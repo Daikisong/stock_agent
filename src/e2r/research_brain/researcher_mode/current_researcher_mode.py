@@ -35,6 +35,7 @@ from .component_scoring_memos import (
 from .dossier import CanonicalResearchDossierBuilder, ResearcherModeDossier
 from .evidence_fact_extractor import (
     FACT_EXTRACTION_OUTPUT_FILES,
+    FACT_EXTRACTION_SEMANTICS_VERSION,
     ResearcherEvidenceFactExtractor,
     ResearcherFactExtractionResult,
     fact_extraction_has_exact_checkpoint_recovery_wait,
@@ -2476,6 +2477,8 @@ def _load_fact_checkpoint(
             ]
         all_calls.append(call)
     carried_coverage_refresh_document_ids: list[str] = []
+    prior_semantics_recovery_document_ids: tuple[str, ...] = ()
+    prior_semantics_recovery_invalidated_claim_count = 0
     result_path = paths["result"]
     if result_path.is_file():
         try:
@@ -2498,6 +2501,91 @@ def _load_fact_checkpoint(
                     or ()
                     if str(value) in current_ids
                 )
+                recovery_status = audit.get(
+                    "semantics_migration_recovery_status"
+                )
+                legacy_bootstrap = recovery_status is None
+                if legacy_bootstrap:
+                    recovery_ids = tuple(
+                        str(value)
+                        for value in audit.get(
+                            "boundary_context_reextraction_document_ids"
+                        )
+                        or ()
+                        if str(value)
+                    )
+                    invalidated_claim_count = int(
+                        audit.get(
+                            "boundary_context_invalidated_prior_claim_count"
+                        )
+                        or 0
+                    )
+                    completed_reextraction_count = int(
+                        audit.get(
+                            "boundary_context_reextraction_completed_document_count"
+                        )
+                        or 0
+                    )
+                    selected_reextraction_count = int(
+                        audit.get(
+                            "boundary_context_reextraction_selected_document_count"
+                        )
+                        or 0
+                    )
+                elif recovery_status == "INCOMPLETE":
+                    recovery_ids = tuple(
+                        str(value)
+                        for value in audit.get(
+                            "pending_semantics_migration_recovery_document_ids"
+                        )
+                        or ()
+                        if str(value)
+                    )
+                    invalidated_claim_count = int(
+                        audit.get(
+                            "pending_semantics_migration_recovery_expected_claim_count"
+                        )
+                        or 0
+                    )
+                    completed_reextraction_count = 0
+                    selected_reextraction_count = len(recovery_ids)
+                else:
+                    recovery_ids = ()
+                    invalidated_claim_count = 0
+                    completed_reextraction_count = 0
+                    selected_reextraction_count = 0
+                if (
+                    audit.get("extraction_semantics_version")
+                    == FACT_EXTRACTION_SEMANTICS_VERSION
+                    and recovery_status in {None, "INCOMPLETE"}
+                    and (
+                        recovery_status is None
+                        or audit.get(
+                            "semantics_migration_recovery_requested"
+                        )
+                        is True
+                    )
+                    and invalidated_claim_count > 0
+                    and completed_reextraction_count == 0
+                    and recovery_ids
+                    and len(recovery_ids) == len(set(recovery_ids))
+                    and selected_reextraction_count == len(recovery_ids)
+                    and set(recovery_ids).issubset(current_ids)
+                    and all(
+                        str(
+                            (document_by_id.get(document_id) or {}).get(
+                                "source_family"
+                            )
+                            or ""
+                        ).upper()
+                        != "PUBLIC_BROKER_PDF"
+                        for document_id in recovery_ids
+                    )
+                ):
+                    prior_semantics_recovery_document_ids = recovery_ids
+                    prior_semantics_recovery_invalidated_claim_count = (
+                        invalidated_claim_count
+                    )
     # Migration for a checkpoint written before the durable refresh-intent
     # roster existed.  A pending coverage-audit call is not accepted as a
     # completed fact call, but its current document id must keep the audit from
@@ -2523,6 +2611,14 @@ def _load_fact_checkpoint(
         for row in persisted_dispositions
         if str(row.get("document_id") or "") in current_ids
     }
+    # The writer commits several canonical files before its result audit.  If
+    # it is interrupted in that window, a subset of recovered rows may already
+    # be visible while the old recovery intent is still authoritative.  Drop
+    # the whole intent roster from ordinary resume projection and rebuild it
+    # from the immutable journal, preserving all-or-nothing recovery.
+    completed_ids.difference_update(
+        prior_semantics_recovery_document_ids
+    )
     dispositions = tuple(
         row
         for row in persisted_dispositions
@@ -2537,6 +2633,10 @@ def _load_fact_checkpoint(
         row
         for row in all_calls
         if row.get("status") == "COMPLETE"
+        and not (
+            set(row.get("document_ids") or ())
+            & set(prior_semantics_recovery_document_ids)
+        )
         and (
             set(row.get("document_ids") or ()).issubset(completed_ids)
             or (
@@ -2559,6 +2659,12 @@ def _load_fact_checkpoint(
         "prior_rejections": rejections,
         "prior_coverage_refresh_document_ids": tuple(
             dict.fromkeys(carried_coverage_refresh_document_ids)
+        ),
+        "prior_semantics_recovery_document_ids": (
+            prior_semantics_recovery_document_ids
+        ),
+        "prior_semantics_recovery_invalidated_claim_count": (
+            prior_semantics_recovery_invalidated_claim_count
         ),
     }
 

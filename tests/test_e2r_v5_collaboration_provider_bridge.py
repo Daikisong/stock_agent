@@ -31,6 +31,12 @@ from e2r.research_brain.researcher_mode import (
     ResearcherDocumentRanker,
     import_collaboration_response,
 )
+from e2r.research_brain.researcher_mode.collaboration_provider_bridge import (
+    _prior_structured_valuation_fact_output_schema,
+)
+from e2r.research_brain.researcher_mode.component_researcher import (
+    _single_payload_request_material,
+)
 from e2r.research_brain.researcher_mode.prompt_projection import (
     project_current_decision_citable_facts,
 )
@@ -379,6 +385,196 @@ def _semantic_quarantine_worker(
 
 
 class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
+    def test_v4_fact_semantics_migration_receipt_is_read_only_and_exact(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = CollaborationCodexResearcherProvider(
+                transport=CollaborationCodexSubagentTransport()
+            )
+            journal = _configure(provider, Path(directory))
+            current_payload = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": "2026-07-12",
+                "archetype_hypothesis": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                "fact_extraction_semantics_version": (
+                    "e2r_v5_structured_valuation_roles_v5"
+                ),
+                "current_evidence_facts": {},
+                "score_gap_context": {},
+                "full_documents": [
+                    {
+                        "document_id": "DOCUMENT-V4",
+                        "source_family": "OPENDART",
+                        "content_text": "literal filing text",
+                    }
+                ],
+            }
+            (
+                _safe,
+                current_schema,
+                _prompt,
+                _prompt_hash,
+                _schema_hash,
+            ) = _single_payload_request_material(
+                pass_name="EVIDENCE_FACT_EXTRACTION",
+                payload=current_payload,
+            )
+            prior_schema = _prior_structured_valuation_fact_output_schema(
+                current_schema
+            )
+            self.assertIsNotNone(prior_schema)
+            historical_payload = {
+                **current_payload,
+                "fact_extraction_semantics_version": (
+                    "e2r_v5_source_boundary_context_v4"
+                ),
+            }
+            (
+                _old_safe,
+                _old_current_schema,
+                historical_prompt,
+                _old_prompt_hash,
+                _old_schema_hash,
+            ) = _single_payload_request_material(
+                pass_name="EVIDENCE_FACT_EXTRACTION",
+                payload=historical_payload,
+            )
+            with self.assertRaisesRegex(
+                StructuredProviderUnavailable,
+                "COLLABORATION_RESPONSE_PENDING",
+            ):
+                provider.transport.complete(
+                    prompt=historical_prompt,
+                    output_schema=prior_schema,
+                    schema_name="e2r_v5_evidence_fact_extraction",
+                )
+            _, request = _request(journal)
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=request["request_id"],
+                response_payload={
+                    "facts": [],
+                    "document_dispositions": [],
+                    "unresolved_document_ids": [],
+                    "unresolved_research_notes": [],
+                    "extraction_complete": True,
+                },
+                agent_id="fact-migration-agent",
+                canonical_task_name="/root/fact_migration",
+                agent_model="codex-collaboration",
+            )
+            request_path = (
+                journal / "requests" / f"{request['request_id']}.json"
+            )
+            response_path = (
+                journal / "responses" / f"{request['request_id']}.json"
+            )
+            before = (request_path.read_bytes(), response_path.read_bytes())
+
+            recovered = provider.validated_fact_extraction_semantics_migration_materials(
+                target_id="CURRENT-TARGET",
+                as_of_date="2026-07-12",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                document_ids=("DOCUMENT-V4",),
+            )
+
+            self.assertIsNotNone(recovered)
+            assert recovered is not None
+            self.assertEqual(
+                recovered["recovery_material_status"], "COMPLETE"
+            )
+            self.assertEqual(len(recovered["materials"]), 1)
+            self.assertEqual(
+                recovered["materials"][0]["request_id"],
+                request["request_id"],
+            )
+            self.assertEqual(
+                before,
+                (request_path.read_bytes(), response_path.read_bytes()),
+            )
+            tampered_request = dict(request)
+            tampered_request["prompt_hash"] = "0" * 64
+            request_path.write_text(
+                json.dumps(tampered_request, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            invalid = provider.validated_fact_extraction_semantics_migration_materials(
+                target_id="CURRENT-TARGET",
+                as_of_date="2026-07-12",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                document_ids=("DOCUMENT-V4",),
+            )
+            self.assertIsNotNone(invalid)
+            assert invalid is not None
+            self.assertEqual(
+                invalid["recovery_material_status"], "INVALID"
+            )
+            self.assertEqual(invalid["materials"], [])
+            request_path.write_text(
+                json.dumps(request, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            renamed_path = (
+                request_path.parent / ("COLLABREQ-" + "f" * 64 + ".json")
+            )
+            request_path.rename(renamed_path)
+            renamed = provider.validated_fact_extraction_semantics_migration_materials(
+                target_id="CURRENT-TARGET",
+                as_of_date="2026-07-12",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                document_ids=("DOCUMENT-V4",),
+            )
+            self.assertIsNotNone(renamed)
+            assert renamed is not None
+            self.assertEqual(
+                renamed["recovery_material_status"], "INVALID"
+            )
+            renamed_path.rename(request_path)
+            broken_prompt_request = dict(request)
+            broken_prompt_request["prompt"] = str(request["prompt"])[:-1]
+            request_path.write_text(
+                json.dumps(broken_prompt_request, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            broken_prompt = provider.validated_fact_extraction_semantics_migration_materials(
+                target_id="CURRENT-TARGET",
+                as_of_date="2026-07-12",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                document_ids=("DOCUMENT-V4",),
+            )
+            self.assertIsNotNone(broken_prompt)
+            assert broken_prompt is not None
+            self.assertEqual(
+                broken_prompt["recovery_material_status"], "INVALID"
+            )
+
+    def test_v4_fact_semantics_migration_distinguishes_absent_receipts(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = CollaborationCodexResearcherProvider(
+                transport=CollaborationCodexSubagentTransport()
+            )
+            journal = _configure(provider, Path(directory))
+
+            recovered = provider.validated_fact_extraction_semantics_migration_materials(
+                target_id="CURRENT-TARGET",
+                as_of_date="2026-07-12",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                document_ids=("DOCUMENT-WITHOUT-V4-RECEIPT",),
+            )
+
+            self.assertIsNotNone(recovered)
+            assert recovered is not None
+            self.assertEqual(
+                recovered["recovery_material_status"], "ABSENT"
+            )
+            self.assertEqual(recovered["materials"], [])
+            self.assertEqual(
+                tuple(journal.rglob("COLLABREQ-*.json")), ()
+            )
+
     def test_default_composite_primary_keeps_normal_codex_cache_identity(
         self,
     ) -> None:

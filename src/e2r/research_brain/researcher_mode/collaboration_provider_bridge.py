@@ -26,7 +26,7 @@ import re
 import tempfile
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
 
 from e2r.research_brain.planning.provider_transport import (
     StructuredProviderRejected,
@@ -64,6 +64,23 @@ _REQUEST_ID_RE = re.compile(r"^COLLABREQ-[0-9a-f]{64}$")
 _RESPONSE_ID_RE = re.compile(r"^COLLABRESP-[0-9a-f]{64}$")
 _AGENT_ID_RE = re.compile(r"^[A-Za-z0-9._:/-]{1,200}$")
 _USAGE_LIMIT_RE = re.compile(r"\busage\s+limit\b", re.IGNORECASE)
+_PRE_STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION = (
+    "e2r_v5_source_boundary_context_v4"
+)
+_STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION = (
+    "e2r_v5_structured_valuation_roles_v5"
+)
+_PRE_STRUCTURED_VALUATION_ROLES = (
+    "SEGMENT_CONTRIBUTION",
+    "QOQ_GROWTH",
+    "FORWARD_GUIDANCE",
+)
+_STRUCTURED_VALUATION_ROLES = (
+    *_PRE_STRUCTURED_VALUATION_ROLES,
+    "FORWARD_BOOK_VALUE",
+    "FORWARD_PB",
+    "FORWARD_EV_EBITDA",
+)
 _REQUEST_ENVELOPE_KEYS = frozenset(
     {
         "schema_version",
@@ -108,6 +125,31 @@ def _canonical_hash(value: Any) -> str:
         separators=(",", ":"),
     ).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
+
+
+def _prior_structured_valuation_fact_output_schema(
+    current_schema: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    """Derive the one frozen schema superseded by the valuation-role change."""
+
+    try:
+        prior = json.loads(json.dumps(current_schema))
+        role_schema = prior["properties"]["facts"]["items"]["properties"][
+            "structured_evidence_roles"
+        ]
+        role_items = role_schema["items"]
+    except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+        return None
+    if (
+        not isinstance(role_schema, dict)
+        or not isinstance(role_items, dict)
+        or tuple(role_items.get("enum") or ()) != _STRUCTURED_VALUATION_ROLES
+        or role_schema.get("maxItems") != 1
+    ):
+        return None
+    role_items["enum"] = list(_PRE_STRUCTURED_VALUATION_ROLES)
+    role_schema.pop("maxItems", None)
+    return prior
 
 
 def _fsync_directory(path: Path) -> None:
@@ -1199,6 +1241,195 @@ class CollaborationCodexSubagentTransport:
             "maximum_requested_page_number": maximum_page,
         }
 
+    def validated_fact_extraction_semantics_migration_materials(
+        self,
+        *,
+        target_id: str,
+        as_of_date: str,
+        archetype_id: str,
+        document_ids: Sequence[str],
+    ) -> Mapping[str, Any] | None:
+        """Read every exact v4 fact receipt for one invalidated roster.
+
+        This is intentionally a read-only journal operation.  The Evidence OS
+        extractor remains responsible for document equality, objective
+        lineage, pagination, literal quotes, and atomic all-or-nothing merge.
+        Here we prove only that each candidate is an active official
+        Collaboration request/response pair created under the single schema
+        superseded by the structured-valuation role migration.
+        """
+
+        root = self.journal_root
+        recovery_ids = tuple(dict.fromkeys(str(value) for value in document_ids))
+        if (
+            root is None
+            or not target_id
+            or not as_of_date
+            or not archetype_id
+            or not recovery_ids
+            or any(not value for value in recovery_ids)
+            or len(recovery_ids) != len(tuple(document_ids))
+        ):
+            return None
+        recovery_id_set = frozenset(recovery_ids)
+        materials: list[Mapping[str, Any]] = []
+        invalid_matching_receipt = False
+        for request_path in sorted(
+            (root / "requests").glob("COLLABREQ-*.json")
+        ):
+            matching_v4_request = False
+            request_envelope_validated = False
+            try:
+                request = _validate_request(
+                    _read_json_object(request_path)
+                )
+                request_envelope_validated = True
+                if request_path.name != f"{request.get('request_id')}.json":
+                    invalid_matching_receipt = True
+                    continue
+                if (
+                    request.get("pass_name")
+                    != "EVIDENCE_FACT_EXTRACTION"
+                    or request.get("schema_name")
+                    != "e2r_v5_evidence_fact_extraction"
+                ):
+                    continue
+                # A validated fact request with malformed prompt JSON is a
+                # corrupt journal leaf, irrespective of its self-reported
+                # target scope.  Scope filtering happens only after this
+                # integrity boundary.
+                matching_v4_request = True
+                request_payload = json.loads(
+                    str(request["prompt"]).rsplit("\n", 1)[-1]
+                )
+                if not isinstance(request_payload, Mapping):
+                    continue
+                if (
+                    request_payload.get("target_id") != target_id
+                    or request_payload.get("as_of_date") != as_of_date
+                    or request_payload.get("archetype_hypothesis")
+                    != archetype_id
+                    or request_payload.get("fact_extraction_semantics_version")
+                    != _PRE_STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
+                    or "fact_extraction_retry_context" in request_payload
+                ):
+                    continue
+                full_documents = request_payload.get("full_documents")
+                if (
+                    not isinstance(full_documents, list)
+                    or not full_documents
+                    or any(not isinstance(row, Mapping) for row in full_documents)
+                ):
+                    continue
+                request_document_ids = tuple(
+                    str(row.get("document_id") or "")
+                    for row in full_documents
+                )
+                if (
+                    any(not value for value in request_document_ids)
+                    or len(request_document_ids) != len(set(request_document_ids))
+                    or not set(request_document_ids).issubset(recovery_id_set)
+                    or any(
+                        str(row.get("source_family") or "").upper()
+                        == "PUBLIC_BROKER_PDF"
+                        for row in full_documents
+                    )
+                ):
+                    continue
+                current_projection = {
+                    **request_payload,
+                    "fact_extraction_semantics_version": (
+                        _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
+                    ),
+                }
+                (
+                    _safe_projection,
+                    current_output_schema,
+                    _current_prompt,
+                    _current_prompt_hash,
+                    _current_schema_hash,
+                ) = _single_payload_request_material(
+                    pass_name="EVIDENCE_FACT_EXTRACTION",
+                    payload=current_projection,
+                )
+                expected_prior_schema = (
+                    _prior_structured_valuation_fact_output_schema(
+                        current_output_schema
+                    )
+                )
+                if (
+                    expected_prior_schema is None
+                    or request.get("output_schema") != expected_prior_schema
+                ):
+                    invalid_matching_receipt = True
+                    continue
+                response_path = (
+                    root
+                    / "responses"
+                    / f"{request['request_id']}.json"
+                )
+                envelope = _validate_response_envelope(
+                    request=request,
+                    envelope=_read_json_object(response_path),
+                )
+                provenance = envelope.get("provenance") or {}
+                if provenance.get("agent_model") != "codex-collaboration":
+                    invalid_matching_receipt = True
+                    continue
+                if (
+                    root
+                    / "quarantine"
+                    / str(request["request_id"])
+                    / f"{envelope['response_id']}.json"
+                ).is_file():
+                    invalid_matching_receipt = True
+                    continue
+            except (
+                FileNotFoundError,
+                OSError,
+                KeyError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+                json.JSONDecodeError,
+            ):
+                if not request_envelope_validated or matching_v4_request:
+                    invalid_matching_receipt = True
+                continue
+            materials.append(
+                {
+                    "request_id": str(request["request_id"]),
+                    "response_id": str(envelope["response_id"]),
+                    "prompt_hash": str(request["prompt_hash"]),
+                    "output_schema_hash": str(request["output_schema_hash"]),
+                    "payload_hash": str(envelope["payload_hash"]),
+                    "request_payload": dict(request_payload),
+                    "response_payload": dict(envelope["payload"]),
+                    "provenance": dict(provenance),
+                }
+            )
+        return {
+            "recovery_material_status": (
+                "INVALID"
+                if invalid_matching_receipt
+                else "COMPLETE"
+                if materials
+                else "ABSENT"
+            ),
+            "prior_semantics_version": (
+                _PRE_STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
+            ),
+            "current_semantics_version": (
+                _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
+            ),
+            "target_id": target_id,
+            "as_of_date": as_of_date,
+            "archetype_id": archetype_id,
+            "document_ids": list(recovery_ids),
+            "provider_name": COLLABORATION_PROVIDER_NAME,
+            "materials": materials,
+        }
+
     def invalidate_last_response(self, reason: str) -> Mapping[str, Any]:
         request_id = self._last_request_id
         if request_id is None:
@@ -1872,6 +2103,23 @@ class CollaborationCodexResearcherProvider(CodexResearcherProvider):
             return None
         return dict(origin_payload)
 
+    def validated_fact_extraction_semantics_migration_materials(
+        self,
+        *,
+        target_id: str,
+        as_of_date: str,
+        archetype_id: str,
+        document_ids: Sequence[str],
+    ) -> Mapping[str, Any] | None:
+        """Expose only envelope-validated v4 receipts to the extractor."""
+
+        return self.transport.validated_fact_extraction_semantics_migration_materials(
+            target_id=target_id,
+            as_of_date=as_of_date,
+            archetype_id=archetype_id,
+            document_ids=document_ids,
+        )
+
     @staticmethod
     def _validated_payload_from_request(
         *,
@@ -2088,6 +2336,23 @@ class CodexSubagentFallbackResearchProvider(CodexResearcherProvider):
 
         return self.collaboration.validated_fact_extraction_pagination_origin_payload(
             primary_payload=primary_payload,
+        )
+
+    def validated_fact_extraction_semantics_migration_materials(
+        self,
+        *,
+        target_id: str,
+        as_of_date: str,
+        archetype_id: str,
+        document_ids: Sequence[str],
+    ) -> Mapping[str, Any] | None:
+        """Delegate checkpoint migration recovery to Collaboration only."""
+
+        return self.collaboration.validated_fact_extraction_semantics_migration_materials(
+            target_id=target_id,
+            as_of_date=as_of_date,
+            archetype_id=archetype_id,
+            document_ids=document_ids,
         )
 
     def invalidate_last_response_cache(self, reason: str) -> Mapping[str, Any]:

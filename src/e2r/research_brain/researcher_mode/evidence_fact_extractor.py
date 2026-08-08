@@ -14,11 +14,12 @@ from datetime import date
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import re
+import tempfile
 from typing import Any, Mapping, Sequence
 
-from e2r.production.metadata import write_json, write_jsonl
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
 from e2r.research_brain.planning.provider_transport import (
     StructuredProviderRejected,
@@ -80,6 +81,9 @@ OBJECTIVE_FACT_RELATIONS = frozenset(
 )
 FACT_EXTRACTION_SEMANTICS_VERSION = (
     "e2r_v5_structured_valuation_roles_v5"
+)
+_PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION = (
+    "e2r_v5_source_boundary_context_v4"
 )
 SOURCE_BOUNDARY_CONTEXT_CHARS = 4_000
 _TRUSTED_COVERAGE_REFRESH_SOURCE_TIERS = frozenset(
@@ -275,8 +279,10 @@ class FactExtractionProviderCall:
     transport_chunk_ids: tuple[str, ...] = ()
     accepted_claims: tuple[Mapping[str, Any], ...] | None = None
     coverage_audit_performed: bool = False
+    semantics_migration_request_ids: tuple[str, ...] = ()
+    semantics_migration_response_ids: tuple[str, ...] = ()
     extraction_semantics_version: str = FACT_EXTRACTION_SEMANTICS_VERSION
-    schema_version: str = "e2r_v5_fact_extraction_provider_call_v3"
+    schema_version: str = "e2r_v5_fact_extraction_provider_call_v4"
 
     def __post_init__(self) -> None:
         if self.status not in {"COMPLETE", "PENDING"}:
@@ -297,6 +303,29 @@ class FactExtractionProviderCall:
                 raise ValueError(
                     "embedded fact extraction claims must match accepted claim ids"
                 )
+        if (
+            len(self.semantics_migration_request_ids)
+            != len(self.semantics_migration_response_ids)
+            or any(
+                re.fullmatch(r"COLLABREQ-[0-9a-f]{64}", value) is None
+                for value in self.semantics_migration_request_ids
+            )
+            or any(
+                re.fullmatch(r"COLLABRESP-[0-9a-f]{64}", value) is None
+                for value in self.semantics_migration_response_ids
+            )
+            or (
+                self.semantics_migration_request_ids
+                and (
+                    self.status != "COMPLETE"
+                    or self.extraction_semantics_version
+                    != _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION
+                    or "COLLABORATION_CODEX_SUBAGENT"
+                    not in self.provider_name
+                )
+            )
+        ):
+            raise ValueError("fact semantics migration receipts are invalid")
 
     def to_dict(self) -> Mapping[str, Any]:
         output = {
@@ -309,6 +338,9 @@ class FactExtractionProviderCall:
             output["accepted_claims"] = [
                 dict(row) for row in self.accepted_claims
             ]
+        if not self.semantics_migration_request_ids:
+            output.pop("semantics_migration_request_ids", None)
+            output.pop("semantics_migration_response_ids", None)
         return output
 
 
@@ -563,6 +595,8 @@ class ResearcherEvidenceFactExtractor:
             FactExtractionRejection | Mapping[str, Any]
         ] = (),
         prior_coverage_refresh_document_ids: Sequence[str] = (),
+        prior_semantics_recovery_document_ids: Sequence[str] = (),
+        prior_semantics_recovery_invalidated_claim_count: int = 0,
         extraction_mode: str = "RESEARCH_BACKFILL",
     ) -> ResearcherFactExtractionResult:
         cutoff = date.fromisoformat(as_of_date)
@@ -648,14 +682,102 @@ class ResearcherEvidenceFactExtractor:
             open_objectives=open_objectives,
             score_gap_context=score_gap_context or {},
         )
+        document_by_id = {
+            str(row["document_id"]): row for row in prepared
+        }
+        semantics_recovery_requested = bool(
+            prior_semantics_recovery_document_ids
+            or prior_semantics_recovery_invalidated_claim_count
+        )
+        semantics_recovery: Mapping[str, Any] | None = None
+        if semantics_recovery_requested:
+            try:
+                semantics_recovery = _recover_v4_fact_semantics_checkpoint(
+                    self.provider,
+                    target_id=target_id,
+                    target_name=target_name,
+                    target_aliases=target_aliases,
+                    archetype_id=archetype_id,
+                    as_of_date=as_of_date,
+                    documents=prepared,
+                    source_boundary_context_by_document_id=(
+                        source_boundary_context_by_document_id
+                    ),
+                    max_document_chars_per_call=(
+                        self.max_document_chars_per_call
+                    ),
+                    open_objectives=open_objectives,
+                    scope_contract=scope_contract,
+                    objective_scope_by_document=(
+                        objective_scope_by_document
+                    ),
+                    objective_component_by_id=objective_component_by_id,
+                    recovery_document_ids=(
+                        prior_semantics_recovery_document_ids
+                    ),
+                    expected_invalidated_claim_count=(
+                        prior_semantics_recovery_invalidated_claim_count
+                    ),
+                    prior_material_claims=prior_material_claims,
+                    prior_document_dispositions=(
+                        prior_document_dispositions
+                    ),
+                    prior_provider_calls=prior_provider_calls,
+                )
+            except (KeyError, OSError, TypeError, ValueError, RuntimeError):
+                semantics_recovery = None
+        semantics_recovery_succeeded = (
+            isinstance(semantics_recovery, Mapping)
+            and semantics_recovery.get("status") == "COMPLETE"
+        )
+        semantics_recovery_absent = (
+            isinstance(semantics_recovery, Mapping)
+            and semantics_recovery.get("status") == "ABSENT"
+        )
+        semantics_recovery_failed = (
+            semantics_recovery_requested
+            and not semantics_recovery_succeeded
+            and not semantics_recovery_absent
+        )
+        if semantics_recovery_succeeded:
+            assert semantics_recovery is not None
+            prior_material_claims = (
+                *prior_material_claims,
+                *semantics_recovery["material_claims"],
+            )
+            prior_document_dispositions = (
+                *prior_document_dispositions,
+                *semantics_recovery["document_dispositions"],
+            )
+            prior_provider_calls = (
+                *prior_provider_calls,
+                *semantics_recovery["provider_calls"],
+            )
+            prior_rejections = (
+                *prior_rejections,
+                *semantics_recovery["rejections"],
+            )
         stale_semantics_disposition_count = sum(
-            _extraction_semantics_version(row)
-            != FACT_EXTRACTION_SEMANTICS_VERSION
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version=_extraction_semantics_version(row),
+                document=document_by_id.get(
+                    str(row.get("document_id") or "")
+                ),
+            )
             for row in prior_document_dispositions
         )
         stale_semantics_provider_call_count = sum(
-            _extraction_semantics_version(row)
-            != FACT_EXTRACTION_SEMANTICS_VERSION
+            any(
+                _fact_semantics_upgrade_requires_reextraction(
+                    previous_version=_extraction_semantics_version(row),
+                    document=document_by_id.get(document_id),
+                )
+                for document_id in (
+                    row.document_ids
+                    if isinstance(row, FactExtractionProviderCall)
+                    else tuple(row.get("document_ids") or ())
+                )
+            )
             for row in prior_provider_calls
         )
         all_prior_dispositions = [
@@ -668,8 +790,12 @@ class ResearcherEvidenceFactExtractor:
         stale_semantics_disposition_ids = {
             str(row.get("document_id") or "")
             for row in all_prior_dispositions
-            if _extraction_semantics_version(row)
-            != FACT_EXTRACTION_SEMANTICS_VERSION
+            if _fact_semantics_upgrade_requires_reextraction(
+                previous_version=_extraction_semantics_version(row),
+                document=document_by_id.get(
+                    str(row.get("document_id") or "")
+                ),
+            )
         }
         if (
             any(
@@ -729,9 +855,11 @@ class ResearcherEvidenceFactExtractor:
             | {
                 document_id
                 for call in all_checkpoint_calls
-                if call.extraction_semantics_version
-                != FACT_EXTRACTION_SEMANTICS_VERSION
                 for document_id in call.document_ids
+                if _fact_semantics_upgrade_requires_reextraction(
+                    previous_version=call.extraction_semantics_version,
+                    document=document_by_id.get(document_id),
+                )
             }
         )
         prior_disposition_by_document_id = {
@@ -911,6 +1039,10 @@ class ResearcherEvidenceFactExtractor:
             not in boundary_context_reextraction_document_ids
         ]
         pending: list[str] = []
+        if semantics_recovery_failed:
+            pending.append(
+                "FACT_SEMANTICS_MIGRATION_RECOVERY_INCOMPLETE"
+            )
         provider_name = str(
             getattr(self.provider, "provider_name", type(self.provider).__name__)
         )
@@ -1061,16 +1193,20 @@ class ResearcherEvidenceFactExtractor:
             not in coverage_refresh_document_ids
         )
         document_batches = (
-            *_document_batches(
-                coverage_refresh_transport_documents,
-                max_documents=self.documents_per_call,
-                max_chars=self.max_document_chars_per_call,
-            ),
-            *_document_batches(
-                primary_transport_documents,
-                max_documents=self.documents_per_call,
-                max_chars=self.max_document_chars_per_call,
-            ),
+            ()
+            if semantics_recovery_failed
+            else (
+                *_document_batches(
+                    coverage_refresh_transport_documents,
+                    max_documents=self.documents_per_call,
+                    max_chars=self.max_document_chars_per_call,
+                ),
+                *_document_batches(
+                    primary_transport_documents,
+                    max_documents=self.documents_per_call,
+                    max_chars=self.max_document_chars_per_call,
+                ),
+            )
         )
         canonical_state_refresh_barrier_count = 0
         for batch_index, batch in enumerate(document_batches):
@@ -1161,167 +1297,27 @@ class ResearcherEvidenceFactExtractor:
                     batch_transport_chunk_ids
                 )
             batch_id = stable_intelligence_id("FACTBATCH", batch_identity)
-            payload = scrub_blind_research_payload(
-                {
-                    "target_id": target_id,
-                    "target_name": target_name,
-                    "target_aliases": list(target_aliases),
-                    "archetype_hypothesis": archetype_id,
-                    "as_of_date": as_of_date,
-                    "fact_extraction_semantics_version": (
-                        FACT_EXTRACTION_SEMANTICS_VERSION
-                    ),
-                    "open_research_objectives": [dict(row) for row in open_objectives],
-                    "current_evidence_facts": current_fact_prompt_context,
-                    "score_gap_context": score_gap_prompt_context,
-                    "normalization_contract": {
-                        "question_family_id": "stable semantic research-question family, not a query string",
-                        "subject_id": "stable target business/product/mechanism subject",
-                        "predicate_family": "stable economic predicate family",
-                        "normalized_object": "concise normalized economic object or state",
-                        "value": (
-                            "Use a JSON number only for one finite quantitative "
-                            "point. Use a JSON string for text, ranges, identifiers, "
-                            "and dates. Do not encode arbitrary objects or arrays."
-                        ),
-                        "mechanism_scope_id": "target-direct business mechanism, never industry or wrong-segment proxy",
-                    },
-                    "deterministic_mechanism_scope_contract": {
-                        "allowed_business_segments": list(scope_contract.allowed_business_segments),
-                        "allowed_product_families": list(scope_contract.allowed_product_families),
-                        "allowed_technology_families": list(scope_contract.allowed_technology_families),
-                        "allowed_transaction_types": list(scope_contract.allowed_transaction_types),
-                        "allowed_economic_mechanisms": list(scope_contract.allowed_economic_mechanisms),
-                        "generic_company_allowed_components": list(scope_contract.generic_company_allowed_components),
-                        "forbidden_business_segments": list(scope_contract.forbidden_business_segments),
-                        "forbidden_product_families": list(scope_contract.forbidden_product_families),
-                        "issuer_wide_fact_encoding": {
-                            "scope_business_segment": "CORPORATE_GENERIC",
-                            "scope_product_family": "CORPORATE_GENERIC",
-                            "scope_technology_family": "CORPORATE_GENERIC",
-                            "scope_transaction_type": "GENERIC_INFORMATION",
-                            "scope_economic_mechanism": "INFORMATION_ONLY",
-                            "allowed_only_for_components": list(
-                                scope_contract.generic_company_allowed_components
-                            ),
-                            "instruction": (
-                                "Use these exact scope tokens for issuer-wide liquidity, "
-                                "capital allocation, funding, governance, or information-quality "
-                                "facts that are not attributable to the archetype business segment."
-                            ),
-                        },
-                    },
-                    "full_documents": [
-                        _document_prompt_row(
-                            row,
-                            source_boundary_context=(
-                                row.get("_source_boundary_context")
-                            ),
-                        )
-                        for row in batch
-                    ],
-                    **(
-                        {
-                            "fact_extraction_scope_contract": {
-                                "mode": "PRODUCTION_OBJECTIVE_LOCAL",
-                                "allowed_objective_relations": sorted(
-                                    OBJECTIVE_FACT_RELATIONS
-                                ),
-                                "objective_component_rows": [
-                                    {
-                                        "objective_id": objective_id,
-                                        "component_id": (
-                                            objective_component_by_id[
-                                                objective_id
-                                            ]
-                                        ),
-                                    }
-                                    for objective_id in sorted(
-                                        {
-                                            objective_id
-                                            for document_id
-                                            in batch_document_ids
-                                            for objective_id in (
-                                                batch_objective_scope_by_document[
-                                                    document_id
-                                                ]
-                                            )
-                                        }
-                                    )
-                                ],
-                                "document_objective_ids": [
-                                    {
-                                        "document_id": str(row["document_id"]),
-                                        "objective_ids": sorted(
-                                            batch_objective_scope_by_document[
-                                                str(row["document_id"])
-                                            ]
-                                        ),
-                                    }
-                                    for row in batch
-                                ],
-                                "material_fact_definition": (
-                                    "A source-backed fact is material in this "
-                                    "production pass only when it directly "
-                                    "advances, counters, or supersedes at least "
-                                    "one document-linked current research "
-                                    "objective, with the unresolved facts and "
-                                    "questions in score_gap_context controlling "
-                                    "the present research focus. General "
-                                    "background, adjacent technology history, "
-                                    "and facts that do not affect that focus "
-                                    "must not be emitted."
-                                ),
-                                "completion_definition": (
-                                    "extraction_complete means no further "
-                                    "distinct objective-linked fact remains in "
-                                    "the supplied document batch; it never "
-                                    "means every generally economic sentence "
-                                    "in the document was exhausted."
-                                ),
-                                "deterministic_validation_scope": (
-                                    "objective roster, document lineage, exact "
-                                    "quote, as_of_date, and closed-vocabulary "
-                                    "mechanism coordinates plus objective-component "
-                                    "compatibility only"
-                                ),
-                                "llm_owns_economic_relevance": True,
-                                **(
-                                    {
-                                        "objective_lineage_reassessment": {
-                                            "enabled": True,
-                                            "documents": (
-                                                objective_lineage_reassessment_rows
-                                            ),
-                                            "instruction": (
-                                                "For this stale-semantics full-document "
-                                                "coverage refresh, independently reassess which "
-                                                "listed current open objectives each literal "
-                                                "source fact advances, counters, or supersedes, "
-                                                "including an objective outside the document's "
-                                                "original discovery lineage. Re-read compound "
-                                                "statements as distinct atomic economic legs when "
-                                                "each leg has its own literal numeric, temporal, "
-                                                "cash-flow, valuation, or market-response meaning "
-                                                "needed to reconstruct the source statement. Emit "
-                                                "only economically material relations supported by "
-                                                "the supplied full text. The proposal's closed-"
-                                                "vocabulary mechanism scope must allow the component "
-                                                "of every cited objective. The expanded candidate "
-                                                "roster is not evidence that a relation exists, and "
-                                                "does not make general background material."
-                                            ),
-                                        }
-                                    }
-                                    if objective_lineage_reassessment_rows
-                                    else {}
-                                ),
-                            }
-                        }
-                        if objective_scope_by_document is not None
-                        else {}
-                    ),
-                }
+            payload = _fact_extraction_primary_payload(
+                target_id=target_id,
+                target_name=target_name,
+                target_aliases=target_aliases,
+                archetype_id=archetype_id,
+                as_of_date=as_of_date,
+                extraction_semantics_version=(
+                    FACT_EXTRACTION_SEMANTICS_VERSION
+                ),
+                open_objectives=open_objectives,
+                current_evidence_facts=current_fact_prompt_context,
+                score_gap_context=score_gap_prompt_context,
+                scope_contract=scope_contract,
+                batch=batch,
+                objective_scope_by_document=(
+                    batch_objective_scope_by_document
+                ),
+                objective_component_by_id=objective_component_by_id,
+                objective_lineage_reassessment_rows=(
+                    objective_lineage_reassessment_rows
+                ),
             )
             prompt_documents = tuple(payload.get("full_documents") or ())
             if len(prompt_documents) != len(batch) or any(
@@ -1675,74 +1671,17 @@ class ResearcherEvidenceFactExtractor:
                     attempt_payload = scrub_blind_research_payload(
                         {
                             **attempt_base_payload,
-                            "fact_extraction_continuation_context": {
-                                "page_number": pagination_page_number,
-                                "page_fact_limit": (
-                                    FACT_EXTRACTION_PAGE_FACT_LIMIT
-                                ),
-                                "required_document_ids": sorted(
-                                    required_page_ids
-                                ),
-                                "previously_accepted_facts": [
-                                    {
-                                        "document_id": str(
-                                            claim["document_id"]
-                                        ),
-                                        "question_family_id": str(
-                                            claim["question_family_id"]
-                                        ),
-                                        "subject_id": str(
-                                            claim["subject_id"]
-                                        ),
-                                        "predicate_family": str(
-                                            claim["predicate_family"]
-                                        ),
-                                        "normalized_object": str(
-                                            claim["normalized_object"]
-                                        ),
-                                        "period": str(claim["period"]),
-                                        "direction": str(
-                                            claim["direction"]
-                                        ),
-                                        "current_lifecycle": str(
-                                            claim["current_lifecycle"]
-                                        ),
-                                        **(
-                                            {
-                                                "objective_ids": list(
-                                                    claim["objective_ids"]
-                                                ),
-                                                "objective_relation": str(
-                                                    claim[
-                                                        "objective_relation"
-                                                    ]
-                                                ),
-                                            }
-                                            if claim.get("objective_ids")
-                                            else {}
-                                        ),
-                                        "exact_quote": str(
-                                            claim["exact_quote"]
-                                        ),
-                                    }
-                                    for claim in (
+                            "fact_extraction_continuation_context": (
+                                _fact_extraction_continuation_context(
+                                    page_number=pagination_page_number,
+                                    required_document_ids=(
+                                        required_page_ids
+                                    ),
+                                    accepted_claims=tuple(
                                         previously_accepted_claims.values()
-                                    )
-                                ],
-                                "instruction": (
-                                    "Continue the same supplied batch without "
-                                    "repeating any previously accepted fact or "
-                                    "exact quote. Return the next distinct page "
-                                    "of material facts. If more remain after "
-                                    "this page, keep extraction_complete false "
-                                    "and list the affected document ids. If no "
-                                    "distinct facts remain, return an empty facts "
-                                    "array, the accurate final disposition "
-                                    "(FACTS_EXTRACTED when prior accepted facts "
-                                    "exist), an empty unresolved_document_ids "
-                                    "array, and extraction_complete true."
-                                ),
-                            },
+                                    ),
+                                )
+                            ),
                         }
                     )
                     continue
@@ -2328,6 +2267,57 @@ class ResearcherEvidenceFactExtractor:
             "stale_semantics_provider_call_count": (
                 stale_semantics_provider_call_count
             ),
+            "semantics_migration_recovery_requested": (
+                semantics_recovery_requested
+            ),
+            "semantics_migration_recovery_status": (
+                "COMPLETE"
+                if semantics_recovery_succeeded
+                else (
+                    "ABSENT_REEXTRACTION"
+                    if semantics_recovery_absent
+                    else (
+                        "INCOMPLETE"
+                        if semantics_recovery_failed
+                        else "NOT_REQUIRED"
+                    )
+                )
+            ),
+            "semantics_migration_recovery_document_count": (
+                int(semantics_recovery.get("document_count") or 0)
+                if semantics_recovery_succeeded
+                and semantics_recovery is not None
+                else 0
+            ),
+            "semantics_migration_recovery_claim_count": (
+                int(semantics_recovery.get("claim_count") or 0)
+                if semantics_recovery_succeeded
+                and semantics_recovery is not None
+                else 0
+            ),
+            "semantics_migration_recovery_call_count": (
+                int(semantics_recovery.get("call_count") or 0)
+                if semantics_recovery_succeeded
+                and semantics_recovery is not None
+                else 0
+            ),
+            "semantics_migration_recovery_request_count": (
+                int(semantics_recovery.get("request_count") or 0)
+                if semantics_recovery_succeeded
+                and semantics_recovery is not None
+                else 0
+            ),
+            "semantics_migration_recovery_is_atomic": True,
+            "pending_semantics_migration_recovery_document_ids": (
+                list(prior_semantics_recovery_document_ids)
+                if semantics_recovery_failed
+                else []
+            ),
+            "pending_semantics_migration_recovery_expected_claim_count": (
+                prior_semantics_recovery_invalidated_claim_count
+                if semantics_recovery_failed
+                else 0
+            ),
             "stale_semantics_checkpoint_reextracted": bool(
                 boundary_context_reextraction_document_ids
                 and boundary_context_reextraction_document_ids
@@ -2518,20 +2508,80 @@ def write_researcher_fact_extraction_result(
     output_directory: str | Path,
 ) -> Mapping[str, Path]:
     root = Path(output_directory)
+    root.mkdir(parents=True, exist_ok=True)
     paths = {
         key: root / filename for key, filename in FACT_EXTRACTION_OUTPUT_FILES.items()
     }
-    write_jsonl(paths["accepted_claims"], result.material_claims)
-    write_jsonl(paths["rejections"], (row.to_dict() for row in result.rejections))
-    write_jsonl(paths["document_dispositions"], result.document_dispositions)
-    write_jsonl(paths["provider_calls"], (row.to_dict() for row in result.provider_calls))
-    write_jsonl(paths["facts"], (row.to_dict() for row in result.facts))
-    write_jsonl(
-        paths["claim_fact_links"],
-        (row.to_dict() for row in result.fact_compilation.claim_fact_links),
+    jsonl_rows = {
+        "accepted_claims": tuple(result.material_claims),
+        "rejections": tuple(row.to_dict() for row in result.rejections),
+        "document_dispositions": tuple(result.document_dispositions),
+        "provider_calls": tuple(row.to_dict() for row in result.provider_calls),
+        "facts": tuple(row.to_dict() for row in result.facts),
+        "claim_fact_links": tuple(
+            row.to_dict() for row in result.fact_compilation.claim_fact_links
+        ),
+    }
+    serialized = {
+        paths[key]: "".join(
+            json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n"
+            for row in rows
+        )
+        for key, rows in jsonl_rows.items()
+    }
+    serialized[paths["audit"]] = (
+        json.dumps(result.audit, ensure_ascii=False, indent=2, sort_keys=True)
+        + "\n"
     )
-    write_json(paths["result"], result.to_dict())
-    write_json(paths["audit"], result.audit)
+    serialized[paths["result"]] = (
+        json.dumps(result.to_dict(), ensure_ascii=False, indent=2, sort_keys=True)
+        + "\n"
+    )
+    temporary_paths: dict[Path, Path] = {}
+    try:
+        for destination, content in serialized.items():
+            descriptor, temporary_name = tempfile.mkstemp(
+                prefix=f".{destination.name}.",
+                suffix=".tmp",
+                dir=root,
+            )
+            temporary_path = Path(temporary_name)
+            temporary_paths[destination] = temporary_path
+            with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+                handle.write(content)
+                handle.flush()
+                os.fsync(handle.fileno())
+        # The embedded result audit is the checkpoint commit marker.  It is
+        # replaced only after every canonical leaf and the standalone audit
+        # are durable, so an interrupted migration keeps the older recovery
+        # intent authoritative on the next resume.
+        leaf_commit_order = (
+            paths["accepted_claims"],
+            paths["rejections"],
+            paths["document_dispositions"],
+            paths["provider_calls"],
+            paths["facts"],
+            paths["claim_fact_links"],
+            paths["audit"],
+        )
+        directory_descriptor = os.open(root, os.O_RDONLY)
+        try:
+            for destination in leaf_commit_order:
+                os.replace(temporary_paths.pop(destination), destination)
+            os.fsync(directory_descriptor)
+            os.replace(
+                temporary_paths.pop(paths["result"]),
+                paths["result"],
+            )
+            os.fsync(directory_descriptor)
+        finally:
+            os.close(directory_descriptor)
+    finally:
+        for temporary_path in temporary_paths.values():
+            try:
+                temporary_path.unlink()
+            except FileNotFoundError:
+                pass
     return paths
 
 
@@ -2707,6 +2757,217 @@ def _document_prompt_row(
     return payload
 
 
+def _fact_extraction_primary_payload(
+    *,
+    target_id: str,
+    target_name: str,
+    target_aliases: Sequence[str],
+    archetype_id: str,
+    as_of_date: str,
+    extraction_semantics_version: str,
+    open_objectives: Sequence[Mapping[str, Any]],
+    current_evidence_facts: Mapping[str, Any],
+    score_gap_context: Mapping[str, Any],
+    scope_contract: ArchetypeMechanismScopeContract,
+    batch: Sequence[Mapping[str, Any]],
+    objective_scope_by_document: Mapping[str, frozenset[str]] | None,
+    objective_component_by_id: Mapping[str, str],
+    objective_lineage_reassessment_rows: Sequence[Mapping[str, Any]] = (),
+) -> Mapping[str, Any]:
+    """Build the immutable fact prompt contract shared with migration replay."""
+
+    batch_document_ids = {
+        str(row["document_id"]) for row in batch
+    }
+    return scrub_blind_research_payload(
+        {
+            "target_id": target_id,
+            "target_name": target_name,
+            "target_aliases": list(target_aliases),
+            "archetype_hypothesis": archetype_id,
+            "as_of_date": as_of_date,
+            "fact_extraction_semantics_version": (
+                extraction_semantics_version
+            ),
+            "open_research_objectives": [
+                dict(row) for row in open_objectives
+            ],
+            "current_evidence_facts": dict(current_evidence_facts),
+            "score_gap_context": dict(score_gap_context),
+            "normalization_contract": {
+                "question_family_id": (
+                    "stable semantic research-question family, not a query string"
+                ),
+                "subject_id": (
+                    "stable target business/product/mechanism subject"
+                ),
+                "predicate_family": "stable economic predicate family",
+                "normalized_object": "concise normalized economic object or state",
+                "value": (
+                    "Use a JSON number only for one finite quantitative "
+                    "point. Use a JSON string for text, ranges, identifiers, "
+                    "and dates. Do not encode arbitrary objects or arrays."
+                ),
+                "mechanism_scope_id": (
+                    "target-direct business mechanism, never industry or "
+                    "wrong-segment proxy"
+                ),
+            },
+            "deterministic_mechanism_scope_contract": {
+                "allowed_business_segments": list(
+                    scope_contract.allowed_business_segments
+                ),
+                "allowed_product_families": list(
+                    scope_contract.allowed_product_families
+                ),
+                "allowed_technology_families": list(
+                    scope_contract.allowed_technology_families
+                ),
+                "allowed_transaction_types": list(
+                    scope_contract.allowed_transaction_types
+                ),
+                "allowed_economic_mechanisms": list(
+                    scope_contract.allowed_economic_mechanisms
+                ),
+                "generic_company_allowed_components": list(
+                    scope_contract.generic_company_allowed_components
+                ),
+                "forbidden_business_segments": list(
+                    scope_contract.forbidden_business_segments
+                ),
+                "forbidden_product_families": list(
+                    scope_contract.forbidden_product_families
+                ),
+                "issuer_wide_fact_encoding": {
+                    "scope_business_segment": "CORPORATE_GENERIC",
+                    "scope_product_family": "CORPORATE_GENERIC",
+                    "scope_technology_family": "CORPORATE_GENERIC",
+                    "scope_transaction_type": "GENERIC_INFORMATION",
+                    "scope_economic_mechanism": "INFORMATION_ONLY",
+                    "allowed_only_for_components": list(
+                        scope_contract.generic_company_allowed_components
+                    ),
+                    "instruction": (
+                        "Use these exact scope tokens for issuer-wide liquidity, "
+                        "capital allocation, funding, governance, or information-quality "
+                        "facts that are not attributable to the archetype business segment."
+                    ),
+                },
+            },
+            "full_documents": [
+                _document_prompt_row(
+                    row,
+                    source_boundary_context=(
+                        row.get("_source_boundary_context")
+                    ),
+                )
+                for row in batch
+            ],
+            **(
+                {
+                    "fact_extraction_scope_contract": {
+                        "mode": "PRODUCTION_OBJECTIVE_LOCAL",
+                        "allowed_objective_relations": sorted(
+                            OBJECTIVE_FACT_RELATIONS
+                        ),
+                        "objective_component_rows": [
+                            {
+                                "objective_id": objective_id,
+                                "component_id": (
+                                    objective_component_by_id[objective_id]
+                                ),
+                            }
+                            for objective_id in sorted(
+                                {
+                                    objective_id
+                                    for document_id in batch_document_ids
+                                    for objective_id in (
+                                        objective_scope_by_document[
+                                            document_id
+                                        ]
+                                    )
+                                }
+                            )
+                        ],
+                        "document_objective_ids": [
+                            {
+                                "document_id": str(row["document_id"]),
+                                "objective_ids": sorted(
+                                    objective_scope_by_document[
+                                        str(row["document_id"])
+                                    ]
+                                ),
+                            }
+                            for row in batch
+                        ],
+                        "material_fact_definition": (
+                            "A source-backed fact is material in this "
+                            "production pass only when it directly "
+                            "advances, counters, or supersedes at least "
+                            "one document-linked current research "
+                            "objective, with the unresolved facts and "
+                            "questions in score_gap_context controlling "
+                            "the present research focus. General "
+                            "background, adjacent technology history, "
+                            "and facts that do not affect that focus "
+                            "must not be emitted."
+                        ),
+                        "completion_definition": (
+                            "extraction_complete means no further "
+                            "distinct objective-linked fact remains in "
+                            "the supplied document batch; it never "
+                            "means every generally economic sentence "
+                            "in the document was exhausted."
+                        ),
+                        "deterministic_validation_scope": (
+                            "objective roster, document lineage, exact "
+                            "quote, as_of_date, and closed-vocabulary "
+                            "mechanism coordinates plus objective-component "
+                            "compatibility only"
+                        ),
+                        "llm_owns_economic_relevance": True,
+                        **(
+                            {
+                                "objective_lineage_reassessment": {
+                                    "enabled": True,
+                                    "documents": [
+                                        dict(row)
+                                        for row in (
+                                            objective_lineage_reassessment_rows
+                                        )
+                                    ],
+                                    "instruction": (
+                                        "For this stale-semantics full-document "
+                                        "coverage refresh, independently reassess which "
+                                        "listed current open objectives each literal "
+                                        "source fact advances, counters, or supersedes, "
+                                        "including an objective outside the document's "
+                                        "original discovery lineage. Re-read compound "
+                                        "statements as distinct atomic economic legs when "
+                                        "each leg has its own literal numeric, temporal, "
+                                        "cash-flow, valuation, or market-response meaning "
+                                        "needed to reconstruct the source statement. Emit "
+                                        "only economically material relations supported by "
+                                        "the supplied full text. The proposal's closed-"
+                                        "vocabulary mechanism scope must allow the component "
+                                        "of every cited objective. The expanded candidate "
+                                        "roster is not evidence that a relation exists, and "
+                                        "does not make general background material."
+                                    ),
+                                }
+                            }
+                            if objective_lineage_reassessment_rows
+                            else {}
+                        ),
+                    }
+                }
+                if objective_scope_by_document is not None
+                else {}
+            ),
+        }
+    )
+
+
 def _source_boundary_context_by_document_id(
     documents: Sequence[Mapping[str, Any]],
     *,
@@ -2819,18 +3080,27 @@ def _boundary_context_reextraction_document_ids(
     document_ids = {
         str(row.get("document_id") or "") for row in documents
     }
+    document_by_id = {
+        str(row.get("document_id") or ""): row for row in documents
+    }
     stale_document_ids = {
         str(row.get("document_id") or "")
         for row in prior_document_dispositions
-        if _extraction_semantics_version(row)
-        != FACT_EXTRACTION_SEMANTICS_VERSION
+        if _fact_semantics_upgrade_requires_reextraction(
+            previous_version=_extraction_semantics_version(row),
+            document=document_by_id.get(
+                str(row.get("document_id") or "")
+            ),
+        )
     }
     stale_document_ids.update(
         document_id
         for call in prior_provider_calls
-        if call.extraction_semantics_version
-        != FACT_EXTRACTION_SEMANTICS_VERSION
         for document_id in call.document_ids
+        if _fact_semantics_upgrade_requires_reextraction(
+            previous_version=call.extraction_semantics_version,
+            document=document_by_id.get(document_id),
+        )
     )
     affected = {
         str(claim.get("document_id") or "")
@@ -2839,6 +3109,15 @@ def _boundary_context_reextraction_document_ids(
         in source_boundary_context_by_document_id
         and str(claim.get("document_id") or "") in stale_document_ids
     }
+    affected.update(
+        document_id
+        for document_id in stale_document_ids
+        if str(
+            (document_by_id.get(document_id) or {}).get("source_family")
+            or ""
+        ).upper()
+        == "PUBLIC_BROKER_PDF"
+    )
     if not affected:
         return frozenset()
     changed = True
@@ -3268,6 +3547,7 @@ def _validate_response(
         Mapping[str, frozenset[str]] | None
     ) = None,
     objective_component_by_id: Mapping[str, str] | None = None,
+    extraction_semantics_version: str = FACT_EXTRACTION_SEMANTICS_VERSION,
 ) -> tuple[
     list[Mapping[str, Any]],
     list[FactExtractionRejection],
@@ -3341,6 +3621,7 @@ def _validate_response(
                     reason="PREVIOUSLY_ACCEPTED_EXACT_QUOTE_REPEATED",
                     material_proposal=False,
                     proposed_exact_quote=proposed_exact_quote,
+                    extraction_semantics_version=extraction_semantics_version,
                 )
             )
             continue
@@ -3360,6 +3641,7 @@ def _validate_response(
                     reason=objective_scope_reason,
                     material_proposal=material,
                     proposed_exact_quote=proposed_exact_quote or None,
+                    extraction_semantics_version=extraction_semantics_version,
                 )
             )
             if material:
@@ -3387,6 +3669,7 @@ def _validate_response(
                         if isinstance(proposal, Mapping)
                         else None
                     ),
+                    extraction_semantics_version=extraction_semantics_version,
                 )
             )
             if material and not reason.startswith("MECHANISM_SCOPE_REJECTED"):
@@ -3404,6 +3687,7 @@ def _validate_response(
                     proposed_exact_quote=(
                         str(proposal.get("exact_quote") or "").strip() or None
                     ),
+                    extraction_semantics_version=extraction_semantics_version,
                 )
             )
             continue
@@ -3471,7 +3755,7 @@ def _validate_response(
             {
                 "schema_version": "e2r_v5_fact_document_disposition_v1",
                 "extraction_semantics_version": (
-                    FACT_EXTRACTION_SEMANTICS_VERSION
+                    extraction_semantics_version
                 ),
                 "batch_id": batch_id,
                 "document_id": document_id,
@@ -3720,6 +4004,527 @@ def _recover_validated_fact_extraction_pagination_origin_payload(
     ):
         return None
     return dict(recovered)
+
+
+def _fact_continuation_projection(
+    claims: Sequence[Mapping[str, Any]],
+) -> list[Mapping[str, Any]]:
+    return [
+        {
+            "document_id": str(claim["document_id"]),
+            "question_family_id": str(claim["question_family_id"]),
+            "subject_id": str(claim["subject_id"]),
+            "predicate_family": str(claim["predicate_family"]),
+            "normalized_object": str(claim["normalized_object"]),
+            "period": str(claim["period"]),
+            "direction": str(claim["direction"]),
+            "current_lifecycle": str(claim["current_lifecycle"]),
+            **(
+                {
+                    "objective_ids": list(claim["objective_ids"]),
+                    "objective_relation": str(claim["objective_relation"]),
+                }
+                if claim.get("objective_ids")
+                else {}
+            ),
+            "exact_quote": str(claim["exact_quote"]),
+        }
+        for claim in claims
+    ]
+
+
+def _fact_extraction_continuation_context(
+    *,
+    page_number: int,
+    required_document_ids: Sequence[str] | frozenset[str] | set[str],
+    accepted_claims: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Build the exact immutable continuation instruction and prior roster."""
+
+    return {
+        "page_number": page_number,
+        "page_fact_limit": FACT_EXTRACTION_PAGE_FACT_LIMIT,
+        "required_document_ids": sorted(
+            str(value) for value in required_document_ids
+        ),
+        "previously_accepted_facts": _fact_continuation_projection(
+            accepted_claims
+        ),
+        "instruction": (
+            "Continue the same supplied batch without repeating any "
+            "previously accepted fact or exact quote. Return the next "
+            "distinct page of material facts. If more remain after this "
+            "page, keep extraction_complete false and list the affected "
+            "document ids. If no distinct facts remain, return an empty "
+            "facts array, the accurate final disposition (FACTS_EXTRACTED "
+            "when prior accepted facts exist), an empty "
+            "unresolved_document_ids array, and extraction_complete true."
+        ),
+    }
+
+
+def _recover_v4_fact_semantics_checkpoint(
+    provider: StructuredResearchProvider,
+    *,
+    target_id: str,
+    target_name: str,
+    target_aliases: Sequence[str],
+    archetype_id: str,
+    as_of_date: str,
+    documents: Sequence[Mapping[str, Any]],
+    source_boundary_context_by_document_id: Mapping[
+        str, Mapping[str, Any]
+    ],
+    max_document_chars_per_call: int,
+    open_objectives: Sequence[Mapping[str, Any]],
+    scope_contract: ArchetypeMechanismScopeContract,
+    objective_scope_by_document: Mapping[str, frozenset[str]] | None,
+    objective_component_by_id: Mapping[str, str],
+    recovery_document_ids: Sequence[str],
+    expected_invalidated_claim_count: int,
+    prior_material_claims: Sequence[Mapping[str, Any]],
+    prior_document_dispositions: Sequence[Mapping[str, Any]],
+    prior_provider_calls: Sequence[
+        FactExtractionProviderCall | Mapping[str, Any]
+    ],
+) -> Mapping[str, Any] | None:
+    """Atomically rebuild one lost v4 checkpoint from official receipts."""
+
+    recovery_ids = tuple(dict.fromkeys(str(value) for value in recovery_document_ids))
+    recovery_id_set = frozenset(recovery_ids)
+    document_by_id = {
+        str(row.get("document_id") or ""): row for row in documents
+    }
+    if (
+        not recovery_ids
+        or len(recovery_ids) != len(tuple(recovery_document_ids))
+        or expected_invalidated_claim_count <= 0
+        or not recovery_id_set.issubset(document_by_id)
+        or objective_scope_by_document is None
+        or any(
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version=(
+                    _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION
+                ),
+                document=document_by_id[document_id],
+            )
+            for document_id in recovery_ids
+        )
+    ):
+        return None
+    prior_disposition_ids = {
+        str(row.get("document_id") or "")
+        for row in prior_document_dispositions
+    }
+    prior_claim_document_ids = {
+        str(row.get("document_id") or "") for row in prior_material_claims
+    }
+    prior_call_document_ids = {
+        str(document_id)
+        for raw_call in prior_provider_calls
+        for document_id in (
+            raw_call.document_ids
+            if isinstance(raw_call, FactExtractionProviderCall)
+            else tuple(raw_call.get("document_ids") or ())
+        )
+    }
+    if recovery_id_set & (
+        prior_disposition_ids
+        | prior_claim_document_ids
+        | prior_call_document_ids
+    ):
+        return None
+    transport_by_document_id: dict[str, Mapping[str, Any]] = {}
+    for document_id in recovery_ids:
+        transport_rows = _document_transport_chunks(
+            document_by_id[document_id],
+            max_chars=max_document_chars_per_call,
+            source_boundary_context=(
+                source_boundary_context_by_document_id.get(document_id)
+            ),
+        )
+        if len(transport_rows) != 1:
+            return None
+        transport_by_document_id[document_id] = transport_rows[0]
+    recover = getattr(
+        provider,
+        "validated_fact_extraction_semantics_migration_materials",
+        None,
+    )
+    if not callable(recover):
+        return None
+    try:
+        recovered = recover(
+            target_id=target_id,
+            as_of_date=as_of_date,
+            archetype_id=archetype_id,
+            document_ids=recovery_ids,
+        )
+    except (OSError, TypeError, ValueError, RuntimeError):
+        return None
+    if (
+        not isinstance(recovered, Mapping)
+        or recovered.get("prior_semantics_version")
+        != _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION
+        or recovered.get("current_semantics_version")
+        != FACT_EXTRACTION_SEMANTICS_VERSION
+        or recovered.get("target_id") != target_id
+        or recovered.get("as_of_date") != as_of_date
+        or recovered.get("archetype_id") != archetype_id
+        or tuple(recovered.get("document_ids") or ()) != recovery_ids
+        or recovered.get("provider_name")
+        != "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE"
+    ):
+        return None
+    raw_materials = recovered.get("materials")
+    recovery_material_status = recovered.get(
+        "recovery_material_status"
+    )
+    if recovery_material_status == "ABSENT" and raw_materials == []:
+        return {"status": "ABSENT"}
+    if recovery_material_status != "COMPLETE":
+        return None
+    if (
+        isinstance(raw_materials, (str, bytes))
+        or not isinstance(raw_materials, Sequence)
+        or not raw_materials
+        or any(not isinstance(row, Mapping) for row in raw_materials)
+    ):
+        return None
+    request_ids = tuple(
+        str(row.get("request_id") or "") for row in raw_materials
+    )
+    response_ids = tuple(
+        str(row.get("response_id") or "") for row in raw_materials
+    )
+    if (
+        any(re.fullmatch(r"COLLABREQ-[0-9a-f]{64}", value) is None for value in request_ids)
+        or any(re.fullmatch(r"COLLABRESP-[0-9a-f]{64}", value) is None for value in response_ids)
+        or len(request_ids) != len(set(request_ids))
+        or len(response_ids) != len(set(response_ids))
+    ):
+        return None
+
+    base_by_roster: dict[tuple[str, ...], Mapping[str, Any]] = {}
+    continuations_by_roster: dict[
+        tuple[str, ...], list[tuple[int, Mapping[str, Any]]]
+    ] = {}
+    for material in raw_materials:
+        request_payload = material.get("request_payload")
+        response_payload = material.get("response_payload")
+        provenance = material.get("provenance")
+        if (
+            not isinstance(request_payload, Mapping)
+            or not isinstance(response_payload, Mapping)
+            or not isinstance(provenance, Mapping)
+            or provenance.get("agent_model") != "codex-collaboration"
+            or request_payload.get("fact_extraction_semantics_version")
+            != _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION
+            or request_payload.get("target_id") != target_id
+            or request_payload.get("target_name") != target_name
+            or tuple(request_payload.get("target_aliases") or ())
+            != tuple(target_aliases)
+            or request_payload.get("archetype_hypothesis") != archetype_id
+            or request_payload.get("as_of_date") != as_of_date
+            or "fact_extraction_retry_context" in request_payload
+        ):
+            return None
+        request_base_payload = dict(request_payload)
+        continuation = request_base_payload.pop(
+            "fact_extraction_continuation_context", None
+        )
+        runtime_evidence_context = request_base_payload.get(
+            "current_evidence_facts"
+        )
+        runtime_score_gap_context = request_base_payload.get(
+            "score_gap_context"
+        )
+        if (
+            not isinstance(runtime_evidence_context, Mapping)
+            or not isinstance(runtime_score_gap_context, Mapping)
+        ):
+            return None
+        full_documents = request_payload.get("full_documents")
+        if (
+            not isinstance(full_documents, list)
+            or not full_documents
+            or any(not isinstance(row, Mapping) for row in full_documents)
+        ):
+            return None
+        batch_document_ids = tuple(
+            str(row.get("document_id") or "") for row in full_documents
+        )
+        if (
+            any(not value for value in batch_document_ids)
+            or len(batch_document_ids) != len(set(batch_document_ids))
+            or not set(batch_document_ids).issubset(recovery_id_set)
+            or full_documents
+            != [
+                _document_prompt_row(
+                    transport_by_document_id[document_id],
+                    source_boundary_context=(
+                        transport_by_document_id[document_id].get(
+                            "_source_boundary_context"
+                        )
+                    ),
+                )
+                for document_id in batch_document_ids
+            ]
+        ):
+            return None
+        expected_base_payload = _fact_extraction_primary_payload(
+            target_id=target_id,
+            target_name=target_name,
+            target_aliases=target_aliases,
+            archetype_id=archetype_id,
+            as_of_date=as_of_date,
+            extraction_semantics_version=(
+                _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION
+            ),
+            open_objectives=open_objectives,
+            current_evidence_facts=runtime_evidence_context,
+            score_gap_context=runtime_score_gap_context,
+            scope_contract=scope_contract,
+            batch=[
+                transport_by_document_id[document_id]
+                for document_id in batch_document_ids
+            ],
+            objective_scope_by_document=objective_scope_by_document,
+            objective_component_by_id=objective_component_by_id,
+        )
+        if request_base_payload != expected_base_payload:
+            return None
+        if continuation is None:
+            if batch_document_ids in base_by_roster:
+                return None
+            base_by_roster[batch_document_ids] = material
+            continue
+        if not isinstance(continuation, Mapping):
+            return None
+        page_number = continuation.get("page_number")
+        if (
+            isinstance(page_number, bool)
+            or not isinstance(page_number, int)
+            or page_number < 2
+        ):
+            return None
+        continuations_by_roster.setdefault(batch_document_ids, []).append(
+            (page_number, material)
+        )
+
+    recovered_document_ids: set[str] = set()
+    recovered_claims: list[Mapping[str, Any]] = []
+    recovered_dispositions: list[Mapping[str, Any]] = []
+    recovered_calls: list[FactExtractionProviderCall] = []
+    for batch_document_ids, base_material in base_by_roster.items():
+        if recovered_document_ids & set(batch_document_ids):
+            return None
+        page_materials = [(1, base_material), *sorted(
+            continuations_by_roster.pop(batch_document_ids, []),
+            key=lambda row: row[0],
+        )]
+        if [row[0] for row in page_materials] != list(
+            range(1, len(page_materials) + 1)
+        ):
+            return None
+        base_payload = dict(base_material["request_payload"])
+        batch_documents = [
+            transport_by_document_id[document_id]
+            for document_id in batch_document_ids
+        ]
+        batch_id = stable_intelligence_id(
+            "FACTBATCH",
+            {
+                "target_id": target_id,
+                "as_of_date": as_of_date,
+                "extraction_semantics_version": (
+                    _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION
+                ),
+                "document_ids": list(batch_document_ids),
+            },
+        )
+        accepted: dict[str, Mapping[str, Any]] = {}
+        feedback: list[str] = []
+        receipt_request_ids: list[str] = []
+        receipt_response_ids: list[str] = []
+        final_dispositions: list[Mapping[str, Any]] = []
+        final_prompt_hash = ""
+        final_response_hash = ""
+        for page_index, material in page_materials:
+            request_payload = dict(material["request_payload"])
+            response_payload = dict(material["response_payload"])
+            if page_index > 1:
+                continuation = request_payload.get(
+                    "fact_extraction_continuation_context"
+                )
+                continuation_base = dict(request_payload)
+                continuation_base.pop(
+                    "fact_extraction_continuation_context", None
+                )
+                if (
+                    not isinstance(continuation, Mapping)
+                    or continuation_base != base_payload
+                    or continuation
+                    != _fact_extraction_continuation_context(
+                        page_number=page_index,
+                        required_document_ids=batch_document_ids,
+                        accepted_claims=tuple(accepted.values()),
+                    )
+                ):
+                    return None
+            prompt_hash = stable_intelligence_id(
+                "FACTPROMPT", request_payload
+            )
+            response_hash = stable_intelligence_id(
+                "FACTRESP",
+                scrub_blind_research_payload(response_payload),
+            )
+            (
+                page_claims,
+                page_rejections,
+                page_dispositions,
+                page_pending,
+                page_feedback,
+                _completion_flag_reconciled,
+            ) = _validate_response(
+                response_payload,
+                batch_id=batch_id,
+                documents=batch_documents,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                scope_contract=scope_contract,
+                provider_name=str(
+                    recovered["provider_name"]
+                ),
+                prompt_hash=prompt_hash,
+                response_hash=response_hash,
+                previously_accepted_claim_counts={
+                    document_id: sum(
+                        1
+                        for claim in accepted.values()
+                        if str(claim.get("document_id") or "")
+                        == document_id
+                    )
+                    for document_id in batch_document_ids
+                },
+                previously_accepted_semantic_identities={
+                    document_id: tuple(
+                        _fact_semantic_identity(claim)
+                        for claim in accepted.values()
+                        if str(claim.get("document_id") or "")
+                        == document_id
+                    )
+                    for document_id in batch_document_ids
+                },
+                objective_scope_by_document=objective_scope_by_document,
+                objective_component_by_id=objective_component_by_id,
+                extraction_semantics_version=(
+                    _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION
+                ),
+            )
+            if page_rejections:
+                return None
+            for claim in page_claims:
+                claim_id = str(claim["claim_id"])
+                if claim_id in accepted:
+                    return None
+                accepted[claim_id] = claim
+            feedback.extend(page_feedback)
+            receipt_request_ids.append(str(material["request_id"]))
+            receipt_response_ids.append(str(material["response_id"]))
+            final_prompt_hash = prompt_hash
+            final_response_hash = response_hash
+            if page_index < len(page_materials):
+                allowed_pending = all(
+                    reason == "LLM_DECLARED_FACT_EXTRACTION_INCOMPLETE"
+                    or reason.startswith("UNRESOLVED_DOCUMENT:")
+                    for reason in page_pending
+                )
+                if (
+                    response_payload.get("extraction_complete") is not False
+                    or not page_pending
+                    or not allowed_pending
+                ):
+                    return None
+            else:
+                if (
+                    response_payload.get("extraction_complete") is not True
+                    or page_pending
+                ):
+                    return None
+                final_dispositions = page_dispositions
+        if (
+            {str(row.get("document_id") or "") for row in final_dispositions}
+            != set(batch_document_ids)
+            or len(final_dispositions) != len(batch_document_ids)
+        ):
+            return None
+        recovered_document_ids.update(batch_document_ids)
+        recovered_claims.extend(accepted.values())
+        recovered_dispositions.extend(final_dispositions)
+        recovered_calls.append(
+            FactExtractionProviderCall(
+                batch_id=batch_id,
+                status="COMPLETE",
+                document_ids=batch_document_ids,
+                accepted_claim_ids=tuple(accepted),
+                rejected_proposal_count=0,
+                document_dispositions=tuple(final_dispositions),
+                pending_reasons=(),
+                research_gap_feedback=tuple(dict.fromkeys(feedback)),
+                provider_name=str(
+                    recovered["provider_name"]
+                ),
+                prompt_hash=final_prompt_hash,
+                response_hash=final_response_hash,
+                provider_attempt_count=len(page_materials),
+                validation_retry_used=False,
+                coverage_audit_performed=False,
+                semantics_migration_request_ids=tuple(receipt_request_ids),
+                semantics_migration_response_ids=tuple(receipt_response_ids),
+                extraction_semantics_version=(
+                    _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION
+                ),
+            )
+        )
+    if continuations_by_roster:
+        return None
+    recovered_claim_ids = tuple(
+        str(row.get("claim_id") or "") for row in recovered_claims
+    )
+    recovered_disposition_ids = tuple(
+        str(row.get("document_id") or "")
+        for row in recovered_dispositions
+    )
+    if (
+        recovered_document_ids != set(recovery_ids)
+        or len(recovered_claims) != expected_invalidated_claim_count
+        or any(not value for value in recovered_claim_ids)
+        or len(recovered_claim_ids) != len(set(recovered_claim_ids))
+        or len(recovered_disposition_ids) != len(set(recovered_disposition_ids))
+        or set(recovered_disposition_ids) != set(recovery_ids)
+        or any(
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version=call.extraction_semantics_version,
+                document=document_by_id[document_id],
+            )
+            for call in recovered_calls
+            for document_id in call.document_ids
+        )
+    ):
+        return None
+    return {
+        "status": "COMPLETE",
+        "material_claims": tuple(recovered_claims),
+        "document_dispositions": tuple(recovered_dispositions),
+        "provider_calls": tuple(recovered_calls),
+        "rejections": (),
+        "request_count": len(raw_materials),
+        "response_count": len(raw_materials),
+        "claim_count": len(recovered_claims),
+        "document_count": len(recovered_dispositions),
+        "call_count": len(recovered_calls),
+    }
 
 
 def _proposal_rejection_reason(
@@ -4527,6 +5332,24 @@ def _extraction_semantics_version(
     return str(row.get("extraction_semantics_version") or "")
 
 
+def _fact_semantics_upgrade_requires_reextraction(
+    *,
+    previous_version: str,
+    document: Mapping[str, Any] | None,
+) -> bool:
+    """Limit the v4→v5 migration to documents that can supply new roles."""
+
+    if previous_version == FACT_EXTRACTION_SEMANTICS_VERSION:
+        return False
+    if previous_version == _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION:
+        return bool(
+            document is not None
+            and str(document.get("source_family") or "").upper()
+            == "PUBLIC_BROKER_PDF"
+        )
+    return True
+
+
 def _coerce_provider_call(
     row: FactExtractionProviderCall | Mapping[str, Any],
 ) -> FactExtractionProviderCall:
@@ -4561,6 +5384,14 @@ def _coerce_provider_call(
         ),
         coverage_audit_performed=bool(
             row.get("coverage_audit_performed")
+        ),
+        semantics_migration_request_ids=tuple(
+            str(value)
+            for value in row.get("semantics_migration_request_ids") or ()
+        ),
+        semantics_migration_response_ids=tuple(
+            str(value)
+            for value in row.get("semantics_migration_response_ids") or ()
         ),
         extraction_semantics_version=str(
             row.get("extraction_semantics_version") or ""

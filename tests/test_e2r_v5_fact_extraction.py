@@ -6,7 +6,8 @@ import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
+from unittest.mock import patch
 
 from e2r.research_brain.researcher_mode import (
     CollaborationCodexResearcherProvider,
@@ -37,6 +38,7 @@ from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED,
     TRANSPORT_FRAGMENT_VALUE_NORMALIZATION,
     _document_transport_chunks,
+    _fact_semantics_upgrade_requires_reextraction,
     _source_boundary_context_by_document_id,
     normalize_punctuation_only_fact_value,
 )
@@ -302,6 +304,79 @@ class CleanResumePagedFactProvider(PagedFactProvider):
                 "score_authority": False,
             },
         }
+
+
+class V4SemanticsMigrationProvider:
+    provider_name = "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE"
+
+    def __init__(self, materials: Sequence[Mapping[str, Any]]) -> None:
+        self.materials = tuple(materials)
+        self.recovery_calls = 0
+        self.complete_calls = 0
+
+    def validated_fact_extraction_semantics_migration_materials(
+        self,
+        *,
+        target_id: str,
+        as_of_date: str,
+        archetype_id: str,
+        document_ids: Sequence[str],
+    ) -> Mapping[str, Any]:
+        self.recovery_calls += 1
+        return {
+            "recovery_material_status": (
+                "COMPLETE" if self.materials else "ABSENT"
+            ),
+            "prior_semantics_version": "e2r_v5_source_boundary_context_v4",
+            "current_semantics_version": FACT_EXTRACTION_SEMANTICS_VERSION,
+            "target_id": target_id,
+            "as_of_date": as_of_date,
+            "archetype_id": archetype_id,
+            "document_ids": list(document_ids),
+            "provider_name": self.provider_name,
+            "materials": [dict(row) for row in self.materials],
+        }
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        self.complete_calls += 1
+        return ObjectiveLocalFactProvider().complete(
+            pass_name=pass_name,
+            payload=payload,
+        )
+
+
+class V4InvalidSemanticsMigrationProvider(V4SemanticsMigrationProvider):
+    def validated_fact_extraction_semantics_migration_materials(
+        self,
+        **kwargs: Any,
+    ) -> Mapping[str, Any]:
+        recovered = dict(
+            super().validated_fact_extraction_semantics_migration_materials(
+                **kwargs
+            )
+        )
+        recovered["recovery_material_status"] = "INVALID"
+        return recovered
+
+
+class V4SemanticsMigrationFallbackProvider(V4SemanticsMigrationProvider):
+    provider_name = (
+        "CODEX_STRUCTURED_RESEARCHER_WITH_COLLABORATION_SUBAGENT_FALLBACK"
+    )
+
+    def validated_fact_extraction_semantics_migration_materials(
+        self,
+        **kwargs: Any,
+    ) -> Mapping[str, Any]:
+        recovered = dict(
+            super().validated_fact_extraction_semantics_migration_materials(
+                **kwargs
+            )
+        )
+        recovered["provider_name"] = (
+            "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE"
+        )
+        return recovered
 
 
 class ObjectiveLocalFactProvider(FactProvider):
@@ -885,6 +960,361 @@ class NoNewFactCoverageChunkProvider(
 
 
 class E2RV5FactExtractionTests(unittest.TestCase):
+    def test_v4_non_broker_checkpoint_is_atomically_recovered_from_receipt(
+        self,
+    ) -> None:
+        document = _document("DOC-V4-RECOVERY", "OPENDART", "OPENDART")
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "eps_fcf_explosion",
+        }
+        material, expected_claim_count = _v4_migration_material(
+            document=document,
+            objective=objective,
+        )
+        provider = V4SemanticsMigrationProvider((material,))
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(objective,),
+            prior_semantics_recovery_document_ids=(
+                document["document_id"],
+            ),
+            prior_semantics_recovery_invalidated_claim_count=(
+                expected_claim_count
+            ),
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(provider.recovery_calls, 1)
+        self.assertEqual(provider.complete_calls, 0)
+        self.assertEqual(len(result.material_claims), expected_claim_count)
+        self.assertEqual(len(result.document_dispositions), 1)
+        self.assertEqual(len(result.provider_calls), 1)
+        recovered_call = result.provider_calls[0]
+        self.assertEqual(
+            recovered_call.extraction_semantics_version,
+            "e2r_v5_source_boundary_context_v4",
+        )
+        self.assertEqual(
+            recovered_call.semantics_migration_request_ids,
+            ("COLLABREQ-" + "1" * 64,),
+        )
+        self.assertEqual(
+            result.audit["semantics_migration_recovery_status"],
+            "COMPLETE",
+        )
+        self.assertTrue(
+            result.audit["semantics_migration_recovery_is_atomic"]
+        )
+
+    def test_v4_broker_checkpoint_cannot_use_migration_receipt(
+        self,
+    ) -> None:
+        safe_document = _document(
+            "DOC-V4-BROKER-BLOCK",
+            "OPENDART",
+            "OPENDART",
+        )
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "valuation_rerating",
+        }
+        material, expected_claim_count = _v4_migration_material(
+            document=safe_document,
+            objective=objective,
+        )
+        broker_document = {
+            **safe_document,
+            "source_family": "PUBLIC_BROKER_PDF",
+            "source_independence_group": "PUBLIC_BROKER_PDF:example.com",
+        }
+        provider = V4SemanticsMigrationProvider((material,))
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(broker_document,),
+            open_objectives=(objective,),
+            prior_semantics_recovery_document_ids=(
+                broker_document["document_id"],
+            ),
+            prior_semantics_recovery_invalidated_claim_count=(
+                expected_claim_count
+            ),
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(provider.recovery_calls, 0)
+        self.assertEqual(provider.complete_calls, 0)
+        self.assertEqual(result.material_claims, ())
+        self.assertIn(
+            "FACT_SEMANTICS_MIGRATION_RECOVERY_INCOMPLETE",
+            result.pending_reasons,
+        )
+        self.assertEqual(
+            result.audit["semantics_migration_recovery_status"],
+            "INCOMPLETE",
+        )
+
+    def test_v4_recovery_requires_the_exact_immutable_prompt_contract(
+        self,
+    ) -> None:
+        document = _document("DOC-V4-PROMPT-TAMPER", "OPENDART", "OPENDART")
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "eps_fcf_explosion",
+        }
+        material, expected_claim_count = _v4_migration_material(
+            document=document,
+            objective=objective,
+        )
+        tampered_material = dict(material)
+        tampered_payload = dict(material["request_payload"])
+        tampered_payload["normalization_contract"] = {
+            "mutated": "omit otherwise material facts"
+        }
+        tampered_material["request_payload"] = tampered_payload
+        provider = V4SemanticsMigrationProvider((tampered_material,))
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(objective,),
+            prior_semantics_recovery_document_ids=(document["document_id"],),
+            prior_semantics_recovery_invalidated_claim_count=(
+                expected_claim_count
+            ),
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(result.material_claims, ())
+        self.assertEqual(
+            result.audit["semantics_migration_recovery_status"],
+            "INCOMPLETE",
+        )
+
+    def test_v4_recovery_records_canonical_collaboration_under_fallback(
+        self,
+    ) -> None:
+        document = _document("DOC-V4-FALLBACK", "OPENDART", "OPENDART")
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "eps_fcf_explosion",
+        }
+        material, expected_claim_count = _v4_migration_material(
+            document=document,
+            objective=objective,
+        )
+        provider = V4SemanticsMigrationFallbackProvider((material,))
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(objective,),
+            prior_semantics_recovery_document_ids=(document["document_id"],),
+            prior_semantics_recovery_invalidated_claim_count=(
+                expected_claim_count
+            ),
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(
+            result.provider_calls[0].provider_name,
+            "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE",
+        )
+
+    def test_absent_v4_receipt_falls_through_to_normal_v5_extraction(
+        self,
+    ) -> None:
+        document = _document("DOC-V4-ABSENT", "OPENDART", "OPENDART")
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "eps_fcf_explosion",
+        }
+        provider = V4SemanticsMigrationProvider(())
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(objective,),
+            prior_semantics_recovery_document_ids=(document["document_id"],),
+            prior_semantics_recovery_invalidated_claim_count=1,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(provider.complete_calls, 1)
+        self.assertEqual(
+            result.audit["semantics_migration_recovery_status"],
+            "ABSENT_REEXTRACTION",
+        )
+        self.assertEqual(
+            result.audit[
+                "pending_semantics_migration_recovery_document_ids"
+            ],
+            [],
+        )
+
+    def test_interrupted_recovery_write_keeps_old_intent_and_valid_jsonl(
+        self,
+    ) -> None:
+        document = _document("DOC-V4-WRITE-CRASH", "OPENDART", "OPENDART")
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "eps_fcf_explosion",
+        }
+        material, expected_claim_count = _v4_migration_material(
+            document=document,
+            objective=objective,
+        )
+        common = {
+            "target_id": TARGET,
+            "target_name": TARGET_NAME,
+            "target_aliases": (),
+            "archetype_id": ARCHETYPE,
+            "as_of_date": AS_OF_DATE,
+            "documents": (document,),
+            "open_objectives": (objective,),
+            "prior_semantics_recovery_document_ids": (
+                document["document_id"],
+            ),
+            "prior_semantics_recovery_invalidated_claim_count": (
+                expected_claim_count
+            ),
+            "extraction_mode": "PRODUCTION_OBJECTIVE_LOCAL",
+        }
+        pending = ResearcherEvidenceFactExtractor(
+            provider=V4InvalidSemanticsMigrationProvider(())
+        ).extract(**common)
+        recovered = ResearcherEvidenceFactExtractor(
+            provider=V4SemanticsMigrationProvider((material,))
+        ).extract(**common)
+        self.assertEqual(
+            pending.audit["semantics_migration_recovery_status"],
+            "INCOMPLETE",
+        )
+        self.assertEqual(
+            recovered.audit["semantics_migration_recovery_status"],
+            "COMPLETE",
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_researcher_fact_extraction_result(pending, root)
+            original_result = json.loads(
+                (root / "fact_extraction_result.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            import os
+
+            real_replace = os.replace
+            replace_count = 0
+
+            def interrupt_after_dispositions(source, destination):
+                nonlocal replace_count
+                replace_count += 1
+                if replace_count == 4:
+                    raise OSError("simulated writer interruption")
+                return real_replace(source, destination)
+
+            with patch(
+                "e2r.research_brain.researcher_mode."
+                "evidence_fact_extractor.os.replace",
+                side_effect=interrupt_after_dispositions,
+            ):
+                with self.assertRaisesRegex(
+                    OSError, "simulated writer interruption"
+                ):
+                    write_researcher_fact_extraction_result(recovered, root)
+
+            self.assertEqual(
+                json.loads(
+                    (root / "fact_extraction_result.json").read_text(
+                        encoding="utf-8"
+                    )
+                ),
+                original_result,
+            )
+            for filename in (
+                "material_fact_claims.jsonl",
+                "fact_extraction_rejections.jsonl",
+                "fact_document_dispositions.jsonl",
+                "fact_extraction_provider_calls.jsonl",
+            ):
+                for line in (root / filename).read_text(
+                    encoding="utf-8"
+                ).splitlines():
+                    json.loads(line)
+            checkpoint = _load_fact_checkpoint(
+                root,
+                source_graph=SimpleNamespace(
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    evidence_documents=(document,),
+                ),
+            )
+            self.assertEqual(
+                checkpoint["prior_semantics_recovery_document_ids"],
+                (document["document_id"],),
+            )
+            self.assertEqual(checkpoint["prior_material_claims"], ())
+            self.assertEqual(checkpoint["prior_provider_calls"], ())
+
+    def test_structured_valuation_semantics_upgrade_reextracts_only_broker_pdf(
+        self,
+    ) -> None:
+        previous = "e2r_v5_source_boundary_context_v4"
+        self.assertTrue(
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version=previous,
+                document={"source_family": "PUBLIC_BROKER_PDF"},
+            )
+        )
+        self.assertFalse(
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version=previous,
+                document={"source_family": "OPENDART"},
+            )
+        )
+        self.assertFalse(
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version=FACT_EXTRACTION_SEMANTICS_VERSION,
+                document={"source_family": "PUBLIC_BROKER_PDF"},
+            )
+        )
+        self.assertTrue(
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version="pre_boundary_context_v3",
+                document={"source_family": "OPENDART"},
+            )
+        )
+
     def test_source_boundary_context_is_bound_only_to_first_transport_chunk(
         self,
     ) -> None:
@@ -2539,6 +2969,95 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             [row["document_id"] for row in checkpoint["prior_rejections"]],
             ["DOC-COMPLETE"],
         )
+
+    def test_loader_carries_only_explicit_incomplete_semantics_recovery_intent(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for filename in (
+                "material_fact_claims.jsonl",
+                "fact_document_dispositions.jsonl",
+                "fact_extraction_provider_calls.jsonl",
+                "fact_extraction_rejections.jsonl",
+            ):
+                (root / filename).write_text("", encoding="utf-8")
+            audit = {
+                "extraction_semantics_version": (
+                    FACT_EXTRACTION_SEMANTICS_VERSION
+                ),
+                "semantics_migration_recovery_requested": True,
+                "semantics_migration_recovery_status": "INCOMPLETE",
+                "pending_semantics_migration_recovery_document_ids": [
+                    "DOC-DART"
+                ],
+                "pending_semantics_migration_recovery_expected_claim_count": 7,
+                "boundary_context_reextraction_document_ids": [
+                    "DOC-BROKER"
+                ],
+                "boundary_context_invalidated_prior_claim_count": 99,
+                "boundary_context_reextraction_completed_document_count": 0,
+                "boundary_context_reextraction_selected_document_count": 1,
+            }
+            (root / "fact_extraction_result.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": TARGET,
+                        "as_of_date": AS_OF_DATE,
+                        "audit": audit,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            source_graph = SimpleNamespace(
+                target_id=TARGET,
+                as_of_date=AS_OF_DATE,
+                evidence_documents=(
+                    {
+                        "document_id": "DOC-DART",
+                        "source_family": "OPENDART",
+                    },
+                    {
+                        "document_id": "DOC-BROKER",
+                        "source_family": "PUBLIC_BROKER_PDF",
+                    },
+                ),
+            )
+
+            checkpoint = _load_fact_checkpoint(
+                root,
+                source_graph=source_graph,
+            )
+            self.assertEqual(
+                checkpoint["prior_semantics_recovery_document_ids"],
+                ("DOC-DART",),
+            )
+            self.assertEqual(
+                checkpoint[
+                    "prior_semantics_recovery_invalidated_claim_count"
+                ],
+                7,
+            )
+
+            audit["semantics_migration_recovery_status"] = "COMPLETE"
+            (root / "fact_extraction_result.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": TARGET,
+                        "as_of_date": AS_OF_DATE,
+                        "audit": audit,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            completed = _load_fact_checkpoint(
+                root,
+                source_graph=source_graph,
+            )
+            self.assertEqual(
+                completed["prior_semantics_recovery_document_ids"],
+                (),
+            )
 
     def test_source_provenance_migration_rematerializes_claim_without_provider(
         self,
@@ -5607,6 +6126,45 @@ def _document(
         "snippet_used_as_document": False,
         "evidence_eligible": True,
     }
+
+
+def _v4_migration_material(
+    *,
+    document: Mapping[str, Any],
+    objective: Mapping[str, Any],
+) -> tuple[Mapping[str, Any], int]:
+    capture = ObjectiveLocalFactProvider()
+    baseline = ResearcherEvidenceFactExtractor(provider=capture).extract(
+        target_id=TARGET,
+        target_name=TARGET_NAME,
+        target_aliases=(),
+        archetype_id=ARCHETYPE,
+        as_of_date=AS_OF_DATE,
+        documents=(document,),
+        open_objectives=(objective,),
+        extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+    )
+    current_payload = dict(capture.calls[0]["payload"])
+    historical_payload = {
+        **current_payload,
+        "fact_extraction_semantics_version": (
+            "e2r_v5_source_boundary_context_v4"
+        ),
+    }
+    response = ObjectiveLocalFactProvider().complete(
+        pass_name="EVIDENCE_FACT_EXTRACTION",
+        payload=historical_payload,
+    )
+    return (
+        {
+            "request_id": "COLLABREQ-" + "1" * 64,
+            "response_id": "COLLABRESP-" + "2" * 64,
+            "request_payload": historical_payload,
+            "response_payload": response,
+            "provenance": {"agent_model": "codex-collaboration"},
+        },
+        len(baseline.material_claims),
+    )
 
 
 def _recursive_keys(value: Any) -> set[str]:
