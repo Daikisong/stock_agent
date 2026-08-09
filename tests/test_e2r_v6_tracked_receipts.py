@@ -864,6 +864,25 @@ class E2RV6TrackedReceiptTests(unittest.TestCase):
         self.assertIn("set -o pipefail", readme)
         self.assertIn("python3 -I -S - --repo-root .", readme)
 
+    def test_clean_head_worker_can_import_installed_runtime_dependencies(self) -> None:
+        import importlib.util
+
+        script = self.ROOT / "scripts/verify_e2r_v6_tracked_readiness.py"
+        spec = importlib.util.spec_from_file_location("readiness_bootstrap", script)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        head = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=self.ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            check=True,
+        ).stdout.strip()
+        result = module._run_clean_head_verifier(self.ROOT, head)
+        self.assertIn(result["status"], {TRACKED_READINESS_PASS, TRACKED_READINESS_FAIL})
+
     def test_untracked_temporary_receipts_cannot_claim_tracked_readiness(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / "receipts"
