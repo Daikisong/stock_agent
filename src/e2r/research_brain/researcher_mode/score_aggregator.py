@@ -24,6 +24,7 @@ from e2r.research_brain.intelligence_schema import stable_intelligence_id
 
 from .component_judge import JUDGE_PASS_BY_ROLE
 from .component_scoring_memos import ComponentScoringMemoRun
+from .score_aggregator_contract import AGGREGATOR_CONFIG
 from .schemas import (
     AnchorConfidence,
     CANONICAL_COMPONENT_ORDER,
@@ -37,22 +38,6 @@ from .schemas import (
     FinalComponentDecision,
 )
 
-
-AGGREGATOR_CONFIG: Mapping[str, Any] = {
-    "version": "e2r_v5_component_consensus_v2",
-    "required_roles": [value.value for value in ComponentJudgeRole],
-    "invalid_proposal_policy": "REMOVE_AND_RECORD",
-    "consensus_method": "MEDIAN_WITH_ALLOWED_RANGE_INTERSECTION",
-    "counter_application": "SKEPTIC_CANNOT_CREATE_SUPPORT",
-    "material_disagreement_fraction": 0.20,
-    "material_disagreement_absolute_floor": 2.0,
-    "minimum_finalization_confidence": 0.40,
-    "source_confidence_affects_points": False,
-    "independent_corroboration_affects_points": False,
-    "tiny_impact_cap_multiplication": False,
-    "material_disagreement_policy": "RESEARCH_REQUIRED",
-    "stage_authority": False,
-}
 
 SCORE_AGGREGATION_OUTPUT_FILES: Mapping[str, str] = {
     "component_results": "deterministic_component_aggregation_results.jsonl",

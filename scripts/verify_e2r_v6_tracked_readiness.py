@@ -19,9 +19,7 @@ import argparse
 import json
 import os
 from pathlib import Path
-import pwd
 import secrets
-import site
 import subprocess
 import sys
 import tempfile
@@ -35,6 +33,40 @@ TRUSTED_ORIGIN_IDENTITY = "github.com/Daikisong/stock_agent"
 TRUSTED_BASELINE_COMMIT_SHA = "575228b95a070beda8145c1623efcce26ddaa0e9"
 PASS_STATUS = "E2R_V6_TRACKED_READINESS_PASS"
 FAIL_STATUS = "E2R_V6_TRACKED_READINESS_FAIL"
+CLEAN_HEAD_WORKER_SOURCE = """
+import json
+from pathlib import Path
+import sys
+import types
+
+source_root = Path(sys.argv[1])
+for package_name, relative_path in (
+    ("e2r", "e2r"),
+    ("e2r.calibration", "e2r/calibration"),
+    ("e2r.production", "e2r/production"),
+    ("e2r.research_brain", "e2r/research_brain"),
+    ("e2r.research_brain.planning", "e2r/research_brain/planning"),
+    ("e2r.research_brain.scoring", "e2r/research_brain/scoring"),
+    (
+        "e2r.research_brain.researcher_mode",
+        "e2r/research_brain/researcher_mode",
+    ),
+):
+    package = types.ModuleType(package_name)
+    package.__package__ = package_name
+    package.__path__ = [str(source_root / relative_path)]
+    sys.modules[package_name] = package
+
+from e2r.research_brain.researcher_mode.tracked_readiness import (
+    compile_tracked_readiness,
+)
+
+result = compile_tracked_readiness(sys.argv[2], repo_root=sys.argv[3])
+print(json.dumps(result, ensure_ascii=False, sort_keys=True, allow_nan=False))
+raise SystemExit(
+    0 if result.get("status") == "E2R_V6_TRACKED_READINESS_PASS" else 2
+)
+"""
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -198,30 +230,7 @@ def _output_overlaps_receipts(output: Path, receipt_root: Path) -> bool:
 
 
 def _run_clean_head_verifier(repo: Path, head: str) -> dict[str, object]:
-    dependency_paths: list[str] = []
-    candidates = [Path(value) for value in site.getsitepackages()]
-    candidates.append(
-        Path(pwd.getpwuid(os.getuid()).pw_dir)
-        / ".local"
-        / "lib"
-        / f"python{sys.version_info.major}.{sys.version_info.minor}"
-        / "site-packages"
-    )
-    for candidate in candidates:
-        if candidate.is_dir() and str(candidate) not in dependency_paths:
-            dependency_paths.append(str(candidate))
-    worker_source = (
-        "import json,sys;"
-        "sys.path.insert(0,sys.argv[1]);"
-        "[sys.path.append(p) for p in json.loads(sys.argv[4]) "
-        "if isinstance(p,str) and p.startswith('/')];"
-        "from e2r.research_brain.researcher_mode.tracked_readiness "
-        "import compile_tracked_readiness;"
-        "r=compile_tracked_readiness(sys.argv[2],repo_root=sys.argv[3]);"
-        "print(json.dumps(r,ensure_ascii=False,sort_keys=True,allow_nan=False));"
-        "raise SystemExit(0 if r.get('status')=="
-        "'E2R_V6_TRACKED_READINESS_PASS' else 2)"
-    )
+    worker_source = CLEAN_HEAD_WORKER_SOURCE
     with tempfile.TemporaryDirectory(prefix="e2r-v6-readiness-") as directory:
         worktree = Path(directory) / "head"
         subprocess.run(
@@ -242,7 +251,6 @@ def _run_clean_head_verifier(repo: Path, head: str) -> dict[str, object]:
                     str(worktree / "src"),
                     str(worktree / RECEIPT_RELATIVE_ROOT),
                     str(worktree),
-                    json.dumps(dependency_paths, separators=(",", ":")),
                 ],
                 cwd=worktree,
                 text=True,

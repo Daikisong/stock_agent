@@ -31,6 +31,12 @@ from e2r.research_brain.researcher_mode.collaboration_provider_bridge import (
     _request_id,
     _request_identity,
     _validate_agent_provenance,
+    _validate_request as _bridge_validate_request,
+    _validate_response_envelope as _bridge_validate_response,
+)
+from e2r.research_brain.researcher_mode.collaboration_envelope_contract import (
+    validate_collaboration_request as _pure_validate_request,
+    validate_collaboration_response_envelope as _pure_validate_response,
 )
 from e2r.research_brain.researcher_mode.schemas import CANONICAL_COMPONENT_ORDER
 from e2r.research_brain.researcher_mode.tracked_receipts import (
@@ -49,6 +55,7 @@ from e2r.research_brain.researcher_mode.tracked_receipts import (
     _fact_scope_attestation_payload,
     _fact_scope_attestation_hash,
     _provider_accounting,
+    _tracked_historical_anchors,
     receipt_content_index,
     receipt_content_tree_hash,
     runtime_config_hash,
@@ -864,7 +871,7 @@ class E2RV6TrackedReceiptTests(unittest.TestCase):
         self.assertIn("set -o pipefail", readme)
         self.assertIn("python3 -I -S - --repo-root .", readme)
 
-    def test_clean_head_worker_can_import_installed_runtime_dependencies(self) -> None:
+    def test_clean_head_worker_uses_no_untracked_runtime_packages(self) -> None:
         import importlib.util
 
         script = self.ROOT / "scripts/verify_e2r_v6_tracked_readiness.py"
@@ -873,15 +880,193 @@ class E2RV6TrackedReceiptTests(unittest.TestCase):
         self.assertIsNotNone(spec.loader)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        head = subprocess.run(
-            ["git", "rev-parse", "HEAD"],
-            cwd=self.ROOT,
-            text=True,
-            stdout=subprocess.PIPE,
-            check=True,
-        ).stdout.strip()
-        result = module._run_clean_head_verifier(self.ROOT, head)
-        self.assertIn(result["status"], {TRACKED_READINESS_PASS, TRACKED_READINESS_FAIL})
+        with tempfile.TemporaryDirectory() as directory:
+            fake_site = Path(directory)
+            marker = fake_site / "external-package-ran"
+            for package_name in ("requests", "pypdf"):
+                package = fake_site / package_name
+                package.mkdir()
+                (package / "__init__.py").write_text(
+                    "from pathlib import Path\n"
+                    f"Path({str(marker)!r}).write_text('ran')\n",
+                    encoding="utf-8",
+                )
+            environment = dict(os.environ)
+            environment["PYTHONPATH"] = str(fake_site)
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    "-I",
+                    "-S",
+                    "-c",
+                    module.CLEAN_HEAD_WORKER_SOURCE,
+                    str(self.ROOT / "src"),
+                    str(
+                        self.ROOT
+                        / "docs/operational/e2r_v6_operational_cutover/"
+                        "canary_receipts/2026-07-12"
+                    ),
+                    str(self.ROOT),
+                ],
+                cwd=self.ROOT,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                env=environment,
+                check=False,
+            )
+            self.assertEqual(completed.returncode, 2, completed.stderr)
+            self.assertFalse(marker.exists())
+
+    def test_offline_anchor_projection_matches_runtime_projection_exactly(self) -> None:
+        archetype_id = "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
+        runtime = _historical_anchors(
+            repo_root=self.ROOT,
+            archetype_id=archetype_id,
+            allow_output_fallback=False,
+        )
+        offline = _tracked_historical_anchors(
+            repo_root=self.ROOT,
+            archetype_id=archetype_id,
+        )
+        self.assertEqual(offline, runtime)
+
+    def test_pure_envelope_contract_matches_operational_bridge(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            target = self._fixture(Path(directory))
+            calls = [
+                json.loads(line)
+                for line in (target / "provider_calls.jsonl")
+                .read_text(encoding="utf-8")
+                .splitlines()
+                if line.strip()
+            ]
+            call = next(row for row in calls if row["call_scope"] == "FACT_EXTRACTION")
+            request = _decode_journal_envelope(call["request_envelope_zlib_b64"])
+            response = _decode_journal_envelope(call["response_envelope_zlib_b64"])
+            self.assertEqual(
+                _pure_validate_request(request),
+                _bridge_validate_request(request),
+            )
+            self.assertEqual(
+                _pure_validate_response(request=request, envelope=response),
+                _bridge_validate_response(request=request, envelope=response),
+            )
+
+    def test_pure_envelope_contract_rejects_invalid_draft_schema_like_bridge(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            target = self._fixture(Path(directory))
+            calls = [
+                json.loads(line)
+                for line in (target / "provider_calls.jsonl")
+                .read_text(encoding="utf-8")
+                .splitlines()
+                if line.strip()
+            ]
+            call = next(row for row in calls if row["call_scope"] == "FACT_EXTRACTION")
+            base_request = dict(
+                _decode_journal_envelope(call["request_envelope_zlib_b64"])
+            )
+            base_response = dict(
+                _decode_journal_envelope(call["response_envelope_zlib_b64"])
+            )
+            for keyword, invalid_value in (
+                ("additionalProperties", "false"),
+                ("additionalProperties", None),
+                ("type", None),
+                ("properties", None),
+                ("required", None),
+                ("anyOf", None),
+                ("enum", None),
+                ("minItems", None),
+            ):
+                with self.subTest(keyword=keyword, invalid_value=invalid_value):
+                    request = deepcopy(base_request)
+                    response = deepcopy(base_response)
+                    schema = deepcopy(request["output_schema"])
+                    schema[keyword] = invalid_value
+                    request["output_schema"] = schema
+                    request["output_schema_hash"] = _canonical_hash(schema)
+                    identity = _request_identity(
+                        pass_name=request["pass_name"],
+                        prompt_hash=request["prompt_hash"],
+                        output_schema_hash=request["output_schema_hash"],
+                        provider_identity_hash=request["provider_identity_hash"],
+                    )
+                    request["request_identity"] = identity
+                    request["request_id"] = _request_id(identity)
+                    response["request_id"] = request["request_id"]
+                    response["output_schema_hash"] = request["output_schema_hash"]
+                    response["response_id"] = "COLLABRESP-" + _canonical_hash(
+                        {
+                            "request_id": request["request_id"],
+                            "payload_hash": response["payload_hash"],
+                            "provenance": response["provenance"],
+                        }
+                    )
+                    with self.assertRaises(ValueError):
+                        _pure_validate_request(request)
+                    self.assertEqual(_bridge_validate_request(request), request)
+                    with self.assertRaises(ValueError):
+                        _pure_validate_response(request=request, envelope=response)
+                    with self.assertRaises(ValueError):
+                        _bridge_validate_response(request=request, envelope=response)
+
+    def test_pure_envelope_enum_keeps_boolean_distinct_from_number(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            target = self._fixture(Path(directory))
+            calls = [
+                json.loads(line)
+                for line in (target / "provider_calls.jsonl")
+                .read_text(encoding="utf-8")
+                .splitlines()
+                if line.strip()
+            ]
+            call = next(row for row in calls if row["call_scope"] == "FACT_EXTRACTION")
+            request = dict(
+                _decode_journal_envelope(call["request_envelope_zlib_b64"])
+            )
+            response = dict(
+                _decode_journal_envelope(call["response_envelope_zlib_b64"])
+            )
+            schema = deepcopy(request["output_schema"])
+            schema["properties"]["facts"]["items"] = {
+                "type": "object",
+                "required": ["material"],
+                "properties": {
+                    "material": {"type": "boolean", "enum": [1]},
+                },
+                "additionalProperties": True,
+            }
+            response["payload"] = deepcopy(response["payload"])
+            for fact in response["payload"]["facts"]:
+                fact["material"] = True
+            response["payload_hash"] = _canonical_hash(response["payload"])
+            request["output_schema"] = schema
+            request["output_schema_hash"] = _canonical_hash(schema)
+            identity = _request_identity(
+                pass_name=request["pass_name"],
+                prompt_hash=request["prompt_hash"],
+                output_schema_hash=request["output_schema_hash"],
+                provider_identity_hash=request["provider_identity_hash"],
+            )
+            request["request_identity"] = identity
+            request["request_id"] = _request_id(identity)
+            response["request_id"] = request["request_id"]
+            response["output_schema_hash"] = request["output_schema_hash"]
+            response["response_id"] = "COLLABRESP-" + _canonical_hash(
+                {
+                    "request_id": request["request_id"],
+                    "payload_hash": response["payload_hash"],
+                    "provenance": response["provenance"],
+                }
+            )
+            self.assertEqual(_pure_validate_request(request), request)
+            self.assertEqual(_bridge_validate_request(request), request)
+            with self.assertRaises(ValueError):
+                _pure_validate_response(request=request, envelope=response)
+            with self.assertRaises(ValueError):
+                _bridge_validate_response(request=request, envelope=response)
 
     def test_untracked_temporary_receipts_cannot_claim_tracked_readiness(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

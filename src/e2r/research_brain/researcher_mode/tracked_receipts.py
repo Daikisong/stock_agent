@@ -42,15 +42,14 @@ from e2r.research_brain.scoring.business_mechanism_scope import (
 from e2r.staging import StageClassificationInput, StageClassifier
 
 from .canary_leaf_contract import canary_output_tree_hash
-from .collaboration_provider_bridge import (
+from .collaboration_envelope_contract import (
     COLLABORATION_PROVIDER_NAME,
-    _validate_request,
-    _validate_response_envelope,
+    validate_collaboration_request as _validate_request,
+    validate_collaboration_response_envelope as _validate_response_envelope,
 )
-from .current_researcher_mode import _historical_anchors
 from .evidence_fact_compiler import _canonical_value, _normalize_text
 from .schemas import CANONICAL_COMPONENT_ORDER, scrub_blind_research_payload
-from .score_aggregator import AGGREGATOR_CONFIG
+from .score_aggregator_contract import AGGREGATOR_CONFIG
 
 
 RECEIPT_MANIFEST_SCHEMA = "e2r_v6_tracked_receipt_manifest_v1"
@@ -1445,10 +1444,9 @@ def _anchor_receipts(
         for anchor_id in component.get("historical_anchor_ids") or ()
     )
     anchors = _index(
-        _historical_anchors(
+        _tracked_historical_anchors(
             repo_root=repo_root,
             archetype_id=archetype_id,
-            allow_output_fallback=False,
         ),
         "anchor_id",
     )
@@ -1469,6 +1467,157 @@ def _anchor_receipts(
             }
         )
     return tuple(receipts)
+
+
+def _tracked_historical_anchors(
+    *,
+    repo_root: str | Path,
+    archetype_id: str,
+) -> tuple[Mapping[str, Any], ...]:
+    """Load current anchors from the tracked atlas without output fallbacks."""
+
+    path = Path(repo_root) / "docs/operational/e2r_v5_component_anchor_atlas.json"
+    if not path.is_file():
+        raise ValueError("tracked historical anchor atlas is required")
+    payload = _read_json(path)
+    all_anchors = tuple(payload.get("component_anchors") or ())
+    anchors = [
+        row
+        for row in all_anchors
+        if str(row.get("archetype_id") or "") == archetype_id
+        and not row.get("company_name_conditioned")
+        and not row.get("target_symbol_conditioned")
+    ]
+    covered = {str(row.get("component_id") or "") for row in anchors}
+    missing = set(CANONICAL_COMPONENT_ORDER) - covered
+    component_maxima = _tracked_component_maxima(
+        repo_root=repo_root,
+        archetype_id=archetype_id,
+    )
+    for component_id in CANONICAL_COMPONENT_ORDER:
+        if component_id not in missing:
+            continue
+        candidates = tuple(
+            row
+            for row in all_anchors
+            if str(row.get("component_id") or "") == component_id
+            and row.get("usable_as_ordinal_anchor") is True
+            and not row.get("company_name_conditioned")
+            and not row.get("target_symbol_conditioned")
+            and float(row.get("max_points") or 0) > 0
+        )
+        representatives: list[Mapping[str, Any]] = []
+        for role in ("POSITIVE", "COUNTER"):
+            role_rows = sorted(
+                (row for row in candidates if row.get("role") == role),
+                key=lambda row: (
+                    float(row["points_mid"]) / float(row["max_points"]),
+                    str(row["anchor_id"]),
+                ),
+            )
+            if not role_rows:
+                continue
+            for index in dict.fromkeys((0, len(role_rows) // 2, len(role_rows) - 1)):
+                representatives.append(role_rows[index])
+        target_maximum = float(component_maxima[component_id])
+        anchors.extend(
+            _tracked_normalized_ordinal_anchor(
+                row,
+                archetype_id=archetype_id,
+                target_maximum=target_maximum,
+            )
+            for row in representatives
+        )
+    final_covered = {str(row.get("component_id") or "") for row in anchors}
+    if final_covered != set(CANONICAL_COMPONENT_ORDER):
+        raise ValueError("tracked anchor atlas lacks seven-component ordinal coverage")
+    return tuple(anchors)
+
+
+def _tracked_component_maxima(
+    *,
+    repo_root: str | Path,
+    archetype_id: str,
+) -> Mapping[str, float]:
+    path = Path(repo_root) / "configs/e2r_archetype_weight_profile_v2_2.json"
+    payload = _read_json(path)
+    if payload.get("enabled") is not True:
+        raise ValueError("tracked archetype weight profile is disabled")
+    profiles = payload.get("archetype_weights")
+    if not isinstance(profiles, Mapping):
+        raise ValueError("tracked archetype weight profile roster is invalid")
+    profile = profiles.get(archetype_id)
+    if not isinstance(profile, Mapping):
+        raise ValueError("tracked archetype scoring contract is missing")
+    weights = profile.get("weights")
+    if not isinstance(weights, Mapping) or set(weights) != set(CANONICAL_COMPONENT_ORDER):
+        raise ValueError("tracked component maxima lack seven-component coverage")
+    maxima = {
+        str(component_id): float(value)
+        for component_id, value in weights.items()
+        if isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(float(value))
+        and float(value) > 0
+    }
+    if (
+        set(maxima) != set(CANONICAL_COMPONENT_ORDER)
+        or abs(sum(maxima.values()) - 100.0) > 1e-9
+    ):
+        raise ValueError("tracked component maxima are invalid")
+    return maxima
+
+
+def _tracked_normalized_ordinal_anchor(
+    row: Mapping[str, Any],
+    *,
+    archetype_id: str,
+    target_maximum: float,
+) -> Mapping[str, Any]:
+    source_maximum = float(row["max_points"])
+    scale = target_maximum / source_maximum
+    source_anchor_id = str(row["anchor_id"])
+    return {
+        "schema_version": "e2r_component_anchor_v1",
+        "anchor_id": "ORDTRANSFER-"
+        + stable_hash(
+            {
+                "source_anchor_id": source_anchor_id,
+                "target_archetype_id": archetype_id,
+                "target_maximum": target_maximum,
+            }
+        )[:24],
+        "archetype_id": archetype_id,
+        "component_id": str(row["component_id"]),
+        "economic_fact_patterns": list(row.get("economic_fact_patterns") or ()),
+        "role": str(row["role"]),
+        "score_band": str(row["score_band"]),
+        "points_lower": round(float(row["points_lower"]) * scale, 6),
+        "points_mid": round(float(row["points_mid"]) * scale, 6),
+        "points_upper": round(float(row["points_upper"]) * scale, 6),
+        "max_points": target_maximum,
+        "source_backed_case_ids": [],
+        "source_proxy_guard_case_ids": list(
+            dict.fromkeys(
+                (
+                    *(row.get("source_backed_case_ids") or ()),
+                    *(row.get("source_proxy_guard_case_ids") or ()),
+                    source_anchor_id,
+                )
+            )
+        ),
+        "source_score_anchor_ids": list(
+            dict.fromkeys(row.get("source_score_anchor_ids") or ())
+        ),
+        "confidence": "LOW",
+        "usable_as_exact_anchor": False,
+        "usable_as_ordinal_anchor": True,
+        "company_name_conditioned": False,
+        "target_symbol_conditioned": False,
+        "ordinal_transfer_only": True,
+        "source_archetype_id": str(row.get("archetype_id") or ""),
+        "source_anchor_id": source_anchor_id,
+    }
 
 
 def _stage_receipt(
@@ -2479,10 +2628,9 @@ def verify_target_receipt(target_root: str | Path) -> Mapping[str, Any]:
     manifest_archetype_id = str(manifest.get("archetype_id") or "")
     try:
         current_anchor_by_id = _index(
-            _historical_anchors(
+            _tracked_historical_anchors(
                 repo_root=repo_root,
                 archetype_id=manifest_archetype_id,
-                allow_output_fallback=False,
             ),
             "anchor_id",
         )
