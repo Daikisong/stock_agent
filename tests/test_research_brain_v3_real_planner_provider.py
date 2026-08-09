@@ -1,3 +1,4 @@
+import inspect
 import unittest
 
 from e2r.research_brain.v2_schemas import CandidateEventV2
@@ -12,30 +13,10 @@ from research_brain_v2_test_helpers import load_v2_cards
 
 
 class ResearchBrainV3RealPlannerProviderTests(unittest.TestCase):
-    def test_openai_planner_rejects_every_local_endpoint_form(self):
-        for endpoint in (
-            "http://127.0.0.1:11434/v1/chat/completions",
-            "https://localhost/v1/chat/completions",
-            "https://localhost./v1/chat/completions",
-            "https://[::1]/v1/chat/completions",
-            "https://127.1/v1/chat/completions",
-            "https://2130706433/v1/chat/completions",
-            "https://0x7f000001/v1/chat/completions",
-            "https://127.0.0.1.nip.io/v1/chat/completions",
-            "https://192.168.1.10/v1/chat/completions",
-            "https://model.internal.local/v1/chat/completions",
-            "https://api.openai.com.evil.test/v1/chat/completions",
-            "https://api.openai.com/v1/chat/completions?redirect=localhost",
-        ):
-            with self.subTest(endpoint=endpoint), self.assertRaisesRegex(
-                ValueError,
-                "official OpenAI HTTPS endpoint",
-            ):
-                OpenAIPlannerProvider(endpoint=endpoint)
-
-        provider = OpenAIPlannerProvider(
-            endpoint="https://api.openai.com/v1/chat/completions"
-        )
+    def test_openai_planner_has_no_endpoint_override(self):
+        parameters = inspect.signature(OpenAIPlannerProvider).parameters
+        self.assertNotIn("endpoint", parameters)
+        provider = OpenAIPlannerProvider()
         self.assertEqual(
             provider.endpoint,
             "https://api.openai.com/v1/chat/completions",

@@ -88,6 +88,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--research-provider",
+        # Keep the production surface Codex-only.  Do not add a local-model
+        # provider, endpoint, CLI option, or fallback here: old local lineage
+        # is rejected by audits and must be regenerated through Codex.
         choices=(
             "codex",
             "codex-subagent",

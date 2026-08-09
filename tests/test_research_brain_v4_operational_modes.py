@@ -1505,6 +1505,23 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertFalse(runs[0].real_provider_success)
         self.assertTrue(runs[1].real_provider_success)
 
+    def test_codex_planner_rejects_non_codex_subprocess_configuration(self):
+        for kwargs in (
+            {"codex_command": "local-provider"},
+            {"profile": "local-profile"},
+            {"extra_args": ("--config", "model_provider=local")},
+        ):
+            with self.subTest(kwargs=kwargs), self.assertRaises(TypeError):
+                CodexCLIPlannerProviderV4(**kwargs)
+
+        provider = CodexCLIPlannerProviderV4()
+        command = provider._command(
+            schema_path=Path("/tmp/schema.json"),
+            output_path=Path("/tmp/output.json"),
+        )
+        self.assertIn("--ignore-user-config", command)
+        self.assertIn("--ignore-rules", command)
+
     def test_runtime_planner_leaf_flush_survives_source_execution_exception(self):
         event = _planner_event_with_id("CE-UNIT-FLUSH", symbol="005930", company_name="삼성전자")
         provider = _RetryPlannerProvider(

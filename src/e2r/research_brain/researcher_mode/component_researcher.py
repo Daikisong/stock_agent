@@ -1577,7 +1577,6 @@ class CodexResearcherProvider:
             CodexStructuredProviderTransport(
                 working_directory=working_directory or Path.cwd(),
                 timeout_seconds=timeout_seconds,
-                extra_args=("--ignore-user-config", "--ignore-rules"),
             )
         )
 
@@ -2368,10 +2367,7 @@ class CodexResearcherProvider:
             return dict(identity())
         return {
             "transport_class": self.transport.__class__.__qualname__,
-            "codex_command": getattr(self.transport, "codex_command", None),
-            "model": getattr(self.transport, "model", None),
-            "profile": getattr(self.transport, "profile", None),
-            "extra_args": list(getattr(self.transport, "extra_args", ()) or ()),
+            "provider_contract": "CODEX_CLI_FIXED",
         }
 
     def _cache_path(self, *, pass_name: str, cache_key: str) -> Path | None:

@@ -6,7 +6,6 @@ import hashlib
 import json
 import os
 import re
-import shlex
 import signal
 import subprocess
 import tempfile
@@ -18,6 +17,8 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 import requests
+
+from e2r.codex_cli_contract import CODEX_EXECUTABLE, codex_isolation_args, codex_subprocess_env
 
 from e2r.production.claim_extraction import ContractBlindRawAssertionExtractor, ExtractionInput
 from e2r.production.cutover_shadow import (
@@ -470,22 +471,19 @@ def _llm_batch_extract_samples(
         ],
     }
     command = [
-        os.environ.get("E2R_CODEX_EXTRACTOR_COMMAND") or "codex",
+        CODEX_EXECUTABLE,
         "--sandbox",
-        os.environ.get("E2R_CODEX_EXTRACTOR_SANDBOX") or "read-only",
+        "read-only",
         "--ask-for-approval",
-        os.environ.get("E2R_CODEX_EXTRACTOR_APPROVAL_POLICY") or "never",
+        "never",
         "exec",
         "--ephemeral",
         "-C",
         str(repo_root),
         "--color",
         "never",
+        *codex_isolation_args(),
     ]
-    requested_model = os.environ.get("E2R_CODEX_EXTRACTOR_MODEL") or ""
-    if requested_model:
-        command.extend(("-m", requested_model))
-    command.extend(shlex.split(os.environ.get("E2R_CODEX_EXTRACTOR_EXTRA_ARGS") or ""))
     prompt = "\n\n".join(
         [
             "You are a contract-blind raw assertion extractor.",
@@ -1216,6 +1214,7 @@ def _run_subprocess(command: Sequence[str], *, prompt: str, timeout: float) -> s
         stderr=subprocess.PIPE,
         text=True,
         start_new_session=(os.name == "posix"),
+        env=codex_subprocess_env(),
     )
     try:
         stdout, stderr = process.communicate(prompt, timeout=timeout)

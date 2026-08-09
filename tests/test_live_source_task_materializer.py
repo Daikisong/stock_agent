@@ -1,10 +1,17 @@
 from __future__ import annotations
 
 import json
+import tempfile
 import unittest
+from copy import deepcopy
 from dataclasses import replace
 from pathlib import Path
+from unittest.mock import patch
 
+from e2r.production.metadata import stable_hash
+from e2r.production.v6_canary_selection import (
+    seal_cross_archetype_canary_selection,
+)
 from e2r.research_brain.intelligence_schema import AcceptedClaimPredicate, EvidenceRecipe
 from e2r.research_brain.planning import FixtureQuestionQueryProvider
 from e2r.research_brain.runtime.live_materialization import (
@@ -130,16 +137,233 @@ class LiveSourceTaskMaterializerTest(unittest.TestCase):
         self.assertEqual(result.status, "CURRENT_SOURCE_TASK_PASS")
         self.assertIn("NRR", result.source_tasks[0].literal_queries[0])
 
+    def test_selection_receipt_filters_unselected_planner_runs(self) -> None:
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        seal_root = Path(temporary.name)
+        archetypes = (
+            "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+            "C15_MATERIAL_SPREAD_SUPERCYCLE",
+            "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+            "C24_BIO_TRIAL_DATA_EVENT_RISK",
+            "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        )
+        selected_runs = []
+        for index, archetype in enumerate(archetypes):
+            run = deepcopy(_planner_run())
+            run["planner_run_id"] = f"LIVEPLAN-SELECTED-{index}"
+            run["target_id"] = f"{index + 1:06d}"
+            run["target_name"] = "테스트회사" if index == 0 else f"테스트회사{index + 1}"
+            run["candidate_event_id"] = f"CAND-{index}"
+            run["trigger_signal_ids"] = [f"TRIG-SELECTED-{index}"]
+            run["blind_input_id"] = f"BLIND-{index}"
+            run["plan"]["critique_output"]["top_k_archetypes"][0][
+                "archetype_id"
+            ] = archetype
+            run["plan"]["critique_output"]["supporting_current_fact_ids"] = [
+                f"FACT-{index}"
+            ]
+            run["plan"]["critique_output"]["source_task_drafts"][0]["draft_id"] = (
+                f"DRAFT-SELECTED-{index}"
+            )
+            selected_runs.append(run)
+        selected = selected_runs[0]
+        unselected = deepcopy(_planner_run())
+        unselected["planner_run_id"] = "LIVEPLAN-UNSELECTED"
+        unselected["target_id"] = "999999"
+        unselected["target_name"] = "미선택회사"
+        unselected["candidate_event_id"] = "CAND-UNSELECTED"
+        unselected["blind_input_id"] = "BLIND-UNSELECTED"
+        unselected["plan"]["critique_output"]["source_task_drafts"][0]["draft_id"] = (
+            "DRAFT-UNSELECTED"
+        )
+        provider = FixtureQuestionQueryProvider(
+            callback=lambda payload: {
+                "input_id": payload["input_id"],
+                "literal_queries": [
+                    "테스트회사 2026년 1분기 공식 IR 계약 갱신 기간 현금흐름"
+                ],
+                "generation_rationale": "선택된 대상만 확인한다.",
+                "ambiguity_reasons": [],
+                "abstain": False,
+                "abstention_reason": "",
+            }
+        )
+        receipts = [
+            _selection_receipt(run, archetype, index=index)
+            for index, (run, archetype) in enumerate(zip(selected_runs, archetypes))
+        ]
+        selected_signals = []
+        for index, run in enumerate(selected_runs):
+            signal = deepcopy(_trigger_signal())
+            signal["trigger_signal_id"] = run["trigger_signal_ids"][0]
+            signal["target_id"] = run["target_id"]
+            signal["target_name"] = run["target_name"]
+            selected_signals.append(signal)
+        selection_manifest = {
+            "schema_version": "e2r_v6_pre_deep_canary_selection_v1",
+            "status": "E2R_V6_CROSS_ARCHETYPE_CANARY_SELECTION_PASS",
+            "selection_as_of_date": "2026-07-10",
+            "critical_count_sum": 0,
+            "critical_counts": {
+                "required_archetype_missing_count": 0,
+                "invalid_candidate_lineage_count": 0,
+                "post_score_target_selection_count": 0,
+                "target_specific_code_branch_count": 0,
+                "forced_canary_mislabeled_natural_count": 0,
+                "duplicate_target_count": 0,
+            },
+            "failures": [],
+            "score_or_stage_authority": False,
+            "required_archetypes": list(archetypes),
+            "selection_count": 5,
+            "selections": receipts,
+            "selection_roster_hash": stable_hash(receipts),
+        }
+        result = CurrentQuestionSourceTaskMaterializer().materialize(
+            SourceTaskMaterializationConfig(
+                as_of_date="2026-07-10",
+                max_source_tasks_per_candidate=3,
+                test_mode=True,
+            ),
+            planner_runs=tuple(selected_runs) + (unselected,),
+            trigger_signals=tuple(selected_signals),
+            recipes=(_recipe(),),
+            provider=provider,
+            selection_manifest_path=_seal_manifest(
+                seal_root / "selection.json", selection_manifest
+            ),
+        )
+        self.assertGreater(len(result.source_tasks), 0)
+        self.assertNotIn("999999", {row.target_id for row in result.source_tasks})
+        self.assertEqual(result.source_tasks[0].target_id, "000001")
+        self.assertTrue(result.audit["selection_receipt_filter_applied"])
+        self.assertEqual(result.audit["unselected_planner_run_count"], 1)
+
+        tampered = deepcopy(selection_manifest)
+        tampered["selection_roster_hash"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "roster hash|exact accepted"):
+            CurrentQuestionSourceTaskMaterializer().materialize(
+                SourceTaskMaterializationConfig(
+                    as_of_date="2026-07-10",
+                    max_source_tasks_per_candidate=3,
+                    test_mode=True,
+                ),
+                planner_runs=tuple(selected_runs),
+                trigger_signals=(_trigger_signal(),),
+                recipes=(_recipe(),),
+                provider=provider,
+                selection_manifest_path=_seal_manifest(
+                    seal_root / "tampered.json", tampered
+                ),
+            )
+
+        extended = deepcopy(selection_manifest)
+        extended["gold_answer_key"] = "must never enter the source-task lane"
+        with self.assertRaisesRegex(ValueError, "accepted sealed roster|exact accepted"):
+            CurrentQuestionSourceTaskMaterializer().materialize(
+                SourceTaskMaterializationConfig(
+                    as_of_date="2026-07-10",
+                    max_source_tasks_per_candidate=3,
+                    test_mode=True,
+                ),
+                planner_runs=tuple(selected_runs),
+                trigger_signals=(_trigger_signal(),),
+                recipes=(_recipe(),),
+                provider=provider,
+                selection_manifest_path=_seal_manifest(
+                    seal_root / "extended.json", extended
+                ),
+            )
+
+        tampered_runs = deepcopy(selected_runs)
+        tampered_runs[0]["candidate_event_id"] = "CAND-FORGED"
+        with patch(
+            "e2r.production.v6_canary_selection.compile_cross_archetype_canary_selection",
+            return_value=selection_manifest,
+        ), self.assertRaisesRegex(ValueError, "planner run roster"):
+            CurrentQuestionSourceTaskMaterializer().materialize(
+                SourceTaskMaterializationConfig(
+                    as_of_date="2026-07-10",
+                    max_source_tasks_per_candidate=3,
+                    test_mode=False,
+                ),
+                planner_runs=tuple(tampered_runs),
+                trigger_signals=tuple(selected_signals),
+                recipes=(_recipe(),),
+                provider=provider,
+                selection_candidates=tuple(
+                    {"planner_run": run} for run in selected_runs
+                ),
+                selection_manifest_path=_seal_manifest(
+                    seal_root / "selection.json", selection_manifest
+                ),
+            )
+
+    def test_selection_filter_rejects_duplicate_planner_run_identity(self) -> None:
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        seal_root = Path(temporary.name)
+        run = _planner_run()
+        manifest = {
+            "schema_version": "e2r_v6_pre_deep_canary_selection_v1",
+            "status": "E2R_V6_CROSS_ARCHETYPE_CANARY_SELECTION_PASS",
+            "selection_as_of_date": "2026-07-10",
+            "critical_count_sum": 0,
+            "critical_counts": {
+                "required_archetype_missing_count": 0,
+                "invalid_candidate_lineage_count": 0,
+                "post_score_target_selection_count": 0,
+                "target_specific_code_branch_count": 0,
+                "forced_canary_mislabeled_natural_count": 0,
+                "duplicate_target_count": 0,
+            },
+            "failures": [],
+            "score_or_stage_authority": False,
+            "required_archetypes": [
+                "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+                "C15_MATERIAL_SPREAD_SUPERCYCLE",
+                "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+                "C24_BIO_TRIAL_DATA_EVENT_RISK",
+                "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+            ],
+            "selection_count": 5,
+            "selections": [],
+            "selection_roster_hash": stable_hash([]),
+        }
+        with self.assertRaisesRegex(ValueError, "five-target roster|unique"):
+            CurrentQuestionSourceTaskMaterializer().materialize(
+                SourceTaskMaterializationConfig(
+                    as_of_date="2026-07-10",
+                    max_source_tasks_per_candidate=3,
+                    test_mode=True,
+                ),
+                planner_runs=(run, deepcopy(run)),
+                trigger_signals=(_trigger_signal(),),
+                recipes=(_recipe(),),
+                provider=FixtureQuestionQueryProvider(callback=lambda payload: {}),
+                selection_manifest_path=_seal_manifest(
+                    seal_root / "selection.json", manifest
+                ),
+            )
+
 
 def _planner_run() -> dict:
     return {
+        "planner_run_id": "LIVEPLAN-SELECTED",
         "target_id": "000001",
         "target_name": "테스트회사",
         "as_of_date": "2026-07-10",
         "candidate_event_id": "CAND-TEST",
         "trigger_signal_ids": ["TRIG-TEST"],
+        "blind_input_id": "BLIND-TEST",
         "plan": {
             "critique_output": {
+                "top_k_archetypes": [
+                    {
+                        "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
+                    }
+                ],
                 "source_task_drafts": [
                     {
                         "draft_id": "DRAFT-TEST",
@@ -164,6 +388,80 @@ def _planner_run() -> dict:
             }
         },
     }
+
+
+def _selection_receipt(run: dict, archetype: str, *, index: int) -> dict:
+    critique = run["plan"]["critique_output"]
+    supporting = sorted(set(critique.get("supporting_current_fact_ids") or ()))
+    drafts = tuple(critique.get("source_task_drafts") or ())
+    recipes = sorted(
+        {str(row.get("recipe_id") or "") for row in drafts if row.get("recipe_id")}
+    )
+    source_families = sorted(
+        {
+            str(value)
+            for row in drafts
+            for field in ("preferred_source_families", "fallback_source_families")
+            for value in row.get(field) or ()
+        }
+    )
+    pre_deep_hash = stable_hash(
+        {
+            "target_id": run["target_id"],
+            "planner_run_id": run["planner_run_id"],
+            "archetype_id": archetype,
+        }
+    )
+    return {
+        "schema_version": "e2r_v6_pre_deep_selection_receipt_v1",
+        "selection_id": "SELREC-" + pre_deep_hash[:24],
+        "archetype_id": archetype,
+        "target_id": run["target_id"],
+        "company_name": run["target_name"],
+        "selection_mode": "FORCED_VALIDATION_CANARY",
+        "selection_as_of_date": "2026-07-10",
+        "pre_deep_input_hash": pre_deep_hash,
+        "krx_effective_date": "2026-07-10",
+        "krx_source_url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_isu_base_info",
+        "krx_source_hash": stable_hash({"krx": index}),
+        "krx_request_id": "KRXREQ-"
+        + stable_hash(
+            {
+                "market": "KOSPI",
+                "effective_date": "2026-07-10",
+                "endpoint": "stk_isu_base_info",
+            }
+        )[:24],
+        "candidate_event_hash": stable_hash({"candidate": index}),
+        "depth_decision_hash": stable_hash({"depth": index}),
+        "planner_run_id": run["planner_run_id"],
+        "blind_input_id": run["blind_input_id"],
+        "plan_hash": stable_hash(run["plan"]),
+        "issuer_profile_hash": stable_hash({"issuer": index}),
+        "business_profile_hash": stable_hash(
+            {
+                "target_id": run["target_id"],
+                "leading_archetype_id": archetype,
+                "direct_current_supporting_fact_ids": supporting,
+                "recipe_ids": recipes,
+                "available_source_families": source_families,
+            }
+        ),
+        "direct_current_supporting_fact_ids": supporting,
+        "recipe_ids": recipes,
+        "trigger_event_ids": [],
+        "available_source_families": source_families,
+        "selection_rationale": "forced current validation canary",
+        "final_score_visible_at_selection": False,
+        "final_stage_visible_at_selection": False,
+        "production_daily_candidate": False,
+        "score_or_stage_authority": False,
+    }
+
+
+def _seal_manifest(path: Path, payload: dict) -> Path:
+    seal_cross_archetype_canary_selection(path, payload)
+    return path
 
 
 def _trigger_signal() -> dict:

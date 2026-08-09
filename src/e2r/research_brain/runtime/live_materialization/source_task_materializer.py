@@ -4,9 +4,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -32,6 +33,76 @@ from e2r.research_brain.runtime.current_operation_runner import DailySourceTaskR
 
 
 LIVE_SOURCE_TASK_AUDIT_SCHEMA_VERSION = "e2r_live_source_task_audit_v1"
+SELECTION_SCHEMA = "e2r_v6_pre_deep_canary_selection_v1"
+SELECTION_RECEIPT_SCHEMA = "e2r_v6_pre_deep_selection_receipt_v1"
+SELECTION_PASS = "E2R_V6_CROSS_ARCHETYPE_CANARY_SELECTION_PASS"
+NATURAL_SELECTION = "NATURAL_TRIGGER_CANARY"
+REQUIRED_ARCHETYPES = (
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+    "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+    "C24_BIO_TRIAL_DATA_EVENT_RISK",
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+)
+_HEX64_RE = re.compile(r"^[0-9a-f]{64}$")
+_TARGET_RE = re.compile(r"^[0-9A-Z]{6}$")
+_SELECTION_MANIFEST_KEYS = frozenset(
+    {
+        "schema_version",
+        "status",
+        "selection_as_of_date",
+        "required_archetypes",
+        "selections",
+        "selection_count",
+        "critical_counts",
+        "critical_count_sum",
+        "failures",
+        "score_or_stage_authority",
+        "selection_roster_hash",
+    }
+)
+_SELECTION_CRITICAL_KEYS = frozenset(
+    {
+        "required_archetype_missing_count",
+        "invalid_candidate_lineage_count",
+        "post_score_target_selection_count",
+        "target_specific_code_branch_count",
+        "forced_canary_mislabeled_natural_count",
+        "duplicate_target_count",
+    }
+)
+_SELECTION_RECEIPT_KEYS = frozenset(
+    {
+        "schema_version",
+        "selection_id",
+        "archetype_id",
+        "target_id",
+        "company_name",
+        "selection_mode",
+        "selection_as_of_date",
+        "pre_deep_input_hash",
+        "krx_effective_date",
+        "krx_source_url",
+        "krx_source_hash",
+        "krx_request_id",
+        "candidate_event_hash",
+        "depth_decision_hash",
+        "planner_run_id",
+        "blind_input_id",
+        "plan_hash",
+        "issuer_profile_hash",
+        "business_profile_hash",
+        "direct_current_supporting_fact_ids",
+        "recipe_ids",
+        "trigger_event_ids",
+        "available_source_families",
+        "selection_rationale",
+        "final_score_visible_at_selection",
+        "final_stage_visible_at_selection",
+        "production_daily_candidate",
+        "score_or_stage_authority",
+    }
+)
 _OFFICIAL_SOURCE_CLASSES = frozenset(
     {
         "DART",
@@ -178,6 +249,8 @@ class CurrentQuestionSourceTaskMaterializer:
         trigger_signals: Sequence[Mapping[str, Any]],
         recipes: Sequence[EvidenceRecipe],
         provider: QuestionQueryProvider | None = None,
+        selection_manifest_path: str | Path | None = None,
+        selection_candidates: Sequence[Mapping[str, Any]] | None = None,
     ) -> SourceTaskMaterializationResult:
         recipe_by_id = _unique_by(recipes, key="recipe_id", context="recipes")
         signals_by_id = _unique_mapping_rows(
@@ -189,10 +262,69 @@ class CurrentQuestionSourceTaskMaterializer:
         if base_provider is None and not config.test_mode:
             base_provider = build_codex_question_query_provider()
 
+        selected_run_ids: set[str] | None = None
+        selection_receipts: tuple[Mapping[str, Any], ...] | None = None
+        if selection_manifest_path is not None:
+            # Imported lazily because the selector validates the live trigger
+            # and depth dataclasses from this package.
+            from e2r.production.v6_canary_selection import (
+                compile_cross_archetype_canary_selection,
+                load_sealed_cross_archetype_canary_selection,
+            )
+
+            selection_manifest = load_sealed_cross_archetype_canary_selection(
+                selection_manifest_path
+            )
+            if not config.test_mode:
+                if selection_candidates is None:
+                    raise ValueError(
+                        "production selection requires canonical upstream candidates"
+                    )
+                expected_manifest = compile_cross_archetype_canary_selection(
+                    selection_as_of_date=config.as_of_date,
+                    candidates=selection_candidates,
+                    trigger_events=trigger_signals,
+                )
+                if dict(selection_manifest) != dict(expected_manifest):
+                    raise ValueError(
+                        "sealed selection differs from canonical live upstream inputs"
+                    )
+                expected_runs = {
+                    str(row.get("planner_run_id") or ""): dict(row)
+                    for candidate in selection_candidates
+                    for row in (candidate.get("planner_run"),)
+                    if isinstance(row, Mapping)
+                }
+                supplied_runs = {
+                    str(row.get("planner_run_id") or ""): dict(row)
+                    for row in planner_runs
+                }
+                if (
+                    "" in expected_runs
+                    or "" in supplied_runs
+                    or len(expected_runs) != len(selection_candidates)
+                    or len(supplied_runs) != len(planner_runs)
+                    or supplied_runs != expected_runs
+                ):
+                    raise ValueError(
+                        "planner run roster differs from canonical selection candidates"
+                    )
+            selection_receipts = tuple(selection_manifest.get("selections") or ())
+            selected_run_ids = _validated_selected_planner_run_ids(
+                selection_manifest,
+                as_of_date=config.as_of_date,
+                planner_runs=planner_runs,
+                trigger_signals=trigger_signals,
+            )
+
         jobs: list[tuple[Mapping[str, Any], Mapping[str, Any]]] = []
         per_target: dict[str, int] = {}
         seen_drafts: set[str] = set()
         for run in planner_runs:
+            if selected_run_ids is not None and str(
+                run.get("planner_run_id") or ""
+            ) not in selected_run_ids:
+                continue
             if str(run.get("as_of_date") or "") != config.as_of_date:
                 raise ValueError("planner run as_of_date differs from source-task run")
             critique = ((run.get("plan") or {}).get("critique_output") or {})
@@ -285,7 +417,8 @@ class CurrentQuestionSourceTaskMaterializer:
         )
         prompt_rows = tuple(row for item in completed for row in item[1])
         response_rows = tuple(row for item in completed for row in item[2])
-        audit = _audit_live_source_tasks(
+        audit = {
+            **_audit_live_source_tasks(
             as_of_date=config.as_of_date,
             draft_count=len(jobs),
             planning_results=planning_results,
@@ -294,7 +427,27 @@ class CurrentQuestionSourceTaskMaterializer:
             prompt_rows=prompt_rows,
             response_rows=response_rows,
             test_mode=config.test_mode,
-        )
+            ),
+            "selection_receipt_filter_applied": selected_run_ids is not None,
+            "selection_receipt_ids": (
+                sorted(str(row.get("selection_id") or "") for row in selection_receipts)
+                if selection_receipts is not None
+                else []
+            ),
+            "selection_receipt_roster_hash": (
+                stable_hash(list(selection_receipts))
+                if selection_receipts is not None
+                else None
+            ),
+            "selected_planner_run_count": (
+                len(selected_run_ids) if selected_run_ids is not None else None
+            ),
+            "unselected_planner_run_count": (
+                len(planner_runs) - len(selected_run_ids)
+                if selected_run_ids is not None
+                else None
+            ),
+        }
         return SourceTaskMaterializationResult(
             as_of_date=config.as_of_date,
             status=(
@@ -309,6 +462,214 @@ class CurrentQuestionSourceTaskMaterializer:
             response_rows=response_rows,
             audit=audit,
         )
+
+
+def _validated_selected_planner_run_ids(
+    manifest: Mapping[str, Any],
+    *,
+    as_of_date: str,
+    planner_runs: Sequence[Mapping[str, Any]],
+    trigger_signals: Sequence[Mapping[str, Any]],
+) -> set[str]:
+    critical_counts = manifest.get("critical_counts")
+    if (
+        set(manifest) != _SELECTION_MANIFEST_KEYS
+        or manifest.get("schema_version") != SELECTION_SCHEMA
+        or manifest.get("status") != SELECTION_PASS
+        or str(manifest.get("selection_as_of_date") or "") != as_of_date
+        or int(manifest.get("critical_count_sum") or 0) != 0
+        or tuple(manifest.get("required_archetypes") or ()) != REQUIRED_ARCHETYPES
+        or manifest.get("failures") != []
+        or manifest.get("score_or_stage_authority") is not False
+        or not isinstance(critical_counts, Mapping)
+        or set(critical_counts) != _SELECTION_CRITICAL_KEYS
+        or any(
+            isinstance(value, bool) or not isinstance(value, int) or value != 0
+            for value in critical_counts.values()
+        )
+    ):
+        raise ValueError("selection manifest is not an accepted sealed roster")
+    receipts = tuple(manifest.get("selections") or ())
+    if (
+        len(receipts) != len(REQUIRED_ARCHETYPES)
+        or int(manifest.get("selection_count") or -1) != len(receipts)
+    ):
+        raise ValueError("selection receipts must contain the exact five-target roster")
+    if manifest.get("selection_roster_hash") != stable_hash(list(receipts)):
+        raise ValueError("selection receipt roster hash mismatch")
+    run_ids = [str(run.get("planner_run_id") or "") for run in planner_runs]
+    if not all(run_ids) or len(run_ids) != len(set(run_ids)):
+        raise ValueError("planner run identities must be nonempty and unique")
+    run_by_id = {str(run["planner_run_id"]): run for run in planner_runs}
+    signal_by_id = {
+        str(row.get("trigger_signal_id") or ""): row for row in trigger_signals
+    }
+    if "" in signal_by_id or len(signal_by_id) != len(trigger_signals):
+        raise ValueError("trigger signal identities must be nonempty and unique")
+    selected: list[str] = []
+    targets: list[str] = []
+    archetypes: list[str] = []
+    for receipt in receipts:
+        if set(receipt) != _SELECTION_RECEIPT_KEYS:
+            raise ValueError("selection receipt keys are not exact")
+        if receipt.get("schema_version") != SELECTION_RECEIPT_SCHEMA:
+            raise ValueError("selection receipt schema is invalid")
+        pre_deep_hash = str(receipt.get("pre_deep_input_hash") or "")
+        if _HEX64_RE.fullmatch(pre_deep_hash) is None:
+            raise ValueError("selection receipt pre-deep hash is invalid")
+        if str(receipt.get("selection_id") or "") != "SELREC-" + pre_deep_hash[:24]:
+            raise ValueError("selection receipt identity is invalid")
+        if str(receipt.get("selection_as_of_date") or "") != as_of_date:
+            raise ValueError("selection receipt as_of_date differs from source-task run")
+        if receipt.get("final_score_visible_at_selection") is not False:
+            raise ValueError("selection receipt must be blind to final score")
+        if receipt.get("final_stage_visible_at_selection") is not False:
+            raise ValueError("selection receipt must be blind to final Stage")
+        if receipt.get("score_or_stage_authority") is not False:
+            raise ValueError("selection receipt cannot carry score or Stage authority")
+        expected_daily = receipt.get("selection_mode") == NATURAL_SELECTION
+        if receipt.get("production_daily_candidate") is not expected_daily:
+            raise ValueError("selection receipt natural/forced daily label mismatch")
+        hash_fields = (
+            "krx_source_hash",
+            "candidate_event_hash",
+            "depth_decision_hash",
+            "plan_hash",
+            "issuer_profile_hash",
+            "business_profile_hash",
+        )
+        if any(
+            _HEX64_RE.fullmatch(str(receipt.get(field) or "")) is None
+            for field in hash_fields
+        ):
+            raise ValueError("selection receipt lineage hash is invalid")
+        run_id = str(receipt.get("planner_run_id") or "")
+        target_id = str(receipt.get("target_id") or "")
+        if target_id != target_id.strip() or _TARGET_RE.fullmatch(target_id) is None:
+            raise ValueError("selection receipt target identity is not canonical")
+        if not run_id:
+            raise ValueError("selection receipt planner run identity is empty")
+        run = run_by_id.get(run_id)
+        if run is None:
+            raise ValueError(f"selected planner run is unavailable: {run_id}")
+        if target_id != str(run.get("target_id") or ""):
+            raise ValueError("selection receipt target/planner run mismatch")
+        if str(receipt.get("company_name") or "") != str(run.get("target_name") or ""):
+            raise ValueError("selection receipt company/planner run mismatch")
+        critique = ((run.get("plan") or {}).get("critique_output") or {})
+        top = tuple(critique.get("top_k_archetypes") or ())
+        leading = str((top[0] if top else {}).get("archetype_id") or "")
+        if str(receipt.get("archetype_id") or "") != leading:
+            raise ValueError("selection receipt archetype/planner top-one mismatch")
+        if str(receipt.get("plan_hash") or "") != stable_hash(run.get("plan") or {}):
+            raise ValueError("selection receipt plan hash mismatch")
+        if str(receipt.get("blind_input_id") or "") != str(
+            run.get("blind_input_id") or ""
+        ):
+            raise ValueError("selection receipt blind input/planner run mismatch")
+        supporting = sorted(
+            {
+                str(value)
+                for value in critique.get("supporting_current_fact_ids") or ()
+                if str(value)
+            }
+        )
+        drafts = tuple(
+            row
+            for row in critique.get("source_task_drafts") or ()
+            if isinstance(row, Mapping)
+        )
+        recipes = sorted(
+            {
+                str(row.get("recipe_id") or "")
+                for row in drafts
+                if str(row.get("recipe_id") or "")
+            }
+        )
+        source_families = sorted(
+            {
+                str(value)
+                for row in drafts
+                for field in ("preferred_source_families", "fallback_source_families")
+                for value in row.get(field) or ()
+                if str(value)
+            }
+        )
+        expected_business_hash = stable_hash(
+            {
+                "target_id": str(run.get("target_id") or ""),
+                "leading_archetype_id": leading,
+                "direct_current_supporting_fact_ids": supporting,
+                "recipe_ids": recipes,
+                "available_source_families": source_families,
+            }
+        )
+        if (
+            list(receipt.get("direct_current_supporting_fact_ids") or ())
+            != supporting
+            or list(receipt.get("recipe_ids") or ()) != recipes
+            or list(receipt.get("available_source_families") or ())
+            != source_families
+            or str(receipt.get("business_profile_hash") or "")
+            != expected_business_hash
+        ):
+            raise ValueError("selection receipt business/planner projection mismatch")
+        trigger_ids = list(receipt.get("trigger_event_ids") or ())
+        if receipt.get("selection_mode") == NATURAL_SELECTION:
+            if not trigger_ids:
+                raise ValueError("natural selection requires current trigger lineage")
+            for signal_id in trigger_ids:
+                signal = signal_by_id.get(str(signal_id))
+                if (
+                    signal is None
+                    or str(signal.get("target_id") or "") != str(run.get("target_id") or "")
+                    or str(signal_id) not in set(run.get("trigger_signal_ids") or ())
+                    or not set(signal.get("source_refs") or ())
+                    <= set(run.get("source_refs") or ())
+                ):
+                    raise ValueError("selection receipt trigger/planner lineage mismatch")
+        elif trigger_ids:
+            raise ValueError("forced selection cannot claim natural trigger lineage")
+        krx_date = date.fromisoformat(str(receipt.get("krx_effective_date") or ""))
+        selection_date = date.fromisoformat(as_of_date)
+        url = str(receipt.get("krx_source_url") or "")
+        endpoint = url.rsplit("/", 1)[-1]
+        market = {"stk_isu_base_info": "KOSPI", "ksq_isu_base_info": "KOSDAQ"}.get(
+            endpoint
+        )
+        expected_request = (
+            "KRXREQ-"
+            + stable_hash(
+                {
+                    "market": market,
+                    "effective_date": krx_date.isoformat(),
+                    "endpoint": endpoint,
+                }
+            )[:24]
+            if market
+            else ""
+        )
+        if (
+            market is None
+            or krx_date > selection_date
+            or krx_date < selection_date - timedelta(days=7)
+            or str(receipt.get("krx_request_id") or "") != expected_request
+        ):
+            raise ValueError("selection receipt KRX lineage is stale or invalid")
+        selected.append(run_id)
+        targets.append(target_id)
+        archetypes.append(str(receipt.get("archetype_id") or ""))
+    if len(selected) != len(set(selected)):
+        raise ValueError("selection receipt planner run identity is duplicate")
+    if len(targets) != len(set(targets)):
+        raise ValueError("selection receipt target identity is duplicate")
+    if tuple(archetypes) != REQUIRED_ARCHETYPES:
+        raise ValueError("selection receipt archetype roster mismatch")
+    available = set(run_ids)
+    missing = set(selected) - available
+    if missing:
+        raise ValueError(f"selected planner run is unavailable: {sorted(missing)}")
+    return set(selected)
 
 
 def load_evidence_recipes(path: str | Path) -> tuple[EvidenceRecipe, ...]:

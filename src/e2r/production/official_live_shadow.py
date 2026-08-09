@@ -22,6 +22,8 @@ import xml.etree.ElementTree as ET
 
 import requests
 
+from e2r.codex_cli_contract import CODEX_EXECUTABLE, codex_isolation_args, codex_subprocess_env
+
 from e2r.env import load_project_env
 from e2r.production.candidate_event_purity import InstrumentRegistry
 from e2r.production.claim_extraction import (
@@ -603,16 +605,15 @@ def _real_codex_planner_runs_for_events(
     load_project_env()
     prompt_payload = _planner_prompt_payload(events)
     prompt_text = _planner_prompt_text(prompt_payload)
-    requested_model = (os.environ.get("E2R_CODEX_PLANNER_MODEL") or "").strip()
-    model = requested_model or "codex-cli-default"
-    command, output_path = _codex_planner_command(repo_root=repo_root, model=requested_model)
+    model = "codex-cli-default"
+    command, output_path = _codex_planner_command(repo_root=repo_root)
     started = time.monotonic()
     with tempfile.TemporaryDirectory(prefix="e2r_cutover_planner_") as tmpdir:
         tmp = Path(tmpdir)
         schema_path = tmp / "planner_schema.json"
         output_file = tmp / "planner_output.json"
         schema_path.write_text(json.dumps(_PLANNER_BATCH_OUTPUT_SCHEMA, ensure_ascii=False), encoding="utf-8")
-        command, output_path = _codex_planner_command(repo_root=repo_root, model=requested_model, schema_path=schema_path, output_path=output_file)
+        command, output_path = _codex_planner_command(repo_root=repo_root, schema_path=schema_path, output_path=output_file)
         completed = _run_codex_command(command, prompt=prompt_text, timeout=_planner_timeout_seconds())
         raw = output_file.read_text(encoding="utf-8") if output_file.exists() else completed.stdout
     latency_ms = int((time.monotonic() - started) * 1000)
@@ -647,8 +648,8 @@ def _real_codex_planner_runs_for_events(
             "fake_provider_used": False,
             "endpoint": "codex-cli",
             "model": model,
-            "requested_model": requested_model or None,
-            "model_identity_status": "EXPLICIT_MODEL" if requested_model else "CODEX_CLI_DEFAULT_MODEL_NOT_PINNED",
+            "requested_model": None,
+            "model_identity_status": "CODEX_CLI_DEFAULT_MODEL_NOT_PINNED",
             "command": command_text,
             "prompt_hash": stable_hash({"batch_prompt_hash": prompt_hash, "candidate_event_id": event_id}),
             "response_hash": stable_hash(plans[event_id]),
@@ -779,31 +780,27 @@ def _validated_planner_plan(row: Mapping[str, Any], event: Mapping[str, Any]) ->
 def _codex_planner_command(
     *,
     repo_root: Path,
-    model: str,
     schema_path: Path | None = None,
     output_path: Path | None = None,
 ) -> tuple[list[str], Path | None]:
     command = [
-        os.environ.get("E2R_CODEX_PLANNER_COMMAND") or "codex",
+        CODEX_EXECUTABLE,
         "--sandbox",
-        os.environ.get("E2R_CODEX_PLANNER_SANDBOX") or "read-only",
+        "read-only",
         "--ask-for-approval",
-        os.environ.get("E2R_CODEX_PLANNER_APPROVAL_POLICY") or "never",
+        "never",
         "exec",
         "--ephemeral",
         "-C",
         str(repo_root),
         "--color",
         "never",
+        *codex_isolation_args(),
     ]
     if schema_path is not None:
         command.extend(("--output-schema", str(schema_path)))
     if output_path is not None:
         command.extend(("-o", str(output_path)))
-    if model:
-        command.extend(("-m", model))
-    extra = tuple(shlex.split(os.environ.get("E2R_CODEX_PLANNER_EXTRA_ARGS") or ""))
-    command.extend(extra)
     command.append("-")
     return command, output_path
 
@@ -816,6 +813,7 @@ def _run_codex_command(command: Sequence[str], *, prompt: str, timeout: float) -
         stderr=subprocess.PIPE,
         text=True,
         start_new_session=(os.name == "posix"),
+        env=codex_subprocess_env(),
     )
     try:
         stdout, stderr = process.communicate(prompt, timeout=timeout)

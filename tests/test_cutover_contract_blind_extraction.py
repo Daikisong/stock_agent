@@ -590,15 +590,27 @@ class CutoverContractBlindExtractionTests(unittest.TestCase):
         self.assertNotIn("3-Green", json.dumps(payload["source_metadata"], ensure_ascii=False))
 
     def test_codex_command_uses_output_schema_for_contract_blind_extractor(self):
-        command = _codex_command(
-            repo_root=".",
-            model="codex-cli-default",
-            output_path="extractor_output.json",
-            output_schema_path="extractor_schema.json",
-        )
+        with patch.dict(
+            "os.environ",
+            {
+                "E2R_CODEX_EXTRACTOR_COMMAND": "local-provider",
+                "E2R_CODEX_EXTRACTOR_EXTRA_ARGS": "--config model_provider=local",
+            },
+            clear=False,
+        ):
+            command = _codex_command(
+                repo_root=".",
+                output_path="extractor_output.json",
+                output_schema_path="extractor_schema.json",
+            )
 
+        self.assertEqual(command[0], "codex")
         self.assertIn("--output-schema", command)
         self.assertEqual(command[command.index("--output-schema") + 1], "extractor_schema.json")
+        self.assertIn("--ignore-user-config", command)
+        self.assertIn("--ignore-rules", command)
+        self.assertNotIn("local-provider", command)
+        self.assertNotIn("model_provider=local", command)
 
     def test_codex_payload_decoder_downgrades_unknown_predicate_to_mention_only(self):
         request = ExtractionInput(

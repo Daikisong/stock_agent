@@ -5,10 +5,31 @@ from pathlib import Path
 from unittest.mock import patch
 
 from e2r.production.cutover_shadow import ProductionCutoverConfig, _planner_call_count, build_production_cutover_bundle
-from e2r.production.official_live_shadow import _real_codex_planner_runs_for_events
+from e2r.production.official_live_shadow import (
+    _codex_planner_command,
+    _real_codex_planner_runs_for_events,
+)
 
 
 class CutoverPlannerProviderIdentityTests(unittest.TestCase):
+    def test_operational_codex_command_ignores_executable_and_config_overrides(self):
+        with patch.dict(
+            "os.environ",
+            {
+                "E2R_CODEX_PLANNER_COMMAND": "local-provider",
+                "E2R_CODEX_PLANNER_EXTRA_ARGS": "--config model_provider=local",
+            },
+            clear=False,
+        ):
+            command, _ = _codex_planner_command(
+                repo_root=Path("."),
+            )
+        self.assertEqual(command[0], "codex")
+        self.assertIn("--ignore-user-config", command)
+        self.assertIn("--ignore-rules", command)
+        self.assertNotIn("local-provider", command)
+        self.assertNotIn("model_provider=local", command)
+
     def test_planner_report_counts_model_null_as_blocker_not_ready_claim(self):
         bundle = build_production_cutover_bundle(
             config=ProductionCutoverConfig(as_of_date="2026-06-30"),
@@ -75,7 +96,8 @@ class CutoverPlannerProviderIdentityTests(unittest.TestCase):
             rows = _real_codex_planner_runs_for_events((event,), repo_root=Path("."))
         row = rows["CE-UNIT-005930-1"]
         self.assertTrue(row["real_provider_success"])
-        self.assertEqual(row["model"], "gpt-test")
+        self.assertEqual(row["model"], "codex-cli-default")
+        self.assertIsNone(row["requested_model"])
         self.assertEqual(row["schema_validation_status"], "PASS")
         self.assertEqual(row["raw_response_payload"]["primitive_gap"], "contract_quality")
         self.assertTrue(row["prompt_hash"])

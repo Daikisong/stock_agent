@@ -67,7 +67,11 @@ class BaseProductionSourceConnector(Protocol):
 
 
 class LocalSnapshotConnector:
-    """Read a provider cache as a snapshot result, never as live evidence."""
+    """Read a repository file snapshot, never a local model or live evidence.
+
+    ``Local`` describes the filesystem location only.  This connector has no
+    model endpoint, process launcher, provider fallback, or network call.
+    """
 
     provider_name: str
     source_class: str
@@ -97,7 +101,7 @@ class LocalSnapshotConnector:
                 request_params={"symbol": symbol, "company_name": company_name},
                 status="PROVIDER_FAILED",
                 fetched_at=datetime.utcnow().isoformat(timespec="seconds") + "Z",
-                provider_error="live_connector_not_configured_in_local_environment",
+                provider_error="live_connector_not_configured",
             )
         for pattern in self.path_patterns:
             for path in sorted(self.repo_root.glob(pattern.format(symbol=symbol))):
@@ -132,7 +136,7 @@ class LocalSnapshotConnector:
             request_params={"symbol": symbol, "company_name": company_name},
             status="NO_RESULT",
             fetched_at=datetime.utcnow().isoformat(timespec="seconds") + "Z",
-            provider_error="no_local_provider_snapshot_found",
+            provider_error="no_repository_snapshot_found",
         )
 
 

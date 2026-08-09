@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from datetime import date
 import json
 import os
 import re
-import shlex
 import signal
 import subprocess
 import tempfile
@@ -15,6 +14,11 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from e2r.env import load_project_env
+from e2r.codex_cli_contract import (
+    CODEX_EXECUTABLE,
+    codex_isolation_args,
+    codex_subprocess_env,
+)
 
 from .evidence_os import (
     Directness,
@@ -51,9 +55,6 @@ from .evidence_workflow import (
     validate_primitive_mapping_provider_schema,
     validate_follow_up_provider_schema,
 )
-
-_DEFAULT_CODEX_ISOLATION_EXTRA_ARGS = ("--ignore-user-config", "--ignore-rules")
-
 
 RAW_ASSERTION_OUTPUT_JSON_SCHEMA: Mapping[str, object] = {
     "type": "object",
@@ -432,14 +433,10 @@ class _JSONRunResult:
 class CodexCLIAgenticEvidenceProvider:
     """Use ``codex exec`` for separated claim/adjudication/mapping calls."""
 
-    codex_command: str = "codex"
-    model: str | None = None
-    profile: str | None = None
     working_directory: str | Path | None = None
     timeout_seconds: float = 60.0
     sandbox: str = "read-only"
     approval_policy: str = "never"
-    extra_args: tuple[str, ...] = field(default_factory=tuple)
 
     def extract(self, inputs: ClaimExtractionInput) -> ClaimExtractionOutput | Mapping[str, object]:
         validate_claim_extractor_provider_schema(RAW_ASSERTION_OUTPUT_JSON_SCHEMA)
@@ -731,7 +728,7 @@ class CodexCLIAgenticEvidenceProvider:
 
     def _command(self, *, schema_path: Path, output_path: Path) -> list[str]:
         command = [
-            self.codex_command,
+            CODEX_EXECUTABLE,
             "--sandbox",
             self.sandbox,
             "--ask-for-approval",
@@ -747,11 +744,7 @@ class CodexCLIAgenticEvidenceProvider:
         ]
         if self.working_directory is not None:
             command.extend(("-C", str(self.working_directory)))
-        if self.model:
-            command.extend(("-m", self.model))
-        if self.profile:
-            command.extend(("-p", self.profile))
-        command.extend(self.extra_args)
+        command.extend(codex_isolation_args())
         command.append("-")
         return command
 
@@ -772,10 +765,6 @@ def build_agentic_evidence_provider_bundle_from_env(
     if mode not in {"codex", "codex-cli", "codex_cli"}:
         return None
     provider = CodexCLIAgenticEvidenceProvider(
-        codex_command=(env.get("E2R_CODEX_AGENTIC_COMMAND") or env.get("E2R_CODEX_THEME_COMMAND") or "codex").strip()
-        or "codex",
-        model=_optional_env(env, "E2R_CODEX_AGENTIC_MODEL") or _optional_env(env, "E2R_CODEX_THEME_MODEL"),
-        profile=_optional_env(env, "E2R_CODEX_AGENTIC_PROFILE") or _optional_env(env, "E2R_CODEX_THEME_PROFILE"),
         working_directory=_optional_env(env, "E2R_CODEX_AGENTIC_WORKDIR")
         or _optional_env(env, "E2R_CODEX_THEME_WORKDIR")
         or working_directory,
@@ -788,7 +777,6 @@ def build_agentic_evidence_provider_bundle_from_env(
             or "never"
         ).strip()
         or "never",
-        extra_args=_agentic_codex_extra_args(env),
     )
     return AgenticEvidenceProviderBundle(
         extractor=provider,
@@ -802,41 +790,12 @@ def build_default_codex_agentic_evidence_provider_bundle(
     *,
     working_directory: str | Path | None = None,
 ) -> AgenticEvidenceProviderBundle | None:
-    """Build the Codex-backed Evidence OS provider while preserving env config."""
+    """Build Codex Evidence OS while preserving only non-routing env settings."""
 
     load_project_env()
     env = dict(os.environ)
     env["E2R_AGENTIC_EVIDENCE_PROVIDER"] = "codex"
     return build_agentic_evidence_provider_bundle_from_env(env, working_directory=working_directory)
-
-
-def _agentic_codex_extra_args(env: Mapping[str, str]) -> tuple[str, ...]:
-    configured = tuple(
-        shlex.split(env.get("E2R_CODEX_AGENTIC_EXTRA_ARGS") or env.get("E2R_CODEX_THEME_EXTRA_ARGS") or "")
-    )
-    inherit_config = _truthy_env(
-        env.get("E2R_CODEX_AGENTIC_INHERIT_CONFIG")
-        or env.get("E2R_CODEX_THEME_INHERIT_CONFIG")
-        or env.get("E2R_CODEX_AGENTIC_LOAD_USER_CONFIG")
-    )
-    if inherit_config:
-        return configured
-    return _dedup_args((*_DEFAULT_CODEX_ISOLATION_EXTRA_ARGS, *configured))
-
-
-def _truthy_env(value: str | None) -> bool:
-    return str(value or "").strip().lower() in {"1", "true", "yes", "on"}
-
-
-def _dedup_args(args: Sequence[str]) -> tuple[str, ...]:
-    deduped: list[str] = []
-    seen: set[str] = set()
-    for arg in args:
-        if arg in seen:
-            continue
-        seen.add(arg)
-        deduped.append(arg)
-    return tuple(deduped)
 
 
 def _run_codex_command(command: Sequence[str], *, prompt: str, timeout: float) -> subprocess.CompletedProcess[str]:
@@ -847,6 +806,7 @@ def _run_codex_command(command: Sequence[str], *, prompt: str, timeout: float) -
         stderr=subprocess.PIPE,
         text=True,
         start_new_session=(os.name == "posix"),
+        env=codex_subprocess_env(),
     )
     try:
         stdout, stderr = process.communicate(prompt, timeout=timeout)

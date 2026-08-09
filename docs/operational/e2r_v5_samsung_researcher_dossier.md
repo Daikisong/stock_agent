@@ -3,11 +3,11 @@
 - target_id: `005930`
 - status: `RESEARCH_CHECKPOINT_PENDING`
 - production research complete: `false`
-- documents: `44`
-- evidence facts: `172`
-- counterfacts: `43`
-- complete component memos: `7` / `7`
-- score valid: `true`
+- documents: `93`
+- evidence facts: `79`
+- counterfacts: `0`
+- complete component memos: `0` / `7`
+- score valid: `false`
 - FINAL StageCourt: `false`
 
 현재 dossier는 live checkpoint 진실을 기록한 것이며, 미완료 상태에서는 점수나 Stage를 확정하지 않는다.
@@ -28,4 +28,4 @@
 - `score_vector.json`: `present`
 - `atomic_stage_decision.json`: `present`
 - `stagecourt_trace.json`: `present`
-- `gold_fact_comparison.jsonl`: `present`
+- `gold_fact_comparison.jsonl`: `missing`

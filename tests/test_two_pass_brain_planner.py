@@ -646,7 +646,7 @@ class TwoPassBrainPlannerTest(unittest.TestCase):
             self.assertIn("--output-last-message", command)
             self.assertEqual(command[-1], "-")
 
-    def test_default_real_provider_loads_project_env_and_validates_transport(self) -> None:
+    def test_default_real_provider_ignores_command_and_config_overrides(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             env_path = Path(tmp) / ".env"
             env_path.write_text(
@@ -665,14 +665,17 @@ class TwoPassBrainPlannerTest(unittest.TestCase):
                     working_directory=REPO_ROOT,
                     env_file=env_path,
                 )
-                self.assertEqual(provider.transport.codex_command, "codex-from-dotenv")
-                self.assertEqual(provider.transport.model, "test-model")
+                self.assertFalse(hasattr(provider.transport, "codex_command"))
+                self.assertFalse(hasattr(provider.transport, "model"))
                 self.assertEqual(provider.transport.timeout_seconds, 42.0)
-                self.assertEqual(
-                    provider.transport.extra_args,
-                    ("--config", "test.value=true"),
-                )
+                self.assertFalse(hasattr(provider.transport, "extra_args"))
                 self.assertEqual(provider.transport.working_directory, REPO_ROOT)
+                command = provider.transport.command(
+                    schema_path=Path(tmp) / "schema.json",
+                    output_path=Path(tmp) / "output.json",
+                )
+                self.assertIn("--ignore-user-config", command)
+                self.assertIn("--ignore-rules", command)
 
             with patch.dict(
                 os.environ,
@@ -680,7 +683,15 @@ class TwoPassBrainPlannerTest(unittest.TestCase):
                 clear=True,
             ):
                 provider = build_codex_two_pass_planner_provider(env_file=env_path)
-                self.assertEqual(provider.transport.codex_command, "process-command")
+                self.assertFalse(hasattr(provider.transport, "codex_command"))
+
+        for kwargs in (
+            {"codex_command": "local-provider"},
+            {"profile": "user-selected-profile"},
+            {"extra_args": ("--config", "model_provider=local")},
+        ):
+            with self.subTest(kwargs=kwargs), self.assertRaises(TypeError):
+                CodexStructuredProviderTransport(**kwargs)
 
         with self.assertRaisesRegex(ValueError, "unsafe characters"):
             CodexStructuredProviderTransport().complete(

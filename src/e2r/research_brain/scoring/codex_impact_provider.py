@@ -150,7 +150,6 @@ class CodexEvidenceImpactProvider:
             CodexStructuredProviderTransport(
                 working_directory=working_directory or Path.cwd(),
                 timeout_seconds=timeout_seconds,
-                extra_args=("--ignore-user-config", "--ignore-rules"),
             )
         )
 

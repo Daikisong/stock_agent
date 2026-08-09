@@ -6,14 +6,14 @@ import json
 import os
 import re
 import signal
-import shlex
 import subprocess
 import tempfile
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping, Sequence
 
 from e2r.env import load_project_env
+from e2r.codex_cli_contract import CODEX_EXECUTABLE, codex_isolation_args, codex_subprocess_env
 from e2r.llm.theme_provider import build_theme_route_messages
 from e2r.llm.theme_schemas import ThemeRouteInput, ThemeRouteOutput, validate_theme_route_output
 
@@ -116,14 +116,10 @@ class CodexCLIThemeRouteProvider:
     asking a non-interactive Codex process for a schema-validated route JSON.
     """
 
-    codex_command: str = "codex"
-    model: str | None = None
-    profile: str | None = None
     working_directory: str | Path | None = None
     timeout_seconds: float = 180.0
     sandbox: str = "read-only"
     approval_policy: str = "never"
-    extra_args: tuple[str, ...] = field(default_factory=tuple)
 
     def route(self, inputs: ThemeRouteInput) -> ThemeRouteOutput:
         with tempfile.TemporaryDirectory(prefix="e2r_codex_theme_") as tmpdir:
@@ -153,7 +149,7 @@ class CodexCLIThemeRouteProvider:
 
     def _command(self, *, schema_path: Path, output_path: Path) -> list[str]:
         command = [
-            self.codex_command,
+            CODEX_EXECUTABLE,
             "--sandbox",
             self.sandbox,
             "--ask-for-approval",
@@ -169,11 +165,7 @@ class CodexCLIThemeRouteProvider:
         ]
         if self.working_directory is not None:
             command.extend(("-C", str(self.working_directory)))
-        if self.model:
-            command.extend(("-m", self.model))
-        if self.profile:
-            command.extend(("-p", self.profile))
-        command.extend(self.extra_args)
+        command.extend(codex_isolation_args())
         command.append("-")
         return command
 
@@ -186,6 +178,7 @@ def _run_codex_command(command: Sequence[str], *, prompt: str, timeout: float) -
         stderr=subprocess.PIPE,
         text=True,
         start_new_session=(os.name == "posix"),
+        env=codex_subprocess_env(),
     )
     try:
         stdout, stderr = process.communicate(prompt, timeout=timeout)
@@ -233,14 +226,10 @@ def build_theme_route_provider_from_env(
     if mode not in {"codex", "codex-cli", "codex_cli"}:
         return None
     return CodexCLIThemeRouteProvider(
-        codex_command=(env.get("E2R_CODEX_THEME_COMMAND") or "codex").strip() or "codex",
-        model=_optional_env(env, "E2R_CODEX_THEME_MODEL"),
-        profile=_optional_env(env, "E2R_CODEX_THEME_PROFILE"),
         working_directory=_optional_env(env, "E2R_CODEX_THEME_WORKDIR") or working_directory,
         timeout_seconds=_float_env(env, "E2R_CODEX_THEME_TIMEOUT_SECONDS", 180.0),
         sandbox=(env.get("E2R_CODEX_THEME_SANDBOX") or "read-only").strip() or "read-only",
         approval_policy=(env.get("E2R_CODEX_THEME_APPROVAL_POLICY") or "never").strip() or "never",
-        extra_args=tuple(shlex.split(env.get("E2R_CODEX_THEME_EXTRA_ARGS") or "")),
     )
 
 
@@ -248,7 +237,7 @@ def build_default_codex_theme_route_provider(
     *,
     working_directory: str | Path | None = None,
 ) -> CodexCLIThemeRouteProvider | None:
-    """Build the operational Codex route provider while preserving env config."""
+    """Build the operational Codex route provider with isolated CLI settings."""
 
     load_project_env()
     env = dict(os.environ)

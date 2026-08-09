@@ -32,4 +32,20 @@ PYTHONPATH=src python -m e2r.cli.verify_e2r_v6_tracked_receipts \
   --offline true
 ```
 
+같은 receipt를 두 번 독립 재생해 점수·Stage와 replay variance까지 확인하는
+Phase 103 readiness 명령:
+
+```bash
+set -o pipefail; \
+  git show HEAD:scripts/verify_e2r_v6_tracked_readiness.py | \
+  python3 -I -S - --repo-root .
+```
+
+이 명령은 변경 가능한 worktree의 E2R 모듈을 먼저 import하지 않는다. Git HEAD의
+stdlib-only bootstrap이 깨끗한 detached worktree를 만든 뒤, 그 안의 verifier만 별도
+isolated Python process에서 실행한다. 또한 `output/`, `.env`, cache, 협업 journal을
+입력으로 사용하지 않는다.
+검증 결과의 `production_readiness_authority=false`는 이 작은 receipt 검증 하나가
+Phase 104~109의 운영 인수를 대신할 수 없다는 뜻이다.
+
 쉬운 예: 삼성전자 점수가 `66.8`이라는 숫자만 보관하지 않는다. 7개 component 합이 실제로 `66.8`인지, 세 judge의 제안으로 각 component 점수가 다시 나오는지, 사용된 fact가 source와 짧은 검수 인용 및 hash로 이어지는지, 그 점수 벡터로 Stage `2`가 다시 나오는지를 한 번에 확인한다.

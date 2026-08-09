@@ -2708,6 +2708,9 @@ def validate_source_graph_checkpoint(
         raise ValueError("source graph checkpoint target mismatch")
     if as_of_date is not None and str(payload["as_of_date"]) != as_of_date:
         raise ValueError("source graph checkpoint as_of mismatch")
+    # Validation-only tombstones for prohibited historical lineage.  This list
+    # is deliberately data, not a provider registry: no item below may be
+    # instantiated, contacted, or used as a fallback by SourceGraph.
     forbidden_local_provider_markers = (
         "OLLAMA",
         "QWEN",

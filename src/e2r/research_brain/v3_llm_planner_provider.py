@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import os
 import urllib.error
-import urllib.parse
 import urllib.request
 from abc import ABC, abstractmethod
 from typing import Any, Mapping, Sequence
@@ -48,45 +47,30 @@ class ResearchBrainPlannerProvider(ABC):
 
 
 class OpenAIPlannerProvider(ResearchBrainPlannerProvider):
-    """OpenAI-compatible chat-completions planner adapter.
+    """Official OpenAI HTTPS chat-completions planner adapter.
 
     The adapter is intentionally idle unless called by the v3 CLI with a real
-    provider mode. Tests use explicit fake providers instead of this class.
+    provider mode.  It has no compatible-endpoint override and no local-model
+    fallback; the endpoint is a fixed official OpenAI HTTPS constant. Tests use
+    explicit fake providers instead.
     """
 
     provider_name = "openai_chat_completions"
     real_provider = True
+    OFFICIAL_ENDPOINT = "https://api.openai.com/v1/chat/completions"
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
         model: str | None = None,
-        endpoint: str = "https://api.openai.com/v1/chat/completions",
         timeout_seconds: int = 60,
     ) -> None:
-        parsed_endpoint = urllib.parse.urlparse(endpoint)
-        try:
-            endpoint_port = parsed_endpoint.port
-        except ValueError:
-            endpoint_port = -1
-        if (
-            parsed_endpoint.scheme != "https"
-            or str(parsed_endpoint.hostname or "").casefold() != "api.openai.com"
-            or endpoint_port not in {None, 443}
-            or parsed_endpoint.username is not None
-            or parsed_endpoint.password is not None
-            or parsed_endpoint.path != "/v1/chat/completions"
-            or bool(parsed_endpoint.params)
-            or bool(parsed_endpoint.query)
-            or bool(parsed_endpoint.fragment)
-        ):
-            raise ValueError(
-                "planner endpoint must be the official OpenAI HTTPS endpoint"
-            )
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.model = model or os.getenv("OPENAI_MODEL", "gpt-5-mini")
-        self.endpoint = endpoint
+        # There is intentionally no endpoint argument or environment override.
+        # Production requests can only target the official OpenAI HTTPS API.
+        self.endpoint = self.OFFICIAL_ENDPOINT
         self.timeout_seconds = timeout_seconds
 
     def plan(

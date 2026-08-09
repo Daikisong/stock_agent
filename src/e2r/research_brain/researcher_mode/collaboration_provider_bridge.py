@@ -2484,6 +2484,10 @@ class CollaborationCodexResearcherProvider(CodexResearcherProvider):
 class CodexSubagentFallbackResearchProvider(CodexResearcherProvider):
     """Route only the exact usage-limited leaf to collaboration Codex.
 
+    Here ``fallback`` means Codex CLI -> audited Codex Collaboration.  It never
+    means a local model, loopback endpoint, local process, or inherited local
+    checkpoint.  Both sides of this bridge are Codex providers.
+
     ``CodexResearcherProvider.complete`` owns the loss-accounted chunk and
     synthesis orchestration.  Keeping that method intact is important: a
     usage-limit miss on chunk 2 must not replay chunk 1 through a different

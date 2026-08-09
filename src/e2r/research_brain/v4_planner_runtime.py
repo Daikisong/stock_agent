@@ -6,15 +6,15 @@ import json
 import hashlib
 import os
 import re
-import shlex
 import subprocess
 import tempfile
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from e2r.agentic.evidence_contract_v2 import load_evidence_contracts_v2
 from e2r.calibration.taxonomy import CANONICAL_ARCHETYPE_IDS
+from e2r.codex_cli_contract import CODEX_EXECUTABLE, codex_isolation_args
 from e2r.env import load_project_env
 from e2r.research_brain.schemas import SourceTask, SourceTaskType, deterministic_id
 from e2r.research_brain.planning.provider_transport import (
@@ -332,14 +332,10 @@ class CodexCLIPlannerProviderV4(ResearchBrainPlannerProviderV4):
     validates it and converts valid drafts into SourceTask objects later.
     """
 
-    codex_command: str = "codex"
-    model: str | None = None
-    profile: str | None = None
     working_directory: str | Path | None = None
     timeout_seconds: float = 180.0
     sandbox: str = "read-only"
     approval_policy: str = "never"
-    extra_args: tuple[str, ...] = field(default_factory=tuple)
 
     provider_name = "codex_cli_planner"
     provider_mode = PlannerProviderModeV4.REAL.value
@@ -414,7 +410,7 @@ class CodexCLIPlannerProviderV4(ResearchBrainPlannerProviderV4):
 
     def _command(self, *, schema_path: Path, output_path: Path) -> list[str]:
         command = [
-            self.codex_command,
+            CODEX_EXECUTABLE,
             "--sandbox",
             self.sandbox,
             "--ask-for-approval",
@@ -430,11 +426,7 @@ class CodexCLIPlannerProviderV4(ResearchBrainPlannerProviderV4):
         ]
         if self.working_directory is not None:
             command.extend(("-C", str(self.working_directory)))
-        if self.model and self.model != "codex-cli-default":
-            command.extend(("-m", self.model))
-        if self.profile:
-            command.extend(("-p", self.profile))
-        command.extend(self.extra_args)
+        command.extend(codex_isolation_args())
         command.append("-")
         return command
 
@@ -511,15 +503,10 @@ def build_planner_provider_v4(
     if normalized in {"real", "codex", "codex_cli"}:
         env = os.environ
         return CodexCLIPlannerProviderV4(
-            codex_command=(env.get("E2R_CODEX_PLANNER_COMMAND") or env.get("E2R_CODEX_THEME_COMMAND") or "codex").strip()
-            or "codex",
-            model=_optional_env(env, "E2R_CODEX_PLANNER_MODEL") or "codex-cli-default",
-            profile=_optional_env(env, "E2R_CODEX_PLANNER_PROFILE"),
             working_directory=_optional_env(env, "E2R_CODEX_PLANNER_WORKDIR") or working_directory,
             timeout_seconds=_float_env(env, "E2R_CODEX_PLANNER_TIMEOUT_SECONDS", 180.0),
             sandbox=(env.get("E2R_CODEX_PLANNER_SANDBOX") or "read-only").strip() or "read-only",
             approval_policy=(env.get("E2R_CODEX_PLANNER_APPROVAL_POLICY") or "never").strip() or "never",
-            extra_args=tuple(shlex.split(env.get("E2R_CODEX_PLANNER_EXTRA_ARGS") or "")),
         )
     raise ValueError(f"unknown planner provider mode: {mode}")
 

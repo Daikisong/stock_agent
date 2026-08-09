@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import os
 import re
-import shlex
 import signal
 import subprocess
 import tempfile
@@ -13,6 +12,8 @@ import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
+
+from e2r.codex_cli_contract import CODEX_EXECUTABLE, codex_isolation_args, codex_subprocess_env
 
 from .contract_blind_extractor import (
     _FORBIDDEN_CONTEXT_KEYS,
@@ -185,17 +186,16 @@ class RuleFallbackExtractorProvider:
 class CodexCLIExtractorProvider:
     provider_name = "codex_cli_contract_blind_extractor"
     provider_mode = "llm"
+    model = "codex-cli-default"
 
     def __init__(
         self,
         *,
         repo_root: str | Path = ".",
-        model: str | None = None,
         timeout_seconds: float | None = None,
         remaining_budget_seconds: Callable[[], float | None] | None = None,
     ) -> None:
         self.repo_root = Path(repo_root)
-        self.model = model or os.environ.get("E2R_CODEX_EXTRACTOR_MODEL") or "codex-cli-default"
         self.timeout_seconds = timeout_seconds or float(os.environ.get("E2R_CODEX_EXTRACTOR_TIMEOUT_SECONDS") or 240.0)
         self.remaining_budget_seconds = remaining_budget_seconds
 
@@ -368,7 +368,6 @@ class CodexCLIExtractorProvider:
             schema_file.write_text(json.dumps(EXTRACTOR_OUTPUT_SCHEMA, ensure_ascii=False), encoding="utf-8")
             command = _codex_command(
                 repo_root=self.repo_root,
-                model=self.model,
                 output_path=output_file,
                 output_schema_path=schema_file,
             )
@@ -769,13 +768,13 @@ def _normalize_predicate(value: object) -> str:
     return predicate if predicate in set(ALLOWED_PREDICATES) else "mention_only"
 
 
-def _codex_command(*, repo_root: Path, model: str, output_path: Path, output_schema_path: Path | None = None) -> list[str]:
+def _codex_command(*, repo_root: Path, output_path: Path, output_schema_path: Path | None = None) -> list[str]:
     command = [
-        os.environ.get("E2R_CODEX_EXTRACTOR_COMMAND") or "codex",
+        CODEX_EXECUTABLE,
         "--sandbox",
-        os.environ.get("E2R_CODEX_EXTRACTOR_SANDBOX") or "read-only",
+        "read-only",
         "--ask-for-approval",
-        os.environ.get("E2R_CODEX_EXTRACTOR_APPROVAL_POLICY") or "never",
+        "never",
         "exec",
         "--ephemeral",
         "-C",
@@ -789,11 +788,9 @@ def _codex_command(*, repo_root: Path, model: str, output_path: Path, output_sch
         "never",
         "-o",
         str(output_path),
+        *codex_isolation_args(),
         ]
     )
-    if model and model != "codex-cli-default":
-        command.extend(("-m", model))
-    command.extend(shlex.split(os.environ.get("E2R_CODEX_EXTRACTOR_EXTRA_ARGS") or ""))
     command.append("-")
     return command
 
@@ -806,6 +803,7 @@ def _run_codex_command(command: Sequence[str], *, prompt: str, timeout: float) -
         stderr=subprocess.PIPE,
         text=True,
         start_new_session=(os.name == "posix"),
+        env=codex_subprocess_env(),
     )
     try:
         stdout, stderr = process.communicate(prompt, timeout=timeout)

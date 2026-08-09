@@ -6,7 +6,6 @@ import hashlib
 import json
 import os
 import re
-import shlex
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -342,7 +341,7 @@ def build_codex_two_pass_planner_provider(
     env_file: str | Path | None = ".env",
     load_env: bool = True,
 ) -> CodexTwoPassPlannerProvider:
-    """Build the canonical real provider after filling empty values from .env."""
+    """Build the fixed Codex transport after loading timeout settings."""
 
     if load_env:
         load_project_env(env_file)
@@ -353,15 +352,6 @@ def build_codex_two_pass_planner_provider(
     except ValueError as exc:
         raise ValueError("E2R_CODEX_PLANNER_TIMEOUT_SECONDS must be numeric") from exc
     transport = CodexStructuredProviderTransport(
-        codex_command=(
-            env.get("E2R_CODEX_PLANNER_COMMAND")
-            or env.get("E2R_CODEX_THEME_COMMAND")
-            or "codex"
-        ).strip()
-        or "codex",
-        model=(env.get("E2R_CODEX_PLANNER_MODEL") or "codex-cli-default").strip()
-        or "codex-cli-default",
-        profile=(env.get("E2R_CODEX_PLANNER_PROFILE") or "").strip() or None,
         working_directory=(
             (env.get("E2R_CODEX_PLANNER_WORKDIR") or "").strip()
             or working_directory
@@ -373,9 +363,6 @@ def build_codex_two_pass_planner_provider(
             env.get("E2R_CODEX_PLANNER_APPROVAL_POLICY") or "never"
         ).strip()
         or "never",
-        extra_args=tuple(
-            shlex.split(env.get("E2R_CODEX_PLANNER_EXTRA_ARGS") or "")
-        ),
     )
     return CodexTwoPassPlannerProvider(transport=transport)
 

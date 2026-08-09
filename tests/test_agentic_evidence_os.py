@@ -2445,6 +2445,8 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         bundle = build_agentic_evidence_provider_bundle_from_env(
             {
                 "E2R_AGENTIC_EVIDENCE_PROVIDER": "codex",
+                "E2R_CODEX_AGENTIC_COMMAND": "local-provider",
+                "E2R_CODEX_AGENTIC_PROFILE": "local-profile",
                 "E2R_CODEX_AGENTIC_MODEL": "gpt-agentic-fixture",
                 "E2R_CODEX_AGENTIC_TIMEOUT_SECONDS": "45",
                 "E2R_CODEX_AGENTIC_EXTRA_ARGS": "--strict-config",
@@ -2457,16 +2459,21 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         self.assertIs(bundle.extractor, bundle.adjudicator)
         self.assertIs(bundle.extractor, bundle.mapper)
         self.assertIs(bundle.extractor, bundle.follow_up_planner)
-        self.assertEqual(bundle.extractor.model, "gpt-agentic-fixture")
+        self.assertFalse(hasattr(bundle.extractor, "model"))
         self.assertEqual(bundle.extractor.timeout_seconds, 45.0)
-        self.assertIn("--ignore-user-config", bundle.extractor.extra_args)
-        self.assertIn("--ignore-rules", bundle.extractor.extra_args)
-        self.assertIn("--strict-config", bundle.extractor.extra_args)
+        self.assertFalse(hasattr(bundle.extractor, "codex_command"))
+        self.assertFalse(hasattr(bundle.extractor, "profile"))
+        # Environment-provided CLI arguments are deliberately ignored.  The
+        # command itself injects only the two fixed isolation flags.
+        self.assertFalse(hasattr(bundle.extractor, "extra_args"))
         command = bundle.extractor._command(schema_path=Path("/tmp/schema.json"), output_path=Path("/tmp/output.json"))
         self.assertIn("--ignore-user-config", command)
         self.assertIn("--ignore-rules", command)
+        self.assertNotIn("--strict-config", command)
+        with self.assertRaises(TypeError):
+            CodexCLIAgenticEvidenceProvider(codex_command="local-provider")
 
-    def test_agentic_codex_provider_env_factory_can_explicitly_inherit_codex_config(self):
+    def test_agentic_codex_provider_env_factory_cannot_inherit_codex_config(self):
         bundle = build_agentic_evidence_provider_bundle_from_env(
             {
                 "E2R_AGENTIC_EVIDENCE_PROVIDER": "codex",
@@ -2477,7 +2484,14 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         )
 
         self.assertIsNotNone(bundle)
-        self.assertEqual(bundle.extractor.extra_args, ("--strict-config",))
+        self.assertFalse(hasattr(bundle.extractor, "extra_args"))
+        command = bundle.extractor._command(
+            schema_path=Path("/tmp/schema.json"),
+            output_path=Path("/tmp/output.json"),
+        )
+        self.assertIn("--ignore-user-config", command)
+        self.assertIn("--ignore-rules", command)
+        self.assertNotIn("--strict-config", command)
 
     def test_free_web_research_input_defaults_agentic_bundle_when_enabled_without_env_provider(self):
         bundle = AgenticEvidenceProviderBundle(
@@ -9575,7 +9589,7 @@ class AgenticEvidenceOSTests(unittest.TestCase):
             self.assertEqual(selected_candidates["summary"]["candidate_row_count"], 1)
             self.assertEqual(selected_candidates["candidates"][0]["request_id"], "SREPL-SECOND")
 
-    def test_same_event_replacement_planner_cli_can_override_codex_reasoning_effort(self):
+    def test_same_event_replacement_planner_cli_has_no_codex_config_override(self):
         provider = CodexCLIAgenticEvidenceProvider(timeout_seconds=99.0)
         with patch.object(
             same_event_planner_cli,
@@ -9586,12 +9600,12 @@ class AgenticEvidenceOSTests(unittest.TestCase):
                 run_provider=True,
                 working_directory=None,
                 timeout_seconds=12.0,
-                reasoning_effort="low",
             )
 
         self.assertIsInstance(built, CodexCLIAgenticEvidenceProvider)
         self.assertEqual(built.timeout_seconds, 12.0)
-        self.assertEqual(built.extra_args[-2:], ("-c", 'model_reasoning_effort="low"'))
+        self.assertFalse(hasattr(built, "extra_args"))
+        self.assertNotIn("--reasoning-effort", same_event_planner_cli.build_arg_parser().format_help())
 
     def test_replacement_snapshot_verifier_cli_writes_dry_run_and_provider_artifacts(self):
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -9968,7 +9982,7 @@ class AgenticEvidenceOSTests(unittest.TestCase):
             self.assertEqual(selected_run["summary"]["task_count"], 1)
             self.assertEqual(selected_run["runs"][0]["replacement_candidate_id"], "SRCAND-SECOND")
 
-    def test_replacement_snapshot_verifier_cli_can_override_codex_reasoning_effort(self):
+    def test_replacement_snapshot_verifier_cli_has_no_codex_config_override(self):
         provider = CodexCLIAgenticEvidenceProvider(timeout_seconds=99.0)
         with patch.object(
             replacement_snapshot_verifier_cli,
@@ -9979,12 +9993,12 @@ class AgenticEvidenceOSTests(unittest.TestCase):
                 run_provider=True,
                 working_directory=None,
                 timeout_seconds=12.0,
-                reasoning_effort="low",
             )
 
         self.assertIsInstance(built, CodexCLIAgenticEvidenceProvider)
         self.assertEqual(built.timeout_seconds, 12.0)
-        self.assertEqual(built.extra_args[-2:], ("-c", 'model_reasoning_effort="low"'))
+        self.assertFalse(hasattr(built, "extra_args"))
+        self.assertNotIn("--reasoning-effort", replacement_snapshot_verifier_cli.build_arg_parser().format_help())
 
     def test_replacement_candidate_fetch_status_keeps_current_text_unverified(self):
         acquisition_queue = {

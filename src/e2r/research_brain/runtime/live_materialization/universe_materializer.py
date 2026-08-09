@@ -402,7 +402,10 @@ def _normalize_rows(
                     "source_url": response.canonical_url,
                     "source_document_id": f"krx:{response.market}:{response.effective_date}",
                     "source_content_hash": response.content_hash,
-                    "source_request_id": response.provider_request_id,
+                    # Use the deterministic request identity in every row.
+                    # The provider's optional X-Request-ID remains preserved in
+                    # the provenance snapshot, but must not change row identity.
+                    "source_request_id": response.request_id,
                     "source_mode": source_mode,
                     "exclusion_reason": reason,
                     "raw_fields": dict(raw),

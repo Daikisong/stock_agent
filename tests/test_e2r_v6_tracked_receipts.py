@@ -5,6 +5,9 @@ from copy import deepcopy
 import hashlib
 import json
 import os
+import shlex
+import subprocess
+import sys
 import tempfile
 import unittest
 import zlib
@@ -12,6 +15,10 @@ from pathlib import Path
 from unittest.mock import patch
 
 from e2r.production.metadata import git_head_sha, stable_hash
+from e2r.cli.compile_e2r_v6_tracked_readiness import (
+    _output_overlaps_receipts,
+    _write_json_atomic as _write_readiness_json_atomic,
+)
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _historical_anchors,
@@ -48,6 +55,13 @@ from e2r.research_brain.researcher_mode.tracked_receipts import (
     stagecourt_rule_hash,
     verify_receipts,
     verify_target_receipt,
+)
+from e2r.research_brain.researcher_mode.tracked_readiness import (
+    TRACKED_READINESS_FAIL,
+    TRACKED_READINESS_PASS,
+    _repository_identity_is_trusted,
+    _verifier_dependencies_match_head,
+    compile_tracked_readiness,
 )
 
 
@@ -741,6 +755,269 @@ class E2RV6TrackedReceiptTests(unittest.TestCase):
         self.assertEqual(result["status"], VERIFICATION_PASS)
         self.assertEqual(result["target_count"], 2)
         self.assertEqual(result["target_ids"], list(PHASE101_TARGET_IDS))
+
+    def test_tracked_readiness_replays_receipt_only_score_and_stage(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "receipts"
+            for target_id in PHASE101_TARGET_IDS:
+                self._fixture(root, target_id=target_id)
+            with patch(
+                "e2r.research_brain.researcher_mode.tracked_readiness."
+                "_tracked_receipt_root_is_current",
+                return_value=True,
+            ):
+                result = compile_tracked_readiness(root)
+        self.assertEqual(result["status"], TRACKED_READINESS_PASS)
+        self.assertTrue(result["ready"])
+        self.assertEqual(result["same_receipt_replay_variance"], 0)
+        self.assertEqual(
+            [row["canonical_stage"] for row in result["score_stage_values"]],
+            ["0", "0"],
+        )
+        self.assertNotIn("output", result["allowed_inputs"])
+        self.assertFalse(result["production_readiness_authority"])
+
+    def test_source_trust_runs_before_and_after_receipt_verification(self) -> None:
+        order: list[str] = []
+        verification = {
+            "status": VERIFICATION_PASS,
+            "offline": True,
+            "critical_count_sum": 0,
+            "receipt_root_identity": "ROOT-TEST",
+            "targets": [
+                {
+                    "target_id": target_id,
+                    "forbidden_runtime_inputs_read": [],
+                    "metrics": {
+                        "total_score_recomputed": 0.0,
+                        "canonical_stage_recomputed": "0",
+                        "component_count": 7,
+                        "judge_count": 21,
+                        "scoring_fact_count": 1,
+                        "source_count": 1,
+                        "anchor_count": 1,
+                        "provider_call_receipt_count": 1,
+                    },
+                }
+                for target_id in PHASE101_TARGET_IDS
+            ],
+        }
+
+        def trusted(*_args, **_kwargs):
+            order.append("trust")
+            return True
+
+        def verify(*_args, **_kwargs):
+            order.append("verify")
+            return deepcopy(verification)
+
+        with patch(
+            "e2r.research_brain.researcher_mode.tracked_readiness."
+            "_tracked_receipt_root_is_current",
+            side_effect=trusted,
+        ), patch(
+            "e2r.research_brain.researcher_mode.tracked_readiness.verify_receipts",
+            side_effect=verify,
+        ):
+            result = compile_tracked_readiness("unused")
+        self.assertEqual(order, ["trust", "verify", "verify", "trust"])
+        self.assertEqual(result["status"], TRACKED_READINESS_PASS)
+
+    def test_canonical_bootstrap_is_isolated_and_pipeline_failure_propagates(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            marker = root / "sitecustomize-ran"
+            (root / "sitecustomize.py").write_text(
+                f"from pathlib import Path\nPath({str(marker)!r}).write_text('ran')\n",
+                encoding="utf-8",
+            )
+            environment = dict(os.environ)
+            environment["PYTHONPATH"] = str(root)
+            isolated = subprocess.run(
+                [sys.executable, "-I", "-S", "-"],
+                input="pass\n",
+                text=True,
+                env=environment,
+                check=False,
+            )
+            self.assertEqual(isolated.returncode, 0)
+            self.assertFalse(marker.exists())
+
+        missing = subprocess.run(
+            [
+                "bash",
+                "-o",
+                "pipefail",
+                "-c",
+                "git show HEAD:missing-readiness-bootstrap.py | "
+                f"{shlex.quote(sys.executable)} -I -S -",
+            ],
+            cwd=self.ROOT,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+        self.assertNotEqual(missing.returncode, 0)
+        readme = (
+            self.ROOT / "docs/operational/e2r_v6_operational_cutover/README.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn("set -o pipefail", readme)
+        self.assertIn("python3 -I -S - --repo-root .", readme)
+
+    def test_untracked_temporary_receipts_cannot_claim_tracked_readiness(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "receipts"
+            for target_id in PHASE101_TARGET_IDS:
+                self._fixture(root, target_id=target_id)
+            result = compile_tracked_readiness(root)
+        self.assertEqual(result["status"], TRACKED_READINESS_FAIL)
+        self.assertFalse(result["criteria"]["receipt_root_is_exact_git_tracked_root"])
+
+    def test_unrelated_git_repository_cannot_claim_clean_clone_identity(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory) / "unrelated"
+            repo.mkdir()
+            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+            subprocess.run(
+                [
+                    "git",
+                    "remote",
+                    "add",
+                    "origin",
+                    "git@github.com:example/unrelated.git",
+                ],
+                cwd=repo,
+                check=True,
+            )
+            (repo / "placeholder").write_text("unrelated\n", encoding="utf-8")
+            subprocess.run(["git", "add", "placeholder"], cwd=repo, check=True)
+            subprocess.run(
+                [
+                    "git",
+                    "-c",
+                    "user.name=test",
+                    "-c",
+                    "user.email=test@example.com",
+                    "commit",
+                    "-qm",
+                    "initial",
+                ],
+                cwd=repo,
+                check=True,
+            )
+            self.assertFalse(_repository_identity_is_trusted(repo))
+
+    def test_repository_identity_binds_the_entire_worktree_to_head(self) -> None:
+        repo = self.ROOT.resolve()
+        head = "a" * 40
+        blob = "b" * 40
+
+        def git_output(argv, **_kwargs):
+            command = tuple(argv[1:])
+            if command == ("rev-parse", "--show-toplevel"):
+                return str(repo) + "\n"
+            if command == ("remote", "get-url", "origin"):
+                return "https://github.com/Daikisong/stock_agent.git\n"
+            if command == ("rev-parse", "HEAD"):
+                return head + "\n"
+            if command == ("rev-parse", "refs/remotes/origin/main"):
+                return head + "\n"
+            if command and command[0] == "rev-parse" and command[1].startswith("HEAD:"):
+                return blob + "\n"
+            if command[0:2] == ("ls-files", "-s"):
+                return f"100644 {blob} 0\t{command[-1]}\n"
+            if command[0:2] == ("hash-object", "--"):
+                return blob + "\n"
+            if command == (
+                "status",
+                "--porcelain=v1",
+                "--untracked-files=all",
+            ):
+                return " M src/e2r/research_brain/researcher_mode/tracked_receipts.py\n"
+            raise AssertionError(command)
+
+        with patch(
+            "e2r.research_brain.researcher_mode.tracked_readiness."
+            "subprocess.check_output",
+            side_effect=git_output,
+        ), patch(
+            "e2r.research_brain.researcher_mode.tracked_readiness.subprocess.run",
+            return_value=subprocess.CompletedProcess([], 0),
+        ):
+            self.assertFalse(_repository_identity_is_trusted(repo))
+
+    def test_assume_unchanged_cannot_hide_verifier_dependency_tamper(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory) / "repo"
+            dependency = repo / "src" / "e2r" / "verifier_dep.py"
+            config = repo / "configs" / "contract.json"
+            dependency.parent.mkdir(parents=True)
+            config.parent.mkdir()
+            dependency.write_text("VALUE = 1\n", encoding="utf-8")
+            config.write_text("{}\n", encoding="utf-8")
+            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(
+                [
+                    "git",
+                    "-c",
+                    "user.name=test",
+                    "-c",
+                    "user.email=test@example.com",
+                    "commit",
+                    "-qm",
+                    "fixture",
+                ],
+                cwd=repo,
+                check=True,
+            )
+            self.assertTrue(_verifier_dependencies_match_head(repo))
+            subprocess.run(
+                ["git", "update-index", "--assume-unchanged", str(dependency.relative_to(repo))],
+                cwd=repo,
+                check=True,
+            )
+            dependency.write_text("VALUE = 999\n", encoding="utf-8")
+            status = subprocess.check_output(
+                ["git", "status", "--porcelain=v1"], cwd=repo, text=True
+            )
+            self.assertEqual(status, "")
+            self.assertFalse(_verifier_dependencies_match_head(repo))
+
+    def test_readiness_output_cannot_alias_or_overwrite_receipt_input(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "receipts"
+            target = self._fixture(root, target_id=PHASE101_TARGET_IDS[0])
+            self.assertTrue(_output_overlaps_receipts(target / "result.json", root))
+            hardlink = Path(directory) / "outside-result.json"
+            os.link(target / "score_receipt.json", hardlink)
+            self.assertTrue(_output_overlaps_receipts(hardlink, root))
+
+    def test_readiness_writer_never_creates_through_a_swapped_symlink_parent(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            victim = root / "receipts"
+            victim.mkdir()
+            swapped_parent = root / "outside"
+            swapped_parent.symlink_to(victim, target_is_directory=True)
+            output = swapped_parent / "new-parent" / "readiness.json"
+            with self.assertRaises(OSError):
+                _write_readiness_json_atomic(output, {"status": "forbidden"})
+            self.assertFalse((victim / "new-parent").exists())
+
+    def test_tracked_readiness_fails_when_one_target_is_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "receipts"
+            self._fixture(root, target_id=PHASE101_TARGET_IDS[0])
+            with patch(
+                "e2r.research_brain.researcher_mode.tracked_readiness."
+                "_tracked_receipt_root_is_current",
+                return_value=True,
+            ):
+                result = compile_tracked_readiness(root)
+        self.assertEqual(result["status"], TRACKED_READINESS_FAIL)
+        self.assertFalse(result["ready"])
+        self.assertFalse(result["criteria"]["exact_target_roster"])
 
     def test_component_score_tamper_fails_even_when_json_is_valid(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

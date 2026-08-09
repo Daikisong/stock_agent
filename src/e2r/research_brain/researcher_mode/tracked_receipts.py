@@ -258,6 +258,10 @@ _FORBIDDEN_IDENTITY_PATTERNS = (
     re.compile(r"(?:^|[\s\"'=:(])(?:\\\\|//)[^\s\"']+"),
     re.compile(r"(?:^|[\s\"'=:(])~/(?:[^/\s\"']+/)*[^/\s\"']*"),
 )
+# Audit-only denylist.  These names must never be used to construct a provider,
+# open an endpoint, or select a fallback.  Keeping the markers here lets the
+# offline verifier reject old/local-model lineage without importing or calling
+# any local-model runtime.
 _FORBIDDEN_LOCAL_PROVIDER_PATTERNS = tuple(
     re.compile(pattern, re.IGNORECASE)
     for pattern in (

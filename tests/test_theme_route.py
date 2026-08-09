@@ -108,7 +108,7 @@ class ThemeRouteTests(unittest.TestCase):
         self.assertIn("revision estimate consensus", messages[1]["content"])
 
     def test_codex_cli_theme_provider_uses_schema_and_validates_output(self):
-        provider = CodexCLIThemeRouteProvider(codex_command="codex", working_directory="/repo", timeout_seconds=30)
+        provider = CodexCLIThemeRouteProvider(working_directory="/repo", timeout_seconds=30)
 
         def fake_run(command, *, prompt, timeout):
             self.assertIn("codex", command[0])
@@ -160,7 +160,7 @@ class ThemeRouteTests(unittest.TestCase):
         self.assertNotIn("stage_override", output.normalized_parsed_fields)
 
     def test_codex_cli_theme_provider_reports_cli_failure(self):
-        provider = CodexCLIThemeRouteProvider(codex_command="codex")
+        provider = CodexCLIThemeRouteProvider()
         with patch(
             "e2r.llm.codex_theme_provider._run_codex_command",
             return_value=subprocess.CompletedProcess(["codex"], 1, "", "not logged in"),
@@ -173,7 +173,7 @@ class ThemeRouteTests(unittest.TestCase):
         self.assertIn("not logged in", output.blocked_reason)
 
     def test_codex_cli_theme_provider_reports_timeout(self):
-        provider = CodexCLIThemeRouteProvider(codex_command="codex", timeout_seconds=0.01)
+        provider = CodexCLIThemeRouteProvider(timeout_seconds=0.01)
         with patch(
             "e2r.llm.codex_theme_provider._run_codex_command",
             side_effect=subprocess.TimeoutExpired(cmd=["codex"], timeout=0.01),
@@ -186,7 +186,7 @@ class ThemeRouteTests(unittest.TestCase):
         self.assertEqual(output.blocked_reason, "codex_cli_timeout")
 
     def test_codex_cli_theme_provider_uses_output_json_before_nonzero_exit(self):
-        provider = CodexCLIThemeRouteProvider(codex_command="codex", working_directory="/repo", timeout_seconds=30)
+        provider = CodexCLIThemeRouteProvider(working_directory="/repo", timeout_seconds=30)
 
         def fake_run(command, *, prompt, timeout):
             output_path = Path(command[command.index("--output-last-message") + 1])
@@ -228,6 +228,9 @@ class ThemeRouteTests(unittest.TestCase):
         provider = build_theme_route_provider_from_env(
             {
                 "E2R_THEME_ROUTE_PROVIDER": "codex",
+                "E2R_CODEX_THEME_COMMAND": "local-provider",
+                "E2R_CODEX_THEME_PROFILE": "local-profile",
+                "E2R_CODEX_THEME_EXTRA_ARGS": "--config model_provider=local",
                 "E2R_CODEX_THEME_MODEL": "gpt-test",
                 "E2R_CODEX_THEME_TIMEOUT_SECONDS": "45",
             },
@@ -235,9 +238,22 @@ class ThemeRouteTests(unittest.TestCase):
         )
 
         self.assertIsInstance(provider, CodexCLIThemeRouteProvider)
-        self.assertEqual(provider.model, "gpt-test")
+        self.assertFalse(hasattr(provider, "model"))
         self.assertEqual(provider.timeout_seconds, 45.0)
         self.assertEqual(str(provider.working_directory), "/repo")
+        self.assertFalse(hasattr(provider, "codex_command"))
+        self.assertFalse(hasattr(provider, "profile"))
+        self.assertFalse(hasattr(provider, "extra_args"))
+        command = provider._command(
+            schema_path=Path("/tmp/schema.json"),
+            output_path=Path("/tmp/output.json"),
+        )
+        self.assertIn("--ignore-user-config", command)
+        self.assertIn("--ignore-rules", command)
+        self.assertNotIn("model_provider=local", command)
+
+        with self.assertRaises(TypeError):
+            CodexCLIThemeRouteProvider(codex_command="local-provider")
 
     def test_theme_route_provider_env_factory_loads_project_env_when_not_explicit(self):
         with tempfile.TemporaryDirectory() as directory, patch.dict("os.environ", {}, clear=True):
@@ -260,7 +276,7 @@ class ThemeRouteTests(unittest.TestCase):
                 os.chdir(old_cwd)
 
         self.assertIsInstance(provider, CodexCLIThemeRouteProvider)
-        self.assertEqual(provider.model, "gpt-env-file")
+        self.assertFalse(hasattr(provider, "model"))
         self.assertEqual(provider.timeout_seconds, 77.0)
         self.assertEqual(str(provider.working_directory), "/repo")
 
@@ -281,7 +297,7 @@ class ThemeRouteTests(unittest.TestCase):
                 os.chdir(old_cwd)
 
         self.assertIsInstance(provider, CodexCLIThemeRouteProvider)
-        self.assertEqual(provider.model, "gpt-operating")
+        self.assertFalse(hasattr(provider, "model"))
         self.assertEqual(provider.timeout_seconds, 88.0)
         self.assertEqual(str(provider.working_directory), "/repo")
 

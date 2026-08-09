@@ -1,4 +1,4 @@
-"""Structured provider transports for canonical Research Brain planners."""
+"""Codex-only structured transport for canonical Research Brain planners."""
 
 from __future__ import annotations
 
@@ -8,9 +8,15 @@ import re
 import signal
 import subprocess
 import tempfile
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping, Sequence
+
+from e2r.codex_cli_contract import (
+    CODEX_EXECUTABLE,
+    codex_isolation_args,
+    codex_subprocess_env,
+)
 
 
 class StructuredProviderUnavailable(RuntimeError):
@@ -31,18 +37,12 @@ class StructuredProviderResponse:
 
 @dataclass
 class CodexStructuredProviderTransport:
-    codex_command: str = "codex"
-    model: str | None = None
-    profile: str | None = None
     working_directory: str | Path | None = None
     timeout_seconds: float = 180.0
     sandbox: str = "read-only"
     approval_policy: str = "never"
-    extra_args: tuple[str, ...] = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
-        if not self.codex_command.strip():
-            raise ValueError("structured provider command must be non-empty")
         if self.timeout_seconds <= 0:
             raise ValueError("structured provider timeout must be positive")
         if not self.sandbox.strip() or not self.approval_policy.strip():
@@ -107,7 +107,7 @@ class CodexStructuredProviderTransport:
 
     def command(self, *, schema_path: Path, output_path: Path) -> list[str]:
         command = [
-            self.codex_command,
+            CODEX_EXECUTABLE,
             "--sandbox",
             self.sandbox,
             "--ask-for-approval",
@@ -123,11 +123,7 @@ class CodexStructuredProviderTransport:
         ]
         if self.working_directory is not None:
             command.extend(("-C", str(self.working_directory)))
-        if self.model and self.model != "codex-cli-default":
-            command.extend(("-m", self.model))
-        if self.profile:
-            command.extend(("-p", self.profile))
-        command.extend(self.extra_args)
+        command.extend(codex_isolation_args())
         command.append("-")
         return command
 
@@ -145,6 +141,7 @@ def run_codex_command(
         stderr=subprocess.PIPE,
         text=True,
         start_new_session=(os.name == "posix"),
+        env=codex_subprocess_env(),
     )
     try:
         stdout, stderr = process.communicate(prompt, timeout=timeout)
@@ -212,6 +209,7 @@ __all__ = [
     "StructuredProviderResponse",
     "StructuredProviderUnavailable",
     "clean_provider_error",
+    "codex_isolation_args",
     "json_object_from_text",
     "run_codex_command",
     "terminate_process_tree",

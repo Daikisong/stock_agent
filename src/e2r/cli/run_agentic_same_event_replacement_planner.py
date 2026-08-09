@@ -7,7 +7,6 @@ does not fetch, verify, score, or stage anything.
 from __future__ import annotations
 
 import argparse
-from dataclasses import replace
 import json
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -61,11 +60,6 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="Optional per-request Codex CLI timeout override.",
     )
     parser.add_argument(
-        "--reasoning-effort",
-        default=None,
-        help="Optional Codex model_reasoning_effort override, for example low.",
-    )
-    parser.add_argument(
         "--request-id",
         action="append",
         default=None,
@@ -93,7 +87,6 @@ def run_same_event_replacement_planner(
     run_provider: bool = False,
     working_directory: str | Path | None = None,
     timeout_seconds: float | None = None,
-    reasoning_effort: str | None = None,
     request_ids: Sequence[str] | None = None,
     max_requests: int | None = None,
     fetch_attempts_path: str | Path | None = None,
@@ -107,7 +100,6 @@ def run_same_event_replacement_planner(
         run_provider=run_provider,
         working_directory=working_directory,
         timeout_seconds=timeout_seconds,
-        reasoning_effort=reasoning_effort,
     )
 
     run_manifest = build_same_event_replacement_planner_run_manifest(
@@ -173,7 +165,6 @@ def _build_provider(
     run_provider: bool,
     working_directory: str | Path | None,
     timeout_seconds: float | None,
-    reasoning_effort: str | None,
 ) -> object | None:
     if not run_provider:
         return None
@@ -181,19 +172,13 @@ def _build_provider(
     if bundle is None:
         return None
     provider = _planner_from_bundle(bundle)
-    if isinstance(provider, CodexCLIAgenticEvidenceProvider):
-        updates: dict[str, object] = {}
-        if timeout_seconds is not None:
-            updates["timeout_seconds"] = timeout_seconds
-        clean_effort = (reasoning_effort or "").strip()
-        if clean_effort:
-            updates["extra_args"] = (
-                *provider.extra_args,
-                "-c",
-                f"model_reasoning_effort={json.dumps(clean_effort)}",
-            )
-        if updates:
-            provider = replace(provider, **updates)
+    if isinstance(provider, CodexCLIAgenticEvidenceProvider) and timeout_seconds is not None:
+        provider = CodexCLIAgenticEvidenceProvider(
+            working_directory=provider.working_directory,
+            timeout_seconds=timeout_seconds,
+            sandbox=provider.sandbox,
+            approval_policy=provider.approval_policy,
+        )
     return provider
 
 
@@ -304,7 +289,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         run_provider=bool(args.run_provider),
         working_directory=args.working_directory,
         timeout_seconds=args.timeout_seconds,
-        reasoning_effort=args.reasoning_effort,
         request_ids=args.request_id,
         max_requests=args.max_requests,
         fetch_attempts_path=args.fetch_attempts,

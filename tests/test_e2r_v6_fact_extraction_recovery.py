@@ -1,14 +1,24 @@
 from __future__ import annotations
 
-from contextlib import redirect_stderr, redirect_stdout
+from contextlib import redirect_stdout
 from io import StringIO
+from pathlib import Path
+import re
 from types import SimpleNamespace
 from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import Mock, patch
 
+from e2r.codex_cli_contract import codex_subprocess_env
 from e2r.cli import resume_e2r_researcher_fact_extraction as cli
+from e2r.cli import run_agentic_adjudication as adjudication_cli
+from e2r.cli import run_agentic_asof_snapshot_verifier as asof_verifier_cli
+from e2r.cli import run_agentic_claim_extraction as claim_extraction_cli
+from e2r.cli import run_agentic_primitive_mapping as primitive_mapping_cli
+from e2r.cli import run_agentic_replacement_snapshot_verifier as replacement_verifier_cli
+from e2r.cli import run_agentic_same_event_replacement_planner as replacement_planner_cli
 from e2r.cli import run_e2r_researcher_mode_until_pass as full_cli
+from e2r.production.claim_extraction.extractor_provider import CodexCLIExtractorProvider
 from e2r.research_brain.planning import provider_transport
 from e2r.research_brain.researcher_mode import component_researcher
 import e2r.research_brain.researcher_mode as researcher_mode
@@ -20,7 +30,70 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
 
 
 class FactExtractionRecoveryCliTest(unittest.TestCase):
+    def test_local_model_names_exist_only_in_audit_only_source_files(self):
+        """Static guard: production source cannot regain a local LLM route.
+
+        The two allowed files contain denylist tombstones only.  They inspect
+        persisted lineage and reject it; neither file constructs a provider or
+        opens a model endpoint.
+        """
+
+        source_root = Path(__file__).resolve().parents[1] / "src" / "e2r"
+        allowed_audit_only_files = {
+            source_root
+            / "research_brain"
+            / "researcher_mode"
+            / "source_graph_explorer.py",
+            source_root
+            / "research_brain"
+            / "researcher_mode"
+            / "tracked_receipts.py",
+        }
+        forbidden_runtime_pattern = re.compile(
+            r"(?i)(?:\bollama\b|\bqwen(?:\d+(?:\.\d+)?)?\b|"
+            r"llama\.cpp|\blm[ _-]?studio\b|11434)"
+        )
+        matching_files = {
+            path
+            for path in source_root.rglob("*.py")
+            if forbidden_runtime_pattern.search(path.read_text(encoding="utf-8"))
+        }
+
+        self.assertEqual(matching_files, allowed_audit_only_files)
+
+    def test_codex_subprocess_environment_drops_every_routing_override(self):
+        # Pure dictionary test: this does not open a socket or start a provider.
+        # The values are deliberately inert and prove that even named routing
+        # variables cannot cross the Codex subprocess boundary.
+        sanitized = codex_subprocess_env(
+            {
+                "PATH": "/usr/bin",
+                "HOME": "/home/test",
+                "OPENAI_API_KEY": "secret",
+                "OPENAI_BASE_URL": "https://forbidden.invalid/v1",
+                "OPENAI_API_BASE": "https://forbidden.invalid/v1",
+                "OLLAMA_HOST": "https://forbidden.invalid",
+                "HTTP_PROXY": "https://forbidden.invalid",
+                "HTTPS_PROXY": "https://forbidden.invalid",
+                "CODEX_HOME": "/tmp/redirected-config",
+                "E2R_CODEX_PLANNER_COMMAND": "local-provider",
+            }
+        )
+
+        self.assertEqual(sanitized["PATH"], "/usr/bin")
+        self.assertEqual(sanitized["HOME"], "/home/test")
+        self.assertEqual(sanitized["OPENAI_API_KEY"], "secret")
+        self.assertNotIn("OPENAI_BASE_URL", sanitized)
+        self.assertNotIn("OPENAI_API_BASE", sanitized)
+        self.assertNotIn("OLLAMA_HOST", sanitized)
+        self.assertNotIn("HTTP_PROXY", sanitized)
+        self.assertNotIn("HTTPS_PROXY", sanitized)
+        self.assertNotIn("CODEX_HOME", sanitized)
+        self.assertNotIn("E2R_CODEX_PLANNER_COMMAND", sanitized)
+
     def test_local_llm_runtime_types_are_not_importable_or_exported(self):
+        # Denylist regression only.  Importing these production modules must
+        # never expose a constructible local-model runtime.
         self.assertFalse(
             hasattr(provider_transport, "OllamaStructuredProviderTransport")
         )
@@ -127,50 +200,49 @@ class FactExtractionRecoveryCliTest(unittest.TestCase):
         self.assertEqual(status, 0)
 
     def test_clis_do_not_expose_a_local_llm_provider_or_option(self):
-        recovery_base = [
-            "--as-of-date",
-            "2026-07-12",
-            "--symbols",
-            "005930",
-            "--archetype",
-            "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-            "--output-root",
-            "output/recovery",
-        ]
-        full_base = [
-            *recovery_base,
-            "--live-materialization-authorized",
-            "true",
-            "--checkpoint-resume",
-            "true",
-            "--gold-lane-isolated",
-            "true",
-            "--require-researcher-parity",
-            "true",
-        ]
-        forbidden_suffixes = (
-            ("--research-provider", "ollama"),
-            ("--research-provider", "qwen"),
-            ("--ollama-base-url", "http://127.0.0.1:11434"),
-            ("--ollama-model", "local-model"),
-            ("--ollama-context-length", "65536"),
-            ("--ollama-max-output-tokens", "4096"),
-            ("--ollama-prompt-character-limit", "100000"),
-            ("--ollama-fact-document-chunk-chars", "50000"),
-            ("--ollama-timeout-seconds", "60"),
+        # Parser-only regression.  Inspect the parser schema without supplying
+        # an endpoint value or starting any provider process.
+        full_parser = full_cli.build_parser()
+        full_provider_action = next(
+            action
+            for action in full_parser._actions
+            if action.dest == "research_provider"
         )
-        for parser, base in (
-            (cli.build_parser(), recovery_base),
-            (full_cli.build_parser(), full_base),
-        ):
-            for suffix in forbidden_suffixes:
-                with (
-                    self.subTest(parser=parser.prog, suffix=suffix),
-                    self.assertRaises(SystemExit),
-                    redirect_stdout(StringIO()),
-                    redirect_stderr(StringIO()),
-                ):
-                    parser.parse_args([*base, *suffix])
+        self.assertEqual(
+            tuple(full_provider_action.choices or ()),
+            ("codex", "codex-subagent", "codex-collaboration"),
+        )
+        self.assertFalse(
+            any(
+                action.dest == "research_provider"
+                for action in cli.build_parser()._actions
+            )
+        )
+        agentic_parsers = (
+            adjudication_cli.build_arg_parser(),
+            asof_verifier_cli.build_arg_parser(),
+            claim_extraction_cli.build_arg_parser(),
+            primitive_mapping_cli.build_arg_parser(),
+            replacement_verifier_cli.build_arg_parser(),
+            replacement_planner_cli.build_arg_parser(),
+        )
+        for parser in (cli.build_parser(), full_parser, *agentic_parsers):
+            option_names = {
+                option
+                for action in parser._actions
+                for option in action.option_strings
+            }
+            self.assertFalse(
+                any(
+                    forbidden in option.casefold()
+                    for option in option_names
+                    for forbidden in ("ollama", "qwen")
+                )
+            )
+            self.assertNotIn("--reasoning-effort", option_names)
+
+        with self.assertRaises(TypeError):
+            CodexCLIExtractorProvider(model="custom-model")
 
     def test_full_and_recovery_clis_share_the_fact_transport_batch_option(self):
         recovery = cli.build_parser().parse_args(
