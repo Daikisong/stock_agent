@@ -277,6 +277,7 @@ def _validate_schema_definition(schema: Any, *, path: str) -> None:
         "properties",
         "required",
         "additionalProperties",
+        "prefixItems",
         "items",
         "minItems",
         "maxItems",
@@ -336,6 +337,17 @@ def _validate_schema_definition(schema: Any, *, path: str) -> None:
         raise ValueError(f"collaboration schema required invalid:{path}")
     if "items" in schema:
         _validate_schema_definition(schema["items"], path=f"{path}/*")
+    prefix_items = schema.get("prefixItems")
+    if "prefixItems" in schema:
+        if not isinstance(prefix_items, list) or not prefix_items:
+            raise ValueError(
+                f"collaboration schema prefixItems invalid:{path}"
+            )
+        for index, child in enumerate(prefix_items):
+            _validate_schema_definition(
+                child,
+                path=f"{path}/prefixItems/{index}",
+            )
     additional = schema.get("additionalProperties")
     if "additionalProperties" in schema and not isinstance(
         additional, (bool, Mapping)
@@ -427,9 +439,16 @@ def _validate_schema_instance(value: Any, schema: Any, *, path: str) -> None:
             raise ValueError(f"collaboration response schema violation:{path}:minItems")
         if "maxItems" in schema and len(value) > int(schema["maxItems"]):
             raise ValueError(f"collaboration response schema violation:{path}:maxItems")
+        prefix_items = schema.get("prefixItems") or ()
+        for index, child in enumerate(prefix_items[: len(value)]):
+            _validate_schema_instance(value[index], child, path=f"{path}/{index}")
         if "items" in schema:
-            for index, item in enumerate(value):
-                _validate_schema_instance(item, schema["items"], path=f"{path}/{index}")
+            for index in range(len(prefix_items), len(value)):
+                _validate_schema_instance(
+                    value[index],
+                    schema["items"],
+                    path=f"{path}/{index}",
+                )
     if isinstance(value, str):
         if len(value) < int(schema.get("minLength", 0)):
             raise ValueError(f"collaboration response schema violation:{path}:minLength")
