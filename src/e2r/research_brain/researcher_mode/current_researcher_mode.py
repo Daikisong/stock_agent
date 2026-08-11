@@ -4327,18 +4327,58 @@ def _attested_compiler_fact_addition_ids(
             old_claim_ids = set(
                 _fact_lineage_values(authority_by_id[fact_id], "claim_ids")
             )
-            old_claim_confidences = [
-                float(claim_by_id[claim_id].get("confidence"))
+            old_claim_rows = [
+                claim_by_id[claim_id]
                 for claim_id in old_claim_ids
                 if claim_id in claim_by_id
             ]
+            if len(old_claim_rows) != len(old_claim_ids) or not old_claim_rows:
+                raise ValueError(
+                    "enriched fact primary authority claim is unavailable"
+                )
+            old_claim_confidences = [
+                float(row.get("confidence")) for row in old_claim_rows
+            ]
+            primary_claim = claim_by_id.get(
+                str(primary.get("claim_id") or "")
+            )
+            primary_confidence = float(primary.get("claim_confidence"))
+            old_max_confidence = max(old_claim_confidences)
+            primary_is_stronger = (
+                primary_confidence > old_max_confidence + 1e-12
+            )
+            # Equal-confidence official corroboration is still monotonic.  The
+            # compiler uses claim-id ordering as its final deterministic
+            # tiebreaker, so adding a second official filing/release can change
+            # the representative source even though the old claim, quote and
+            # source remain present.  Admit only that narrow case; equal-strength
+            # media/general-web replacements remain fail-closed.
+            official_tiers = {
+                "REGULATORY_OFFICIAL",
+                "ISSUER_OFFICIAL",
+                "CUSTOMER_OFFICIAL",
+            }
+            primary_is_equal_official_corroboration = bool(
+                primary_claim is not None
+                and abs(primary_confidence - old_max_confidence) <= 1e-12
+                and str(primary_claim.get("source_tier") or "")
+                in official_tiers
+                and old_claim_rows
+                and all(
+                    str(row.get("source_tier") or "") in official_tiers
+                    for row in old_claim_rows
+                    if abs(float(row.get("confidence")) - old_max_confidence)
+                    <= 1e-12
+                )
+            )
             if (
-                len(old_claim_confidences) != len(old_claim_ids)
-                or str(primary.get("claim_id") or "") not in fact_claim_ids
+                str(primary.get("claim_id") or "") not in fact_claim_ids
                 or str(primary.get("source_independence_group") or "")
                 != str(current.get("source_independence_group") or "")
-                or float(primary.get("claim_confidence"))
-                <= max(old_claim_confidences)
+                or not (
+                    primary_is_stronger
+                    or primary_is_equal_official_corroboration
+                )
             ):
                 raise ValueError(
                     "enriched fact primary source changed without stronger current evidence"

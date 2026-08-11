@@ -2,7 +2,7 @@
 
 - exact verdict: `MEANINGFUL_E2R_RESEARCHER_PARITY_NOT_READY`
 - reviewer gate: `E2R_V5_INDEPENDENT_REVIEWER_GATE_FAIL`
-- reviewer critical sum: `9`
+- reviewer critical sum: `12`
 - failed reviewers: `F, G, J`
 
 ## Historical parity

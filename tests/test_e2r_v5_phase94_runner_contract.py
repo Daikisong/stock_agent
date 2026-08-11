@@ -439,19 +439,21 @@ def _authority_committed_snapshot(
 def _authority_fact_enrichment_fixture(
     *,
     new_confidence: float = 0.86,
+    old_source_family: str = "TRUSTED_BUSINESS_MEDIA",
+    new_source_family: str = "TRUSTED_BUSINESS_MEDIA",
 ):
     old_document = dict(
         _document(
             "SGDOC-" + "a" * 24,
-            "TRUSTED_BUSINESS_MEDIA",
-            "TRUSTED_BUSINESS_MEDIA:old.example",
+            old_source_family,
+            f"{old_source_family}:old.example",
         )
     )
     new_document = dict(
         _document(
             "SGDOC-" + "d" * 24,
-            "TRUSTED_BUSINESS_MEDIA",
-            "TRUSTED_BUSINESS_MEDIA:new.example",
+            new_source_family,
+            f"{new_source_family}:new.example",
         )
     )
     proposal_provider = FactProvider()
@@ -1059,6 +1061,22 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         )
         with self.assertRaisesRegex(ValueError, "without stronger"):
             attest(weak_primary)
+
+        equal_official_primary = _authority_fact_enrichment_fixture(
+            new_confidence=0.8,
+            old_source_family="OPENDART",
+            new_source_family="ISSUER_NEWSROOM",
+        )
+        self.assertNotEqual(
+            equal_official_primary["old_fact"]["source_independence_group"],
+            equal_official_primary["current_fact"][
+                "source_independence_group"
+            ],
+        )
+        self.assertEqual(
+            attest(equal_official_primary),
+            (equal_official_primary["old_fact"]["fact_id"],),
+        )
 
         semantic_drift = copy.deepcopy(positive)
         drifted_fact = dict(semantic_drift["current_fact"])
