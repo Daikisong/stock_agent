@@ -2532,7 +2532,16 @@ class ResearcherSourceGraphAcquirer:
         state["source_graph"] = graph.to_dict()
         if status != "QUERY_GENERATION_PENDING":
             state.pop("pending_query_generation_replay_context", None)
-        checkpoint = _finalize_checkpoint(state)
+        checkpoint_reused_without_progress = bool(
+            prior_checkpoint is not None
+            and _checkpoint_semantic_payload(state)
+            == _checkpoint_semantic_payload(prior_checkpoint)
+        )
+        checkpoint = (
+            dict(prior_checkpoint)
+            if checkpoint_reused_without_progress
+            else _finalize_checkpoint(state)
+        )
         audit = _audit_acquisition_run(
             config=config,
             checkpoint=checkpoint,
@@ -2576,6 +2585,9 @@ class ResearcherSourceGraphAcquirer:
             ),
             "pending_query_generation_replay_context_preserved": bool(
                 checkpoint.get("pending_query_generation_replay_context")
+            ),
+            "checkpoint_reused_without_progress": (
+                checkpoint_reused_without_progress
             ),
             "official_first_resolution_record_count": len(
                 checkpoint.get("official_first_resolution_records") or ()
@@ -3399,6 +3411,31 @@ def _checkpoint_hash(checkpoint: Mapping[str, Any]) -> str:
             "utf-8"
         )
     ).hexdigest()
+
+
+def _checkpoint_semantic_payload(
+    checkpoint: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Project state without the append-only checkpoint identity fields."""
+
+    return json.loads(
+        json.dumps(
+            {
+                key: value
+                for key, value in checkpoint.items()
+                if key
+                not in {
+                    "checkpoint_id",
+                    "checkpoint_hash",
+                    "epoch",
+                    "resumed_from_checkpoint_id",
+                }
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+            default=str,
+        )
+    )
 
 
 def _merge_official_documents(

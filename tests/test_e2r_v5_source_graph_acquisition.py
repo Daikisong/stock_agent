@@ -2054,6 +2054,54 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             second.checkpoint,
         )
 
+    def test_repeated_collaboration_ranking_wait_reuses_checkpoint_identity(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteRankingProvider(
+            queries=(QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        url = "https://customer.example.com/current-wait"
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp customer wait", url),)}
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={url: _document_text("customer-wait")}
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=1,
+            max_fetches_per_checkpoint=1,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+        )
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=first.checkpoint,
+        )
+
+        self.assertEqual(first.status, "CANDIDATE_RANKING_PENDING")
+        self.assertEqual(second.status, "CANDIDATE_RANKING_PENDING")
+        self.assertEqual(
+            second.checkpoint["checkpoint_id"],
+            first.checkpoint["checkpoint_id"],
+        )
+        self.assertEqual(
+            second.checkpoint["checkpoint_hash"],
+            first.checkpoint["checkpoint_hash"],
+        )
+        self.assertEqual(second.checkpoint["epoch"], first.checkpoint["epoch"])
+        self.assertTrue(second.audit["checkpoint_reused_without_progress"])
+
     def test_collaboration_pending_ranking_roster_survives_navigation_migration(
         self,
     ) -> None:

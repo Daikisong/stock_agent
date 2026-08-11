@@ -1312,8 +1312,8 @@ test_candidate_materiality_scope_attestation_binds_official_request (test_e2r_v5
 test_candidate_scope_attestation_fails_closed_on_request_tamper (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
 test_clean_resume_recovers_exact_peer_retry_after_primary_quarantine (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
 test_clean_resume_recovers_fact_pagination_origin_before_page_two (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
-test_concurrent_import_is_atomic_first_writer_wins (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... backfill_plan=/tmp/tmpevjzdc8v/backfill_plan.json
-{"as_of_date": "2026-07-01", "blockers": ["CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE"], "canonical_stage": "0", "command": "run_e2r_census_mode", "command_hashes": {"commit_hash": "30fad22698a047c87eb57ecb808eeab2f9db4959", "config_hash": "457b61686be8ada34510692aa0397f98b22be4ba2ec1eedffbb89c018ecf1ab3", "corpus_hash": "f101882840c61f1d0250a3f50b2ad7307a834e15672ebc0a38776481e560d0b8", "dirty_status_hash": "d896e3a49c141a3e46691afa633c9983d0e134df2ec0ff02a4b57a2d89cf0bff", "memory_hash": "98341bf8a27880cd5bee065340a3a16063986f74970b5899db4bca9f17336e12", "prompt_hash": "607819cc776d804ee9188351b88f09cd27e99ba9c42fda6df3c3e195424c7d45", "recipe_hash": "0ba8645a35367b4b56d316fa5c08ed3a40bd53d93a5c3bc8683e3a869e134ba0", "repo_dirty": true, "source_hash": "ec499d62a33b3face216285f6771a93131e6977789c867fec3fba4f65e967ea9"}, "command_run_id": "COMMAND-32de5270e9b1edb9d53a12a3", "mode": "census_selective_deep", "output_paths": {"command_audit": "output/test_legacy_cli_lockout/command_run_reproducibility_audit.json", "command_manifest": "output/test_legacy_cli_lockout/command_run_manifest.json", "pending": "output/test_legacy_cli_lockout/current_operation_source_pending.json"}, "production_runtime_ready": false, "raw_reference_score": null, "schema_version": "e2r_current_operation_source_pending_v1", "score_valid": false, "status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY", "universe": "krx"}
+test_concurrent_import_is_atomic_first_writer_wins (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... backfill_plan=/tmp/tmpkjiov6hw/backfill_plan.json
+{"as_of_date": "2026-07-01", "blockers": ["CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE"], "canonical_stage": "0", "command": "run_e2r_census_mode", "command_hashes": {"commit_hash": "538286e03fe304ae697c95d38058ac182a23acbd", "config_hash": "457b61686be8ada34510692aa0397f98b22be4ba2ec1eedffbb89c018ecf1ab3", "corpus_hash": "f101882840c61f1d0250a3f50b2ad7307a834e15672ebc0a38776481e560d0b8", "dirty_status_hash": "b7d76102a27503d49adb7ad345b822eb6b7179eec1573354927303d0b04b032f", "memory_hash": "98341bf8a27880cd5bee065340a3a16063986f74970b5899db4bca9f17336e12", "prompt_hash": "607819cc776d804ee9188351b88f09cd27e99ba9c42fda6df3c3e195424c7d45", "recipe_hash": "0ba8645a35367b4b56d316fa5c08ed3a40bd53d93a5c3bc8683e3a869e134ba0", "repo_dirty": true, "source_hash": "ec499d62a33b3face216285f6771a93131e6977789c867fec3fba4f65e967ea9"}, "command_run_id": "COMMAND-aa9132d13a39240b1eff8112", "mode": "census_selective_deep", "output_paths": {"command_audit": "output/test_legacy_cli_lockout/command_run_reproducibility_audit.json", "command_manifest": "output/test_legacy_cli_lockout/command_run_manifest.json", "pending": "output/test_legacy_cli_lockout/current_operation_source_pending.json"}, "production_runtime_ready": false, "raw_reference_score": null, "schema_version": "e2r_current_operation_source_pending_v1", "score_valid": false, "status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY", "universe": "krx"}
 {"canonical_readiness_eligible": false, "canonical_ready_label_allowed": false, "command": "run_e2r_census_v3_until_pass", "reason": "legacy command requires explicit diagnostic opt-in", "replacement": "python -m e2r.cli.run_e2r_current_operation", "status": "LEGACY_DIAGNOSTIC_ONLY"}
 INVALID_PARTIAL_OUTPUT
 NOT_READY
@@ -1324,10 +1324,10 @@ ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 dry_run=True
-planned_searches=/tmp/tmp9bxfkv1y/out/planned_searches.json
-summary=/tmp/tmp9bxfkv1y/out/case_coverage_summary.md
-matrix=/tmp/tmp9bxfkv1y/out/archetype_case_matrix.csv
-weights=/tmp/tmp9bxfkv1y/out/recommended_score_weights.md
+planned_searches=/tmp/tmpy0qockcw/out/planned_searches.json
+summary=/tmp/tmpy0qockcw/out/case_coverage_summary.md
+matrix=/tmp/tmpy0qockcw/out/archetype_case_matrix.csv
+weights=/tmp/tmpy0qockcw/out/recommended_score_weights.md
 ok
 test_dedicated_importer_cli_writes_only_validated_response_namespace (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
 test_default_composite_primary_keeps_normal_codex_cache_identity (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
@@ -1657,6 +1657,7 @@ test_parallel_score_authorities_have_file_and_line_lineage (test_e2r_v5_phase80_
 test_score_collapse_root_causes_use_current_leaf_metrics (test_e2r_v5_phase80_forensic.E2RV5Phase80ForensicTests) ... ok
 test_alternate_query_fact_lineage_closes_earlier_no_fact_query (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_authoritative_fact_context_accepts_exact_compiler_corroboration (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
+test_authoritative_fact_context_accepts_validated_multi_epoch_fact_superset (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_authoritative_fact_context_attests_pending_new_and_blocks_mixed_gap (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_authoritative_fact_context_fails_on_conflict_or_source_drift (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_authoritative_fact_context_preserves_no_gap_and_retirement (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
@@ -2005,6 +2006,7 @@ test_reference_url_is_ranked_and_fetched_on_checkpoint_resume (test_e2r_v5_sourc
 test_rejected_parent_still_discovers_and_fetches_linked_original (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
 test_release_footer_more_news_date_is_not_publication_date (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
 test_release_head_fallback_does_not_override_metadata_date (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
+test_repeated_collaboration_ranking_wait_reuses_checkpoint_identity (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
 test_repeated_identical_fetch_failure_returns_to_llm_for_alternate_route (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
 test_repeated_large_roster_omission_splits_and_recombines_every_candidate (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
 test_requested_family_is_not_coverage_until_matched_fetch (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
@@ -2248,6 +2250,9 @@ test_one_command_cli_rejects_output_symlink_alias_before_driver (test_e2r_v6_ope
 test_one_command_cli_requires_every_resume_and_verification_phase (test_e2r_v6_operational_acceptance.E2RV6OperationalAcceptanceTests) ... ok
 test_one_command_cli_writes_checkpoint_and_k_v_gate_without_false_success (test_e2r_v6_operational_acceptance.E2RV6OperationalAcceptanceTests) ... ok
 test_phase101_collaboration_wait_returns_before_receipt_export (test_e2r_v6_operational_acceptance.E2RV6OperationalAcceptanceTests) ... ok
+test_phase101_compact_stdout_recomputes_current_leaf_collaboration_wait (test_e2r_v6_operational_acceptance.E2RV6OperationalAcceptanceTests) ... ok
+test_phase101_current_leaf_with_existing_response_is_not_external_wait (test_e2r_v6_operational_acceptance.E2RV6OperationalAcceptanceTests) ... ok
+test_phase101_hard_runner_error_is_not_masked_by_an_older_open_request (test_e2r_v6_operational_acceptance.E2RV6OperationalAcceptanceTests) ... ok
 test_phase101_missing_receipts_runs_research_export_verify_in_order (test_e2r_v6_operational_acceptance.E2RV6OperationalAcceptanceTests) ... ok
 test_phase101_nonzero_canonical_runner_fails_closed_before_selection (test_e2r_v6_operational_acceptance.E2RV6OperationalAcceptanceTests) ... ok
 test_phase102_103_clean_clone_attempt_is_exact_and_fail_closed (test_e2r_v6_operational_acceptance.E2RV6OperationalAcceptanceTests) ... ok
@@ -3322,7 +3327,7 @@ test_source_route_patterns_exist_for_mandatory_required_primitives (test_researc
 test_balanced_candidate_selection_audit_prioritizes_missing_canaries (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... ok
 test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... {
   "all_failure_classes_resolved": true,
-  "audit_hash": "c6f929b5530fb7166b3d4eda1a8c9176ede8e1c8a46eb84deff340ade21fdbff",
+  "audit_hash": "30cc3f58202aaf0a3e77804484811eb877ecdd57e347bf5d387fe2bb841161c4",
   "caller_attestation_trusted": false,
   "critical_count_sum": 0,
   "critical_counts": {
@@ -3367,10 +3372,10 @@ test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to
       "clean_rerun_verified": true,
       "failure_class": "RECEIPT_LINEAGE_BROKEN",
       "file_path": "src/e2r/example.py",
-      "first_parent": "39932dd3d2c9d0c43442702498991e4de33a39e9",
+      "first_parent": "7006a0b1deeb9d6824f1541d08fb3e9769343a0e",
       "focused_tests_verified": true,
       "iteration_id": "E2RREPAIR-0123456789abcdef01234567",
-      "patch_commit": "db2e677a8b7fb0bfee2d2ca7c0992c7b419e425b",
+      "patch_commit": "04300d60ed9fdaf3e13216c51b8474e7c1df1337",
       "patch_commit_verified": true,
       "remaining_blocker_count": 0,
       "resolved": true,
@@ -3380,7 +3385,7 @@ test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to
   "iteration_count": 1,
   "iteration_roster_hash": "fd51155a695662b86207e47b411efb4cff4890316e2e4ba93ca43b01ffede8e2",
   "journal_path": "self_repair_iterations.jsonl",
-  "journal_sha256": "f581959584d87e0209221cba6bbfcc8fba5b2c9a7a171b311f0e9f4be38403d8",
+  "journal_sha256": "63e615b90773b08a161026e7c980f7e8bcc06c2f3cbec7da842fa30f8f227e55",
   "production_readiness_authority": false,
   "schema_version": "e2r_v6_operational_self_repair_audit_v1",
   "score_or_stage_authority": false,
@@ -3404,11 +3409,11 @@ test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to
     "TRIGGER_LANE_DISCONNECTED": 0
   }
 }
-{"audit": {"all_failure_classes_resolved": true, "audit_hash": "c6f929b5530fb7166b3d4eda1a8c9176ede8e1c8a46eb84deff340ade21fdbff", "caller_attestation_trusted": false, "critical_count_sum": 0, "critical_counts": {"after_hash_mismatch_count": 0, "before_hash_mismatch_count": 0, "clean_rerun_failure_count": 0, "duplicate_iteration_id_count": 0, "focused_test_failure_count": 0, "invalid_iteration_count": 0, "journal_empty_count": 0, "journal_missing_count": 0, "journal_parse_error_count": 0, "remaining_blocker_count": 0, "unknown_failure_class_count": 0, "unresolved_failure_class_count": 0, "unverifiable_patch_commit_count": 0}, "failure_class_counts": {"ABSOLUTE_PATH_IDENTITY": 0, "ARTIFACT_LIFECYCLE_CONTRADICTION": 0, "CLEAN_CLONE_DEPENDENCY": 0, "CROSS_ARCHETYPE_RESEARCH_INCOMPLETE": 0, "CURRENT_UNIVERSE_MATERIALIZATION_FAILED": 0, "FULL_TEST_STALE": 0, "L5_RESEARCH_INCOMPLETE": 0, "NATURAL_CANDIDATE_ZERO": 0, "PROVIDER_ROUTE_MISMATCH": 0, "RECEIPT_LINEAGE_BROKEN": 1, "RECEIPT_VALUE_MISSING": 0, "SCORE_STAGE_ATOMICITY_FAILURE": 0, "SECRET_LEAK": 0, "TARGET_SPECIFIC_OVERFIT": 0, "TRIGGER_LANE_DISCONNECTED": 0}, "fixed_iteration_count_is_completion_authority": false, "iteration_audits": [{"after_hash_recomputed": "9ef99f7ec60e17fecea712bc2edd911ab8c7eb5da960a24b36b3251755567a1d", "after_hash_verified": true, "before_hash_recomputed": "a94be6152ca489c4b76613643550f13f4cab89adcbe1aaa09c2a23a91273622d", "before_hash_verified": true, "clean_rerun_verified": true, "failure_class": "RECEIPT_LINEAGE_BROKEN", "file_path": "src/e2r/example.py", "first_parent": "39932dd3d2c9d0c43442702498991e4de33a39e9", "focused_tests_verified": true, "iteration_id": "E2RREPAIR-0123456789abcdef01234567", "patch_commit": "db2e677a8b7fb0bfee2d2ca7c0992c7b419e425b", "patch_commit_verified": true, "remaining_blocker_count": 0, "resolved": true, "shape_valid": true}], "iteration_count": 1, "iteration_roster_hash": "fd51155a695662b86207e47b411efb4cff4890316e2e4ba93ca43b01ffede8e2", "journal_path": "self_repair_iterations.jsonl", "journal_sha256": "f581959584d87e0209221cba6bbfcc8fba5b2c9a7a171b311f0e9f4be38403d8", "production_readiness_authority": false, "schema_version": "e2r_v6_operational_self_repair_audit_v1", "score_or_stage_authority": false, "status": "E2R_V6_OPERATIONAL_SELF_REPAIR_PASS", "test_mode": false, "unresolved_failure_class_counts": {"ABSOLUTE_PATH_IDENTITY": 0, "ARTIFACT_LIFECYCLE_CONTRADICTION": 0, "CLEAN_CLONE_DEPENDENCY": 0, "CROSS_ARCHETYPE_RESEARCH_INCOMPLETE": 0, "CURRENT_UNIVERSE_MATERIALIZATION_FAILED": 0, "FULL_TEST_STALE": 0, "L5_RESEARCH_INCOMPLETE": 0, "NATURAL_CANDIDATE_ZERO": 0, "PROVIDER_ROUTE_MISMATCH": 0, "RECEIPT_LINEAGE_BROKEN": 0, "RECEIPT_VALUE_MISSING": 0, "SCORE_STAGE_ATOMICITY_FAILURE": 0, "SECRET_LEAK": 0, "TARGET_SPECIFIC_OVERFIT": 0, "TRIGGER_LANE_DISCONNECTED": 0}}, "status": "PASS"}
+{"audit": {"all_failure_classes_resolved": true, "audit_hash": "30cc3f58202aaf0a3e77804484811eb877ecdd57e347bf5d387fe2bb841161c4", "caller_attestation_trusted": false, "critical_count_sum": 0, "critical_counts": {"after_hash_mismatch_count": 0, "before_hash_mismatch_count": 0, "clean_rerun_failure_count": 0, "duplicate_iteration_id_count": 0, "focused_test_failure_count": 0, "invalid_iteration_count": 0, "journal_empty_count": 0, "journal_missing_count": 0, "journal_parse_error_count": 0, "remaining_blocker_count": 0, "unknown_failure_class_count": 0, "unresolved_failure_class_count": 0, "unverifiable_patch_commit_count": 0}, "failure_class_counts": {"ABSOLUTE_PATH_IDENTITY": 0, "ARTIFACT_LIFECYCLE_CONTRADICTION": 0, "CLEAN_CLONE_DEPENDENCY": 0, "CROSS_ARCHETYPE_RESEARCH_INCOMPLETE": 0, "CURRENT_UNIVERSE_MATERIALIZATION_FAILED": 0, "FULL_TEST_STALE": 0, "L5_RESEARCH_INCOMPLETE": 0, "NATURAL_CANDIDATE_ZERO": 0, "PROVIDER_ROUTE_MISMATCH": 0, "RECEIPT_LINEAGE_BROKEN": 1, "RECEIPT_VALUE_MISSING": 0, "SCORE_STAGE_ATOMICITY_FAILURE": 0, "SECRET_LEAK": 0, "TARGET_SPECIFIC_OVERFIT": 0, "TRIGGER_LANE_DISCONNECTED": 0}, "fixed_iteration_count_is_completion_authority": false, "iteration_audits": [{"after_hash_recomputed": "9ef99f7ec60e17fecea712bc2edd911ab8c7eb5da960a24b36b3251755567a1d", "after_hash_verified": true, "before_hash_recomputed": "a94be6152ca489c4b76613643550f13f4cab89adcbe1aaa09c2a23a91273622d", "before_hash_verified": true, "clean_rerun_verified": true, "failure_class": "RECEIPT_LINEAGE_BROKEN", "file_path": "src/e2r/example.py", "first_parent": "7006a0b1deeb9d6824f1541d08fb3e9769343a0e", "focused_tests_verified": true, "iteration_id": "E2RREPAIR-0123456789abcdef01234567", "patch_commit": "04300d60ed9fdaf3e13216c51b8474e7c1df1337", "patch_commit_verified": true, "remaining_blocker_count": 0, "resolved": true, "shape_valid": true}], "iteration_count": 1, "iteration_roster_hash": "fd51155a695662b86207e47b411efb4cff4890316e2e4ba93ca43b01ffede8e2", "journal_path": "self_repair_iterations.jsonl", "journal_sha256": "63e615b90773b08a161026e7c980f7e8bcc06c2f3cbec7da842fa30f8f227e55", "production_readiness_authority": false, "schema_version": "e2r_v6_operational_self_repair_audit_v1", "score_or_stage_authority": false, "status": "E2R_V6_OPERATIONAL_SELF_REPAIR_PASS", "test_mode": false, "unresolved_failure_class_counts": {"ABSOLUTE_PATH_IDENTITY": 0, "ARTIFACT_LIFECYCLE_CONTRADICTION": 0, "CLEAN_CLONE_DEPENDENCY": 0, "CROSS_ARCHETYPE_RESEARCH_INCOMPLETE": 0, "CURRENT_UNIVERSE_MATERIALIZATION_FAILED": 0, "FULL_TEST_STALE": 0, "L5_RESEARCH_INCOMPLETE": 0, "NATURAL_CANDIDATE_ZERO": 0, "PROVIDER_ROUTE_MISMATCH": 0, "RECEIPT_LINEAGE_BROKEN": 0, "RECEIPT_VALUE_MISSING": 0, "SCORE_STAGE_ATOMICITY_FAILURE": 0, "SECRET_LEAK": 0, "TARGET_SPECIFIC_OVERFIT": 0, "TRIGGER_LANE_DISCONNECTED": 0}}, "status": "PASS"}
 {
   "status": "NOT_READY",
   "paths": {
-    "summary": "/tmp/tmp5347ejpa/out/summary.json"
+    "summary": "/tmp/tmp0x60vfa_/out/summary.json"
   }
 }
 ok
@@ -7166,17 +7171,17 @@ test_worldex_audit_opinion_with_samsung_customer_mention_does_not_create_samsung
 test_zoom_like_one_off_demand_news_is_marked_one_off (test_web_research_runner.WebResearchRunnerTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 7046 tests in 655.448s
+Ran 7051 tests in 638.688s
 
 OK
 {
-  "acceptance_report_path": "/home/eorb915/projects/stock_agent/output/tmpnn264jgb/research_to_runtime_acceptance_report.md",
-  "all_archetype_next_attempt_plan_path": "/home/eorb915/projects/stock_agent/output/tmpnn264jgb/all_archetype_next_runtime_attempt_plan_2026-07-05.json",
+  "acceptance_report_path": "/home/eorb915/projects/stock_agent/output/tmp8133a7r0/research_to_runtime_acceptance_report.md",
+  "all_archetype_next_attempt_plan_path": "/home/eorb915/projects/stock_agent/output/tmp8133a7r0/all_archetype_next_runtime_attempt_plan_2026-07-05.json",
   "all_archetype_next_attempt_plan_row_count": 36,
   "all_archetype_next_source_task_count": 126,
-  "all_archetype_runtime_execution_manifest_path": "/home/eorb915/projects/stock_agent/output/tmpnn264jgb/all_archetype_runtime_execution_manifest_2026-07-05.json",
+  "all_archetype_runtime_execution_manifest_path": "/home/eorb915/projects/stock_agent/output/tmp8133a7r0/all_archetype_runtime_execution_manifest_2026-07-05.json",
   "all_archetype_runtime_execution_seed_event_count": 126,
-  "all_archetype_runtime_status_matrix_path": "/home/eorb915/projects/stock_agent/output/tmpnn264jgb/all_archetype_runtime_status_matrix_2026-07-05.json",
+  "all_archetype_runtime_status_matrix_path": "/home/eorb915/projects/stock_agent/output/tmp8133a7r0/all_archetype_runtime_status_matrix_2026-07-05.json",
   "all_archetype_runtime_status_row_count": 36,
   "blockers": [
     "FULL_THESIS_ARCHETYPE_DIVERSITY_BELOW_MINIMUM",
@@ -7189,15 +7194,15 @@ OK
   "legacy_internal_meaningful_pass": false,
   "mandatory_replay_accepted_claim_count": 6,
   "mandatory_replay_source_proxy_repair_task_count": 18,
-  "matrix_path": "/home/eorb915/projects/stock_agent/output/tmpnn264jgb/research_to_runtime_parity_matrix_2026-07-05.json",
+  "matrix_path": "/home/eorb915/projects/stock_agent/output/tmp8133a7r0/research_to_runtime_parity_matrix_2026-07-05.json",
   "max_iterations_requested": 1,
   "mode": "full_thesis_balanced",
   "planner_bias_status": "PLANNER_ARCHETYPE_ROUTING_BIAS_PASS",
-  "readiness_verdict_path": "/home/eorb915/projects/stock_agent/output/tmpnn264jgb/research_to_runtime_readiness_verdict.md",
+  "readiness_verdict_path": "/home/eorb915/projects/stock_agent/output/tmp8133a7r0/research_to_runtime_readiness_verdict.md",
   "research_case_count": 11501,
   "research_memory_card_count": 36,
   "research_memory_followup_task_count": 0,
-  "root_cause_path": "/home/eorb915/projects/stock_agent/output/tmpnn264jgb/research_to_runtime_root_cause_2026-07-05.md",
+  "root_cause_path": "/home/eorb915/projects/stock_agent/output/tmp8133a7r0/research_to_runtime_root_cause_2026-07-05.md",
   "self_repair_enabled": false,
   "self_repair_history": [
     {
@@ -7218,7 +7223,7 @@ OK
         "C24_BIO_TRIAL_DATA_EVENT_RISK",
         "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
       ],
-      "output_root": "/tmp/tmphvwqbbfn/runtime",
+      "output_root": "/tmp/tmpwjqmf54h/runtime",
       "required_positive_missing_rate": 0.0
     }
   ],
@@ -7226,8 +7231,8 @@ OK
   "self_repair_stop_reason": null,
   "source_route_pattern_count": 2049,
   "status": "LEGACY_DIAGNOSTIC_ONLY",
-  "summary_path": "/home/eorb915/projects/stock_agent/output/tmpnn264jgb/research_to_runtime_parity_matrix_2026-07-05.md",
-  "v2_audit_path": "/home/eorb915/projects/stock_agent/output/tmpnn264jgb/census_mode_v4_full_thesis_evidence_completion_audit_v2.json"
+  "summary_path": "/home/eorb915/projects/stock_agent/output/tmp8133a7r0/research_to_runtime_parity_matrix_2026-07-05.md",
+  "v2_audit_path": "/home/eorb915/projects/stock_agent/output/tmp8133a7r0/census_mode_v4_full_thesis_evidence_completion_audit_v2.json"
 }
 {
   "acceptance_report_path": "docs/operational/fake_acceptance.md",

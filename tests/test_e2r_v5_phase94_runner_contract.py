@@ -669,6 +669,120 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             42,
         )
 
+    def test_authoritative_fact_context_accepts_validated_multi_epoch_fact_superset(self):
+        rows = _authority_fact_rows(3)
+        ledger = _authority_ledger(rows)
+        base_source_id = "SGCHECK-" + "1" * 24
+        source_checkpoint = {
+            **_authority_source_checkpoint(),
+            "epoch": 9,
+            "checkpoint_id": "SGCHECK-" + "3" * 24,
+            "checkpoint_hash": "3" * 64,
+            "resumed_from_checkpoint_id": "SGCHECK-" + "2" * 24,
+        }
+        epoch = SimpleNamespace(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            checkpoint_id=ledger.checkpoint_id,
+            checkpoint_hash=ledger.checkpoint_hash,
+            source_graph_checkpoint_id=base_source_id,
+        )
+        progress = {
+            "schema_version": "e2r_v5_phase94_until_pass_progress_v1",
+            "status": "RESEARCH_CHECKPOINT_PENDING",
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": AS_OF_DATE,
+            "source_transport_chain_valid": True,
+            "source_checkpoint_binding": {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": AS_OF_DATE,
+                "checkpoint_id": base_source_id,
+                "checkpoint_hash": "1" * 64,
+                "epoch": 7,
+            },
+            "research_epoch_checkpoint_binding": {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": AS_OF_DATE,
+                "checkpoint_id": ledger.checkpoint_id,
+                "checkpoint_hash": ledger.checkpoint_hash,
+                "epoch": 2,
+                "source_graph_checkpoint_id": base_source_id,
+            },
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "research_epochs.jsonl").write_text("{}\n", encoding="utf-8")
+            (root / "research_epoch_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            (root / "until_pass_progress.json").write_text(
+                json.dumps(progress, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            with (
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_authoritative_research_epoch_fact_ledger",
+                    return_value=ledger,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_research_epoch_checkpoint",
+                    return_value=epoch,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "_load_committed_fact_result_snapshot",
+                    return_value=_authority_committed_snapshot(rows),
+                ),
+            ):
+                context = _load_authoritative_prior_fact_context(
+                    root,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=source_checkpoint,
+                )
+
+                missing_source = {
+                    **source_checkpoint,
+                    "production_downstream_document_ids": [],
+                    "evidence_documents": [],
+                }
+                with self.assertRaisesRegex(ValueError, "binding"):
+                    _load_authoritative_prior_fact_context(
+                        root,
+                        target_id="CURRENT-TARGET",
+                        as_of_date=AS_OF_DATE,
+                        source_checkpoint=missing_source,
+                    )
+
+                tampered_progress = {
+                    **progress,
+                    "source_checkpoint_binding": {
+                        **progress["source_checkpoint_binding"],
+                        "checkpoint_hash": "not-a-hash",
+                    },
+                }
+                (root / "until_pass_progress.json").write_text(
+                    json.dumps(tampered_progress, sort_keys=True) + "\n",
+                    encoding="utf-8",
+                )
+                with self.assertRaisesRegex(ValueError, "binding drift"):
+                    _load_authoritative_prior_fact_context(
+                        root,
+                        target_id="CURRENT-TARGET",
+                        as_of_date=AS_OF_DATE,
+                        source_checkpoint=source_checkpoint,
+                    )
+
+        self.assertIsNotNone(context)
+        assert context is not None
+        self.assertEqual(
+            context["source_graph_checkpoint_binding_status"],
+            "VALIDATED_CURRENT_SOURCE_FACT_SUPERSET",
+        )
+        self.assertEqual(len(context["facts"]), 3)
+
     def test_authoritative_fact_context_preserves_no_gap_and_retirement(self):
         rows = _authority_fact_rows(3)
         source_checkpoint = _authority_source_checkpoint()

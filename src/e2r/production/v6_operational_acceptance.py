@@ -300,6 +300,29 @@ def run_operational_acceptance_phases(
                 "--research-provider", "codex-collaboration",
             ],
         )
+        current_wait_request_ids = _phase101_current_collaboration_wait_request_ids(
+            source_root
+        )
+        if (
+            current_wait_request_ids
+            and research_attempt.get("exit_code") == 2
+            and research_attempt.get("semantic_status")
+            == "PHASE94_CURRENT_RESEARCHER_MODE_PENDING"
+            and not _attempt_is_external_wait(research_attempt)
+        ):
+            research_attempt = {
+                **dict(research_attempt),
+                "pending_markers": ["COLLABORATION_RESPONSE_PENDING"],
+                "current_collaboration_request_ids": list(current_wait_request_ids),
+            }
+            attempts[-1] = research_attempt
+            steps[-1] = _driver_step(
+                "c06_canonical_research",
+                "COMMAND_PENDING",
+                "CLI_EXECUTED",
+                research_attempt,
+            )
+            persist()
         if _attempt_is_external_wait(research_attempt):
             result = snapshot(pending_reason="PHASE101_C06_COLLABORATION_PENDING")
             if checkpoint_writer is not None:
@@ -1870,6 +1893,68 @@ def _stdout_semantic_status(stdout: str) -> str | None:
 
 def _attempt_is_external_wait(attempt: Mapping[str, Any]) -> bool:
     return bool(attempt.get("pending_markers"))
+
+
+_COLLABORATION_WAIT_REQUEST_RE = re.compile(
+    r"COLLABORATION_RESPONSE_PENDING:(COLLABREQ-[0-9a-f]{64})(?![0-9a-f])"
+)
+
+
+def _phase101_current_collaboration_wait_request_ids(
+    source_root: Path,
+) -> tuple[str, ...]:
+    """Recompute an external wait from the current C06 target leaves.
+
+    The canonical Researcher Mode CLI intentionally emits only its compact
+    terminal status on stdout.  The detailed provider wait remains in the
+    current target leaves.  Phase 108 must inspect those leaves instead of
+    collapsing a real Collaboration wait into an unspecified runner failure.
+    Historical journal requests are never scanned: a request is admitted only
+    when a current authoritative leaf names it, its exact request file exists,
+    and no active response file exists.
+    """
+
+    request_ids: list[str] = []
+    current_leaf_names = (
+        "source_graph_checkpoint.json",
+        "fact_extraction_result.json",
+        "current_structured_materialization.json",
+        "business_model_memo.json",
+        "researcher_mode_dossier.json",
+    )
+    for target_id in PHASE101_TARGET_IDS:
+        target_root = source_root / target_id
+        manifest = _safe_json(target_root / "target_run_manifest.json")
+        if manifest.get("status") != "RESEARCH_CHECKPOINT_PENDING":
+            continue
+        provider_root = target_root / "collaboration_codex_subagent_provider"
+        requests_root = provider_root / "requests"
+        responses_root = provider_root / "responses"
+        if (
+            provider_root.is_symlink()
+            or requests_root.is_symlink()
+            or responses_root.is_symlink()
+            or not requests_root.is_dir()
+            or not responses_root.is_dir()
+        ):
+            continue
+        for leaf_name in current_leaf_names:
+            leaf = _safe_json(target_root / leaf_name)
+            if not leaf:
+                continue
+            encoded = json.dumps(leaf, ensure_ascii=False, sort_keys=True)
+            for request_id in _COLLABORATION_WAIT_REQUEST_RE.findall(encoded):
+                request_path = requests_root / f"{request_id}.json"
+                response_path = responses_root / f"{request_id}.json"
+                request = _safe_json(request_path)
+                if (
+                    request.get("request_id") != request_id
+                    or response_path.exists()
+                    or request_path.is_symlink()
+                ):
+                    continue
+                request_ids.append(request_id)
+    return tuple(dict.fromkeys(request_ids))
 
 
 def _driver_step(

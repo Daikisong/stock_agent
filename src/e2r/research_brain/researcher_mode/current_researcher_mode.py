@@ -4521,11 +4521,46 @@ def _load_authoritative_prior_fact_context(
     current_source_parent_id = str(
         source_checkpoint.get("resumed_from_checkpoint_id") or ""
     )
+    authority_rows = _validated_fact_rows(
+        ledger.fact_rows,
+        target_id=target_id,
+        as_of_date=as_of_date,
+        label="authoritative fact ledger",
+    )
+    exact_or_direct_source_bound = bool(
+        current_source_checkpoint_id == epoch_source_checkpoint_id
+        or current_source_parent_id == epoch_source_checkpoint_id
+    )
+    multi_epoch_fact_superset_bound = False
+    if not exact_or_direct_source_bound:
+        authority_source_ids = {
+            str(source_id)
+            for row in authority_rows
+            for source_id in row.get("source_ids") or ()
+            if str(source_id).strip()
+        }
+        current_downstream_document_ids = set(
+            _source_checkpoint_downstream_document_ids(source_checkpoint)
+        )
+        multi_epoch_fact_superset_bound = (
+            _validated_multi_epoch_source_fact_binding(
+                root=root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                ledger_checkpoint_id=ledger.checkpoint_id,
+                ledger_checkpoint_hash=ledger.checkpoint_hash,
+                epoch_source_checkpoint_id=epoch_source_checkpoint_id,
+                current_source_checkpoint=source_checkpoint,
+            )
+            and authority_source_ids.issubset(current_downstream_document_ids)
+        )
     source_binding_status = (
         "EXACT_EPOCH_SOURCE_CHECKPOINT"
         if current_source_checkpoint_id == epoch_source_checkpoint_id
         else "DIRECT_DESCENDANT_OF_EPOCH_SOURCE_CHECKPOINT"
         if current_source_parent_id == epoch_source_checkpoint_id
+        else "VALIDATED_CURRENT_SOURCE_FACT_SUPERSET"
+        if multi_epoch_fact_superset_bound
         else "INVALID"
     )
     if (
@@ -4539,12 +4574,6 @@ def _load_authoritative_prior_fact_context(
             "authoritative fact ledger source checkpoint binding drift"
         )
 
-    authority_rows = _validated_fact_rows(
-        ledger.fact_rows,
-        target_id=target_id,
-        as_of_date=as_of_date,
-        label="authoritative fact ledger",
-    )
     authority_by_id = {
         str(row["fact_id"]): row for row in authority_rows
     }
@@ -4708,6 +4737,85 @@ def _load_authoritative_prior_fact_context(
         ),
         "production_score_authority": False,
     }
+
+
+def _validated_multi_epoch_source_fact_binding(
+    *,
+    root: Path,
+    target_id: str,
+    as_of_date: str,
+    ledger_checkpoint_id: str,
+    ledger_checkpoint_hash: str,
+    epoch_source_checkpoint_id: str,
+    current_source_checkpoint: Mapping[str, Any],
+) -> bool:
+    """Admit a multi-epoch source head only with a durable bound base.
+
+    Source acquisition checkpoints are cumulative but the current leaf keeps
+    only its immediate parent.  A long-running Collaboration wait can advance
+    that leaf more than once before the research epoch commits.  The durable
+    until-pass receipt preserves the exact research/source base; the caller
+    separately proves that every authoritative fact source still belongs to
+    the current production document roster.  This is deliberately not named
+    an ancestry proof: it is a current-source fact-superset binding.
+    """
+
+    progress_path = root / "until_pass_progress.json"
+    if progress_path.is_symlink() or not progress_path.is_file():
+        return False
+    try:
+        progress = _read_json(progress_path)
+    except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
+        return False
+    source_binding = progress.get("source_checkpoint_binding")
+    research_binding = progress.get("research_epoch_checkpoint_binding")
+    if not isinstance(source_binding, Mapping) or not isinstance(
+        research_binding, Mapping
+    ):
+        return False
+    current_epoch = current_source_checkpoint.get("epoch")
+    base_epoch = source_binding.get("epoch")
+    current_parent_id = str(
+        current_source_checkpoint.get("resumed_from_checkpoint_id") or ""
+    )
+
+    def sha256_text(value: Any) -> bool:
+        text = str(value or "")
+        return len(text) == 64 and all(
+            character in "0123456789abcdef" for character in text
+        )
+
+    return bool(
+        progress.get("schema_version")
+        == "e2r_v5_phase94_until_pass_progress_v1"
+        and progress.get("status") == "RESEARCH_CHECKPOINT_PENDING"
+        and progress.get("source_transport_chain_valid") is True
+        and str(progress.get("target_id") or "") == target_id
+        and str(progress.get("as_of_date") or "") == as_of_date
+        and str(source_binding.get("target_id") or "") == target_id
+        and str(source_binding.get("as_of_date") or "") == as_of_date
+        and str(source_binding.get("checkpoint_id") or "")
+        == epoch_source_checkpoint_id
+        and sha256_text(source_binding.get("checkpoint_hash"))
+        and isinstance(base_epoch, int)
+        and not isinstance(base_epoch, bool)
+        and base_epoch > 0
+        and str(research_binding.get("target_id") or "") == target_id
+        and str(research_binding.get("as_of_date") or "") == as_of_date
+        and str(research_binding.get("checkpoint_id") or "")
+        == ledger_checkpoint_id
+        and str(research_binding.get("checkpoint_hash") or "")
+        == ledger_checkpoint_hash
+        and str(research_binding.get("source_graph_checkpoint_id") or "")
+        == epoch_source_checkpoint_id
+        and isinstance(current_epoch, int)
+        and not isinstance(current_epoch, bool)
+        and current_epoch >= base_epoch + 2
+        and bool(current_parent_id)
+        and current_parent_id != epoch_source_checkpoint_id
+        and current_parent_id
+        != str(current_source_checkpoint.get("checkpoint_id") or "")
+    )
 
 
 def _load_prior_research_context(

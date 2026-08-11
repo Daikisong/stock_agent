@@ -975,6 +975,199 @@ class E2RV6OperationalAcceptanceTests(unittest.TestCase):
             ["-m", "e2r.cli.run_e2r_researcher_mode_until_pass"],
         )
 
+    def test_phase101_compact_stdout_recomputes_current_leaf_collaboration_wait(self):
+        calls: list[list[str]] = []
+        request_id = "COLLABREQ-" + "a" * 64
+
+        def runner(argv: object, _cwd: Path) -> subprocess.CompletedProcess[str]:
+            command = list(argv)  # type: ignore[arg-type]
+            calls.append(command)
+            return subprocess.CompletedProcess(
+                command,
+                2,
+                stdout=json.dumps(
+                    {"status": "PHASE94_CURRENT_RESEARCHER_MODE_PENDING"}
+                ),
+                stderr="",
+            )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            target = (
+                repo
+                / "output/researcher_mode/c06"
+                / CANARY_RECEIPT_DATE
+                / "005930"
+            )
+            provider = target / "collaboration_codex_subagent_provider"
+            (provider / "requests").mkdir(parents=True)
+            (provider / "responses").mkdir()
+            _write_json(
+                target / "target_run_manifest.json",
+                {"status": "RESEARCH_CHECKPOINT_PENDING"},
+            )
+            _write_json(
+                target / "source_graph_checkpoint.json",
+                {
+                    "status": "CANDIDATE_RANKING_PENDING",
+                    "pending_reasons": [
+                        "PARTITION_0:RANKING_PROVIDER_ERROR:"
+                        f"COLLABORATION_RESPONSE_PENDING:{request_id}"
+                    ],
+                },
+            )
+            _write_json(
+                provider / "requests" / f"{request_id}.json",
+                {"request_id": request_id},
+            )
+            with patch(
+                "e2r.production.v6_operational_acceptance._phase101_receipts_ready",
+                return_value=False,
+            ):
+                result = run_operational_acceptance_phases(
+                    repo_root=repo,
+                    output_root=repo / "driver",
+                    as_of_date="2026-08-09",
+                    research_provider="codex-collaboration",
+                    command_runner=runner,
+                    test_mode=True,
+                )
+
+        self.assertEqual(
+            result["blockers"], ["PHASE101_C06_COLLABORATION_PENDING"]
+        )
+        self.assertEqual(len(calls), 1)
+        attempt = result["phase_driver"]["command_attempts"][0]
+        self.assertEqual(
+            attempt["pending_markers"], ["COLLABORATION_RESPONSE_PENDING"]
+        )
+        self.assertEqual(attempt["current_collaboration_request_ids"], [request_id])
+
+    def test_phase101_current_leaf_with_existing_response_is_not_external_wait(self):
+        request_id = "COLLABREQ-" + "b" * 64
+
+        def runner(argv: object, _cwd: Path) -> subprocess.CompletedProcess[str]:
+            command = list(argv)  # type: ignore[arg-type]
+            return subprocess.CompletedProcess(
+                command,
+                2,
+                stdout=json.dumps(
+                    {"status": "PHASE94_CURRENT_RESEARCHER_MODE_PENDING"}
+                ),
+                stderr="",
+            )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            target = (
+                repo
+                / "output/researcher_mode/c06"
+                / CANARY_RECEIPT_DATE
+                / "005930"
+            )
+            provider = target / "collaboration_codex_subagent_provider"
+            (provider / "requests").mkdir(parents=True)
+            (provider / "responses").mkdir()
+            _write_json(
+                target / "target_run_manifest.json",
+                {"status": "RESEARCH_CHECKPOINT_PENDING"},
+            )
+            _write_json(
+                target / "fact_extraction_result.json",
+                {
+                    "status": "FACT_EXTRACTION_PENDING",
+                    "pending_reasons": [
+                        "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                        f"COLLABORATION_RESPONSE_PENDING:{request_id}"
+                    ],
+                },
+            )
+            _write_json(
+                provider / "requests" / f"{request_id}.json",
+                {"request_id": request_id},
+            )
+            _write_json(
+                provider / "responses" / f"{request_id}.json",
+                {"request_id": request_id, "response_id": "COLLABRESP-" + "c" * 64},
+            )
+            with patch(
+                "e2r.production.v6_operational_acceptance._phase101_receipts_ready",
+                return_value=False,
+            ):
+                result = run_operational_acceptance_phases(
+                    repo_root=repo,
+                    output_root=repo / "driver",
+                    as_of_date="2026-08-09",
+                    research_provider="codex-collaboration",
+                    command_runner=runner,
+                    test_mode=True,
+                )
+
+        self.assertEqual(result["blockers"], ["PHASE101_C06_CANONICAL_RUN_PENDING"])
+        attempt = result["phase_driver"]["command_attempts"][0]
+        self.assertEqual(attempt["pending_markers"], [])
+        self.assertNotIn("current_collaboration_request_ids", attempt)
+
+    def test_phase101_hard_runner_error_is_not_masked_by_an_older_open_request(self):
+        request_id = "COLLABREQ-" + "d" * 64
+
+        def runner(argv: object, _cwd: Path) -> subprocess.CompletedProcess[str]:
+            command = list(argv)  # type: ignore[arg-type]
+            return subprocess.CompletedProcess(
+                command,
+                1,
+                stdout="",
+                stderr="ValueError: authoritative fact ledger source checkpoint binding drift",
+            )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            target = (
+                repo
+                / "output/researcher_mode/c06"
+                / CANARY_RECEIPT_DATE
+                / "005930"
+            )
+            provider = target / "collaboration_codex_subagent_provider"
+            (provider / "requests").mkdir(parents=True)
+            (provider / "responses").mkdir()
+            _write_json(
+                target / "target_run_manifest.json",
+                {"status": "RESEARCH_CHECKPOINT_PENDING"},
+            )
+            _write_json(
+                target / "source_graph_checkpoint.json",
+                {
+                    "status": "CANDIDATE_RANKING_PENDING",
+                    "pending_reasons": [
+                        "PARTITION_0:RANKING_PROVIDER_ERROR:"
+                        f"COLLABORATION_RESPONSE_PENDING:{request_id}"
+                    ],
+                },
+            )
+            _write_json(
+                provider / "requests" / f"{request_id}.json",
+                {"request_id": request_id},
+            )
+            with patch(
+                "e2r.production.v6_operational_acceptance._phase101_receipts_ready",
+                return_value=False,
+            ):
+                result = run_operational_acceptance_phases(
+                    repo_root=repo,
+                    output_root=repo / "driver",
+                    as_of_date="2026-08-09",
+                    research_provider="codex-collaboration",
+                    command_runner=runner,
+                    test_mode=True,
+                )
+
+        self.assertEqual(result["blockers"], ["PHASE101_C06_CANONICAL_RUN_PENDING"])
+        attempt = result["phase_driver"]["command_attempts"][0]
+        self.assertEqual(attempt["exit_code"], 1)
+        self.assertEqual(attempt["pending_markers"], [])
+        self.assertNotIn("current_collaboration_request_ids", attempt)
+
     def test_phase101_missing_receipts_runs_research_export_verify_in_order(self):
         modules: list[str] = []
 
