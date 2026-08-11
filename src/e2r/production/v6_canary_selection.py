@@ -11,14 +11,20 @@ from collections import Counter
 from datetime import date, timedelta
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import re
+import secrets
 import stat
-import tempfile
 from typing import Any
 
 from e2r.production.metadata import stable_hash
+from e2r.production.v6_issuer_business_profile import (
+    PROFILE_PASS as ISSUER_PROFILE_COMPLETE,
+    PROFILE_RESULT_SCHEMA_VERSION as ISSUER_PROFILE_SCHEMA,
+    validate_issuer_business_profile_result,
+)
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
 from e2r.research_brain.runtime.live_materialization.depth_selector import (
     LiveDepthDecision,
@@ -40,9 +46,10 @@ SELECTION_SCHEMA = "e2r_v6_pre_deep_canary_selection_v1"
 SELECTION_RECEIPT_SCHEMA = "e2r_v6_pre_deep_selection_receipt_v1"
 SELECTION_PASS = "E2R_V6_CROSS_ARCHETYPE_CANARY_SELECTION_PASS"
 SELECTION_FAIL = "E2R_V6_CROSS_ARCHETYPE_CANARY_SELECTION_FAIL"
-SELECTION_SUMMARY_SCHEMA = "e2r_v6_cross_archetype_canary_summary_v1"
+SELECTION_SUMMARY_SCHEMA = "e2r_v6_pre_deep_canary_selection_summary_v1"
 NATURAL_SELECTION = "NATURAL_TRIGGER_CANARY"
 FORCED_SELECTION = "FORCED_VALIDATION_CANARY"
+ISSUER_PROFILE_MANIFEST_NAME = "issuer_business_profile_manifest.json"
 REQUIRED_ARCHETYPES = (
     "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
     "C15_MATERIAL_SPREAD_SUPERCYCLE",
@@ -109,9 +116,15 @@ _SAFE_NEGATIVE_AUTHORITY_KEYS = frozenset(
         "scorestagefieldforwardedcount",
         "scorestagefieldforwarded",
         "scoreorstageauthority",
+        "goldauthority",
+        "forcedvalidationauthority",
+        "outcomeevidencedroppedcount",
     }
 )
-_SAFE_PRE_DEEP_NUMERIC_KEYS = frozenset({"priorityscore"})
+_SAFE_PRE_DEEP_NUMERIC_KEYS = frozenset({"priorityscore", "returnpct"})
+_SAFE_PRE_DEEP_ENUM_VALUES = {
+    "pricescoreusage": frozenset({"INVESTIGATION_ONLY"}),
+}
 _HEX64_RE = re.compile(r"^[0-9a-f]{64}$")
 _TARGET_RE = re.compile(r"^[0-9A-Z]{6}$")
 _KRX_ENDPOINTS = {
@@ -177,6 +190,45 @@ _SELECTION_RECEIPT_KEYS = frozenset(
         "score_or_stage_authority",
     }
 )
+_FORCED_PROFILE_RECEIPT_KEYS = frozenset(
+    {
+        "official_profile_manifest_hash",
+        "official_profile_id",
+        "official_profile_hash",
+        "official_profile_selection_id",
+        "official_profile_selection_hash",
+        "official_profile_compatibility_request_id",
+        "official_profile_compatibility_response_id",
+        "official_profile_compatibility_response_hash",
+        "official_profile_compatibility_receipt_hash",
+        "official_profile_document_id",
+        "official_profile_document_hash",
+        "official_profile_exact_quote_hash",
+        "official_profile_large_sector_id",
+        "official_profile_confidence",
+        "forced_validation_authority",
+        "gold_authority",
+    }
+)
+_SELECTION_SUMMARY_KEYS = frozenset(
+    {
+        "schema_version",
+        "status",
+        "selection_as_of_date",
+        "required_archetype_count",
+        "selected_archetype_count",
+        "natural_canary_count",
+        "forced_validation_canary_count",
+        "target_ids",
+        "selection_ids",
+        "selection_roster_hash",
+        "post_score_target_selection_count",
+        "target_specific_code_branch_count",
+        "forced_canary_mislabeled_natural_count",
+        "score_or_stage_authority",
+        "summary_id",
+    }
+)
 _LIVE_SELECTION_INPUT_FILES = (
     "universe_eligible.jsonl",
     "universe_provenance.json",
@@ -191,6 +243,28 @@ _LIVE_SELECTION_INPUT_FILES = (
     "llm_responses.jsonl",
     "planner_validation.json",
 )
+
+
+class _LoadedSealedSelection(dict[str, Any]):
+    """Dict-compatible seal carrying its already re-opened sibling profile.
+
+    The attachment is deliberately not a JSON field, so the immutable Phase-105
+    schema and roster hash stay unchanged.  Downstream Phase-106 validators that
+    receive the loader result can nevertheless revalidate forced receipts
+    without reaching back into ignored live output.
+    """
+
+    def __init__(
+        self,
+        payload: Mapping[str, Any],
+        issuer_business_profile_manifest: Mapping[str, Any] | None,
+    ) -> None:
+        super().__init__(payload)
+        self._issuer_business_profile_manifest = (
+            dict(issuer_business_profile_manifest)
+            if issuer_business_profile_manifest is not None
+            else None
+        )
 
 
 def _normalized_key(value: object) -> str:
@@ -211,8 +285,18 @@ def _deep_result_keys(value: object) -> tuple[str, ...]:
                 safe_pre_deep = normalized in _SAFE_PRE_DEEP_NUMERIC_KEYS and (
                     isinstance(child, (int, float)) and not isinstance(child, bool)
                 )
-                if not safe_negative and not safe_pre_deep and any(
-                    token in normalized for token in _FORBIDDEN_DEEP_KEY_TOKENS
+                safe_pre_deep_enum = (
+                    normalized in _SAFE_PRE_DEEP_ENUM_VALUES
+                    and child in _SAFE_PRE_DEEP_ENUM_VALUES[normalized]
+                )
+                if (
+                    not safe_negative
+                    and not safe_pre_deep
+                    and not safe_pre_deep_enum
+                    and any(
+                        token in normalized
+                        for token in _FORBIDDEN_DEEP_KEY_TOKENS
+                    )
                 ):
                     found.add(str(key))
                 visit(child)
@@ -282,6 +366,99 @@ def _json_object(encoded: bytes, *, context: str) -> Mapping[str, Any]:
     return _mapping(payload, context=context)
 
 
+def load_current_issuer_business_profile_manifest(
+    path: str | Path,
+    *,
+    selection_as_of_date: str,
+) -> Mapping[str, Any]:
+    """Load one immutable official profile manifest for forced canaries."""
+
+    selection_date = _iso_date(
+        selection_as_of_date, context="selection as_of_date"
+    )
+    payload = _json_object(
+        _read_live_input_file(Path(path)),
+        context="issuer business profile manifest",
+    )
+    validated = validate_issuer_business_profile_result(payload)
+    if (
+        validated.get("status") != ISSUER_PROFILE_COMPLETE
+        or validated.get("as_of_date") != selection_date
+    ):
+        raise ValueError("forced issuer profile manifest is not current COMPLETE")
+    return dict(validated)
+
+
+def _official_profile_bindings(
+    manifest: Mapping[str, Any] | None,
+    *,
+    selection_date: str,
+) -> tuple[Mapping[str, Mapping[str, Any]], str | None]:
+    if manifest is None:
+        return {}, None
+    validated = validate_issuer_business_profile_result(manifest)
+    if (
+        validated.get("status") != ISSUER_PROFILE_COMPLETE
+        or validated.get("as_of_date") != selection_date
+        or tuple(validated.get("required_archetypes") or ())
+        != REQUIRED_ARCHETYPES
+    ):
+        raise ValueError("forced issuer profile manifest scope is not exact COMPLETE")
+    manifest_hash = stable_hash(dict(validated))
+    profiles = {
+        str(row["profile_id"]): row for row in validated["profiles"]
+    }
+    compatibility = {
+        str(row["response_id"]): row
+        for row in validated["compatibility_receipts"]
+    }
+    bindings: dict[str, Mapping[str, Any]] = {}
+    for selection in validated["selections"]:
+        target_id = str(selection["target_id"])
+        profile = profiles[str(selection["profile_id"])]
+        compatibility_receipt = compatibility[
+            str(selection["compatibility_response_id"])
+        ]
+        if target_id in bindings:
+            raise ValueError("forced issuer profile target is not unique")
+        bindings[target_id] = {
+            "archetype_id": selection["archetype_id"],
+            "target_id": target_id,
+            "company_name": selection["company_name"],
+            "as_of_date": selection["as_of_date"],
+            "krx_row": selection["krx_row"],
+            "krx_request_id": selection["krx_request_id"],
+            "krx_content_hash": selection["krx_content_hash"],
+            "manifest_hash": manifest_hash,
+            "profile_id": profile["profile_id"],
+            "profile_hash": stable_hash(dict(profile)),
+            "selection_id": selection["selection_id"],
+            "selection_hash": stable_hash(dict(selection)),
+            "compatibility_request_id": selection[
+                "compatibility_request_id"
+            ],
+            "compatibility_response_id": selection[
+                "compatibility_response_id"
+            ],
+            "compatibility_response_hash": selection[
+                "compatibility_response_envelope_hash"
+            ],
+            "compatibility_receipt_hash": stable_hash(
+                dict(compatibility_receipt)
+            ),
+            "document_id": selection["periodic_report_document_id"],
+            "document_hash": selection["periodic_report_full_text_hash"],
+            "exact_quote_hash": selection["exact_quote_hash"],
+            "large_sector_id": selection["large_sector_id"],
+            "confidence": selection["confidence"],
+        }
+    if tuple(
+        binding["archetype_id"] for binding in bindings.values()
+    ) != REQUIRED_ARCHETYPES:
+        raise ValueError("forced issuer profile selection roster is not exact")
+    return bindings, manifest_hash
+
+
 def _jsonl_objects(encoded: bytes, *, context: str) -> tuple[Mapping[str, Any], ...]:
     rows: list[Mapping[str, Any]] = []
     try:
@@ -318,6 +495,18 @@ def _validate_planner_call_receipts(
     prompt_rows: Sequence[Mapping[str, Any]],
     response_rows: Sequence[Mapping[str, Any]],
 ) -> None:
+    def accepted_output(payload: object) -> object:
+        # The planner decoder canonicalizes an optional empty abstention reason
+        # to ``None`` before storing an accepted plan.  Preserve every other
+        # response field exactly when binding the immutable journal to that
+        # stored plan.
+        if not isinstance(payload, Mapping):
+            return payload
+        normalized = dict(payload)
+        if normalized.get("abstention_reason") == "":
+            normalized["abstention_reason"] = None
+        return normalized
+
     prompts: dict[str, Mapping[str, Any]] = {}
     responses: dict[str, Mapping[str, Any]] = {}
     for label, rows, destination in (
@@ -391,12 +580,16 @@ def _validate_planner_call_receipts(
         for target_id, run in run_by_target.items()
     ):
         raise ValueError("planner call journal does not exactly bind the run roster")
-    completed_run_by_target = {
+    two_pass_run_by_target = {
         target_id: run
         for target_id, run in run_by_target.items()
         if run.get("terminal_status") == "COMPLETE"
+        or (
+            run.get("terminal_status") == "ABSTAINED"
+            and run.get("provider_call_count") == 2
+        )
     }
-    for target_id, run in completed_run_by_target.items():
+    for target_id, run in two_pass_run_by_target.items():
         target_call_ids = tuple(
             call_id
             for call_id, prompt in prompts.items()
@@ -416,7 +609,7 @@ def _validate_planner_call_receipts(
             )
         ):
             raise ValueError(
-                "completed planner target requires exactly its two successful calls"
+                "eligible two-pass planner target requires exactly its two successful calls"
             )
 
     calls_by_edge: dict[tuple[str, str, str, str, str], int] = {}
@@ -451,7 +644,11 @@ def _validate_planner_call_receipts(
         )
     for run in planner_runs:
         traces = tuple((run.get("plan") or {}).get("provider_traces") or ())
-        if run.get("terminal_status") == "COMPLETE" and (
+        requires_two_pass = run.get("terminal_status") == "COMPLETE" or (
+            run.get("terminal_status") == "ABSTAINED"
+            and run.get("provider_call_count") == 2
+        )
+        if requires_two_pass and (
             run.get("provider_call_count") != 2
             or len(traces) != 2
             or Counter(
@@ -462,7 +659,7 @@ def _validate_planner_call_receipts(
             != Counter({"BLIND_HYPOTHESIS": 1, "MEMORY_CRITIQUE": 1})
         ):
             raise ValueError(
-                "completed planner run requires one exact call for each two-pass role"
+                "eligible two-pass planner run requires one exact call for each role"
             )
         for trace in traces:
             trace = _mapping(trace, context="planner provider trace")
@@ -482,7 +679,11 @@ def _validate_planner_call_receipts(
                 if trace.get("planner_pass") == "MEMORY_CRITIQUE"
                 else None
             )
-            if response_payload_by_edge.get(edge) != expected_output:
+            if (
+                run.get("terminal_status") in {"COMPLETE", "ABSTAINED"}
+                and accepted_output(response_payload_by_edge.get(edge))
+                != expected_output
+            ):
                 raise ValueError("planner response payload does not bind the stored plan")
     trace_edges = Counter(
         (
@@ -504,6 +705,7 @@ def load_current_live_selection_inputs(
     live_root: str | Path,
     *,
     selection_as_of_date: str,
+    issuer_business_profile_manifest: Mapping[str, Any] | None = None,
 ) -> tuple[tuple[Mapping[str, Any], ...], tuple[Mapping[str, Any], ...]]:
     """Load the selector input only from one audited current live root.
 
@@ -513,6 +715,10 @@ def load_current_live_selection_inputs(
 
     selection_date = _iso_date(
         selection_as_of_date, context="selection as_of_date"
+    )
+    forced_profile_bindings, _profile_manifest_hash = _official_profile_bindings(
+        issuer_business_profile_manifest,
+        selection_date=selection_date,
     )
     repo = canonical_repository_root()
     if not _repository_identity_is_trusted(repo):
@@ -605,7 +811,7 @@ def load_current_live_selection_inputs(
         if (
             attempt is None
             or attempt.get("status") != "FETCHED"
-            or str(attempt.get("canonical_url") or "").split("?", 1)[0]
+            or str(attempt.get("canonical_url") or "")
             != member.source_url
             or str(attempt.get("request_id") or "") != member.source_request_id
             or str(attempt.get("content_hash") or "") != member.source_content_hash
@@ -635,10 +841,16 @@ def load_current_live_selection_inputs(
     ):
         raise ValueError("live selection upstream target identities are not unique")
     candidates: list[Mapping[str, Any]] = []
+    loaded_forced_targets: set[str] = set()
     for run in planner_runs:
-        if run.get("terminal_status") != "COMPLETE":
-            continue
+        terminal_status = run.get("terminal_status")
         target_id = str(run.get("target_id") or "")
+        is_forced_profile_target = (
+            terminal_status == "ABSTAINED"
+            and target_id in forced_profile_bindings
+        )
+        if terminal_status != "COMPLETE" and not is_forced_profile_target:
+            continue
         universe = universe_by_target.get(target_id)
         event = event_by_target.get(target_id)
         depth = depth_by_target.get(target_id)
@@ -651,6 +863,12 @@ def load_current_live_selection_inputs(
                 "depth_decision": depth,
                 "planner_run": run,
             }
+        )
+        if is_forced_profile_target:
+            loaded_forced_targets.add(target_id)
+    if loaded_forced_targets != set(forced_profile_bindings):
+        raise ValueError(
+            "forced issuer profile requires an exact real two-call ABSTAINED planner roster"
         )
     return tuple(candidates), tuple(signals)
 
@@ -682,7 +900,10 @@ def _universe_row(raw: object, *, selection_date: str) -> LiveUniverseRow:
     ):
         raise ValueError("candidate is not an eligible current live KRX common equity")
     endpoint = _KRX_ENDPOINTS[member.market]
-    expected_url = f"{_KRX_BASE}/{endpoint}"
+    expected_url = (
+        f"{_KRX_BASE}/{endpoint}"
+        f"?basDd={member.source_effective_date.replace('-', '')}"
+    )
     expected_request = "KRXREQ-" + stable_hash(
         {
             "market": member.market,
@@ -712,7 +933,11 @@ def _candidate_event(raw: object) -> CandidateEvent:
     return event
 
 
-def _depth_decision(raw: object) -> LiveDepthDecision:
+def _depth_decision(
+    raw: object,
+    *,
+    require_acquisition_eligible: bool = True,
+) -> LiveDepthDecision:
     row = dict(_mapping(raw, context="depth decision"))
     for key in ("completed_depths", "trigger_signal_ids", "selection_reasons"):
         row[key] = tuple(row.get(key) or ())
@@ -729,7 +954,7 @@ def _depth_decision(raw: object) -> LiveDepthDecision:
     )[:24]
     if decision.depth_decision_id != expected_id:
         raise ValueError("depth decision identity does not recompute")
-    if (
+    if require_acquisition_eligible and (
         not decision.selected_for_deep
         or not decision.selected_for_brain
         or not decision.acquisition_eligible
@@ -738,16 +963,25 @@ def _depth_decision(raw: object) -> LiveDepthDecision:
     return decision
 
 
-def _planner_projection(raw: object) -> Mapping[str, Any]:
+def _planner_projection(
+    raw: object,
+    *,
+    allow_abstained: bool = False,
+) -> Mapping[str, Any]:
     run = _mapping(raw, context="planner run")
     if set(run) != _PLANNER_RUN_KEYS:
         raise ValueError("planner run schema keys are not exact")
     plan = _mapping(run.get("plan"), context="planner plan")
     critique = _mapping(plan.get("critique_output"), context="planner critique")
+    terminal_status = str(run.get("terminal_status") or "")
     top = tuple(critique.get("top_k_archetypes") or ())
-    if not top or not isinstance(top[0], Mapping):
+    if any(not isinstance(row, Mapping) for row in top):
+        raise ValueError("planner critique archetype rows must be objects")
+    if not top and not (
+        allow_abstained and terminal_status == "ABSTAINED"
+    ):
         raise ValueError("planner critique requires a leading archetype")
-    leading = str(top[0].get("archetype_id") or "")
+    leading = str(top[0].get("archetype_id") or "") if top else ""
     blind_input_id = str(run.get("blind_input_id") or "")
     expected_plan_id = stable_intelligence_id(
         "two-pass-plan", {"blind_input_id": blind_input_id}
@@ -758,9 +992,12 @@ def _planner_projection(raw: object) -> Mapping[str, Any]:
         for trace in traces
         if isinstance(trace, Mapping)
     )
+    accepted_terminal = terminal_status == "COMPLETE" or (
+        allow_abstained and terminal_status == "ABSTAINED"
+    )
     if (
         run.get("schema_version") != "e2r_live_planner_run_v1"
-        or run.get("terminal_status") != "COMPLETE"
+        or not accepted_terminal
         or run.get("provider_real") is not True
         or run.get("provider_fake") is not False
         or run.get("real_provider_success") is not True
@@ -783,13 +1020,13 @@ def _planner_projection(raw: object) -> Mapping[str, Any]:
         )
         or plan.get("plan_id") != expected_plan_id
         or plan.get("blind_input_id") != blind_input_id
-        or plan.get("status") != "COMPLETE"
+        or plan.get("status") != terminal_status
         or plan.get("pending") is not None
         or plan.get("deterministic_stage_or_score_mutation") is not False
         or not isinstance(plan.get("blind_output"), Mapping)
-        or critique.get("abstain") is not False
+        or critique.get("abstain") is not (terminal_status == "ABSTAINED")
     ):
-        raise ValueError("planner run is not a current real completed blind plan")
+        raise ValueError("planner run is not a current real terminal blind plan")
     target_id = str(run.get("target_id") or "")
     expected_run_id = "LIVEPLAN-" + stable_hash(
         {
@@ -820,9 +1057,16 @@ def _planner_projection(raw: object) -> Mapping[str, Any]:
             for family in (draft.get(field) or ())
         ]
     )
-    if not supporting or not recipes or not sources:
+    if terminal_status == "COMPLETE" and (
+        not supporting or not recipes or not sources
+    ):
         raise ValueError("planner run lacks current support, recipes, or source lanes")
+    if terminal_status == "ABSTAINED":
+        supporting = ()
+        recipes = ()
+        sources = ()
     return {
+        "planner_terminal_status": terminal_status,
         "planner_run_id": expected_run_id,
         "target_id": target_id,
         "target_name": str(run.get("target_name") or ""),
@@ -841,15 +1085,22 @@ def _planner_projection(raw: object) -> Mapping[str, Any]:
 
 
 def _candidate_projection(
-    row: Mapping[str, Any], *, selection_date: str
+    row: Mapping[str, Any],
+    *,
+    selection_date: str,
+    official_profile_binding: Mapping[str, Any] | None = None,
 ) -> Mapping[str, Any]:
     if set(row) != _CANDIDATE_KEYS:
         raise ValueError("candidate schema keys are not exact")
     universe = _universe_row(row.get("universe_row"), selection_date=selection_date)
     event = _candidate_event(row.get("candidate_event"))
     depth = _depth_decision(row.get("depth_decision"))
-    planner = _planner_projection(row.get("planner_run"))
+    planner = _planner_projection(
+        row.get("planner_run"),
+        allow_abstained=official_profile_binding is not None,
+    )
     target = str(universe.symbol or "")
+    forced = planner["planner_terminal_status"] == "ABSTAINED"
     if (
         event.target_id != target
         or depth.target_id != target
@@ -870,6 +1121,28 @@ def _candidate_projection(
         or tuple(depth.trigger_signal_ids) != tuple(event.trigger_signal_ids)
     ):
         raise ValueError("candidate KRX/trigger/depth/planner lineage mismatch")
+    if forced:
+        binding = _mapping(
+            official_profile_binding,
+            context="official forced profile binding",
+        )
+        if (
+            binding.get("target_id") != target
+            or binding.get("company_name") != universe.company_name
+            or binding.get("as_of_date") != selection_date
+            or binding.get("krx_row") != row.get("universe_row")
+            or binding.get("krx_request_id") != universe.source_request_id
+            or binding.get("krx_content_hash") != universe.source_content_hash
+            or binding.get("archetype_id") not in REQUIRED_ARCHETYPES
+        ):
+            raise ValueError("forced profile does not bind exact KRX issuer lineage")
+    elif official_profile_binding is not None:
+        raise ValueError("official profile cannot relabel a completed natural planner")
+    leading_archetype = (
+        str(official_profile_binding["archetype_id"])
+        if forced and official_profile_binding is not None
+        else planner["leading_archetype_id"]
+    )
     return {
         **planner,
         "target_id": target,
@@ -897,9 +1170,11 @@ def _candidate_projection(
             }
         ),
         "business_profile_hash": stable_hash(
-            {
+            dict(official_profile_binding)
+            if forced and official_profile_binding is not None
+            else {
                 "target_id": target,
-                "leading_archetype_id": planner["leading_archetype_id"],
+                "leading_archetype_id": leading_archetype,
                 "direct_current_supporting_fact_ids": planner[
                     "direct_current_supporting_fact_ids"
                 ],
@@ -908,6 +1183,12 @@ def _candidate_projection(
                     "available_source_families"
                 ],
             }
+        ),
+        "leading_archetype_id": leading_archetype,
+        "official_profile_binding": (
+            dict(official_profile_binding)
+            if forced and official_profile_binding is not None
+            else None
         ),
     }
 
@@ -940,11 +1221,17 @@ def _validated_trigger_rows(
             raise ValueError("trigger signal identity does not recompute")
         if signal.effective_date > selection_date or signal.detected_at > selection_date:
             raise ValueError("future trigger signal is forbidden")
-        if signal.score_evidence_eligible or signal.lifecycle_status not in {
-            "CURRENT",
-            "OPEN",
-        }:
-            continue
+        price_score_usage = signal.payload.get("price_score_usage")
+        return_pct = signal.payload.get("return_pct")
+        if (price_score_usage is not None or return_pct is not None) and (
+            price_score_usage != "INVESTIGATION_ONLY"
+            or isinstance(return_pct, bool)
+            or not isinstance(return_pct, (int, float))
+            or not math.isfinite(float(return_pct))
+        ):
+            raise ValueError("market trigger payload is not pre-deep investigation-only")
+        if not str(signal.lifecycle_status or "").strip():
+            raise ValueError("trigger lifecycle status is required")
         if not include_inactive and not signal.investigation_required:
             continue
         validated.append(signal.to_dict())
@@ -957,6 +1244,7 @@ def compile_cross_archetype_canary_selection(
     candidates: Sequence[Mapping[str, Any]],
     trigger_events: Sequence[Mapping[str, Any]],
     required_archetypes: Sequence[str] = REQUIRED_ARCHETYPES,
+    issuer_business_profile_manifest: Mapping[str, Any] | None = None,
 ) -> Mapping[str, Any]:
     """Select one unique current issuer per required archetype pre-deep."""
 
@@ -973,6 +1261,20 @@ def compile_cross_archetype_canary_selection(
                 "detail": list(required_archetypes),
             }
         )
+    try:
+        official_bindings, official_manifest_hash = _official_profile_bindings(
+            issuer_business_profile_manifest,
+            selection_date=selection_date,
+        )
+    except (TypeError, ValueError, json.JSONDecodeError) as exc:
+        official_bindings = {}
+        official_manifest_hash = None
+        failures.append(
+            {
+                "code": "INVALID_ISSUER_BUSINESS_PROFILE_MANIFEST",
+                "detail": str(exc),
+            }
+        )
     forbidden_keys = _deep_result_keys((candidates, trigger_events))
     if forbidden_keys:
         failures.append(
@@ -985,7 +1287,22 @@ def compile_cross_archetype_canary_selection(
     projected: list[Mapping[str, Any]] = []
     for index, row in enumerate(candidates):
         try:
-            projected.append(_candidate_projection(row, selection_date=selection_date))
+            planner_run = _mapping(
+                row.get("planner_run"), context="planner run"
+            )
+            target_id = str(planner_run.get("target_id") or "")
+            binding = (
+                official_bindings.get(target_id)
+                if planner_run.get("terminal_status") == "ABSTAINED"
+                else None
+            )
+            projected.append(
+                _candidate_projection(
+                    row,
+                    selection_date=selection_date,
+                    official_profile_binding=binding,
+                )
+            )
         except (TypeError, ValueError) as exc:
             failures.append(
                 {
@@ -1131,9 +1448,12 @@ def compile_cross_archetype_canary_selection(
                 and set(signal_by_id[signal_id]["source_refs"])
                 <= set(row["source_refs"])
             )
+            forced_candidate = row["planner_terminal_status"] == "ABSTAINED"
+            if not forced_candidate and not matching:
+                continue
             ranked.append(
                 (
-                    0 if matching else 1,
+                    1 if forced_candidate else 0,
                     -len(matching),
                     -len(row["available_source_families"]),
                     str(row["target_id"]),
@@ -1151,16 +1471,24 @@ def compile_cross_archetype_canary_selection(
             continue
         _, _, _, _, selected, matching = min(ranked, key=lambda item: item[:4])
         used_targets.add(str(selected["target_id"]))
+        selection_mode = (
+            FORCED_SELECTION
+            if selected["planner_terminal_status"] == "ABSTAINED"
+            else NATURAL_SELECTION
+        )
         pre_deep_payload = {
             "selection_as_of_date": selection_date,
             "archetype_id": archetype_id,
             "candidate": selected,
-            "trigger_signal_ids": [row["trigger_signal_id"] for row in matching],
+            "trigger_signal_ids": (
+                [row["trigger_signal_id"] for row in matching]
+                if selection_mode == NATURAL_SELECTION
+                else []
+            ),
         }
         pre_deep_hash = stable_hash(pre_deep_payload)
-        selection_mode = NATURAL_SELECTION if matching else FORCED_SELECTION
-        receipts.append(
-            {
+        binding = selected.get("official_profile_binding")
+        receipt = {
                 "schema_version": SELECTION_RECEIPT_SCHEMA,
                 "selection_id": "SELREC-" + pre_deep_hash[:24],
                 "archetype_id": archetype_id,
@@ -1182,23 +1510,69 @@ def compile_cross_archetype_canary_selection(
                 "business_profile_hash": selected["business_profile_hash"],
                 "direct_current_supporting_fact_ids": list(
                     selected["direct_current_supporting_fact_ids"]
+                    if selection_mode == NATURAL_SELECTION
+                    else ()
                 ),
-                "recipe_ids": list(selected["recipe_ids"]),
-                "trigger_event_ids": [row["trigger_signal_id"] for row in matching],
+                "recipe_ids": list(
+                    selected["recipe_ids"]
+                    if selection_mode == NATURAL_SELECTION
+                    else ()
+                ),
+                "trigger_event_ids": (
+                    [row["trigger_signal_id"] for row in matching]
+                    if selection_mode == NATURAL_SELECTION
+                    else []
+                ),
                 "available_source_families": list(
                     selected["available_source_families"]
+                    if selection_mode == NATURAL_SELECTION
+                    else ("KRX", "OPENDART")
                 ),
                 "selection_rationale": (
                     "current source-backed trigger lineage matches the current blind plan"
-                    if matching
-                    else "forced validation canary from a current KRX issuer and completed blind plan"
+                    if selection_mode == NATURAL_SELECTION
+                    else "forced validation canary from exact KRX, real two-call abstention, and official issuer profile lineage"
                 ),
                 "final_score_visible_at_selection": False,
                 "final_stage_visible_at_selection": False,
                 "production_daily_candidate": selection_mode == NATURAL_SELECTION,
                 "score_or_stage_authority": False,
             }
-        )
+        if selection_mode == FORCED_SELECTION:
+            binding = _mapping(binding, context="forced profile binding")
+            receipt.update(
+                {
+                    "official_profile_manifest_hash": binding["manifest_hash"],
+                    "official_profile_id": binding["profile_id"],
+                    "official_profile_hash": binding["profile_hash"],
+                    "official_profile_selection_id": binding["selection_id"],
+                    "official_profile_selection_hash": binding["selection_hash"],
+                    "official_profile_compatibility_request_id": binding[
+                        "compatibility_request_id"
+                    ],
+                    "official_profile_compatibility_response_id": binding[
+                        "compatibility_response_id"
+                    ],
+                    "official_profile_compatibility_response_hash": binding[
+                        "compatibility_response_hash"
+                    ],
+                    "official_profile_compatibility_receipt_hash": binding[
+                        "compatibility_receipt_hash"
+                    ],
+                    "official_profile_document_id": binding["document_id"],
+                    "official_profile_document_hash": binding["document_hash"],
+                    "official_profile_exact_quote_hash": binding[
+                        "exact_quote_hash"
+                    ],
+                    "official_profile_large_sector_id": binding[
+                        "large_sector_id"
+                    ],
+                    "official_profile_confidence": binding["confidence"],
+                    "forced_validation_authority": False,
+                    "gold_authority": False,
+                }
+            )
+        receipts.append(receipt)
 
     roster = tuple(row["archetype_id"] for row in receipts)
     if roster != REQUIRED_ARCHETYPES:
@@ -1207,6 +1581,21 @@ def compile_cross_archetype_canary_selection(
         )
     if len({row["target_id"] for row in receipts}) != len(receipts):
         failures.append({"code": "CROSS_ARCHETYPE_TARGET_REUSE", "detail": None})
+    forced_receipt_targets = {
+        str(row["target_id"])
+        for row in receipts
+        if row["selection_mode"] == FORCED_SELECTION
+    }
+    if official_bindings and forced_receipt_targets != set(official_bindings):
+        failures.append(
+            {
+                "code": "OFFICIAL_PROFILE_FORCED_TARGET_ROSTER_MISMATCH",
+                "detail": {
+                    "selected": sorted(forced_receipt_targets),
+                    "profile": sorted(official_bindings),
+                },
+            }
+        )
 
     critical_counts = {
         "required_archetype_missing_count": len(REQUIRED_ARCHETYPES)
@@ -1238,6 +1627,11 @@ def compile_cross_archetype_canary_selection(
         "failures": failures,
         "score_or_stage_authority": False,
     }
+    # Keep the established natural-selection manifest byte/schema compatible.
+    # The extra binding exists only when the separate official-profile lane is
+    # actually authorizing one or more forced validation canaries.
+    if official_manifest_hash is not None:
+        result["issuer_business_profile_manifest_hash"] = official_manifest_hash
     return {**result, "selection_roster_hash": stable_hash(result["selections"])}
 
 
@@ -1306,7 +1700,12 @@ def _validate_selection_manifest_shape(payload: Mapping[str, Any]) -> None:
     critical = payload.get("critical_counts")
     receipts = tuple(payload.get("selections") or ())
     if (
-        set(payload) != _SELECTION_MANIFEST_KEYS
+        set(payload)
+        not in {
+            _SELECTION_MANIFEST_KEYS,
+            _SELECTION_MANIFEST_KEYS
+            | {"issuer_business_profile_manifest_hash"},
+        }
         or payload.get("schema_version") != SELECTION_SCHEMA
         or payload.get("status") != SELECTION_PASS
         or tuple(payload.get("required_archetypes") or ()) != REQUIRED_ARCHETYPES
@@ -1327,6 +1726,7 @@ def _validate_selection_manifest_shape(payload: Mapping[str, Any]) -> None:
     ):
         raise ValueError("selection manifest is not the exact accepted five-target roster")
     targets: list[str] = []
+    forced_manifest_hashes: set[str] = set()
     for expected_archetype, receipt in zip(REQUIRED_ARCHETYPES, receipts):
         receipt = _mapping(receipt, context="selection receipt")
         target = str(receipt.get("target_id") or "")
@@ -1342,8 +1742,13 @@ def _validate_selection_manifest_shape(payload: Mapping[str, Any]) -> None:
         )
         mode = receipt.get("selection_mode")
         trigger_ids = tuple(receipt.get("trigger_event_ids") or ())
+        expected_receipt_keys = (
+            _SELECTION_RECEIPT_KEYS | _FORCED_PROFILE_RECEIPT_KEYS
+            if mode == FORCED_SELECTION
+            else _SELECTION_RECEIPT_KEYS
+        )
         if (
-            set(receipt) != _SELECTION_RECEIPT_KEYS
+            set(receipt) != expected_receipt_keys
             or receipt.get("schema_version") != SELECTION_RECEIPT_SCHEMA
             or receipt.get("archetype_id") != expected_archetype
             or target != target.strip()
@@ -1365,14 +1770,317 @@ def _validate_selection_manifest_shape(payload: Mapping[str, Any]) -> None:
                 _HEX64_RE.fullmatch(str(receipt.get(field) or "")) is None
                 for field in hash_fields
             )
-            or not tuple(receipt.get("direct_current_supporting_fact_ids") or ())
-            or not tuple(receipt.get("recipe_ids") or ())
             or not tuple(receipt.get("available_source_families") or ())
         ):
             raise ValueError("selection receipt identity or blind lineage is invalid")
+        if mode == NATURAL_SELECTION:
+            if (
+                not tuple(receipt.get("direct_current_supporting_fact_ids") or ())
+                or not tuple(receipt.get("recipe_ids") or ())
+            ):
+                raise ValueError("natural selection lacks current fact/recipe lineage")
+        else:
+            forced_hash_fields = (
+                "official_profile_manifest_hash",
+                "official_profile_hash",
+                "official_profile_selection_hash",
+                "official_profile_compatibility_response_hash",
+                "official_profile_compatibility_receipt_hash",
+                "official_profile_document_hash",
+                "official_profile_exact_quote_hash",
+            )
+            confidence = receipt.get("official_profile_confidence")
+            if (
+                trigger_ids
+                or tuple(receipt.get("direct_current_supporting_fact_ids") or ())
+                or tuple(receipt.get("recipe_ids") or ())
+                or tuple(receipt.get("available_source_families") or ())
+                != ("KRX", "OPENDART")
+                or receipt.get("production_daily_candidate") is not False
+                or receipt.get("forced_validation_authority") is not False
+                or receipt.get("gold_authority") is not False
+                or any(
+                    _HEX64_RE.fullmatch(str(receipt.get(field) or "")) is None
+                    for field in forced_hash_fields
+                )
+                or re.fullmatch(
+                    r"ISSUERPROFILE-[0-9a-f]{24}",
+                    str(receipt.get("official_profile_id") or ""),
+                )
+                is None
+                or re.fullmatch(
+                    r"PROFILESEL-[0-9a-f]{24}",
+                    str(receipt.get("official_profile_selection_id") or ""),
+                )
+                is None
+                or re.fullmatch(
+                    r"PROFILECLASSREQ-[0-9a-f]{24}",
+                    str(
+                        receipt.get(
+                            "official_profile_compatibility_request_id"
+                        )
+                        or ""
+                    ),
+                )
+                is None
+                or re.fullmatch(
+                    r"PROFILECLASSRESP-[0-9a-f]{24}",
+                    str(
+                        receipt.get(
+                            "official_profile_compatibility_response_id"
+                        )
+                        or ""
+                    ),
+                )
+                is None
+                or not str(receipt.get("official_profile_document_id") or "").startswith(
+                    "opendart:disclosure:"
+                )
+                or not str(receipt.get("official_profile_large_sector_id") or "").startswith(
+                    "L"
+                )
+                or isinstance(confidence, bool)
+                or not isinstance(confidence, (int, float))
+                or not 0.0 <= float(confidence) <= 1.0
+            ):
+                raise ValueError("forced selection lacks exact official profile lineage")
+            forced_manifest_hashes.add(
+                str(receipt["official_profile_manifest_hash"])
+            )
         targets.append(target)
+    manifest_hash = payload.get("issuer_business_profile_manifest_hash")
+    if (
+        forced_manifest_hashes
+        and (
+            forced_manifest_hashes != {str(manifest_hash or "")}
+            or _HEX64_RE.fullmatch(str(manifest_hash or "")) is None
+        )
+    ) or (not forced_manifest_hashes and manifest_hash is not None):
+        raise ValueError("selection manifest official profile hash binding is invalid")
     if len(targets) != len(set(targets)):
         raise ValueError("selection target roster is not canonical and unique")
+
+
+def validate_cross_archetype_canary_selection_manifest(
+    payload: Mapping[str, Any],
+    *,
+    issuer_business_profile_manifest: Mapping[str, Any] | None = None,
+) -> None:
+    """Validate the complete sealed Phase-105 selection contract."""
+
+    if issuer_business_profile_manifest is None:
+        attached_profile = getattr(
+            payload, "_issuer_business_profile_manifest", None
+        )
+        if isinstance(attached_profile, Mapping):
+            issuer_business_profile_manifest = attached_profile
+    _validate_selection_manifest_shape(payload)
+    forced_receipts = tuple(
+        row
+        for row in payload.get("selections") or ()
+        if row.get("selection_mode") == FORCED_SELECTION
+    )
+    if not forced_receipts:
+        if issuer_business_profile_manifest is not None:
+            raise ValueError("natural selection must not bind a forced profile manifest")
+        return
+    bindings, manifest_hash = _official_profile_bindings(
+        issuer_business_profile_manifest,
+        selection_date=str(payload.get("selection_as_of_date") or ""),
+    )
+    if (
+        not bindings
+        or manifest_hash != payload.get("issuer_business_profile_manifest_hash")
+        or {str(row["target_id"]) for row in forced_receipts} != set(bindings)
+    ):
+        raise ValueError("forced selection external profile manifest binding is missing")
+    receipt_fields = {
+        "official_profile_manifest_hash": "manifest_hash",
+        "official_profile_id": "profile_id",
+        "official_profile_hash": "profile_hash",
+        "official_profile_selection_id": "selection_id",
+        "official_profile_selection_hash": "selection_hash",
+        "official_profile_compatibility_request_id": "compatibility_request_id",
+        "official_profile_compatibility_response_id": "compatibility_response_id",
+        "official_profile_compatibility_response_hash": "compatibility_response_hash",
+        "official_profile_compatibility_receipt_hash": "compatibility_receipt_hash",
+        "official_profile_document_id": "document_id",
+        "official_profile_document_hash": "document_hash",
+        "official_profile_exact_quote_hash": "exact_quote_hash",
+        "official_profile_large_sector_id": "large_sector_id",
+        "official_profile_confidence": "confidence",
+    }
+    for receipt in forced_receipts:
+        binding = bindings[str(receipt["target_id"])]
+        if (
+            receipt.get("archetype_id") != binding["archetype_id"]
+            or receipt.get("company_name") != binding["company_name"]
+            or any(
+                receipt.get(receipt_field) != binding[binding_field]
+                for receipt_field, binding_field in receipt_fields.items()
+            )
+        ):
+            raise ValueError("forced selection receipt differs from official profile")
+
+
+def validate_cross_archetype_canary_selection_summary(
+    payload: Mapping[str, Any],
+) -> None:
+    """Validate a compact summary before it becomes a tracked artifact."""
+
+    target_ids = tuple(payload.get("target_ids") or ())
+    selection_ids = tuple(payload.get("selection_ids") or ())
+    natural_count = payload.get("natural_canary_count")
+    forced_count = payload.get("forced_validation_canary_count")
+    numeric_zero_fields = (
+        "post_score_target_selection_count",
+        "target_specific_code_branch_count",
+        "forced_canary_mislabeled_natural_count",
+    )
+    if (
+        set(payload) != _SELECTION_SUMMARY_KEYS
+        or payload.get("schema_version") != SELECTION_SUMMARY_SCHEMA
+        or payload.get("status") != SELECTION_PASS
+        or payload.get("required_archetype_count") != len(REQUIRED_ARCHETYPES)
+        or payload.get("selected_archetype_count") != len(REQUIRED_ARCHETYPES)
+        or not isinstance(natural_count, int)
+        or isinstance(natural_count, bool)
+        or not isinstance(forced_count, int)
+        or isinstance(forced_count, bool)
+        or natural_count < 0
+        or forced_count < 0
+        or natural_count + forced_count != len(REQUIRED_ARCHETYPES)
+        or len(target_ids) != len(REQUIRED_ARCHETYPES)
+        or target_ids != tuple(sorted(target_ids))
+        or len(set(target_ids)) != len(target_ids)
+        or any(_TARGET_RE.fullmatch(str(target_id)) is None for target_id in target_ids)
+        or len(selection_ids) != len(REQUIRED_ARCHETYPES)
+        or len(set(selection_ids)) != len(selection_ids)
+        or any(
+            re.fullmatch(r"SELREC-[0-9a-f]{24}", str(selection_id)) is None
+            for selection_id in selection_ids
+        )
+        or _HEX64_RE.fullmatch(str(payload.get("selection_roster_hash") or ""))
+        is None
+        or any(
+            isinstance(payload.get(field), bool)
+            or not isinstance(payload.get(field), int)
+            or payload.get(field) != 0
+            for field in numeric_zero_fields
+        )
+        or payload.get("score_or_stage_authority") is not False
+    ):
+        raise ValueError("selection summary contract is invalid")
+    summary_without_id = {
+        key: value for key, value in payload.items() if key != "summary_id"
+    }
+    if payload.get("summary_id") != "SELSUM-" + stable_hash(summary_without_id)[:24]:
+        raise ValueError("selection summary identity does not recompute")
+
+
+def _open_or_create_directory_no_symlinks(path: Path) -> int:
+    """Pin a directory from the filesystem root without following links."""
+
+    absolute = path.absolute()
+    descriptor = os.open(absolute.anchor, os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        for part in absolute.parts[1:]:
+            if part in {"", ".", ".."}:
+                raise ValueError("unsafe selection seal parent component")
+            try:
+                child = os.open(
+                    part,
+                    os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                    dir_fd=descriptor,
+                )
+            except FileNotFoundError:
+                try:
+                    os.mkdir(part, mode=0o700, dir_fd=descriptor)
+                except FileExistsError:
+                    pass
+                child = os.open(
+                    part,
+                    os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                    dir_fd=descriptor,
+                )
+            os.close(descriptor)
+            descriptor = child
+        return descriptor
+    except BaseException:
+        os.close(descriptor)
+        raise
+
+
+def _open_existing_directory_no_symlinks(path: Path) -> int:
+    """Re-open an existing directory path for final pathname identity checks."""
+
+    absolute = path.absolute()
+    descriptor = os.open(absolute.anchor, os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        for part in absolute.parts[1:]:
+            if part in {"", ".", ".."}:
+                raise ValueError("unsafe selection seal parent component")
+            child = os.open(
+                part,
+                os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                dir_fd=descriptor,
+            )
+            os.close(descriptor)
+            descriptor = child
+        return descriptor
+    except BaseException:
+        os.close(descriptor)
+        raise
+
+
+def _read_regular_from_directory(
+    parent_fd: int,
+    name: str,
+    *,
+    expected_link_count: int = 1,
+) -> tuple[bytes, os.stat_result]:
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(name, flags, dir_fd=parent_fd)
+    try:
+        before = os.fstat(descriptor)
+        if (
+            not stat.S_ISREG(before.st_mode)
+            or before.st_nlink != expected_link_count
+            or before.st_mode & 0o022
+        ):
+            raise ValueError("selection seal must be a private regular file")
+        chunks: list[bytes] = []
+        while True:
+            chunk = os.read(descriptor, 65536)
+            if not chunk:
+                break
+            chunks.append(chunk)
+        after = os.fstat(descriptor)
+        path_stat = os.stat(name, dir_fd=parent_fd, follow_symlinks=False)
+        identity = (
+            before.st_dev,
+            before.st_ino,
+            before.st_uid,
+            before.st_gid,
+            stat.S_IMODE(before.st_mode),
+        )
+        if identity != (
+            after.st_dev,
+            after.st_ino,
+            after.st_uid,
+            after.st_gid,
+            stat.S_IMODE(after.st_mode),
+        ) or identity != (
+            path_stat.st_dev,
+            path_stat.st_ino,
+            path_stat.st_uid,
+            path_stat.st_gid,
+            stat.S_IMODE(path_stat.st_mode),
+        ):
+            raise ValueError("selection seal changed while it was read")
+        return b"".join(chunks), before
+    finally:
+        os.close(descriptor)
 
 
 def _read_regular_no_follow(path: Path) -> bytes:
@@ -1430,61 +2138,106 @@ def _read_regular_no_follow(path: Path) -> bytes:
 def seal_cross_archetype_canary_selection(
     path: str | Path,
     payload: Mapping[str, Any],
+    *,
+    issuer_business_profile_manifest: Mapping[str, Any] | None = None,
 ) -> Path:
     """Create a private regular-file seal; identical replay is idempotent."""
 
-    destination = Path(path)
+    destination = Path(path).absolute()
     if payload.get("schema_version") == SELECTION_SCHEMA:
-        _validate_selection_manifest_shape(payload)
-    _assert_no_symlink_ancestor(destination.parent)
+        validate_cross_archetype_canary_selection_manifest(
+            payload,
+            issuer_business_profile_manifest=issuer_business_profile_manifest,
+        )
+    elif payload.get("schema_version") == SELECTION_SUMMARY_SCHEMA:
+        validate_cross_archetype_canary_selection_summary(payload)
+    elif payload.get("schema_version") == ISSUER_PROFILE_SCHEMA:
+        validated_profile = validate_issuer_business_profile_result(payload)
+        if validated_profile.get("status") != ISSUER_PROFILE_COMPLETE:
+            raise ValueError(
+                "only a current COMPLETE issuer profile manifest may be sealed"
+            )
+    else:
+        raise ValueError("selection seal schema is not supported")
     encoded = (
         json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True, allow_nan=False)
         + "\n"
     ).encode("utf-8")
-    if destination.exists() or destination.is_symlink():
-        if _read_regular_no_follow(destination) != encoded:
-            raise ValueError("selection seal already exists with different payload")
-        return destination
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    _assert_no_symlink_ancestor(destination.parent)
-    descriptor, temporary_name = tempfile.mkstemp(
-        prefix=f".{destination.name}.", suffix=".tmp", dir=destination.parent
-    )
-    temporary = Path(temporary_name)
-    linked = False
-    guard_descriptor: int | None = None
     try:
-        with os.fdopen(descriptor, "wb") as handle:
+        parent_fd = _open_or_create_directory_no_symlinks(destination.parent)
+    except OSError as exc:
+        raise ValueError("selection seal parent symlink or unsafe path is forbidden") from exc
+    temporary_name = f".{destination.name}.{secrets.token_hex(16)}.tmp"
+    temporary_fd = -1
+    guard_fd = -1
+    linked = False
+    created_destination = False
+    completed = False
+    try:
+        try:
+            existing, _metadata = _read_regular_from_directory(
+                parent_fd, destination.name
+            )
+        except FileNotFoundError:
+            existing = None
+        except OSError as exc:
+            raise ValueError("selection seal symlink or unsafe file is forbidden") from exc
+        if existing is not None:
+            if existing != encoded:
+                raise ValueError("selection seal already exists with different payload")
+            return destination
+
+        temporary_fd = os.open(
+            temporary_name,
+            os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+            0o600,
+            dir_fd=parent_fd,
+        )
+        with os.fdopen(temporary_fd, "wb") as handle:
+            temporary_fd = -1
             handle.write(encoded)
             handle.flush()
             os.fsync(handle.fileno())
-            # Keep the original inode alive until every final-path check has
-            # completed.  Otherwise an attacker can unlink it and make the
-            # filesystem immediately reuse the same inode number.
-            guard_descriptor = os.dup(handle.fileno())
-        temporary_stat = os.fstat(guard_descriptor)
+            guard_fd = os.dup(handle.fileno())
+        temporary_stat = os.fstat(guard_fd)
         try:
-            os.link(temporary, destination, follow_symlinks=False)
+            os.link(
+                temporary_name,
+                destination.name,
+                src_dir_fd=parent_fd,
+                dst_dir_fd=parent_fd,
+                follow_symlinks=False,
+            )
             linked = True
+            created_destination = True
         except FileExistsError:
-            if _read_regular_no_follow(destination) != encoded:
+            existing, _metadata = _read_regular_from_directory(
+                parent_fd, destination.name
+            )
+            if existing != encoded:
                 raise ValueError(
                     "selection seal was concurrently created with different payload"
                 )
             return destination
-        destination_stat = destination.stat(follow_symlinks=False)
+        destination_stat = os.stat(
+            destination.name, dir_fd=parent_fd, follow_symlinks=False
+        )
         if not stat.S_ISREG(destination_stat.st_mode) or (
             destination_stat.st_dev,
             destination_stat.st_ino,
         ) != (temporary_stat.st_dev, temporary_stat.st_ino):
             raise ValueError("selection seal changed during atomic creation")
-        if _read_regular_no_follow_allow_link(destination) != encoded:
+        linked_bytes, _metadata = _read_regular_from_directory(
+            parent_fd, destination.name, expected_link_count=2
+        )
+        if linked_bytes != encoded:
             raise ValueError("selection seal bytes changed during atomic creation")
-        temporary.unlink()
+        os.unlink(temporary_name, dir_fd=parent_fd)
         linked = False
-        final_bytes = _read_regular_no_follow(destination)
-        final_stat = destination.stat(follow_symlinks=False)
-        guarded_stat = os.fstat(guard_descriptor)
+        final_bytes, final_stat = _read_regular_from_directory(
+            parent_fd, destination.name
+        )
+        guarded_stat = os.fstat(guard_fd)
         if (
             final_bytes != encoded
             or (
@@ -1517,24 +2270,72 @@ def seal_cross_archetype_canary_selection(
             )
         ):
             raise ValueError("selection seal changed after atomic creation")
-        directory_fd = os.open(destination.parent, os.O_RDONLY)
+        os.fsync(parent_fd)
         try:
-            os.fsync(directory_fd)
+            reopened_parent_fd = _open_existing_directory_no_symlinks(
+                destination.parent
+            )
+        except OSError as exc:
+            os.unlink(destination.name, dir_fd=parent_fd)
+            raise ValueError(
+                "selection seal parent changed during atomic creation"
+            ) from exc
+        try:
+            pinned = os.fstat(parent_fd)
+            reopened = os.fstat(reopened_parent_fd)
+            if (pinned.st_dev, pinned.st_ino) != (reopened.st_dev, reopened.st_ino):
+                os.unlink(destination.name, dir_fd=parent_fd)
+                raise ValueError("selection seal parent changed during atomic creation")
         finally:
-            os.close(directory_fd)
+            os.close(reopened_parent_fd)
+        completed = True
     finally:
-        if guard_descriptor is not None:
-            os.close(guard_descriptor)
-        if temporary.exists():
-            temporary.unlink()
-        if linked and destination.exists():
-            # A failed validation must not leave an untrusted seal behind.
-            destination.unlink()
+        if temporary_fd >= 0:
+            os.close(temporary_fd)
+        if guard_fd >= 0:
+            os.close(guard_fd)
+        try:
+            os.unlink(temporary_name, dir_fd=parent_fd)
+        except FileNotFoundError:
+            pass
+        if linked:
+            try:
+                os.unlink(destination.name, dir_fd=parent_fd)
+            except FileNotFoundError:
+                pass
+        elif created_destination and not completed:
+            try:
+                os.unlink(destination.name, dir_fd=parent_fd)
+            except FileNotFoundError:
+                pass
+        os.close(parent_fd)
     return destination
+
+
+def seal_current_issuer_business_profile_manifest(
+    path: str | Path,
+    payload: Mapping[str, Any],
+) -> Path:
+    """Seal one self-contained COMPLETE profile beside the Phase-105 selection.
+
+    The underlying writer is the same no-symlink, no-hardlink, atomic writer
+    used by the selection seal.  Keeping the validated profile in the tracked
+    cutover directory lets a clean clone re-open a forced selection without
+    reading the ignored live-output tree or a Collaboration journal.
+    """
+
+    validated = validate_issuer_business_profile_result(payload)
+    if validated.get("status") != ISSUER_PROFILE_COMPLETE:
+        raise ValueError(
+            "only a current COMPLETE issuer profile manifest may be sealed"
+        )
+    return seal_cross_archetype_canary_selection(path, validated)
 
 
 def load_sealed_cross_archetype_canary_selection(
     path: str | Path,
+    *,
+    issuer_business_profile_manifest: Mapping[str, Any] | None = None,
 ) -> Mapping[str, Any]:
     """Read one canonical, non-link selection seal for downstream execution."""
 
@@ -1559,8 +2360,29 @@ def load_sealed_cross_archetype_canary_selection(
     ).encode("utf-8")
     if encoded != canonical:
         raise ValueError("selection seal JSON encoding is not canonical")
-    _validate_selection_manifest_shape(payload)
-    return dict(payload)
+    forced_receipts = tuple(
+        row
+        for row in payload.get("selections") or ()
+        if isinstance(row, Mapping)
+        and row.get("selection_mode") == FORCED_SELECTION
+    )
+    if forced_receipts and issuer_business_profile_manifest is None:
+        issuer_business_profile_manifest = (
+            load_current_issuer_business_profile_manifest(
+                source.parent / ISSUER_PROFILE_MANIFEST_NAME,
+                selection_as_of_date=str(
+                    payload.get("selection_as_of_date") or ""
+                ),
+            )
+        )
+    validate_cross_archetype_canary_selection_manifest(
+        payload,
+        issuer_business_profile_manifest=issuer_business_profile_manifest,
+    )
+    return _LoadedSealedSelection(
+        payload,
+        issuer_business_profile_manifest,
+    )
 
 
 def _read_regular_no_follow_allow_link(path: Path) -> bytes:
@@ -1583,13 +2405,18 @@ def _read_regular_no_follow_allow_link(path: Path) -> bytes:
 
 __all__ = [
     "FORCED_SELECTION",
+    "ISSUER_PROFILE_MANIFEST_NAME",
     "NATURAL_SELECTION",
     "REQUIRED_ARCHETYPES",
     "SELECTION_FAIL",
     "SELECTION_PASS",
     "compile_cross_archetype_canary_selection",
+    "load_current_issuer_business_profile_manifest",
     "load_current_live_selection_inputs",
     "load_sealed_cross_archetype_canary_selection",
     "seal_cross_archetype_canary_selection",
+    "seal_current_issuer_business_profile_manifest",
     "summarize_cross_archetype_canary_selection",
+    "validate_cross_archetype_canary_selection_manifest",
+    "validate_cross_archetype_canary_selection_summary",
 ]

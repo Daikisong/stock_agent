@@ -6,11 +6,12 @@ import argparse
 import json
 from pathlib import Path
 from e2r.production.v6_canary_selection import (
+    ISSUER_PROFILE_MANIFEST_NAME,
     SELECTION_PASS,
     compile_cross_archetype_canary_selection,
+    load_current_issuer_business_profile_manifest,
     load_current_live_selection_inputs,
     seal_cross_archetype_canary_selection,
-    summarize_cross_archetype_canary_selection,
 )
 from e2r.research_brain.researcher_mode.tracked_readiness import (
     _repository_identity_is_trusted,
@@ -29,6 +30,10 @@ def _parser() -> argparse.ArgumentParser:
         default=".",
         help="repository root containing the canonical output/live_materialization tree",
     )
+    parser.add_argument(
+        "--issuer-profile-manifest",
+        help="current COMPLETE official issuer-business profile manifest for forced canaries",
+    )
     return parser
 
 
@@ -40,31 +45,52 @@ def main() -> int:
     ):
         raise SystemExit("selection must run from the trusted canonical repository")
     live_root = repo_root / "output" / "live_materialization" / args.as_of_date
+    cutover_root = repo_root / CUTOVER_RELATIVE_ROOT
+    canonical_profile_path = cutover_root / ISSUER_PROFILE_MANIFEST_NAME
+    if args.issuer_profile_manifest and (
+        Path(args.issuer_profile_manifest).resolve()
+        != canonical_profile_path.resolve()
+    ):
+        raise SystemExit(
+            "issuer profile manifest must use the tracked Phase-105 cutover path"
+        )
+    profile_manifest = (
+        load_current_issuer_business_profile_manifest(
+            canonical_profile_path,
+            selection_as_of_date=args.as_of_date,
+        )
+        if (
+            args.issuer_profile_manifest
+            or canonical_profile_path.exists()
+            or canonical_profile_path.is_symlink()
+        )
+        else None
+    )
     candidates, trigger_events = load_current_live_selection_inputs(
         live_root,
         selection_as_of_date=args.as_of_date,
+        issuer_business_profile_manifest=profile_manifest,
     )
     result = compile_cross_archetype_canary_selection(
         selection_as_of_date=args.as_of_date,
         candidates=candidates,
         trigger_events=trigger_events,
+        issuer_business_profile_manifest=profile_manifest,
     )
     if result["status"] == SELECTION_PASS:
-        cutover_root = repo_root / CUTOVER_RELATIVE_ROOT
         selection_path = cutover_root / "cross_archetype_canary_selection.json"
-        summary_path = cutover_root / "cross_archetype_canary_summary.json"
-        seal_cross_archetype_canary_selection(selection_path, result)
-        summary = summarize_cross_archetype_canary_selection(result)
-        seal_cross_archetype_canary_selection(summary_path, summary)
+        seal_cross_archetype_canary_selection(
+            selection_path,
+            result,
+            issuer_business_profile_manifest=profile_manifest,
+        )
     else:
         selection_path = None
-        summary_path = None
     print(
         json.dumps(
             {
                 **result,
                 "selection_path": str(selection_path) if selection_path else None,
-                "summary_path": str(summary_path) if summary_path else None,
             },
             ensure_ascii=False,
             indent=2,

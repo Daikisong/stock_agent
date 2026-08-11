@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+from contextlib import redirect_stdout
 from copy import deepcopy
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -12,16 +15,41 @@ from unittest.mock import patch
 from e2r.production.metadata import stable_hash
 from e2r.production.v6_canary_selection import (
     FORCED_SELECTION,
+    ISSUER_PROFILE_MANIFEST_NAME,
     NATURAL_SELECTION,
     REQUIRED_ARCHETYPES,
     SELECTION_FAIL,
     SELECTION_PASS,
     compile_cross_archetype_canary_selection,
+    load_current_issuer_business_profile_manifest,
     load_current_live_selection_inputs,
+    load_sealed_cross_archetype_canary_selection,
+    seal_current_issuer_business_profile_manifest,
+    validate_cross_archetype_canary_selection_manifest,
     seal_cross_archetype_canary_selection,
     summarize_cross_archetype_canary_selection,
 )
+from e2r.production.v6_issuer_business_profile import (
+    IssuerBusinessProfileConfig,
+    V6IssuerBusinessProfileMaterializer,
+)
+from e2r.production.v6_canary_results import (
+    CANARY_COMPILATION_PENDING,
+    compile_cross_archetype_canary_directory,
+)
+from tests.test_e2r_v6_issuer_business_profile import (
+    FakeCompatibilityProvider,
+    FakeOpenDartFetcher,
+)
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
+from e2r.cli.select_e2r_v6_cross_archetype_canaries import (
+    CUTOVER_RELATIVE_ROOT,
+    main as selection_cli_main,
+)
+from e2r.cli.materialize_e2r_v6_issuer_business_profiles import (
+    load_canonical_profile_inputs,
+    materialize_canonical_profile_manifest,
+)
 
 
 class E2RV6CanarySelectionTests(unittest.TestCase):
@@ -35,7 +63,10 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
         # Match the canonical KRX endpoint spelling used by the materializer.
         if market == "KOSDAQ":
             endpoint = "ksq_isu_base_info"
-        source_url = f"https://data-dbg.krx.co.kr/svc/apis/sto/{endpoint}"
+        source_url = (
+            f"https://data-dbg.krx.co.kr/svc/apis/sto/{endpoint}"
+            f"?basDd={self.AS_OF_DATE.replace('-', '')}"
+        )
         request_id = "KRXREQ-" + stable_hash(
             {
                 "market": market,
@@ -46,6 +77,14 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
         source_event_id = f"SOURCE-EVENT-{index}"
         source_ref = f"SRC-{index}"
         trigger_payload = {"report_name": "current official event"}
+        if index == 0:
+            trigger_payload.update(
+                {
+                    "price_score_usage": "INVESTIGATION_ONLY",
+                    "return_pct": 12.5,
+                    "trading_value": 1_500_000_000,
+                }
+            )
         trigger_id = "TRIG-" + stable_hash(
             {
                 "target": target_id,
@@ -200,7 +239,17 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
                 "blind_input_id": blind_id,
                 "compiled_fact_count": 1,
                 "input_compilation_audit": {
-                    "score_stage_field_forwarded_count": 0
+                    "input_row_count": 1,
+                    "compiled_fact_count": 1,
+                    "future_evidence_dropped_count": 0,
+                    "invalid_date_evidence_dropped_count": 0,
+                    "outcome_evidence_dropped_count": 0,
+                    "forbidden_context_evidence_dropped_count": 0,
+                    "forbidden_assignment_stripped_count": 0,
+                    "score_stage_field_forwarded_count": 0,
+                    "archetype_label_field_forwarded_count": 0,
+                    "source_primary_field_forwarded_count": 0,
+                    "sector_context_forwarded_to_pass_a_count": 0,
                 },
                 "provider_name": "codex_cli_two_pass_planner",
                 "provider_real": True,
@@ -218,8 +267,47 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
             for index, archetype_id in enumerate(REQUIRED_ARCHETYPES)
         ]
 
+    def _forced_profile_manifest(self, candidates: list[dict]) -> dict:
+        industries = {
+            candidates[0]["universe_row"]["symbol"]: "26120",
+            candidates[1]["universe_row"]["symbol"]: "20110",
+            candidates[2]["universe_row"]["symbol"]: "20202",
+            candidates[3]["universe_row"]["symbol"]: "21101",
+            candidates[4]["universe_row"]["symbol"]: "62010",
+        }
+        return dict(
+            V6IssuerBusinessProfileMaterializer().materialize(
+                IssuerBusinessProfileConfig(
+                    as_of_date=self.AS_OF_DATE,
+                    max_profile_fetches=5,
+                ),
+                universe_rows=[row["universe_row"] for row in candidates],
+                credential="official-fixture-key",
+                fetcher=FakeOpenDartFetcher(industries),
+                compatibility_provider=FakeCompatibilityProvider(),
+            )
+        )
+
+    def _abstained_candidates(self) -> list[dict]:
+        candidates = self._candidates()
+        for candidate in candidates:
+            run = candidate["planner_run"]
+            run["terminal_status"] = "ABSTAINED"
+            run["plan"]["status"] = "ABSTAINED"
+            run["plan"]["critique_output"]["abstain"] = True
+        return candidates
+
     def _signal(self, candidate: dict, index: int = 0) -> dict:
         event = candidate["candidate_event"]
+        payload = {"report_name": "current official event"}
+        if index == 0:
+            payload.update(
+                {
+                    "price_score_usage": "INVESTIGATION_ONLY",
+                    "return_pct": 12.5,
+                    "trading_value": 1_500_000_000,
+                }
+            )
         return {
             "trigger_signal_id": event["trigger_signal_ids"][0],
             "target_id": event["target_id"],
@@ -235,7 +323,7 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
             "investigation_required": True,
             "score_evidence_eligible": False,
             "headline_or_snippet_only": False,
-            "payload": {"report_name": "current official event"},
+            "payload": payload,
             "schema_version": "e2r_live_trigger_signal_v1",
         }
 
@@ -323,7 +411,7 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
                 {
                     "market": market,
                     "effective_date": self.AS_OF_DATE,
-                    "canonical_url": sample["source_url"] + "?basDd=20260807",
+                    "canonical_url": sample["source_url"],
                     "content_hash": sample["source_content_hash"],
                     "request_id": sample["source_request_id"],
                     "provider_request_id": sample["source_request_id"],
@@ -391,16 +479,51 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
                 "hard_acceptance_pass": True,
             },
         )
+        depth_rows = [deepcopy(candidate["depth_decision"]) for candidate in candidates]
+        for universe_row in universe_rows[len(candidates) :]:
+            target_id = universe_row["symbol"]
+            depth_rows.append(
+                {
+                    "depth_decision_id": "DEPTH-"
+                    + stable_hash(
+                        {
+                            "target": target_id,
+                            "as_of_date": self.AS_OF_DATE,
+                            "maximum": "L1_BASELINE",
+                            "candidate": None,
+                        }
+                    )[:24],
+                    "target_id": target_id,
+                    "target_name": universe_row["company_name"],
+                    "as_of_date": self.AS_OF_DATE,
+                    "completed_depths": ["L0_UNIVERSE", "L1_BASELINE"],
+                    "maximum_depth": "L1_BASELINE",
+                    "candidate_event_id": None,
+                    "trigger_signal_ids": [],
+                    "priority_score": 0.0,
+                    "selected_for_official_light": False,
+                    "selected_for_deep": False,
+                    "selected_for_brain": False,
+                    "acquisition_eligible": False,
+                    "selection_reasons": ["current bounded baseline only"],
+                    "not_selected_reason": "no current investigation candidate",
+                    "source_task_budget": {"max_source_tasks": 0},
+                    "llm_budget": {"max_llm_calls": 0},
+                    "general_web_budget": {"max_fetches": 0},
+                    "forced_archetype_quota": False,
+                    "schema_version": "e2r_live_depth_decision_v1",
+                }
+            )
         write_jsonl(
             "depth_decisions.jsonl",
-            [candidate["depth_decision"] for candidate in candidates],
+            depth_rows,
         )
         write_json(
             "candidate_selection_audit.json",
             {
                 "schema_version": "e2r_live_depth_selection_audit_v1",
                 "as_of_date": self.AS_OF_DATE,
-                "depth_decision_count": len(candidates),
+                "depth_decision_count": len(depth_rows),
                 "critical_count_sum": 0,
                 "hard_acceptance_pass": True,
             },
@@ -424,9 +547,58 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
         )
         return candidates, signals
 
+    def _rewrite_live_planners_as_abstained(
+        self, root: Path, *, omit_top_k: bool
+    ) -> None:
+        run_path = root / "planner_runs.jsonl"
+        runs = [json.loads(line) for line in run_path.read_text().splitlines()]
+        for run in runs:
+            run["terminal_status"] = "ABSTAINED"
+            run["plan"]["status"] = "ABSTAINED"
+            critique = run["plan"]["critique_output"]
+            critique["abstain"] = True
+            if omit_top_k:
+                critique.pop("top_k_archetypes")
+            raw_response = json.dumps(
+                critique, ensure_ascii=False, sort_keys=True
+            )
+            for trace in run["plan"]["provider_traces"]:
+                if trace["planner_pass"] == "MEMORY_CRITIQUE":
+                    trace["response_hash"] = hashlib.sha256(
+                        raw_response.encode("utf-8")
+                    ).hexdigest()
+        run_path.write_text(
+            "".join(json.dumps(row, sort_keys=True) + "\n" for row in runs),
+            encoding="utf-8",
+        )
+
+        run_by_target = {row["target_id"]: row for row in runs}
+        response_path = root / "llm_responses.jsonl"
+        responses = [
+            json.loads(line) for line in response_path.read_text().splitlines()
+        ]
+        for response in responses:
+            if response["planner_pass"] != "MEMORY_CRITIQUE":
+                continue
+            payload = run_by_target[response["target_id"]]["plan"][
+                "critique_output"
+            ]
+            raw_response = json.dumps(
+                payload, ensure_ascii=False, sort_keys=True
+            )
+            response["response_payload"] = payload
+            response["raw_response"] = raw_response
+            response["response_hash"] = hashlib.sha256(
+                raw_response.encode("utf-8")
+            ).hexdigest()
+        response_path.write_text(
+            "".join(json.dumps(row, sort_keys=True) + "\n" for row in responses),
+            encoding="utf-8",
+        )
+
     def test_selects_exact_five_without_score_or_stage_visibility(self):
         candidates = self._candidates()
-        signals = self._signals(candidates, natural_indices={0})
+        signals = self._signals(candidates)
         result = compile_cross_archetype_canary_selection(
             selection_as_of_date=self.AS_OF_DATE,
             candidates=candidates,
@@ -434,17 +606,181 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
         )
         self.assertEqual(result["status"], SELECTION_PASS)
         self.assertEqual(result["selection_count"], 5)
-        self.assertEqual(result["selections"][0]["selection_mode"], NATURAL_SELECTION)
         self.assertTrue(
             all(
-                row["selection_mode"] == FORCED_SELECTION
-                for row in result["selections"][1:]
+                row["selection_mode"] == NATURAL_SELECTION
+                for row in result["selections"]
             )
         )
         self.assertEqual(len({row["target_id"] for row in result["selections"]}), 5)
         summary = summarize_cross_archetype_canary_selection(result)
         self.assertEqual(summary["selected_archetype_count"], 5)
         self.assertEqual(summary["target_specific_code_branch_count"], 0)
+
+    def test_forced_exact_five_require_complete_official_profile_and_abstention(self):
+        candidates = self._abstained_candidates()
+        profile_manifest = self._forced_profile_manifest(candidates)
+        signals = self._signals(candidates)
+        result = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=candidates,
+            trigger_events=signals,
+            issuer_business_profile_manifest=profile_manifest,
+        )
+        self.assertEqual(result["status"], SELECTION_PASS)
+        self.assertTrue(
+            all(
+                row["selection_mode"] == FORCED_SELECTION
+                and row["trigger_event_ids"] == []
+                and row["direct_current_supporting_fact_ids"] == []
+                and row["recipe_ids"] == []
+                and row["production_daily_candidate"] is False
+                and row["forced_validation_authority"] is False
+                and row["score_or_stage_authority"] is False
+                and row["gold_authority"] is False
+                for row in result["selections"]
+            )
+        )
+        self.assertEqual(
+            result["issuer_business_profile_manifest_hash"],
+            stable_hash(profile_manifest),
+        )
+        validate_cross_archetype_canary_selection_manifest(
+            result,
+            issuer_business_profile_manifest=profile_manifest,
+        )
+
+    def test_forced_abstained_exact_five_does_not_require_top_k(self):
+        candidates = self._abstained_candidates()
+        for candidate in candidates:
+            candidate["planner_run"]["plan"]["critique_output"].pop(
+                "top_k_archetypes"
+            )
+        profile_manifest = self._forced_profile_manifest(candidates)
+        result = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=candidates,
+            trigger_events=self._signals(candidates),
+            issuer_business_profile_manifest=profile_manifest,
+        )
+        self.assertEqual(result["status"], SELECTION_PASS)
+        self.assertEqual(result["selection_count"], len(REQUIRED_ARCHETYPES))
+        self.assertTrue(
+            all(
+                row["selection_mode"] == FORCED_SELECTION
+                for row in result["selections"]
+            )
+        )
+
+    def test_forced_selection_reopens_from_tracked_sibling_in_a_clean_clone(self):
+        candidates = self._abstained_candidates()
+        for candidate in candidates:
+            candidate["planner_run"]["plan"]["critique_output"].pop(
+                "top_k_archetypes"
+            )
+        profile_manifest = self._forced_profile_manifest(candidates)
+        result = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=candidates,
+            trigger_events=self._signals(candidates),
+            issuer_business_profile_manifest=profile_manifest,
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            clone_root = Path(directory)
+            cutover_root = clone_root / CUTOVER_RELATIVE_ROOT
+            profile_path = cutover_root / ISSUER_PROFILE_MANIFEST_NAME
+            selection_path = cutover_root / "cross_archetype_canary_selection.json"
+            seal_current_issuer_business_profile_manifest(
+                profile_path, profile_manifest
+            )
+            seal_cross_archetype_canary_selection(
+                selection_path,
+                result,
+                issuer_business_profile_manifest=profile_manifest,
+            )
+
+            # A git checkout normally restores tracked files as 0644.  No
+            # ignored output tree or Collaboration journal is available here.
+            profile_path.chmod(0o644)
+            selection_path.chmod(0o644)
+            self.assertFalse((clone_root / "output").exists())
+            reopened = load_sealed_cross_archetype_canary_selection(selection_path)
+            self.assertEqual(reopened["status"], SELECTION_PASS)
+            self.assertEqual(
+                reopened["selection_roster_hash"],
+                result["selection_roster_hash"],
+            )
+            validate_cross_archetype_canary_selection_manifest(reopened)
+            downstream = compile_cross_archetype_canary_directory(
+                selection=reopened,
+                live_root=cutover_root / "current_live_canaries",
+            )
+            self.assertEqual(downstream["status"], CANARY_COMPILATION_PENDING)
+
+            profile_path.unlink()
+            with self.assertRaisesRegex(ValueError, "unavailable"):
+                load_sealed_cross_archetype_canary_selection(selection_path)
+
+    def test_forced_selection_fails_without_complete_exact_profile(self):
+        candidates = self._abstained_candidates()
+        signals = self._signals(candidates)
+        missing = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=candidates,
+            trigger_events=signals,
+        )
+        self.assertEqual(missing["status"], SELECTION_FAIL)
+        profile_manifest = self._forced_profile_manifest(candidates)
+        pending = deepcopy(profile_manifest)
+        pending["status"] = "PENDING"
+        pending["audit"]["production_acceptance_pass"] = False
+        result = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=candidates,
+            trigger_events=signals,
+            issuer_business_profile_manifest=pending,
+        )
+        self.assertEqual(result["status"], SELECTION_FAIL)
+        self.assertIn(
+            "INVALID_ISSUER_BUSINESS_PROFILE_MANIFEST",
+            {row["code"] for row in result["failures"]},
+        )
+        pending_planner_candidates = self._abstained_candidates()
+        current_profile = self._forced_profile_manifest(pending_planner_candidates)
+        pending_planner_candidates[0]["planner_run"]["terminal_status"] = "PENDING"
+        pending_planner_candidates[0]["planner_run"]["plan"]["status"] = "PENDING"
+        planner_pending = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=pending_planner_candidates,
+            trigger_events=self._signals(pending_planner_candidates),
+            issuer_business_profile_manifest=current_profile,
+        )
+        self.assertEqual(planner_pending["status"], SELECTION_FAIL)
+
+    def test_forced_profile_tamper_and_natural_mislabel_fail_closed(self):
+        candidates = self._abstained_candidates()
+        profile_manifest = self._forced_profile_manifest(candidates)
+        result = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=candidates,
+            trigger_events=self._signals(candidates),
+            issuer_business_profile_manifest=profile_manifest,
+        )
+        tampered_profile = deepcopy(profile_manifest)
+        tampered_profile["selections"][0]["exact_quote_hash"] = "0" * 64
+        with self.assertRaises(ValueError):
+            validate_cross_archetype_canary_selection_manifest(
+                result,
+                issuer_business_profile_manifest=tampered_profile,
+            )
+        mislabeled = deepcopy(result)
+        mislabeled["selections"][0]["selection_mode"] = NATURAL_SELECTION
+        mislabeled["selection_roster_hash"] = stable_hash(mislabeled["selections"])
+        with self.assertRaisesRegex(ValueError, "identity|lineage"):
+            validate_cross_archetype_canary_selection_manifest(
+                mislabeled,
+                issuer_business_profile_manifest=profile_manifest,
+            )
 
     def test_rejects_post_score_alias_and_candidate_schema_extension(self):
         candidates = self._candidates()
@@ -456,6 +792,20 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
         )
         self.assertEqual(result["status"], SELECTION_FAIL)
         self.assertEqual(result["critical_counts"]["post_score_target_selection_count"], 1)
+
+        candidates = self._candidates()
+        signals = self._signals(candidates)
+        signals[0]["payload"]["price_score_usage"] = "FINAL_SCORE"
+        result = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=candidates,
+            trigger_events=signals,
+        )
+        self.assertEqual(result["status"], SELECTION_FAIL)
+        self.assertIn(
+            "POST_DEEP_SCORE_OR_STAGE_VISIBLE_AT_SELECTION",
+            {row["code"] for row in result["failures"]},
+        )
 
     def test_empty_required_roster_cannot_bypass_exact_five_contract(self):
         result = compile_cross_archetype_canary_selection(
@@ -535,7 +885,12 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
         old_date = "2020-01-01"
         row = candidates[0]["universe_row"]
         row["source_effective_date"] = old_date
-        endpoint = row["source_url"].rsplit("/", 1)[-1]
+        endpoint = row["source_url"].split("?", 1)[0].rsplit("/", 1)[-1]
+        row["source_url"] = (
+            row["source_url"].split("?", 1)[0]
+            + "?basDd="
+            + old_date.replace("-", "")
+        )
         row["source_request_id"] = "KRXREQ-" + stable_hash(
             {
                 "market": row["market"],
@@ -580,7 +935,7 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
         result = compile_cross_archetype_canary_selection(
             selection_as_of_date=self.AS_OF_DATE,
             candidates=candidates,
-            trigger_events=self._signals(candidates, natural_indices=set()),
+            trigger_events=self._signals(candidates),
         )
         self.assertEqual(result["status"], SELECTION_FAIL)
         self.assertEqual(result["critical_counts"]["required_archetype_missing_count"], 1)
@@ -590,7 +945,7 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
         result = compile_cross_archetype_canary_selection(
             selection_as_of_date=self.AS_OF_DATE,
             candidates=candidates,
-            trigger_events=self._signals(candidates, natural_indices=set()),
+            trigger_events=self._signals(candidates),
         )
         self.assertEqual(result["status"], SELECTION_PASS)
         with tempfile.TemporaryDirectory() as directory:
@@ -629,7 +984,7 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
         result = compile_cross_archetype_canary_selection(
             selection_as_of_date=self.AS_OF_DATE,
             candidates=candidates,
-            trigger_events=self._signals(candidates, natural_indices=set()),
+            trigger_events=self._signals(candidates),
         )
         with tempfile.TemporaryDirectory() as directory:
             destination = Path(directory) / "selection.json"
@@ -643,29 +998,207 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
                 )
                 + "\n"
             ).encode("utf-8")
-            original_unlink = Path.unlink
+            original_unlink = os.unlink
             attacked = False
 
-            def replace_after_temp_unlink(path: Path, *args, **kwargs):
+            def replace_after_temp_unlink(path, *args, **kwargs):
                 nonlocal attacked
                 outcome = original_unlink(path, *args, **kwargs)
-                if not attacked and path.name.startswith(".selection.json."):
+                name = os.fspath(path)
+                if not attacked and name.startswith(".selection.json."):
                     attacked = True
-                    original_unlink(destination)
-                    destination.write_bytes(encoded)
-                    destination.chmod(0o600)
+                    directory_fd = kwargs.get("dir_fd")
+                    original_unlink(destination.name, dir_fd=directory_fd)
+                    descriptor = os.open(
+                        destination.name,
+                        os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                        0o600,
+                        dir_fd=directory_fd,
+                    )
+                    try:
+                        os.write(descriptor, encoded)
+                    finally:
+                        os.close(descriptor)
                 return outcome
 
-            with patch.object(Path, "unlink", new=replace_after_temp_unlink):
+            with patch(
+                "e2r.production.v6_canary_selection.os.unlink",
+                side_effect=replace_after_temp_unlink,
+            ):
                 with self.assertRaisesRegex(ValueError, "changed after atomic creation"):
                     seal_cross_archetype_canary_selection(destination, result)
+            self.assertFalse(destination.exists())
+
+    def test_seal_never_writes_through_a_parent_symlink_swap(self):
+        candidates = self._candidates()
+        result = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=candidates,
+            trigger_events=self._signals(candidates),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            parent = root / "cutover"
+            displaced = root / "cutover-original"
+            victim = root / "outside"
+            parent.mkdir()
+            victim.mkdir()
+            destination = parent / "selection.json"
+            original_link = os.link
+            attacked = False
+
+            def swap_parent_before_link(*args, **kwargs):
+                nonlocal attacked
+                if not attacked:
+                    attacked = True
+                    parent.rename(displaced)
+                    parent.symlink_to(victim, target_is_directory=True)
+                return original_link(*args, **kwargs)
+
+            with patch(
+                "e2r.production.v6_canary_selection.os.link",
+                side_effect=swap_parent_before_link,
+            ):
+                with self.assertRaisesRegex(ValueError, "parent changed"):
+                    seal_cross_archetype_canary_selection(destination, result)
+
+            self.assertFalse((victim / destination.name).exists())
+            self.assertFalse((displaced / destination.name).exists())
+
+    def test_phase105_cli_does_not_claim_the_phase106_result_summary_path(self):
+        candidates = self._candidates()
+        signals = self._signals(candidates)
+        result = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=candidates,
+            trigger_events=signals,
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory).resolve()
+            argv = [
+                "select_e2r_v6_cross_archetype_canaries",
+                "--as-of-date",
+                self.AS_OF_DATE,
+                "--repo-root",
+                str(repo),
+            ]
+            with (
+                patch.object(sys, "argv", argv),
+                patch(
+                    "e2r.cli.select_e2r_v6_cross_archetype_canaries."
+                    "canonical_repository_root",
+                    return_value=repo,
+                ),
+                patch(
+                    "e2r.cli.select_e2r_v6_cross_archetype_canaries."
+                    "_repository_identity_is_trusted",
+                    return_value=True,
+                ),
+                patch(
+                    "e2r.cli.select_e2r_v6_cross_archetype_canaries."
+                    "load_current_live_selection_inputs",
+                    return_value=(candidates, signals),
+                ),
+                patch(
+                    "e2r.cli.select_e2r_v6_cross_archetype_canaries."
+                    "compile_cross_archetype_canary_selection",
+                    return_value=result,
+                ),
+                patch(
+                    "e2r.cli.select_e2r_v6_cross_archetype_canaries."
+                    "seal_cross_archetype_canary_selection"
+                ) as seal,
+                redirect_stdout(io.StringIO()) as stdout,
+            ):
+                self.assertEqual(selection_cli_main(), 0)
+            seal.assert_called_once()
+            self.assertEqual(
+                Path(seal.call_args.args[0]).name,
+                "cross_archetype_canary_selection.json",
+            )
+            output = json.loads(stdout.getvalue())
+            self.assertNotIn("summary_path", output)
+
+    def test_phase105_cli_exactly_binds_forced_profile_manifest(self):
+        candidates = self._abstained_candidates()
+        signals = self._signals(candidates)
+        profile_manifest = self._forced_profile_manifest(candidates)
+        result = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=candidates,
+            trigger_events=signals,
+            issuer_business_profile_manifest=profile_manifest,
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory).resolve()
+            profile_path = (
+                repo / CUTOVER_RELATIVE_ROOT / ISSUER_PROFILE_MANIFEST_NAME
+            )
+            argv = [
+                "select_e2r_v6_cross_archetype_canaries",
+                "--as-of-date",
+                self.AS_OF_DATE,
+                "--repo-root",
+                str(repo),
+                "--issuer-profile-manifest",
+                str(profile_path),
+            ]
+            with (
+                patch.object(sys, "argv", argv),
+                patch(
+                    "e2r.cli.select_e2r_v6_cross_archetype_canaries."
+                    "canonical_repository_root",
+                    return_value=repo,
+                ),
+                patch(
+                    "e2r.cli.select_e2r_v6_cross_archetype_canaries."
+                    "_repository_identity_is_trusted",
+                    return_value=True,
+                ),
+                patch(
+                    "e2r.cli.select_e2r_v6_cross_archetype_canaries."
+                    "load_current_issuer_business_profile_manifest",
+                    return_value=profile_manifest,
+                ) as profile_loader,
+                patch(
+                    "e2r.cli.select_e2r_v6_cross_archetype_canaries."
+                    "load_current_live_selection_inputs",
+                    return_value=(candidates, signals),
+                ) as live_loader,
+                patch(
+                    "e2r.cli.select_e2r_v6_cross_archetype_canaries."
+                    "compile_cross_archetype_canary_selection",
+                    return_value=result,
+                ) as compiler,
+                patch(
+                    "e2r.cli.select_e2r_v6_cross_archetype_canaries."
+                    "seal_cross_archetype_canary_selection"
+                ) as seal,
+                redirect_stdout(io.StringIO()),
+            ):
+                self.assertEqual(selection_cli_main(), 0)
+            profile_loader.assert_called_once_with(
+                profile_path, selection_as_of_date=self.AS_OF_DATE
+            )
+            self.assertIs(
+                live_loader.call_args.kwargs["issuer_business_profile_manifest"],
+                profile_manifest,
+            )
+            self.assertIs(
+                compiler.call_args.kwargs["issuer_business_profile_manifest"],
+                profile_manifest,
+            )
+            self.assertIs(
+                seal.call_args.kwargs["issuer_business_profile_manifest"],
+                profile_manifest,
+            )
 
     def test_selection_seal_rejects_whitespace_target_collision(self):
         candidates = self._candidates()
         result = compile_cross_archetype_canary_selection(
             selection_as_of_date=self.AS_OF_DATE,
             candidates=candidates,
-            trigger_events=self._signals(candidates, natural_indices=set()),
+            trigger_events=self._signals(candidates),
         )
         forged = deepcopy(result)
         forged["selections"][1]["target_id"] = (
@@ -705,6 +1238,225 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
             self.assertTrue(
                 all(
                     row["selection_mode"] == NATURAL_SELECTION
+                    for row in result["selections"]
+                )
+            )
+
+    def test_profile_candidate_loader_uses_full_actual_shaped_audit_and_journal(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            root = repo / "output" / "live_materialization" / self.AS_OF_DATE
+            root.mkdir(parents=True)
+            candidates, _signals = self._write_live_root(root)
+            self._rewrite_live_planners_as_abstained(root, omit_top_k=True)
+            with patch(
+                "e2r.production.v6_canary_selection.canonical_repository_root",
+                return_value=repo,
+            ), patch(
+                "e2r.production.v6_canary_selection._repository_identity_is_trusted",
+                return_value=True,
+            ):
+                inputs = load_canonical_profile_inputs(
+                    root, as_of_date=self.AS_OF_DATE
+                )
+            self.assertEqual(inputs.l3_target_count, len(candidates))
+            self.assertEqual(inputs.natural_complete_count, 0)
+            self.assertEqual(inputs.eligible_abstained_count, len(candidates))
+            self.assertEqual(inputs.ineligible_abstained_count, 0)
+            self.assertEqual(inputs.pending_count, 0)
+            self.assertEqual(
+                tuple(row["symbol"] for row in inputs.universe_rows),
+                tuple(
+                    candidate["universe_row"]["symbol"]
+                    for candidate in candidates
+                ),
+            )
+
+            run_path = root / "planner_runs.jsonl"
+            original_runs = run_path.read_bytes()
+            runs = [json.loads(line) for line in original_runs.splitlines()]
+            runs[0]["plan"]["final_score"] = 99
+            run_path.write_text(
+                "".join(json.dumps(row, sort_keys=True) + "\n" for row in runs),
+                encoding="utf-8",
+            )
+            with patch(
+                "e2r.production.v6_canary_selection.canonical_repository_root",
+                return_value=repo,
+            ), patch(
+                "e2r.production.v6_canary_selection._repository_identity_is_trusted",
+                return_value=True,
+            ), self.assertRaisesRegex(ValueError, "post-deep authority"):
+                load_canonical_profile_inputs(root, as_of_date=self.AS_OF_DATE)
+            run_path.write_bytes(original_runs)
+
+            response_path = root / "llm_responses.jsonl"
+            responses = [
+                json.loads(line) for line in response_path.read_text().splitlines()
+            ]
+            responses[0]["response_hash"] = "0" * 64
+            response_path.write_text(
+                "".join(json.dumps(row, sort_keys=True) + "\n" for row in responses),
+                encoding="utf-8",
+            )
+            with patch(
+                "e2r.production.v6_canary_selection.canonical_repository_root",
+                return_value=repo,
+            ), patch(
+                "e2r.production.v6_canary_selection._repository_identity_is_trusted",
+                return_value=True,
+            ), self.assertRaisesRegex(ValueError, "response receipt hash"):
+                load_canonical_profile_inputs(root, as_of_date=self.AS_OF_DATE)
+
+    def test_complete_profile_materialization_seals_only_the_tracked_cutover_leaf(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory).resolve()
+            live_root = (
+                repo / "output" / "live_materialization" / self.AS_OF_DATE
+            )
+            live_root.mkdir(parents=True)
+            candidates, _signals = self._write_live_root(live_root)
+            self._rewrite_live_planners_as_abstained(
+                live_root, omit_top_k=True
+            )
+            industries = dict(
+                zip(
+                    (
+                        candidate["universe_row"]["symbol"]
+                        for candidate in candidates
+                    ),
+                    ("26120", "20110", "20202", "21101", "62010"),
+                    strict=True,
+                )
+            )
+            with patch(
+                "e2r.production.v6_canary_selection.canonical_repository_root",
+                return_value=repo,
+            ), patch(
+                "e2r.production.v6_canary_selection._repository_identity_is_trusted",
+                return_value=True,
+            ):
+                result, destination, inputs = materialize_canonical_profile_manifest(
+                    repo_root=repo,
+                    config=IssuerBusinessProfileConfig(
+                        as_of_date=self.AS_OF_DATE,
+                        max_profile_fetches=5,
+                    ),
+                    credential="official-fixture-key",
+                    fetcher=FakeOpenDartFetcher(industries),
+                    compatibility_provider=FakeCompatibilityProvider(),
+                )
+            self.assertEqual(result["status"], "COMPLETE")
+            self.assertEqual(inputs.eligible_abstained_count, 5)
+            self.assertEqual(
+                destination,
+                repo
+                / CUTOVER_RELATIVE_ROOT
+                / ISSUER_PROFILE_MANIFEST_NAME,
+            )
+            self.assertTrue(destination.is_file())
+            self.assertFalse(
+                (live_root / ISSUER_PROFILE_MANIFEST_NAME).exists()
+            )
+            loaded = load_current_issuer_business_profile_manifest(
+                destination, selection_as_of_date=self.AS_OF_DATE
+            )
+            self.assertEqual(stable_hash(loaded), stable_hash(result))
+
+    def test_operational_loader_admits_only_profile_bound_abstained_targets(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            root = repo / "output" / "live_materialization" / self.AS_OF_DATE
+            root.mkdir(parents=True)
+            candidates, _signals = self._write_live_root(root)
+            profile_manifest = self._forced_profile_manifest(candidates)
+            profile_path = root / "issuer_business_profile.json"
+            profile_path.write_text(
+                json.dumps(profile_manifest, ensure_ascii=False, sort_keys=True),
+                encoding="utf-8",
+            )
+            runs = [
+                json.loads(line)
+                for line in (root / "planner_runs.jsonl").read_text(
+                    encoding="utf-8"
+                ).splitlines()
+                if line.strip()
+            ]
+            for run in runs:
+                run["terminal_status"] = "ABSTAINED"
+                run["plan"]["status"] = "ABSTAINED"
+                run["plan"]["critique_output"]["abstain"] = True
+                critique_raw = json.dumps(
+                    run["plan"]["critique_output"],
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+                for trace in run["plan"]["provider_traces"]:
+                    if trace["planner_pass"] == "MEMORY_CRITIQUE":
+                        trace["response_hash"] = hashlib.sha256(
+                            critique_raw.encode("utf-8")
+                        ).hexdigest()
+            (root / "planner_runs.jsonl").write_text(
+                "".join(
+                    json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n"
+                    for row in runs
+                ),
+                encoding="utf-8",
+            )
+            responses = [
+                json.loads(line)
+                for line in (root / "llm_responses.jsonl").read_text(
+                    encoding="utf-8"
+                ).splitlines()
+                if line.strip()
+            ]
+            run_by_target = {row["target_id"]: row for row in runs}
+            for response in responses:
+                if response["planner_pass"] != "MEMORY_CRITIQUE":
+                    continue
+                payload = run_by_target[response["target_id"]]["plan"][
+                    "critique_output"
+                ]
+                raw_response = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+                response["response_payload"] = payload
+                response["raw_response"] = raw_response
+                response["response_hash"] = hashlib.sha256(
+                    raw_response.encode("utf-8")
+                ).hexdigest()
+            (root / "llm_responses.jsonl").write_text(
+                "".join(
+                    json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n"
+                    for row in responses
+                ),
+                encoding="utf-8",
+            )
+            with patch(
+                "e2r.production.v6_canary_selection.canonical_repository_root",
+                return_value=repo,
+            ), patch(
+                "e2r.production.v6_canary_selection._repository_identity_is_trusted",
+                return_value=True,
+            ):
+                loaded_profile = load_current_issuer_business_profile_manifest(
+                    profile_path,
+                    selection_as_of_date=self.AS_OF_DATE,
+                )
+                loaded_candidates, signals = load_current_live_selection_inputs(
+                    root,
+                    selection_as_of_date=self.AS_OF_DATE,
+                    issuer_business_profile_manifest=loaded_profile,
+                )
+            self.assertEqual(len(loaded_candidates), 5)
+            result = compile_cross_archetype_canary_selection(
+                selection_as_of_date=self.AS_OF_DATE,
+                candidates=loaded_candidates,
+                trigger_events=signals,
+                issuer_business_profile_manifest=loaded_profile,
+            )
+            self.assertEqual(result["status"], SELECTION_PASS)
+            self.assertTrue(
+                all(
+                    row["selection_mode"] == FORCED_SELECTION
                     for row in result["selections"]
                 )
             )
