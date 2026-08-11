@@ -8012,6 +8012,24 @@ def _supervisor_explicitly_exhausted_source_routes(
     remain downstream obligations.
     """
 
+    structured_gap = score_gap_context.get("prior_structured_source_gap")
+    if isinstance(structured_gap, Mapping) and (
+        structured_gap.get("status") == "SOURCE_PENDING"
+        and any(
+            roles
+            for roles in (
+                structured_gap.get("missing_roles_by_component") or {}
+            ).values()
+        )
+    ):
+        # A Supervisor may exhaust the routes for its own semantic fact gap
+        # while the deterministic structured engine still lacks a required
+        # point-in-time source (for example, a post-cutoff mutable consensus
+        # page was correctly rejected).  Closing query generation here would
+        # turn a provider/source failure into permanent score authority.  The
+        # LLM must retain ownership of an alternate bounded source route; this
+        # condition never synthesizes a query in deterministic code.
+        return False
     supervisor = score_gap_context.get("prior_supervisor_gap")
     if (
         not isinstance(supervisor, Mapping)

@@ -1844,6 +1844,32 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             )
         )
 
+    def test_supervisor_route_exhaustion_does_not_hide_structured_source_gap(
+        self,
+    ) -> None:
+        self.assertFalse(
+            source_graph_module._supervisor_explicitly_exhausted_source_routes(
+                {
+                    "prior_supervisor_gap": {
+                        "reasonable_positive_routes_remaining": False,
+                        "new_source_family_directions": [],
+                        "query_direction_briefs": [],
+                        "source_family_gaps": [],
+                        "failure_assessments": [],
+                        "parser_or_extractor_failures": [],
+                    },
+                    "prior_structured_source_gap": {
+                        "status": "SOURCE_PENDING",
+                        "missing_roles_by_component": {
+                            "valuation_rerating": ["FORWARD_PB"],
+                        },
+                        "query_generation_owner": "LLM",
+                        "deterministic_fallback_query_allowed": False,
+                    },
+                }
+            )
+        )
+
     def test_consecutive_empty_collaboration_responses_advance_semantic_prompt(
         self,
     ) -> None:

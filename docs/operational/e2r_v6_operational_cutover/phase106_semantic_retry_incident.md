@@ -89,6 +89,19 @@ score, Stage 또는 cutover authority가 아니다.
    `QUERY_GENERATION_PENDING`에서 `EPOCH_COMPLETE_REQUIRES_SUPERVISOR`로 전진하고 pending
    replay context가 제거되는 것을 확인했다.
 
+7. **semantic route 종료가 별도 structured source gap까지 가림**
+
+   Supervisor의 `routes=false`는 당시 semantic fact gap에 대한 판단이다. 그런데 C08의
+   CompanyGuide consensus page는 `as_of_date` 뒤에 갱신된 mutable page라 point-in-time
+   validator가 올바르게 거절했고, `FORWARD_PB`, `FORWARD_EV_EBITDA`, revision 등
+   structured role은 계속 `SOURCE_PENDING`이었다. semantic route 종료를 전체 source
+   종료로 적용하면 이 provider/source gap이 낮은 점수나 영구 pending으로 굳는다.
+
+   수정 후 `prior_structured_source_gap.status=SOURCE_PENDING`이고 required role이 남아
+   있으면 Supervisor의 semantic route 종료가 LLM source planning을 덮지 않는다.
+   deterministic 코드는 검색어를 만들지 않고, LLM이 full broker PDF 같은 대체 문서
+   class를 제안할 권한만 유지한다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -125,6 +138,9 @@ score, Stage 또는 cutover authority가 아니다.
 9. `RSUP-PENDING`은 source direction이 아니다. source routing은 마지막으로 검증된
    provider Supervisor 판정을 유지하되, readiness와 점수 계산은 현재 pending 상태를
    그대로 사용한다.
+10. semantic source route 종료와 structured provider/source gap 종료를 같은 boolean으로
+    취급하지 않는다. structured required role이 남으면 score를 확정하지 않고 LLM 대체
+    source route를 다시 열어야 한다.
 
 ## Goal 경계
 
