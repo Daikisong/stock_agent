@@ -1474,6 +1474,118 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
                 )
             )
 
+    def test_operational_loader_admits_full_krx_expanded_profile_targets(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            root = repo / "output" / "live_materialization" / self.AS_OF_DATE
+            root.mkdir(parents=True)
+            self._write_live_root(root)
+            # The original five L3 rows are not the selected issuers.  Marking
+            # them ABSTAINED proves the five profile-expanded issuers below do
+            # not borrow or fabricate an unrelated planner lineage.
+            self._rewrite_live_planners_as_abstained(root, omit_top_k=True)
+            universe_rows = [
+                json.loads(line)
+                for line in (root / "universe_eligible.jsonl").read_text(
+                    encoding="utf-8"
+                ).splitlines()
+                if line.strip()
+            ]
+            expanded_rows = universe_rows[5:10]
+            industries = {
+                expanded_rows[0]["symbol"]: "26120",
+                expanded_rows[1]["symbol"]: "20110",
+                expanded_rows[2]["symbol"]: "20202",
+                expanded_rows[3]["symbol"]: "21101",
+                expanded_rows[4]["symbol"]: "62010",
+            }
+            profile_manifest = dict(
+                V6IssuerBusinessProfileMaterializer().materialize(
+                    IssuerBusinessProfileConfig(
+                        as_of_date=self.AS_OF_DATE,
+                        max_profile_fetches=5,
+                        max_discovery_fetches=5,
+                        max_forced_candidates_per_required_slot=1,
+                    ),
+                    universe_rows=(),
+                    discovery_universe_rows=expanded_rows,
+                    credential="official-fixture-key",
+                    fetcher=FakeOpenDartFetcher(industries),
+                    compatibility_provider=FakeCompatibilityProvider(),
+                )
+            )
+            self.assertEqual(profile_manifest["status"], "COMPLETE")
+            selected_targets = {
+                row["target_id"] for row in profile_manifest["selections"]
+            }
+            self.assertEqual(
+                selected_targets,
+                {row["symbol"] for row in expanded_rows},
+            )
+            profile_path = repo / "profile.json"
+            seal_current_issuer_business_profile_manifest(
+                profile_path, profile_manifest
+            )
+            with patch(
+                "e2r.production.v6_canary_selection.canonical_repository_root",
+                return_value=repo,
+            ), patch(
+                "e2r.production.v6_canary_selection._repository_identity_is_trusted",
+                return_value=True,
+            ):
+                loaded_profile = load_current_issuer_business_profile_manifest(
+                    profile_path,
+                    selection_as_of_date=self.AS_OF_DATE,
+                )
+                loaded_candidates, signals = load_current_live_selection_inputs(
+                    root,
+                    selection_as_of_date=self.AS_OF_DATE,
+                    issuer_business_profile_manifest=loaded_profile,
+                )
+            self.assertEqual(len(loaded_candidates), 5)
+            self.assertTrue(
+                all(
+                    set(row)
+                    == {"universe_row", "forced_profile_target_id"}
+                    for row in loaded_candidates
+                )
+            )
+            result = compile_cross_archetype_canary_selection(
+                selection_as_of_date=self.AS_OF_DATE,
+                candidates=loaded_candidates,
+                trigger_events=signals,
+                issuer_business_profile_manifest=loaded_profile,
+            )
+            self.assertEqual(result["status"], SELECTION_PASS)
+            self.assertEqual(
+                {row["target_id"] for row in result["selections"]},
+                selected_targets,
+            )
+            self.assertTrue(
+                all(
+                    row["selection_mode"] == FORCED_SELECTION
+                    and row["forced_candidate_origin"]
+                    == "OFFICIAL_PROFILE_CANDIDATE_EXPANSION"
+                    and row["trigger_event_ids"] == []
+                    for row in result["selections"]
+                )
+            )
+            validate_cross_archetype_canary_selection_manifest(
+                result,
+                issuer_business_profile_manifest=loaded_profile,
+            )
+
+            tampered = deepcopy(result)
+            tampered["selections"][0]["candidate_expansion_entry_hash"] = "0" * 64
+            tampered["selection_roster_hash"] = stable_hash(
+                tampered["selections"]
+            )
+            with self.assertRaisesRegex(ValueError, "recompute|differs"):
+                validate_cross_archetype_canary_selection_manifest(
+                    tampered,
+                    issuer_business_profile_manifest=loaded_profile,
+                )
+
     def test_operational_loader_rejects_call_or_universe_tamper(self):
         with tempfile.TemporaryDirectory() as directory:
             repo = Path(directory)

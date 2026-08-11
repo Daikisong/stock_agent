@@ -49,6 +49,7 @@ SELECTION_FAIL = "E2R_V6_CROSS_ARCHETYPE_CANARY_SELECTION_FAIL"
 SELECTION_SUMMARY_SCHEMA = "e2r_v6_pre_deep_canary_selection_summary_v1"
 NATURAL_SELECTION = "NATURAL_TRIGGER_CANARY"
 FORCED_SELECTION = "FORCED_VALIDATION_CANARY"
+FORCED_PROFILE_EXPANSION_ORIGIN = "OFFICIAL_PROFILE_CANDIDATE_EXPANSION"
 ISSUER_PROFILE_MANIFEST_NAME = "issuer_business_profile_manifest.json"
 REQUIRED_ARCHETYPES = (
     "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
@@ -64,6 +65,12 @@ _CANDIDATE_KEYS = frozenset(
         "candidate_event",
         "depth_decision",
         "planner_run",
+    }
+)
+_FORCED_EXPANDED_CANDIDATE_KEYS = frozenset(
+    {
+        "universe_row",
+        "forced_profile_target_id",
     }
 )
 _PLANNER_RUN_KEYS = frozenset(
@@ -208,6 +215,13 @@ _FORCED_PROFILE_RECEIPT_KEYS = frozenset(
         "official_profile_confidence",
         "forced_validation_authority",
         "gold_authority",
+    }
+)
+_FORCED_EXPANSION_RECEIPT_KEYS = frozenset(
+    {
+        "forced_candidate_origin",
+        "candidate_expansion_receipt_hash",
+        "candidate_expansion_entry_hash",
     }
 )
 _SELECTION_SUMMARY_KEYS = frozenset(
@@ -405,6 +419,28 @@ def _official_profile_bindings(
     ):
         raise ValueError("forced issuer profile manifest scope is not exact COMPLETE")
     manifest_hash = stable_hash(dict(validated))
+    expansion_receipt = _mapping(
+        validated.get("candidate_expansion_receipt"),
+        context="official profile candidate expansion receipt",
+    )
+    expansion_receipt_hash = stable_hash(dict(expansion_receipt))
+    natural_targets = {
+        str(target)
+        for target in expansion_receipt.get("natural_candidate_roster") or ()
+    }
+    legacy_natural_origin = (
+        expansion_receipt.get("status") == "NOT_REQUESTED"
+        and not tuple(expansion_receipt.get("expanded_candidates") or ())
+    )
+    expanded_entries = {
+        str(row.get("target_id") or ""): dict(row)
+        for row in expansion_receipt.get("expanded_candidates") or ()
+        if isinstance(row, Mapping)
+    }
+    if "" in expanded_entries or len(expanded_entries) != len(
+        expansion_receipt.get("expanded_candidates") or ()
+    ):
+        raise ValueError("official profile candidate expansion targets are not unique")
     profiles = {
         str(row["profile_id"]): row for row in validated["profiles"]
     }
@@ -419,6 +455,12 @@ def _official_profile_bindings(
         compatibility_receipt = compatibility[
             str(selection["compatibility_response_id"])
         ]
+        expanded_entry = expanded_entries.get(target_id)
+        is_natural = target_id in natural_targets or legacy_natural_origin
+        if is_natural is (expanded_entry is not None):
+            raise ValueError(
+                "official profile target must have one exact natural or expanded origin"
+            )
         if target_id in bindings:
             raise ValueError("forced issuer profile target is not unique")
         bindings[target_id] = {
@@ -451,6 +493,15 @@ def _official_profile_bindings(
             "exact_quote_hash": selection["exact_quote_hash"],
             "large_sector_id": selection["large_sector_id"],
             "confidence": selection["confidence"],
+            "forced_candidate_origin": (
+                "NATURAL_ABSTAINED_PLANNER"
+                if is_natural
+                else FORCED_PROFILE_EXPANSION_ORIGIN
+            ),
+            "candidate_expansion_receipt_hash": expansion_receipt_hash,
+            "candidate_expansion_entry_hash": (
+                stable_hash(expanded_entry) if expanded_entry is not None else None
+            ),
         }
     if tuple(
         binding["archetype_id"] for binding in bindings.values()
@@ -866,9 +917,38 @@ def load_current_live_selection_inputs(
         )
         if is_forced_profile_target:
             loaded_forced_targets.add(target_id)
+    for target_id, binding in forced_profile_bindings.items():
+        if target_id in loaded_forced_targets:
+            continue
+        if binding.get("forced_candidate_origin") != FORCED_PROFILE_EXPANSION_ORIGIN:
+            continue
+        universe = universe_by_target.get(target_id)
+        if universe is None:
+            raise ValueError(
+                "expanded forced issuer profile lacks an exact KRX universe row"
+            )
+        member = _universe_row(universe, selection_date=selection_date)
+        if (
+            binding.get("target_id") != member.symbol
+            or binding.get("company_name") != member.company_name
+            or binding.get("as_of_date") != selection_date
+            or binding.get("krx_row") != universe
+            or binding.get("krx_request_id") != member.source_request_id
+            or binding.get("krx_content_hash") != member.source_content_hash
+        ):
+            raise ValueError(
+                "expanded forced issuer profile does not bind the live KRX universe"
+            )
+        candidates.append(
+            {
+                "universe_row": universe,
+                "forced_profile_target_id": target_id,
+            }
+        )
+        loaded_forced_targets.add(target_id)
     if loaded_forced_targets != set(forced_profile_bindings):
         raise ValueError(
-            "forced issuer profile requires an exact real two-call ABSTAINED planner roster"
+            "forced issuer profile requires an exact abstained-planner or official-expanded roster"
         )
     return tuple(candidates), tuple(signals)
 
@@ -1190,6 +1270,116 @@ def _candidate_projection(
             if forced and official_profile_binding is not None
             else None
         ),
+        "forced_profile_expansion": False,
+    }
+
+
+def _expanded_profile_candidate_projection(
+    row: Mapping[str, Any],
+    *,
+    selection_date: str,
+    official_profile_binding: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Project a forced candidate sealed by full-KRX profile expansion.
+
+    This is deliberately separate from planner projection: an issuer recovered
+    from the full KRX roster has no L3 trigger/depth/planner lineage and must not
+    be mislabeled as a real two-call planner abstention.
+    """
+
+    if set(row) != _FORCED_EXPANDED_CANDIDATE_KEYS:
+        raise ValueError("expanded forced candidate schema keys are not exact")
+    universe = _universe_row(row.get("universe_row"), selection_date=selection_date)
+    binding = _mapping(
+        official_profile_binding,
+        context="official expanded forced profile binding",
+    )
+    target = str(universe.symbol or "")
+    expansion_receipt_hash = str(
+        binding.get("candidate_expansion_receipt_hash") or ""
+    )
+    expansion_entry_hash = str(binding.get("candidate_expansion_entry_hash") or "")
+    if (
+        row.get("forced_profile_target_id") != target
+        or binding.get("forced_candidate_origin")
+        != FORCED_PROFILE_EXPANSION_ORIGIN
+        or binding.get("target_id") != target
+        or binding.get("company_name") != universe.company_name
+        or binding.get("as_of_date") != selection_date
+        or binding.get("krx_row") != row.get("universe_row")
+        or binding.get("krx_request_id") != universe.source_request_id
+        or binding.get("krx_content_hash") != universe.source_content_hash
+        or binding.get("archetype_id") not in REQUIRED_ARCHETYPES
+        or _HEX64_RE.fullmatch(expansion_receipt_hash) is None
+        or _HEX64_RE.fullmatch(expansion_entry_hash) is None
+    ):
+        raise ValueError("expanded profile does not bind exact official issuer lineage")
+    expansion_identity = {
+        "origin": FORCED_PROFILE_EXPANSION_ORIGIN,
+        "target_id": target,
+        "candidate_expansion_receipt_hash": expansion_receipt_hash,
+        "candidate_expansion_entry_hash": expansion_entry_hash,
+        "compatibility_request_id": binding["compatibility_request_id"],
+        "compatibility_response_id": binding["compatibility_response_id"],
+    }
+    candidate_event_hash = stable_hash(
+        {**expansion_identity, "projection": "FORCED_PROFILE_EVENT"}
+    )
+    depth_decision_hash = stable_hash(
+        {**expansion_identity, "projection": "FORCED_PROFILE_DEPTH"}
+    )
+    planner_identity_hash = stable_hash(
+        {**expansion_identity, "projection": "FORCED_PROFILE_COMPATIBILITY"}
+    )
+    leading_archetype = str(binding["archetype_id"])
+    return {
+        "planner_terminal_status": "PROFILE_EXPANDED",
+        "planner_run_id": "PROFILEEXPAND-" + planner_identity_hash[:24],
+        "target_id": target,
+        "target_name": str(universe.company_name or ""),
+        "as_of_date": selection_date,
+        "depth_decision_id": "PROFILEDEPTH-" + depth_decision_hash[:24],
+        "candidate_event_id": "PROFILEEVENT-" + candidate_event_hash[:24],
+        "trigger_signal_ids": [],
+        "source_refs": [universe.source_document_id, str(binding["document_id"])],
+        "blind_input_id": "PROFILECOMPAT-" + planner_identity_hash[:24],
+        "plan_hash": planner_identity_hash,
+        "leading_archetype_id": leading_archetype,
+        "direct_current_supporting_fact_ids": [],
+        "recipe_ids": [],
+        "available_source_families": ["KRX", "OPENDART"],
+        "company_name": str(universe.company_name or ""),
+        "market": universe.market,
+        "krx_effective_date": universe.source_effective_date,
+        "krx_source_url": universe.source_url,
+        "krx_source_hash": universe.source_content_hash,
+        "krx_request_id": universe.source_request_id,
+        "candidate_event_hash": candidate_event_hash,
+        "event_latest_effective_date": universe.source_effective_date,
+        "event_trigger_types": [],
+        "event_trigger_signal_ids": [],
+        "event_source_refs": [
+            universe.source_document_id,
+            str(binding["document_id"]),
+        ],
+        "event_summary": (
+            f"{universe.company_name}: official full-KRX issuer-profile "
+            "expansion validation"
+        ),
+        "depth_decision_hash": depth_decision_hash,
+        "issuer_profile_hash": stable_hash(
+            {
+                "target_id": target,
+                "company_name": universe.company_name,
+                "market": universe.market,
+                "security_group": universe.security_group,
+                "stock_certificate_type": universe.stock_certificate_type,
+                "sector_type": universe.sector_type,
+            }
+        ),
+        "business_profile_hash": stable_hash(dict(binding)),
+        "official_profile_binding": dict(binding),
+        "forced_profile_expansion": True,
     }
 
 
@@ -1287,22 +1477,35 @@ def compile_cross_archetype_canary_selection(
     projected: list[Mapping[str, Any]] = []
     for index, row in enumerate(candidates):
         try:
-            planner_run = _mapping(
-                row.get("planner_run"), context="planner run"
-            )
-            target_id = str(planner_run.get("target_id") or "")
-            binding = (
-                official_bindings.get(target_id)
-                if planner_run.get("terminal_status") == "ABSTAINED"
-                else None
-            )
-            projected.append(
-                _candidate_projection(
-                    row,
-                    selection_date=selection_date,
-                    official_profile_binding=binding,
+            if set(row) == _FORCED_EXPANDED_CANDIDATE_KEYS:
+                target_id = str(row.get("forced_profile_target_id") or "")
+                projected.append(
+                    _expanded_profile_candidate_projection(
+                        row,
+                        selection_date=selection_date,
+                        official_profile_binding=_mapping(
+                            official_bindings.get(target_id),
+                            context="expanded official profile binding",
+                        ),
+                    )
                 )
-            )
+            else:
+                planner_run = _mapping(
+                    row.get("planner_run"), context="planner run"
+                )
+                target_id = str(planner_run.get("target_id") or "")
+                binding = (
+                    official_bindings.get(target_id)
+                    if planner_run.get("terminal_status") == "ABSTAINED"
+                    else None
+                )
+                projected.append(
+                    _candidate_projection(
+                        row,
+                        selection_date=selection_date,
+                        official_profile_binding=binding,
+                    )
+                )
         except (TypeError, ValueError) as exc:
             failures.append(
                 {
@@ -1346,6 +1549,27 @@ def compile_cross_archetype_canary_selection(
         )
     lineage_valid_candidates: list[Mapping[str, Any]] = []
     for row in projected_candidates:
+        if row.get("forced_profile_expansion") is True:
+            if (
+                row.get("planner_terminal_status") != "PROFILE_EXPANDED"
+                or tuple(row.get("trigger_signal_ids") or ())
+                or tuple(row.get("event_trigger_signal_ids") or ())
+                or tuple(row.get("event_trigger_types") or ())
+                or not tuple(row.get("event_source_refs") or ())
+            ):
+                failures.append(
+                    {
+                        "code": "CANDIDATE_TRIGGER_ROSTER_MISMATCH",
+                        "detail": {
+                            "target_id": row.get("target_id"),
+                            "aggregate_mismatch": True,
+                            "expanded_profile_origin": True,
+                        },
+                    }
+                )
+                continue
+            lineage_valid_candidates.append(row)
+            continue
         referenced = tuple(str(value) for value in row["event_trigger_signal_ids"])
         ordered_target_signals = tuple(
             sorted(
@@ -1448,7 +1672,10 @@ def compile_cross_archetype_canary_selection(
                 and set(signal_by_id[signal_id]["source_refs"])
                 <= set(row["source_refs"])
             )
-            forced_candidate = row["planner_terminal_status"] == "ABSTAINED"
+            forced_candidate = row["planner_terminal_status"] in {
+                "ABSTAINED",
+                "PROFILE_EXPANDED",
+            }
             if not forced_candidate and not matching:
                 continue
             ranked.append(
@@ -1473,7 +1700,8 @@ def compile_cross_archetype_canary_selection(
         used_targets.add(str(selected["target_id"]))
         selection_mode = (
             FORCED_SELECTION
-            if selected["planner_terminal_status"] == "ABSTAINED"
+            if selected["planner_terminal_status"]
+            in {"ABSTAINED", "PROFILE_EXPANDED"}
             else NATURAL_SELECTION
         )
         pre_deep_payload = {
@@ -1531,7 +1759,12 @@ def compile_cross_archetype_canary_selection(
                 "selection_rationale": (
                     "current source-backed trigger lineage matches the current blind plan"
                     if selection_mode == NATURAL_SELECTION
-                    else "forced validation canary from exact KRX, real two-call abstention, and official issuer profile lineage"
+                    else (
+                        "forced validation canary from exact KRX, bounded official "
+                        "profile expansion, and Codex compatibility lineage"
+                        if selected.get("forced_profile_expansion") is True
+                        else "forced validation canary from exact KRX, real two-call abstention, and official issuer profile lineage"
+                    )
                 ),
                 "final_score_visible_at_selection": False,
                 "final_stage_visible_at_selection": False,
@@ -1572,6 +1805,20 @@ def compile_cross_archetype_canary_selection(
                     "gold_authority": False,
                 }
             )
+            if selected.get("forced_profile_expansion") is True:
+                receipt.update(
+                    {
+                        "forced_candidate_origin": binding[
+                            "forced_candidate_origin"
+                        ],
+                        "candidate_expansion_receipt_hash": binding[
+                            "candidate_expansion_receipt_hash"
+                        ],
+                        "candidate_expansion_entry_hash": binding[
+                            "candidate_expansion_entry_hash"
+                        ],
+                    }
+                )
         receipts.append(receipt)
 
     roster = tuple(row["archetype_id"] for row in receipts)
@@ -1742,11 +1989,16 @@ def _validate_selection_manifest_shape(payload: Mapping[str, Any]) -> None:
         )
         mode = receipt.get("selection_mode")
         trigger_ids = tuple(receipt.get("trigger_event_ids") or ())
-        expected_receipt_keys = (
-            _SELECTION_RECEIPT_KEYS | _FORCED_PROFILE_RECEIPT_KEYS
-            if mode == FORCED_SELECTION
-            else _SELECTION_RECEIPT_KEYS
+        expanded_forced = (
+            mode == FORCED_SELECTION
+            and receipt.get("forced_candidate_origin")
+            == FORCED_PROFILE_EXPANSION_ORIGIN
         )
+        expected_receipt_keys = _SELECTION_RECEIPT_KEYS
+        if mode == FORCED_SELECTION:
+            expected_receipt_keys |= _FORCED_PROFILE_RECEIPT_KEYS
+        if expanded_forced:
+            expected_receipt_keys |= _FORCED_EXPANSION_RECEIPT_KEYS
         if (
             set(receipt) != expected_receipt_keys
             or receipt.get("schema_version") != SELECTION_RECEIPT_SCHEMA
@@ -1844,6 +2096,51 @@ def _validate_selection_manifest_shape(payload: Mapping[str, Any]) -> None:
                 or not 0.0 <= float(confidence) <= 1.0
             ):
                 raise ValueError("forced selection lacks exact official profile lineage")
+            if expanded_forced:
+                expansion_receipt_hash = str(
+                    receipt.get("candidate_expansion_receipt_hash") or ""
+                )
+                expansion_entry_hash = str(
+                    receipt.get("candidate_expansion_entry_hash") or ""
+                )
+                expansion_identity = {
+                    "origin": FORCED_PROFILE_EXPANSION_ORIGIN,
+                    "target_id": target,
+                    "candidate_expansion_receipt_hash": expansion_receipt_hash,
+                    "candidate_expansion_entry_hash": expansion_entry_hash,
+                    "compatibility_request_id": receipt[
+                        "official_profile_compatibility_request_id"
+                    ],
+                    "compatibility_response_id": receipt[
+                        "official_profile_compatibility_response_id"
+                    ],
+                }
+                expected_event_hash = stable_hash(
+                    {**expansion_identity, "projection": "FORCED_PROFILE_EVENT"}
+                )
+                expected_depth_hash = stable_hash(
+                    {**expansion_identity, "projection": "FORCED_PROFILE_DEPTH"}
+                )
+                expected_plan_hash = stable_hash(
+                    {
+                        **expansion_identity,
+                        "projection": "FORCED_PROFILE_COMPATIBILITY",
+                    }
+                )
+                if (
+                    _HEX64_RE.fullmatch(expansion_receipt_hash) is None
+                    or _HEX64_RE.fullmatch(expansion_entry_hash) is None
+                    or receipt.get("candidate_event_hash") != expected_event_hash
+                    or receipt.get("depth_decision_hash") != expected_depth_hash
+                    or receipt.get("plan_hash") != expected_plan_hash
+                    or receipt.get("planner_run_id")
+                    != "PROFILEEXPAND-" + expected_plan_hash[:24]
+                    or receipt.get("blind_input_id")
+                    != "PROFILECOMPAT-" + expected_plan_hash[:24]
+                ):
+                    raise ValueError(
+                        "expanded forced selection lineage does not recompute"
+                    )
             forced_manifest_hashes.add(
                 str(receipt["official_profile_manifest_hash"])
             )
@@ -1912,12 +2209,34 @@ def validate_cross_archetype_canary_selection_manifest(
     }
     for receipt in forced_receipts:
         binding = bindings[str(receipt["target_id"])]
+        expanded = (
+            binding.get("forced_candidate_origin")
+            == FORCED_PROFILE_EXPANSION_ORIGIN
+        )
+        expansion_fields = {
+            "forced_candidate_origin": "forced_candidate_origin",
+            "candidate_expansion_receipt_hash": (
+                "candidate_expansion_receipt_hash"
+            ),
+            "candidate_expansion_entry_hash": "candidate_expansion_entry_hash",
+        }
         if (
             receipt.get("archetype_id") != binding["archetype_id"]
             or receipt.get("company_name") != binding["company_name"]
             or any(
                 receipt.get(receipt_field) != binding[binding_field]
                 for receipt_field, binding_field in receipt_fields.items()
+            )
+            or (
+                expanded
+                and any(
+                    receipt.get(receipt_field) != binding[binding_field]
+                    for receipt_field, binding_field in expansion_fields.items()
+                )
+            )
+            or (
+                not expanded
+                and any(receipt_field in receipt for receipt_field in expansion_fields)
             )
         ):
             raise ValueError("forced selection receipt differs from official profile")
