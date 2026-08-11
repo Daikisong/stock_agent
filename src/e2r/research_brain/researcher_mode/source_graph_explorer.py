@@ -2497,6 +2497,16 @@ class ResearcherSourceGraphAcquirer:
                 "SOURCE_REPAIR_BARRIER_PENDING:" + document_id
                 for document_id in pending_source_repair_ids
             )
+        # Operational note: an empty LLM answer is a semantic-retry boundary,
+        # not one completed unit of research.  The append-only retry context
+        # below deliberately keeps the Source Graph pending until the LLM
+        # proposes a genuinely new route (or a later canonical supervisor
+        # snapshot removes the source obligation).  Consequently, neither an
+        # epoch number nor an imported empty response is valid progress or an
+        # ETA signal.  In particular, downstream memo responses received while
+        # this boundary is open cannot become canonical early; doing so would
+        # mix two different evidence snapshots.  See the tracked Phase 106
+        # incident note in docs/operational/e2r_v6_operational_cutover/.
         elif query_generation and query_generation.status == "PENDING" and not query_generation.queries:
             status = "QUERY_GENERATION_PENDING"
         elif still_pending_rank:
@@ -3135,6 +3145,12 @@ def _query_generation_semantic_retry_context(
     The attempt counter and full hash lineage are intentionally monotonic and
     uncapped.  They change prompt identity only after a provider response was
     consumed; repeated waits for that same response remain byte-identical.
+
+    ``attempt`` is audit lineage, not a completion counter.  An operator that
+    repeatedly invokes an ``until_pass`` command after empty replies will see
+    more collaboration leaves without getting closer to a Goal gate.  That is
+    why operational acceptance reports fixed semantic gates (facts, 7/7
+    memos, judges, saturation, score and StageCourt), never retry counts.
     """
 
     attempts: list[tuple[Mapping[str, Any], tuple[str, ...]]] = []

@@ -4,7 +4,7 @@
 
 핵심 원칙은 원본 `output/`을 커밋하는 것이 아니라 최종 점수에 실제 사용된 fact, source, judge, anchor와 Stage 입력을 결박하는 것이다. 검증기는 영수증과 현재 코드·설정만 사용하며 `output/`, cache, `.env`, 협업 journal을 읽지 않는다.
 
-현재 상태는 [starting_state.json](starting_state.json)과 [provider_lineage_blocker_audit.json](provider_lineage_blocker_audit.json)에 기록했다. Phase 101 canonical receipt는 Codex-only 재생성 및 독립 검증 PASS 후 `canary_receipts/2026-07-12/`에 공개한다.
+현재 상태는 [starting_state.json](starting_state.json)과 [provider_lineage_blocker_audit.json](provider_lineage_blocker_audit.json)에 기록했다. Phase 106 실행 중 반복 leaf가 실제 진척처럼 보였던 원인과 재발 방지는 [phase106_semantic_retry_incident.md](phase106_semantic_retry_incident.md)에 기록했다. Phase 101 canonical receipt는 Codex-only 재생성 및 독립 검증 PASS 후 `canary_receipts/2026-07-12/`에 공개한다.
 
 Codex-only는 신규 호출만 뜻하지 않는다. Source Graph, fact, component, judge,
 Supervisor 어느 leaf에도 과거 로컬 LLM provider가 만든 checkpoint 계보를 재사용하지
