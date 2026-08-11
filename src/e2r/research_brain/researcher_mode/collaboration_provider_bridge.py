@@ -76,6 +76,15 @@ _PRE_STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION = (
 _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION = (
     "e2r_v5_structured_revision_roles_v6"
 )
+_PRE_REVISION_FACT_SEMANTICS_VERSION = (
+    "e2r_v5_structured_valuation_roles_v5"
+)
+_AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS = frozenset(
+    (
+        _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION,
+        _PRE_REVISION_FACT_SEMANTICS_VERSION,
+    )
+)
 _PRE_STRUCTURED_VALUATION_ROLES = (
     "SEGMENT_CONTRIBUTION",
     "QOQ_GROWTH",
@@ -1786,7 +1795,7 @@ class CollaborationCodexSubagentTransport:
             or not str(as_of_date).strip()
             or not str(archetype_id).strip()
             or fact_extraction_semantics_version
-            != _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
+            not in _AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS
             or not requested_ids
             or any(not value for value in requested_ids)
             or len(requested_ids) != len(set(requested_ids))

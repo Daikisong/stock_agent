@@ -173,7 +173,12 @@ def _scope_contract(documents):
     }
 
 
-def _prompt_payload(documents, *, marker: str):
+def _prompt_payload(
+    documents,
+    *,
+    marker: str,
+    semantics_version: str = FACT_EXTRACTION_SEMANTICS_VERSION,
+):
     objective_scope = {
         str(document["document_id"]): frozenset(
             str(value) for value in document["objective_ids"]
@@ -191,7 +196,7 @@ def _prompt_payload(documents, *, marker: str):
         target_aliases=("Current",),
         archetype_id=ARCHETYPE,
         as_of_date=AS_OF_DATE,
-        extraction_semantics_version=FACT_EXTRACTION_SEMANTICS_VERSION,
+        extraction_semantics_version=semantics_version,
         open_objectives=(),
         current_evidence_facts={"fact_count": 499},
         score_gap_context={

@@ -43,6 +43,7 @@ from .prompt_projection import (
 )
 from .evidence_fact_compiler import EvidenceFactCompiler, FactCompilationResult
 from .fact_lineage_materials import (
+    AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS,
     AuthoritativeResearchEpochFactLedger,
     CurrentFactLineageRecoveryBinding,
     validate_current_v5_fact_lineage_materials,
@@ -3671,17 +3672,70 @@ def resolve_current_fact_lineage_recovery_binding(
         objective_scope_by_document=objective_scope_by_document,
         objective_component_by_id=objective_component_by_id,
     )
-    materials = validate_current_v5_fact_lineage_materials(
-        journal_root=journal_root,
-        target_id=target_id,
-        as_of_date=as_of_date,
-        archetype_id=archetype_id,
-        current_documents=prepared,
-        current_fact_prompt_payload=prompt_payload,
-        recovery_projection_document_ids=seed_source_document_ids,
-    )
-    if materials.get("status") != "READY_FOR_OFFICIAL_SEMANTIC_REPLAY":
-        raise ValueError("current fact journal source-seed lookup is invalid")
+    exact_bindings: list[CurrentFactLineageRecoveryBinding] = []
+    for semantics_version in AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS:
+        materials = validate_current_v5_fact_lineage_materials(
+            journal_root=journal_root,
+            target_id=target_id,
+            as_of_date=as_of_date,
+            archetype_id=archetype_id,
+            current_documents=prepared,
+            current_fact_prompt_payload=prompt_payload,
+            recovery_projection_document_ids=seed_source_document_ids,
+            fact_extraction_semantics_version=semantics_version,
+        )
+        if materials.get("status") != "READY_FOR_OFFICIAL_SEMANTIC_REPLAY":
+            continue
+        try:
+            binding = _current_fact_lineage_binding_from_materials(
+                journal_root=journal_root,
+                seed_source_document_ids=seed_source_document_ids,
+                pending_new_fact_ids=pending_new_fact_ids,
+                prior_document_dispositions=prior_document_dispositions,
+                materials=materials,
+                fact_extraction_semantics_version=semantics_version,
+            )
+            replay = _recover_current_fact_lineage_authority_gap(
+                authoritative_fact_ledger=authoritative_fact_ledger,
+                recovery_binding=binding,
+                target_id=target_id,
+                target_name=target_name,
+                target_aliases=target_aliases,
+                archetype_id=archetype_id,
+                as_of_date=as_of_date,
+                documents=prepared,
+                open_objectives=open_objectives,
+                current_facts=current_facts,
+                score_gap_context=score_gap_context or {},
+                prior_material_claims=prior_material_claims,
+                prior_document_dispositions=prior_document_dispositions,
+                scope_contract=scope_contract,
+                objective_scope_by_document=objective_scope_by_document,
+                objective_component_by_id=objective_component_by_id,
+            )
+        except (KeyError, TypeError, ValueError, RuntimeError):
+            continue
+        if replay.get("status") == "COMPLETE":
+            exact_bindings.append(binding)
+    if len(exact_bindings) != 1:
+        raise ValueError(
+            "current fact journal source-seed cover is ambiguous or does "
+            "not reproduce the exact authoritative fact intersection"
+        )
+    return exact_bindings[0]
+
+
+def _current_fact_lineage_binding_from_materials(
+    *,
+    journal_root: str | Path,
+    seed_source_document_ids: Sequence[str],
+    pending_new_fact_ids: Sequence[str],
+    prior_document_dispositions: Sequence[Mapping[str, Any]],
+    materials: Mapping[str, Any],
+    fact_extraction_semantics_version: str,
+) -> CurrentFactLineageRecoveryBinding:
+    """Seal one structural cover before exact fact-intersection replay."""
+
     occurrence_counts = materials.get(
         "current_document_material_occurrence_counts"
     )
@@ -3771,6 +3825,9 @@ def resolve_current_fact_lineage_recovery_binding(
         ),
         expected_recovery_document_ids=expanded_ids,
         pending_new_fact_ids=tuple(str(value) for value in pending_new_fact_ids),
+        fact_extraction_semantics_version=(
+            fact_extraction_semantics_version
+        ),
     )
 
 
@@ -5502,6 +5559,9 @@ def _recover_current_fact_lineage_authority_gap(
         current_documents=documents,
         current_fact_prompt_payload=prompt_payload,
         recovery_projection_document_ids=seed_source_document_ids,
+        fact_extraction_semantics_version=(
+            recovery_binding.fact_extraction_semantics_version
+        ),
     )
     if material_result.get("status") != (
         "READY_FOR_OFFICIAL_SEMANTIC_REPLAY"

@@ -32,6 +32,7 @@ from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
 from e2r.research_brain.researcher_mode.fact_lineage_materials import (
     AuthoritativeResearchEpochFactLedger,
     CurrentFactLineageRecoveryBinding,
+    PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION,
     validate_current_v5_fact_lineage_materials,
 )
 from e2r.research_brain.scoring.business_mechanism_scope import (
@@ -298,6 +299,129 @@ def _bundle(root: Path):
 
 
 class CurrentFactLineageRecoveryTests(unittest.TestCase):
+    def test_authority_recovery_selects_exact_prior_semantics_before_rewrite(
+        self,
+    ):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            journal = root / "collaboration_codex_subagent_provider"
+            transport = CollaborationCodexSubagentTransport()
+            transport.configure_journal_root(journal)
+            prompt_document = _prompt_document(
+                "SGDOC-SEMANTICS-UPGRADE",
+                "OBJECTIVE-SEMANTICS-UPGRADE",
+            )
+            current_document = _current_document(prompt_document)
+            old_response = _response(
+                [prompt_document],
+                [
+                    _proposal(
+                        prompt_document,
+                        claim_index=700,
+                        quote_index=0,
+                    ),
+                    _proposal(
+                        prompt_document,
+                        claim_index=701,
+                        quote_index=1,
+                    ),
+                ],
+            )
+            old_payload = _prompt_payload(
+                [prompt_document],
+                marker="prior-semantics-authority",
+                semantics_version=(
+                    PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION
+                ),
+            )
+            _write_pair(
+                transport,
+                journal,
+                payload=old_payload,
+                response=old_response,
+                agent_model="codex-collaboration",
+            )
+            current_payload = _prompt_payload(
+                [prompt_document],
+                marker="current-semantics-rewrite",
+            )
+            _write_pair(
+                transport,
+                journal,
+                payload=current_payload,
+                response=_response(
+                    [prompt_document],
+                    [
+                        _proposal(
+                            prompt_document,
+                            claim_index=799,
+                            quote_index=2,
+                        )
+                    ],
+                ),
+                agent_model="codex-collaboration",
+            )
+            prior_materials = validate_current_v5_fact_lineage_materials(
+                journal_root=journal,
+                target_id=TARGET,
+                as_of_date=AS_OF_DATE,
+                archetype_id=ARCHETYPE,
+                current_documents=(current_document,),
+                current_fact_prompt_payload=current_payload,
+                fact_extraction_semantics_version=(
+                    PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION
+                ),
+            )
+            old_claims, _dispositions, old_compilation = _official_replay(
+                prior_materials
+            )
+            authority = _ledger(
+                tuple(row.to_dict() for row in old_compilation.facts)
+            )
+            common = {
+                "target_id": TARGET,
+                "target_name": "Current Corp",
+                "target_aliases": ("Current",),
+                "archetype_id": ARCHETYPE,
+                "as_of_date": AS_OF_DATE,
+                "documents": (current_document,),
+                "open_objectives": _objectives((current_document,)),
+                "current_facts": authority.fact_rows,
+                "score_gap_context": {},
+                "prior_material_claims": (),
+                "prior_document_dispositions": (),
+                "extraction_mode": "PRODUCTION_OBJECTIVE_LOCAL",
+            }
+            binding = resolve_current_fact_lineage_recovery_binding(
+                authoritative_fact_ledger=authority,
+                journal_root=journal,
+                **common,
+            )
+            provider = _NoCompleteProvider()
+            result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+                **common,
+                authoritative_fact_ledger=authority,
+                current_fact_lineage_recovery_binding=binding,
+            )
+
+        self.assertEqual(
+            binding.fact_extraction_semantics_version,
+            PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION,
+        )
+        self.assertEqual(provider.complete_call_count, 0)
+        self.assertEqual(
+            {row["claim_id"] for row in old_claims},
+            {row["claim_id"] for row in result.material_claims},
+        )
+        self.assertEqual(
+            {row.fact_id for row in old_compilation.facts},
+            {row.fact_id for row in result.facts},
+        )
+        self.assertEqual(
+            result.audit["current_fact_lineage_recovery_status"],
+            "COMPLETE",
+        )
+
     def test_actual_shaped_13_seed_restores_52_dispositions_and_42_facts(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

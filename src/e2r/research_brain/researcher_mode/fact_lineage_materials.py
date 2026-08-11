@@ -36,6 +36,13 @@ from .research_epoch import (
 CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION = (
     "e2r_v5_structured_revision_roles_v6"
 )
+PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION = (
+    "e2r_v5_structured_valuation_roles_v5"
+)
+AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS = (
+    CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION,
+    PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION,
+)
 _STATIC_OBJECTIVE_SCOPE_KEYS = (
     "mode",
     "allowed_objective_relations",
@@ -75,6 +82,9 @@ class CurrentFactLineageRecoveryBinding:
     journal_response_ids: tuple[str, ...]
     expected_recovery_document_ids: tuple[str, ...] = ()
     pending_new_fact_ids: tuple[str, ...] = ()
+    fact_extraction_semantics_version: str = (
+        CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION
+    )
     schema_version: str = "e2r_v5_current_fact_lineage_recovery_binding_v1"
 
     def __post_init__(self) -> None:
@@ -99,6 +109,13 @@ class CurrentFactLineageRecoveryBinding:
         if not self.seed_source_document_ids:
             raise ValueError(
                 "current fact lineage recovery document roster is required"
+            )
+        if (
+            self.fact_extraction_semantics_version
+            not in AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS
+        ):
+            raise ValueError(
+                "current fact lineage recovery semantics are unsupported"
             )
         if (
             not self.journal_request_ids
@@ -132,6 +149,9 @@ class CurrentFactLineageRecoveryBinding:
                 self.expected_recovery_document_ids
             ),
             "pending_new_fact_ids": list(self.pending_new_fact_ids),
+            "fact_extraction_semantics_version": (
+                self.fact_extraction_semantics_version
+            ),
             "production_score_authority": False,
         }
 
@@ -405,6 +425,46 @@ def current_fact_semantics_contract(
     }
 
 
+def _fact_semantics_compatibility_contract(
+    prompt_payload: Mapping[str, Any],
+    *,
+    expected_semantics_version: str,
+) -> Mapping[str, Any]:
+    """Project fields that must remain stable across a typed-role upgrade."""
+
+    if (
+        expected_semantics_version
+        not in AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS
+        or prompt_payload.get("fact_extraction_semantics_version")
+        != expected_semantics_version
+    ):
+        raise ValueError("fact lineage recovery semantics identity mismatch")
+    normalization = prompt_payload.get("normalization_contract")
+    mechanism = prompt_payload.get(
+        "deterministic_mechanism_scope_contract"
+    )
+    objective_scope = prompt_payload.get("fact_extraction_scope_contract")
+    if not all(
+        isinstance(value, Mapping)
+        for value in (normalization, mechanism, objective_scope)
+    ):
+        raise ValueError("fact lineage semantics contracts are incomplete")
+    assert isinstance(objective_scope, Mapping)
+    if any(key not in objective_scope for key in _STATIC_OBJECTIVE_SCOPE_KEYS):
+        raise ValueError("fact lineage objective scope contract is incomplete")
+    projection = {
+        "normalization_contract": dict(normalization),
+        "deterministic_mechanism_scope_contract": dict(mechanism),
+        "static_production_objective_scope_contract": {
+            key: objective_scope[key] for key in _STATIC_OBJECTIVE_SCOPE_KEYS
+        },
+    }
+    return {
+        **projection,
+        "contract_hash": _canonical_hash(projection),
+    }
+
+
 def validate_current_v5_fact_lineage_materials(
     *,
     journal_root: str | Path,
@@ -414,6 +474,9 @@ def validate_current_v5_fact_lineage_materials(
     current_documents: Sequence[Mapping[str, Any]],
     current_fact_prompt_payload: Mapping[str, Any],
     recovery_projection_document_ids: Sequence[str] | None = None,
+    fact_extraction_semantics_version: str = (
+        CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION
+    ),
 ) -> Mapping[str, Any]:
     """Validate raw journal batches for official semantic replay.
 
@@ -458,6 +521,14 @@ def validate_current_v5_fact_lineage_materials(
         semantics_contract = current_fact_semantics_contract(
             current_fact_prompt_payload
         )
+        semantics_compatibility_contract = (
+            _fact_semantics_compatibility_contract(
+                current_fact_prompt_payload,
+                expected_semantics_version=(
+                    CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION
+                ),
+            )
+        )
         transport = CollaborationCodexSubagentTransport(
             journal_root=Path(journal_root)
         )
@@ -467,7 +538,7 @@ def validate_current_v5_fact_lineage_materials(
             archetype_id=str(archetype_id),
             document_ids=projection_ids,
             fact_extraction_semantics_version=(
-                CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION
+                fact_extraction_semantics_version
             ),
         )
         if not isinstance(journal, Mapping):
@@ -515,7 +586,12 @@ def validate_current_v5_fact_lineage_materials(
                 archetype_id=str(archetype_id),
                 current_document_by_id=document_by_id,
                 recovery_projection_document_ids=frozenset(projection_ids),
-                current_semantics_contract=semantics_contract,
+                current_semantics_compatibility_contract=(
+                    semantics_compatibility_contract
+                ),
+                recovery_semantics_version=(
+                    fact_extraction_semantics_version
+                ),
             )
             for material_group in _ordered_journal_material_groups(
                 raw_materials
@@ -573,6 +649,9 @@ def validate_current_v5_fact_lineage_materials(
             "status": "READY_FOR_OFFICIAL_SEMANTIC_REPLAY",
             "current_semantics_version": (
                 CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION
+            ),
+            "recovery_semantics_version": (
+                fact_extraction_semantics_version
             ),
             "current_semantics_contract_hash": semantics_contract[
                 "contract_hash"
@@ -700,7 +779,8 @@ def _validate_candidate_material_group(
     archetype_id: str,
     current_document_by_id: Mapping[str, Mapping[str, Any]],
     recovery_projection_document_ids: frozenset[str],
-    current_semantics_contract: Mapping[str, Any],
+    current_semantics_compatibility_contract: Mapping[str, Any],
+    recovery_semantics_version: str,
 ) -> Mapping[str, Any]:
     if not materials:
         raise ValueError("fact lineage journal call group is empty")
@@ -714,8 +794,11 @@ def _validate_candidate_material_group(
         request_payload.get("target_id") != target_id
         or request_payload.get("as_of_date") != as_of_date
         or request_payload.get("archetype_hypothesis") != archetype_id
-        or current_fact_semantics_contract(request_payload)
-        != current_semantics_contract
+        or _fact_semantics_compatibility_contract(
+            request_payload,
+            expected_semantics_version=recovery_semantics_version,
+        )
+        != current_semantics_compatibility_contract
     ):
         raise ValueError("fact lineage current semantics identity mismatch")
     raw_documents = request_payload.get("full_documents")

@@ -140,6 +140,25 @@ score, Stage 또는 cutover authority가 아니다.
    재생성, persisted audit binding, safety critical count를 검증하므로 손상된 checkpoint를
    허용하지 않는다. 일반 readonly replay의 terminal 조건은 그대로 유지한다.
 
+10. **typed-role semantics 교체와 권위 장부 복구 순서가 충돌**
+
+   원인 9를 고친 뒤 권위 장부의 누락 3개 fact를 복구하는 단계가 열렸지만, 복구기는
+   현재 v6 semantics의 새 response만 조회했다. 권위 장부의 3개 fact는 직전 v5
+   semantics response가 만든 것이고, 새 v6 response는 이를 1개 typed revision fact로
+   다시 쓰기 위한 응답이었다. 따라서 복구기의 기대 집합 3개와 새 응답의 집합 1개가
+   다를 수밖에 없었다.
+
+   쉬운 예: 구 장부 세 줄을 먼저 복원한 다음 새 회계 양식 한 줄로 대체해야 하는데,
+   복원 단계부터 새 양식 영수증을 대입해 “세 줄이 아니다”라고 실패한 상태다.
+
+   수정 후 authoritative recovery는 현재 semantics와 명시적으로 지원되는 직전
+   semantics의 immutable Collaboration 영수증을 각각 검증한다. target/date/document,
+   정규화·mechanism·objective scope 계약이 모두 같아야 하며, official validator와
+   compiler를 다시 통과해 권위 장부의 정확한 claim/fact intersection을 재현하는
+   유일한 영수증만 선택한다. 두 영수증이 모두 맞거나 어느 것도 맞지 않으면 계속
+   fail-closed한다. 복구가 끝난 다음 clean resume에서만 새 typed-role response를
+   소비한다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -186,6 +205,10 @@ score, Stage 또는 cutover authority가 아니다.
     graph/audit 무결성을 검증한 뒤 사실 장부를 먼저 복구하고, pending query/ranking/fetch
     response는 다음 clean resume에서 소비한다. pending 상태를 identity drift라고 기록하지
     않는다.
+13. fact semantics upgrade 중 authority loss가 함께 보이면 새 semantics response로 과거
+    장부를 복구하지 않는다. 지원되는 직전 semantics 영수증까지 재검증하고, 권위 epoch의
+    exact claim/fact intersection을 유일하게 재현한 영수증으로 구 장부를 먼저 복구한 뒤
+    다음 resume에서 새 response를 적용한다.
 
 ## Goal 경계
 
