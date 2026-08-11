@@ -1357,6 +1357,20 @@ class ResearcherEvidenceFactExtractor:
                 prior_provider_calls=all_checkpoint_calls,
             )
         )
+        # Authority restoration and a semantics rewrite are two different
+        # commits.  Persist the exact historical intersection first; a clean
+        # resume can then invalidate it and consume the newer semantics
+        # response.  Applying both in this invocation would restore and drop
+        # the same claims forever while the authority ledger stayed ahead.
+        deferred_boundary_context_reextraction_document_ids = frozenset(
+            boundary_context_reextraction_document_ids
+            if current_lineage_recovery_succeeded
+            else ()
+        )
+        active_boundary_context_reextraction_document_ids = frozenset(
+            boundary_context_reextraction_document_ids
+            - deferred_boundary_context_reextraction_document_ids
+        )
         effective_current_facts = tuple(
             row
             for row in current_facts
@@ -1366,10 +1380,10 @@ class ResearcherEvidenceFactExtractor:
                     for value in row.get("source_ids") or ()
                     if str(value)
                 }
-                & boundary_context_reextraction_document_ids
+                & active_boundary_context_reextraction_document_ids
             )
             and str(row.get("document_id") or "")
-            not in boundary_context_reextraction_document_ids
+            not in active_boundary_context_reextraction_document_ids
         )
         raw_coverage_complete_document_ids = {
             document_id
@@ -1511,7 +1525,7 @@ class ResearcherEvidenceFactExtractor:
             active_carried_coverage_refresh_document_ids
         )
         coverage_refresh_document_ids.difference_update(
-            boundary_context_reextraction_document_ids
+            active_boundary_context_reextraction_document_ids
         )
         new_unprocessed_document_ids = {
             str(document["document_id"])
@@ -1520,7 +1534,7 @@ class ResearcherEvidenceFactExtractor:
                 str(document["document_id"])
                 not in set(all_prior_disposition_ids)
                 or str(document["document_id"])
-                in boundary_context_reextraction_document_ids
+                in active_boundary_context_reextraction_document_ids
             )
             and str(document["document_id"])
             not in coverage_refresh_document_ids
@@ -1562,7 +1576,7 @@ class ResearcherEvidenceFactExtractor:
         retained_prior_disposition_ids = (
             set(all_prior_disposition_ids)
             - coverage_refresh_document_ids
-            - boundary_context_reextraction_document_ids
+            - active_boundary_context_reextraction_document_ids
         )
         dispositions: list[Mapping[str, Any]] = [
             row
@@ -1574,7 +1588,7 @@ class ResearcherEvidenceFactExtractor:
             dict(row)
             for row in prior_material_claims
             if str(row.get("document_id") or "")
-            not in boundary_context_reextraction_document_ids
+            not in active_boundary_context_reextraction_document_ids
         ]
         claim_ids = [str(row.get("claim_id") or "") for row in claims]
         if any(not value for value in claim_ids) or len(claim_ids) != len(set(claim_ids)):
@@ -1595,7 +1609,7 @@ class ResearcherEvidenceFactExtractor:
                 if isinstance(row, FactExtractionRejection)
                 else row.get("document_id") or ""
             )
-            not in boundary_context_reextraction_document_ids
+            not in active_boundary_context_reextraction_document_ids
         ]
         pending: list[str] = []
         if current_lineage_recovery is not None and not (
@@ -1640,7 +1654,7 @@ class ResearcherEvidenceFactExtractor:
                         str(document["document_id"])
                         not in set(all_prior_disposition_ids)
                         or str(document["document_id"])
-                        in boundary_context_reextraction_document_ids
+                        in active_boundary_context_reextraction_document_ids
                     )
                     and bool(
                         set(document.get("objective_ids") or ())
@@ -1676,7 +1690,7 @@ class ResearcherEvidenceFactExtractor:
                 for call in all_checkpoint_calls
                 if not (
                     set(call.document_ids)
-                    & boundary_context_reextraction_document_ids
+                    & active_boundary_context_reextraction_document_ids
                 )
                 and (
                     not (
@@ -1702,7 +1716,7 @@ class ResearcherEvidenceFactExtractor:
             )
             and not (
                 set(row.document_ids)
-                & boundary_context_reextraction_document_ids
+                & active_boundary_context_reextraction_document_ids
             )
         ]
         checkpoint_call_object_ids = {id(row) for row in calls}
@@ -1817,7 +1831,10 @@ class ResearcherEvidenceFactExtractor:
             )
         )
         canonical_state_refresh_barrier_count = 0
-        if current_lineage_recovery_succeeded and transport_documents:
+        if current_lineage_recovery_succeeded and (
+            transport_documents
+            or deferred_boundary_context_reextraction_document_ids
+        ):
             # Journal recovery changes the canonical claim/fact/disposition
             # state.  Persist that atomic recovery before opening requests for
             # documents outside the sealed recovery closure.  Otherwise the

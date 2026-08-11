@@ -178,6 +178,22 @@ score, Stage 또는 cutover authority가 아니다.
    exact 비교하며, 그 뒤에도 official response validator와 compiler가 권위 장부의
    정확한 intersection을 재현해야만 복구에 사용한다.
 
+12. **복구 성공과 semantics 교체를 한 checkpoint에서 동시에 적용**
+
+   직전 v5 영수증이 누락 3개를 정확히 재현한 뒤에도 같은 extractor 호출이 해당
+   broker PDF를 v6 revision-role 재추출 대상으로 즉시 분류했다. 그 결과 메모리에서는
+   3개를 복구했지만 writer 직전 다시 제외되어 67개만 저장됐고, authoritative epoch는
+   계속 70개였기 때문에 다음 resume이 같은 3개 복구를 반복했다.
+
+   쉬운 예: 장부 누락 3줄을 복원한 직후 같은 거래에서 새 양식 전환 대상이라는 이유로
+   그 3줄을 다시 지우고, 다음 날 또 복원하는 상태다.
+
+   수정 후 authority restoration은 정확한 과거 claim/fact/disposition을 먼저 하나의
+   atomic checkpoint로 저장하고 `CANONICAL_STATE_REFRESH_REQUIRED`에서 멈춘다. 그
+   checkpoint의 audit에는 다음 clean resume에서 처리할 semantics re-extraction 문서와
+   invalidated claim 수를 그대로 남긴다. 다음 resume에서만 v5 3개를 제거하고 이미
+   검증된 v6 response를 소비한다. 즉 복구 commit과 교체 commit이 섞이지 않는다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -231,6 +247,9 @@ score, Stage 또는 cutover authority가 아니다.
 14. 지원 semantics 목록을 늘릴 때는 버전 문자열만 허용하지 않는다. 각 버전의 frozen
     instruction·output schema·hash를 재생성하는 회귀 테스트를 함께 두고, 현재 builder로
     과거 요청을 검증하지 않는다.
+15. authority recovery와 semantics rewrite가 동시에 필요하면 recovery 결과를 먼저
+    durable commit하고 canonical refresh barrier를 둔다. 한 호출에서 복구한 행을 다시
+    invalidation filter에 넣지 않으며, 다음 rewrite intent는 audit에 보존한다.
 
 ## Goal 경계
 

@@ -311,6 +311,17 @@ class CurrentFactLineageRecoveryTests(unittest.TestCase):
                 "SGDOC-SEMANTICS-UPGRADE",
                 "OBJECTIVE-SEMANTICS-UPGRADE",
             )
+            prompt_document.update(
+                {
+                    "canonical_url": (
+                        "https://broker.example/semantics-upgrade.pdf"
+                    ),
+                    "source_family": "PUBLIC_BROKER_PDF",
+                    "source_independence_group": (
+                        "PUBLIC_BROKER_PDF:broker.example"
+                    ),
+                }
+            )
             current_document = _current_document(prompt_document)
             old_response = _response(
                 [prompt_document],
@@ -419,6 +430,11 @@ class CurrentFactLineageRecoveryTests(unittest.TestCase):
             PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION,
         )
         self.assertEqual(provider.complete_call_count, 0)
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(
+            result.pending_reasons,
+            ("FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED",),
+        )
         self.assertEqual(
             {row["claim_id"] for row in old_claims},
             {row["claim_id"] for row in result.material_claims},
@@ -430,6 +446,10 @@ class CurrentFactLineageRecoveryTests(unittest.TestCase):
         self.assertEqual(
             result.audit["current_fact_lineage_recovery_status"],
             "COMPLETE",
+        )
+        self.assertEqual(
+            result.audit["boundary_context_invalidated_prior_claim_count"],
+            2,
         )
 
     def test_actual_shaped_13_seed_restores_52_dispositions_and_42_facts(self):
