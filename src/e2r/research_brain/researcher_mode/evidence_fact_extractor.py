@@ -9,7 +9,7 @@ the fact graph.
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from datetime import date
 import hashlib
 import json
@@ -35,12 +35,18 @@ from e2r.research_brain.scoring.business_mechanism_scope import (
 from .component_researcher import (
     FACT_EXTRACTION_PAGE_FACT_LIMIT,
     StructuredResearchProvider,
+    _single_payload_request_material,
 )
 from .prompt_projection import (
     project_fact_extraction_evidence_context,
     project_fact_extraction_score_gap_context,
 )
 from .evidence_fact_compiler import EvidenceFactCompiler, FactCompilationResult
+from .fact_lineage_materials import (
+    AuthoritativeResearchEpochFactLedger,
+    CurrentFactLineageRecoveryBinding,
+    validate_current_v5_fact_lineage_materials,
+)
 from .schemas import (
     CANONICAL_COMPONENT_ORDER,
     EvidenceDirection,
@@ -56,6 +62,7 @@ FACT_EXTRACTION_OUTPUT_FILES: Mapping[str, str] = {
     "document_dispositions": "fact_document_dispositions.jsonl",
     "provider_calls": "fact_extraction_provider_calls.jsonl",
     "facts": "evidence_facts.jsonl",
+    "counterfacts": "counterfacts.jsonl",
     "claim_fact_links": "claim_fact_links.jsonl",
     "result": "fact_extraction_result.json",
     "audit": "fact_extraction_audit.json",
@@ -281,16 +288,26 @@ class FactExtractionProviderCall:
     coverage_audit_performed: bool = False
     semantics_migration_request_ids: tuple[str, ...] = ()
     semantics_migration_response_ids: tuple[str, ...] = ()
+    current_lineage_request_ids: tuple[str, ...] = ()
+    current_lineage_response_ids: tuple[str, ...] = ()
+    current_lineage_original_batch_document_ids: tuple[str, ...] = ()
+    current_lineage_objective_reassessment_document_ids: tuple[str, ...] = ()
     extraction_semantics_version: str = FACT_EXTRACTION_SEMANTICS_VERSION
-    schema_version: str = "e2r_v5_fact_extraction_provider_call_v4"
+    schema_version: str = "e2r_v5_fact_extraction_provider_call_v5"
 
     def __post_init__(self) -> None:
         if self.status not in {"COMPLETE", "PENDING"}:
             raise ValueError("unknown fact extraction provider-call status")
         if self.status == "PENDING" and not self.pending_reasons:
             raise ValueError("pending fact extraction call requires reasons")
-        if self.provider_attempt_count <= 0:
-            raise ValueError("fact extraction provider attempt count must be positive")
+        if self.provider_attempt_count < 0 or (
+            self.provider_attempt_count == 0
+            and not self.current_lineage_request_ids
+        ):
+            raise ValueError(
+                "fact extraction provider attempt count must be positive "
+                "outside current-lineage journal replay"
+            )
         if self.accepted_claims is not None:
             embedded_claim_ids = tuple(
                 str(row.get("claim_id") or "") for row in self.accepted_claims
@@ -326,6 +343,69 @@ class FactExtractionProviderCall:
             )
         ):
             raise ValueError("fact semantics migration receipts are invalid")
+        if (
+            len(self.current_lineage_request_ids)
+            != len(self.current_lineage_response_ids)
+            or len(self.current_lineage_request_ids)
+            != len(set(self.current_lineage_request_ids))
+            or len(self.current_lineage_response_ids)
+            != len(set(self.current_lineage_response_ids))
+            or any(
+                re.fullmatch(r"COLLABREQ-[0-9a-f]{64}", value) is None
+                for value in self.current_lineage_request_ids
+            )
+            or any(
+                re.fullmatch(r"COLLABRESP-[0-9a-f]{64}", value) is None
+                for value in self.current_lineage_response_ids
+            )
+            or len(self.current_lineage_original_batch_document_ids)
+            != len(set(self.current_lineage_original_batch_document_ids))
+            or any(
+                not value
+                for value in self.current_lineage_original_batch_document_ids
+            )
+            or len(
+                self.current_lineage_objective_reassessment_document_ids
+            )
+            != len(
+                set(
+                    self.current_lineage_objective_reassessment_document_ids
+                )
+            )
+            or any(
+                not value
+                for value in (
+                    self.current_lineage_objective_reassessment_document_ids
+                )
+            )
+            or not set(
+                self.current_lineage_objective_reassessment_document_ids
+            ).issubset(self.document_ids)
+            or (
+                self.current_lineage_request_ids
+                and (
+                    self.status != "COMPLETE"
+                    or self.provider_attempt_count != 0
+                    or self.extraction_semantics_version
+                    != FACT_EXTRACTION_SEMANTICS_VERSION
+                    or "COLLABORATION_CODEX_SUBAGENT"
+                    not in self.provider_name
+                    or not self.current_lineage_original_batch_document_ids
+                    or not set(self.document_ids).issubset(
+                        self.current_lineage_original_batch_document_ids
+                    )
+                    or self.semantics_migration_request_ids
+                )
+            )
+            or (
+                not self.current_lineage_request_ids
+                and (
+                    self.current_lineage_original_batch_document_ids
+                    or self.current_lineage_objective_reassessment_document_ids
+                )
+            )
+        ):
+            raise ValueError("current fact lineage recovery receipts are invalid")
 
     def to_dict(self) -> Mapping[str, Any]:
         output = {
@@ -341,6 +421,14 @@ class FactExtractionProviderCall:
         if not self.semantics_migration_request_ids:
             output.pop("semantics_migration_request_ids", None)
             output.pop("semantics_migration_response_ids", None)
+        if not self.current_lineage_request_ids:
+            output.pop("current_lineage_request_ids", None)
+            output.pop("current_lineage_response_ids", None)
+            output.pop("current_lineage_original_batch_document_ids", None)
+            output.pop(
+                "current_lineage_objective_reassessment_document_ids",
+                None,
+            )
         return output
 
 
@@ -400,6 +488,14 @@ _INCOMPLETE_FACT_TRANSPORT_RE = re.compile(
     r"INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
     r"SGDOC-[0-9a-f]{24}:[0-9]+/[1-9][0-9]*"
 )
+_CURRENT_FACT_LINEAGE_REMATERIALIZATION_RE = re.compile(
+    r"CURRENT_FACT_LINEAGE_REMATERIALIZATION_REQUIRED:"
+    r"SGDOC-[0-9a-f]{24}"
+)
+_CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_RE = re.compile(
+    r"CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+    r"SGDOC-[0-9a-f]{24}"
+)
 FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED = (
     "FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED"
 )
@@ -431,17 +527,58 @@ def fact_extraction_has_exact_checkpoint_recovery_wait(
     """Recognize only a bounded fact queue wait that may reuse source state."""
 
     reasons = tuple(str(value) for value in pending_reasons)
-    if fact_extraction_has_exact_collaboration_wait(reasons):
-        return True
+    collaboration_count = sum(
+        _COLLABORATION_FACT_WAIT_RE.fullmatch(reason) is not None
+        for reason in reasons
+    )
     refresh_count = reasons.count(
         FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
     )
+    rematerialization_reasons = tuple(
+        reason
+        for reason in reasons
+        if _CURRENT_FACT_LINEAGE_REMATERIALIZATION_RE.fullmatch(reason)
+        is not None
+    )
+    rematerialization_count = len(rematerialization_reasons)
+    rematerialization_roster_is_unique = (
+        rematerialization_count == len(set(rematerialization_reasons))
+    )
+    objective_reassessment_reasons = tuple(
+        reason
+        for reason in reasons
+        if _CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_RE.fullmatch(reason)
+        is not None
+    )
+    objective_reassessment_count = len(objective_reassessment_reasons)
+    objective_reassessment_roster_is_unique = (
+        objective_reassessment_count
+        == len(set(objective_reassessment_reasons))
+    )
+    incomplete_count = sum(
+        _INCOMPLETE_FACT_TRANSPORT_RE.fullmatch(reason) is not None
+        for reason in reasons
+    )
     return bool(
-        refresh_count == 1
-        and all(
-            reason == FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
-            or _INCOMPLETE_FACT_TRANSPORT_RE.fullmatch(reason) is not None
-            for reason in reasons
+        reasons
+        and rematerialization_roster_is_unique
+        and objective_reassessment_roster_is_unique
+        and collaboration_count <= 1
+        and refresh_count <= 1
+        and not (collaboration_count and refresh_count)
+        and (
+            collaboration_count
+            + refresh_count
+            + rematerialization_count
+            + objective_reassessment_count
+            + incomplete_count
+            == len(reasons)
+        )
+        and (
+            rematerialization_count >= 1
+            or objective_reassessment_count >= 1
+            or collaboration_count == 1
+            or refresh_count == 1
         )
     )
 
@@ -490,6 +627,270 @@ def _project_current_facts_with_accepted_claims(
                 for fact_id in sorted(merged_by_fact_id)
             ),
         )
+    )
+
+
+def _current_document_ids_for_lineage_row(
+    row: Mapping[str, Any],
+    *,
+    current_document_ids: frozenset[str],
+) -> frozenset[str]:
+    linked_ids = {
+        str(value)
+        for value in row.get("source_ids") or ()
+        if str(value) in current_document_ids
+    }
+    document_id = str(row.get("document_id") or "")
+    if document_id in current_document_ids:
+        linked_ids.add(document_id)
+    return frozenset(linked_ids)
+
+
+def _current_fact_lineage_rematerialization_gaps(
+    *,
+    current_facts: Sequence[Mapping[str, Any]],
+    current_document_ids: frozenset[str],
+    compilation: FactCompilationResult,
+) -> Mapping[str, tuple[str, ...]]:
+    """Find current-roster facts absent from the newly compiled fact graph.
+
+    ``current_facts`` is prompt context, not compiler input.  A document that
+    leaves and later re-enters the source roster can therefore expose an old
+    fact to the provider even when its durable claim/disposition checkpoint is
+    absent.  If the provider avoids re-emitting that apparent duplicate, the
+    compiler would otherwise retire the fact silently.
+
+    An old fact is reconciled only when its exact id remains in the new graph,
+    or a new claim/fact link explicitly names that id in ``supersedes`` or
+    ``resolves`` lineage.  A source outside the current document roster is not
+    constrained here; ordinary roster retirement remains allowed.
+    """
+
+    compiled_fact_by_id = {
+        row.fact_id: row.to_dict() for row in compilation.facts
+    }
+    explicitly_reconciled_fact_ids = {
+        fact_id
+        for link in compilation.claim_fact_links
+        for fact_id in (*link.supersedes_fact_ids, *link.resolves_fact_ids)
+        if fact_id != link.fact_id
+    }
+    gaps_by_document: dict[str, set[str]] = {}
+    for row in current_facts:
+        linked_document_ids = _current_document_ids_for_lineage_row(
+            row,
+            current_document_ids=current_document_ids,
+        )
+        if not linked_document_ids:
+            continue
+        fact_id = str(row.get("fact_id") or "").strip()
+        if not fact_id:
+            raise ValueError(
+                "current fact linked to the current source roster lacks fact_id"
+            )
+        if fact_id in explicitly_reconciled_fact_ids:
+            continue
+        compiled_row = compiled_fact_by_id.get(fact_id)
+        gap_document_ids = set(linked_document_ids)
+        if compiled_row is not None:
+            old_source_ids = {
+                str(value)
+                for value in row.get("source_ids") or ()
+                if str(value)
+            }
+            compiled_source_ids = {
+                str(value)
+                for value in compiled_row.get("source_ids") or ()
+                if str(value)
+            }
+            required_current_source_ids = (
+                old_source_ids & set(current_document_ids)
+            )
+            missing_current_source_ids = (
+                required_current_source_ids - compiled_source_ids
+            )
+            all_old_sources_are_current = bool(old_source_ids) and (
+                old_source_ids <= set(current_document_ids)
+            )
+            old_claim_ids = {
+                str(value)
+                for value in row.get("claim_ids") or ()
+                if str(value)
+            }
+            compiled_claim_ids = {
+                str(value)
+                for value in compiled_row.get("claim_ids") or ()
+                if str(value)
+            }
+            old_quote_ids = {
+                str(value)
+                for value in row.get("quote_ids") or ()
+                if str(value)
+            }
+            compiled_quote_ids = {
+                str(value)
+                for value in compiled_row.get("quote_ids") or ()
+                if str(value)
+            }
+            lineage_set_fields = (
+                "claim_ids",
+                "quote_ids",
+                "corroborating_independence_groups",
+                "question_family_tags",
+                "primitive_tags",
+                "allowed_component_ids",
+                "structured_evidence_roles",
+            )
+            lineage_set_regressed = all_old_sources_are_current and any(
+                {
+                    str(value)
+                    for value in row.get(field) or ()
+                    if str(value)
+                }
+                - {
+                    str(value)
+                    for value in compiled_row.get(field) or ()
+                    if str(value)
+                }
+                for field in lineage_set_fields
+            )
+            confidence_regressed = all_old_sources_are_current and (
+                float(compiled_row.get("confidence") or 0.0) + 1e-12
+                < float(row.get("confidence") or 0.0)
+            )
+            exact_lineage_roster_unchanged = bool(
+                all_old_sources_are_current
+                and old_source_ids == compiled_source_ids
+                and old_claim_ids == compiled_claim_ids
+                and old_quote_ids == compiled_quote_ids
+            )
+            primary_lineage_changed_in_place = bool(
+                exact_lineage_roster_unchanged
+                and (
+                    tuple(row.get("claim_ids") or ())
+                    != tuple(compiled_row.get("claim_ids") or ())
+                    or str(row.get("source_independence_group") or "")
+                    != str(
+                        compiled_row.get("source_independence_group") or ""
+                    )
+                )
+            )
+            # If only part of a corroborated fact's source roster remains
+            # current, retired support may legitimately disappear.  The
+            # surviving fact must nevertheless retain at least one immutable
+            # claim and quote from its current support; otherwise a new claim
+            # with the same economic identity could silently replace all old
+            # lineage while keeping the same deterministic fact id.
+            mixed_source_lineage_replaced = bool(
+                required_current_source_ids
+                and not all_old_sources_are_current
+                and (
+                    not (old_claim_ids & compiled_claim_ids)
+                    or not (old_quote_ids & compiled_quote_ids)
+                )
+            )
+            if not (
+                missing_current_source_ids
+                or lineage_set_regressed
+                or confidence_regressed
+                or mixed_source_lineage_replaced
+                or primary_lineage_changed_in_place
+            ):
+                continue
+            # When the missing source is known, rematerialize that exact
+            # current document.  A claim/quote/metadata regression cannot be
+            # mapped back to one source from an EvidenceFact row alone, so the
+            # complete current lineage unit must be reconsidered.
+            gap_document_ids = (
+                missing_current_source_ids or set(linked_document_ids)
+            )
+        for document_id in gap_document_ids:
+            gaps_by_document.setdefault(document_id, set()).add(fact_id)
+    return {
+        document_id: tuple(sorted(fact_ids))
+        for document_id, fact_ids in sorted(gaps_by_document.items())
+    }
+
+
+def _atomic_fact_lineage_rematerialization_document_ids(
+    *,
+    initial_document_ids: Sequence[str],
+    provider_calls: Sequence[FactExtractionProviderCall],
+    current_document_ids: frozenset[str],
+) -> tuple[str, ...]:
+    """Expand a gap to the complete transitive provider-call unit."""
+
+    affected = {
+        str(value)
+        for value in initial_document_ids
+        if str(value) in current_document_ids
+    }
+    changed = True
+    while changed:
+        changed = False
+        for call in provider_calls:
+            call_document_ids = set(call.document_ids) & set(
+                current_document_ids
+            )
+            if (
+                affected & call_document_ids
+                and not call_document_ids <= affected
+            ):
+                affected.update(call_document_ids)
+                changed = True
+    return tuple(sorted(affected))
+
+
+def _batch_current_fact_lineage_pending_reasons(
+    *,
+    current_facts: Sequence[Mapping[str, Any]],
+    batch_document_ids: frozenset[str],
+    accepted_claims: Sequence[Mapping[str, Any]],
+    target_id: str,
+    as_of_date: str,
+) -> tuple[str, ...]:
+    """Fail a terminal batch response that silently drops a current fact.
+
+    This check intentionally runs only after all deterministic response
+    validation for one observable parent batch.  Its pending reason enters the
+    ordinary validation-retry path, which invalidates a cached Collaboration
+    response and gives the rewrite request a distinct identity.  Because
+    ``EvidenceFact`` carries parent-document, not exact transport-chunk,
+    lineage, the caller invokes this for an unsplit batch or only after the
+    final chunk of a split parent.
+    """
+
+    if not batch_document_ids:
+        return ()
+    batch_current_facts = tuple(
+        row
+        for row in current_facts
+        if _current_document_ids_for_lineage_row(
+            row,
+            current_document_ids=batch_document_ids,
+        )
+    )
+    if not batch_current_facts:
+        return ()
+    claim_by_id: dict[str, Mapping[str, Any]] = {}
+    for claim in accepted_claims:
+        claim_id = str(claim.get("claim_id") or "").strip()
+        if not claim_id:
+            continue
+        claim_by_id[claim_id] = claim
+    compilation = EvidenceFactCompiler().compile(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        accepted_claims=tuple(claim_by_id.values()),
+    )
+    gaps = _current_fact_lineage_rematerialization_gaps(
+        current_facts=batch_current_facts,
+        current_document_ids=batch_document_ids,
+        compilation=compilation,
+    )
+    return tuple(
+        "CURRENT_FACT_LINEAGE_REMATERIALIZATION_REQUIRED:" + document_id
+        for document_id in gaps
     )
 
 
@@ -595,8 +996,17 @@ class ResearcherEvidenceFactExtractor:
             FactExtractionRejection | Mapping[str, Any]
         ] = (),
         prior_coverage_refresh_document_ids: Sequence[str] = (),
+        prior_current_lineage_objective_reassessment_document_ids: (
+            Sequence[str]
+        ) = (),
         prior_semantics_recovery_document_ids: Sequence[str] = (),
         prior_semantics_recovery_invalidated_claim_count: int = 0,
+        authoritative_fact_ledger: (
+            AuthoritativeResearchEpochFactLedger | None
+        ) = None,
+        current_fact_lineage_recovery_binding: (
+            CurrentFactLineageRecoveryBinding | None
+        ) = None,
         extraction_mode: str = "RESEARCH_BACKFILL",
     ) -> ResearcherFactExtractionResult:
         cutoff = date.fromisoformat(as_of_date)
@@ -678,6 +1088,25 @@ class ResearcherEvidenceFactExtractor:
             raise ValueError(
                 "prior coverage refresh intent is outside current documents"
             )
+        carried_current_lineage_objective_reassessment_document_ids = tuple(
+            dict.fromkeys(
+                str(value).strip()
+                for value in (
+                    prior_current_lineage_objective_reassessment_document_ids
+                )
+                if str(value).strip()
+            )
+        )
+        if any(
+            document_id not in document_ids
+            for document_id in (
+                carried_current_lineage_objective_reassessment_document_ids
+            )
+        ):
+            raise ValueError(
+                "prior current-lineage objective reassessment intent is "
+                "outside current documents"
+            )
         coverage_gap_objective_ids = _coverage_gap_objective_ids(
             open_objectives=open_objectives,
             score_gap_context=score_gap_context or {},
@@ -685,6 +1114,90 @@ class ResearcherEvidenceFactExtractor:
         document_by_id = {
             str(row["document_id"]): row for row in prepared
         }
+        if (
+            current_fact_lineage_recovery_binding is not None
+            and authoritative_fact_ledger is None
+        ):
+            raise ValueError(
+                "current fact lineage recovery binding requires its "
+                "authoritative research-epoch fact ledger"
+            )
+        current_lineage_recovery: Mapping[str, Any] | None = None
+        if authoritative_fact_ledger is not None:
+            try:
+                current_lineage_recovery = (
+                    _recover_current_fact_lineage_authority_gap(
+                        authoritative_fact_ledger=authoritative_fact_ledger,
+                        recovery_binding=(
+                            current_fact_lineage_recovery_binding
+                        ),
+                        target_id=target_id,
+                        target_name=target_name,
+                        target_aliases=target_aliases,
+                        archetype_id=archetype_id,
+                        as_of_date=as_of_date,
+                        documents=prepared,
+                        open_objectives=open_objectives,
+                        current_facts=current_facts,
+                        score_gap_context=score_gap_context or {},
+                        prior_material_claims=prior_material_claims,
+                        prior_document_dispositions=(
+                            prior_document_dispositions
+                        ),
+                        scope_contract=scope_contract,
+                        objective_scope_by_document=(
+                            objective_scope_by_document
+                        ),
+                        objective_component_by_id=objective_component_by_id,
+                    )
+                )
+            except (
+                FileNotFoundError,
+                OSError,
+                KeyError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+                json.JSONDecodeError,
+            ) as exc:
+                current_lineage_recovery = {
+                    "status": "PENDING",
+                    "pending_reason": (
+                        "CURRENT_FACT_LINEAGE_JOURNAL_RECOVERY_INVALID:"
+                        f"{type(exc).__name__}:{_clean_error(exc)}"
+                    ),
+                    "provider_complete_call_count": 0,
+                    "recovered_claim_count": 0,
+                    "recovered_fact_count": 0,
+                    "recovered_document_count": 0,
+                    "objective_reassessment_rows": (),
+                }
+        current_lineage_recovery_succeeded = bool(
+            current_lineage_recovery is not None
+            and current_lineage_recovery.get("status") == "COMPLETE"
+        )
+        current_lineage_recovery_phase = bool(
+            current_fact_lineage_recovery_binding is not None
+            or (
+                current_lineage_recovery is not None
+                and current_lineage_recovery.get("status")
+                not in {"NO_AUTHORITY_LOSS"}
+            )
+        )
+        if current_lineage_recovery_succeeded:
+            assert current_lineage_recovery is not None
+            prior_material_claims = (
+                *prior_material_claims,
+                *current_lineage_recovery["material_claims"],
+            )
+            prior_document_dispositions = (
+                *prior_document_dispositions,
+                *current_lineage_recovery["document_dispositions"],
+            )
+            prior_provider_calls = (
+                *prior_provider_calls,
+                *current_lineage_recovery["provider_calls"],
+            )
         semantics_recovery_requested = bool(
             prior_semantics_recovery_document_ids
             or prior_semantics_recovery_invalidated_claim_count
@@ -913,12 +1426,36 @@ class ResearcherEvidenceFactExtractor:
                 & coverage_gap_objective_ids
             )
         }
+        current_lineage_objective_reassessment_document_ids = tuple(
+            sorted(
+                set(
+                    carried_current_lineage_objective_reassessment_document_ids
+                )
+                | {
+                    str(row.get("document_id") or "")
+                    for row in (
+                        current_lineage_recovery.get(
+                            "objective_reassessment_rows"
+                        )
+                        or ()
+                        if current_lineage_recovery is not None
+                        else ()
+                    )
+                    if str(row.get("document_id") or "")
+                }
+            )
+        )
         active_carried_coverage_refresh_document_ids = frozenset(
             carried_coverage_refresh_document_ids
             if extraction_mode != "PRODUCTION_OBJECTIVE_LOCAL"
             else (
-                set(carried_coverage_refresh_document_ids)
-                & live_gap_lineage_document_ids
+                (
+                    set(carried_coverage_refresh_document_ids)
+                    & live_gap_lineage_document_ids
+                )
+                | set(
+                    current_lineage_objective_reassessment_document_ids
+                )
             )
         )
         coverage_complete_document_ids = (
@@ -1039,6 +1576,24 @@ class ResearcherEvidenceFactExtractor:
             not in boundary_context_reextraction_document_ids
         ]
         pending: list[str] = []
+        if current_lineage_recovery is not None and not (
+            current_lineage_recovery_succeeded
+            or current_lineage_recovery.get("status")
+            == "NO_AUTHORITY_LOSS"
+        ):
+            pending.append(
+                str(
+                    current_lineage_recovery.get("pending_reason")
+                    or "CURRENT_FACT_LINEAGE_JOURNAL_RECOVERY_PENDING"
+                )
+            )
+        pending.extend(
+            "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+            + document_id
+            for document_id in (
+                current_lineage_objective_reassessment_document_ids
+            )
+        )
         if semantics_recovery_failed:
             pending.append(
                 "FACT_SEMANTICS_MIGRATION_RECOVERY_INCOMPLETE"
@@ -1161,8 +1716,39 @@ class ResearcherEvidenceFactExtractor:
         maximum_current_fact_prompt_context_chars = _json_character_count(
             current_fact_prompt_context
         )
+        effective_score_gap_context = dict(score_gap_context or {})
+        if current_lineage_objective_reassessment_document_ids:
+            raw_prior_feedback = effective_score_gap_context.get(
+                "prior_fact_extraction_feedback",
+                (),
+            )
+            if isinstance(raw_prior_feedback, (str, bytes)) or not (
+                isinstance(raw_prior_feedback, Sequence)
+            ):
+                raise ValueError(
+                    "current-lineage objective reassessment requires raw "
+                    "fact feedback rows"
+                )
+            effective_score_gap_context[
+                "prior_fact_extraction_feedback"
+            ] = list(
+                dict.fromkeys(
+                    (
+                        *(str(value) for value in raw_prior_feedback),
+                        *(
+                            "FACT_EXTRACTION_RETRY_CONTEXT:"
+                            "CURRENT_FACT_LINEAGE_OBJECTIVE_"
+                            "REASSESSMENT_REQUIRED:"
+                            + document_id
+                            for document_id in (
+                                current_lineage_objective_reassessment_document_ids
+                            )
+                        ),
+                    )
+                )
+            )
         score_gap_prompt_context = project_fact_extraction_score_gap_context(
-            score_gap_context or {}
+            effective_score_gap_context
         )
         score_gap_prompt_context_chars = _json_character_count(
             score_gap_prompt_context
@@ -1194,7 +1780,7 @@ class ResearcherEvidenceFactExtractor:
         )
         document_batches = (
             ()
-            if semantics_recovery_failed
+            if semantics_recovery_failed or current_lineage_recovery_phase
             else (
                 *_document_batches(
                     coverage_refresh_transport_documents,
@@ -1685,6 +2271,42 @@ class ResearcherEvidenceFactExtractor:
                         }
                     )
                     continue
+                parent_fact_roster_is_observable = (
+                    not batch_transport_chunk_ids
+                    or all(
+                        int(row.get("transport_chunk_index") or 0)
+                        == int(row.get("transport_chunk_count") or 1) - 1
+                        for row in batch
+                    )
+                )
+                if parent_fact_roster_is_observable:
+                    # A current-roster fact may be visible in prompt context
+                    # even when the durable claim/disposition checkpoint was
+                    # lost during roster churn.  Detect that omission while
+                    # this exact response is still the provider's latest cache
+                    # entry, so the existing invalidation + rewrite machinery
+                    # can request the missing lineage under a fresh identity.
+                    # For split parents this becomes safe only on the final
+                    # chunk, after claims from every earlier chunk are present.
+                    batch_pending.extend(
+                        reason
+                        for reason in (
+                            _batch_current_fact_lineage_pending_reasons(
+                                current_facts=effective_current_facts,
+                                batch_document_ids=frozenset(
+                                    batch_document_ids
+                                ),
+                                accepted_claims=(
+                                    *claims,
+                                    *previously_accepted_claims.values(),
+                                    *batch_claims,
+                                ),
+                                target_id=target_id,
+                                as_of_date=as_of_date,
+                            )
+                        )
+                        if reason not in batch_pending
+                    )
                 if (
                     not batch_pending
                     and extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
@@ -2095,6 +2717,33 @@ class ResearcherEvidenceFactExtractor:
                 )
             )
         }
+        completed_current_lineage_objective_reassessment_document_ids = (
+            set(current_lineage_objective_reassessment_document_ids)
+            & completed_coverage_refresh_document_ids
+        )
+        if completed_current_lineage_objective_reassessment_document_ids:
+            completed_reassessment_reasons = {
+                "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+                + document_id
+                for document_id in (
+                    completed_current_lineage_objective_reassessment_document_ids
+                )
+            }
+            pending = [
+                reason
+                for reason in pending
+                if reason not in completed_reassessment_reasons
+            ]
+            current_lineage_objective_reassessment_document_ids = tuple(
+                document_id
+                for document_id in (
+                    current_lineage_objective_reassessment_document_ids
+                )
+                if document_id
+                not in (
+                    completed_current_lineage_objective_reassessment_document_ids
+                )
+            )
         incomplete_coverage_refresh_document_ids = (
             set(coverage_refresh_document_ids)
             | deferred_coverage_refresh_document_ids
@@ -2138,7 +2787,17 @@ class ResearcherEvidenceFactExtractor:
                     disposition_by_document_id[document_id] = row
         if (
             deferred_coverage_refresh_document_ids
-            and not pending
+            and all(
+                reason
+                in {
+                    "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+                    + document_id
+                    for document_id in (
+                        current_lineage_objective_reassessment_document_ids
+                    )
+                }
+                for reason in pending
+            )
             and new_unprocessed_document_ids.issubset(
                 {
                     str(row.get("document_id") or "")
@@ -2170,6 +2829,189 @@ class ResearcherEvidenceFactExtractor:
             as_of_date=as_of_date,
             accepted_claims=claims,
         )
+        initial_current_fact_lineage_gaps_by_document = (
+            _current_fact_lineage_rematerialization_gaps(
+                current_facts=effective_current_facts,
+                current_document_ids=frozenset(document_ids),
+                compilation=compilation,
+            )
+        )
+        initial_lineage_gap_document_ids = tuple(
+            initial_current_fact_lineage_gaps_by_document
+        )
+        initial_lineage_gap_fact_ids = tuple(
+            sorted(
+                {
+                    fact_id
+                    for fact_ids in (
+                        initial_current_fact_lineage_gaps_by_document.values()
+                    )
+                    for fact_id in fact_ids
+                }
+            )
+        )
+        current_fact_lineage_rematerialization_document_ids = (
+            _atomic_fact_lineage_rematerialization_document_ids(
+                initial_document_ids=initial_lineage_gap_document_ids,
+                provider_calls=calls,
+                current_document_ids=frozenset(document_ids),
+            )
+        )
+        current_fact_lineage_rematerialization_by_document = dict(
+            initial_current_fact_lineage_gaps_by_document
+        )
+        rematerialization_document_ids = set(
+            current_fact_lineage_rematerialization_document_ids
+        )
+        if current_fact_lineage_rematerialization_document_ids:
+            # A partial or NO_MATERIAL_FACT response is not a safe replacement
+            # for compiler-owned claim/fact/link lineage.  Invalidate the whole
+            # affected document checkpoint so the next clean resume re-reads
+            # it without the stale prompt-only fact snapshot.
+            invalidated_calls = tuple(
+                call
+                for call in calls
+                if set(call.document_ids) & rematerialization_document_ids
+            )
+            retained_calls = [
+                call
+                for call in calls
+                if not (
+                    set(call.document_ids)
+                    & rematerialization_document_ids
+                )
+            ]
+            invalidated_transport_chunk_ids = {
+                chunk_id
+                for call in invalidated_calls
+                for chunk_id in call.transport_chunk_ids
+            }
+            invalidated_transport_chunk_ids.update(
+                chunk_id
+                for document_id in rematerialization_document_ids
+                for chunk_id in split_chunk_ids_by_document.get(
+                    document_id, ()
+                )
+            )
+            pending_transport_chunk_ids.difference_update(
+                invalidated_transport_chunk_ids
+            )
+            resumed_transport_chunk_ids.difference_update(
+                invalidated_transport_chunk_ids
+            )
+            invalidated_call_pending_reasons = {
+                reason
+                for call in invalidated_calls
+                for reason in call.pending_reasons
+            }
+            retained_call_pending_reasons = {
+                reason
+                for call in retained_calls
+                for reason in call.pending_reasons
+            }
+            invalidated_feedback = {
+                reason
+                for call in invalidated_calls
+                for reason in call.research_gap_feedback
+            }
+            retained_feedback = {
+                reason
+                for call in retained_calls
+                for reason in call.research_gap_feedback
+            }
+            pending = [
+                reason
+                for reason in pending
+                if not (
+                    reason in invalidated_call_pending_reasons
+                    and reason not in retained_call_pending_reasons
+                    and _COLLABORATION_FACT_WAIT_RE.fullmatch(reason) is None
+                )
+                and not (
+                    set(reason.split(":"))
+                    & rematerialization_document_ids
+                )
+            ]
+            research_gap_feedback = [
+                reason
+                for reason in research_gap_feedback
+                if not (
+                    reason in invalidated_feedback
+                    and reason not in retained_feedback
+                )
+            ]
+            claims = [
+                row
+                for row in claims
+                if not (
+                    _current_document_ids_for_lineage_row(
+                        row,
+                        current_document_ids=frozenset(
+                            rematerialization_document_ids
+                        ),
+                    )
+                )
+            ]
+            dispositions = [
+                row
+                for row in dispositions
+                if str(row.get("document_id") or "")
+                not in rematerialization_document_ids
+            ]
+            calls = retained_calls
+            rejections = [
+                row
+                for row in rejections
+                if row.document_id not in rematerialization_document_ids
+            ]
+            coverage_audited_document_ids.difference_update(
+                rematerialization_document_ids
+            )
+            coverage_audited_transport_chunk_ids.difference_update(
+                invalidated_transport_chunk_ids
+            )
+            current_semantics_disposition_ids.difference_update(
+                rematerialization_document_ids
+            )
+            completed_boundary_context_reextraction_document_ids = (
+                completed_boundary_context_reextraction_document_ids
+                - rematerialization_document_ids
+            )
+            completed_coverage_refresh_document_ids.difference_update(
+                rematerialization_document_ids
+            )
+            compilation = EvidenceFactCompiler().compile(
+                target_id=target_id,
+                as_of_date=as_of_date,
+                accepted_claims=claims,
+            )
+            current_fact_lineage_rematerialization_by_document = dict(
+                _current_fact_lineage_rematerialization_gaps(
+                    current_facts=effective_current_facts,
+                    current_document_ids=frozenset(
+                        rematerialization_document_ids
+                    ),
+                    compilation=compilation,
+                )
+            )
+            pending.extend(
+                "CURRENT_FACT_LINEAGE_REMATERIALIZATION_REQUIRED:"
+                + document_id
+                for document_id in (
+                    current_fact_lineage_rematerialization_document_ids
+                )
+            )
+        current_fact_lineage_rematerialization_fact_ids = tuple(
+            sorted(
+                {
+                    fact_id
+                    for fact_ids in (
+                        current_fact_lineage_rematerialization_by_document.values()
+                    )
+                    for fact_id in fact_ids
+                }
+            )
+        )
         if compilation.status != "FACT_COMPILATION_COMPLETE":
             pending.append(compilation.status)
         pending = list(dict.fromkeys(pending))
@@ -2185,6 +3027,9 @@ class ResearcherEvidenceFactExtractor:
             (
                 set(coverage_refresh_document_ids)
                 | deferred_coverage_refresh_document_ids
+                | set(
+                    current_lineage_objective_reassessment_document_ids
+                )
             )
             - completed_coverage_refresh_document_ids
         )
@@ -2261,6 +3106,113 @@ class ResearcherEvidenceFactExtractor:
             "extraction_semantics_version": (
                 FACT_EXTRACTION_SEMANTICS_VERSION
             ),
+            "current_fact_lineage_recovery_requested": (
+                authoritative_fact_ledger is not None
+            ),
+            "current_fact_lineage_recovery_status": (
+                str(current_lineage_recovery.get("status") or "PENDING")
+                if current_lineage_recovery is not None
+                else "NOT_REQUESTED"
+            ),
+            "current_fact_lineage_authority_checkpoint_id": (
+                authoritative_fact_ledger.checkpoint_id
+                if authoritative_fact_ledger is not None
+                else None
+            ),
+            "current_fact_lineage_authority_checkpoint_hash": (
+                authoritative_fact_ledger.checkpoint_hash
+                if authoritative_fact_ledger is not None
+                else None
+            ),
+            "current_fact_lineage_expectation_status": (
+                str(
+                    (
+                        current_lineage_recovery.get("expectation")
+                        or {}
+                    ).get("status")
+                    or "NOT_REQUESTED"
+                )
+                if current_lineage_recovery is not None
+                else "NOT_REQUESTED"
+            ),
+            "current_fact_lineage_recovered_claim_count": (
+                int(
+                    current_lineage_recovery.get(
+                        "recovered_claim_count"
+                    )
+                    or 0
+                )
+                if current_lineage_recovery is not None
+                else 0
+            ),
+            "current_fact_lineage_recovered_fact_count": (
+                int(
+                    current_lineage_recovery.get("recovered_fact_count")
+                    or 0
+                )
+                if current_lineage_recovery is not None
+                else 0
+            ),
+            "current_fact_lineage_recovered_document_count": (
+                int(
+                    current_lineage_recovery.get(
+                        "recovered_document_count"
+                    )
+                    or 0
+                )
+                if current_lineage_recovery is not None
+                else 0
+            ),
+            "current_fact_lineage_journal_request_count": (
+                int(
+                    current_lineage_recovery.get("journal_request_count")
+                    or 0
+                )
+                if current_lineage_recovery is not None
+                else 0
+            ),
+            "current_fact_lineage_journal_call_group_count": (
+                int(
+                    current_lineage_recovery.get(
+                        "journal_call_group_count"
+                    )
+                    or 0
+                )
+                if current_lineage_recovery is not None
+                else 0
+            ),
+            "current_fact_lineage_provider_complete_call_count": (
+                int(
+                    current_lineage_recovery.get(
+                        "provider_complete_call_count"
+                    )
+                    or 0
+                )
+                if current_lineage_recovery is not None
+                else 0
+            ),
+            "current_fact_lineage_recovered_claim_ids": list(
+                current_lineage_recovery.get("recovered_claim_ids") or ()
+            )
+            if current_lineage_recovery is not None
+            else [],
+            "current_fact_lineage_recovered_fact_ids": list(
+                current_lineage_recovery.get("recovered_fact_ids") or ()
+            )
+            if current_lineage_recovery is not None
+            else [],
+            "current_fact_lineage_exact_recovery_receipt": (
+                dict(current_lineage_recovery.get("receipt") or {})
+                if current_lineage_recovery is not None
+                else {}
+            ),
+            "current_fact_lineage_atomic_all_or_nothing": True,
+            "current_fact_lineage_objective_reassessment_document_ids": list(
+                current_lineage_objective_reassessment_document_ids
+            ),
+            "current_fact_lineage_objective_reassessment_preserves_facts": (
+                True
+            ),
             "stale_semantics_disposition_count": (
                 stale_semantics_disposition_count
             ),
@@ -2333,6 +3285,37 @@ class ResearcherEvidenceFactExtractor:
             "preserved_prior_claim_count": sum(
                 str(row.get("document_id") or "")
                 not in boundary_context_reextraction_document_ids
+                and str(row.get("document_id") or "")
+                not in rematerialization_document_ids
+                for row in prior_material_claims
+            ),
+            "current_fact_lineage_initial_gap_document_ids": list(
+                initial_lineage_gap_document_ids
+            ),
+            "current_fact_lineage_initial_gap_fact_ids": list(
+                initial_lineage_gap_fact_ids
+            ),
+            "current_fact_lineage_initial_gap_by_document": {
+                document_id: list(fact_ids)
+                for document_id, fact_ids in (
+                    initial_current_fact_lineage_gaps_by_document.items()
+                )
+            },
+            "current_fact_lineage_rematerialization_document_ids": list(
+                current_fact_lineage_rematerialization_document_ids
+            ),
+            "current_fact_lineage_rematerialization_fact_ids": list(
+                current_fact_lineage_rematerialization_fact_ids
+            ),
+            "current_fact_lineage_rematerialization_by_document": {
+                document_id: list(fact_ids)
+                for document_id, fact_ids in (
+                    current_fact_lineage_rematerialization_by_document.items()
+                )
+            },
+            "current_fact_lineage_invalidated_prior_claim_count": sum(
+                str(row.get("document_id") or "")
+                in rematerialization_document_ids
                 for row in prior_material_claims
             ),
             "boundary_context_invalidated_prior_claim_count": sum(
@@ -2503,6 +3486,246 @@ class ResearcherEvidenceFactExtractor:
         )
 
 
+def resolve_current_fact_lineage_recovery_binding(
+    *,
+    authoritative_fact_ledger: AuthoritativeResearchEpochFactLedger,
+    journal_root: str | Path,
+    target_id: str,
+    target_name: str,
+    target_aliases: Sequence[str],
+    archetype_id: str,
+    as_of_date: str,
+    documents: Sequence[Mapping[str, Any]],
+    open_objectives: Sequence[Mapping[str, Any]],
+    current_facts: Sequence[Mapping[str, Any]],
+    score_gap_context: Mapping[str, Any] | None,
+    prior_material_claims: Sequence[Mapping[str, Any]],
+    prior_document_dispositions: Sequence[Mapping[str, Any]],
+    extraction_mode: str,
+    pending_new_fact_ids: Sequence[str] = (),
+) -> CurrentFactLineageRecoveryBinding:
+    """Resolve the authoritative source seed to one exact journal call cover.
+
+    This resolver is read-only and never calls ``provider.complete``.  It is
+    intentionally strict: every missing-fact source must occur in exactly one
+    validated call group.  A second plausible historical call is ambiguity,
+    not an invitation to choose whichever result looks convenient.
+    """
+
+    cutoff = date.fromisoformat(as_of_date)
+    if extraction_mode not in FACT_EXTRACTION_MODES:
+        raise ValueError("unknown fact extraction mode")
+    prepared = _validate_documents(
+        documents,
+        target_id=target_id,
+        as_of_date=as_of_date,
+        cutoff=cutoff,
+    )
+    document_by_id = {
+        str(row["document_id"]): row for row in prepared
+    }
+    if (
+        authoritative_fact_ledger.target_id != target_id
+        or authoritative_fact_ledger.as_of_date != as_of_date
+    ):
+        raise ValueError("current fact authority target/date mismatch")
+    prior_compilation = EvidenceFactCompiler().compile(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        accepted_claims=prior_material_claims,
+    )
+    if prior_compilation.status != "FACT_COMPILATION_COMPLETE":
+        raise ValueError("persisted fact claims do not compile completely")
+    persisted_rows = {
+        row.fact_id: row.to_dict() for row in prior_compilation.facts
+    }
+    expectation = authoritative_fact_ledger.recovery_expectation(
+        persisted_fact_ids=tuple(persisted_rows),
+        pending_new_fact_ids=pending_new_fact_ids,
+    )
+    if expectation["status"] != "AUTHORITY_LOSS_RECOVERY_REQUIRED":
+        raise ValueError(
+            "current fact lineage binding requires an exact authority loss"
+        )
+    authority_rows = _exact_fact_rows_by_id(
+        authoritative_fact_ledger.fact_rows,
+        label="authoritative research-epoch facts",
+    )
+    if _exact_fact_rows_by_id(
+        current_facts,
+        label="current fact authority projection",
+    ) != authority_rows:
+        raise ValueError("current fact authority projection is not exact")
+    for fact_id, row in persisted_rows.items():
+        if fact_id in authority_rows and _canonical_json_value(row) != (
+            _canonical_json_value(authority_rows[fact_id])
+        ):
+            raise ValueError("persisted fact body differs from authority")
+    seed_source_document_ids = tuple(
+        str(value)
+        for value in expectation["expected_recovered_source_document_ids"]
+    )
+    if not seed_source_document_ids or not set(
+        seed_source_document_ids
+    ).issubset(document_by_id):
+        raise ValueError("authority-loss source seed is outside current documents")
+
+    objective_ids = {
+        str(row.get("objective_id") or "").strip()
+        for row in open_objectives
+    }
+    if "" in objective_ids or len(objective_ids) != len(open_objectives):
+        raise ValueError("fact extraction objectives require unique ids")
+    objective_component_by_id = {
+        str(row.get("objective_id") or "").strip(): str(
+            row.get("component_id") or ""
+        ).strip()
+        for row in open_objectives
+    }
+    objective_scope_by_document: Mapping[str, frozenset[str]] | None = None
+    if extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL":
+        if not objective_ids or any(
+            value not in CANONICAL_COMPONENT_ORDER
+            for value in objective_component_by_id.values()
+        ):
+            raise ValueError("production objective scope is invalid")
+        objective_scope_by_document = {
+            str(row["document_id"]): frozenset(
+                str(value).strip()
+                for value in row.get("objective_ids") or ()
+                if str(value).strip() in objective_ids
+            )
+            for row in prepared
+        }
+        if any(not values for values in objective_scope_by_document.values()):
+            raise ValueError(
+                "production evidence documents lack current objective lineage"
+            )
+    scope_contract = load_mechanism_scope_contracts().get(archetype_id)
+    if scope_contract is None:
+        raise ValueError("fact extraction archetype lacks mechanism-scope contract")
+    prompt_payload = _fact_extraction_primary_payload(
+        target_id=target_id,
+        target_name=target_name,
+        target_aliases=target_aliases,
+        archetype_id=archetype_id,
+        as_of_date=as_of_date,
+        extraction_semantics_version=FACT_EXTRACTION_SEMANTICS_VERSION,
+        open_objectives=open_objectives,
+        current_evidence_facts=(
+            _project_current_facts_with_accepted_claims(
+                current_facts=current_facts,
+                accepted_claims=prior_material_claims,
+                target_id=target_id,
+                as_of_date=as_of_date,
+            )
+        ),
+        score_gap_context=project_fact_extraction_score_gap_context(
+            score_gap_context or {}
+        ),
+        scope_contract=scope_contract,
+        batch=tuple(
+            document_by_id[document_id]
+            for document_id in seed_source_document_ids
+        ),
+        objective_scope_by_document=objective_scope_by_document,
+        objective_component_by_id=objective_component_by_id,
+    )
+    materials = validate_current_v5_fact_lineage_materials(
+        journal_root=journal_root,
+        target_id=target_id,
+        as_of_date=as_of_date,
+        archetype_id=archetype_id,
+        current_documents=prepared,
+        current_fact_prompt_payload=prompt_payload,
+        recovery_projection_document_ids=seed_source_document_ids,
+    )
+    if materials.get("status") != "READY_FOR_OFFICIAL_SEMANTIC_REPLAY":
+        raise ValueError("current fact journal source-seed lookup is invalid")
+    occurrence_counts = materials.get(
+        "current_document_material_occurrence_counts"
+    )
+    if not isinstance(occurrence_counts, Mapping) or set(
+        str(key) for key in occurrence_counts
+    ) != set(seed_source_document_ids) or any(
+        int(value) <= 0 for value in occurrence_counts.values()
+    ):
+        raise ValueError("current fact journal source-seed cover is ambiguous")
+    material_rows = tuple(
+        dict(row) for row in materials.get("materials") or ()
+    )
+    if not material_rows:
+        raise ValueError("current fact journal source-seed cover is empty")
+    group_ids = tuple(
+        dict.fromkeys(
+            str(row.get("lineage_call_group_id") or "")
+            for row in material_rows
+        )
+    )
+    if any(not value for value in group_ids):
+        raise ValueError("current fact journal call-group identity is missing")
+    if _validated_raw_current_lineage_transport_cover(
+        material_rows=material_rows,
+        document_ids=seed_source_document_ids,
+    ) is None:
+        raise ValueError("current fact journal source-seed cover is ambiguous")
+    disposition_ids = {
+        str(row.get("document_id") or "")
+        for row in prior_document_dispositions
+    }
+    expanded_by_group = {
+        group_id: frozenset(
+            str(document_id)
+            for row in material_rows
+            if row.get("lineage_call_group_id") == group_id
+            for document_id in (
+                row.get("validated_current_document_ids") or ()
+            )
+            if str(document_id) not in disposition_ids
+        )
+        for group_id in group_ids
+    }
+    expanded_ids = tuple(
+        sorted(
+            {
+                document_id
+                for values in expanded_by_group.values()
+                for document_id in values
+            }
+        )
+    )
+    if (
+        not set(seed_source_document_ids).issubset(expanded_ids)
+        or _validated_raw_current_lineage_transport_cover(
+            material_rows=material_rows,
+            document_ids=expanded_ids,
+        )
+        is None
+    ):
+        raise ValueError("current fact atomic document expansion is ambiguous")
+    ordered_material_rows = tuple(
+        sorted(
+            material_rows,
+            key=lambda row: (
+                str(row.get("lineage_call_group_id") or ""),
+                int(row.get("continuation_page_number") or 0),
+            ),
+        )
+    )
+    return CurrentFactLineageRecoveryBinding(
+        journal_root=Path(journal_root),
+        seed_source_document_ids=tuple(sorted(seed_source_document_ids)),
+        journal_request_ids=tuple(
+            str(row["request_id"]) for row in ordered_material_rows
+        ),
+        journal_response_ids=tuple(
+            str(row["response_id"]) for row in ordered_material_rows
+        ),
+        expected_recovery_document_ids=expanded_ids,
+        pending_new_fact_ids=tuple(str(value) for value in pending_new_fact_ids),
+    )
+
+
 def write_researcher_fact_extraction_result(
     result: ResearcherFactExtractionResult,
     output_directory: str | Path,
@@ -2518,6 +3741,11 @@ def write_researcher_fact_extraction_result(
         "document_dispositions": tuple(result.document_dispositions),
         "provider_calls": tuple(row.to_dict() for row in result.provider_calls),
         "facts": tuple(row.to_dict() for row in result.facts),
+        "counterfacts": tuple(
+            row.to_dict()
+            for row in result.facts
+            if row.direction == EvidenceDirection.COUNTER.value
+        ),
         "claim_fact_links": tuple(
             row.to_dict() for row in result.fact_compilation.claim_fact_links
         ),
@@ -2561,6 +3789,7 @@ def write_researcher_fact_extraction_result(
             paths["document_dispositions"],
             paths["provider_calls"],
             paths["facts"],
+            paths["counterfacts"],
             paths["claim_fact_links"],
             paths["audit"],
         )
@@ -4063,6 +5292,1001 @@ def _fact_extraction_continuation_context(
     }
 
 
+def _recover_current_fact_lineage_authority_gap(
+    *,
+    authoritative_fact_ledger: AuthoritativeResearchEpochFactLedger,
+    recovery_binding: CurrentFactLineageRecoveryBinding | None,
+    target_id: str,
+    target_name: str,
+    target_aliases: Sequence[str],
+    archetype_id: str,
+    as_of_date: str,
+    documents: Sequence[Mapping[str, Any]],
+    open_objectives: Sequence[Mapping[str, Any]],
+    current_facts: Sequence[Mapping[str, Any]],
+    score_gap_context: Mapping[str, Any],
+    prior_material_claims: Sequence[Mapping[str, Any]],
+    prior_document_dispositions: Sequence[Mapping[str, Any]],
+    scope_contract: ArchetypeMechanismScopeContract,
+    objective_scope_by_document: Mapping[str, frozenset[str]] | None,
+    objective_component_by_id: Mapping[str, str],
+) -> Mapping[str, Any]:
+    """Replay an exact current-fact authority gap without calling a provider."""
+
+    if (
+        authoritative_fact_ledger.target_id != target_id
+        or authoritative_fact_ledger.as_of_date != as_of_date
+    ):
+        raise ValueError("current fact authority target/date mismatch")
+    prior_compilation = EvidenceFactCompiler().compile(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        accepted_claims=prior_material_claims,
+    )
+    if prior_compilation.status != "FACT_COMPILATION_COMPLETE":
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_PERSISTED_CLAIMS_INVALID",
+        )
+    persisted_fact_rows = {
+        row.fact_id: row.to_dict() for row in prior_compilation.facts
+    }
+    pending_new_fact_ids = (
+        recovery_binding.pending_new_fact_ids
+        if recovery_binding is not None
+        else ()
+    )
+    expectation = authoritative_fact_ledger.recovery_expectation(
+        persisted_fact_ids=tuple(persisted_fact_rows),
+        pending_new_fact_ids=pending_new_fact_ids,
+    )
+    authority_rows = _exact_fact_rows_by_id(
+        authoritative_fact_ledger.fact_rows,
+        label="authoritative research-epoch facts",
+    )
+    current_rows = _exact_fact_rows_by_id(
+        current_facts,
+        label="current fact authority projection",
+    )
+    if current_rows != authority_rows:
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_AUTHORITY_PROJECTION_MISMATCH",
+            expectation=expectation,
+        )
+    for fact_id in set(persisted_fact_rows).intersection(authority_rows):
+        if _canonical_json_value(persisted_fact_rows[fact_id]) != (
+            _canonical_json_value(authority_rows[fact_id])
+        ):
+            return _current_lineage_pending_result(
+                "CURRENT_FACT_LINEAGE_PERSISTED_FACT_BODY_MISMATCH",
+                expectation=expectation,
+            )
+    expectation_status = str(expectation["status"])
+    if expectation_status == "NO_AUTHORITY_LOSS":
+        return {
+            "status": "NO_AUTHORITY_LOSS",
+            "expectation": dict(expectation),
+            "provider_complete_call_count": 0,
+            "recovered_claim_count": 0,
+            "recovered_fact_count": 0,
+            "recovered_document_count": 0,
+            "objective_reassessment_rows": (),
+        }
+    if expectation_status != "AUTHORITY_LOSS_RECOVERY_REQUIRED":
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_" + expectation_status,
+            expectation=expectation,
+        )
+    if recovery_binding is None:
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_RECOVERY_BINDING_REQUIRED",
+            expectation=expectation,
+        )
+
+    document_by_id = {
+        str(row.get("document_id") or ""): dict(row) for row in documents
+    }
+    seed_source_document_ids = tuple(
+        recovery_binding.seed_source_document_ids
+    )
+    seed_source_document_id_set = frozenset(seed_source_document_ids)
+    prior_disposition_ids = {
+        str(row.get("document_id") or "")
+        for row in prior_document_dispositions
+    }
+    if (
+        not seed_source_document_id_set.issubset(document_by_id)
+        or seed_source_document_id_set.intersection(prior_disposition_ids)
+    ):
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_RECOVERY_DOCUMENT_SCOPE_INVALID",
+            expectation=expectation,
+        )
+    expected_source_ids = frozenset(
+        str(value)
+        for value in expectation["expected_recovered_source_document_ids"]
+    )
+    if expected_source_ids != seed_source_document_id_set:
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_RECOVERY_SOURCE_COVER_INCOMPLETE",
+            expectation=expectation,
+        )
+
+    prompt_payload = _fact_extraction_primary_payload(
+        target_id=target_id,
+        target_name=target_name,
+        target_aliases=target_aliases,
+        archetype_id=archetype_id,
+        as_of_date=as_of_date,
+        extraction_semantics_version=FACT_EXTRACTION_SEMANTICS_VERSION,
+        open_objectives=open_objectives,
+        current_evidence_facts=(
+            _project_current_facts_with_accepted_claims(
+                current_facts=current_facts,
+                accepted_claims=prior_material_claims,
+                target_id=target_id,
+                as_of_date=as_of_date,
+            )
+        ),
+        score_gap_context=project_fact_extraction_score_gap_context(
+            score_gap_context
+        ),
+        scope_contract=scope_contract,
+        batch=tuple(
+            document_by_id[document_id]
+            for document_id in seed_source_document_ids
+        ),
+        objective_scope_by_document=objective_scope_by_document,
+        objective_component_by_id=objective_component_by_id,
+    )
+    material_result = validate_current_v5_fact_lineage_materials(
+        journal_root=recovery_binding.journal_root,
+        target_id=target_id,
+        as_of_date=as_of_date,
+        archetype_id=archetype_id,
+        current_documents=documents,
+        current_fact_prompt_payload=prompt_payload,
+        recovery_projection_document_ids=seed_source_document_ids,
+    )
+    if material_result.get("status") != (
+        "READY_FOR_OFFICIAL_SEMANTIC_REPLAY"
+    ):
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_JOURNAL_MATERIALS_"
+            + str(material_result.get("status") or "INVALID"),
+            expectation=expectation,
+        )
+
+    material_rows = tuple(
+        dict(row) for row in material_result.get("materials") or ()
+    )
+    material_by_receipt: dict[tuple[str, str], Mapping[str, Any]] = {}
+    for material in material_rows:
+        pair = (
+            str(material.get("request_id") or ""),
+            str(material.get("response_id") or ""),
+        )
+        if pair in material_by_receipt:
+            return _current_lineage_pending_result(
+                "CURRENT_FACT_LINEAGE_DUPLICATE_JOURNAL_RECEIPT",
+                expectation=expectation,
+            )
+        material_by_receipt[pair] = material
+    sealed_pairs = tuple(recovery_binding.journal_receipt_pairs)
+    if any(pair not in material_by_receipt for pair in sealed_pairs):
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_SEALED_JOURNAL_RECEIPT_MISSING",
+            expectation=expectation,
+        )
+    selected_materials = tuple(
+        material_by_receipt[pair] for pair in sealed_pairs
+    )
+    selected_group_ids = {
+        str(row.get("lineage_call_group_id") or "")
+        for row in selected_materials
+    }
+    for group_id in selected_group_ids:
+        complete_group_pairs = {
+            (
+                str(row.get("request_id") or ""),
+                str(row.get("response_id") or ""),
+            )
+            for row in material_rows
+            if str(row.get("lineage_call_group_id") or "") == group_id
+        }
+        if not complete_group_pairs or not complete_group_pairs.issubset(
+            sealed_pairs
+        ):
+            return _current_lineage_pending_result(
+                "CURRENT_FACT_LINEAGE_PARTIAL_JOURNAL_CALL_GROUP",
+                expectation=expectation,
+            )
+
+    grouped: dict[str, list[Mapping[str, Any]]] = {}
+    for material in selected_materials:
+        group_id = str(material.get("lineage_call_group_id") or "")
+        grouped.setdefault(group_id, []).append(material)
+    recovery_document_ids = tuple(
+        sorted(
+            {
+                str(document_id)
+                for material in selected_materials
+                for document_id in (
+                    material.get("validated_current_document_ids") or ()
+                )
+                if str(document_id) not in prior_disposition_ids
+            }
+        )
+    )
+    recovery_document_id_set = frozenset(recovery_document_ids)
+    if (
+        not recovery_document_ids
+        or not seed_source_document_id_set.issubset(
+            recovery_document_id_set
+        )
+        or (
+            recovery_binding.expected_recovery_document_ids
+            and recovery_document_id_set
+            != frozenset(
+                recovery_binding.expected_recovery_document_ids
+            )
+        )
+    ):
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_ATOMIC_DOCUMENT_EXPANSION_INVALID",
+            expectation=expectation,
+        )
+    replayed_groups = []
+    try:
+        for group_id in sorted(grouped):
+            replayed_groups.append(
+                _replay_current_fact_lineage_group(
+                    group_id=group_id,
+                    materials=grouped[group_id],
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    scope_contract=scope_contract,
+                    provider_name=str(material_result["provider_name"]),
+                    recovery_document_ids=recovery_document_id_set,
+                )
+            )
+    except (KeyError, TypeError, ValueError, RuntimeError):
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_OFFICIAL_SEMANTIC_REPLAY_INVALID",
+            expectation=expectation,
+        )
+    split_chunk_ids_by_document = (
+        _validated_current_lineage_transport_cover(
+            replayed_groups=replayed_groups,
+            recovery_document_ids=recovery_document_ids,
+        )
+    )
+    if split_chunk_ids_by_document is None:
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_UNIQUE_ATOMIC_GROUP_COVER_REQUIRED",
+            expectation=expectation,
+        )
+
+    recovered_claims = tuple(
+        claim
+        for row in replayed_groups
+        for claim in row["material_claims"]
+    )
+    raw_recovered_dispositions = tuple(
+        disposition
+        for row in replayed_groups
+        for disposition in row["document_dispositions"]
+    )
+    (
+        reconciled_claims,
+        reconciled_dispositions,
+        transport_pending,
+    ) = _reconcile_transport_chunks(
+        claims=recovered_claims,
+        dispositions=raw_recovered_dispositions,
+        pending=(),
+        split_chunk_ids_by_document=split_chunk_ids_by_document,
+        pending_transport_chunk_ids=set(),
+        target_id=target_id,
+        as_of_date=as_of_date,
+    )
+    if transport_pending or len(reconciled_claims) != len(
+        recovered_claims
+    ):
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_TRANSPORT_RECONCILIATION_INVALID",
+            expectation=expectation,
+        )
+    recovered_claims = tuple(reconciled_claims)
+    recovered_dispositions = tuple(reconciled_dispositions)
+    if (
+        len(recovered_dispositions) != len(recovery_document_ids)
+        or {
+            str(row.get("document_id") or "")
+            for row in recovered_dispositions
+        }
+        != set(recovery_document_ids)
+    ):
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_RECOVERED_DISPOSITION_COVER_INVALID",
+            expectation=expectation,
+        )
+    recovered_calls = tuple(
+        row["provider_call"] for row in replayed_groups
+    )
+    recovered_claim_ids = tuple(
+        str(row.get("claim_id") or "") for row in recovered_claims
+    )
+    if (
+        any(not value for value in recovered_claim_ids)
+        or len(recovered_claim_ids) != len(set(recovered_claim_ids))
+        or set(recovered_claim_ids).intersection(
+            str(row.get("claim_id") or "")
+            for row in prior_material_claims
+        )
+        or set(recovered_claim_ids)
+        != set(expectation["expected_recovered_claim_ids"])
+    ):
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_RECOVERED_CLAIM_INTERSECTION_INVALID",
+            expectation=expectation,
+        )
+    recovered_compilation = EvidenceFactCompiler().compile(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        accepted_claims=recovered_claims,
+    )
+    recovered_fact_ids = tuple(
+        row.fact_id for row in recovered_compilation.facts
+    )
+    if (
+        recovered_compilation.status != "FACT_COMPILATION_COMPLETE"
+        or set(recovered_fact_ids)
+        != set(expectation["expected_recovered_fact_ids"])
+    ):
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_RECOVERED_FACT_INTERSECTION_INVALID",
+            expectation=expectation,
+        )
+    merged_compilation = EvidenceFactCompiler().compile(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        accepted_claims=(*prior_material_claims, *recovered_claims),
+    )
+    merged_rows = {
+        row.fact_id: row.to_dict() for row in merged_compilation.facts
+    }
+    if (
+        merged_compilation.status != "FACT_COMPILATION_COMPLETE"
+        or _canonical_json_value(merged_rows)
+        != _canonical_json_value(authority_rows)
+    ):
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_MERGED_FACT_ROWS_NOT_AUTHORITATIVE",
+            expectation=expectation,
+        )
+    receipt = authoritative_fact_ledger.exact_recovery_receipt(
+        persisted_fact_ids=tuple(persisted_fact_rows),
+        recovered_fact_ids=recovered_fact_ids,
+        recovered_claim_ids=recovered_claim_ids,
+        pending_new_fact_ids=pending_new_fact_ids,
+    )
+    objective_reassessment_rows = tuple(
+        dict(row)
+        for row in material_result.get(
+            "objective_lineage_reassessment"
+        )
+        or ()
+        if str(row.get("document_id") or "")
+        in recovery_document_id_set
+    )
+    objective_reassessment_document_ids = frozenset(
+        str(row["document_id"]) for row in objective_reassessment_rows
+    )
+    recovered_calls = tuple(
+        replace(
+            call,
+            current_lineage_objective_reassessment_document_ids=tuple(
+                sorted(
+                    set(call.document_ids)
+                    & objective_reassessment_document_ids
+                )
+            ),
+        )
+        for call in recovered_calls
+    )
+    if objective_reassessment_document_ids != frozenset(
+        document_id
+        for call in recovered_calls
+        for document_id in (
+            call.current_lineage_objective_reassessment_document_ids
+        )
+    ):
+        return _current_lineage_pending_result(
+            "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_RECEIPT_INVALID",
+            expectation=expectation,
+        )
+    return {
+        "status": "COMPLETE",
+        "expectation": dict(expectation),
+        "receipt": dict(receipt),
+        "material_claims": recovered_claims,
+        "document_dispositions": recovered_dispositions,
+        "provider_calls": recovered_calls,
+        "seed_source_document_ids": tuple(
+            sorted(seed_source_document_ids)
+        ),
+        "recovery_document_ids": tuple(sorted(recovery_document_ids)),
+        "recovered_claim_ids": tuple(sorted(recovered_claim_ids)),
+        "recovered_fact_ids": tuple(sorted(recovered_fact_ids)),
+        "recovered_claim_count": len(recovered_claims),
+        "recovered_fact_count": len(recovered_fact_ids),
+        "recovered_document_count": len(recovered_dispositions),
+        "journal_request_count": len(selected_materials),
+        "journal_call_group_count": len(replayed_groups),
+        "provider_complete_call_count": 0,
+        "objective_reassessment_rows": objective_reassessment_rows,
+        "objective_reassessment_pending_count": len(
+            objective_reassessment_rows
+        ),
+        "atomic_all_or_nothing": True,
+    }
+
+
+def _replay_current_fact_lineage_group(
+    *,
+    group_id: str,
+    materials: Sequence[Mapping[str, Any]],
+    target_id: str,
+    as_of_date: str,
+    scope_contract: ArchetypeMechanismScopeContract,
+    provider_name: str,
+    recovery_document_ids: frozenset[str],
+) -> Mapping[str, Any]:
+    """Run one historical base plus every continuation through authority."""
+
+    ordered = tuple(
+        sorted(
+            (dict(row) for row in materials),
+            key=lambda row: int(row.get("continuation_page_number") or 0),
+        )
+    )
+    if not ordered:
+        raise ValueError("current fact lineage call group is empty")
+    base_payload = dict(ordered[0]["request_payload"])
+    if (
+        "fact_extraction_continuation_context" in base_payload
+        or "fact_extraction_retry_context" in base_payload
+        or "fact_extraction_coverage_audit_context" in base_payload
+    ):
+        raise ValueError("current fact lineage call group lacks a plain base")
+    historical_prompt_documents = tuple(
+        dict(row) for row in base_payload.get("full_documents") or ()
+    )
+    historical_documents = tuple(
+        _historical_fact_validation_document(row)
+        for row in historical_prompt_documents
+    )
+    original_document_ids = tuple(
+        str(row.get("document_id") or "") for row in historical_documents
+    )
+    if (
+        not historical_documents
+        or any(not value for value in original_document_ids)
+        or len(original_document_ids) != len(set(original_document_ids))
+    ):
+        raise ValueError("current fact lineage historical batch is invalid")
+    projection_document_ids = tuple(
+        document_id
+        for document_id in original_document_ids
+        if document_id in recovery_document_ids
+    )
+    if not projection_document_ids:
+        raise ValueError("current fact lineage group has no recovery projection")
+    objective_scope, objective_components = (
+        _historical_fact_objective_contract(base_payload)
+    )
+    historical_transport_chunk_ids = tuple(
+        str((row.get("transport_chunk") or {}).get("transport_chunk_id"))
+        for row in historical_prompt_documents
+        if isinstance(row.get("transport_chunk"), Mapping)
+        and str(
+            (row.get("transport_chunk") or {}).get("transport_chunk_id")
+            or ""
+        )
+    )
+    batch_identity = {
+        "target_id": target_id,
+        "as_of_date": as_of_date,
+        "extraction_semantics_version": FACT_EXTRACTION_SEMANTICS_VERSION,
+        "document_ids": list(original_document_ids),
+    }
+    if historical_transport_chunk_ids:
+        batch_identity["transport_chunk_ids"] = list(
+            historical_transport_chunk_ids
+        )
+    batch_id = stable_intelligence_id("FACTBATCH", batch_identity)
+    accepted: dict[str, Mapping[str, Any]] = {}
+    final_dispositions: list[Mapping[str, Any]] = []
+    feedback: list[str] = []
+    request_ids: list[str] = []
+    response_ids: list[str] = []
+    final_prompt_hash = ""
+    final_response_hash = ""
+    for page_index, material in enumerate(ordered, start=1):
+        if int(material.get("continuation_page_number") or 0) != page_index:
+            raise ValueError("current fact lineage pages are not contiguous")
+        request_payload = dict(material["request_payload"])
+        response_payload = dict(material["response_payload"])
+        request_core = dict(request_payload)
+        continuation = request_core.pop(
+            "fact_extraction_continuation_context",
+            None,
+        )
+        if request_core != base_payload:
+            raise ValueError("current fact lineage continuation base drifted")
+        if page_index == 1:
+            if continuation is not None:
+                raise ValueError("current fact lineage first page is continuation")
+        elif continuation != _fact_extraction_continuation_context(
+            page_number=page_index,
+            required_document_ids=original_document_ids,
+            accepted_claims=tuple(accepted.values()),
+        ):
+            raise ValueError("current fact lineage continuation context drifted")
+        prompt_hash = stable_intelligence_id(
+            "FACTPROMPT",
+            request_payload,
+        )
+        (
+            _safe_payload,
+            _output_schema,
+            _transport_prompt,
+            transport_prompt_hash,
+            transport_schema_hash,
+        ) = _single_payload_request_material(
+            pass_name="EVIDENCE_FACT_EXTRACTION",
+            payload=request_payload,
+        )
+        if (
+            str(material.get("prompt_hash") or "")
+            != transport_prompt_hash
+            or str(material.get("output_schema_hash") or "")
+            != transport_schema_hash
+        ):
+            raise ValueError("current fact lineage prompt hash drifted")
+        response_hash = stable_intelligence_id(
+            "FACTRESP",
+            scrub_blind_research_payload(response_payload),
+        )
+        (
+            page_claims,
+            page_rejections,
+            page_dispositions,
+            page_pending,
+            page_feedback,
+            _completion_flag_reconciled,
+        ) = _validate_response(
+            response_payload,
+            batch_id=batch_id,
+            documents=historical_documents,
+            target_id=target_id,
+            as_of_date=as_of_date,
+            scope_contract=scope_contract,
+            provider_name=provider_name,
+            prompt_hash=prompt_hash,
+            response_hash=response_hash,
+            previously_accepted_claim_counts={
+                document_id: sum(
+                    str(claim.get("document_id") or "") == document_id
+                    for claim in accepted.values()
+                )
+                for document_id in original_document_ids
+            },
+            previously_accepted_semantic_identities={
+                document_id: tuple(
+                    _fact_semantic_identity(claim)
+                    for claim in accepted.values()
+                    if str(claim.get("document_id") or "") == document_id
+                )
+                for document_id in original_document_ids
+            },
+            objective_scope_by_document=objective_scope,
+            objective_component_by_id=objective_components,
+            extraction_semantics_version=FACT_EXTRACTION_SEMANTICS_VERSION,
+        )
+        if any(row.material_proposal for row in page_rejections):
+            raise ValueError("current fact lineage material proposal rejected")
+        for claim in page_claims:
+            claim_id = str(claim.get("claim_id") or "")
+            if not claim_id or claim_id in accepted:
+                raise ValueError("current fact lineage accepted claim duplicated")
+            accepted[claim_id] = claim
+        feedback.extend(page_feedback)
+        request_ids.append(str(material["request_id"]))
+        response_ids.append(str(material["response_id"]))
+        final_prompt_hash = prompt_hash
+        final_response_hash = response_hash
+        if page_index < len(ordered):
+            if (
+                response_payload.get("extraction_complete") is not False
+                or not page_pending
+                or any(
+                    reason != "LLM_DECLARED_FACT_EXTRACTION_INCOMPLETE"
+                    and not reason.startswith("UNRESOLVED_DOCUMENT:")
+                    for reason in page_pending
+                )
+            ):
+                raise ValueError("current fact lineage continuation did not stay open")
+        else:
+            if (
+                response_payload.get("extraction_complete") is not True
+                or page_pending
+            ):
+                raise ValueError("current fact lineage final page is incomplete")
+            final_dispositions = page_dispositions
+    if (
+        len(final_dispositions) != len(original_document_ids)
+        or {
+            str(row.get("document_id") or "")
+            for row in final_dispositions
+        }
+        != set(original_document_ids)
+    ):
+        raise ValueError("current fact lineage final dispositions are incomplete")
+    projected_claims = tuple(
+        claim
+        for claim in accepted.values()
+        if str(claim.get("document_id") or "")
+        in projection_document_ids
+    )
+    projected_dispositions = tuple(
+        row
+        for row in final_dispositions
+        if str(row.get("document_id") or "")
+        in projection_document_ids
+    )
+    transport_chunk_ids = tuple(
+        str((row.get("transport_chunk") or {}).get("transport_chunk_id"))
+        for row in historical_prompt_documents
+        if str(row.get("document_id") or "") in projection_document_ids
+        and isinstance(row.get("transport_chunk"), Mapping)
+        and str(
+            (row.get("transport_chunk") or {}).get("transport_chunk_id")
+            or ""
+        )
+    )
+    provider_call = FactExtractionProviderCall(
+        batch_id=batch_id,
+        status="COMPLETE",
+        document_ids=projection_document_ids,
+        accepted_claim_ids=tuple(
+            str(row["claim_id"]) for row in projected_claims
+        ),
+        rejected_proposal_count=0,
+        document_dispositions=projected_dispositions,
+        pending_reasons=(),
+        research_gap_feedback=tuple(dict.fromkeys(feedback)),
+        provider_name=provider_name,
+        prompt_hash=final_prompt_hash,
+        response_hash=final_response_hash,
+        provider_attempt_count=0,
+        validation_retry_used=False,
+        completion_flag_reconciled=False,
+        transport_chunk_ids=transport_chunk_ids,
+        accepted_claims=projected_claims,
+        coverage_audit_performed=False,
+        current_lineage_request_ids=tuple(request_ids),
+        current_lineage_response_ids=tuple(response_ids),
+        current_lineage_original_batch_document_ids=(
+            original_document_ids
+        ),
+        extraction_semantics_version=FACT_EXTRACTION_SEMANTICS_VERSION,
+    )
+    return {
+        "group_id": group_id,
+        "recovery_document_ids": frozenset(projection_document_ids),
+        "material_claims": projected_claims,
+        "document_dispositions": projected_dispositions,
+        "provider_call": provider_call,
+        "transport_chunks": tuple(
+            {
+                "document_id": str(row.get("document_id") or ""),
+                "transport_chunk_id": str(
+                    (row.get("transport_chunk") or {}).get(
+                        "transport_chunk_id"
+                    )
+                    or ""
+                ),
+                "chunk_index": int(
+                    (row.get("transport_chunk") or {}).get("chunk_index")
+                    or 0
+                ),
+                "chunk_count": int(
+                    (row.get("transport_chunk") or {}).get("chunk_count")
+                    or 0
+                ),
+                "full_document_content_hash": str(
+                    (row.get("transport_chunk") or {}).get(
+                        "full_document_content_hash"
+                    )
+                    or ""
+                ),
+            }
+            for row in historical_prompt_documents
+            if str(row.get("document_id") or "")
+            in projection_document_ids
+            and isinstance(row.get("transport_chunk"), Mapping)
+        ),
+    }
+
+
+def _historical_fact_validation_document(
+    prompt_document: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Rebuild the extractor's internal chunk row from its prompt projection."""
+
+    row = dict(prompt_document)
+    transport = row.get("transport_chunk")
+    if transport is None:
+        return row
+    if not isinstance(transport, Mapping):
+        raise ValueError("historical fact transport chunk is invalid")
+    return {
+        **row,
+        "transport_chunk_id": str(transport["transport_chunk_id"]),
+        "transport_chunk_index": int(transport["chunk_index"]),
+        "transport_chunk_count": int(transport["chunk_count"]),
+        "transport_chunk_start": int(transport["start_char"]),
+        "transport_chunk_end": int(transport["end_char"]),
+        "transport_chunk_content_hash": str(
+            transport["chunk_content_hash"]
+        ),
+        "content_hash": str(transport["full_document_content_hash"]),
+        "full_document_text_chars": int(
+            transport["full_document_text_chars"]
+        ),
+    }
+
+
+def _historical_fact_objective_contract(
+    request_payload: Mapping[str, Any],
+) -> tuple[Mapping[str, frozenset[str]] | None, Mapping[str, str] | None]:
+    scope = request_payload.get("fact_extraction_scope_contract")
+    if scope is None:
+        return None, None
+    if not isinstance(scope, Mapping):
+        raise ValueError("historical fact objective scope is invalid")
+    document_rows = scope.get("document_objective_ids")
+    component_rows = scope.get("objective_component_rows")
+    if not isinstance(document_rows, list) or not isinstance(
+        component_rows,
+        list,
+    ):
+        raise ValueError("historical fact objective rows are invalid")
+    objective_scope: dict[str, frozenset[str]] = {}
+    for row in document_rows:
+        if not isinstance(row, Mapping):
+            raise ValueError("historical document objective row is invalid")
+        document_id = str(row.get("document_id") or "")
+        objective_ids = frozenset(
+            str(value) for value in row.get("objective_ids") or ()
+        )
+        if (
+            not document_id
+            or not objective_ids
+            or document_id in objective_scope
+        ):
+            raise ValueError("historical document objective row is incomplete")
+        objective_scope[document_id] = objective_ids
+    objective_components: dict[str, str] = {}
+    for row in component_rows:
+        if not isinstance(row, Mapping):
+            raise ValueError("historical objective component row is invalid")
+        objective_id = str(row.get("objective_id") or "")
+        component_id = str(row.get("component_id") or "")
+        if (
+            not objective_id
+            or component_id not in CANONICAL_COMPONENT_ORDER
+            or objective_id in objective_components
+        ):
+            raise ValueError("historical objective component row is incomplete")
+        objective_components[objective_id] = component_id
+    if set(objective_components) != {
+        objective_id
+        for objective_ids in objective_scope.values()
+        for objective_id in objective_ids
+    }:
+        raise ValueError("historical objective/component cover is not exact")
+    return objective_scope, objective_components
+
+
+def _validated_current_lineage_transport_cover(
+    *,
+    replayed_groups: Sequence[Mapping[str, Any]],
+    recovery_document_ids: Sequence[str],
+) -> Mapping[str, tuple[str, ...]] | None:
+    """Validate one non-split unit or every exact chunk for each document."""
+
+    split_chunks_by_document: dict[str, list[Mapping[str, Any]]] = {}
+    for group in replayed_groups:
+        for raw in group.get("transport_chunks") or ():
+            if not isinstance(raw, Mapping):
+                return None
+            document_id = str(raw.get("document_id") or "")
+            if document_id:
+                split_chunks_by_document.setdefault(document_id, []).append(
+                    dict(raw)
+                )
+    result: dict[str, tuple[str, ...]] = {}
+    for document_id in recovery_document_ids:
+        group_occurrence_count = sum(
+            document_id in group["recovery_document_ids"]
+            for group in replayed_groups
+        )
+        chunks = split_chunks_by_document.get(document_id, [])
+        if not chunks:
+            if group_occurrence_count != 1:
+                return None
+            continue
+        chunk_count_values = {
+            int(row.get("chunk_count") or 0) for row in chunks
+        }
+        full_hash_values = {
+            str(row.get("full_document_content_hash") or "")
+            for row in chunks
+        }
+        chunk_ids = tuple(
+            str(row.get("transport_chunk_id") or "") for row in chunks
+        )
+        chunk_indices = tuple(int(row.get("chunk_index") or 0) for row in chunks)
+        if (
+            len(chunk_count_values) != 1
+            or len(full_hash_values) != 1
+            or "" in full_hash_values
+            or not chunk_ids
+            or any(not value for value in chunk_ids)
+            or len(chunk_ids) != len(set(chunk_ids))
+            or len(chunk_indices) != len(set(chunk_indices))
+        ):
+            return None
+        chunk_count = next(iter(chunk_count_values))
+        if (
+            chunk_count <= 1
+            or len(chunks) != chunk_count
+            or set(chunk_indices) != set(range(chunk_count))
+            or group_occurrence_count != chunk_count
+        ):
+            return None
+        result[document_id] = tuple(
+            str(row["transport_chunk_id"])
+            for row in sorted(
+                chunks,
+                key=lambda row: int(row["chunk_index"]),
+            )
+        )
+    if set(split_chunks_by_document) - set(recovery_document_ids):
+        return None
+    return result
+
+
+def _validated_raw_current_lineage_transport_cover(
+    *,
+    material_rows: Sequence[Mapping[str, Any]],
+    document_ids: Sequence[str],
+) -> Mapping[str, tuple[str, ...]] | None:
+    """Validate structural full/chunk units before official semantic replay."""
+
+    base_by_group: dict[str, Mapping[str, Any]] = {}
+    for row in material_rows:
+        group_id = str(row.get("lineage_call_group_id") or "")
+        if int(row.get("continuation_page_number") or 0) == 1:
+            if not group_id or group_id in base_by_group:
+                return None
+            base_by_group[group_id] = row
+    target_ids = frozenset(str(value) for value in document_ids)
+    units_by_document: dict[str, list[Mapping[str, Any] | None]] = {
+        document_id: [] for document_id in target_ids
+    }
+    for material in base_by_group.values():
+        request_payload = material.get("request_payload")
+        if not isinstance(request_payload, Mapping):
+            return None
+        for raw in request_payload.get("full_documents") or ():
+            if not isinstance(raw, Mapping):
+                return None
+            document_id = str(raw.get("document_id") or "")
+            if document_id not in target_ids:
+                continue
+            transport = raw.get("transport_chunk")
+            if transport is not None and not isinstance(transport, Mapping):
+                return None
+            units_by_document[document_id].append(
+                dict(transport) if isinstance(transport, Mapping) else None
+            )
+    result: dict[str, tuple[str, ...]] = {}
+    for document_id, units in units_by_document.items():
+        if not units:
+            return None
+        if all(unit is None for unit in units):
+            if len(units) != 1:
+                return None
+            continue
+        if any(unit is None for unit in units):
+            return None
+        chunks = [dict(unit) for unit in units if unit is not None]
+        chunk_ids = tuple(
+            str(row.get("transport_chunk_id") or "") for row in chunks
+        )
+        counts = {int(row.get("chunk_count") or 0) for row in chunks}
+        indices = tuple(int(row.get("chunk_index") or 0) for row in chunks)
+        full_hashes = {
+            str(row.get("full_document_content_hash") or "")
+            for row in chunks
+        }
+        if (
+            len(counts) != 1
+            or len(full_hashes) != 1
+            or "" in full_hashes
+            or any(not value for value in chunk_ids)
+            or len(chunk_ids) != len(set(chunk_ids))
+            or len(indices) != len(set(indices))
+        ):
+            return None
+        count = next(iter(counts))
+        if count <= 1 or len(chunks) != count or set(indices) != set(range(count)):
+            return None
+        result[document_id] = tuple(
+            str(row["transport_chunk_id"])
+            for row in sorted(chunks, key=lambda row: int(row["chunk_index"]))
+        )
+    return result
+
+
+def _exact_fact_rows_by_id(
+    rows: Sequence[Mapping[str, Any]],
+    *,
+    label: str,
+) -> Mapping[str, Mapping[str, Any]]:
+    result: dict[str, Mapping[str, Any]] = {}
+    for raw in rows:
+        value = raw.to_dict() if hasattr(raw, "to_dict") else dict(raw)
+        fact_id = str(value.get("fact_id") or "")
+        if not fact_id or fact_id in result:
+            raise ValueError(f"{label} require unique fact ids")
+        result[fact_id] = _canonical_json_value(value)
+    return result
+
+
+def _canonical_json_value(value: Any) -> Any:
+    return json.loads(
+        json.dumps(
+            value,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        )
+    )
+
+
+def _current_lineage_pending_result(
+    reason: str,
+    *,
+    expectation: Mapping[str, Any] | None = None,
+) -> Mapping[str, Any]:
+    return {
+        "status": "PENDING",
+        "pending_reason": reason,
+        "expectation": dict(expectation or {}),
+        "provider_complete_call_count": 0,
+        "recovered_claim_count": 0,
+        "recovered_fact_count": 0,
+        "recovered_document_count": 0,
+        "objective_reassessment_rows": (),
+        "atomic_all_or_nothing": True,
+    }
+
+
 def _recover_v4_fact_semantics_checkpoint(
     provider: StructuredResearchProvider,
     *,
@@ -5371,7 +7595,11 @@ def _coerce_provider_call(
         response_hash=(
             str(row["response_hash"]) if row.get("response_hash") else None
         ),
-        provider_attempt_count=int(row.get("provider_attempt_count") or 1),
+        provider_attempt_count=int(
+            row["provider_attempt_count"]
+            if "provider_attempt_count" in row
+            else 1
+        ),
         validation_retry_used=bool(row.get("validation_retry_used")),
         completion_flag_reconciled=bool(
             row.get("completion_flag_reconciled")
@@ -5392,6 +7620,28 @@ def _coerce_provider_call(
         semantics_migration_response_ids=tuple(
             str(value)
             for value in row.get("semantics_migration_response_ids") or ()
+        ),
+        current_lineage_request_ids=tuple(
+            str(value)
+            for value in row.get("current_lineage_request_ids") or ()
+        ),
+        current_lineage_response_ids=tuple(
+            str(value)
+            for value in row.get("current_lineage_response_ids") or ()
+        ),
+        current_lineage_original_batch_document_ids=tuple(
+            str(value)
+            for value in row.get(
+                "current_lineage_original_batch_document_ids"
+            )
+            or ()
+        ),
+        current_lineage_objective_reassessment_document_ids=tuple(
+            str(value)
+            for value in row.get(
+                "current_lineage_objective_reassessment_document_ids"
+            )
+            or ()
         ),
         extraction_semantics_version=str(
             row.get("extraction_semantics_version") or ""
@@ -5432,5 +7682,6 @@ __all__ = [
     "ResearcherEvidenceFactExtractor",
     "ResearcherFactExtractionResult",
     "production_material_fact_rows",
+    "resolve_current_fact_lineage_recovery_binding",
     "write_researcher_fact_extraction_result",
 ]

@@ -349,6 +349,32 @@ def _validate_agent_provenance(
     }
 
 
+def _is_nonlocal_codex_collaboration_provenance(
+    provenance: Mapping[str, Any],
+) -> bool:
+    """Accept the model labels emitted by Codex Collaboration, not local LLMs.
+
+    ``_validate_response_envelope`` proves that the provenance object is bound
+    into the immutable response id.  The generic importer deliberately accepts
+    future model labels, though, so fact-lineage reuse needs this additional
+    narrow policy boundary.  Historical official receipts use both
+    ``codex-collaboration`` and ``codex-gpt-5``; requiring one exact spelling
+    would incorrectly discard otherwise identical Codex lineage.
+    """
+
+    model = str(provenance.get("agent_model") or "").strip().casefold()
+    recognized_model = model == "codex-collaboration" or re.fullmatch(
+        r"codex-gpt-[0-9]+(?:\.[0-9]+)*",
+        model,
+    ) is not None
+    return (
+        provenance.get("agent_surface") == "CODEX_COLLABORATION_SUBAGENT"
+        and provenance.get("provenance_assurance")
+        == COLLABORATION_PROVENANCE_ASSURANCE
+        and recognized_model
+    )
+
+
 @dataclass
 class CollaborationCodexSubagentTransport:
     """Filesystem journal transport consumed only after strict import."""
@@ -1725,6 +1751,236 @@ class CollaborationCodexSubagentTransport:
             "materials": materials,
         }
 
+    def validated_current_fact_lineage_journal_materials(
+        self,
+        *,
+        target_id: str,
+        as_of_date: str,
+        archetype_id: str,
+        document_ids: Sequence[str],
+        fact_extraction_semantics_version: str = (
+            _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
+        ),
+    ) -> Mapping[str, Any] | None:
+        """Return active current-v5 fact pairs touching an exact document set.
+
+        This method proves only the immutable journal boundary: request
+        identity, response envelope, Draft 2020-12 output schema, blind-output
+        policy, provider identity, non-local Codex provenance, and quarantine
+        absence.  Document equality, exact-cover selection, literal quotes and
+        compiler identities belong to the fact-lineage material validator.
+
+        A matching request without a response is reported as pending and does
+        not invalidate an older complete pair.  Conversely, one corrupt or
+        quarantined matching pair makes the result atomic-invalid and no
+        partially validated material is returned.
+        """
+
+        root = self.journal_root
+        requested_ids = tuple(str(value).strip() for value in document_ids)
+        if (
+            root is None
+            or not str(target_id).strip()
+            or not str(as_of_date).strip()
+            or not str(archetype_id).strip()
+            or fact_extraction_semantics_version
+            != _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
+            or not requested_ids
+            or any(not value for value in requested_ids)
+            or len(requested_ids) != len(set(requested_ids))
+        ):
+            return None
+        requested_id_set = frozenset(requested_ids)
+        materials: list[Mapping[str, Any]] = []
+        pending_request_ids: list[str] = []
+        invalid_matching_receipt = False
+        try:
+            request_paths = tuple(
+                sorted((root / "requests").glob("COLLABREQ-*.json"))
+            )
+        except OSError:
+            return {
+                "recovery_material_status": "INVALID",
+                "current_semantics_version": (
+                    fact_extraction_semantics_version
+                ),
+                "target_id": target_id,
+                "as_of_date": as_of_date,
+                "archetype_id": archetype_id,
+                "document_ids": list(requested_ids),
+                "provider_name": COLLABORATION_PROVIDER_NAME,
+                "pending_request_ids": [],
+                "materials": [],
+            }
+        for request_path in request_paths:
+            request_envelope_validated = False
+            matching_scope = False
+            try:
+                request = _validate_request(_read_json_object(request_path))
+                request_envelope_validated = True
+                if request_path.name != f"{request.get('request_id')}.json":
+                    invalid_matching_receipt = True
+                    continue
+                if (
+                    request.get("pass_name") != "EVIDENCE_FACT_EXTRACTION"
+                    or request.get("schema_name")
+                    != "e2r_v5_evidence_fact_extraction"
+                ):
+                    continue
+                request_payload = json.loads(
+                    str(request["prompt"]).rsplit("\n", 1)[-1]
+                )
+                if not isinstance(request_payload, Mapping):
+                    invalid_matching_receipt = True
+                    continue
+                if (
+                    request_payload.get("target_id") != target_id
+                    or request_payload.get("as_of_date") != as_of_date
+                    or request_payload.get("archetype_hypothesis")
+                    != archetype_id
+                ):
+                    continue
+                matching_scope = True
+                if (
+                    request_payload.get("fact_extraction_semantics_version")
+                    != fact_extraction_semantics_version
+                    or "fact_extraction_retry_context" in request_payload
+                ):
+                    continue
+                (
+                    safe_payload,
+                    expected_output_schema,
+                    expected_prompt,
+                    expected_prompt_hash,
+                    expected_output_schema_hash,
+                ) = _single_payload_request_material(
+                    pass_name="EVIDENCE_FACT_EXTRACTION",
+                    payload=request_payload,
+                )
+                if (
+                    safe_payload != request_payload
+                    or request.get("prompt") != expected_prompt
+                    or request.get("prompt_hash") != expected_prompt_hash
+                    or request.get("output_schema")
+                    != expected_output_schema
+                    or request.get("output_schema_hash")
+                    != expected_output_schema_hash
+                ):
+                    invalid_matching_receipt = True
+                    continue
+                full_documents = request_payload.get("full_documents")
+                if (
+                    not isinstance(full_documents, list)
+                    or not full_documents
+                    or any(
+                        not isinstance(row, Mapping)
+                        for row in full_documents
+                    )
+                ):
+                    invalid_matching_receipt = True
+                    continue
+                request_document_ids = tuple(
+                    str(row.get("document_id") or "").strip()
+                    for row in full_documents
+                )
+                if (
+                    any(not value for value in request_document_ids)
+                    or len(request_document_ids)
+                    != len(set(request_document_ids))
+                    or not requested_id_set.intersection(
+                        request_document_ids
+                    )
+                ):
+                    if not requested_id_set.intersection(
+                        request_document_ids
+                    ):
+                        continue
+                    invalid_matching_receipt = True
+                    continue
+                request_id = str(request["request_id"])
+                response_path = root / "responses" / f"{request_id}.json"
+                if not response_path.is_file():
+                    pending_request_ids.append(request_id)
+                    continue
+                envelope = _validate_response_envelope(
+                    request=request,
+                    envelope=_read_json_object(response_path),
+                )
+                provenance = envelope.get("provenance")
+                if (
+                    not isinstance(provenance, Mapping)
+                    or not _is_nonlocal_codex_collaboration_provenance(
+                        provenance
+                    )
+                    or (
+                        root
+                        / "quarantine"
+                        / request_id
+                        / f"{envelope['response_id']}.json"
+                    ).is_file()
+                ):
+                    invalid_matching_receipt = True
+                    continue
+            except (
+                FileNotFoundError,
+                OSError,
+                KeyError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+                json.JSONDecodeError,
+            ):
+                if not request_envelope_validated or matching_scope:
+                    invalid_matching_receipt = True
+                continue
+            materials.append(
+                {
+                    "request_id": str(request["request_id"]),
+                    "response_id": str(envelope["response_id"]),
+                    "prompt_hash": str(request["prompt_hash"]),
+                    "output_schema_hash": str(
+                        request["output_schema_hash"]
+                    ),
+                    "provider_identity_hash": str(
+                        request["provider_identity_hash"]
+                    ),
+                    "payload_hash": str(envelope["payload_hash"]),
+                    "request_payload": dict(request_payload),
+                    "response_payload": dict(envelope["payload"]),
+                    "provenance": dict(provenance),
+                    "continuation_page_number": int(
+                        (
+                            request_payload.get(
+                                "fact_extraction_continuation_context"
+                            )
+                            or {}
+                        ).get("page_number")
+                        or 1
+                    ),
+                }
+            )
+        if invalid_matching_receipt:
+            materials = []
+        return {
+            "recovery_material_status": (
+                "INVALID"
+                if invalid_matching_receipt
+                else "COMPLETE"
+                if materials
+                else "ABSENT"
+            ),
+            "current_semantics_version": (
+                fact_extraction_semantics_version
+            ),
+            "target_id": target_id,
+            "as_of_date": as_of_date,
+            "archetype_id": archetype_id,
+            "document_ids": list(requested_ids),
+            "provider_name": COLLABORATION_PROVIDER_NAME,
+            "pending_request_ids": sorted(set(pending_request_ids)),
+            "materials": materials,
+        }
+
     def invalidate_last_response(self, reason: str) -> Mapping[str, Any]:
         request_id = self._last_request_id
         if request_id is None:
@@ -2430,6 +2686,29 @@ class CollaborationCodexResearcherProvider(CodexResearcherProvider):
             document_ids=document_ids,
         )
 
+    def validated_current_fact_lineage_journal_materials(
+        self,
+        *,
+        target_id: str,
+        as_of_date: str,
+        archetype_id: str,
+        document_ids: Sequence[str],
+        fact_extraction_semantics_version: str = (
+            _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
+        ),
+    ) -> Mapping[str, Any] | None:
+        """Expose envelope-validated current-v5 fact lineage receipts."""
+
+        return self.transport.validated_current_fact_lineage_journal_materials(
+            target_id=target_id,
+            as_of_date=as_of_date,
+            archetype_id=archetype_id,
+            document_ids=document_ids,
+            fact_extraction_semantics_version=(
+                fact_extraction_semantics_version
+            ),
+        )
+
     @staticmethod
     def _validated_payload_from_request(
         *,
@@ -2667,6 +2946,29 @@ class CodexSubagentFallbackResearchProvider(CodexResearcherProvider):
             as_of_date=as_of_date,
             archetype_id=archetype_id,
             document_ids=document_ids,
+        )
+
+    def validated_current_fact_lineage_journal_materials(
+        self,
+        *,
+        target_id: str,
+        as_of_date: str,
+        archetype_id: str,
+        document_ids: Sequence[str],
+        fact_extraction_semantics_version: str = (
+            _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
+        ),
+    ) -> Mapping[str, Any] | None:
+        """Delegate current-v5 lineage lookup to Collaboration only."""
+
+        return self.collaboration.validated_current_fact_lineage_journal_materials(
+            target_id=target_id,
+            as_of_date=as_of_date,
+            archetype_id=archetype_id,
+            document_ids=document_ids,
+            fact_extraction_semantics_version=(
+                fact_extraction_semantics_version
+            ),
         )
 
     def invalidate_last_response_cache(self, reason: str) -> Mapping[str, Any]:

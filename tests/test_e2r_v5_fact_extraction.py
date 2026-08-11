@@ -37,9 +37,13 @@ from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     PUNCTUATION_ONLY_VALUE_NORMALIZATION,
     STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED,
     TRANSPORT_FRAGMENT_VALUE_NORMALIZATION,
+    _atomic_fact_lineage_rematerialization_document_ids,
+    _batch_current_fact_lineage_pending_reasons,
+    _current_fact_lineage_rematerialization_gaps,
     _document_transport_chunks,
     _fact_semantics_upgrade_requires_reextraction,
     _source_boundary_context_by_document_id,
+    fact_extraction_has_exact_checkpoint_recovery_wait,
     normalize_punctuation_only_fact_value,
 )
 
@@ -641,6 +645,88 @@ class ObjectiveIrrelevantDocumentProvider(FactProvider):
         return response
 
 
+class TwoFactProvider(FactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        response["facts"] = [dict(row) for row in response["facts"]]
+        second_quote = (
+            "The full report explains the underlying capacity and customer "
+            "mechanism."
+        )
+        for first in tuple(response["facts"]):
+            second = dict(first)
+            second.update(
+                {
+                    "question_family_id": "capacity_visibility",
+                    "subject_id": "target_capacity",
+                    "subject": "Current Corp capacity",
+                    "economic_mechanism": (
+                        "capacity and customer mechanism supports visibility"
+                    ),
+                    "predicate": "reported capacity and customer mechanism",
+                    "predicate_family": "capacity_customer_visibility",
+                    "value": "capacity_customer_mechanism_explained",
+                    "normalized_object": (
+                        "capacity_customer_mechanism_explained"
+                    ),
+                    "exact_quote": second_quote,
+                    "question_family_tags": ["capacity_visibility"],
+                }
+            )
+            response["facts"].append(second)
+        return response
+
+
+class CurrentFactLineageRetryProvider(TwoFactProvider):
+    """Return one old fact per request so only the retry reconciles both."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.invalidations: list[str] = []
+
+    def invalidate_last_response_cache(self, reason: str) -> None:
+        self.invalidations.append(reason)
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        response["facts"] = [
+            row
+            for row in response["facts"]
+            if (
+                row["predicate"]
+                == (
+                    "reported capacity and customer mechanism"
+                    if payload.get("fact_extraction_retry_context")
+                    else "reported record operating cash flow"
+                )
+            )
+        ]
+        return response
+
+
+class RepeatingPartialCurrentFactProvider(CurrentFactLineageRetryProvider):
+    """Model a cache that ignores the retry identity and repeats page one."""
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            TwoFactProvider.complete(
+                self,
+                pass_name=pass_name,
+                payload=payload,
+            )
+        )
+        response["facts"] = [
+            row
+            for row in response["facts"]
+            if row["predicate"] == "reported record operating cash flow"
+        ]
+        return response
+
+
 class WrongObjectiveThenCorrectProvider(ObjectiveLocalFactProvider):
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(
@@ -902,6 +988,52 @@ class ChunkAwareFactProvider(FactProvider):
         return response
 
 
+class TwoChunkTwoFactProvider(FactProvider):
+    first_quote = "Current Corp reported record operating cash flow in 2026Q1."
+    second_quote = (
+        "Current Corp confirmed the second independent capacity visibility fact."
+    )
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        document = payload["full_documents"][0]
+        content = str(document.get("content_text") or "")
+        template = dict(response["facts"][0])
+        facts = []
+        if self.first_quote in content:
+            facts.append(template)
+        if self.second_quote in content:
+            second = dict(template)
+            second.update(
+                {
+                    "question_family_id": "capacity_visibility",
+                    "subject_id": "target_capacity",
+                    "subject": "Current Corp capacity",
+                    "economic_mechanism": (
+                        "capacity confirmation supports visibility"
+                    ),
+                    "predicate": "confirmed capacity visibility fact",
+                    "predicate_family": "capacity_visibility_confirmation",
+                    "value": "capacity_visibility_confirmed",
+                    "normalized_object": "capacity_visibility_confirmed",
+                    "exact_quote": self.second_quote,
+                    "question_family_tags": ["capacity_visibility"],
+                }
+            )
+            facts.append(second)
+        response["facts"] = facts
+        response["document_dispositions"] = [
+            {
+                "document_id": document["document_id"],
+                "status": "FACTS_EXTRACTED" if facts else "NO_MATERIAL_FACT",
+                "rationale": "전송 청크의 distinct material fact를 모두 처리했다.",
+            }
+        ]
+        return response
+
+
 class ObjectiveLocalChunkAwareFactProvider(ChunkAwareFactProvider):
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(
@@ -960,6 +1092,55 @@ class NoNewFactCoverageChunkProvider(
 
 
 class E2RV5FactExtractionTests(unittest.TestCase):
+    def test_objective_reassessment_is_an_exact_bounded_recovery_wait(self):
+        reassessment = (
+            "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+            "SGDOC-" + "a" * 24
+        )
+        incomplete = (
+            "INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+            "SGDOC-" + "b" * 24 + ":0/3"
+        )
+        collaboration = (
+            "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+            "StructuredProviderUnavailable:"
+            "COLLABORATION_RESPONSE_PENDING:COLLABREQ-" + "c" * 64
+        )
+        self.assertTrue(
+            fact_extraction_has_exact_checkpoint_recovery_wait(
+                (reassessment,)
+            )
+        )
+        self.assertTrue(
+            fact_extraction_has_exact_checkpoint_recovery_wait(
+                (reassessment, incomplete)
+            )
+        )
+        self.assertTrue(
+            fact_extraction_has_exact_checkpoint_recovery_wait(
+                (collaboration, reassessment, incomplete)
+            )
+        )
+
+        for invalid in (
+            (reassessment, reassessment),
+            (
+                "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+                "SGDOC-" + "a" * 23,
+            ),
+            (
+                "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+                "SGDOC-" + "A" * 24,
+            ),
+            (reassessment + ":SUFFIX",),
+            (reassessment, "CANDIDATE_RANKING_PENDING"),
+            (incomplete,),
+        ):
+            self.assertFalse(
+                fact_extraction_has_exact_checkpoint_recovery_wait(invalid),
+                invalid,
+            )
+
     def test_v4_non_broker_checkpoint_is_atomically_recovered_from_receipt(
         self,
     ) -> None:
@@ -2700,6 +2881,1086 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             len(full_text),
         )
 
+    def test_reentered_current_source_fact_without_claim_lineage_fails_closed(
+        self,
+    ) -> None:
+        document = _document(
+            "DOC-ROSTER-REENTRY",
+            "ISSUER_PRESENTATION",
+            "ISSUER:current.example",
+        )
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=TwoFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        self.assertEqual(len(baseline.facts), 2)
+        self.assertEqual(len(baseline.material_claims), 2)
+        self.assertEqual(len(baseline.fact_compilation.claim_fact_links), 2)
+        missing_fact_id = next(
+            row.fact_id
+            for row in baseline.facts
+            if row.predicate == "reported capacity and customer mechanism"
+        )
+
+        # Model the minimum roster-churn counterexample: the broader current
+        # fact snapshot still contains this document's fact, while the current
+        # extraction checkpoint has no claim/disposition ledger for the source.
+        # A provider that sees both facts in current_evidence_facts may emit
+        # only one of them. One surviving claim for the document must not hide
+        # the loss of the other fact/claim/link.
+        provider = FactProvider()
+        reentered = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+            current_facts=tuple(row.to_dict() for row in baseline.facts),
+            prior_material_claims=(),
+            prior_document_dispositions=(),
+            prior_provider_calls=(),
+            prior_rejections=(),
+        )
+
+        self.assertEqual(
+            provider.calls[0]["payload"]["current_evidence_facts"][
+                "fact_count"
+            ],
+            2,
+        )
+        self.assertEqual(reentered.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(
+            reentered.pending_reasons,
+            (
+                "CURRENT_FACT_LINEAGE_REMATERIALIZATION_REQUIRED:"
+                "DOC-ROSTER-REENTRY",
+            ),
+        )
+        self.assertEqual(
+            reentered.audit[
+                "current_fact_lineage_rematerialization_document_ids"
+            ],
+            ["DOC-ROSTER-REENTRY"],
+        )
+        self.assertEqual(
+            reentered.audit["current_fact_lineage_initial_gap_fact_ids"],
+            [missing_fact_id],
+        )
+        self.assertEqual(
+            set(
+                reentered.audit[
+                    "current_fact_lineage_rematerialization_fact_ids"
+                ]
+            ),
+            {row.fact_id for row in baseline.facts},
+        )
+        self.assertEqual(
+            reentered.audit["critical_counts"][
+                "provider_or_semantic_pending_count"
+            ],
+            1,
+        )
+        self.assertEqual(reentered.material_claims, ())
+        self.assertEqual(reentered.document_dispositions, ())
+
+        recovered = ResearcherEvidenceFactExtractor(
+            provider=TwoFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+            current_facts=tuple(row.to_dict() for row in baseline.facts),
+            prior_material_claims=reentered.material_claims,
+            prior_document_dispositions=reentered.document_dispositions,
+            prior_provider_calls=reentered.provider_calls,
+            prior_rejections=reentered.rejections,
+        )
+        self.assertEqual(recovered.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(
+            {row.fact_id for row in recovered.facts},
+            {row.fact_id for row in baseline.facts},
+        )
+
+    def test_no_material_rationale_cannot_retire_current_roster_fact(
+        self,
+    ) -> None:
+        document = _document(
+            "SGDOC-555555555555555555555555",
+            "ISSUER_PRESENTATION",
+            "ISSUER:current.example",
+        )
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=FactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        provider = ObjectiveIrrelevantDocumentProvider()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+            current_facts=tuple(row.to_dict() for row in baseline.facts),
+        )
+
+        reason = (
+            "CURRENT_FACT_LINEAGE_REMATERIALIZATION_REQUIRED:"
+            "SGDOC-555555555555555555555555"
+        )
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(result.pending_reasons, (reason,))
+        self.assertEqual(len(provider.calls), 3)
+        self.assertEqual(result.facts, ())
+        self.assertEqual(result.material_claims, ())
+        self.assertEqual(result.document_dispositions, ())
+        self.assertEqual(result.provider_calls, ())
+        self.assertEqual(
+            result.audit["current_fact_lineage_rematerialization_fact_ids"],
+            [baseline.facts[0].fact_id],
+        )
+        self.assertGreater(result.audit["critical_count_sum"], 0)
+
+    def test_collaboration_wait_is_preserved_with_lineage_rematerialization(
+        self,
+    ) -> None:
+        document = _document(
+            "SGDOC-666666666666666666666666",
+            "ISSUER_PRESENTATION",
+            "ISSUER:current.example",
+        )
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=FactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        request_id = "COLLABREQ-" + "6" * 64
+        collaboration_reason = (
+            "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+            "StructuredProviderUnavailable:"
+            "COLLABORATION_RESPONSE_PENDING:" + request_id
+        )
+
+        class PendingProvider(FactProvider):
+            def complete(self, *, pass_name, payload):
+                self.calls.append(
+                    {"pass_name": pass_name, "payload": payload}
+                )
+                raise StructuredProviderUnavailable(
+                    "COLLABORATION_RESPONSE_PENDING:" + request_id
+                )
+
+        result = ResearcherEvidenceFactExtractor(
+            provider=PendingProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+            current_facts=tuple(row.to_dict() for row in baseline.facts),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(
+            result.pending_reasons,
+            (
+                collaboration_reason,
+                "CURRENT_FACT_LINEAGE_REMATERIALIZATION_REQUIRED:"
+                "SGDOC-666666666666666666666666",
+            ),
+        )
+        self.assertEqual(result.provider_calls, ())
+
+    def test_lineage_gap_invalidates_cached_base_and_retries_missing_fact(
+        self,
+    ) -> None:
+        document = _document(
+            "SGDOC-111111111111111111111111",
+            "ISSUER_PRESENTATION",
+            "ISSUER:current.example",
+        )
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=TwoFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        provider = CurrentFactLineageRetryProvider()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+            current_facts=tuple(row.to_dict() for row in baseline.facts),
+        )
+
+        reason = (
+            "CURRENT_FACT_LINEAGE_REMATERIALIZATION_REQUIRED:"
+            "SGDOC-111111111111111111111111"
+        )
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(provider.calls), 2)
+        self.assertNotIn(
+            "fact_extraction_retry_context",
+            provider.calls[0]["payload"],
+        )
+        retry_context = provider.calls[1]["payload"][
+            "fact_extraction_retry_context"
+        ]
+        self.assertIn(reason, retry_context["validation_errors"])
+        self.assertEqual(len(retry_context["previously_accepted_facts"]), 1)
+        self.assertEqual(len(provider.invalidations), 1)
+        self.assertIn(reason, provider.invalidations[0])
+        self.assertEqual(
+            {row.fact_id for row in result.facts},
+            {row.fact_id for row in baseline.facts},
+        )
+        self.assertEqual(
+            result.audit[
+                "current_fact_lineage_rematerialization_document_ids"
+            ],
+            [],
+        )
+
+    def test_lineage_gap_repeated_base_response_never_false_completes(
+        self,
+    ) -> None:
+        document = _document(
+            "SGDOC-222222222222222222222222",
+            "ISSUER_PRESENTATION",
+            "ISSUER:current.example",
+        )
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=TwoFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        provider = RepeatingPartialCurrentFactProvider()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+            current_facts=tuple(row.to_dict() for row in baseline.facts),
+        )
+
+        reason = (
+            "CURRENT_FACT_LINEAGE_REMATERIALIZATION_REQUIRED:"
+            "SGDOC-222222222222222222222222"
+        )
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(result.pending_reasons, (reason,))
+        self.assertEqual(len(provider.calls), 3)
+        self.assertTrue(
+            all(
+                "fact_extraction_retry_context" in row["payload"]
+                for row in provider.calls[1:]
+            )
+        )
+        self.assertGreaterEqual(len(provider.invalidations), 2)
+        self.assertEqual(result.material_claims, ())
+        self.assertEqual(result.provider_calls, ())
+
+    def test_batch_lineage_retry_does_not_absorb_unprocessed_gap_document(
+        self,
+    ) -> None:
+        first_document = _document(
+            "SGDOC-333333333333333333333333",
+            "ISSUER_PRESENTATION",
+            "ISSUER:first.example",
+        )
+        second_document = _document(
+            "SGDOC-444444444444444444444444",
+            "REUTERS",
+            "REUTERS:second.example",
+        )
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=TwoFactProvider(),
+            documents_per_call=2,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(first_document, second_document),
+            open_objectives=(),
+        )
+        first_partial = ResearcherEvidenceFactExtractor(
+            provider=FactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(first_document,),
+            open_objectives=(),
+        )
+
+        self.assertEqual(
+            _batch_current_fact_lineage_pending_reasons(
+                current_facts=tuple(
+                    row.to_dict() for row in baseline.facts
+                ),
+                batch_document_ids=frozenset(
+                    {"SGDOC-333333333333333333333333"}
+                ),
+                accepted_claims=first_partial.material_claims,
+                target_id=TARGET,
+                as_of_date=AS_OF_DATE,
+            ),
+            (
+                "CURRENT_FACT_LINEAGE_REMATERIALIZATION_REQUIRED:"
+                "SGDOC-333333333333333333333333",
+            ),
+        )
+
+    def test_reentered_current_source_full_exact_fact_reemit_completes(
+        self,
+    ) -> None:
+        document = _document(
+            "DOC-ROSTER-REENTRY-FULL",
+            "ISSUER_PRESENTATION",
+            "ISSUER:current.example",
+        )
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=TwoFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        reentered = ResearcherEvidenceFactExtractor(
+            provider=TwoFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+            current_facts=tuple(row.to_dict() for row in baseline.facts),
+        )
+
+        self.assertEqual(reentered.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(
+            {row.fact_id for row in reentered.facts},
+            {row.fact_id for row in baseline.facts},
+        )
+        self.assertEqual(
+            reentered.audit[
+                "current_fact_lineage_rematerialization_document_ids"
+            ],
+            [],
+        )
+        self.assertEqual(
+            reentered.audit["current_fact_lineage_rematerialization_fact_ids"],
+            [],
+        )
+
+    def test_current_fact_source_outside_roster_may_retire(self) -> None:
+        old_document = _document(
+            "DOC-RETIRED-FROM-ROSTER",
+            "ISSUER_PRESENTATION",
+            "ISSUER:old.example",
+        )
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=TwoFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(old_document,),
+            open_objectives=(),
+        )
+        current_document = _document(
+            "DOC-CURRENT-NO-MATERIAL-FACT",
+            "ISSUER_PRESENTATION",
+            "ISSUER:current.example",
+        )
+        retired = ResearcherEvidenceFactExtractor(
+            provider=ObjectiveIrrelevantDocumentProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(current_document,),
+            open_objectives=(),
+            current_facts=tuple(row.to_dict() for row in baseline.facts),
+        )
+
+        self.assertEqual(retired.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(retired.facts, ())
+        self.assertEqual(
+            retired.audit[
+                "current_fact_lineage_rematerialization_document_ids"
+            ],
+            [],
+        )
+        self.assertEqual(
+            retired.audit["current_fact_lineage_rematerialization_fact_ids"],
+            [],
+        )
+
+    def test_explicit_supersedes_or_resolves_link_reconciles_old_fact_id(
+        self,
+    ) -> None:
+        document = _document(
+            "DOC-EXPLICIT-FACT-REPLACEMENT",
+            "ISSUER_PRESENTATION",
+            "ISSUER:current.example",
+        )
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=FactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        old_fact = baseline.facts[0]
+
+        for lineage_field in ("supersedes_fact_ids", "resolves_fact_ids"):
+            with self.subTest(lineage_field=lineage_field):
+                replacement = dict(baseline.material_claims[0])
+                replacement.update(
+                    {
+                        "claim_id": f"RFC-EXPLICIT-{lineage_field}",
+                        "subject": "Current Corp capacity",
+                        "economic_mechanism": (
+                            "capacity and customer mechanism supports visibility"
+                        ),
+                        "predicate": (
+                            "reported capacity and customer mechanism"
+                        ),
+                        "value": "capacity_customer_mechanism_explained",
+                        "period": "2026Q2",
+                        lineage_field: [old_fact.fact_id],
+                    }
+                )
+                compilation = EvidenceFactCompiler().compile(
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    accepted_claims=(replacement,),
+                )
+                self.assertNotIn(
+                    old_fact.fact_id,
+                    {row.fact_id for row in compilation.facts},
+                )
+                self.assertEqual(
+                    _current_fact_lineage_rematerialization_gaps(
+                        current_facts=(old_fact.to_dict(),),
+                        current_document_ids=frozenset(
+                            {"DOC-EXPLICIT-FACT-REPLACEMENT"}
+                        ),
+                        compilation=compilation,
+                    ),
+                    {},
+                )
+
+    def test_same_fact_id_cannot_drop_current_source_or_claim_lineage(
+        self,
+    ) -> None:
+        first_document = _document(
+            "DOC-SAME-FACT-FIRST",
+            "ISSUER_PRESENTATION",
+            "ISSUER:first.example",
+        )
+        second_document = _document(
+            "DOC-SAME-FACT-SECOND",
+            "REUTERS",
+            "REUTERS:second.example",
+        )
+        merged = ResearcherEvidenceFactExtractor(
+            provider=FactProvider(),
+            documents_per_call=2,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(first_document, second_document),
+            open_objectives=(),
+        )
+        self.assertEqual(merged.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(merged.facts), 1)
+        old_fact = merged.facts[0]
+        self.assertEqual(
+            set(old_fact.source_ids),
+            {"DOC-SAME-FACT-FIRST", "DOC-SAME-FACT-SECOND"},
+        )
+
+        first_claim_only = EvidenceFactCompiler().compile(
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(merged.material_claims[0],),
+        )
+        self.assertEqual(
+            {row.fact_id for row in first_claim_only.facts},
+            {old_fact.fact_id},
+        )
+        self.assertEqual(
+            _current_fact_lineage_rematerialization_gaps(
+                current_facts=(old_fact.to_dict(),),
+                current_document_ids=frozenset(
+                    {"DOC-SAME-FACT-FIRST", "DOC-SAME-FACT-SECOND"}
+                ),
+                compilation=first_claim_only,
+            ),
+            {"DOC-SAME-FACT-SECOND": (old_fact.fact_id,)},
+        )
+
+        # Even when a source id survives, losing one of two claims that back
+        # the same fact is lineage loss.  EvidenceFact cannot map the missing
+        # claim to a narrower document, so the current source unit is retried.
+        corroborating_claim = dict(merged.material_claims[0])
+        corroborating_claim["claim_id"] = "RFC-SAME-SOURCE-CORROBORATION"
+        two_claim_compilation = EvidenceFactCompiler().compile(
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(
+                merged.material_claims[0],
+                corroborating_claim,
+            ),
+        )
+        two_claim_fact = two_claim_compilation.facts[0]
+        one_claim_compilation = EvidenceFactCompiler().compile(
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(merged.material_claims[0],),
+        )
+        self.assertEqual(
+            _current_fact_lineage_rematerialization_gaps(
+                current_facts=(two_claim_fact.to_dict(),),
+                current_document_ids=frozenset(
+                    {"DOC-SAME-FACT-FIRST", "DOC-SAME-FACT-SECOND"}
+                ),
+                compilation=one_claim_compilation,
+            ),
+            {
+                "DOC-SAME-FACT-FIRST": (two_claim_fact.fact_id,),
+            },
+        )
+
+    def test_mixed_source_retirement_requires_surviving_old_lineage(
+        self,
+    ) -> None:
+        first_document = _document(
+            "DOC-MIXED-CURRENT-SOURCE",
+            "ISSUER_PRESENTATION",
+            "ISSUER:current.example",
+        )
+        second_document = _document(
+            "DOC-MIXED-RETIRED-SOURCE",
+            "REUTERS",
+            "REUTERS:retired.example",
+        )
+        merged = ResearcherEvidenceFactExtractor(
+            provider=FactProvider(),
+            documents_per_call=2,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(first_document, second_document),
+            open_objectives=(),
+        )
+        old_fact = merged.facts[0]
+        current_claim = next(
+            row
+            for row in merged.material_claims
+            if row["document_id"] == "DOC-MIXED-CURRENT-SOURCE"
+        )
+        legitimate_retirement = EvidenceFactCompiler().compile(
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(current_claim,),
+        )
+        self.assertEqual(
+            _current_fact_lineage_rematerialization_gaps(
+                current_facts=(old_fact.to_dict(),),
+                current_document_ids=frozenset(
+                    {"DOC-MIXED-CURRENT-SOURCE"}
+                ),
+                compilation=legitimate_retirement,
+            ),
+            {},
+        )
+
+        replacement = dict(current_claim)
+        replacement["claim_id"] = "RFC-MIXED-SOURCE-REPLACEMENT"
+        replacement["quote_ids"] = ["QUOTE-MIXED-SOURCE-REPLACEMENT"]
+        replacement["confidence"] = 0.2
+        silent_replacement = EvidenceFactCompiler().compile(
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(replacement,),
+        )
+        self.assertEqual(
+            {row.fact_id for row in silent_replacement.facts},
+            {old_fact.fact_id},
+        )
+        self.assertEqual(
+            _current_fact_lineage_rematerialization_gaps(
+                current_facts=(old_fact.to_dict(),),
+                current_document_ids=frozenset(
+                    {"DOC-MIXED-CURRENT-SOURCE"}
+                ),
+                compilation=silent_replacement,
+            ),
+            {"DOC-MIXED-CURRENT-SOURCE": (old_fact.fact_id,)},
+        )
+
+    def test_self_referential_fact_lineage_is_rejected(self) -> None:
+        document = _document(
+            "DOC-SELF-REFERENTIAL-LINEAGE",
+            "ISSUER_PRESENTATION",
+            "ISSUER:self.example",
+        )
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=FactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        claim = dict(baseline.material_claims[0])
+        claim["supersedes_fact_ids"] = [baseline.facts[0].fact_id]
+        compilation = EvidenceFactCompiler().compile(
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(claim,),
+        )
+        self.assertEqual(
+            compilation.status,
+            "FACT_COMPILATION_INVALID_ACCEPTED_CLAIM",
+        )
+        self.assertEqual(compilation.facts, ())
+        self.assertEqual(
+            [row.reason for row in compilation.rejected_claims],
+            ["SELF_REFERENTIAL_FACT_LINEAGE"],
+        )
+
+    def test_same_lineage_set_cannot_change_primary_claim_in_place(
+        self,
+    ) -> None:
+        document = _document(
+            "DOC-PRIMARY-LINEAGE-ORDER",
+            "ISSUER_PRESENTATION",
+            "ISSUER:primary.example",
+        )
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=FactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        first = dict(baseline.material_claims[0])
+        second = dict(first)
+        second["claim_id"] = "RFC-PRIMARY-LINEAGE-SECOND"
+        first["confidence"] = 0.9
+        second["confidence"] = 0.8
+        old_compilation = EvidenceFactCompiler().compile(
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(first, second),
+        )
+        old_fact = old_compilation.facts[0]
+        first["confidence"] = 0.8
+        second["confidence"] = 0.9
+        reordered = EvidenceFactCompiler().compile(
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(first, second),
+        )
+        self.assertEqual(
+            set(old_fact.claim_ids),
+            set(reordered.facts[0].claim_ids),
+        )
+        self.assertEqual(old_fact.confidence, reordered.facts[0].confidence)
+        self.assertNotEqual(
+            old_fact.claim_ids[0],
+            reordered.facts[0].claim_ids[0],
+        )
+        self.assertEqual(
+            _current_fact_lineage_rematerialization_gaps(
+                current_facts=(old_fact.to_dict(),),
+                current_document_ids=frozenset(
+                    {"DOC-PRIMARY-LINEAGE-ORDER"}
+                ),
+                compilation=reordered,
+            ),
+            {"DOC-PRIMARY-LINEAGE-ORDER": (old_fact.fact_id,)},
+        )
+
+    def test_two_fact_replacement_cycle_is_rejected(self) -> None:
+        document = _document(
+            "DOC-CYCLIC-FACT-LINEAGE",
+            "ISSUER_PRESENTATION",
+            "ISSUER:cycle.example",
+        )
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=FactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        first = dict(baseline.material_claims[0])
+        second = dict(first)
+        second.update(
+            {
+                "claim_id": "RFC-CYCLIC-SECOND",
+                "subject": "Current Corp second mechanism",
+                "economic_mechanism": "second economic mechanism",
+                "predicate": "reported second economic state",
+                "value": "second_state",
+            }
+        )
+        identity_compilation = EvidenceFactCompiler().compile(
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(first, second),
+        )
+        fact_by_claim = {
+            link.claim_id: link.fact_id
+            for link in identity_compilation.claim_fact_links
+        }
+        first["supersedes_fact_ids"] = [
+            fact_by_claim["RFC-CYCLIC-SECOND"]
+        ]
+        second["resolves_fact_ids"] = [
+            fact_by_claim[first["claim_id"]]
+        ]
+        cyclic = EvidenceFactCompiler().compile(
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(first, second),
+        )
+        self.assertEqual(
+            cyclic.status,
+            "FACT_COMPILATION_INVALID_ACCEPTED_CLAIM",
+        )
+        self.assertEqual(cyclic.facts, ())
+        self.assertEqual(
+            {row.reason for row in cyclic.rejected_claims},
+            {"CYCLIC_FACT_LINEAGE"},
+        )
+        self.assertEqual(len(cyclic.rejected_claims), 2)
+
+    def test_lineage_gap_invalidates_every_document_in_shared_provider_call(
+        self,
+    ) -> None:
+        first_document = _document(
+            "DOC-SHARED-CALL-GAP",
+            "ISSUER_PRESENTATION",
+            "ISSUER:first.example",
+        )
+        second_document = _document(
+            "DOC-SHARED-CALL-PEER",
+            "REUTERS",
+            "REUTERS:second.example",
+        )
+
+        class FirstDocumentHasExtraFactProvider(TwoFactProvider):
+            def complete(self, *, pass_name, payload):
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                response["facts"] = [
+                    row
+                    for row in response["facts"]
+                    if row["document_id"] == "DOC-SHARED-CALL-GAP"
+                    or row["predicate"]
+                    == "reported record operating cash flow"
+                ]
+                return response
+
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=FirstDocumentHasExtraFactProvider(),
+            documents_per_call=2,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(first_document, second_document),
+            open_objectives=(),
+        )
+        self.assertEqual(len(baseline.facts), 2)
+        extra_fact = next(
+            row
+            for row in baseline.facts
+            if row.predicate == "reported capacity and customer mechanism"
+        )
+        self.assertEqual(extra_fact.source_ids, ("DOC-SHARED-CALL-GAP",))
+
+        partial = ResearcherEvidenceFactExtractor(
+            provider=FactProvider(),
+            documents_per_call=2,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(first_document, second_document),
+            open_objectives=(),
+            current_facts=tuple(row.to_dict() for row in baseline.facts),
+        )
+
+        self.assertEqual(partial.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(
+            partial.audit["current_fact_lineage_initial_gap_document_ids"],
+            ["DOC-SHARED-CALL-GAP"],
+        )
+        self.assertEqual(
+            partial.audit[
+                "current_fact_lineage_rematerialization_document_ids"
+            ],
+            ["DOC-SHARED-CALL-GAP", "DOC-SHARED-CALL-PEER"],
+        )
+        self.assertEqual(
+            set(
+                partial.audit[
+                    "current_fact_lineage_rematerialization_fact_ids"
+                ]
+            ),
+            {row.fact_id for row in baseline.facts},
+        )
+        self.assertEqual(
+            set(
+                partial.audit[
+                    "current_fact_lineage_rematerialization_by_document"
+                ]
+            ),
+            {"DOC-SHARED-CALL-GAP", "DOC-SHARED-CALL-PEER"},
+        )
+        self.assertEqual(partial.material_claims, ())
+        self.assertEqual(partial.document_dispositions, ())
+        self.assertEqual(partial.provider_calls, ())
+
+    def test_lineage_rematerialization_closes_transitive_call_roster(
+        self,
+    ) -> None:
+        self.assertEqual(
+            _atomic_fact_lineage_rematerialization_document_ids(
+                initial_document_ids=("SGDOC-aaaaaaaaaaaaaaaaaaaaaaaa",),
+                provider_calls=(
+                    SimpleNamespace(
+                        document_ids=(
+                            "SGDOC-aaaaaaaaaaaaaaaaaaaaaaaa",
+                            "SGDOC-bbbbbbbbbbbbbbbbbbbbbbbb",
+                        )
+                    ),
+                    SimpleNamespace(
+                        document_ids=(
+                            "SGDOC-bbbbbbbbbbbbbbbbbbbbbbbb",
+                            "SGDOC-cccccccccccccccccccccccc",
+                        )
+                    ),
+                ),
+                current_document_ids=frozenset(
+                    {
+                        "SGDOC-aaaaaaaaaaaaaaaaaaaaaaaa",
+                        "SGDOC-bbbbbbbbbbbbbbbbbbbbbbbb",
+                        "SGDOC-cccccccccccccccccccccccc",
+                    }
+                ),
+            ),
+            (
+                "SGDOC-aaaaaaaaaaaaaaaaaaaaaaaa",
+                "SGDOC-bbbbbbbbbbbbbbbbbbbbbbbb",
+                "SGDOC-cccccccccccccccccccccccc",
+            ),
+        )
+
+    def test_split_lineage_gap_drops_embedded_chunk_calls_before_resume(
+        self,
+    ) -> None:
+        document = dict(
+            _document(
+                "DOC-SPLIT-ROSTER-REENTRY",
+                "ISSUER_PRESENTATION",
+                "ISSUER:current.example",
+            )
+        )
+        text = (
+            TwoChunkTwoFactProvider.first_quote
+            + "\n"
+            + ("x" * 120_000)
+            + "\n"
+            + TwoChunkTwoFactProvider.second_quote
+        )
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+        baseline_provider = TwoChunkTwoFactProvider()
+        baseline = ResearcherEvidenceFactExtractor(
+            provider=baseline_provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        self.assertEqual(baseline.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(baseline.facts), 2)
+        self.assertEqual(len(baseline_provider.calls), 2)
+
+        partial_provider = ChunkAwareFactProvider()
+        partial = ResearcherEvidenceFactExtractor(
+            provider=partial_provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+            current_facts=tuple(row.to_dict() for row in baseline.facts),
+        )
+        self.assertEqual(partial.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(len(partial_provider.calls), 4)
+        self.assertTrue(
+            all(
+                "fact_extraction_retry_context" in row["payload"]
+                for row in partial_provider.calls[2:]
+            )
+        )
+        self.assertEqual(partial.provider_calls, ())
+
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint_root = Path(directory)
+            write_researcher_fact_extraction_result(
+                partial,
+                checkpoint_root,
+            )
+            checkpoint = _load_fact_checkpoint(
+                checkpoint_root,
+                source_graph=SimpleNamespace(
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    evidence_documents=(document,),
+                ),
+            )
+        self.assertEqual(checkpoint["prior_provider_calls"], ())
+
+        recovery_provider = TwoChunkTwoFactProvider()
+        recovered = ResearcherEvidenceFactExtractor(
+            provider=recovery_provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+            current_facts=tuple(row.to_dict() for row in baseline.facts),
+            **checkpoint,
+        )
+        self.assertEqual(recovered.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(recovery_provider.calls), 2)
+        self.assertEqual(
+            recovered.audit["prompt_transport_accounting"][
+                "resumed_transport_chunk_count"
+            ],
+            0,
+        )
+        self.assertEqual(
+            {row.fact_id for row in recovered.facts},
+            {row.fact_id for row in baseline.facts},
+        )
+
     def test_long_document_chunks_cover_full_text_and_aggregate_one_disposition(self) -> None:
         provider = ChunkAwareFactProvider()
         document = dict(
@@ -4227,6 +5488,9 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             prior_document_dispositions=legacy_dispositions,
             prior_provider_calls=legacy_calls,
             prior_rejections=initial.rejections,
+            prior_current_lineage_objective_reassessment_document_ids=(
+                "DOC-STALE-COVERAGE",
+            ),
             score_gap_context={
                 **semantic_score_gap_context,
                 "source_graph_status": "QUERY_GENERATION_PENDING",
@@ -4259,6 +5523,17 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             waiting.audit["pending_coverage_refresh_document_ids"],
             ["DOC-STALE-COVERAGE"],
         )
+        self.assertEqual(
+            waiting.audit[
+                "current_fact_lineage_objective_reassessment_document_ids"
+            ],
+            ["DOC-STALE-COVERAGE"],
+        )
+        self.assertIn(
+            "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+            "DOC-STALE-COVERAGE",
+            waiting.pending_reasons,
+        )
         with tempfile.TemporaryDirectory() as directory:
             checkpoint_root = Path(directory)
             write_researcher_fact_extraction_result(
@@ -4275,6 +5550,12 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             )
         self.assertEqual(
             waiting_checkpoint["prior_coverage_refresh_document_ids"],
+            ("DOC-STALE-COVERAGE",),
+        )
+        self.assertEqual(
+            waiting_checkpoint[
+                "prior_current_lineage_objective_reassessment_document_ids"
+            ],
             ("DOC-STALE-COVERAGE",),
         )
 
@@ -4314,8 +5595,14 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             provider.calls[0]["payload"],
         )
         self.assertEqual(
-            resumed.pending_reasons,
-            (FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,),
+            set(resumed.pending_reasons),
+            {
+                FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+                (
+                    "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+                    "DOC-STALE-COVERAGE"
+                ),
+            },
         )
         self.assertEqual(
             resumed.audit[
@@ -4386,6 +5673,159 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertEqual(
             refreshed.audit["pending_coverage_refresh_document_ids"],
             [],
+        )
+        self.assertEqual(
+            refreshed.audit[
+                "current_fact_lineage_objective_reassessment_document_ids"
+            ],
+            [],
+        )
+        self.assertNotIn(
+            "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+            "DOC-STALE-COVERAGE",
+            refreshed.pending_reasons,
+        )
+
+    def test_objective_reassessment_wait_survives_without_live_gap(self) -> None:
+        stale = _document(
+            "DOC-CURRENT-LINEAGE-REASSESS",
+            "ISSUER_PRESENTATION",
+            "ISSUER",
+        )
+        new = _document(
+            "DOC-NEW-WHILE-REASSESS-PENDING",
+            "ISSUER_EARNINGS_RELEASE",
+            "ISSUER",
+        )
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "information_confidence",
+        }
+        initial = ResearcherEvidenceFactExtractor(
+            provider=ObjectiveLocalFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(stale,),
+            open_objectives=(objective,),
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        class PendingFactProvider:
+            provider_name = "TEST_PENDING_FACT_PROVIDER"
+
+            def __init__(self) -> None:
+                self.calls = []
+
+            def complete(self, *, pass_name, payload):
+                self.calls.append(
+                    {"pass_name": pass_name, "payload": payload}
+                )
+                raise StructuredProviderUnavailable(
+                    "COLLABORATION_RESPONSE_PENDING:COLLABREQ-"
+                    + "c" * 64
+                )
+
+        first_provider = PendingFactProvider()
+        first = ResearcherEvidenceFactExtractor(
+            provider=first_provider
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(stale, new),
+            open_objectives=(objective,),
+            prior_material_claims=initial.material_claims,
+            prior_document_dispositions=initial.document_dispositions,
+            prior_provider_calls=initial.provider_calls,
+            prior_rejections=initial.rejections,
+            prior_coverage_refresh_document_ids=(
+                "DOC-CURRENT-LINEAGE-REASSESS",
+            ),
+            prior_current_lineage_objective_reassessment_document_ids=(
+                "DOC-CURRENT-LINEAGE-REASSESS",
+            ),
+            score_gap_context={"prior_fact_extraction_feedback": []},
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        self.assertEqual(len(first_provider.calls), 1)
+        self.assertEqual(
+            [
+                row["document_id"]
+                for row in first_provider.calls[0]["payload"][
+                    "full_documents"
+                ]
+            ],
+            ["DOC-NEW-WHILE-REASSESS-PENDING"],
+        )
+        self.assertEqual(
+            first_provider.calls[0]["payload"]["score_gap_context"][
+                "prior_fact_extraction_feedback"
+            ]["feedback_count"],
+            1,
+        )
+        self.assertEqual(
+            first.audit[
+                "current_fact_lineage_objective_reassessment_document_ids"
+            ],
+            ["DOC-CURRENT-LINEAGE-REASSESS"],
+        )
+        self.assertEqual(
+            first.audit["pending_coverage_refresh_document_ids"],
+            ["DOC-CURRENT-LINEAGE-REASSESS"],
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint_root = Path(directory)
+            write_researcher_fact_extraction_result(first, checkpoint_root)
+            checkpoint = _load_fact_checkpoint(
+                checkpoint_root,
+                source_graph=SimpleNamespace(
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    evidence_documents=(stale, new),
+                ),
+            )
+        self.assertEqual(
+            checkpoint[
+                "prior_current_lineage_objective_reassessment_document_ids"
+            ],
+            ("DOC-CURRENT-LINEAGE-REASSESS",),
+        )
+
+        second_provider = PendingFactProvider()
+        second = ResearcherEvidenceFactExtractor(
+            provider=second_provider
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(stale, new),
+            open_objectives=(objective,),
+            **checkpoint,
+            score_gap_context={
+                "prior_fact_extraction_feedback": list(
+                    first.research_gap_feedback
+                )
+            },
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        self.assertEqual(len(second_provider.calls), 1)
+        self.assertEqual(
+            first_provider.calls[0]["payload"],
+            second_provider.calls[0]["payload"],
+        )
+        self.assertEqual(
+            second.audit[
+                "current_fact_lineage_objective_reassessment_document_ids"
+            ],
+            ["DOC-CURRENT-LINEAGE-REASSESS"],
         )
 
     def test_pending_split_coverage_refresh_preserves_atomic_baseline(
@@ -4485,6 +5925,9 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             prior_coverage_refresh_document_ids=(
                 "DOC-SPLIT-COVERAGE-RESUME",
             ),
+            prior_current_lineage_objective_reassessment_document_ids=(
+                "DOC-SPLIT-COVERAGE-RESUME",
+            ),
         )
         self.assertEqual(
             len(semantics_refresh_provider.calls),
@@ -4545,6 +5988,12 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 "fact_extraction_scope_contract"
             ]["objective_lineage_reassessment"]["enabled"]
         )
+        self.assertEqual(
+            semantics_resumed.audit[
+                "current_fact_lineage_objective_reassessment_document_ids"
+            ],
+            [],
+        )
 
         class CollaborationPendingProvider:
             provider_name = "TEST_COLLABORATION_PENDING_PROVIDER"
@@ -4575,6 +6024,9 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             prior_coverage_refresh_document_ids=(
                 "DOC-SPLIT-COVERAGE-RESUME",
             ),
+            prior_current_lineage_objective_reassessment_document_ids=(
+                "DOC-SPLIT-COVERAGE-RESUME",
+            ),
         )
         self.assertEqual(first_pending.status, "FACT_EXTRACTION_PENDING")
         self.assertEqual(len(first_pending_provider.calls), 1)
@@ -4591,6 +6043,12 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         )
         self.assertEqual(
             first_pending.audit["pending_coverage_refresh_document_ids"],
+            ["DOC-SPLIT-COVERAGE-RESUME"],
+        )
+        self.assertEqual(
+            first_pending.audit[
+                "current_fact_lineage_objective_reassessment_document_ids"
+            ],
             ["DOC-SPLIT-COVERAGE-RESUME"],
         )
 
@@ -4738,8 +6196,14 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             ["DOC-SPLIT-COVERAGE-RESUME"],
         )
         self.assertEqual(
-            deferred.pending_reasons,
-            (FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,),
+            set(deferred.pending_reasons),
+            {
+                FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+                (
+                    "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+                    "DOC-SPLIT-COVERAGE-RESUME"
+                ),
+            },
         )
         with tempfile.TemporaryDirectory() as directory:
             checkpoint_root = Path(directory)
@@ -4804,6 +6268,12 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         )
         self.assertEqual(
             final.audit["pending_coverage_refresh_document_ids"],
+            [],
+        )
+        self.assertEqual(
+            final.audit[
+                "current_fact_lineage_objective_reassessment_document_ids"
+            ],
             [],
         )
 

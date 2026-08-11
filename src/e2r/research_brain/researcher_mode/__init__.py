@@ -275,6 +275,7 @@ from .evidence_fact_extractor import (
     ResearcherEvidenceFactExtractor,
     ResearcherFactExtractionResult,
     production_material_fact_rows,
+    resolve_current_fact_lineage_recovery_binding,
     write_researcher_fact_extraction_result,
 )
 from .official_source_materializer import (
@@ -410,6 +411,14 @@ from .research_epoch import (
     ResearchEpochRunner,
     load_research_epoch_checkpoint,
     write_research_epoch_run,
+)
+from .fact_lineage_materials import (
+    AuthoritativeResearchEpochFactLedger,
+    CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION,
+    CurrentFactLineageRecoveryBinding,
+    current_fact_semantics_contract,
+    load_authoritative_research_epoch_fact_ledger,
+    validate_current_v5_fact_lineage_materials,
 )
 from .historical_blind_replay import (
     FrozenHistoricalBlindResearchProvider,
@@ -703,6 +712,9 @@ __all__ = [
     "SegmentFinancialObservation",
     "QUESTION_AUTHORITY_PASS",
     "RESEARCH_EPOCH_OUTPUT_FILES",
+    "AuthoritativeResearchEpochFactLedger",
+    "CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION",
+    "CurrentFactLineageRecoveryBinding",
     "REQUIRED_COMPONENT_JUDGE_ROLES",
     "RESEARCH_SUPERVISOR_SCHEMA",
     "ResearchQuestionSeed",
@@ -809,6 +821,9 @@ __all__ = [
     "load_research_question_seed_catalog",
     "load_source_graph_checkpoint",
     "load_research_epoch_checkpoint",
+    "current_fact_semantics_contract",
+    "load_authoritative_research_epoch_fact_ledger",
+    "validate_current_v5_fact_lineage_materials",
     "write_historical_judgment_atlas",
     "write_phase84_researcher_mode_audit",
     "write_phase85_source_graph_acquisition_audit",
@@ -836,6 +851,7 @@ __all__ = [
     "write_source_graph_acquisition_run",
     "write_evidence_fact_graph_result",
     "production_material_fact_rows",
+    "resolve_current_fact_lineage_recovery_binding",
     "write_researcher_fact_extraction_result",
     "write_researcher_stagecourt_run",
     "write_official_source_materialization",

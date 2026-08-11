@@ -280,6 +280,24 @@ class EvidenceFactCompiler:
             else:
                 prepared.append(rejection)
 
+        cyclic_fact_ids = _cyclic_fact_lineage_ids(prepared)
+        if cyclic_fact_ids:
+            noncyclic: list[_PreparedClaim] = []
+            for row in prepared:
+                if row.fact_id in cyclic_fact_ids:
+                    rejections.append(
+                        FactCompilationRejection(
+                            claim_id=row.claim_id,
+                            reason="CYCLIC_FACT_LINEAGE",
+                            accepted_claim=True,
+                            material_claim=row.material_claim,
+                            input_index=row.input_index,
+                        )
+                    )
+                else:
+                    noncyclic.append(row)
+            prepared = noncyclic
+
         grouped: dict[str, list[_PreparedClaim]] = {}
         for claim in prepared:
             grouped.setdefault(claim.fact_id, []).append(claim)
@@ -522,6 +540,10 @@ def _prepare_claim(
     }
     fact_id = stable_intelligence_id("EFACT", identity)
     quote_ids = _quote_ids(claim, claim_id=claim_id, source_ids=source_ids)
+    supersedes_fact_ids = _strings(claim.get("supersedes_fact_ids"))
+    resolves_fact_ids = _strings(claim.get("resolves_fact_ids"))
+    if fact_id in {*supersedes_fact_ids, *resolves_fact_ids}:
+        return reject("SELF_REFERENTIAL_FACT_LINEAGE")
     return _PreparedClaim(
         input_index=input_index,
         claim_id=claim_id,
@@ -551,10 +573,50 @@ def _prepare_claim(
         structured_evidence_roles=_strings(
             claim.get("structured_evidence_roles")
         ),
-        supersedes_fact_ids=_strings(claim.get("supersedes_fact_ids")),
-        resolves_fact_ids=_strings(claim.get("resolves_fact_ids")),
+        supersedes_fact_ids=supersedes_fact_ids,
+        resolves_fact_ids=resolves_fact_ids,
         material_claim=material,
     )
+
+
+def _cyclic_fact_lineage_ids(
+    claims: Sequence[_PreparedClaim],
+) -> frozenset[str]:
+    """Return compiled fact ids participating in a replacement cycle."""
+
+    fact_ids = {row.fact_id for row in claims}
+    edges: dict[str, set[str]] = {fact_id: set() for fact_id in fact_ids}
+    for row in claims:
+        edges[row.fact_id].update(
+            fact_id
+            for fact_id in (
+                *row.supersedes_fact_ids,
+                *row.resolves_fact_ids,
+            )
+            if fact_id in fact_ids
+        )
+    visiting: list[str] = []
+    visiting_index: dict[str, int] = {}
+    visited: set[str] = set()
+    cyclic: set[str] = set()
+
+    def visit(fact_id: str) -> None:
+        if fact_id in visited:
+            return
+        if fact_id in visiting_index:
+            cyclic.update(visiting[visiting_index[fact_id] :])
+            return
+        visiting_index[fact_id] = len(visiting)
+        visiting.append(fact_id)
+        for related_fact_id in sorted(edges[fact_id]):
+            visit(related_fact_id)
+        visiting.pop()
+        visiting_index.pop(fact_id, None)
+        visited.add(fact_id)
+
+    for fact_id in sorted(fact_ids):
+        visit(fact_id)
+    return frozenset(cyclic)
 
 
 def _accepted(claim: Mapping[str, Any]) -> bool:

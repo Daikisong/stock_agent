@@ -11,7 +11,9 @@ from dataclasses import dataclass
 from datetime import date
 import hashlib
 import json
+import os
 from pathlib import Path
+import tempfile
 from typing import Any, Mapping, Sequence
 
 from e2r.production.metadata import stable_hash, write_json, write_jsonl
@@ -27,6 +29,11 @@ from .canary_leaf_contract import (
 )
 from .component_research_planner import ComponentResearchPlanner
 from .component_researcher import CodexResearcherProvider, StructuredResearchProvider
+from .collaboration_envelope_contract import (
+    COLLABORATION_PROVIDER_NAME,
+    validate_collaboration_request,
+    validate_collaboration_response_envelope,
+)
 from .component_scoring_memos import (
     ComponentScoringMemoRun,
     LLMComponentScoringMemoEngine,
@@ -38,11 +45,20 @@ from .evidence_fact_extractor import (
     FACT_EXTRACTION_SEMANTICS_VERSION,
     ResearcherEvidenceFactExtractor,
     ResearcherFactExtractionResult,
+    _accepted_claim,
+    _coerce_provider_call,
+    _coerce_rejection,
+    _normalize_transport_fact_proposal,
     fact_extraction_has_exact_checkpoint_recovery_wait,
     normalize_punctuation_only_fact_value,
     production_material_fact_rows,
     rematerialize_claim_source_provenance,
+    resolve_current_fact_lineage_recovery_binding,
     write_researcher_fact_extraction_result,
+)
+from .evidence_fact_compiler import EvidenceFactCompiler
+from .fact_lineage_materials import (
+    load_authoritative_research_epoch_fact_ledger,
 )
 from .official_source_materializer import (
     OFFICIAL_SOURCE_OUTPUT_FILES,
@@ -77,6 +93,7 @@ from .schemas import (
     CANONICAL_COMPONENT_ORDER,
     ComponentResearchPlan,
     EvidenceDirection,
+    scrub_blind_research_payload,
 )
 from .score_aggregator import (
     DeterministicScoreAggregationRun,
@@ -372,18 +389,35 @@ class CurrentResearcherModeTargetRunner:
                 target_id=target.target_id,
                 as_of_date=config.as_of_date,
             )
+        authoritative_fact_context = (
+            _load_authoritative_prior_fact_context(
+                root,
+                target_id=target.target_id,
+                as_of_date=config.as_of_date,
+                source_checkpoint=prior_source_checkpoint,
+            )
+        )
         prior_context = _load_prior_research_context(
             root,
             target_id=target.target_id,
             as_of_date=config.as_of_date,
             objectives=objective_rows,
             archetype_id=config.archetype_id,
+            authoritative_fact_context=authoritative_fact_context,
+        )
+        authoritative_fact_lineage_recovery_required = bool(
+            prior_context[
+                "authoritative_fact_lineage_recovery_required"
+            ]
         )
         source_context_requires_acquisition = bool(
-            prior_context["source_transport_pending_objective_ids"]
-            or prior_context[
-                "source_queries_without_accepted_fact_lineage"
-            ]
+            not authoritative_fact_lineage_recovery_required
+            and (
+                prior_context["source_transport_pending_objective_ids"]
+                or prior_context[
+                    "source_queries_without_accepted_fact_lineage"
+                ]
+            )
         )
         source_coverage = tuple(
             sorted(
@@ -466,7 +500,8 @@ class CurrentResearcherModeTargetRunner:
             or source_checkpoint_provenance_migration_only
         )
         source_checkpoint_readonly_replayed = bool(
-            source_resume_mode == "REUSE_READY_CHECKPOINT"
+            not authoritative_fact_lineage_recovery_required
+            and source_resume_mode == "REUSE_READY_CHECKPOINT"
             and prior_source_checkpoint is not None
             and not source_context_requires_acquisition
             and not source_checkpoint_migration_only
@@ -476,7 +511,8 @@ class CurrentResearcherModeTargetRunner:
             )
         )
         source_checkpoint_downstream_recovery_replayed = bool(
-            source_resume_mode == "REUSE_READY_CHECKPOINT"
+            not authoritative_fact_lineage_recovery_required
+            and source_resume_mode == "REUSE_READY_CHECKPOINT"
             and prior_source_checkpoint is not None
             and not source_context_requires_acquisition
             and not source_checkpoint_readonly_replayed
@@ -490,18 +526,21 @@ class CurrentResearcherModeTargetRunner:
             )
         )
         source_checkpoint_fact_extraction_recovery_replayed = bool(
-            source_resume_mode == "REUSE_READY_CHECKPOINT"
-            and prior_source_checkpoint is not None
-            and not source_context_requires_acquisition
-            and not source_checkpoint_readonly_replayed
-            and not source_checkpoint_migration_only
-            and not source_checkpoint_legacy_text_cap_repair_only
-            and not source_checkpoint_downstream_recovery_replayed
-            and _source_checkpoint_needs_fact_extraction_recovery(
-                root=root,
-                checkpoint=prior_source_checkpoint,
-                target_id=target.target_id,
-                as_of_date=config.as_of_date,
+            authoritative_fact_lineage_recovery_required
+            or (
+                source_resume_mode == "REUSE_READY_CHECKPOINT"
+                and prior_source_checkpoint is not None
+                and not source_context_requires_acquisition
+                and not source_checkpoint_readonly_replayed
+                and not source_checkpoint_migration_only
+                and not source_checkpoint_legacy_text_cap_repair_only
+                and not source_checkpoint_downstream_recovery_replayed
+                and _source_checkpoint_needs_fact_extraction_recovery(
+                    root=root,
+                    checkpoint=prior_source_checkpoint,
+                    target_id=target.target_id,
+                    as_of_date=config.as_of_date,
+                )
             )
         )
         if (
@@ -519,6 +558,12 @@ class CurrentResearcherModeTargetRunner:
                 ),
                 allow_pending_fact_extraction_recovery=(
                     source_checkpoint_fact_extraction_recovery_replayed
+                    and not authoritative_fact_lineage_recovery_required
+                ),
+                authoritative_fact_lineage_recovery=(
+                    authoritative_fact_context
+                    if authoritative_fact_lineage_recovery_required
+                    else None
                 ),
             )
         else:
@@ -580,7 +625,55 @@ class CurrentResearcherModeTargetRunner:
                 ),
             )
             write_source_graph_acquisition_run(source_graph, output_root=root)
-        prior_fact = _load_fact_checkpoint(root, source_graph=source_graph)
+        prior_fact = _load_fact_checkpoint(
+            root,
+            source_graph=source_graph,
+            committed_fact_snapshot=(
+                authoritative_fact_context.get(
+                    "committed_fact_result_snapshot"
+                )
+                if authoritative_fact_context is not None
+                else None
+            ),
+        )
+        fact_score_gap_context = {
+            "source_graph_status": source_graph.status,
+            "source_graph_pending_reasons": list(
+                source_graph.checkpoint.get("pending_reasons") or ()
+            ),
+            "prior_fact_extraction_feedback": list(
+                prior_context["research_gap_feedback"]
+            ),
+            "prior_structured_source_gap": dict(
+                prior_context["structured_gap_context"]
+            ),
+            "prior_deterministic_score_gap": dict(
+                prior_context["score_gap_context"]
+            ),
+            "prior_supervisor_gap": dict(
+                prior_context["supervisor_source_gap_context"]
+            ),
+        }
+        authoritative_fact_recovery_kwargs = (
+            _authoritative_fact_recovery_extract_kwargs(
+                root=root,
+                authoritative_fact_context=authoritative_fact_context,
+                target=target,
+                archetype_id=config.archetype_id,
+                as_of_date=config.as_of_date,
+                documents=source_graph.evidence_documents,
+                open_objectives=objective_rows,
+                current_facts=prior_context["facts"],
+                score_gap_context=fact_score_gap_context,
+                prior_fact=prior_fact,
+                extraction_mode=(
+                    "PRODUCTION_OBJECTIVE_LOCAL"
+                    if config.source_acquisition_mode
+                    == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
+                    else "RESEARCH_BACKFILL"
+                ),
+            )
+        )
         fact_extraction = fact_extractor.extract(
             target_id=target.target_id,
             target_name=target.company_name,
@@ -590,41 +683,17 @@ class CurrentResearcherModeTargetRunner:
             documents=source_graph.evidence_documents,
             open_objectives=objective_rows,
             current_facts=prior_context["facts"],
-            score_gap_context={
-                "source_graph_status": source_graph.status,
-                "source_graph_pending_reasons": list(
-                    source_graph.checkpoint.get("pending_reasons") or ()
-                ),
-                "prior_fact_extraction_feedback": list(
-                    prior_context["research_gap_feedback"]
-                ),
-                "prior_structured_source_gap": dict(
-                    prior_context["structured_gap_context"]
-                ),
-                "prior_deterministic_score_gap": dict(
-                    prior_context["score_gap_context"]
-                ),
-                "prior_supervisor_gap": dict(
-                    prior_context["supervisor_source_gap_context"]
-                ),
-            },
+            score_gap_context=fact_score_gap_context,
             extraction_mode=(
                 "PRODUCTION_OBJECTIVE_LOCAL"
                 if config.source_acquisition_mode
                 == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
                 else "RESEARCH_BACKFILL"
             ),
+            **authoritative_fact_recovery_kwargs,
             **prior_fact,
         )
         write_researcher_fact_extraction_result(fact_extraction, root)
-        write_jsonl(
-            root / "counterfacts.jsonl",
-            (
-                row.to_dict()
-                for row in fact_extraction.facts
-                if row.direction == EvidenceDirection.COUNTER.value
-            ),
-        )
         if fact_extraction.status != "FACT_EXTRACTION_COMPLETE":
             # Upstream facts define every downstream prompt and deterministic
             # input.  A pending exact Codex response is therefore a hard
@@ -657,6 +726,15 @@ class CurrentResearcherModeTargetRunner:
                 "fact_extraction_pending_reasons": list(
                     fact_extraction.pending_reasons
                 ),
+                "authoritative_fact_ledger_available": prior_context[
+                    "authoritative_fact_ledger_available"
+                ],
+                "authoritative_fact_lineage_recovery_required": (
+                    authoritative_fact_lineage_recovery_required
+                ),
+                "pending_new_fact_epoch_commit_required": prior_context[
+                    "pending_new_fact_epoch_commit_required"
+                ],
                 "downstream_pipeline_started": False,
                 "blocked_downstream_stages": [
                     "structured_peer_materialization",
@@ -986,6 +1064,15 @@ class CurrentResearcherModeTargetRunner:
             "completion_based_on_fixed_rounds": False,
             "zero_search_result_treated_as_completion": False,
             "transport_budget_treated_as_completion": False,
+            "authoritative_fact_ledger_available": prior_context[
+                "authoritative_fact_ledger_available"
+            ],
+            "authoritative_fact_lineage_recovery_required": (
+                authoritative_fact_lineage_recovery_required
+            ),
+            "pending_new_fact_epoch_commit_required": prior_context[
+                "pending_new_fact_epoch_commit_required"
+            ],
             "source_checkpoint_readonly_replayed": (
                 source_checkpoint_readonly_replayed
                 or source_checkpoint_downstream_recovery_replayed
@@ -2266,18 +2353,27 @@ def _hydrate_readonly_source_graph_run(
     config: SourceGraphAcquisitionConfig,
     allow_pending_downstream_recovery: bool = False,
     allow_pending_fact_extraction_recovery: bool = False,
+    authoritative_fact_lineage_recovery: Mapping[str, Any] | None = None,
 ) -> SourceGraphAcquisitionRun:
     """Hydrate a ready source run without mutating acquisition lineage."""
 
+    authoritative_recovery = bool(
+        authoritative_fact_lineage_recovery
+        and authoritative_fact_lineage_recovery.get(
+            "authoritative_fact_lineage_recovery_required"
+        )
+        is True
+    )
     if (
         not allow_pending_downstream_recovery
         and not allow_pending_fact_extraction_recovery
+        and not authoritative_recovery
         and not _source_checkpoint_is_ready_for_readonly_replay(checkpoint)
     ):
         raise ValueError("source checkpoint is not ready for readonly replay")
     if (
         allow_pending_downstream_recovery
-        and allow_pending_fact_extraction_recovery
+        and (allow_pending_fact_extraction_recovery or authoritative_recovery)
     ):
         raise ValueError("source checkpoint recovery replay is ambiguous")
     if allow_pending_downstream_recovery and (
@@ -2297,6 +2393,43 @@ def _hydrate_readonly_source_graph_run(
             "pending fact extraction recovery requires an exact collaboration "
             "or canonical refresh wait over the current source snapshot"
         )
+    if authoritative_recovery:
+        assert authoritative_fact_lineage_recovery is not None
+        expected_source_id = str(
+            authoritative_fact_lineage_recovery.get(
+                "source_graph_checkpoint_id"
+            )
+            or ""
+        )
+        expected_source_hash = str(
+            authoritative_fact_lineage_recovery.get(
+                "source_graph_checkpoint_hash"
+            )
+            or ""
+        )
+        if (
+            str(authoritative_fact_lineage_recovery.get("target_id") or "")
+            != str(checkpoint.get("target_id") or "")
+            or str(
+                authoritative_fact_lineage_recovery.get("as_of_date") or ""
+            )
+            != str(checkpoint.get("as_of_date") or "")
+            or expected_source_id != str(checkpoint.get("checkpoint_id") or "")
+            or expected_source_hash
+            != str(checkpoint.get("checkpoint_hash") or "")
+            or not (
+                _source_checkpoint_is_ready_for_readonly_replay(checkpoint)
+                or _source_checkpoint_needs_fact_extraction_recovery(
+                    root=root,
+                    checkpoint=checkpoint,
+                    target_id=str(checkpoint.get("target_id") or ""),
+                    as_of_date=str(checkpoint.get("as_of_date") or ""),
+                )
+            )
+        ):
+            raise ValueError(
+                "authoritative fact recovery source checkpoint binding drift"
+            )
     graph_payload = checkpoint.get("source_graph")
     if not isinstance(graph_payload, Mapping):
         raise ValueError("source checkpoint graph payload is missing")
@@ -2392,6 +2525,7 @@ def _hydrate_readonly_source_graph_run(
         ),
         "fact_extraction_recovery_replay": (
             allow_pending_fact_extraction_recovery
+            or authoritative_recovery
         ),
     }
     return SourceGraphAcquisitionRun(
@@ -2514,8 +2648,168 @@ def _same_lane_structured_cache_roots(
     return tuple(roots)
 
 
+def _upgrade_current_lineage_objective_reassessment_receipts(
+    provider_calls: Sequence[Mapping[str, Any]],
+    *,
+    document_by_id: Mapping[str, Mapping[str, Any]],
+) -> tuple[str, ...]:
+    """Upgrade only claim-proven legacy journal calls to typed intent.
+
+    Current-lineage recovery calls written before the typed receipt existed
+    still embed the exact accepted claims that official replay validated.  A
+    claim objective that is no longer current, but remains in the document's
+    explicit historical objective lineage, proves that this recovered
+    document needs one current-objective coverage audit.  Ordinary provider
+    calls and the global claim roster are intentionally outside this narrow
+    migration boundary.
+    """
+
+    reassessment_ids: set[str] = set()
+    for call in provider_calls:
+        if not call.get("current_lineage_request_ids"):
+            continue
+        _coerce_provider_call(call)
+        call_document_ids = {
+            str(value) for value in call.get("document_ids") or ()
+        }
+        if (
+            "current_lineage_objective_reassessment_document_ids"
+            in call
+        ):
+            typed_ids = {
+                str(value)
+                for value in call.get(
+                    "current_lineage_objective_reassessment_document_ids"
+                )
+                or ()
+            }
+            reassessment_ids.update(typed_ids)
+            continue
+
+        claimed_objective_ids_by_document: dict[str, set[str]] = {}
+        embedded_claims = call.get("accepted_claims")
+        if isinstance(embedded_claims, Sequence) and not isinstance(
+            embedded_claims,
+            (str, bytes),
+        ):
+            for claim in embedded_claims:
+                if not isinstance(claim, Mapping):
+                    raise ValueError(
+                        "legacy current-lineage embedded claim is invalid"
+                    )
+                document_id = str(claim.get("document_id") or "")
+                if document_id not in call_document_ids:
+                    raise ValueError(
+                        "legacy current-lineage claim is outside its call"
+                    )
+                raw_objective_ids = claim.get("objective_ids") or ()
+                if isinstance(raw_objective_ids, (str, bytes)) or not (
+                    isinstance(raw_objective_ids, Sequence)
+                ):
+                    raise ValueError(
+                        "legacy current-lineage claim objectives are invalid"
+                    )
+                objective_ids = {
+                    str(value).strip() for value in raw_objective_ids
+                }
+                if "" in objective_ids:
+                    raise ValueError(
+                        "legacy current-lineage claim objective is empty"
+                    )
+                claimed_objective_ids_by_document.setdefault(
+                    document_id,
+                    set(),
+                ).update(objective_ids)
+
+        migrated_ids: list[str] = []
+        for document_id, claimed_objective_ids in (
+            claimed_objective_ids_by_document.items()
+        ):
+            document = document_by_id.get(document_id)
+            if document is None:
+                continue
+            current_objective_ids = {
+                str(value).strip()
+                for value in document.get("objective_ids") or ()
+                if str(value).strip()
+            }
+            historical_objective_ids = {
+                str(value).strip()
+                for value in document.get("historical_objective_ids") or ()
+                if str(value).strip()
+            }
+            retired_claim_objective_ids = (
+                claimed_objective_ids - current_objective_ids
+            )
+            if not retired_claim_objective_ids:
+                continue
+            if not retired_claim_objective_ids.issubset(
+                historical_objective_ids
+            ):
+                raise ValueError(
+                    "legacy current-lineage objective drift lacks explicit "
+                    "historical lineage"
+                )
+            migrated_ids.append(document_id)
+        call[
+            "current_lineage_objective_reassessment_document_ids"
+        ] = sorted(set(migrated_ids))
+        reassessment_ids.update(migrated_ids)
+        _coerce_provider_call(call)
+    return tuple(sorted(reassessment_ids))
+
+
+def _completed_current_semantics_coverage_audit_document_ids(
+    *,
+    provider_calls: Sequence[Mapping[str, Any]],
+    document_dispositions: Sequence[Mapping[str, Any]],
+) -> frozenset[str]:
+    """Return only parents whose complete current-semantics audit is sealed."""
+
+    nonsplit_ids: set[str] = set()
+    audited_chunk_ids_by_document: dict[str, set[str]] = {}
+    for raw_call in provider_calls:
+        if (
+            raw_call.get("status") != "COMPLETE"
+            or raw_call.get("coverage_audit_performed") is not True
+            or str(raw_call.get("extraction_semantics_version") or "")
+            != FACT_EXTRACTION_SEMANTICS_VERSION
+        ):
+            continue
+        call = _coerce_provider_call(raw_call)
+        if not call.transport_chunk_ids:
+            nonsplit_ids.update(call.document_ids)
+            continue
+        for document_id in call.document_ids:
+            audited_chunk_ids_by_document.setdefault(
+                document_id,
+                set(),
+            ).update(call.transport_chunk_ids)
+    completed_ids = set(nonsplit_ids)
+    for disposition in document_dispositions:
+        document_id = str(disposition.get("document_id") or "")
+        expected_chunk_ids = {
+            str(value)
+            for value in disposition.get("transport_chunk_ids") or ()
+            if str(value)
+        }
+        if (
+            document_id
+            and expected_chunk_ids
+            and disposition.get("all_transport_chunks_complete") is True
+            and expected_chunk_ids.issubset(
+                audited_chunk_ids_by_document.get(document_id, set())
+            )
+        ):
+            completed_ids.add(document_id)
+    return frozenset(completed_ids)
+
+
 def _load_fact_checkpoint(
-    root: Path, *, source_graph: SourceGraphAcquisitionRun
+    root: Path,
+    *,
+    source_graph: SourceGraphAcquisitionRun,
+    committed_fact_snapshot: Mapping[str, Any] | None = None,
 ) -> Mapping[str, Any]:
     paths = {key: root / value for key, value in FACT_EXTRACTION_OUTPUT_FILES.items()}
     required = (
@@ -2524,8 +2818,17 @@ def _load_fact_checkpoint(
         paths["provider_calls"],
         paths["rejections"],
     )
-    if not all(path.is_file() for path in required):
+    if committed_fact_snapshot is None and not all(
+        path.is_file() for path in required
+    ):
         return {}
+    if committed_fact_snapshot is not None and (
+        str(committed_fact_snapshot.get("target_id") or "")
+        != str(getattr(source_graph, "target_id", ""))
+        or str(committed_fact_snapshot.get("as_of_date") or "")
+        != str(getattr(source_graph, "as_of_date", ""))
+    ):
+        raise ValueError("committed fact snapshot target/date mismatch")
     current_ids = {
         str(row.get("document_id") or "") for row in source_graph.evidence_documents
     }
@@ -2541,10 +2844,18 @@ def _load_fact_checkpoint(
                 str(row.get("document_id") or "")
             ),
         )
-        for row in _read_jsonl(paths["accepted_claims"])
+        for row in (
+            tuple(committed_fact_snapshot.get("accepted_claims") or ())
+            if committed_fact_snapshot is not None
+            else _read_jsonl(paths["accepted_claims"])
+        )
     )
     all_calls: list[Mapping[str, Any]] = []
-    for raw_call in _read_jsonl(paths["provider_calls"]):
+    for raw_call in (
+        tuple(committed_fact_snapshot.get("provider_calls") or ())
+        if committed_fact_snapshot is not None
+        else _read_jsonl(paths["provider_calls"])
+    ):
         call = dict(raw_call)
         if isinstance(call.get("accepted_claims"), list):
             call["accepted_claims"] = [
@@ -2557,15 +2868,36 @@ def _load_fact_checkpoint(
                 for claim in call["accepted_claims"]
             ]
         all_calls.append(call)
+    typed_current_lineage_reassessment_receipt_present = any(
+        bool(call.get("current_lineage_request_ids"))
+        and "current_lineage_objective_reassessment_document_ids"
+        in call
+        for call in all_calls
+    )
+    current_lineage_reassessment_receipt_ids = (
+        _upgrade_current_lineage_objective_reassessment_receipts(
+            all_calls,
+            document_by_id=document_by_id,
+        )
+    )
     carried_coverage_refresh_document_ids: list[str] = []
+    carried_current_lineage_objective_reassessment_document_ids: list[
+        str
+    ] = []
+    audit_current_lineage_objective_reassessment_ids: tuple[str, ...] = ()
     prior_semantics_recovery_document_ids: tuple[str, ...] = ()
     prior_semantics_recovery_invalidated_claim_count = 0
     result_path = paths["result"]
-    if result_path.is_file():
+    if committed_fact_snapshot is not None:
+        prior_result = dict(committed_fact_snapshot.get("result") or {})
+    elif result_path.is_file():
         try:
             prior_result = _read_json(result_path)
         except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
             prior_result = {}
+    else:
+        prior_result = {}
+    if prior_result:
         if (
             str(prior_result.get("target_id") or "")
             == str(getattr(source_graph, "target_id", ""))
@@ -2582,6 +2914,20 @@ def _load_fact_checkpoint(
                     or ()
                     if str(value) in current_ids
                 )
+                if (
+                    "current_fact_lineage_objective_reassessment_document_ids"
+                    in audit
+                ):
+                    audit_current_lineage_objective_reassessment_ids = tuple(
+                        dict.fromkeys(
+                            str(value)
+                            for value in audit.get(
+                                "current_fact_lineage_objective_reassessment_document_ids"
+                            )
+                            or ()
+                            if str(value) in current_ids
+                        )
+                    )
                 recovery_status = audit.get(
                     "semantics_migration_recovery_status"
                 )
@@ -2686,7 +3032,48 @@ def _load_fact_checkpoint(
         for document_id in row.get("document_ids") or ()
         if str(document_id) in current_ids
     }
-    persisted_dispositions = _read_jsonl(paths["document_dispositions"])
+    persisted_dispositions = (
+        tuple(committed_fact_snapshot.get("document_dispositions") or ())
+        if committed_fact_snapshot is not None
+        else _read_jsonl(paths["document_dispositions"])
+    )
+    completed_current_lineage_reassessment_ids = (
+        _completed_current_semantics_coverage_audit_document_ids(
+            provider_calls=all_calls,
+            document_dispositions=persisted_dispositions,
+        )
+    )
+    if (
+        typed_current_lineage_reassessment_receipt_present
+        and not set(
+            audit_current_lineage_objective_reassessment_ids
+        ).issubset(current_lineage_reassessment_receipt_ids)
+    ):
+        raise ValueError(
+            "fact objective reassessment audit is outside its typed receipts"
+        )
+    outstanding_current_lineage_reassessment_ids = set(
+        current_lineage_reassessment_receipt_ids
+    )
+    if not outstanding_current_lineage_reassessment_ids:
+        # Compatibility for the one legacy no-claim edge that cannot be
+        # reconstructed from embedded accepted claims.  New recovery writes
+        # always carry the typed provider-call receipt above.
+        outstanding_current_lineage_reassessment_ids.update(
+            audit_current_lineage_objective_reassessment_ids
+        )
+    outstanding_current_lineage_reassessment_ids.intersection_update(
+        current_ids
+    )
+    outstanding_current_lineage_reassessment_ids.difference_update(
+        completed_current_lineage_reassessment_ids
+    )
+    carried_current_lineage_objective_reassessment_document_ids.extend(
+        sorted(outstanding_current_lineage_reassessment_ids)
+    )
+    carried_coverage_refresh_document_ids.extend(
+        sorted(outstanding_current_lineage_reassessment_ids)
+    )
     completed_ids = completed_call_ids & {
         str(row.get("document_id") or "")
         for row in persisted_dispositions
@@ -2730,7 +3117,11 @@ def _load_fact_checkpoint(
     )
     rejections = tuple(
         row
-        for row in _read_jsonl(paths["rejections"])
+        for row in (
+            tuple(committed_fact_snapshot.get("rejections") or ())
+            if committed_fact_snapshot is not None
+            else _read_jsonl(paths["rejections"])
+        )
         if str(row.get("document_id") or "") in completed_ids
     )
     return {
@@ -2741,12 +3132,113 @@ def _load_fact_checkpoint(
         "prior_coverage_refresh_document_ids": tuple(
             dict.fromkeys(carried_coverage_refresh_document_ids)
         ),
+        "prior_current_lineage_objective_reassessment_document_ids": tuple(
+            dict.fromkeys(
+                carried_current_lineage_objective_reassessment_document_ids
+            )
+        ),
         "prior_semantics_recovery_document_ids": (
             prior_semantics_recovery_document_ids
         ),
         "prior_semantics_recovery_invalidated_claim_count": (
             prior_semantics_recovery_invalidated_claim_count
         ),
+    }
+
+
+def _authoritative_fact_recovery_extract_kwargs(
+    *,
+    root: Path,
+    authoritative_fact_context: Mapping[str, Any] | None,
+    target: CurrentResearchTarget,
+    archetype_id: str,
+    as_of_date: str,
+    documents: Sequence[Mapping[str, Any]],
+    open_objectives: Sequence[Mapping[str, Any]],
+    current_facts: Sequence[Mapping[str, Any]],
+    score_gap_context: Mapping[str, Any],
+    prior_fact: Mapping[str, Any],
+    extraction_mode: str,
+) -> Mapping[str, Any]:
+    """Seal an authority-loss replay to its exact validated journal calls."""
+
+    if not (
+        authoritative_fact_context
+        and authoritative_fact_context.get(
+            "authoritative_fact_lineage_recovery_required"
+        )
+        is True
+    ):
+        return {}
+    ledger = authoritative_fact_context.get("authoritative_fact_ledger")
+    expectation = authoritative_fact_context.get(
+        "authoritative_recovery_expectation"
+    )
+    pending_new_fact_ids = tuple(
+        authoritative_fact_context.get("pending_new_fact_ids") or ()
+    )
+    if (
+        ledger is None
+        or not isinstance(expectation, Mapping)
+        or expectation.get("status")
+        != "AUTHORITY_LOSS_RECOVERY_REQUIRED"
+        or pending_new_fact_ids
+    ):
+        raise ValueError("authoritative fact recovery context is inconsistent")
+    try:
+        binding = resolve_current_fact_lineage_recovery_binding(
+            authoritative_fact_ledger=ledger,
+            journal_root=root / "collaboration_codex_subagent_provider",
+            target_id=target.target_id,
+            target_name=target.company_name,
+            target_aliases=target.aliases,
+            archetype_id=archetype_id,
+            as_of_date=as_of_date,
+            documents=documents,
+            open_objectives=open_objectives,
+            current_facts=current_facts,
+            score_gap_context=score_gap_context,
+            prior_material_claims=tuple(
+                prior_fact.get("prior_material_claims") or ()
+            ),
+            prior_document_dispositions=tuple(
+                prior_fact.get("prior_document_dispositions") or ()
+            ),
+            extraction_mode=extraction_mode,
+            pending_new_fact_ids=(),
+        )
+    except (
+        FileNotFoundError,
+        OSError,
+        KeyError,
+        TypeError,
+        ValueError,
+        RuntimeError,
+        json.JSONDecodeError,
+    ):
+        # The extractor owns the public checkpoint schema.  Handing it the
+        # validated ledger without a binding yields a deterministic
+        # CURRENT_FACT_LINEAGE_RECOVERY_BINDING_REQUIRED PENDING result and,
+        # importantly, keeps its ordinary provider batches closed.
+        return {"authoritative_fact_ledger": ledger}
+    expected_source_ids = tuple(
+        sorted(
+            str(value)
+            for value in expectation.get(
+                "expected_recovered_source_document_ids"
+            )
+            or ()
+        )
+    )
+    if (
+        tuple(sorted(binding.seed_source_document_ids))
+        != expected_source_ids
+        or binding.pending_new_fact_ids
+    ):
+        raise ValueError("authoritative fact journal binding widened its seed")
+    return {
+        "authoritative_fact_ledger": ledger,
+        "current_fact_lineage_recovery_binding": binding,
     }
 
 
@@ -2805,6 +3297,18 @@ def resume_current_fact_extraction_checkpoint(
         target_id=target.target_id,
         as_of_date=config.as_of_date,
     )
+    authoritative_fact_context = _load_authoritative_prior_fact_context(
+        root,
+        target_id=target.target_id,
+        as_of_date=config.as_of_date,
+        source_checkpoint=checkpoint,
+    )
+    authoritative_fact_lineage_recovery_required = bool(
+        authoritative_fact_context
+        and authoritative_fact_context.get(
+            "authoritative_fact_lineage_recovery_required"
+        )
+    )
     source_config = SourceGraphAcquisitionConfig(
         mode=config.source_acquisition_mode,
         max_results_per_query=100,
@@ -2818,12 +3322,18 @@ def resume_current_fact_extraction_checkpoint(
         open_objectives=initial_graph.open_objectives,
         config=source_config,
         allow_pending_fact_extraction_recovery=(
-            _source_checkpoint_needs_fact_extraction_recovery(
+            not authoritative_fact_lineage_recovery_required
+            and _source_checkpoint_needs_fact_extraction_recovery(
                 root=root,
                 checkpoint=checkpoint,
                 target_id=target.target_id,
                 as_of_date=config.as_of_date,
             )
+        ),
+        authoritative_fact_lineage_recovery=(
+            authoritative_fact_context
+            if authoritative_fact_lineage_recovery_required
+            else None
         ),
     )
     prior_context = _load_prior_research_context(
@@ -2832,8 +3342,17 @@ def resume_current_fact_extraction_checkpoint(
         as_of_date=config.as_of_date,
         objectives=objective_rows,
         archetype_id=config.archetype_id,
+        authoritative_fact_context=authoritative_fact_context,
     )
-    prior_fact = _load_fact_checkpoint(root, source_graph=source_graph)
+    prior_fact = _load_fact_checkpoint(
+        root,
+        source_graph=source_graph,
+        committed_fact_snapshot=(
+            authoritative_fact_context.get("committed_fact_result_snapshot")
+            if authoritative_fact_context is not None
+            else None
+        ),
+    )
     extractor = ResearcherEvidenceFactExtractor(
         provider=provider,
         documents_per_call=config.fact_documents_per_call,
@@ -2845,6 +3364,39 @@ def resume_current_fact_extraction_checkpoint(
             )
         ),
     )
+    fact_score_gap_context = {
+        "source_graph_status": source_graph.status,
+        "source_graph_pending_reasons": list(
+            source_graph.checkpoint.get("pending_reasons") or ()
+        ),
+        "prior_fact_extraction_feedback": list(
+            prior_context["research_gap_feedback"]
+        ),
+        "prior_structured_source_gap": dict(
+            prior_context["structured_gap_context"]
+        ),
+        "prior_deterministic_score_gap": dict(
+            prior_context["score_gap_context"]
+        ),
+        "prior_supervisor_gap": dict(
+            prior_context["supervisor_source_gap_context"]
+        ),
+    }
+    authoritative_fact_recovery_kwargs = (
+        _authoritative_fact_recovery_extract_kwargs(
+            root=root,
+            authoritative_fact_context=authoritative_fact_context,
+            target=target,
+            archetype_id=config.archetype_id,
+            as_of_date=config.as_of_date,
+            documents=source_graph.evidence_documents,
+            open_objectives=objective_rows,
+            current_facts=prior_context["facts"],
+            score_gap_context=fact_score_gap_context,
+            prior_fact=prior_fact,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+    )
     result = extractor.extract(
         target_id=target.target_id,
         target_name=target.company_name,
@@ -2854,36 +3406,12 @@ def resume_current_fact_extraction_checkpoint(
         documents=source_graph.evidence_documents,
         open_objectives=objective_rows,
         current_facts=prior_context["facts"],
-        score_gap_context={
-            "source_graph_status": source_graph.status,
-            "source_graph_pending_reasons": list(
-                source_graph.checkpoint.get("pending_reasons") or ()
-            ),
-            "prior_fact_extraction_feedback": list(
-                prior_context["research_gap_feedback"]
-            ),
-            "prior_structured_source_gap": dict(
-                prior_context["structured_gap_context"]
-            ),
-            "prior_deterministic_score_gap": dict(
-                prior_context["score_gap_context"]
-            ),
-            "prior_supervisor_gap": dict(
-                prior_context["supervisor_source_gap_context"]
-            ),
-        },
+        score_gap_context=fact_score_gap_context,
         extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        **authoritative_fact_recovery_kwargs,
         **prior_fact,
     )
     write_researcher_fact_extraction_result(result, root)
-    write_jsonl(
-        root / "counterfacts.jsonl",
-        (
-            row.to_dict()
-            for row in result.facts
-            if row.direction == EvidenceDirection.COUNTER.value
-        ),
-    )
     return result
 
 
@@ -2940,6 +3468,1248 @@ def _fact_extraction_is_complete_for_source_checkpoint(
     )
 
 
+def _canonical_json_payload(value: Any) -> str:
+    """Return one strict RFC-8259-compatible JSON identity."""
+
+    try:
+        return json.dumps(
+            value,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        )
+    except (TypeError, ValueError) as exc:
+        raise ValueError("checkpoint payload is not canonical JSON") from exc
+
+
+def _canonical_fact_payload(row: Mapping[str, Any]) -> str:
+    """Return the strict JSON identity used to join fact authority planes."""
+
+    return _canonical_json_payload(dict(row))
+
+
+def _strict_jsonl_objects(path: Path, *, label: str) -> tuple[Mapping[str, Any], ...]:
+    if not path.is_file():
+        raise ValueError(f"committed fact checkpoint lacks {label}")
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except (OSError, UnicodeError) as exc:
+        raise ValueError(f"cannot read committed fact {label}") from exc
+    if any(not line.strip() for line in lines):
+        raise ValueError(f"committed fact {label} has a blank row")
+    rows: list[Mapping[str, Any]] = []
+    for line in lines:
+        try:
+            value = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise ValueError(
+                f"committed fact {label} contains invalid JSON"
+            ) from exc
+        if not isinstance(value, Mapping):
+            raise ValueError(f"committed fact {label} contains a non-object")
+        _canonical_json_payload(value)
+        rows.append(dict(value))
+    return tuple(rows)
+
+
+def _embedded_mapping_rows(
+    value: Any,
+    *,
+    label: str,
+) -> tuple[Mapping[str, Any], ...]:
+    if isinstance(value, (str, bytes)) or not isinstance(value, Sequence):
+        raise ValueError(f"fact result embedded {label} must be an array")
+    rows = tuple(dict(row) for row in value if isinstance(row, Mapping))
+    if len(rows) != len(value):
+        raise ValueError(f"fact result embedded {label} contains a non-object")
+    _canonical_json_payload(rows)
+    return rows
+
+
+def _load_committed_fact_result_snapshot(
+    root: Path,
+    *,
+    target_id: str,
+    as_of_date: str,
+) -> Mapping[str, Any]:
+    """Project only the result-last fact generation, never mixed new leaves.
+
+    The writer replaces six JSONL leaves and the standalone audit before it
+    replaces ``fact_extraction_result.json``.  A crash can therefore expose,
+    for example, a new 499-fact leaf beside the older 457-fact result marker.
+    The marker's embedded rows remain the committed generation; mismatching
+    leaves are repair work and must not silently become the next input.
+    """
+
+    result_path = root / FACT_EXTRACTION_OUTPUT_FILES["result"]
+    if not result_path.is_file():
+        raise ValueError(
+            "authoritative fact ledger requires a result-last fact checkpoint"
+        )
+    result = _read_json(result_path)
+    if (
+        str(result.get("target_id") or "") != target_id
+        or str(result.get("as_of_date") or "") != as_of_date
+    ):
+        raise ValueError("fact result commit marker target/date mismatch")
+    compilation = result.get("fact_compilation")
+    audit = result.get("audit")
+    if not isinstance(compilation, Mapping) or not isinstance(audit, Mapping):
+        raise ValueError("fact result commit marker is incomplete")
+    embedded = {
+        "accepted_claims": _embedded_mapping_rows(
+            result.get("material_claims"),
+            label="material claims",
+        ),
+        "rejections": _embedded_mapping_rows(
+            result.get("rejections"),
+            label="rejections",
+        ),
+        "document_dispositions": _embedded_mapping_rows(
+            result.get("document_dispositions"),
+            label="document dispositions",
+        ),
+        "provider_calls": _embedded_mapping_rows(
+            result.get("provider_calls"),
+            label="provider calls",
+        ),
+        "facts": _validated_fact_rows(
+            compilation.get("facts"),
+            target_id=target_id,
+            as_of_date=as_of_date,
+            label="fact result compiled roster",
+        ),
+        "claim_fact_links": _embedded_mapping_rows(
+            compilation.get("claim_fact_links"),
+            label="claim/fact links",
+        ),
+    }
+    for row in embedded["provider_calls"]:
+        _coerce_provider_call(row)
+    for row in embedded["rejections"]:
+        _coerce_rejection(row)
+    disposition_ids = tuple(
+        str(row.get("document_id") or "").strip()
+        for row in embedded["document_dispositions"]
+    )
+    if (
+        any(not value for value in disposition_ids)
+        or len(disposition_ids) != len(set(disposition_ids))
+    ):
+        raise ValueError(
+            "fact result embedded document dispositions are not unique"
+        )
+    recomputed = EvidenceFactCompiler().compile(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        accepted_claims=embedded["accepted_claims"],
+    )
+    if (
+        _canonical_json_payload(
+            tuple(row.to_dict() for row in recomputed.facts)
+        )
+        != _canonical_json_payload(embedded["facts"])
+        or _canonical_json_payload(
+            tuple(row.to_dict() for row in recomputed.claim_fact_links)
+        )
+        != _canonical_json_payload(embedded["claim_fact_links"])
+    ):
+        raise ValueError(
+            "fact result embedded compiler projection is inconsistent"
+        )
+
+    leaf_mismatches: list[str] = []
+    for key in (
+        "accepted_claims",
+        "rejections",
+        "document_dispositions",
+        "provider_calls",
+        "facts",
+        "claim_fact_links",
+    ):
+        leaf_rows = _strict_jsonl_objects(
+            root / FACT_EXTRACTION_OUTPUT_FILES[key],
+            label=key,
+        )
+        if _canonical_json_payload(leaf_rows) != _canonical_json_payload(
+            embedded[key]
+        ):
+            leaf_mismatches.append(key)
+    audit_path = root / FACT_EXTRACTION_OUTPUT_FILES["audit"]
+    if not audit_path.is_file() or _canonical_json_payload(
+        _read_json(audit_path) if audit_path.is_file() else None
+    ) != _canonical_json_payload(dict(audit)):
+        leaf_mismatches.append("audit")
+    counterfacts = tuple(
+        row
+        for row in embedded["facts"]
+        if str(row.get("direction") or "") == EvidenceDirection.COUNTER.value
+    )
+    counterfact_path = root / "counterfacts.jsonl"
+    if (
+        not counterfact_path.is_file()
+        or _canonical_json_payload(
+            _strict_jsonl_objects(counterfact_path, label="counterfacts")
+        )
+        != _canonical_json_payload(counterfacts)
+    ):
+        leaf_mismatches.append("counterfacts")
+    return {
+        "schema_version": "e2r_v5_result_last_fact_snapshot_v1",
+        "target_id": target_id,
+        "as_of_date": as_of_date,
+        "result": dict(result),
+        "audit": dict(audit),
+        **embedded,
+        "leaf_commit_complete": not leaf_mismatches,
+        "atomic_snapshot_repair_required": bool(leaf_mismatches),
+        "leaf_mismatch_names": tuple(leaf_mismatches),
+        "production_score_authority": False,
+    }
+
+
+def _repair_fact_checkpoint_leaves_from_result_snapshot(
+    root: Path,
+    *,
+    snapshot: Mapping[str, Any],
+) -> None:
+    """Atomically restore every derived leaf from the result-last marker."""
+
+    if snapshot.get("atomic_snapshot_repair_required") is not True:
+        return
+    result = snapshot.get("result")
+    audit = snapshot.get("audit")
+    if not isinstance(result, Mapping) or not isinstance(audit, Mapping):
+        raise ValueError("fact result repair snapshot is incomplete")
+    result_path = root / FACT_EXTRACTION_OUTPUT_FILES["result"]
+    if _canonical_json_payload(_read_json(result_path)) != (
+        _canonical_json_payload(dict(result))
+    ):
+        raise ValueError("fact result commit marker changed before leaf repair")
+    jsonl_rows = {
+        key: tuple(snapshot.get(key) or ())
+        for key in (
+            "accepted_claims",
+            "rejections",
+            "document_dispositions",
+            "provider_calls",
+            "facts",
+            "claim_fact_links",
+        )
+    }
+    jsonl_rows["counterfacts"] = tuple(
+        row
+        for row in jsonl_rows["facts"]
+        if str(row.get("direction") or "") == EvidenceDirection.COUNTER.value
+    )
+    destinations = {
+        **{
+            key: root / FACT_EXTRACTION_OUTPUT_FILES[key]
+            for key in (
+                "accepted_claims",
+                "rejections",
+                "document_dispositions",
+                "provider_calls",
+                "facts",
+                "claim_fact_links",
+            )
+        },
+        "counterfacts": root / "counterfacts.jsonl",
+        "audit": root / FACT_EXTRACTION_OUTPUT_FILES["audit"],
+    }
+    serialized = {
+        destinations[key]: "".join(
+            json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n"
+            for row in rows
+        )
+        for key, rows in jsonl_rows.items()
+    }
+    serialized[destinations["audit"]] = (
+        json.dumps(dict(audit), ensure_ascii=False, indent=2, sort_keys=True)
+        + "\n"
+    )
+    temporary_paths: dict[Path, Path] = {}
+    try:
+        for destination, content in serialized.items():
+            descriptor, temporary_name = tempfile.mkstemp(
+                prefix=f".{destination.name}.",
+                suffix=".repair.tmp",
+                dir=root,
+            )
+            temporary_path = Path(temporary_name)
+            temporary_paths[destination] = temporary_path
+            with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+                handle.write(content)
+                handle.flush()
+                os.fsync(handle.fileno())
+        if _canonical_json_payload(_read_json(result_path)) != (
+            _canonical_json_payload(dict(result))
+        ):
+            raise ValueError("fact result commit marker changed during leaf repair")
+        directory_descriptor = os.open(root, os.O_RDONLY)
+        try:
+            for destination in serialized:
+                os.replace(temporary_paths.pop(destination), destination)
+            os.fsync(directory_descriptor)
+        finally:
+            os.close(directory_descriptor)
+        if _canonical_json_payload(_read_json(result_path)) != (
+            _canonical_json_payload(dict(result))
+        ):
+            raise ValueError("fact result commit marker changed after leaf repair")
+    finally:
+        for temporary_path in temporary_paths.values():
+            try:
+                temporary_path.unlink()
+            except FileNotFoundError:
+                pass
+
+
+def _validated_fact_rows(
+    values: Sequence[Any],
+    *,
+    target_id: str,
+    as_of_date: str,
+    label: str,
+) -> tuple[Mapping[str, Any], ...]:
+    if isinstance(values, (str, bytes)) or not isinstance(values, Sequence):
+        raise ValueError(f"{label} must be a JSON row sequence")
+    rows: list[Mapping[str, Any]] = []
+    fact_ids: list[str] = []
+    for value in values:
+        if not isinstance(value, Mapping):
+            raise ValueError(f"{label} contains a non-object fact row")
+        row = dict(value)
+        fact_id = str(row.get("fact_id") or "").strip()
+        if (
+            not fact_id
+            or str(row.get("target_id") or "") != target_id
+            or str(row.get("as_of_date") or "") != as_of_date
+        ):
+            raise ValueError(f"{label} fact identity is invalid")
+        _canonical_fact_payload(row)
+        rows.append(row)
+        fact_ids.append(fact_id)
+    if len(fact_ids) != len(set(fact_ids)):
+        raise ValueError(f"{label} fact ids are duplicated")
+    return tuple(rows)
+
+
+def _source_checkpoint_downstream_document_ids(
+    checkpoint: Mapping[str, Any],
+) -> tuple[str, ...]:
+    raw = checkpoint.get("production_downstream_document_ids")
+    if isinstance(raw, (str, bytes)) or not isinstance(raw, Sequence):
+        raise ValueError(
+            "authoritative fact recovery requires a downstream source roster"
+        )
+    result = tuple(str(value or "").strip() for value in raw)
+    evidence_ids = {
+        str(row.get("document_id") or "").strip()
+        for row in checkpoint.get("evidence_documents") or ()
+        if isinstance(row, Mapping)
+        and str(row.get("document_id") or "").strip()
+    }
+    if (
+        not result
+        or any(not value for value in result)
+        or len(result) != len(set(result))
+        or not set(result).issubset(evidence_ids)
+    ):
+        raise ValueError(
+            "authoritative fact recovery source roster binding is invalid"
+        )
+    return result
+
+
+_FACT_COMPILER_ADDITIVE_FIELDS = frozenset(
+    {
+        "claim_ids",
+        "source_ids",
+        "quote_ids",
+        "corroborating_independence_groups",
+        "source_independence_group",
+        "confidence",
+    }
+)
+
+
+def _fact_lineage_values(
+    row: Mapping[str, Any],
+    field: str,
+    *,
+    allow_empty: bool = False,
+) -> tuple[str, ...]:
+    raw = row.get(field)
+    if isinstance(raw, (str, bytes)) or not isinstance(raw, Sequence):
+        raise ValueError(f"fact {field} lineage must be an array")
+    values = tuple(str(value or "").strip() for value in raw)
+    if (
+        any(not value for value in values)
+        or len(values) != len(set(values))
+        or (not allow_empty and not values)
+    ):
+        raise ValueError(f"fact {field} lineage is invalid")
+    return values
+
+
+def _compiler_claim_quote_ids(row: Mapping[str, Any]) -> frozenset[str]:
+    raw = row.get("quote_ids")
+    if raw is None and row.get("quote_id"):
+        raw = [row.get("quote_id")]
+    if raw:
+        return frozenset(
+            _fact_lineage_values({"quote_ids": raw}, "quote_ids")
+        )
+    claim_id = str(row.get("claim_id") or "").strip()
+    source_ids = _fact_lineage_values(row, "source_ids")
+    exact_quote = str(
+        row.get("exact_quote") or row.get("quote_text") or ""
+    ).strip()
+    if not claim_id or not exact_quote:
+        raise ValueError("fact addition claim quote lineage is incomplete")
+    return frozenset(
+        {
+            stable_intelligence_id(
+                "QUOTE",
+                {
+                    "claim_id": claim_id,
+                    "source_ids": list(source_ids),
+                    "quote_text": exact_quote,
+                },
+            )
+        }
+    )
+
+
+def _fact_result_is_bound_to_source_checkpoint(
+    *,
+    result: Mapping[str, Any],
+    source_checkpoint: Mapping[str, Any],
+    target_id: str,
+    as_of_date: str,
+) -> bool:
+    status = str(result.get("status") or "")
+    if status == "FACT_EXTRACTION_COMPLETE":
+        return _fact_extraction_is_complete_for_source_checkpoint(
+            fact_result=result,
+            source_checkpoint=source_checkpoint,
+            target_id=target_id,
+            as_of_date=as_of_date,
+        )
+    if status != "FACT_EXTRACTION_PENDING":
+        return False
+    downstream_ids = _source_checkpoint_downstream_document_ids(
+        source_checkpoint
+    )
+    audit = result.get("audit") or {}
+    return bool(
+        fact_extraction_has_exact_checkpoint_recovery_wait(
+            result.get("pending_reasons") or ()
+        )
+        and isinstance(audit, Mapping)
+        and int(audit.get("input_document_count") or 0)
+        == len(downstream_ids)
+    )
+
+
+def _validated_official_fact_journal_payloads(
+    root: Path,
+    *,
+    required_lineages: Sequence[tuple[str, str]],
+) -> Mapping[tuple[str, str], Mapping[str, Any]]:
+    """Open only exact current fact request/response receipts.
+
+    Historical journals can contain requests for schemas that are no longer
+    accepted by the current bridge.  They are irrelevant here.  We first
+    project the stable FACTPROMPT identity and then fully validate only the
+    exact prompt/response lineages claimed by the committed fact generation.
+    """
+
+    required = frozenset(
+        (str(prompt_hash), str(response_hash))
+        for prompt_hash, response_hash in required_lineages
+    )
+    if not required:
+        return {}
+    if any(
+        not prompt_hash.startswith("FACTPROMPT-")
+        or not response_hash.startswith("FACTRESP-")
+        for prompt_hash, response_hash in required
+    ):
+        raise ValueError("fact addition journal lineage identity is invalid")
+    journal_root = root / "collaboration_codex_subagent_provider"
+    request_root = journal_root / "requests"
+    response_root = journal_root / "responses"
+    if not request_root.is_dir() or not response_root.is_dir():
+        raise ValueError("fact additions require the official Collaboration journal")
+    required_prompt_hashes = {value[0] for value in required}
+    found: dict[tuple[str, str], Mapping[str, Any]] = {}
+    for request_path in sorted(request_root.glob("COLLABREQ-*.json")):
+        raw_request = _read_json(request_path)
+        if raw_request.get("pass_name") != "EVIDENCE_FACT_EXTRACTION":
+            continue
+        prompt = raw_request.get("prompt")
+        if not isinstance(prompt, str) or not prompt:
+            continue
+        try:
+            request_payload = json.loads(prompt.rsplit("\n", 1)[-1])
+        except (TypeError, ValueError, json.JSONDecodeError):
+            continue
+        if not isinstance(request_payload, Mapping):
+            continue
+        prompt_hash = stable_intelligence_id(
+            "FACTPROMPT", request_payload
+        )
+        if prompt_hash not in required_prompt_hashes:
+            continue
+        request = validate_collaboration_request(raw_request)
+        request_id = str(request["request_id"])
+        if request_path.name != f"{request_id}.json":
+            raise ValueError("fact addition request filename identity mismatch")
+        response_path = response_root / f"{request_id}.json"
+        if not response_path.is_file():
+            continue
+        response = validate_collaboration_response_envelope(
+            request=request,
+            envelope=_read_json(response_path),
+        )
+        response_payload = response.get("payload")
+        if not isinstance(response_payload, Mapping):
+            raise ValueError("fact addition response payload is invalid")
+        response_hash = stable_intelligence_id(
+            "FACTRESP",
+            scrub_blind_research_payload(response_payload),
+        )
+        lineage = (prompt_hash, response_hash)
+        if lineage not in required:
+            continue
+        quarantine_path = (
+            journal_root
+            / "quarantine"
+            / request_id
+            / f"{response['response_id']}.json"
+        )
+        if quarantine_path.is_file():
+            raise ValueError("fact addition response receipt is quarantined")
+        if lineage in found:
+            raise ValueError("fact addition journal lineage is ambiguous")
+        found[lineage] = dict(response_payload)
+    if set(found) != set(required):
+        raise ValueError("fact addition lacks an exact official imported receipt")
+    return found
+
+
+def _attested_compiler_fact_addition_ids(
+    *,
+    root: Path,
+    target_id: str,
+    as_of_date: str,
+    source_checkpoint: Mapping[str, Any],
+    authority_by_id: Mapping[str, Mapping[str, Any]],
+    convenience_rows: Sequence[Mapping[str, Any]],
+    enriched_fact_ids: Sequence[str],
+    pending_new_fact_ids: Sequence[str],
+    committed_snapshot: Mapping[str, Any],
+) -> tuple[str, ...]:
+    """Attest compiler-owned additive changes without weakening epoch authority.
+
+    An epoch fact may gain corroboration before the next epoch commit, but no
+    authority-owned semantic or evidence field may disappear.  Every added
+    claim is rebuilt from one validated Collaboration response, checked against
+    its exact current source document, and then compiled again with the entire
+    committed claim roster.  This makes enrichment monotonic and all-or-none.
+    """
+
+    enriched = tuple(sorted(str(value) for value in enriched_fact_ids))
+    pending_new = tuple(sorted(str(value) for value in pending_new_fact_ids))
+    addition_fact_ids = frozenset((*enriched, *pending_new))
+    if not addition_fact_ids:
+        return ()
+    if committed_snapshot.get("leaf_commit_complete") is not True:
+        raise ValueError("fact additions require a fully committed fact snapshot")
+    result = committed_snapshot.get("result")
+    if (
+        not isinstance(result, Mapping)
+        or str(result.get("target_id") or "") != target_id
+        or str(result.get("as_of_date") or "") != as_of_date
+        or not _fact_result_is_bound_to_source_checkpoint(
+            result=result,
+            source_checkpoint=source_checkpoint,
+            target_id=target_id,
+            as_of_date=as_of_date,
+        )
+    ):
+        raise ValueError("fact additions are not bound to the current source checkpoint")
+
+    convenience_by_id = {
+        str(row["fact_id"]): dict(row) for row in convenience_rows
+    }
+    snapshot_fact_rows = tuple(committed_snapshot.get("facts") or ())
+    snapshot_by_id = {
+        str(row.get("fact_id") or ""): dict(row)
+        for row in snapshot_fact_rows
+        if isinstance(row, Mapping)
+    }
+    if (
+        len(snapshot_by_id) != len(snapshot_fact_rows)
+        or set(snapshot_by_id) != set(convenience_by_id)
+        or any(
+            _canonical_fact_payload(snapshot_by_id[fact_id])
+            != _canonical_fact_payload(convenience_by_id[fact_id])
+            for fact_id in snapshot_by_id
+        )
+    ):
+        raise ValueError("fact additions do not match the result-last fact roster")
+
+    accepted_claims = tuple(committed_snapshot.get("accepted_claims") or ())
+    if any(not isinstance(row, Mapping) for row in accepted_claims):
+        raise ValueError("fact addition claim roster is invalid")
+    claim_by_id = {
+        str(row.get("claim_id") or ""): dict(row)
+        for row in accepted_claims
+        if isinstance(row, Mapping) and str(row.get("claim_id") or "")
+    }
+    if len(claim_by_id) != len(accepted_claims):
+        raise ValueError("fact addition claim ids are missing or duplicated")
+    recomputed = EvidenceFactCompiler().compile(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        accepted_claims=accepted_claims,
+    )
+    recomputed_fact_rows = tuple(row.to_dict() for row in recomputed.facts)
+    recomputed_link_rows = tuple(
+        row.to_dict() for row in recomputed.claim_fact_links
+    )
+    snapshot_links = tuple(committed_snapshot.get("claim_fact_links") or ())
+    if (
+        recomputed.status != "FACT_COMPILATION_COMPLETE"
+        or not recomputed.fact_graph_ready
+        or _canonical_json_payload(recomputed_fact_rows)
+        != _canonical_json_payload(snapshot_fact_rows)
+        or _canonical_json_payload(recomputed_link_rows)
+        != _canonical_json_payload(snapshot_links)
+    ):
+        raise ValueError("fact additions fail exact compiler replay")
+    link_by_claim_id = {
+        str(row.get("claim_id") or ""): dict(row)
+        for row in snapshot_links
+        if isinstance(row, Mapping) and str(row.get("claim_id") or "")
+    }
+    if len(link_by_claim_id) != len(snapshot_links):
+        raise ValueError("fact addition claim/fact links are ambiguous")
+
+    added_claim_ids_by_fact: dict[str, frozenset[str]] = {}
+    for fact_id in pending_new:
+        current = convenience_by_id.get(fact_id)
+        if current is None:
+            raise ValueError("pending-new fact addition is absent")
+        added_claim_ids_by_fact[fact_id] = frozenset(
+            _fact_lineage_values(current, "claim_ids")
+        )
+    for fact_id in enriched:
+        old = authority_by_id.get(fact_id)
+        current = convenience_by_id.get(fact_id)
+        if old is None or current is None:
+            raise ValueError("enriched fact is absent from an authority plane")
+        old_stable = {
+            key: value
+            for key, value in old.items()
+            if key not in _FACT_COMPILER_ADDITIVE_FIELDS
+        }
+        current_stable = {
+            key: value
+            for key, value in current.items()
+            if key not in _FACT_COMPILER_ADDITIVE_FIELDS
+        }
+        if _canonical_json_payload(old_stable) != _canonical_json_payload(
+            current_stable
+        ):
+            raise ValueError("enriched fact changed immutable semantic metadata")
+        old_claim_ids = frozenset(
+            _fact_lineage_values(old, "claim_ids")
+        )
+        current_claim_ids = frozenset(
+            _fact_lineage_values(current, "claim_ids")
+        )
+        added_claim_ids = current_claim_ids - old_claim_ids
+        if not added_claim_ids or not old_claim_ids.issubset(current_claim_ids):
+            raise ValueError("enriched fact did not preserve exact claim lineage")
+        added_claim_ids_by_fact[fact_id] = added_claim_ids
+        for field in (
+            "source_ids",
+            "quote_ids",
+            "corroborating_independence_groups",
+        ):
+            old_values = frozenset(_fact_lineage_values(old, field))
+            current_values = frozenset(
+                _fact_lineage_values(current, field)
+            )
+            if not old_values.issubset(current_values):
+                raise ValueError(f"enriched fact removed authority {field}")
+        old_confidence = float(old.get("confidence"))
+        current_confidence = float(current.get("confidence"))
+        if current_confidence + 1e-12 < old_confidence:
+            raise ValueError("enriched fact confidence regressed")
+
+    added_claim_ids = frozenset(
+        claim_id
+        for values in added_claim_ids_by_fact.values()
+        for claim_id in values
+    )
+    if not added_claim_ids or any(
+        claim_id not in claim_by_id or claim_id not in link_by_claim_id
+        for claim_id in added_claim_ids
+    ):
+        raise ValueError("fact addition claim/link coverage is incomplete")
+
+    downstream_ids = frozenset(
+        _source_checkpoint_downstream_document_ids(source_checkpoint)
+    )
+    document_by_id = {
+        str(row.get("document_id") or ""): dict(row)
+        for row in source_checkpoint.get("evidence_documents") or ()
+        if isinstance(row, Mapping) and str(row.get("document_id") or "")
+    }
+    cutoff = date.fromisoformat(as_of_date)
+    provider_calls = tuple(
+        _coerce_provider_call(row)
+        for row in committed_snapshot.get("provider_calls") or ()
+    )
+    required_lineages: set[tuple[str, str]] = set()
+    for fact_id, fact_claim_ids in added_claim_ids_by_fact.items():
+        current = convenience_by_id[fact_id]
+        added_claim_rows = tuple(claim_by_id[value] for value in fact_claim_ids)
+        added_sources = {
+            source_id
+            for row in added_claim_rows
+            for source_id in _fact_lineage_values(row, "source_ids")
+        }
+        added_quotes = {
+            quote_id
+            for row in added_claim_rows
+            for quote_id in _compiler_claim_quote_ids(row)
+        }
+        added_groups = {
+            str(row.get("source_independence_group") or "").strip()
+            for row in added_claim_rows
+            if str(row.get("source_independence_group") or "").strip()
+        }
+        if not added_sources or not added_sources.issubset(downstream_ids):
+            raise ValueError("fact addition source is outside the current roster")
+        if fact_id in enriched:
+            old = authority_by_id[fact_id]
+            old_sources = set(_fact_lineage_values(old, "source_ids"))
+            current_sources = set(
+                _fact_lineage_values(current, "source_ids")
+            )
+            if current_sources != old_sources | added_sources:
+                raise ValueError("enriched fact source union is not additive")
+            old_quotes = set(_fact_lineage_values(old, "quote_ids"))
+            current_quotes = set(_fact_lineage_values(current, "quote_ids"))
+            if current_quotes != old_quotes | added_quotes:
+                raise ValueError("enriched fact quote union is not additive")
+            old_groups = set(
+                _fact_lineage_values(
+                    old, "corroborating_independence_groups"
+                )
+            )
+            current_groups = set(
+                _fact_lineage_values(
+                    current, "corroborating_independence_groups"
+                )
+            )
+            if current_groups != old_groups | added_groups:
+                raise ValueError(
+                    "enriched fact independence-group union is not additive"
+                )
+        for claim in added_claim_rows:
+            document_id = str(claim.get("document_id") or "").strip()
+            source_ids = frozenset(
+                _fact_lineage_values(claim, "source_ids")
+            )
+            document = document_by_id.get(document_id)
+            exact_quote = str(claim.get("exact_quote") or "").strip()
+            content = str((document or {}).get("content_text") or "")
+            try:
+                published = date.fromisoformat(
+                    str((document or {}).get("published_at") or "")[:10]
+                )
+                available = date.fromisoformat(
+                    str((document or {}).get("available_at") or "")[:10]
+                )
+            except ValueError as exc:
+                raise ValueError(
+                    "fact addition source date is invalid"
+                ) from exc
+            if (
+                document is None
+                or source_ids != {document_id}
+                or document_id not in downstream_ids
+                or str(claim.get("target_id") or "") != target_id
+                or str(claim.get("as_of_date") or "") != as_of_date
+                or str(document.get("target_id") or "") != target_id
+                or str(document.get("as_of_date") or "") != as_of_date
+                or not exact_quote
+                or exact_quote not in content
+                or hashlib.sha256(content.encode("utf-8")).hexdigest()
+                != str(document.get("content_hash") or "")
+                or str(claim.get("canonical_url") or "")
+                != str(document.get("canonical_url") or "")
+                or str(claim.get("published_at") or "")
+                != str(document.get("published_at") or "")
+                or str(claim.get("available_at") or "")
+                != str(document.get("available_at") or "")
+                or str(claim.get("source_independence_group") or "")
+                != str(document.get("source_independence_group") or "")
+                or published > cutoff
+                or available > cutoff
+            ):
+                raise ValueError("fact addition claim/source provenance drift")
+            prompt_hash = str(claim.get("provider_prompt_hash") or "")
+            response_hash = str(claim.get("provider_response_hash") or "")
+            required_lineages.add((prompt_hash, response_hash))
+            matching_calls = tuple(
+                call
+                for call in provider_calls
+                if claim["claim_id"] in call.accepted_claim_ids
+                and call.status == "COMPLETE"
+                and call.provider_attempt_count == 1
+                and call.provider_name == COLLABORATION_PROVIDER_NAME
+                and call.prompt_hash == prompt_hash
+                and call.response_hash == response_hash
+                and source_ids.issubset(set(call.document_ids))
+                and not call.current_lineage_request_ids
+                and not call.semantics_migration_request_ids
+            )
+            if len(matching_calls) != 1:
+                raise ValueError("fact addition provider-call receipt is not exact")
+            if (
+                matching_calls[0].accepted_claims is not None
+                and sum(
+                    _canonical_json_payload(row)
+                    == _canonical_json_payload(claim)
+                    for row in matching_calls[0].accepted_claims
+                )
+                != 1
+            ):
+                raise ValueError("fact addition embedded claim receipt mismatch")
+            link = link_by_claim_id[str(claim["claim_id"])]
+            if (
+                str(link.get("fact_id") or "") != fact_id
+                or str(link.get("source_independence_group") or "")
+                != str(claim.get("source_independence_group") or "")
+                or frozenset(link.get("source_ids") or ()) != source_ids
+                or float(link.get("claim_confidence"))
+                != float(claim.get("confidence"))
+                or fact_id
+                in {
+                    *(str(value) for value in link.get("supersedes_fact_ids") or ()),
+                    *(str(value) for value in link.get("resolves_fact_ids") or ()),
+                }
+            ):
+                raise ValueError("fact addition claim/fact link drift")
+
+        primary_links = tuple(
+            row
+            for row in snapshot_links
+            if str(row.get("fact_id") or "") == fact_id
+            and str(row.get("link_role") or "") == "PRIMARY_FACT_CLAIM"
+        )
+        if len(primary_links) != 1:
+            raise ValueError("fact addition primary claim is ambiguous")
+        if fact_id in enriched and (
+            str(current.get("source_independence_group") or "")
+            != str(authority_by_id[fact_id].get("source_independence_group") or "")
+        ):
+            primary = primary_links[0]
+            old_claim_ids = set(
+                _fact_lineage_values(authority_by_id[fact_id], "claim_ids")
+            )
+            old_claim_confidences = [
+                float(claim_by_id[claim_id].get("confidence"))
+                for claim_id in old_claim_ids
+                if claim_id in claim_by_id
+            ]
+            if (
+                len(old_claim_confidences) != len(old_claim_ids)
+                or str(primary.get("claim_id") or "") not in fact_claim_ids
+                or str(primary.get("source_independence_group") or "")
+                != str(current.get("source_independence_group") or "")
+                or float(primary.get("claim_confidence"))
+                <= max(old_claim_confidences)
+            ):
+                raise ValueError(
+                    "enriched fact primary source changed without stronger current evidence"
+                )
+
+    journal_payloads = _validated_official_fact_journal_payloads(
+        root,
+        required_lineages=tuple(sorted(required_lineages)),
+    )
+    for claim_id in added_claim_ids:
+        claim = claim_by_id[claim_id]
+        lineage = (
+            str(claim.get("provider_prompt_hash") or ""),
+            str(claim.get("provider_response_hash") or ""),
+        )
+        response_payload = journal_payloads[lineage]
+        raw_facts = response_payload.get("facts")
+        if isinstance(raw_facts, (str, bytes)) or not isinstance(
+            raw_facts, Sequence
+        ):
+            raise ValueError("fact addition journal fact roster is invalid")
+        document_id = str(claim.get("document_id") or "")
+        document = document_by_id[document_id]
+        reconstructed = []
+        for proposal in raw_facts:
+            normalized = _normalize_transport_fact_proposal(
+                proposal,
+                document_by_id={document_id: document},
+            )
+            if (
+                not isinstance(normalized, Mapping)
+                or str(normalized.get("document_id") or "") != document_id
+            ):
+                continue
+            try:
+                candidate = _accepted_claim(
+                    normalized,
+                    document=document,
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    provider_name=COLLABORATION_PROVIDER_NAME,
+                    prompt_hash=lineage[0],
+                    response_hash=lineage[1],
+                    allowed_component_ids=tuple(
+                        claim.get("allowed_component_ids") or ()
+                    ),
+                )
+            except (KeyError, TypeError, ValueError):
+                continue
+            if _canonical_json_payload(candidate) == _canonical_json_payload(
+                claim
+            ):
+                reconstructed.append(candidate)
+        if len(reconstructed) != 1:
+            raise ValueError("fact addition claim is not exact in its official response")
+    return tuple(sorted(addition_fact_ids))
+
+
+def _attested_pending_new_fact_ids(
+    *,
+    root: Path,
+    target_id: str,
+    as_of_date: str,
+    source_checkpoint: Mapping[str, Any],
+    convenience_rows: Sequence[Mapping[str, Any]],
+    pending_new_fact_ids: Sequence[str],
+    committed_snapshot: Mapping[str, Any],
+) -> tuple[str, ...]:
+    """Bind facts outside the epoch head to one exact result-last snapshot."""
+
+    pending_new = tuple(sorted(str(value) for value in pending_new_fact_ids))
+    if not pending_new:
+        return ()
+    if committed_snapshot.get("leaf_commit_complete") is not True:
+        raise ValueError(
+            "pending-new facts require a fully committed fact snapshot"
+        )
+    result = committed_snapshot.get("result")
+    if not isinstance(result, Mapping):
+        raise ValueError("fact result commit marker is unavailable")
+    result_rows = tuple(committed_snapshot.get("facts") or ())
+    convenience_by_id = {
+        str(row["fact_id"]): _canonical_fact_payload(row)
+        for row in convenience_rows
+    }
+    result_by_id = {
+        str(row["fact_id"]): _canonical_fact_payload(row)
+        for row in result_rows
+    }
+    if result_by_id != convenience_by_id:
+        raise ValueError(
+            "convenience facts do not match the result-last compiled roster"
+        )
+    source_bound = _fact_result_is_bound_to_source_checkpoint(
+        result=result,
+        source_checkpoint=source_checkpoint,
+        target_id=target_id,
+        as_of_date=as_of_date,
+    )
+    downstream_id_set = set(
+        _source_checkpoint_downstream_document_ids(source_checkpoint)
+    )
+    pending_by_id = {
+        str(row["fact_id"]): row
+        for row in result_rows
+        if str(row["fact_id"]) in set(pending_new)
+    }
+    pending_sources_are_bound = bool(
+        len(pending_by_id) == len(pending_new)
+        and all(
+            isinstance(row.get("source_ids"), (list, tuple))
+            and bool(row.get("source_ids"))
+            and {
+                str(value or "").strip()
+                for value in row.get("source_ids") or ()
+            }.issubset(downstream_id_set)
+            and all(
+                str(value or "").strip()
+                for value in row.get("source_ids") or ()
+            )
+            for row in pending_by_id.values()
+        )
+    )
+    if (
+        str(result.get("target_id") or "") != target_id
+        or str(result.get("as_of_date") or "") != as_of_date
+        or not source_bound
+        or not pending_sources_are_bound
+    ):
+        raise ValueError(
+            "facts outside the authoritative ledger lack an exact pending roster"
+        )
+    return pending_new
+
+
+def _load_authoritative_prior_fact_context(
+    root: Path,
+    *,
+    target_id: str,
+    as_of_date: str,
+    source_checkpoint: Mapping[str, Any] | None,
+) -> Mapping[str, Any] | None:
+    """Union a validated epoch fact head with its convenience snapshot.
+
+    The research-epoch JSONL is append-only authority.  The convenience file is
+    only the latest extraction attempt, so a strict subset is a recovery signal,
+    not permission to reopen source acquisition.
+    """
+
+    ledger_path = root / "research_epochs.jsonl"
+    epoch_path = root / "research_epoch_checkpoint.json"
+    if not ledger_path.exists() and not epoch_path.exists():
+        return None
+    if not ledger_path.is_file() or not epoch_path.is_file():
+        raise ValueError("authoritative research epoch ledger is incomplete")
+    if source_checkpoint is None:
+        raise ValueError(
+            "authoritative fact ledger requires its bound source checkpoint"
+        )
+    if (
+        str(source_checkpoint.get("target_id") or "") != target_id
+        or str(source_checkpoint.get("as_of_date") or "") != as_of_date
+        or not str(source_checkpoint.get("checkpoint_id") or "").strip()
+        or not str(source_checkpoint.get("checkpoint_hash") or "").strip()
+    ):
+        raise ValueError("authoritative fact source checkpoint identity is invalid")
+
+    ledger = load_authoritative_research_epoch_fact_ledger(
+        root,
+        target_id=target_id,
+        as_of_date=as_of_date,
+    )
+    epoch = load_research_epoch_checkpoint(epoch_path)
+    epoch_source_checkpoint_id = str(
+        epoch.source_graph_checkpoint_id or ""
+    )
+    current_source_checkpoint_id = str(
+        source_checkpoint.get("checkpoint_id") or ""
+    )
+    current_source_parent_id = str(
+        source_checkpoint.get("resumed_from_checkpoint_id") or ""
+    )
+    source_binding_status = (
+        "EXACT_EPOCH_SOURCE_CHECKPOINT"
+        if current_source_checkpoint_id == epoch_source_checkpoint_id
+        else "DIRECT_DESCENDANT_OF_EPOCH_SOURCE_CHECKPOINT"
+        if current_source_parent_id == epoch_source_checkpoint_id
+        else "INVALID"
+    )
+    if (
+        epoch.target_id != target_id
+        or epoch.as_of_date != as_of_date
+        or epoch.checkpoint_id != ledger.checkpoint_id
+        or epoch.checkpoint_hash != ledger.checkpoint_hash
+        or source_binding_status == "INVALID"
+    ):
+        raise ValueError(
+            "authoritative fact ledger source checkpoint binding drift"
+        )
+
+    authority_rows = _validated_fact_rows(
+        ledger.fact_rows,
+        target_id=target_id,
+        as_of_date=as_of_date,
+        label="authoritative fact ledger",
+    )
+    authority_by_id = {
+        str(row["fact_id"]): row for row in authority_rows
+    }
+    if set(authority_by_id) != set(ledger.current_fact_ids):
+        raise ValueError("authoritative fact ledger current roster mismatch")
+    committed_snapshot = _load_committed_fact_result_snapshot(
+        root,
+        target_id=target_id,
+        as_of_date=as_of_date,
+    )
+    atomic_snapshot_repair_required = bool(
+        committed_snapshot["atomic_snapshot_repair_required"]
+    )
+    atomic_snapshot_leaf_mismatches = tuple(
+        committed_snapshot["leaf_mismatch_names"]
+    )
+    if atomic_snapshot_repair_required:
+        _repair_fact_checkpoint_leaves_from_result_snapshot(
+            root,
+            snapshot=committed_snapshot,
+        )
+        committed_snapshot = _load_committed_fact_result_snapshot(
+            root,
+            target_id=target_id,
+            as_of_date=as_of_date,
+        )
+        if committed_snapshot["leaf_commit_complete"] is not True:
+            raise ValueError("fact checkpoint leaf repair did not commit")
+    convenience_rows = tuple(committed_snapshot["facts"])
+    convenience_by_id = {
+        str(row["fact_id"]): row for row in convenience_rows
+    }
+    current_ids = set(ledger.current_fact_ids)
+    retired_ids = set(ledger.retired_fact_ids)
+    enriched_existing_fact_ids: list[str] = []
+    for fact_id in sorted(current_ids.intersection(convenience_by_id)):
+        if _canonical_fact_payload(authority_by_id[fact_id]) != (
+            _canonical_fact_payload(convenience_by_id[fact_id])
+        ):
+            enriched_existing_fact_ids.append(fact_id)
+    pending_new_fact_ids = tuple(
+        sorted(set(convenience_by_id) - current_ids - retired_ids)
+    )
+    if pending_new_fact_ids:
+        _attested_pending_new_fact_ids(
+            root=root,
+            target_id=target_id,
+            as_of_date=as_of_date,
+            source_checkpoint=source_checkpoint,
+            convenience_rows=convenience_rows,
+            pending_new_fact_ids=pending_new_fact_ids,
+            committed_snapshot=committed_snapshot,
+        )
+    if enriched_existing_fact_ids or pending_new_fact_ids:
+        try:
+            _attested_compiler_fact_addition_ids(
+                root=root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                source_checkpoint=source_checkpoint,
+                authority_by_id=authority_by_id,
+                convenience_rows=convenience_rows,
+                enriched_fact_ids=enriched_existing_fact_ids,
+                pending_new_fact_ids=pending_new_fact_ids,
+                committed_snapshot=committed_snapshot,
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            conflict_id = (
+                enriched_existing_fact_ids[0]
+                if enriched_existing_fact_ids
+                else pending_new_fact_ids[0]
+            )
+            raise ValueError(
+                "authoritative and convenience fact payloads conflict:"
+                f"{conflict_id}:{exc}"
+            ) from exc
+    persisted_current_ids = tuple(
+        sorted(current_ids.intersection(convenience_by_id))
+    )
+    expectation = ledger.recovery_expectation(
+        persisted_fact_ids=(
+            *persisted_current_ids,
+            *pending_new_fact_ids,
+        ),
+        pending_new_fact_ids=pending_new_fact_ids,
+    )
+    status = str(expectation.get("status") or "")
+    if status == "MIXED_AUTHORITY_LOSS_AND_PENDING_NEW_FACTS_BLOCKED":
+        raise ValueError(
+            "fact snapshot mixes authority loss with pending-new facts"
+        )
+    authoritative_recovery_required = (
+        status == "AUTHORITY_LOSS_RECOVERY_REQUIRED"
+    )
+    if authoritative_recovery_required:
+        downstream_document_ids = _source_checkpoint_downstream_document_ids(
+            source_checkpoint
+        )
+        if not set(
+            expectation.get("expected_recovered_source_document_ids") or ()
+        ).issubset(downstream_document_ids):
+            raise ValueError(
+                "authoritative fact recovery source binding drift"
+            )
+
+    union_by_id = dict(authority_by_id)
+    union_by_id.update(
+        {
+            fact_id: convenience_by_id[fact_id]
+            for fact_id in (
+                *enriched_existing_fact_ids,
+                *pending_new_fact_ids,
+            )
+        }
+    )
+    return {
+        "schema_version": "e2r_v5_authoritative_prior_fact_context_v1",
+        "target_id": target_id,
+        "as_of_date": as_of_date,
+        "facts": tuple(
+            union_by_id[fact_id] for fact_id in sorted(union_by_id)
+        ),
+        "fact_snapshot_available": True,
+        "authoritative_fact_ledger_available": True,
+        "authoritative_fact_lineage_recovery_required": (
+            authoritative_recovery_required
+        ),
+        "pending_new_fact_epoch_commit_required": (
+            status == "PENDING_NEW_FACT_EPOCH_COMMIT_REQUIRED"
+        ),
+        "authoritative_recovery_expectation": dict(expectation),
+        # Kept in-memory only so the exact validated ledger instance can be
+        # handed to the extractor.  Audits below project only scalar bindings.
+        "authoritative_fact_ledger": ledger,
+        "committed_fact_result_snapshot": committed_snapshot,
+        "atomic_fact_snapshot_repair_required": (
+            atomic_snapshot_repair_required
+        ),
+        "atomic_fact_snapshot_leaf_mismatches": (
+            atomic_snapshot_leaf_mismatches
+        ),
+        "authoritative_current_fact_count": len(ledger.current_fact_ids),
+        "persisted_current_fact_count": len(persisted_current_ids),
+        "retired_convenience_fact_count": len(
+            set(convenience_by_id).intersection(retired_ids)
+        ),
+        "enriched_existing_fact_ids": tuple(enriched_existing_fact_ids),
+        "enriched_existing_fact_count": len(enriched_existing_fact_ids),
+        "pending_new_fact_ids": pending_new_fact_ids,
+        "research_epoch_checkpoint_id": ledger.checkpoint_id,
+        "research_epoch_checkpoint_hash": ledger.checkpoint_hash,
+        "source_graph_checkpoint_id": str(
+            source_checkpoint["checkpoint_id"]
+        ),
+        "source_graph_checkpoint_hash": str(
+            source_checkpoint["checkpoint_hash"]
+        ),
+        "source_graph_checkpoint_binding_status": source_binding_status,
+        "research_epoch_source_graph_checkpoint_id": (
+            epoch_source_checkpoint_id
+        ),
+        "production_score_authority": False,
+    }
+
+
 def _load_prior_research_context(
     root: Path,
     *,
@@ -2947,14 +4717,33 @@ def _load_prior_research_context(
     as_of_date: str,
     objectives: Sequence[Mapping[str, Any]],
     archetype_id: str | None = None,
+    authoritative_fact_context: Mapping[str, Any] | None = None,
 ) -> Mapping[str, Any]:
-    fact_snapshot_available = (root / "evidence_facts.jsonl").is_file()
-    facts = tuple(
-        row
-        for row in _read_jsonl(root / "evidence_facts.jsonl")
-        if str(row.get("target_id") or "") == target_id
-        and str(row.get("as_of_date") or "") == as_of_date
-    )
+    if authoritative_fact_context is not None:
+        if (
+            str(authoritative_fact_context.get("target_id") or "")
+            != target_id
+            or str(authoritative_fact_context.get("as_of_date") or "")
+            != as_of_date
+            or authoritative_fact_context.get(
+                "authoritative_fact_ledger_available"
+            )
+            is not True
+        ):
+            raise ValueError("authoritative prior fact context identity mismatch")
+        facts = tuple(
+            dict(row)
+            for row in authoritative_fact_context.get("facts") or ()
+        )
+        fact_snapshot_available = True
+    else:
+        fact_snapshot_available = (root / "evidence_facts.jsonl").is_file()
+        facts = tuple(
+            row
+            for row in _read_jsonl(root / "evidence_facts.jsonl")
+            if str(row.get("target_id") or "") == target_id
+            and str(row.get("as_of_date") or "") == as_of_date
+        )
     business_model = None
     business_path = root / "business_model_memo.json"
     if business_path.is_file():
@@ -3514,6 +5303,26 @@ def _load_prior_research_context(
     return {
         "facts": facts,
         "fact_snapshot_available": fact_snapshot_available,
+        "authoritative_fact_ledger_available": bool(
+            authoritative_fact_context
+        ),
+        "authoritative_fact_lineage_recovery_required": bool(
+            authoritative_fact_context
+            and authoritative_fact_context.get(
+                "authoritative_fact_lineage_recovery_required"
+            )
+        ),
+        "pending_new_fact_epoch_commit_required": bool(
+            authoritative_fact_context
+            and authoritative_fact_context.get(
+                "pending_new_fact_epoch_commit_required"
+            )
+        ),
+        "authoritative_fact_recovery_context": (
+            dict(authoritative_fact_context)
+            if authoritative_fact_context is not None
+            else {}
+        ),
         "fact_extraction_complete": fact_extraction_complete,
         "business_model": business_model,
         "research_gap_feedback": feedback,

@@ -33,8 +33,8 @@ class FactExtractionRecoveryCliTest(unittest.TestCase):
     def test_local_model_names_exist_only_in_audit_only_source_files(self):
         """Static guard: production source cannot regain a local LLM route.
 
-        The two allowed files contain denylist tombstones only.  They inspect
-        persisted lineage and reject it; neither file constructs a provider or
+        The allowed files contain denylist tombstones only.  They inspect
+        persisted lineage and reject it; none of these files constructs a provider or
         opens a model endpoint.
         """
 
@@ -48,6 +48,8 @@ class FactExtractionRecoveryCliTest(unittest.TestCase):
             / "research_brain"
             / "researcher_mode"
             / "tracked_receipts.py",
+            source_root / "production" / "v6_provider_runtime_audit.py",
+            source_root / "production" / "v6_production_static_audit.py",
         }
         forbidden_runtime_pattern = re.compile(
             r"(?i)(?:\bollama\b|\bqwen(?:\d+(?:\.\d+)?)?\b|"
@@ -347,6 +349,164 @@ class FactExtractionRecoveryFunctionTest(unittest.TestCase):
                     provider=provider,
                 )
             provider.configure_response_cache.assert_not_called()
+
+    def test_fact_only_resume_routes_authority_gap_to_exact_journal_replay(self):
+        target = CurrentResearchTarget("005930", "삼성전자", ("Samsung",))
+        as_of_date = "2026-07-12"
+        document_id = "SGDOC-" + "a" * 24
+        source_checkpoint = {
+            "target_id": target.target_id,
+            "target_name": target.company_name,
+            "as_of_date": as_of_date,
+            "checkpoint_id": "SGCHECK-CURRENT",
+            "checkpoint_hash": "s" * 64,
+            "resumed_from_checkpoint_id": "SGCHECK-AUTHORITY",
+            "production_downstream_document_ids": [document_id],
+            "evidence_documents": [{"document_id": document_id}],
+        }
+        authority_facts = (
+            {
+                "fact_id": "EFACT-AUTHORITY",
+                "target_id": target.target_id,
+                "as_of_date": as_of_date,
+                "source_ids": [document_id],
+            },
+        )
+        ledger = object()
+        binding = SimpleNamespace(
+            seed_source_document_ids=(document_id,),
+            pending_new_fact_ids=(),
+        )
+        authority_context = {
+            "target_id": target.target_id,
+            "as_of_date": as_of_date,
+            "facts": authority_facts,
+            "authoritative_fact_ledger_available": True,
+            "authoritative_fact_lineage_recovery_required": True,
+            "pending_new_fact_epoch_commit_required": False,
+            "pending_new_fact_ids": (),
+            "authoritative_fact_ledger": ledger,
+            "authoritative_recovery_expectation": {
+                "status": "AUTHORITY_LOSS_RECOVERY_REQUIRED",
+                "expected_recovered_source_document_ids": [document_id],
+            },
+            "source_graph_checkpoint_id": "SGCHECK-CURRENT",
+            "source_graph_checkpoint_hash": "s" * 64,
+        }
+        prior_context = {
+            "facts": authority_facts,
+            "research_gap_feedback": (),
+            "structured_gap_context": {},
+            "score_gap_context": {},
+            "supervisor_source_gap_context": {},
+        }
+        prior_fact = {
+            "prior_material_claims": (),
+            "prior_document_dispositions": (),
+            "prior_provider_calls": (),
+            "prior_rejections": (),
+        }
+        source_graph = SimpleNamespace(
+            status="EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+            evidence_documents=(
+                {
+                    "document_id": document_id,
+                    "target_id": target.target_id,
+                    "as_of_date": as_of_date,
+                },
+            ),
+            checkpoint={**source_checkpoint, "pending_reasons": []},
+            audit={"critical_count_sum": 0},
+        )
+        result = SimpleNamespace(
+            status="FACT_EXTRACTION_COMPLETE",
+            facts=(),
+        )
+        extractor = Mock()
+        extractor.extract.return_value = result
+        provider = Mock()
+        provider.semantic_prompt_chunk_chars = 220_000
+        events = []
+
+        with TemporaryDirectory() as directory:
+            target_root = Path(directory) / target.target_id
+            target_root.mkdir(parents=True)
+            (target_root / "source_graph_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            config = CurrentResearcherModeConfig(
+                as_of_date=as_of_date,
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                output_root=directory,
+                live_materialization_authorized=True,
+                checkpoint_resume=True,
+                gold_lane_isolated=True,
+                require_researcher_parity=True,
+            )
+            module = (
+                "e2r.research_brain.researcher_mode.current_researcher_mode."
+            )
+            with (
+                patch(module + "load_source_graph_checkpoint", return_value=source_checkpoint),
+                patch(
+                    module + "validate_source_graph_checkpoint",
+                    return_value=source_checkpoint,
+                ),
+                patch(
+                    module + "_load_authoritative_prior_fact_context",
+                    side_effect=lambda *args, **kwargs: (
+                        events.append("authority_loaded") or authority_context
+                    ),
+                ),
+                patch(
+                    module + "_hydrate_readonly_source_graph_run",
+                    side_effect=lambda **kwargs: (
+                        events.append("source_replayed") or source_graph
+                    ),
+                ) as hydrate,
+                patch(
+                    module + "_load_prior_research_context",
+                    return_value=prior_context,
+                ),
+                patch(module + "_load_fact_checkpoint", return_value=prior_fact),
+                patch(
+                    module + "resolve_current_fact_lineage_recovery_binding",
+                    return_value=binding,
+                ) as resolve_binding,
+                patch(
+                    module + "ResearcherEvidenceFactExtractor",
+                    return_value=extractor,
+                ),
+                patch(module + "write_researcher_fact_extraction_result"),
+                patch(module + "write_jsonl"),
+            ):
+                recovered = resume_current_fact_extraction_checkpoint(
+                    config=config,
+                    target=target,
+                    provider=provider,
+                )
+
+            self.assertIs(recovered, result)
+            self.assertEqual(events, ["authority_loaded", "source_replayed"])
+            self.assertTrue(
+                hydrate.call_args.kwargs[
+                    "authoritative_fact_lineage_recovery"
+                ]["authoritative_fact_lineage_recovery_required"]
+            )
+            resolve_binding.assert_called_once()
+            self.assertEqual(
+                resolve_binding.call_args.kwargs["journal_root"],
+                target_root / "collaboration_codex_subagent_provider",
+            )
+
+        provider.complete.assert_not_called()
+        extraction_kwargs = extractor.extract.call_args.kwargs
+        self.assertIs(extraction_kwargs["authoritative_fact_ledger"], ledger)
+        self.assertIs(
+            extraction_kwargs["current_fact_lineage_recovery_binding"],
+            binding,
+        )
+        self.assertEqual(extraction_kwargs["current_facts"], authority_facts)
 
 
 if __name__ == "__main__":

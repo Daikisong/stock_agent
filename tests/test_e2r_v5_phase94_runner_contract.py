@@ -4,6 +4,7 @@ import hashlib
 import inspect
 import json
 import os
+import copy
 import subprocess
 import sys
 import tempfile
@@ -71,6 +72,13 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
 )
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+    _accepted_claim,
+)
+from e2r.research_brain.researcher_mode.evidence_fact_compiler import (
+    EvidenceFactCompiler,
+)
+from e2r.research_brain.researcher_mode.collaboration_envelope_contract import (
+    COLLABORATION_PROVIDER_NAME,
 )
 from e2r.research_brain.researcher_mode.research_epoch import (
     _research_checkpoint_hash,
@@ -271,10 +279,18 @@ class Phase94IntegrationOfficialMaterializer:
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeTargetRunner,
     FactExtractionCheckpointPending,
+    _authoritative_fact_recovery_extract_kwargs,
+    _attested_compiler_fact_addition_ids,
     _component_supervisor_feedback_by_component,
     _historical_anchors,
+    _load_authoritative_prior_fact_context,
+    _load_committed_fact_result_snapshot,
+    _load_fact_checkpoint,
     _load_prior_research_context,
     _structured_result_from_official,
+)
+from e2r.research_brain.researcher_mode.fact_lineage_materials import (
+    AuthoritativeResearchEpochFactLedger,
 )
 
 
@@ -311,8 +327,1228 @@ class Phase94IntegrationStructuredMaterializer:
         )
 
 
+def _authority_fact_rows(
+    count: int,
+    *,
+    target_id: str = "CURRENT-TARGET",
+    as_of_date: str = AS_OF_DATE,
+    document_id: str = "SGDOC-aaaaaaaaaaaaaaaaaaaaaaaa",
+):
+    return tuple(
+        {
+            "schema_version": "e2r_evidence_fact_v1",
+            "fact_id": f"EFACT-AUTHORITY-{index:04d}",
+            "target_id": target_id,
+            "as_of_date": as_of_date,
+            "subject": "Current Corp",
+            "business_segment": "memory",
+            "product_family": "HBM",
+            "economic_mechanism": "authority lineage fixture",
+            "predicate": f"reported fixture fact {index}",
+            "value": index,
+            "unit": None,
+            "period": "2026Q2",
+            "direction": "POSITIVE",
+            "source_ids": [document_id],
+            "claim_ids": [f"RFC-AUTHORITY-{index:04d}"],
+            "quote_ids": [f"QUOTE-AUTHORITY-{index:04d}"],
+            "current_lifecycle": "CURRENT",
+            "source_independence_group": "ISSUER:example.com",
+            "confidence": 0.8,
+            "corroborating_independence_groups": [
+                "ISSUER:example.com"
+            ],
+            "question_family_tags": [],
+            "primitive_tags": [],
+            "allowed_component_ids": ["information_confidence"],
+            "structured_evidence_roles": [],
+        }
+        for index in range(count)
+    )
+
+
+def _authority_ledger(
+    rows,
+    *,
+    retired_fact_ids=(),
+):
+    current_ids = tuple(sorted(str(row["fact_id"]) for row in rows))
+    retired_ids = tuple(sorted(str(value) for value in retired_fact_ids))
+    return AuthoritativeResearchEpochFactLedger(
+        target_id="CURRENT-TARGET",
+        as_of_date=AS_OF_DATE,
+        checkpoint_id="RESEARCH-EPOCH-AUTHORITY",
+        checkpoint_hash="e" * 64,
+        epoch_count=2,
+        epoch_checkpoint_ids=("RESEARCH-EPOCH-1", "RESEARCH-EPOCH-AUTHORITY"),
+        cumulative_fact_ids=tuple(sorted((*current_ids, *retired_ids))),
+        current_fact_ids=current_ids,
+        retired_fact_ids=retired_ids,
+        fact_rows=tuple(rows),
+    )
+
+
+def _authority_source_checkpoint(
+    *,
+    document_id: str = "SGDOC-aaaaaaaaaaaaaaaaaaaaaaaa",
+):
+    return {
+        "target_id": "CURRENT-TARGET",
+        "target_name": "Current Corp",
+        "as_of_date": AS_OF_DATE,
+        "mode": "PRODUCTION_DAILY",
+        "epoch": 7,
+        "status": "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+        "checkpoint_id": "SOURCE-AUTHORITY",
+        "checkpoint_hash": "s" * 64,
+        "production_downstream_document_ids": [document_id],
+        "evidence_documents": [{"document_id": document_id}],
+        "generated_queries": [],
+        "search_candidates": [],
+        "source_graph": {},
+    }
+
+
+def _authority_committed_snapshot(
+    rows,
+    *,
+    status="FACT_EXTRACTION_PENDING",
+):
+    fact_rows = tuple(dict(row) for row in rows)
+    result = {
+        "target_id": "CURRENT-TARGET",
+        "as_of_date": AS_OF_DATE,
+        "status": status,
+        "fact_compilation": {"facts": list(fact_rows)},
+        "pending_reasons": [
+            FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+        ],
+        "audit": {"input_document_count": 1},
+    }
+    return {
+        "target_id": "CURRENT-TARGET",
+        "as_of_date": AS_OF_DATE,
+        "result": result,
+        "facts": fact_rows,
+        "leaf_commit_complete": True,
+        "atomic_snapshot_repair_required": False,
+        "leaf_mismatch_names": (),
+    }
+
+
+def _authority_fact_enrichment_fixture(
+    *,
+    new_confidence: float = 0.86,
+):
+    old_document = dict(
+        _document(
+            "SGDOC-" + "a" * 24,
+            "TRUSTED_BUSINESS_MEDIA",
+            "TRUSTED_BUSINESS_MEDIA:old.example",
+        )
+    )
+    new_document = dict(
+        _document(
+            "SGDOC-" + "d" * 24,
+            "TRUSTED_BUSINESS_MEDIA",
+            "TRUSTED_BUSINESS_MEDIA:new.example",
+        )
+    )
+    proposal_provider = FactProvider()
+    old_proposal = dict(
+        proposal_provider.complete(
+            pass_name="EVIDENCE_FACT_EXTRACTION",
+            payload={"full_documents": [old_document]},
+        )["facts"][0]
+    )
+    new_proposal = dict(
+        proposal_provider.complete(
+            pass_name="EVIDENCE_FACT_EXTRACTION",
+            payload={"full_documents": [new_document]},
+        )["facts"][0]
+    )
+    old_proposal["confidence"] = 0.8
+    new_proposal["confidence"] = new_confidence
+    old_prompt_hash = stable_intelligence_id(
+        "FACTPROMPT", {"document_id": old_document["document_id"]}
+    )
+    old_response_hash = stable_intelligence_id(
+        "FACTRESP", {"document_id": old_document["document_id"]}
+    )
+    new_prompt_hash = stable_intelligence_id(
+        "FACTPROMPT", {"document_id": new_document["document_id"]}
+    )
+    new_response_hash = stable_intelligence_id(
+        "FACTRESP", {"document_id": new_document["document_id"]}
+    )
+    allowed_components = ("information_confidence",)
+    old_claim = _accepted_claim(
+        old_proposal,
+        document=old_document,
+        target_id="CURRENT-TARGET",
+        as_of_date=AS_OF_DATE,
+        provider_name=COLLABORATION_PROVIDER_NAME,
+        prompt_hash=old_prompt_hash,
+        response_hash=old_response_hash,
+        allowed_component_ids=allowed_components,
+    )
+    new_claim = _accepted_claim(
+        new_proposal,
+        document=new_document,
+        target_id="CURRENT-TARGET",
+        as_of_date=AS_OF_DATE,
+        provider_name=COLLABORATION_PROVIDER_NAME,
+        prompt_hash=new_prompt_hash,
+        response_hash=new_response_hash,
+        allowed_component_ids=allowed_components,
+    )
+    compiler = EvidenceFactCompiler()
+    old_compilation = compiler.compile(
+        target_id="CURRENT-TARGET",
+        as_of_date=AS_OF_DATE,
+        accepted_claims=(old_claim,),
+    )
+    current_compilation = compiler.compile(
+        target_id="CURRENT-TARGET",
+        as_of_date=AS_OF_DATE,
+        accepted_claims=(old_claim, new_claim),
+    )
+    source_checkpoint = {
+        **_authority_source_checkpoint(document_id=old_document["document_id"]),
+        "production_downstream_document_ids": [
+            old_document["document_id"],
+            new_document["document_id"],
+        ],
+        "evidence_documents": [old_document, new_document],
+    }
+    current_facts = tuple(row.to_dict() for row in current_compilation.facts)
+    current_links = tuple(
+        row.to_dict() for row in current_compilation.claim_fact_links
+    )
+    provider_call = {
+        "schema_version": "e2r_v5_fact_extraction_provider_call_v5",
+        "batch_id": "FACTBATCH-" + "b" * 24,
+        "status": "COMPLETE",
+        "document_ids": [new_document["document_id"]],
+        "accepted_claim_ids": [new_claim["claim_id"]],
+        "rejected_proposal_count": 0,
+        "document_dispositions": [],
+        "pending_reasons": [],
+        "research_gap_feedback": [],
+        "provider_name": COLLABORATION_PROVIDER_NAME,
+        "prompt_hash": new_prompt_hash,
+        "response_hash": new_response_hash,
+        "provider_attempt_count": 1,
+    }
+    result = {
+        "target_id": "CURRENT-TARGET",
+        "as_of_date": AS_OF_DATE,
+        "status": "FACT_EXTRACTION_PENDING",
+        "pending_reasons": [
+            FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+        ],
+        "audit": {"input_document_count": 2},
+        "fact_compilation": {"facts": list(current_facts)},
+    }
+    snapshot = {
+        "target_id": "CURRENT-TARGET",
+        "as_of_date": AS_OF_DATE,
+        "result": result,
+        "facts": current_facts,
+        "accepted_claims": (old_claim, new_claim),
+        "claim_fact_links": current_links,
+        "provider_calls": (provider_call,),
+        "leaf_commit_complete": True,
+        "atomic_snapshot_repair_required": False,
+        "leaf_mismatch_names": (),
+    }
+    lineage = (new_prompt_hash, new_response_hash)
+    return {
+        "old_fact": old_compilation.facts[0].to_dict(),
+        "current_fact": current_compilation.facts[0].to_dict(),
+        "old_claim": old_claim,
+        "new_claim": new_claim,
+        "new_proposal": new_proposal,
+        "source_checkpoint": source_checkpoint,
+        "snapshot": snapshot,
+        "journal_payloads": {
+            lineage: {
+                "facts": [new_proposal],
+                "document_dispositions": [],
+                "unresolved_document_ids": [],
+                "unresolved_research_notes": [],
+                "extraction_complete": True,
+            }
+        },
+    }
+
+
 class E2RV5Phase94RunnerContractTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
+
+    def test_authoritative_fact_context_unions_499_from_457_snapshot(self):
+        rows = _authority_fact_rows(499)
+        ledger = _authority_ledger(rows)
+        source_checkpoint = _authority_source_checkpoint()
+        source_checkpoint.update(
+            checkpoint_id="SGCHECK-b34481bcb5d6347b8f0a9c6e",
+            checkpoint_hash="s" * 64,
+            resumed_from_checkpoint_id="SGCHECK-6bb25d73166e107f1ee2697d",
+        )
+        epoch = SimpleNamespace(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            checkpoint_id=ledger.checkpoint_id,
+            checkpoint_hash=ledger.checkpoint_hash,
+            source_graph_checkpoint_id="SGCHECK-6bb25d73166e107f1ee2697d",
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "research_epochs.jsonl").write_text("{}\n", encoding="utf-8")
+            (root / "research_epoch_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            (root / "evidence_facts.jsonl").write_text(
+                "".join(
+                    json.dumps(row, sort_keys=True) + "\n"
+                    for row in rows[:457]
+                ),
+                encoding="utf-8",
+            )
+            with (
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_authoritative_research_epoch_fact_ledger",
+                    return_value=ledger,
+                ) as load_ledger,
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_research_epoch_checkpoint",
+                    return_value=epoch,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "_load_committed_fact_result_snapshot",
+                    return_value=_authority_committed_snapshot(rows[:457]),
+                ),
+            ):
+                context = _load_authoritative_prior_fact_context(
+                    root,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=source_checkpoint,
+                )
+
+        self.assertIsNotNone(context)
+        assert context is not None
+        load_ledger.assert_called_once_with(
+            root,
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+        )
+        self.assertEqual(len(context["facts"]), 499)
+        self.assertEqual(context["authoritative_current_fact_count"], 499)
+        self.assertEqual(context["persisted_current_fact_count"], 457)
+        self.assertEqual(
+            context["source_graph_checkpoint_binding_status"],
+            "DIRECT_DESCENDANT_OF_EPOCH_SOURCE_CHECKPOINT",
+        )
+        self.assertEqual(
+            context["research_epoch_source_graph_checkpoint_id"],
+            "SGCHECK-6bb25d73166e107f1ee2697d",
+        )
+        self.assertTrue(
+            context["authoritative_fact_lineage_recovery_required"]
+        )
+        self.assertEqual(
+            len(
+                context["authoritative_recovery_expectation"][
+                    "expected_recovered_fact_ids"
+                ]
+            ),
+            42,
+        )
+
+    def test_authoritative_fact_context_preserves_no_gap_and_retirement(self):
+        rows = _authority_fact_rows(3)
+        source_checkpoint = _authority_source_checkpoint()
+        cases = (
+            (rows, (), rows, 3),
+            (rows[:2], (rows[2]["fact_id"],), rows, 2),
+        )
+        for current_rows, retired_ids, convenience_rows, expected_count in cases:
+            with self.subTest(retired_ids=retired_ids), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                ledger = _authority_ledger(
+                    current_rows,
+                    retired_fact_ids=retired_ids,
+                )
+                epoch = SimpleNamespace(
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    checkpoint_id=ledger.checkpoint_id,
+                    checkpoint_hash=ledger.checkpoint_hash,
+                    source_graph_checkpoint_id=(
+                        source_checkpoint["checkpoint_id"]
+                    ),
+                )
+                (root / "research_epochs.jsonl").write_text(
+                    "{}\n", encoding="utf-8"
+                )
+                (root / "research_epoch_checkpoint.json").write_text(
+                    "{}\n", encoding="utf-8"
+                )
+                (root / "evidence_facts.jsonl").write_text(
+                    "".join(
+                        json.dumps(row, sort_keys=True) + "\n"
+                        for row in convenience_rows
+                    ),
+                    encoding="utf-8",
+                )
+                with (
+                    patch(
+                        "e2r.research_brain.researcher_mode.current_researcher_mode."
+                        "load_authoritative_research_epoch_fact_ledger",
+                        return_value=ledger,
+                    ),
+                    patch(
+                        "e2r.research_brain.researcher_mode.current_researcher_mode."
+                        "load_research_epoch_checkpoint",
+                        return_value=epoch,
+                    ),
+                    patch(
+                        "e2r.research_brain.researcher_mode.current_researcher_mode."
+                        "_load_committed_fact_result_snapshot",
+                        return_value=_authority_committed_snapshot(
+                            convenience_rows
+                        ),
+                    ),
+                ):
+                    context = _load_authoritative_prior_fact_context(
+                        root,
+                        target_id="CURRENT-TARGET",
+                        as_of_date=AS_OF_DATE,
+                        source_checkpoint=source_checkpoint,
+                    )
+            self.assertIsNotNone(context)
+            assert context is not None
+            self.assertEqual(len(context["facts"]), expected_count)
+            self.assertFalse(
+                context["authoritative_fact_lineage_recovery_required"]
+            )
+            self.assertEqual(
+                context["retired_convenience_fact_count"],
+                len(retired_ids),
+            )
+
+    def test_authoritative_fact_context_fails_on_conflict_or_source_drift(self):
+        rows = _authority_fact_rows(2)
+        ledger = _authority_ledger(rows)
+        source_checkpoint = _authority_source_checkpoint()
+        epoch = SimpleNamespace(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            checkpoint_id=ledger.checkpoint_id,
+            checkpoint_hash=ledger.checkpoint_hash,
+            source_graph_checkpoint_id=source_checkpoint["checkpoint_id"],
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "research_epochs.jsonl").write_text("{}\n", encoding="utf-8")
+            (root / "research_epoch_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            conflict = dict(rows[0])
+            conflict["confidence"] = 0.1
+            (root / "evidence_facts.jsonl").write_text(
+                json.dumps(conflict) + "\n",
+                encoding="utf-8",
+            )
+            with (
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_authoritative_research_epoch_fact_ledger",
+                    return_value=ledger,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_research_epoch_checkpoint",
+                    return_value=epoch,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "_load_committed_fact_result_snapshot",
+                    return_value=_authority_committed_snapshot((conflict,)),
+                ),
+                self.assertRaisesRegex(ValueError, "payloads conflict"),
+            ):
+                _load_authoritative_prior_fact_context(
+                    root,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=source_checkpoint,
+                )
+
+            (root / "evidence_facts.jsonl").write_text(
+                json.dumps(rows[0]) + "\n",
+                encoding="utf-8",
+            )
+            drifted_epoch = SimpleNamespace(
+                **{
+                    **epoch.__dict__,
+                    "source_graph_checkpoint_id": "SOURCE-OTHER",
+                }
+            )
+            with (
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_authoritative_research_epoch_fact_ledger",
+                    return_value=ledger,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_research_epoch_checkpoint",
+                    return_value=drifted_epoch,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "_load_committed_fact_result_snapshot",
+                    return_value=_authority_committed_snapshot((rows[0],)),
+                ),
+                self.assertRaisesRegex(ValueError, "binding drift"),
+            ):
+                _load_authoritative_prior_fact_context(
+                    root,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=source_checkpoint,
+                )
+
+    def test_authoritative_fact_context_accepts_exact_compiler_corroboration(self):
+        material = _authority_fact_enrichment_fixture()
+        old_fact = material["old_fact"]
+        current_fact = material["current_fact"]
+        ledger = _authority_ledger((old_fact,))
+        source_checkpoint = material["source_checkpoint"]
+        epoch = SimpleNamespace(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            checkpoint_id=ledger.checkpoint_id,
+            checkpoint_hash=ledger.checkpoint_hash,
+            source_graph_checkpoint_id=source_checkpoint["checkpoint_id"],
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "research_epochs.jsonl").write_text("{}\n", encoding="utf-8")
+            (root / "research_epoch_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            with (
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_authoritative_research_epoch_fact_ledger",
+                    return_value=ledger,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_research_epoch_checkpoint",
+                    return_value=epoch,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "_load_committed_fact_result_snapshot",
+                    return_value=material["snapshot"],
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "_validated_official_fact_journal_payloads",
+                    return_value=material["journal_payloads"],
+                ),
+            ):
+                context = _load_authoritative_prior_fact_context(
+                    root,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=source_checkpoint,
+                )
+        assert context is not None
+        self.assertEqual(context["facts"], (current_fact,))
+        self.assertEqual(
+            context["enriched_existing_fact_ids"],
+            (old_fact["fact_id"],),
+        )
+        self.assertEqual(context["enriched_existing_fact_count"], 1)
+        self.assertEqual(context["pending_new_fact_ids"], ())
+        self.assertGreaterEqual(
+            current_fact["confidence"], old_fact["confidence"]
+        )
+
+    def test_compiler_corroboration_attestation_rejects_nonadditive_changes(self):
+        def attest(material, *, snapshot=None, current_fact=None):
+            effective_snapshot = snapshot or material["snapshot"]
+            effective_fact = current_fact or material["current_fact"]
+            with patch(
+                "e2r.research_brain.researcher_mode.current_researcher_mode."
+                "_validated_official_fact_journal_payloads",
+                return_value=material["journal_payloads"],
+            ):
+                return _attested_compiler_fact_addition_ids(
+                    root=Path("unused"),
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=material["source_checkpoint"],
+                    authority_by_id={
+                        material["old_fact"]["fact_id"]: material["old_fact"]
+                    },
+                    convenience_rows=(effective_fact,),
+                    enriched_fact_ids=(material["old_fact"]["fact_id"],),
+                    pending_new_fact_ids=(),
+                    committed_snapshot=effective_snapshot,
+                )
+
+        positive = _authority_fact_enrichment_fixture()
+        self.assertEqual(
+            attest(positive),
+            (positive["old_fact"]["fact_id"],),
+        )
+
+        replacement = copy.deepcopy(positive)
+        replacement_compilation = EvidenceFactCompiler().compile(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(replacement["new_claim"],),
+        )
+        replacement_fact = replacement_compilation.facts[0].to_dict()
+        replacement["snapshot"]["accepted_claims"] = (
+            replacement["new_claim"],
+        )
+        replacement["snapshot"]["facts"] = (replacement_fact,)
+        replacement["snapshot"]["claim_fact_links"] = tuple(
+            row.to_dict() for row in replacement_compilation.claim_fact_links
+        )
+        with self.assertRaisesRegex(ValueError, "preserve exact claim"):
+            attest(replacement, current_fact=replacement_fact)
+
+        forged_confidence = copy.deepcopy(positive)
+        forged_fact = dict(forged_confidence["current_fact"])
+        forged_fact["confidence"] = 0.999999
+        forged_confidence["snapshot"]["facts"] = (forged_fact,)
+        with self.assertRaisesRegex(ValueError, "compiler replay"):
+            attest(forged_confidence, current_fact=forged_fact)
+
+        weak_primary = _authority_fact_enrichment_fixture(
+            new_confidence=0.8
+        )
+        self.assertNotEqual(
+            weak_primary["old_fact"]["source_independence_group"],
+            weak_primary["current_fact"]["source_independence_group"],
+        )
+        with self.assertRaisesRegex(ValueError, "without stronger"):
+            attest(weak_primary)
+
+        semantic_drift = copy.deepcopy(positive)
+        drifted_fact = dict(semantic_drift["current_fact"])
+        drifted_fact["period"] = "2026Q2"
+        semantic_drift["snapshot"]["facts"] = (drifted_fact,)
+        with self.assertRaisesRegex(ValueError, "compiler replay|semantic metadata"):
+            attest(semantic_drift, current_fact=drifted_fact)
+
+        self_supersession = copy.deepcopy(positive)
+        changed_links = [
+            dict(row) for row in self_supersession["snapshot"]["claim_fact_links"]
+        ]
+        for link in changed_links:
+            if link["claim_id"] == self_supersession["new_claim"]["claim_id"]:
+                link["supersedes_fact_ids"] = [link["fact_id"]]
+        self_supersession["snapshot"]["claim_fact_links"] = tuple(changed_links)
+        with self.assertRaisesRegex(ValueError, "compiler replay|link drift"):
+            attest(self_supersession)
+
+    def test_authoritative_fact_context_attests_pending_new_and_blocks_mixed_gap(
+        self,
+    ):
+        rows = _authority_fact_rows(3)
+        new_fact = {
+            **rows[0],
+            "fact_id": "EFACT-PENDING-NEW",
+            "predicate": "new fact awaiting epoch commit",
+            "claim_ids": ["RFC-PENDING-NEW"],
+            "quote_ids": ["QUOTE-PENDING-NEW"],
+        }
+        source_checkpoint = _authority_source_checkpoint()
+        cases = (
+            (rows, (*rows, new_fact), False),
+            (rows, (*rows[:2], new_fact), True),
+        )
+        for authority_rows, convenience_rows, mixed_gap in cases:
+            with self.subTest(mixed_gap=mixed_gap), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                ledger = _authority_ledger(authority_rows)
+                epoch = SimpleNamespace(
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    checkpoint_id=ledger.checkpoint_id,
+                    checkpoint_hash=ledger.checkpoint_hash,
+                    source_graph_checkpoint_id=(
+                        source_checkpoint["checkpoint_id"]
+                    ),
+                )
+                (root / "research_epochs.jsonl").write_text(
+                    "{}\n", encoding="utf-8"
+                )
+                (root / "research_epoch_checkpoint.json").write_text(
+                    "{}\n", encoding="utf-8"
+                )
+                (root / "evidence_facts.jsonl").write_text(
+                    "".join(
+                        json.dumps(row, sort_keys=True) + "\n"
+                        for row in convenience_rows
+                    ),
+                    encoding="utf-8",
+                )
+                (root / "fact_extraction_result.json").write_text(
+                    json.dumps(
+                        {
+                            "target_id": "CURRENT-TARGET",
+                            "as_of_date": AS_OF_DATE,
+                            "status": "FACT_EXTRACTION_PENDING",
+                            "fact_compilation": {
+                                "facts": list(convenience_rows),
+                            },
+                            "pending_reasons": [
+                                FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+                            ],
+                            "audit": {"input_document_count": 1},
+                        },
+                        sort_keys=True,
+                    ),
+                    encoding="utf-8",
+                )
+                if mixed_gap:
+                    with (
+                        patch(
+                            "e2r.research_brain.researcher_mode."
+                            "current_researcher_mode."
+                            "load_authoritative_research_epoch_fact_ledger",
+                            return_value=ledger,
+                        ),
+                        patch(
+                            "e2r.research_brain.researcher_mode."
+                            "current_researcher_mode."
+                            "load_research_epoch_checkpoint",
+                            return_value=epoch,
+                        ),
+                        patch(
+                            "e2r.research_brain.researcher_mode."
+                            "current_researcher_mode."
+                            "_load_committed_fact_result_snapshot",
+                            return_value=_authority_committed_snapshot(
+                                convenience_rows
+                            ),
+                        ),
+                        patch(
+                            "e2r.research_brain.researcher_mode."
+                            "current_researcher_mode."
+                            "_attested_compiler_fact_addition_ids",
+                            return_value=tuple(
+                                row["fact_id"] for row in convenience_rows
+                            ),
+                        ),
+                        self.assertRaisesRegex(
+                            ValueError, "mixes authority loss"
+                        ),
+                    ):
+                        _load_authoritative_prior_fact_context(
+                            root,
+                            target_id="CURRENT-TARGET",
+                            as_of_date=AS_OF_DATE,
+                            source_checkpoint=source_checkpoint,
+                        )
+                else:
+                    with (
+                        patch(
+                            "e2r.research_brain.researcher_mode."
+                            "current_researcher_mode."
+                            "load_authoritative_research_epoch_fact_ledger",
+                            return_value=ledger,
+                        ),
+                        patch(
+                            "e2r.research_brain.researcher_mode."
+                            "current_researcher_mode."
+                            "load_research_epoch_checkpoint",
+                            return_value=epoch,
+                        ),
+                        patch(
+                            "e2r.research_brain.researcher_mode."
+                            "current_researcher_mode."
+                            "_load_committed_fact_result_snapshot",
+                            return_value=_authority_committed_snapshot(
+                                convenience_rows
+                            ),
+                        ),
+                        patch(
+                            "e2r.research_brain.researcher_mode."
+                            "current_researcher_mode."
+                            "_attested_compiler_fact_addition_ids",
+                            return_value=tuple(
+                                row["fact_id"] for row in convenience_rows
+                            ),
+                        ),
+                    ):
+                        context = _load_authoritative_prior_fact_context(
+                            root,
+                            target_id="CURRENT-TARGET",
+                            as_of_date=AS_OF_DATE,
+                            source_checkpoint=source_checkpoint,
+                        )
+                    assert context is not None
+                    self.assertEqual(len(context["facts"]), 4)
+                    self.assertEqual(
+                        context["pending_new_fact_ids"],
+                        ("EFACT-PENDING-NEW",),
+                    )
+                    self.assertTrue(
+                        context["pending_new_fact_epoch_commit_required"]
+                    )
+                    self.assertFalse(
+                        context[
+                            "authoritative_fact_lineage_recovery_required"
+                        ]
+                    )
+
+    def test_full_runner_routes_authority_gap_to_exact_journal_replay_only(self):
+        document_id = "SGDOC-" + "a" * 24
+        source_checkpoint = _authority_source_checkpoint(
+            document_id=document_id
+        )
+        authority_rows = _authority_fact_rows(2, document_id=document_id)
+        ledger = _authority_ledger(authority_rows)
+        recovery_binding = SimpleNamespace(
+            seed_source_document_ids=(document_id,),
+            pending_new_fact_ids=(),
+        )
+        authoritative_context = {
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": AS_OF_DATE,
+            "facts": authority_rows,
+            "authoritative_fact_ledger_available": True,
+            "authoritative_fact_lineage_recovery_required": True,
+            "pending_new_fact_epoch_commit_required": False,
+            "pending_new_fact_ids": (),
+            "authoritative_fact_ledger": ledger,
+            "authoritative_recovery_expectation": {
+                "status": "AUTHORITY_LOSS_RECOVERY_REQUIRED",
+                "expected_recovered_source_document_ids": [document_id],
+            },
+            "source_graph_checkpoint_id": source_checkpoint["checkpoint_id"],
+            "source_graph_checkpoint_hash": source_checkpoint[
+                "checkpoint_hash"
+            ],
+        }
+        prior_context = {
+            "facts": authority_rows,
+            "business_model": None,
+            "research_gap_feedback": (),
+            "structured_gap_context": {},
+            "structured_report_candidate_context": {},
+            "score_gap_context": {},
+            "supervisor_source_gap_context": {},
+            "source_transport_pending_objective_ids": (),
+            "source_queries_without_accepted_fact_lineage": (),
+            "authoritative_fact_ledger_available": True,
+            "authoritative_fact_lineage_recovery_required": True,
+            "pending_new_fact_epoch_commit_required": False,
+        }
+        document = {
+            "document_id": document_id,
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": AS_OF_DATE,
+        }
+        source_graph = SimpleNamespace(
+            status="EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+            evidence_documents=(document,),
+            checkpoint={**source_checkpoint, "pending_reasons": []},
+            audit={"critical_count_sum": 0},
+        )
+        prior_fact = {
+            "prior_material_claims": (),
+            "prior_document_dispositions": (),
+            "prior_provider_calls": (),
+            "prior_rejections": (),
+        }
+        pending = SimpleNamespace(
+            status="FACT_EXTRACTION_PENDING",
+            facts=(),
+            pending_reasons=(
+                "CURRENT_FACT_LINEAGE_JOURNAL_RECOVERY_INVALID:fixture",
+            ),
+        )
+
+        class ForbiddenProvider:
+            provider_name = "FORBIDDEN_PROVIDER"
+            semantic_prompt_chunk_chars = 220_000
+
+            def __init__(self):
+                self.complete_call_count = 0
+
+            def configure_response_cache(self, _directory):
+                return None
+
+            def complete(self, **_kwargs):
+                self.complete_call_count += 1
+                raise AssertionError("authority recovery called provider.complete")
+
+        class ForbiddenSourceAcquirer:
+            def __init__(self):
+                self.call_count = 0
+
+            def acquire(self, **_kwargs):
+                self.call_count += 1
+                raise AssertionError("authority recovery reopened source acquisition")
+
+        class CapturingFactExtractor:
+            documents_per_call = 1
+
+            def __init__(self):
+                self.calls = []
+
+            def extract(self, **kwargs):
+                self.calls.append(kwargs)
+                return pending
+
+        class ForbiddenOfficialMaterializer:
+            def materialize(self, **_kwargs):
+                raise AssertionError("authority recovery reopened official sources")
+
+        provider = ForbiddenProvider()
+        source_acquirer = ForbiddenSourceAcquirer()
+        fact_extractor = CapturingFactExtractor()
+        runner = CurrentResearcherModeTargetRunner(
+            provider=provider,
+            official_materializer=ForbiddenOfficialMaterializer(),
+            structured_materializer=Mock(),
+            source_acquirer=source_acquirer,
+            fact_extractor=fact_extractor,
+        )
+        target = CurrentResearchTarget(
+            symbol="CURRENT-TARGET",
+            company_name="Current Corp",
+            official_domains=("example.com",),
+        )
+        official = OfficialSourceMaterializationResult(
+            target_id=target.target_id,
+            as_of_date=AS_OF_DATE,
+            status="OFFICIAL_SOURCE_MATERIALIZED",
+            evidence_documents=(),
+            provider_attempts=(),
+            structured_payloads=(),
+            pending_reasons=(),
+            audit={"critical_count_sum": 0},
+        )
+        events = []
+        with tempfile.TemporaryDirectory() as directory:
+            target_root = Path(directory) / target.target_id
+            target_root.mkdir(parents=True)
+            (target_root / "source_graph_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            with (
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "_load_official_checkpoint",
+                    return_value=official,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_source_graph_checkpoint",
+                    return_value=source_checkpoint,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "validate_source_graph_checkpoint",
+                    side_effect=lambda *args, **kwargs: source_checkpoint,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "_load_authoritative_prior_fact_context",
+                    side_effect=lambda *args, **kwargs: (
+                        events.append("authority_loaded")
+                        or authoritative_context
+                    ),
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "_load_prior_research_context",
+                    return_value=prior_context,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "_hydrate_readonly_source_graph_run",
+                    side_effect=lambda **kwargs: (
+                        events.append("source_replayed") or source_graph
+                    ),
+                ) as hydrate,
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "_load_fact_checkpoint",
+                    return_value=prior_fact,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "resolve_current_fact_lineage_recovery_binding",
+                    return_value=recovery_binding,
+                ) as resolve_binding,
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "write_researcher_fact_extraction_result"
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "write_jsonl"
+                ),
+                self.assertRaises(FactExtractionCheckpointPending) as raised,
+            ):
+                runner.run_checkpoint(
+                    config=CurrentResearcherModeConfig(
+                        as_of_date=AS_OF_DATE,
+                        archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                        output_root=directory,
+                        live_materialization_authorized=True,
+                        checkpoint_resume=True,
+                        gold_lane_isolated=True,
+                        require_researcher_parity=True,
+                        latest_trading_snapshot_date=AS_OF_DATE,
+                    ),
+                    target=target,
+                    repo_root=self.ROOT,
+                )
+
+        self.assertEqual(events, ["authority_loaded", "source_replayed"])
+        self.assertEqual(source_acquirer.call_count, 0)
+        self.assertEqual(provider.complete_call_count, 0)
+        self.assertTrue(
+            hydrate.call_args.kwargs[
+                "authoritative_fact_lineage_recovery"
+            ]["authoritative_fact_lineage_recovery_required"]
+        )
+        resolve_binding.assert_called_once()
+        self.assertEqual(
+            resolve_binding.call_args.kwargs["journal_root"],
+            target_root / "collaboration_codex_subagent_provider",
+        )
+        self.assertEqual(len(fact_extractor.calls), 1)
+        extraction_kwargs = fact_extractor.calls[0]
+        self.assertIs(
+            extraction_kwargs["authoritative_fact_ledger"], ledger
+        )
+        self.assertIs(
+            extraction_kwargs["current_fact_lineage_recovery_binding"],
+            recovery_binding,
+        )
+        self.assertEqual(len(extraction_kwargs["current_facts"]), 2)
+        self.assertTrue(
+            raised.exception.audit[
+                "authoritative_fact_lineage_recovery_required"
+            ]
+        )
+
+    def test_interrupted_fact_writer_uses_old_result_last_generation(self):
+        """New leaves beside an old marker cannot erase an authority gap."""
+
+        document_id = "SGDOC-" + "a" * 24
+        authority_fact = _authority_fact_rows(
+            1,
+            document_id=document_id,
+        )[0]
+        ledger = _authority_ledger((authority_fact,))
+        source_checkpoint = _authority_source_checkpoint(
+            document_id=document_id
+        )
+        epoch = SimpleNamespace(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            checkpoint_id=ledger.checkpoint_id,
+            checkpoint_hash=ledger.checkpoint_hash,
+            source_graph_checkpoint_id=source_checkpoint["checkpoint_id"],
+        )
+        old_result = {
+            "schema_version": "e2r_v5_fact_extraction_result_v1",
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": AS_OF_DATE,
+            "status": "FACT_EXTRACTION_PENDING",
+            "material_claims": [],
+            "rejections": [],
+            "document_dispositions": [],
+            "provider_calls": [],
+            "pending_reasons": [
+                "CURRENT_FACT_LINEAGE_REMATERIALIZATION_REQUIRED:"
+                + document_id
+            ],
+            "research_gap_feedback": [],
+            "fact_compilation": {
+                "facts": [],
+                "claim_fact_links": [],
+            },
+            "audit": {},
+            "production_score_authority": False,
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "research_epochs.jsonl").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            (root / "research_epoch_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            (root / "fact_extraction_result.json").write_text(
+                json.dumps(old_result, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            # Simulate a crash after some new-generation leaves were replaced.
+            (root / "material_fact_claims.jsonl").write_text(
+                '{"partial_new_claim":true}\n', encoding="utf-8"
+            )
+            (root / "fact_extraction_rejections.jsonl").write_text(
+                "", encoding="utf-8"
+            )
+            (root / "fact_document_dispositions.jsonl").write_text(
+                "", encoding="utf-8"
+            )
+            (root / "fact_extraction_provider_calls.jsonl").write_text(
+                "", encoding="utf-8"
+            )
+            (root / "evidence_facts.jsonl").write_text(
+                json.dumps(authority_fact, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            (root / "claim_fact_links.jsonl").write_text(
+                "", encoding="utf-8"
+            )
+            (root / "fact_extraction_audit.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            (root / "counterfacts.jsonl").write_text("", encoding="utf-8")
+
+            snapshot = _load_committed_fact_result_snapshot(
+                root,
+                target_id="CURRENT-TARGET",
+                as_of_date=AS_OF_DATE,
+            )
+            self.assertEqual(snapshot["facts"], ())
+            self.assertTrue(snapshot["atomic_snapshot_repair_required"])
+            self.assertEqual(
+                set(snapshot["leaf_mismatch_names"]),
+                {"accepted_claims", "facts"},
+            )
+            with (
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_authoritative_research_epoch_fact_ledger",
+                    return_value=ledger,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_research_epoch_checkpoint",
+                    return_value=epoch,
+                ),
+            ):
+                context = _load_authoritative_prior_fact_context(
+                    root,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=source_checkpoint,
+                )
+
+            assert context is not None
+            self.assertTrue(
+                context["authoritative_fact_lineage_recovery_required"]
+            )
+            self.assertEqual(context["persisted_current_fact_count"], 0)
+            self.assertTrue(context["atomic_fact_snapshot_repair_required"])
+            prior = _load_fact_checkpoint(
+                root,
+                source_graph=SimpleNamespace(
+                    evidence_documents=(
+                        {
+                            "document_id": document_id,
+                            "target_id": "CURRENT-TARGET",
+                            "as_of_date": AS_OF_DATE,
+                        },
+                    ),
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                ),
+                committed_fact_snapshot=snapshot,
+            )
+            self.assertEqual(prior["prior_material_claims"], ())
+            self.assertEqual(prior["prior_provider_calls"], ())
+
+    def test_binding_resolver_failure_becomes_structured_pending_without_provider(
+        self,
+    ):
+        from tests.test_e2r_v5_current_fact_lineage_recovery import (
+            _NoCompleteProvider,
+            _bundle,
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bundle = _bundle(root)
+            common = bundle["common"]
+            with patch(
+                "e2r.research_brain.researcher_mode.current_researcher_mode."
+                "resolve_current_fact_lineage_recovery_binding",
+                side_effect=ValueError("ambiguous sealed journal cover"),
+            ):
+                recovery_kwargs = _authoritative_fact_recovery_extract_kwargs(
+                    root=root,
+                    authoritative_fact_context={
+                        "authoritative_fact_lineage_recovery_required": True,
+                        "authoritative_fact_ledger": bundle["authority"],
+                        "authoritative_recovery_expectation": (
+                            bundle["authority"].recovery_expectation(
+                                persisted_fact_ids=tuple(
+                                    row.fact_id
+                                    for row in bundle["prior_compilation"].facts
+                                )
+                            )
+                        ),
+                        "pending_new_fact_ids": (),
+                    },
+                    target=CurrentResearchTarget(
+                        symbol=common["target_id"],
+                        company_name=common["target_name"],
+                        aliases=common["target_aliases"],
+                    ),
+                    archetype_id=common["archetype_id"],
+                    as_of_date=common["as_of_date"],
+                    documents=common["documents"],
+                    open_objectives=common["open_objectives"],
+                    current_facts=common["current_facts"],
+                    score_gap_context=common["score_gap_context"],
+                    prior_fact={
+                        "prior_material_claims": common[
+                            "prior_material_claims"
+                        ],
+                        "prior_document_dispositions": common[
+                            "prior_document_dispositions"
+                        ],
+                    },
+                    extraction_mode=common["extraction_mode"],
+                )
+            provider = _NoCompleteProvider()
+            result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+                **common,
+                prior_provider_calls=bundle["prior_calls"],
+                **recovery_kwargs,
+            )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(provider.complete_call_count, 0)
+        self.assertIn(
+            "CURRENT_FACT_LINEAGE_RECOVERY_BINDING_REQUIRED",
+            result.pending_reasons,
+        )
 
     def test_issuer_ir_failure_is_preserved_as_official_gap(self):
         official = OfficialSourceMaterializationResult(
@@ -1362,6 +2598,104 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     as_of_date=AS_OF_DATE,
                 )
             )
+
+            rematerialization_reason = (
+                "CURRENT_FACT_LINEAGE_REMATERIALIZATION_REQUIRED:"
+                "SGDOC-" + "d" * 24
+            )
+            objective_reassessment_reason = (
+                "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+                "SGDOC-" + "e" * 24
+            )
+            incomplete_reason = (
+                "INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+                "SGDOC-" + "d" * 24 + ":0/3"
+            )
+            collaboration_reason = fact_result["pending_reasons"][0]
+            for recoverable_reasons in (
+                (rematerialization_reason,),
+                (rematerialization_reason, incomplete_reason),
+                (
+                    collaboration_reason,
+                    rematerialization_reason,
+                    incomplete_reason,
+                ),
+                (
+                    FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+                    rematerialization_reason,
+                    incomplete_reason,
+                ),
+                (objective_reassessment_reason,),
+                (objective_reassessment_reason, incomplete_reason),
+                (
+                    collaboration_reason,
+                    objective_reassessment_reason,
+                    incomplete_reason,
+                ),
+            ):
+                fact_path.write_text(
+                    json.dumps(
+                        {
+                            **fact_result,
+                            "pending_reasons": list(recoverable_reasons),
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+                self.assertTrue(
+                    _source_checkpoint_needs_fact_extraction_recovery(
+                        root=root,
+                        checkpoint=checkpoint,
+                        target_id="CURRENT-TARGET",
+                        as_of_date=AS_OF_DATE,
+                    ),
+                    recoverable_reasons,
+                )
+
+            for unrecoverable_reasons in (
+                (rematerialization_reason, rematerialization_reason),
+                (
+                    objective_reassessment_reason,
+                    objective_reassessment_reason,
+                ),
+                (
+                    "CURRENT_FACT_LINEAGE_REMATERIALIZATION_REQUIRED:"
+                    "DOC-NONCANONICAL",
+                ),
+                (
+                    "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+                    "SGDOC-" + "E" * 24,
+                ),
+                (
+                    objective_reassessment_reason,
+                    "CANDIDATE_RANKING_PENDING",
+                ),
+                (rematerialization_reason, "UNRELATED_PENDING_REASON"),
+                (
+                    collaboration_reason,
+                    FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+                    rematerialization_reason,
+                ),
+            ):
+                fact_path.write_text(
+                    json.dumps(
+                        {
+                            **fact_result,
+                            "pending_reasons": list(unrecoverable_reasons),
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+                self.assertFalse(
+                    _source_checkpoint_needs_fact_extraction_recovery(
+                        root=root,
+                        checkpoint=checkpoint,
+                        target_id="CURRENT-TARGET",
+                        as_of_date=AS_OF_DATE,
+                    ),
+                    unrecoverable_reasons,
+                )
+            fact_path.write_text(json.dumps(fact_result), encoding="utf-8")
 
             recoverable_pending_checkpoints = []
             for pending_reason in (
