@@ -1,0 +1,130 @@
+name: E2R v6 operational cutover verification
+
+"on":
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/e2r_v6_operational_cutover_verify.yml"
+      - "configs/**"
+      - "docs/operational/e2r_v6_operational_cutover/**"
+      - "requirements/e2r_v6_clean_clone_py310_linux_x86_64.lock"
+      - "scripts/run_e2r_v6_clean_clone_reproduction.py"
+      - "src/**"
+      - "tests/**"
+  pull_request:
+    paths:
+      - ".github/workflows/e2r_v6_operational_cutover_verify.yml"
+      - "configs/**"
+      - "docs/operational/e2r_v6_operational_cutover/**"
+      - "requirements/e2r_v6_clean_clone_py310_linux_x86_64.lock"
+      - "scripts/run_e2r_v6_clean_clone_reproduction.py"
+      - "src/**"
+      - "tests/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2r-v6-cutover-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  offline-contract:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use CPython 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Assert portable checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -d output
+          test ! -f .env
+          test ! -d collaboration_journal
+          test -z "$(git status --porcelain)"
+
+      - name: Install hash-locked verification dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install \
+            --disable-pip-version-check \
+            --require-hashes \
+            -r requirements/e2r_v6_clean_clone_py310_linux_x86_64.lock
+
+      - name: Verify tracked receipts offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=src python -m e2r.cli.verify_e2r_v6_tracked_receipts \
+            --receipt-root docs/operational/e2r_v6_operational_cutover/canary_receipts/2026-07-12 \
+            --offline true
+
+      - name: Recompute production static audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=src python -m e2r.cli.compile_e2r_v6_production_static_audit \
+            --repo-root . \
+            --output "${RUNNER_TEMP}/production_static_audit.json"
+
+      - name: Run full unit-test suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=src python -m unittest discover -s tests -v
+
+  main-authority:
+    if: github.ref == 'refs/heads/main'
+    needs: offline-contract
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+    steps:
+      - name: Checkout origin main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use CPython 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Verify tracked readiness
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=src python -m e2r.cli.compile_e2r_v6_operational_self_repair \
+            --repo-root . \
+            --final-root docs/operational/e2r_v6_operational_cutover \
+            --verify-only
+          PYTHONPATH=src python -m e2r.cli.compile_e2r_v6_tracked_readiness \
+            --receipt-root docs/operational/e2r_v6_operational_cutover/canary_receipts/2026-07-12 \
+            --output "${RUNNER_TEMP}/tracked_readiness.json"
+
+      - name: Reproduce from a no-local clean clone
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -I -S scripts/run_e2r_v6_clean_clone_reproduction.py \
+            --repo-root .
+
+      - name: Reverify terminal publication when present
+        shell: bash
+        run: |
+          set -euo pipefail
+          terminal="docs/operational/e2r_v6_operational_cutover/operational_cutover_final.md"
+          if test -f "${terminal}"; then
+            PYTHONPATH=src python -m e2r.cli.verify_e2r_v6_operational_cutover_publication \
+              --repo-root .
+          fi
