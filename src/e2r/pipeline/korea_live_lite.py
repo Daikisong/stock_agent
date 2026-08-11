@@ -41,7 +41,7 @@ from e2r.models import (
 )
 from e2r.pipeline.evidence_builder import evidence_from_feature_domains
 from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner, WebResearchPipelineResult
-from e2r.research.naver_search_provider import NaverFreeSearchProvider
+from e2r.research.naver_search_provider import NAVER_DEFAULT_SEARCH_DOMAINS, NaverFreeSearchProvider
 from e2r.research.official_follow_up_provider import (
     CompositeFollowUpSourceProvider,
     KoreaOfficialFollowUpSourceProvider,
@@ -3041,7 +3041,7 @@ class _LiveNaverSearchProvider:
     cache_directory: Path
     source_modes: dict[str, str]
     fallback_reasons: dict[str, str]
-    search_domains: tuple[str, ...] = ("news", "web", "doc")
+    search_domains: tuple[str, ...] = NAVER_DEFAULT_SEARCH_DOMAINS
     errors: list[str] = field(default_factory=list)
 
     def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:

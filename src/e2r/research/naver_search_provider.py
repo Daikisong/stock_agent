@@ -20,8 +20,12 @@ from e2r.sources.source_errors import SourceRequest
 NAVER_SEARCH_ENDPOINTS: Mapping[str, str] = {
     "news": "https://openapi.naver.com/v1/search/news.json",
     "web": "https://openapi.naver.com/v1/search/webkr.json",
-    "doc": "https://openapi.naver.com/v1/search/doc.json",
 }
+
+# Naver shut down the professional-document (``doc``) Search API on
+# 2026-07-31. Keeping it in the production default makes an otherwise
+# successful news/web search report a provider error on every request.
+NAVER_DEFAULT_SEARCH_DOMAINS: tuple[str, ...] = tuple(NAVER_SEARCH_ENDPOINTS)
 
 
 @dataclass
@@ -34,7 +38,7 @@ class NaverFreeSearchProvider:
 
     client_id: str | None = None
     client_secret: str | None = None
-    search_domains: Sequence[str] = ("news", "web", "doc")
+    search_domains: Sequence[str] = NAVER_DEFAULT_SEARCH_DOMAINS
     fixture_provider: FixtureSearchProvider | None = None
     fixture_mode: bool = True
     live_enabled: bool = False
@@ -162,4 +166,4 @@ def _naver_datetime(value: Any) -> datetime | None:
         return None
 
 
-__all__ = ["NAVER_SEARCH_ENDPOINTS", "NaverFreeSearchProvider"]
+__all__ = ["NAVER_DEFAULT_SEARCH_DOMAINS", "NAVER_SEARCH_ENDPOINTS", "NaverFreeSearchProvider"]

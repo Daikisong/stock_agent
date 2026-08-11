@@ -1,11 +1,17 @@
 import os
+from datetime import date
 from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
 
 from e2r.env import load_project_env
-from e2r.research.naver_search_provider import NaverFreeSearchProvider
+from e2r.probe.api_probe import _naver_targets
+from e2r.research.naver_search_provider import (
+    NAVER_DEFAULT_SEARCH_DOMAINS,
+    NAVER_SEARCH_ENDPOINTS,
+    NaverFreeSearchProvider,
+)
 
 
 class EnvLoadingTests(unittest.TestCase):
@@ -48,6 +54,32 @@ class EnvLoadingTests(unittest.TestCase):
 
         self.assertEqual(provider.client_id, "ID_FROM_FILE")
         self.assertEqual(provider.client_secret, "SECRET_FROM_FILE")
+
+    def test_naver_production_defaults_exclude_retired_professional_document_api(self):
+        provider = NaverFreeSearchProvider(
+            client_id="ID",
+            client_secret="SECRET",
+            fixture_mode=False,
+            live_enabled=True,
+        )
+
+        requests = provider.build_search_requests("issuer report", date(2026, 8, 11), 100)
+
+        self.assertEqual(NAVER_DEFAULT_SEARCH_DOMAINS, ("news", "web"))
+        self.assertEqual(tuple(NAVER_SEARCH_ENDPOINTS), NAVER_DEFAULT_SEARCH_DOMAINS)
+        self.assertEqual(
+            tuple(request.url for request in requests),
+            (
+                "https://openapi.naver.com/v1/search/news.json",
+                "https://openapi.naver.com/v1/search/webkr.json",
+            ),
+        )
+        self.assertNotIn("https://openapi.naver.com/v1/search/doc.json", tuple(request.url for request in requests))
+
+    def test_api_probe_uses_only_current_naver_search_endpoints(self):
+        targets = _naver_targets(date(2026, 8, 11), "issuer report")
+
+        self.assertEqual(tuple(target.source_name for target in targets), ("naver_news", "naver_web"))
 
 
 if __name__ == "__main__":

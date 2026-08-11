@@ -271,7 +271,7 @@ class APIProbeRunner:
             for target in _naver_targets(as_of, config.sample_query):
                 add(target, "NAVER_CLIENT_ID/NAVER_CLIENT_SECRET")
         else:
-            for name in ("naver_news", "naver_web", "naver_doc"):
+            for name in ("naver_news", "naver_web"):
                 source_modes[name] = "disabled_optional"
                 skipped_sources.append(name)
 
