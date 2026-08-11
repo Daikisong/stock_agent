@@ -785,6 +785,113 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         )
         self.assertEqual(len(context["facts"]), 3)
 
+    def test_authoritative_fact_context_accepts_phase106_resume_binding(self):
+        rows = _authority_fact_rows(3)
+        ledger = _authority_ledger(rows)
+        base_source_id = "SGCHECK-" + "1" * 24
+        source_checkpoint = {
+            **_authority_source_checkpoint(),
+            "epoch": 8,
+            "checkpoint_id": "SGCHECK-" + "3" * 24,
+            "checkpoint_hash": "3" * 64,
+            "resumed_from_checkpoint_id": "SGCHECK-" + "2" * 24,
+        }
+        epoch = SimpleNamespace(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            checkpoint_id=ledger.checkpoint_id,
+            checkpoint_hash=ledger.checkpoint_hash,
+            source_graph_checkpoint_id=base_source_id,
+        )
+        receipt = {
+            "schema_version": "e2r_v6_current_live_canary_resume_binding_v1",
+            "status": "RESEARCH_CHECKPOINT_PENDING",
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": AS_OF_DATE,
+            "archetype_id": "C08_TEST",
+            "selection_id": "SELECTION-TEST",
+            "selection_roster_hash": "a" * 64,
+            "phase106_source_checkpoint_binding": {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": AS_OF_DATE,
+                "checkpoint_id": source_checkpoint["checkpoint_id"],
+                "checkpoint_hash": source_checkpoint["checkpoint_hash"],
+                "epoch": source_checkpoint["epoch"],
+                "resumed_from_checkpoint_id": source_checkpoint[
+                    "resumed_from_checkpoint_id"
+                ],
+            },
+            "research_epoch_checkpoint_binding": {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": AS_OF_DATE,
+                "checkpoint_id": ledger.checkpoint_id,
+                "checkpoint_hash": ledger.checkpoint_hash,
+                "epoch": 7,
+                "source_graph_checkpoint_id": base_source_id,
+            },
+            "current_source_fact_superset_revalidation_required": True,
+            "production_score_authority": False,
+            "production_stage_authority": False,
+        }
+        receipt["resume_binding_hash"] = stable_hash(receipt)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "research_epochs.jsonl").write_text("{}\n", encoding="utf-8")
+            (root / "research_epoch_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            (root / "until_pass_progress.json").write_text(
+                json.dumps(receipt, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            with (
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_authoritative_research_epoch_fact_ledger",
+                    return_value=ledger,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "load_research_epoch_checkpoint",
+                    return_value=epoch,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode.current_researcher_mode."
+                    "_load_committed_fact_result_snapshot",
+                    return_value=_authority_committed_snapshot(rows),
+                ),
+            ):
+                context = _load_authoritative_prior_fact_context(
+                    root,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=source_checkpoint,
+                )
+                tampered = {
+                    **receipt,
+                    "phase106_source_checkpoint_binding": {
+                        **receipt["phase106_source_checkpoint_binding"],
+                        "checkpoint_hash": "4" * 64,
+                    },
+                }
+                (root / "until_pass_progress.json").write_text(
+                    json.dumps(tampered, sort_keys=True) + "\n",
+                    encoding="utf-8",
+                )
+                with self.assertRaisesRegex(ValueError, "binding drift"):
+                    _load_authoritative_prior_fact_context(
+                        root,
+                        target_id="CURRENT-TARGET",
+                        as_of_date=AS_OF_DATE,
+                        source_checkpoint=source_checkpoint,
+                    )
+
+        self.assertEqual(
+            context["source_graph_checkpoint_binding_status"],
+            "VALIDATED_CURRENT_SOURCE_FACT_SUPERSET",
+        )
+        self.assertEqual(len(context["facts"]), 3)
+
     def test_authoritative_fact_context_preserves_no_gap_and_retirement(self):
         rows = _authority_fact_rows(3)
         source_checkpoint = _authority_source_checkpoint()

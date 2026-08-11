@@ -18,6 +18,7 @@ import shutil
 import stat
 from typing import Any
 
+from e2r.production.metadata import stable_hash, write_json
 from e2r.production.v6_canary_compact_receipt import (
     build_selection_bound_canary_artifacts_from_output,
     build_selection_bound_canary_manifest,
@@ -54,6 +55,16 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeTargetRunner,
     FactExtractionCheckpointPending,
 )
+from e2r.research_brain.researcher_mode.canary_leaf_contract import (
+    refresh_canary_target_manifest_hash,
+)
+from e2r.research_brain.researcher_mode.research_epoch import (
+    load_research_epoch_checkpoint,
+)
+from e2r.research_brain.researcher_mode.source_graph_explorer import (
+    load_source_graph_checkpoint,
+    validate_source_graph_checkpoint,
+)
 
 
 PHASE106_RUN_SCHEMA = "e2r_v6_current_live_canary_runner_v1"
@@ -62,12 +73,101 @@ PHASE106_RUN_PENDING = "E2R_V6_CURRENT_LIVE_CANARY_RUN_PENDING"
 PHASE106_TERMINAL_RESEARCH_STATUS = (
     "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
 )
+PHASE106_RESUME_BINDING_SCHEMA = "e2r_v6_current_live_canary_resume_binding_v1"
 
 CURRENT_LIVE_DIRECTORY_NAME = "current_live_canaries"
 CURRENT_LIVE_SUMMARY_NAME = "cross_archetype_canary_summary.json"
 
 
 CheckpointRunnerFactory = Callable[[Mapping[str, Any]], Any]
+
+
+def _write_phase106_resume_binding(
+    *,
+    target_root: Path,
+    selection: Mapping[str, Any],
+    row: Mapping[str, Any],
+) -> bool:
+    """Bind a one-checkpoint Phase106 resume to its cumulative source head.
+
+    The generic researcher-mode ``until-pass`` command writes its own progress
+    receipt after every semantic checkpoint.  Phase106 deliberately returns
+    after one checkpoint, so it needs an equivalent selection-bound receipt
+    before the next invocation.  This receipt has no score or Stage authority;
+    the fact loader still proves that every authoritative fact source remains
+    in the current production document roster.
+    """
+
+    source_path = target_root / "source_graph_checkpoint.json"
+    epoch_path = target_root / "research_epoch_checkpoint.json"
+    if (
+        not source_path.is_file()
+        or source_path.is_symlink()
+        or not epoch_path.is_file()
+        or epoch_path.is_symlink()
+    ):
+        return False
+    target_id = str(row.get("target_id") or "")
+    as_of_date = str(selection.get("selection_as_of_date") or "")
+    source = validate_source_graph_checkpoint(
+        load_source_graph_checkpoint(source_path),
+        target_id=target_id,
+        as_of_date=as_of_date,
+    )
+    epoch = load_research_epoch_checkpoint(epoch_path)
+    if epoch.target_id != target_id or epoch.as_of_date != as_of_date:
+        raise ValueError("Phase106 resume research checkpoint identity drift")
+    source_binding = {
+        "target_id": target_id,
+        "as_of_date": as_of_date,
+        "checkpoint_id": str(source.get("checkpoint_id") or ""),
+        "checkpoint_hash": str(source.get("checkpoint_hash") or ""),
+        "epoch": int(source.get("epoch") or 0),
+        "resumed_from_checkpoint_id": str(
+            source.get("resumed_from_checkpoint_id") or ""
+        ),
+    }
+    research_binding = {
+        "target_id": epoch.target_id,
+        "as_of_date": epoch.as_of_date,
+        "checkpoint_id": epoch.checkpoint_id,
+        "checkpoint_hash": epoch.checkpoint_hash,
+        "epoch": epoch.epoch,
+        "source_graph_checkpoint_id": str(
+            epoch.source_graph_checkpoint_id or ""
+        ),
+    }
+    if (
+        not source_binding["checkpoint_id"]
+        or not source_binding["checkpoint_hash"]
+        or source_binding["epoch"] < 1
+        or not research_binding["checkpoint_id"]
+        or not research_binding["checkpoint_hash"]
+        or not research_binding["source_graph_checkpoint_id"]
+    ):
+        raise ValueError("Phase106 resume checkpoint binding is incomplete")
+    payload = {
+        "schema_version": PHASE106_RESUME_BINDING_SCHEMA,
+        "status": "RESEARCH_CHECKPOINT_PENDING",
+        "target_id": target_id,
+        "as_of_date": as_of_date,
+        "archetype_id": str(row.get("archetype_id") or ""),
+        "selection_id": str(row.get("selection_id") or ""),
+        "selection_roster_hash": str(
+            selection.get("selection_roster_hash") or ""
+        ),
+        "phase106_source_checkpoint_binding": source_binding,
+        "research_epoch_checkpoint_binding": research_binding,
+        "current_source_fact_superset_revalidation_required": True,
+        "production_score_authority": False,
+        "production_stage_authority": False,
+    }
+    write_json(
+        target_root / "until_pass_progress.json",
+        {**payload, "resume_binding_hash": stable_hash(payload)},
+    )
+    refresh_canary_target_manifest_hash(target_root)
+    return True
 
 
 def _mapping(value: object, *, context: str) -> Mapping[str, Any]:
@@ -546,6 +646,11 @@ class V6CurrentLiveCanaryRunner:
                         or selection["selection_as_of_date"]
                     ),
                     fact_documents_per_call=fact_documents_per_call,
+                )
+                _write_phase106_resume_binding(
+                    target_root=target_root,
+                    selection=selection,
+                    row=row,
                 )
                 checkpoint_runner = self._checkpoint_runner_factory(row)
                 try:

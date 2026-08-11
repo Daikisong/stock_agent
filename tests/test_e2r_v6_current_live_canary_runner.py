@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import unittest
+from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 from e2r.production import v6_current_live_canary_runner as phase106_runner_module
@@ -26,8 +27,10 @@ from e2r.production.v6_canary_compact_receipt import (
 from e2r.production.v6_current_live_canary_runner import (
     PHASE106_RUN_PASS,
     PHASE106_RUN_PENDING,
+    PHASE106_RESUME_BINDING_SCHEMA,
     PHASE106_TERMINAL_RESEARCH_STATUS,
     V6CurrentLiveCanaryRunner,
+    _write_phase106_resume_binding,
 )
 from e2r.production.v6_canary_selection import (
     ISSUER_PROFILE_MANIFEST_NAME,
@@ -87,6 +90,93 @@ def _write_dummy_strong_bundle(path: Path) -> None:
 
 
 class E2RV6CurrentLiveCanaryRunnerTests(unittest.TestCase):
+    def test_phase106_resume_binding_seals_current_source_and_research_epoch(
+        self,
+    ) -> None:
+        selection = _selection()
+        row = selection["selections"][0]
+        assert isinstance(row, dict)
+        source = {
+            "target_id": row["target_id"],
+            "as_of_date": selection["selection_as_of_date"],
+            "checkpoint_id": "SGCHECK-" + "3" * 24,
+            "checkpoint_hash": "3" * 64,
+            "epoch": 8,
+            "resumed_from_checkpoint_id": "SGCHECK-" + "2" * 24,
+        }
+        epoch = SimpleNamespace(
+            target_id=row["target_id"],
+            as_of_date=selection["selection_as_of_date"],
+            checkpoint_id="REPOCH-" + "4" * 24,
+            checkpoint_hash="4" * 64,
+            epoch=7,
+            source_graph_checkpoint_id="SGCHECK-" + "1" * 24,
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            target_root = Path(temporary)
+            (target_root / "source_graph_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            (target_root / "research_epoch_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            with (
+                patch(
+                    "e2r.production.v6_current_live_canary_runner."
+                    "load_source_graph_checkpoint",
+                    return_value=source,
+                ),
+                patch(
+                    "e2r.production.v6_current_live_canary_runner."
+                    "validate_source_graph_checkpoint",
+                    return_value=source,
+                ),
+                patch(
+                    "e2r.production.v6_current_live_canary_runner."
+                    "load_research_epoch_checkpoint",
+                    return_value=epoch,
+                ),
+                patch(
+                    "e2r.production.v6_current_live_canary_runner."
+                    "refresh_canary_target_manifest_hash",
+                    return_value=False,
+                ),
+            ):
+                written = _write_phase106_resume_binding(
+                    target_root=target_root,
+                    selection=selection,
+                    row=row,
+                )
+
+            self.assertTrue(written)
+            receipt = json.loads(
+                (target_root / "until_pass_progress.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(
+                receipt["schema_version"], PHASE106_RESUME_BINDING_SCHEMA
+            )
+            self.assertEqual(
+                receipt["phase106_source_checkpoint_binding"], source
+            )
+            self.assertEqual(
+                receipt["research_epoch_checkpoint_binding"]["checkpoint_id"],
+                epoch.checkpoint_id,
+            )
+            self.assertFalse(receipt["production_score_authority"])
+            self.assertFalse(receipt["production_stage_authority"])
+            self.assertEqual(
+                receipt["resume_binding_hash"],
+                stable_hash(
+                    {
+                        key: value
+                        for key, value in receipt.items()
+                        if key != "resume_binding_hash"
+                    }
+                ),
+            )
+
     def test_forced_selection_loads_profile_from_canonical_cutover_sibling(
         self,
     ) -> None:

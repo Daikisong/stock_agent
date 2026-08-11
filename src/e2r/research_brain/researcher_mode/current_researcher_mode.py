@@ -4807,6 +4807,77 @@ def _validated_multi_epoch_source_fact_binding(
         progress = _read_json(progress_path)
     except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
         return False
+    if progress.get("schema_version") == (
+        "e2r_v6_current_live_canary_resume_binding_v1"
+    ):
+        receipt_hash = str(progress.get("resume_binding_hash") or "")
+        receipt_payload = {
+            key: value
+            for key, value in progress.items()
+            if key != "resume_binding_hash"
+        }
+        source_binding = progress.get(
+            "phase106_source_checkpoint_binding"
+        )
+        research_binding = progress.get(
+            "research_epoch_checkpoint_binding"
+        )
+        current_binding = {
+            "target_id": str(
+                current_source_checkpoint.get("target_id") or ""
+            ),
+            "as_of_date": str(
+                current_source_checkpoint.get("as_of_date") or ""
+            ),
+            "checkpoint_id": str(
+                current_source_checkpoint.get("checkpoint_id") or ""
+            ),
+            "checkpoint_hash": str(
+                current_source_checkpoint.get("checkpoint_hash") or ""
+            ),
+            "epoch": current_source_checkpoint.get("epoch"),
+            "resumed_from_checkpoint_id": str(
+                current_source_checkpoint.get(
+                    "resumed_from_checkpoint_id"
+                )
+                or ""
+            ),
+        }
+        return bool(
+            receipt_hash == stable_hash(receipt_payload)
+            and progress.get("status") == "RESEARCH_CHECKPOINT_PENDING"
+            and progress.get("target_id") == target_id
+            and progress.get("as_of_date") == as_of_date
+            and progress.get(
+                "current_source_fact_superset_revalidation_required"
+            )
+            is True
+            and progress.get("production_score_authority") is False
+            and progress.get("production_stage_authority") is False
+            and isinstance(source_binding, Mapping)
+            and dict(source_binding) == current_binding
+            and isinstance(research_binding, Mapping)
+            and str(research_binding.get("target_id") or "") == target_id
+            and str(research_binding.get("as_of_date") or "")
+            == as_of_date
+            and str(research_binding.get("checkpoint_id") or "")
+            == ledger_checkpoint_id
+            and str(research_binding.get("checkpoint_hash") or "")
+            == ledger_checkpoint_hash
+            and str(
+                research_binding.get("source_graph_checkpoint_id") or ""
+            )
+            == epoch_source_checkpoint_id
+            and isinstance(current_binding["epoch"], int)
+            and not isinstance(current_binding["epoch"], bool)
+            and current_binding["epoch"] > 0
+            and bool(current_binding["resumed_from_checkpoint_id"])
+            and current_binding["checkpoint_id"]
+            != epoch_source_checkpoint_id
+            and current_binding["resumed_from_checkpoint_id"]
+            != current_binding["checkpoint_id"]
+        )
+
     source_binding = progress.get("source_checkpoint_binding")
     research_binding = progress.get("research_epoch_checkpoint_binding")
     if not isinstance(source_binding, Mapping) or not isinstance(
