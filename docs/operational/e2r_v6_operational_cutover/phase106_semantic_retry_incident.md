@@ -102,6 +102,26 @@ score, Stage 또는 cutover authority가 아니다.
    deterministic 코드는 검색어를 만들지 않고, LLM이 full broker PDF 같은 대체 문서
    class를 제안할 권한만 유지한다.
 
+8. **원문을 확보해도 revision 역할을 저장할 수 없는 schema 단절**
+
+   C08은 유진투자증권의 2026-05-11 full PDF를 실제 fetch했고, 원문에는
+   `영업이익(26E) 현재 1,771 / 직전 1,719 / ▲`처럼 현 추정치와 직전 추정치가 함께
+   있었다. 그러나 `EvidenceFact`와 collaboration output schema는
+   `OPERATING_PROFIT_REVISION` 및 `EPS_REVISION`을 허용하지 않았고, structured
+   materializer도 이 fact를 consensus revision record로 승격하는 경로가 없었다.
+   따라서 검색을 더 반복해도 이미 확보한 정답을 structured gap에 연결할 수 없었다.
+
+   쉬운 예: 창고에 정식 세금계산서가 도착했는데 전산 입력 화면에 “수정 전 금액”과
+   “수정 후 금액” 칸이 없어서 계속 새 계산서만 찾던 상태다.
+
+   수정 후에는 target/sector 조건 없이 두 revision 역할을 공통 fact schema에
+   추가했다. 다만 숫자 하나만 있는 전망표는 revision으로 인정하지 않는다. dated
+   full broker PDF, metric 이름, 수정 신호, 수정 전·후의 서로 다른 두 숫자, forward
+   period, exact quote가 모두 있어야 한다. `1,771십억원`은 엔진에서 KRW
+   1.771조원으로 정규화하되, 원문 숫자 1,771과 변환 결과를 함께 검증한다. semantics
+   version 변경은 `PUBLIC_BROKER_PDF`만 선택 재추출하고 무관한 공시 수백 건은 다시
+   열지 않는다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -141,6 +161,9 @@ score, Stage 또는 cutover authority가 아니다.
 10. semantic source route 종료와 structured provider/source gap 종료를 같은 boolean으로
     취급하지 않는다. structured required role이 남으면 score를 확정하지 않고 LLM 대체
     source route를 다시 열어야 한다.
+11. 새 문서 class를 찾기 전에 이미 fetch된 full document가 missing structured role을
+    표현할 수 있는지 schema→fact→materializer→engine 전 경로를 검사한다. 원문이 있는데
+    typed role 경로가 없으면 검색 재시도가 아니라 공통 schema 단절을 먼저 수리한다.
 
 ## Goal 경계
 

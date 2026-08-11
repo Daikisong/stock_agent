@@ -23,6 +23,14 @@ BROKER_VALUATION_FACT_RECORD_CONTRACTS: Mapping[str, Mapping[str, str]] = {
         "unit": "MULTIPLE",
     },
 }
+BROKER_REVISION_FACT_RECORD_CONTRACTS: Mapping[str, Mapping[str, str]] = {
+    "EPS_REVISION": {
+        "metric_id": "broker_eps_revision",
+    },
+    "OPERATING_PROFIT_REVISION": {
+        "metric_id": "broker_operating_profit_revision",
+    },
+}
 BROKER_VALUATION_QUOTE_METRIC_PATTERNS: Mapping[str, re.Pattern[str]] = {
     "FORWARD_BOOK_VALUE": re.compile(
         r"(?:\bBPS\b|book\s+value\s+per\s+share|주당\s*(?:순자산|장부가))",
@@ -117,6 +125,55 @@ def broker_valuation_quote_matches_claim(
     return False
 
 
+def broker_revision_quote_matches_claim(
+    *,
+    role: str,
+    exact_quote: str,
+    revised_value: Any,
+) -> bool:
+    """Bind a revised point to an explicit old/new broker estimate quote.
+
+    A lone forecast row is insufficient.  The quote must identify the metric,
+    contain a current-vs-previous or revision cue, include the nominated
+    revised point, and include at least one distinct comparison point.
+    """
+
+    quote = str(exact_quote or "").strip()
+    if not quote:
+        return False
+    metric_patterns = {
+        "EPS_REVISION": re.compile(
+            r"(?:\bEPS\b|주당\s*(?:순이익|이익))", re.IGNORECASE
+        ),
+        "OPERATING_PROFIT_REVISION": re.compile(
+            r"(?:영업이익|operating\s+(?:profit|income))", re.IGNORECASE
+        ),
+    }
+    pattern = metric_patterns.get(role)
+    if pattern is None or not pattern.search(quote):
+        return False
+    if not re.search(
+        r"(?:기존|직전|상향|하향|조정|변동|previous|prior|revised|raised|lowered|[▲▼↑↓])",
+        quote,
+        re.IGNORECASE,
+    ):
+        return False
+    revised = _broker_number(revised_value)
+    if revised is None:
+        return False
+    values = [
+        number
+        for number in _broker_reported_numbers(quote)
+        if not (1900 <= abs(number) <= 2100 and float(number).is_integer())
+    ]
+    if not any(_same_broker_reported_number(value, revised) for value in values):
+        return False
+    return any(
+        not _same_broker_reported_number(value, revised)
+        for value in values
+    )
+
+
 def _broker_line_binds_period_and_value(
     line: str,
     *,
@@ -161,6 +218,14 @@ def _broker_reported_numbers(text: str) -> tuple[float, ...]:
         float(token.replace(",", ""))
         for token in re.findall(r"[-+]?\d[\d,]*(?:\.\d+)?", text)
     )
+
+
+def _broker_number(value: Any) -> float | None:
+    try:
+        parsed = float(str(value).replace(",", ""))
+    except (TypeError, ValueError):
+        return None
+    return parsed if math.isfinite(parsed) else None
 
 
 def _same_broker_reported_number(left: float, right: float) -> bool:
@@ -351,11 +416,13 @@ def _coerce_record(
 
 
 __all__ = [
+    "BROKER_REVISION_FACT_RECORD_CONTRACTS",
     "BROKER_VALUATION_FACT_RECORD_CONTRACTS",
     "BROKER_VALUATION_QUOTE_METRIC_PATTERNS",
     "StructuredDataResearcher",
     "StructuredMetricRecord",
     "StructuredResearchResult",
+    "broker_revision_quote_matches_claim",
     "broker_valuation_forward_period_end",
     "broker_valuation_quote_matches_claim",
 ]

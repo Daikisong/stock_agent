@@ -1923,6 +1923,137 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
             result.audit["observed_nonblocking_fetch_failure_count"], 1
         )
 
+    def test_verified_broker_revision_fact_closes_operating_profit_revision(self):
+        class TargetFutureSnapshotTransport(FixtureStructuredTransport):
+            def get_text(self, *, url, params, headers, timeout_seconds):
+                response = super().get_text(
+                    url=url,
+                    params=params,
+                    headers=headers,
+                    timeout_seconds=timeout_seconds,
+                )
+                if str(params.get("cmp_cd") or "") != "005930":
+                    return response
+                text = _companyguide_html("2026.07.13")
+                return replace(
+                    response,
+                    content_hash=hashlib.sha256(text.encode()).hexdigest(),
+                    text=text,
+                )
+
+        transport = TargetFutureSnapshotTransport()
+        facts, claims, documents = _broker_revision_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=FixturePeerProvider(),
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+                required_roles_by_component={
+                    "market_mispricing": ("OPERATING_PROFIT_REVISION",),
+                },
+            )
+
+        self.assertEqual((result.status, result.pending_reasons), ("COMPLETE", ()))
+        self.assertEqual(
+            result.engine_result.missing_roles_by_component["market_mispricing"],
+            (),
+        )
+        promoted = [
+            row
+            for row in result.engine_result.records
+            if row.record_kind == "SOURCE_BACKED_BROKER_REVISION"
+        ]
+        self.assertEqual(len(promoted), 1)
+        row = promoted[0]
+        self.assertEqual(row.evidence_roles, ("OPERATING_PROFIT_REVISION",))
+        self.assertEqual(row.metric_id, "broker_operating_profit_revision")
+        self.assertEqual(row.dataset, "CONSENSUS_REVISION")
+        self.assertEqual(row.value, 1_771_000_000_000.0)
+        self.assertEqual(row.unit, "KRW")
+        self.assertEqual(
+            result.audit["issuer_fact_materialization"][
+                "broker_revision_record_count"
+            ],
+            1,
+        )
+
+    def test_broker_revision_requires_metric_revision_cue_and_two_values(self):
+        matches = structured_materializer_module.broker_revision_quote_matches_claim
+        self.assertTrue(
+            matches(
+                role="OPERATING_PROFIT_REVISION",
+                exact_quote=(
+                    "(십억원) 현재 직전 변동\n"
+                    "영업이익(26E) 1,771 1,719 ▲"
+                ),
+                revised_value=1771,
+            )
+        )
+        self.assertFalse(
+            matches(
+                role="OPERATING_PROFIT_REVISION",
+                exact_quote="영업이익(26E) 1,771",
+                revised_value=1771,
+            )
+        )
+        self.assertFalse(
+            matches(
+                role="EPS_REVISION",
+                exact_quote="영업이익(26E) 1,771 1,719 ▲",
+                revised_value=1771,
+            )
+        )
+
+    def test_broker_revision_wrong_source_and_generic_period_are_rejected(self):
+        facts, claims, documents = _broker_revision_fact_bundle()
+        wrong_source = ({**documents[0], "source_family": "ISSUER_IR_PRESENTATION"},)
+        _, _, source_audit = structured_materializer_module._fact_structured_routes(
+            target_id="005930",
+            cutoff=date(2026, 7, 12),
+            evidence_facts=facts,
+            source_claims=claims,
+            source_documents=wrong_source,
+        )
+        self.assertEqual(source_audit["broker_revision_record_count"], 0)
+        self.assertEqual(
+            source_audit["rejection_counts"],
+            {"ROLE_SOURCE_FAMILY_NOT_ALLOWED:OPERATING_PROFIT_REVISION": 1},
+        )
+
+        generic_fact = replace(facts[0], period="forward")
+        generic_claim = {**claims[0], "period": "forward"}
+        _, _, period_audit = structured_materializer_module._fact_structured_routes(
+            target_id="005930",
+            cutoff=date(2026, 7, 12),
+            evidence_facts=(generic_fact,),
+            source_claims=(generic_claim,),
+            source_documents=documents,
+        )
+        self.assertEqual(period_audit["broker_revision_record_count"], 0)
+        self.assertEqual(
+            period_audit["rejection_counts"],
+            {"REVISION_PERIOD_NOT_FORWARD:OPERATING_PROFIT_REVISION": 1},
+        )
+
     def test_broker_quote_binding_uses_matching_metric_row_and_period_column(self):
         quote = """2023 2024 2025F 2026F
 BPS [원] 73,495 101,515 159,734 342,488
@@ -3228,6 +3359,69 @@ def _broker_valuation_fact_bundle():
             )
         )
     return tuple(facts), tuple(claims), (document,)
+
+
+def _broker_revision_fact_bundle():
+    quote = "(십억원) 현재 직전 변동\n영업이익(26E) 1,771 1,719 ▲"
+    document = {
+        "document_id": "DOC-BROKER-REVISION",
+        "target_id": "005930",
+        "as_of_date": "2026-07-12",
+        "canonical_url": "https://broker.example.com/revision.pdf",
+        "title": "Current Corp estimate revision report",
+        "source_family": "PUBLIC_BROKER_PDF",
+        "published_at": "2026-05-11",
+        "available_at": "2026-05-11",
+        "content_hash": hashlib.sha256(quote.encode()).hexdigest(),
+        "content_text": quote,
+        "source_independence_group": "BROKER:broker.example.com",
+        "full_fetch_performed": True,
+        "snippet_only": False,
+        "evidence_eligible": True,
+    }
+    claim = {
+        "claim_id": "BROKER-REVISION-CLAIM-1",
+        "target_id": "005930",
+        "as_of_date": "2026-07-12",
+        "accepted": True,
+        "accepted_by_evidence_os": True,
+        "material": True,
+        "document_id": document["document_id"],
+        "exact_quote": quote,
+        "business_segment": "COMPANY",
+        "scope_business_segment": "COMPANY",
+        "product_family": "CONSOLIDATED",
+        "scope_product_family": "CONSOLIDATED",
+        "predicate_family": "operating_profit_revision",
+        "normalized_object": "operating_profit_revision",
+        "value": 1771,
+        "unit": "십억원",
+        "period": "2026E; report dated 2026-05-11",
+        "confidence": 0.92,
+        "structured_evidence_roles": ["OPERATING_PROFIT_REVISION"],
+    }
+    fact = EvidenceFact(
+        fact_id="BROKER-REVISION-FACT-1",
+        target_id="005930",
+        as_of_date="2026-07-12",
+        subject="Current Corp consolidated operating profit",
+        business_segment="COMPANY",
+        product_family="CONSOLIDATED",
+        economic_mechanism="broker estimate revision",
+        predicate="operating_profit_revision",
+        value=1771,
+        unit="십억원",
+        period="2026E; report dated 2026-05-11",
+        direction="POSITIVE",
+        source_ids=(document["document_id"],),
+        claim_ids=(claim["claim_id"],),
+        quote_ids=("BROKER-REVISION-QUOTE-1",),
+        current_lifecycle="OPEN",
+        source_independence_group="BROKER:broker.example.com",
+        confidence=0.92,
+        structured_evidence_roles=("OPERATING_PROFIT_REVISION",),
+    )
+    return (fact,), (claim,), (document,)
 
 
 def _dart_payload(*, year: int, report_code: str):

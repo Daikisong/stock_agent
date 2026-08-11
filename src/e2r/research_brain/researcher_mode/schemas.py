@@ -261,6 +261,8 @@ class EvidenceFact:
             "SEGMENT_CONTRIBUTION",
             "QOQ_GROWTH",
             "FORWARD_GUIDANCE",
+            "EPS_REVISION",
+            "OPERATING_PROFIT_REVISION",
             "FORWARD_BOOK_VALUE",
             "FORWARD_PB",
             "FORWARD_EV_EBITDA",

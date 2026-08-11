@@ -27,8 +27,10 @@ from e2r.models import (
 from e2r.production.metadata import write_jsonl
 
 from .structured_data_researcher import (
+    BROKER_REVISION_FACT_RECORD_CONTRACTS,
     BROKER_VALUATION_FACT_RECORD_CONTRACTS,
     StructuredMetricRecord,
+    broker_revision_quote_matches_claim,
     broker_valuation_forward_period_end,
     broker_valuation_quote_matches_claim,
 )
@@ -2018,11 +2020,20 @@ def _seed_record_rejection(
         contract["metric_id"]
         for contract in BROKER_VALUATION_FACT_RECORD_CONTRACTS.values()
     }
+    broker_revision_metric_ids = {
+        contract["metric_id"]
+        for contract in BROKER_REVISION_FACT_RECORD_CONTRACTS.values()
+    }
     if item.metric_id in broker_metric_ids:
         if route_name != "PUBLIC_BROKER_REPORT":
             return "BROKER_VALUATION_METRIC_REQUIRES_PUBLIC_BROKER_ROUTE"
         if item.record_kind != "SOURCE_BACKED_BROKER_VALUATION":
             return "BROKER_VALUATION_METRIC_REQUIRES_VERIFIED_RECORD_KIND"
+    if item.metric_id in broker_revision_metric_ids:
+        if route_name != "PUBLIC_BROKER_REPORT":
+            return "BROKER_REVISION_METRIC_REQUIRES_PUBLIC_BROKER_ROUTE"
+        if item.record_kind != "SOURCE_BACKED_BROKER_REVISION":
+            return "BROKER_REVISION_METRIC_REQUIRES_VERIFIED_RECORD_KIND"
     if (
         _public_broker_seed_requires_verified_ingress(item, route_name)
         and broker_ingress_reason
@@ -2111,6 +2122,68 @@ def _seed_record_rejection(
         )
         if period_end <= available:
             return "BROKER_VALUATION_PERIOD_NOT_FORWARD"
+    if item.record_kind == "SOURCE_BACKED_BROKER_REVISION":
+        if broker_ingress_reason:
+            return broker_ingress_reason
+        if route_name != "PUBLIC_BROKER_REPORT":
+            return "BROKER_REVISION_REQUIRES_PUBLIC_BROKER_ROUTE"
+        if item.provenance != "STRUCTURED_EXTRACTED":
+            return "BROKER_REVISION_REQUIRES_EXTRACTED_PROVENANCE"
+        if len(item.evidence_roles) != 1:
+            return "BROKER_REVISION_REQUIRES_ONE_ROLE"
+        role = item.evidence_roles[0]
+        contract = BROKER_REVISION_FACT_RECORD_CONTRACTS.get(role)
+        if contract is None:
+            return "BROKER_REVISION_ROLE_NOT_ALLOWED"
+        if item.metric_id != contract["metric_id"]:
+            return "BROKER_REVISION_METRIC_ROLE_MISMATCH"
+        if item.dataset != "CONSENSUS_REVISION":
+            return "BROKER_REVISION_DATASET_MISMATCH"
+        if item.metadata.get("source_family") != "PUBLIC_BROKER_PDF":
+            return "BROKER_REVISION_SOURCE_FAMILY_MISMATCH"
+        if item.metadata.get("exact_quote_verified") is not True:
+            return "BROKER_REVISION_QUOTE_NOT_VERIFIED"
+        if item.metadata.get("fact_boundary_validation_version") != (
+            "e2r_broker_revision_fact_boundary_v1"
+        ):
+            return "BROKER_REVISION_FACT_BOUNDARY_UNVERIFIED"
+        fact_id = str(item.metadata.get("fact_id") or "").strip()
+        claim_id = str(item.metadata.get("claim_id") or "").strip()
+        document_id = str(item.metadata.get("document_id") or "").strip()
+        if not fact_id or not claim_id or item.source_ids != (document_id,):
+            return "BROKER_REVISION_FACT_CLAIM_DOCUMENT_LINEAGE_MISSING"
+        exact_quote = str(item.metadata.get("exact_quote") or "")
+        quote_hash = str(item.metadata.get("exact_quote_hash") or "")
+        document_hash = str(item.metadata.get("document_content_hash") or "")
+        if (
+            not exact_quote
+            or hashlib.sha256(exact_quote.encode("utf-8")).hexdigest()
+            != quote_hash
+            or not _is_sha256(document_hash)
+        ):
+            return "BROKER_REVISION_QUOTE_OR_DOCUMENT_HASH_INVALID"
+        reported_value = item.metadata.get("reported_value")
+        reported_unit = str(item.metadata.get("reported_unit") or "")
+        if not _broker_reported_value_matches_normalized(
+            reported_value=reported_value,
+            reported_unit=reported_unit,
+            normalized_value=float(item.value),
+        ):
+            return "BROKER_REVISION_REPORTED_VALUE_NORMALIZATION_MISMATCH"
+        if not broker_revision_quote_matches_claim(
+            role=role,
+            exact_quote=exact_quote,
+            revised_value=reported_value,
+        ):
+            return "BROKER_REVISION_QUOTE_ROLE_VALUE_MISMATCH"
+        period_end = broker_valuation_forward_period_end(item.period)
+        if period_end is None:
+            return "BROKER_REVISION_PERIOD_NOT_CONCRETE"
+        available = date.fromisoformat(
+            (item.available_at or item.observed_at)[:10]
+        )
+        if period_end <= available:
+            return "BROKER_REVISION_PERIOD_NOT_FORWARD"
     return None
 
 
@@ -2160,7 +2233,11 @@ def _issue_verified_broker_fact_ingress(
         route_name != "PUBLIC_BROKER_REPORT"
         or not records
         or any(
-            row.record_kind != "SOURCE_BACKED_BROKER_VALUATION"
+            row.record_kind
+            not in {
+                "SOURCE_BACKED_BROKER_VALUATION",
+                "SOURCE_BACKED_BROKER_REVISION",
+            }
             for row in records
         )
     ):
@@ -2216,6 +2293,7 @@ def _public_broker_seed_requires_verified_ingress(
         return False
     protected_roles = {
         *BROKER_VALUATION_FACT_RECORD_CONTRACTS,
+        *BROKER_REVISION_FACT_RECORD_CONTRACTS,
         "FORWARD_PE",
         "OWN_HISTORICAL_BAND",
     }
@@ -3932,6 +4010,44 @@ def _is_sha256(value: str) -> bool:
     except ValueError:
         return False
     return True
+
+
+def _broker_reported_value_matches_normalized(
+    *,
+    reported_value: Any,
+    reported_unit: str,
+    normalized_value: float,
+) -> bool:
+    """Verify that fact-boundary currency scaling did not alter the claim.
+
+    Easy example: a broker row reporting ``1,771 십억원`` must enter the
+    engine as KRW 1.771 trillion, while the exact-quote matcher must still look
+    for the literal 1,771.  Keeping both values bound prevents either side from
+    being silently substituted.
+    """
+
+    try:
+        reported = float(str(reported_value).replace(",", ""))
+    except (TypeError, ValueError):
+        return False
+    if not math.isfinite(reported):
+        return False
+    unit = str(reported_unit or "").casefold()
+    if "조원" in unit:
+        multiplier = 1e12
+    elif "십억원" in unit:
+        multiplier = 1e9
+    elif "억원" in unit:
+        multiplier = 1e8
+    elif "백만원" in unit:
+        multiplier = 1e6
+    elif "천원" in unit:
+        multiplier = 1e3
+    else:
+        multiplier = 1.0
+    expected = reported * multiplier
+    tolerance = max(1e-9, abs(expected) * 1e-9)
+    return abs(float(normalized_value) - expected) <= tolerance
 
 
 def _quantile(values: Sequence[float], probability: float) -> float:

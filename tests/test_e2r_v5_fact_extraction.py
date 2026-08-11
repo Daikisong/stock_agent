@@ -1495,6 +1495,19 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 document={"source_family": "OPENDART"},
             )
         )
+        previous_revision_boundary = "e2r_v5_structured_valuation_roles_v5"
+        self.assertTrue(
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version=previous_revision_boundary,
+                document={"source_family": "PUBLIC_BROKER_PDF"},
+            )
+        )
+        self.assertFalse(
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version=previous_revision_boundary,
+                document={"source_family": "OPENDART"},
+            )
+        )
         self.assertFalse(
             _fact_semantics_upgrade_requires_reextraction(
                 previous_version=FACT_EXTRACTION_SEMANTICS_VERSION,

@@ -87,6 +87,9 @@ OBJECTIVE_FACT_RELATIONS = frozenset(
     {"ADVANCE", "COUNTER", "SUPERSEDE"}
 )
 FACT_EXTRACTION_SEMANTICS_VERSION = (
+    "e2r_v5_structured_revision_roles_v6"
+)
+_PRE_STRUCTURED_REVISION_ROLE_SEMANTICS_VERSION = (
     "e2r_v5_structured_valuation_roles_v5"
 )
 _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION = (
@@ -7793,11 +7796,20 @@ def _fact_semantics_upgrade_requires_reextraction(
     previous_version: str,
     document: Mapping[str, Any] | None,
 ) -> bool:
-    """Limit the v4→v5 migration to documents that can supply new roles."""
+    """Re-read only broker PDFs that can supply newly admitted typed roles.
+
+    Easy example: adding a verified operating-profit-revision role must revisit
+    the dated broker PDF that contains the old/new estimates, but it must not
+    reopen hundreds of unrelated issuer filings.  The document is re-read by
+    the LLM; this boundary still does not infer a role from keywords.
+    """
 
     if previous_version == FACT_EXTRACTION_SEMANTICS_VERSION:
         return False
-    if previous_version == _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION:
+    if previous_version in {
+        _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION,
+        _PRE_STRUCTURED_REVISION_ROLE_SEMANTICS_VERSION,
+    }:
         return bool(
             document is not None
             and str(document.get("source_family") or "").upper()
