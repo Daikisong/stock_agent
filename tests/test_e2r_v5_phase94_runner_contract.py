@@ -69,6 +69,8 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _load_prior_component_memos,
     _reusable_prior_component_memos,
     _same_lane_structured_cache_roots,
+    _source_routing_supervisor_review,
+    _supervisor_review_is_transport_scaffold,
 )
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
@@ -6790,6 +6792,112 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 for component_id in CANONICAL_COMPONENT_ORDER
             },
         )
+
+    def test_pending_supervisor_uses_latest_semantic_review_for_source_routing(
+        self,
+    ) -> None:
+        """A memo refresh must not turn a closed search lane back on."""
+
+        target_id = "CURRENT-TARGET"
+        as_of_date = "2026-06-29"
+        pending = {
+            "review_id": "RSUP-PENDING-current",
+            "status": "NEXT_RESEARCH_REQUIRED",
+            "ready_for_independent_saturation_review": False,
+            "component_memos_sufficient": False,
+            "component_findings": [],
+            "missing_material_facts": [],
+            "new_source_family_directions": [],
+            "query_direction_briefs": [],
+            "rationale": (
+                "SUPERVISOR_SYNTHESIS_LINEAGE_PENDING:"
+                "CURRENT_SYNTHESIS_NOT_COMPLETE"
+            ),
+        }
+        semantic = {
+            "review_id": "RSUP-semantic",
+            "status": "NEXT_RESEARCH_REQUIRED",
+            "ready_for_independent_saturation_review": False,
+            "component_memos_sufficient": False,
+            "component_findings": [
+                {
+                    "component_id": "information_confidence",
+                    "memo_sufficient": False,
+                    "missing_fact_needs": [],
+                    "rationale": "rewrite current evidence without more search",
+                }
+            ],
+            "missing_material_facts": [],
+            "new_source_family_directions": [],
+            "query_direction_briefs": [],
+            "source_family_gaps": [],
+            "parser_or_extractor_failures": [],
+            "failure_assessments": [],
+            "reasonable_positive_routes_remaining": False,
+            "rationale": "public source routes exhausted; rewrite memo",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "research_epochs.jsonl").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "checkpoint_id": "REPOCH-prior",
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            with patch(
+                "e2r.research_brain.researcher_mode."
+                "current_researcher_mode._coerce_checkpoint",
+                return_value=SimpleNamespace(supervisor_review=semantic),
+            ):
+                selected = _source_routing_supervisor_review(
+                    root=root,
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    current_epoch={
+                        "checkpoint_id": "REPOCH-current",
+                        "supervisor_review": pending,
+                    },
+                )
+
+        self.assertTrue(_supervisor_review_is_transport_scaffold(pending))
+        self.assertFalse(
+            _supervisor_review_is_transport_scaffold(semantic)
+        )
+        self.assertEqual(selected["review_id"], "RSUP-semantic")
+        self.assertIs(
+            selected["reasonable_positive_routes_remaining"], False
+        )
+
+    def test_current_semantic_supervisor_wins_over_epoch_history(self) -> None:
+        current = {
+            "review_id": "RSUP-current",
+            "status": "NEXT_RESEARCH_REQUIRED",
+            "ready_for_independent_saturation_review": False,
+            "component_memos_sufficient": False,
+            "component_findings": [],
+            "missing_material_facts": [],
+            "new_source_family_directions": [],
+            "query_direction_briefs": [],
+            "reasonable_positive_routes_remaining": True,
+            "rationale": "new provider judgment",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            selected = _source_routing_supervisor_review(
+                root=Path(directory),
+                target_id="CURRENT-TARGET",
+                as_of_date="2026-06-29",
+                current_epoch={
+                    "checkpoint_id": "REPOCH-current",
+                    "supervisor_review": current,
+                },
+            )
+
+        self.assertEqual(selected, current)
 
     def test_complete_component_does_not_resolve_pending_source_query(self) -> None:
         target_id = "CURRENT-TARGET"

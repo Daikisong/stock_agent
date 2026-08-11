@@ -70,6 +70,25 @@ score, Stage 또는 cutover authority가 아니다.
    absence로 승격되지 않는다. 구체적인 source direction이나 retryable fetch/parser
    failure가 하나라도 있으면 이 종료 규칙은 적용되지 않는다.
 
+6. **memo rewrite 중간 scaffold가 직전 Supervisor 판정을 가림**
+
+   source lane을 한 번 닫은 뒤 `information_confidence` memo를 다시 쓰면, 새 memo에
+   맞는 judges와 synthesis가 아직 없다는 뜻의 `RSUP-PENDING` checkpoint가 먼저
+   저장된다. 이 객체의 `reasonable_positive_routes_remaining=true`는 안전한 pending
+   기본값이지 LLM Supervisor의 새 판단이 아니다. 그런데 source planning이 이 값을
+   그대로 읽으면서 직전의 서명된 `routes=false` 판정을 잃고 query를 다시 열었다.
+
+   쉬운 예: “추가 배송 없음”이라는 서명된 지시서가 있는데 새 검토서의 서명이 아직
+   안 끝났다는 이유로 임시 빈 양식의 기본값 “배송 가능”을 실행한 셈이다.
+
+   수정 후 source routing만 append-only `research_epochs.jsonl`에서 checkpoint id/hash와
+   nested schema가 검증된 가장 최근의 non-`RSUP-PENDING` Supervisor 판정을 사용한다.
+   현재 pending checkpoint는 readiness·score·Stage에서 계속 pending으로 남는다. 즉,
+   과거 판정으로 점수를 확정하지 않고 임시 scaffold가 새 검색 권한을 발명하는 것만
+   막는다. 실제 C08 clean resume에서 Source Graph가
+   `QUERY_GENERATION_PENDING`에서 `EPOCH_COMPLETE_REQUIRES_SUPERVISOR`로 전진하고 pending
+   replay context가 제거되는 것을 확인했다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -103,6 +122,9 @@ score, Stage 또는 cutover authority가 아니다.
 8. `reasonable_positive_routes_remaining=false`는 source absence나 saturation 인증이
    아니다. search lane만 닫고 memo rewrite·judge·saturation·score gate는 그대로
    실행한다.
+9. `RSUP-PENDING`은 source direction이 아니다. source routing은 마지막으로 검증된
+   provider Supervisor 판정을 유지하되, readiness와 점수 계산은 현재 pending 상태를
+   그대로 사용한다.
 
 ## Goal 경계
 

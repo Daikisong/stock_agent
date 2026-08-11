@@ -74,6 +74,7 @@ from .current_structured_materializer import (
 from .research_epoch import (
     ResearchEpochRun,
     ResearchEpochRunner,
+    _coerce_checkpoint,
     load_research_epoch_checkpoint,
     write_research_epoch_run,
 )
@@ -5364,7 +5365,12 @@ def _load_prior_research_context(
             ),
             "next_actions": epoch.get("next_actions"),
         }
-        supervisor = epoch.get("supervisor_review") or {}
+        supervisor = _source_routing_supervisor_review(
+            root=root,
+            target_id=target_id,
+            as_of_date=as_of_date,
+            current_epoch=epoch,
+        )
         if isinstance(supervisor, Mapping):
             supervisor_gap_context = {
                 key: supervisor.get(key)
@@ -5587,6 +5593,84 @@ def _load_prior_research_context(
         "resolved_objective_ids": resolved_objective_ids,
         "research_epoch": epoch_context,
     }
+
+
+def _source_routing_supervisor_review(
+    *,
+    root: Path,
+    target_id: str,
+    as_of_date: str,
+    current_epoch: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Keep transport scaffolds from inventing new source authority.
+
+    A component rewrite invalidates the current synthesis for one invocation.
+    ``ResearchEpochRunner`` then persists an ``RSUP-PENDING`` scaffold while
+    the new memo-bound judges/synthesis are being rebuilt.  That scaffold says
+    ``reasonable_positive_routes_remaining=true`` only as a fail-closed
+    default; it is not a new Supervisor judgment.  If source planning consumes
+    it literally, an earlier completed ``routes=false`` decision is hidden and
+    the already exhausted query lane opens again before the new Supervisor can
+    review the rewritten memo.
+
+    Use the newest hash-validated, non-scaffold review from the append-only
+    epoch chain for *source routing only*.  Readiness, score and Stage continue
+    to use the current pending checkpoint.  This is analogous to keeping the
+    last signed delivery instruction while a replacement form is awaiting a
+    signature: the unsigned placeholder cannot order another shipment.
+    """
+
+    current = current_epoch.get("supervisor_review") or {}
+    if not isinstance(current, Mapping):
+        raise TypeError("research epoch supervisor review must be an object")
+    if not _supervisor_review_is_transport_scaffold(current):
+        return dict(current)
+
+    history_path = root / "research_epochs.jsonl"
+    if not history_path.is_file():
+        return dict(current)
+    for raw in reversed(_read_jsonl(history_path)):
+        if (
+            str(raw.get("target_id") or "") != target_id
+            or str(raw.get("as_of_date") or "") != as_of_date
+            or str(raw.get("checkpoint_id") or "")
+            == str(current_epoch.get("checkpoint_id") or "")
+        ):
+            continue
+        # The append-only row is authority only after its complete checkpoint
+        # id/hash and nested Supervisor schema round-trip successfully.
+        checkpoint = _coerce_checkpoint(raw)
+        if checkpoint is None:
+            continue
+        candidate = checkpoint.supervisor_review
+        if _supervisor_review_is_transport_scaffold(candidate):
+            continue
+        return dict(candidate)
+    return dict(current)
+
+
+def _supervisor_review_is_transport_scaffold(
+    review: Mapping[str, Any],
+) -> bool:
+    """Identify deterministic pending state, never a provider judgment."""
+
+    review_id = str(review.get("review_id") or "")
+    rationale = str(review.get("rationale") or "")
+    return bool(
+        review_id.startswith("RSUP-PENDING-")
+        and review.get("status") == "NEXT_RESEARCH_REQUIRED"
+        and review.get("ready_for_independent_saturation_review") is False
+        and review.get("component_memos_sufficient") is False
+        and not (review.get("component_findings") or ())
+        and not (review.get("missing_material_facts") or ())
+        and not (review.get("new_source_family_directions") or ())
+        and not (review.get("query_direction_briefs") or ())
+        and (
+            rationale.startswith("SUPERVISOR_SYNTHESIS_LINEAGE_PENDING:")
+            or rationale.startswith("SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:")
+            or rationale == "SUPERVISOR_PROVIDER_NOT_CONFIGURED"
+        )
+    )
 
 
 def _component_supervisor_feedback_by_component(
