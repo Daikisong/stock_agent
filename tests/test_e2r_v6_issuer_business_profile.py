@@ -233,7 +233,7 @@ class FakeCompatibilityProvider:
         profiles = prompt_payload["profiles"]
         selected_targets: set[str] = set()
         decisions = []
-        for archetype in REQUIRED_ARCHETYPES:
+        for archetype in tuple(prompt_payload["required_archetypes"]):
             expected_sector = large_sector_for_archetype(archetype)
             candidates = [
                 row
@@ -248,8 +248,14 @@ class FakeCompatibilityProvider:
                     if row["target_id"] in selected_targets
                     and row["large_sector_id"] == expected_sector
                 ]
-            if self.mode in {"abstain", "pending"}:
-                status = "ABSTAIN" if self.mode == "abstain" else "PENDING"
+            tail_quote_absent = bool(
+                self.mode == "tail_quote"
+                and candidates
+                and "</BODY></DOCUMENT>"
+                not in str(candidates[0].get("periodic_report_full_text") or "")
+            )
+            if self.mode in {"abstain", "pending"} or tail_quote_absent:
+                status = "PENDING" if self.mode == "pending" else "ABSTAIN"
                 decisions.append(
                     {
                         "archetype_id": archetype,
@@ -270,6 +276,8 @@ class FakeCompatibilityProvider:
             quote = (
                 f"{row['target_id']}의 공식 정기보고서에는 반복 가능한 사업 메커니즘과 고객 구조가 설명되어 있다."
             )
+            if self.mode in {"tail_quote", "unprompted_quote"}:
+                quote = "</BODY></DOCUMENT>"
             decisions.append(
                 {
                     "archetype_id": archetype,
@@ -514,9 +522,49 @@ class V6IssuerBusinessProfileTest(unittest.TestCase):
             provider=provider,
             max_prompt_chars=10_000,
         )
-        self.assertEqual(result["status"], PROFILE_PENDING)
-        self.assertEqual(provider.calls, 0)
+        self.assertEqual(result["status"], PROFILE_PASS)
+        self.assertEqual(provider.calls, 5)
+        self.assertTrue(all(length <= 10_000 for length in provider.prompt_lengths))
         self.assertLessEqual(result["audit"]["profile_fetch_count"], 5)
+
+    def test_oversized_full_reports_are_chunked_without_unprompted_quote_authority(self) -> None:
+        _, industries = _five_rows()
+        fetcher = FakeOpenDartFetcher(industries, document_padding=30_000)
+        provider = FakeCompatibilityProvider()
+        result, _, _ = self._materialize(
+            fetcher=fetcher,
+            provider=provider,
+            max_prompt_chars=10_000,
+        )
+        self.assertEqual(result["status"], PROFILE_PASS)
+        self.assertEqual(provider.calls, 5)
+        self.assertTrue(all(length <= 10_000 for length in provider.prompt_lengths))
+
+        unprompted, _, bad_provider = self._materialize(
+            fetcher=FakeOpenDartFetcher(industries, document_padding=30_000),
+            provider=FakeCompatibilityProvider(mode="unprompted_quote"),
+            max_prompt_chars=10_000,
+        )
+        self.assertEqual(unprompted["status"], PROFILE_PENDING)
+        self.assertEqual(bad_provider.calls, 1)
+        self.assertEqual(unprompted["selections"], [])
+
+    def test_chunking_reviews_the_report_tail_without_dropping_ranges(self) -> None:
+        _, industries = _five_rows()
+        provider = FakeCompatibilityProvider(mode="tail_quote")
+        result, _, _ = self._materialize(
+            fetcher=FakeOpenDartFetcher(industries, document_padding=30_000),
+            provider=provider,
+            max_prompt_chars=10_000,
+            max_fetches=100,
+        )
+        self.assertEqual(result["status"], PROFILE_PASS)
+        self.assertGreater(provider.calls, 5)
+        self.assertLessEqual(provider.calls, 100)
+        self.assertTrue(all(length <= 10_000 for length in provider.prompt_lengths))
+        self.assertTrue(
+            all(row["exact_quote"] == "</BODY></DOCUMENT>" for row in result["selections"])
+        )
 
     def test_exported_validators_reject_quote_hash_or_orphan_tamper(self) -> None:
         result, fetcher, _ = self._materialize()

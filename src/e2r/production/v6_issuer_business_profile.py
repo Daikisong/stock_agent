@@ -7,8 +7,8 @@ Stage.  It builds a separate, pre-deep compatibility receipt from:
 * one current eligible KRX listing row;
 * the OpenDART corp-code and company-profile identities;
 * the latest periodic report available by the as-of date; and
-* one Codex Collaboration classification of the exact five Phase-105
-  archetypes, supported by literal quotations from the full report.
+* bounded Codex Collaboration classifications that account for the exact five
+  Phase-105 archetypes, supported by literal quotations from the full report.
 
 No company-name or symbol allowlist is used.  Deterministic code validates
 identity, dates, hashes, taxonomy, quotation membership, uniqueness, budgets,
@@ -392,6 +392,7 @@ class V6IssuerBusinessProfileMaterializer:
         provider_status = "NOT_CALLED"
         stopped_on_five = False
         fetch_count = 0
+        compatibility_call_counter = [0]
         for candidate in candidates:
             if fetch_count >= config.max_profile_fetches:
                 break
@@ -423,12 +424,14 @@ class V6IssuerBusinessProfileMaterializer:
             if not _sector_quota_available(profiles):
                 continue
             try:
-                selected, receipt = _classify_profiles(
+                selected, classification_receipts = _classify_profiles_bounded(
                     as_of_date=config.as_of_date,
                     profiles=profiles,
                     provider=compatibility_provider,
                     test_mode=config.test_mode,
                     max_prompt_chars=config.max_compatibility_prompt_chars,
+                    max_calls=config.max_profile_fetches,
+                    call_counter=compatibility_call_counter,
                 )
             except (TypeError, ValueError, RuntimeError, json.JSONDecodeError) as exc:
                 provider_status = "PENDING"
@@ -436,13 +439,24 @@ class V6IssuerBusinessProfileMaterializer:
                     {"code": "COMPATIBILITY_PROVIDER_OR_OUTPUT_PENDING", "detail": str(exc)}
                 )
                 break
-            receipts.append(receipt)
+            known_response_ids = {
+                str(row.get("response_id") or "") for row in receipts
+            }
+            for receipt in classification_receipts:
+                response_id = str(receipt.get("response_id") or "")
+                if response_id not in known_response_ids:
+                    receipts.append(receipt)
+                    known_response_ids.add(response_id)
             provider_status = "COMPLETED"
             if len(selected) == len(REQUIRED_ARCHETYPES):
                 selections = selected
                 stopped_on_five = True
                 break
-            statuses = {str(row.get("status") or "") for row in receipt["decisions"]}
+            statuses = {
+                str(row.get("status") or "")
+                for receipt in classification_receipts
+                for row in receipt["decisions"]
+            }
             if "PENDING" in statuses:
                 pending.append({"code": "COMPATIBILITY_DECISION_PENDING"})
                 break
@@ -721,6 +735,10 @@ def _classify_profiles(
     provider: IssuerBusinessCompatibilityProvider,
     test_mode: bool,
     max_prompt_chars: int,
+    required_archetypes: Sequence[str] = REQUIRED_ARCHETYPES,
+    prompt_text_by_profile_id: Mapping[str, str] | None = None,
+    max_calls: int | None = None,
+    call_counter: list[int] | None = None,
 ) -> tuple[tuple[Mapping[str, Any], ...], Mapping[str, Any]]:
     if not test_mode and (
         provider.provider_name != CANONICAL_COMPATIBILITY_PROVIDER
@@ -728,19 +746,26 @@ def _classify_profiles(
         or provider.fake_provider is not False
     ):
         raise ValueError("production profile classification requires Codex Collaboration")
+    requested_archetypes = _validated_requested_archetypes(required_archetypes)
+    text_overrides = dict(prompt_text_by_profile_id or {})
+    profile_ids = {str(row.get("profile_id") or "") for row in profiles}
+    if set(text_overrides) - profile_ids:
+        raise ValueError("compatibility prompt text override is orphaned")
     prompt_profiles = [
         {
             **{key: value for key, value in row.items() if key != "_full_document"},
-            "periodic_report_full_text": row["_full_document"],
+            "periodic_report_full_text": text_overrides.get(
+                str(row["profile_id"]), str(row["_full_document"])
+            ),
         }
         for row in profiles
     ]
     prompt_payload = {
         "as_of_date": as_of_date,
-        "required_archetypes": list(REQUIRED_ARCHETYPES),
+        "required_archetypes": list(requested_archetypes),
         "profiles": prompt_profiles,
         "instructions": (
-            "Classify the exact five requested archetypes at once. Select only a "
+            "Classify the requested archetype roster exactly. Select only a "
             "mechanism-compatible profile using a literal full-report quote; otherwise "
             "ABSTAIN or PENDING. Do not output a score, Stage, Gold, or recommendation."
         ),
@@ -752,7 +777,21 @@ def _classify_profiles(
     request_id = "PROFILECLASSREQ-" + stable_hash(
         {"provider_name": provider.provider_name, "prompt_hash": prompt_hash}
     )[:24]
-    completion = provider.complete(prompt=prompt, output_schema=_compatibility_schema())
+    if call_counter is not None:
+        if (
+            len(call_counter) != 1
+            or isinstance(call_counter[0], bool)
+            or not isinstance(call_counter[0], int)
+            or call_counter[0] < 0
+        ):
+            raise ValueError("compatibility call counter is invalid")
+        if max_calls is None or call_counter[0] >= max_calls:
+            raise RuntimeError("compatibility call budget exhausted")
+        call_counter[0] += 1
+    completion = provider.complete(
+        prompt=prompt,
+        output_schema=_compatibility_schema(requested_archetypes),
+    )
     if not isinstance(completion, CompatibilityProviderCompletion):
         raise TypeError("compatibility provider completion type is invalid")
     raw_response = completion.raw_response
@@ -768,9 +807,9 @@ def _classify_profiles(
     decisions = payload.get("decisions")
     if (
         not isinstance(decisions, list)
-        or len(decisions) != len(REQUIRED_ARCHETYPES)
+        or len(decisions) != len(requested_archetypes)
         or tuple(str(row.get("archetype_id") or "") for row in decisions if isinstance(row, Mapping))
-        != REQUIRED_ARCHETYPES
+        != requested_archetypes
         or payload.get("classification_complete") is not True
         or not isinstance(payload.get("unresolved_notes"), list)
         or set(payload) != {"decisions", "classification_complete", "unresolved_notes"}
@@ -780,7 +819,7 @@ def _classify_profiles(
     selected: list[Mapping[str, Any]] = []
     selected_targets: set[str] = set()
     validated_decisions: list[Mapping[str, Any]] = []
-    for expected_archetype, raw_decision in zip(REQUIRED_ARCHETYPES, decisions):
+    for expected_archetype, raw_decision in zip(requested_archetypes, decisions):
         if not isinstance(raw_decision, Mapping):
             raise ValueError("compatibility decision must be an object")
         decision = dict(raw_decision)
@@ -826,6 +865,10 @@ def _classify_profiles(
         expected_sector = large_sector_for_archetype(expected_archetype)
         quote = str(decision.get("exact_quote") or "")
         target = str(decision.get("target_id") or "")
+        prompt_document = text_overrides.get(
+            str(decision.get("profile_id") or ""),
+            str(profile.get("_full_document") or "") if profile is not None else "",
+        )
         if (
             profile is None
             or target in selected_targets
@@ -837,6 +880,7 @@ def _classify_profiles(
             != str(profile["periodic_report_document_id"])
             or len(quote.strip()) < 12
             or quote not in str(profile["_full_document"])
+            or quote not in prompt_document
             or not str(decision.get("mechanism_rationale") or "").strip()
         ):
             raise ValueError("selected compatibility lacks unique taxonomy/quote lineage")
@@ -866,7 +910,7 @@ def _classify_profiles(
         validated_decisions.append(decision)
     request_envelope = {
         "as_of_date": as_of_date,
-        "required_archetypes": list(REQUIRED_ARCHETYPES),
+        "required_archetypes": list(requested_archetypes),
         "profiles": [
             {
                 "profile_id": row["profile_id"],
@@ -961,7 +1005,192 @@ def _classify_profiles(
     return tuple(enriched), receipt
 
 
-def _compatibility_schema() -> Mapping[str, Any]:
+def _validated_requested_archetypes(values: Sequence[str]) -> tuple[str, ...]:
+    requested = tuple(str(value) for value in values)
+    requested_set = set(requested)
+    if (
+        not requested
+        or len(requested_set) != len(requested)
+        or tuple(
+            archetype for archetype in REQUIRED_ARCHETYPES if archetype in requested_set
+        )
+        != requested
+    ):
+        raise ValueError("compatibility requested archetype roster is invalid")
+    return requested
+
+
+def _compatibility_prompt_payload(
+    *,
+    as_of_date: str,
+    profiles: Sequence[Mapping[str, Any]],
+    required_archetypes: Sequence[str],
+    prompt_text_by_profile_id: Mapping[str, str] | None = None,
+) -> Mapping[str, Any]:
+    requested = _validated_requested_archetypes(required_archetypes)
+    text_overrides = dict(prompt_text_by_profile_id or {})
+    return {
+        "as_of_date": as_of_date,
+        "required_archetypes": list(requested),
+        "profiles": [
+            {
+                **{key: value for key, value in row.items() if key != "_full_document"},
+                "periodic_report_full_text": text_overrides.get(
+                    str(row["profile_id"]), str(row["_full_document"])
+                ),
+            }
+            for row in profiles
+        ],
+        "instructions": (
+            "Classify the requested archetype roster exactly. Select only a "
+            "mechanism-compatible profile using a literal full-report quote; otherwise "
+            "ABSTAIN or PENDING. Do not output a score, Stage, Gold, or recommendation."
+        ),
+    }
+
+
+def _bounded_profile_fragments(
+    *,
+    as_of_date: str,
+    profile: Mapping[str, Any],
+    archetype: str,
+    max_prompt_chars: int,
+) -> tuple[str, ...]:
+    """Split one full report without dropping any byte-range from review.
+
+    A deterministic overlap keeps quotations near a raw chunk boundary visible
+    in at least one prompt.  The final selector still validates every quote
+    against the complete OpenDART document and its original hash.
+    """
+
+    text = str(profile.get("_full_document") or "")
+    if not text:
+        raise ValueError("compatibility profile full document is empty")
+    fragments: list[str] = []
+    start = 0
+    while start < len(text):
+        remaining = len(text) - start
+        low = 0
+        high = min(remaining, max_prompt_chars)
+        while low < high:
+            middle = (low + high + 1) // 2
+            fragment = text[start : start + middle]
+            payload = _compatibility_prompt_payload(
+                as_of_date=as_of_date,
+                profiles=(profile,),
+                required_archetypes=(archetype,),
+                prompt_text_by_profile_id={str(profile["profile_id"]): fragment},
+            )
+            encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+            if len(encoded) <= max_prompt_chars:
+                low = middle
+            else:
+                high = middle - 1
+        if low <= 0:
+            raise ValueError("compatibility prompt metadata alone exceeds bounded size")
+        end = start + low
+        if end < len(text):
+            search_floor = start + max(1, low * 9 // 10)
+            newline = text.rfind("\n", search_floor, end)
+            if newline > start:
+                end = newline + 1
+        fragments.append(text[start:end])
+        if end >= len(text):
+            break
+        overlap = min(4096, max(0, (end - start) // 8))
+        next_start = end - overlap
+        if next_start <= start:
+            next_start = end
+        start = next_start
+    return tuple(fragments)
+
+
+def _classify_profiles_bounded(
+    *,
+    as_of_date: str,
+    profiles: Sequence[Mapping[str, Any]],
+    provider: IssuerBusinessCompatibilityProvider,
+    test_mode: bool,
+    max_prompt_chars: int,
+    max_calls: int,
+    call_counter: list[int],
+) -> tuple[tuple[Mapping[str, Any], ...], tuple[Mapping[str, Any], ...]]:
+    full_payload = _compatibility_prompt_payload(
+        as_of_date=as_of_date,
+        profiles=profiles,
+        required_archetypes=REQUIRED_ARCHETYPES,
+    )
+    full_prompt = json.dumps(full_payload, ensure_ascii=False, sort_keys=True)
+    if len(full_prompt) <= max_prompt_chars:
+        selected, receipt = _classify_profiles(
+            as_of_date=as_of_date,
+            profiles=profiles,
+            provider=provider,
+            test_mode=test_mode,
+            max_prompt_chars=max_prompt_chars,
+            max_calls=max_calls,
+            call_counter=call_counter,
+        )
+        return selected, (receipt,)
+
+    selected: list[Mapping[str, Any]] = []
+    receipts: list[Mapping[str, Any]] = []
+    selected_targets: set[str] = set()
+    for archetype in REQUIRED_ARCHETYPES:
+        expected_sector = large_sector_for_archetype(archetype)
+        matched = False
+        candidates = tuple(
+            profile
+            for profile in profiles
+            if str(profile.get("large_sector_id") or "") == expected_sector
+            and str(profile.get("target_id") or "") not in selected_targets
+        )
+        for profile in candidates:
+            for fragment in _bounded_profile_fragments(
+                as_of_date=as_of_date,
+                profile=profile,
+                archetype=archetype,
+                max_prompt_chars=max_prompt_chars,
+            ):
+                partial, receipt = _classify_profiles(
+                    as_of_date=as_of_date,
+                    profiles=(profile,),
+                    provider=provider,
+                    test_mode=test_mode,
+                    max_prompt_chars=max_prompt_chars,
+                    required_archetypes=(archetype,),
+                    prompt_text_by_profile_id={str(profile["profile_id"]): fragment},
+                    max_calls=max_calls,
+                    call_counter=call_counter,
+                )
+                receipts.append(receipt)
+                if any(
+                    str(row.get("status") or "") == "PENDING"
+                    for row in receipt["decisions"]
+                ):
+                    return (), tuple(receipts)
+                if partial:
+                    selection = partial[0]
+                    target = str(selection["target_id"])
+                    if target in selected_targets:
+                        raise ValueError("bounded compatibility selected a duplicate target")
+                    selected.append(selection)
+                    selected_targets.add(target)
+                    matched = True
+                    break
+            if matched:
+                break
+        if not matched:
+            return (), tuple(receipts)
+    if tuple(row["archetype_id"] for row in selected) != REQUIRED_ARCHETYPES:
+        raise ValueError("bounded compatibility selection roster is not exact")
+    return tuple(selected), tuple(receipts)
+
+
+def _compatibility_schema(
+    required_archetypes: Sequence[str] = REQUIRED_ARCHETYPES,
+) -> Mapping[str, Any]:
+    requested = _validated_requested_archetypes(required_archetypes)
     return {
         "type": "object",
         "additionalProperties": False,
@@ -969,8 +1198,8 @@ def _compatibility_schema() -> Mapping[str, Any]:
         "properties": {
             "decisions": {
                 "type": "array",
-                "minItems": len(REQUIRED_ARCHETYPES),
-                "maxItems": len(REQUIRED_ARCHETYPES),
+                "minItems": len(requested),
+                "maxItems": len(requested),
                 "items": {
                     "type": "object",
                     "additionalProperties": False,
@@ -987,7 +1216,7 @@ def _compatibility_schema() -> Mapping[str, Any]:
                         "confidence",
                     ],
                     "properties": {
-                        "archetype_id": {"type": "string", "enum": list(REQUIRED_ARCHETYPES)},
+                        "archetype_id": {"type": "string", "enum": list(requested)},
                         "status": {"type": "string", "enum": ["SELECTED", "ABSTAIN", "PENDING"]},
                         "target_id": {"type": "string"},
                         "company_name": {"type": "string"},
@@ -1318,9 +1547,18 @@ def validate_issuer_business_profile_result(
         archetypes != REQUIRED_ARCHETYPES
         or len(targets) != len(REQUIRED_ARCHETYPES)
         or audit.get("stopped_on_five") is not True
-        or len({row["compatibility_response_id"] for row in selections}) != 1
-        or compatibility_by_id[selections[0]["compatibility_response_id"]]["status"]
-        != "COMPLETE"
+        or any(
+            compatibility_by_id[row["compatibility_response_id"]]["status"]
+            != "COMPLETE"
+            for row in selections
+        )
+        or sum(
+            1
+            for receipt in compatibility
+            for decision in receipt["decisions"]
+            if decision["status"] == "SELECTED"
+        )
+        != len(selections)
     ):
         raise ValueError("production COMPLETE requires the exact-five unique manifest")
     if result["status"] in {PROFILE_PENDING, PROFILE_ABSTAINED} and selections:
@@ -1473,6 +1711,9 @@ def _validate_compatibility_receipt(raw: object) -> Mapping[str, Any]:
     request_envelope = receipt.get("request_envelope")
     if not isinstance(raw_response, str) or not isinstance(request_envelope, Mapping):
         raise ValueError("compatibility request/response envelope is invalid")
+    requested_archetypes = _validated_requested_archetypes(
+        tuple(request_envelope.get("required_archetypes") or ())
+    )
     decoded = json.loads(raw_response)
     decisions = receipt.get("decisions")
     if (
@@ -1504,7 +1745,8 @@ def _validate_compatibility_receipt(raw: object) -> Mapping[str, Any]:
     if (
         not isinstance(decisions, list)
         or any(not isinstance(row, Mapping) for row in decisions)
-        or tuple(row.get("archetype_id") for row in decisions) != REQUIRED_ARCHETYPES
+        or tuple(row.get("archetype_id") for row in decisions)
+        != requested_archetypes
     ):
         raise ValueError("compatibility decision roster is not exact")
     for decision in decisions:
@@ -1553,7 +1795,8 @@ def _validate_compatibility_receipt(raw: object) -> Mapping[str, Any]:
     if (
         set(request_envelope) != {"as_of_date", "required_archetypes", "profiles"}
         or request_envelope.get("as_of_date") != receipt.get("as_of_date")
-        or tuple(request_envelope.get("required_archetypes") or ()) != REQUIRED_ARCHETYPES
+        or tuple(request_envelope.get("required_archetypes") or ())
+        != requested_archetypes
         or isinstance(request_profiles, (str, bytes))
         or not isinstance(request_profiles, Sequence)
         or not request_profiles
