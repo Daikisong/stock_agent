@@ -5,6 +5,7 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -16,21 +17,52 @@ from e2r.cli.compile_e2r_v6_artifact_lifecycle import (
     main as lifecycle_cli_main,
 )
 from e2r.production.metadata import stable_hash
+from e2r.production.v6_canary_results import (
+    CANARY_COMPILATION_PASS,
+    CANARY_RECEIPT_NAME,
+    CANARY_RESULT_NAME,
+    CANARY_RESULT_PASS,
+    CANARY_RESULT_SCHEMA,
+    CANARY_REVIEW_NAMES,
+    CANARY_REVIEWS_DIRECTORY,
+    build_full_researcher_mode_canary_receipt,
+    build_independent_canary_review,
+    compile_cross_archetype_canary_results,
+)
+from e2r.production.v6_canary_selection import (
+    NATURAL_SELECTION,
+    REQUIRED_ARCHETYPES,
+    SELECTION_PASS,
+    SELECTION_RECEIPT_SCHEMA,
+    SELECTION_SCHEMA,
+    summarize_cross_archetype_canary_selection,
+)
+from e2r.production.v6_production_static_audit import (
+    PRODUCTION_STATIC_AUDIT_LEAF,
+    compile_production_static_audit,
+)
 from e2r.research_brain.researcher_mode.artifact_lifecycle import (
     ARTIFACT_LIFECYCLE_FAIL,
     ARTIFACT_LIFECYCLE_MANIFEST_SCHEMA,
     ARTIFACT_LIFECYCLE_PASS,
     CANARY_RECEIPT_DATE,
     CANARY_TARGET_IDS,
+    CANONICAL_MANIFEST_NAME,
+    CLEAN_CLONE_REPRODUCTION_PASS,
+    CLEAN_CLONE_REPRODUCTION_SCHEMA,
+    CLEAN_CLONE_TEST_PASS,
+    CLEAN_CLONE_TEST_SCHEMA,
     CURRENT_AUTHORITY,
-    CURRENT_LIVE_CANARY_PREFIXES,
     FINAL_ROOT_RELATIVE,
     FINAL_STATUS_PROJECTION,
     HISTORICAL_SNAPSHOT,
     PRE_GOLD_PENDING_STATUS,
+    PROVIDER_RUNTIME_AUDIT_PASS,
+    PROVIDER_RUNTIME_AUDIT_SCHEMA,
     SUPERSEDED,
     compile_artifact_lifecycle,
 )
+from e2r.research_brain.researcher_mode.schemas import CANONICAL_COMPONENT_ORDER
 
 
 def _run_git(repo: Path, *args: str) -> str:
@@ -47,6 +79,97 @@ def _write_json(path: Path, payload: object) -> None:
     )
 
 
+_STATIC_AUDIT_FIXTURE: dict[str, object] | None = None
+
+
+def _static_audit_fixture() -> dict[str, object]:
+    global _STATIC_AUDIT_FIXTURE
+    if _STATIC_AUDIT_FIXTURE is None:
+        _STATIC_AUDIT_FIXTURE = dict(
+            compile_production_static_audit(repo_root=Path.cwd())
+        )
+    return json.loads(json.dumps(_STATIC_AUDIT_FIXTURE))
+
+
+def _phase106_bundle(
+    selection: dict[str, object],
+    row: dict[str, object],
+) -> dict[str, object]:
+    vector = dict(
+        zip(CANONICAL_COMPONENT_ORDER, (10.0, 10.0, 10.0, 8.0, 8.0, 2.0, 2.0))
+    )
+    result_body: dict[str, object] = {
+        "schema_version": CANARY_RESULT_SCHEMA,
+        "status": CANARY_RESULT_PASS,
+        "run_id": "RESEARCHRUN-" + str(row["target_id"]),
+        "selection_id": row["selection_id"],
+        "selection_roster_hash": selection["selection_roster_hash"],
+        "archetype_id": row["archetype_id"],
+        "target_id": row["target_id"],
+        "as_of_date": CANARY_RECEIPT_DATE,
+        "production_research_status": "COMPLETE",
+        "fact_extraction_status": "COMPLETE",
+        "structured_materialization_status": "COMPLETE",
+        "business_model_status": "COMPLETE",
+        "component_research_status": "COMPLETE",
+        "judge_status": "COMPLETE",
+        "red_team_status": "COMPLETE",
+        "synthesis_status": "COMPLETE",
+        "supervisor_status": "COMPLETE",
+        "semantic_saturation_status": "COMPLETE",
+        "score_status": "COMPLETE",
+        "stagecourt_status": "FINAL",
+        "full_researcher_mode_complete": True,
+        "component_score_vector": vector,
+        "total_score": 50.0,
+        "canonical_stage": "2",
+        "score_valid": True,
+        "stage_final": True,
+        "component_count": 7,
+        "judge_decision_count": 21,
+        "query_count": 3,
+        "document_count": 8,
+        "fact_count": 13,
+        "counterfact_count": 2,
+        "material_gap_count": 0,
+        "source_count": 7,
+        "output_tree_hash": hashlib.sha256(
+            f"phase106:{row['target_id']}".encode()
+        ).hexdigest(),
+        "provider_call_counts": {"COLLABORATION_CODEX": 4},
+        "provider_error_count": 0,
+        "unauthorized_provider_call_count": 0,
+        "local_provider_call_count": 0,
+        "score_or_stage_authority": False,
+        "production_readiness_authority": False,
+    }
+    result = {
+        **result_body,
+        "result_id": "CANARYRUN-" + stable_hash(result_body)[:24],
+    }
+    receipt = build_full_researcher_mode_canary_receipt(
+        result,
+        selection=selection,
+        selection_row=row,
+    )
+    reviews = [
+        build_independent_canary_review(
+            reviewer_id=f"/root/phase106_{reviewer.lower()}",
+            provider_call_id=f"COLLABCALL-{row['target_id']}-{reviewer}",
+            prompt_hash=hashlib.sha256(
+                f"prompt:{row['target_id']}:{reviewer}".encode()
+            ).hexdigest(),
+            response_hash=hashlib.sha256(
+                f"response:{row['target_id']}:{reviewer}".encode()
+            ).hexdigest(),
+            result=result,
+            receipt=receipt,
+        )
+        for reviewer in ("A", "B")
+    ]
+    return {"result": result, "receipt": receipt, "reviews": reviews}
+
+
 class _TrackedDossierFixture:
     def __init__(self) -> None:
         self._temporary = tempfile.TemporaryDirectory()
@@ -59,6 +182,12 @@ class _TrackedDossierFixture:
         self.final = self.repo / FINAL_ROOT_RELATIVE
         self._create_final_tree()
         self.commit("initial tracked dossier")
+        self._manifest_payload = self._build_manifest()
+        _write_json(
+            self.final / CANONICAL_MANIFEST_NAME,
+            self._manifest_payload,
+        )
+        self.commit("track canonical lifecycle manifest")
 
     def close(self) -> None:
         self._temporary.cleanup()
@@ -74,14 +203,91 @@ class _TrackedDossierFixture:
         (self.final / "README.md").write_text("# E2R v6 dossier\n", encoding="utf-8")
         _write_json(self.final / "starting_state.json", {"snapshot": "START"})
         for name in (
-            "clean_clone_reproduction.json",
-            "provider_runtime_audit.json",
-            "cross_archetype_canary_selection.json",
-            "cross_archetype_canary_summary.json",
             "current_krx_census_summary.json",
             "operational_acceptance_reviewer_gate.json",
         ):
             _write_json(self.final / name, {"artifact": name, "complete": True})
+        selection_receipts: list[dict[str, object]] = []
+        for index, archetype_id in enumerate(REQUIRED_ARCHETYPES, start=1):
+            target_id = f"{index:06d}"
+            pre_deep_hash = hashlib.sha256(
+                f"{archetype_id}:{target_id}".encode("utf-8")
+            ).hexdigest()
+            selection_receipts.append(
+                {
+                    "schema_version": SELECTION_RECEIPT_SCHEMA,
+                    "selection_id": "SELREC-" + pre_deep_hash[:24],
+                    "archetype_id": archetype_id,
+                    "target_id": target_id,
+                    "company_name": f"회사{index}",
+                    "selection_mode": NATURAL_SELECTION,
+                    "selection_as_of_date": CANARY_RECEIPT_DATE,
+                    "pre_deep_input_hash": pre_deep_hash,
+                    "krx_effective_date": CANARY_RECEIPT_DATE,
+                    "krx_source_url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_isu_base_info",
+                    "krx_source_hash": hashlib.sha256(f"krx:{index}".encode()).hexdigest(),
+                    "krx_request_id": f"KRXREQ-{index:024x}",
+                    "candidate_event_hash": hashlib.sha256(f"event:{index}".encode()).hexdigest(),
+                    "depth_decision_hash": hashlib.sha256(f"depth:{index}".encode()).hexdigest(),
+                    "planner_run_id": f"LIVEPLAN-{index:024x}",
+                    "blind_input_id": f"BLIND-{index:024x}",
+                    "plan_hash": hashlib.sha256(f"plan:{index}".encode()).hexdigest(),
+                    "issuer_profile_hash": hashlib.sha256(f"issuer:{index}".encode()).hexdigest(),
+                    "business_profile_hash": hashlib.sha256(f"business:{index}".encode()).hexdigest(),
+                    "direct_current_supporting_fact_ids": [f"FACT-{index}"],
+                    "recipe_ids": [f"RECIPE-{index}"],
+                    "trigger_event_ids": [f"TRIG-{index}"],
+                    "available_source_families": ["OPENDART"],
+                    "selection_rationale": "natural validation fixture",
+                    "final_score_visible_at_selection": False,
+                    "final_stage_visible_at_selection": False,
+                    "production_daily_candidate": True,
+                    "score_or_stage_authority": False,
+                }
+            )
+        selection = {
+            "schema_version": SELECTION_SCHEMA,
+            "status": SELECTION_PASS,
+            "selection_as_of_date": CANARY_RECEIPT_DATE,
+            "required_archetypes": list(REQUIRED_ARCHETYPES),
+            "selections": selection_receipts,
+            "selection_count": len(REQUIRED_ARCHETYPES),
+            "critical_counts": {
+                "required_archetype_missing_count": 0,
+                "invalid_candidate_lineage_count": 0,
+                "post_score_target_selection_count": 0,
+                "target_specific_code_branch_count": 0,
+                "forced_canary_mislabeled_natural_count": 0,
+                "duplicate_target_count": 0,
+            },
+            "critical_count_sum": 0,
+            "failures": [],
+            "score_or_stage_authority": False,
+            "selection_roster_hash": stable_hash(selection_receipts),
+        }
+        _write_json(self.final / "cross_archetype_canary_selection.json", selection)
+        bundles: dict[str, dict[str, object]] = {}
+        live_root = self.final / "current_live_canaries"
+        for row in selection_receipts:
+            archetype_id = str(row["archetype_id"])
+            bundle = _phase106_bundle(selection, row)
+            bundles[archetype_id] = bundle
+            target_root = live_root / f"{archetype_id}_{row['target_id']}"
+            _write_json(target_root / CANARY_RESULT_NAME, bundle["result"])
+            _write_json(target_root / CANARY_RECEIPT_NAME, bundle["receipt"])
+            reviews = bundle["reviews"]
+            assert isinstance(reviews, list)
+            for name, review in zip(CANARY_REVIEW_NAMES, reviews):
+                _write_json(target_root / CANARY_REVIEWS_DIRECTORY / name, review)
+        compiled = compile_cross_archetype_canary_results(
+            selection=selection,
+            bundles_by_archetype=bundles,
+        )
+        assert compiled["status"] == CANARY_COMPILATION_PASS
+        _write_json(
+            self.final / "cross_archetype_canary_summary.json",
+            compiled["summary"],
+        )
         (self.final / "current_krx_stage_map_compact.jsonl").write_text(
             '{"target_id":"TEST","canonical_stage":"2"}\n',
             encoding="utf-8",
@@ -138,33 +344,98 @@ class _TrackedDossierFixture:
                 "scoring_facts.jsonl",
                 "judge_decisions.jsonl",
                 "source_manifest.jsonl",
+                "anchor_manifest.jsonl",
+                "provider_calls.jsonl",
             ):
                 (target_root / name).write_text(
                     json.dumps({"target_id": target_id, "kind": name}) + "\n",
                     encoding="utf-8",
                 )
-        live_root = self.final / "current_live_canaries"
-        for prefix in CURRENT_LIVE_CANARY_PREFIXES:
-            (live_root / f"{prefix}fixture").mkdir(parents=True)
         clone_root = self.final / "clean_clone"
-        for name in (
-            "receipt_recompute_result.json",
-            "tracked_readiness_result.json",
-            "test_result.json",
-        ):
-            _write_json(clone_root / name, {"status": "PASS"})
+        receipt_result = {
+            "schema_version": "e2r_v6_receipt_only_verification_v1",
+            "status": "E2R_V6_RECEIPT_ONLY_REPRODUCTION_PASS",
+            "offline": True,
+            "critical_count_sum": 0,
+            "target_count": 2,
+            "target_ids": list(CANARY_TARGET_IDS),
+        }
+        readiness_result = {
+            "schema_version": "e2r_v6_tracked_readiness_v1",
+            "status": "E2R_V6_TRACKED_READINESS_PASS",
+            "ready": True,
+            "offline": True,
+            "production_readiness_authority": False,
+            "critical_count": 0,
+            "same_receipt_replay_variance": 0,
+            "target_ids": list(CANARY_TARGET_IDS),
+        }
+        test_result = {
+            "schema_version": CLEAN_CLONE_TEST_SCHEMA,
+            "status": CLEAN_CLONE_TEST_PASS,
+            "executed_test_count": 100,
+            "failed_test_count": 0,
+            "error_test_count": 0,
+            "critical_count_sum": 0,
+            "production_readiness_authority": False,
+        }
+        _write_json(clone_root / "receipt_recompute_result.json", receipt_result)
+        _write_json(clone_root / "tracked_readiness_result.json", readiness_result)
+        _write_json(clone_root / "test_result.json", test_result)
+        _write_json(
+            self.final / "clean_clone_reproduction.json",
+            {
+                "schema_version": CLEAN_CLONE_REPRODUCTION_SCHEMA,
+                "status": CLEAN_CLONE_REPRODUCTION_PASS,
+                "as_of_date": CANARY_RECEIPT_DATE,
+                "receipt_recompute_result_hash": hashlib.sha256(
+                    (clone_root / "receipt_recompute_result.json").read_bytes()
+                ).hexdigest(),
+                "tracked_readiness_result_hash": hashlib.sha256(
+                    (clone_root / "tracked_readiness_result.json").read_bytes()
+                ).hexdigest(),
+                "test_result_hash": hashlib.sha256(
+                    (clone_root / "test_result.json").read_bytes()
+                ).hexdigest(),
+                "critical_count_sum": 0,
+                "production_readiness_authority": False,
+            },
+        )
+        _write_json(
+            self.final / "provider_runtime_audit.json",
+            {
+                "schema_version": PROVIDER_RUNTIME_AUDIT_SCHEMA,
+                "status": PROVIDER_RUNTIME_AUDIT_PASS,
+                "as_of_date": CANARY_RECEIPT_DATE,
+                "provider_call_counts": {"COLLABORATION_CODEX": 1},
+                "scored_fact_provider_lineage_counts": {"COLLABORATION_CODEX": 1},
+                "provider_error_count": 0,
+                "unauthorized_provider_call_count": 0,
+                "local_provider_call_count": 0,
+                "qwen_call_count": 0,
+                "ollama_call_count": 0,
+                "inherited_qwen_scored_fact_count": 0,
+                "inherited_ollama_scored_fact_count": 0,
+                "critical_count_sum": 0,
+                "production_readiness_authority": False,
+            },
+        )
+        _write_json(
+            self.final / PRODUCTION_STATIC_AUDIT_LEAF,
+            _static_audit_fixture(),
+        )
 
     def commit(self, message: str) -> str:
         _run_git(self.repo, "add", "-A")
         _run_git(self.repo, "commit", "-qm", message)
         return _run_git(self.repo, "rev-parse", "HEAD")
 
-    def manifest(self) -> dict[str, object]:
+    def _build_manifest(self) -> dict[str, object]:
         head = _run_git(self.repo, "rev-parse", "HEAD")
         audit_path = self.final / "artifact_lifecycle_audit.json"
         artifacts: list[dict[str, object]] = []
         for path in sorted(item for item in self.final.rglob("*") if item.is_file()):
-            if path == audit_path:
+            if path in {audit_path, self.final / CANONICAL_MANIFEST_NAME}:
                 continue
             relative = path.relative_to(self.repo).as_posix()
             digest = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -192,6 +463,24 @@ class _TrackedDossierFixture:
             "artifacts": artifacts,
             "status_projection": dict(FINAL_STATUS_PROJECTION),
         }
+
+    def manifest(self) -> dict[str, object]:
+        return json.loads(json.dumps(self._manifest_payload))
+
+    def install_manifest(self, manifest: dict[str, object], message: str) -> None:
+        _write_json(self.final / CANONICAL_MANIFEST_NAME, manifest)
+        self.commit(message)
+        self._manifest_payload = json.loads(json.dumps(manifest))
+
+    def replace_artifact_and_reseal(
+        self,
+        relative: str,
+        payload: object,
+        message: str,
+    ) -> None:
+        _write_json(self.final / relative, payload)
+        self.commit(f"{message} payload")
+        self.install_manifest(self._build_manifest(), f"{message} manifest")
 
     def compile(self, manifest: dict[str, object] | None = None) -> dict[str, object]:
         return dict(
@@ -256,6 +545,144 @@ class E2RV6ArtifactLifecycleTests(unittest.TestCase):
             self.assertFalse(result["score_or_stage_authority"])
             self.assertFalse(
                 (fixture.final / "artifact_lifecycle_audit.json").exists()
+            )
+            static_row = _TrackedDossierFixture.row_for(
+                fixture.manifest(),
+                PRODUCTION_STATIC_AUDIT_LEAF,
+            )
+            self.assertEqual(static_row["artifact_role"], CURRENT_AUTHORITY)
+            self.assertTrue(static_row["production_readiness_authority"])
+            self.assertEqual(result["required_current_authority_failures"], [])
+
+    def test_phase104_does_not_require_phase109_terminal_publications(self) -> None:
+        with _TrackedDossierFixture() as fixture:
+            for name in (
+                "operational_acceptance_reviewer_gate.json",
+                "operational_cutover_final.md",
+            ):
+                (fixture.final / name).unlink()
+            fixture.commit("remove phase109 terminal publications")
+            manifest = fixture._build_manifest()
+            fixture.install_manifest(
+                manifest,
+                "track lifecycle before phase109 publication",
+            )
+
+            result = fixture.compile(manifest)
+
+            self.assertEqual(result["status"], ARTIFACT_LIFECYCLE_PASS)
+            self.assertEqual(result["critical_count_sum"], 0)
+            missing = "\n".join(result["missing_required_final_files"])
+            self.assertNotIn("operational_acceptance_reviewer_gate.json", missing)
+            self.assertNotIn("operational_cutover_final.md", missing)
+
+    def test_canonical_manifest_and_semantic_pass_artifacts_are_not_self_attested(self) -> None:
+        mutated_manifest_cases = (
+            (
+                "clean_clone_reproduction.json",
+                {"complete": True},
+                "CLEAN_CLONE_REPRODUCTION_CONTRACT_INVALID",
+            ),
+            (
+                "clean_clone/test_result.json",
+                {"status": "PASS"},
+                "CLEAN_CLONE_TEST_RESULT_NOT_PASS",
+            ),
+            (
+                "provider_runtime_audit.json",
+                {"complete": True},
+                "PROVIDER_RUNTIME_AUDIT_CONTRACT_INVALID",
+            ),
+            (
+                PRODUCTION_STATIC_AUDIT_LEAF,
+                {"complete": True, "critical_count_sum": 0},
+                "PRODUCTION_STATIC_AUDIT_CONTRACT_INVALID",
+            ),
+            (
+                "cross_archetype_canary_selection.json",
+                {"complete": True},
+                "CANARY_SELECTION_CONTRACT_INVALID",
+            ),
+            (
+                "cross_archetype_canary_summary.json",
+                {"complete": True},
+                "CROSS_ARCHETYPE_CANARY_RESULT_SUMMARY_INVALID",
+            ),
+        )
+        for relative, payload, expected_code in mutated_manifest_cases:
+            with self.subTest(relative=relative), _TrackedDossierFixture() as fixture:
+                fixture.replace_artifact_and_reseal(
+                    relative, payload, f"replace {relative} with placeholder"
+                )
+                result = fixture.compile()
+                self.assertEqual(result["status"], ARTIFACT_LIFECYCLE_FAIL)
+                self.assertIn(
+                    expected_code,
+                    {
+                        row["code"]
+                        for row in result["semantic_final_artifact_failures"]
+                    },
+                )
+                self.assertGreater(
+                    result["critical_counts"][
+                        "semantic_final_artifact_contract_failure_count"
+                    ],
+                    0,
+                )
+
+        with _TrackedDossierFixture() as fixture:
+            forged = fixture.manifest()
+            forged["status_projection"]["score_valid"] = False
+            result = fixture.compile(forged)
+            self.assertEqual(result["status"], ARTIFACT_LIFECYCLE_FAIL)
+            self.assertEqual(
+                result["critical_counts"][
+                    "canonical_lifecycle_manifest_unbound_count"
+                ],
+                1,
+            )
+            self.assertFalse(
+                result["criteria"][
+                    "canonical_lifecycle_manifest_is_tracked_and_exact"
+                ]
+            )
+
+        with _TrackedDossierFixture() as fixture:
+            selection = json.loads(
+                (fixture.final / "cross_archetype_canary_selection.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            fixture.replace_artifact_and_reseal(
+                "cross_archetype_canary_summary.json",
+                summarize_cross_archetype_canary_selection(selection),
+                "replace Phase106 result with Phase105 projection",
+            )
+            result = fixture.compile()
+            self.assertIn(
+                "CROSS_ARCHETYPE_CANARY_RESULT_SUMMARY_INVALID",
+                {
+                    row["code"]
+                    for row in result["semantic_final_artifact_failures"]
+                },
+            )
+
+        with _TrackedDossierFixture() as fixture:
+            provider_path = fixture.final / "provider_runtime_audit.json"
+            provider = json.loads(provider_path.read_text(encoding="utf-8"))
+            provider["provider_call_counts"] = {"OLLAMA": 1}
+            fixture.replace_artifact_and_reseal(
+                "provider_runtime_audit.json",
+                provider,
+                "forge provider map while zeroing explicit local counts",
+            )
+            result = fixture.compile()
+            self.assertIn(
+                "PROVIDER_RUNTIME_AUDIT_CONTRACT_INVALID",
+                {
+                    row["code"]
+                    for row in result["semantic_final_artifact_failures"]
+                },
             )
 
     def test_git_content_binding_and_path_escape_fail_closed(self) -> None:
@@ -354,6 +781,7 @@ class E2RV6ArtifactLifecycleTests(unittest.TestCase):
             older["artifact_role"] = SUPERSEDED
             older["superseded_by"] = newer["artifact_id"]
             newer["supersedes"] = [older["artifact_id"]]
+            fixture.install_manifest(manifest, "track valid supersession manifest")
             self.assertEqual(fixture.compile(manifest)["status"], ARTIFACT_LIFECYCLE_PASS)
 
             newer["supersedes"] = []
@@ -451,8 +879,12 @@ class E2RV6ArtifactLifecycleTests(unittest.TestCase):
         with _TrackedDossierFixture() as fixture:
             missing_file = fixture.final / "provider_runtime_audit.json"
             missing_file.unlink()
-            missing_dir = fixture.final / "current_live_canaries" / "C08_fixture"
-            missing_dir.rmdir()
+            missing_dir = next(
+                path
+                for path in (fixture.final / "current_live_canaries").iterdir()
+                if path.name.startswith("C08_")
+            )
+            shutil.rmtree(missing_dir)
             result = fixture.compile()
             self.assertEqual(result["status"], ARTIFACT_LIFECYCLE_FAIL)
             self.assertGreater(
@@ -467,9 +899,8 @@ class E2RV6ArtifactLifecycleTests(unittest.TestCase):
 
     def test_cli_writes_result_last_and_preserves_old_output_on_replace_failure(self) -> None:
         with _TrackedDossierFixture() as fixture:
-            manifest_path = fixture.base / "lifecycle_manifest.json"
+            manifest_path = fixture.final / CANONICAL_MANIFEST_NAME
             manifest = fixture.manifest()
-            _write_json(manifest_path, manifest)
             output = fixture.final / "artifact_lifecycle_audit.json"
             argv = [
                 "compile_e2r_v6_artifact_lifecycle",

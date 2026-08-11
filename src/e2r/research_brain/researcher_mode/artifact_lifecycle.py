@@ -19,7 +19,34 @@ import subprocess
 from typing import Any, Mapping, Sequence
 
 from e2r.production.metadata import stable_hash
+from e2r.production.v6_canary_results import (
+    CANARY_COMPILATION_PASS,
+    CANARY_SUMMARY_PASS,
+    CANARY_SUMMARY_SCHEMA,
+    compile_cross_archetype_canary_directory,
+    validate_cross_archetype_canary_summary,
+)
+from e2r.production.v6_canary_selection import (
+    FORCED_SELECTION,
+    ISSUER_PROFILE_MANIFEST_NAME,
+    validate_cross_archetype_canary_selection_manifest,
+)
+from e2r.production.v6_issuer_business_profile import (
+    PROFILE_PASS as ISSUER_PROFILE_PASS,
+    validate_issuer_business_profile_result,
+)
+from e2r.production.v6_production_static_audit import (
+    PRODUCTION_STATIC_AUDIT_LEAF,
+    validate_production_static_audit,
+)
+from e2r.research_brain.researcher_mode.tracked_receipts import (
+    PHASE101_TARGET_IDS,
+    VERIFICATION_PASS,
+    VERIFICATION_SCHEMA,
+)
 from e2r.research_brain.researcher_mode.tracked_readiness import (
+    TRACKED_READINESS_PASS,
+    TRACKED_READINESS_SCHEMA,
     _repository_identity_is_trusted,
 )
 
@@ -42,13 +69,24 @@ FINAL_ROOT_RELATIVE = Path("docs/operational/e2r_v6_operational_cutover")
 FINAL_ROOT_REQUIRED_FILES = (
     "README.md",
     "starting_state.json",
+    "artifact_lifecycle_manifest.json",
     "artifact_lifecycle_audit.json",
     "clean_clone_reproduction.json",
     "provider_runtime_audit.json",
+    PRODUCTION_STATIC_AUDIT_LEAF,
     "cross_archetype_canary_selection.json",
     "cross_archetype_canary_summary.json",
     "current_krx_census_summary.json",
     "current_krx_stage_map_compact.jsonl",
+)
+# Phase 109 publishes these two terminal documents only after Reviewer K--V
+# has consumed the Phase-104 lifecycle audit.  Requiring their own hashes in
+# that earlier manifest creates an impossible self-reference: the reviewer
+# gate hashes the lifecycle audit while the lifecycle manifest would hash the
+# reviewer gate.  They are therefore final publications, not Phase-104 input
+# artifacts.  The Phase-109 publisher and final repository probe validate
+# them separately.
+TERMINAL_PUBLICATION_FILES = (
     "operational_acceptance_reviewer_gate.json",
     "operational_cutover_final.md",
 )
@@ -61,6 +99,8 @@ CANARY_TARGET_REQUIRED_FILES = (
     "scoring_facts.jsonl",
     "judge_decisions.jsonl",
     "source_manifest.jsonl",
+    "anchor_manifest.jsonl",
+    "provider_calls.jsonl",
     "stagecourt_receipt.json",
 )
 CURRENT_LIVE_CANARY_PREFIXES = ("C08_", "C15_", "C17_", "C24_", "C28_")
@@ -89,7 +129,57 @@ FINAL_STATUS_PROJECTION: Mapping[str, Any] = {
     "stage_final": True,
 }
 PRE_GOLD_PENDING_STATUS = "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+CANONICAL_MANIFEST_NAME = "artifact_lifecycle_manifest.json"
+CLEAN_CLONE_REPRODUCTION_SCHEMA = "e2r_v6_clean_clone_reproduction_v1"
+CLEAN_CLONE_REPRODUCTION_PASS = "E2R_V6_CLEAN_CLONE_REPRODUCTION_PASS"
+CLEAN_CLONE_TEST_SCHEMA = "e2r_v6_clean_clone_test_result_v1"
+CLEAN_CLONE_TEST_PASS = "E2R_V6_CLEAN_CLONE_TEST_PASS"
+PROVIDER_RUNTIME_AUDIT_SCHEMA = "e2r_v6_provider_runtime_audit_v1"
+PROVIDER_RUNTIME_AUDIT_PASS = "E2R_V6_PROVIDER_RUNTIME_AUDIT_PASS"
+CROSS_ARCHETYPE_CANARY_SUMMARY_SCHEMA = CANARY_SUMMARY_SCHEMA
+CROSS_ARCHETYPE_CANARY_SUMMARY_PASS = CANARY_SUMMARY_PASS
 
+_CLEAN_CLONE_REPRODUCTION_KEYS = frozenset(
+    {
+        "schema_version",
+        "status",
+        "as_of_date",
+        "receipt_recompute_result_hash",
+        "tracked_readiness_result_hash",
+        "test_result_hash",
+        "critical_count_sum",
+        "production_readiness_authority",
+    }
+)
+_CLEAN_CLONE_TEST_KEYS = frozenset(
+    {
+        "schema_version",
+        "status",
+        "executed_test_count",
+        "failed_test_count",
+        "error_test_count",
+        "critical_count_sum",
+        "production_readiness_authority",
+    }
+)
+_PROVIDER_RUNTIME_AUDIT_KEYS = frozenset(
+    {
+        "schema_version",
+        "status",
+        "as_of_date",
+        "provider_call_counts",
+        "scored_fact_provider_lineage_counts",
+        "provider_error_count",
+        "unauthorized_provider_call_count",
+        "local_provider_call_count",
+        "qwen_call_count",
+        "ollama_call_count",
+        "inherited_qwen_scored_fact_count",
+        "inherited_ollama_scored_fact_count",
+        "critical_count_sum",
+        "production_readiness_authority",
+    }
+)
 ARTIFACT_ENTRY_KEYS = frozenset(
     {
         "artifact_id",
@@ -300,6 +390,270 @@ def _content_sha256(path: Path) -> str | None:
         return hashlib.sha256(path.read_bytes()).hexdigest()
     except OSError:
         return None
+
+
+def _canonical_manifest_binding(
+    *,
+    repo: Path,
+    final_root: str,
+    payload: Mapping[str, Any],
+    head: str | None,
+) -> Mapping[str, Any]:
+    """Bind the caller payload to the canonical tracked manifest file."""
+
+    relative = f"{final_root}/{CANONICAL_MANIFEST_NAME}"
+    path = repo / relative
+    digest = _content_sha256(path)
+    binding = (
+        _validate_git_binding(
+            repo=repo,
+            relative_path=relative,
+            declared_commit=head or "",
+            declared_content_hash=digest or "",
+            head=head,
+        )
+        if digest is not None
+        else {}
+    )
+    content = _artifact_content(path)
+    exact_payload = isinstance(content, Mapping) and dict(content) == dict(payload)
+    return {
+        "canonical_path": relative,
+        "payload_matches_canonical_file": exact_payload,
+        "git_binding": dict(binding),
+        "valid": bool(exact_payload and binding and all(binding.values())),
+    }
+
+
+def _zero_int(value: Any) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool) and value == 0
+
+
+def _nonnegative_count_mapping(value: Any) -> bool:
+    return bool(
+        isinstance(value, Mapping)
+        and value
+        and all(
+            isinstance(item, int) and not isinstance(item, bool) and item >= 0
+            for item in value.values()
+        )
+    )
+
+
+def _authorized_provider_count_mapping(value: Any) -> bool:
+    return bool(
+        _nonnegative_count_mapping(value)
+        and set(value) <= {"CODEX", "COLLABORATION_CODEX"}
+        and sum(value.values()) > 0
+    )
+
+
+def _semantic_final_artifact_failures(
+    *,
+    repo: Path,
+    final_root: str,
+    current_contents_by_path: Mapping[str, Any],
+) -> tuple[Mapping[str, Any], ...]:
+    """Validate hard-gate artifacts by their real schema and PASS contract."""
+
+    failures: list[Mapping[str, Any]] = []
+
+    def content(relative_suffix: str) -> Any:
+        relative = f"{final_root}/{relative_suffix}"
+        value = current_contents_by_path.get(relative)
+        if value is None:
+            failures.append(
+                {"code": "CURRENT_SEMANTIC_ARTIFACT_MISSING", "artifact_path": relative}
+            )
+        return value
+
+    selection = content("cross_archetype_canary_selection.json")
+    summary = content("cross_archetype_canary_summary.json")
+    forced_selection = bool(
+        isinstance(selection, Mapping)
+        and any(
+            isinstance(row, Mapping)
+            and row.get("selection_mode") == FORCED_SELECTION
+            for row in selection.get("selections") or ()
+        )
+    )
+    issuer_profile: Mapping[str, Any] | None = None
+    if forced_selection:
+        profile_relative = f"{final_root}/{ISSUER_PROFILE_MANIFEST_NAME}"
+        raw_profile = current_contents_by_path.get(profile_relative)
+        if isinstance(raw_profile, Mapping):
+            try:
+                validated_profile = validate_issuer_business_profile_result(
+                    raw_profile
+                )
+                if validated_profile.get("status") != ISSUER_PROFILE_PASS:
+                    raise ValueError("issuer profile is not COMPLETE")
+                issuer_profile = validated_profile
+            except (TypeError, ValueError) as exc:
+                failures.append(
+                    {
+                        "code": "ISSUER_BUSINESS_PROFILE_CONTRACT_INVALID",
+                        "artifact_path": profile_relative,
+                        "detail": str(exc),
+                    }
+                )
+        else:
+            failures.append(
+                {
+                    "code": "ISSUER_BUSINESS_PROFILE_CURRENT_AUTHORITY_MISSING",
+                    "artifact_path": profile_relative,
+                }
+            )
+    selection_valid = False
+    if isinstance(selection, Mapping):
+        try:
+            validate_cross_archetype_canary_selection_manifest(
+                selection,
+                issuer_business_profile_manifest=issuer_profile,
+            )
+            selection_valid = True
+        except (TypeError, ValueError) as exc:
+            failures.append(
+                {
+                    "code": "CANARY_SELECTION_CONTRACT_INVALID",
+                    "artifact_path": f"{final_root}/cross_archetype_canary_selection.json",
+                    "detail": str(exc),
+                }
+            )
+    summary_contract_valid = False
+    if selection_valid and isinstance(selection, Mapping) and isinstance(summary, Mapping):
+        try:
+            validate_cross_archetype_canary_summary(
+                summary,
+                selection=selection,
+                issuer_business_profile_manifest=issuer_profile,
+            )
+            recomputed = compile_cross_archetype_canary_directory(
+                selection=selection,
+                live_root=repo / final_root / "current_live_canaries",
+                issuer_business_profile_manifest=issuer_profile,
+                repo_root=repo,
+            )
+            summary_contract_valid = bool(
+                recomputed.get("status") == CANARY_COMPILATION_PASS
+                and isinstance(recomputed.get("summary"), Mapping)
+                and dict(recomputed["summary"]) == dict(summary)
+            )
+        except (OSError, TypeError, ValueError):
+            summary_contract_valid = False
+    if not summary_contract_valid:
+        failures.append({"code": "CROSS_ARCHETYPE_CANARY_RESULT_SUMMARY_INVALID"})
+
+    receipt_result = content("clean_clone/receipt_recompute_result.json")
+    readiness_result = content("clean_clone/tracked_readiness_result.json")
+    test_result = content("clean_clone/test_result.json")
+    clean_clone = content("clean_clone_reproduction.json")
+    expected_targets = tuple(sorted(PHASE101_TARGET_IDS))
+    if not (
+        isinstance(receipt_result, Mapping)
+        and receipt_result.get("schema_version") == VERIFICATION_SCHEMA
+        and receipt_result.get("status") == VERIFICATION_PASS
+        and receipt_result.get("offline") is True
+        and _zero_int(receipt_result.get("critical_count_sum"))
+        and receipt_result.get("target_count") == len(expected_targets)
+        and tuple(sorted(str(value) for value in receipt_result.get("target_ids") or ()))
+        == expected_targets
+    ):
+        failures.append({"code": "CLEAN_CLONE_RECEIPT_RECOMPUTE_NOT_PASS"})
+    if not (
+        isinstance(readiness_result, Mapping)
+        and readiness_result.get("schema_version") == TRACKED_READINESS_SCHEMA
+        and readiness_result.get("status") == TRACKED_READINESS_PASS
+        and readiness_result.get("ready") is True
+        and readiness_result.get("offline") is True
+        and readiness_result.get("production_readiness_authority") is False
+        and _zero_int(readiness_result.get("critical_count"))
+        and readiness_result.get("same_receipt_replay_variance") == 0
+        and tuple(sorted(str(value) for value in readiness_result.get("target_ids") or ()))
+        == expected_targets
+    ):
+        failures.append({"code": "CLEAN_CLONE_TRACKED_READINESS_NOT_PASS"})
+    if not (
+        isinstance(test_result, Mapping)
+        and set(test_result) == _CLEAN_CLONE_TEST_KEYS
+        and test_result.get("schema_version") == CLEAN_CLONE_TEST_SCHEMA
+        and test_result.get("status") == CLEAN_CLONE_TEST_PASS
+        and isinstance(test_result.get("executed_test_count"), int)
+        and not isinstance(test_result.get("executed_test_count"), bool)
+        and test_result.get("executed_test_count") > 0
+        and all(
+            _zero_int(test_result.get(key))
+            for key in ("failed_test_count", "error_test_count", "critical_count_sum")
+        )
+        and test_result.get("production_readiness_authority") is False
+    ):
+        failures.append({"code": "CLEAN_CLONE_TEST_RESULT_NOT_PASS"})
+    clean_clone_hashes = {
+        "receipt_recompute_result_hash": _content_sha256(
+            repo / final_root / "clean_clone" / "receipt_recompute_result.json"
+        ),
+        "tracked_readiness_result_hash": _content_sha256(
+            repo / final_root / "clean_clone" / "tracked_readiness_result.json"
+        ),
+        "test_result_hash": _content_sha256(
+            repo / final_root / "clean_clone" / "test_result.json"
+        ),
+    }
+    if not (
+        isinstance(clean_clone, Mapping)
+        and set(clean_clone) == _CLEAN_CLONE_REPRODUCTION_KEYS
+        and clean_clone.get("schema_version") == CLEAN_CLONE_REPRODUCTION_SCHEMA
+        and clean_clone.get("status") == CLEAN_CLONE_REPRODUCTION_PASS
+        and clean_clone.get("as_of_date") == CANARY_RECEIPT_DATE
+        and _zero_int(clean_clone.get("critical_count_sum"))
+        and clean_clone.get("production_readiness_authority") is False
+        and all(
+            digest is not None and clean_clone.get(key) == digest
+            for key, digest in clean_clone_hashes.items()
+        )
+    ):
+        failures.append({"code": "CLEAN_CLONE_REPRODUCTION_CONTRACT_INVALID"})
+
+    provider = content("provider_runtime_audit.json")
+    provider_audit_as_of = (
+        str(selection.get("selection_as_of_date") or "")
+        if isinstance(selection, Mapping)
+        and _valid_date(selection.get("selection_as_of_date"))
+        else CANARY_RECEIPT_DATE
+    )
+    if not (
+        isinstance(provider, Mapping)
+        and set(provider) == _PROVIDER_RUNTIME_AUDIT_KEYS
+        and provider.get("schema_version") == PROVIDER_RUNTIME_AUDIT_SCHEMA
+        and provider.get("status") == PROVIDER_RUNTIME_AUDIT_PASS
+        and provider.get("as_of_date") == provider_audit_as_of
+        and _authorized_provider_count_mapping(provider.get("provider_call_counts"))
+        and _authorized_provider_count_mapping(
+            provider.get("scored_fact_provider_lineage_counts")
+        )
+        and all(
+            _zero_int(provider.get(key))
+            for key in (
+                "provider_error_count",
+                "unauthorized_provider_call_count",
+                "local_provider_call_count",
+                "qwen_call_count",
+                "ollama_call_count",
+                "inherited_qwen_scored_fact_count",
+                "inherited_ollama_scored_fact_count",
+                "critical_count_sum",
+            )
+        )
+        and provider.get("production_readiness_authority") is False
+    ):
+        failures.append({"code": "PROVIDER_RUNTIME_AUDIT_CONTRACT_INVALID"})
+    production_static_audit = content(PRODUCTION_STATIC_AUDIT_LEAF)
+    if not (
+        isinstance(production_static_audit, Mapping)
+        and validate_production_static_audit(production_static_audit)
+    ):
+        failures.append({"code": "PRODUCTION_STATIC_AUDIT_CONTRACT_INVALID"})
+    return tuple(failures)
 
 
 def _validate_git_binding(
@@ -529,8 +883,11 @@ def _numbers_match(left: Any, right: Any) -> bool:
 
 def _required_current_authority_paths(final_root: str) -> frozenset[str]:
     result = {
-        f"{final_root}/operational_acceptance_reviewer_gate.json",
-        f"{final_root}/operational_cutover_final.md",
+        f"{final_root}/clean_clone_reproduction.json",
+        f"{final_root}/provider_runtime_audit.json",
+        f"{final_root}/{PRODUCTION_STATIC_AUDIT_LEAF}",
+        f"{final_root}/cross_archetype_canary_selection.json",
+        f"{final_root}/cross_archetype_canary_summary.json",
         f"{final_root}/current_krx_census_summary.json",
         f"{final_root}/current_krx_stage_map_compact.jsonl",
     }
@@ -565,6 +922,12 @@ def compile_artifact_lifecycle(
     requested_final_root = _safe_relative_path(Path(final_root).as_posix())
     final_root_argument_valid = requested_final_root == canonical_final_root
     safe_final_root = canonical_final_root
+    canonical_manifest_binding = _canonical_manifest_binding(
+        repo=repo,
+        final_root=safe_final_root,
+        payload=payload,
+        head=head,
+    )
 
     top_level_valid = (
         set(payload) == {"schema_version", "artifacts", "status_projection"}
@@ -840,12 +1203,26 @@ def compile_artifact_lifecycle(
     required_undeclared = sorted(
         relative
         for relative in required_files
-        if relative != audit_relative and relative not in declared_paths
+        if relative
+        not in {
+            audit_relative,
+            f"{safe_final_root}/{CANONICAL_MANIFEST_NAME}",
+        }
+        and relative not in declared_paths
     )
     unaccounted_final_files = sorted(
         relative
         for relative in actual_final_files
-        if relative != audit_relative and relative not in declared_paths
+        if relative
+        not in {
+            audit_relative,
+            f"{safe_final_root}/{CANONICAL_MANIFEST_NAME}",
+            *(
+                f"{safe_final_root}/{name}"
+                for name in TERMINAL_PUBLICATION_FILES
+            ),
+        }
+        and relative not in declared_paths
     )
 
     required_current_paths = _required_current_authority_paths(safe_final_root)
@@ -872,6 +1249,15 @@ def compile_artifact_lifecycle(
         for artifact_id, material in contents_by_id.items()
         if material[0].get("artifact_role") == CURRENT_AUTHORITY
     }
+    current_contents_by_path = {
+        str(row.get("artifact_path") or ""): content
+        for row, content in current_contents.values()
+    }
+    semantic_artifact_failures = _semantic_final_artifact_failures(
+        repo=repo,
+        final_root=safe_final_root,
+        current_contents_by_path=current_contents_by_path,
+    )
     observations: dict[str, list[tuple[str, Any]]] = defaultdict(list)
     markdown_pending_artifacts: set[str] = set()
     stale_masquerades: set[str] = set()
@@ -891,7 +1277,6 @@ def compile_artifact_lifecycle(
         )
         if top is not None:
             content_role = top.get("artifact_role")
-            content_authority = top.get("production_readiness_authority")
             content_successor = top.get("superseded_by")
             snapshot_status = str(top.get("snapshot_status") or "")
             stale = stale or bool(
@@ -899,7 +1284,6 @@ def compile_artifact_lifecycle(
                 and (
                     snapshot_status.startswith("SUPERSEDED")
                     or content_role in {HISTORICAL_SNAPSHOT, SUPERSEDED}
-                    or content_authority is False
                     or content_successor not in (None, "")
                 )
             )
@@ -907,7 +1291,7 @@ def compile_artifact_lifecycle(
                 role != CURRENT_AUTHORITY
                 and (
                     content_role == CURRENT_AUTHORITY
-                    or content_authority is True
+                    or top.get("production_readiness_authority") is True
                 )
             )
         if stale:
@@ -1010,6 +1394,9 @@ def compile_artifact_lifecycle(
         "manifest_schema_or_shape_error_count": int(not top_level_valid),
         "repository_head_unverified_count": int(head is None),
         "repository_identity_untrusted_count": int(not repository_identity_trusted),
+        "canonical_lifecycle_manifest_unbound_count": int(
+            not canonical_manifest_binding.get("valid")
+        ),
         "final_root_argument_invalid_count": int(not final_root_argument_valid),
         "invalid_artifact_row_count": len(invalid_rows),
         "duplicate_artifact_id_count": len(duplicate_ids),
@@ -1029,11 +1416,17 @@ def compile_artifact_lifecycle(
         "required_current_authority_missing_or_wrong_role_count": len(
             current_path_role_failures
         ),
+        "semantic_final_artifact_contract_failure_count": len(
+            semantic_artifact_failures
+        ),
     }
     criteria = {
         "manifest_schema_and_shape_valid": top_level_valid,
         "repository_head_verified": head is not None,
         "repository_identity_trusted": repository_identity_trusted,
+        "canonical_lifecycle_manifest_is_tracked_and_exact": bool(
+            canonical_manifest_binding.get("valid")
+        ),
         "final_root_argument_valid": final_root_argument_valid,
         "all_artifact_rows_valid": not invalid_rows,
         "artifact_ids_unique": not duplicate_ids,
@@ -1051,6 +1444,7 @@ def compile_artifact_lifecycle(
         "every_final_file_lifecycle_accounted": not unaccounted_final_files,
         "final_tree_contains_no_symlinks": not symlink_entries,
         "required_final_authorities_are_current": not current_path_role_failures,
+        "semantic_final_artifact_contracts_pass": not semantic_artifact_failures,
         "lifecycle_audit_output_contract_satisfied": (
             audit_output_contract_satisfied
         ),
@@ -1067,6 +1461,7 @@ def compile_artifact_lifecycle(
         "repo_head_commit_sha": head,
         "final_root": safe_final_root,
         "manifest_hash": manifest_hash,
+        "canonical_lifecycle_manifest_binding": canonical_manifest_binding,
         "artifact_count": len(validated_rows),
         "artifact_role_counts": dict(sorted(role_counts.items())),
         "status_projection": projection,
@@ -1081,6 +1476,7 @@ def compile_artifact_lifecycle(
         "unaccounted_final_files": unaccounted_final_files,
         "final_tree_symlinks": sorted(symlink_entries),
         "required_current_authority_failures": current_path_role_failures,
+        "semantic_final_artifact_failures": list(semantic_artifact_failures),
         "duplicate_artifact_ids": duplicate_ids,
         "duplicate_artifact_paths": duplicate_paths,
         "duplicate_current_authority_scopes": duplicate_current_scopes,
@@ -1106,13 +1502,23 @@ __all__ = [
     "ARTIFACT_ROLES",
     "CANARY_RECEIPT_DATE",
     "CANARY_TARGET_IDS",
+    "CANONICAL_MANIFEST_NAME",
+    "CLEAN_CLONE_REPRODUCTION_PASS",
+    "CLEAN_CLONE_REPRODUCTION_SCHEMA",
+    "CLEAN_CLONE_TEST_PASS",
+    "CLEAN_CLONE_TEST_SCHEMA",
+    "CROSS_ARCHETYPE_CANARY_SUMMARY_PASS",
+    "CROSS_ARCHETYPE_CANARY_SUMMARY_SCHEMA",
     "CURRENT_AUTHORITY",
     "CURRENT_LIVE_CANARY_PREFIXES",
     "FINAL_ROOT_RELATIVE",
     "FINAL_STATUS_PROJECTION",
     "HISTORICAL_SNAPSHOT",
     "PRE_GOLD_PENDING_STATUS",
+    "PROVIDER_RUNTIME_AUDIT_PASS",
+    "PROVIDER_RUNTIME_AUDIT_SCHEMA",
     "SUPERSEDED",
+    "TERMINAL_PUBLICATION_FILES",
     "compile_artifact_lifecycle",
     "load_artifact_lifecycle_manifest",
 ]

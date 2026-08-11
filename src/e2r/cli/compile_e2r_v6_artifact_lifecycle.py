@@ -10,6 +10,7 @@ import secrets
 
 from e2r.research_brain.researcher_mode.artifact_lifecycle import (
     ARTIFACT_LIFECYCLE_PASS,
+    CANONICAL_MANIFEST_NAME,
     FINAL_ROOT_RELATIVE,
     compile_artifact_lifecycle,
     load_artifact_lifecycle_manifest,
@@ -150,6 +151,12 @@ def main() -> int:
     args = _parser().parse_args()
     repo_root = Path(args.repo_root).resolve()
     manifest_path = Path(args.manifest)
+    canonical_manifest_path = repo_root / FINAL_ROOT_RELATIVE / CANONICAL_MANIFEST_NAME
+    if (
+        manifest_path.is_symlink()
+        or manifest_path.resolve() != canonical_manifest_path.resolve()
+    ):
+        raise SystemExit("artifact lifecycle manifest must be the canonical tracked file")
     raw_output = Path(args.output)
     output = raw_output.resolve()
     manifest = load_artifact_lifecycle_manifest(manifest_path)
