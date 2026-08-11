@@ -45,7 +45,7 @@ PROFILE_SELECTION_RECEIPT_SCHEMA_VERSION = (
     "e2r_v6_issuer_business_profile_selection_receipt_v1"
 )
 CANDIDATE_EXPANSION_RECEIPT_SCHEMA_VERSION = (
-    "e2r_v6_issuer_business_candidate_expansion_receipt_v1"
+    "e2r_v6_issuer_business_candidate_expansion_receipt_v2"
 )
 INDUSTRY_DISCOVERY_SCHEMA_VERSION = "e2r_v6_opendart_industry_discovery_v1"
 PROFILE_PASS = "COMPLETE"
@@ -54,6 +54,13 @@ PROFILE_ABSTAINED = "ABSTAINED"
 PROFILE_TEST_ONLY = "TEST_ONLY"
 CANONICAL_COMPATIBILITY_PROVIDER = (
     "codex_collaboration_issuer_business_profile"
+)
+
+_DISCOVERY_CANDIDATE_INELIGIBLE_DETAILS = frozenset(
+    {
+        "OpenDART discovery corp-code identity does not match KRX",
+        "OpenDART discovery company identity or industry code is invalid",
+    }
 )
 
 REQUIRED_ARCHETYPES = (
@@ -814,6 +821,7 @@ def _candidate_expansion_receipt(
     pending: Sequence[Mapping[str, Any]],
     status: str,
     stop_reason: str,
+    diagnostics: Sequence[Mapping[str, Any]] = (),
 ) -> Mapping[str, Any]:
     natural_roster = [str(row["symbol"]) for row in natural_candidates]
     expanded = [dict(row) for row in expanded_candidates]
@@ -860,6 +868,7 @@ def _candidate_expansion_receipt(
         ),
         "unfilled_sector_quotas": unfilled,
         "pending": [dict(row) for row in pending],
+        "diagnostics": [dict(row) for row in diagnostics],
         "stop_reason": stop_reason,
         "official_only": True,
         "bounded": True,
@@ -955,6 +964,7 @@ def _expand_forced_candidates(
     expanded_rows: list[Mapping[str, Any]] = []
     expanded_krx_rows: list[Mapping[str, Any]] = []
     pending = list(invalid)
+    diagnostics: list[Mapping[str, Any]] = []
     fetch_count = 0
     quotas_filled = False
     for candidate in pool:
@@ -978,13 +988,25 @@ def _expand_forced_candidates(
                 as_of_date=config.as_of_date,
             )
         except (TypeError, ValueError, json.JSONDecodeError, ET.ParseError) as exc:
-            pending.append(
-                {
-                    "code": "FORCED_DISCOVERY_PROVIDER_PENDING",
-                    "target_id": candidate["symbol"],
-                    "detail": str(exc),
-                }
-            )
+            detail = str(exc)
+            failure = {
+                "target_id": candidate["symbol"],
+                "detail": detail,
+            }
+            if detail in _DISCOVERY_CANDIDATE_INELIGIBLE_DETAILS:
+                diagnostics.append(
+                    {
+                        "code": "FORCED_DISCOVERY_CANDIDATE_INELIGIBLE",
+                        **failure,
+                    }
+                )
+            else:
+                pending.append(
+                    {
+                        "code": "FORCED_DISCOVERY_PROVIDER_PENDING",
+                        **failure,
+                    }
+                )
             continue
         sector = str(discovered["large_sector_id"])
         if sector in quotas and counts[sector] < quotas[sector]:
@@ -1026,6 +1048,7 @@ def _expand_forced_candidates(
         pending=pending,
         status=status,
         stop_reason=stop_reason,
+        diagnostics=diagnostics,
     )
     return tuple(expanded_krx_rows), receipt
 
@@ -1991,6 +2014,7 @@ def validate_candidate_expansion_receipt(raw: object) -> Mapping[str, Any]:
         "expanded_candidate_roster_hash",
         "unfilled_sector_quotas",
         "pending",
+        "diagnostics",
         "stop_reason",
         "official_only",
         "bounded",
@@ -2055,11 +2079,14 @@ def validate_candidate_expansion_receipt(raw: object) -> Mapping[str, Any]:
         raise ValueError("candidate expansion sector quotas are not taxonomy-derived")
     expanded_raw = receipt["expanded_candidates"]
     pending = receipt["pending"]
+    diagnostics = receipt["diagnostics"]
     unfilled = receipt["unfilled_sector_quotas"]
     if any(
         isinstance(value, (str, bytes)) or not isinstance(value, Sequence)
-        for value in (expanded_raw, pending, unfilled)
-    ) or any(not isinstance(row, Mapping) for row in pending):
+        for value in (expanded_raw, pending, diagnostics, unfilled)
+    ) or any(
+        not isinstance(row, Mapping) for row in (*pending, *diagnostics)
+    ):
         raise ValueError("candidate expansion collections are invalid")
     expanded = [_validate_industry_discovery_record(row) for row in expanded_raw]
     expanded_targets = [str(row["target_id"]) for row in expanded]
@@ -2092,11 +2119,29 @@ def validate_candidate_expansion_receipt(raw: object) -> Mapping[str, Any]:
     ]
     if list(unfilled) != expected_unfilled:
         raise ValueError("candidate expansion unfilled sector quota audit is invalid")
+    diagnostic_targets = []
+    for diagnostic in diagnostics:
+        if set(diagnostic) != {"code", "target_id", "detail"} or (
+            diagnostic.get("code")
+            != "FORCED_DISCOVERY_CANDIDATE_INELIGIBLE"
+            or _TARGET_RE.fullmatch(str(diagnostic.get("target_id") or "")) is None
+            or diagnostic.get("detail")
+            not in _DISCOVERY_CANDIDATE_INELIGIBLE_DETAILS
+        ):
+            raise ValueError("candidate expansion diagnostic is invalid")
+        diagnostic_targets.append(str(diagnostic["target_id"]))
+    if (
+        len(set(diagnostic_targets)) != len(diagnostic_targets)
+        or set(diagnostic_targets).intersection(expanded_targets)
+        or len(diagnostics) + len(expanded) > receipt["discovery_fetch_count"]
+    ):
+        raise ValueError("candidate expansion diagnostic roster is invalid")
     stop_reason = receipt["stop_reason"]
     if status == "NOT_REQUESTED" and (
         any(count_fields)
         or expanded
         or pending
+        or diagnostics
         or stop_reason != "NOT_REQUESTED"
     ):
         raise ValueError("not-requested candidate expansion carries live authority")

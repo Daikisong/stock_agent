@@ -60,6 +60,7 @@ class FakeOpenDartFetcher:
         industry_by_target: dict[str, str],
         *,
         fail_targets: set[str] | None = None,
+        invalid_discovery_targets: set[str] | None = None,
         mutate_response_hash_for: set[str] | None = None,
         future_report_for: set[str] | None = None,
         stale_document_for: set[str] | None = None,
@@ -67,6 +68,7 @@ class FakeOpenDartFetcher:
     ) -> None:
         self.industry_by_target = industry_by_target
         self.fail_targets = fail_targets or set()
+        self.invalid_discovery_targets = invalid_discovery_targets or set()
         self.mutate_response_hash_for = mutate_response_hash_for or set()
         self.future_report_for = future_report_for or set()
         self.stale_document_for = stale_document_for or set()
@@ -103,14 +105,17 @@ class FakeOpenDartFetcher:
             f"<stock_code>{target_id}</stock_code>"
             "</list></result>"
         )
+        company_payload = {
+            "status": "000",
+            "corp_code": corp_code,
+            "corp_name": company_name,
+            "stock_code": target_id,
+            "induty_code": self.industry_by_target.get(target_id, "99999"),
+        }
+        if target_id in self.invalid_discovery_targets:
+            company_payload["induty_code"] = ""
         company_text = json.dumps(
-            {
-                "status": "000",
-                "corp_code": corp_code,
-                "corp_name": company_name,
-                "stock_code": target_id,
-                "induty_code": self.industry_by_target.get(target_id, "99999"),
-            },
+            company_payload,
             ensure_ascii=False,
             sort_keys=True,
         )
@@ -541,6 +546,49 @@ class V6IssuerBusinessProfileTest(unittest.TestCase):
         )
         with self.assertRaisesRegex(ValueError, "drifted from forced discovery"):
             validate_issuer_business_profile_result(drifted)
+
+    def test_nonselected_ineligible_discovery_is_diagnostic(self) -> None:
+        rows, industries = _five_rows()
+        ineligible = _krx_row("100006", "발행인 비대상")
+        industries[ineligible["symbol"]] = "99999"
+        fetcher = FakeOpenDartFetcher(
+            industries,
+            invalid_discovery_targets={ineligible["symbol"]},
+        )
+
+        result = V6IssuerBusinessProfileMaterializer().materialize(
+            IssuerBusinessProfileConfig(
+                as_of_date=AS_OF,
+                max_profile_fetches=5,
+                max_discovery_fetches=10,
+                max_forced_candidates_per_required_slot=1,
+            ),
+            universe_rows=rows,
+            discovery_universe_rows=[*rows, ineligible],
+            credential="official-fixture-key",
+            fetcher=fetcher,
+            compatibility_provider=FakeCompatibilityProvider(),
+        )
+
+        self.assertEqual(result["status"], PROFILE_PASS)
+        expansion = result["candidate_expansion_receipt"]
+        self.assertEqual(expansion["status"], "COMPLETE")
+        self.assertEqual(expansion["stop_reason"], "FULL_KRX_EXHAUSTED")
+        self.assertEqual(expansion["pending"], [])
+        self.assertEqual(
+            expansion["diagnostics"],
+            [
+                {
+                    "code": "FORCED_DISCOVERY_CANDIDATE_INELIGIBLE",
+                    "target_id": ineligible["symbol"],
+                    "detail": (
+                        "OpenDART discovery company identity or industry code "
+                        "is invalid"
+                    ),
+                }
+            ],
+        )
+        self.assertEqual(fetcher.discovery_calls, [ineligible["symbol"]])
 
     def test_forced_discovery_provider_failure_is_pending_before_full_profiles(self) -> None:
         full_rows, industries = _five_rows()
