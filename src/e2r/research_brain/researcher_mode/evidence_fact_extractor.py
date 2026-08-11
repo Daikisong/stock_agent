@@ -499,6 +499,9 @@ _CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_RE = re.compile(
 FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED = (
     "FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED"
 )
+_CURRENT_FACT_LINEAGE_AUTHORITY_PROJECTION_MISMATCH = (
+    "CURRENT_FACT_LINEAGE_AUTHORITY_PROJECTION_MISMATCH"
+)
 
 
 def fact_extraction_has_exact_collaboration_wait(
@@ -534,6 +537,9 @@ def fact_extraction_has_exact_checkpoint_recovery_wait(
     refresh_count = reasons.count(
         FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
     )
+    authority_projection_mismatch_count = reasons.count(
+        _CURRENT_FACT_LINEAGE_AUTHORITY_PROJECTION_MISMATCH
+    )
     rematerialization_reasons = tuple(
         reason
         for reason in reasons
@@ -565,10 +571,18 @@ def fact_extraction_has_exact_checkpoint_recovery_wait(
         and objective_reassessment_roster_is_unique
         and collaboration_count <= 1
         and refresh_count <= 1
-        and not (collaboration_count and refresh_count)
+        and authority_projection_mismatch_count <= 1
+        and not (
+            collaboration_count
+            and (refresh_count or authority_projection_mismatch_count)
+        )
+        and not (
+            refresh_count and authority_projection_mismatch_count
+        )
         and (
             collaboration_count
             + refresh_count
+            + authority_projection_mismatch_count
             + rematerialization_count
             + objective_reassessment_count
             + incomplete_count
@@ -579,6 +593,7 @@ def fact_extraction_has_exact_checkpoint_recovery_wait(
             or objective_reassessment_count >= 1
             or collaboration_count == 1
             or refresh_count == 1
+            or authority_projection_mismatch_count == 1
         )
     )
 
@@ -1795,6 +1810,16 @@ class ResearcherEvidenceFactExtractor:
             )
         )
         canonical_state_refresh_barrier_count = 0
+        if current_lineage_recovery_succeeded and transport_documents:
+            # Journal recovery changes the canonical claim/fact/disposition
+            # state.  Persist that atomic recovery before opening requests for
+            # documents outside the sealed recovery closure.  Otherwise the
+            # deliberately empty batch schedule below can produce a pending
+            # result with no machine-readable reason.
+            pending.append(
+                FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+            )
+            canonical_state_refresh_barrier_count += 1
         for batch_index, batch in enumerate(document_batches):
             downstream_input_hash_before_batch = (
                 _canonical_downstream_fact_input_hash(
@@ -3507,9 +3532,9 @@ def resolve_current_fact_lineage_recovery_binding(
     """Resolve the authoritative source seed to one exact journal call cover.
 
     This resolver is read-only and never calls ``provider.complete``.  It is
-    intentionally strict: every missing-fact source must occur in exactly one
-    validated call group.  A second plausible historical call is ambiguity,
-    not an invitation to choose whichever result looks convenient.
+    intentionally strict: the missing-fact sources must have one structural
+    exact cover.  Redundant partial overlaps are ignored, while a second
+    independently complete cover remains ambiguous and fails closed.
     """
 
     cutoff = date.fromisoformat(as_of_date)
@@ -3551,16 +3576,28 @@ def resolve_current_fact_lineage_recovery_binding(
         authoritative_fact_ledger.fact_rows,
         label="authoritative research-epoch facts",
     )
-    if _exact_fact_rows_by_id(
+    current_projection_rows = _exact_fact_rows_by_id(
         current_facts,
         label="current fact authority projection",
-    ) != authority_rows:
+    )
+    if set(current_projection_rows) != set(authority_rows):
         raise ValueError("current fact authority projection is not exact")
     for fact_id, row in persisted_rows.items():
-        if fact_id in authority_rows and _canonical_json_value(row) != (
+        if (
+            fact_id in current_projection_rows
+            and _canonical_json_value(row)
+            != _canonical_json_value(current_projection_rows[fact_id])
+        ):
+            raise ValueError(
+                "persisted fact body differs from current fact projection"
+            )
+    for fact_id in set(authority_rows) - set(persisted_rows):
+        if _canonical_json_value(current_projection_rows[fact_id]) != (
             _canonical_json_value(authority_rows[fact_id])
         ):
-            raise ValueError("persisted fact body differs from authority")
+            raise ValueError(
+                "missing fact body differs from authoritative lineage"
+            )
     seed_source_document_ids = tuple(
         str(value)
         for value in expectation["expected_recovered_source_document_ids"]
@@ -3664,11 +3701,19 @@ def resolve_current_fact_lineage_recovery_binding(
     )
     if any(not value for value in group_ids):
         raise ValueError("current fact journal call-group identity is missing")
-    if _validated_raw_current_lineage_transport_cover(
+    selected_material_rows = _select_unique_raw_current_lineage_transport_cover(
         material_rows=material_rows,
         document_ids=seed_source_document_ids,
-    ) is None:
+    )
+    if selected_material_rows is None:
         raise ValueError("current fact journal source-seed cover is ambiguous")
+    material_rows = tuple(dict(row) for row in selected_material_rows)
+    group_ids = tuple(
+        dict.fromkeys(
+            str(row.get("lineage_call_group_id") or "")
+            for row in material_rows
+        )
+    )
     disposition_ids = {
         str(row.get("document_id") or "")
         for row in prior_document_dispositions
@@ -5347,17 +5392,25 @@ def _recover_current_fact_lineage_authority_gap(
         current_facts,
         label="current fact authority projection",
     )
-    if current_rows != authority_rows:
+    if set(current_rows) != set(authority_rows):
         return _current_lineage_pending_result(
             "CURRENT_FACT_LINEAGE_AUTHORITY_PROJECTION_MISMATCH",
             expectation=expectation,
         )
     for fact_id in set(persisted_fact_rows).intersection(authority_rows):
         if _canonical_json_value(persisted_fact_rows[fact_id]) != (
-            _canonical_json_value(authority_rows[fact_id])
+            _canonical_json_value(current_rows[fact_id])
         ):
             return _current_lineage_pending_result(
                 "CURRENT_FACT_LINEAGE_PERSISTED_FACT_BODY_MISMATCH",
+                expectation=expectation,
+            )
+    for fact_id in set(authority_rows) - set(persisted_fact_rows):
+        if _canonical_json_value(current_rows[fact_id]) != (
+            _canonical_json_value(authority_rows[fact_id])
+        ):
+            return _current_lineage_pending_result(
+                "CURRENT_FACT_LINEAGE_MISSING_FACT_BODY_MISMATCH",
                 expectation=expectation,
             )
     expectation_status = str(expectation["status"])
@@ -5658,7 +5711,7 @@ def _recover_current_fact_lineage_authority_gap(
     if (
         merged_compilation.status != "FACT_COMPILATION_COMPLETE"
         or _canonical_json_value(merged_rows)
-        != _canonical_json_value(authority_rows)
+        != _canonical_json_value(current_rows)
     ):
         return _current_lineage_pending_result(
             "CURRENT_FACT_LINEAGE_MERGED_FACT_ROWS_NOT_AUTHORITATIVE",
@@ -6240,6 +6293,185 @@ def _validated_raw_current_lineage_transport_cover(
             for row in sorted(chunks, key=lambda row: int(row["chunk_index"]))
         )
     return result
+
+
+def _select_unique_raw_current_lineage_transport_cover(
+    *,
+    material_rows: Sequence[Mapping[str, Any]],
+    document_ids: Sequence[str],
+) -> tuple[Mapping[str, Any], ...] | None:
+    """Select the sole structurally exact journal-call cover, if one exists.
+
+    A later valid call may overlap only part of an older atomic call.  Such a
+    redundant call must not make the older, complete cover ambiguous.  At the
+    same time, two independently complete covers remain ambiguous and fail
+    closed.  Split documents are covered only by one complete, hash-consistent
+    chunk set.
+    """
+
+    target_ids = tuple(sorted({str(value) for value in document_ids}))
+    if (
+        not target_ids
+        or len(target_ids) != len(tuple(document_ids))
+        or any(not value for value in target_ids)
+    ):
+        return None
+
+    rows_by_group: dict[str, list[Mapping[str, Any]]] = {}
+    base_by_group: dict[str, Mapping[str, Any]] = {}
+    for row in material_rows:
+        group_id = str(row.get("lineage_call_group_id") or "")
+        if not group_id:
+            return None
+        rows_by_group.setdefault(group_id, []).append(row)
+        if int(row.get("continuation_page_number") or 0) == 1:
+            if group_id in base_by_group:
+                return None
+            base_by_group[group_id] = row
+    if set(rows_by_group) != set(base_by_group):
+        return None
+
+    units_by_document: dict[
+        str, dict[str, Mapping[str, Any] | None]
+    ] = {document_id: {} for document_id in target_ids}
+    for group_id, material in base_by_group.items():
+        request_payload = material.get("request_payload")
+        if not isinstance(request_payload, Mapping):
+            return None
+        for raw in request_payload.get("full_documents") or ():
+            if not isinstance(raw, Mapping):
+                return None
+            document_id = str(raw.get("document_id") or "")
+            if document_id not in units_by_document:
+                continue
+            if group_id in units_by_document[document_id]:
+                return None
+            transport = raw.get("transport_chunk")
+            if transport is not None and not isinstance(transport, Mapping):
+                return None
+            units_by_document[document_id][group_id] = (
+                dict(transport) if isinstance(transport, Mapping) else None
+            )
+
+    options_by_document: dict[str, tuple[frozenset[str], ...]] = {}
+    touching_by_document: dict[str, frozenset[str]] = {}
+    for document_id, units_by_group in units_by_document.items():
+        if not units_by_group:
+            return None
+        touching_by_document[document_id] = frozenset(units_by_group)
+        options: set[frozenset[str]] = {
+            frozenset((group_id,))
+            for group_id, unit in units_by_group.items()
+            if unit is None
+        }
+        chunks_by_identity: dict[
+            tuple[int, str], dict[int, list[str]]
+        ] = {}
+        for group_id, unit in units_by_group.items():
+            if unit is None:
+                continue
+            count = int(unit.get("chunk_count") or 0)
+            index = int(unit.get("chunk_index") or 0)
+            full_hash = str(unit.get("full_document_content_hash") or "")
+            chunk_id = str(unit.get("transport_chunk_id") or "")
+            if (
+                count <= 1
+                or index < 0
+                or index >= count
+                or not full_hash
+                or not chunk_id
+            ):
+                return None
+            chunks_by_identity.setdefault((count, full_hash), {}).setdefault(
+                index, []
+            ).append(group_id)
+        for (count, _full_hash), groups_by_index in chunks_by_identity.items():
+            if set(groups_by_index) != set(range(count)):
+                continue
+
+            def add_chunk_options(
+                index: int,
+                selected: frozenset[str],
+            ) -> None:
+                if index == count:
+                    options.add(selected)
+                    return
+                for group_id in sorted(groups_by_index[index]):
+                    if group_id not in selected:
+                        add_chunk_options(index + 1, selected | {group_id})
+
+            add_chunk_options(0, frozenset())
+        if not options:
+            return None
+        options_by_document[document_id] = tuple(
+            sorted(options, key=lambda value: (len(value), tuple(sorted(value))))
+        )
+
+    solutions: set[frozenset[str]] = set()
+    visited: set[tuple[tuple[str, ...], frozenset[str], frozenset[str]]] = set()
+
+    def search(
+        remaining: tuple[str, ...],
+        selected: frozenset[str],
+        forbidden: frozenset[str],
+    ) -> None:
+        if len(solutions) > 1:
+            return
+        state = (remaining, selected, forbidden)
+        if state in visited:
+            return
+        visited.add(state)
+        if not remaining:
+            chosen_rows = tuple(
+                row
+                for row in material_rows
+                if str(row.get("lineage_call_group_id") or "") in selected
+            )
+            if _validated_raw_current_lineage_transport_cover(
+                material_rows=chosen_rows,
+                document_ids=target_ids,
+            ) is not None:
+                solutions.add(selected)
+            return
+
+        compatible_by_document: dict[str, tuple[frozenset[str], ...]] = {}
+        for document_id in remaining:
+            touching = touching_by_document[document_id]
+            already_selected = selected.intersection(touching)
+            compatible = tuple(
+                option
+                for option in options_by_document[document_id]
+                if already_selected.issubset(option)
+                and not option.intersection(forbidden)
+            )
+            if not compatible:
+                return
+            compatible_by_document[document_id] = compatible
+        document_id = min(
+            remaining,
+            key=lambda value: (len(compatible_by_document[value]), value),
+        )
+        touching = touching_by_document[document_id]
+        next_remaining = tuple(
+            value for value in remaining if value != document_id
+        )
+        for option in compatible_by_document[document_id]:
+            next_selected = selected.union(option)
+            next_forbidden = forbidden.union(touching - option)
+            if next_selected.intersection(next_forbidden):
+                continue
+            search(next_remaining, next_selected, next_forbidden)
+
+    search(target_ids, frozenset(), frozenset())
+    if len(solutions) != 1:
+        return None
+    selected_group_ids = next(iter(solutions))
+    return tuple(
+        row
+        for row in material_rows
+        if str(row.get("lineage_call_group_id") or "")
+        in selected_group_ids
+    )
 
 
 def _exact_fact_rows_by_id(

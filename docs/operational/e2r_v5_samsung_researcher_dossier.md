@@ -3,9 +3,9 @@
 - target_id: `005930`
 - status: `RESEARCH_CHECKPOINT_PENDING`
 - production research complete: `false`
-- documents: `272`
-- evidence facts: `504`
-- counterfacts: `0`
+- documents: `277`
+- evidence facts: `533`
+- counterfacts: `112`
 - complete component memos: `0` / `7`
 - score valid: `false`
 - FINAL StageCourt: `false`

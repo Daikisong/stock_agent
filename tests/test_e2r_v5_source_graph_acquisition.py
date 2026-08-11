@@ -1713,12 +1713,28 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         )
         self.assertEqual(search.calls, [])
 
+        # Simulate a persisted pre-fix checkpoint: it knows that the exact
+        # response was consumed, but its frozen score gap does not yet contain
+        # the semantic attempt lineage.  Resume must recover that lineage from
+        # query_generation_history and mint a new semantic prompt.
+        legacy_state = json.loads(json.dumps(empty.checkpoint))
+        legacy_state.pop("checkpoint_id")
+        legacy_state.pop("checkpoint_hash")
+        legacy_state["pending_query_generation_replay_context"][
+            "score_gap_context"
+        ].pop(
+            source_graph_module.QUERY_GENERATION_SEMANTIC_RETRY_CONTEXT_KEY
+        )
+        legacy_checkpoint = source_graph_module._finalize_checkpoint(
+            legacy_state
+        )
+
         provider.queries = (QUERY,)
         completed = self._run(
             provider=provider,
             search=search,
             fetcher=PageFetcher(fixture_text_by_url={}),
-            checkpoint=empty.checkpoint,
+            checkpoint=legacy_checkpoint,
             score_gap_context={},
             resolved_objective_ids=("OBJECTIVE-1",),
         )
@@ -1731,10 +1747,188 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(len(query_payloads), 3)
         self.assertEqual(query_payloads[0], query_payloads[1])
         self.assertNotEqual(query_payloads[1], query_payloads[2])
+        semantic_retry = query_payloads[2]["score_gap_context"][
+            source_graph_module.QUERY_GENERATION_SEMANTIC_RETRY_CONTEXT_KEY
+        ]
+        self.assertEqual(semantic_retry["attempt"], 1)
+        self.assertEqual(
+            semantic_retry["previous_feedback_for_next_llm_call"],
+            ["LLM_RETURNED_NO_NEW_VALID_QUERY"],
+        )
+        self.assertEqual(
+            semantic_retry["previous_unresolved_research_notes"], []
+        )
+        self.assertFalse(semantic_retry["fixed_retry_cap_used"])
+        self.assertFalse(semantic_retry["production_score_authority"])
         self.assertEqual(search.calls[0][0], QUERY)
         self.assertNotIn(
             "pending_query_generation_replay_context",
             completed.checkpoint,
+        )
+
+    def test_consecutive_empty_collaboration_responses_advance_semantic_prompt(
+        self,
+    ) -> None:
+        class EmptyCollaborationProvider(SourceBrainProvider):
+            def __init__(self) -> None:
+                super().__init__(queries=())
+                self.ready_payload_hashes: set[str] = set()
+
+            @staticmethod
+            def payload_hash(payload: Mapping[str, Any]) -> str:
+                return hashlib.sha256(
+                    json.dumps(
+                        payload,
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    ).encode("utf-8")
+                ).hexdigest()
+
+            def mark_latest_query_ready(self) -> None:
+                latest = next(
+                    row
+                    for row in reversed(self.calls)
+                    if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+                )
+                self.ready_payload_hashes.add(
+                    self.payload_hash(latest["payload"])
+                )
+
+            def complete(self, *, pass_name, payload):
+                if pass_name != "SOURCE_QUERY_GENERATION":
+                    return super().complete(
+                        pass_name=pass_name,
+                        payload=payload,
+                    )
+                self.calls.append(
+                    {"pass_name": pass_name, "payload": payload}
+                )
+                payload_hash = self.payload_hash(payload)
+                if payload_hash not in self.ready_payload_hashes:
+                    raise RuntimeError(
+                        "COLLABORATION_RESPONSE_PENDING:COLLABREQ-"
+                        + payload_hash
+                    )
+                return {
+                    "suggested_queries": [],
+                    "new_source_directions": [],
+                    "unresolved_research_notes": [
+                        "No genuinely new official document route was found."
+                    ],
+                }
+
+        provider = EmptyCollaborationProvider()
+        search = RecordingSearchProvider({})
+        fetcher = PageFetcher(fixture_text_by_url={})
+
+        first_wait = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+        )
+        repeated_wait = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=first_wait.checkpoint,
+        )
+        provider.mark_latest_query_ready()
+        first_empty = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=repeated_wait.checkpoint,
+        )
+        second_wait = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=first_empty.checkpoint,
+        )
+
+        payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+        ]
+        self.assertEqual(payloads[0], payloads[1])
+        self.assertEqual(payloads[1], payloads[2])
+        self.assertNotEqual(payloads[2], payloads[3])
+        first_retry = payloads[3]["score_gap_context"][
+            source_graph_module.QUERY_GENERATION_SEMANTIC_RETRY_CONTEXT_KEY
+        ]
+        self.assertEqual(first_retry["attempt"], 1)
+        self.assertEqual(
+            first_retry["previous_unresolved_research_notes"],
+            ["No genuinely new official document route was found."],
+        )
+
+        provider.mark_latest_query_ready()
+        second_empty = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=second_wait.checkpoint,
+        )
+        third_wait = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=second_empty.checkpoint,
+        )
+        del third_wait
+        payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+        ]
+        self.assertEqual(payloads[3], payloads[4])
+        self.assertNotEqual(payloads[4], payloads[5])
+        second_retry = payloads[5]["score_gap_context"][
+            source_graph_module.QUERY_GENERATION_SEMANTIC_RETRY_CONTEXT_KEY
+        ]
+        self.assertEqual(second_retry["attempt"], 2)
+        self.assertEqual(len(second_retry["prompt_hash_lineage"]), 2)
+        self.assertEqual(len(second_retry["response_hash_lineage"]), 2)
+        self.assertFalse(second_retry["deterministic_fallback_query_allowed"])
+        self.assertFalse(second_retry["fixed_retry_cap_used"])
+        self.assertFalse(second_retry["production_score_authority"])
+        self.assertEqual(search.calls, [])
+
+    def test_semantic_retry_context_preserves_duplicate_query_feedback(
+        self,
+    ) -> None:
+        duplicate_feedback = (
+            "DUPLICATE_OR_ALREADY_EXECUTED_QUERY:"
+            "Current Corp existing official route"
+        )
+        retry = source_graph_module._query_generation_semantic_retry_context(
+            [
+                {
+                    "status": "PENDING",
+                    "queries": [],
+                    "feedback_for_next_llm_call": [duplicate_feedback],
+                    "unresolved_research_notes": [
+                        "The official route remains unresolved."
+                    ],
+                    "new_source_directions": [],
+                    "prompt_hash": "QUERYPROMPT-duplicate",
+                    "response_hash": "QUERYRESP-duplicate",
+                    "deterministic_fallback_query_used": False,
+                }
+            ]
+        )
+
+        self.assertIsNotNone(retry)
+        self.assertEqual(retry["attempt"], 1)  # type: ignore[index]
+        self.assertEqual(
+            retry["previous_feedback_for_next_llm_call"],  # type: ignore[index]
+            [duplicate_feedback],
+        )
+        self.assertEqual(
+            retry["previous_unresolved_research_notes"],  # type: ignore[index]
+            ["The official route remains unresolved."],
         )
 
     def test_future_dated_llm_query_is_rejected_before_search(self) -> None:

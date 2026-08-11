@@ -101,6 +101,12 @@ OFFICIAL_SOURCE_SUCCESS_DISCOVERY_FALLBACK_REASON = (
 QUERY_GENERATION_REPLAY_CONTEXT_SCHEMA_VERSION = (
     "e2r_v5_query_generation_replay_context_v1"
 )
+QUERY_GENERATION_SEMANTIC_RETRY_CONTEXT_SCHEMA_VERSION = (
+    "e2r_v5_query_generation_semantic_retry_context_v1"
+)
+QUERY_GENERATION_SEMANTIC_RETRY_CONTEXT_KEY = (
+    "query_generation_semantic_retry"
+)
 CANDIDATE_RANKING_REPLAY_CONTEXT_SCHEMA_VERSION = (
     "e2r_v5_candidate_ranking_replay_context_v2"
 )
@@ -1392,6 +1398,23 @@ class ResearcherSourceGraphAcquirer:
                     or pending_query_generation_replay is not None
                 )
             ):
+                replay_score_gap_context = json.loads(
+                    json.dumps(
+                        effective_score_gap_context,
+                        ensure_ascii=False,
+                        default=str,
+                    )
+                )
+                if not collaboration_transport_wait:
+                    semantic_retry_context = (
+                        _query_generation_semantic_retry_context(
+                            state["query_generation_history"]
+                        )
+                    )
+                    if semantic_retry_context is not None:
+                        replay_score_gap_context[
+                            QUERY_GENERATION_SEMANTIC_RETRY_CONTEXT_KEY
+                        ] = semantic_retry_context
                 state["pending_query_generation_replay_context"] = {
                     "schema_version": (
                         QUERY_GENERATION_REPLAY_CONTEXT_SCHEMA_VERSION
@@ -1400,13 +1423,7 @@ class ResearcherSourceGraphAcquirer:
                         str(row["objective_id"])
                         for row in query_generation_objectives
                     ),
-                    "score_gap_context": json.loads(
-                        json.dumps(
-                            effective_score_gap_context,
-                            ensure_ascii=False,
-                            default=str,
-                        )
-                    ),
+                    "score_gap_context": replay_score_gap_context,
                     "prompt_hash": query_generation.prompt_hash,
                     "origin_prompt_hash": (
                         str(
@@ -3041,6 +3058,34 @@ def _validated_pending_query_generation_replay_context(
         )
     ):
         raise ValueError("pending query generation replay lineage mismatch")
+    semantic_retry_context = _query_generation_semantic_retry_context(
+        history
+    )
+    stored_semantic_retry_context = score_gap_context.get(
+        QUERY_GENERATION_SEMANTIC_RETRY_CONTEXT_KEY
+    )
+    if stored_semantic_retry_context is not None and (
+        not isinstance(stored_semantic_retry_context, Mapping)
+        or stored_semantic_retry_context != semantic_retry_context
+    ):
+        raise ValueError(
+            "pending query generation semantic retry lineage mismatch"
+        )
+    if (
+        replay_phase == "POST_RESPONSE_SEMANTIC_RETRY"
+        and semantic_retry_context is not None
+    ):
+        # Legacy v1 replay contexts froze only the pre-response gap.  Recover
+        # the consumed LLM response from the append-only history so the next
+        # call is a semantic retry with a new prompt identity, rather than a
+        # cache replay of the same empty/invalid response.  A transport wait
+        # never enters this branch and therefore keeps its exact request id.
+        score_gap_context = {
+            **dict(score_gap_context),
+            QUERY_GENERATION_SEMANTIC_RETRY_CONTEXT_KEY: (
+                semantic_retry_context
+            ),
+        }
     return {
         **dict(raw),
         "unresolved_objective_ids": unresolved,
@@ -3059,6 +3104,102 @@ def _query_generation_has_collaboration_transport_wait(
         is not None
         for reason in value.get("feedback_for_next_llm_call") or ()
     )
+
+
+def _query_generation_semantic_retry_feedback(
+    value: Mapping[str, Any],
+) -> tuple[str, ...]:
+    """Return LLM-output validation feedback, excluding provider transport.
+
+    Provider outages and collaboration waits require an idempotent retry of
+    the same request.  Empty, duplicate, future-dated, or otherwise invalid
+    LLM suggestions require a new semantic prompt that shows the model what
+    its previous attempt returned.
+    """
+
+    return tuple(
+        dict.fromkeys(
+            reason
+            for raw in value.get("feedback_for_next_llm_call") or ()
+            for reason in (str(raw or "").strip(),)
+            if reason and not reason.startswith("QUERY_PROVIDER_ERROR:")
+        )
+    )
+
+
+def _query_generation_semantic_retry_context(
+    history: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any] | None:
+    """Project every consumed failed LLM attempt into the next prompt.
+
+    The attempt counter and full hash lineage are intentionally monotonic and
+    uncapped.  They change prompt identity only after a provider response was
+    consumed; repeated waits for that same response remain byte-identical.
+    """
+
+    attempts: list[tuple[Mapping[str, Any], tuple[str, ...]]] = []
+    for raw in history:
+        if not isinstance(raw, Mapping):
+            continue
+        if raw.get("queries"):
+            # A valid LLM-authored query ends the prior semantic retry chain.
+            # A later empty response belongs to a new gap/retry lineage.
+            attempts.clear()
+            continue
+        feedback = _query_generation_semantic_retry_feedback(raw)
+        if (
+            str(raw.get("status") or "") != "PENDING"
+            or not feedback
+        ):
+            continue
+        prompt_hash = str(raw.get("prompt_hash") or "")
+        response_hash = str(raw.get("response_hash") or "")
+        if (
+            not prompt_hash.startswith("QUERYPROMPT-")
+            or not response_hash.startswith("QUERYRESP-")
+            or raw.get("deterministic_fallback_query_used") is not False
+        ):
+            raise ValueError(
+                "query generation semantic retry history is invalid"
+            )
+        attempts.append((raw, feedback))
+    if not attempts:
+        return None
+    latest, latest_feedback = attempts[-1]
+    prompt_hash_lineage = [
+        str(row.get("prompt_hash")) for row, _ in attempts
+    ]
+    response_hash_lineage = [
+        str(row.get("response_hash")) for row, _ in attempts
+    ]
+    return {
+        "schema_version": (
+            QUERY_GENERATION_SEMANTIC_RETRY_CONTEXT_SCHEMA_VERSION
+        ),
+        "attempt": len(attempts),
+        "origin_prompt_hash": prompt_hash_lineage[0],
+        "previous_prompt_hash": prompt_hash_lineage[-1],
+        "prompt_hash_lineage": prompt_hash_lineage,
+        "response_hash_lineage": response_hash_lineage,
+        "previous_feedback_for_next_llm_call": list(latest_feedback),
+        "previous_unresolved_research_notes": list(
+            latest.get("unresolved_research_notes") or ()
+        ),
+        "previous_new_source_directions": list(
+            latest.get("new_source_directions") or ()
+        ),
+        "instruction": (
+            "Use the previous feedback, unresolved notes, and source "
+            "directions as the exact prior LLM attempt. Return only a "
+            "meaningfully new target-scoped source route; if none exists, "
+            "keep suggested_queries empty and explain the unresolved gap "
+            "without paraphrasing an executed query."
+        ),
+        "query_generation_owner": "SOURCE_QUERY_GENERATION_LLM",
+        "deterministic_fallback_query_allowed": False,
+        "fixed_retry_cap_used": False,
+        "production_score_authority": False,
+    }
 
 
 def _candidate_ranking_collaboration_request_ids(

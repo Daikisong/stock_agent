@@ -616,6 +616,208 @@ class CurrentFactLineageRecoveryTests(unittest.TestCase):
                     **bundle["common"],
                 )
 
+    def test_redundant_partial_overlap_keeps_unique_atomic_cover(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bundle = _bundle(root)
+            fixture = bundle["fixture"]
+            original = bundle["binding"]
+            seed_document_id = original.seed_source_document_ids[0]
+            seed_prompt_document = next(
+                dict(document)
+                for payload in fixture["payloads"]
+                for document in payload["full_documents"]
+                if document["document_id"] == seed_document_id
+            )
+            transport = CollaborationCodexSubagentTransport()
+            transport.configure_journal_root(fixture["journal"])
+            overlap_payload = _prompt_payload(
+                [seed_prompt_document],
+                marker="redundant-partial-overlap",
+            )
+            overlap_request_id = _write_pair(
+                transport,
+                fixture["journal"],
+                payload=overlap_payload,
+                response=_response(
+                    [seed_prompt_document],
+                    [
+                        _proposal(
+                            seed_prompt_document,
+                            claim_index=990,
+                            quote_index=10,
+                        )
+                    ],
+                ),
+                agent_model="codex-collaboration",
+            )
+
+            binding = resolve_current_fact_lineage_recovery_binding(
+                authoritative_fact_ledger=bundle["authority"],
+                journal_root=fixture["journal"],
+                **bundle["common"],
+            )
+
+            self.assertEqual(
+                binding.journal_request_ids,
+                original.journal_request_ids,
+            )
+            self.assertNotIn(overlap_request_id, binding.journal_request_ids)
+            self.assertEqual(
+                binding.expected_recovery_document_ids,
+                original.expected_recovery_document_ids,
+            )
+
+    def test_authority_gap_preserves_attested_persisted_enrichment(self):
+        with tempfile.TemporaryDirectory() as directory:
+            bundle = _bundle(Path(directory))
+            claims = list(bundle["common"]["prior_material_claims"])
+            corroborating_claim = dict(claims[0])
+            corroborating_claim["exact_quote"] = (
+                "Persisted statement 0. Persisted statement 1."
+            )
+            corroborating_claim["claim_id"] = stable_intelligence_id(
+                "RFC",
+                {
+                    key: corroborating_claim[key]
+                    for key in (
+                        "target_id",
+                        "as_of_date",
+                        "document_id",
+                        "question_family_id",
+                        "subject_id",
+                        "predicate_family",
+                        "normalized_object",
+                        "period",
+                        "mechanism_scope_id",
+                        "exact_quote",
+                    )
+                },
+            )
+            corroborating_claim["provider_prompt_hash"] = (
+                stable_intelligence_id("FACTPROMPT", {"enrichment": 1})
+            )
+            corroborating_claim["provider_response_hash"] = (
+                stable_intelligence_id("FACTRESP", {"enrichment": 1})
+            )
+            claims.append(corroborating_claim)
+            enriched_compilation = EvidenceFactCompiler().compile(
+                target_id=TARGET,
+                as_of_date=AS_OF_DATE,
+                accepted_claims=claims,
+            )
+            prior_rows = {
+                row.fact_id: row.to_dict()
+                for row in enriched_compilation.facts
+            }
+            current_rows = {
+                str(row["fact_id"]): dict(row)
+                for row in bundle["authority"].fact_rows
+            }
+            current_rows.update(prior_rows)
+            common = {
+                **bundle["common"],
+                "current_facts": tuple(
+                    current_rows[fact_id]
+                    for fact_id in sorted(current_rows)
+                ),
+                "prior_material_claims": tuple(claims),
+            }
+
+            binding = resolve_current_fact_lineage_recovery_binding(
+                authoritative_fact_ledger=bundle["authority"],
+                journal_root=bundle["fixture"]["journal"],
+                **common,
+            )
+            provider = _NoCompleteProvider()
+            result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+                **common,
+                prior_provider_calls=bundle["prior_calls"],
+                authoritative_fact_ledger=bundle["authority"],
+                current_fact_lineage_recovery_binding=binding,
+            )
+
+            self.assertEqual(provider.complete_call_count, 0)
+            self.assertEqual(
+                result.audit["current_fact_lineage_recovery_status"],
+                "COMPLETE",
+            )
+            self.assertEqual(
+                {row.fact_id: row.to_dict() for row in result.facts},
+                current_rows,
+            )
+
+    def test_recovery_closes_before_scheduling_new_documents(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bundle = _bundle(root)
+            documents = []
+            for raw_document in bundle["common"]["documents"]:
+                document = dict(raw_document)
+                if document["document_id"] == "SGDOC-CURRENT-000":
+                    document["objective_ids"] = list(
+                        document["historical_objective_ids"]
+                    )
+                documents.append(document)
+            documents.extend(
+                _current_document(
+                    _prompt_document(
+                        f"SGDOC-NEW-{index}",
+                        f"OBJECTIVE-NEW-{index}",
+                    )
+                )
+                for index in range(2)
+            )
+            common = {
+                **bundle["common"],
+                "documents": tuple(documents),
+                "open_objectives": _objectives(documents),
+            }
+            binding = resolve_current_fact_lineage_recovery_binding(
+                authoritative_fact_ledger=bundle["authority"],
+                journal_root=bundle["fixture"]["journal"],
+                **common,
+            )
+            provider = _NoCompleteProvider()
+
+            result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+                **common,
+                prior_provider_calls=bundle["prior_calls"],
+                authoritative_fact_ledger=bundle["authority"],
+                current_fact_lineage_recovery_binding=binding,
+            )
+
+            self.assertEqual(provider.complete_call_count, 0)
+            self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+            self.assertEqual(
+                result.pending_reasons,
+                ("FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED",),
+            )
+            self.assertEqual(
+                result.audit["current_fact_lineage_recovery_status"],
+                "COMPLETE",
+            )
+            self.assertEqual(
+                result.audit["current_fact_lineage_recovered_fact_count"],
+                42,
+            )
+            self.assertEqual(result.audit["new_unprocessed_document_count"], 2)
+            self.assertEqual(
+                result.audit["critical_counts"]["unaccounted_document_count"],
+                2,
+            )
+            output = root / "recovery-boundary-checkpoint"
+            write_researcher_fact_extraction_result(result, output)
+            persisted = json.loads(
+                (output / "fact_extraction_result.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(
+                persisted["pending_reasons"],
+                ["FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED"],
+            )
+
     def test_content_tamper_fails_closed_before_replay(self):
         with tempfile.TemporaryDirectory() as directory:
             bundle = _bundle(Path(directory))

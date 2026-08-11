@@ -1121,6 +1121,14 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 (collaboration, reassessment, incomplete)
             )
         )
+        authority_projection_mismatch = (
+            "CURRENT_FACT_LINEAGE_AUTHORITY_PROJECTION_MISMATCH"
+        )
+        self.assertTrue(
+            fact_extraction_has_exact_checkpoint_recovery_wait(
+                (authority_projection_mismatch, reassessment)
+            )
+        )
 
         for invalid in (
             (reassessment, reassessment),
@@ -1134,6 +1142,10 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             ),
             (reassessment + ":SUFFIX",),
             (reassessment, "CANDIDATE_RANKING_PENDING"),
+            (
+                authority_projection_mismatch,
+                "FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED",
+            ),
             (incomplete,),
         ):
             self.assertFalse(
