@@ -4,6 +4,7 @@ from copy import deepcopy
 from datetime import date, timedelta
 import json
 import unittest
+from unittest import mock
 
 from e2r.calibration.taxonomy import large_sector_for_archetype
 from e2r.production.metadata import stable_hash
@@ -422,6 +423,43 @@ class V6IssuerBusinessProfileTest(unittest.TestCase):
             compatibility_provider=actual_provider,
         )
         return dict(result), actual_fetcher, actual_provider
+
+    def test_corp_code_document_is_indexed_once_for_many_symbols(self) -> None:
+        corp_xml = (
+            "<result>"
+            "<list><corp_code>001</corp_code><corp_name>첫째</corp_name>"
+            "<stock_code>1</stock_code></list>"
+            "<list><corp_code>002</corp_code><corp_name>둘째</corp_name>"
+            "<stock_code>2</stock_code></list>"
+            "<list><corp_code>003</corp_code><corp_name>중복A</corp_name>"
+            "<stock_code>3</stock_code></list>"
+            "<list><corp_code>004</corp_code><corp_name>중복B</corp_name>"
+            "<stock_code>3</stock_code></list>"
+            "</result>"
+        )
+        profile_module._corp_row_index.cache_clear()
+        try:
+            with mock.patch.object(
+                profile_module.ET,
+                "fromstring",
+                wraps=profile_module.ET.fromstring,
+            ) as parse:
+                first = profile_module._corp_row(corp_xml, target_id="000001")
+                second = profile_module._corp_row(corp_xml, target_id="000002")
+                duplicate = profile_module._corp_row(corp_xml, target_id="000003")
+                self.assertEqual(parse.call_count, 1)
+            self.assertEqual(first["corp_name"], "첫째")
+            self.assertEqual(second["corp_name"], "둘째")
+            self.assertIsNone(duplicate)
+            first["corp_name"] = "변경"
+            self.assertEqual(
+                profile_module._corp_row(corp_xml, target_id="000001")[
+                    "corp_name"
+                ],
+                "첫째",
+            )
+        finally:
+            profile_module._corp_row_index.cache_clear()
 
     def test_industry_21_is_pharma_not_materials(self) -> None:
         self.assertEqual(

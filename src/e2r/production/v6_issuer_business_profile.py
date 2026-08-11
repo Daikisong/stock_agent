@@ -21,6 +21,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from datetime import date, timedelta
+from functools import lru_cache
 import hashlib
 import io
 import json
@@ -2776,25 +2777,46 @@ def _pending_discovery(
     }
 
 
-def _corp_row(text: str, *, target_id: str) -> Mapping[str, str] | None:
+@lru_cache(maxsize=4)
+def _corp_row_index(text: str) -> Mapping[str, tuple[str, str]]:
+    """Parse one immutable OpenDART corp-code document only once.
+
+    Phase-105 discovery looks up many KRX symbols in the same large official
+    XML response.  Caching the document-level index preserves the exact
+    uniqueness and completeness checks while avoiding a full XML parse for
+    every candidate.
+    """
+
     root = ET.fromstring(text)
-    matches = []
+    matches: dict[str, list[tuple[str, str]]] = {}
     for item in root.findall("list"):
         raw_stock_code = str(item.findtext("stock_code") or "").strip()
         if not raw_stock_code:
             continue
         stock_code = raw_stock_code.zfill(6)
-        if stock_code == target_id:
-            matches.append(
-                {
-                    "stock_code": stock_code,
-                    "corp_code": str(item.findtext("corp_code") or "").strip(),
-                    "corp_name": str(item.findtext("corp_name") or "").strip(),
-                }
+        matches.setdefault(stock_code, []).append(
+            (
+                str(item.findtext("corp_code") or "").strip(),
+                str(item.findtext("corp_name") or "").strip(),
             )
-    if len(matches) != 1 or not all(matches[0].values()):
+        )
+    return {
+        stock_code: rows[0]
+        for stock_code, rows in matches.items()
+        if len(rows) == 1 and all(rows[0])
+    }
+
+
+def _corp_row(text: str, *, target_id: str) -> Mapping[str, str] | None:
+    row = _corp_row_index(text).get(target_id)
+    if row is None:
         return None
-    return matches[0]
+    corp_code, corp_name = row
+    return {
+        "stock_code": target_id,
+        "corp_code": corp_code,
+        "corp_name": corp_name,
+    }
 
 
 def _latest_periodic_row(
