@@ -2651,6 +2651,273 @@ def seal_current_issuer_business_profile_manifest(
     return seal_cross_archetype_canary_selection(path, validated)
 
 
+def _validate_legacy_current_issuer_profile_for_replacement(
+    raw: Mapping[str, Any],
+    *,
+    replacement: Mapping[str, Any],
+) -> None:
+    """Admit only the old COMPLETE Phase-105 leaf for an explicit migration.
+
+    Phase-105 originally used a create-only seal.  That is correct for an
+    immutable historical receipt, but this filename is the *current* profile
+    pointer.  When a validator bug is repaired, the old bytes must be replaced
+    without pretending that the stale target is still current.  The legacy
+    v2 leaf predates the listed-mechanism-owner fields, so the current strict
+    validator cannot reopen it; this bounded check is intentionally only a
+    replacement precondition and never makes the legacy leaf authoritative.
+    """
+
+    selections = raw.get("selections")
+    compatibility_receipts = raw.get("compatibility_receipts")
+    audit = raw.get("audit")
+    legacy_decision_keys = {
+        "archetype_id",
+        "status",
+        "target_id",
+        "company_name",
+        "profile_id",
+        "large_sector_id",
+        "periodic_report_document_id",
+        "exact_quote",
+        "mechanism_rationale",
+        "confidence",
+    }
+    if (
+        raw.get("schema_version") != ISSUER_PROFILE_SCHEMA
+        or raw.get("status") != ISSUER_PROFILE_COMPLETE
+        or raw.get("as_of_date") != replacement.get("as_of_date")
+        or tuple(raw.get("required_archetypes") or ()) != REQUIRED_ARCHETYPES
+        or not isinstance(selections, list)
+        or len(selections) != len(REQUIRED_ARCHETYPES)
+        or tuple(
+            str(row.get("archetype_id") or "")
+            for row in selections
+            if isinstance(row, Mapping)
+        )
+        != REQUIRED_ARCHETYPES
+        or len(
+            {
+                str(row.get("target_id") or "")
+                for row in selections
+                if isinstance(row, Mapping)
+            }
+        )
+        != len(REQUIRED_ARCHETYPES)
+        or any(
+            not isinstance(row, Mapping)
+            or not str(row.get("target_id") or "")
+            or not str(row.get("company_name") or "")
+            or not str(row.get("profile_id") or "")
+            or not str(row.get("periodic_report_document_id") or "")
+            or row.get("forced_validation_authority") is not False
+            or row.get("score_or_stage_authority") is not False
+            or row.get("gold_authority") is not False
+            for row in selections
+        )
+        # Do not let a damaged current-schema file fall back to the legacy
+        # migration path.  Only the exact pre-owner-field decision shape is
+        # admitted; current decisions must pass the current strict validator.
+        or not isinstance(compatibility_receipts, list)
+        or any(
+            not isinstance(receipt, Mapping)
+            or not isinstance(receipt.get("decisions"), list)
+            or any(
+                not isinstance(decision, Mapping)
+                or set(decision) != legacy_decision_keys
+                for decision in receipt.get("decisions") or ()
+            )
+            for receipt in compatibility_receipts
+        )
+        or any(
+            "mechanism_owner_target_id" in row
+            or "mechanism_owner_company_name" in row
+            for row in selections
+        )
+        or not isinstance(audit, Mapping)
+        or audit.get("production_acceptance_pass") is not True
+        or audit.get("provider_status") != "COMPLETED"
+        or audit.get("selected_archetype_count") != len(REQUIRED_ARCHETYPES)
+        or audit.get("unique_selected_target_count") != len(REQUIRED_ARCHETYPES)
+        or raw.get("forced_validation_authority") is not False
+        or raw.get("score_or_stage_authority") is not False
+        or raw.get("gold_authority") is not False
+    ):
+        raise ValueError("existing current issuer profile is not replaceable COMPLETE")
+
+
+def _replace_private_regular_file(
+    destination: Path,
+    *,
+    expected_existing: bytes,
+    replacement: bytes,
+) -> None:
+    """Atomically compare-and-swap one private regular file."""
+
+    try:
+        parent_fd = _open_existing_directory_no_symlinks(destination.parent)
+    except OSError as exc:
+        raise ValueError("current seal parent symlink or unsafe path is forbidden") from exc
+    temporary_name = f".{destination.name}.{secrets.token_hex(16)}.replace.tmp"
+    temporary_fd = -1
+    try:
+        existing, _metadata = _read_regular_from_directory(
+            parent_fd, destination.name
+        )
+        if existing != expected_existing:
+            raise ValueError("current seal changed before explicit replacement")
+        if existing == replacement:
+            return
+        temporary_fd = os.open(
+            temporary_name,
+            os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+            0o600,
+            dir_fd=parent_fd,
+        )
+        offset = 0
+        while offset < len(replacement):
+            offset += os.write(temporary_fd, replacement[offset:])
+        os.fsync(temporary_fd)
+        temporary_stat = os.fstat(temporary_fd)
+        if not stat.S_ISREG(temporary_stat.st_mode) or temporary_stat.st_nlink != 1:
+            raise ValueError("replacement seal temporary file is not private")
+        concurrent, _metadata = _read_regular_from_directory(
+            parent_fd, destination.name
+        )
+        if concurrent != expected_existing:
+            raise ValueError("current seal changed during explicit replacement")
+        os.replace(
+            temporary_name,
+            destination.name,
+            src_dir_fd=parent_fd,
+            dst_dir_fd=parent_fd,
+        )
+        final, final_stat = _read_regular_from_directory(parent_fd, destination.name)
+        if final != replacement or (
+            final_stat.st_dev,
+            final_stat.st_ino,
+            final_stat.st_uid,
+            final_stat.st_gid,
+            stat.S_IMODE(final_stat.st_mode),
+        ) != (
+            temporary_stat.st_dev,
+            temporary_stat.st_ino,
+            temporary_stat.st_uid,
+            temporary_stat.st_gid,
+            stat.S_IMODE(temporary_stat.st_mode),
+        ):
+            raise ValueError("current seal replacement did not publish exact bytes")
+        os.fsync(parent_fd)
+    finally:
+        if temporary_fd >= 0:
+            os.close(temporary_fd)
+        try:
+            os.unlink(temporary_name, dir_fd=parent_fd)
+        except FileNotFoundError:
+            pass
+        os.close(parent_fd)
+
+
+def publish_current_issuer_business_profile_manifest(
+    path: str | Path,
+    payload: Mapping[str, Any],
+    *,
+    replace_existing: bool = False,
+) -> Path:
+    """Publish the current Phase-105 profile, with explicit CAS migration.
+
+    Normal calls retain the immutable create/idempotent behavior.  A caller
+    must explicitly opt into replacement, and both the stale leaf and the new
+    leaf must be COMPLETE, authority-free manifests for the same as-of date.
+    """
+
+    validated = validate_issuer_business_profile_result(payload)
+    if validated.get("status") != ISSUER_PROFILE_COMPLETE:
+        raise ValueError("only a current COMPLETE issuer profile may be published")
+    destination = Path(path).absolute()
+    if not replace_existing:
+        return seal_current_issuer_business_profile_manifest(destination, validated)
+    existing = _read_regular_no_follow(destination)
+    try:
+        previous = json.loads(existing.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError("existing current issuer profile is not canonical JSON") from exc
+    if not isinstance(previous, Mapping):
+        raise ValueError("existing current issuer profile is not an object")
+    try:
+        previous_validated = validate_issuer_business_profile_result(previous)
+    except ValueError:
+        _validate_legacy_current_issuer_profile_for_replacement(
+            previous,
+            replacement=validated,
+        )
+    else:
+        if (
+            previous_validated.get("status") != ISSUER_PROFILE_COMPLETE
+            or previous_validated.get("as_of_date") != validated.get("as_of_date")
+        ):
+            raise ValueError("existing current issuer profile scope is not replaceable")
+    encoded = (
+        json.dumps(validated, ensure_ascii=False, indent=2, sort_keys=True, allow_nan=False)
+        + "\n"
+    ).encode("utf-8")
+    _replace_private_regular_file(
+        destination,
+        expected_existing=existing,
+        replacement=encoded,
+    )
+    return destination
+
+
+def publish_current_cross_archetype_canary_selection(
+    path: str | Path,
+    payload: Mapping[str, Any],
+    *,
+    issuer_business_profile_manifest: Mapping[str, Any] | None = None,
+    replace_existing: bool = False,
+) -> Path:
+    """Publish the current pre-deep selection with explicit CAS replacement."""
+
+    validate_cross_archetype_canary_selection_manifest(
+        payload,
+        issuer_business_profile_manifest=issuer_business_profile_manifest,
+    )
+    destination = Path(path).absolute()
+    if not replace_existing:
+        return seal_cross_archetype_canary_selection(
+            destination,
+            payload,
+            issuer_business_profile_manifest=issuer_business_profile_manifest,
+        )
+    existing = _read_regular_no_follow(destination)
+    try:
+        previous = json.loads(existing.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError("existing current selection is not canonical JSON") from exc
+    if not isinstance(previous, Mapping):
+        raise ValueError("existing current selection is not an object")
+    # The previous current pointer is bound to the previous profile manifest,
+    # which has already been superseded before this publication step.  Its
+    # self-contained receipt/hash shape is still auditable, but rebinding it
+    # to the *new* profile would be false lineage.  Validate that immutable
+    # shape here and validate the replacement against the new profile above.
+    _validate_selection_manifest_shape(previous)
+    if (
+        previous.get("status") != SELECTION_PASS
+        or previous.get("selection_as_of_date") != payload.get("selection_as_of_date")
+    ):
+        raise ValueError("existing current selection scope is not replaceable")
+    encoded = (
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True, allow_nan=False)
+        + "\n"
+    ).encode("utf-8")
+    _replace_private_regular_file(
+        destination,
+        expected_existing=existing,
+        replacement=encoded,
+    )
+    return destination
+
+
 def load_sealed_cross_archetype_canary_selection(
     path: str | Path,
     *,
@@ -2733,6 +3000,8 @@ __all__ = [
     "load_current_issuer_business_profile_manifest",
     "load_current_live_selection_inputs",
     "load_sealed_cross_archetype_canary_selection",
+    "publish_current_cross_archetype_canary_selection",
+    "publish_current_issuer_business_profile_manifest",
     "seal_cross_archetype_canary_selection",
     "seal_current_issuer_business_profile_manifest",
     "summarize_cross_archetype_canary_selection",

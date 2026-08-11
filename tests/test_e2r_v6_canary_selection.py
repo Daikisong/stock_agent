@@ -24,6 +24,8 @@ from e2r.production.v6_canary_selection import (
     load_current_issuer_business_profile_manifest,
     load_current_live_selection_inputs,
     load_sealed_cross_archetype_canary_selection,
+    publish_current_cross_archetype_canary_selection,
+    publish_current_issuer_business_profile_manifest,
     seal_current_issuer_business_profile_manifest,
     validate_cross_archetype_canary_selection_manifest,
     seal_cross_archetype_canary_selection,
@@ -1106,7 +1108,7 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
                 ),
                 patch(
                     "e2r.cli.select_e2r_v6_cross_archetype_canaries."
-                    "seal_cross_archetype_canary_selection"
+                    "publish_current_cross_archetype_canary_selection"
                 ) as seal,
                 redirect_stdout(io.StringIO()) as stdout,
             ):
@@ -1172,7 +1174,7 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
                 ) as compiler,
                 patch(
                     "e2r.cli.select_e2r_v6_cross_archetype_canaries."
-                    "seal_cross_archetype_canary_selection"
+                    "publish_current_cross_archetype_canary_selection"
                 ) as seal,
                 redirect_stdout(io.StringIO()),
             ):
@@ -1192,6 +1194,148 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
                 seal.call_args.kwargs["issuer_business_profile_manifest"],
                 profile_manifest,
             )
+            self.assertFalse(seal.call_args.kwargs["replace_existing"])
+
+    def test_explicit_current_profile_and_selection_publication_is_safe_cas(self):
+        candidates = self._abstained_candidates()
+        signals = self._signals(candidates)
+        original_profile = self._forced_profile_manifest(candidates)
+
+        class RevisedCompatibilityProvider(FakeCompatibilityProvider):
+            def complete(self, *, prompt: str, output_schema: dict):
+                completion = super().complete(
+                    prompt=prompt,
+                    output_schema=output_schema,
+                )
+                payload = deepcopy(completion.payload)
+                if "decisions" in payload:
+                    payload["decisions"][0]["confidence"] = 0.79
+                    payload["decisions"][0]["mechanism_rationale"] += (
+                        " 재검증된 현재 결과다."
+                    )
+                raw = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+                return type(completion)(payload=payload, raw_response=raw)
+
+        industries = dict(
+            zip(
+                (
+                    candidate["universe_row"]["symbol"]
+                    for candidate in candidates
+                ),
+                ("26120", "20110", "20202", "21101", "62010"),
+                strict=True,
+            )
+        )
+        revised_profile = dict(
+            V6IssuerBusinessProfileMaterializer().materialize(
+                IssuerBusinessProfileConfig(
+                    as_of_date=self.AS_OF_DATE,
+                    max_profile_fetches=5,
+                ),
+                universe_rows=[row["universe_row"] for row in candidates],
+                credential="official-fixture-key",
+                fetcher=FakeOpenDartFetcher(industries),
+                compatibility_provider=RevisedCompatibilityProvider(),
+            )
+        )
+        self.assertNotEqual(
+            stable_hash(original_profile),
+            stable_hash(revised_profile),
+        )
+        original_selection = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=candidates,
+            trigger_events=signals,
+            issuer_business_profile_manifest=original_profile,
+        )
+        revised_selection = compile_cross_archetype_canary_selection(
+            selection_as_of_date=self.AS_OF_DATE,
+            candidates=candidates,
+            trigger_events=signals,
+            issuer_business_profile_manifest=revised_profile,
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            profile_path = root / "profile.json"
+            selection_path = root / "selection.json"
+            # Reproduce the tracked pre-owner-field Phase-105 leaf that could
+            # not pass the repaired validator but must be safely superseded.
+            legacy_profile = deepcopy(original_profile)
+            for row in legacy_profile["selections"]:
+                row.pop("mechanism_owner_target_id")
+                row.pop("mechanism_owner_company_name")
+            for receipt in legacy_profile["compatibility_receipts"]:
+                for decision in receipt["decisions"]:
+                    decision.pop("mechanism_owner_target_id")
+                    decision.pop("mechanism_owner_company_name")
+            profile_path.write_text(
+                json.dumps(
+                    legacy_profile,
+                    ensure_ascii=False,
+                    indent=2,
+                    sort_keys=True,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            profile_path.chmod(0o600)
+            seal_cross_archetype_canary_selection(
+                selection_path,
+                original_selection,
+                issuer_business_profile_manifest=original_profile,
+            )
+            with self.assertRaisesRegex(ValueError, "different payload"):
+                publish_current_issuer_business_profile_manifest(
+                    profile_path,
+                    revised_profile,
+                )
+            publish_current_issuer_business_profile_manifest(
+                profile_path,
+                revised_profile,
+                replace_existing=True,
+            )
+            loaded_profile = load_current_issuer_business_profile_manifest(
+                profile_path,
+                selection_as_of_date=self.AS_OF_DATE,
+            )
+            self.assertEqual(stable_hash(loaded_profile), stable_hash(revised_profile))
+
+            with self.assertRaisesRegex(ValueError, "different payload"):
+                publish_current_cross_archetype_canary_selection(
+                    selection_path,
+                    revised_selection,
+                    issuer_business_profile_manifest=revised_profile,
+                )
+            publish_current_cross_archetype_canary_selection(
+                selection_path,
+                revised_selection,
+                issuer_business_profile_manifest=revised_profile,
+                replace_existing=True,
+            )
+            loaded_selection = load_sealed_cross_archetype_canary_selection(
+                selection_path,
+                issuer_business_profile_manifest=revised_profile,
+            )
+            self.assertEqual(
+                stable_hash(loaded_selection),
+                stable_hash(revised_selection),
+            )
+
+    def test_explicit_current_publication_rejects_hardlinked_existing_file(self):
+        candidates = self._candidates()
+        profile = self._forced_profile_manifest(candidates)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            external = root / "external.json"
+            seal_current_issuer_business_profile_manifest(external, profile)
+            hardlink = root / "profile.json"
+            os.link(external, hardlink)
+            with self.assertRaisesRegex(ValueError, "private regular file"):
+                publish_current_issuer_business_profile_manifest(
+                    hardlink,
+                    profile,
+                    replace_existing=True,
+                )
 
     def test_selection_seal_rejects_whitespace_target_collision(self):
         candidates = self._candidates()

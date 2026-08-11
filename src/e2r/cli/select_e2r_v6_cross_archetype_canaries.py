@@ -11,7 +11,7 @@ from e2r.production.v6_canary_selection import (
     compile_cross_archetype_canary_selection,
     load_current_issuer_business_profile_manifest,
     load_current_live_selection_inputs,
-    seal_cross_archetype_canary_selection,
+    publish_current_cross_archetype_canary_selection,
 )
 from e2r.research_brain.researcher_mode.tracked_readiness import (
     _repository_identity_is_trusted,
@@ -33,6 +33,14 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--issuer-profile-manifest",
         help="current COMPLETE official issuer-business profile manifest for forced canaries",
+    )
+    parser.add_argument(
+        "--replace-current-seal",
+        action="store_true",
+        help=(
+            "explicitly replace the tracked current PASS selection for the "
+            "same as-of date after compare-and-swap validation"
+        ),
     )
     return parser
 
@@ -79,10 +87,13 @@ def main() -> int:
     )
     if result["status"] == SELECTION_PASS:
         selection_path = cutover_root / "cross_archetype_canary_selection.json"
-        seal_cross_archetype_canary_selection(
+        # Current selection publication is opt-in replacement; historical
+        # Collaboration/profile receipts remain append-only and immutable.
+        publish_current_cross_archetype_canary_selection(
             selection_path,
             result,
             issuer_business_profile_manifest=profile_manifest,
+            replace_existing=args.replace_current_seal,
         )
     else:
         selection_path = None

@@ -34,7 +34,7 @@ from e2r.production.v6_canary_selection import (
     _read_live_input_file,
     _universe_row,
     load_current_live_selection_inputs,
-    seal_current_issuer_business_profile_manifest,
+    publish_current_issuer_business_profile_manifest,
 )
 from e2r.production.v6_issuer_business_profile import (
     IssuerBusinessProfileConfig,
@@ -405,6 +405,7 @@ def materialize_canonical_profile_manifest(
     credential: str | None,
     fetcher: IssuerBusinessProfileFetcher,
     compatibility_provider: IssuerBusinessCompatibilityProvider,
+    replace_current_seal: bool = False,
 ) -> tuple[Mapping[str, Any], Path, CanonicalProfileInputs]:
     root = Path(repo_root).resolve()
     live_root = root / "output" / "live_materialization" / config.as_of_date
@@ -423,7 +424,14 @@ def materialize_canonical_profile_manifest(
     validated = validate_forced_validation_profile_manifest(result)
     if validated["status"] == PROFILE_PASS:
         destination = root / CUTOVER_RELATIVE_ROOT / PROFILE_MANIFEST_NAME
-        seal_current_issuer_business_profile_manifest(destination, validated)
+        # This path is a tracked *current-state pointer*, not an immutable
+        # historical receipt.  Replacement remains opt-in so an ordinary run
+        # cannot silently overwrite a prior COMPLETE selection.
+        publish_current_issuer_business_profile_manifest(
+            destination,
+            validated,
+            replace_existing=replace_current_seal,
+        )
     else:
         # Pending diagnostics remain mutable run output.  Only a COMPLETE,
         # self-contained profile may enter the immutable tracked cutover root.
@@ -443,6 +451,14 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-discovery-fetches", type=int, default=3_000)
     parser.add_argument(
         "--max-forced-candidates-per-required-slot", type=int, default=10
+    )
+    parser.add_argument(
+        "--replace-current-seal",
+        action="store_true",
+        help=(
+            "explicitly replace the tracked current COMPLETE profile for the "
+            "same as-of date after compare-and-swap validation"
+        ),
     )
     return parser
 
@@ -478,6 +494,7 @@ def main() -> int:
         compatibility_provider=CollaborationIssuerBusinessCompatibilityProvider(
             journal_root=live_root / PROFILE_JOURNAL_DIRECTORY
         ),
+        replace_current_seal=args.replace_current_seal,
     )
     print(
         json.dumps(

@@ -229,6 +229,25 @@ score, Stage 또는 cutover authority가 아니다.
    자회사 메커니즘이면 모회사를 ABSTAIN하도록 명시한다. 이 규칙은 종목명이나 C08에
    한정되지 않고 모든 forced canary에 동일하게 적용한다.
 
+15. **현재 상태 포인터를 영구 영수증처럼 봉인**
+
+   Phase-105의 tracked profile/selection 파일은 이름과 소비 방식상 "현재 선택"
+   포인터인데, writer는 영구 영수증과 똑같은 create-only 정책을 썼다. 그래서 owner
+   검증 버그를 고쳐 `C08=058470 리노공업`을 COMPLETE로 다시 계산해도, 기존
+   `C08=000150 두산` 파일이 존재한다는 이유로 새 결과를 게시할 수 없었다. 뒤 단계는
+   계속 낡은 두산 선택을 읽었고, 그 선택에서 생긴 정보 공백을 새 검색 문제로 오판해
+   재시도했다.
+
+   쉬운 예: 주소 정정 신청은 승인됐는데, "현재 주소" 칸을 한 번만 쓸 수 있게 만들어
+   예전 주소가 계속 배송지로 사용된 것과 같다. 신청 영수증은 불변이어야 하지만 현재
+   주소 포인터는 검증된 정정 절차로 바뀔 수 있어야 한다.
+
+   수정 후 historical Collaboration 요청/응답은 그대로 append-only다. tracked current
+   profile/selection만 CLI의 명시적 `--replace-current-seal`에서 교체할 수 있다. 교체 시
+   기존 파일과 새 파일이 같은 `as_of_date`, COMPLETE/PASS, authority=false인지
+   확인하고, symlink/hardlink/동시 변경을 거부한 뒤 원자적 compare-and-swap으로
+   게시한다. 기본 실행은 여전히 기존과 같은 create-only라 우발적 덮어쓰기는 불가능하다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -291,6 +310,10 @@ score, Stage 또는 cutover authority가 아니다.
 17. 연결 보고서의 자회사 문구로 issuer를 선택할 때는 실제 mechanism owner를 별도
     필드로 선언·검증한다. 별도 상장 자회사와 selected issuer가 다르면 parent selection을
     fail-closed하며, parent valuation/FCF와 subsidiary mechanism을 섞지 않는다.
+18. tracked `current` profile/selection 파일은 기본 create-only를 유지하되, validator
+   수리로 같은 기준일의 COMPLETE 결과가 바뀐 경우에만 명시적 compare-and-swap
+   교체를 허용한다. 기존·신규 파일의 기준일/완결성/권한 없음과 regular-file
+   identity를 모두 검증하며, 과거 Collaboration 영수증 자체는 덮어쓰지 않는다.
 
 ## Goal 경계
 
