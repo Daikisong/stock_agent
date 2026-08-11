@@ -194,6 +194,41 @@ score, Stage 또는 cutover authority가 아니다.
    invalidated claim 수를 그대로 남긴다. 다음 resume에서만 v5 3개를 제거하고 이미
    검증된 v6 response를 소비한다. 즉 복구 commit과 교체 commit이 섞이지 않는다.
 
+13. **KRX 종목코드 순서가 forced canary 후보 우선순위가 됨**
+
+   Phase 105의 full-KRX 확장기는 공식 OpenDART 업종 quota가 차는 순간 탐색을
+   종료했다. 2026-08-09 실행에서는 2,689개 중 앞쪽 578개만 경량 조회한 뒤
+   `QUOTAS_FILLED`가 되었고, 뒤쪽의 별도 상장 직접 사업자는 profile 후보에도
+   들어오지 못했다. 업종 quota는 수집 budget일 뿐 사업 적합성 순위가 아닌데,
+   종목코드 순서를 사실상 적합성 점수로 사용한 셈이다.
+
+   쉬운 예: 전국 카페를 검증하면서 전화번호부 앞 578개에서 "음식점" quota가
+   찼다는 이유로 뒤쪽의 실제 카페는 보지도 않고 첫 복합몰을 고른 것과 같다.
+
+   수정 후에는 점수·Stage·Gold를 전혀 보지 않는 별도 Collaboration shortlist가
+   full current KRX issuer roster에서 아키타입별 bounded full-report 후보를 먼저
+   고른다. deterministic 코드는 KRX membership, roster order, budget, request/response
+   hash, authority=false를 검증하고, shortlist 밖 후보도 fallback discovery pool에서
+   제거하지 않는다. 최종 선택은 계속 OpenDART full periodic report의 literal quote와
+   compatibility 검증을 통과해야 한다.
+
+14. **별도 상장 자회사 메커니즘을 모회사 직접 사업으로 봉인**
+
+   기존 compatibility schema에는 exact quote와 selected issuer만 있었고, 그 문구의
+   실제 사업 주체를 별도로 선언하는 필드가 없었다. 그 결과 `000150 두산` 연결
+   보고서 안의 별도 상장 자회사 두산테스나 R&D 표에서 `Socket`을 찾은 뒤, 모회사
+   두산을 C08 직접 issuer로 봉인했다. 이후 구조화 재무·valuation은 두산 전사 기준,
+   fact/memo는 두산테스나 기준으로 갈라져 `wrong segment`와 missing role이 반복됐다.
+
+   쉬운 예: 쇼핑몰 연결 매출과 입점 카페의 원두 품질을 한 회사의 같은 손익으로
+   합산한 것이다. 두 숫자가 모두 사실이어도 평가 대상은 같지 않다.
+
+   수정 후 compatibility response는 `mechanism_owner_target_id`와
+   `mechanism_owner_company_name`을 반드시 낸다. deterministic validator는 이 owner가
+   selected KRX issuer와 정확히 같을 때만 SELECTED를 허용한다. prompt도 별도 상장
+   자회사 메커니즘이면 모회사를 ABSTAIN하도록 명시한다. 이 규칙은 종목명이나 C08에
+   한정되지 않고 모든 forced canary에 동일하게 적용한다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -250,6 +285,12 @@ score, Stage 또는 cutover authority가 아니다.
 15. authority recovery와 semantics rewrite가 동시에 필요하면 recovery 결과를 먼저
     durable commit하고 canonical refresh barrier를 둔다. 한 호출에서 복구한 행을 다시
     invalidation filter에 넣지 않으며, 다음 rewrite intent는 audit에 보존한다.
+16. full-KRX forced discovery에서 입력 순서를 business compatibility 순위로 사용하지
+    않는다. score-blind bounded shortlist를 별도 영수증으로 남기고, shortlist 결과는
+    full official report 검증 전까지 선택 authority가 아니다.
+17. 연결 보고서의 자회사 문구로 issuer를 선택할 때는 실제 mechanism owner를 별도
+    필드로 선언·검증한다. 별도 상장 자회사와 selected issuer가 다르면 parent selection을
+    fail-closed하며, parent valuation/FCF와 subsidiary mechanism을 섞지 않는다.
 
 ## Goal 경계
 

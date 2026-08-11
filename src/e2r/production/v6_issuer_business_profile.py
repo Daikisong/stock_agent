@@ -45,7 +45,13 @@ PROFILE_SELECTION_RECEIPT_SCHEMA_VERSION = (
     "e2r_v6_issuer_business_profile_selection_receipt_v1"
 )
 CANDIDATE_EXPANSION_RECEIPT_SCHEMA_VERSION = (
-    "e2r_v6_issuer_business_candidate_expansion_receipt_v2"
+    "e2r_v6_issuer_business_candidate_expansion_receipt_v3"
+)
+CANDIDATE_SHORTLIST_RECEIPT_SCHEMA_VERSION = (
+    "e2r_v6_issuer_business_candidate_shortlist_receipt_v1"
+)
+CANDIDATE_SHORTLIST_SCHEMA_NAME = (
+    "e2r_v5_issuer_business_profile_candidate_shortlist"
 )
 INDUSTRY_DISCOVERY_SCHEMA_VERSION = "e2r_v6_opendart_industry_discovery_v1"
 PROFILE_PASS = "COMPLETE"
@@ -530,6 +536,7 @@ class V6IssuerBusinessProfileMaterializer:
                 discovery_universe_rows=discovery_universe_rows,
                 credential=credential,
                 fetcher=fetcher,
+                compatibility_provider=compatibility_provider,
             )
             for candidate in expanded_candidates:
                 target = str(candidate["symbol"])
@@ -810,6 +817,262 @@ def _required_sector_quotas(
     )
 
 
+def _candidate_shortlist_schema(
+    max_candidates_per_required_slot: int,
+) -> Mapping[str, Any]:
+    """Return the score-blind schema for pre-fetch KRX candidate routing."""
+
+    return {
+        "$id": CANDIDATE_SHORTLIST_SCHEMA_NAME,
+        "type": "object",
+        "additionalProperties": False,
+        "required": ["shortlists", "shortlist_complete", "unresolved_notes"],
+        "properties": {
+            "shortlists": {
+                "type": "array",
+                "minItems": len(REQUIRED_ARCHETYPES),
+                "maxItems": len(REQUIRED_ARCHETYPES),
+                "items": {
+                    "type": "object",
+                    "additionalProperties": False,
+                    "required": [
+                        "archetype_id",
+                        "candidate_target_ids",
+                        "rationale",
+                    ],
+                    "properties": {
+                        "archetype_id": {
+                            "type": "string",
+                            "enum": list(REQUIRED_ARCHETYPES),
+                        },
+                        "candidate_target_ids": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": max_candidates_per_required_slot,
+                            "uniqueItems": True,
+                            "items": {"type": "string", "pattern": "^[0-9A-Z]{6}$"},
+                        },
+                        "rationale": {"type": "string", "minLength": 1},
+                    },
+                },
+            },
+            "shortlist_complete": {"type": "boolean", "const": True},
+            "unresolved_notes": {"type": "array", "items": {"type": "string"}},
+        },
+    }
+
+
+def _not_requested_candidate_shortlist_receipt(
+    *, as_of_date: str, max_candidates_per_required_slot: int
+) -> Mapping[str, Any]:
+    core = {
+        "schema_version": CANDIDATE_SHORTLIST_RECEIPT_SCHEMA_VERSION,
+        "status": "NOT_REQUESTED",
+        "as_of_date": as_of_date,
+        "provider_name": CANONICAL_COMPATIBILITY_PROVIDER,
+        "provider_real": True,
+        "provider_fake": False,
+        "request_id": "",
+        "request_input_hash": stable_hash([]),
+        "prompt_hash": "",
+        "raw_response": "",
+        "response_hash": "",
+        "full_krx_candidate_count": 0,
+        "full_krx_candidate_roster_hash": stable_hash([]),
+        "max_candidates_per_required_slot": max_candidates_per_required_slot,
+        "shortlists": [],
+        "flattened_candidate_roster": [],
+        "flattened_candidate_roster_hash": stable_hash([]),
+        "unresolved_notes": [],
+        "pending_reason": None,
+        "forced_validation_authority": False,
+        "score_or_stage_authority": False,
+        "gold_authority": False,
+    }
+    return {
+        **core,
+        "receipt_id": "PROFILESHORTLIST-" + stable_hash(core)[:24],
+    }
+
+
+def _shortlist_forced_candidates(
+    *,
+    config: IssuerBusinessProfileConfig,
+    candidates: Sequence[Mapping[str, Any]],
+    provider: IssuerBusinessCompatibilityProvider,
+) -> tuple[tuple[Mapping[str, Any], ...], Mapping[str, Any]]:
+    """Use a blind LLM route to remove KRX-code-order bias before full fetch.
+
+    OpenDART industry codes are useful discovery metadata, but they are not a
+    business-model oracle.  For example, a semiconductor test-service issuer
+    may be filed under a generic professional-services KSIC code.  Therefore
+    deterministic code validates the roster/budget while the LLM chooses which
+    issuer profiles deserve an expensive official full-report fetch.  The
+    choice has no score or Stage authority and is revalidated against the full
+    OpenDART report later.
+    """
+
+    if not config.test_mode and (
+        provider.provider_name != CANONICAL_COMPATIBILITY_PROVIDER
+        or provider.real_provider is not True
+        or provider.fake_provider is not False
+    ):
+        raise ValueError("production candidate shortlist requires Codex Collaboration")
+    candidate_rows = [
+        {
+            "target_id": str(row["symbol"]),
+            "company_name": str(row["company_name"]),
+            "market": str(row["market"]),
+            "krx_row_hash": stable_hash(dict(row)),
+        }
+        for row in candidates
+    ]
+    prompt_payload = {
+        "as_of_date": config.as_of_date,
+        "required_archetypes": list(REQUIRED_ARCHETYPES),
+        "max_candidates_per_required_slot": (
+            config.max_forced_candidates_per_required_slot
+        ),
+        "candidate_universe": candidate_rows,
+        "instructions": (
+            "Shortlist current KRX issuers for official full-report compatibility "
+            "validation. Use only issuer identity/business plausibility visible here; "
+            "do not use or output a score, Stage, Gold label, expected outcome, or "
+            "recommendation. Prefer the listed issuer that directly owns the requested "
+            "business mechanism. Do not choose a parent merely because its report "
+            "consolidates a separately listed subsidiary. Return a bounded candidate "
+            "roster for every requested archetype; deterministic code will fetch and "
+            "validate the full official report before any selection is sealed."
+        ),
+    }
+    prompt = json.dumps(prompt_payload, ensure_ascii=False, sort_keys=True)
+    if len(prompt) > config.max_compatibility_prompt_chars:
+        raise ValueError("candidate shortlist prompt exceeds configured bounded size")
+    prompt_hash = _sha256_text(prompt)
+    request_id = "PROFILESHORTLISTREQ-" + stable_hash(
+        {"provider_name": provider.provider_name, "prompt_hash": prompt_hash}
+    )[:24]
+    try:
+        completion = provider.complete(
+            prompt=prompt,
+            output_schema=_candidate_shortlist_schema(
+                config.max_forced_candidates_per_required_slot
+            ),
+        )
+    except RuntimeError as exc:
+        core = {
+            "schema_version": CANDIDATE_SHORTLIST_RECEIPT_SCHEMA_VERSION,
+            "status": "PENDING",
+            "as_of_date": config.as_of_date,
+            "provider_name": provider.provider_name,
+            "provider_real": bool(provider.real_provider),
+            "provider_fake": bool(provider.fake_provider),
+            "request_id": request_id,
+            "request_input_hash": stable_hash(prompt_payload),
+            "prompt_hash": prompt_hash,
+            "raw_response": "",
+            "response_hash": "",
+            "full_krx_candidate_count": len(candidate_rows),
+            "full_krx_candidate_roster_hash": stable_hash(candidate_rows),
+            "max_candidates_per_required_slot": (
+                config.max_forced_candidates_per_required_slot
+            ),
+            "shortlists": [],
+            "flattened_candidate_roster": [],
+            "flattened_candidate_roster_hash": stable_hash([]),
+            "unresolved_notes": [],
+            "pending_reason": str(exc)[:500],
+            "forced_validation_authority": False,
+            "score_or_stage_authority": False,
+            "gold_authority": False,
+        }
+        return (), {
+            **core,
+            "receipt_id": "PROFILESHORTLIST-" + stable_hash(core)[:24],
+        }
+    if not isinstance(completion, CompatibilityProviderCompletion):
+        raise TypeError("candidate shortlist provider completion type is invalid")
+    raw_response = str(completion.raw_response)
+    try:
+        decoded = json.loads(raw_response)
+    except json.JSONDecodeError as exc:
+        raise ValueError("candidate shortlist response is not exact JSON") from exc
+    payload = dict(completion.payload)
+    if decoded != payload:
+        raise ValueError("candidate shortlist raw response and payload differ")
+    _assert_no_forbidden_output_keys(payload)
+    if (
+        set(payload) != {"shortlists", "shortlist_complete", "unresolved_notes"}
+        or payload.get("shortlist_complete") is not True
+        or not isinstance(payload.get("shortlists"), list)
+        or not isinstance(payload.get("unresolved_notes"), list)
+    ):
+        raise ValueError("candidate shortlist response envelope is invalid")
+    by_target = {str(row["symbol"]): row for row in candidates}
+    shortlists: list[Mapping[str, Any]] = []
+    flattened_targets: list[str] = []
+    for expected_archetype, raw in zip(REQUIRED_ARCHETYPES, payload["shortlists"]):
+        if not isinstance(raw, Mapping) or set(raw) != {
+            "archetype_id",
+            "candidate_target_ids",
+            "rationale",
+        }:
+            raise ValueError("candidate shortlist row keys are not exact")
+        targets = raw.get("candidate_target_ids")
+        if (
+            raw.get("archetype_id") != expected_archetype
+            or isinstance(targets, (str, bytes))
+            or not isinstance(targets, Sequence)
+            or not 1 <= len(targets) <= config.max_forced_candidates_per_required_slot
+            or len(set(str(value) for value in targets)) != len(targets)
+            or any(str(value) not in by_target for value in targets)
+            or not str(raw.get("rationale") or "").strip()
+        ):
+            raise ValueError("candidate shortlist row scope/roster is invalid")
+        normalized = {
+            "archetype_id": expected_archetype,
+            "candidate_target_ids": [str(value) for value in targets],
+            "rationale": str(raw["rationale"]),
+        }
+        shortlists.append(normalized)
+        for target in normalized["candidate_target_ids"]:
+            if target not in flattened_targets:
+                flattened_targets.append(target)
+    if len(shortlists) != len(REQUIRED_ARCHETYPES):
+        raise ValueError("candidate shortlist does not account for exact archetype roster")
+    core = {
+        "schema_version": CANDIDATE_SHORTLIST_RECEIPT_SCHEMA_VERSION,
+        "status": "COMPLETE",
+        "as_of_date": config.as_of_date,
+        "provider_name": provider.provider_name,
+        "provider_real": bool(provider.real_provider),
+        "provider_fake": bool(provider.fake_provider),
+        "request_id": request_id,
+        "request_input_hash": stable_hash(prompt_payload),
+        "prompt_hash": prompt_hash,
+        "raw_response": raw_response,
+        "response_hash": _sha256_text(raw_response),
+        "full_krx_candidate_count": len(candidate_rows),
+        "full_krx_candidate_roster_hash": stable_hash(candidate_rows),
+        "max_candidates_per_required_slot": (
+            config.max_forced_candidates_per_required_slot
+        ),
+        "shortlists": shortlists,
+        "flattened_candidate_roster": flattened_targets,
+        "flattened_candidate_roster_hash": stable_hash(flattened_targets),
+        "unresolved_notes": [str(value) for value in payload["unresolved_notes"]],
+        "pending_reason": None,
+        "forced_validation_authority": False,
+        "score_or_stage_authority": False,
+        "gold_authority": False,
+    }
+    ordered = tuple(by_target[target] for target in flattened_targets)
+    return ordered, {
+        **core,
+        "receipt_id": "PROFILESHORTLIST-" + stable_hash(core)[:24],
+    }
+
+
 def _candidate_expansion_receipt(
     *,
     config: IssuerBusinessProfileConfig,
@@ -822,6 +1085,7 @@ def _candidate_expansion_receipt(
     status: str,
     stop_reason: str,
     diagnostics: Sequence[Mapping[str, Any]] = (),
+    candidate_shortlist_receipt: Mapping[str, Any] | None = None,
 ) -> Mapping[str, Any]:
     natural_roster = [str(row["symbol"]) for row in natural_candidates]
     expanded = [dict(row) for row in expanded_candidates]
@@ -853,6 +1117,15 @@ def _candidate_expansion_receipt(
         "provider_name": "OpenDART",
         "required_archetypes": list(REQUIRED_ARCHETYPES),
         "required_sector_quotas": quotas,
+        "candidate_shortlist_receipt": dict(
+            candidate_shortlist_receipt
+            or _not_requested_candidate_shortlist_receipt(
+                as_of_date=config.as_of_date,
+                max_candidates_per_required_slot=(
+                    config.max_forced_candidates_per_required_slot
+                ),
+            )
+        ),
         "natural_candidate_roster": natural_roster,
         "natural_candidate_roster_hash": stable_hash(natural_roster),
         "full_krx_candidate_count": full_krx_candidate_count,
@@ -905,6 +1178,7 @@ def _expand_forced_candidates(
     discovery_universe_rows: Sequence[Mapping[str, Any]],
     credential: str,
     fetcher: IssuerBusinessProfileFetcher,
+    compatibility_provider: IssuerBusinessCompatibilityProvider,
 ) -> tuple[tuple[Mapping[str, Any], ...], Mapping[str, Any]]:
     natural_targets = {str(row["symbol"]) for row in natural_candidates}
     full_candidates: list[Mapping[str, Any]] = []
@@ -933,6 +1207,38 @@ def _expand_forced_candidates(
     )
     raw_full_count = len(discovery_universe_rows)
     raw_pool_count = max(0, raw_full_count - len(natural_candidates))
+    shortlisted, shortlist_receipt = _shortlist_forced_candidates(
+        config=config,
+        candidates=pool,
+        provider=compatibility_provider,
+    )
+    if shortlist_receipt["status"] != "COMPLETE":
+        pending = [
+            *invalid,
+            {
+                "code": "FORCED_CANDIDATE_SHORTLIST_PENDING",
+                "detail": str(shortlist_receipt.get("pending_reason") or "")[:500],
+            },
+        ]
+        return (), _candidate_expansion_receipt(
+            config=config,
+            natural_candidates=natural_candidates,
+            full_krx_candidate_count=raw_full_count,
+            discovery_pool_count=raw_pool_count,
+            discovery_fetch_count=0,
+            expanded_candidates=(),
+            pending=pending,
+            status="PENDING",
+            stop_reason="PROVIDER_PENDING",
+            candidate_shortlist_receipt=shortlist_receipt,
+        )
+    shortlisted_targets = {str(row["symbol"]) for row in shortlisted}
+    # The shortlist changes fetch priority only.  All remaining KRX rows stay
+    # eligible for bounded fallback discovery, so an imperfect LLM shortlist
+    # cannot silently become a deterministic exclusion list.
+    pool = tuple(shortlisted) + tuple(
+        row for row in pool if str(row["symbol"]) not in shortlisted_targets
+    )
     discover = getattr(fetcher, "discover_industry", None)
     if not callable(discover):
         pending = [
@@ -952,6 +1258,7 @@ def _expand_forced_candidates(
             pending=pending,
             status="PENDING",
             stop_reason="PROVIDER_PENDING",
+            candidate_shortlist_receipt=shortlist_receipt,
         )
     quota_rows = _required_sector_quotas(
         config.max_forced_candidates_per_required_slot
@@ -1049,6 +1356,7 @@ def _expand_forced_candidates(
         status=status,
         stop_reason=stop_reason,
         diagnostics=diagnostics,
+        candidate_shortlist_receipt=shortlist_receipt,
     )
     return tuple(expanded_krx_rows), receipt
 
@@ -1294,7 +1602,10 @@ def _classify_profiles(
         "instructions": (
             "Classify the requested archetype roster exactly. Select only a "
             "mechanism-compatible profile using a literal full-report quote; otherwise "
-            "ABSTAIN or PENDING. Do not output a score, Stage, Gold, or recommendation."
+            "ABSTAIN or PENDING. A SELECTED row must identify the listed issuer itself "
+            "as the mechanism owner. If the mechanism belongs to a separately listed "
+            "subsidiary consolidated in the issuer report, ABSTAIN for the parent. "
+            "Do not output a score, Stage, Gold, or recommendation."
         ),
     }
     prompt = json.dumps(prompt_payload, ensure_ascii=False, sort_keys=True)
@@ -1355,6 +1666,8 @@ def _classify_profiles(
             "status",
             "target_id",
             "company_name",
+            "mechanism_owner_target_id",
+            "mechanism_owner_company_name",
             "profile_id",
             "large_sector_id",
             "periodic_report_document_id",
@@ -1379,6 +1692,8 @@ def _classify_profiles(
                 for key in (
                     "target_id",
                     "company_name",
+                    "mechanism_owner_target_id",
+                    "mechanism_owner_company_name",
                     "profile_id",
                     "large_sector_id",
                     "periodic_report_document_id",
@@ -1401,6 +1716,9 @@ def _classify_profiles(
             or target in selected_targets
             or target != str(profile["target_id"])
             or str(decision.get("company_name") or "") != str(profile["company_name"])
+            or str(decision.get("mechanism_owner_target_id") or "") != target
+            or str(decision.get("mechanism_owner_company_name") or "")
+            != str(profile["company_name"])
             or str(decision.get("large_sector_id") or "") != expected_sector
             or str(profile["large_sector_id"]) != expected_sector
             or str(decision.get("periodic_report_document_id") or "")
@@ -1417,6 +1735,8 @@ def _classify_profiles(
             "large_sector_id": expected_sector,
             "target_id": target,
             "company_name": profile["company_name"],
+            "mechanism_owner_target_id": target,
+            "mechanism_owner_company_name": profile["company_name"],
             "profile_id": profile["profile_id"],
             "periodic_report_document_id": profile["periodic_report_document_id"],
             "periodic_report_full_text_hash": profile["source_hashes"][
@@ -1490,6 +1810,10 @@ def _classify_profiles(
             "status": "COMPLETE",
             "target_id": selection["target_id"],
             "company_name": selection["company_name"],
+            "mechanism_owner_target_id": selection["mechanism_owner_target_id"],
+            "mechanism_owner_company_name": selection[
+                "mechanism_owner_company_name"
+            ],
             "as_of_date": as_of_date,
             "krx_row": profile["krx_row"],
             "krx_row_hash": profile["krx_row_hash"],
@@ -1571,7 +1895,10 @@ def _compatibility_prompt_payload(
         "instructions": (
             "Classify the requested archetype roster exactly. Select only a "
             "mechanism-compatible profile using a literal full-report quote; otherwise "
-            "ABSTAIN or PENDING. Do not output a score, Stage, Gold, or recommendation."
+            "ABSTAIN or PENDING. A SELECTED row must identify the listed issuer itself "
+            "as the mechanism owner. If the mechanism belongs to a separately listed "
+            "subsidiary consolidated in the issuer report, ABSTAIN for the parent. "
+            "Do not output a score, Stage, Gold, or recommendation."
         ),
     }
 
@@ -1735,6 +2062,8 @@ def _compatibility_schema(
                         "status",
                         "target_id",
                         "company_name",
+                        "mechanism_owner_target_id",
+                        "mechanism_owner_company_name",
                         "profile_id",
                         "large_sector_id",
                         "periodic_report_document_id",
@@ -1747,6 +2076,8 @@ def _compatibility_schema(
                         "status": {"type": "string", "enum": ["SELECTED", "ABSTAIN", "PENDING"]},
                         "target_id": {"type": "string"},
                         "company_name": {"type": "string"},
+                        "mechanism_owner_target_id": {"type": "string"},
+                        "mechanism_owner_company_name": {"type": "string"},
                         "profile_id": {"type": "string"},
                         "large_sector_id": {"type": "string"},
                         "periodic_report_document_id": {"type": "string"},
@@ -1782,6 +2113,8 @@ def validate_issuer_business_profile_receipt(
         "status",
         "target_id",
         "company_name",
+        "mechanism_owner_target_id",
+        "mechanism_owner_company_name",
         "as_of_date",
         "krx_row",
         "krx_row_hash",
@@ -1843,6 +2176,8 @@ def validate_issuer_business_profile_receipt(
         or not 0.0 <= float(confidence) <= 1.0
         or receipt.get("large_sector_id") != expected_sector
         or normalized_profile.get("large_sector_id") != expected_sector
+        or receipt.get("mechanism_owner_target_id") != receipt.get("target_id")
+        or receipt.get("mechanism_owner_company_name") != receipt.get("company_name")
     ):
         raise ValueError("profile selection quote/confidence/taxonomy is invalid")
     profile_links = {
@@ -1894,6 +2229,10 @@ def validate_issuer_business_profile_receipt(
         decision["status"] != "SELECTED"
         or decision["target_id"] != receipt["target_id"]
         or decision["company_name"] != receipt["company_name"]
+        or decision["mechanism_owner_target_id"]
+        != receipt["mechanism_owner_target_id"]
+        or decision["mechanism_owner_company_name"]
+        != receipt["mechanism_owner_company_name"]
         or decision["profile_id"] != receipt["profile_id"]
         or decision["large_sector_id"] != receipt["large_sector_id"]
         or decision["periodic_report_document_id"]
@@ -1991,6 +2330,134 @@ def _validate_industry_discovery_record(raw: object) -> Mapping[str, Any]:
     return row
 
 
+def validate_candidate_shortlist_receipt(raw: object) -> Mapping[str, Any]:
+    if not isinstance(raw, Mapping):
+        raise ValueError("candidate shortlist receipt is not an object")
+    receipt = dict(raw)
+    expected_keys = {
+        "schema_version",
+        "status",
+        "as_of_date",
+        "provider_name",
+        "provider_real",
+        "provider_fake",
+        "request_id",
+        "request_input_hash",
+        "prompt_hash",
+        "raw_response",
+        "response_hash",
+        "full_krx_candidate_count",
+        "full_krx_candidate_roster_hash",
+        "max_candidates_per_required_slot",
+        "shortlists",
+        "flattened_candidate_roster",
+        "flattened_candidate_roster_hash",
+        "unresolved_notes",
+        "pending_reason",
+        "forced_validation_authority",
+        "score_or_stage_authority",
+        "gold_authority",
+        "receipt_id",
+    }
+    if set(receipt) != expected_keys:
+        raise ValueError("candidate shortlist receipt keys are not exact")
+    status = receipt["status"]
+    count = receipt["full_krx_candidate_count"]
+    maximum = receipt["max_candidates_per_required_slot"]
+    if (
+        receipt["schema_version"] != CANDIDATE_SHORTLIST_RECEIPT_SCHEMA_VERSION
+        or status not in {"NOT_REQUESTED", "COMPLETE", "PENDING"}
+        or receipt["provider_name"] != CANONICAL_COMPATIBILITY_PROVIDER
+        or receipt["provider_real"] is not True
+        or receipt["provider_fake"] is not False
+        or isinstance(count, bool)
+        or not isinstance(count, int)
+        or count < 0
+        or isinstance(maximum, bool)
+        or not isinstance(maximum, int)
+        or not 1 <= maximum <= 10
+        or any(
+            receipt[key] is not False
+            for key in (
+                "forced_validation_authority",
+                "score_or_stage_authority",
+                "gold_authority",
+            )
+        )
+    ):
+        raise ValueError("candidate shortlist receipt scope/authority is invalid")
+    date.fromisoformat(str(receipt["as_of_date"]))
+    shortlists = receipt["shortlists"]
+    flattened = receipt["flattened_candidate_roster"]
+    unresolved = receipt["unresolved_notes"]
+    if any(
+        isinstance(value, (str, bytes)) or not isinstance(value, Sequence)
+        for value in (shortlists, flattened, unresolved)
+    ):
+        raise ValueError("candidate shortlist receipt collections are invalid")
+    if (
+        any(_TARGET_RE.fullmatch(str(target)) is None for target in flattened)
+        or len(set(str(target) for target in flattened)) != len(flattened)
+        or receipt["flattened_candidate_roster_hash"] != stable_hash(list(flattened))
+    ):
+        raise ValueError("candidate shortlist flattened roster is invalid")
+    if status == "COMPLETE":
+        if (
+            len(shortlists) != len(REQUIRED_ARCHETYPES)
+            or receipt["pending_reason"] is not None
+            or not receipt["raw_response"]
+            or receipt["response_hash"]
+            != _sha256_text(str(receipt["raw_response"]))
+            or not receipt["prompt_hash"]
+            or not receipt["request_id"].startswith("PROFILESHORTLISTREQ-")
+        ):
+            raise ValueError("complete candidate shortlist envelope is invalid")
+        rebuilt: list[str] = []
+        for expected_archetype, raw_row in zip(REQUIRED_ARCHETYPES, shortlists):
+            if not isinstance(raw_row, Mapping) or set(raw_row) != {
+                "archetype_id",
+                "candidate_target_ids",
+                "rationale",
+            }:
+                raise ValueError("candidate shortlist row keys are invalid")
+            targets = raw_row["candidate_target_ids"]
+            if (
+                raw_row["archetype_id"] != expected_archetype
+                or isinstance(targets, (str, bytes))
+                or not isinstance(targets, Sequence)
+                or not 1 <= len(targets) <= maximum
+                or len(set(str(value) for value in targets)) != len(targets)
+                or any(_TARGET_RE.fullmatch(str(value)) is None for value in targets)
+                or not str(raw_row["rationale"] or "").strip()
+            ):
+                raise ValueError("candidate shortlist row scope is invalid")
+            for target in targets:
+                clean = str(target)
+                if clean not in rebuilt:
+                    rebuilt.append(clean)
+        if rebuilt != list(flattened):
+            raise ValueError("candidate shortlist flattened order drifted")
+    elif status == "PENDING":
+        if shortlists or flattened or not str(receipt["pending_reason"] or "").strip():
+            raise ValueError("pending candidate shortlist lacks exact failure")
+    else:
+        if (
+            count != 0
+            or shortlists
+            or flattened
+            or receipt["request_id"]
+            or receipt["prompt_hash"]
+            or receipt["raw_response"]
+            or receipt["response_hash"]
+            or receipt["pending_reason"] is not None
+        ):
+            raise ValueError("not-requested candidate shortlist carries live state")
+    core = {key: value for key, value in receipt.items() if key != "receipt_id"}
+    if receipt["receipt_id"] != "PROFILESHORTLIST-" + stable_hash(core)[:24]:
+        raise ValueError("candidate shortlist receipt id hash mismatch")
+    return receipt
+
+
 def validate_candidate_expansion_receipt(raw: object) -> Mapping[str, Any]:
     if not isinstance(raw, Mapping):
         raise ValueError("candidate expansion receipt is not an object")
@@ -2003,6 +2470,7 @@ def validate_candidate_expansion_receipt(raw: object) -> Mapping[str, Any]:
         "provider_name",
         "required_archetypes",
         "required_sector_quotas",
+        "candidate_shortlist_receipt",
         "natural_candidate_roster",
         "natural_candidate_roster_hash",
         "full_krx_candidate_count",
@@ -2077,6 +2545,26 @@ def validate_candidate_expansion_receipt(raw: object) -> Mapping[str, Any]:
     expected_quotas = list(_required_sector_quotas(per_slot))
     if receipt["required_sector_quotas"] != expected_quotas:
         raise ValueError("candidate expansion sector quotas are not taxonomy-derived")
+    shortlist = validate_candidate_shortlist_receipt(
+        receipt["candidate_shortlist_receipt"]
+    )
+    if (
+        shortlist["as_of_date"] != receipt["as_of_date"]
+        or shortlist["max_candidates_per_required_slot"] != per_slot
+        or (
+            status == "NOT_REQUESTED"
+            and shortlist["status"] != "NOT_REQUESTED"
+        )
+        or (
+            status == "COMPLETE"
+            and shortlist["status"] != "COMPLETE"
+        )
+        or (
+            status == "PENDING"
+            and shortlist["status"] not in {"NOT_REQUESTED", "PENDING", "COMPLETE"}
+        )
+    ):
+        raise ValueError("candidate expansion shortlist binding is invalid")
     expanded_raw = receipt["expanded_candidates"]
     pending = receipt["pending"]
     diagnostics = receipt["diagnostics"]
@@ -2571,6 +3059,8 @@ def _validate_compatibility_receipt(raw: object) -> Mapping[str, Any]:
             "status",
             "target_id",
             "company_name",
+            "mechanism_owner_target_id",
+            "mechanism_owner_company_name",
             "profile_id",
             "large_sector_id",
             "periodic_report_document_id",
@@ -2594,6 +3084,8 @@ def _validate_compatibility_receipt(raw: object) -> Mapping[str, Any]:
             for key in (
                 "target_id",
                 "company_name",
+                "mechanism_owner_target_id",
+                "mechanism_owner_company_name",
                 "profile_id",
                 "large_sector_id",
                 "periodic_report_document_id",
@@ -2647,6 +3139,9 @@ def _validate_compatibility_receipt(raw: object) -> Mapping[str, Any]:
             or target in selected_targets
             or decision["company_name"] != envelope_profile["company_name"]
             or target != envelope_profile["target_id"]
+            or decision["mechanism_owner_target_id"] != target
+            or decision["mechanism_owner_company_name"]
+            != envelope_profile["company_name"]
             or decision["large_sector_id"]
             != large_sector_for_archetype(decision["archetype_id"])
             or decision["large_sector_id"] != envelope_profile["large_sector_id"]

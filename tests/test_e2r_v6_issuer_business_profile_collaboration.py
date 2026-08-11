@@ -94,6 +94,24 @@ class IssuerBusinessProfileCollaborationTest(unittest.TestCase):
             self.assertFalse(request["production_score_authority"])
             self.assertEqual(tuple((root / "responses").iterdir()), ())
 
+    def test_adapter_separates_shortlist_request_identity(self) -> None:
+        transport = _RecordingTransport()
+        provider = CollaborationIssuerBusinessCompatibilityProvider(
+            journal_root=Path("journal"),
+            transport=transport,  # type: ignore[arg-type]
+        )
+        provider.complete(
+            prompt="blind KRX candidate roster",
+            output_schema={
+                "$id": "e2r_v5_issuer_business_profile_candidate_shortlist",
+                "type": "object",
+            },
+        )
+        self.assertEqual(
+            transport.call["schema_name"],
+            "e2r_v5_issuer_business_profile_candidate_shortlist",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

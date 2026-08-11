@@ -286,21 +286,49 @@ class FakeCompatibilityProvider:
         real_provider: bool = True,
         fake_provider: bool = False,
         provider_name: str = CANONICAL_COMPATIBILITY_PROVIDER,
+        shortlist_by_archetype: dict[str, list[str]] | None = None,
     ) -> None:
         self.mode = mode
         self.real_provider = real_provider
         self.fake_provider = fake_provider
         self.provider_name = provider_name
+        self.shortlist_by_archetype = shortlist_by_archetype or {}
         self.calls = 0
+        self.shortlist_calls = 0
         self.prompt_lengths: list[int] = []
 
     def complete(self, *, prompt: str, output_schema: dict) -> CompatibilityProviderCompletion:
+        prompt_payload = json.loads(prompt)
+        if "candidate_universe" in prompt_payload:
+            self.shortlist_calls += 1
+            universe = list(prompt_payload["candidate_universe"])
+            max_per_slot = int(prompt_payload["max_candidates_per_required_slot"])
+            payload = {
+                "shortlists": [
+                    {
+                        "archetype_id": archetype,
+                        "candidate_target_ids": [
+                            *self.shortlist_by_archetype.get(
+                                archetype,
+                                [universe[index % len(universe)]["target_id"]],
+                            )
+                        ][:max_per_slot],
+                        "rationale": "점수 비노출 KRX 발행인 후보를 공식 원문 검증 대상으로 보낸다.",
+                    }
+                    for index, archetype in enumerate(
+                        prompt_payload["required_archetypes"]
+                    )
+                ],
+                "shortlist_complete": True,
+                "unresolved_notes": [],
+            }
+            raw = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+            return CompatibilityProviderCompletion(payload=payload, raw_response=raw)
         self.calls += 1
         self.prompt_lengths.append(len(prompt))
         self.output_schema = output_schema
         if self.mode == "provider_failure":
             raise RuntimeError("fixture provider unavailable")
-        prompt_payload = json.loads(prompt)
         profiles = prompt_payload["profiles"]
         selected_targets: set[str] = set()
         decisions = []
@@ -333,6 +361,8 @@ class FakeCompatibilityProvider:
                         "status": status,
                         "target_id": "",
                         "company_name": "",
+                        "mechanism_owner_target_id": "",
+                        "mechanism_owner_company_name": "",
                         "profile_id": "",
                         "large_sector_id": "",
                         "periodic_report_document_id": "",
@@ -355,6 +385,16 @@ class FakeCompatibilityProvider:
                     "status": "SELECTED",
                     "target_id": row["target_id"],
                     "company_name": row["company_name"],
+                    "mechanism_owner_target_id": (
+                        "999999"
+                        if self.mode == "listed_subsidiary_owner"
+                        else row["target_id"]
+                    ),
+                    "mechanism_owner_company_name": (
+                        "별도상장 자회사"
+                        if self.mode == "listed_subsidiary_owner"
+                        else row["company_name"]
+                    ),
                     "profile_id": row["profile_id"],
                     "large_sector_id": (
                         "L10_POLICY_EVENT_CROSS_REDTEAM_MISC"
@@ -758,6 +798,7 @@ class V6IssuerBusinessProfileTest(unittest.TestCase):
         for mode in (
             "quote_tamper",
             "cross_sector",
+            "listed_subsidiary_owner",
             "duplicate_target",
             "missing_roster",
             "forbidden_authority",
@@ -771,6 +812,57 @@ class V6IssuerBusinessProfileTest(unittest.TestCase):
                 self.assertEqual(result["status"], PROFILE_PENDING)
                 self.assertEqual(provider.calls, 1)
                 self.assertEqual(result["selections"], [])
+
+    def test_blind_shortlist_prevents_krx_order_from_choosing_early_decoys(self) -> None:
+        direct_rows, industries = _five_rows()
+        decoys = [
+            _krx_row("090001", "앞번호 전자 지주"),
+            _krx_row("090002", "앞번호 소재 지주"),
+            _krx_row("090003", "앞번호 제약 지주"),
+            _krx_row("090004", "앞번호 소프트웨어 지주"),
+        ]
+        industries.update(
+            {
+                "090001": "26120",
+                "090002": "20110",
+                "090003": "21101",
+                "090004": "62010",
+            }
+        )
+        shortlist = {
+            archetype: [direct_rows[index]["symbol"]]
+            for index, archetype in enumerate(REQUIRED_ARCHETYPES)
+        }
+        result = V6IssuerBusinessProfileMaterializer().materialize(
+            IssuerBusinessProfileConfig(
+                as_of_date=AS_OF,
+                max_profile_fetches=5,
+                max_discovery_fetches=20,
+                max_forced_candidates_per_required_slot=1,
+            ),
+            universe_rows=(),
+            discovery_universe_rows=[*decoys, *direct_rows],
+            credential="official-fixture-key",
+            fetcher=(fetcher := FakeOpenDartFetcher(industries)),
+            compatibility_provider=FakeCompatibilityProvider(
+                shortlist_by_archetype=shortlist
+            ),
+        )
+
+        self.assertEqual(result["status"], PROFILE_PASS)
+        self.assertEqual(
+            fetcher.calls,
+            [row["symbol"] for row in direct_rows],
+        )
+        self.assertEqual(
+            [row["target_id"] for row in result["selections"]],
+            [row["symbol"] for row in direct_rows],
+        )
+        shortlist_receipt = result["candidate_expansion_receipt"][
+            "candidate_shortlist_receipt"
+        ]
+        self.assertEqual(shortlist_receipt["status"], "COMPLETE")
+        self.assertFalse(shortlist_receipt["score_or_stage_authority"])
 
     def test_production_rejects_fake_provider_but_test_mode_never_passes(self) -> None:
         fake = FakeCompatibilityProvider(

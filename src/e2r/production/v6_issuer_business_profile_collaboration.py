@@ -26,6 +26,12 @@ from .v6_issuer_business_profile import (
 
 
 _SCHEMA_NAME = "e2r_v5_issuer_business_profile_compatibility"
+_ALLOWED_SCHEMA_NAMES = frozenset(
+    {
+        _SCHEMA_NAME,
+        "e2r_v5_issuer_business_profile_candidate_shortlist",
+    }
+)
 
 
 @dataclass
@@ -56,10 +62,18 @@ class CollaborationIssuerBusinessCompatibilityProvider:
         prompt: str,
         output_schema: Mapping[str, Any],
     ) -> CompatibilityProviderCompletion:
+        # Phase-105 uses the same score-blind Collaboration boundary twice:
+        # first to shortlist KRX issuers before expensive full-report fetches,
+        # and then to classify the fetched official profiles.  The schema name
+        # is part of the immutable request identity, so the two decisions must
+        # never share a misleading compatibility pass label.
+        schema_name = str(output_schema.get("$id") or _SCHEMA_NAME)
+        if schema_name not in _ALLOWED_SCHEMA_NAMES:
+            raise ValueError("issuer profile collaboration schema is not allowed")
         completion = self.transport.complete(
             prompt=prompt,
             output_schema=output_schema,
-            schema_name=_SCHEMA_NAME,
+            schema_name=schema_name,
         )
         return CompatibilityProviderCompletion(
             payload=dict(completion.payload),
