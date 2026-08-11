@@ -54,6 +54,22 @@ score, Stage 또는 cutover authority가 아니다.
    설명했다. Phase 106의 고정 합격 조건인 `5 targets`, `7/7`, `material_gap=0`,
    `score_valid=true`, `StageCourt=FINAL` 중 몇 개가 닫혔는지를 보고했어야 했다.
 
+5. **종료된 search lineage가 계속 reopen authority를 보유**
+
+   terminal query에서 accepted fact가 나오지 않으면
+   `source_query_lineage_gap_objectives`가 그 objective를 계속 미해결로 표시했다.
+   canonical Supervisor가 `reasonable_positive_routes_remaining=false`, source
+   direction 0건, retryable fetch/parser repair 0건이라고 판정한 뒤에도 이 과거
+   lineage가 더 높은 우선순위로 남아 query generation을 다시 열었다. 그 결과
+   Supervisor가 요구한 “현재 evidence로 memo를 다시 쓰고 새 judges를 실행”하는
+   downstream 작업이 시작되지 못했다.
+
+   수정 후에는 exact collaboration response가 먼저 journal에 들어간 뒤,
+   Supervisor의 route-exhaustion snapshot이 과거 semantic retry의 reopen authority만
+   제거한다. 실패 query와 material0 기록은 감사 ledger에 그대로 남고 source
+   absence로 승격되지 않는다. 구체적인 source direction이나 retryable fetch/parser
+   failure가 하나라도 있으면 이 종료 규칙은 적용되지 않는다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -84,6 +100,9 @@ score, Stage 또는 cutover authority가 아니다.
    - deterministic StageCourt FINAL
    - provider error 0
    - tracked receipt 및 independent post-run review
+8. `reasonable_positive_routes_remaining=false`는 source absence나 saturation 인증이
+   아니다. search lane만 닫고 memo rewrite·judge·saturation·score gate는 그대로
+   실행한다.
 
 ## Goal 경계
 

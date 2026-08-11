@@ -119,6 +119,7 @@ from .source_graph_explorer import (
     source_graph_checkpoint_audit_binding,
     source_graph_legacy_text_cap_document_ids,
     source_graph_pending_source_repair_ids,
+    _supervisor_explicitly_exhausted_source_routes,
     validated_official_first_resolution_query_ids,
     validate_source_graph_checkpoint,
     write_source_graph_acquisition_run,
@@ -5401,9 +5402,14 @@ def _load_prior_research_context(
                 if objective_id in objective_component_by_id:
                     supervisor_unresolved_objectives.add(objective_id)
 
-            for gap in supervisor.get("missing_material_facts") or ():
-                if isinstance(gap, Mapping):
-                    route_source_row(gap)
+            supervisor_routes_exhausted = (
+                supervisor.get("reasonable_positive_routes_remaining")
+                is False
+            )
+            if not supervisor_routes_exhausted:
+                for gap in supervisor.get("missing_material_facts") or ():
+                    if isinstance(gap, Mapping):
+                        route_source_row(gap)
             for key in (
                 "new_source_family_directions",
                 "query_direction_briefs",
@@ -5487,9 +5493,15 @@ def _load_prior_research_context(
                 or parser_failures
                 or any(filtered_directions.values())
                 or source_family_gaps
+                or supervisor_routes_exhausted
             ):
                 supervisor_source_gap_context = {
                     "status": supervisor.get("status"),
+                    "reasonable_positive_routes_remaining": (
+                        supervisor.get(
+                            "reasonable_positive_routes_remaining"
+                        )
+                    ),
                     "missing_material_facts": missing_facts,
                     "failure_assessments": source_failures,
                     "new_source_family_directions": filtered_directions[
@@ -5501,6 +5513,16 @@ def _load_prior_research_context(
                     "source_family_gaps": source_family_gaps,
                     "parser_or_extractor_failures": parser_failures,
                 }
+    if _supervisor_explicitly_exhausted_source_routes(
+        {"prior_supervisor_gap": supervisor_source_gap_context}
+    ):
+        # A terminal query without accepted fact lineage remains auditable in
+        # ``source_queries_without_accepted_fact_lineage``.  It no longer owns
+        # reopen authority after the canonical Supervisor explicitly exhausts
+        # public routes.  This is not a source-absence claim: the component
+        # researcher must still rewrite the memo and the three memo-bound
+        # judges must run again before saturation or scoring can open.
+        source_query_lineage_gap_objectives.clear()
     semantic_resolved_objective_ids = tuple(
         str(row["objective_id"])
         for row in objectives

@@ -1766,6 +1766,84 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             completed.checkpoint,
         )
 
+    def test_consumed_empty_retry_does_not_override_newer_supervisor_route_exhaustion(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteQueryProvider(queries=())
+        search = RecordingSearchProvider({})
+        waiting = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+        )
+        self.assertEqual(waiting.status, "QUERY_GENERATION_PENDING")
+        provider.query_pending = False
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=waiting.checkpoint,
+        )
+        self.assertEqual(first.status, "QUERY_GENERATION_PENDING")
+        self.assertEqual(
+            first.checkpoint["pending_query_generation_replay_context"][
+                "replay_phase"
+            ],
+            "POST_RESPONSE_SEMANTIC_RETRY",
+        )
+
+        exhausted = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=first.checkpoint,
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "status": "NEXT_RESEARCH_REQUIRED",
+                    "reasonable_positive_routes_remaining": False,
+                    "new_source_family_directions": [],
+                    "query_direction_briefs": [],
+                    "source_family_gaps": [],
+                    "failure_assessments": [],
+                    "parser_or_extractor_failures": [],
+                }
+            },
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        self.assertEqual(exhausted.status, "STOPPED_ON_RESOLUTION")
+        self.assertEqual(
+            sum(
+                row["pass_name"] == "SOURCE_QUERY_GENERATION"
+                for row in provider.calls
+            ),
+            2,
+        )
+        self.assertEqual(search.calls, [])
+        self.assertNotIn(
+            "pending_query_generation_replay_context",
+            exhausted.checkpoint,
+        )
+
+    def test_supervisor_route_exhaustion_does_not_suppress_concrete_repair(
+        self,
+    ) -> None:
+        self.assertFalse(
+            source_graph_module._supervisor_explicitly_exhausted_source_routes(
+                {
+                    "prior_supervisor_gap": {
+                        "reasonable_positive_routes_remaining": False,
+                        "failure_assessments": [
+                            {
+                                "classification": "FETCH_FAILURE",
+                                "retryable": True,
+                            }
+                        ],
+                    }
+                }
+            )
+        )
+
     def test_consecutive_empty_collaboration_responses_advance_semantic_prompt(
         self,
     ) -> None:

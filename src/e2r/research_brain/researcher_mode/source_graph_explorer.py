@@ -659,6 +659,11 @@ class ResearcherSourceGraphAcquirer:
                 mode=config.mode,
             )
         effective_score_gap_context = dict(score_gap_context or {})
+        supervisor_routes_exhausted = (
+            _supervisor_explicitly_exhausted_source_routes(
+                effective_score_gap_context
+            )
+        )
         pending_query_generation_replay = (
             _validated_pending_query_generation_replay_context(
                 state,
@@ -667,6 +672,21 @@ class ResearcherSourceGraphAcquirer:
             if not checkpoint_nonresearch_only
             else None
         )
+        if (
+            pending_query_generation_replay is not None
+            and pending_query_generation_replay.get("replay_phase")
+            == "POST_RESPONSE_SEMANTIC_RETRY"
+            and supervisor_routes_exhausted
+        ):
+            # The exact provider response has already been consumed, and the
+            # newer canonical Supervisor snapshot says there is no remaining
+            # public source route.  Replaying the old frozen gap here would
+            # reopen query generation forever and prevent the Supervisor's
+            # requested memo-only rewrite from becoming canonical.  An
+            # AWAITING_COLLABORATION_RESPONSE boundary is never suppressed:
+            # its exact response must still be journaled first.
+            pending_query_generation_replay = None
+            state.pop("pending_query_generation_replay_context", None)
         if pending_query_generation_replay is not None:
             # SOURCE_QUERY_GENERATION is an asynchronous transport boundary.
             # Downstream component/supervisor artifacts can temporarily lose
@@ -1340,6 +1360,7 @@ class ResearcherSourceGraphAcquirer:
             and unresolved_objectives
             and not pending_query_rows
             and not blocked_official_first_rows
+            and not supervisor_routes_exhausted
             and (
                 not pending_candidate_work
                 or candidate_query_edge_direction_priority
@@ -7976,6 +7997,44 @@ def _has_actionable_supervisor_query_direction(
             if objective_id in unresolved_objective_ids:
                 return True
     return False
+
+
+def _supervisor_explicitly_exhausted_source_routes(
+    score_gap_context: Mapping[str, Any],
+) -> bool:
+    """Return whether the current Supervisor closed only the search lane.
+
+    ``reasonable_positive_routes_remaining=false`` does not prove that a fact
+    is absent and does not certify research saturation.  It only says that the
+    next action is no longer another source query.  We honor it only when the
+    same canonical snapshot contains no concrete source direction and no
+    retryable parser/fetch repair.  Component memo rewrites and fresh judges
+    remain downstream obligations.
+    """
+
+    supervisor = score_gap_context.get("prior_supervisor_gap")
+    if (
+        not isinstance(supervisor, Mapping)
+        or supervisor.get("reasonable_positive_routes_remaining") is not False
+    ):
+        return False
+    for key in (
+        "new_source_family_directions",
+        "query_direction_briefs",
+        "source_family_gaps",
+        "parser_or_extractor_failures",
+    ):
+        if supervisor.get(key):
+            return False
+    for raw in supervisor.get("failure_assessments") or ():
+        if (
+            isinstance(raw, Mapping)
+            and raw.get("retryable") is True
+            and str(raw.get("classification") or "")
+            in {"PARSER_EXTRACTOR_FAILURE", "FETCH_FAILURE"}
+        ):
+            return False
+    return True
 
 
 def _candidate_is_reference_only(candidate: Mapping[str, Any]) -> bool:
