@@ -440,6 +440,7 @@ class CurrentClaimCompiler:
             tuple(provenance_by_claim_mapping.values())
         )
         audit = _audit_claim_compilation(
+            as_of_date=config.as_of_date,
             raw_assertions=raw_rows,
             adjudicated_claims=claim_rows,
             accepted_claims=tuple(accepted_claims.values()),
@@ -765,6 +766,7 @@ def _merge_claim_provenance(
 
 def _audit_claim_compilation(
     *,
+    as_of_date: str,
     raw_assertions: Sequence[Mapping[str, Any]],
     adjudicated_claims: Sequence[Mapping[str, Any]],
     accepted_claims: Sequence[Mapping[str, Any]],
@@ -804,6 +806,7 @@ def _audit_claim_compilation(
         status_counts[item.status] = status_counts.get(item.status, 0) + 1
     return {
         "schema_version": "e2r_live_current_claim_audit_v1",
+        "as_of_date": as_of_date,
         "anchor_count": len({item.get("anchor_id") for item in raw_assertions}),
         "raw_assertion_count": len(raw_assertions),
         "extraction_pass_count": extraction_pass_count,

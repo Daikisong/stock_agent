@@ -192,7 +192,11 @@ class CurrentAtomicDecisionBuilder:
                         ),
                     )
                 )
-        audit = _audit_current_atomic(states=states, decisions=decisions)
+        audit = _audit_current_atomic(
+            as_of_date=as_of_date,
+            states=states,
+            decisions=decisions,
+        )
         return CurrentAtomicDecisionResult(
             as_of_date=as_of_date,
             status="CURRENT_ATOMIC_DECISION_PASS" if audit["hard_acceptance_pass"] else "CURRENT_ATOMIC_DECISION_FAIL",
@@ -325,6 +329,7 @@ def _controlled_probe_points_test_only(count: int) -> tuple[float, ...]:
 
 def _audit_current_atomic(
     *,
+    as_of_date: str,
     states: Sequence[CurrentPrimitiveState],
     decisions: Sequence[AtomicStageDecision],
 ) -> Mapping[str, Any]:
@@ -344,6 +349,7 @@ def _audit_current_atomic(
     }
     return {
         "schema_version": "e2r_live_current_atomic_score_audit_v1",
+        "as_of_date": as_of_date,
         "primitive_state_count": len(states),
         "unknown_primitive_count": sum(item.state == "UNKNOWN" for item in states),
         "atomic_decision_count": len(decisions),

@@ -24,6 +24,7 @@ from e2r.research_brain.runtime.current_operation_runner import (
 from e2r.research_brain.runtime.live_materialization import (
     AuthorizationPath,
     LiveCurrentMaterializationOrchestrator,
+    LiveMaterializationPendingError,
     LiveRunMode,
     load_live_run_profile,
     package_live_census_operation,
@@ -127,6 +128,21 @@ def main(
             materialized_input_manifest = str(materialized_paths["canonical_manifest"])
             materialized_live_root = live_root
             materialization_audit_path = live_root / "current_orchestration_audit.json"
+        except LiveMaterializationPendingError as exc:
+            return write_current_internal_materializer_pending_run(
+                command=command_name,
+                args=recorded_args,
+                effective_argv=effective_argv,
+                output_root=output_root,
+                blockers=exc.blocker_codes,
+                authorization={
+                    **authorization.to_dict(),
+                    "pending_stage_id": exc.pending_stage_id,
+                    "pending_detail": exc.detail,
+                    "materialization_audit_path": str(exc.audit_path),
+                },
+                materializer_called=True,
+            )
         except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
             return write_current_internal_materializer_pending_run(
                 command=command_name,
@@ -137,7 +153,9 @@ def main(
                 authorization={
                     **authorization.to_dict(),
                     "profile_error_category": type(exc).__name__,
+                    "materialization_error": str(exc),
                 },
+                materializer_called=True,
             )
     input_manifest = materialized_input_manifest or _resolve_default_input_manifest(args)
     if input_manifest is None:
@@ -360,6 +378,7 @@ def write_current_internal_materializer_pending_run(
     output_root: str | Path,
     blockers: tuple[str, ...],
     authorization: Mapping[str, Any],
+    materializer_called: bool = False,
 ) -> int:
     """Record an internal live-path blocker without mislabelling it external."""
 
@@ -374,7 +393,7 @@ def write_current_internal_materializer_pending_run(
         "mode": args.get("mode"),
         "blockers": list(blockers),
         "authorization": dict(authorization),
-        "materializer_called": False,
+        "materializer_called": materializer_called,
         "score_valid": False,
         "raw_reference_score": None,
         "canonical_stage": "0",
@@ -403,7 +422,13 @@ def write_current_internal_materializer_pending_run(
             "corpus": (
                 command_inline_hash_entry(
                     "live-materialization-universe-state",
-                    {"state": "NOT_MATERIALIZED_INTERNAL_PATH_INCOMPLETE"},
+                    {
+                        "state": (
+                            "MATERIALIZATION_ATTEMPTED_STAGE_PENDING"
+                            if materializer_called
+                            else "NOT_MATERIALIZED_INTERNAL_PATH_INCOMPLETE"
+                        )
+                    },
                 ),
             ),
             "memory": (

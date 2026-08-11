@@ -362,7 +362,12 @@ class CurrentAdaptiveGapClosure:
                 )
             )
         ledger = _append_only_entries(ledger_payloads)
-        audit = _audit_adaptive_gap(ledger=ledger, attempts=attempts, gaps=gap_rows)
+        audit = _audit_adaptive_gap(
+            as_of_date=config.as_of_date,
+            ledger=ledger,
+            attempts=attempts,
+            gaps=gap_rows,
+        )
         return AdaptiveGapClosureResult(
             as_of_date=config.as_of_date,
             status="ADAPTIVE_GAP_CLOSURE_PASS" if audit["hard_acceptance_pass"] else "ADAPTIVE_GAP_CLOSURE_FAIL",
@@ -467,6 +472,7 @@ def _append_only_entries(payloads: Sequence[Mapping[str, Any]]) -> tuple[AppendO
 
 def _audit_adaptive_gap(
     *,
+    as_of_date: str,
     ledger: Sequence[AppendOnlyLedgerEntry],
     attempts: Sequence[AdaptiveGapAttempt],
     gaps: Sequence[Mapping[str, Any]],
@@ -496,6 +502,7 @@ def _audit_adaptive_gap(
         terminal_counts[status] = terminal_counts.get(status, 0) + 1
     return {
         "schema_version": "e2r_live_adaptive_gap_audit_v1",
+        "as_of_date": as_of_date,
         "ledger_entry_count": len(ledger),
         "adaptive_attempt_count": len(attempts),
         "new_llm_query_count": sum(len(item.suggested_queries) for item in attempts),

@@ -28,6 +28,7 @@ from .universe_materializer import (
     LiveUniverseRow,
     UniverseMaterializationResult,
     UniverseMaterializerConfig,
+    load_universe_rows,
     write_universe_materialization,
 )
 from .current_state_store import (
@@ -143,6 +144,7 @@ from .current_orchestrator import (
     LIVE_CURRENT_ORCHESTRATOR_SCHEMA_VERSION,
     LiveCurrentMaterializationOrchestrator,
     LiveCurrentOrchestrationResult,
+    LiveMaterializationPendingError,
     write_live_acceptance_promotion,
 )
 from .live_operational_packager import package_live_current_operation
@@ -216,6 +218,7 @@ __all__ = [
     "CurrentOperationRunnerInputBuilder",
     "LiveCurrentMaterializationOrchestrator",
     "LiveCurrentOrchestrationResult",
+    "LiveMaterializationPendingError",
     "CurrentPrimitiveState",
     "CurrentSourceAcquisitionOrchestrator",
     "CurrentDepthSelector",
@@ -246,6 +249,7 @@ __all__ = [
     "LiveOperationalRunEnvelope",
     "LivePlannerRun",
     "LiveUniverseRow",
+    "load_universe_rows",
     "EventLifecycleStatus",
     "EvidenceDocumentRecord",
     "FINAL_READINESS_SCHEMA_VERSION",

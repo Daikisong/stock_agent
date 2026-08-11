@@ -98,6 +98,7 @@ class AdaptiveResearchRepairLoopTests(unittest.TestCase):
             identical_query=True,
         )
         audit = _audit_adaptive_gap(
+            as_of_date="2026-07-12",
             ledger=(),
             attempts=(attempt,),
             gaps=(),

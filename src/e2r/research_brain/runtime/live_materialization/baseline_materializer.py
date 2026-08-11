@@ -456,8 +456,10 @@ class CurrentBaselineMaterializer:
         krx_credential: str | None = None,
         opendart_credential: str | None = None,
         env_file: str | Path | None = ".env",
+        load_environment: bool = True,
     ) -> BaselineMaterializationResult:
-        load_project_env(env_file, override=False)
+        if load_environment:
+            load_project_env(env_file, override=False)
         eligible = tuple(row for row in universe if row.eligible)
         if not eligible:
             raise ValueError("baseline materializer requires eligible universe")
@@ -468,11 +470,13 @@ class CurrentBaselineMaterializer:
         as_of = date.fromisoformat(config.as_of_date)
         price_date = _resolve_price_date(config=config, universe=eligible)
         dart_start = date.fromisoformat(config.dart_index_start_date or config.as_of_date)
-        krx_key = krx_credential or os.environ.get("KRX_OPENAPI_KEY")
+        krx_key = krx_credential or (
+            os.environ.get("KRX_OPENAPI_KEY") if load_environment else None
+        )
         dart_key = (
             opendart_credential
-            or os.environ.get("OPENDART_API_KEY")
-            or os.environ.get("OPEN_DART_API_KEY")
+            or (os.environ.get("OPENDART_API_KEY") if load_environment else None)
+            or (os.environ.get("OPEN_DART_API_KEY") if load_environment else None)
         )
         snapshots: list[BaselineBulkSnapshot] = []
         for market in sorted(_KRX_PRICE_ENDPOINTS):

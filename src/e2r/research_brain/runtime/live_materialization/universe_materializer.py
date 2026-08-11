@@ -365,6 +365,38 @@ def write_universe_materialization(
     return paths
 
 
+def load_universe_rows(path: str | Path) -> tuple[LiveUniverseRow, ...]:
+    """Load a normalized universe leaf while preserving its schema checks."""
+
+    source = Path(path)
+    if not source.is_file():
+        return ()
+    rows: list[LiveUniverseRow] = []
+    with source.open(encoding="utf-8") as handle:
+        for line_number, raw_line in enumerate(handle, start=1):
+            line = raw_line.strip()
+            if not line:
+                continue
+            try:
+                payload = json.loads(line)
+                rows.append(
+                    LiveUniverseRow(
+                        **{
+                            **payload,
+                            "raw_fields": dict(payload.get("raw_fields") or {}),
+                        }
+                    )
+                )
+            except (TypeError, ValueError, json.JSONDecodeError) as exc:
+                raise ValueError(
+                    f"invalid normalized universe row at line {line_number}: {exc}"
+                ) from exc
+    symbols = [row.symbol for row in rows if row.eligible]
+    if len(symbols) != len(set(symbols)):
+        raise ValueError("duplicate eligible symbol in normalized universe leaf")
+    return tuple(rows)
+
+
 def _normalize_rows(
     responses: Sequence[KrxBulkResponse],
     *,
