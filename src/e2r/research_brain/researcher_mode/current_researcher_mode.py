@@ -2419,19 +2419,18 @@ def _hydrate_readonly_source_graph_run(
             or expected_source_id != str(checkpoint.get("checkpoint_id") or "")
             or expected_source_hash
             != str(checkpoint.get("checkpoint_hash") or "")
-            or not (
-                _source_checkpoint_is_ready_for_readonly_replay(checkpoint)
-                or _source_checkpoint_needs_fact_extraction_recovery(
-                    root=root,
-                    checkpoint=checkpoint,
-                    target_id=str(checkpoint.get("target_id") or ""),
-                    as_of_date=str(checkpoint.get("as_of_date") or ""),
-                )
-            )
         ):
             raise ValueError(
                 "authoritative fact recovery source checkpoint binding drift"
             )
+        # Authoritative fact recovery is a serialization barrier, not an
+        # ordinary downstream replay.  Freeze the exact source snapshot even
+        # when it still has a ranking/query response to consume; restore the
+        # missing fact ledger first and let the next clean resume consume that
+        # source response.  For example, a pending delivery inspection must
+        # not make the already signed inventory ledger look like identity
+        # drift.  Target/date/id/hash above and graph/audit reproduction below
+        # remain the fail-closed integrity checks.
     graph_payload = checkpoint.get("source_graph")
     if not isinstance(graph_payload, Mapping):
         raise ValueError("source checkpoint graph payload is missing")

@@ -60,6 +60,7 @@ from tests.test_e2r_v5_researcher_mode import ScriptedResearchProvider
 from tests.test_e2r_v5_source_graph_acquisition import SourceBrainProvider
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _fact_extraction_is_complete_for_source_checkpoint,
+    _hydrate_readonly_source_graph_run,
     _initial_component_research_plans,
     _official_gap_reasons,
     _score_gap_context_for_supervisor,
@@ -2785,6 +2786,56 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             candidate = {**ready, **mutation}
             self.assertFalse(
                 _source_checkpoint_is_ready_for_readonly_replay(candidate)
+            )
+
+    def test_authoritative_fact_recovery_freezes_exact_pending_source_snapshot(
+        self,
+    ) -> None:
+        checkpoint = _phase94_source_checkpoint(
+            epoch=8,
+            search_candidates=(
+                {
+                    "candidate_id": "SGCAND-" + "a" * 24,
+                    "ranking_status": "PENDING",
+                    "fetch_status": "NOT_STARTED",
+                },
+            ),
+        )
+        recovery = {
+            "authoritative_fact_lineage_recovery_required": True,
+            "target_id": checkpoint["target_id"],
+            "as_of_date": checkpoint["as_of_date"],
+            "source_graph_checkpoint_id": checkpoint["checkpoint_id"],
+            "source_graph_checkpoint_hash": checkpoint["checkpoint_hash"],
+        }
+        self.assertFalse(
+            _source_checkpoint_is_ready_for_readonly_replay(checkpoint)
+        )
+        with (
+            tempfile.TemporaryDirectory() as directory,
+            self.assertRaisesRegex(ValueError, "graph payload is missing"),
+        ):
+            _hydrate_readonly_source_graph_run(
+                root=Path(directory),
+                checkpoint=checkpoint,
+                open_objectives=(),
+                config=SourceGraphAcquisitionConfig(mode="TEST"),
+                authoritative_fact_lineage_recovery=recovery,
+            )
+
+        with (
+            tempfile.TemporaryDirectory() as directory,
+            self.assertRaisesRegex(ValueError, "binding drift"),
+        ):
+            _hydrate_readonly_source_graph_run(
+                root=Path(directory),
+                checkpoint=checkpoint,
+                open_objectives=(),
+                config=SourceGraphAcquisitionConfig(mode="TEST"),
+                authoritative_fact_lineage_recovery={
+                    **recovery,
+                    "source_graph_checkpoint_hash": "f" * 64,
+                },
             )
 
     def test_fact_extraction_recovery_freezes_pending_source_snapshot(

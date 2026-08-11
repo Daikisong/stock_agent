@@ -122,6 +122,24 @@ score, Stage 또는 cutover authority가 아니다.
    version 변경은 `PUBLIC_BROKER_PDF`만 선택 재추출하고 무관한 공시 수백 건은 다시
    열지 않는다.
 
+9. **권위 사실 장부 복구와 source readiness를 같은 조건으로 판정**
+
+   revision 역할 추가 후 과거 research epoch의 권위 장부에는 70개 fact가 있었지만,
+   편의 스냅샷에는 67개만 남아 canonical rematerialization이 필요했다. 동시에 새
+   ranking collaboration response가 아직 Source Graph에 소비되지 않아 checkpoint는
+   `CANDIDATE_RANKING_PENDING`이었다. 기존 readonly hydration은 target/date/checkpoint
+   id/hash가 모두 정확히 같아도 이 pending 상태를 identity drift로 잘못 분류했다.
+
+   쉬운 예: 서명된 재고 장부 70줄을 복구해야 하는데 새 입고 검수표가 대기 중이라는
+   이유로 “장부 자체가 다른 장부”라고 거절한 상태다. 올바른 순서는 정확한 장부
+   스냅샷을 고정해 누락 3줄을 먼저 복구하고, 다음 clean resume에서 검수표를 소비하는
+   것이다.
+
+   수정 후 authoritative fact recovery는 source 작업이 terminal인지와 무관하게 exact
+   target/date/checkpoint id/hash를 먼저 고정한다. 이어 기존과 동일하게 source graph
+   재생성, persisted audit binding, safety critical count를 검증하므로 손상된 checkpoint를
+   허용하지 않는다. 일반 readonly replay의 terminal 조건은 그대로 유지한다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -164,6 +182,10 @@ score, Stage 또는 cutover authority가 아니다.
 11. 새 문서 class를 찾기 전에 이미 fetch된 full document가 missing structured role을
     표현할 수 있는지 schema→fact→materializer→engine 전 경로를 검사한다. 원문이 있는데
     typed role 경로가 없으면 검색 재시도가 아니라 공통 schema 단절을 먼저 수리한다.
+12. authoritative fact recovery는 source readiness와 분리한다. exact source identity와
+    graph/audit 무결성을 검증한 뒤 사실 장부를 먼저 복구하고, pending query/ranking/fetch
+    response는 다음 clean resume에서 소비한다. pending 상태를 identity drift라고 기록하지
+    않는다.
 
 ## Goal 경계
 
