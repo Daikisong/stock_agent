@@ -37,6 +37,9 @@ from .component_researcher import (
     StructuredResearchProvider,
     _single_payload_request_material,
 )
+from .collaboration_provider_bridge import (
+    _authority_recovery_fact_request_material,
+)
 from .prompt_projection import (
     project_fact_extraction_evidence_context,
     project_fact_extraction_score_gap_context,
@@ -5663,6 +5666,9 @@ def _recover_current_fact_lineage_authority_gap(
                     scope_contract=scope_contract,
                     provider_name=str(material_result["provider_name"]),
                     recovery_document_ids=recovery_document_id_set,
+                    fact_extraction_semantics_version=(
+                        recovery_binding.fact_extraction_semantics_version
+                    ),
                 )
             )
     except (KeyError, TypeError, ValueError, RuntimeError):
@@ -5857,6 +5863,7 @@ def _replay_current_fact_lineage_group(
     scope_contract: ArchetypeMechanismScopeContract,
     provider_name: str,
     recovery_document_ids: frozenset[str],
+    fact_extraction_semantics_version: str = FACT_EXTRACTION_SEMANTICS_VERSION,
 ) -> Mapping[str, Any]:
     """Run one historical base plus every continuation through authority."""
 
@@ -5913,7 +5920,7 @@ def _replay_current_fact_lineage_group(
     batch_identity = {
         "target_id": target_id,
         "as_of_date": as_of_date,
-        "extraction_semantics_version": FACT_EXTRACTION_SEMANTICS_VERSION,
+        "extraction_semantics_version": fact_extraction_semantics_version,
         "document_ids": list(original_document_ids),
     }
     if historical_transport_chunk_ids:
@@ -5959,9 +5966,11 @@ def _replay_current_fact_lineage_group(
             _transport_prompt,
             transport_prompt_hash,
             transport_schema_hash,
-        ) = _single_payload_request_material(
-            pass_name="EVIDENCE_FACT_EXTRACTION",
+        ) = _authority_recovery_fact_request_material(
             payload=request_payload,
+            fact_extraction_semantics_version=(
+                fact_extraction_semantics_version
+            ),
         )
         if (
             str(material.get("prompt_hash") or "")
@@ -6008,7 +6017,7 @@ def _replay_current_fact_lineage_group(
             },
             objective_scope_by_document=objective_scope,
             objective_component_by_id=objective_components,
-            extraction_semantics_version=FACT_EXTRACTION_SEMANTICS_VERSION,
+            extraction_semantics_version=fact_extraction_semantics_version,
         )
         if any(row.material_proposal for row in page_rejections):
             raise ValueError("current fact lineage material proposal rejected")

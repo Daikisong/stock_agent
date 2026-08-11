@@ -341,6 +341,16 @@ class CurrentFactLineageRecoveryTests(unittest.TestCase):
                 response=old_response,
                 agent_model="codex-collaboration",
             )
+            old_request = next(
+                json.loads(path.read_text(encoding="utf-8"))
+                for path in (journal / "requests").glob("COLLABREQ-*.json")
+            )
+            old_roles = old_request["output_schema"]["properties"]["facts"][
+                "items"
+            ]["properties"]["structured_evidence_roles"]["items"]["enum"]
+            self.assertIn("FORWARD_PB", old_roles)
+            self.assertNotIn("EPS_REVISION", old_roles)
+            self.assertNotIn("OPERATING_PROFIT_REVISION", old_roles)
             current_payload = _prompt_payload(
                 [prompt_document],
                 marker="current-semantics-rewrite",

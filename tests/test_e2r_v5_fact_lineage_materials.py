@@ -12,6 +12,7 @@ from e2r.research_brain.planning.provider_transport import (
 from e2r.research_brain.researcher_mode.collaboration_provider_bridge import (
     COLLABORATION_RESPONSE_SCHEMA_VERSION,
     CollaborationCodexSubagentTransport,
+    _authority_recovery_fact_request_material,
     _canonical_hash,
     _validate_agent_provenance,
     import_collaboration_response,
@@ -285,9 +286,12 @@ def _write_pair(
     response,
     agent_model,
 ):
-    _, schema, prompt, _, _ = _single_payload_request_material(
-        pass_name="EVIDENCE_FACT_EXTRACTION",
+    semantics_version = str(
+        payload.get("fact_extraction_semantics_version") or ""
+    )
+    _, schema, prompt, _, _ = _authority_recovery_fact_request_material(
         payload=payload,
+        fact_extraction_semantics_version=semantics_version,
     )
     with unittest.TestCase().assertRaises(StructuredProviderUnavailable):
         transport.complete(

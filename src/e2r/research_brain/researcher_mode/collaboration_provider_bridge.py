@@ -38,6 +38,7 @@ from e2r.research_brain.intelligence_schema import stable_intelligence_id
 from .component_researcher import (
     CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT,
     CodexResearcherProvider,
+    _pass_instruction,
     _single_payload_request_material,
 )
 from .document_ranker import (
@@ -97,6 +98,11 @@ _STRUCTURED_VALUATION_ROLES = (
     "FORWARD_BOOK_VALUE",
     "FORWARD_PB",
     "FORWARD_EV_EBITDA",
+)
+_PRE_REVISION_STRUCTURED_VALUATION_ROLES = tuple(
+    role
+    for role in _STRUCTURED_VALUATION_ROLES
+    if role not in {"EPS_REVISION", "OPERATING_PROFIT_REVISION"}
 )
 _REQUEST_ENVELOPE_KEYS = frozenset(
     {
@@ -180,6 +186,101 @@ def _prior_structured_valuation_fact_output_schema(
     role_items["enum"] = list(_PRE_STRUCTURED_VALUATION_ROLES)
     role_schema.pop("maxItems", None)
     return prior
+
+
+def _prior_revision_fact_output_schema(
+    current_schema: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    """Derive the frozen v5 schema immediately before revision roles.
+
+    Authority recovery must validate a historical request with the schema
+    that actually created it.  The older valuation migration helper removes
+    valuation roles too, so it cannot represent this immediate v5 -> v6
+    revision-role boundary.
+    """
+
+    try:
+        prior = json.loads(json.dumps(current_schema))
+        role_schema = prior["properties"]["facts"]["items"]["properties"][
+            "structured_evidence_roles"
+        ]
+        role_items = role_schema["items"]
+    except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+        return None
+    if (
+        not isinstance(role_schema, dict)
+        or not isinstance(role_items, dict)
+        or tuple(role_items.get("enum") or ()) != _STRUCTURED_VALUATION_ROLES
+        or role_schema.get("maxItems") != 1
+    ):
+        return None
+    role_items["enum"] = list(_PRE_REVISION_STRUCTURED_VALUATION_ROLES)
+    return prior
+
+
+def _prior_revision_fact_instruction() -> str:
+    """Rebuild the immutable v5 instruction from the current v6 text."""
+
+    current = _pass_instruction("EVIDENCE_FACT_EXTRACTION")
+    prior = current.replace(
+        ", EPS_REVISION, OPERATING_PROFIT_REVISION",
+        "",
+        1,
+    ).replace(
+        " A revision role additionally requires a dated full broker PDF "
+        "whose exact quote identifies the forward metric and shows both "
+        "the previous and revised estimates; value is the revised numeric "
+        "point.",
+        "",
+        1,
+    )
+    if prior == current:
+        raise ValueError("prior revision fact instruction cannot be derived")
+    return prior
+
+
+def _authority_recovery_fact_request_material(
+    *,
+    payload: Mapping[str, Any],
+    fact_extraction_semantics_version: str,
+) -> tuple[Mapping[str, Any], Mapping[str, Any], str, str, str]:
+    """Build exact request material for either supported recovery version."""
+
+    material = _single_payload_request_material(
+        pass_name="EVIDENCE_FACT_EXTRACTION",
+        payload=payload,
+    )
+    if (
+        fact_extraction_semantics_version
+        == _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
+    ):
+        return material
+    if (
+        fact_extraction_semantics_version
+        != _PRE_REVISION_FACT_SEMANTICS_VERSION
+    ):
+        raise ValueError("fact authority recovery semantics are unsupported")
+    safe_payload, current_schema, current_prompt, _prompt_hash, _schema_hash = (
+        material
+    )
+    prior_schema = _prior_revision_fact_output_schema(current_schema)
+    if prior_schema is None:
+        raise ValueError("prior revision fact schema cannot be derived")
+    current_instruction = _pass_instruction("EVIDENCE_FACT_EXTRACTION")
+    if current_prompt.count(current_instruction) != 1:
+        raise ValueError("current fact instruction boundary is ambiguous")
+    prior_prompt = current_prompt.replace(
+        current_instruction,
+        _prior_revision_fact_instruction(),
+        1,
+    )
+    return (
+        safe_payload,
+        prior_schema,
+        prior_prompt,
+        hashlib.sha256(prior_prompt.encode("utf-8")).hexdigest(),
+        _canonical_hash(prior_schema),
+    )
 
 
 def _fsync_directory(path: Path) -> None:
@@ -1864,9 +1965,11 @@ class CollaborationCodexSubagentTransport:
                     expected_prompt,
                     expected_prompt_hash,
                     expected_output_schema_hash,
-                ) = _single_payload_request_material(
-                    pass_name="EVIDENCE_FACT_EXTRACTION",
+                ) = _authority_recovery_fact_request_material(
                     payload=request_payload,
+                    fact_extraction_semantics_version=(
+                        fact_extraction_semantics_version
+                    ),
                 )
                 if (
                     safe_payload != request_payload

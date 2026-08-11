@@ -159,6 +159,25 @@ score, Stage 또는 cutover authority가 아니다.
    fail-closed한다. 복구가 끝난 다음 clean resume에서만 새 typed-role response를
    소비한다.
 
+11. **직전 semantics 허용 목록과 역사적 prompt/schema 검증기가 불일치**
+
+   원인 10의 복구 후보 목록에는 직전 v5 semantics가 포함됐지만, journal 검증기는
+   그 요청을 현재 v6 instruction과 output schema로 다시 생성해 비교했다. v5 요청은
+   valuation 역할은 포함하지만 새 `EPS_REVISION`·`OPERATING_PROFIT_REVISION` 역할과
+   revision 전용 instruction은 없는 것이 정상이다. 따라서 올바른 과거 영수증이
+   prompt/schema hash 불일치로 `INVALID` 처리되고, 복구기는 다시 binding을 찾지
+   못했다.
+
+   쉬운 예: 2025년 양식으로 정상 발행된 영수증을 2026년 양식 칸 수와 비교한 뒤
+   위조라고 판단한 셈이다. 발행 당시 양식을 재현해서 검증해야 한다.
+
+   수정 후 authority-recovery journal 검증과 실제 semantic replay는 모두 명시적으로
+   지원되는 semantics version별 frozen instruction과 schema를 deterministic하게
+   재생성한다. 직전 v5는 valuation 역할을 보존하고 revision 두 역할과 revision 전용
+   문장만 제거한다. 저장된 prompt를 그대로 믿지 않고 재생성한 prompt/schema/hash와
+   exact 비교하며, 그 뒤에도 official response validator와 compiler가 권위 장부의
+   정확한 intersection을 재현해야만 복구에 사용한다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -209,6 +228,9 @@ score, Stage 또는 cutover authority가 아니다.
     장부를 복구하지 않는다. 지원되는 직전 semantics 영수증까지 재검증하고, 권위 epoch의
     exact claim/fact intersection을 유일하게 재현한 영수증으로 구 장부를 먼저 복구한 뒤
     다음 resume에서 새 response를 적용한다.
+14. 지원 semantics 목록을 늘릴 때는 버전 문자열만 허용하지 않는다. 각 버전의 frozen
+    instruction·output schema·hash를 재생성하는 회귀 테스트를 함께 두고, 현재 builder로
+    과거 요청을 검증하지 않는다.
 
 ## Goal 경계
 
