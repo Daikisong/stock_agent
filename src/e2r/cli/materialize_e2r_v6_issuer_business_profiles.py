@@ -1,10 +1,12 @@
 """Materialize the canonical Phase-105 official issuer-profile manifest.
 
-The production candidate roster is not the first N KRX listings.  It is the
-stable KRX-order intersection of current L3 depth decisions and real,
-successful, two-call planner abstentions.  Natural COMPLETE planner runs keep
-using the existing selector lane; PENDING and incomplete planner attempts do
-not receive forced-validation authority.
+The existing natural roster remains the stable KRX-order intersection of
+current L3 depth decisions and real, successful, two-call planner abstentions.
+A separate forced-validation lane may inspect the full current eligible KRX
+roster with bounded OpenDART company/industry discovery, retain only sectors
+required by the exact archetype roster, and then require the same full periodic
+profile compatibility validation.  Natural COMPLETE planner runs keep using
+the existing selector lane; PENDING attempts receive no forced authority.
 """
 
 from __future__ import annotations
@@ -62,6 +64,7 @@ CUTOVER_RELATIVE_ROOT = Path("docs/operational/e2r_v6_operational_cutover")
 @dataclass(frozen=True)
 class CanonicalProfileInputs:
     universe_rows: tuple[Mapping[str, Any], ...]
+    forced_discovery_rows: tuple[Mapping[str, Any], ...]
     l3_target_count: int
     natural_complete_count: int
     eligible_abstained_count: int
@@ -351,6 +354,7 @@ def load_canonical_profile_inputs(
         raise ValueError("forced profile candidate roster escaped the KRX universe")
     return CanonicalProfileInputs(
         universe_rows=selected_rows,
+        forced_discovery_rows=tuple(universe),
         l3_target_count=len(l3_targets),
         natural_complete_count=natural_complete_count,
         eligible_abstained_count=len(selected_rows),
@@ -411,6 +415,7 @@ def materialize_canonical_profile_manifest(
     result = V6IssuerBusinessProfileMaterializer().materialize(
         config,
         universe_rows=inputs.universe_rows,
+        discovery_universe_rows=inputs.forced_discovery_rows,
         credential=credential,
         fetcher=fetcher,
         compatibility_provider=compatibility_provider,
@@ -435,6 +440,10 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-list-pages", type=int, default=3)
     parser.add_argument("--request-timeout-seconds", type=float, default=30.0)
     parser.add_argument("--max-compatibility-prompt-chars", type=int, default=2_000_000)
+    parser.add_argument("--max-discovery-fetches", type=int, default=3_000)
+    parser.add_argument(
+        "--max-forced-candidates-per-required-slot", type=int, default=10
+    )
     return parser
 
 
@@ -458,6 +467,10 @@ def main() -> int:
             max_list_pages=args.max_list_pages,
             request_timeout_seconds=args.request_timeout_seconds,
             max_compatibility_prompt_chars=args.max_compatibility_prompt_chars,
+            max_discovery_fetches=args.max_discovery_fetches,
+            max_forced_candidates_per_required_slot=(
+                args.max_forced_candidates_per_required_slot
+            ),
             test_mode=False,
         ),
         credential=credential,
@@ -478,6 +491,7 @@ def main() -> int:
                     "eligible_abstained_count": inputs.eligible_abstained_count,
                     "ineligible_abstained_count": inputs.ineligible_abstained_count,
                     "pending_count": inputs.pending_count,
+                    "full_krx_discovery_count": len(inputs.forced_discovery_rows),
                 },
                 "forced_validation_authority": False,
                 "score_or_stage_authority": False,

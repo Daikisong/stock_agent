@@ -1271,6 +1271,19 @@ class E2RV6CanarySelectionTests(unittest.TestCase):
                     for candidate in candidates
                 ),
             )
+            full_krx_rows = [
+                json.loads(line)
+                for line in (root / "universe_eligible.jsonl").read_text(
+                    encoding="utf-8"
+                ).splitlines()
+                if line.strip()
+            ]
+            self.assertEqual(inputs.forced_discovery_rows, tuple(full_krx_rows))
+            self.assertTrue(
+                {row["symbol"] for row in inputs.universe_rows}.issubset(
+                    {row["symbol"] for row in inputs.forced_discovery_rows}
+                )
+            )
 
             run_path = root / "planner_runs.jsonl"
             original_runs = run_path.read_bytes()

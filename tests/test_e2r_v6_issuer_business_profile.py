@@ -71,7 +71,72 @@ class FakeOpenDartFetcher:
         self.stale_document_for = stale_document_for or set()
         self.document_padding = document_padding
         self.calls: list[str] = []
+        self.discovery_calls: list[str] = []
         self.full_documents: dict[str, str] = {}
+
+    def discover_industry(
+        self,
+        *,
+        target_id: str,
+        company_name: str,
+        as_of_date: date,
+        credential: str,
+        timeout_seconds: float,
+    ) -> dict:
+        del credential, timeout_seconds
+        self.discovery_calls.append(target_id)
+        if target_id in self.fail_targets:
+            return {
+                "status": "PENDING",
+                "provider_name": "OpenDART",
+                "target_id": target_id,
+                "company_name": company_name,
+                "request_count": 1,
+                "error_category": "OPENDART_PROVIDER_FAILURE:fixture",
+            }
+        corp_code = "00" + target_id
+        corp_xml = (
+            "<result><list>"
+            f"<corp_code>{corp_code}</corp_code>"
+            f"<corp_name>{company_name}</corp_name>"
+            f"<stock_code>{target_id}</stock_code>"
+            "</list></result>"
+        )
+        company_text = json.dumps(
+            {
+                "status": "000",
+                "corp_code": corp_code,
+                "corp_name": company_name,
+                "stock_code": target_id,
+                "induty_code": self.industry_by_target.get(target_id, "99999"),
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+        return {
+            "status": "DISCOVERED",
+            "provider_name": "OpenDART",
+            "target_id": target_id,
+            "company_name": company_name,
+            "request_count": 2,
+            "corp_code_receipt": profile_module._source_receipt(
+                role="CORP_CODE_IDENTITY",
+                target_id=target_id,
+                as_of_date=as_of_date,
+                canonical_url=profile_module._CORP_CODE_URL,
+                request_params={},
+                response_text=corp_xml,
+            ),
+            "company_receipt": profile_module._source_receipt(
+                role="COMPANY_IDENTITY",
+                target_id=target_id,
+                as_of_date=as_of_date,
+                canonical_url=profile_module._COMPANY_URL,
+                request_params={"corp_code": corp_code},
+                response_text=company_text,
+            ),
+            "error_category": None,
+        }
 
     def fetch(
         self,
@@ -368,6 +433,141 @@ class V6IssuerBusinessProfileTest(unittest.TestCase):
             "L4_MATERIALS_SPREAD_RESOURCE",
         )
 
+    def test_forced_discovery_recovers_required_sector_outside_natural_roster(self) -> None:
+        full_rows, industries = _five_rows()
+        natural_rows = full_rows[1:]
+        fetcher = FakeOpenDartFetcher(industries)
+        provider = FakeCompatibilityProvider()
+
+        result = V6IssuerBusinessProfileMaterializer().materialize(
+            IssuerBusinessProfileConfig(
+                as_of_date=AS_OF,
+                max_profile_fetches=5,
+                max_discovery_fetches=10,
+                max_forced_candidates_per_required_slot=1,
+            ),
+            universe_rows=natural_rows,
+            discovery_universe_rows=full_rows,
+            credential="official-fixture-key",
+            fetcher=fetcher,
+            compatibility_provider=provider,
+        )
+
+        self.assertEqual(result["status"], PROFILE_PASS)
+        expansion = result["candidate_expansion_receipt"]
+        self.assertEqual(expansion["status"], "COMPLETE")
+        self.assertEqual(expansion["selection_mode"], "FORCED_VALIDATION_CANARY")
+        self.assertEqual(
+            [row["target_id"] for row in expansion["expanded_candidates"]],
+            [full_rows[0]["symbol"]],
+        )
+        self.assertEqual(
+            expansion["natural_candidate_roster"],
+            [row["symbol"] for row in natural_rows],
+        )
+        self.assertEqual(fetcher.calls[0], full_rows[0]["symbol"])
+        self.assertEqual(
+            tuple(row["archetype_id"] for row in result["selections"]),
+            REQUIRED_ARCHETYPES,
+        )
+        self.assertFalse(expansion["score_or_stage_authority"])
+        self.assertFalse(expansion["gold_authority"])
+
+        drifted = deepcopy(result)
+        drifted_discovery = drifted["candidate_expansion_receipt"][
+            "expanded_candidates"
+        ][0]
+        drifted_discovery["company_profile_hash"] = "f" * 64
+        discovery_core = {
+            key: value
+            for key, value in drifted_discovery.items()
+            if key != "discovery_id"
+        }
+        drifted_discovery["discovery_id"] = (
+            "PROFILEDISC-" + stable_hash(discovery_core)[:24]
+        )
+        drifted_expansion = drifted["candidate_expansion_receipt"]
+        drifted_expansion["expanded_candidate_roster_hash"] = stable_hash(
+            [
+                row["discovery_id"]
+                for row in drifted_expansion["expanded_candidates"]
+            ]
+        )
+        expansion_core = {
+            key: value
+            for key, value in drifted_expansion.items()
+            if key != "receipt_id"
+        }
+        drifted_expansion["receipt_id"] = (
+            "PROFILEEXPAND-" + stable_hash(expansion_core)[:24]
+        )
+        with self.assertRaisesRegex(ValueError, "drifted from forced discovery"):
+            validate_issuer_business_profile_result(drifted)
+
+    def test_forced_discovery_provider_failure_is_pending_before_full_profiles(self) -> None:
+        full_rows, industries = _five_rows()
+        natural_rows = full_rows[1:]
+        fetcher = FakeOpenDartFetcher(
+            industries,
+            fail_targets={full_rows[0]["symbol"]},
+        )
+        provider = FakeCompatibilityProvider()
+
+        result = V6IssuerBusinessProfileMaterializer().materialize(
+            IssuerBusinessProfileConfig(
+                as_of_date=AS_OF,
+                max_profile_fetches=5,
+                max_discovery_fetches=10,
+                max_forced_candidates_per_required_slot=1,
+            ),
+            universe_rows=natural_rows,
+            discovery_universe_rows=full_rows,
+            credential="official-fixture-key",
+            fetcher=fetcher,
+            compatibility_provider=provider,
+        )
+
+        self.assertEqual(result["status"], PROFILE_PENDING)
+        self.assertEqual(result["candidate_expansion_receipt"]["status"], "PENDING")
+        self.assertEqual(
+            result["candidate_expansion_receipt"]["stop_reason"],
+            "PROVIDER_PENDING",
+        )
+        self.assertEqual(fetcher.calls, [])
+        self.assertEqual(provider.calls, 0)
+
+    def test_forced_discovery_budget_exhaustion_is_pending_and_bounded(self) -> None:
+        full_rows, industries = _five_rows()
+        natural_rows = full_rows[1:]
+        irrelevant = _krx_row("100006", "발행인 비관련")
+        industries[irrelevant["symbol"]] = "10799"
+        discovery_rows = [irrelevant, *natural_rows, full_rows[0]]
+        fetcher = FakeOpenDartFetcher(industries)
+        provider = FakeCompatibilityProvider()
+
+        result = V6IssuerBusinessProfileMaterializer().materialize(
+            IssuerBusinessProfileConfig(
+                as_of_date=AS_OF,
+                max_profile_fetches=5,
+                max_discovery_fetches=1,
+                max_forced_candidates_per_required_slot=1,
+            ),
+            universe_rows=natural_rows,
+            discovery_universe_rows=discovery_rows,
+            credential="official-fixture-key",
+            fetcher=fetcher,
+            compatibility_provider=provider,
+        )
+
+        expansion = result["candidate_expansion_receipt"]
+        self.assertEqual(result["status"], PROFILE_PENDING)
+        self.assertEqual(expansion["status"], "PENDING")
+        self.assertEqual(expansion["stop_reason"], "BUDGET_EXHAUSTED")
+        self.assertEqual(expansion["discovery_fetch_count"], 1)
+        self.assertEqual(fetcher.discovery_calls, [irrelevant["symbol"]])
+        self.assertEqual(fetcher.calls, [])
+        self.assertEqual(provider.calls, 0)
+
     def test_production_exact_five_is_complete_and_stops(self) -> None:
         rows, industries = _five_rows()
         rows.append(_krx_row("100006", "발행인 제타"))
@@ -593,6 +793,12 @@ class V6IssuerBusinessProfileTest(unittest.TestCase):
         ] = "2026-08-08"
         with self.assertRaisesRegex(ValueError, "envelope/hash"):
             validate_issuer_business_profile_result(request_hash_tamper)
+        expansion_hash_tamper = deepcopy(result)
+        expansion_hash_tamper["candidate_expansion_receipt"][
+            "natural_candidate_roster_hash"
+        ] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "natural/full KRX roster"):
+            validate_issuer_business_profile_result(expansion_hash_tamper)
         document_tamper = dict(fetcher.full_documents)
         first_doc = result["selections"][0]["periodic_report_document_id"]
         document_tamper[first_doc] += "변조"

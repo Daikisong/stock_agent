@@ -4,7 +4,8 @@ The ordinary current planner may abstain when a weak trigger says only that a
 filing exists.  This module does not turn that abstention into a score or a
 Stage.  It builds a separate, pre-deep compatibility receipt from:
 
-* one current eligible KRX listing row;
+* current eligible KRX listing rows, with a separately receipted full-universe
+  forced discovery lane;
 * the OpenDART corp-code and company-profile identities;
 * the latest periodic report available by the as-of date; and
 * bounded Codex Collaboration classifications that account for the exact five
@@ -35,13 +36,17 @@ from e2r.production.metadata import stable_hash
 
 
 PROFILE_SCHEMA_VERSION = "e2r_v6_issuer_business_profile_v1"
-PROFILE_RESULT_SCHEMA_VERSION = "e2r_v6_issuer_business_profile_result_v1"
+PROFILE_RESULT_SCHEMA_VERSION = "e2r_v6_issuer_business_profile_result_v2"
 COMPATIBILITY_RECEIPT_SCHEMA_VERSION = (
     "e2r_v6_issuer_business_compatibility_receipt_v1"
 )
 PROFILE_SELECTION_RECEIPT_SCHEMA_VERSION = (
     "e2r_v6_issuer_business_profile_selection_receipt_v1"
 )
+CANDIDATE_EXPANSION_RECEIPT_SCHEMA_VERSION = (
+    "e2r_v6_issuer_business_candidate_expansion_receipt_v1"
+)
+INDUSTRY_DISCOVERY_SCHEMA_VERSION = "e2r_v6_opendart_industry_discovery_v1"
 PROFILE_PASS = "COMPLETE"
 PROFILE_PENDING = "PENDING"
 PROFILE_ABSTAINED = "ABSTAINED"
@@ -114,6 +119,8 @@ class IssuerBusinessProfileConfig:
     max_list_pages: int = 3
     request_timeout_seconds: float = 30.0
     max_compatibility_prompt_chars: int = 2_000_000
+    max_discovery_fetches: int = 3_000
+    max_forced_candidates_per_required_slot: int = 10
     test_mode: bool = False
 
     def __post_init__(self) -> None:
@@ -134,6 +141,16 @@ class IssuerBusinessProfileConfig:
             self.max_compatibility_prompt_chars, int
         ) or not 10_000 <= self.max_compatibility_prompt_chars <= 5_000_000:
             raise ValueError("compatibility prompt must have a finite bounded size")
+        if isinstance(self.max_discovery_fetches, bool) or not isinstance(
+            self.max_discovery_fetches, int
+        ) or not 1 <= self.max_discovery_fetches <= 5_000:
+            raise ValueError("OpenDART industry discovery must be bounded by 5,000")
+        if isinstance(
+            self.max_forced_candidates_per_required_slot, bool
+        ) or not isinstance(self.max_forced_candidates_per_required_slot, int) or not 1 <= (
+            self.max_forced_candidates_per_required_slot
+        ) <= 10:
+            raise ValueError("forced candidates per required slot must be bounded by ten")
         if not isinstance(self.test_mode, bool):
             raise ValueError("test_mode must be a boolean")
 
@@ -148,6 +165,17 @@ class IssuerBusinessProfileFetcher(Protocol):
     """Injectable official network boundary used by the materializer."""
 
     provider_name: str
+
+    def discover_industry(
+        self,
+        *,
+        target_id: str,
+        company_name: str,
+        as_of_date: date,
+        credential: str,
+        timeout_seconds: float,
+    ) -> Mapping[str, Any]:
+        ...
 
     def fetch(
         self,
@@ -183,6 +211,85 @@ class RequestsOpenDartIssuerBusinessProfileFetcher:
 
     def __init__(self) -> None:
         self._corp_code_text: str | None = None
+
+    def discover_industry(
+        self,
+        *,
+        target_id: str,
+        company_name: str,
+        as_of_date: date,
+        credential: str,
+        timeout_seconds: float,
+    ) -> Mapping[str, Any]:
+        """Fetch only official identity and industry code before full reports."""
+
+        request_count = 0
+        try:
+            if self._corp_code_text is None:
+                response = requests.get(
+                    _CORP_CODE_URL,
+                    params={"crtfc_key": credential},
+                    timeout=(5.0, timeout_seconds),
+                )
+                request_count += 1
+                response.raise_for_status()
+                self._corp_code_text = _decode_corp_code_payload(response.content)
+            corp_text = self._corp_code_text
+            corp_row = _corp_row(corp_text, target_id=target_id)
+            if corp_row is None:
+                return _pending_discovery(
+                    target_id=target_id,
+                    company_name=company_name,
+                    error_category="OPENDART_SYMBOL_NOT_FOUND",
+                    request_count=request_count,
+                )
+            corp_code = str(corp_row["corp_code"])
+            company_response = requests.get(
+                _COMPANY_URL,
+                params={"crtfc_key": credential, "corp_code": corp_code},
+                timeout=(5.0, timeout_seconds),
+            )
+            request_count += 1
+            company_response.raise_for_status()
+            company_text = company_response.text
+            return {
+                "status": "DISCOVERED",
+                "provider_name": self.provider_name,
+                "target_id": target_id,
+                "company_name": company_name,
+                "request_count": request_count,
+                "corp_code_receipt": _source_receipt(
+                    role="CORP_CODE_IDENTITY",
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    canonical_url=_CORP_CODE_URL,
+                    request_params={},
+                    response_text=corp_text,
+                ),
+                "company_receipt": _source_receipt(
+                    role="COMPANY_IDENTITY",
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    canonical_url=_COMPANY_URL,
+                    request_params={"corp_code": corp_code},
+                    response_text=company_text,
+                ),
+                "error_category": None,
+            }
+        except (
+            requests.RequestException,
+            RuntimeError,
+            TypeError,
+            ValueError,
+            json.JSONDecodeError,
+            ET.ParseError,
+        ) as exc:
+            return _pending_discovery(
+                target_id=target_id,
+                company_name=company_name,
+                error_category=f"OPENDART_PROVIDER_FAILURE:{type(exc).__name__}",
+                request_count=request_count,
+            )
 
     def fetch(
         self,
@@ -353,6 +460,7 @@ class V6IssuerBusinessProfileMaterializer:
         config: IssuerBusinessProfileConfig,
         *,
         universe_rows: Sequence[Mapping[str, Any]],
+        discovery_universe_rows: Sequence[Mapping[str, Any]] = (),
         credential: str | None,
         fetcher: IssuerBusinessProfileFetcher,
         compatibility_provider: IssuerBusinessCompatibilityProvider,
@@ -360,6 +468,26 @@ class V6IssuerBusinessProfileMaterializer:
         if fetcher.provider_name != "OpenDART":
             raise ValueError("issuer profile fetcher must be official-only OpenDART")
         if not credential:
+            expansion_pending = (
+                ({"code": "FORCED_DISCOVERY_CREDENTIAL_PENDING"},)
+                if discovery_universe_rows
+                else ()
+            )
+            expansion_receipt = (
+                _candidate_expansion_receipt(
+                    config=config,
+                    natural_candidates=(),
+                    full_krx_candidate_count=len(discovery_universe_rows),
+                    discovery_pool_count=len(discovery_universe_rows),
+                    discovery_fetch_count=0,
+                    expanded_candidates=(),
+                    pending=expansion_pending,
+                    status="PENDING",
+                    stop_reason="CREDENTIAL_PENDING",
+                )
+                if discovery_universe_rows
+                else _not_requested_candidate_expansion_receipt(config)
+            )
             return validate_forced_validation_profile_manifest(_result(
                 config=config,
                 profiles=(),
@@ -369,6 +497,7 @@ class V6IssuerBusinessProfileMaterializer:
                 fetch_count=0,
                 stopped_on_five=False,
                 provider_status="NOT_CALLED",
+                candidate_expansion_receipt=expansion_receipt,
             ))
         candidates: list[Mapping[str, Any]] = []
         invalid_inputs: list[Mapping[str, Any]] = []
@@ -385,10 +514,48 @@ class V6IssuerBusinessProfileMaterializer:
                 invalid_inputs.append(
                     {"code": "INVALID_KRX_CANDIDATE", "index": index, "detail": str(exc)}
                 )
+        expansion_receipt = _not_requested_candidate_expansion_receipt(config)
+        if discovery_universe_rows:
+            expanded_candidates, expansion_receipt = _expand_forced_candidates(
+                config=config,
+                natural_candidates=candidates,
+                discovery_universe_rows=discovery_universe_rows,
+                credential=credential,
+                fetcher=fetcher,
+            )
+            for candidate in expanded_candidates:
+                target = str(candidate["symbol"])
+                if target in seen_targets:
+                    raise ValueError("forced discovery duplicated a natural candidate")
+                seen_targets.add(target)
+            # Discovery candidates are already official-sector filtered.  Give
+            # them the bounded full-profile budget first while preserving the
+            # original KRX order within both the forced and natural lanes.
+            candidates = [*expanded_candidates, *candidates]
         profiles: list[Mapping[str, Any]] = []
         receipts: list[Mapping[str, Any]] = []
         selections: tuple[Mapping[str, Any], ...] = ()
         pending: list[Mapping[str, Any]] = list(invalid_inputs)
+        if expansion_receipt["status"] == "PENDING":
+            pending.append(
+                {
+                    "code": "FORCED_DISCOVERY_PENDING",
+                    "receipt_id": expansion_receipt["receipt_id"],
+                }
+            )
+            return validate_forced_validation_profile_manifest(
+                _result(
+                    config=config,
+                    profiles=(),
+                    selections=(),
+                    receipts=(),
+                    pending=tuple(_deduplicated_rows(pending)),
+                    fetch_count=0,
+                    stopped_on_five=False,
+                    provider_status="NOT_CALLED",
+                    candidate_expansion_receipt=expansion_receipt,
+                )
+            )
         provider_status = "NOT_CALLED"
         stopped_on_five = False
         fetch_count = 0
@@ -481,6 +648,7 @@ class V6IssuerBusinessProfileMaterializer:
             fetch_count=fetch_count,
             stopped_on_five=stopped_on_five,
             provider_status=provider_status,
+            candidate_expansion_receipt=expansion_receipt,
         )
         return validate_forced_validation_profile_manifest(
             result,
@@ -524,6 +692,341 @@ def _validate_krx_row(
     ):
         raise ValueError("KRX issuer identity is not current and canonical")
     return row
+
+
+def validate_issuer_industry_discovery(
+    *,
+    krx_row: Mapping[str, Any],
+    opendart_bundle: Mapping[str, Any],
+    as_of_date: str,
+) -> Mapping[str, Any]:
+    """Validate one official OpenDART identity/industry light-discovery row."""
+
+    candidate = _validate_krx_row(krx_row, as_of_date=as_of_date)
+    bundle = opendart_bundle
+    target = str(candidate["symbol"])
+    company = str(candidate["company_name"])
+    if (
+        not isinstance(bundle, Mapping)
+        or bundle.get("status") != "DISCOVERED"
+        or bundle.get("provider_name") != "OpenDART"
+        or str(bundle.get("target_id") or "") != target
+        or str(bundle.get("company_name") or "") != company
+        or isinstance(bundle.get("request_count"), bool)
+        or not isinstance(bundle.get("request_count"), int)
+        or int(bundle.get("request_count") or 0) <= 0
+        or bundle.get("error_category") is not None
+    ):
+        raise ValueError(
+            "OpenDART industry discovery is pending: "
+            + str(bundle.get("error_category") or "invalid bundle")
+        )
+    corp_receipt = _validate_source_receipt(
+        bundle.get("corp_code_receipt"),
+        role="CORP_CODE_IDENTITY",
+        canonical_url=_CORP_CODE_URL,
+        target_id=target,
+        as_of_date=as_of_date,
+    )
+    corp_row = _corp_row(corp_receipt["response_text"], target_id=target)
+    if corp_row is None or not _same_company_name(corp_row["corp_name"], company):
+        raise ValueError("OpenDART discovery corp-code identity does not match KRX")
+    corp_code = str(corp_row["corp_code"])
+    company_receipt = _validate_source_receipt(
+        bundle.get("company_receipt"),
+        role="COMPANY_IDENTITY",
+        canonical_url=_COMPANY_URL,
+        target_id=target,
+        as_of_date=as_of_date,
+    )
+    if company_receipt["request_params"] != {"corp_code": corp_code}:
+        raise ValueError("OpenDART discovery company request scope mismatch")
+    company_payload = json.loads(company_receipt["response_text"])
+    industry_code = str(company_payload.get("induty_code") or "").strip()
+    company_stock_code = str(company_payload.get("stock_code") or "").strip()
+    if (
+        company_payload.get("status") != "000"
+        or str(company_payload.get("corp_code") or "") != corp_code
+        or not company_stock_code
+        or company_stock_code.zfill(6) != target
+        or not _same_company_name(company_payload.get("corp_name"), company)
+        or re.fullmatch(r"[0-9]{2,6}", industry_code) is None
+    ):
+        raise ValueError("OpenDART discovery company identity or industry code is invalid")
+    discovery_core = {
+        "schema_version": INDUSTRY_DISCOVERY_SCHEMA_VERSION,
+        "status": "COMPLETE",
+        "target_id": target,
+        "company_name": company,
+        "as_of_date": as_of_date,
+        "krx_row": dict(candidate),
+        "krx_row_hash": stable_hash(dict(candidate)),
+        "corp_code": corp_code,
+        "corp_code_request_id": corp_receipt["request_id"],
+        "corp_code_response_hash": corp_receipt["response_hash"],
+        "company_profile_request_id": company_receipt["request_id"],
+        "company_profile_hash": company_receipt["response_hash"],
+        "industry_code": industry_code,
+        "large_sector_id": large_sector_for_industry_code(industry_code) or "",
+        "official_only": True,
+        "forced_validation_authority": False,
+        "score_or_stage_authority": False,
+        "gold_authority": False,
+    }
+    return {
+        **discovery_core,
+        "discovery_id": "PROFILEDISC-" + stable_hash(discovery_core)[:24],
+    }
+
+
+def _required_sector_quotas(
+    max_candidates_per_required_slot: int,
+) -> tuple[Mapping[str, Any], ...]:
+    counts: dict[str, int] = {}
+    order: list[str] = []
+    for archetype in REQUIRED_ARCHETYPES:
+        sector = str(large_sector_for_archetype(archetype) or "")
+        if not sector:
+            raise ValueError("required archetype lacks a canonical large sector")
+        if sector not in counts:
+            order.append(sector)
+            counts[sector] = 0
+        counts[sector] += 1
+    return tuple(
+        {
+            "large_sector_id": sector,
+            "required_archetype_count": counts[sector],
+            "candidate_quota": counts[sector] * max_candidates_per_required_slot,
+        }
+        for sector in order
+    )
+
+
+def _candidate_expansion_receipt(
+    *,
+    config: IssuerBusinessProfileConfig,
+    natural_candidates: Sequence[Mapping[str, Any]],
+    full_krx_candidate_count: int,
+    discovery_pool_count: int,
+    discovery_fetch_count: int,
+    expanded_candidates: Sequence[Mapping[str, Any]],
+    pending: Sequence[Mapping[str, Any]],
+    status: str,
+    stop_reason: str,
+) -> Mapping[str, Any]:
+    natural_roster = [str(row["symbol"]) for row in natural_candidates]
+    expanded = [dict(row) for row in expanded_candidates]
+    quotas = list(
+        _required_sector_quotas(config.max_forced_candidates_per_required_slot)
+    )
+    expanded_counts = {
+        row["large_sector_id"]: sum(
+            1
+            for candidate in expanded
+            if candidate["large_sector_id"] == row["large_sector_id"]
+        )
+        for row in quotas
+    }
+    unfilled = [
+        {
+            "large_sector_id": row["large_sector_id"],
+            "missing_candidate_count": row["candidate_quota"]
+            - expanded_counts[row["large_sector_id"]],
+        }
+        for row in quotas
+        if expanded_counts[row["large_sector_id"]] < row["candidate_quota"]
+    ]
+    core = {
+        "schema_version": CANDIDATE_EXPANSION_RECEIPT_SCHEMA_VERSION,
+        "status": status,
+        "selection_mode": "FORCED_VALIDATION_CANARY",
+        "as_of_date": config.as_of_date,
+        "provider_name": "OpenDART",
+        "required_archetypes": list(REQUIRED_ARCHETYPES),
+        "required_sector_quotas": quotas,
+        "natural_candidate_roster": natural_roster,
+        "natural_candidate_roster_hash": stable_hash(natural_roster),
+        "full_krx_candidate_count": full_krx_candidate_count,
+        "discovery_pool_count": discovery_pool_count,
+        "discovery_fetch_count": discovery_fetch_count,
+        "max_discovery_fetches": config.max_discovery_fetches,
+        "max_forced_candidates_per_required_slot": (
+            config.max_forced_candidates_per_required_slot
+        ),
+        "expanded_candidates": expanded,
+        "expanded_candidate_roster_hash": stable_hash(
+            [row["discovery_id"] for row in expanded]
+        ),
+        "unfilled_sector_quotas": unfilled,
+        "pending": [dict(row) for row in pending],
+        "stop_reason": stop_reason,
+        "official_only": True,
+        "bounded": True,
+        "forced_validation_authority": False,
+        "score_or_stage_authority": False,
+        "gold_authority": False,
+    }
+    return {
+        **core,
+        "receipt_id": "PROFILEEXPAND-" + stable_hash(core)[:24],
+    }
+
+
+def _not_requested_candidate_expansion_receipt(
+    config: IssuerBusinessProfileConfig,
+) -> Mapping[str, Any]:
+    return _candidate_expansion_receipt(
+        config=config,
+        natural_candidates=(),
+        full_krx_candidate_count=0,
+        discovery_pool_count=0,
+        discovery_fetch_count=0,
+        expanded_candidates=(),
+        pending=(),
+        status="NOT_REQUESTED",
+        stop_reason="NOT_REQUESTED",
+    )
+
+
+def _expand_forced_candidates(
+    *,
+    config: IssuerBusinessProfileConfig,
+    natural_candidates: Sequence[Mapping[str, Any]],
+    discovery_universe_rows: Sequence[Mapping[str, Any]],
+    credential: str,
+    fetcher: IssuerBusinessProfileFetcher,
+) -> tuple[tuple[Mapping[str, Any], ...], Mapping[str, Any]]:
+    natural_targets = {str(row["symbol"]) for row in natural_candidates}
+    full_candidates: list[Mapping[str, Any]] = []
+    invalid: list[Mapping[str, Any]] = []
+    seen: set[str] = set()
+    for index, row in enumerate(discovery_universe_rows):
+        try:
+            candidate = _validate_krx_row(row, as_of_date=config.as_of_date)
+            target = str(candidate["symbol"])
+            if target in seen:
+                raise ValueError("duplicate full-KRX discovery target")
+            seen.add(target)
+            full_candidates.append(candidate)
+        except (TypeError, ValueError) as exc:
+            invalid.append(
+                {
+                    "code": "FORCED_DISCOVERY_INPUT_PENDING",
+                    "index": index,
+                    "detail": str(exc),
+                }
+            )
+    pool = tuple(
+        candidate
+        for candidate in full_candidates
+        if str(candidate["symbol"]) not in natural_targets
+    )
+    raw_full_count = len(discovery_universe_rows)
+    raw_pool_count = max(0, raw_full_count - len(natural_candidates))
+    discover = getattr(fetcher, "discover_industry", None)
+    if not callable(discover):
+        pending = [
+            *invalid,
+            {
+                "code": "FORCED_DISCOVERY_PROVIDER_PENDING",
+                "detail": "OpenDART fetcher lacks industry discovery",
+            },
+        ]
+        return (), _candidate_expansion_receipt(
+            config=config,
+            natural_candidates=natural_candidates,
+            full_krx_candidate_count=raw_full_count,
+            discovery_pool_count=raw_pool_count,
+            discovery_fetch_count=0,
+            expanded_candidates=(),
+            pending=pending,
+            status="PENDING",
+            stop_reason="PROVIDER_PENDING",
+        )
+    quota_rows = _required_sector_quotas(
+        config.max_forced_candidates_per_required_slot
+    )
+    quotas = {
+        str(row["large_sector_id"]): int(row["candidate_quota"])
+        for row in quota_rows
+    }
+    counts = {sector: 0 for sector in quotas}
+    expanded_rows: list[Mapping[str, Any]] = []
+    expanded_krx_rows: list[Mapping[str, Any]] = []
+    pending = list(invalid)
+    fetch_count = 0
+    quotas_filled = False
+    for candidate in pool:
+        if all(counts[sector] >= quota for sector, quota in quotas.items()):
+            quotas_filled = True
+            break
+        if fetch_count >= config.max_discovery_fetches:
+            break
+        fetch_count += 1
+        bundle = discover(
+            target_id=str(candidate["symbol"]),
+            company_name=str(candidate["company_name"]),
+            as_of_date=date.fromisoformat(config.as_of_date),
+            credential=credential,
+            timeout_seconds=config.request_timeout_seconds,
+        )
+        try:
+            discovered = validate_issuer_industry_discovery(
+                krx_row=candidate,
+                opendart_bundle=bundle,
+                as_of_date=config.as_of_date,
+            )
+        except (TypeError, ValueError, json.JSONDecodeError, ET.ParseError) as exc:
+            pending.append(
+                {
+                    "code": "FORCED_DISCOVERY_PROVIDER_PENDING",
+                    "target_id": candidate["symbol"],
+                    "detail": str(exc),
+                }
+            )
+            continue
+        sector = str(discovered["large_sector_id"])
+        if sector in quotas and counts[sector] < quotas[sector]:
+            expanded_rows.append(discovered)
+            expanded_krx_rows.append(candidate)
+            counts[sector] += 1
+    if all(counts[sector] >= quota for sector, quota in quotas.items()):
+        quotas_filled = True
+    budget_exhausted = (
+        not quotas_filled
+        and fetch_count >= config.max_discovery_fetches
+        and fetch_count < len(pool)
+    )
+    provider_pending = bool(pending)
+    if budget_exhausted:
+        pending.append(
+            {
+                "code": "FORCED_DISCOVERY_BUDGET_PENDING",
+                "discovery_fetch_count": fetch_count,
+                "discovery_pool_count": len(pool),
+            }
+        )
+    status = "PENDING" if pending or budget_exhausted else "COMPLETE"
+    if provider_pending:
+        stop_reason = "PROVIDER_PENDING"
+    elif budget_exhausted:
+        stop_reason = "BUDGET_EXHAUSTED"
+    elif quotas_filled:
+        stop_reason = "QUOTAS_FILLED"
+    else:
+        stop_reason = "FULL_KRX_EXHAUSTED"
+    receipt = _candidate_expansion_receipt(
+        config=config,
+        natural_candidates=natural_candidates,
+        full_krx_candidate_count=raw_full_count,
+        discovery_pool_count=raw_pool_count,
+        discovery_fetch_count=fetch_count,
+        expanded_candidates=expanded_rows,
+        pending=pending,
+        status=status,
+        stop_reason=stop_reason,
+    )
+    return tuple(expanded_krx_rows), receipt
 
 
 def validate_issuer_business_profile(
@@ -1387,6 +1890,237 @@ def validate_issuer_business_profile_receipt(
     return receipt
 
 
+def _validate_industry_discovery_record(raw: object) -> Mapping[str, Any]:
+    if not isinstance(raw, Mapping):
+        raise ValueError("industry discovery record is not an object")
+    row = dict(raw)
+    if set(row) != {
+        "schema_version",
+        "status",
+        "target_id",
+        "company_name",
+        "as_of_date",
+        "krx_row",
+        "krx_row_hash",
+        "corp_code",
+        "corp_code_request_id",
+        "corp_code_response_hash",
+        "company_profile_request_id",
+        "company_profile_hash",
+        "industry_code",
+        "large_sector_id",
+        "official_only",
+        "forced_validation_authority",
+        "score_or_stage_authority",
+        "gold_authority",
+        "discovery_id",
+    }:
+        raise ValueError("industry discovery record keys are not exact")
+    if (
+        row["schema_version"] != INDUSTRY_DISCOVERY_SCHEMA_VERSION
+        or row["status"] != "COMPLETE"
+        or row["official_only"] is not True
+        or any(
+            row[key] is not False
+            for key in (
+                "forced_validation_authority",
+                "score_or_stage_authority",
+                "gold_authority",
+            )
+        )
+    ):
+        raise ValueError("industry discovery status/authority is invalid")
+    candidate = _validate_krx_row(row["krx_row"], as_of_date=row["as_of_date"])
+    industry_code = str(row["industry_code"])
+    corp_code = str(row["corp_code"])
+    if (
+        row["target_id"] != candidate["symbol"]
+        or row["company_name"] != candidate["company_name"]
+        or row["krx_row_hash"] != stable_hash(dict(candidate))
+        or re.fullmatch(r"[0-9]{8}", corp_code) is None
+        or re.fullmatch(r"[0-9]{2,6}", industry_code) is None
+        or row["large_sector_id"]
+        != (large_sector_for_industry_code(industry_code) or "")
+        or row["corp_code_request_id"]
+        != _official_request_id(
+            role="CORP_CODE_IDENTITY",
+            target_id=row["target_id"],
+            as_of_date=row["as_of_date"],
+            request_params={},
+        )
+        or row["company_profile_request_id"]
+        != _official_request_id(
+            role="COMPANY_IDENTITY",
+            target_id=row["target_id"],
+            as_of_date=row["as_of_date"],
+            request_params={"corp_code": corp_code},
+        )
+        or any(
+            _HEX64_RE.fullmatch(str(row[key])) is None
+            for key in ("corp_code_response_hash", "company_profile_hash")
+        )
+    ):
+        raise ValueError("industry discovery identity/hash/taxonomy is invalid")
+    core = {key: value for key, value in row.items() if key != "discovery_id"}
+    if row["discovery_id"] != "PROFILEDISC-" + stable_hash(core)[:24]:
+        raise ValueError("industry discovery id hash mismatch")
+    return row
+
+
+def validate_candidate_expansion_receipt(raw: object) -> Mapping[str, Any]:
+    if not isinstance(raw, Mapping):
+        raise ValueError("candidate expansion receipt is not an object")
+    receipt = dict(raw)
+    if set(receipt) != {
+        "schema_version",
+        "status",
+        "selection_mode",
+        "as_of_date",
+        "provider_name",
+        "required_archetypes",
+        "required_sector_quotas",
+        "natural_candidate_roster",
+        "natural_candidate_roster_hash",
+        "full_krx_candidate_count",
+        "discovery_pool_count",
+        "discovery_fetch_count",
+        "max_discovery_fetches",
+        "max_forced_candidates_per_required_slot",
+        "expanded_candidates",
+        "expanded_candidate_roster_hash",
+        "unfilled_sector_quotas",
+        "pending",
+        "stop_reason",
+        "official_only",
+        "bounded",
+        "forced_validation_authority",
+        "score_or_stage_authority",
+        "gold_authority",
+        "receipt_id",
+    }:
+        raise ValueError("candidate expansion receipt keys are not exact")
+    status = receipt["status"]
+    max_discovery = receipt["max_discovery_fetches"]
+    per_slot = receipt["max_forced_candidates_per_required_slot"]
+    count_fields = (
+        receipt["full_krx_candidate_count"],
+        receipt["discovery_pool_count"],
+        receipt["discovery_fetch_count"],
+    )
+    if (
+        receipt["schema_version"] != CANDIDATE_EXPANSION_RECEIPT_SCHEMA_VERSION
+        or status not in {"NOT_REQUESTED", "COMPLETE", "PENDING"}
+        or receipt["selection_mode"] != "FORCED_VALIDATION_CANARY"
+        or receipt["provider_name"] != "OpenDART"
+        or tuple(receipt["required_archetypes"] or ()) != REQUIRED_ARCHETYPES
+        or receipt["official_only"] is not True
+        or receipt["bounded"] is not True
+        or any(
+            receipt[key] is not False
+            for key in (
+                "forced_validation_authority",
+                "score_or_stage_authority",
+                "gold_authority",
+            )
+        )
+        or any(
+            isinstance(value, bool) or not isinstance(value, int) or value < 0
+            for value in count_fields
+        )
+        or isinstance(max_discovery, bool)
+        or not isinstance(max_discovery, int)
+        or not 1 <= max_discovery <= 5_000
+        or isinstance(per_slot, bool)
+        or not isinstance(per_slot, int)
+        or not 1 <= per_slot <= 10
+        or receipt["discovery_fetch_count"] > max_discovery
+        or receipt["discovery_fetch_count"] > receipt["discovery_pool_count"]
+    ):
+        raise ValueError("candidate expansion scope/budget/authority is invalid")
+    date.fromisoformat(str(receipt["as_of_date"]))
+    natural = receipt["natural_candidate_roster"]
+    if (
+        isinstance(natural, (str, bytes))
+        or not isinstance(natural, Sequence)
+        or any(_TARGET_RE.fullmatch(str(target)) is None for target in natural)
+        or len(set(natural)) != len(natural)
+        or receipt["natural_candidate_roster_hash"] != stable_hash(list(natural))
+        or receipt["full_krx_candidate_count"]
+        != receipt["discovery_pool_count"] + len(natural)
+    ):
+        raise ValueError("candidate expansion natural/full KRX roster is invalid")
+    expected_quotas = list(_required_sector_quotas(per_slot))
+    if receipt["required_sector_quotas"] != expected_quotas:
+        raise ValueError("candidate expansion sector quotas are not taxonomy-derived")
+    expanded_raw = receipt["expanded_candidates"]
+    pending = receipt["pending"]
+    unfilled = receipt["unfilled_sector_quotas"]
+    if any(
+        isinstance(value, (str, bytes)) or not isinstance(value, Sequence)
+        for value in (expanded_raw, pending, unfilled)
+    ) or any(not isinstance(row, Mapping) for row in pending):
+        raise ValueError("candidate expansion collections are invalid")
+    expanded = [_validate_industry_discovery_record(row) for row in expanded_raw]
+    expanded_targets = [str(row["target_id"]) for row in expanded]
+    quota_by_sector = {
+        str(row["large_sector_id"]): int(row["candidate_quota"])
+        for row in expected_quotas
+    }
+    if (
+        any(row["as_of_date"] != receipt["as_of_date"] for row in expanded)
+        or len(set(expanded_targets)) != len(expanded_targets)
+        or set(expanded_targets).intersection(str(target) for target in natural)
+        or any(row["large_sector_id"] not in quota_by_sector for row in expanded)
+        or any(
+            sum(1 for row in expanded if row["large_sector_id"] == sector) > quota
+            for sector, quota in quota_by_sector.items()
+        )
+        or len(expanded) > receipt["discovery_fetch_count"]
+        or receipt["expanded_candidate_roster_hash"]
+        != stable_hash([row["discovery_id"] for row in expanded])
+    ):
+        raise ValueError("candidate expansion discovered roster is invalid")
+    expected_unfilled = [
+        {
+            "large_sector_id": sector,
+            "missing_candidate_count": quota
+            - sum(1 for row in expanded if row["large_sector_id"] == sector),
+        }
+        for sector, quota in quota_by_sector.items()
+        if sum(1 for row in expanded if row["large_sector_id"] == sector) < quota
+    ]
+    if list(unfilled) != expected_unfilled:
+        raise ValueError("candidate expansion unfilled sector quota audit is invalid")
+    stop_reason = receipt["stop_reason"]
+    if status == "NOT_REQUESTED" and (
+        any(count_fields)
+        or expanded
+        or pending
+        or stop_reason != "NOT_REQUESTED"
+    ):
+        raise ValueError("not-requested candidate expansion carries live authority")
+    if status == "COMPLETE" and (
+        pending
+        or stop_reason not in {"QUOTAS_FILLED", "FULL_KRX_EXHAUSTED"}
+        or (stop_reason == "QUOTAS_FILLED" and unfilled)
+        or (
+            stop_reason == "FULL_KRX_EXHAUSTED"
+            and receipt["discovery_fetch_count"] != receipt["discovery_pool_count"]
+        )
+    ):
+        raise ValueError("complete candidate expansion stop state is invalid")
+    if status == "PENDING" and (
+        not pending
+        or stop_reason
+        not in {"CREDENTIAL_PENDING", "PROVIDER_PENDING", "BUDGET_EXHAUSTED"}
+    ):
+        raise ValueError("pending candidate expansion lacks a bounded failure")
+    core = {key: value for key, value in receipt.items() if key != "receipt_id"}
+    if receipt["receipt_id"] != "PROFILEEXPAND-" + stable_hash(core)[:24]:
+        raise ValueError("candidate expansion receipt id hash mismatch")
+    return receipt
+
+
 def validate_issuer_business_profile_result(
     raw: Mapping[str, Any],
     *,
@@ -1403,6 +2137,7 @@ def validate_issuer_business_profile_result(
         "profiles",
         "selections",
         "compatibility_receipts",
+        "candidate_expansion_receipt",
         "pending",
         "audit",
         "forced_validation_authority",
@@ -1441,6 +2176,39 @@ def validate_issuer_business_profile_result(
         raise ValueError("issuer profile ids are not unique")
     profile_by_id = {row["profile_id"]: row for row in profiles}
     compatibility = [_validate_compatibility_receipt(row) for row in compatibility_raw]
+    expansion = validate_candidate_expansion_receipt(
+        result.get("candidate_expansion_receipt")
+    )
+    if expansion["as_of_date"] != result["as_of_date"]:
+        raise ValueError("candidate expansion belongs to a different as-of scope")
+    if expansion["status"] != "NOT_REQUESTED":
+        candidate_targets = {
+            str(target) for target in expansion["natural_candidate_roster"]
+        }
+        candidate_targets.update(
+            str(row["target_id"]) for row in expansion["expanded_candidates"]
+        )
+        if any(str(profile["target_id"]) not in candidate_targets for profile in profiles):
+            raise ValueError("issuer profile escaped natural/forced candidate lineage")
+        expanded_by_target = {
+            str(row["target_id"]): row for row in expansion["expanded_candidates"]
+        }
+        for profile in profiles:
+            discovered = expanded_by_target.get(str(profile["target_id"]))
+            if discovered is not None and any(
+                profile[key] != discovered[key]
+                for key in (
+                    "company_name",
+                    "krx_row_hash",
+                    "corp_code",
+                    "corp_code_request_id",
+                    "company_profile_request_id",
+                    "company_profile_hash",
+                    "industry_code",
+                    "large_sector_id",
+                )
+            ):
+                raise ValueError("full issuer profile drifted from forced discovery")
     if len({row["response_id"] for row in compatibility}) != len(compatibility):
         raise ValueError("compatibility response ids are not unique")
     compatibility_by_id = {row["response_id"]: row for row in compatibility}
@@ -1563,6 +2331,8 @@ def validate_issuer_business_profile_result(
         raise ValueError("production COMPLETE requires the exact-five unique manifest")
     if result["status"] in {PROFILE_PENDING, PROFILE_ABSTAINED} and selections:
         raise ValueError("pending/abstained result may not masquerade as selected")
+    if result["status"] == PROFILE_PASS and expansion["status"] == "PENDING":
+        raise ValueError("pending forced candidate expansion may not become COMPLETE")
     if result["status"] == PROFILE_TEST_ONLY and audit.get("production_acceptance_pass"):
         raise ValueError("test mode may not become a production acceptance PASS")
     return result
@@ -1878,6 +2648,7 @@ def _result(
     fetch_count: int,
     stopped_on_five: bool,
     provider_status: str,
+    candidate_expansion_receipt: Mapping[str, Any],
 ) -> Mapping[str, Any]:
     selected_complete = (
         tuple(str(row.get("archetype_id") or "") for row in selections)
@@ -1887,9 +2658,12 @@ def _result(
     )
     latest_decisions = tuple(receipts[-1].get("decisions") or ()) if receipts else ()
     has_abstain = any(row.get("status") == "ABSTAIN" for row in latest_decisions)
+    forced_discovery_pending = (
+        candidate_expansion_receipt.get("status") == "PENDING"
+    )
     if config.test_mode:
         status = PROFILE_TEST_ONLY
-    elif selected_complete:
+    elif selected_complete and not forced_discovery_pending:
         status = PROFILE_PASS
     elif has_abstain and not any("PENDING" in str(row.get("code") or "") for row in pending):
         status = PROFILE_ABSTAINED
@@ -1923,6 +2697,7 @@ def _result(
         "profiles": list(profiles),
         "selections": list(selections),
         "compatibility_receipts": list(receipts),
+        "candidate_expansion_receipt": dict(candidate_expansion_receipt),
         "pending": list(pending),
         "audit": audit,
         "forced_validation_authority": False,
@@ -1976,6 +2751,19 @@ def _official_request_id(
 
 
 def _pending_fetch(
+    *, target_id: str, company_name: str, error_category: str, request_count: int
+) -> Mapping[str, Any]:
+    return {
+        "status": "PENDING",
+        "provider_name": "OpenDART",
+        "target_id": target_id,
+        "company_name": company_name,
+        "request_count": request_count,
+        "error_category": error_category,
+    }
+
+
+def _pending_discovery(
     *, target_id: str, company_name: str, error_category: str, request_count: int
 ) -> Mapping[str, Any]:
     return {
@@ -2110,11 +2898,13 @@ def _yyyymmdd_to_iso(value: object) -> str:
 
 
 __all__ = [
+    "CANDIDATE_EXPANSION_RECEIPT_SCHEMA_VERSION",
     "CANONICAL_COMPATIBILITY_PROVIDER",
     "CompatibilityProviderCompletion",
     "IssuerBusinessCompatibilityProvider",
     "IssuerBusinessProfileConfig",
     "IssuerBusinessProfileFetcher",
+    "INDUSTRY_DISCOVERY_SCHEMA_VERSION",
     "PROFILE_ABSTAINED",
     "PROFILE_PASS",
     "PROFILE_PENDING",
@@ -2126,7 +2916,9 @@ __all__ = [
     "RequestsOpenDartIssuerBusinessProfileFetcher",
     "V6IssuerBusinessProfileMaterializer",
     "large_sector_for_industry_code",
+    "validate_candidate_expansion_receipt",
     "validate_forced_validation_profile_manifest",
+    "validate_issuer_industry_discovery",
     "validate_issuer_business_profile",
     "validate_issuer_business_profile_receipt",
     "validate_issuer_business_profile_result",
