@@ -483,6 +483,24 @@ score, Stage 또는 cutover authority가 아니다.
    score/Stage를 확정하지 않고, 현재 Supervisor가 강화된 validator로 정확히 한 번
    재판정해야만 다음 단계가 열린다. 종목명·아키타입·문구 키워드 조건은 사용하지 않는다.
 
+29. **terminal receipt가 append-only 과거 요청까지 현재 provider error로 계산**
+
+   C08의 현재 연구·saturation·Stage mapping이 모두 끝난 뒤에도 compact receipt는 journal
+   전체의 `request_count == response_count`를 요구했다. 원인 28에서 실행 권한을 잃은
+   과거 요청과 정식 quarantine된 교정 전 응답까지 현재 실패로 합산했기 때문에, 정확한
+   현재 결과가 있어도 receipt를 만들 수 없었다.
+
+   쉬운 예: 현재 월 장부는 모두 결재됐는데, 취소된 과거 신청서에 승인 도장이 없다는
+   이유로 이번 달 결산을 거부한 셈이다. 취소 신청서를 몰래 승인하는 것이 아니라,
+   취소·미응답 이력을 보존하고 현재 결산에 쓰인 서류가 모두 완료됐는지를 봐야 한다.
+
+   수정 후 journal은 invalid request/response, orphan, quarantine envelope·reason receipt,
+   active response와 quarantine의 동시 존재, request/response/pending 수식을 별도로
+   검증한다. 과거 미응답·quarantine은 terminal score, FINAL Stage, saturation certificate,
+   material gap 0이 이미 exact이고 이번 실행의 logical call 전부가 성공했을 때만 non-active
+   history로 허용한다. terminal 전이나 이번 실행에 실패 call이 있으면 같은 미응답은 계속
+   hard pending이다. 이를 provider success로 세거나 score/Stage authority로 사용하지 않는다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -592,6 +610,11 @@ score, Stage 또는 cutover authority가 아니다.
     route 0, retryable repair 0이라는 구조적 조건이 exact할 때만 과거 review의 routing
     authority를 일시 정지한다. 이 호환 projection은 component rewrite와 source query를
     열 수 없고, 새 Supervisor validation 한 건만 허용한다.
+31. terminal provider accounting은 immutable journal의 모든 과거 request에 응답을
+    강요하지 않는다. 대신 현재 terminal boundary가 먼저 성립해야 하고, active response,
+    unresolved historical request, validated quarantine가 request roster를 exact 분할해야
+    한다. current-run logical/successful call 수도 exact해야 한다. quarantine envelope와
+    reason receipt가 하나라도 손상되거나 count가 맞지 않으면 fail-closed한다.
 
 ## Goal 경계
 

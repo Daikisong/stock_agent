@@ -2256,6 +2256,9 @@ class CollaborationCodexSubagentTransport:
                 "orphan_response_count": 0,
                 "pending_response_count": 0,
                 "quarantined_response_count": 0,
+                "validated_quarantined_response_count": 0,
+                "invalid_quarantined_response_count": 0,
+                "unresolved_pending_response_count": 0,
                 "provenance_assurance": (
                     COLLABORATION_PROVENANCE_ASSURANCE
                 ),
@@ -2310,6 +2313,91 @@ class CollaborationCodexSubagentTransport:
             for path in (root / "quarantine").rglob("COLLABRESP-*.json")
             if not path.name.endswith(".reason.json")
         )
+        validated_quarantine_request_ids: set[str] = set()
+        invalid_quarantined_response_count = 0
+        quarantine_root = (root / "quarantine").resolve()
+        for quarantine_path in quarantined:
+            request_id = quarantine_path.parent.name
+            request = valid_requests.get(request_id)
+            try:
+                if request is None:
+                    raise ValueError(
+                        "quarantined response lacks a valid request"
+                    )
+                envelope = _validate_response_envelope(
+                    request=request,
+                    envelope=_read_json_object(quarantine_path),
+                )
+                response_id = str(envelope["response_id"])
+                if quarantine_path.name != f"{response_id}.json":
+                    raise ValueError(
+                        "quarantine path and response identity disagree"
+                    )
+                if (root / "responses" / f"{request_id}.json").is_file():
+                    raise ValueError(
+                        "quarantined request also has an active response"
+                    )
+                reason_paths = tuple(
+                    quarantine_path.parent.glob(
+                        f"{quarantine_path.name}.*.reason.json"
+                    )
+                )
+                if not reason_paths:
+                    raise ValueError(
+                        "quarantined response lacks a reason receipt"
+                    )
+                for reason_path in reason_paths:
+                    reason = _read_json_object(reason_path)
+                    recorded_quarantine_path = Path(
+                        str(reason.get("quarantined_response_path") or "")
+                    )
+                    clean_reason = " ".join(
+                        str(reason.get("reason") or "").split()
+                    )[-1000:]
+                    reason_hash = hashlib.sha256(
+                        clean_reason.encode("utf-8")
+                    ).hexdigest()
+                    if (
+                        reason.get("schema_version")
+                        != "e2r_v5_collaboration_response_quarantine_v1"
+                        or str(reason.get("request_id") or "")
+                        != request_id
+                        or str(reason.get("response_id") or "")
+                        != response_id
+                        or not clean_reason
+                        or reason_path.name
+                        != (
+                            f"{quarantine_path.name}.{reason_hash}.reason.json"
+                        )
+                        # Older receipts recorded an absolute path while a
+                        # later audit may configure the same journal through
+                        # a repo-relative path.  Compare canonical filesystem
+                        # identities, not spelling; still reject symlinks and
+                        # paths escaping the quarantine root.
+                        or quarantine_path.is_symlink()
+                        or reason_path.is_symlink()
+                        or not quarantine_path.resolve().is_relative_to(
+                            quarantine_root
+                        )
+                        or not reason_path.resolve().is_relative_to(
+                            quarantine_root
+                        )
+                        or recorded_quarantine_path.resolve()
+                        != quarantine_path.resolve()
+                        or reason.get("production_score_authority") is not False
+                        or reason.get("reusable_provider_response") is not False
+                    ):
+                        raise ValueError(
+                            "quarantine reason receipt is invalid"
+                        )
+                validated_quarantine_request_ids.add(request_id)
+            except (OSError, TypeError, ValueError, RuntimeError):
+                invalid_quarantined_response_count += 1
+        unresolved_pending_request_ids = (
+            set(valid_requests)
+            - validated_response_request_ids
+            - validated_quarantine_request_ids
+        )
         return {
             "schema_version": (
                 "e2r_v5_collaboration_provider_journal_audit_v1"
@@ -2329,6 +2417,14 @@ class CollaborationCodexSubagentTransport:
                 set(valid_requests) - validated_response_request_ids
             ),
             "quarantined_response_count": len(quarantined),
+            "validated_quarantined_response_count": len(quarantined)
+            - invalid_quarantined_response_count,
+            "invalid_quarantined_response_count": (
+                invalid_quarantined_response_count
+            ),
+            "unresolved_pending_response_count": len(
+                unresolved_pending_request_ids
+            ),
             "last_request_id": self._last_request_id,
             "last_response_id": self._last_response_id,
             "provenance_assurance": COLLABORATION_PROVENANCE_ASSURANCE,

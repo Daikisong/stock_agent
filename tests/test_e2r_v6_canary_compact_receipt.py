@@ -14,6 +14,7 @@ from e2r.production.v6_canary_compact_receipt import (
     COMPACT_REVIEW_SCHEMA,
     REQUIRED_ARTIFACT_NAMES,
     build_selection_bound_canary_artifacts_from_output,
+    _production_provider_accounting,
     build_selection_bound_canary_manifest,
     export_selection_bound_canary_bundle,
     validate_selection_bound_canary_artifacts,
@@ -860,6 +861,54 @@ def _write_terminal_output(root: Path, selection: dict[str, object]) -> Path:
 
 
 class E2RV6CanaryCompactReceiptTests(unittest.TestCase):
+    def test_terminal_provider_allows_only_valid_accounted_history(self) -> None:
+        audit = {
+            "status": "COLLABORATION_PROVIDER_JOURNAL_ACTIVE",
+            "provider_name": (
+                "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE"
+            ),
+            "logical_call_count": 24,
+            "successful_call_count": 24,
+            "provider_error_count": 0,
+            "provider_output_rejected_count": 0,
+            "prompt_transport_rejected_count": 0,
+            "collaboration_journal": {
+                "status": "COLLABORATION_JOURNAL_ACTIVE",
+                "request_count": 148,
+                "validated_request_count": 148,
+                "invalid_request_count": 0,
+                "response_file_count": 138,
+                "validated_response_count": 138,
+                "invalid_response_count": 0,
+                "orphan_response_count": 0,
+                "pending_response_count": 10,
+                "quarantined_response_count": 1,
+                "validated_quarantined_response_count": 1,
+                "invalid_quarantined_response_count": 0,
+                "unresolved_pending_response_count": 9,
+            },
+        }
+
+        accounting = _production_provider_accounting(
+            audit,
+            terminal_output_complete=True,
+        )
+        self.assertEqual(accounting["provider_error_count"], 0)
+        with self.assertRaises(ValueError):
+            _production_provider_accounting(
+                audit,
+                terminal_output_complete=False,
+            )
+        broken = deepcopy(audit)
+        broken["collaboration_journal"][
+            "unresolved_pending_response_count"
+        ] = 8
+        with self.assertRaises(ValueError):
+            _production_provider_accounting(
+                broken,
+                terminal_output_complete=True,
+            )
+
     def test_terminal_projection_recounts_positive_rosters_and_zero_material_gap(
         self,
     ) -> None:

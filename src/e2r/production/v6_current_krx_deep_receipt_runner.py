@@ -507,7 +507,27 @@ def _terminal_artifacts(
     evidence_rows = _read_jsonl(target_root / "evidence_facts.jsonl")
     counter_rows = _read_jsonl(target_root / "counterfacts.jsonl")
     material_gap_count = _material_gap_count(saturation=saturation, supervisor=supervisor)
-    provider_accounting = _production_provider_accounting(provider_audit)
+    # Phase107 uses the same append-only Collaboration journal as Phase106.
+    # Historical superseded requests may remain unanswered, but they become
+    # non-active history only after the exact target output is independently
+    # terminal.  Before this boundary, the same rows remain hard pending.
+    terminal_provider_boundary = bool(
+        target_manifest.get("status") == PHASE107_TERMINAL_RESEARCH_STATUS
+        and target_manifest.get("production_research_complete") is True
+        and score_vector.get("status") == "COMPLETE"
+        and score_vector.get("score_valid") is True
+        and atomic_stage.get("status") == "FINAL"
+        and atomic_stage.get("score_valid") is True
+        and saturation.get("status") == "CERTIFIED"
+        and saturation.get("semantic_saturation_certified") is True
+        and supervisor.get("status")
+        == "READY_FOR_INDEPENDENT_SATURATION_REVIEW"
+        and material_gap_count == 0
+    )
+    provider_accounting = _production_provider_accounting(
+        provider_audit,
+        terminal_output_complete=terminal_provider_boundary,
+    )
     output_tree_hash = canary_output_tree_hash(target_root, include_post_run_gold=False)
     query_ids = tuple(str(row.get("query_id") or "") for row in query_rows)
     document_ids = tuple(str(row.get("document_id") or "") for row in document_rows)

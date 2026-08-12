@@ -1796,10 +1796,55 @@ class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
                 ],
                 1,
             )
+            journal_audit = provider.collaboration.transport.journal_audit()
+            self.assertEqual(
+                journal_audit["validated_quarantined_response_count"],
+                1,
+            )
+            self.assertEqual(
+                journal_audit["invalid_quarantined_response_count"],
+                0,
+            )
+            # One clean retry is still unanswered; the quarantined original is
+            # accounted history, not the current pending request.
+            self.assertEqual(
+                journal_audit["unresolved_pending_response_count"],
+                1,
+            )
+            relative_transport = CollaborationCodexSubagentTransport()
+            relative_transport.configure_journal_root(
+                Path(os.path.relpath(journal, Path.cwd()))
+            )
+            relative_audit = relative_transport.journal_audit()
+            self.assertEqual(
+                relative_audit["validated_quarantined_response_count"],
+                1,
+            )
+            self.assertEqual(
+                relative_audit["invalid_quarantined_response_count"],
+                0,
+            )
             # The clean semantic retry has a different prompt hash and request.
             self.assertEqual(
                 len(tuple((journal / "requests").glob("*.json"))),
                 2,
+            )
+
+            reason_path = next(
+                (journal / "quarantine").rglob("*.reason.json")
+            )
+            reason = json.loads(reason_path.read_text(encoding="utf-8"))
+            reason["production_score_authority"] = True
+            reason_path.write_text(
+                json.dumps(reason, ensure_ascii=False, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            tampered_audit = (
+                provider.collaboration.transport.journal_audit()
+            )
+            self.assertEqual(
+                tampered_audit["invalid_quarantined_response_count"],
+                1,
             )
 
     def test_malformed_response_id_cannot_escape_quarantine_root(

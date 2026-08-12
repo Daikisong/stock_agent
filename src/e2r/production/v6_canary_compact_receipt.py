@@ -978,8 +978,22 @@ def _material_gap_count(
 
 def _production_provider_accounting(
     provider_audit: Mapping[str, Any],
+    *,
+    terminal_output_complete: bool,
 ) -> Mapping[str, int | str]:
-    """Fail closed on the runtime provider roster, including its journal audit."""
+    """Fail closed on current calls without criminalizing immutable history.
+
+    Collaboration requests are append-only.  A semantic correction can leave
+    an old request unanswered or its rejected response quarantined even though
+    every provider call used by the terminal score has completed.  Requiring
+    ``responses == all historical requests`` makes the only apparent escape
+    filling obsolete requests with fabricated answers.
+
+    Historical unanswered/quarantined rows are therefore allowed only behind
+    an already terminal score/Stage/saturation boundary, with exact accounting
+    and a fully valid quarantine audit.  Invalid requests, invalid responses,
+    orphan responses, current provider errors, and count drift still fail.
+    """
 
     def count(payload: Mapping[str, Any], field: str) -> int:
         value = payload.get(field, 0)
@@ -1008,18 +1022,33 @@ def _production_provider_accounting(
         provider_audit.get("collaboration_journal"),
         context="Collaboration provider journal audit",
     )
-    journal_failure_fields = (
+    journal_integrity_failure_fields = (
         "invalid_request_count",
         "invalid_response_count",
         "orphan_response_count",
-        "pending_response_count",
-        "quarantined_response_count",
+        "invalid_quarantined_response_count",
     )
-    journal_failures = sum(count(journal, field) for field in journal_failure_fields)
+    journal_failures = sum(
+        count(journal, field) for field in journal_integrity_failure_fields
+    )
     request_count = count(journal, "request_count")
     validated_request_count = count(journal, "validated_request_count")
     response_count = count(journal, "response_file_count")
     validated_response_count = count(journal, "validated_response_count")
+    pending_response_count = count(journal, "pending_response_count")
+    quarantined_response_count = count(
+        journal, "quarantined_response_count"
+    )
+    validated_quarantined_response_count = count(
+        journal, "validated_quarantined_response_count"
+    )
+    unresolved_pending_response_count = count(
+        journal, "unresolved_pending_response_count"
+    )
+    historical_nonactive_count = (
+        unresolved_pending_response_count
+        + validated_quarantined_response_count
+    )
     if (
         provider_audit.get("status") != "COLLABORATION_PROVIDER_JOURNAL_ACTIVE"
         or journal.get("status") != "COLLABORATION_JOURNAL_ACTIVE"
@@ -1029,10 +1058,19 @@ def _production_provider_accounting(
         or journal_failures != 0
         or request_count <= 0
         or request_count != validated_request_count
-        or response_count != request_count
-        or validated_response_count != request_count
+        or response_count != validated_response_count
+        or pending_response_count != request_count - response_count
+        or quarantined_response_count
+        != validated_quarantined_response_count
+        or historical_nonactive_count != pending_response_count
+        or (
+            historical_nonactive_count > 0
+            and not terminal_output_complete
+        )
     ):
-        raise ValueError("current Collaboration provider roster is not clean and complete")
+        raise ValueError(
+            "current Collaboration provider lineage is not clean and complete"
+        )
     return {
         "provider_name": provider_name,
         "successful_call_count": successful,
@@ -1119,7 +1157,24 @@ def build_selection_bound_canary_artifacts_from_output(
         saturation=saturation,
         supervisor=supervisor,
     )
-    provider_accounting = _production_provider_accounting(provider_audit)
+    terminal_provider_boundary = bool(
+        target_manifest.get("status")
+        == "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+        and target_manifest.get("production_research_complete") is True
+        and score_vector.get("status") == "COMPLETE"
+        and score_vector.get("score_valid") is True
+        and atomic_stage.get("status") == "FINAL"
+        and atomic_stage.get("score_valid") is True
+        and saturation.get("status") == "CERTIFIED"
+        and saturation.get("semantic_saturation_certified") is True
+        and supervisor.get("status")
+        == "READY_FOR_INDEPENDENT_SATURATION_REVIEW"
+        and material_gap_count == 0
+    )
+    provider_accounting = _production_provider_accounting(
+        provider_audit,
+        terminal_output_complete=terminal_provider_boundary,
+    )
     query_ids = tuple(str(row.get("query_id") or "") for row in query_rows)
     document_ids = tuple(
         str(row.get("document_id") or "") for row in all_document_rows
