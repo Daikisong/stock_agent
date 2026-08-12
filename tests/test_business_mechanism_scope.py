@@ -4,6 +4,7 @@ import json
 import unittest
 from pathlib import Path
 
+from e2r.production.v6_canary_selection import REQUIRED_ARCHETYPES
 from e2r.research_brain.scoring.business_mechanism_scope import (
     BusinessMechanismScope,
     MechanismScopeValidator,
@@ -15,6 +16,41 @@ from e2r.research_brain.scoring.business_mechanism_scope import (
 
 class BusinessMechanismScopeTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
+
+    def test_current_live_canaries_all_have_scope_contracts(self) -> None:
+        contracts = load_mechanism_scope_contracts()
+        self.assertEqual(
+            set(REQUIRED_ARCHETYPES) - set(contracts),
+            set(),
+        )
+
+    def test_explicit_validated_scope_is_reused_without_prose_guessing(self) -> None:
+        claim = {
+            "target_id": "TARGET",
+            "period": "2026Q2",
+            "exact_quote": "Operating margin increased.",
+            "scope_business_segment": "CHEMICALS",
+            "scope_product_family": "CHEMICAL_PRODUCT",
+            "scope_technology_family": "CHEMICAL_PROCESS",
+            "scope_transaction_type": "REVENUE_ACTUAL",
+            "scope_economic_mechanism": "REVENUE_CONVERSION",
+            "scope_confidence": 0.94,
+        }
+        scope = infer_business_mechanism_scope(
+            claim,
+            primitive_id="opm_expansion_pctp",
+            archetype_id="C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+        )
+        self.assertEqual(scope.business_segment, "CHEMICALS")
+        self.assertEqual(scope.product_family, "CHEMICAL_PRODUCT")
+        result = MechanismScopeValidator().validate(
+            scope=scope,
+            contract=load_mechanism_scope_contracts()[
+                "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+            ],
+            component_id="earnings_visibility",
+        )
+        self.assertTrue(result.scope_match)
 
     def test_same_issuer_wrong_segment_is_rejected_and_rerouted(self) -> None:
         contract = load_mechanism_scope_contracts()[

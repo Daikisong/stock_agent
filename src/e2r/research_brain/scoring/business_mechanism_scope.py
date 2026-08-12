@@ -264,6 +264,57 @@ def audit_business_mechanism_scope(
 def infer_business_mechanism_scope(
     claim: Mapping[str, Any], *, primitive_id: str, archetype_id: str
 ) -> BusinessMechanismScope:
+    # Production fact extraction has already checked these five coordinates
+    # against the archetype's closed vocabulary.  Reuse that exact accepted
+    # lineage downstream instead of trying to guess the segment again from
+    # prose.  Easy example: a C17 filing fact explicitly encoded as
+    # CHEMICALS/CHEMICAL_PRODUCT must not fall back to CORPORATE_GENERIC merely
+    # because its short exact quote says only "operating margin increased".
+    explicit_scope_fields = (
+        "scope_business_segment",
+        "scope_product_family",
+        "scope_technology_family",
+        "scope_transaction_type",
+        "scope_economic_mechanism",
+    )
+    if all(str(claim.get(field) or "").strip() for field in explicit_scope_fields):
+        try:
+            explicit_confidence = float(claim.get("scope_confidence", 1.0))
+        except (TypeError, ValueError):
+            explicit_confidence = -1.0
+        if 0 <= explicit_confidence <= 1:
+            raw = claim.get("raw_assertion") or {}
+            return BusinessMechanismScope(
+                issuer_id=str(
+                    claim.get("target_id")
+                    or claim.get("target_entity_id")
+                    or ""
+                ),
+                business_segment=str(claim["scope_business_segment"]).strip(),
+                product_family=str(claim["scope_product_family"]).strip(),
+                technology_family=str(
+                    claim["scope_technology_family"]
+                ).strip(),
+                customer_or_counterparty=str(
+                    claim.get("customer_or_counterparty") or ""
+                ).strip(),
+                transaction_type=str(claim["scope_transaction_type"]).strip(),
+                economic_mechanism=str(
+                    claim["scope_economic_mechanism"]
+                ).strip(),
+                geography=str(raw.get("geography") or "UNSPECIFIED"),
+                effective_period="/".join(
+                    str(value)
+                    for value in (
+                        claim.get("effective_start"),
+                        claim.get("effective_end"),
+                        claim.get("event_date"),
+                    )
+                    if value
+                )
+                or str(claim.get("period") or "CURRENT_UNSPECIFIED"),
+                scope_confidence=explicit_confidence,
+            )
     raw = claim.get("raw_assertion") or {}
     text = " ".join(
         str(value or "")

@@ -33,6 +33,39 @@
       "forbidden_business_segments": [],
       "forbidden_product_families": [],
       "reroute_by_segment": {}
+    },
+    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": {
+      "allowed_business_segments": ["CHEMICALS"],
+      "allowed_product_families": ["CHEMICAL_PRODUCT", "CHEMICAL_FEEDSTOCK"],
+      "allowed_technology_families": ["CHEMICAL_PROCESS", "COMMODITY_SPREAD"],
+      "allowed_transaction_types": ["PRICING_ACTUAL", "REVENUE_ACTUAL", "CAPACITY_INVESTMENT", "INVENTORY_ACTUAL", "RISK", "PRODUCT_PROFILE", "GENERIC_INFORMATION"],
+      "allowed_economic_mechanisms": ["MARGIN_SPREAD", "RAW_MATERIAL_COST_RISK", "UTILIZATION_CONVERSION", "INVENTORY_CYCLE", "REVENUE_CONVERSION", "SUPPLY_RESPONSE", "RISK_COUNTER", "INFORMATION_ONLY"],
+      "generic_company_allowed_components": ["information_confidence", "capital_allocation"],
+      "forbidden_business_segments": [],
+      "forbidden_product_families": [],
+      "reroute_by_segment": {}
+    },
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": {
+      "allowed_business_segments": ["BIOPHARMA"],
+      "allowed_product_families": ["CLINICAL_PROGRAM", "BIOPHARMA_PRODUCT"],
+      "allowed_technology_families": ["CLINICAL_DEVELOPMENT", "REGULATORY_DEVELOPMENT"],
+      "allowed_transaction_types": ["CLINICAL_DATA", "REGULATORY_STATUS", "SAFETY_EVENT", "FUNDING_RUNWAY", "PRODUCT_PROFILE", "RISK", "GENERIC_INFORMATION"],
+      "allowed_economic_mechanisms": ["TRIAL_QUALITY", "BINARY_EVENT_RISK", "REGULATORY_RISK", "SAFETY_RISK", "CASH_RUNWAY_RISK", "RISK_COUNTER", "INFORMATION_ONLY"],
+      "generic_company_allowed_components": ["information_confidence", "capital_allocation"],
+      "forbidden_business_segments": [],
+      "forbidden_product_families": [],
+      "reroute_by_segment": {}
+    },
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": {
+      "allowed_business_segments": ["SOFTWARE"],
+      "allowed_product_families": ["SECURITY_SOFTWARE", "SUBSCRIPTION_SOFTWARE"],
+      "allowed_technology_families": ["SECURITY_PLATFORM", "SUBSCRIPTION_PLATFORM"],
+      "allowed_transaction_types": ["RECURRING_REVENUE", "CUSTOMER_RENEWAL", "CONTRACT_OBLIGATION", "REVENUE_ACTUAL", "RISK", "PRODUCT_PROFILE", "GENERIC_INFORMATION"],
+      "allowed_economic_mechanisms": ["ARR_GROWTH", "NET_RETENTION", "CUSTOMER_RETENTION", "RPO_CONVERSION", "RECURRING_MARGIN_LEVERAGE", "RISK_COUNTER", "INFORMATION_ONLY"],
+      "generic_company_allowed_components": ["information_confidence", "capital_allocation"],
+      "forbidden_business_segments": [],
+      "forbidden_product_families": [],
+      "reroute_by_segment": {}
     }
   }
 }
