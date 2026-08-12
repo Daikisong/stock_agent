@@ -36,6 +36,7 @@ from .prompt_projection import (
     project_supervisor_source_graph_checkpoint,
 )
 from .source_graph_explorer import (
+    SOURCE_FAMILY_CLASSES,
     _candidate_materiality_decision_binds_scope,
     _candidate_materiality_scope_hash,
     _normalize_url,
@@ -1429,6 +1430,7 @@ def _build_supervisor_prompt_material(
             for row in open_objectives
             if bool(row.get("counter_or_supersession_required", True))
         },
+        objective_component_by_id=objective_component_by_id,
         structured_result=structured_result,
         materiality_scope_attestations=(
             dict(
@@ -2561,19 +2563,37 @@ def build_counter_and_supersession_route_proof(
     document_dispositions: Sequence[Mapping[str, Any]],
     evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
     required_objective_ids: Sequence[str],
+    objective_component_by_id: Mapping[str, str] | None = None,
 ) -> tuple[Mapping[str, Any], ...]:
     """Materialize verified counter/supersession lineage from persisted work.
 
-    A query flag alone is never proof.  Each emitted row must join an executed
-    counter/supersession query to an eligible full document, a successful
-    extractor disposition, and a source-backed fact of the matching semantic
-    kind.
+    A query flag alone is never proof.  Query-derived rows must join an
+    executed counter/supersession query to an eligible full document, a
+    successful extractor disposition, and a source-backed fact of the
+    matching semantic kind.
+
+    An already-fetched official/full document is stronger evidence than an
+    additional web-search transport hop.  Such a document may therefore
+    produce a ``DIRECT_SOURCE_BACKED_FACT`` row without a query id, but only
+    when its objective, the objective's deterministic component, and the
+    fact's ``allowed_component_ids`` all agree.  This keeps zero-result search
+    from becoming proof while preventing an impossible liveness requirement:
+    an audited counterfact must not need to be rediscovered by a specially
+    labelled query before it can satisfy the counter-review gate.
     """
 
     required = {
         str(value).strip()
         for value in required_objective_ids
         if str(value).strip()
+    }
+    objective_components = {
+        str(objective_id).strip(): str(component_id).strip()
+        for objective_id, component_id in (
+            objective_component_by_id or {}
+        ).items()
+        if str(objective_id).strip() in required
+        and str(component_id).strip()
     }
     query_by_id = {
         str(row.get("query_id") or ""): dict(row)
@@ -2604,7 +2624,7 @@ def build_counter_and_supersession_route_proof(
         for source_id in fact.source_ids:
             facts_by_document.setdefault(str(source_id), []).append(fact)
 
-    members: dict[tuple[str, str], dict[str, set[str]]] = {}
+    members: dict[tuple[str, str, str], dict[str, set[str]]] = {}
     for source in source_graph_checkpoint.get("evidence_documents") or ():
         document = dict(source)
         document_id = str(document.get("document_id") or "").strip()
@@ -2649,7 +2669,7 @@ def build_counter_and_supersession_route_proof(
                 if route_kind is None:
                     continue
                 bucket = members.setdefault(
-                    (objective_id, route_kind),
+                    (objective_id, route_kind, "EXECUTED_COUNTER_QUERY"),
                     {
                         "query_ids": set(),
                         "document_ids": set(),
@@ -2660,19 +2680,80 @@ def build_counter_and_supersession_route_proof(
                 bucket["document_ids"].add(document_id)
                 bucket["fact_ids"].add(fact.fact_id)
 
+        # Direct source-backed proof does not inherit completion from a search
+        # result.  It is independently bound through the document objective,
+        # the deterministic objective/component map, the extractor
+        # disposition, and the fact's allowed component roster.
+        for objective_id in sorted(document_objectives & required):
+            if (
+                str(document.get("source_family") or "").upper()
+                not in SOURCE_FAMILY_CLASSES["OFFICIAL"]
+            ):
+                continue
+            component_id = objective_components.get(objective_id)
+            if not component_id:
+                continue
+            for fact in facts_by_document.get(document_id, ()):
+                if component_id not in set(fact.allowed_component_ids):
+                    continue
+                route_kind = None
+                if (
+                    fact.direction == "COUNTER"
+                    and fact.current_lifecycle in {"CURRENT", "OPEN"}
+                ):
+                    route_kind = "COUNTER"
+                elif (
+                    fact.direction == "RESOLUTION"
+                    or fact.current_lifecycle in {"RESOLVED", "SUPERSEDED"}
+                ):
+                    route_kind = "SUPERSESSION"
+                if route_kind is None:
+                    continue
+                bucket = members.setdefault(
+                    (
+                        objective_id,
+                        route_kind,
+                        "DIRECT_SOURCE_BACKED_FACT",
+                    ),
+                    {
+                        "query_ids": set(),
+                        "document_ids": set(),
+                        "fact_ids": set(),
+                    },
+                )
+                bucket["document_ids"].add(document_id)
+                bucket["fact_ids"].add(fact.fact_id)
+
     rows = []
-    for (objective_id, route_kind), lineage in sorted(members.items()):
-        rows.append(
-            {
-                "objective_id": objective_id,
-                "route_kind": route_kind,
-                "query_ids": sorted(lineage["query_ids"]),
-                "document_ids": sorted(lineage["document_ids"]),
-                "fact_ids": sorted(lineage["fact_ids"]),
-                "parser_extractor_verified": True,
-                "zero_result_only": False,
-            }
-        )
+    for (objective_id, route_kind, route_basis), lineage in sorted(
+        members.items()
+    ):
+        if (
+            route_basis == "EXECUTED_COUNTER_QUERY"
+            and (
+                objective_id,
+                route_kind,
+                "DIRECT_SOURCE_BACKED_FACT",
+            )
+            in members
+        ):
+            # Prefer the independently valid direct document/fact lineage.
+            # A stale or partially-accounted search branch must not poison a
+            # stronger official proof for the same objective and event kind.
+            continue
+        row = {
+            "objective_id": objective_id,
+            "route_kind": route_kind,
+            "route_basis": route_basis,
+            "query_ids": sorted(lineage["query_ids"]),
+            "document_ids": sorted(lineage["document_ids"]),
+            "fact_ids": sorted(lineage["fact_ids"]),
+            "parser_extractor_verified": True,
+            "zero_result_only": False,
+        }
+        if route_basis == "DIRECT_SOURCE_BACKED_FACT":
+            row["component_id"] = objective_components[objective_id]
+        rows.append(row)
     return tuple(rows)
 
 
@@ -2683,6 +2764,7 @@ def _counter_route_proof_complete(
     evidence_facts: Sequence[EvidenceFact],
     objective_ids: set[str],
     required_objective_ids: set[str],
+    objective_component_by_id: Mapping[str, str] | None = None,
     structured_result: Any | None,
     materiality_scope_attestations: Mapping[str, Mapping[str, Any]],
 ) -> bool:
@@ -2713,6 +2795,13 @@ def _counter_route_proof_complete(
         for source_id in (getattr(record, "source_ids", ()) or ())
         if str(source_id)
     }
+    objective_components = {
+        str(objective_id).strip(): str(component_id).strip()
+        for objective_id, component_id in (
+            objective_component_by_id or {}
+        ).items()
+        if str(objective_id).strip() and str(component_id).strip()
+    }
     checked_objective_ids = {
         str(query.get("objective_id") or "").strip()
         for query in query_by_id.values()
@@ -2734,6 +2823,14 @@ def _counter_route_proof_complete(
             covered_route_kinds.add(route_kind)
         else:
             return False
+        route_basis = str(
+            row.get("route_basis") or "EXECUTED_COUNTER_QUERY"
+        ).strip()
+        if route_basis not in {
+            "EXECUTED_COUNTER_QUERY",
+            "DIRECT_SOURCE_BACKED_FACT",
+        }:
+            return False
         query_ids = _proof_ids(row, "query_ids", "query_id")
         proof_document_ids = _proof_ids(row, "document_ids", "document_id")
         proof_fact_ids = _proof_ids(row, "fact_ids", "fact_id")
@@ -2741,21 +2838,36 @@ def _counter_route_proof_complete(
             row, "structured_record_ids", "structured_record_id"
         )
         source_ids = _proof_ids(row, "source_ids", "source_id")
-        if not (query_ids and proof_document_ids and proof_fact_ids):
+        if not (proof_document_ids and proof_fact_ids):
             return False
-        if any(query_id not in query_by_id for query_id in query_ids):
-            return False
-        for query_id in query_ids:
-            query = query_by_id[query_id]
-            if not bool(query.get("counter_or_supersession_search")):
+        if route_basis == "EXECUTED_COUNTER_QUERY":
+            if not query_ids:
                 return False
-            if not _counter_search_query_has_executed_results(
-                source_graph_checkpoint,
-                query,
-                materiality_scope_attestations=materiality_scope_attestations,
+            if any(query_id not in query_by_id for query_id in query_ids):
+                return False
+            for query_id in query_ids:
+                query = query_by_id[query_id]
+                if not bool(query.get("counter_or_supersession_search")):
+                    return False
+                if not _counter_search_query_has_executed_results(
+                    source_graph_checkpoint,
+                    query,
+                    materiality_scope_attestations=(
+                        materiality_scope_attestations
+                    ),
+                ):
+                    return False
+                if str(query.get("objective_id") or "") != objective_id:
+                    return False
+        elif query_ids:
+            return False
+        expected_component_id = objective_components.get(objective_id)
+        if route_basis == "DIRECT_SOURCE_BACKED_FACT":
+            if (
+                not expected_component_id
+                or str(row.get("component_id") or "").strip()
+                != expected_component_id
             ):
-                return False
-            if str(query.get("objective_id") or "") != objective_id:
                 return False
         if proof_document_ids and not set(proof_document_ids).issubset(document_ids):
             return False
@@ -2769,10 +2881,20 @@ def _counter_route_proof_complete(
             }
             if (
                 objective_id not in linked_objectives
-                or not linked_queries.intersection(query_ids)
                 or document.get("evidence_eligible") is not True
                 or document.get("full_fetch_performed") is not True
                 or bool(document.get("snippet_only"))
+            ):
+                return False
+            if (
+                route_basis == "DIRECT_SOURCE_BACKED_FACT"
+                and str(document.get("source_family") or "").upper()
+                not in SOURCE_FAMILY_CLASSES["OFFICIAL"]
+            ):
+                return False
+            if (
+                route_basis == "EXECUTED_COUNTER_QUERY"
+                and not linked_queries.intersection(query_ids)
             ):
                 return False
         if query_ids and any(
@@ -2793,6 +2915,13 @@ def _counter_route_proof_complete(
         for fact_id in proof_fact_ids:
             fact = fact_by_id[fact_id]
             if not set(fact.source_ids).intersection(proof_document_ids):
+                return False
+            if (
+                route_basis == "DIRECT_SOURCE_BACKED_FACT"
+                and expected_component_id not in set(
+                    fact.allowed_component_ids
+                )
+            ):
                 return False
             if route_kind == "COUNTER" and not (
                 fact.direction == "COUNTER"
@@ -2816,6 +2945,8 @@ def _counter_route_proof_complete(
             return False
         if row.get("parser_extractor_verified") is not True:
             return False
+        if route_basis == "DIRECT_SOURCE_BACKED_FACT":
+            checked_objective_ids.add(objective_id)
     return bool(
         # COUNTER and SUPERSESSION are real event kinds, so requiring both
         # kinds for every objective would force the researcher to invent an

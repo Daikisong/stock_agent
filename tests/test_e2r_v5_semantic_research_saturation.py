@@ -3982,6 +3982,152 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         )
         self.assertEqual(pending.status, "NEXT_RESEARCH_REQUIRED")
 
+    def test_counter_route_accepts_exact_direct_official_fact_lineage(
+        self,
+    ) -> None:
+        """A zero-result search cannot hide already verified official facts."""
+
+        secondary_objective_id = "OBJ-DIRECT-MARKET"
+        objective_component_by_id = {
+            OBJECTIVE_ID: "eps_fcf_explosion",
+            secondary_objective_id: "market_mispricing",
+        }
+        source = _source_checkpoint_with_updates(
+            _source_checkpoint(zero_results=True),
+            evidence_documents=[
+                {
+                    "document_id": "DOC-1",
+                    "target_id": TARGET,
+                    "published_at": "2026-06-20",
+                    "source_family": "OPENDART",
+                    "query_ids": [],
+                    "objective_ids": [
+                        OBJECTIVE_ID,
+                        secondary_objective_id,
+                    ],
+                    "evidence_eligible": True,
+                    "full_fetch_performed": True,
+                    "snippet_only": False,
+                    "full_text": "audited counter and resolution facts",
+                }
+            ],
+        )
+        facts = (
+            replace(
+                _fact("FACT-DIRECT-COUNTER", direction="COUNTER"),
+                allowed_component_ids=("eps_fcf_explosion",),
+            ),
+            replace(
+                _fact(
+                    "FACT-DIRECT-RESOLUTION",
+                    direction="RESOLUTION",
+                    current_lifecycle="RESOLVED",
+                ),
+                allowed_component_ids=("market_mispricing",),
+            ),
+        )
+        proof = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=source,
+            document_dispositions=(
+                {
+                    "document_id": "DOC-1",
+                    "status": "FACTS_EXTRACTED",
+                    "rationale": "official facts extracted",
+                },
+            ),
+            evidence_facts=facts,
+            required_objective_ids=(OBJECTIVE_ID, secondary_objective_id),
+            objective_component_by_id=objective_component_by_id,
+        )
+
+        self.assertEqual(
+            {
+                (
+                    row["objective_id"],
+                    row["route_kind"],
+                    row["route_basis"],
+                )
+                for row in proof
+            },
+            {
+                (
+                    OBJECTIVE_ID,
+                    "COUNTER",
+                    "DIRECT_SOURCE_BACKED_FACT",
+                ),
+                (
+                    secondary_objective_id,
+                    "SUPERSESSION",
+                    "DIRECT_SOURCE_BACKED_FACT",
+                ),
+            },
+        )
+        self.assertTrue(all(row["query_ids"] == [] for row in proof))
+        self.assertTrue(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=source,
+                evidence_facts=facts,
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                objective_component_by_id=objective_component_by_id,
+                structured_result=_structured(),
+                materiality_scope_attestations={},
+            )
+        )
+
+        # The direct path is not a relaxation of source or component binding.
+        tampered_component = [dict(row) for row in proof]
+        tampered_component[0]["component_id"] = "capital_allocation"
+        self.assertFalse(
+            _counter_route_proof_complete(
+                tampered_component,
+                source_graph_checkpoint=source,
+                evidence_facts=facts,
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                objective_component_by_id=objective_component_by_id,
+                structured_result=_structured(),
+                materiality_scope_attestations={},
+            )
+        )
+        self.assertFalse(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=source,
+                evidence_facts=tuple(
+                    replace(fact, allowed_component_ids=())
+                    for fact in facts
+                ),
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                objective_component_by_id=objective_component_by_id,
+                structured_result=_structured(),
+                materiality_scope_attestations={},
+            )
+        )
+        nonofficial_source = _source_checkpoint_with_updates(
+            source,
+            evidence_documents=[
+                {
+                    **dict(source["evidence_documents"][0]),
+                    "source_family": "TRUSTED_BUSINESS_MEDIA",
+                }
+            ],
+        )
+        self.assertFalse(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=nonofficial_source,
+                evidence_facts=facts,
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                objective_component_by_id=objective_component_by_id,
+                structured_result=_structured(),
+                materiality_scope_attestations={},
+            )
+        )
+
     def test_counter_route_accepts_checked_objective_without_fabricated_event(
         self,
     ) -> None:

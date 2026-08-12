@@ -418,6 +418,29 @@ score, Stage 또는 cutover authority가 아니다.
    source roster가 모두 맞을 때만 의도적 retirement로 인정하고, 그 외 축소는 계속
    authority loss로 fail-closed한다.
 
+26. **공식 원문의 반증 사실도 반드시 별도 반증 검색을 거쳐야 한다는 교착**
+
+   의미 재추출과 judge 합성이 끝난 뒤에도 Supervisor의
+   `counter_route_proof_complete`가 false로 남았다. 기존 증명기는
+   `반증 query의 양수 검색 결과 → full document → extractor → COUNTER/RESOLUTION fact`
+   계보만 인정했다. 이미 fetch·parse된 공식 공시에서 모든 component의 반증·해소 fact를
+   확보했어도, 그 문서가 `counter_or_supersession_search=true` query를 통해 들어오지
+   않았으면 무시했다. 반대로 남은 반증 검색이 0건으로 끝나면 0건을 absence나 증명으로
+   쓸 수 없으므로, `빈 검색 → counter 미완료 → 다시 검색`에서 빠져나올 수 없었다.
+
+   쉬운 예: 감사보고서에 “고객 집중 위험”이 명시돼 있고 exact quote까지 검증했는데,
+   그 보고서를 “위험 검색” 버튼으로 찾지 않았다는 이유로 위험 검토를 안 했다고 판정한
+   셈이다. 이후 위험 검색 결과가 0건이어도 기존 공식 문서는 계속 무시됐다.
+
+   수정 후 두 증명 경로를 명시적으로 분리한다. 검색으로 얻은 반증은 종전처럼 양수
+   result의 query→document→fact 계보를 전부 요구한다. 이미 보유한 공식/full document의
+   반증은 `DIRECT_SOURCE_BACKED_FACT`로 표시하고, objective→deterministic component,
+   document objective, `FACTS_EXTRACTED` disposition, fact source,
+   `allowed_component_ids`, COUNTER/RESOLUTION lifecycle이 모두 exact 일치할 때만 인정한다.
+   0건 검색, snippet, 비적격 문서, component가 다른 fact는 어느 경로에서도 증명이
+   아니다. 따라서 검색 실패를 source absence로 과장하지 않으면서도, 더 강한 공식
+   반증을 검색 운송 계보가 없다는 이유로 버리지 않는다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -511,6 +534,10 @@ score, Stage 또는 cutover authority가 아니다.
     유지하고, 완료 후 사라진 fact는 exact `pending_retired_fact_ids` attestation으로만
     epoch 대기 projection에 반영한다. 단순히 convenience snapshot에서 fact가 없다는
     이유만으로 retirement를 추정하지 않는다.
+28. counter/supersession 완료는 검색 transport 자체가 아니라 검증된 반증 증거의
+    계보를 확인한다. query 기반 경로는 양수 검색 결과를 계속 요구한다. direct 공식
+    경로는 objective/component/document/fact 결속을 모두 검증하며, zero-result나
+    provider error를 완료 또는 source absence로 바꾸지 않는다.
 
 ## Goal 경계
 

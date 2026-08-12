@@ -952,6 +952,12 @@ class CurrentResearcherModeTargetRunner:
                 for row in objective_rows
                 if bool(row.get("counter_or_supersession_required", True))
             ),
+            objective_component_by_id={
+                str(row.get("objective_id") or ""): str(
+                    row.get("component_id") or ""
+                )
+                for row in objective_rows
+            },
         )
         epoch = ResearchEpochRunner(
             supervisor=ResearchSupervisor(provider=self.provider),
