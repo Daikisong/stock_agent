@@ -120,10 +120,10 @@ class _HistoricalThenActivePendingCheckpointRunner:
         raise AssertionError("active transport request must remain pending")
 
 
-class _HistoricalThenActiveStageCourtPendingCheckpointRunner(
+class _HistoricalThenActiveResearchEpochPendingCheckpointRunner(
     _HistoricalThenActivePendingCheckpointRunner
 ):
-    """Return a nonterminal run whose exact wait lives in StageCourt."""
+    """Return a nonterminal run whose exact wait lives in ResearchEpoch."""
 
     def run_checkpoint(self, *, config, target, repo_root, source_resume_mode):
         self.calls.append(target.target_id)
@@ -161,12 +161,20 @@ class _HistoricalThenActiveStageCourtPendingCheckpointRunner(
             structured_materialization=SimpleNamespace(pending_reasons=()),
             stagecourt=SimpleNamespace(
                 decision=SimpleNamespace(
-                    pending_reasons=(
-                        "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
-                        "StructuredProviderUnavailable:"
-                        f"COLLABORATION_RESPONSE_PENDING:{self.active_request_id}",
-                    )
+                    pending_reasons=("RESEARCHER_MODE_NOT_COMPLETE",)
                 )
+            ),
+            research_epoch=SimpleNamespace(
+                to_dict=lambda: {
+                    "saturation_certificate": {
+                        "pending_reasons": [
+                            "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                            "StructuredProviderUnavailable:"
+                            "COLLABORATION_RESPONSE_PENDING:"
+                            f"{self.active_request_id}"
+                        ]
+                    }
+                }
             ),
         )
 
@@ -500,13 +508,13 @@ class E2RV6CurrentLiveCanaryRunnerTests(unittest.TestCase):
             )
             self.assertEqual(len(tuple(journal.glob("*.json"))), 2)
 
-    def test_stagecourt_wait_exposes_current_supervisor_not_history(self) -> None:
-        """Supervisor waits are born after dossier construction in StageCourt."""
+    def test_research_epoch_wait_exposes_current_supervisor_not_history(self) -> None:
+        """Supervisor waits are born after dossier construction in ResearchEpoch."""
 
         selection = _selection()
         calls: list[str] = []
         checkpoint_runner = (
-            _HistoricalThenActiveStageCourtPendingCheckpointRunner(calls)
+            _HistoricalThenActiveResearchEpochPendingCheckpointRunner(calls)
         )
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

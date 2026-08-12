@@ -789,6 +789,10 @@ class V6CurrentLiveCanaryRunner:
                                 # is therefore absent from dossier.pending_reasons
                                 # even though it is the exact current blocker.
                                 run.stagecourt.decision.pending_reasons,
+                                # Supervisor and independent saturation waits
+                                # are owned by the ResearchEpoch result, not by
+                                # the deterministic StageCourt decision.
+                                run.research_epoch.to_dict(),
                             )
                         ),
                     )
