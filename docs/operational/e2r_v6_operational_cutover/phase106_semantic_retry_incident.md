@@ -687,6 +687,19 @@ score, Stage 또는 cutover authority가 아니다.
     반드시 `pass_name`을 우선해 leaf를 라우팅한다. 코드에도 이 parent/pass 차이를
     주석으로 고정했고, 회귀 테스트는 `FULL_RESEARCHER_MODE` 안의
     `PHASE106_TEST` pass가 별도로 노출되는지 검증한다.
+37. **12-fact transport page가 꽉 차면 빈 종료 인증 page가 한 번 필요함**
+
+    Evidence fact 응답은 한 transport page에 최대 12개만 담는다. 마지막 material
+    fact가 정확히 12번째 칸을 채운 경우에도 그 응답 하나만으로는 `뒤에 더 있었는데
+    잘렸다`와 `정확히 여기서 끝났다`를 구분할 수 없다. 따라서 다음 continuation에서
+    문서를 다시 대조하고, 새 distinct objective-local fact가 없으면 `facts=[]`,
+    `FACTS_EXTRACTED`, `extraction_complete=true`로 종료를 인증한다.
+
+    쉬운 예: 장부 한 페이지의 마지막 줄까지 기록했으면 다음 빈 페이지에 `이하 없음`을
+    찍는 것과 같다. 이 한 건은 새 검색이나 새 gap이 아니며, 같은 문서의 유실 없는
+    pagination closure다. 운영 진행률에서는 이를 `새 연구 leaf`가 아니라
+    `FACT_EXTRACTION_EMPTY_FINAL_CERTIFICATION`으로 해석해야 한다. 반대로 12개 미만으로
+    끝난 page 뒤에 같은 이유로 빈 page를 반복 생성하면 실제 버그이므로 fail-closed한다.
 
 ## Goal 경계
 
