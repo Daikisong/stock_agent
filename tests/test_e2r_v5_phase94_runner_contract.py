@@ -294,6 +294,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _load_committed_fact_result_snapshot,
     _load_fact_checkpoint,
     _load_prior_research_context,
+    _required_structured_roles_for_plans,
     _structured_result_from_official,
 )
 from e2r.research_brain.researcher_mode.fact_lineage_materials import (
@@ -6147,6 +6148,31 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             by_component["valuation_rerating"].structured_metric_requirements,
         )
 
+    def test_live_structured_gate_uses_archetype_contract_not_phase86_union(self) -> None:
+        plans = ComponentResearchPlanner().plan(
+            target_id="CURRENT",
+            archetype_id="C15_MATERIAL_SPREAD_SUPERCYCLE",
+            evidence_facts=(),
+            historical_anchors=(),
+            research_seeds=(),
+        )
+
+        requirements = _required_structured_roles_for_plans(plans)
+
+        self.assertEqual(
+            requirements["market_mispricing"], ("CURRENT_VALUATION",)
+        )
+        self.assertEqual(
+            requirements["valuation_rerating"], ("CURRENT_VALUATION",)
+        )
+        self.assertEqual(requirements["eps_fcf_explosion"], ())
+        self.assertNotIn(
+            "CONSENSUS_HISTORY", requirements["market_mispricing"]
+        )
+        self.assertNotIn(
+            "OWN_HISTORICAL_BAND", requirements["valuation_rerating"]
+        )
+
     def test_missing_exact_archetype_anchors_use_generic_ordinal_guards(self) -> None:
         anchors = _historical_anchors(
             repo_root=self.ROOT,
@@ -6286,6 +6312,10 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 "required_roles_by_component"
             ]
             self.assertIn(
+                "ACTUAL_EARNINGS",
+                structured_requirements["eps_fcf_explosion"],
+            )
+            self.assertNotIn(
                 "FORWARD_GUIDANCE",
                 structured_requirements["eps_fcf_explosion"],
             )

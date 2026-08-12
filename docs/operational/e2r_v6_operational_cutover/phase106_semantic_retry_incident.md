@@ -750,6 +750,25 @@ score, Stage 또는 cutover authority가 아니다.
     ISO 날짜는 보고서 발행일일 수 있으므로 forward 기간으로 승격하지 않고, 종료일이
     시작일보다 빠른 interval도 거절한다. 회귀 테스트는 실제 structured fact 경로에서
     EV/EBITDA가 materialize되는지와 역전 interval이 fail-closed되는지를 함께 검증한다.
+41. **옛 Phase86의 전체 metric roster를 모든 아키타입의 필수 AND gate로 사용**
+
+    Component planner는 이미 각 아키타입 scoring contract에서 structured-compatible 역할만
+    골라낸다. C15의 경우 현재 계약상 필요한 structured 역할은 market/valuation의
+    `CURRENT_VALUATION`이고, KRX·DART·KIRS·peer 계보가 이를 충족했다. 그런데 live runner가
+    여기에 옛 Phase86의 전체 metric roster를 다시 합쳐 `YOY_GROWTH`,
+    `CONSENSUS_HISTORY`, `EARNINGS_SURPRISE`, `OPERATING_PROFIT_REVISION`,
+    `OWN_HISTORICAL_BAND`까지 모두 필수로 만들었다. 상장 이력이 짧아 과거 consensus
+    snapshot이 존재하지 않는 종목은 새 source route가 없어도 영원히 pending이 됐다.
+
+    쉬운 예: C15 시험표에는 `현재 밸류에이션` 한 과목만 적혀 있는데, 접수 시스템이
+    삼성전자용 보충 과목 다섯 개까지 모두 제출해야 합격이라고 바꾼 셈이다.
+
+    수정 후 live runner는 planner가 만든 아키타입별 semantic structured contract를 그대로
+    사용한다. Phase86의 exhaustive roster는 isolated engine의 default/회귀 fixture로 보존해
+    parser coverage를 낮추지 않는다. DART처럼 대체 계약이 없는 provider 실패는 계속
+    fail-closed하고, CompanyGuide처럼 필요한 역할이 다른 verified route로 충족된 경우에만
+    nonblocking substitution으로 분류한다. 회귀 테스트는 C15에서 두
+    `CURRENT_VALUATION` 요구만 남고 legacy 역할이 재유입되지 않는지 확인한다.
 
 ## Goal 경계
 

@@ -128,7 +128,6 @@ from .source_graph_explorer import (
 from .structured_data_researcher import StructuredMetricRecord
 from .structured_financial_engine import (
     PHASE86_COMPONENT_ROLE_COMPATIBILITY,
-    PHASE86_REQUIRED_ROLES_BY_COMPONENT,
     StructuredEngineResult,
     StructuredFinancialConsensusValuationEngine,
     StructuredSourcePayload,
@@ -795,19 +794,9 @@ class CurrentResearcherModeTargetRunner:
                 fact_extraction=fact_extraction,
                 audit=gate_audit,
             )
-        required_structured_roles = {
-            plan.component_id: tuple(
-                dict.fromkeys(
-                    (
-                        *PHASE86_REQUIRED_ROLES_BY_COMPONENT.get(
-                            plan.component_id, ()
-                        ),
-                        *plan.structured_metric_requirements,
-                    )
-                )
-            )
-            for plan in initial_plans
-        }
+        required_structured_roles = _required_structured_roles_for_plans(
+            initial_plans
+        )
         structured_materialization = self.structured_materializer.materialize(
             target_id=target.target_id,
             target_name=target.company_name,
@@ -6509,6 +6498,42 @@ def _reusable_prior_component_memos(
         )
         and prior_structured_hashes.get(component_id)
         == current_structured_hashes.get(component_id)
+    }
+
+
+def _required_structured_roles_for_plans(
+    plans: Sequence[ComponentResearchPlan],
+) -> Mapping[str, tuple[str, ...]]:
+    """Use the archetype contract as the live structured completeness gate.
+
+    ``PHASE86_REQUIRED_ROLES_BY_COMPONENT`` is the legacy exhaustive fixture
+    roster of every structured metric the engine knows how to compile.  It is
+    useful as an isolated engine default, but unioning that roster into every
+    live archetype turns optional measurements into universal AND gates.  For
+    example, a newly listed materials issuer can have source-backed current
+    valuation while legitimately lacking a three-snapshot consensus history.
+    The component planner has already filtered the archetype scoring contract
+    to structured-compatible semantic requirements, so the live runner must
+    preserve that exact contract instead of widening it.
+    """
+
+    by_component = {
+        plan.component_id: tuple(
+            dict.fromkeys(
+                str(role).strip()
+                for role in plan.structured_metric_requirements
+                if str(role).strip()
+            )
+        )
+        for plan in plans
+    }
+    if set(by_component) != set(CANONICAL_COMPONENT_ORDER):
+        raise ValueError(
+            "structured plan roster must contain exactly seven components"
+        )
+    return {
+        component_id: by_component[component_id]
+        for component_id in CANONICAL_COMPONENT_ORDER
     }
 
 
