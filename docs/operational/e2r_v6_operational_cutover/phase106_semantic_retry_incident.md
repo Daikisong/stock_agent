@@ -395,6 +395,29 @@ score, Stage 또는 cutover authority가 아니다.
    resume에서만 남은 semantics 작업을 계속한다. 새 행이 projection에 없거나 출처·본문이
    다르면 기존처럼 provider 호출 없이 fail-closed한다.
 
+25. **복구 직후 의미 재추출이 끝나기 전에 기존 사실을 먼저 지워 다시 복구 루프로 진입**
+
+   원인 24의 `71 + 새 사실 1 = 72` atomic 복구는 실제로 성공했다. 그러나 다음 clean
+   resume에서 boundary-context 의미 재추출을 시작할 때, 4개 문서 전체의 새 응답이
+   끝나기 전에 과거 provider call의 사실 34개를 top-level checkpoint에서 먼저
+   제거했다. 첫 문서의 새 page response는 아직 전체 교체가 아니었으므로 편의
+   스냅샷은 다시 38개로 줄었고, append-only epoch 권위는 71개였다. 다음 실행은 이
+   의도적 중간 상태를 실제 authority loss로 판정해 같은 34개를 다시 복구했다.
+
+   쉬운 예: 장부 72줄을 복구한 뒤 4장짜리 교체 서류를 작성하면서, 1장만 쓴 시점에
+   기존 34줄을 먼저 지웠다. 다음 담당자는 지워진 34줄을 분실로 보고 되살렸고,
+   시스템은 `복구 → 먼저 삭제 → 다시 복구`를 반복했다.
+
+   수정 후 boundary-context 재추출은 선택된 document/call closure 전체가 current
+   semantics로 끝날 때까지 하나의 replacement transaction으로 취급한다. 부분 완료
+   page의 새 claims는 exact provider-call receipt 안에만 보관해 resume에 사용하고,
+   top-level claims/dispositions/facts에는 과거 baseline을 그대로 유지한다. 모든 문서가
+   끝난 한 시점에만 새 projection으로 원자 교체한다. 그때 사라진 과거 fact는
+   `pending_retired_fact_ids`로 별도 attestation한다. 즉 result-last snapshot, current
+   semantics dispositions, Collaboration provider receipts, official journal lineage,
+   source roster가 모두 맞을 때만 의도적 retirement로 인정하고, 그 외 축소는 계속
+   authority loss로 fail-closed한다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -483,6 +506,11 @@ score, Stage 또는 cutover authority가 아니다.
     historical journal이 권위 누락 집합을 유일하게 재현할 때만 atomic union recovery를
     허용한다. 같은 문서의 disposition은 최신 committed 행 하나만 남기고, 복구된 과거
     claim과 immutable journal receipt는 보존한다.
+27. semantics replacement는 페이지·문서별 부분 결과를 canonical fact projection에
+    노출하지 않는다. 선택된 call/document closure 전체가 완료될 때까지 baseline fact를
+    유지하고, 완료 후 사라진 fact는 exact `pending_retired_fact_ids` attestation으로만
+    epoch 대기 projection에 반영한다. 단순히 convenience snapshot에서 fact가 없다는
+    이유만으로 retirement를 추정하지 않는다.
 
 ## Goal 경계
 

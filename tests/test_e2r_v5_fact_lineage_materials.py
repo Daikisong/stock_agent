@@ -669,6 +669,40 @@ class CurrentFactLineageMaterialTests(unittest.TestCase):
                     recovered_claim_ids=[],
                 )
 
+            retired_id = ledger.current_fact_ids[0]
+            projected = ledger.recovery_expectation(
+                persisted_fact_ids=[
+                    fact_id
+                    for fact_id in ledger.current_fact_ids
+                    if fact_id != retired_id
+                ],
+                pending_retired_fact_ids=[retired_id],
+            )
+            self.assertEqual(
+                projected["status"],
+                "PENDING_FACT_RETIREMENT_EPOCH_COMMIT_REQUIRED",
+            )
+            self.assertEqual(projected["expected_recovered_fact_count"], 0)
+            self.assertEqual(
+                projected["pending_retired_fact_ids"],
+                [retired_id],
+            )
+            unclassified = ledger.recovery_expectation(
+                persisted_fact_ids=[
+                    fact_id
+                    for fact_id in ledger.current_fact_ids
+                    if fact_id != retired_id
+                ],
+            )
+            self.assertEqual(
+                unclassified["status"],
+                "AUTHORITY_LOSS_RECOVERY_REQUIRED",
+            )
+            self.assertEqual(
+                unclassified["expected_recovered_fact_ids"],
+                [retired_id],
+            )
+
     def test_content_mismatch_invalidates_the_entire_material_set(self):
         with tempfile.TemporaryDirectory() as directory:
             fixture = _build_actual_shaped_journal(Path(directory))

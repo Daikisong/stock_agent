@@ -1687,6 +1687,7 @@ class ResearcherEvidenceFactExtractor:
             resumed_transport_claims,
             resumed_transport_dispositions,
             resumed_transport_chunk_ids,
+            resumed_transport_document_ids,
         ) = _resume_completed_transport_chunks(
             calls=tuple(
                 call
@@ -1694,6 +1695,8 @@ class ResearcherEvidenceFactExtractor:
                 if not (
                     set(call.document_ids)
                     & active_boundary_context_reextraction_document_ids
+                    and call.extraction_semantics_version
+                    != FACT_EXTRACTION_SEMANTICS_VERSION
                 )
                 and (
                     not (
@@ -1720,6 +1723,8 @@ class ResearcherEvidenceFactExtractor:
             and not (
                 set(row.document_ids)
                 & active_boundary_context_reextraction_document_ids
+                and row.extraction_semantics_version
+                != FACT_EXTRACTION_SEMANTICS_VERSION
             )
         ]
         checkpoint_call_object_ids = {id(row) for row in calls}
@@ -1736,8 +1741,15 @@ class ResearcherEvidenceFactExtractor:
         transport_documents = tuple(
             row
             for row in all_transport_documents
-            if str(row.get("transport_chunk_id") or "")
-            not in resumed_transport_chunk_ids
+            if (
+                str(row.get("transport_chunk_id") or "")
+                not in resumed_transport_chunk_ids
+                and not (
+                    not str(row.get("transport_chunk_id") or "")
+                    and str(row.get("document_id") or "")
+                    in resumed_transport_document_ids
+                )
+            )
         )
         pending_transport_chunk_ids: set[str] = set()
         provider_circuit_breaker_open = False
@@ -2663,8 +2675,15 @@ class ResearcherEvidenceFactExtractor:
                         transport_chunk_ids=batch_transport_chunk_ids,
                         accepted_claims=(
                             tuple(combined_batch_claims.values())
-                            if batch_transport_chunk_ids
-                            and not batch_pending
+                            if not batch_pending
+                            and (
+                                batch_transport_chunk_ids
+                                or batch_document_ids
+                                & (
+                                    active_boundary_context_reextraction_document_ids
+                                    | set(coverage_refresh_document_ids)
+                                )
+                            )
                             else None
                         ),
                     )
@@ -2753,6 +2772,22 @@ class ResearcherEvidenceFactExtractor:
             boundary_context_reextraction_document_ids
             & current_semantics_disposition_ids
         )
+        # Boundary-context migration is one replacement transaction, even when
+        # its old provider call covered several canonical documents.  Do not
+        # expose a half-new/half-old fact graph: completed v7 page calls remain
+        # resumable in the provider-call ledger, while the durable top-level
+        # claim/disposition projection stays entirely on the baseline until
+        # every selected document has a current-semantics parent disposition.
+        #
+        # Easy example: an old two-document call produced 34 facts.  If only
+        # document A has finished its replacement, deleting A's old claims now
+        # makes the next invocation diagnose a false authority loss.  Keeping
+        # both A and B on the baseline until B also finishes prevents that
+        # restore/re-extract loop.
+        if not boundary_context_reextraction_document_ids.issubset(
+            current_semantics_disposition_ids
+        ):
+            completed_boundary_context_reextraction_document_ids = frozenset()
         completed_coverage_refresh_document_ids = {
             document_id
             for document_id in set(coverage_refresh_document_ids)
@@ -2800,7 +2835,15 @@ class ResearcherEvidenceFactExtractor:
             set(coverage_refresh_document_ids)
             | deferred_coverage_refresh_document_ids
         ) - completed_coverage_refresh_document_ids
-        if incomplete_coverage_refresh_document_ids:
+        incomplete_boundary_context_reextraction_document_ids = (
+            set(boundary_context_reextraction_document_ids)
+            - set(completed_boundary_context_reextraction_document_ids)
+        )
+        incomplete_atomic_replacement_document_ids = (
+            incomplete_coverage_refresh_document_ids
+            | incomplete_boundary_context_reextraction_document_ids
+        )
+        if incomplete_atomic_replacement_document_ids:
             # A coverage refresh is an atomic replacement of an already
             # accepted parent document.  Until every transport chunk has a
             # COMPLETE audit response, keep the baseline parent disposition
@@ -2809,11 +2852,27 @@ class ResearcherEvidenceFactExtractor:
             # resumed independently; exposing their partial claims or
             # deleting the baseline would make the next clean resume mistake
             # the same document for a first-pass extraction.
+            # Partial replacement claims live only inside their exact completed
+            # provider-call receipts.  Publishing them beside baseline claims
+            # would make a partial page look canonical, so remove them from the
+            # top-level projection before restoring the baseline.
+            claims = [
+                row
+                for row in claims
+                if str(row.get("document_id") or "")
+                not in incomplete_atomic_replacement_document_ids
+            ]
+            dispositions = [
+                row
+                for row in dispositions
+                if str(row.get("document_id") or "")
+                not in incomplete_atomic_replacement_document_ids
+            ]
             baseline_claims = [
                 dict(row)
                 for row in prior_material_claims
                 if str(row.get("document_id") or "")
-                in incomplete_coverage_refresh_document_ids
+                in incomplete_atomic_replacement_document_ids
             ]
             claim_by_id = {
                 str(
@@ -2832,11 +2891,50 @@ class ResearcherEvidenceFactExtractor:
                 document_id = str(row.get("document_id") or "")
                 if (
                     document_id
-                    in incomplete_coverage_refresh_document_ids
+                    in incomplete_atomic_replacement_document_ids
                     and document_id not in disposition_by_document_id
                 ):
                     dispositions.append(row)
                     disposition_by_document_id[document_id] = row
+            baseline_calls = [
+                row
+                for row in all_checkpoint_calls
+                if set(row.document_ids)
+                & incomplete_atomic_replacement_document_ids
+                and row.extraction_semantics_version
+                != FACT_EXTRACTION_SEMANTICS_VERSION
+            ]
+            call_by_key = {
+                (
+                    row.batch_id,
+                    row.prompt_hash,
+                    row.response_hash,
+                    tuple(row.document_ids),
+                    tuple(row.transport_chunk_ids),
+                ): row
+                for row in (*calls, *baseline_calls)
+            }
+            calls = list(call_by_key.values())
+            baseline_rejections = [
+                _coerce_rejection(row)
+                for row in prior_rejections
+                if str(
+                    row.document_id
+                    if isinstance(row, FactExtractionRejection)
+                    else row.get("document_id") or ""
+                )
+                in incomplete_atomic_replacement_document_ids
+            ]
+            rejection_by_key = {
+                (
+                    row.batch_id,
+                    row.document_id,
+                    row.reason,
+                    row.proposed_exact_quote,
+                ): row
+                for row in (*rejections, *baseline_rejections)
+            }
+            rejections = list(rejection_by_key.values())
         if (
             deferred_coverage_refresh_document_ids
             and all(
@@ -3391,6 +3489,9 @@ class ResearcherEvidenceFactExtractor:
                 boundary_context_reextraction_document_ids
             ),
             "boundary_context_reextraction_completed_document_count": len(
+                completed_boundary_context_reextraction_document_ids
+            ),
+            "boundary_context_reextraction_committed_document_ids": sorted(
                 completed_boundary_context_reextraction_document_ids
             ),
             "source_boundary_context_document_count": len(
@@ -4675,14 +4776,20 @@ def _resume_completed_transport_chunks(
     list[Mapping[str, Any]],
     list[Mapping[str, Any]],
     set[str],
+    set[str],
 ]:
-    """Restore only self-contained COMPLETE chunk checkpoints.
+    """Restore only self-contained COMPLETE replacement checkpoints.
 
     A split parent has no canonical disposition until every chunk is complete.
     The provider-call ledger therefore embeds the verified claims and per-chunk
     disposition needed for a clean resume.  Legacy calls without that embedded
     state, stale chunk ids, or internally inconsistent rows are ignored so the
     provider safely reprocesses those chunks instead of promoting partial data.
+
+    A boundary/coverage replacement can also yield between ordinary unsplit
+    documents.  Those calls embed the same verified state and resume by exact
+    document id; otherwise document A would be called again forever while the
+    durable top-level projection correctly keeps the old A+B baseline.
     """
 
     chunk_by_id = {
@@ -4695,10 +4802,100 @@ def _resume_completed_transport_chunks(
             FactExtractionProviderCall,
             tuple[Mapping[str, Any], ...],
             tuple[Mapping[str, Any], ...],
+            tuple[str, ...],
         ]
     ] = []
     for call in calls:
         chunk_ids = tuple(call.transport_chunk_ids)
+        if (
+            not chunk_ids
+            and call.accepted_claims is not None
+            and call.extraction_semantics_version
+            == FACT_EXTRACTION_SEMANTICS_VERSION
+        ):
+            document_ids = tuple(call.document_ids)
+            if (
+                not document_ids
+                or len(document_ids) != len(set(document_ids))
+            ):
+                continue
+            document_by_id = {
+                str(row.get("document_id") or ""): row
+                for row in transport_documents
+                if not str(row.get("transport_chunk_id") or "")
+                and str(row.get("document_id") or "") in document_ids
+            }
+            if set(document_by_id) != set(document_ids):
+                continue
+            disposition_by_document_id = {
+                str(row.get("document_id") or ""): row
+                for row in call.document_dispositions
+                if str(row.get("document_id") or "")
+            }
+            if (
+                len(disposition_by_document_id)
+                != len(call.document_dispositions)
+                or set(disposition_by_document_id) != set(document_ids)
+            ):
+                continue
+            claims = tuple(dict(row) for row in call.accepted_claims)
+            claim_ids = tuple(
+                str(row.get("claim_id") or "") for row in claims
+            )
+            claims_by_document: dict[str, list[Mapping[str, Any]]] = {}
+            valid = bool(
+                not any(not value for value in claim_ids)
+                and len(claim_ids) == len(set(claim_ids))
+                and set(claim_ids) == set(call.accepted_claim_ids)
+            )
+            for claim in claims:
+                document_id = str(claim.get("document_id") or "")
+                document = document_by_id.get(document_id)
+                if (
+                    document is None
+                    or str(claim.get("target_id") or "") != target_id
+                    or str(claim.get("as_of_date") or "") != as_of_date
+                    or not str(claim.get("exact_quote") or "")
+                    or str(claim.get("exact_quote") or "")
+                    not in str(document.get("content_text") or "")
+                ):
+                    valid = False
+                    break
+                claims_by_document.setdefault(document_id, []).append(claim)
+            dispositions = tuple(
+                dict(disposition_by_document_id[document_id])
+                for document_id in document_ids
+            )
+            for disposition in dispositions:
+                document_id = str(disposition.get("document_id") or "")
+                accepted_count = len(
+                    claims_by_document.get(document_id, ())
+                )
+                status = str(disposition.get("status") or "")
+                if (
+                    str(
+                        disposition.get("extraction_semantics_version")
+                        or ""
+                    )
+                    != FACT_EXTRACTION_SEMANTICS_VERSION
+                    or int(disposition.get("accepted_fact_count") or 0)
+                    != accepted_count
+                    or (status == "FACTS_EXTRACTED")
+                    != bool(accepted_count)
+                    or status
+                    not in {
+                        "FACTS_EXTRACTED",
+                        "NO_MATERIAL_FACT",
+                        "WRONG_TARGET_OR_SEGMENT",
+                    }
+                ):
+                    valid = False
+                    break
+            if valid:
+                structurally_valid.append(
+                    (call, claims, dispositions, document_ids)
+                )
+            continue
         if (
             not chunk_ids
             or call.accepted_claims is None
@@ -4784,33 +4981,44 @@ def _resume_completed_transport_chunks(
                 break
         if not dispositions_valid:
             continue
-        structurally_valid.append((call, claims, dispositions))
+        structurally_valid.append((call, claims, dispositions, ()))
 
     chunk_occurrence_count: dict[str, int] = {}
-    for call, _, _ in structurally_valid:
+    document_occurrence_count: dict[str, int] = {}
+    for call, _, _, document_ids in structurally_valid:
         for chunk_id in call.transport_chunk_ids:
             chunk_occurrence_count[chunk_id] = (
                 chunk_occurrence_count.get(chunk_id, 0) + 1
+            )
+        for document_id in document_ids:
+            document_occurrence_count[document_id] = (
+                document_occurrence_count.get(document_id, 0) + 1
             )
     resumed_calls: list[FactExtractionProviderCall] = []
     resumed_claims: list[Mapping[str, Any]] = []
     resumed_dispositions: list[Mapping[str, Any]] = []
     resumed_chunk_ids: set[str] = set()
-    for call, claims, dispositions in structurally_valid:
+    resumed_document_ids: set[str] = set()
+    for call, claims, dispositions, document_ids in structurally_valid:
         if any(
             chunk_occurrence_count.get(chunk_id) != 1
             for chunk_id in call.transport_chunk_ids
+        ) or any(
+            document_occurrence_count.get(document_id) != 1
+            for document_id in document_ids
         ):
             continue
         resumed_calls.append(call)
         resumed_claims.extend(claims)
         resumed_dispositions.extend(dispositions)
         resumed_chunk_ids.update(call.transport_chunk_ids)
+        resumed_document_ids.update(document_ids)
     return (
         resumed_calls,
         resumed_claims,
         resumed_dispositions,
         resumed_chunk_ids,
+        resumed_document_ids,
     )
 
 

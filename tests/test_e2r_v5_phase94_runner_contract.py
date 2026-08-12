@@ -75,6 +75,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
 )
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+    FACT_EXTRACTION_SEMANTICS_VERSION,
     _accepted_claim,
 )
 from e2r.research_brain.researcher_mode.evidence_fact_compiler import (
@@ -284,6 +285,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     FactExtractionCheckpointPending,
     _authoritative_fact_recovery_extract_kwargs,
     _attested_compiler_fact_addition_ids,
+    _attested_pending_fact_retirement_ids,
     _component_supervisor_feedback_by_component,
     _historical_anchors,
     _load_authoritative_prior_fact_context,
@@ -1326,6 +1328,250 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                         else "PENDING_NEW_FACT_EPOCH_COMMIT_REQUIRED"
                     ),
                 )
+
+    def test_completed_semantics_replacement_attests_exact_fact_retirement(
+        self,
+    ):
+        document_id = "SGDOC-" + "a" * 24
+        authority_rows = _authority_fact_rows(
+            2,
+            document_id=document_id,
+        )
+        source_checkpoint = _authority_source_checkpoint(
+            document_id=document_id
+        )
+        prompt_hash = "FACTPROMPT-" + "1" * 24
+        response_hash = "FACTRESP-" + "2" * 24
+        disposition = {
+            "schema_version": "e2r_v5_fact_document_disposition_v1",
+            "extraction_semantics_version": FACT_EXTRACTION_SEMANTICS_VERSION,
+            "batch_id": "FACTBATCH-CURRENT",
+            "document_id": document_id,
+            "status": "NO_MATERIAL_FACT",
+            "rationale": "full replacement found no current material fact",
+            "accepted_fact_count": 0,
+            "source_absence_proven": False,
+            "production_score_authority": False,
+        }
+        provider_call = {
+            "schema_version": "e2r_v5_fact_extraction_provider_call_v5",
+            "extraction_semantics_version": FACT_EXTRACTION_SEMANTICS_VERSION,
+            "batch_id": "FACTBATCH-CURRENT",
+            "status": "COMPLETE",
+            "document_ids": [document_id],
+            "accepted_claim_ids": [],
+            "rejected_proposal_count": 0,
+            "document_dispositions": [disposition],
+            "pending_reasons": [],
+            "research_gap_feedback": [],
+            "provider_name": COLLABORATION_PROVIDER_NAME,
+            "prompt_hash": prompt_hash,
+            "response_hash": response_hash,
+            "provider_attempt_count": 1,
+            "validation_retry_used": False,
+            "completion_flag_reconciled": False,
+            "transport_chunk_ids": [],
+            "accepted_claims": [],
+            "coverage_audit_performed": False,
+            "semantics_migration_request_ids": [],
+            "semantics_migration_response_ids": [],
+            "current_lineage_request_ids": [],
+            "current_lineage_response_ids": [],
+            "current_lineage_original_batch_document_ids": [],
+            "current_lineage_objective_reassessment_document_ids": [],
+        }
+        audit = {
+            "input_document_count": 1,
+            "boundary_context_reextraction_document_ids": [document_id],
+            "boundary_context_reextraction_committed_document_ids": [
+                document_id
+            ],
+            "boundary_context_reextraction_selected_document_count": 1,
+            "boundary_context_reextraction_completed_document_count": 1,
+            "stale_semantics_checkpoint_reextracted": True,
+        }
+        result = {
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": AS_OF_DATE,
+            "status": "FACT_EXTRACTION_PENDING",
+            "pending_reasons": [
+                FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+            ],
+            "audit": audit,
+        }
+        snapshot = {
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": AS_OF_DATE,
+            "result": result,
+            "audit": audit,
+            "facts": (),
+            "accepted_claims": (),
+            "document_dispositions": (disposition,),
+            "provider_calls": (provider_call,),
+            "leaf_commit_complete": True,
+        }
+
+        with tempfile.TemporaryDirectory() as directory, patch(
+            "e2r.research_brain.researcher_mode.current_researcher_mode."
+            "_validated_official_fact_journal_payloads",
+            return_value={(prompt_hash, response_hash): {"facts": []}},
+        ):
+            retired = _attested_pending_fact_retirement_ids(
+                root=Path(directory),
+                target_id="CURRENT-TARGET",
+                as_of_date=AS_OF_DATE,
+                source_checkpoint=source_checkpoint,
+                authority_by_id={
+                    row["fact_id"]: row for row in authority_rows
+                },
+                convenience_rows=(),
+                committed_snapshot=snapshot,
+            )
+        self.assertEqual(
+            retired,
+            tuple(sorted(row["fact_id"] for row in authority_rows)),
+        )
+
+        partial = copy.deepcopy(snapshot)
+        partial["audit"][
+            "boundary_context_reextraction_committed_document_ids"
+        ] = []
+        self.assertEqual(
+            _attested_pending_fact_retirement_ids(
+                root=Path("."),
+                target_id="CURRENT-TARGET",
+                as_of_date=AS_OF_DATE,
+                source_checkpoint=source_checkpoint,
+                authority_by_id={
+                    row["fact_id"]: row for row in authority_rows
+                },
+                convenience_rows=(),
+                committed_snapshot=partial,
+            ),
+            (),
+        )
+
+    def test_authoritative_context_projects_new_and_retired_facts_together(
+        self,
+    ):
+        authority_rows = _authority_fact_rows(3)
+        retired_id = authority_rows[-1]["fact_id"]
+        new_fact = {
+            **authority_rows[0],
+            "fact_id": "EFACT-PENDING-NEW",
+            "predicate": "replacement fact awaiting epoch commit",
+            "claim_ids": ["RFC-PENDING-NEW"],
+            "quote_ids": ["QUOTE-PENDING-NEW"],
+        }
+        convenience_rows = (*authority_rows[:-1], new_fact)
+        source_checkpoint = _authority_source_checkpoint()
+        ledger = _authority_ledger(authority_rows)
+        epoch = SimpleNamespace(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            checkpoint_id=ledger.checkpoint_id,
+            checkpoint_hash=ledger.checkpoint_hash,
+            source_graph_checkpoint_id=source_checkpoint["checkpoint_id"],
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "research_epochs.jsonl").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            (root / "research_epoch_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            (root / "evidence_facts.jsonl").write_text(
+                "".join(
+                    json.dumps(row, sort_keys=True) + "\n"
+                    for row in convenience_rows
+                ),
+                encoding="utf-8",
+            )
+            (root / "fact_extraction_result.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": AS_OF_DATE,
+                        "status": "FACT_EXTRACTION_PENDING",
+                        "fact_compilation": {
+                            "facts": list(convenience_rows),
+                        },
+                        "pending_reasons": [
+                            FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+                        ],
+                        "audit": {"input_document_count": 1},
+                    },
+                    sort_keys=True,
+                ),
+                encoding="utf-8",
+            )
+            with (
+                patch(
+                    "e2r.research_brain.researcher_mode."
+                    "current_researcher_mode."
+                    "load_authoritative_research_epoch_fact_ledger",
+                    return_value=ledger,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode."
+                    "current_researcher_mode."
+                    "load_research_epoch_checkpoint",
+                    return_value=epoch,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode."
+                    "current_researcher_mode."
+                    "_load_committed_fact_result_snapshot",
+                    return_value=_authority_committed_snapshot(
+                        convenience_rows
+                    ),
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode."
+                    "current_researcher_mode."
+                    "_attested_compiler_fact_addition_ids",
+                    return_value=(new_fact["fact_id"],),
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode."
+                    "current_researcher_mode."
+                    "_attested_pending_fact_retirement_ids",
+                    return_value=(retired_id,),
+                ),
+            ):
+                context = _load_authoritative_prior_fact_context(
+                    root,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=source_checkpoint,
+                )
+
+        assert context is not None
+        self.assertEqual(
+            {row["fact_id"] for row in context["facts"]},
+            {
+                authority_rows[0]["fact_id"],
+                authority_rows[1]["fact_id"],
+                new_fact["fact_id"],
+            },
+        )
+        self.assertFalse(
+            context["authoritative_fact_lineage_recovery_required"]
+        )
+        self.assertFalse(context["pending_new_fact_epoch_commit_required"])
+        self.assertTrue(
+            context["pending_fact_projection_epoch_commit_required"]
+        )
+        self.assertEqual(
+            context["authoritative_recovery_expectation"]["status"],
+            "PENDING_FACT_PROJECTION_EPOCH_COMMIT_REQUIRED",
+        )
+        self.assertEqual(
+            context["pending_retired_fact_ids"],
+            (retired_id,),
+        )
 
     def test_full_runner_routes_authority_gap_to_exact_journal_replay_only(self):
         document_id = "SGDOC-" + "a" * 24

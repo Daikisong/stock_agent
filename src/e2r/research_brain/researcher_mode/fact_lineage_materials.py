@@ -179,6 +179,7 @@ class AuthoritativeResearchEpochFactLedger:
         *,
         persisted_fact_ids: Sequence[str],
         pending_new_fact_ids: Sequence[str] = (),
+        pending_retired_fact_ids: Sequence[str] = (),
     ) -> Mapping[str, Any]:
         """Derive the only fact/claim/source set eligible for restoration."""
 
@@ -193,33 +194,50 @@ class AuthoritativeResearchEpochFactLedger:
                 label="pending new fact ids",
             )
         )
+        pending_retired = frozenset(
+            _unique_nonempty_strings(
+                pending_retired_fact_ids,
+                label="pending retired fact ids",
+            )
+        )
         persisted_set = frozenset(persisted)
         outside_current = persisted_set - current
         if (
             pending_new != outside_current
             or pending_new.intersection(current)
+            or not pending_retired.issubset(current)
+            or pending_retired.intersection(persisted_set)
+            or pending_retired.intersection(pending_new)
         ):
             raise ValueError(
-                "persisted facts outside current_fact_ids require an exact "
-                "pending_new_fact_ids attestation"
+                "persisted fact projection requires exact "
+                "pending_new_fact_ids and pending_retired_fact_ids attestations"
             )
         fact_by_id = {
             str(row["fact_id"]): dict(row) for row in self.fact_rows
         }
-        persisted_current = persisted_set.intersection(current)
-        missing_ids = tuple(sorted(current - persisted_current))
+        projected_current = current - pending_retired
+        persisted_current = persisted_set.intersection(projected_current)
+        missing_ids = tuple(sorted(projected_current - persisted_current))
         missing_rows = tuple(fact_by_id[fact_id] for fact_id in missing_ids)
         claim_ids = _row_string_union(missing_rows, "claim_ids")
         source_document_ids = _row_string_union(missing_rows, "source_ids")
-        status = (
-            "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_NEW_REQUIRED"
-            if missing_ids and pending_new
-            else "AUTHORITY_LOSS_RECOVERY_REQUIRED"
-            if missing_ids
-            else "PENDING_NEW_FACT_EPOCH_COMMIT_REQUIRED"
-            if pending_new
-            else "NO_AUTHORITY_LOSS"
-        )
+        if missing_ids and pending_retired:
+            status = (
+                "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_PROJECTION_REQUIRED"
+            )
+        elif missing_ids and pending_new:
+            status = "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_NEW_REQUIRED"
+        elif missing_ids:
+            status = "AUTHORITY_LOSS_RECOVERY_REQUIRED"
+        elif pending_new and pending_retired:
+            status = "PENDING_FACT_PROJECTION_EPOCH_COMMIT_REQUIRED"
+        elif pending_new:
+            status = "PENDING_NEW_FACT_EPOCH_COMMIT_REQUIRED"
+        elif pending_retired:
+            status = "PENDING_FACT_RETIREMENT_EPOCH_COMMIT_REQUIRED"
+        else:
+            status = "NO_AUTHORITY_LOSS"
         return {
             "schema_version": (
                 "e2r_v5_authoritative_fact_recovery_expectation_v1"
@@ -232,6 +250,7 @@ class AuthoritativeResearchEpochFactLedger:
             "authoritative_current_fact_count": len(self.current_fact_ids),
             "persisted_current_fact_count": len(persisted_current),
             "pending_new_fact_count": len(pending_new),
+            "pending_retired_fact_count": len(pending_retired),
             "expected_recovered_fact_count": len(missing_ids),
             "expected_recovered_claim_count": len(claim_ids),
             "expected_recovered_source_document_count": len(
@@ -239,6 +258,8 @@ class AuthoritativeResearchEpochFactLedger:
             ),
             "persisted_fact_ids": list(sorted(persisted_current)),
             "pending_new_fact_ids": list(sorted(pending_new)),
+            "pending_retired_fact_ids": list(sorted(pending_retired)),
+            "projected_current_fact_ids": list(sorted(projected_current)),
             "expected_recovered_fact_ids": list(missing_ids),
             "expected_recovered_claim_ids": list(claim_ids),
             "expected_recovered_source_document_ids": list(
@@ -254,16 +275,19 @@ class AuthoritativeResearchEpochFactLedger:
         recovered_fact_ids: Sequence[str],
         recovered_claim_ids: Sequence[str],
         pending_new_fact_ids: Sequence[str] = (),
+        pending_retired_fact_ids: Sequence[str] = (),
     ) -> Mapping[str, Any]:
         """Require exact missing-set intersection before any future merge."""
 
         expectation = self.recovery_expectation(
             persisted_fact_ids=persisted_fact_ids,
             pending_new_fact_ids=pending_new_fact_ids,
+            pending_retired_fact_ids=pending_retired_fact_ids,
         )
         if expectation["status"] not in {
             "AUTHORITY_LOSS_RECOVERY_REQUIRED",
             "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_NEW_REQUIRED",
+            "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_PROJECTION_REQUIRED",
         }:
             raise ValueError(
                 "fact lineage recovery is allowed only for an authority loss"
@@ -284,12 +308,15 @@ class AuthoritativeResearchEpochFactLedger:
         )
         persisted = frozenset(expectation["persisted_fact_ids"])
         pending_new = frozenset(expectation["pending_new_fact_ids"])
+        pending_retired = frozenset(
+            expectation["pending_retired_fact_ids"]
+        )
         if (
             frozenset(recovered_facts) != expected_facts
             or frozenset(recovered_claims) != expected_claims
             or persisted.intersection(recovered_facts)
             or persisted.union(recovered_facts)
-            != frozenset(self.current_fact_ids)
+            != frozenset(expectation["projected_current_fact_ids"])
             or pending_new.intersection(
                 persisted.union(recovered_facts)
             )
@@ -311,9 +338,11 @@ class AuthoritativeResearchEpochFactLedger:
             "recovered_fact_count": len(recovered_facts),
             "recovered_claim_count": len(recovered_claims),
             "pending_new_fact_count": len(pending_new),
+            "pending_retired_fact_count": len(pending_retired),
             "recovered_fact_ids": list(sorted(recovered_facts)),
             "recovered_claim_ids": list(sorted(recovered_claims)),
             "pending_new_fact_ids": list(sorted(pending_new)),
+            "pending_retired_fact_ids": list(sorted(pending_retired)),
             "merged_current_fact_ids": list(
                 sorted(persisted.union(recovered_facts))
             ),

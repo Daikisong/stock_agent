@@ -150,17 +150,23 @@ class BoundaryPeriodFactProvider:
         self.calls.append(payload)
         documents = payload["full_documents"]
         current = next(
-            row for row in documents if row["document_id"] == "DOC-BOUNDARY-1"
+            (
+                row
+                for row in documents
+                if row["document_id"] == "DOC-BOUNDARY-1"
+            ),
+            None,
         )
-        context = current["source_boundary_context"]
-        if context["preceding_tail_text"] != "현금흐름표\n전분기":
-            raise AssertionError(context)
-        if context["preceding_context_exact_quote_authority"] is not False:
-            raise AssertionError(context)
+        if current is not None:
+            context = current["source_boundary_context"]
+            if context["preceding_tail_text"] != "현금흐름표\n전분기":
+                raise AssertionError(context)
+            if context["preceding_context_exact_quote_authority"] is not False:
+                raise AssertionError(context)
         quote = "영업활동으로 인한 자산 부채의 변동\n(1,973,975)"
         coverage_audit = "fact_extraction_coverage_audit_context" in payload
         return {
-            "facts": [] if coverage_audit else [
+            "facts": [] if coverage_audit or current is None else [
                 {
                     "document_id": current["document_id"],
                     "question_family_id": "cash_earnings_conversion",
@@ -201,7 +207,8 @@ class BoundaryPeriodFactProvider:
                     "document_id": row["document_id"],
                     "status": (
                         "FACTS_EXTRACTED"
-                        if row["document_id"] == current["document_id"]
+                        if current is not None
+                        and row["document_id"] == current["document_id"]
                         else "NO_MATERIAL_FACT"
                     ),
                     "rationale": "canonical source boundary was inspected",
@@ -1645,10 +1652,22 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
         )
         self.assertEqual(migration_pending.status, "FACT_EXTRACTION_PENDING")
-        self.assertEqual(migration_pending.material_claims, ())
-        self.assertEqual(migration_pending.facts, ())
-        self.assertEqual(migration_pending.document_dispositions, ())
-        self.assertEqual(migration_pending.rejections, ())
+        # A failed replacement is not a retirement.  Keep the old atomic
+        # projection durable while the new semantics request is pending; the
+        # extractor still excludes these rows from the replacement prompt.
+        self.assertEqual(
+            migration_pending.material_claims,
+            wrong.material_claims,
+        )
+        self.assertEqual(
+            tuple(row.to_dict() for row in migration_pending.facts),
+            tuple(row.to_dict() for row in wrong.facts),
+        )
+        self.assertEqual(
+            migration_pending.document_dispositions,
+            tuple(legacy_dispositions),
+        )
+        self.assertEqual(len(migration_pending.rejections), 1)
         self.assertEqual(
             migration_pending.audit["base_reextraction_document_count"],
             0,
@@ -1682,15 +1701,27 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 checkpoint_root,
                 source_graph=SimpleNamespace(evidence_documents=documents),
             )
-        self.assertEqual(clean_checkpoint["prior_material_claims"], ())
-        self.assertEqual(clean_checkpoint["prior_document_dispositions"], ())
-        self.assertEqual(clean_checkpoint["prior_provider_calls"], ())
-        self.assertEqual(clean_checkpoint["prior_rejections"], ())
+        self.assertEqual(
+            clean_checkpoint["prior_material_claims"],
+            wrong.material_claims,
+        )
+        self.assertEqual(
+            clean_checkpoint["prior_document_dispositions"],
+            tuple(legacy_dispositions),
+        )
+        self.assertEqual(len(clean_checkpoint["prior_provider_calls"]), 1)
+        self.assertEqual(
+            clean_checkpoint["prior_provider_calls"][0][
+                "extraction_semantics_version"
+            ],
+            "pre_boundary_context_v3",
+        )
+        self.assertEqual(len(clean_checkpoint["prior_rejections"]), 1)
 
-        corrected_provider = BoundaryPeriodFactProvider(period="2025Q1")
-        corrected = ResearcherEvidenceFactExtractor(
-            provider=corrected_provider,
-            documents_per_call=2,
+        partial_provider = BoundaryPeriodFactProvider(period="2025Q1")
+        partial = ResearcherEvidenceFactExtractor(
+            provider=partial_provider,
+            documents_per_call=1,
         ).extract(
             target_id=TARGET,
             target_name=TARGET_NAME,
@@ -1706,7 +1737,73 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
         )
 
-        self.assertEqual(corrected.status, "FACT_EXTRACTION_COMPLETE")
+        # Reproduce the production loop exactly: the first replacement page
+        # completed, then the canonical-state barrier yielded before the
+        # second document.  The new call is resumable, but the durable graph
+        # must still be the complete old baseline rather than a 1/2 rewrite.
+        self.assertEqual(partial.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(
+            partial.material_claims,
+            wrong.material_claims,
+        )
+        self.assertEqual(
+            tuple(row.to_dict() for row in partial.facts),
+            tuple(row.to_dict() for row in wrong.facts),
+        )
+        self.assertEqual(
+            partial.audit[
+                "boundary_context_reextraction_completed_document_count"
+            ],
+            0,
+        )
+        self.assertEqual(
+            partial.audit[
+                "boundary_context_reextraction_committed_document_ids"
+            ],
+            [],
+        )
+        self.assertEqual(
+            sum(
+                row.extraction_semantics_version
+                == FACT_EXTRACTION_SEMANTICS_VERSION
+                for row in partial.provider_calls
+            ),
+            1,
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint_root = Path(directory)
+            write_researcher_fact_extraction_result(
+                partial,
+                checkpoint_root,
+            )
+            partial_checkpoint = _load_fact_checkpoint(
+                checkpoint_root,
+                source_graph=SimpleNamespace(evidence_documents=documents),
+            )
+
+        corrected_provider = BoundaryPeriodFactProvider(period="2025Q1")
+        corrected = ResearcherEvidenceFactExtractor(
+            provider=corrected_provider,
+            documents_per_call=1,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=documents,
+            open_objectives=objectives,
+            current_facts=tuple(row.to_dict() for row in partial.facts),
+            **partial_checkpoint,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(
+            corrected.status,
+            "FACT_EXTRACTION_COMPLETE",
+            corrected.to_dict(),
+        )
         self.assertGreaterEqual(len(corrected_provider.calls), 1)
         self.assertEqual(
             corrected_provider.calls[0]["current_evidence_facts"][

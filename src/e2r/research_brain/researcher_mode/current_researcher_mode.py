@@ -737,6 +737,11 @@ class CurrentResearcherModeTargetRunner:
                 "pending_new_fact_epoch_commit_required": prior_context[
                     "pending_new_fact_epoch_commit_required"
                 ],
+                "pending_fact_projection_epoch_commit_required": bool(
+                    prior_context.get(
+                        "pending_fact_projection_epoch_commit_required"
+                    )
+                ),
                 "downstream_pipeline_started": False,
                 "blocked_downstream_stages": [
                     "structured_peer_materialization",
@@ -1075,6 +1080,11 @@ class CurrentResearcherModeTargetRunner:
             "pending_new_fact_epoch_commit_required": prior_context[
                 "pending_new_fact_epoch_commit_required"
             ],
+            "pending_fact_projection_epoch_commit_required": bool(
+                prior_context.get(
+                    "pending_fact_projection_epoch_commit_required"
+                )
+            ),
             "source_checkpoint_readonly_replayed": (
                 source_checkpoint_readonly_replayed
                 or source_checkpoint_downstream_recovery_replayed
@@ -4441,6 +4451,183 @@ def _attested_compiler_fact_addition_ids(
     return tuple(sorted(addition_fact_ids))
 
 
+def _attested_pending_fact_retirement_ids(
+    *,
+    root: Path,
+    target_id: str,
+    as_of_date: str,
+    source_checkpoint: Mapping[str, Any],
+    authority_by_id: Mapping[str, Mapping[str, Any]],
+    convenience_rows: Sequence[Mapping[str, Any]],
+    committed_snapshot: Mapping[str, Any],
+) -> tuple[str, ...]:
+    """Admit only an all-pages-complete semantic replacement retirement.
+
+    The append-only research epoch intentionally lags an in-progress fact
+    rewrite.  Missing authority facts are therefore still loss unless the
+    result-last snapshot proves that every document in one boundary-context
+    replacement transaction completed under the current semantics.  This is
+    the retirement counterpart to pending-new fact attestation.
+
+    Easy example: 72 signed ledger rows and a 38-row convenience file normally
+    means 34 rows were lost.  It means retirement only when those 34 rows all
+    belong to the exact documents whose replacement pages are fully complete,
+    provider receipts are official, and the current compiler roster omits them.
+    """
+
+    convenience_ids = {
+        str(row.get("fact_id") or "") for row in convenience_rows
+    }
+    absent_authority_ids = tuple(
+        sorted(set(authority_by_id) - convenience_ids)
+    )
+    if not absent_authority_ids:
+        return ()
+    if committed_snapshot.get("leaf_commit_complete") is not True:
+        return ()
+    result = committed_snapshot.get("result")
+    audit = committed_snapshot.get("audit")
+    if (
+        not isinstance(result, Mapping)
+        or not isinstance(audit, Mapping)
+        or str(result.get("target_id") or "") != target_id
+        or str(result.get("as_of_date") or "") != as_of_date
+        or not _fact_result_is_bound_to_source_checkpoint(
+            result=result,
+            source_checkpoint=source_checkpoint,
+            target_id=target_id,
+            as_of_date=as_of_date,
+        )
+    ):
+        return ()
+
+    selected_document_ids = tuple(
+        str(value)
+        for value in audit.get(
+            "boundary_context_reextraction_document_ids"
+        )
+        or ()
+        if str(value)
+    )
+    committed_document_ids = tuple(
+        str(value)
+        for value in audit.get(
+            "boundary_context_reextraction_committed_document_ids"
+        )
+        or ()
+        if str(value)
+    )
+    committed_set = frozenset(committed_document_ids)
+    if (
+        not committed_set
+        or len(selected_document_ids) != len(set(selected_document_ids))
+        or len(committed_document_ids) != len(committed_set)
+        or set(selected_document_ids) != set(committed_set)
+        or int(
+            audit.get(
+                "boundary_context_reextraction_selected_document_count"
+            )
+            or 0
+        )
+        != len(committed_set)
+        or int(
+            audit.get(
+                "boundary_context_reextraction_completed_document_count"
+            )
+            or 0
+        )
+        != len(committed_set)
+        or audit.get("stale_semantics_checkpoint_reextracted") is not True
+    ):
+        return ()
+
+    downstream_ids = frozenset(
+        _source_checkpoint_downstream_document_ids(source_checkpoint)
+    )
+    if not committed_set.issubset(downstream_ids):
+        raise ValueError("fact retirement documents left the current source roster")
+    disposition_by_id = {
+        str(row.get("document_id") or ""): row
+        for row in committed_snapshot.get("document_dispositions") or ()
+        if isinstance(row, Mapping) and str(row.get("document_id") or "")
+    }
+    if any(
+        document_id not in disposition_by_id
+        or str(
+            disposition_by_id[document_id].get(
+                "extraction_semantics_version"
+            )
+            or ""
+        )
+        != FACT_EXTRACTION_SEMANTICS_VERSION
+        for document_id in committed_set
+    ):
+        raise ValueError("fact retirement lacks current-semantics dispositions")
+
+    current_calls = tuple(
+        _coerce_provider_call(row)
+        for row in committed_snapshot.get("provider_calls") or ()
+        if isinstance(row, Mapping)
+        and str(row.get("extraction_semantics_version") or "")
+        == FACT_EXTRACTION_SEMANTICS_VERSION
+        and set(str(value) for value in row.get("document_ids") or ())
+        & committed_set
+    )
+    if (
+        not current_calls
+        or any(
+            call.status != "COMPLETE"
+            or call.provider_attempt_count != 1
+            or call.provider_name != COLLABORATION_PROVIDER_NAME
+            for call in current_calls
+        )
+        or not committed_set.issubset(
+            {
+                document_id
+                for call in current_calls
+                for document_id in call.document_ids
+            }
+        )
+    ):
+        raise ValueError("fact retirement lacks exact current provider calls")
+    required_lineages = tuple(
+        sorted(
+            {
+                (call.prompt_hash, call.response_hash)
+                for call in current_calls
+            }
+        )
+    )
+    _validated_official_fact_journal_payloads(
+        root,
+        required_lineages=required_lineages,
+    )
+
+    current_claim_ids = {
+        str(row.get("claim_id") or "")
+        for row in committed_snapshot.get("accepted_claims") or ()
+        if isinstance(row, Mapping) and str(row.get("claim_id") or "")
+    }
+    for fact_id in absent_authority_ids:
+        authority = authority_by_id[fact_id]
+        source_ids = frozenset(
+            _fact_lineage_values(authority, "source_ids")
+        )
+        claim_ids = frozenset(
+            _fact_lineage_values(authority, "claim_ids")
+        )
+        if (
+            not source_ids
+            or not source_ids.issubset(committed_set)
+            or not claim_ids
+            or claim_ids.intersection(current_claim_ids)
+        ):
+            raise ValueError(
+                "authority fact disappearance is not an attested retirement"
+            )
+    return absent_authority_ids
+
+
 def _attested_pending_new_fact_ids(
     *,
     root: Path,
@@ -4652,6 +4839,15 @@ def _load_authoritative_prior_fact_context(
     }
     current_ids = set(ledger.current_fact_ids)
     retired_ids = set(ledger.retired_fact_ids)
+    pending_retired_fact_ids = _attested_pending_fact_retirement_ids(
+        root=root,
+        target_id=target_id,
+        as_of_date=as_of_date,
+        source_checkpoint=source_checkpoint,
+        authority_by_id=authority_by_id,
+        convenience_rows=convenience_rows,
+        committed_snapshot=committed_snapshot,
+    )
     enriched_existing_fact_ids: list[str] = []
     for fact_id in sorted(current_ids.intersection(convenience_by_id)):
         if _canonical_fact_payload(authority_by_id[fact_id]) != (
@@ -4703,8 +4899,17 @@ def _load_authoritative_prior_fact_context(
             *pending_new_fact_ids,
         ),
         pending_new_fact_ids=pending_new_fact_ids,
+        pending_retired_fact_ids=pending_retired_fact_ids,
     )
     status = str(expectation.get("status") or "")
+    if status == "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_PROJECTION_REQUIRED":
+        # Retiring an attested completed replacement and reconstructing an
+        # unrelated lost authority row are separate recovery transactions.
+        # No live fixture currently needs that compound path, so keep it
+        # fail-closed rather than guessing which journal replay should win.
+        raise ValueError(
+            "fact projection retirement overlaps an unresolved authority loss"
+        )
     authoritative_recovery_required = (
         status
         in {
@@ -4730,7 +4935,11 @@ def _load_authoritative_prior_fact_context(
                 "authoritative fact recovery source binding drift"
             )
 
-    union_by_id = dict(authority_by_id)
+    union_by_id = {
+        fact_id: row
+        for fact_id, row in authority_by_id.items()
+        if fact_id not in set(pending_retired_fact_ids)
+    }
     union_by_id.update(
         {
             fact_id: convenience_by_id[fact_id]
@@ -4755,6 +4964,12 @@ def _load_authoritative_prior_fact_context(
         "pending_new_fact_epoch_commit_required": (
             status == "PENDING_NEW_FACT_EPOCH_COMMIT_REQUIRED"
         ),
+        "pending_fact_projection_epoch_commit_required": status
+        in {
+            "PENDING_NEW_FACT_EPOCH_COMMIT_REQUIRED",
+            "PENDING_FACT_RETIREMENT_EPOCH_COMMIT_REQUIRED",
+            "PENDING_FACT_PROJECTION_EPOCH_COMMIT_REQUIRED",
+        },
         "authoritative_recovery_expectation": dict(expectation),
         # Kept in-memory only so the exact validated ledger instance can be
         # handed to the extractor.  Audits below project only scalar bindings.
@@ -4774,6 +4989,7 @@ def _load_authoritative_prior_fact_context(
         "enriched_existing_fact_ids": tuple(enriched_existing_fact_ids),
         "enriched_existing_fact_count": len(enriched_existing_fact_ids),
         "pending_new_fact_ids": pending_new_fact_ids,
+        "pending_retired_fact_ids": pending_retired_fact_ids,
         "research_epoch_checkpoint_id": ledger.checkpoint_id,
         "research_epoch_checkpoint_hash": ledger.checkpoint_hash,
         "source_graph_checkpoint_id": str(
@@ -5572,6 +5788,12 @@ def _load_prior_research_context(
             authoritative_fact_context
             and authoritative_fact_context.get(
                 "pending_new_fact_epoch_commit_required"
+            )
+        ),
+        "pending_fact_projection_epoch_commit_required": bool(
+            authoritative_fact_context
+            and authoritative_fact_context.get(
+                "pending_fact_projection_epoch_commit_required"
             )
         ),
         "authoritative_fact_recovery_context": (
