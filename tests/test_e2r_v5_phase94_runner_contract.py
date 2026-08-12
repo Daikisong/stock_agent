@@ -70,6 +70,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _source_checkpoint_requires_exhausted_lineage_reconciliation,
     _load_prior_component_memos,
     _reusable_prior_component_memos,
+    _unconsumed_component_supervisor_feedback,
     _same_lane_structured_cache_roots,
     _component_supervisor_feedback_by_component,
     _source_routing_supervisor_review,
@@ -4322,6 +4323,22 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertNotIn("information_confidence", unconsumed)
         self.assertIn("information_confidence", consumed)
         self.assertNotIn("information_confidence", missing_binding)
+        self.assertEqual(
+            _unconsumed_component_supervisor_feedback(
+                actionable_feedback_by_component=actionable,
+                reusable_prior_component_memos=consumed,
+            ),
+            {},
+        )
+        self.assertEqual(
+            set(
+                _unconsumed_component_supervisor_feedback(
+                    actionable_feedback_by_component=actionable,
+                    reusable_prior_component_memos=unconsumed,
+                )
+            ),
+            {"information_confidence"},
+        )
 
     def test_prior_memo_citing_retired_fact_is_not_reused_after_snapshot_stabilizes(
         self,

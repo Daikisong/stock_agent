@@ -796,7 +796,10 @@ score, Stage 또는 cutover authority가 아니다.
     옛 finding의 자동 재개방 권한을 소진하고 현재 memo를 재사용한다. 이 hash 차이는 문제가
     해결됐다는 판정이나 score/Stage authority가 아니다. 새 memo-bound judges, synthesis,
     Supervisor가 새 memo를 다시 검토하며, 필요하면 새 rationale와 새 binding으로 정확히 한
-    번 더 열 수 있다. Binding이 없거나 손상되면 기존처럼 fail-closed한다. 회귀 테스트는
+    번 더 열 수 있다. 또한 이 판정에서 이미 소비된 feedback은 Dossier builder에 다시
+    넘기지 않는다. 앞단 hash 판정이 reuse를 허용해도 안쪽의 방어 조건이 원본 feedback을
+    다시 보고 거부하면 같은 루프가 재현되기 때문이다. Binding이 없거나 손상되면 기존처럼
+    fail-closed한다. 회귀 테스트는
     `same hash -> reopen`, `new hash -> reuse`, `missing binding -> reopen` 세 경우를 고정한다.
 
 ## Goal 경계

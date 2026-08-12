@@ -883,6 +883,16 @@ class CurrentResearcherModeTargetRunner:
             current_structured_result=structured,
             required_roles_by_component=required_structured_roles,
         )
+        unconsumed_supervisor_feedback_by_component = (
+            _unconsumed_component_supervisor_feedback(
+                actionable_feedback_by_component=(
+                    supervisor_feedback_by_component
+                ),
+                reusable_prior_component_memos=(
+                    reusable_prior_component_memos
+                ),
+            )
+        )
         dossier = CanonicalResearchDossierBuilder(provider=self.provider).build(
             target_id=target.target_id,
             archetype_id=config.archetype_id,
@@ -898,7 +908,7 @@ class CurrentResearcherModeTargetRunner:
                 reusable_prior_component_memos
             ),
             prior_supervisor_feedback_by_component=(
-                supervisor_feedback_by_component
+                unconsumed_supervisor_feedback_by_component
             ),
         )
         _write_dossier(root, dossier)
@@ -6598,6 +6608,29 @@ def _reusable_prior_component_memos(
         )
         and prior_structured_hashes.get(component_id)
         == current_structured_hashes.get(component_id)
+    }
+
+
+def _unconsumed_component_supervisor_feedback(
+    *,
+    actionable_feedback_by_component: Mapping[str, Mapping[str, Any]],
+    reusable_prior_component_memos: Mapping[str, Mapping[str, Any]],
+) -> Mapping[str, Mapping[str, Any]]:
+    """Do not reapply an instruction whose memo-bound rewrite was consumed.
+
+    ``_reusable_prior_component_memos`` is the single semantic adjudicator: a
+    newer memo may be reusable because the old Supervisor instruction was
+    bound to an older memo hash.  Passing the unfiltered feedback into the
+    dossier would make its defensive ``component_id not in feedback`` guard
+    reject the same memo a second time and recreate the loop.  Keep genuinely
+    unconsumed feedback fail-closed, and remove only components whose exact
+    current memo already passed the hash-bound reuse contract.
+    """
+
+    return {
+        component_id: feedback
+        for component_id, feedback in actionable_feedback_by_component.items()
+        if component_id not in reusable_prior_component_memos
     }
 
 
