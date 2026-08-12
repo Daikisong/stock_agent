@@ -931,6 +931,30 @@ score, Stage 또는 cutover authority가 아니다.
     현재 judge request를 함께 둔 뒤 현재 하나만 노출되고 SOURCE_PENDING으로 오분류되지
     않는지 검증한다.
 
+48. **source 종료 뒤 독립 judge 불교집합을 새 문서 gap으로 오해할 위험**
+
+    47번 수리로 C17의 21개 judge 응답을 모두 소비하자 deterministic aggregation은
+    `bottleneck_pricing`, `market_mispricing`, `capital_allocation` 세 component에서
+    `UNRESOLVED_MATERIAL_JUDGE_DISAGREEMENT`를 검출했다. 이는 source graph가 다시 열린
+    것이 아니다. 세 memo는 동일한 73개 current fact와 이미 닫힌 source graph를 사용했고,
+    각 Analyst/Skeptic도 positive·counter fact를 모두 회계했다. 다만 허용구간이 서로
+    만나지 않았다. 예를 들어 market은 Analyst 하단 `4.8`과 Skeptic 상단 `4.6` 사이에
+    `0.2`점 틈이 있었고, capital도 `2.3` 대 `2.1`의 틈이 있었다.
+
+    쉬운 예: 같은 사진을 보고 두 감정사가 한 명은 최소 48만원, 다른 한 명은 최대
+    46만원이라고 평가한 상태다. 사진을 백 장 더 모으는 문제가 아니라, 같은 사진에서
+    `사용감`과 `희소성`을 얼마씩 반영했는지 평가 기준을 다시 맞춰야 한다. 시스템이
+    임의로 47만원을 확정하면 deterministic consensus 계약을 어긴다.
+
+    이 전이에서 Supervisor는 disagreement component를 `memo_sufficient=false`로 표시하되,
+    prompt에 genuinely missing source-backed fact가 없으면
+    `missing_material_facts`, `new_source_family_directions`, `query_direction_briefs`를 모두
+    비워 둔다. `reasonable_positive_routes_remaining=false`도 유지한다. 다음 작업은 오직
+    current evidence를 사용한 세 memo의 semantic rewrite, 그 memo에 bind된 새 A/S/C judge,
+    Red Team·synthesis refresh다. 같은·동의어 검색이나 새 보고서 ranking으로 점수를
+    바꾸지 않는다. 이렇게 `source research 완료`와 `score interpretation reconciliation`을
+    별도 상태로 기록해야 후자를 전자로 오인한 문서 수집 루프를 막을 수 있다.
+
 ## Goal 경계
 
 이 수정은 query template, score weight, Stage rule 또는 target-specific branch를 추가하지
