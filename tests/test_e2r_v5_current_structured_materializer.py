@@ -798,6 +798,38 @@ class InvalidStructuredRetryPeerProvider(FixturePeerProvider):
 
 
 class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
+    def test_korean_guidance_period_uses_latest_concrete_target_end(self):
+        available = date(2026, 8, 9)
+        cases = {
+            "2025년 7월부터 2028년 7월 상용화 목표": date(2028, 7, 31),
+            "2026년 3분기부터 2028년 상용화 목표": date(2028, 12, 31),
+            "2025년 1월부터 2027년 1분기 상용화 목표": date(2027, 3, 31),
+            "2026년 4월부터 2026년 12월 개발완료 목표": date(2026, 12, 31),
+        }
+        for period, expected_end in cases.items():
+            with self.subTest(period=period):
+                self.assertEqual(
+                    structured_materializer_module._period_end(period),
+                    expected_end,
+                )
+                self.assertTrue(
+                    structured_materializer_module._period_is_forward(
+                        period, available
+                    )
+                )
+
+    def test_korean_guidance_period_is_not_forward_after_target_end(self):
+        period = "2025년 1월부터 2026년 3월 상용화 목표"
+        self.assertEqual(
+            structured_materializer_module._period_end(period),
+            date(2026, 3, 31),
+        )
+        self.assertFalse(
+            structured_materializer_module._period_is_forward(
+                period, date(2026, 8, 9)
+            )
+        )
+
     def test_opendart_falls_back_from_empty_cfs_to_official_ofs_once_per_period(
         self,
     ):

@@ -638,6 +638,20 @@ score, Stage 또는 cutover authority가 아니다.
     검증된 fact provider-call receipt가 품은 exact Collaboration envelope에서 full
     prompt/payload hash를 복구해야 한다. canonical evidence ledger와 counter-only view의
     동일 행은 한 번만 세되, same-ID content drift는 거부한다.
+33. exact report-id/file-name 검색 0건은 transport route 포화가 아니다.
+    같은 id·file name·literal을 반복하는 것은 금지하지만, 이미 알고 있는
+    report title이나 provider landing page로 제약을 완화하는 것은 새 transport
+    route다. 예를 들어 `1105488 1F014...pdf`가 0건이면 같은 문자열을
+    재시도하지 않고 `수요 확대에 대비한 증설 미래에셋 엔비알모션`처럼
+    title route를 한 번 실행한다. title route도 실패한 뒤에야 새 verified
+    identity가 없는 것을 확인하고 닫는다. literal query는 계속 LLM이 작성하며,
+    deterministic code는 as-of, target scope, duplicate, future leakage만 검증한다.
+34. 한국어 issuer guidance period를 ISO/FY/Q 표기로만 파싱하지 않는다.
+    `2026년 3분기부터 2028년 상용화 목표`처럼 종료 시점이 명시된 문구는
+    source available date 이후인지 deterministic parser가 검증해야 한다. 원문·fact·claim이
+    exact한데 표기법만 못 읽어 `GUIDANCE_PERIOD_NOT_FORWARD`로 버리면, 불필요한
+    web query와 Supervisor retry가 발생한다. 다만 시작일이 과거인 계획은 종료·목표
+    시점이 available date 이후일 때만 forward로 승격한다.
 
 ## Goal 경계
 

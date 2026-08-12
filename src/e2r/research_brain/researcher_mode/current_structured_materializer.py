@@ -4168,35 +4168,61 @@ def _period_is_forward(period: str, available: date) -> bool:
 
 def _period_end(period: str) -> date | None:
     normalized = period.upper().replace(" ", "")
-    match = re.search(r"(20\d{2})[-/]?(?:Q([1-4])|([1-4])Q|([1-4])분기)", normalized)
-    if match:
+    # Guidance copied from Korean filings commonly describes a range in prose,
+    # for example ``2026년 3분기부터 2028년 상용화 목표`` or
+    # ``2026년 4월부터 2026년 12월 개발완료 목표``.  Returning the
+    # first recognizable date makes an already verified future issuer plan look
+    # stale when its start is in the past but its target end is still ahead.
+    # Collect every concrete endpoint and use the latest one; this only parses
+    # dates and never promotes an unverified claim or assigns score authority.
+    candidates: list[date] = []
+    for match in re.finditer(
+        r"(20\d{2})(?:[-/]?|년)(?:Q([1-4])|([1-4])Q|([1-4])분기)", normalized
+    ):
         year = int(match.group(1))
         quarter = int(next(value for value in match.groups()[1:] if value))
         month = quarter * 3
-        return date(year, month, _month_end(year, month))
-    match = re.search(r"(20\d{2})(?:H([12])|([12])H|상반기|하반기)", normalized)
-    if match:
+        candidates.append(date(year, month, _month_end(year, month)))
+    for match in re.finditer(
+        r"(20\d{2})(?:년)?(?:H([12])|([12])H|상반기|하반기)", normalized
+    ):
         year = int(match.group(1))
         half = (
             int(match.group(2) or match.group(3))
             if match.group(2) or match.group(3)
-            else (1 if "상반기" in period else 2)
+            else (1 if "상반기" in match.group(0) else 2)
         )
-        return date(year, 6 if half == 1 else 12, 30 if half == 1 else 31)
+        candidates.append(
+            date(year, 6 if half == 1 else 12, 30 if half == 1 else 31)
+        )
+    for match in re.finditer(r"(20\d{2})년(\d{1,2})월", normalized):
+        year, month = int(match.group(1)), int(match.group(2))
+        if 1 <= month <= 12:
+            candidates.append(date(year, month, _month_end(year, month)))
+    for match in re.finditer(
+        r"(?<!\d)(20\d{2})년(?=(?:상용화|개발|양산|완료|목표|예정))",
+        normalized,
+    ):
+        candidates.append(date(int(match.group(1)), 12, 31))
+    for match in re.finditer(
+        r"(?<!\d)(20\d{2})[-/](\d{1,2})(?:[-/](\d{1,2}))?", normalized
+    ):
+        year, month = int(match.group(1)), int(match.group(2))
+        day = int(match.group(3)) if match.group(3) else (
+            _month_end(year, month) if 1 <= month <= 12 else 0
+        )
+        try:
+            candidates.append(date(year, month, day))
+        except ValueError:
+            continue
+    if candidates:
+        return max(candidates)
     match = re.fullmatch(r"(?:FY)?(20\d{2})(?:년)?", normalized)
     if match:
         return date(int(match.group(1)), 12, 31)
     match = re.match(r"^(?:FY)?(20\d{2})(?:년|[EF])(?:\b|\(|;|,|$)", normalized)
     if match:
         return date(int(match.group(1)), 12, 31)
-    match = re.fullmatch(r"(20\d{2})[-/](\d{1,2})(?:[-/](\d{1,2}))?", normalized)
-    if match:
-        year, month = int(match.group(1)), int(match.group(2))
-        day = int(match.group(3)) if match.group(3) else _month_end(year, month)
-        try:
-            return date(year, month, day)
-        except ValueError:
-            return None
     return None
 
 
