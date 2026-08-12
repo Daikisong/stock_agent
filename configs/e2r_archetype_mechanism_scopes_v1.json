@@ -35,9 +35,9 @@
       "reroute_by_segment": {}
     },
     "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": {
-      "allowed_business_segments": ["CHEMICALS"],
-      "allowed_product_families": ["CHEMICAL_PRODUCT", "CHEMICAL_FEEDSTOCK"],
-      "allowed_technology_families": ["CHEMICAL_PROCESS", "COMMODITY_SPREAD"],
+      "allowed_business_segments": ["CHEMICALS", "MATERIALS"],
+      "allowed_product_families": ["CHEMICAL_PRODUCT", "CHEMICAL_FEEDSTOCK", "COMMODITY_PRODUCT", "COMMODITY_FEEDSTOCK"],
+      "allowed_technology_families": ["CHEMICAL_PROCESS", "METAL_PROCESS", "COMMODITY_SPREAD"],
       "allowed_transaction_types": ["PRICING_ACTUAL", "REVENUE_ACTUAL", "CAPACITY_INVESTMENT", "INVENTORY_ACTUAL", "RISK", "PRODUCT_PROFILE", "GENERIC_INFORMATION"],
       "allowed_economic_mechanisms": ["MARGIN_SPREAD", "RAW_MATERIAL_COST_RISK", "UTILIZATION_CONVERSION", "INVENTORY_CYCLE", "REVENUE_CONVERSION", "SUPPLY_RESPONSE", "RISK_COUNTER", "INFORMATION_ONLY"],
       "generic_company_allowed_components": ["information_confidence", "capital_allocation"],

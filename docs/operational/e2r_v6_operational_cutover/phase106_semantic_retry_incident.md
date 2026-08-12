@@ -844,12 +844,15 @@ score, Stage 또는 cutover authority가 아니다.
     C15에서 끝난 상태다. 화학 spread 수치가 맞아도 `화학 제품/원재료/가동률`을 어느
     칸에 써야 하는지 표가 없으므로 시험 시작 전에 멈춘 것이다.
 
-    수정 후 기존 canonical scoring/evidence contract의 경제 의미를 따라 C17·C24·C28의
-    closed-vocabulary mechanism scope를 명시한다. 종목명이나 검색어 분기는 추가하지 않는다.
+    수정 후 기존 canonical scoring/evidence contract와 sealed issuer-profile compatibility의
+    경제 의미를 따라 C17·C24·C28의 closed-vocabulary mechanism scope를 명시한다. C17은
+    이름의 `CHEMICAL` 문자열에만 묶지 않고, 같은 원재료-제품 가격 시차·재고·가동률·마진
+    bridge를 가진 chemical 및 non-ferrous commodity materials를 함께 허용한다. 종목명이나
+    검색어 분기는 추가하지 않는다.
     또한 fact extraction에서 이미 이 vocabulary로 검증해 저장한 explicit scope 좌표는
     downstream이 짧은 원문을 다시 keyword 추측하지 않고 그대로 재사용한다. 예를 들어
     원문이 `영업이익률 상승`이라고만 써도 accepted fact에 검증된
-    `CHEMICALS/CHEMICAL_PRODUCT`가 있으면 이를 `CORPORATE_GENERIC`으로 잃지 않는다.
+    `MATERIALS/COMMODITY_PRODUCT`가 있으면 이를 `CORPORATE_GENERIC`으로 잃지 않는다.
     회귀 테스트는 Phase106 `REQUIRED_ARCHETYPES` 전부에 계약이 있는지 직접 대조하므로
     exact-five 목록이 바뀌거나 새 아키타입이 들어왔는데 계약이 빠지면 실행 전에 실패한다.
 

@@ -29,9 +29,9 @@ class BusinessMechanismScopeTests(unittest.TestCase):
             "target_id": "TARGET",
             "period": "2026Q2",
             "exact_quote": "Operating margin increased.",
-            "scope_business_segment": "CHEMICALS",
-            "scope_product_family": "CHEMICAL_PRODUCT",
-            "scope_technology_family": "CHEMICAL_PROCESS",
+            "scope_business_segment": "MATERIALS",
+            "scope_product_family": "COMMODITY_PRODUCT",
+            "scope_technology_family": "METAL_PROCESS",
             "scope_transaction_type": "REVENUE_ACTUAL",
             "scope_economic_mechanism": "REVENUE_CONVERSION",
             "scope_confidence": 0.94,
@@ -41,8 +41,8 @@ class BusinessMechanismScopeTests(unittest.TestCase):
             primitive_id="opm_expansion_pctp",
             archetype_id="C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
         )
-        self.assertEqual(scope.business_segment, "CHEMICALS")
-        self.assertEqual(scope.product_family, "CHEMICAL_PRODUCT")
+        self.assertEqual(scope.business_segment, "MATERIALS")
+        self.assertEqual(scope.product_family, "COMMODITY_PRODUCT")
         result = MechanismScopeValidator().validate(
             scope=scope,
             contract=load_mechanism_scope_contracts()[
