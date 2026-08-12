@@ -369,6 +369,78 @@ class OpenDARTConnector:
             ),
         )
 
+    @staticmethod
+    def normalize_derived_q4_actuals(
+        annual_payload: Mapping[str, Any],
+        q3_payload: Mapping[str, Any],
+        *,
+        symbol: str,
+        fiscal_year: int,
+        as_of_date: date,
+        reported_at: date,
+    ) -> tuple[FinancialActual, ...]:
+        """Derive a standalone Q4 from official annual and Q3 cumulative rows.
+
+        OpenDART exposes Q1-Q3 filings but no separate Q4 filing.  Income
+        statement Q3 rows provide a nine-month ``thstrm_add_amount`` while
+        cash-flow rows are already cumulative in ``thstrm_amount``.  Subtract
+        those cumulative values from the audited annual statement.  This is a
+        source-backed arithmetic bridge, not an estimate or an LLM value.
+        """
+
+        annual_rows = annual_payload.get("list") or ()
+        q3_rows = q3_payload.get("list") or ()
+        if not isinstance(annual_rows, (list, tuple)) or not isinstance(
+            q3_rows, (list, tuple)
+        ):
+            return ()
+        annual = _single_account_values(annual_rows)
+        cumulative = _single_account_cumulative_values(q3_rows)
+        values: dict[str, float] = {}
+        for key in (
+            "sales",
+            "operating_profit",
+            "net_income",
+            "cashflow_from_operations",
+            "capex",
+        ):
+            if key not in annual or key not in cumulative:
+                continue
+            value = float(annual[key]) - float(cumulative[key])
+            if key in {"sales", "capex"} and value < 0:
+                continue
+            values[key] = value
+        if not values:
+            return ()
+        cfo = values.get("cashflow_from_operations")
+        capex = values.get("capex")
+        fcf = cfo - abs(capex) if cfo is not None and capex is not None else None
+        sales = values.get("sales")
+        operating_profit = values.get("operating_profit")
+        opm = (
+            operating_profit / sales * 100.0
+            if sales is not None and sales > 0 and operating_profit is not None
+            else None
+        )
+        return (
+            FinancialActual(
+                symbol=symbol,
+                fiscal_year=fiscal_year,
+                fiscal_quarter=4,
+                period_end=date(fiscal_year, 12, 31),
+                reported_at=datetime_value(reported_at),
+                as_of_date=as_of_date,
+                source="OpenDART annual minus Q3 cumulative",
+                sales=sales,
+                operating_profit=operating_profit,
+                net_income=values.get("net_income"),
+                opm=opm,
+                cashflow_from_operations=cfo,
+                capex=capex,
+                fcf=fcf,
+            ),
+        )
+
 
 def parse_disclosure_text(raw_text: str, *, title: str = "") -> dict[str, Any]:
     """Extract explicit disclosure fields without fabricating missing values."""
@@ -861,6 +933,41 @@ def _single_account_values(rows: Sequence[Mapping[str, Any]]) -> dict[str, float
     if capex_by_priority:
         best_priority = max(capex_by_priority)
         result["capex"] = capex_by_priority[best_priority]
+    return result
+
+
+def _single_account_cumulative_values(
+    rows: Sequence[Mapping[str, Any]],
+) -> dict[str, float]:
+    """Read nine-month values from a Q3 full-account response."""
+
+    values: dict[str, tuple[int, float]] = {}
+    capex_by_priority: dict[int, float] = {}
+    for row in rows:
+        if not isinstance(row, Mapping):
+            continue
+        key = _single_account_component(row)
+        if key is None:
+            continue
+        statement = str(row.get("sj_div") or "")
+        if statement in {"IS", "CIS"}:
+            amount = _amount_float(row.get("thstrm_add_amount"))
+        elif statement == "CF":
+            amount = _amount_float(row.get("thstrm_amount"))
+        else:
+            amount = None
+        if amount is None:
+            continue
+        priority = _single_account_priority(row)
+        if key == "capex":
+            capex_by_priority[priority] = capex_by_priority.get(priority, 0.0) + abs(amount)
+            continue
+        existing = values.get(key)
+        if existing is None or priority > existing[0]:
+            values[key] = (priority, amount)
+    result = {key: amount for key, (_, amount) in values.items()}
+    if capex_by_priority:
+        result["capex"] = capex_by_priority[max(capex_by_priority)]
     return result
 
 

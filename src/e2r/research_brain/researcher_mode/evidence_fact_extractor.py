@@ -91,6 +91,9 @@ OBJECTIVE_FACT_RELATIONS = frozenset(
     {"ADVANCE", "COUNTER", "SUPERSEDE"}
 )
 FACT_EXTRACTION_SEMANTICS_VERSION = (
+    "e2r_v5_structured_scenario_input_roles_v7"
+)
+_PRE_STRUCTURED_SCENARIO_INPUT_ROLE_SEMANTICS_VERSION = (
     "e2r_v5_structured_revision_roles_v6"
 )
 _PRE_STRUCTURED_REVISION_ROLE_SEMANTICS_VERSION = (
@@ -7882,7 +7885,7 @@ def _fact_semantics_upgrade_requires_reextraction(
     previous_version: str,
     document: Mapping[str, Any] | None,
 ) -> bool:
-    """Re-read only broker PDFs that can supply newly admitted typed roles.
+    """Re-read only source families that can supply newly admitted typed roles.
 
     Easy example: adding a verified operating-profit-revision role must revisit
     the dated broker PDF that contains the old/new estimates, but it must not
@@ -7892,6 +7895,20 @@ def _fact_semantics_upgrade_requires_reextraction(
 
     if previous_version == FACT_EXTRACTION_SEMANTICS_VERSION:
         return False
+    if previous_version == _PRE_STRUCTURED_SCENARIO_INPUT_ROLE_SEMANTICS_VERSION:
+        return bool(
+            document is not None
+            and str(document.get("source_family") or "").upper()
+            in {
+                "OPENDART",
+                "KIND_KRX",
+                "ISSUER_EARNINGS_RELEASE",
+                "ISSUER_PRESENTATION",
+                "ISSUER_NEWSROOM",
+                "FINANCIAL_STATEMENTS",
+                "CASH_FLOW",
+            }
+        )
     if previous_version in {
         _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION,
         _PRE_STRUCTURED_REVISION_ROLE_SEMANTICS_VERSION,

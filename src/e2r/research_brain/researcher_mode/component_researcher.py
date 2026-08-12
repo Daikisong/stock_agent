@@ -470,6 +470,7 @@ EVIDENCE_FACT_EXTRACTION_SCHEMA: Mapping[str, Any] = {
                                 "SEGMENT_CONTRIBUTION",
                                 "QOQ_GROWTH",
                                 "FORWARD_GUIDANCE",
+                                "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION",
                                 "EPS_REVISION",
                                 "OPERATING_PROFIT_REVISION",
                                 "FORWARD_BOOK_VALUE",
@@ -5129,14 +5130,21 @@ def _pass_instruction(pass_name: str) -> str:
             "business segment, product, period, direction, and lifecycle explicit, and account "
             "for every document with one disposition. Tag SEGMENT_CONTRIBUTION, QOQ_GROWTH, "
             "FORWARD_GUIDANCE, EPS_REVISION, OPERATING_PROFIT_REVISION, "
+            "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION, "
             "FORWARD_BOOK_VALUE, FORWARD_PB, or FORWARD_EV_EBITDA only when "
             "the exact quote and value explicitly establish that "
             "structured role; keep value as only the reported numeric point/range, unit separately, "
             "and the time horizon in period. A revision role additionally requires a dated "
             "full broker PDF whose exact quote identifies the forward metric and shows both "
             "the previous and revised estimates; value is the revised numeric point. Otherwise "
-            "return an empty structured_evidence_roles array. Tags "
-            "are extraction context only and never assign points. Read prior fact-extraction retry "
+            "return an empty structured_evidence_roles array. "
+            "FORWARD_GUIDANCE includes a numeric issuer-owned future operating, capacity, "
+            "or capital plan whose period ends after the source became available; it does "
+            "not include a broker estimate. LATEST_ACTUAL_DEPRECIATION_AMORTIZATION requires "
+            "one reported issuer/regulatory numeric point for an already-ended period and "
+            "must not be attached to a forecast. "
+            "These tags are extraction context only and never assign points. Read prior "
+            "fact-extraction retry "
             "context and correct the cited disposition/schema failure: FACTS_EXTRACTED is valid only "
             "when that same document has at least one accepted fact proposal; otherwise use the "
             "accurate non-fact disposition. The five scope_* fields are closed-vocabulary "

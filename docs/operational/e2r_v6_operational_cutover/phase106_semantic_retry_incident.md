@@ -296,6 +296,60 @@ score, Stage 또는 cutover authority가 아니다.
    우선하고 중복 합산하지 않는다. cache identity에도 `fs_div`를 포함해 resume 시 서로
    다른 장부가 섞이지 않게 한다.
 
+19. **1분기 QoQ를 요구하면서 직전 4분기를 만드는 데 필요한 3분기 누적값을 안 가져옴**
+
+   `QOQ_GROWTH`는 현재 분기와 바로 전 분기를 비교해야 한다. 그런데 기준일의 최신
+   실적이 2026년 1분기일 때 materializer는 2025년 연간값만 가져오고 2025년 3분기
+   누적값은 가져오지 않았다. 따라서 `2025 Q4 = 2025 연간 - 2025 Q3 누적`이라는
+   공식 숫자끼리의 계산을 할 수 없었고, QoQ가 영원히 비어 있었다.
+
+   쉬운 예: 1년 총매출과 9개월 누적매출이 있으면 마지막 3개월 매출은 뺄셈으로
+   구할 수 있다. 그런데 9개월 장부를 아예 요청하지 않았던 것이다.
+
+   수정 후 latest period가 Q1이면 전년도 Q3를 bounded supplemental period로 한 번
+   가져온다. 같은 official statement에서 annual minus Q3 cumulative로 sales, operating
+   profit, net income, OCF, CAPEX, FCF의 Q4를 계산한다. 파생값은 `DERIVED_Q4_FROM_ANNUAL_MINUS_Q3`
+   로 명시하며 어느 한쪽이 없으면 만들지 않는다. Q3 balance sheet는 `FY2025Q3`로
+   identity를 분리해 연간 `FY2025` 행과 충돌하지 않게 했다.
+
+20. **사업부 공시에 금액이 함께 있다는 이유로 유일한 매출비중까지 버림**
+
+   리노공업의 공식 표는 `639억원; 64.10%; 수출 596억원; 내수 43억원`처럼 금액과
+   비중을 함께 적는다. generic numeric parser는 여러 숫자가 있다는 이유로 전체를
+   거절했고 `SEGMENT_CONTRIBUTION`이 비었다.
+
+   쉬운 예: “사과 매출 639원, 전체의 64.10%”에서 요구값이 비중임이 분명한데,
+   숫자가 둘이라는 이유로 둘 다 버린 셈이다.
+
+   수정 후 이 역할에만 좁은 parser를 쓴다. 정확한 `%` 토큰이 하나일 때만 그 비중을
+   받으며, `수출 78.62%; 내수 10.13%`처럼 퍼센트가 둘이면 계속 거절한다. LLM이
+   역할을 지정하고 exact quote를 제시해야 한다는 경계는 바꾸지 않는다.
+
+21. **공식 공시에 선행 투자계획·상각비가 있는데 typed structured role이 없어 재검색**
+
+   full fetched KIND/OpenDART 문서에는 2026-11-10까지의 971.82억원 공장 투자계획과
+   과거 기간 감가·무형자산상각비가 있었다. 하지만 fact output schema에는 실제 상각비
+   역할이 없었고, 향후 CAPEX 계획이 `FORWARD_GUIDANCE`에 해당한다는 설명도 불충분했다.
+   원문을 갖고도 engine 입력으로 전달하지 못해 broker 검색을 다시 열었다.
+
+   수정 후 fact semantics를 v7으로 올려 LLM이 기존 full document를 다시 읽게 한다.
+   issuer-owned numeric future operating/capacity/capital plan은 `FORWARD_GUIDANCE`, 이미
+   끝난 기간의 단일 상각비 숫자는 `LATEST_ACTUAL_DEPRECIATION_AMORTIZATION`으로만
+   제안할 수 있다. deterministic validator는 source family, exact quote, 숫자, 기간,
+   lifecycle을 다시 검증한다. 상각비는 EBITDA를 직접 주장하지 않고, actual operating
+   margin과 actual D&A margin을 유지한 명시적 deterministic scenario에만 들어간다.
+
+22. **공식 자본과 scenario 순이익으로 계산 가능한 forward book/PB도 provider 값만 기다림**
+
+   engine은 이미 actual trend로 forward EPS/FCF scenario를 만들면서도, 같은 경계에서
+   book value를 만들지 않았다. 그래서 공식 actual equity와 projected net income이
+   있어도 `FORWARD_BOOK_VALUE`와 `FORWARD_PB`가 provider pending으로 남았다.
+
+   수정 후 base/bear/bull scenario에 `latest reported equity + projected net income`을
+   shares로 나눈 book value per share를 추가한다. 배당과 OCI는 0으로 고정했다는 가정을
+   metadata에 적고 confidence 0.65의 `DETERMINISTIC_SCENARIO`로 유지한다. 이는 관측된
+   미래값이나 consensus가 아니며, 최종 점수는 계속 deterministic engine이 계산한다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -369,6 +423,14 @@ score, Stage 또는 cutover authority가 아니다.
 20. OpenDART actuals는 period별 CFS 우선, CFS 무자료일 때만 OFS fallback을 수행한다.
     둘 다 없는 경우에만 해당 period를 unavailable로 남기며, 무자료를 0으로 만들지
     않는다.
+21. latest actual이 Q1이면 전년도 Q3 누적을 bounded로 가져와 annual-minus-Q3 Q4를
+    계산한다. balance sheet period identity는 annual과 quarter를 구분한다.
+22. multi-number segment claim은 `SEGMENT_CONTRIBUTION`의 explicit percent가 정확히
+    하나일 때만 허용하며, 두 개 이상이면 deterministic 선택을 하지 않는다.
+23. 이미 full-fetch한 공식 문서가 새 typed role을 공급할 수 있으면 fact semantics를
+    버전업해 해당 source family만 재추출한다. 검색 query를 대신 만들지 않는다.
+24. deterministic scenario에서 만든 book value·EBITDA는 observed/consensus로 표시하지
+    않고 formula, input lineage, 가정을 metadata에 남긴다.
 
 ## Goal 경계
 

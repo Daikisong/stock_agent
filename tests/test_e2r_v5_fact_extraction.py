@@ -1482,6 +1482,21 @@ class E2RV5FactExtractionTests(unittest.TestCase):
     def test_structured_valuation_semantics_upgrade_reextracts_only_broker_pdf(
         self,
     ) -> None:
+        previous_scenario_input_boundary = (
+            "e2r_v5_structured_revision_roles_v6"
+        )
+        self.assertTrue(
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version=previous_scenario_input_boundary,
+                document={"source_family": "OPENDART"},
+            )
+        )
+        self.assertFalse(
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version=previous_scenario_input_boundary,
+                document={"source_family": "GENERAL_WEB_DISCOVERY"},
+            )
+        )
         previous = "e2r_v5_source_boundary_context_v4"
         self.assertTrue(
             _fact_semantics_upgrade_requires_reextraction(

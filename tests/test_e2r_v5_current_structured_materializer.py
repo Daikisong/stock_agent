@@ -1891,9 +1891,133 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
             for row in result.engine_result.records
             if set(row.evidence_roles)
             & {"SEGMENT_CONTRIBUTION", "QOQ_GROWTH", "FORWARD_GUIDANCE"}
+            and row.metadata.get("llm_role_nomination_only") is True
         ]
         self.assertTrue(all(row.metadata["exact_quote_verified"] for row in promoted))
         self.assertTrue(all(row.metadata["llm_role_nomination_only"] for row in promoted))
+
+    def test_segment_contribution_accepts_one_explicit_percent_among_amounts(self):
+        transport = FixtureStructuredTransport()
+        facts, claims, documents = _structured_fact_bundle(
+            roles=("SEGMENT_CONTRIBUTION",)
+        )
+        quote = (
+            "Socket revenue was 639억원, 64.10% of company sales; "
+            "exports were 596억원 and domestic sales 43억원."
+        )
+        documents = (
+            {
+                **documents[0],
+                "content_text": quote,
+                "content_hash": hashlib.sha256(quote.encode()).hexdigest(),
+            },
+        )
+        claims = (
+            {
+                **claims[0],
+                "exact_quote": quote,
+                "value": "639억원; 64.10%; exports 596억원; domestic 43억원",
+                "unit": "KRW 100 million; %",
+            },
+        )
+        facts = (
+            replace(
+                facts[0],
+                value="639억원; 64.10%; exports 596억원; domestic 43억원",
+                unit="KRW 100 million; %",
+            ),
+        )
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+                required_roles_by_component={
+                    "eps_fcf_explosion": ("SEGMENT_CONTRIBUTION",)
+                },
+            )
+        rows = [
+            row
+            for row in result.engine_result.records
+            if "SEGMENT_CONTRIBUTION" in row.evidence_roles
+            and row.source_route == "ISSUER_GUIDANCE"
+        ]
+        # The engine keeps both the reported segment observation and its
+        # normalized contribution projection.  The regression contract is
+        # that the one explicit percentage survives without choosing one of
+        # the surrounding currency amounts.
+        self.assertTrue(rows)
+        self.assertTrue(all(row.value == 64.1 for row in rows))
+        self.assertTrue(all(row.unit == "PERCENT" for row in rows))
+        self.assertEqual(
+            result.audit["issuer_fact_materialization"][
+                "accepted_structured_observation_count"
+            ],
+            1,
+        )
+
+    def test_segment_contribution_rejects_two_explicit_percent_values(self):
+        parsed = structured_materializer_module._parse_segment_contribution_numeric(
+            "exports 78.62%; domestic 10.13%",
+            "% of company sales",
+        )
+        self.assertIsNone(parsed)
+
+    def test_verified_actual_depreciation_fact_becomes_scenario_input(self):
+        transport = FixtureStructuredTransport()
+        role = "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION"
+        facts, claims, documents = _structured_fact_bundle(roles=(role,))
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+                required_roles_by_component={},
+            )
+        rows = [
+            row
+            for row in result.engine_result.records
+            if role in row.evidence_roles
+        ]
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0].metric_id, "depreciation_and_amortization")
+        self.assertEqual(rows[0].record_kind, "SOURCE_BACKED_ACTUAL_DEPRECIATION_AMORTIZATION")
 
     def test_verified_broker_facts_close_valuation_roles_without_future_snapshot(self):
         class TargetFutureSnapshotTransport(FixtureStructuredTransport):
@@ -3268,6 +3392,13 @@ def _structured_fact_bundle(roles=None):
             "unit": "억원",
             "period": "2026Q3",
             "predicate": "revenue_guidance",
+        },
+        "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION": {
+            "quote": "2026Q1 depreciation and amortization was KRW 3.2 billion.",
+            "value": "3.2",
+            "unit": "KRW billion",
+            "period": "2026Q1",
+            "predicate": "depreciation_and_amortization",
         },
     }
     text = " ".join(definitions[role]["quote"] for role in selected_roles)

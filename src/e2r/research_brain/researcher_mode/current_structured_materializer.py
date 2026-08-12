@@ -113,6 +113,7 @@ _FACT_STRUCTURED_ROLES = frozenset(
         "SEGMENT_CONTRIBUTION",
         "QOQ_GROWTH",
         "FORWARD_GUIDANCE",
+        "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION",
         "EPS_REVISION",
         "OPERATING_PROFIT_REVISION",
         "FORWARD_BOOK_VALUE",
@@ -180,6 +181,16 @@ FACT_STRUCTURED_ROLE_RESOLUTION_CONTRACTS: Mapping[
         "period_must_be_forward_from_source_availability_date": True,
         "issuer_source_required": True,
         "third_party_estimate_is_not_substitutable": True,
+    },
+    "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION": {
+        "allowed_source_families": tuple(
+            sorted(_QOQ_STRUCTURED_SOURCE_FAMILIES)
+        ),
+        "exact_quote_required": True,
+        "machine_numeric_value_required": True,
+        "point_value_required": True,
+        "reported_period_must_not_be_forward": True,
+        "current_lifecycle_required": True,
     },
     "EPS_REVISION": {
         "allowed_source_families": tuple(
@@ -3403,12 +3414,24 @@ def _fact_structured_routes(
             observed_at = str(document.get("published_at") or "")[:10]
             available_at = str(document.get("available_at") or "")[:10]
             period = str(claim.get("period") or "").strip()
-            parsed = _parse_reported_numeric(
-                claim.get("value"), claim.get("unit")
+            # A segment contribution claim often carries both the segment's
+            # revenue and its one explicit contribution percentage.  The
+            # generic numeric parser correctly rejects multi-number prose, but
+            # applying it here also discarded the unambiguous percentage.  For
+            # example, ``639억원; 64.10%; 수출 596억원; 내수 43억원`` has
+            # several amounts yet exactly one contribution value: 64.10%.
+            # Keep the LLM-nominated role and exact-quote boundary, then let a
+            # role-specific parser accept only one explicit percent token.  A
+            # row such as ``수출 78.62%; 내수 10.13%`` remains ambiguous and is
+            # still rejected instead of selecting a number deterministically.
+            segment_only = set(roles) == {"SEGMENT_CONTRIBUTION"}
+            numeric_parser = (
+                _parse_segment_contribution_numeric
+                if segment_only
+                else _parse_reported_numeric
             )
-            fact_parsed = _parse_reported_numeric(
-                fact.get("value"), fact.get("unit")
-            )
+            parsed = numeric_parser(claim.get("value"), claim.get("unit"))
+            fact_parsed = numeric_parser(fact.get("value"), fact.get("unit"))
             confidence = min(
                 _probability(fact.get("confidence"), default=0.0),
                 _probability(claim.get("confidence"), default=0.0),
@@ -3447,6 +3470,8 @@ def _fact_structured_routes(
                     continue
                 if role in {"SEGMENT_CONTRIBUTION", "FORWARD_GUIDANCE"}:
                     allowed_families = _ISSUER_STRUCTURED_SOURCE_FAMILIES
+                elif role == "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION":
+                    allowed_families = _QOQ_STRUCTURED_SOURCE_FAMILIES
                 elif broker_valuation_role or broker_revision_role:
                     allowed_families = (
                         _BROKER_VALUATION_STRUCTURED_SOURCE_FAMILIES
@@ -3567,6 +3592,55 @@ def _fact_structured_routes(
                             ),
                             guidance_status="ISSUER_GUIDANCE",
                             confidence=confidence,
+                            metadata={
+                                "fact_id": fact_id,
+                                "claim_id": claim_id,
+                                "exact_quote_verified": True,
+                                "llm_role_nomination_only": True,
+                                "structured_source": True,
+                            },
+                        )
+                    )
+                elif role == "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION":
+                    if parsed.low is not None or parsed.high is not None:
+                        reject("DEPRECIATION_AMORTIZATION_REQUIRES_POINT_VALUE")
+                        continue
+                    if parsed.midpoint < 0:
+                        reject("DEPRECIATION_AMORTIZATION_REQUIRES_NONNEGATIVE_VALUE")
+                        continue
+                    period_end = _period_end(period)
+                    if (
+                        period_end is not None
+                        and period_end > date.fromisoformat(available_at)
+                    ):
+                        reject("DEPRECIATION_AMORTIZATION_PERIOD_IS_FORWARD")
+                        continue
+                    issuer_metric_rows.append(
+                        StructuredMetricRecord(
+                            record_id="STRUCT-" + stable_hash(
+                                {
+                                    "fact_id": fact_id,
+                                    "claim_id": claim_id,
+                                    "role": role,
+                                    "value": parsed.midpoint,
+                                    "period": period,
+                                }
+                            )[:24],
+                            target_id=target_id,
+                            as_of_date=cutoff.isoformat(),
+                            metric_id="depreciation_and_amortization",
+                            value=parsed.midpoint,
+                            unit=parsed.unit,
+                            period=period,
+                            evidence_roles=(role,),
+                            source_ids=(document_id,),
+                            source_route="ISSUER_GUIDANCE",
+                            observed_at=observed_at,
+                            available_at=available_at,
+                            record_kind="SOURCE_BACKED_ACTUAL_DEPRECIATION_AMORTIZATION",
+                            confidence=confidence,
+                            dataset="FINANCIAL",
+                            provenance="STRUCTURED_EXTRACTED",
                             metadata={
                                 "fact_id": fact_id,
                                 "claim_id": claim_id,
@@ -3971,6 +4045,41 @@ def _parse_reported_numeric(value: Any, unit: Any) -> _ParsedReportedNumeric | N
     )
 
 
+def _parse_segment_contribution_numeric(
+    value: Any,
+    unit: Any,
+) -> _ParsedReportedNumeric | None:
+    """Return one explicitly identified segment contribution percentage.
+
+    This is deliberately narrower than extracting the first number.  A
+    multi-number segment claim is accepted only when its value contains one
+    and only one literal percent token.  Single numeric values whose unit is a
+    percent continue through the generic parser.  The caller separately
+    verifies the full-document quote and a specific segment identity.
+    """
+
+    raw_value = str(value or "").strip()
+    explicit = re.findall(
+        r"(?<![\d.])([-+]?\d[\d,]*(?:\.\d+)?)\s*(?:%|percent\b|pct\b|퍼센트)",
+        raw_value,
+        flags=re.IGNORECASE,
+    )
+    if explicit:
+        distinct = tuple(dict.fromkeys(explicit))
+        if len(distinct) != 1:
+            return None
+        parsed = _float(distinct[0])
+        if parsed is None:
+            return None
+        return _ParsedReportedNumeric(
+            low=None,
+            high=None,
+            midpoint=float(parsed),
+            unit="PERCENT",
+        )
+    return _parse_reported_numeric(value, unit)
+
+
 def _reported_unit_is_krw_per_share(
     raw_unit: Any,
     normalized_unit: str,
@@ -4349,6 +4458,22 @@ def _financial_statement_periods(cutoff: date) -> tuple[Mapping[str, Any], ...]:
                 "reported_at": date(prior_year, *reported_month_day),
             }
         )
+        if quarter == 1:
+            # A current Q1 needs the immediately preceding Q4 for QoQ.  DART
+            # does not publish Q4 as a standalone filing, so retain the prior
+            # year's Q3 filing as a bounded deterministic input; the adapter
+            # derives Q4 from audited annual values minus nine-month
+            # cumulative values.  Without this one official input, every Q1
+            # run stayed SOURCE_PENDING even though DART held both operands.
+            periods.append(
+                {
+                    "fiscal_year": prior_year,
+                    "fiscal_quarter": 3,
+                    "period_end": date(prior_year, 9, 30),
+                    "report_code": "11014",
+                    "reported_at": date(prior_year, 11, 16),
+                }
+            )
     for fiscal_year in (cutoff.year - 1, cutoff.year - 2, cutoff.year - 3):
         reported_at = date(fiscal_year + 1, 4, 1)
         if reported_at <= cutoff:

@@ -34,10 +34,10 @@ from .research_epoch import (
 
 
 CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION = (
-    "e2r_v5_structured_revision_roles_v6"
+    "e2r_v5_structured_scenario_input_roles_v7"
 )
 PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION = (
-    "e2r_v5_structured_valuation_roles_v5"
+    "e2r_v5_structured_revision_roles_v6"
 )
 AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS = (
     CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION,

@@ -1061,6 +1061,42 @@ class E2RV5StructuredFinancialEngineTests(unittest.TestCase):
         self.assertTrue(scenarios)
         self.assertTrue(all(not row.metadata["observed_fact"] for row in scenarios))
 
+    def test_actual_equity_and_scenario_income_derive_forward_book_and_pb(self) -> None:
+        result = self._run(
+            route(
+                "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+                financial_actuals=(actual(2025),),
+            ),
+            route(
+                "ISSUER_GUIDANCE",
+                structured_records=(
+                    metric("equity", 200.0, "ACTUAL_EQUITY"),
+                    metric(
+                        "depreciation_and_amortization",
+                        5.0,
+                        "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION",
+                    ),
+                    metric("cash_and_equivalents", 100.0, "BALANCE_SHEET_CASH"),
+                    metric("total_debt", 40.0, "BALANCE_SHEET_DEBT"),
+                ),
+            ),
+            route("KRX_PRICE_MARKET_CAP", price_bars=price_bars()),
+        )
+        rows = {row.metric_id: row for row in result.records}
+        self.assertIn("scenario_base_book_value_per_share", rows)
+        self.assertIn("forward_book_value", rows)
+        self.assertIn("forward_pb", rows)
+        self.assertIn("scenario_base_ebitda", rows)
+        self.assertIn("forward_ev_ebitda", rows)
+        scenario_book = rows["scenario_base_book_value_per_share"]
+        self.assertEqual(scenario_book.provenance, "DETERMINISTIC_SCENARIO")
+        self.assertFalse(scenario_book.metadata["observed_fact"])
+        self.assertEqual(
+            scenario_book.metadata["book_value_formula"],
+            "latest_reported_equity + projected_net_income; "
+            "dividends_and_oci_held_zero",
+        )
+
     def test_report_eps_and_krx_history_create_daily_own_forward_pe_band(self) -> None:
         def report(
             observed: date,

@@ -75,10 +75,10 @@ _PRE_STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION = (
     "e2r_v5_source_boundary_context_v4"
 )
 _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION = (
-    "e2r_v5_structured_revision_roles_v6"
+    "e2r_v5_structured_scenario_input_roles_v7"
 )
 _PRE_REVISION_FACT_SEMANTICS_VERSION = (
-    "e2r_v5_structured_valuation_roles_v5"
+    "e2r_v5_structured_revision_roles_v6"
 )
 _AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS = frozenset(
     (
@@ -93,6 +93,7 @@ _PRE_STRUCTURED_VALUATION_ROLES = (
 )
 _STRUCTURED_VALUATION_ROLES = (
     *_PRE_STRUCTURED_VALUATION_ROLES,
+    "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION",
     "EPS_REVISION",
     "OPERATING_PROFIT_REVISION",
     "FORWARD_BOOK_VALUE",
@@ -102,7 +103,7 @@ _STRUCTURED_VALUATION_ROLES = (
 _PRE_REVISION_STRUCTURED_VALUATION_ROLES = tuple(
     role
     for role in _STRUCTURED_VALUATION_ROLES
-    if role not in {"EPS_REVISION", "OPERATING_PROFIT_REVISION"}
+    if role != "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION"
 )
 _REQUEST_ENVELOPE_KEYS = frozenset(
     {
@@ -219,18 +220,17 @@ def _prior_revision_fact_output_schema(
 
 
 def _prior_revision_fact_instruction() -> str:
-    """Rebuild the immutable v5 instruction from the current v6 text."""
+    """Rebuild the immutable v6 instruction from the current v7 text."""
 
     current = _pass_instruction("EVIDENCE_FACT_EXTRACTION")
     prior = current.replace(
-        ", EPS_REVISION, OPERATING_PROFIT_REVISION",
+        "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION, ",
         "",
         1,
     ).replace(
-        " A revision role additionally requires a dated full broker PDF "
-        "whose exact quote identifies the forward metric and shows both "
-        "the previous and revised estimates; value is the revised numeric "
-        "point.",
+        "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION requires one reported "
+        "issuer/regulatory numeric point for an already-ended period and "
+        "must not be attached to a forecast. ",
         "",
         1,
     )

@@ -1730,6 +1730,40 @@ class StructuredFinancialConsensusValuationEngine:
                 )
                 result.append(forward_fcf_record)
                 forward_inputs["forward_fcf"] = forward_fcf_record
+        if "forward_book_value" not in forward_inputs:
+            scenario_book_value = _latest_metric(
+                scenario_records, ("scenario_base_book_value_per_share",)
+            )
+            if scenario_book_value is not None:
+                # This is the same deterministic-scenario boundary already
+                # used for forward FCF: it is not consensus and it is not an
+                # observed future fact.  The record stays explicitly tagged
+                # as a scenario so downstream scoring can discount it.
+                forward_book_record = _copy_as_valuation_input(
+                    scenario_book_value,
+                    target_id=target_id,
+                    cutoff=cutoff,
+                    metric_id="forward_book_value",
+                    unit=scenario_book_value.unit,
+                    role="FORWARD_BOOK_VALUE",
+                )
+                result.append(forward_book_record)
+                forward_inputs["forward_book_value"] = forward_book_record
+        if "forward_ebitda" not in forward_inputs:
+            scenario_ebitda = _latest_metric(
+                scenario_records, ("scenario_base_ebitda",)
+            )
+            if scenario_ebitda is not None:
+                forward_ebitda_record = _copy_as_valuation_input(
+                    scenario_ebitda,
+                    target_id=target_id,
+                    cutoff=cutoff,
+                    metric_id="forward_ebitda",
+                    unit=scenario_ebitda.unit,
+                    role="FORWARD_EBITDA",
+                )
+                result.append(forward_ebitda_record)
+                forward_inputs["forward_ebitda"] = forward_ebitda_record
 
         net_debt = _latest_metric(valuation_existing, ("net_debt",))
         net_cash = _latest_metric(valuation_existing, ("net_cash",))
@@ -3662,6 +3696,40 @@ def _scenario_records(
         if market_cap is not None and current_price is not None
         else None
     )
+    latest_equity = _latest_metric(
+        existing,
+        ("equity", "parent_equity", "total_equity"),
+    )
+    if latest_equity is not None:
+        input_ids = tuple(
+            dict.fromkeys((*input_ids, latest_equity.record_id))
+        )
+        source_ids = tuple(
+            dict.fromkeys((*source_ids, *latest_equity.source_ids))
+        )
+    latest_depreciation_amortization = _latest_metric(
+        existing,
+        ("depreciation_and_amortization",),
+    )
+    if latest_depreciation_amortization is not None:
+        input_ids = tuple(
+            dict.fromkeys(
+                (*input_ids, latest_depreciation_amortization.record_id)
+            )
+        )
+        source_ids = tuple(
+            dict.fromkeys(
+                (*source_ids, *latest_depreciation_amortization.source_ids)
+            )
+        )
+    depreciation_margin = (
+        _safe_divide(
+            _amount_in_base(latest_depreciation_amortization),
+            item.sales,
+        )
+        if latest_depreciation_amortization is not None
+        else None
+    )
     output: list[StructuredMetricRecord] = []
     for scenario, adjustment in (("bear", -10.0), ("base", 0.0), ("bull", 10.0)):
         growth = _clamp(base_growth + adjustment, -50.0, 75.0)
@@ -3688,6 +3756,19 @@ def _scenario_records(
             ),
         ]
         projected_net_income = revenue * net_margin if net_margin is not None else None
+        projected_ebitda = (
+            revenue * op_margin + revenue * depreciation_margin
+            if op_margin is not None and depreciation_margin is not None
+            else None
+        )
+        scenario_values.append(
+            (
+                "ebitda",
+                projected_ebitda,
+                "CURRENCY",
+                ("SCENARIO_SENSITIVITY", "FORWARD_EBITDA"),
+            )
+        )
         projected_eps = (
             _safe_divide(projected_net_income, shares)
             if projected_net_income is not None and shares is not None
@@ -3699,6 +3780,24 @@ def _scenario_records(
                 projected_eps,
                 "CURRENCY_PER_SHARE",
                 ("SCENARIO_SENSITIVITY", "FORWARD_EPS"),
+            )
+        )
+        projected_book_value_per_share = (
+            _safe_divide(
+                _amount_in_base(latest_equity) + projected_net_income,
+                shares,
+            )
+            if latest_equity is not None
+            and projected_net_income is not None
+            and shares is not None
+            else None
+        )
+        scenario_values.append(
+            (
+                "book_value_per_share",
+                projected_book_value_per_share,
+                "CURRENCY_PER_SHARE",
+                ("SCENARIO_SENSITIVITY", "FORWARD_BOOK_VALUE"),
             )
         )
         projected_fcf = revenue * fcf_margin if fcf_margin is not None else None
@@ -3746,7 +3845,13 @@ def _scenario_records(
                         "growth_adjustment_pctp": adjustment,
                         "scenario_growth_pct": round(growth, 6),
                         "margin_hold_constant": True,
-                        "formula_version": "dart_actual_trend_scenario_v1",
+                        "book_value_formula": (
+                            "latest_reported_equity + projected_net_income; "
+                            "dividends_and_oci_held_zero"
+                            if metric_id == "book_value_per_share"
+                            else None
+                        ),
+                        "formula_version": "dart_actual_trend_scenario_v2",
                         "observed_fact": False,
                         "structured_source": True,
                     },
@@ -4100,7 +4205,10 @@ def _dedupe_records(
     for row in records:
         existing = by_id.get(row.record_id)
         if existing is not None and existing.to_dict() != row.to_dict():
-            raise ValueError("structured record id collision")
+            raise ValueError(
+                "structured record id collision: "
+                f"{row.record_id}:{row.metric_id}:{row.period}"
+            )
         by_id[row.record_id] = row
     return tuple(
         sorted(

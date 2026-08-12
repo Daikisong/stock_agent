@@ -159,9 +159,45 @@ class OpenDARTActualsStructuredRoute:
                     target_id=target_id,
                     as_of_date=as_of_date,
                     fiscal_year=int(row["fiscal_year"]),
+                    fiscal_quarter=(
+                        int(row["fiscal_quarter"])
+                        if row.get("fiscal_quarter") not in (None, "")
+                        else None
+                    ),
                     reported_at=reported_at,
                     source_id=raw_source_id,
                     source_route=self.route_name,
+                )
+            )
+        by_period = {
+            (
+                int(row["fiscal_year"]),
+                (
+                    int(row["fiscal_quarter"])
+                    if row.get("fiscal_quarter") not in (None, "")
+                    else None
+                ),
+            ): row
+            for row in self.single_account_payloads
+            if isinstance(row.get("payload"), Mapping)
+        }
+        for (fiscal_year, quarter), annual_row in tuple(by_period.items()):
+            if quarter is not None:
+                continue
+            q3_row = by_period.get((fiscal_year, 3))
+            if q3_row is None:
+                continue
+            reported_at = _date_value(annual_row.get("reported_at") or as_of_date)
+            if reported_at > as_of_date:
+                continue
+            actuals.extend(
+                OpenDARTConnector.normalize_derived_q4_actuals(
+                    annual_row["payload"],
+                    q3_row["payload"],
+                    symbol=symbol,
+                    fiscal_year=fiscal_year,
+                    as_of_date=as_of_date,
+                    reported_at=reported_at,
                 )
             )
         compiled = tuple(
@@ -549,6 +585,7 @@ def _opendart_balance_sheet_records(
     target_id: str,
     as_of_date: date,
     fiscal_year: int,
+    fiscal_quarter: int | None,
     reported_at: date,
     source_id: str,
     source_route: str,
@@ -645,6 +682,11 @@ def _opendart_balance_sheet_records(
             )
         )
     output = []
+    period = (
+        f"FY{fiscal_year}Q{fiscal_quarter}"
+        if fiscal_quarter is not None
+        else f"FY{fiscal_year}"
+    )
     for metric_id, value, role, metadata in values:
         output.append(
             StructuredMetricRecord(
@@ -652,6 +694,7 @@ def _opendart_balance_sheet_records(
                     "STRUCTURED-DART-BALANCE",
                     target_id,
                     fiscal_year,
+                    fiscal_quarter,
                     metric_id,
                     value,
                     source_id,
@@ -661,7 +704,7 @@ def _opendart_balance_sheet_records(
                 metric_id=metric_id,
                 value=value,
                 unit="KRW",
-                period=f"FY{fiscal_year}",
+                period=period,
                 evidence_roles=(role,),
                 source_ids=(source_id,),
                 source_route=source_route,
@@ -675,6 +718,7 @@ def _opendart_balance_sheet_records(
                     **dict(metadata),
                     "structured_source": True,
                     "source_family": "OpenDART_single_account_all",
+                    "fiscal_quarter": fiscal_quarter,
                 },
             )
         )

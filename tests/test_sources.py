@@ -52,6 +52,54 @@ class SourceConnectorTests(unittest.TestCase):
         self.assertNotIn("is_cancellable", fields)
         self.assertEqual(evidence.source_tier, SourceTier.TIER_0)
 
+    def test_opendart_derives_q4_from_annual_and_q3_cumulative_values(self):
+        def row(name, statement, annual, cumulative):
+            return {
+                "account_nm": name,
+                "sj_div": statement,
+                "fs_div": "OFS",
+                "thstrm_amount": str(annual),
+                "thstrm_add_amount": (
+                    str(cumulative) if cumulative is not None else None
+                ),
+            }
+
+        annual = {
+            "list": [
+                row("매출액", "CIS", 400, None),
+                row("영업이익", "CIS", 80, None),
+                row("당기순이익", "CIS", 60, None),
+                row("영업활동현금흐름", "CF", 100, None),
+                row("유형자산의 취득", "CF", 40, None),
+            ]
+        }
+        q3 = {
+            "list": [
+                row("매출액", "CIS", 110, 300),
+                row("영업이익", "CIS", 25, 55),
+                row("분기순이익", "CIS", 20, 45),
+                row("영업활동현금흐름", "CF", 70, None),
+                row("유형자산의 취득", "CF", 25, None),
+            ]
+        }
+        actuals = OpenDARTConnector.normalize_derived_q4_actuals(
+            annual,
+            q3,
+            symbol="058470",
+            fiscal_year=2025,
+            as_of_date=date(2026, 8, 9),
+            reported_at=date(2026, 4, 1),
+        )
+        self.assertEqual(len(actuals), 1)
+        actual = actuals[0]
+        self.assertEqual(actual.fiscal_quarter, 4)
+        self.assertEqual(actual.sales, 100)
+        self.assertEqual(actual.operating_profit, 25)
+        self.assertEqual(actual.net_income, 15)
+        self.assertEqual(actual.cashflow_from_operations, 30)
+        self.assertEqual(actual.capex, 15)
+        self.assertEqual(actual.fcf, 15)
+
     def test_opendart_parses_table_style_contract_fields(self):
         raw_text = """
         그린생명과학/단일판매ㆍ공급계약체결/(2026.06.30)
