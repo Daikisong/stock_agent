@@ -824,6 +824,10 @@ score, Stage 또는 cutover authority가 아니다.
     materialization이 없는 경우에만 기존 전체 미응답 fallback을 쓴다. 과거 `f103...`은
     삭제하거나 가짜 응답으로 채우지 않는다. terminal provider audit가 append-only
     request/active response/historical unanswered/quarantine 수를 계속 exact 검증한다.
+    Supervisor wait는 dossier가 만들어진 뒤 StageCourt/saturation certificate에서
+    materialize되므로, nonterminal run의 active roster에는 dossier뿐 아니라 StageCourt
+    decision의 exact pending reasons도 포함한다. 이 축을 빠뜨리면 과거 요청은 잘 숨겨도
+    현재 Supervisor `9373...`까지 숨기는 과소 필터가 된다.
     회귀 테스트는 미응답 request 두 개가 있어도 typed exception이 가리킨 최신 한 개만
     pending output에 나타나고, journal에는 두 request가 모두 보존되는지 검증한다.
 

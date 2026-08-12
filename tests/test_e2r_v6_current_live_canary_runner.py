@@ -120,6 +120,57 @@ class _HistoricalThenActivePendingCheckpointRunner:
         raise AssertionError("active transport request must remain pending")
 
 
+class _HistoricalThenActiveStageCourtPendingCheckpointRunner(
+    _HistoricalThenActivePendingCheckpointRunner
+):
+    """Return a nonterminal run whose exact wait lives in StageCourt."""
+
+    def run_checkpoint(self, *, config, target, repo_root, source_resume_mode):
+        self.calls.append(target.target_id)
+        target_root = Path(config.output_root) / target.target_id
+        transport = CollaborationCodexSubagentTransport()
+        transport.configure_journal_root(
+            target_root / "collaboration_codex_subagent_provider"
+        )
+        schema = {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["ok"],
+            "properties": {"ok": {"type": "boolean"}},
+        }
+        for label in ("historical", "active"):
+            try:
+                transport.complete(
+                    prompt=f"{label} research {target.target_id}",
+                    output_schema=schema,
+                    schema_name=f"e2r_v5_phase106_{label}_stagecourt_test",
+                )
+            except StructuredProviderUnavailable as exc:
+                request_id = str(exc).rsplit(":", 1)[-1]
+                if label == "historical":
+                    self.historical_request_id = request_id
+                else:
+                    self.active_request_id = request_id
+        assert self.active_request_id is not None
+        return SimpleNamespace(
+            status="RESEARCH_CHECKPOINT_PENDING",
+            audit={},
+            dossier=SimpleNamespace(pending_reasons=()),
+            fact_extraction=SimpleNamespace(pending_reasons=()),
+            source_graph=SimpleNamespace(checkpoint={"pending_reasons": []}),
+            structured_materialization=SimpleNamespace(pending_reasons=()),
+            stagecourt=SimpleNamespace(
+                decision=SimpleNamespace(
+                    pending_reasons=(
+                        "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                        "StructuredProviderUnavailable:"
+                        f"COLLABORATION_RESPONSE_PENDING:{self.active_request_id}",
+                    )
+                )
+            ),
+        )
+
+
 def _write_dummy_strong_bundle(path: Path) -> None:
     path.mkdir(parents=True)
     for name in (RECEIPT_MANIFEST_NAME, *REQUIRED_ARTIFACT_NAMES):
@@ -448,6 +499,39 @@ class E2RV6CurrentLiveCanaryRunnerTests(unittest.TestCase):
                 / "requests"
             )
             self.assertEqual(len(tuple(journal.glob("*.json"))), 2)
+
+    def test_stagecourt_wait_exposes_current_supervisor_not_history(self) -> None:
+        """Supervisor waits are born after dossier construction in StageCourt."""
+
+        selection = _selection()
+        calls: list[str] = []
+        checkpoint_runner = (
+            _HistoricalThenActiveStageCourtPendingCheckpointRunner(calls)
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            result = V6CurrentLiveCanaryRunner(
+                checkpoint_runner_factory=lambda _row: checkpoint_runner
+            ).run_checkpoint(
+                repo_root=REPO_ROOT,
+                selection=selection,
+                work_root=root / "work",
+                cutover_root=root / "cutover",
+                live_materialization_authorized=True,
+                checkpoint_resume=True,
+            )
+
+            self.assertEqual(result["status"], PHASE106_RUN_PENDING)
+            self.assertEqual(result["pending_kind"], "RESEARCH_COLLABORATION_RESPONSE")
+            self.assertEqual(result["blockers"], ["COLLABORATION_RESPONSE_PENDING"])
+            self.assertEqual(
+                [row["request_id"] for row in result["pending_requests"]],
+                [checkpoint_runner.active_request_id],
+            )
+            self.assertNotEqual(
+                checkpoint_runner.historical_request_id,
+                checkpoint_runner.active_request_id,
+            )
 
     def test_terminal_target_opens_exact_distinct_blind_reviews_before_next_target(
         self,

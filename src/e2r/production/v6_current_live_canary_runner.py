@@ -784,6 +784,11 @@ class V6CurrentLiveCanaryRunner:
                                     "pending_reasons"
                                 ),
                                 run.structured_materialization.pending_reasons,
+                                # A Supervisor transport wait is materialized
+                                # by StageCourt after dossier construction.  It
+                                # is therefore absent from dossier.pending_reasons
+                                # even though it is the exact current blocker.
+                                run.stagecourt.decision.pending_reasons,
                             )
                         ),
                     )
