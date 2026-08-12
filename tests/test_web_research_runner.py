@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from urllib import error
 from unittest.mock import patch
 
 from e2r.features import DeterministicFeatureEngineer, FeatureEngineeringInput
@@ -878,6 +879,51 @@ OPM 개선폭 6%
                 first.response_last_modified_at,
             )
             urlopen.assert_not_called()
+
+    def test_page_fetcher_recovers_missing_intermediate_without_disabling_tls(self):
+        html = "<html><body><p>검증된 발행사 원문 자료</p></body></html>"
+        tls_error = error.URLError(
+            "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: "
+            "unable to get local issuer certificate"
+        )
+        verified_context = object()
+        with patch(
+            "e2r.research.page_fetcher._verified_aia_intermediate_context",
+            return_value=verified_context,
+        ) as build_context, patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            side_effect=(tls_error, _FakeHTTPResponse(html)),
+        ) as urlopen:
+            result = PageFetcher(live_enabled=True).fetch(
+                "https://issuer.example.com/report.html",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertTrue(result.ok)
+        self.assertIn("검증된 발행사 원문", result.text)
+        build_context.assert_called_once_with(
+            "https://issuer.example.com/report.html",
+            timeout=10.0,
+        )
+        self.assertEqual(urlopen.call_count, 2)
+        self.assertIs(urlopen.call_args_list[1].kwargs["context"], verified_context)
+
+    def test_page_fetcher_does_not_aia_retry_unrelated_network_error(self):
+        with patch(
+            "e2r.research.page_fetcher._verified_aia_intermediate_context",
+        ) as build_context, patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            side_effect=error.URLError("timed out"),
+        ) as urlopen:
+            result = PageFetcher(live_enabled=True).fetch(
+                "https://issuer.example.com/report.pdf",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertFalse(result.ok)
+        self.assertIn("timed out", result.reason)
+        self.assertEqual(urlopen.call_count, 1)
+        build_context.assert_not_called()
 
     def test_page_fetcher_collects_document_level_publication_metadata(self):
         html = """

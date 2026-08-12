@@ -652,6 +652,24 @@ score, Stage 또는 cutover authority가 아니다.
     exact한데 표기법만 못 읽어 `GUIDANCE_PERIOD_NOT_FORWARD`로 버리면, 불필요한
     web query와 Supervisor retry가 발생한다. 다만 시작일이 과거인 계획은 종료·목표
     시점이 available date 이후일 때만 forward로 승격한다.
+35. **유효한 발행사 TLS leaf가 중간 인증서 누락으로 영구 provider pending**
+
+    한국IR협의회 원문 PDF는 정확한 종목·제목·발행사 경로였지만 서버가 TLS leaf만
+    보내고 중간 인증서를 보내지 않았다. Python과 curl은 모두 정상적으로
+    `unable to get local issuer certificate`를 반환했다. 기존 상태기계는 같은 URL을
+    두 번 실패한 뒤 alternate route를 다시 Supervisor에 넘겼고, 실제 내용 문제가
+    아닌 전송 호환성 문제가 source research loop처럼 보였다.
+
+    쉬운 예: 신분증은 진짜지만 발급기관 확인서 한 장이 봉투에서 빠져, 창구가 매번
+    서류 전체를 반려한 상태다. 신분 확인을 생략해서 통과시키면 안 되고 빠진 확인서를
+    공인 경로에서 보충한 뒤 다시 검증해야 한다.
+
+    수정 후 PageFetcher는 이 정확한 TLS 오류에만 leaf의 표준 AIA CA Issuers 경로를
+    사용한다. 비검증 연결은 공개 leaf 인증서를 읽는 데만 쓰고 문서 bytes는 읽지 않는다.
+    가져온 intermediate와 leaf의 DNS 이름을 certifi 신뢰 root까지 cryptography로 먼저
+    검증한 뒤, 검증을 켠 SSL context로 문서를 다시 요청한다. timeout 같은 일반 네트워크
+    오류나 다른 인증서 오류에는 적용하지 않는다. Source Graph는 새 transport semantics로
+    같은 exact URL을 한 번만 다시 열며 동일 실패가 반복되면 terminal로 남긴다.
 
 ## Goal 경계
 

@@ -8135,6 +8135,43 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(first, 1)
         self.assertEqual(second, 0)
 
+    def test_missing_intermediate_tls_failure_reopens_once_for_verified_aia_repair(self) -> None:
+        candidate = {
+            "candidate_id": "MISSING-INTERMEDIATE",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FETCH_ROUTE_EXHAUSTED",
+            "url": "https://publisher.example/report.pdf",
+        }
+        rejected = (
+            {
+                "candidate_id": "MISSING-INTERMEDIATE",
+                "rejection_reason": (
+                    "SNIPPET_ONLY_FULL_FETCH_REQUIRED:live_fetch_failed:"
+                    "URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] "
+                    "certificate verify failed: unable to get local issuer certificate>"
+                ),
+            },
+        )
+
+        first = source_graph_module._reopen_fetch_semantics_candidates(
+            [candidate],
+            rejected_documents=rejected,
+        )
+        candidate["fetch_status"] = "FETCH_ROUTE_EXHAUSTED"
+        second = source_graph_module._reopen_fetch_semantics_candidates(
+            [candidate],
+            rejected_documents=rejected,
+        )
+
+        self.assertEqual(first, 1)
+        self.assertEqual(second, 0)
+        self.assertEqual(candidate["fetch_status"], "FETCH_ROUTE_EXHAUSTED")
+        self.assertTrue(candidate["tls_aia_intermediate_recovery_attempted"])
+        self.assertEqual(
+            candidate["fetch_semantics_policy_version"],
+            source_graph_module.TLS_AIA_INTERMEDIATE_RECOVERY_SEMANTICS_VERSION,
+        )
+
     def test_pending_old_date_retry_advances_policy_without_reopening(self) -> None:
         candidate = {
             "candidate_id": "PENDING-OLD-DATE-POLICY",

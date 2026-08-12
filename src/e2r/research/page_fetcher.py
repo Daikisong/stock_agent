@@ -6,6 +6,9 @@ import hashlib
 import html
 import json
 import re
+import socket
+import ssl
+import warnings
 from dataclasses import dataclass
 from datetime import date, datetime
 from email.message import Message
@@ -14,6 +17,16 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib import error, parse, request
 from typing import Any, Mapping
+
+import certifi
+from cryptography import x509
+from cryptography.hazmat.primitives import serialization
+from cryptography.utils import CryptographyDeprecationWarning
+from cryptography.x509.oid import (
+    AuthorityInformationAccessOID,
+    ExtensionOID,
+)
+from cryptography.x509.verification import DNSName, PolicyBuilder, Store
 
 from e2r.research.pdf_text_extractor import (
     PDF_TEXT_EXTRACTION_SEMANTICS_VERSION,
@@ -28,6 +41,9 @@ PUBLICATION_METADATA_SEMANTICS_VERSION = (
 TEXT_CACHE_SEMANTICS_VERSION = "e2r_page_fetch_text_cache_v2"
 RESPONSE_CONTENT_CLASSIFICATION_SEMANTICS_VERSION = (
     "e2r_page_fetch_response_content_classification_v2"
+)
+TLS_AIA_INTERMEDIATE_RECOVERY_SEMANTICS_VERSION = (
+    "e2r_page_fetch_tls_aia_intermediate_recovery_v1"
 )
 
 
@@ -219,7 +235,10 @@ class PageFetcher:
                 },
                 method="GET",
             )
-            with request.urlopen(req, timeout=self.timeout_seconds) as response:
+            with _urlopen_with_verified_aia_intermediate_recovery(
+                req,
+                timeout=self.timeout_seconds,
+            ) as response:
                 content_type = _content_type(response)
                 content_disposition_filename = (
                     _content_disposition_filename(response)
@@ -395,6 +414,144 @@ def _path_exists(value: str) -> bool:
         return Path(value).exists()
     except OSError:
         return False
+
+
+def _urlopen_with_verified_aia_intermediate_recovery(
+    req: request.Request,
+    *,
+    timeout: float,
+):
+    """Open HTTPS once more when a server omitted its intermediate CA.
+
+    Some otherwise valid publisher sites send only the leaf certificate.  A
+    normal TLS client then fails with ``unable to get local issuer
+    certificate`` even though the leaf advertises its intermediate through
+    the standard Authority Information Access (AIA) extension.
+
+    This recovery never disables verification for document transport.  It
+    uses an unverified handshake only to read the public leaf certificate,
+    downloads the advertised CA certificate, verifies leaf + intermediate +
+    DNS name against the normal certifi root store, and only then repeats the
+    HTTP request with a verifying ``SSLContext``.  Any ambiguity falls back to
+    the original fail-closed TLS error.
+    """
+
+    try:
+        return request.urlopen(req, timeout=timeout)
+    except error.URLError as original_error:
+        if not _is_missing_intermediate_tls_error(original_error):
+            raise
+        try:
+            context = _verified_aia_intermediate_context(
+                req.full_url,
+                timeout=timeout,
+            )
+            return request.urlopen(
+                req,
+                timeout=timeout,
+                context=context,
+            )
+        except Exception:
+            # Preserve the stable provider failure taxonomy.  Recovery is a
+            # bounded compatibility path, not permission to replace a TLS
+            # verification failure with an unrelated parser/network error.
+            raise original_error
+
+
+def _is_missing_intermediate_tls_error(exc: BaseException) -> bool:
+    parts: list[str] = []
+    current: BaseException | None = exc
+    visited: set[int] = set()
+    while current is not None and id(current) not in visited:
+        visited.add(id(current))
+        parts.append(str(current).casefold())
+        reason = getattr(current, "reason", None)
+        current = reason if isinstance(reason, BaseException) else current.__cause__
+    detail = " ".join(parts)
+    return bool(
+        "certificate_verify_failed" in detail
+        and "unable to get local issuer certificate" in detail
+    )
+
+
+def _verified_aia_intermediate_context(
+    url: str,
+    *,
+    timeout: float,
+) -> ssl.SSLContext:
+    parsed = parse.urlparse(url)
+    host = str(parsed.hostname or "")
+    if parsed.scheme != "https" or not host:
+        raise ValueError("AIA TLS recovery requires an HTTPS hostname")
+    port = int(parsed.port or 443)
+
+    # This socket reads only the peer's public leaf certificate.  No HTTP
+    # request or evidence bytes travel through the unverified connection.
+    probe_context = ssl._create_unverified_context()  # noqa: SLF001
+    with socket.create_connection((host, port), timeout=timeout) as raw_socket:
+        with probe_context.wrap_socket(
+            raw_socket,
+            server_hostname=host,
+        ) as tls_socket:
+            leaf_der = tls_socket.getpeercert(binary_form=True)
+    if not leaf_der:
+        raise ssl.SSLCertVerificationError("peer did not provide a leaf certificate")
+    leaf = x509.load_der_x509_certificate(leaf_der)
+
+    aia = leaf.extensions.get_extension_for_oid(
+        ExtensionOID.AUTHORITY_INFORMATION_ACCESS
+    ).value
+    issuer_urls = tuple(
+        str(description.access_location.value)
+        for description in aia
+        if description.access_method == AuthorityInformationAccessOID.CA_ISSUERS
+        and str(description.access_location.value).startswith(("http://", "https://"))
+    )
+    if not issuer_urls:
+        raise ssl.SSLCertVerificationError("leaf has no HTTP AIA CA issuer URL")
+
+    intermediates: list[x509.Certificate] = []
+    for issuer_url in issuer_urls[:3]:
+        issuer_request = request.Request(
+            issuer_url,
+            headers={"User-Agent": "Mozilla/5.0 E2R-TLS-AIA-Recovery/1.0"},
+            method="GET",
+        )
+        with request.urlopen(issuer_request, timeout=timeout) as response:
+            issuer_bytes = response.read(1_000_001)
+        if len(issuer_bytes) > 1_000_000:
+            raise ValueError("AIA issuer certificate exceeds 1 MB")
+        try:
+            intermediate = x509.load_der_x509_certificate(issuer_bytes)
+        except ValueError:
+            intermediate = x509.load_pem_x509_certificate(issuer_bytes)
+        intermediates.append(intermediate)
+
+    # The public Mozilla bundle can contain a grandfathered legacy root with
+    # a non-positive serial.  It remains an OpenSSL trust-store input today;
+    # suppress only that library deprecation while parsing the complete bundle.
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", CryptographyDeprecationWarning)
+        root_certificates = x509.load_pem_x509_certificates(
+            Path(certifi.where()).read_bytes()
+        )
+    if not root_certificates:
+        raise ssl.SSLCertVerificationError("trusted root store is empty")
+    verifier = (
+        PolicyBuilder()
+        .store(Store(root_certificates))
+        .build_server_verifier(DNSName(host))
+    )
+    verifier.verify(leaf, intermediates)
+
+    verified_context = ssl.create_default_context(cafile=certifi.where())
+    verified_context.load_verify_locations(
+        cadata="\n".join(
+            certificate.public_bytes(serialization.Encoding.PEM).decode("ascii")
+            for certificate in intermediates
+        )
+    )
+    return verified_context
 
 
 def _http_request_url(url: str) -> str:

@@ -23,6 +23,9 @@ from e2r.research.page_fetcher import (
     TEXT_CACHE_SEMANTICS_VERSION,
 )
 from e2r.research.page_fetcher import PageFetcher
+from e2r.research.page_fetcher import (
+    TLS_AIA_INTERMEDIATE_RECOVERY_SEMANTICS_VERSION,
+)
 from e2r.research.pdf_text_extractor import (
     PDF_TEXT_EXTRACTION_SEMANTICS_VERSION,
     extracted_text_unreadable_reason,
@@ -7614,6 +7617,11 @@ def _candidate_has_current_fetch_semantics_retry(
             policy_version
             == RESPONSE_CONTENT_CLASSIFICATION_SEMANTICS_VERSION
         )
+    if reason == "PRIOR_TLS_FAILURE_PRECEDED_VERIFIED_AIA_INTERMEDIATE_RECOVERY":
+        return (
+            policy_version
+            == TLS_AIA_INTERMEDIATE_RECOVERY_SEMANTICS_VERSION
+        )
     return False
 
 
@@ -8768,6 +8776,30 @@ def _reopen_fetch_semantics_candidates(
             )
             candidate["fetch_semantics_policy_version"] = (
                 RESPONSE_CONTENT_CLASSIFICATION_SEMANTICS_VERSION
+            )
+        elif (
+            "CERTIFICATE_VERIFY_FAILED" in reason
+            and "unable to get local issuer certificate" in reason
+            and str(candidate.get("url") or "").startswith("https://")
+        ):
+            # The first transport correctly failed closed.  PageFetcher now
+            # has a generic, chain-verifying AIA repair for servers that omit
+            # their intermediate CA.  Reopen the same exact route once under
+            # that new semantics; an identical result becomes terminal and
+            # cannot create another supervisor/fetch loop.
+            flag = "tls_aia_intermediate_recovery_attempted"
+            if (
+                candidate.get(flag)
+                and candidate.get("fetch_semantics_policy_version")
+                == TLS_AIA_INTERMEDIATE_RECOVERY_SEMANTICS_VERSION
+            ):
+                continue
+            candidate[flag] = True
+            candidate["fetch_semantics_retry_reason"] = (
+                "PRIOR_TLS_FAILURE_PRECEDED_VERIFIED_AIA_INTERMEDIATE_RECOVERY"
+            )
+            candidate["fetch_semantics_policy_version"] = (
+                TLS_AIA_INTERMEDIATE_RECOVERY_SEMANTICS_VERSION
             )
         else:
             continue
