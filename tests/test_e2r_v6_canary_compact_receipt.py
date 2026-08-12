@@ -14,6 +14,8 @@ from e2r.production.v6_canary_compact_receipt import (
     COMPACT_REVIEW_PASS,
     COMPACT_REVIEW_SCHEMA,
     REQUIRED_ARTIFACT_NAMES,
+    _accepted_fact_inventory,
+    _fact_extraction_transport_hashes,
     _provider_audit_with_revalidated_journal,
     build_selection_bound_canary_artifacts_from_output,
     _production_provider_accounting,
@@ -863,6 +865,50 @@ def _write_terminal_output(root: Path, selection: dict[str, object]) -> Path:
 
 
 class E2RV6CanaryCompactReceiptTests(unittest.TestCase):
+    def test_counter_view_may_repeat_only_the_identical_canonical_fact(
+        self,
+    ) -> None:
+        fact = {"fact_id": "EFACT-1", "direction": "COUNTER"}
+        self.assertEqual(
+            _accepted_fact_inventory((fact,), (deepcopy(fact),)),
+            {"EFACT-1": fact},
+        )
+        conflicting = {**fact, "direction": "POSITIVE"}
+        with self.assertRaises(ValueError):
+            _accepted_fact_inventory((fact,), (conflicting,))
+
+    def test_fact_stable_ids_resolve_only_through_exact_transport_envelopes(
+        self,
+    ) -> None:
+        call = {
+            "call_scope": "FACT_EXTRACTION",
+            "prompt_hash": "FACTPROMPT-" + "a" * 24,
+            "response_hash": "FACTRESP-" + "b" * 24,
+            "request_envelope_zlib_b64": "request",
+            "response_envelope_zlib_b64": "response",
+        }
+        with patch(
+            "e2r.production.v6_canary_compact_receipt."
+            "_provider_call_receipts",
+            return_value=(call,),
+        ), patch(
+            "e2r.production.v6_canary_compact_receipt."
+            "_decode_journal_envelope",
+            side_effect=(
+                {"prompt_hash": "c" * 64},
+                {"payload_hash": "d" * 64},
+            ),
+        ):
+            self.assertEqual(
+                _fact_extraction_transport_hashes(Path("unused")),
+                {
+                    (
+                        "FACTPROMPT-" + "a" * 24,
+                        "FACTRESP-" + "b" * 24,
+                    ): ("c" * 64, "d" * 64)
+                },
+            )
+
     def test_legacy_provider_audit_is_upgraded_only_from_exact_journal(
         self,
     ) -> None:

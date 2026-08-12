@@ -504,6 +504,22 @@ score, Stage 또는 cutover authority가 아니다.
    journal을 새 validator로 다시 읽고, 기존 audit의 request/response/pending/quarantine
    count와 전부 일치할 때만 새 분리 필드를 보충한다.
 
+30. **compact receipt가 같은 계보의 두 표현과 counter view를 결함으로 오판**
+
+   Evidence OS claim은 검증된 추출 호출을 `FACTPROMPT-*`/`FACTRESP-*` 안정 ID로
+   보존하지만 compact receipt는 실제 transport의 64자리 prompt/payload hash를 요구했다.
+   또 `evidence_facts.jsonl`은 모든 방향의 canonical ledger이고 `counterfacts.jsonl`은 그중
+   COUNTER 행을 그대로 반복하는 materialized view인데, projector는 이 동일 행도 duplicate
+   identity 오류로 처리했다.
+
+   쉬운 예: 같은 결제에 주문번호와 카드 승인번호가 둘 다 있는데 주문번호가 카드 승인번호
+   형식이 아니라고 결제를 거부했고, 전체 거래장과 환불 거래장에 같은 환불 행이 보인다고
+   이중 결제로 오해한 셈이다.
+
+   수정 후 안정 ID는 검증된 Collaboration request/response envelope와 다시 결속해 실제
+   64자리 hash를 가져온다. 동일 fact ID가 두 view에 있으면 byte-equivalent semantic row만
+   한 fact로 합치며, 내용이 조금이라도 다르면 계속 fail-closed한다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -618,6 +634,10 @@ score, Stage 또는 cutover authority가 아니다.
     unresolved historical request, validated quarantine가 request roster를 exact 분할해야
     한다. current-run logical/successful call 수도 exact해야 한다. quarantine envelope와
     reason receipt가 하나라도 손상되거나 count가 맞지 않으면 fail-closed한다.
+32. compact fact lineage는 `FACTPROMPT`/`FACTRESP`를 임의 hash 변환하지 않는다.
+    검증된 fact provider-call receipt가 품은 exact Collaboration envelope에서 full
+    prompt/payload hash를 복구해야 한다. canonical evidence ledger와 counter-only view의
+    동일 행은 한 번만 세되, same-ID content drift는 거부한다.
 
 ## Goal 경계
 

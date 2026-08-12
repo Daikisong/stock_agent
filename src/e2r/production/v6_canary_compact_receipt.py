@@ -48,9 +48,11 @@ from e2r.research_brain.researcher_mode.schemas import CANONICAL_COMPONENT_ORDER
 from e2r.research_brain.researcher_mode.tracked_receipts import (
     _anchor_receipts,
     _component_receipts,
+    _decode_journal_envelope,
     _decision_rows,
     _fact_receipts,
     _judge_receipts,
+    _provider_call_receipts,
     _recompute_stage,
     _source_receipts,
     _stage_receipt,
@@ -1150,6 +1152,85 @@ def _provider_audit_with_revalidated_journal(
     return upgraded
 
 
+def _fact_extraction_transport_hashes(
+    target_root: Path,
+) -> Mapping[tuple[str, str], tuple[str, str]]:
+    """Bind stable fact compiler IDs to full Collaboration transport hashes.
+
+    Evidence OS intentionally stores compact ``FACTPROMPT``/``FACTRESP``
+    identities on accepted claims.  The post-run compact receipt requires the
+    full SHA-256 prompt and response-payload hashes instead.  The bridge is the
+    validated join: tracked provider-call receipts already prove that each
+    stable pair belongs to one exact request/response envelope.
+    """
+
+    by_stable_identity: dict[tuple[str, str], tuple[str, str]] = {}
+    for call in _provider_call_receipts(target_root):
+        if call.get("call_scope") != "FACT_EXTRACTION":
+            continue
+        request = _decode_journal_envelope(
+            call.get("request_envelope_zlib_b64")
+        )
+        response = _decode_journal_envelope(
+            call.get("response_envelope_zlib_b64")
+        )
+        stable_identity = (
+            str(call.get("prompt_hash") or ""),
+            str(call.get("response_hash") or ""),
+        )
+        transport_identity = (
+            str(request.get("prompt_hash") or ""),
+            str(response.get("payload_hash") or ""),
+        )
+        if (
+            re.fullmatch(r"FACTPROMPT-[0-9a-f]{24}", stable_identity[0])
+            is None
+            or re.fullmatch(
+                r"FACTRESP-[0-9a-f]{24}", stable_identity[1]
+            )
+            is None
+            or _HEX64.fullmatch(transport_identity[0]) is None
+            or _HEX64.fullmatch(transport_identity[1]) is None
+        ):
+            raise ValueError(
+                "fact extraction provider receipt lacks exact transport hashes"
+            )
+        prior = by_stable_identity.setdefault(
+            stable_identity,
+            transport_identity,
+        )
+        if prior != transport_identity:
+            raise ValueError(
+                "fact extraction stable identity maps to multiple transports"
+            )
+    return by_stable_identity
+
+
+def _accepted_fact_inventory(
+    evidence_rows: Sequence[Mapping[str, Any]],
+    counter_rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Mapping[str, Any]]:
+    """Merge the full fact ledger and its counter-only materialized view.
+
+    ``evidence_facts.jsonl`` is the canonical all-direction ledger, while
+    ``counterfacts.jsonl`` intentionally repeats its COUNTER rows for a
+    convenient downstream view.  Identical repetitions are one fact; only a
+    same-ID content disagreement is a collision.
+    """
+
+    by_id: dict[str, Mapping[str, Any]] = {}
+    for row in (*evidence_rows, *counter_rows):
+        fact_id = str(row.get("fact_id") or "")
+        if not fact_id:
+            raise ValueError("current accepted fact lacks an identity")
+        prior = by_id.setdefault(fact_id, row)
+        if dict(prior) != dict(row):
+            raise ValueError(
+                "current accepted fact inventory contains a conflicting identity"
+            )
+    return by_id
+
+
 def build_selection_bound_canary_artifacts_from_output(
     *,
     repo_root: str | Path,
@@ -1402,6 +1483,20 @@ def build_selection_bound_canary_artifacts_from_output(
     fact_call_groups: dict[
         tuple[str, str, str], list[str]
     ] = defaultdict(list)
+    needs_transport_resolution = any(
+        str(row.get("provider_prompt_hash") or "").startswith(
+            "FACTPROMPT-"
+        )
+        or str(row.get("provider_response_hash") or "").startswith(
+            "FACTRESP-"
+        )
+        for row in rich_facts
+    )
+    fact_transport_hashes = (
+        _fact_extraction_transport_hashes(target)
+        if needs_transport_resolution
+        else {}
+    )
     for row in rich_facts:
         extraction_provider_name = _normalized_provider_name(
             row.get("extraction_provider_name")
@@ -1410,8 +1505,32 @@ def build_selection_bound_canary_artifacts_from_output(
             raise ValueError(
                 "Phase106 fact extraction lineage is not Collaboration Codex"
             )
-        provider_prompt_hash = str(row.get("provider_prompt_hash") or "")
-        provider_response_hash = str(row.get("provider_response_hash") or "")
+        provider_prompt_identity = str(
+            row.get("provider_prompt_hash") or ""
+        )
+        provider_response_identity = str(
+            row.get("provider_response_hash") or ""
+        )
+        if (
+            _HEX64.fullmatch(provider_prompt_identity) is not None
+            and _HEX64.fullmatch(provider_response_identity) is not None
+        ):
+            provider_prompt_hash = provider_prompt_identity
+            provider_response_hash = provider_response_identity
+        else:
+            resolved_transport = fact_transport_hashes.get(
+                (
+                    provider_prompt_identity,
+                    provider_response_identity,
+                )
+            )
+            if resolved_transport is None:
+                raise ValueError(
+                    "accepted fact lacks exact extraction provider lineage"
+                )
+            provider_prompt_hash, provider_response_hash = (
+                resolved_transport
+            )
         if (
             _HEX64.fullmatch(provider_prompt_hash) is None
             or _HEX64.fullmatch(provider_response_hash) is None
@@ -1517,13 +1636,10 @@ def build_selection_bound_canary_artifacts_from_output(
         str(row["component_id"]): float(row["max_points"]) for row in components
     }
     total = round(sum(vector.values()), 6)
-    raw_fact_by_id = {
-        str(row["fact_id"]): row
-        for row in (*raw_evidence_rows, *raw_counter_rows)
-        if str(row.get("fact_id") or "")
-    }
-    if len(raw_fact_by_id) != len(raw_evidence_rows) + len(raw_counter_rows):
-        raise ValueError("current accepted fact inventory contains duplicate identities")
+    raw_fact_by_id = _accepted_fact_inventory(
+        raw_evidence_rows,
+        raw_counter_rows,
+    )
     raw_claim_by_id = {
         str(row["claim_id"]): row
         for row in _read_current_jsonl(target / "material_fact_claims.jsonl")
