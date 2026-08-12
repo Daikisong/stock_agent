@@ -350,6 +350,18 @@ class E2RV6CurrentLiveCanaryRunnerTests(unittest.TestCase):
                     "COLLABREQ-"
                 )
             )
+            self.assertEqual(
+                result["pending_requests"][0]["request_scope"],
+                "FULL_RESEARCHER_MODE",
+            )
+            self.assertEqual(
+                result["pending_requests"][0]["pass_name"],
+                "PHASE106_TEST",
+            )
+            self.assertEqual(
+                result["pending_requests"][0]["schema_name"],
+                "e2r_v5_phase106_test",
+            )
             self.assertFalse((root / "cutover" / "current_live_canaries").exists())
             self.assertEqual(result["gold_call_count"], 0)
             self.assertEqual(result["local_provider_call_count"], 0)

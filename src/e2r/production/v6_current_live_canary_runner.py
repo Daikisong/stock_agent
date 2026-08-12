@@ -210,13 +210,15 @@ def _default_checkpoint_runner(_row: Mapping[str, Any]) -> Any:
     )
 
 
-def _pending_research_requests(target_root: Path) -> tuple[str, ...]:
+def _pending_research_request_rows(
+    target_root: Path,
+) -> tuple[Mapping[str, str | None], ...]:
     journal = target_root / "collaboration_codex_subagent_provider"
     request_root = journal / "requests"
     response_root = journal / "responses"
     if not request_root.is_dir() or request_root.is_symlink():
         return ()
-    pending: list[str] = []
+    pending: list[Mapping[str, str | None]] = []
     for path in sorted(request_root.glob("*.json")):
         if path.is_symlink() or not path.is_file():
             raise ValueError("Collaboration request journal contains an unsafe leaf")
@@ -232,7 +234,20 @@ def _pending_research_requests(target_root: Path) -> tuple[str, ...]:
             raise ValueError("Collaboration request path identity is invalid")
         response_path = response_root / f"{request_id}.json"
         if not response_path.is_file():
-            pending.append(request_id)
+            # FULL_RESEARCHER_MODE is the parent execution scope, not the
+            # collaboration pass that must be answered.  Expose the immutable
+            # pass_name from the request envelope so an operator cannot route
+            # an EVIDENCE_FACT_EXTRACTION continuation as (for example) a
+            # RESEARCH_SUPERVISOR_REVIEW merely from the parent scope label.
+            pending.append(
+                {
+                    "request_id": request_id,
+                    "reviewer_slot": None,
+                    "request_scope": "FULL_RESEARCHER_MODE",
+                    "pass_name": str(request["pass_name"]),
+                    "schema_name": str(request["schema_name"]),
+                }
+            )
     return tuple(pending)
 
 
@@ -277,24 +292,17 @@ def _research_pending_result(
     target_root: Path,
     detail: str,
 ) -> Mapping[str, Any]:
-    request_ids = _pending_research_requests(target_root)
+    request_rows = _pending_research_request_rows(target_root)
     wait_marker = (
-        "COLLABORATION_RESPONSE_PENDING" if request_ids else "SOURCE_PENDING"
+        "COLLABORATION_RESPONSE_PENDING" if request_rows else "SOURCE_PENDING"
     )
     return _pending_result(
         selection=selection,
         rows=rows,
         prepared_count=prepared_count,
         active_row=row,
-        pending_kind="RESEARCH_COLLABORATION_RESPONSE" if request_ids else detail,
-        request_rows=tuple(
-            {
-                "request_id": request_id,
-                "reviewer_slot": None,
-                "request_scope": "FULL_RESEARCHER_MODE",
-            }
-            for request_id in request_ids
-        ),
+        pending_kind="RESEARCH_COLLABORATION_RESPONSE" if request_rows else detail,
+        request_rows=request_rows,
         external_wait_marker=wait_marker,
     )
 

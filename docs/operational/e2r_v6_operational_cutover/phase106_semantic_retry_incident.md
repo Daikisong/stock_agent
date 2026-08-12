@@ -670,6 +670,23 @@ score, Stage 또는 cutover authority가 아니다.
     검증한 뒤, 검증을 켠 SSL context로 문서를 다시 요청한다. timeout 같은 일반 네트워크
     오류나 다른 인증서 오류에는 적용하지 않는다. Source Graph는 새 transport semantics로
     같은 exact URL을 한 번만 다시 열며 동일 실패가 반복되면 terminal로 남긴다.
+36. **상위 실행 모드가 실제 Collaboration pass를 가려 잘못 라우팅될 수 있음**
+
+    Phase106 runner의 pending 출력은 모든 리서치 요청에
+    `request_scope=FULL_RESEARCHER_MODE`만 표시했다. 하지만 이 값은 상위 실행
+    컨테이너일 뿐, 실제로 답해야 하는 요청은 envelope의 `pass_name`으로 구분한다.
+    예를 들어 이번 KIRS 세 번째 요청은 `EVIDENCE_FACT_EXTRACTION` continuation인데,
+    상위 scope만 보면 Supervisor review로 오해할 수 있었다. 잘못 답하면 schema에서
+    거절되거나, 사람이 재작업을 열어 반복이 늘어난 것처럼 보인다.
+
+    쉬운 예: 택배 상태가 모두 `배송 중`으로만 보이고 실제 단계인 `세관 서류 보완`이
+    숨겨진 것과 같다. 배송 기사 업무로 넘기면 해결되지 않는다.
+
+    수정 후 pending row는 기존 parent `request_scope`를 호환용으로 보존하면서,
+    immutable request envelope의 `pass_name`과 `schema_name`을 함께 출력한다. 운영자는
+    반드시 `pass_name`을 우선해 leaf를 라우팅한다. 코드에도 이 parent/pass 차이를
+    주석으로 고정했고, 회귀 테스트는 `FULL_RESEARCHER_MODE` 안의
+    `PHASE106_TEST` pass가 별도로 노출되는지 검증한다.
 
 ## Goal 경계
 
