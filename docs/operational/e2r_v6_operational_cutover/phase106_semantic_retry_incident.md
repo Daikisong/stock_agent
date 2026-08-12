@@ -877,6 +877,15 @@ score, Stage 또는 cutover authority가 아니다.
     remainder가 있으면 같은 문서만 정직하게 continuation한다. 회귀 테스트는 master
     driver가 Phase106과 Phase107 모두 이 bounded batch를 실제 CLI에 전달하는지 검증한다.
 
+    진행 중인 checkpoint에서 transport batch 값을 바꾸는 경우에는 **기존 active response를
+    먼저 원래 batch 값으로 소비한 뒤** 전환해야 한다. request identity에는 정확한 prompt
+    document roster가 포함되므로, 응답을 import만 하고 소비하기 전에 `1 -> 3`으로 바꾸면
+    새 세 문서 prompt가 별도 request identity를 만든다. 기존 응답은 append-only 감사
+    journal에 보존되지만 current fact checkpoint에는 아직 반영되지 않았으므로 첫 문서가
+    새 batch에 한 번 다시 포함된다. 현재 migration에서는 새 active batch가 그 문서를
+    독립 재검증하게 하고, 과거 응답을 가짜 current 응답으로 재지정하지 않는다. clean
+    operational run은 시작부터 값 `3`을 고정하므로 이 전환 중복이 발생하지 않는다.
+
 ## Goal 경계
 
 이 수정은 query template, score weight, Stage rule 또는 target-specific branch를 추가하지
