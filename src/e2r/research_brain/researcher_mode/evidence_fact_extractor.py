@@ -3595,7 +3595,10 @@ def resolve_current_fact_lineage_recovery_binding(
         persisted_fact_ids=tuple(persisted_rows),
         pending_new_fact_ids=pending_new_fact_ids,
     )
-    if expectation["status"] != "AUTHORITY_LOSS_RECOVERY_REQUIRED":
+    if expectation["status"] not in {
+        "AUTHORITY_LOSS_RECOVERY_REQUIRED",
+        "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_NEW_REQUIRED",
+    }:
         raise ValueError(
             "current fact lineage binding requires an exact authority loss"
         )
@@ -3607,7 +3610,12 @@ def resolve_current_fact_lineage_recovery_binding(
         current_facts,
         label="current fact authority projection",
     )
-    if set(current_projection_rows) != set(authority_rows):
+    pending_new = frozenset(str(value) for value in pending_new_fact_ids)
+    expected_projection_ids = set(authority_rows).union(pending_new)
+    if (
+        set(current_projection_rows) != expected_projection_ids
+        or not pending_new.issubset(persisted_rows)
+    ):
         raise ValueError("current fact authority projection is not exact")
     for fact_id, row in persisted_rows.items():
         if (
@@ -3633,6 +3641,19 @@ def resolve_current_fact_lineage_recovery_binding(
         seed_source_document_ids
     ).issubset(document_by_id):
         raise ValueError("authority-loss source seed is outside current documents")
+    pending_new_source_document_ids = tuple(
+        sorted(
+            {
+                str(source_id)
+                for fact_id in pending_new
+                for source_id in (
+                    current_projection_rows[fact_id].get("source_ids") or ()
+                )
+            }
+        )
+    )
+    if pending_new and not pending_new_source_document_ids:
+        raise ValueError("pending-new facts require exact source lineage")
 
     objective_ids = {
         str(row.get("objective_id") or "").strip()
@@ -3714,6 +3735,9 @@ def resolve_current_fact_lineage_recovery_binding(
                 journal_root=journal_root,
                 seed_source_document_ids=seed_source_document_ids,
                 pending_new_fact_ids=pending_new_fact_ids,
+                permitted_prior_disposition_document_ids=(
+                    pending_new_source_document_ids
+                ),
                 prior_document_dispositions=prior_document_dispositions,
                 materials=materials,
                 fact_extraction_semantics_version=semantics_version,
@@ -3753,6 +3777,7 @@ def _current_fact_lineage_binding_from_materials(
     journal_root: str | Path,
     seed_source_document_ids: Sequence[str],
     pending_new_fact_ids: Sequence[str],
+    permitted_prior_disposition_document_ids: Sequence[str] = (),
     prior_document_dispositions: Sequence[Mapping[str, Any]],
     materials: Mapping[str, Any],
     fact_extraction_semantics_version: str,
@@ -3798,6 +3823,14 @@ def _current_fact_lineage_binding_from_materials(
         str(row.get("document_id") or "")
         for row in prior_document_dispositions
     }
+    permitted_disposition_ids = frozenset(
+        str(value)
+        for value in permitted_prior_disposition_document_ids
+    )
+    if not permitted_disposition_ids.issubset(disposition_ids):
+        raise ValueError(
+            "pending-new source dispositions lack committed lineage"
+        )
     expanded_by_group = {
         group_id: frozenset(
             str(document_id)
@@ -3806,7 +3839,10 @@ def _current_fact_lineage_binding_from_materials(
             for document_id in (
                 row.get("validated_current_document_ids") or ()
             )
-            if str(document_id) not in disposition_ids
+            if (
+                str(document_id) not in disposition_ids
+                or str(document_id) in permitted_disposition_ids
+            )
         )
         for group_id in group_ids
     }
@@ -3848,6 +3884,9 @@ def _current_fact_lineage_binding_from_materials(
         ),
         expected_recovery_document_ids=expanded_ids,
         pending_new_fact_ids=tuple(str(value) for value in pending_new_fact_ids),
+        pending_new_source_document_ids=tuple(
+            sorted(permitted_disposition_ids)
+        ),
         fact_extraction_semantics_version=(
             fact_extraction_semantics_version
         ),
@@ -5475,7 +5514,12 @@ def _recover_current_fact_lineage_authority_gap(
         current_facts,
         label="current fact authority projection",
     )
-    if set(current_rows) != set(authority_rows):
+    pending_new = frozenset(str(value) for value in pending_new_fact_ids)
+    expected_current_ids = set(authority_rows).union(pending_new)
+    if (
+        set(current_rows) != expected_current_ids
+        or not pending_new.issubset(persisted_fact_rows)
+    ):
         return _current_lineage_pending_result(
             "CURRENT_FACT_LINEAGE_AUTHORITY_PROJECTION_MISMATCH",
             expectation=expectation,
@@ -5507,7 +5551,10 @@ def _recover_current_fact_lineage_authority_gap(
             "recovered_document_count": 0,
             "objective_reassessment_rows": (),
         }
-    if expectation_status != "AUTHORITY_LOSS_RECOVERY_REQUIRED":
+    if expectation_status not in {
+        "AUTHORITY_LOSS_RECOVERY_REQUIRED",
+        "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_NEW_REQUIRED",
+    }:
         return _current_lineage_pending_result(
             "CURRENT_FACT_LINEAGE_" + expectation_status,
             expectation=expectation,
@@ -5529,9 +5576,22 @@ def _recover_current_fact_lineage_authority_gap(
         str(row.get("document_id") or "")
         for row in prior_document_dispositions
     }
+    pending_new_source_document_ids = frozenset(
+        str(value)
+        for value in recovery_binding.pending_new_source_document_ids
+    )
+    expected_pending_new_source_document_ids = frozenset(
+        str(source_id)
+        for fact_id in pending_new
+        for source_id in current_rows[fact_id].get("source_ids") or ()
+    )
     if (
         not seed_source_document_id_set.issubset(document_by_id)
-        or seed_source_document_id_set.intersection(prior_disposition_ids)
+        or pending_new_source_document_ids
+        != expected_pending_new_source_document_ids
+        or not seed_source_document_id_set.intersection(
+            prior_disposition_ids
+        ).issubset(pending_new_source_document_ids)
     ):
         return _current_lineage_pending_result(
             "CURRENT_FACT_LINEAGE_RECOVERY_DOCUMENT_SCOPE_INVALID",
@@ -5652,7 +5712,11 @@ def _recover_current_fact_lineage_authority_gap(
                 for document_id in (
                     material.get("validated_current_document_ids") or ()
                 )
-                if str(document_id) not in prior_disposition_ids
+                if (
+                    str(document_id) not in prior_disposition_ids
+                    or str(document_id)
+                    in pending_new_source_document_ids
+                )
             }
         )
     )
@@ -5847,12 +5911,23 @@ def _recover_current_fact_lineage_authority_gap(
             "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_RECEIPT_INVALID",
             expectation=expectation,
         )
+    # A document may already have a newer disposition because it produced an
+    # attested pending-new fact.  The historical replay is still required to
+    # restore older claims from that same full document, but the top-level
+    # checkpoint must retain exactly one disposition per document.  Keep the
+    # newer committed disposition and use the replayed disposition only for
+    # documents that were genuinely absent.
+    new_recovered_dispositions = tuple(
+        row
+        for row in recovered_dispositions
+        if str(row.get("document_id") or "") not in prior_disposition_ids
+    )
     return {
         "status": "COMPLETE",
         "expectation": dict(expectation),
         "receipt": dict(receipt),
         "material_claims": recovered_claims,
-        "document_dispositions": recovered_dispositions,
+        "document_dispositions": new_recovered_dispositions,
         "provider_calls": recovered_calls,
         "seed_source_document_ids": tuple(
             sorted(seed_source_document_ids)

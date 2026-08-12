@@ -989,7 +989,7 @@ class CurrentFactLineageRecoveryTests(unittest.TestCase):
                     **common,
                 )
 
-    def test_pending_new_fact_blocks_journal_recovery_and_provider(self):
+    def test_pending_new_fact_without_union_projection_blocks_recovery(self):
         with tempfile.TemporaryDirectory() as directory:
             bundle = _bundle(Path(directory))
             extra_claim = dict(bundle["common"]["prior_material_claims"][0])
@@ -1042,12 +1042,117 @@ class CurrentFactLineageRecoveryTests(unittest.TestCase):
                 "PENDING",
             )
             self.assertIn(
-                "MIXED_AUTHORITY_LOSS_AND_PENDING_NEW_FACTS_BLOCKED",
+                "CURRENT_FACT_LINEAGE_AUTHORITY_PROJECTION_MISMATCH",
                 "|".join(result.pending_reasons),
             )
             self.assertEqual(
                 result.audit["current_fact_lineage_recovered_fact_count"],
                 0,
+            )
+
+    def test_attested_pending_new_fact_merges_with_exact_authority_recovery(self):
+        with tempfile.TemporaryDirectory() as directory:
+            bundle = _bundle(Path(directory))
+            extra_claim = dict(bundle["recovered_claims"][0])
+            extra_claim.update(
+                {
+                    "claim_id": "RFC-PENDING-NEW-MIXED-RECOVERY",
+                    "subject_id": "pending-new-mixed-recovery",
+                    "subject": "pending new mixed recovery subject",
+                    "predicate": "pending new mixed recovery predicate",
+                    "predicate_family": "pending_new_mixed_recovery",
+                    "normalized_object": "pending_new_mixed_recovery",
+                    "mechanism_scope_id": "PENDING-NEW-MIXED-RECOVERY",
+                    "exact_quote": "Current statement 0.",
+                    "extraction_semantics_version": (
+                        FACT_EXTRACTION_SEMANTICS_VERSION
+                    ),
+                }
+            )
+            claims = (*bundle["common"]["prior_material_claims"], extra_claim)
+            pending_compilation = EvidenceFactCompiler().compile(
+                target_id=TARGET,
+                as_of_date=AS_OF_DATE,
+                accepted_claims=claims,
+            )
+            pending_rows = {
+                row.fact_id: row.to_dict()
+                for row in pending_compilation.facts
+                if row.fact_id not in bundle["authority"].current_fact_ids
+            }
+            self.assertEqual(len(pending_rows), 1)
+            pending_fact_id = next(iter(pending_rows))
+            current_rows = {
+                str(row["fact_id"]): dict(row)
+                for row in bundle["authority"].fact_rows
+            }
+            current_rows.update(pending_rows)
+            pending_document_id = str(extra_claim["document_id"])
+            pending_disposition = {
+                **bundle["common"]["prior_document_dispositions"][0],
+                "batch_id": "FACTBATCH-PENDING-NEW-MIXED-RECOVERY",
+                "document_id": pending_document_id,
+                "accepted_fact_count": 1,
+                "rationale": "new semantics fact already committed",
+                "extraction_semantics_version": (
+                    FACT_EXTRACTION_SEMANTICS_VERSION
+                ),
+            }
+            common = {
+                **bundle["common"],
+                "current_facts": tuple(
+                    current_rows[fact_id] for fact_id in sorted(current_rows)
+                ),
+                "prior_material_claims": claims,
+                "prior_document_dispositions": (
+                    *bundle["common"]["prior_document_dispositions"],
+                    pending_disposition,
+                ),
+            }
+
+            binding = resolve_current_fact_lineage_recovery_binding(
+                authoritative_fact_ledger=bundle["authority"],
+                journal_root=bundle["fixture"]["journal"],
+                pending_new_fact_ids=(pending_fact_id,),
+                **common,
+            )
+            provider = _NoCompleteProvider()
+            result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+                **common,
+                prior_provider_calls=bundle["prior_calls"],
+                authoritative_fact_ledger=bundle["authority"],
+                current_fact_lineage_recovery_binding=binding,
+            )
+
+            self.assertEqual(provider.complete_call_count, 0)
+            self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+            self.assertIn(
+                "FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED",
+                result.pending_reasons,
+            )
+            self.assertEqual(
+                result.audit["current_fact_lineage_recovery_status"],
+                "COMPLETE",
+            )
+            self.assertEqual(
+                result.audit["current_fact_lineage_expectation_status"],
+                "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_NEW_REQUIRED",
+            )
+            self.assertEqual(len(result.facts), 500)
+            self.assertIn(pending_fact_id, {row.fact_id for row in result.facts})
+            disposition_ids = [
+                str(row["document_id"])
+                for row in result.document_dispositions
+            ]
+            self.assertEqual(len(disposition_ids), len(set(disposition_ids)))
+            self.assertEqual(disposition_ids.count(pending_document_id), 1)
+            self.assertEqual(
+                next(
+                    row["rationale"]
+                    for row in result.document_dispositions
+                    if row["document_id"] == pending_document_id
+                ),
+                "new semantics fact already committed",
             )
 
     def test_self_and_cycle_in_persisted_claims_block_before_journal(self):

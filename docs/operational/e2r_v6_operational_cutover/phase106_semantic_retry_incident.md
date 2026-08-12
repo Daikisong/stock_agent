@@ -367,6 +367,34 @@ score, Stage 또는 cutover authority가 아니다.
    바꿀 때 새 버전의 frozen builder를 함께 만들지 않으면 테스트가 실패한다. 저장된
    request/response 자체의 hash·schema·provider·Codex provenance 검증은 그대로 유지한다.
 
+24. **복구할 과거 사실과 이미 커밋된 새 사실이 함께 있으면 안전장치가 둘 다 거부**
+
+   원인 23을 고친 뒤 과거 v6 영수증은 42개 누락 사실을 정확히 재현했다. 하지만 그
+   전에 v7 full-document 응답에서 미래 배당계획 사실 1개가 이미 durable checkpoint에
+   저장됐다. 편의 스냅샷은 `기존 29 + 새 v7 1 = 30`, 권위 epoch는 기존 71개였으므로
+   필요한 최종 집합은 `권위 71 + 새 v7 1 = 72`였다. 기존 장부 코드는 “권위 손실”과
+   “다음 epoch 대기 사실”이 동시에 보이면 무조건
+   `MIXED_AUTHORITY_LOSS_AND_PENDING_NEW_FACTS_BLOCKED`로 중단했다.
+
+   더 까다로운 점은 누락 42개 중 8개와 새 사실 1개가 같은 공식 문서에서 나왔다는
+   것이다. 과거 disposition과 최신 v7 disposition을 단순히 이어 붙이면 같은 문서가
+   두 번 처리된 것처럼 되어 또 fail-closed했다.
+
+   쉬운 예: 원장 71줄 중 42줄이 복사본에서 빠진 사이 새 거래 1줄이 정상 기입됐다.
+   정답은 원장 71줄을 복원하고 새 거래 1줄을 보존하는 72줄이다. 그런데 기존 코드는
+   “복원할 줄과 새 줄이 동시에 있다”는 이유만으로 장부 전체를 거부했고, 같은 영수증의
+   과거 검수도 최신 검수와 중복으로 셌다.
+
+   수정 후 mixed 상태는 별도
+   `AUTHORITY_LOSS_RECOVERY_WITH_PENDING_NEW_REQUIRED` 전이로 처리한다. 새 fact id/body/
+   source는 committed result와 compiler replay로 이미 증명된 경우만 허용하고, 과거
+   영수증은 권위 장부의 정확한 누락 교집합만 복원한다. 최종 fact 집합은
+   `authority ∪ attested pending-new`와 byte-equivalent여야 한다. 같은 문서가 겹치면
+   과거 claim은 복구하되 top-level disposition은 최신 v7 행 하나만 유지한다. 결과는
+   atomic writer로 먼저 저장하고 canonical-refresh barrier에서 멈춘 뒤 다음 clean
+   resume에서만 남은 semantics 작업을 계속한다. 새 행이 projection에 없거나 출처·본문이
+   다르면 기존처럼 provider 호출 없이 fail-closed한다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -450,6 +478,11 @@ score, Stage 또는 cutover authority가 아니다.
     않고 formula, input lineage, 가정을 metadata에 남긴다.
 25. fact semantics 버전업은 JSON schema뿐 아니라 instruction 전문을 버전별 frozen
     hash로 재생성해야 한다. 현재 문구로 과거 prompt를 재생성해 비교하지 않는다.
+26. 권위 손실과 pending-new fact가 함께 있어도 둘 중 하나를 버리지 않는다. 단,
+    pending-new fact id/body/source가 committed snapshot과 compiler replay에 exact attested되고,
+    historical journal이 권위 누락 집합을 유일하게 재현할 때만 atomic union recovery를
+    허용한다. 같은 문서의 disposition은 최신 committed 행 하나만 남기고, 복구된 과거
+    claim과 immutable journal receipt는 보존한다.
 
 ## Goal 경계
 

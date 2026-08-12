@@ -82,6 +82,7 @@ class CurrentFactLineageRecoveryBinding:
     journal_response_ids: tuple[str, ...]
     expected_recovery_document_ids: tuple[str, ...] = ()
     pending_new_fact_ids: tuple[str, ...] = ()
+    pending_new_source_document_ids: tuple[str, ...] = ()
     fact_extraction_semantics_version: str = (
         CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION
     )
@@ -95,6 +96,7 @@ class CurrentFactLineageRecoveryBinding:
             "journal_response_ids",
             "expected_recovery_document_ids",
             "pending_new_fact_ids",
+            "pending_new_source_document_ids",
         ):
             values = tuple(
                 str(value).strip() for value in getattr(self, field_name)
@@ -210,7 +212,7 @@ class AuthoritativeResearchEpochFactLedger:
         claim_ids = _row_string_union(missing_rows, "claim_ids")
         source_document_ids = _row_string_union(missing_rows, "source_ids")
         status = (
-            "MIXED_AUTHORITY_LOSS_AND_PENDING_NEW_FACTS_BLOCKED"
+            "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_NEW_REQUIRED"
             if missing_ids and pending_new
             else "AUTHORITY_LOSS_RECOVERY_REQUIRED"
             if missing_ids
@@ -259,7 +261,10 @@ class AuthoritativeResearchEpochFactLedger:
             persisted_fact_ids=persisted_fact_ids,
             pending_new_fact_ids=pending_new_fact_ids,
         )
-        if expectation["status"] != "AUTHORITY_LOSS_RECOVERY_REQUIRED":
+        if expectation["status"] not in {
+            "AUTHORITY_LOSS_RECOVERY_REQUIRED",
+            "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_NEW_REQUIRED",
+        }:
             raise ValueError(
                 "fact lineage recovery is allowed only for an authority loss"
             )
@@ -278,12 +283,16 @@ class AuthoritativeResearchEpochFactLedger:
             expectation["expected_recovered_claim_ids"]
         )
         persisted = frozenset(expectation["persisted_fact_ids"])
+        pending_new = frozenset(expectation["pending_new_fact_ids"])
         if (
             frozenset(recovered_facts) != expected_facts
             or frozenset(recovered_claims) != expected_claims
             or persisted.intersection(recovered_facts)
             or persisted.union(recovered_facts)
             != frozenset(self.current_fact_ids)
+            or pending_new.intersection(
+                persisted.union(recovered_facts)
+            )
         ):
             raise ValueError(
                 "recovered fact lineage is not the exact authoritative gap"
@@ -301,10 +310,15 @@ class AuthoritativeResearchEpochFactLedger:
             "persisted_current_fact_count": len(persisted),
             "recovered_fact_count": len(recovered_facts),
             "recovered_claim_count": len(recovered_claims),
+            "pending_new_fact_count": len(pending_new),
             "recovered_fact_ids": list(sorted(recovered_facts)),
             "recovered_claim_ids": list(sorted(recovered_claims)),
+            "pending_new_fact_ids": list(sorted(pending_new)),
             "merged_current_fact_ids": list(
                 sorted(persisted.union(recovered_facts))
+            ),
+            "merged_fact_ids": list(
+                sorted(persisted.union(recovered_facts).union(pending_new))
             ),
             "exact_intersection": True,
             "production_score_authority": False,

@@ -3182,8 +3182,10 @@ def _authoritative_fact_recovery_extract_kwargs(
         ledger is None
         or not isinstance(expectation, Mapping)
         or expectation.get("status")
-        != "AUTHORITY_LOSS_RECOVERY_REQUIRED"
-        or pending_new_fact_ids
+        not in {
+            "AUTHORITY_LOSS_RECOVERY_REQUIRED",
+            "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_NEW_REQUIRED",
+        }
     ):
         raise ValueError("authoritative fact recovery context is inconsistent")
     try:
@@ -3206,7 +3208,7 @@ def _authoritative_fact_recovery_extract_kwargs(
                 prior_fact.get("prior_document_dispositions") or ()
             ),
             extraction_mode=extraction_mode,
-            pending_new_fact_ids=(),
+            pending_new_fact_ids=pending_new_fact_ids,
         )
     except (
         FileNotFoundError,
@@ -3234,7 +3236,8 @@ def _authoritative_fact_recovery_extract_kwargs(
     if (
         tuple(sorted(binding.seed_source_document_ids))
         != expected_source_ids
-        or binding.pending_new_fact_ids
+        or tuple(sorted(binding.pending_new_fact_ids))
+        != tuple(sorted(pending_new_fact_ids))
     ):
         raise ValueError("authoritative fact journal binding widened its seed")
     return {
@@ -4702,13 +4705,20 @@ def _load_authoritative_prior_fact_context(
         pending_new_fact_ids=pending_new_fact_ids,
     )
     status = str(expectation.get("status") or "")
-    if status == "MIXED_AUTHORITY_LOSS_AND_PENDING_NEW_FACTS_BLOCKED":
-        raise ValueError(
-            "fact snapshot mixes authority loss with pending-new facts"
-        )
     authoritative_recovery_required = (
-        status == "AUTHORITY_LOSS_RECOVERY_REQUIRED"
+        status
+        in {
+            "AUTHORITY_LOSS_RECOVERY_REQUIRED",
+            "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_NEW_REQUIRED",
+        }
     )
+    # A semantics upgrade can durably commit one new fact before an older
+    # authority gap is restored.  Treating that attested mixed snapshot as a
+    # fatal conflict caused the runner to reopen research forever: 42 valid
+    # v6 facts could not be restored because one valid v7 fact already
+    # existed.  Recovery now restores only the exact old gap, preserves the
+    # attested new row, and lets the extractor write one atomic union behind
+    # its canonical-refresh barrier.  Unattested extra rows still fail above.
     if authoritative_recovery_required:
         downstream_document_ids = _source_checkpoint_downstream_document_ids(
             source_checkpoint

@@ -1206,7 +1206,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "compiler replay|link drift"):
             attest(self_supersession)
 
-    def test_authoritative_fact_context_attests_pending_new_and_blocks_mixed_gap(
+    def test_authoritative_fact_context_attests_pending_new_and_recovers_mixed_gap(
         self,
     ):
         rows = _authority_fact_rows(3)
@@ -1266,8 +1266,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     ),
                     encoding="utf-8",
                 )
-                if mixed_gap:
-                    with (
+                with (
                         patch(
                             "e2r.research_brain.researcher_mode."
                             "current_researcher_mode."
@@ -1296,67 +1295,37 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                                 row["fact_id"] for row in convenience_rows
                             ),
                         ),
-                        self.assertRaisesRegex(
-                            ValueError, "mixes authority loss"
-                        ),
-                    ):
-                        _load_authoritative_prior_fact_context(
-                            root,
-                            target_id="CURRENT-TARGET",
-                            as_of_date=AS_OF_DATE,
-                            source_checkpoint=source_checkpoint,
-                        )
-                else:
-                    with (
-                        patch(
-                            "e2r.research_brain.researcher_mode."
-                            "current_researcher_mode."
-                            "load_authoritative_research_epoch_fact_ledger",
-                            return_value=ledger,
-                        ),
-                        patch(
-                            "e2r.research_brain.researcher_mode."
-                            "current_researcher_mode."
-                            "load_research_epoch_checkpoint",
-                            return_value=epoch,
-                        ),
-                        patch(
-                            "e2r.research_brain.researcher_mode."
-                            "current_researcher_mode."
-                            "_load_committed_fact_result_snapshot",
-                            return_value=_authority_committed_snapshot(
-                                convenience_rows
-                            ),
-                        ),
-                        patch(
-                            "e2r.research_brain.researcher_mode."
-                            "current_researcher_mode."
-                            "_attested_compiler_fact_addition_ids",
-                            return_value=tuple(
-                                row["fact_id"] for row in convenience_rows
-                            ),
-                        ),
-                    ):
-                        context = _load_authoritative_prior_fact_context(
-                            root,
-                            target_id="CURRENT-TARGET",
-                            as_of_date=AS_OF_DATE,
-                            source_checkpoint=source_checkpoint,
-                        )
-                    assert context is not None
-                    self.assertEqual(len(context["facts"]), 4)
-                    self.assertEqual(
-                        context["pending_new_fact_ids"],
-                        ("EFACT-PENDING-NEW",),
+                ):
+                    context = _load_authoritative_prior_fact_context(
+                        root,
+                        target_id="CURRENT-TARGET",
+                        as_of_date=AS_OF_DATE,
+                        source_checkpoint=source_checkpoint,
                     )
-                    self.assertTrue(
-                        context["pending_new_fact_epoch_commit_required"]
-                    )
-                    self.assertFalse(
-                        context[
-                            "authoritative_fact_lineage_recovery_required"
-                        ]
-                    )
+                assert context is not None
+                self.assertEqual(len(context["facts"]), 4)
+                self.assertEqual(
+                    context["pending_new_fact_ids"],
+                    ("EFACT-PENDING-NEW",),
+                )
+                self.assertEqual(
+                    context["pending_new_fact_epoch_commit_required"],
+                    not mixed_gap,
+                )
+                self.assertEqual(
+                    context[
+                        "authoritative_fact_lineage_recovery_required"
+                    ],
+                    mixed_gap,
+                )
+                self.assertEqual(
+                    context["authoritative_recovery_expectation"]["status"],
+                    (
+                        "AUTHORITY_LOSS_RECOVERY_WITH_PENDING_NEW_REQUIRED"
+                        if mixed_gap
+                        else "PENDING_NEW_FACT_EPOCH_COMMIT_REQUIRED"
+                    ),
+                )
 
     def test_full_runner_routes_authority_gap_to_exact_journal_replay_only(self):
         document_id = "SGDOC-" + "a" * 24
