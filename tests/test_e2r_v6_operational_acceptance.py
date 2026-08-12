@@ -1791,7 +1791,7 @@ class E2RV6OperationalAcceptanceTests(unittest.TestCase):
             "--research-provider",
             "codex-collaboration",
             "--fact-documents-per-call",
-            "1",
+            "3",
         ]
         self.assertEqual(calls[1], expected_deep)
         self.assertEqual(calls[1].count("--research-provider"), 1)
@@ -1945,6 +1945,10 @@ class E2RV6OperationalAcceptanceTests(unittest.TestCase):
             ["-m", "e2r.cli.run_e2r_v6_current_live_canaries_until_pass"],
         )
         self.assertNotIn("e2r.cli.run_e2r_census_mode", calls[0])
+        self.assertEqual(
+            calls[0][calls[0].index("--fact-documents-per-call") + 1],
+            "3",
+        )
         self.assertEqual(
             result["phase_driver"]["command_attempts"][0]["pending_markers"],
             ["COLLABORATION_RESPONSE_PENDING"],

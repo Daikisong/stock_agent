@@ -856,6 +856,27 @@ score, Stage 또는 cutover authority가 아니다.
     회귀 테스트는 Phase106 `REQUIRED_ARCHETYPES` 전부에 계약이 있는지 직접 대조하므로
     exact-five 목록이 바뀌거나 새 아키타입이 들어왔는데 계약이 빠지면 실행 전에 실패한다.
 
+45. **운영 acceptance가 full-document transport를 한 건씩 직렬 처리한 병목**
+
+    C17의 첫 OPENDART 분기보고서는 원문 보존을 위해 약 18K 문자씩 9개 transport
+    chunk로 나뉘었다. 그런데 operational master driver가
+    `--fact-documents-per-call 1`을 고정해, 각 chunk마다 Collaboration request와
+    independent validation round trip을 하나씩 만들었다. 이는 source나 semantic
+    saturation이 새로 늘어난 것이 아니라 같은 원문을 운반하는 방식이 wall time을
+    불필요하게 직렬화한 것이다.
+
+    쉬운 예: 책 아홉 상자를 모두 같은 검수실에서 확인할 수 있는데도, 트럭이 한 번에
+    한 상자만 운반하고 매번 출입증을 새로 발급받은 상태다. 상자 세 개를 함께 옮겨도
+    각 상자의 봉인번호와 내용물 목록을 따로 확인하면 감사 정확도는 떨어지지 않는다.
+
+    수정 후 Phase106 live canary와 Phase107 natural deep receipt의 operational master
+    command는 bounded transport batch `3`을 사용한다. 이는 evidence top-N이나 research
+    종료 횟수가 아니다. output schema의 최대 fact 수, 문서별 exact disposition,
+    exact quote/source lineage, unresolved continuation 규칙은 그대로 유지한다. 세 chunk의
+    통상 크기는 provider의 220K semantic prompt ceiling보다 충분히 작고, material
+    remainder가 있으면 같은 문서만 정직하게 continuation한다. 회귀 테스트는 master
+    driver가 Phase106과 Phase107 모두 이 bounded batch를 실제 CLI에 전달하는지 검증한다.
+
 ## Goal 경계
 
 이 수정은 query template, score weight, Stage rule 또는 target-specific branch를 추가하지

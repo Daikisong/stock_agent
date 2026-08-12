@@ -88,6 +88,13 @@ OPERATIONAL_REVIEWER_GATE_SCHEMA = "e2r_v6_operational_reviewer_gate_k_v_v1"
 OPERATIONAL_ACCEPTANCE_PASS = "MEANINGFUL_E2R_OPERATIONAL_MARKET_CUTOVER_READY"
 OPERATIONAL_ACCEPTANCE_FAIL = "E2R_V6_OPERATIONAL_MARKET_CUTOVER_NOT_READY"
 OPERATIONAL_ACCEPTANCE_TEST_PASS = "E2R_V6_OPERATIONAL_ACCEPTANCE_CONTRACT_TEST_PASS"
+# Keep production fact extraction bounded, but do not serialize every transport
+# chunk into its own Collaboration round trip.  Three 18k-character DART chunks
+# remain far below the provider's 220k semantic-prompt ceiling, while every
+# document still receives an exact disposition and every accepted fact keeps
+# quote/source lineage.  This is a transport batch, never a research-completion
+# count or a fixed top-N evidence filter.
+OPERATIONAL_FACT_DOCUMENTS_PER_CALL = 3
 OPERATIONAL_ACCEPTANCE_PENDING = "E2R_V6_OPERATIONAL_ACCEPTANCE_PENDING"
 OPERATIONAL_PHASE_DRIVER_SCHEMA = "e2r_v6_operational_phase_driver_v1"
 REVIEWER_GATE_PASS = "E2R_V6_OPERATIONAL_REVIEWER_K_V_PASS"
@@ -455,7 +462,7 @@ def run_operational_acceptance_phases(
                 "--live-materialization-authorized", "true",
                 "--checkpoint-resume", "true",
                 "--research-provider", "codex-collaboration",
-                "--fact-documents-per-call", "1",
+                "--fact-documents-per-call", str(OPERATIONAL_FACT_DOCUMENTS_PER_CALL),
                 "--work-root", str(output / "phase106"),
             ],
         )
@@ -540,7 +547,7 @@ def run_operational_acceptance_phases(
                         "--live-materialization-authorized", "true",
                         "--checkpoint-resume", "true",
                         "--research-provider", "codex-collaboration",
-                        "--fact-documents-per-call", "1",
+                        "--fact-documents-per-call", str(OPERATIONAL_FACT_DOCUMENTS_PER_CALL),
                     ],
                 )
                 if "COLLABORATION_RESPONSE_PENDING" in tuple(
