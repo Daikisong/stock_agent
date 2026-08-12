@@ -49,6 +49,23 @@ BROKER_VALUATION_QUOTE_METRIC_PATTERNS: Mapping[str, re.Pattern[str]] = {
 
 def broker_valuation_forward_period_end(period: str) -> date | None:
     normalized = str(period or "").strip().upper().replace(" ", "")
+    # Collaboration-extracted facts can preserve a machine-readable reporting
+    # interval instead of the broker table's compact ``2026F`` label, for
+    # example ``2026-01-01/2026-12-31 forecast``.  Treat only an explicit
+    # two-ended ISO interval as this form and use its end date.  A lone ISO
+    # date may merely be the report publication date, so accepting one here
+    # would incorrectly turn a stale observation into a forward estimate.
+    interval = re.match(
+        r"^(20\d{2})-(\d{2})-(\d{2})/(20\d{2})-(\d{2})-(\d{2})",
+        normalized,
+    )
+    if interval:
+        try:
+            start = date(*(int(value) for value in interval.groups()[:3]))
+            end = date(*(int(value) for value in interval.groups()[3:]))
+        except ValueError:
+            return None
+        return end if end >= start else None
     quarter = re.match(
         r"^(?:FY)?(20\d{2})(?:Q([1-4])|([1-4])Q|([1-4])분기)",
         normalized,

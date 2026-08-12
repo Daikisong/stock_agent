@@ -2353,6 +2353,39 @@ EV/EBITDA(배) 22.0 3.9 2.4 0.4"""
                     )
                 )
 
+    def test_broker_valuation_accepts_explicit_forward_iso_interval(self):
+        period = "2026-01-01/2026-12-31 forecast"
+        self.assertEqual(
+            structured_materializer_module.broker_valuation_forward_period_end(
+                period
+            ),
+            date(2026, 12, 31),
+        )
+
+        facts, claims, documents = _broker_valuation_fact_bundle()
+        ev_fact = replace(facts[2], period=period)
+        ev_claim = {**claims[2], "period": period}
+        _, broker_route, audit = structured_materializer_module._fact_structured_routes(
+            target_id="005930",
+            cutoff=date(2026, 7, 12),
+            evidence_facts=(ev_fact,),
+            source_claims=(ev_claim,),
+            source_documents=documents,
+        )
+        self.assertEqual(audit["broker_valuation_record_count"], 1)
+        self.assertEqual(audit["rejection_counts"], {})
+        self.assertEqual(
+            broker_route.payload.structured_records[0].evidence_roles,
+            ("FORWARD_EV_EBITDA",),
+        )
+
+    def test_broker_valuation_rejects_reversed_iso_interval(self):
+        self.assertIsNone(
+            structured_materializer_module.broker_valuation_forward_period_end(
+                "2026-12-31/2026-01-01 forecast"
+            )
+        )
+
     def test_broker_role_rejects_generic_period_and_non_krw_book_value(self):
         self.assertEqual(
             structured_materializer_module.broker_valuation_forward_period_end(

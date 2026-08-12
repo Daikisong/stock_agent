@@ -735,6 +735,21 @@ score, Stage 또는 cutover authority가 아니다.
     obsolete pending marker만 제거한다. 다른 fetch/parser/transport pending이 섞이면 이
     reconciliation을 허용하지 않고 기존 fail-closed 경로를 유지한다. audit에는
     `source_checkpoint_exhausted_lineage_reconciled=true`를 남긴다.
+40. **Broker forward 기간의 ISO interval 표기를 stale로 오판**
+
+    KIRS 원문에서 검증된 2026F EV/EBITDA fact는 Collaboration 계보에
+    `2026-01-01/2026-12-31 forecast`라는 기계 판독형 기간으로 저장됐다. 기존 broker
+    valuation parser는 `2026F`, `2026E`, `FY2026`, `2026Q4`만 읽어서 값·원문·source가
+    모두 유효한데도 `VALUATION_PERIOD_NOT_FORWARD`로 버렸다. 이 때문에 이미 확보한
+    `FORWARD_EV_EBITDA` 역할이 missing으로 남고 structured 재검증이 반복됐다.
+
+    쉬운 예: `2026F`와 `2026-01-01~2026-12-31 전망`은 같은 2026년 전망인데, 전자는
+    접수하고 후자는 날짜 형식이 길다는 이유로 반려한 것이다.
+
+    수정 후 parser는 두 끝점이 모두 있는 ISO interval만 받아 종료일을 사용한다. 단일
+    ISO 날짜는 보고서 발행일일 수 있으므로 forward 기간으로 승격하지 않고, 종료일이
+    시작일보다 빠른 interval도 거절한다. 회귀 테스트는 실제 structured fact 경로에서
+    EV/EBITDA가 materialize되는지와 역전 interval이 fail-closed되는지를 함께 검증한다.
 
 ## Goal 경계
 
