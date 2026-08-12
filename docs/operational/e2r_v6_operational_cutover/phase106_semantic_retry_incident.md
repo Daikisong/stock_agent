@@ -700,6 +700,21 @@ score, Stage 또는 cutover authority가 아니다.
     pagination closure다. 운영 진행률에서는 이를 `새 연구 leaf`가 아니라
     `FACT_EXTRACTION_EMPTY_FINAL_CERTIFICATION`으로 해석해야 한다. 반대로 12개 미만으로
     끝난 page 뒤에 같은 이유로 빈 page를 반복 생성하면 실제 버그이므로 fail-closed한다.
+38. **새 evidence와 Supervisor feedback을 반영한 memo는 judge 계보를 다시 결속해야 함**
+
+    새 full document가 fact ledger에 들어오면 component memo가 먼저 새 evidence를 반영한다.
+    기존 Supervisor가 특정 원문 gap을 남긴 경우, 그 gap을 새 evidence가 같은 경제 질문의
+    alternate source로 실제 해소했는지 한 번 더 semantic rewrite에 기록한다. 이때 exact
+    broker file identity 자체를 다른 보고서로 대체했다고 쓰면 안 되고, `동일 파일 확보`와
+    `다른 독립 원문으로 경제 질문 해소`를 구분한다.
+
+    rewrite는 새 memo id를 만든다. 이전 judge 결과를 새 memo에 이름만 바꿔 붙이는 것은
+    금지되므로 Analyst/Skeptic/Calibration과 Red Team이 새 memo 계보에 다시 결속된다.
+    쉬운 예: 계약서 수정본의 결론이 구 계약서와 같아도 서명을 수정본에 다시 받아야 한다.
+    이는 새 검색 loop가 아니라 provenance closure다. 다만 같은 fact roster, 같은 Supervisor
+    feedback, 같은 memo semantic hash에 대해 또 새 memo를 만드는 것은 반복 버그로 간주해
+    fail-closed해야 한다. 운영 보고에서는 `source expansion`과 `memo-bound revalidation`을
+    별도 카운트로 표시한다.
 
 ## Goal 경계
 
