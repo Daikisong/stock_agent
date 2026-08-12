@@ -654,7 +654,14 @@ class ResearchSupervisor:
                                 "you also return a concrete missing_material_facts row "
                                 "for that component. Every source/query direction must "
                                 "map to a component with such a fact row. Do not invent "
-                                "evidence, queries, scores, or stages."
+                                "evidence, queries, scores, or stages. A component with "
+                                "a missing_material_facts row must have "
+                                "memo_sufficient=false. When all deterministic evidence "
+                                "gates are complete and no actionable route remains, "
+                                "keep scored limitations and future monitoring only in "
+                                "rationale or next-monitoring prose; remove them from "
+                                "missing_material_facts and unresolved_material_questions, "
+                                "and make readiness true."
                             ),
                         },
                     }
@@ -933,6 +940,13 @@ def _review_from_provider_response(
     )
     gap_component_ids = {row.component_id for row in gaps}
     if any(
+        finding_by_component[row.component_id].memo_sufficient
+        for row in gaps
+    ):
+        raise ValueError(
+            "supervisor material fact gap contradicts memo sufficiency"
+        )
+    if any(
         not finding_by_component[component_id].memo_sufficient
         and component_id not in gap_component_ids
         for component_id in transport_wait_score_component_ids
@@ -1075,6 +1089,31 @@ def _review_from_provider_response(
         for row in assessments
         if _failure_blocks_readiness(row, failure_by_id[row.failure_id])
     )
+    nonroute_gate_complete = bool(
+        actual_component_sufficient
+        and actual_structured_complete
+        and red_team_complete
+        and counter_checked
+        and not blocking_failures
+        and not source_graph_zero_result_only
+        and not source_graph_research_pending
+    )
+    if (
+        nonroute_gate_complete
+        and not reasonable_routes
+        and not directions
+        and not query_directions
+        and (gaps or unresolved)
+    ):
+        # A scored limitation or a future monitoring question is not an open
+        # material research gap once every deterministic evidence gate is
+        # complete and the provider says that no actionable public route
+        # remains.  Keeping it in the blocking fields creates an impossible
+        # state: there is work that allegedly must be done, but no legal work
+        # item that can ever do it.
+        raise ValueError(
+            "supervisor unreachable monitoring item cannot block readiness"
+        )
     deterministic_ready = bool(
         actual_component_sufficient
         and actual_structured_complete

@@ -441,6 +441,27 @@ score, Stage 또는 cutover authority가 아니다.
    아니다. 따라서 검색 실패를 source absence로 과장하지 않으면서도, 더 강한 공식
    반증을 검색 운송 계보가 없다는 이유로 버리지 않는다.
 
+27. **완료된 제한사항을 material gap으로 다시 적어 만든 출구 없는 상태**
+
+   direct 공식 반증 증명까지 연결한 실제 재개에서 Supervisor는 7개 메모 충분,
+   structured 완료, counter/supersession 완료, 추가 합법 경로 없음이라는 네 상태를
+   모두 `true/true/true/false`로 정확히 냈다. 그런데 이미 점수 상단을 제한하는 데
+   반영한 고객·마진·CAPA 공개 공백과 다음 정기공시 점검 항목을 다시
+   `missing_material_facts`와 `unresolved_material_questions`에 넣고 readiness만 false로
+   냈다. 기존 validator는 ready일 때 gap이 없는지는 검사했지만, 반대 방향인
+   “모든 gate 완료 + 실행할 route 없음 + blocking gap 있음” 모순은 거부하지 않았다.
+
+   쉬운 예: 졸업시험을 모두 통과했고 재시험 과목도 없다고 판정한 뒤, “졸업 후에도
+   실력을 계속 점검해야 한다”는 이유로 졸업만 영구 보류한 셈이다. 점검 항목은
+   monitoring이지 지금 수행 가능한 보충시험이 아니다.
+
+   수정 후 `missing_material_facts`가 있는 component는 반드시
+   `memo_sufficient=false`여야 한다. 또한 component·structured·red-team·counter proof와
+   failure 상태가 모두 완료되고 provider가 actionable route도 없다고 판정했다면,
+   gap/unresolved blocking field를 남길 수 없다. 실제로 새 자료를 찾을 합법적 route가
+   있다면 objective-bound direction과 함께 memo를 불충분으로 열고, 없다면 그 제한은
+   rationale의 monitoring/counterweight로만 보존하고 readiness를 true로 맞춘다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -538,6 +559,12 @@ score, Stage 또는 cutover authority가 아니다.
     계보를 확인한다. query 기반 경로는 양수 검색 결과를 계속 요구한다. direct 공식
     경로는 objective/component/document/fact 결속을 모두 검증하며, zero-result나
     provider error를 완료 또는 source absence로 바꾸지 않는다.
+29. `component_memos_sufficient=true`인 component에 `missing_material_facts`를 동시에
+    둘 수 없다. 모든 비검색 gate가 완료되고 `reasonable_positive_routes_remaining=false`
+    이면 monitoring 문구를 blocking gap으로 재분류하지 않는다. material gap이라면
+    memo를 다시 열고 실행 가능한 LLM-owned route를 제시해야 하며, 그렇지 않으면
+    Supervisor correction retry가 gap을 monitoring rationale로 이동하고 readiness를
+    완료 상태와 일치시킨다.
 
 ## Goal 경계
 

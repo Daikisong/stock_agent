@@ -5027,6 +5027,72 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         self.assertEqual(pending.status, "NEXT_RESEARCH_REQUIRED")
         self.assertFalse(pending.component_memos_sufficient)
 
+    def test_supervisor_corrects_unreachable_monitoring_blockers(
+        self,
+    ) -> None:
+        """Monitoring prose cannot create work when no work route exists."""
+
+        class MisfiledMonitoringProvider(Phase87SupervisorProvider):
+            def __init__(self, invalid_kind: str) -> None:
+                super().__init__("READY")
+                self.invalid_kind = invalid_kind
+
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                if len(self.calls) != 1:
+                    return response
+                response.update(
+                    {
+                        "ready_for_independent_saturation_review": False,
+                        "reasonable_positive_routes_remaining": False,
+                        "next_actions": ["다음 정기 공시에서 계속 감시한다."],
+                        "rationale": "완료된 제한사항을 monitoring한다.",
+                    }
+                )
+                if self.invalid_kind == "SUFFICIENT_MATERIAL_GAP":
+                    response["missing_material_facts"] = [
+                        {
+                            "component_id": CANONICAL_COMPONENT_ORDER[0],
+                            "fact_need": "다음 분기 제품별 마진",
+                            "why_material": "다음 정기점검에서 확인한다.",
+                            "direction": "RESOLUTION",
+                        }
+                    ]
+                else:
+                    response["unresolved_material_questions"] = [
+                        "다음 정기 공시에서 같은 제한사항을 계속 감시한다."
+                    ]
+                return response
+
+        for invalid_kind, error_fragment in (
+            (
+                "SUFFICIENT_MATERIAL_GAP",
+                "material fact gap contradicts memo sufficiency",
+            ),
+            (
+                "UNREACHABLE_UNRESOLVED_QUESTION",
+                "unreachable monitoring item cannot block readiness",
+            ),
+        ):
+            with self.subTest(invalid_kind=invalid_kind):
+                provider = MisfiledMonitoringProvider(invalid_kind)
+                review = ResearchSupervisor(provider=provider).review_epoch(
+                    **_supervisor_inputs()
+                )
+                self.assertEqual(
+                    review.status,
+                    "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+                )
+                self.assertEqual(len(provider.calls), 2)
+                retry = provider.calls[1]["payload"][
+                    "supervisor_validation_retry_context"
+                ]
+                self.assertIn(error_fragment, retry["validation_error"])
+
     def test_structured_complete_label_without_records_cannot_open_saturation(self) -> None:
         empty = StructuredResearchResult(
             status="COMPLETE",
