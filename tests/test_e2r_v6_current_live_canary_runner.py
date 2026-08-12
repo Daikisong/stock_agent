@@ -329,6 +329,59 @@ class _RequestFreeNoProgressCheckpointRunner:
         )
 
 
+class _ExhaustedSourceThenActiveCheckpointRunner(
+    _RequestFreeThenActiveCheckpointRunner
+):
+    """Model a no-new-query marker followed by an internal memo rewrite."""
+
+    def run_checkpoint(self, *, config, target, repo_root, source_resume_mode):
+        if len(self.calls) == 0:
+            self.calls.append(target.target_id)
+            return SimpleNamespace(
+                status="RESEARCH_CHECKPOINT_PENDING",
+                audit={},
+                dossier=SimpleNamespace(
+                    pending_reasons=("SUPERVISOR_MEMO_REWRITE_PENDING",)
+                ),
+                fact_extraction=SimpleNamespace(pending_reasons=()),
+                source_graph=SimpleNamespace(
+                    checkpoint={
+                        "pending_reasons": [
+                            "LLM_RETURNED_NO_NEW_VALID_QUERY"
+                        ]
+                    }
+                ),
+                structured_materialization=SimpleNamespace(
+                    pending_reasons=()
+                ),
+                scoring_memos=SimpleNamespace(to_dict=lambda: {}),
+                stagecourt=SimpleNamespace(
+                    decision=SimpleNamespace(
+                        pending_reasons=("RESEARCHER_MODE_NOT_COMPLETE",)
+                    )
+                ),
+                research_epoch=SimpleNamespace(
+                    to_dict=lambda: {
+                        "supervisor_review": {
+                            "reasonable_positive_routes_remaining": False,
+                            "missing_material_facts": [],
+                            "new_source_family_directions": [],
+                            "query_direction_briefs": [],
+                            "next_actions": [
+                                "rewrite one component from current evidence"
+                            ],
+                        }
+                    }
+                ),
+            )
+        return super().run_checkpoint(
+            config=config,
+            target=target,
+            repo_root=repo_root,
+            source_resume_mode=source_resume_mode,
+        )
+
+
 class _FactRefreshThenActiveCheckpointRunner:
     """Model persisted fact recovery followed by the next exact request."""
 
@@ -823,6 +876,67 @@ class E2RV6CurrentLiveCanaryRunnerTests(unittest.TestCase):
                 [row["request_id"] for row in result["pending_requests"]],
                 [checkpoint_runner.active_request_id],
             )
+
+    def test_exhausted_query_marker_advances_to_memo_rewrite_request(self) -> None:
+        """A Supervisor-closed query lane must not remain SOURCE_PENDING."""
+
+        selection = _selection()
+        calls: list[str] = []
+        checkpoint_runner = _ExhaustedSourceThenActiveCheckpointRunner(calls)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            result = V6CurrentLiveCanaryRunner(
+                checkpoint_runner_factory=lambda _row: checkpoint_runner
+            ).run_checkpoint(
+                repo_root=REPO_ROOT,
+                selection=selection,
+                work_root=root / "work",
+                cutover_root=root / "cutover",
+                live_materialization_authorized=True,
+                checkpoint_resume=True,
+            )
+
+            self.assertEqual(calls, ["000001", "000001"])
+            self.assertEqual(result["status"], PHASE106_RUN_PENDING)
+            self.assertEqual(
+                result["pending_kind"], "RESEARCH_COLLABORATION_RESPONSE"
+            )
+            self.assertEqual(
+                result["blockers"], ["COLLABORATION_RESPONSE_PENDING"]
+            )
+            self.assertEqual(
+                [row["request_id"] for row in result["pending_requests"]],
+                [checkpoint_runner.active_request_id],
+            )
+
+    def test_no_new_query_marker_still_waits_while_route_is_open(self) -> None:
+        """Query exhaustion alone never proves that source research is done."""
+
+        run = SimpleNamespace(
+            source_graph=SimpleNamespace(
+                checkpoint={
+                    "pending_reasons": ["LLM_RETURNED_NO_NEW_VALID_QUERY"]
+                }
+            ),
+            fact_extraction=SimpleNamespace(pending_reasons=()),
+            structured_materialization=SimpleNamespace(pending_reasons=()),
+            research_epoch=SimpleNamespace(
+                to_dict=lambda: {
+                    "supervisor_review": {
+                        "reasonable_positive_routes_remaining": True,
+                        "missing_material_facts": [],
+                        "new_source_family_directions": [],
+                        "query_direction_briefs": [],
+                    }
+                }
+            ),
+        )
+
+        self.assertFalse(
+            phase106_runner_module._only_internal_semantic_transition_remains(
+                run
+            )
+        )
 
     def test_request_free_internal_transition_fails_on_semantic_no_progress(
         self,

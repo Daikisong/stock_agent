@@ -993,6 +993,33 @@ score, Stage 또는 cutover authority가 아니다.
     retry completion을 만들지 않는다. 회귀 테스트는 refresh 뒤 exact request 노출과 반복
     refresh fail-closed를 각각 검증한다.
 
+51. **query exhaustion과 same-evidence memo rewrite 사이의 빈 SOURCE_PENDING 전이**
+
+    C24에서 날짜 없는 partner landing을 evidence로 쓰지 않고, verified detail identity가
+    없는 상태에서 query planner가 `LLM_RETURNED_NO_NEW_VALID_QUERY`를 반환했다. 이후
+    Supervisor는 이 실패를 소비해 `reasonable_positive_routes_remaining=false`,
+    missing fact·source direction·query brief 모두 0으로 닫고, `earnings_visibility`만
+    현재 evidence로 semantic rewrite하라고 지시했다. 그러나 source checkpoint 자체는
+    query planner의 정직한 종료 표식 때문에 `QUERY_GENERATION_PENDING`을 유지했다.
+    Phase106 wrapper는 그 표식을 아직 외부 source 대기로 해석해 request가 하나도 없는
+    `SOURCE_PENDING`을 반환했다.
+
+    쉬운 예: 도서관 검색 담당자는 “검증 가능한 새 책 번호가 없다”고 보고했고 감독자는
+    “그럼 가진 자료로 요약문만 다시 쓰라”고 결재했다. 그런데 전광판은 예전 검색표의
+    `검색 종료` 도장을 보고 계속 새 책 배송을 기다린 셈이다. 답할 번호표도 없으므로 같은
+    명령을 반복해도 운영자가 풀 수 없는 교착이다.
+
+    수정 후 wrapper는 source pending roster가 정확히
+    `LLM_RETURNED_NO_NEW_VALID_QUERY` 하나이고, 최신 Supervisor가 positive route를 false로
+    닫았으며 missing fact·new source direction·query brief가 모두 비어 있을 때만 그
+    표식을 **소비된 query-exhaustion handoff**로 인정한다. fact 또는 structured pending,
+    다른 source failure, 아직 열린 route가 있으면 기존처럼 외부 pending을 반환한다.
+    자동 전진 뒤 exact memo request나 terminal state가 생겨야 하며, semantic fingerprint가
+    반복되면 49번과 같은 no-progress 오류로 fail-closed한다. 따라서 빈 대기를 제거하되
+    zero result를 source absence나 research completion으로 바꾸지 않는다. 회귀 테스트는
+    `exhausted query marker + Supervisor routes=false -> exact memo rewrite request` 전이를
+    검증한다.
+
 ## Goal 경계
 
 이 수정은 query template, score weight, Stage rule 또는 target-specific branch를 추가하지

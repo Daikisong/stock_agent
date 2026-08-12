@@ -458,7 +458,36 @@ def _only_internal_semantic_transition_remains(run: Any) -> bool:
         )
         or ()
     )
-    return not (source_pending or fact_pending or structured_pending)
+    if fact_pending or structured_pending:
+        return False
+    if not source_pending:
+        return True
+
+    # Query generation deliberately stays ``QUERY_GENERATION_PENDING`` when
+    # the provider cannot name a new verified route.  Once the later
+    # Supervisor has consumed that exact failure, closed positive routes, and
+    # prescribed only a same-evidence memo rewrite, the source marker is
+    # historical context rather than an external wait.  Returning it as an
+    # empty SOURCE_PENDING would deadlock Phase106: there is no Collaboration
+    # request a caller could answer to make progress.
+    if source_pending != ("LLM_RETURNED_NO_NEW_VALID_QUERY",):
+        return False
+    research_epoch = getattr(run, "research_epoch", None)
+    to_dict = getattr(research_epoch, "to_dict", None)
+    if not callable(to_dict):
+        return False
+    epoch_payload = to_dict()
+    if not isinstance(epoch_payload, Mapping):
+        return False
+    review = epoch_payload.get("supervisor_review")
+    if not isinstance(review, Mapping):
+        return False
+    return bool(
+        review.get("reasonable_positive_routes_remaining") is False
+        and not (review.get("missing_material_facts") or ())
+        and not (review.get("new_source_family_directions") or ())
+        and not (review.get("query_direction_briefs") or ())
+    )
 
 
 def _terminal_artifacts_if_present(
