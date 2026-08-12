@@ -67,6 +67,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _source_checkpoint_is_ready_for_readonly_replay,
     _source_checkpoint_needs_fact_extraction_recovery,
     _source_checkpoint_needs_downstream_provider_recovery,
+    _source_checkpoint_requires_exhausted_lineage_reconciliation,
     _load_prior_component_memos,
     _reusable_prior_component_memos,
     _same_lane_structured_cache_roots,
@@ -7138,6 +7139,60 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertEqual(selected["review_id"], "RSUP-semantic")
         self.assertIs(
             selected["reasonable_positive_routes_remaining"], False
+        )
+
+    def test_exhausted_supervisor_reconciles_pure_lineage_pending_checkpoint(
+        self,
+    ) -> None:
+        checkpoint = {
+            "status": "SOURCE_PROVIDER_PENDING",
+            "pending_reasons": [
+                "SOURCE_FAMILY_ACCEPTED_LINEAGE_PENDING:"
+                "OBJECTIVE-EPS:PUBLIC_BROKER_PDF",
+                "SOURCE_FAMILY_ACCEPTED_LINEAGE_PENDING:"
+                "OBJECTIVE-VALUATION:PUBLIC_BROKER_PDF",
+            ],
+        }
+        exhausted = {
+            "reasonable_positive_routes_remaining": False,
+            "new_source_family_directions": [],
+            "query_direction_briefs": [],
+            "source_family_gaps": [],
+            "parser_or_extractor_failures": [],
+            "failure_assessments": [
+                {
+                    "classification": "PROVIDER_FAILURE",
+                    "retryable": True,
+                }
+            ],
+        }
+
+        self.assertTrue(
+            _source_checkpoint_requires_exhausted_lineage_reconciliation(
+                checkpoint,
+                supervisor_source_gap_context=exhausted,
+            )
+        )
+        self.assertFalse(
+            _source_checkpoint_requires_exhausted_lineage_reconciliation(
+                {
+                    **checkpoint,
+                    "pending_reasons": [
+                        *checkpoint["pending_reasons"],
+                        "FETCH_RETRY_PENDING:SGCAND-1",
+                    ],
+                },
+                supervisor_source_gap_context=exhausted,
+            )
+        )
+        self.assertFalse(
+            _source_checkpoint_requires_exhausted_lineage_reconciliation(
+                checkpoint,
+                supervisor_source_gap_context={
+                    **exhausted,
+                    "reasonable_positive_routes_remaining": True,
+                },
+            )
         )
 
     def test_current_semantic_supervisor_wins_over_epoch_history(self) -> None:

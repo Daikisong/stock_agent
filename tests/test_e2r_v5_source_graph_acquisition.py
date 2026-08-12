@@ -4851,6 +4851,42 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             )
         )
 
+        exhausted_provider = SourceBrainProvider(
+            queries=("must not be called",),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        exhausted = self._run(
+            provider=exhausted_provider,
+            search=RecordingSearchProvider({}),
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=second.checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "reasonable_positive_routes_remaining": False,
+                    "new_source_family_directions": [],
+                    "query_direction_briefs": [],
+                    "source_family_gaps": [],
+                    "parser_or_extractor_failures": [],
+                    "failure_assessments": [],
+                }
+            },
+        )
+
+        self.assertEqual(
+            exhausted.status,
+            "STOPPED_ON_RESOLUTION",
+        )
+        self.assertFalse(exhausted_provider.calls)
+        self.assertFalse(
+            any(
+                str(value).startswith(
+                    "SOURCE_FAMILY_ACCEPTED_LINEAGE_PENDING:"
+                )
+                for value in exhausted.checkpoint["pending_reasons"]
+            )
+        )
+
     def test_new_supervisor_family_direction_reopens_resolved_without_prior_query(
         self,
     ) -> None:

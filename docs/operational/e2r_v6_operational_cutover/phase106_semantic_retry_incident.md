@@ -715,6 +715,26 @@ score, Stage 또는 cutover authority가 아니다.
     feedback, 같은 memo semantic hash에 대해 또 새 memo를 만드는 것은 반복 버그로 간주해
     fail-closed해야 한다. 운영 보고에서는 `source expansion`과 `memo-bound revalidation`을
     별도 카운트로 표시한다.
+39. **Supervisor는 source route를 닫았지만 과거 accepted-lineage pending을 readonly 재생**
+
+    C15에서 current Supervisor는 `reasonable_positive_routes_remaining=false`, source
+    direction 0, query brief 0으로 검색 lane을 닫았다. 그런데 직전 Source Graph
+    checkpoint에는 미래에셋·신한 `PUBLIC_BROKER_PDF`의
+    `SOURCE_FAMILY_ACCEPTED_LINEAGE_PENDING` 두 건이 남아 있었다. prior-context는 이
+    두 gap의 reopen authority를 올바르게 제거했지만, runner는 그래서 acquisition이
+    필요 없다고 판단하고 과거 pending checkpoint를 readonly로 재생했다. 결과는 새
+    collaboration request도 없고 terminal도 아닌 `SOURCE_PENDING` 교착이었다.
+
+    쉬운 예: 창구 직원은 `추가 서류 없음`으로 종결했지만 번호표 전광판은 이전
+    `서류 제출 대기` 상태를 그대로 복사해 누구도 다음 순서로 넘어가지 못한 것이다.
+
+    수정 후 pending reason 전부가 accepted-lineage wait이고, 같은 canonical Supervisor가
+    공개 route를 명시적으로 소진했으며 새 direction·parser/fetch repair가 없을 때만
+    deterministic source acquisition을 한 번 강제한다. acquirer는 historical failure를
+    삭제하거나 source absence로 바꾸지 않고, current mandatory pair가 0임을 재계산해
+    obsolete pending marker만 제거한다. 다른 fetch/parser/transport pending이 섞이면 이
+    reconciliation을 허용하지 않고 기존 fail-closed 경로를 유지한다. audit에는
+    `source_checkpoint_exhausted_lineage_reconciled=true`를 남긴다.
 
 ## Goal 경계
 

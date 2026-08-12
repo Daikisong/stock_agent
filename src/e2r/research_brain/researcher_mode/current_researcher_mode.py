@@ -412,6 +412,15 @@ class CurrentResearcherModeTargetRunner:
                 "authoritative_fact_lineage_recovery_required"
             ]
         )
+        source_checkpoint_exhausted_lineage_reconciliation_required = bool(
+            prior_source_checkpoint is not None
+            and _source_checkpoint_requires_exhausted_lineage_reconciliation(
+                prior_source_checkpoint,
+                supervisor_source_gap_context=prior_context[
+                    "supervisor_source_gap_context"
+                ],
+            )
+        )
         source_context_requires_acquisition = bool(
             not authoritative_fact_lineage_recovery_required
             and (
@@ -419,6 +428,12 @@ class CurrentResearcherModeTargetRunner:
                 or prior_context[
                     "source_queries_without_accepted_fact_lineage"
                 ]
+                # A newer Supervisor can explicitly close every public route
+                # after an older checkpoint recorded accepted-lineage waits.
+                # Re-run the deterministic acquirer once so it can prune those
+                # obsolete waits.  Replaying the old pending checkpoint here
+                # would create a request-free SOURCE_PENDING deadlock.
+                or source_checkpoint_exhausted_lineage_reconciliation_required
             )
         )
         source_coverage = tuple(
@@ -1110,6 +1125,9 @@ class CurrentResearcherModeTargetRunner:
             ),
             "source_checkpoint_legacy_text_cap_repair_only": (
                 source_checkpoint_legacy_text_cap_repair_only
+            ),
+            "source_checkpoint_exhausted_lineage_reconciled": (
+                source_checkpoint_exhausted_lineage_reconciliation_required
             ),
             "component_memo_count": len(component_memos),
             "fact_count": len(fact_extraction.facts),
@@ -1960,6 +1978,36 @@ def _production_semantic_saturation_certified(
         and len(set(prompt_hashes)) == len(SATURATION_REVIEW_ROLES)
         and set(prompt_hashes)
         == set(certificate.get("provider_prompt_hashes") or ())
+    )
+
+
+def _source_checkpoint_requires_exhausted_lineage_reconciliation(
+    checkpoint: Mapping[str, Any],
+    *,
+    supervisor_source_gap_context: Mapping[str, Any],
+) -> bool:
+    """Detect a request-free pending checkpoint superseded by Supervisor.
+
+    An accepted-lineage wait is valid while the current Supervisor still
+    requires that exact objective/family route.  Once the canonical
+    Supervisor explicitly exhausts public routes, the immutable failure stays
+    in the audit ledger but the checkpoint pending marker must be recomputed.
+    Only the pure lineage-pending shape is eligible; mixed transport/parser
+    waits keep their ordinary fail-closed handling.
+    """
+
+    pending_reasons = tuple(
+        str(value)
+        for value in checkpoint.get("pending_reasons") or ()
+        if str(value).strip()
+    )
+    lineage_prefix = "SOURCE_FAMILY_ACCEPTED_LINEAGE_PENDING:"
+    return bool(
+        pending_reasons
+        and all(value.startswith(lineage_prefix) for value in pending_reasons)
+        and _supervisor_explicitly_exhausted_source_routes(
+            {"prior_supervisor_gap": supervisor_source_gap_context}
+        )
     )
 
 
