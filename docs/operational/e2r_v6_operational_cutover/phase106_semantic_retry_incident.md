@@ -977,6 +977,22 @@ score, Stage 또는 cutover authority가 아니다.
     연결한다. 회귀 테스트는 `request-free -> exact request` 자동 전진과
     `request-free -> 동일 semantic state` 명시적 실패를 각각 검증한다.
 
+50. **fact continuation 종료와 canonical state refresh 사이의 빈 SOURCE_PENDING 전이**
+
+    C24 fact continuation이 마지막 9개 fact를 accepted/compiled하고 parent document를
+    `extraction_complete=true`로 닫은 직후, extractor는 새 canonical fact graph를 먼저
+    영속화하기 위해 `FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED` barrier를
+    반환했다. 이는 새 문서나 provider 응답을 기다리는 상태가 아닌데도 Phase106 wrapper는
+    typed `FactExtractionCheckpointPending`을 무조건 외부 `SOURCE_PENDING`으로 바꿨다.
+
+    쉬운 예: 창고 입고는 끝났고 재고대장 합계만 다시 계산하면 되는데, 전광판이 이를
+    `배송 중`으로 표시한 셈이다. 수정 후 wrapper는 exact pending roster가 canonical refresh
+    한 건뿐이고 unanswered Collaboration request가 없을 때만 같은 target을 즉시 재개한다.
+    다른 fact pending reason이나 실제 unanswered request는 기존처럼 즉시 반환한다. 같은
+    semantic fact state가 반복되면 명시적 no-progress 오류로 실패하므로 무한루프나 고정
+    retry completion을 만들지 않는다. 회귀 테스트는 refresh 뒤 exact request 노출과 반복
+    refresh fail-closed를 각각 검증한다.
+
 ## Goal 경계
 
 이 수정은 query template, score weight, Stage rule 또는 target-specific branch를 추가하지

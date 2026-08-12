@@ -45,6 +45,12 @@ from e2r.research_brain.planning.provider_transport import (
 from e2r.research_brain.researcher_mode.collaboration_provider_bridge import (
     CollaborationCodexSubagentTransport,
 )
+from e2r.research_brain.researcher_mode.current_researcher_mode import (
+    FactExtractionCheckpointPending,
+)
+from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
+    FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+)
 from tests.test_e2r_v6_canary_compact_receipt import (
     REPO_ROOT,
     _artifacts,
@@ -320,6 +326,70 @@ class _RequestFreeNoProgressCheckpointRunner:
                 )
             ),
             research_epoch=SimpleNamespace(to_dict=lambda: {}),
+        )
+
+
+class _FactRefreshThenActiveCheckpointRunner:
+    """Model persisted fact recovery followed by the next exact request."""
+
+    def __init__(self, calls: list[str]) -> None:
+        self.calls = calls
+        self.active_request_id: str | None = None
+
+    def run_checkpoint(self, *, config, target, repo_root, source_resume_mode):
+        self.calls.append(target.target_id)
+        target_root = Path(config.output_root) / target.target_id
+        if len(self.calls) == 1:
+            raise FactExtractionCheckpointPending(
+                target=target,
+                output_root=target_root,
+                source_graph=SimpleNamespace(
+                    checkpoint={"pending_reasons": []}
+                ),
+                fact_extraction=SimpleNamespace(
+                    pending_reasons=(
+                        FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+                    )
+                ),
+                audit={"status": "FACT_EXTRACTION_AUDIT_PENDING"},
+            )
+        transport = CollaborationCodexSubagentTransport()
+        transport.configure_journal_root(
+            target_root / "collaboration_codex_subagent_provider"
+        )
+        try:
+            transport.complete(
+                prompt=f"post-fact refresh {target.target_id}",
+                output_schema={
+                    "type": "object",
+                    "additionalProperties": False,
+                    "required": ["ok"],
+                    "properties": {"ok": {"type": "boolean"}},
+                },
+                schema_name="e2r_v5_phase106_post_fact_refresh_test",
+            )
+        except StructuredProviderUnavailable as exc:
+            self.active_request_id = str(exc).rsplit(":", 1)[-1]
+            raise
+        raise AssertionError("post-refresh request must remain pending")
+
+
+class _FactRefreshNoProgressCheckpointRunner:
+    def __init__(self, calls: list[str]) -> None:
+        self.calls = calls
+
+    def run_checkpoint(self, *, config, target, repo_root, source_resume_mode):
+        self.calls.append(target.target_id)
+        raise FactExtractionCheckpointPending(
+            target=target,
+            output_root=Path(config.output_root) / target.target_id,
+            source_graph=SimpleNamespace(checkpoint={"pending_reasons": []}),
+            fact_extraction=SimpleNamespace(
+                pending_reasons=(
+                    FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+                )
+            ),
+            audit={"status": "FACT_EXTRACTION_AUDIT_PENDING"},
         )
 
 
@@ -768,6 +838,55 @@ class E2RV6CurrentLiveCanaryRunnerTests(unittest.TestCase):
                 V6CurrentLiveCanaryRunner(
                     checkpoint_runner_factory=lambda _row: (
                         _RequestFreeNoProgressCheckpointRunner(calls)
+                    )
+                ).run_checkpoint(
+                    repo_root=REPO_ROOT,
+                    selection=selection,
+                    work_root=root / "work",
+                    cutover_root=root / "cutover",
+                    live_materialization_authorized=True,
+                    checkpoint_resume=True,
+                )
+            self.assertEqual(calls, ["000001", "000001"])
+
+    def test_fact_canonical_refresh_advances_to_exact_request(self) -> None:
+        selection = _selection()
+        calls: list[str] = []
+        checkpoint_runner = _FactRefreshThenActiveCheckpointRunner(calls)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            result = V6CurrentLiveCanaryRunner(
+                checkpoint_runner_factory=lambda _row: checkpoint_runner
+            ).run_checkpoint(
+                repo_root=REPO_ROOT,
+                selection=selection,
+                work_root=root / "work",
+                cutover_root=root / "cutover",
+                live_materialization_authorized=True,
+                checkpoint_resume=True,
+            )
+
+            self.assertEqual(calls, ["000001", "000001"])
+            self.assertEqual(
+                result["pending_kind"], "RESEARCH_COLLABORATION_RESPONSE"
+            )
+            self.assertEqual(
+                [row["request_id"] for row in result["pending_requests"]],
+                [checkpoint_runner.active_request_id],
+            )
+
+    def test_fact_canonical_refresh_fails_on_semantic_no_progress(self) -> None:
+        selection = _selection()
+        calls: list[str] = []
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with self.assertRaisesRegex(
+                RuntimeError,
+                "request-free fact extraction checkpoint made no progress",
+            ):
+                V6CurrentLiveCanaryRunner(
+                    checkpoint_runner_factory=lambda _row: (
+                        _FactRefreshNoProgressCheckpointRunner(calls)
                     )
                 ).run_checkpoint(
                     repo_root=REPO_ROOT,

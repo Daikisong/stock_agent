@@ -57,6 +57,9 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeTargetRunner,
     FactExtractionCheckpointPending,
 )
+from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
+    FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+)
 from e2r.research_brain.researcher_mode.canary_leaf_contract import (
     refresh_canary_target_manifest_hash,
 )
@@ -822,6 +825,56 @@ class V6CurrentLiveCanaryRunner:
                             source_resume_mode="REUSE_READY_CHECKPOINT",
                         )
                     except FactExtractionCheckpointPending as exc:
+                        active_request_ids = _active_collaboration_request_ids(
+                            (
+                                exc.audit,
+                                exc.fact_extraction.pending_reasons,
+                                exc.source_graph.checkpoint.get(
+                                    "pending_reasons"
+                                ),
+                            )
+                        )
+                        request_rows = _pending_research_request_rows(
+                            target_root,
+                            active_request_ids=active_request_ids,
+                        )
+                        if request_rows:
+                            return _pending_result(
+                                selection=selection,
+                                rows=rows,
+                                prepared_count=prepared_count,
+                                active_row=row,
+                                pending_kind=(
+                                    "RESEARCH_COLLABORATION_RESPONSE"
+                                ),
+                                request_rows=request_rows,
+                            )
+                        if tuple(
+                            str(reason)
+                            for reason in exc.fact_extraction.pending_reasons
+                        ) == (
+                            FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+                        ):
+                            fingerprint = stable_hash(
+                                {
+                                    "transition": (
+                                        "FACT_EXTRACTION_CANONICAL_STATE_REFRESH"
+                                    ),
+                                    "semantic_state": (
+                                        _request_free_semantic_transition_fingerprint(
+                                            target_root=target_root,
+                                            run=exc,
+                                        )
+                                    ),
+                                }
+                            )
+                            if fingerprint in request_free_fingerprints:
+                                raise RuntimeError(
+                                    "Phase106 request-free fact extraction "
+                                    "checkpoint made no progress"
+                                )
+                            request_free_fingerprints.add(fingerprint)
+                            continue
                         return _research_pending_result(
                             selection=selection,
                             rows=rows,
@@ -829,15 +882,7 @@ class V6CurrentLiveCanaryRunner:
                             row=row,
                             target_root=target_root,
                             detail="FACT_EXTRACTION_CHECKPOINT_PENDING",
-                            active_request_ids=_active_collaboration_request_ids(
-                                (
-                                    exc.audit,
-                                    exc.fact_extraction.pending_reasons,
-                                    exc.source_graph.checkpoint.get(
-                                        "pending_reasons"
-                                    ),
-                                )
-                            ),
+                            active_request_ids=active_request_ids,
                         )
                     except StructuredProviderUnavailable as exc:
                         detail = str(exc)
