@@ -784,6 +784,14 @@ class V6CurrentLiveCanaryRunner:
                                     "pending_reasons"
                                 ),
                                 run.structured_materialization.pending_reasons,
+                                # The 21 role/component scoring calls are
+                                # created after the Dossier.  Their exact
+                                # Collaboration waits live only in the scoring
+                                # memo run; omitting this plane produces a
+                                # misleading SOURCE_PENDING with an empty
+                                # request roster even when current judge
+                                # requests are waiting in the journal.
+                                run.scoring_memos.to_dict(),
                                 # A Supervisor transport wait is materialized
                                 # by StageCourt after dossier construction.  It
                                 # is therefore absent from dossier.pending_reasons

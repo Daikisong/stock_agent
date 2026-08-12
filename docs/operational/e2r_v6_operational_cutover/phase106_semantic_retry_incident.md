@@ -910,6 +910,27 @@ score, Stage 또는 cutover authority가 아니다.
     component memo만 새 anchor binding으로 재작성한다. 회귀 테스트는 새 anchorless 응답이
     즉시 재시도되는지와 과거 anchorless memo가 live reuse에서 제외되는지를 각각 검증한다.
 
+47. **현재 judge 응답 대기를 빈 SOURCE_PENDING으로 숨긴 active-request 누락**
+
+    46번 수리 후 C17의 7개 memo는 모두 usable anchor를 가졌고, 21개 독립 judge
+    Collaboration request가 정상 생성됐다. 하지만 Phase106 pending formatter는 Dossier,
+    fact/source/structured, StageCourt, ResearchEpoch만 훑고 `ComponentScoringMemoRun`을
+    빠뜨렸다. Judge 대기는 이 scoring plane에만 있으므로 operator 출력은
+    `SEMANTIC_CHECKPOINT_PENDING`, `pending_requests=[]`, `SOURCE_PENDING`으로 나왔다.
+    실제 journal에는 현재 judge request 21개가 있었지만 답해야 할 ID가 숨겨진 것이다.
+
+    쉬운 예: 채점실에서 21개 답변을 기다리고 있는데 전광판은 채점실 대기표를 읽지 않고
+    `자료 출처 확인 중, 번호표 없음`이라고 표시한 셈이다. 이 상태에서는 운영자가 정확한
+    답변을 제출할 수 없고 같은 master command만 반복하게 된다.
+
+    수정 후 nonterminal Phase106 active-request 탐색에 exact
+    `run.scoring_memos.to_dict()`를 포함한다. Append-only journal 전체를 다시 active로
+    만드는 것이 아니라, 현재 scoring run의 pending reason에 실제로 묶인 request ID만
+    노출한다. 따라서 과거 unanswered judge request는 계속 감사 이력으로 남고 current
+    prompt identity만 `COLLABORATION_RESPONSE_PENDING`으로 표시된다. 회귀 테스트는 과거와
+    현재 judge request를 함께 둔 뒤 현재 하나만 노출되고 SOURCE_PENDING으로 오분류되지
+    않는지 검증한다.
+
 ## Goal 경계
 
 이 수정은 query template, score weight, Stage rule 또는 target-specific branch를 추가하지
