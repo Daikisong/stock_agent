@@ -1844,10 +1844,10 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             )
         )
 
-    def test_supervisor_route_exhaustion_does_not_hide_structured_source_gap(
+    def test_supervisor_route_exhaustion_closes_only_query_lane_with_structured_gap(
         self,
     ) -> None:
-        self.assertFalse(
+        self.assertTrue(
             source_graph_module._supervisor_explicitly_exhausted_source_routes(
                 {
                     "prior_supervisor_gap": {

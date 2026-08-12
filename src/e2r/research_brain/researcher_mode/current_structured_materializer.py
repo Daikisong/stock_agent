@@ -912,48 +912,61 @@ class CurrentStructuredSourceMaterializer:
             )
         payloads: list[Mapping[str, Any]] = []
         for period in _financial_statement_periods(cutoff):
-            key = (
-                f"dart_{target_id}_{corp_code}_{period['fiscal_year']}_"
-                f"{period['report_code']}_CFS"
-            )
-            response = self._json(
-                target_id=target_id,
-                cutoff=cutoff,
-                provider_name="OpenDART",
-                source_role="FINANCIAL_ACTUALS",
-                cache_key=key,
-                cache_root=cache_root,
-                checkpoint_resume=checkpoint_resume,
-                url=_DART_FULL_ACCOUNT_URL,
-                params={
-                    "crtfc_key": credential,
-                    "corp_code": corp_code,
-                    "bsns_year": str(period["fiscal_year"]),
-                    "reprt_code": period["report_code"],
-                    "fs_div": "CFS",
-                },
-                headers={},
-                attempts=attempts,
-                manifests=manifests,
-                effective_date=period["reported_at"].isoformat(),
-                rows_getter=lambda value: value.get("list") or (),
-            )
-            if response is None:
-                continue
-            status = str(response.get("status") or "")
-            if status != "000" or not isinstance(response.get("list"), list):
-                continue
-            payloads.append(
-                {
-                    "payload": response,
-                    "fiscal_year": period["fiscal_year"],
-                    "fiscal_quarter": period["fiscal_quarter"],
-                    "period_end": period["period_end"].isoformat(),
-                    "reported_at": period["reported_at"].isoformat(),
-                    "report_code": period["report_code"],
-                    "corp_code": corp_code,
-                }
-            )
+            # OpenDART uses CFS for consolidated issuers and OFS for issuers
+            # that publish only separate statements.  Asking only for CFS
+            # made a perfectly valid OFS-only issuer look as if it had no
+            # financial statements, which in turn kept every structured role
+            # pending and repeatedly reopened LLM source search.  Keep this
+            # bounded and official-first: try CFS once, then OFS only when CFS
+            # has no usable rows, and stop at the first usable statement for
+            # this reporting period.  Example: an issuer with no subsidiaries
+            # may return DART status 013 for CFS and 89 valid rows for OFS.
+            for fs_div in ("CFS", "OFS"):
+                key = (
+                    f"dart_{target_id}_{corp_code}_{period['fiscal_year']}_"
+                    f"{period['report_code']}_{fs_div}"
+                )
+                response = self._json(
+                    target_id=target_id,
+                    cutoff=cutoff,
+                    provider_name="OpenDART",
+                    source_role="FINANCIAL_ACTUALS",
+                    cache_key=key,
+                    cache_root=cache_root,
+                    checkpoint_resume=checkpoint_resume,
+                    url=_DART_FULL_ACCOUNT_URL,
+                    params={
+                        "crtfc_key": credential,
+                        "corp_code": corp_code,
+                        "bsns_year": str(period["fiscal_year"]),
+                        "reprt_code": period["report_code"],
+                        "fs_div": fs_div,
+                    },
+                    headers={},
+                    attempts=attempts,
+                    manifests=manifests,
+                    effective_date=period["reported_at"].isoformat(),
+                    rows_getter=lambda value: value.get("list") or (),
+                )
+                if response is None:
+                    continue
+                status = str(response.get("status") or "")
+                rows = response.get("list")
+                if status != "000" or not isinstance(rows, list) or not rows:
+                    continue
+                payloads.append(
+                    {
+                        "payload": response,
+                        "fiscal_year": period["fiscal_year"],
+                        "fiscal_quarter": period["fiscal_quarter"],
+                        "period_end": period["period_end"].isoformat(),
+                        "reported_at": period["reported_at"].isoformat(),
+                        "report_code": period["report_code"],
+                        "corp_code": corp_code,
+                        "fs_div": fs_div,
+                    }
+                )
+                break
         if not payloads:
             return UnavailableStructuredSourceRoute(
                 "DART_ACTUALS_DETERMINISTIC_SCENARIO",

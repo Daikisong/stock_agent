@@ -2674,6 +2674,47 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         )
         self.assertEqual(len(provider.calls), 2)
 
+    def test_no_new_query_marker_rejects_route_true_without_actionable_direction(
+        self,
+    ) -> None:
+        class RouteWithoutDirectionProvider(Phase87SupervisorProvider):
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                response.update(
+                    {
+                        "reasonable_positive_routes_remaining": True,
+                        "ready_for_independent_saturation_review": False,
+                        "next_actions": [
+                            "이미 실패한 경로를 설명 없이 다시 시도한다."
+                        ],
+                        "rationale": "구체적 방향 없이 route만 true로 둔다.",
+                    }
+                )
+                return response
+
+        source_checkpoint = _source_checkpoint_with_updates(
+            _source_checkpoint(),
+            status="QUERY_GENERATION_PENDING",
+            pending_reasons=["LLM_RETURNED_NO_NEW_VALID_QUERY"],
+        )
+        inputs = dict(_supervisor_inputs())
+        inputs["source_graph_checkpoint"] = source_checkpoint
+        provider = RouteWithoutDirectionProvider("READY")
+
+        review = ResearchSupervisor(provider=provider).review_epoch(**inputs)
+
+        self.assertEqual(review.status, "NEXT_RESEARCH_REQUIRED")
+        self.assertEqual(review.component_findings, ())
+        self.assertIn(
+            "routes remaining requires an actionable source or query direction",
+            review.unresolved_material_questions[0],
+        )
+        self.assertEqual(len(provider.calls), 2)
+
     def test_parser_failure_and_source_absence_are_distinct(self) -> None:
         parser_provider = Phase87SupervisorProvider("PARSER")
         parser_review = ResearchSupervisor(provider=parser_provider).review_epoch(

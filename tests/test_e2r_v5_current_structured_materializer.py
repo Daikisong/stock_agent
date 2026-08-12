@@ -102,6 +102,36 @@ class FixtureStructuredTransport:
             raise AssertionError("DART corp_code was not restored to eight digits")
 
 
+class SeparateOnlyFinancialStructuredTransport(FixtureStructuredTransport):
+    """An issuer whose OpenDART actuals exist only as separate statements."""
+
+    def get_json(self, *, url, params, headers, timeout_seconds):
+        if "fnlttSinglAcntAll" in url and params.get("fs_div") == "CFS":
+            del headers, timeout_seconds
+            self.calls.append(("json", url, dict(params)))
+            self.assert_dart_corp_code(params)
+            payload = {
+                "status": "013",
+                "message": "조회된 데이타가 없습니다.",
+            }
+            raw = json.dumps(
+                payload, ensure_ascii=False, sort_keys=True
+            ).encode()
+            return StructuredHTTPResponse(
+                status_code=200,
+                canonical_url=url,
+                provider_request_id="FIXTURE-CFS-NO-DATA",
+                content_hash=hashlib.sha256(raw).hexdigest(),
+                payload=payload,
+            )
+        return super().get_json(
+            url=url,
+            params=params,
+            headers=headers,
+            timeout_seconds=timeout_seconds,
+        )
+
+
 class HistoricalReportFallbackStructuredTransport(FixtureStructuredTransport):
     """Peer snapshots lack consensus, while official equity remains available."""
 
@@ -768,6 +798,54 @@ class InvalidStructuredRetryPeerProvider(FixturePeerProvider):
 
 
 class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
+    def test_opendart_falls_back_from_empty_cfs_to_official_ofs_once_per_period(
+        self,
+    ):
+        transport = SeparateOnlyFinancialStructuredTransport()
+        materializer = CurrentStructuredSourceMaterializer(
+            transport=transport,
+            price_lookback_days=400,
+        )
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = materializer.materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+            )
+
+        dart_calls = [
+            row
+            for row in transport.calls
+            if row[0] == "json" and "fnlttSinglAcntAll" in row[1]
+        ]
+        self.assertGreater(len(dart_calls), 0)
+        self.assertEqual(len(dart_calls) % 2, 0)
+        self.assertTrue(
+            all(
+                dart_calls[index][2]["fs_div"] == "CFS"
+                and dart_calls[index + 1][2]["fs_div"] == "OFS"
+                for index in range(0, len(dart_calls), 2)
+            )
+        )
+        self.assertGreater(len(result.engine_result.financial_records), 0)
+        self.assertTrue(
+            any(
+                "LATEST_ACTUAL_REVENUE" in row.evidence_roles
+                for row in result.engine_result.financial_records
+            )
+        )
     def test_companyguide_forward_fundamentals_keep_units_and_page_date(self):
         payload = parse_companyguide_live_consensus_payload(
             _companyguide_html("2026.07.10"),

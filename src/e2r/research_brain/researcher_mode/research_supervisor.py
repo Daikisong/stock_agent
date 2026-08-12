@@ -305,6 +305,7 @@ class _SupervisorPromptMaterial:
     counter_route_proof_complete: bool
     source_graph_zero_result_only: bool
     source_graph_research_pending: bool
+    source_graph_no_new_valid_query: bool
 
 
 class ResearchSupervisor:
@@ -456,6 +457,9 @@ class ResearchSupervisor:
         counter_route_proof_complete = material.counter_route_proof_complete
         source_graph_zero_result_only = material.source_graph_zero_result_only
         source_graph_research_pending = material.source_graph_research_pending
+        source_graph_no_new_valid_query = (
+            material.source_graph_no_new_valid_query
+        )
         failure_group_members = material.failure_group_members
         attempt_payload = payload
         validation_retry_used = False
@@ -518,6 +522,9 @@ class ResearchSupervisor:
                     counter_route_proof_complete=counter_route_proof_complete,
                     source_graph_zero_result_only=source_graph_zero_result_only,
                     source_graph_research_pending=source_graph_research_pending,
+                    source_graph_no_new_valid_query=(
+                        source_graph_no_new_valid_query
+                    ),
                     provider_name=str(
                         getattr(
                             self.provider,
@@ -602,6 +609,9 @@ class ResearchSupervisor:
                                 ),
                                 "source_graph_research_pending": (
                                     source_graph_research_pending
+                                ),
+                                "source_graph_no_new_valid_query": (
+                                    source_graph_no_new_valid_query
                                 ),
                                 "material_score_disagreement_component_ids": list(
                                     material_score_disagreement_component_ids
@@ -883,6 +893,7 @@ def _review_from_provider_response(
     counter_route_proof_complete: bool,
     source_graph_zero_result_only: bool,
     source_graph_research_pending: bool,
+    source_graph_no_new_valid_query: bool,
     provider_name: str,
     prompt_hash: str,
     prior_review_prompt_projection: Mapping[str, Any] | None,
@@ -1015,6 +1026,23 @@ def _review_from_provider_response(
     reasonable_routes = _required_bool(
         response, "reasonable_positive_routes_remaining"
     )
+    if (
+        source_graph_no_new_valid_query
+        and reasonable_routes
+        and not directions
+        and not query_directions
+    ):
+        # ``routes remaining`` must name an actionable LLM-owned route.  A
+        # bare True with only prose in next_actions cannot be consumed by the
+        # query planner and used to create the production loop
+        # Supervisor -> empty/duplicate query -> Supervisor.  This validator
+        # does not invent a fallback query: the provider must either emit an
+        # objective-bound source/query direction or explicitly close only the
+        # query lane.  Structured/source gaps still block score validity.
+        raise ValueError(
+            "supervisor routes remaining requires an actionable source or "
+            "query direction"
+        )
     provider_ready = _required_bool(
         response, "ready_for_independent_saturation_review"
     )
@@ -1419,6 +1447,9 @@ def _build_supervisor_prompt_material(
     source_graph_research_pending = _source_graph_research_pending(
         source_graph_checkpoint
     )
+    source_graph_no_new_valid_query = (
+        _source_graph_no_new_valid_query(source_graph_checkpoint)
+    )
     failure_projection = project_supervisor_failures(failures)
     failure_prompt_projection = _supervisor_failure_prompt_projection(
         failure_projection
@@ -1623,6 +1654,7 @@ def _build_supervisor_prompt_material(
         counter_route_proof_complete=counter_route_proof_complete,
         source_graph_zero_result_only=source_graph_zero_result_only,
         source_graph_research_pending=source_graph_research_pending,
+        source_graph_no_new_valid_query=source_graph_no_new_valid_query,
     )
 
 
@@ -2469,6 +2501,28 @@ def _source_graph_research_pending(checkpoint: Mapping[str, Any]) -> bool:
         "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
         "STOPPED_ON_RESOLUTION",
     }
+
+
+def _source_graph_no_new_valid_query(
+    checkpoint: Mapping[str, Any],
+) -> bool:
+    """Return whether the LLM consumed this gap but found no novel route.
+
+    This is deliberately narrower than a zero-result search.  A first empty
+    search result never proves saturation.  The marker is emitted only after
+    the query-generation LLM has seen prior queries/failures and responded
+    that it cannot provide a new valid query.  The Supervisor may still keep
+    the lane open, but only by naming a new objective-bound direction.
+    """
+
+    return bool(
+        str(checkpoint.get("status") or "") == "QUERY_GENERATION_PENDING"
+        and "LLM_RETURNED_NO_NEW_VALID_QUERY"
+        in {
+            str(value)
+            for value in checkpoint.get("pending_reasons") or ()
+        }
+    )
 
 
 def _structured_data_complete(result: Any | None) -> bool:

@@ -248,6 +248,54 @@ score, Stage 또는 cutover authority가 아니다.
    확인하고, symlink/hardlink/동시 변경을 거부한 뒤 원자적 compare-and-swap으로
    게시한다. 기본 실행은 여전히 기존과 같은 create-only라 우발적 덮어쓰기는 불가능하다.
 
+16. **이미 실행한 exact report 경로를 Supervisor가 다시 남은 경로로 선언**
+
+   C08의 LS 2026-07-07 report `1110945 / 1F04720260707_058470.pdf`는 exact
+   literal query로 한 번 실행됐고 결과가 0건이었다. 그 다음 query planner는 prior
+   query와 failure ledger를 보고 새 verified document identity가 없다고 정직하게
+   `LLM_RETURNED_NO_NEW_VALID_QUERY`를 반환했다. 그런데 다음 Supervisor 응답은
+   `reasonable_positive_routes_remaining=true`만 남기고 objective-bound source/query
+   direction은 0건이었다. 상태기계는 이 빈 `true`를 새 조사 권한으로 읽어
+   Supervisor → empty query → Supervisor를 반복했다.
+
+   쉬운 예: 이미 폐점 확인한 매장을 “다른 주소나 담당자 정보 없이 다시 방문”이라고
+   작업지시서에 쓰고, 방문 담당자는 중복이라 거절하고, 관리자는 같은 지시를 다시
+   내리는 상태다.
+
+   수정 후 `LLM_RETURNED_NO_NEW_VALID_QUERY`가 기록된 snapshot에서 Supervisor가
+   routes=true를 유지하려면 concrete missing fact와 연결된 새 source-family direction
+   또는 semantic query brief를 반드시 내야 한다. `next_actions`의 자유문장만으로는
+   query 권한을 만들 수 없다. deterministic fallback query는 여전히 만들지 않는다.
+
+17. **structured pending을 이유로 닫힌 web-query lane까지 강제 reopen**
+
+   `_supervisor_explicitly_exhausted_source_routes()`는 structured role이 하나라도
+   `SOURCE_PENDING`이면 Supervisor의 routes=false를 무조건 무시했다. 그래서 exact
+   broker search가 끝났어도 structured gap이 남아 있는 동안 같은 web query lane을
+   닫을 방법이 없었다.
+
+   수정 후 query lane 종료와 structured-data 해결을 분리한다. query lane을 닫아도
+   missing structured role은 그대로 `SOURCE_PENDING`, `score_valid=false`, StageCourt
+   non-final로 남는다. 즉 “같은 검색을 그만한다”를 “사실이 없다”나 “0점”으로 바꾸지
+   않는다. 새로운 actionable route가 있거나 retryable fetch/parser repair가 있으면
+   기존과 같이 lane을 열어 둔다.
+
+18. **OpenDART 연결재무제표(CFS)만 조회해 별도재무제표(OFS) issuer를 빈 회사로 처리**
+
+   current structured materializer는 모든 issuer·period에 `fs_div=CFS`만 요청했다.
+   리노공업의 2026년 1분기는 CFS가 status `013 / 조회된 데이터 없음`이지만 OFS에는
+   공식 재무행 89개가 있었다. 그런데 OFS fallback이 없어 revenue, operating profit,
+   net income, OCF, CAPEX, FCF 역할이 모두 비었고, 이 structured gap이 원인 16·17의
+   query loop를 계속 자극했다.
+
+   쉬운 예: 자회사가 없는 회사에 연결 장부가 없다고 해서, 실제 별도 장부 89줄까지
+   없는 것으로 처리한 셈이다.
+
+   수정 후 period마다 bounded official-first 순서 `CFS 1회 → usable row가 없을 때만
+   OFS 1회 → 첫 usable statement에서 stop`을 적용한다. CFS와 OFS가 둘 다 있으면 CFS를
+   우선하고 중복 합산하지 않는다. cache identity에도 `fs_div`를 포함해 resume 시 서로
+   다른 장부가 섞이지 않게 한다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -285,8 +333,9 @@ score, Stage 또는 cutover authority가 아니다.
    provider Supervisor 판정을 유지하되, readiness와 점수 계산은 현재 pending 상태를
    그대로 사용한다.
 10. semantic source route 종료와 structured provider/source gap 종료를 같은 boolean으로
-    취급하지 않는다. structured required role이 남으면 score를 확정하지 않고 LLM 대체
-    source route를 다시 열어야 한다.
+    취급하지 않는다. structured required role이 남으면 score를 확정하지 않는다. 다만
+    web-query lane은 objective-bound 새 direction이 있을 때만 다시 열고, 공식 structured
+    connector retry는 별도 pending 상태로 유지한다.
 11. 새 문서 class를 찾기 전에 이미 fetch된 full document가 missing structured role을
     표현할 수 있는지 schema→fact→materializer→engine 전 경로를 검사한다. 원문이 있는데
     typed role 경로가 없으면 검색 재시도가 아니라 공통 schema 단절을 먼저 수리한다.
@@ -313,7 +362,13 @@ score, Stage 또는 cutover authority가 아니다.
 18. tracked `current` profile/selection 파일은 기본 create-only를 유지하되, validator
    수리로 같은 기준일의 COMPLETE 결과가 바뀐 경우에만 명시적 compare-and-swap
    교체를 허용한다. 기존·신규 파일의 기준일/완결성/권한 없음과 regular-file
-   identity를 모두 검증하며, 과거 Collaboration 영수증 자체는 덮어쓰지 않는다.
+    identity를 모두 검증하며, 과거 Collaboration 영수증 자체는 덮어쓰지 않는다.
+19. `reasonable_positive_routes_remaining=true`는 그 자체로 실행계획이 아니다. 직전
+    query planner가 `LLM_RETURNED_NO_NEW_VALID_QUERY`를 반환했다면 새 source/query
+    direction이 반드시 함께 있어야 하며, 없으면 Supervisor 응답을 fail-closed한다.
+20. OpenDART actuals는 period별 CFS 우선, CFS 무자료일 때만 OFS fallback을 수행한다.
+    둘 다 없는 경우에만 해당 period를 unavailable로 남기며, 무자료를 0으로 만들지
+    않는다.
 
 ## Goal 경계
 
