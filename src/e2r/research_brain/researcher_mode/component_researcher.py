@@ -4259,6 +4259,28 @@ def _component_memo_from_response(
     _require_ids_exist(
         (*historical, *nearest_positive, *nearest_counter), anchors, "anchor"
     )
+    cited_anchors = tuple(anchors[anchor_id] for anchor_id in historical)
+    if not cited_anchors or not any(
+        row.get("usable_as_exact_anchor") is True
+        or row.get("usable_as_ordinal_anchor") is True
+        for row in cited_anchors
+    ):
+        # A component memo is the input contract for the three independent
+        # judges.  Letting an anchorless memo look COMPLETE only postpones the
+        # same error until deterministic scoring, where checkpoint reuse can
+        # turn it into a non-progressing loop.  Reject it here so the provider
+        # receives the normal validation-retry context and rewrites the memo.
+        raise ValueError(
+            "component research requires a usable historical anchor"
+        )
+    if any(
+        abs(float(row.get("max_points") or 0.0) - plan.component_max_points)
+        > 1e-9
+        for row in cited_anchors
+    ):
+        raise ValueError(
+            "historical anchor and component point scales differ"
+        )
     if not set((*nearest_positive, *nearest_counter)).issubset(historical):
         raise ValueError("nearest anchors must also be historical_anchor_ids")
     for anchor_id in nearest_positive:

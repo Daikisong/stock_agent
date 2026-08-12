@@ -760,6 +760,68 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             result.memo.historical_anchor_ids,  # type: ignore[union-attr]
         )
 
+    def test_component_semantic_validation_retries_anchorless_complete_memo(
+        self,
+    ) -> None:
+        """An anchorless COMPLETE memo must be repaired before judge scoring."""
+
+        class AnchorCorrectingProvider(ScriptedResearchProvider):
+            def __init__(self) -> None:
+                super().__init__()
+                self.invalidated_reasons: list[str] = []
+
+            def invalidate_last_response_cache(self, reason: str):
+                self.invalidated_reasons.append(reason)
+                return {"status": "FIXTURE_INVALIDATED"}
+
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                if (
+                    pass_name == "COMPONENT_RESEARCH"
+                    and "component_research_validation_retry_context"
+                    not in payload
+                ):
+                    response["historical_anchor_ids"] = []
+                    response["nearest_positive_anchor_ids"] = []
+                    response["nearest_counter_anchor_ids"] = []
+                return response
+
+        provider = AnchorCorrectingProvider()
+        business = BusinessMechanismResearcher(provider=provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=self.facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        ).memo
+
+        result = EPSFCFResearcher(provider=provider).research(
+            plan=self._plans()[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+        )
+
+        calls = [
+            row for row in provider.calls
+            if row["pass_name"] == "COMPONENT_RESEARCH"
+        ]
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(len(provider.invalidated_reasons), 1)
+        self.assertIn(
+            "requires a usable historical anchor",
+            provider.invalidated_reasons[0],
+        )
+        self.assertTrue(result.memo.historical_anchor_ids)  # type: ignore[union-attr]
+
     def test_component_fact_grounding_retries_predicate_drift(self) -> None:
         class GroundingCorrectingProvider(ScriptedResearchProvider):
             def __init__(self) -> None:

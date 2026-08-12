@@ -886,6 +886,30 @@ score, Stage 또는 cutover authority가 아니다.
     독립 재검증하게 하고, 과거 응답을 가짜 current 응답으로 재지정하지 않는다. clean
     operational run은 시작부터 값 `3`을 고정하므로 이 전환 중복이 발생하지 않는다.
 
+46. **앵커 없는 과거 component memo를 COMPLETE로 재사용한 채점 교착**
+
+    C17의 source graph, 77개 fact, 7개 component memo, Red Team, synthesis,
+    Supervisor와 세 saturation review는 모두 닫혔다. 그런데 deterministic score는
+    7개 중 5개 component에서 `component scoring requires a usable historical anchor`로
+    시작하지 못했다. Tracked anchor atlas에는 C17의 일곱 component별 ordinal anchor가
+    충분히 있었지만, 오래전에 생성된 다섯 memo의 `historical_anchor_ids`와 nearest anchor
+    배열이 비어 있었다. Component decoder는 빈 배열을 허용했고 checkpoint reuse는
+    fact·structured input이 같다는 이유만으로 그 memo를 계속 COMPLETE로 재사용했다.
+    따라서 앞 단계는 terminal인데 21-role scoring 중 15개가 매 실행 똑같이 pending인
+    교착이 됐다.
+
+    쉬운 예: 채점 기준표는 서랍에 있고 답안도 제출됐지만, 답안의 `참조 기준표 번호` 칸이
+    비어 있다. 접수 창구는 이를 완성 답안으로 계속 복사하고, 채점실은 기준표 번호가 없어
+    매번 반려한다. 보고서를 더 읽거나 같은 답안을 다시 복사해도 끝나지 않는다.
+
+    수정 후 component response decoder는 적어도 하나의 exact/ordinal usable anchor와
+    component 점수척도 일치를 COMPLETE 전에 검증한다. 실패하면 기존 validation retry
+    경로로 LLM에게 전체 memo를 다시 쓰게 한다. Live checkpoint reuse도 현재 tracked
+    atlas를 받아, 비어 있거나 존재하지 않거나 다른 component/archetype/점수척도의 anchor를
+    참조한 과거 memo를 재사용하지 않는다. 이 경우 source search는 열지 않고 해당
+    component memo만 새 anchor binding으로 재작성한다. 회귀 테스트는 새 anchorless 응답이
+    즉시 재시도되는지와 과거 anchorless memo가 live reuse에서 제외되는지를 각각 검증한다.
+
 ## Goal 경계
 
 이 수정은 query template, score weight, Stage rule 또는 target-specific branch를 추가하지

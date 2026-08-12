@@ -866,6 +866,7 @@ class CurrentResearcherModeTargetRunner:
         )
         reusable_prior_component_memos = _reusable_prior_component_memos(
             prior_component_memos=prior_component_memos,
+            historical_anchors=anchors,
             actionable_feedback_by_component=(
                 supervisor_feedback_by_component
             ),
@@ -6549,6 +6550,7 @@ def _read_jsonl(path: Path) -> tuple[Mapping[str, Any], ...]:
 def _reusable_prior_component_memos(
     *,
     prior_component_memos: Mapping[str, Mapping[str, Any]],
+    historical_anchors: Sequence[Mapping[str, Any]] | None = None,
     actionable_feedback_by_component: Mapping[str, Mapping[str, Any]],
     reviewed_component_memo_hashes: Mapping[str, str] | None = None,
     prior_facts: Sequence[Mapping[str, Any]],
@@ -6558,7 +6560,13 @@ def _reusable_prior_component_memos(
     current_structured_result: StructuredEngineResult,
     required_roles_by_component: Mapping[str, Sequence[str]],
 ) -> Mapping[str, Mapping[str, Any]]:
-    """Reuse a complete memo only when its semantic input plane is unchanged."""
+    """Reuse a complete memo only when its semantic input plane is unchanged.
+
+    When the current anchor atlas is supplied (the production path always
+    supplies it), a memo also has to retain a usable, scale-compatible anchor
+    binding.  This prevents an old anchorless memo from being reused forever
+    while every downstream judge deterministically rejects it.
+    """
 
     if (
         not prior_fact_snapshot_available
@@ -6576,6 +6584,46 @@ def _reusable_prior_component_memos(
         current_structured_result.records,
         required_roles_by_component=required_roles_by_component,
     )
+    anchor_by_id = {
+        str(row.get("anchor_id") or ""): row
+        for row in historical_anchors or ()
+        if str(row.get("anchor_id") or "")
+    }
+
+    def has_usable_anchor_binding(
+        component_id: str,
+        memo: Mapping[str, Any],
+    ) -> bool:
+        # ``None`` preserves the narrow unit-test helper contract.  The live
+        # runner passes the authoritative atlas and therefore fails closed.
+        if historical_anchors is None:
+            return True
+        cited_ids = tuple(
+            str(value).strip()
+            for value in memo.get("historical_anchor_ids") or ()
+            if str(value).strip()
+        )
+        if not cited_ids or len(cited_ids) != len(set(cited_ids)):
+            return False
+        cited = tuple(anchor_by_id.get(anchor_id) for anchor_id in cited_ids)
+        if any(row is None for row in cited):
+            return False
+        archetype_id = str(memo.get("archetype_id") or "")
+        maximum = float(memo.get("component_max_points") or 0.0)
+        if any(
+            str(row.get("archetype_id") or "") != archetype_id
+            or str(row.get("component_id") or "") != component_id
+            or abs(float(row.get("max_points") or 0.0) - maximum) > 1e-9
+            for row in cited
+            if row is not None
+        ):
+            return False
+        return any(
+            row.get("usable_as_exact_anchor") is True
+            or row.get("usable_as_ordinal_anchor") is True
+            for row in cited
+            if row is not None
+        )
 
     def has_unconsumed_actionable_feedback(
         component_id: str,
@@ -6601,6 +6649,7 @@ def _reusable_prior_component_memos(
         for component_id, memo in prior_component_memos.items()
         if component_id in CANONICAL_COMPONENT_ORDER
         and memo.get("research_complete") is True
+        and has_usable_anchor_binding(component_id, memo)
         and not has_unconsumed_actionable_feedback(component_id, memo)
         and _component_memo_cites_only_current_facts(
             memo,

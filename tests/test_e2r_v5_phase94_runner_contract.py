@@ -4257,6 +4257,59 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         )
         self.assertNotIn("eps_fcf_explosion", structured_drift)
 
+    def test_anchorless_prior_memo_is_not_reused_by_live_runner(self) -> None:
+        facts = ({"fact_id": "FACT-1", "value": 1},)
+        requirements = {
+            component_id: () for component_id in CANONICAL_COMPONENT_ORDER
+        }
+        maximum = 20.0
+        usable_anchor = {
+            "anchor_id": "ANCHOR-EPS-1",
+            "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+            "component_id": "eps_fcf_explosion",
+            "max_points": maximum,
+            "usable_as_exact_anchor": False,
+            "usable_as_ordinal_anchor": True,
+        }
+        base_memo = {
+            "component_id": "eps_fcf_explosion",
+            "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+            "component_max_points": maximum,
+            "research_complete": True,
+            "positive_fact_ids": ["FACT-1"],
+        }
+
+        anchorless = _reusable_prior_component_memos(
+            prior_component_memos={"eps_fcf_explosion": base_memo},
+            historical_anchors=(usable_anchor,),
+            actionable_feedback_by_component={},
+            prior_facts=facts,
+            current_facts=facts,
+            prior_fact_snapshot_available=True,
+            prior_structured_result={"records": []},
+            current_structured_result=SimpleNamespace(records=()),
+            required_roles_by_component=requirements,
+        )
+        anchored = _reusable_prior_component_memos(
+            prior_component_memos={
+                "eps_fcf_explosion": {
+                    **base_memo,
+                    "historical_anchor_ids": ["ANCHOR-EPS-1"],
+                }
+            },
+            historical_anchors=(usable_anchor,),
+            actionable_feedback_by_component={},
+            prior_facts=facts,
+            current_facts=facts,
+            prior_fact_snapshot_available=True,
+            prior_structured_result={"records": []},
+            current_structured_result=SimpleNamespace(records=()),
+            required_roles_by_component=requirements,
+        )
+
+        self.assertEqual(anchorless, {})
+        self.assertIn("eps_fcf_explosion", anchored)
+
     def test_newer_memo_consumes_feedback_bound_to_the_reviewed_memo(self) -> None:
         """One Supervisor instruction may open one rewrite, not an endless loop."""
 
