@@ -869,6 +869,9 @@ class CurrentResearcherModeTargetRunner:
             actionable_feedback_by_component=(
                 supervisor_feedback_by_component
             ),
+            reviewed_component_memo_hashes=prior_context[
+                "supervisor_reviewed_component_memo_hashes"
+            ],
             prior_facts=prior_context["facts"],
             current_facts=fact_extraction.facts,
             prior_fact_snapshot_available=bool(
@@ -5408,6 +5411,7 @@ def _load_prior_research_context(
     score_gap_context: Mapping[str, Any] = {}
     epoch_context = None
     supervisor_gap_context: Mapping[str, Any] = {}
+    supervisor_reviewed_component_memo_hashes: Mapping[str, str] = {}
     supervisor_source_gap_context: Mapping[str, Any] = {}
     supervisor_unresolved_components: set[str] = set()
     supervisor_unresolved_objectives: set[str] = set()
@@ -5634,7 +5638,10 @@ def _load_prior_research_context(
             ),
             "next_actions": epoch.get("next_actions"),
         }
-        supervisor = _source_routing_supervisor_review(
+        (
+            supervisor,
+            supervisor_reviewed_component_memo_hashes,
+        ) = _source_routing_supervisor_snapshot(
             root=root,
             target_id=target_id,
             as_of_date=as_of_date,
@@ -5856,6 +5863,9 @@ def _load_prior_research_context(
         ),
         "score_gap_context": score_gap_context,
         "supervisor_gap_context": supervisor_gap_context,
+        "supervisor_reviewed_component_memo_hashes": (
+            supervisor_reviewed_component_memo_hashes
+        ),
         "supervisor_source_gap_context": supervisor_source_gap_context,
         "source_transport_pending_objective_ids": tuple(
             sorted(source_transport_pending_objectives)
@@ -5897,20 +5907,60 @@ def _source_routing_supervisor_review(
     signature: the unsigned placeholder cannot order another shipment.
     """
 
+    review, _ = _source_routing_supervisor_snapshot(
+        root=root,
+        target_id=target_id,
+        as_of_date=as_of_date,
+        current_epoch=current_epoch,
+        source_graph_checkpoint=source_graph_checkpoint,
+    )
+    return review
+
+
+def _source_routing_supervisor_snapshot(
+    *,
+    root: Path,
+    target_id: str,
+    as_of_date: str,
+    current_epoch: Mapping[str, Any],
+    source_graph_checkpoint: Mapping[str, Any] | None = None,
+) -> tuple[Mapping[str, Any], Mapping[str, str]]:
+    """Return the routing review and the exact memo roster it reviewed.
+
+    Supervisor feedback is an instruction against one immutable component
+    memo snapshot.  Once a component researcher has consumed that instruction
+    and produced a newer memo, replaying the old instruction against the new
+    memo creates a self-output loop: the rewrite itself becomes the reason for
+    another rewrite.  Keep the containing epoch's memo hashes beside the
+    historical review so downstream reuse can distinguish an unconsumed
+    instruction from one that has already produced a new memo.
+
+    Easy example: a teacher's correction on draft A remains actionable while
+    draft A is current.  After draft B is submitted, the same correction may
+    inform the next review, but it cannot automatically order draft C without
+    a new review of draft B.
+    """
+
     current = current_epoch.get("supervisor_review") or {}
     if not isinstance(current, Mapping):
         raise TypeError("research epoch supervisor review must be an object")
+    current_memo_hashes = _validated_component_memo_hash_binding(
+        current_epoch.get("component_memo_hashes") or {}
+    )
     if not _supervisor_review_is_transport_scaffold(current):
         if _legacy_supervisor_review_requires_semantic_revalidation(
             current,
             source_graph_checkpoint=source_graph_checkpoint,
         ):
-            return _supervisor_semantic_revalidation_routing_view(current)
-        return dict(current)
+            return (
+                _supervisor_semantic_revalidation_routing_view(current),
+                current_memo_hashes,
+            )
+        return dict(current), current_memo_hashes
 
     history_path = root / "research_epochs.jsonl"
     if not history_path.is_file():
-        return dict(current)
+        return dict(current), current_memo_hashes
     for raw in reversed(_read_jsonl(history_path)):
         if (
             str(raw.get("target_id") or "") != target_id
@@ -5931,9 +5981,38 @@ def _source_routing_supervisor_review(
             candidate,
             source_graph_checkpoint=source_graph_checkpoint,
         ):
-            return _supervisor_semantic_revalidation_routing_view(candidate)
-        return dict(candidate)
-    return dict(current)
+            return (
+                _supervisor_semantic_revalidation_routing_view(candidate),
+                _validated_component_memo_hash_binding(
+                    getattr(checkpoint, "component_memo_hashes", {})
+                ),
+            )
+        return (
+            dict(candidate),
+            _validated_component_memo_hash_binding(
+                getattr(checkpoint, "component_memo_hashes", {})
+            ),
+        )
+    return dict(current), current_memo_hashes
+
+
+def _validated_component_memo_hash_binding(
+    value: Any,
+) -> Mapping[str, str]:
+    """Normalize only canonical, SHA-256 memo bindings from an epoch."""
+
+    if not isinstance(value, Mapping):
+        return {}
+    return {
+        str(component_id): str(memo_hash)
+        for component_id, memo_hash in value.items()
+        if str(component_id) in CANONICAL_COMPONENT_ORDER
+        and len(str(memo_hash)) == 64
+        and all(
+            character in "0123456789abcdef"
+            for character in str(memo_hash)
+        )
+    }
 
 
 def _legacy_supervisor_review_requires_semantic_revalidation(
@@ -6461,6 +6540,7 @@ def _reusable_prior_component_memos(
     *,
     prior_component_memos: Mapping[str, Mapping[str, Any]],
     actionable_feedback_by_component: Mapping[str, Mapping[str, Any]],
+    reviewed_component_memo_hashes: Mapping[str, str] | None = None,
     prior_facts: Sequence[Mapping[str, Any]],
     current_facts: Sequence[Any],
     prior_fact_snapshot_available: bool,
@@ -6486,12 +6566,32 @@ def _reusable_prior_component_memos(
         current_structured_result.records,
         required_roles_by_component=required_roles_by_component,
     )
+
+    def has_unconsumed_actionable_feedback(
+        component_id: str,
+        memo: Mapping[str, Any],
+    ) -> bool:
+        if component_id not in actionable_feedback_by_component:
+            return False
+        reviewed_hash = str(
+            (reviewed_component_memo_hashes or {}).get(component_id) or ""
+        )
+        # Missing provenance remains fail-closed: without the reviewed memo
+        # hash we cannot prove that a later memo consumed the instruction.
+        if not reviewed_hash:
+            return True
+        # A hash mismatch is not evidence that the old concern was solved.  It
+        # is only evidence that the requested rewrite already happened.  The
+        # new memo-bound judges and Supervisor must decide whether to reopen it
+        # with a fresh instruction; blindly replaying the old one loops.
+        return stable_hash(memo) == reviewed_hash
+
     return {
         component_id: memo
         for component_id, memo in prior_component_memos.items()
         if component_id in CANONICAL_COMPONENT_ORDER
         and memo.get("research_complete") is True
-        and component_id not in actionable_feedback_by_component
+        and not has_unconsumed_actionable_feedback(component_id, memo)
         and _component_memo_cites_only_current_facts(
             memo,
             current_fact_ids=current_fact_ids,

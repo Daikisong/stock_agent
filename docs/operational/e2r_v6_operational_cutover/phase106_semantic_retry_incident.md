@@ -770,6 +770,35 @@ score, Stage 또는 cutover authority가 아니다.
     nonblocking substitution으로 분류한다. 회귀 테스트는 C15에서 두
     `CURRENT_VALUATION` 요구만 남고 legacy 역할이 재유입되지 않는지 확인한다.
 
+42. **이미 이행한 Supervisor memo-rewrite 지시가 새 메모를 다시 재개방**
+
+    C15에서 Supervisor `RSUP-55a...`는 당시 information memo hash
+    `754208...`의 Analyst/Skeptic/Calibration 범위가 겹치지 않는다고 판정해 semantic
+    rewrite를 한 번 요구했다. 이후 component researcher는 새 memo `CRMEMO-5b811...`
+    (hash `64fe12...`)를 만들었고, 새 memo-bound 3-role judges와 Red Team도 완료했다.
+    Fact 185개, structured input, source roster에는 변화가 없었다.
+
+    그런데 pending synthesis 동안 current checkpoint에는 운송용 `RSUP-PENDING` scaffold가
+    저장된다. Source routing은 새 검색을 막기 위해 append-only ledger에서 마지막 substantive
+    Supervisor를 복구했지만, 그 review만 복구하고 **그 review가 실제로 검토한 component memo
+    hash roster를 버렸다**. Component reuse는 복구된 옛 finding을 현재 메모에도 그대로
+    actionable로 보았고, 이미 rewrite된 memo를 다시 COMPONENT_RESEARCH 요청 `f103...`으로
+    열었다. 새 증거가 아니라 자기 출력이 다음 반복의 입력이 된 실제 무한루프였다.
+
+    쉬운 예: 선생님이 초안 A에 `근거를 보강하라`고 표시했고 학생이 초안 B를 제출했는데,
+    전산이 첨삭 대상이 A였다는 정보를 잃어버려 B에도 같은 미제출 알림을 자동 발송한
+    상태다. B가 충분한지는 새 검토가 판단해야지, A의 알림이 자동으로 초안 C를 요구하면
+    안 된다.
+
+    수정 후 historical Supervisor routing snapshot은 review와 함께 그 epoch의 exact
+    `component_memo_hashes`를 복구한다. Finding의 reviewed hash와 현재 memo hash가 같으면
+    아직 이행되지 않은 지시이므로 memo를 한 번 연다. 다르면 rewrite는 이미 발생한 것이므로
+    옛 finding의 자동 재개방 권한을 소진하고 현재 memo를 재사용한다. 이 hash 차이는 문제가
+    해결됐다는 판정이나 score/Stage authority가 아니다. 새 memo-bound judges, synthesis,
+    Supervisor가 새 memo를 다시 검토하며, 필요하면 새 rationale와 새 binding으로 정확히 한
+    번 더 열 수 있다. Binding이 없거나 손상되면 기존처럼 fail-closed한다. 회귀 테스트는
+    `same hash -> reopen`, `new hash -> reuse`, `missing binding -> reopen` 세 경우를 고정한다.
+
 ## Goal 경계
 
 이 수정은 query template, score weight, Stage rule 또는 target-specific branch를 추가하지

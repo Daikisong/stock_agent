@@ -73,6 +73,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _same_lane_structured_cache_roots,
     _component_supervisor_feedback_by_component,
     _source_routing_supervisor_review,
+    _source_routing_supervisor_snapshot,
     _supervisor_review_is_transport_scaffold,
 )
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
@@ -4255,6 +4256,73 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         )
         self.assertNotIn("eps_fcf_explosion", structured_drift)
 
+    def test_newer_memo_consumes_feedback_bound_to_the_reviewed_memo(self) -> None:
+        """One Supervisor instruction may open one rewrite, not an endless loop."""
+
+        old_memo = {
+            "component_id": "information_confidence",
+            "research_complete": True,
+            "positive_fact_ids": ["FACT-1"],
+            "counter_fact_ids": [],
+            "resolution_fact_ids": [],
+            "researcher_summary": "old draft",
+        }
+        new_memo = {
+            **old_memo,
+            "researcher_summary": "rewritten draft",
+        }
+        facts = ({"fact_id": "FACT-1", "value": 1},)
+        requirements = {
+            component_id: () for component_id in CANONICAL_COMPONENT_ORDER
+        }
+        actionable = {
+            "information_confidence": {
+                "component_findings": [{"memo_sufficient": False}]
+            }
+        }
+
+        unconsumed = _reusable_prior_component_memos(
+            prior_component_memos={"information_confidence": old_memo},
+            actionable_feedback_by_component=actionable,
+            reviewed_component_memo_hashes={
+                "information_confidence": stable_hash(old_memo)
+            },
+            prior_facts=facts,
+            current_facts=facts,
+            prior_fact_snapshot_available=True,
+            prior_structured_result={"records": []},
+            current_structured_result=SimpleNamespace(records=()),
+            required_roles_by_component=requirements,
+        )
+        consumed = _reusable_prior_component_memos(
+            prior_component_memos={"information_confidence": new_memo},
+            actionable_feedback_by_component=actionable,
+            reviewed_component_memo_hashes={
+                "information_confidence": stable_hash(old_memo)
+            },
+            prior_facts=facts,
+            current_facts=facts,
+            prior_fact_snapshot_available=True,
+            prior_structured_result={"records": []},
+            current_structured_result=SimpleNamespace(records=()),
+            required_roles_by_component=requirements,
+        )
+        missing_binding = _reusable_prior_component_memos(
+            prior_component_memos={"information_confidence": new_memo},
+            actionable_feedback_by_component=actionable,
+            reviewed_component_memo_hashes={},
+            prior_facts=facts,
+            current_facts=facts,
+            prior_fact_snapshot_available=True,
+            prior_structured_result={"records": []},
+            current_structured_result=SimpleNamespace(records=()),
+            required_roles_by_component=requirements,
+        )
+
+        self.assertNotIn("information_confidence", unconsumed)
+        self.assertIn("information_confidence", consumed)
+        self.assertNotIn("information_confidence", missing_binding)
+
     def test_prior_memo_citing_retired_fact_is_not_reused_after_snapshot_stabilizes(
         self,
     ) -> None:
@@ -7147,12 +7215,21 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 + "\n",
                 encoding="utf-8",
             )
+            reviewed_hashes = {
+                component_id: stable_hash(
+                    {"component_id": component_id, "draft": "reviewed"}
+                )
+                for component_id in CANONICAL_COMPONENT_ORDER
+            }
             with patch(
                 "e2r.research_brain.researcher_mode."
                 "current_researcher_mode._coerce_checkpoint",
-                return_value=SimpleNamespace(supervisor_review=semantic),
+                return_value=SimpleNamespace(
+                    supervisor_review=semantic,
+                    component_memo_hashes=reviewed_hashes,
+                ),
             ):
-                selected = _source_routing_supervisor_review(
+                selected, selected_hashes = _source_routing_supervisor_snapshot(
                     root=root,
                     target_id=target_id,
                     as_of_date=as_of_date,
@@ -7170,6 +7247,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertIs(
             selected["reasonable_positive_routes_remaining"], False
         )
+        self.assertEqual(selected_hashes, reviewed_hashes)
 
     def test_exhausted_supervisor_reconciles_pure_lineage_pending_checkpoint(
         self,
