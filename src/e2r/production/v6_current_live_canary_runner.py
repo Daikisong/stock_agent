@@ -1,10 +1,11 @@
 """Resumable Phase-106 runner for the sealed exact-five current canaries.
 
-One invocation advances at most one semantic checkpoint per unfinished target.
-An exact Codex Collaboration request is therefore returned to the caller
-immediately instead of being retried in-process.  Publication is a separate
-commit step: all five strong compact bundles are offline-verified in a private
-staging tree before the complete directory is renamed into the tracked cutover.
+One invocation advances request-free internal semantic transitions until it
+reaches an exact external Collaboration request or a terminal target.  Exact
+Collaboration waits are still returned immediately and never retried
+in-process.  Publication is a separate commit step: all five strong compact
+bundles are offline-verified in a private staging tree before the complete
+directory is renamed into the tracked cutover.
 """
 
 from __future__ import annotations
@@ -373,6 +374,90 @@ def _research_pending_result(
     )
 
 
+def _request_free_semantic_transition_fingerprint(
+    *,
+    target_root: Path,
+    run: Any,
+) -> str:
+    """Hash one request-free internal transition without epoch lineage noise.
+
+    A Supervisor response is consumed near the end of one Researcher Mode
+    checkpoint, while its component rewrite instructions are consumed near
+    the beginning of the next checkpoint.  Returning between those two
+    boundaries exposes an empty ``SOURCE_PENDING`` even though no source is
+    pending and the next deterministic transition can run immediately.
+
+    The hash deliberately ignores checkpoint/review sequence identifiers.  If
+    the same semantic leaves recur without producing an external request or a
+    terminal result, the caller fails instead of spinning on ever-new epoch
+    ids.
+    """
+
+    volatile_keys = {
+        "checkpoint_id",
+        "epoch",
+        "output_tree_hash",
+        "resumed_from_checkpoint_id",
+        "review_id",
+    }
+
+    def semantic(value: Any) -> Any:
+        if isinstance(value, Mapping):
+            return {
+                str(key): semantic(item)
+                for key, item in value.items()
+                if str(key) not in volatile_keys
+            }
+        if isinstance(value, (list, tuple)):
+            return [semantic(item) for item in value]
+        return value
+
+    leaves: dict[str, Any] = {}
+    for name in (
+        "researcher_mode_dossier.json",
+        "component_scoring_memo_run.json",
+        "deterministic_score_aggregation_run.json",
+        "research_epoch_checkpoint.json",
+        "stagecourt.json",
+        "target_run_manifest.json",
+    ):
+        path = target_root / name
+        if path.is_file() and not path.is_symlink():
+            try:
+                leaves[name] = semantic(
+                    json.loads(path.read_text(encoding="utf-8"))
+                )
+            except (OSError, UnicodeError, json.JSONDecodeError):
+                leaves[name] = "INVALID_OR_UNREADABLE"
+    if not leaves:
+        leaves["run_status"] = str(getattr(run, "status", ""))
+    return stable_hash(leaves)
+
+
+def _only_internal_semantic_transition_remains(run: Any) -> bool:
+    """Return true only when no upstream/external evidence lane is waiting."""
+
+    source_pending = tuple(
+        getattr(getattr(run, "source_graph", None), "checkpoint", {}).get(
+            "pending_reasons", ()
+        )
+        or ()
+    )
+    fact_pending = tuple(
+        getattr(getattr(run, "fact_extraction", None), "pending_reasons", ())
+        or ()
+    )
+    structured_pending = tuple(
+        getattr(
+            getattr(run, "structured_materialization", None),
+            "pending_reasons",
+            (),
+        )
+        or ()
+    )
+    return not (source_pending or fact_pending or structured_pending)
+
+
 def _terminal_artifacts_if_present(
     *,
     repo_root: Path,
@@ -727,83 +812,98 @@ class V6CurrentLiveCanaryRunner:
                     row=row,
                 )
                 checkpoint_runner = self._checkpoint_runner_factory(row)
-                try:
-                    run = checkpoint_runner.run_checkpoint(
-                        config=config,
-                        target=target,
-                        repo_root=repo,
-                        source_resume_mode="REUSE_READY_CHECKPOINT",
+                request_free_fingerprints: set[str] = set()
+                while True:
+                    try:
+                        run = checkpoint_runner.run_checkpoint(
+                            config=config,
+                            target=target,
+                            repo_root=repo,
+                            source_resume_mode="REUSE_READY_CHECKPOINT",
+                        )
+                    except FactExtractionCheckpointPending as exc:
+                        return _research_pending_result(
+                            selection=selection,
+                            rows=rows,
+                            prepared_count=prepared_count,
+                            row=row,
+                            target_root=target_root,
+                            detail="FACT_EXTRACTION_CHECKPOINT_PENDING",
+                            active_request_ids=_active_collaboration_request_ids(
+                                (
+                                    exc.audit,
+                                    exc.fact_extraction.pending_reasons,
+                                    exc.source_graph.checkpoint.get(
+                                        "pending_reasons"
+                                    ),
+                                )
+                            ),
+                        )
+                    except StructuredProviderUnavailable as exc:
+                        detail = str(exc)
+                        if not detail.startswith(
+                            "COLLABORATION_RESPONSE_PENDING:"
+                        ):
+                            raise
+                        return _research_pending_result(
+                            selection=selection,
+                            rows=rows,
+                            prepared_count=prepared_count,
+                            row=row,
+                            target_root=target_root,
+                            detail="RESEARCH_COLLABORATION_RESPONSE",
+                            active_request_ids=(
+                                _active_collaboration_request_ids(detail)
+                            ),
+                        )
+                    if (
+                        getattr(run, "status", None)
+                        == PHASE106_TERMINAL_RESEARCH_STATUS
+                    ):
+                        break
+                    active_request_ids = _active_collaboration_request_ids(
+                        (
+                            run.audit,
+                            run.dossier.pending_reasons,
+                            run.fact_extraction.pending_reasons,
+                            run.source_graph.checkpoint.get(
+                                "pending_reasons"
+                            ),
+                            run.structured_materialization.pending_reasons,
+                            # The 21 role/component scoring calls are created
+                            # after the Dossier.  Their exact Collaboration
+                            # waits live only in the scoring memo run.
+                            run.scoring_memos.to_dict(),
+                            # StageCourt and ResearchEpoch own later Supervisor
+                            # and independent-saturation waits.
+                            run.stagecourt.decision.pending_reasons,
+                            run.research_epoch.to_dict(),
+                        )
                     )
-                except FactExtractionCheckpointPending as exc:
-                    return _research_pending_result(
-                        selection=selection,
-                        rows=rows,
-                        prepared_count=prepared_count,
-                        row=row,
-                        target_root=target_root,
-                        detail="FACT_EXTRACTION_CHECKPOINT_PENDING",
-                        active_request_ids=_active_collaboration_request_ids(
-                            (
-                                exc.audit,
-                                exc.fact_extraction.pending_reasons,
-                                exc.source_graph.checkpoint.get(
-                                    "pending_reasons"
-                                ),
-                            )
-                        ),
+                    if active_request_ids or not (
+                        _only_internal_semantic_transition_remains(run)
+                    ):
+                        return _research_pending_result(
+                            selection=selection,
+                            rows=rows,
+                            prepared_count=prepared_count,
+                            row=row,
+                            target_root=target_root,
+                            detail="SEMANTIC_CHECKPOINT_PENDING",
+                            active_request_ids=active_request_ids,
+                        )
+                    fingerprint = (
+                        _request_free_semantic_transition_fingerprint(
+                            target_root=target_root,
+                            run=run,
+                        )
                     )
-                except StructuredProviderUnavailable as exc:
-                    detail = str(exc)
-                    if not detail.startswith("COLLABORATION_RESPONSE_PENDING:"):
-                        raise
-                    return _research_pending_result(
-                        selection=selection,
-                        rows=rows,
-                        prepared_count=prepared_count,
-                        row=row,
-                        target_root=target_root,
-                        detail="RESEARCH_COLLABORATION_RESPONSE",
-                        active_request_ids=(
-                            _active_collaboration_request_ids(detail)
-                        ),
-                    )
-                if getattr(run, "status", None) != PHASE106_TERMINAL_RESEARCH_STATUS:
-                    return _research_pending_result(
-                        selection=selection,
-                        rows=rows,
-                        prepared_count=prepared_count,
-                        row=row,
-                        target_root=target_root,
-                        detail="SEMANTIC_CHECKPOINT_PENDING",
-                        active_request_ids=_active_collaboration_request_ids(
-                            (
-                                run.audit,
-                                run.dossier.pending_reasons,
-                                run.fact_extraction.pending_reasons,
-                                run.source_graph.checkpoint.get(
-                                    "pending_reasons"
-                                ),
-                                run.structured_materialization.pending_reasons,
-                                # The 21 role/component scoring calls are
-                                # created after the Dossier.  Their exact
-                                # Collaboration waits live only in the scoring
-                                # memo run; omitting this plane produces a
-                                # misleading SOURCE_PENDING with an empty
-                                # request roster even when current judge
-                                # requests are waiting in the journal.
-                                run.scoring_memos.to_dict(),
-                                # A Supervisor transport wait is materialized
-                                # by StageCourt after dossier construction.  It
-                                # is therefore absent from dossier.pending_reasons
-                                # even though it is the exact current blocker.
-                                run.stagecourt.decision.pending_reasons,
-                                # Supervisor and independent saturation waits
-                                # are owned by the ResearchEpoch result, not by
-                                # the deterministic StageCourt decision.
-                                run.research_epoch.to_dict(),
-                            )
-                        ),
-                    )
+                    if fingerprint in request_free_fingerprints:
+                        raise RuntimeError(
+                            "Phase106 request-free semantic checkpoint made "
+                            "no progress"
+                        )
+                    request_free_fingerprints.add(fingerprint)
                 artifacts = build_selection_bound_canary_artifacts_from_output(
                     repo_root=repo,
                     target_root=target_root,

@@ -247,6 +247,82 @@ class _HistoricalThenActiveScoringPendingCheckpointRunner(
         )
 
 
+class _RequestFreeThenActiveCheckpointRunner:
+    """Model Supervisor consumption followed by memo request materialization."""
+
+    def __init__(self, calls: list[str]) -> None:
+        self.calls = calls
+        self.active_request_id: str | None = None
+
+    def run_checkpoint(self, *, config, target, repo_root, source_resume_mode):
+        self.calls.append(target.target_id)
+        target_root = Path(config.output_root) / target.target_id
+        if len(self.calls) == 1:
+            return SimpleNamespace(
+                status="RESEARCH_CHECKPOINT_PENDING",
+                audit={},
+                dossier=SimpleNamespace(
+                    pending_reasons=("SUPERVISOR_REWRITE_NOT_YET_CONSUMED",)
+                ),
+                fact_extraction=SimpleNamespace(pending_reasons=()),
+                source_graph=SimpleNamespace(
+                    checkpoint={"pending_reasons": []}
+                ),
+                structured_materialization=SimpleNamespace(
+                    pending_reasons=()
+                ),
+                scoring_memos=SimpleNamespace(to_dict=lambda: {}),
+                stagecourt=SimpleNamespace(
+                    decision=SimpleNamespace(
+                        pending_reasons=("RESEARCHER_MODE_NOT_COMPLETE",)
+                    )
+                ),
+                research_epoch=SimpleNamespace(to_dict=lambda: {}),
+            )
+        transport = CollaborationCodexSubagentTransport()
+        transport.configure_journal_root(
+            target_root / "collaboration_codex_subagent_provider"
+        )
+        try:
+            transport.complete(
+                prompt=f"semantic rewrite {target.target_id}",
+                output_schema={
+                    "type": "object",
+                    "additionalProperties": False,
+                    "required": ["ok"],
+                    "properties": {"ok": {"type": "boolean"}},
+                },
+                schema_name="e2r_v5_phase106_semantic_rewrite_test",
+            )
+        except StructuredProviderUnavailable as exc:
+            self.active_request_id = str(exc).rsplit(":", 1)[-1]
+            raise
+        raise AssertionError("semantic rewrite request must remain pending")
+
+
+class _RequestFreeNoProgressCheckpointRunner:
+    def __init__(self, calls: list[str]) -> None:
+        self.calls = calls
+
+    def run_checkpoint(self, *, config, target, repo_root, source_resume_mode):
+        self.calls.append(target.target_id)
+        return SimpleNamespace(
+            status="RESEARCH_CHECKPOINT_PENDING",
+            audit={},
+            dossier=SimpleNamespace(pending_reasons=("INTERNAL_PENDING",)),
+            fact_extraction=SimpleNamespace(pending_reasons=()),
+            source_graph=SimpleNamespace(checkpoint={"pending_reasons": []}),
+            structured_materialization=SimpleNamespace(pending_reasons=()),
+            scoring_memos=SimpleNamespace(to_dict=lambda: {}),
+            stagecourt=SimpleNamespace(
+                decision=SimpleNamespace(
+                    pending_reasons=("RESEARCHER_MODE_NOT_COMPLETE",)
+                )
+            ),
+            research_epoch=SimpleNamespace(to_dict=lambda: {}),
+        )
+
+
 def _write_dummy_strong_bundle(path: Path) -> None:
     path.mkdir(parents=True)
     for name in (RECEIPT_MANIFEST_NAME, *REQUIRED_ARTIFACT_NAMES):
@@ -645,6 +721,63 @@ class E2RV6CurrentLiveCanaryRunnerTests(unittest.TestCase):
                 checkpoint_runner.historical_request_id,
                 checkpoint_runner.active_request_id,
             )
+
+    def test_request_free_internal_transition_advances_to_exact_request(self) -> None:
+        """A consumed Supervisor must not surface as empty SOURCE_PENDING."""
+
+        selection = _selection()
+        calls: list[str] = []
+        checkpoint_runner = _RequestFreeThenActiveCheckpointRunner(calls)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            result = V6CurrentLiveCanaryRunner(
+                checkpoint_runner_factory=lambda _row: checkpoint_runner
+            ).run_checkpoint(
+                repo_root=REPO_ROOT,
+                selection=selection,
+                work_root=root / "work",
+                cutover_root=root / "cutover",
+                live_materialization_authorized=True,
+                checkpoint_resume=True,
+            )
+
+            self.assertEqual(calls, ["000001", "000001"])
+            self.assertEqual(result["status"], PHASE106_RUN_PENDING)
+            self.assertEqual(
+                result["pending_kind"], "RESEARCH_COLLABORATION_RESPONSE"
+            )
+            self.assertEqual(
+                result["blockers"], ["COLLABORATION_RESPONSE_PENDING"]
+            )
+            self.assertEqual(
+                [row["request_id"] for row in result["pending_requests"]],
+                [checkpoint_runner.active_request_id],
+            )
+
+    def test_request_free_internal_transition_fails_on_semantic_no_progress(
+        self,
+    ) -> None:
+        selection = _selection()
+        calls: list[str] = []
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with self.assertRaisesRegex(
+                RuntimeError,
+                "request-free semantic checkpoint made no progress",
+            ):
+                V6CurrentLiveCanaryRunner(
+                    checkpoint_runner_factory=lambda _row: (
+                        _RequestFreeNoProgressCheckpointRunner(calls)
+                    )
+                ).run_checkpoint(
+                    repo_root=REPO_ROOT,
+                    selection=selection,
+                    work_root=root / "work",
+                    cutover_root=root / "cutover",
+                    live_materialization_authorized=True,
+                    checkpoint_resume=True,
+                )
+            self.assertEqual(calls, ["000001", "000001"])
 
     def test_terminal_target_opens_exact_distinct_blind_reviews_before_next_target(
         self,

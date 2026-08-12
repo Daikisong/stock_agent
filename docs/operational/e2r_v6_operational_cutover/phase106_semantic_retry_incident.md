@@ -955,6 +955,28 @@ score, Stage 또는 cutover authority가 아니다.
     바꾸지 않는다. 이렇게 `source research 완료`와 `score interpretation reconciliation`을
     별도 상태로 기록해야 후자를 전자로 오인한 문서 수집 루프를 막을 수 있다.
 
+49. **Supervisor 소비와 component rewrite 생성 사이의 빈 SOURCE_PENDING 전이**
+
+    48번의 Supervisor 응답을 import한 뒤 첫 master invocation은 그 응답을 ResearchEpoch
+    25에 저장했지만, Dossier는 같은 invocation의 앞부분에서 이미 구성된 상태였다. 따라서
+    세 memo rewrite 요청은 다음 invocation에서야 생성됐다. Phase106 wrapper는 이 중간
+    checkpoint에 실제 Collaboration request가 없다는 이유로
+    `SEMANTIC_CHECKPOINT_PENDING`, `pending_requests=[]`, `SOURCE_PENDING`을 반환했다.
+
+    쉬운 예: 결재는 오후 단계에서 끝났고 작업지시는 다음 날 오전 배치에서 발행되는
+    구조인데, 전광판은 그 사이를 `원자료 배송 대기`라고 표시한 셈이다. 실제로 기다릴
+    외부 배송은 없으므로 운영자가 같은 명령을 한 번 더 수동 실행해야만 번호표가 나왔다.
+
+    수정 후 Phase106 `until_pass` runner는 source graph, fact extraction, structured
+    materialization에 실제 pending reason이 없고 Collaboration request도 없는 경우 이를
+    **내부 semantic 전이**로만 취급해 같은 target checkpoint를 즉시 재개한다. 다음 exact
+    request가 생기면 즉시 반환하고, 외부 source/provider pending은 기존처럼 반환한다.
+    내부 전이의 semantic leaf fingerprint가 반복되면 epoch 번호가 바뀌더라도 no-progress로
+    실패하므로 in-process 무한루프도 만들지 않는다. 이 동작은 research 완료를 고정 횟수로
+    선언하지 않으며, 단지 외부 작업이 없는 상태기계의 두 내부 단계를 하나의 운영 명령으로
+    연결한다. 회귀 테스트는 `request-free -> exact request` 자동 전진과
+    `request-free -> 동일 semantic state` 명시적 실패를 각각 검증한다.
+
 ## Goal 경계
 
 이 수정은 query template, score weight, Stage rule 또는 target-specific branch를 추가하지
