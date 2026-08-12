@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from e2r.production.metadata import stable_hash
 from e2r.production.v6_canary_compact_receipt import (
@@ -13,6 +14,7 @@ from e2r.production.v6_canary_compact_receipt import (
     COMPACT_REVIEW_PASS,
     COMPACT_REVIEW_SCHEMA,
     REQUIRED_ARTIFACT_NAMES,
+    _provider_audit_with_revalidated_journal,
     build_selection_bound_canary_artifacts_from_output,
     _production_provider_accounting,
     build_selection_bound_canary_manifest,
@@ -861,6 +863,53 @@ def _write_terminal_output(root: Path, selection: dict[str, object]) -> Path:
 
 
 class E2RV6CanaryCompactReceiptTests(unittest.TestCase):
+    def test_legacy_provider_audit_is_upgraded_only_from_exact_journal(
+        self,
+    ) -> None:
+        saved_journal = {
+            "status": "COLLABORATION_JOURNAL_ACTIVE",
+            "request_count": 2,
+            "validated_request_count": 2,
+            "invalid_request_count": 0,
+            "response_file_count": 1,
+            "validated_response_count": 1,
+            "invalid_response_count": 0,
+            "orphan_response_count": 0,
+            "pending_response_count": 1,
+            "quarantined_response_count": 0,
+        }
+        current_journal = {
+            **saved_journal,
+            "validated_quarantined_response_count": 0,
+            "invalid_quarantined_response_count": 0,
+            "unresolved_pending_response_count": 1,
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory)
+            (
+                target / "collaboration_codex_subagent_provider"
+            ).mkdir()
+            with patch(
+                "e2r.production.v6_canary_compact_receipt."
+                "CollaborationCodexSubagentTransport.journal_audit",
+                return_value=current_journal,
+            ):
+                upgraded = _provider_audit_with_revalidated_journal(
+                    {"collaboration_journal": saved_journal},
+                    target_root=target,
+                )
+                self.assertEqual(
+                    upgraded["collaboration_journal"],
+                    current_journal,
+                )
+                drifted = deepcopy(saved_journal)
+                drifted["request_count"] = 3
+                with self.assertRaises(ValueError):
+                    _provider_audit_with_revalidated_journal(
+                        {"collaboration_journal": drifted},
+                        target_root=target,
+                    )
+
     def test_terminal_provider_allows_only_valid_accounted_history(self) -> None:
         audit = {
             "status": "COLLABORATION_PROVIDER_JOURNAL_ACTIVE",

@@ -41,6 +41,9 @@ from e2r.production.v6_canary_results import (
 from e2r.research_brain.researcher_mode.canary_leaf_contract import (
     canary_output_tree_hash,
 )
+from e2r.research_brain.researcher_mode.collaboration_provider_bridge import (
+    CollaborationCodexSubagentTransport,
+)
 from e2r.research_brain.researcher_mode.schemas import CANONICAL_COMPONENT_ORDER
 from e2r.research_brain.researcher_mode.tracked_receipts import (
     _anchor_receipts,
@@ -1078,6 +1081,75 @@ def _production_provider_accounting(
     }
 
 
+def _provider_audit_with_revalidated_journal(
+    provider_audit: Mapping[str, Any],
+    *,
+    target_root: Path,
+) -> Mapping[str, Any]:
+    """Upgrade a persisted audit only by rereading its immutable journal.
+
+    Terminal outputs created before quarantine accounting was strengthened do
+    not contain the new split counts.  Guessing those counts from
+    ``request_count - response_count`` would silently trust a damaged
+    quarantine.  When a journal exists, recompute it with the current strict
+    validator and require every legacy count to match before adding the new
+    fields.  Normal synthetic/legacy fixtures with no pending history need no
+    filesystem upgrade.
+    """
+
+    saved_journal = _mapping(
+        provider_audit.get("collaboration_journal"),
+        context="persisted Collaboration provider journal audit",
+    )
+    journal_root = target_root / "collaboration_codex_subagent_provider"
+    has_nonactive_history = (
+        int(saved_journal.get("pending_response_count") or 0) > 0
+        or int(saved_journal.get("quarantined_response_count") or 0) > 0
+    )
+    if not journal_root.is_dir():
+        if has_nonactive_history:
+            raise ValueError(
+                "persisted Collaboration history lacks its immutable journal"
+            )
+        return dict(provider_audit)
+    if journal_root.is_symlink() or any(
+        path.is_symlink() for path in journal_root.rglob("*")
+    ):
+        raise ValueError("Collaboration provider journal contains a symlink")
+    saved_root = str(saved_journal.get("journal_root") or "")
+    if saved_root and Path(saved_root).resolve() != journal_root.resolve():
+        raise ValueError("persisted Collaboration journal root has drifted")
+
+    # Assigning the already-existing root keeps this receipt projection
+    # read-only; configure_journal_root() is intentionally not called because
+    # it is allowed to create missing directories.
+    transport = CollaborationCodexSubagentTransport()
+    transport.journal_root = journal_root
+    current_journal = dict(transport.journal_audit())
+    legacy_exact_fields = (
+        "status",
+        "request_count",
+        "validated_request_count",
+        "invalid_request_count",
+        "response_file_count",
+        "validated_response_count",
+        "invalid_response_count",
+        "orphan_response_count",
+        "pending_response_count",
+        "quarantined_response_count",
+    )
+    if any(
+        saved_journal.get(field) != current_journal.get(field)
+        for field in legacy_exact_fields
+    ):
+        raise ValueError(
+            "persisted Collaboration audit disagrees with its immutable journal"
+        )
+    upgraded = dict(provider_audit)
+    upgraded["collaboration_journal"] = current_journal
+    return upgraded
+
+
 def build_selection_bound_canary_artifacts_from_output(
     *,
     repo_root: str | Path,
@@ -1172,7 +1244,10 @@ def build_selection_bound_canary_artifacts_from_output(
         and material_gap_count == 0
     )
     provider_accounting = _production_provider_accounting(
-        provider_audit,
+        _provider_audit_with_revalidated_journal(
+            provider_audit,
+            target_root=target,
+        ),
         terminal_output_complete=terminal_provider_boundary,
     )
     query_ids = tuple(str(row.get("query_id") or "") for row in query_rows)

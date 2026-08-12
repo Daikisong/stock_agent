@@ -500,6 +500,9 @@ score, Stage 또는 cutover authority가 아니다.
    material gap 0이 이미 exact이고 이번 실행의 logical call 전부가 성공했을 때만 non-active
    history로 허용한다. terminal 전이나 이번 실행에 실패 call이 있으면 같은 미응답은 계속
    hard pending이다. 이를 provider success로 세거나 score/Stage authority로 사용하지 않는다.
+   교정 전 저장된 audit에 새 분리 필드가 없으면 숫자를 역산하지 않는다. 실제 immutable
+   journal을 새 validator로 다시 읽고, 기존 audit의 request/response/pending/quarantine
+   count와 전부 일치할 때만 새 분리 필드를 보충한다.
 
 ## 데이터 무결성 판단
 

@@ -31,6 +31,7 @@ from e2r.production.metadata import stable_hash
 from e2r.production.v6_canary_compact_receipt import (
     _material_gap_count,
     _production_provider_accounting,
+    _provider_audit_with_revalidated_journal,
 )
 from e2r.production.v6_canary_selection import (
     _candidate_projection,
@@ -525,7 +526,10 @@ def _terminal_artifacts(
         and material_gap_count == 0
     )
     provider_accounting = _production_provider_accounting(
-        provider_audit,
+        _provider_audit_with_revalidated_journal(
+            provider_audit,
+            target_root=target_root,
+        ),
         terminal_output_complete=terminal_provider_boundary,
     )
     output_tree_hash = canary_output_tree_hash(target_root, include_post_run_gold=False)
