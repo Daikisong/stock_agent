@@ -350,6 +350,23 @@ score, Stage 또는 cutover authority가 아니다.
    metadata에 적고 confidence 0.65의 `DETERMINISTIC_SCENARIO`로 유지한다. 이는 관측된
    미래값이나 consensus가 아니며, 최종 점수는 계속 deterministic engine이 계산한다.
 
+23. **v7 의미 버전 전환이 과거 v6 프롬프트 문구를 정확히 복원하지 못해 사실 42건을 분실로 오판**
+
+   v7은 새 D&A 역할만 추가한 것이 아니라 `FORWARD_GUIDANCE` 설명과 바로 뒤의
+   `Tags` 문장도 바꿨다. authority recovery는 v6 JSON payload와 output schema가 정확히
+   같아도, 현재 v7 문구에서 D&A 문장만 제거해 만든 prompt hash를 과거 v6 hash와
+   비교했다. 그 결과 실제로 존재하는 v6 공식 영수증 다섯 묶음을 모두 invalid로
+   처리하고, 권위 epoch의 사실 42건이 사라진 것처럼
+   `CURRENT_FACT_LINEAGE_RECOVERY_BINDING_REQUIRED`에 멈췄다.
+
+   쉬운 예: 장부의 숫자와 서명은 그대로인데 새 양식의 안내문 한 줄이 다르다는 이유로
+   과거 장부 전체를 위조로 판정한 셈이다.
+
+   수정 후 v7에서 v6을 복원할 때 enum뿐 아니라 v7에서 추가·변경된 모든 안내문을
+   제거·복원한다. 과거 v6 instruction의 SHA-256을 회귀 테스트로 고정해, 이후 문구를
+   바꿀 때 새 버전의 frozen builder를 함께 만들지 않으면 테스트가 실패한다. 저장된
+   request/response 자체의 hash·schema·provider·Codex provenance 검증은 그대로 유지한다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -431,6 +448,8 @@ score, Stage 또는 cutover authority가 아니다.
     버전업해 해당 source family만 재추출한다. 검색 query를 대신 만들지 않는다.
 24. deterministic scenario에서 만든 book value·EBITDA는 observed/consensus로 표시하지
     않고 formula, input lineage, 가정을 metadata에 남긴다.
+25. fact semantics 버전업은 JSON schema뿐 아니라 instruction 전문을 버전별 frozen
+    hash로 재생성해야 한다. 현재 문구로 과거 prompt를 재생성해 비교하지 않는다.
 
 ## Goal 경계
 

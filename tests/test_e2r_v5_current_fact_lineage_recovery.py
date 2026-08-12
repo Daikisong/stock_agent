@@ -299,7 +299,7 @@ def _bundle(root: Path):
 
 
 class CurrentFactLineageRecoveryTests(unittest.TestCase):
-    def test_authority_recovery_selects_exact_prior_semantics_before_rewrite(
+    def test_authority_recovery_selects_exact_prior_semantics_without_unneeded_rewrite(
         self,
     ):
         with tempfile.TemporaryDirectory() as directory:
@@ -360,8 +360,12 @@ class CurrentFactLineageRecoveryTests(unittest.TestCase):
                 "items"
             ]["properties"]["structured_evidence_roles"]["items"]["enum"]
             self.assertIn("FORWARD_PB", old_roles)
-            self.assertNotIn("EPS_REVISION", old_roles)
-            self.assertNotIn("OPERATING_PROFIT_REVISION", old_roles)
+            self.assertIn("EPS_REVISION", old_roles)
+            self.assertIn("OPERATING_PROFIT_REVISION", old_roles)
+            self.assertNotIn(
+                "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION",
+                old_roles,
+            )
             current_payload = _prompt_payload(
                 [prompt_document],
                 marker="current-semantics-rewrite",
@@ -430,11 +434,8 @@ class CurrentFactLineageRecoveryTests(unittest.TestCase):
             PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION,
         )
         self.assertEqual(provider.complete_call_count, 0)
-        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
-        self.assertEqual(
-            result.pending_reasons,
-            ("FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED",),
-        )
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(result.pending_reasons, ())
         self.assertEqual(
             {row["claim_id"] for row in old_claims},
             {row["claim_id"] for row in result.material_claims},
@@ -449,7 +450,7 @@ class CurrentFactLineageRecoveryTests(unittest.TestCase):
         )
         self.assertEqual(
             result.audit["boundary_context_invalidated_prior_claim_count"],
-            2,
+            0,
         )
 
     def test_actual_shaped_13_seed_restores_52_dispositions_and_42_facts(self):

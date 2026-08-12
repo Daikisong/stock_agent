@@ -32,6 +32,7 @@ from e2r.research_brain.researcher_mode import (
     import_collaboration_response,
 )
 from e2r.research_brain.researcher_mode.collaboration_provider_bridge import (
+    _prior_revision_fact_instruction,
     _prior_structured_valuation_fact_output_schema,
 )
 from e2r.research_brain.researcher_mode.component_researcher import (
@@ -388,6 +389,32 @@ def _semantic_quarantine_worker(
 
 
 class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
+    def test_v6_fact_instruction_recovery_is_frozen_across_v7_clarifications(
+        self,
+    ) -> None:
+        instruction = _prior_revision_fact_instruction()
+
+        # This is the exact instruction hash carried by immutable v6
+        # Collaboration requests.  Reconstructing only the newly-added enum
+        # token is insufficient because v7 also changed FORWARD_GUIDANCE
+        # wording and the adjacent "Tags" sentence.
+        self.assertEqual(
+            hashlib.sha256(instruction.encode("utf-8")).hexdigest(),
+            "948201a296d0d2be4e8d4a4f87c5b15be74aebab8b82fee3aa231128ffc03bab",
+        )
+        self.assertNotIn(
+            "FORWARD_GUIDANCE includes a numeric issuer-owned future",
+            instruction,
+        )
+        self.assertNotIn(
+            "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION",
+            instruction,
+        )
+        self.assertIn(
+            "Tags are extraction context only and never assign points.",
+            instruction,
+        )
+
     def test_candidate_materiality_scope_attestation_binds_official_request(
         self,
     ) -> None:

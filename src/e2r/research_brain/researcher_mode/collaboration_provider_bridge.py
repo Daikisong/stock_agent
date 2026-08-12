@@ -223,8 +223,22 @@ def _prior_revision_fact_instruction() -> str:
     """Rebuild the immutable v6 instruction from the current v7 text."""
 
     current = _pass_instruction("EVIDENCE_FACT_EXTRACTION")
+    # Authority recovery validates an immutable historical request, not merely
+    # its JSON payload.  A semantics bump may change more than the enum: v7
+    # also clarified which issuer-owned plans count as FORWARD_GUIDANCE and
+    # changed the following sentence from "Tags" to "These tags".  Leaving
+    # either wording in the reconstructed v6 instruction invalidates every
+    # otherwise exact v6 receipt and makes the current ledger look as if its
+    # facts disappeared.  Keep every v7-only instruction delta here so the
+    # frozen v6 prompt hash remains reproducible.
     prior = current.replace(
         "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION, ",
+        "",
+        1,
+    ).replace(
+        "FORWARD_GUIDANCE includes a numeric issuer-owned future operating, "
+        "capacity, or capital plan whose period ends after the source became "
+        "available; it does not include a broker estimate. ",
         "",
         1,
     ).replace(
@@ -232,6 +246,10 @@ def _prior_revision_fact_instruction() -> str:
         "issuer/regulatory numeric point for an already-ended period and "
         "must not be attached to a forecast. ",
         "",
+        1,
+    ).replace(
+        "These tags are extraction context only and never assign points.",
+        "Tags are extraction context only and never assign points.",
         1,
     )
     if prior == current:
