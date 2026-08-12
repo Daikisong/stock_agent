@@ -70,6 +70,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _load_prior_component_memos,
     _reusable_prior_component_memos,
     _same_lane_structured_cache_roots,
+    _component_supervisor_feedback_by_component,
     _source_routing_supervisor_review,
     _supervisor_review_is_transport_scaffold,
 )
@@ -7164,6 +7165,136 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             )
 
         self.assertEqual(selected, current)
+
+    def test_legacy_monitoring_blocker_cannot_reopen_component_memos(self) -> None:
+        """A pre-fix impossible review needs one Supervisor retry, not 7 memos."""
+
+        legacy = {
+            "review_id": "RSUP-legacy-monitoring",
+            "status": "NEXT_RESEARCH_REQUIRED",
+            "ready_for_independent_saturation_review": False,
+            "component_memos_sufficient": True,
+            "structured_data_complete": True,
+            "counter_and_supersession_checked": True,
+            "reasonable_positive_routes_remaining": False,
+            "component_status": {
+                component_id: "COMPLETE"
+                for component_id in CANONICAL_COMPONENT_ORDER
+            },
+            "component_findings": [
+                {
+                    "component_id": component_id,
+                    "memo_sufficient": True,
+                    "missing_fact_needs": ["future monitoring only"],
+                    "rationale": "already reflected as a score limitation",
+                }
+                for component_id in CANONICAL_COMPONENT_ORDER
+            ],
+            "missing_material_facts": [
+                {
+                    "component_id": component_id,
+                    "fact_need": "future monitoring only",
+                }
+                for component_id in CANONICAL_COMPONENT_ORDER
+            ],
+            "unresolved_material_questions": ["watch the next filing"],
+            "new_source_family_directions": [],
+            "query_direction_briefs": [],
+            "source_family_gaps": [],
+            "parser_or_extractor_failures": [],
+            "failure_assessments": [
+                {
+                    "failure_id": "RSFAIL-resolved",
+                    "classification": "PROVIDER_FAILURE",
+                    "retryable": False,
+                    "source_absence_claim_allowed": False,
+                }
+            ],
+            "rationale": "all gates complete; keep monitoring",
+        }
+        pending = {
+            "review_id": "RSUP-PENDING-current",
+            "status": "NEXT_RESEARCH_REQUIRED",
+            "ready_for_independent_saturation_review": False,
+            "component_memos_sufficient": False,
+            "component_findings": [],
+            "missing_material_facts": [],
+            "new_source_family_directions": [],
+            "query_direction_briefs": [],
+            "rationale": (
+                "SUPERVISOR_SYNTHESIS_LINEAGE_PENDING:"
+                "CURRENT_SYNTHESIS_NOT_COMPLETE"
+            ),
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "research_epochs.jsonl").write_text(
+                json.dumps(
+                    {
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": "2026-06-29",
+                        "checkpoint_id": "REPOCH-legacy",
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            with patch(
+                "e2r.research_brain.researcher_mode."
+                "current_researcher_mode._coerce_checkpoint",
+                return_value=SimpleNamespace(supervisor_review=legacy),
+            ):
+                selected = _source_routing_supervisor_review(
+                    root=root,
+                    target_id="CURRENT-TARGET",
+                    as_of_date="2026-06-29",
+                    current_epoch={
+                        "checkpoint_id": "REPOCH-current",
+                        "supervisor_review": pending,
+                    },
+                    source_graph_checkpoint={
+                        "status": "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+                        "pending_reasons": [],
+                        "audit": {"critical_count_sum": 0},
+                    },
+                )
+
+        self.assertTrue(selected["component_memos_sufficient"])
+        self.assertTrue(selected["structured_data_complete"])
+        self.assertTrue(selected["counter_and_supersession_checked"])
+        self.assertFalse(selected["reasonable_positive_routes_remaining"])
+        self.assertFalse(selected["ready_for_independent_saturation_review"])
+        self.assertEqual(selected["component_findings"], [])
+        self.assertEqual(selected["missing_material_facts"], [])
+        self.assertIn(
+            "SUPERVISOR_SEMANTIC_REVALIDATION_REQUIRED:",
+            selected["rationale"],
+        )
+        self.assertEqual(
+            _component_supervisor_feedback_by_component(selected),
+            {},
+        )
+
+        # The compatibility rule must not hide the same fact gap while Source
+        # Graph work is genuinely still pending.
+        pending_source = _source_routing_supervisor_review(
+            root=Path("."),
+            target_id="CURRENT-TARGET",
+            as_of_date="2026-06-29",
+            current_epoch={
+                "checkpoint_id": "REPOCH-current",
+                "supervisor_review": legacy,
+            },
+            source_graph_checkpoint={
+                "status": "QUERY_GENERATION_PENDING",
+                "pending_reasons": ["SOURCE_QUERY_GENERATION_REQUIRED"],
+                "audit": {"critical_count_sum": 0},
+            },
+        )
+        self.assertEqual(
+            len(pending_source["missing_material_facts"]),
+            len(CANONICAL_COMPONENT_ORDER),
+        )
 
     def test_complete_component_does_not_resolve_pending_source_query(self) -> None:
         target_id = "CURRENT-TARGET"

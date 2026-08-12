@@ -5384,6 +5384,7 @@ def _load_prior_research_context(
     source_queries_without_accepted_fact_lineage: list[Mapping[str, Any]] = []
     source_query_lineage_gap_objectives: set[str] = set()
     source_checkpoint_path = root / "source_graph_checkpoint.json"
+    source_checkpoint: Mapping[str, Any] = {}
     if source_checkpoint_path.is_file():
         source_checkpoint = _read_json(source_checkpoint_path)
         fact_extraction_complete = (
@@ -5601,6 +5602,7 @@ def _load_prior_research_context(
             target_id=target_id,
             as_of_date=as_of_date,
             current_epoch=epoch,
+            source_graph_checkpoint=source_checkpoint,
         )
         if isinstance(supervisor, Mapping):
             supervisor_gap_context = {
@@ -5838,6 +5840,7 @@ def _source_routing_supervisor_review(
     target_id: str,
     as_of_date: str,
     current_epoch: Mapping[str, Any],
+    source_graph_checkpoint: Mapping[str, Any] | None = None,
 ) -> Mapping[str, Any]:
     """Keep transport scaffolds from inventing new source authority.
 
@@ -5861,6 +5864,11 @@ def _source_routing_supervisor_review(
     if not isinstance(current, Mapping):
         raise TypeError("research epoch supervisor review must be an object")
     if not _supervisor_review_is_transport_scaffold(current):
+        if _legacy_supervisor_review_requires_semantic_revalidation(
+            current,
+            source_graph_checkpoint=source_graph_checkpoint,
+        ):
+            return _supervisor_semantic_revalidation_routing_view(current)
         return dict(current)
 
     history_path = root / "research_epochs.jsonl"
@@ -5882,8 +5890,122 @@ def _source_routing_supervisor_review(
         candidate = checkpoint.supervisor_review
         if _supervisor_review_is_transport_scaffold(candidate):
             continue
+        if _legacy_supervisor_review_requires_semantic_revalidation(
+            candidate,
+            source_graph_checkpoint=source_graph_checkpoint,
+        ):
+            return _supervisor_semantic_revalidation_routing_view(candidate)
         return dict(candidate)
     return dict(current)
+
+
+def _legacy_supervisor_review_requires_semantic_revalidation(
+    review: Mapping[str, Any],
+    *,
+    source_graph_checkpoint: Mapping[str, Any] | None,
+) -> bool:
+    """Recognize a provider review accepted before the monitoring-gap fix.
+
+    Older validators checked only that a *ready* review had no blocking gaps.
+    They did not reject the inverse contradiction: all deterministic research
+    gates complete, no actionable route remaining, but future monitoring text
+    still stored in ``missing_material_facts`` or
+    ``unresolved_material_questions``.  Such a persisted review can reopen all
+    seven component memos before the corrected Supervisor validator gets a
+    chance to re-read it.
+
+    This predicate is deliberately semantic and target-agnostic.  A review is
+    recoverable only when every non-route gate says complete, no source repair
+    is actionable, every component finding is sufficient, and the sole reason
+    it is not ready is a blocking field that the current validator rejects.
+    Append-only history remains untouched; only its routing authority is
+    suspended until one fresh Supervisor validation succeeds.
+    """
+
+    findings = tuple(
+        row
+        for row in review.get("component_findings") or ()
+        if isinstance(row, Mapping)
+    )
+    assessments = tuple(
+        row
+        for row in review.get("failure_assessments") or ()
+        if isinstance(row, Mapping)
+    )
+    has_blocking_monitoring_field = bool(
+        review.get("missing_material_facts")
+        or review.get("unresolved_material_questions")
+    )
+    has_actionable_route = bool(
+        review.get("new_source_family_directions")
+        or review.get("query_direction_briefs")
+        or review.get("source_family_gaps")
+        or review.get("parser_or_extractor_failures")
+        or any(row.get("retryable") is True for row in assessments)
+    )
+    source_checkpoint = dict(source_graph_checkpoint or {})
+    source_graph_terminal = bool(
+        source_checkpoint.get("status")
+        in {"EPOCH_COMPLETE_REQUIRES_SUPERVISOR", "STOPPED_ON_RESOLUTION"}
+        and not (source_checkpoint.get("pending_reasons") or ())
+        and int(
+            dict(source_checkpoint.get("audit") or {}).get(
+                "critical_count_sum"
+            )
+            or 0
+        )
+        == 0
+    )
+    finding_component_ids = {
+        str(row.get("component_id") or "") for row in findings
+    }
+    return bool(
+        source_graph_terminal
+        and review.get("status") == "NEXT_RESEARCH_REQUIRED"
+        and review.get("ready_for_independent_saturation_review") is False
+        and review.get("component_memos_sufficient") is True
+        and review.get("structured_data_complete") is True
+        and review.get("counter_and_supersession_checked") is True
+        and review.get("reasonable_positive_routes_remaining") is False
+        and has_blocking_monitoring_field
+        and not has_actionable_route
+        and finding_component_ids == set(CANONICAL_COMPONENT_ORDER)
+        and all(row.get("memo_sufficient") is True for row in findings)
+    )
+
+
+def _supervisor_semantic_revalidation_routing_view(
+    review: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Remove only obsolete routing authority from one legacy review.
+
+    Think of the persisted review as a signed form with an invalid checkbox.
+    We retain the form and its failure ledger for audit, but do not let the
+    invalid checkbox order seven new research jobs.  The current epoch remains
+    pending and ``ResearchSupervisor`` must issue a newly validated response;
+    this view never grants readiness, score, Stage, or source-absence authority.
+    """
+
+    return {
+        **dict(review),
+        "component_findings": [],
+        "missing_material_facts": [],
+        "unresolved_material_questions": [
+            "SUPERVISOR_SEMANTIC_REVALIDATION_REQUIRED:"
+            "UNREACHABLE_MONITORING_BLOCKER"
+        ],
+        "new_source_family_directions": [],
+        "query_direction_briefs": [],
+        "source_family_gaps": [],
+        "parser_or_extractor_failures": [],
+        "reasonable_positive_routes_remaining": False,
+        "ready_for_independent_saturation_review": False,
+        "rationale": (
+            "SUPERVISOR_SEMANTIC_REVALIDATION_REQUIRED:"
+            "UNREACHABLE_MONITORING_BLOCKER;"
+            + str(review.get("rationale") or "")
+        ),
+    }
 
 
 def _supervisor_review_is_transport_scaffold(

@@ -462,6 +462,27 @@ score, Stage 또는 cutover authority가 아니다.
    있다면 objective-bound direction과 함께 memo를 불충분으로 열고, 없다면 그 제한은
    rationale의 monitoring/counterweight로만 보존하고 readiness를 true로 맞춘다.
 
+28. **수정 전 저장된 모순 판정이 수정 후에도 7개 메모를 먼저 재개방**
+
+   원인 27의 validator를 고친 뒤에도 이미 append-only epoch에 저장된 과거 판정은
+   사라지지 않았다. 현재 checkpoint가 synthesis pending scaffold가 되자 source routing은
+   직전 non-scaffold 판정을 찾아 썼고, 그 과거 판정의 `missing_material_facts` 7건이
+   새 validator에 도달하기도 전에 7개 `COMPONENT_RESEARCH` 요청으로 변환됐다. 새
+   validator는 새 Supervisor 응답만 검사하므로 이미 저장된 모순의 파생 작업을 막지
+   못했다.
+
+   쉬운 예: 잘못 작성된 보충수업 지시서를 고치는 규칙은 만들었지만, 이미 배부된
+   지시서가 출석부에 먼저 반영돼 학생 7명을 다시 수업에 등록한 상태다. 정답은 7개
+   수업을 진행하는 것이 아니라, 옛 지시서의 등록 권한을 정지하고 교무실이 새 양식으로
+   한 번 재판정하게 하는 것이다.
+
+   수정 후 호환 복구기는 `memos=true`, `structured=true`, `counter=true`,
+   `routes=false`인데 monitoring gap 때문에 `ready=false`인 구 판정만 일반 규칙으로
+   식별한다. append-only 원문과 failure ledger는 보존하지만 component/source routing용
+   projection에서는 그 gap·finding을 제거한다. readiness를 임의로 true로 바꾸거나
+   score/Stage를 확정하지 않고, 현재 Supervisor가 강화된 validator로 정확히 한 번
+   재판정해야만 다음 단계가 열린다. 종목명·아키타입·문구 키워드 조건은 사용하지 않는다.
+
 ## 데이터 무결성 판단
 
 - 빈 query response는 score/Stage authority가 아니었다.
@@ -565,6 +586,12 @@ score, Stage 또는 cutover authority가 아니다.
     memo를 다시 열고 실행 가능한 LLM-owned route를 제시해야 하며, 그렇지 않으면
     Supervisor correction retry가 gap을 monitoring rationale로 이동하고 readiness를
     완료 상태와 일치시킨다.
+
+30. validator 강화 전에 저장된 모순 Supervisor review는 append-only 감사 기록에서
+    삭제하거나 현재 완료로 승격하지 않는다. 대신 모든 비검색 gate 완료, actionable
+    route 0, retryable repair 0이라는 구조적 조건이 exact할 때만 과거 review의 routing
+    authority를 일시 정지한다. 이 호환 projection은 component rewrite와 source query를
+    열 수 없고, 새 Supervisor validation 한 건만 허용한다.
 
 ## Goal 경계
 
