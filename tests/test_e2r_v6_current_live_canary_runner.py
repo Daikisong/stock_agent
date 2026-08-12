@@ -79,6 +79,47 @@ class _PendingCheckpointRunner:
         raise AssertionError("transport must stop on its exact pending request")
 
 
+class _HistoricalThenActivePendingCheckpointRunner:
+    """Leave one immutable old request, then stop on a distinct current one."""
+
+    def __init__(self, calls: list[str]) -> None:
+        self.calls = calls
+        self.historical_request_id: str | None = None
+        self.active_request_id: str | None = None
+
+    def run_checkpoint(self, *, config, target, repo_root, source_resume_mode):
+        self.calls.append(target.target_id)
+        target_root = Path(config.output_root) / target.target_id
+        transport = CollaborationCodexSubagentTransport()
+        transport.configure_journal_root(
+            target_root / "collaboration_codex_subagent_provider"
+        )
+        schema = {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["ok"],
+            "properties": {"ok": {"type": "boolean"}},
+        }
+        try:
+            transport.complete(
+                prompt=f"historical research {target.target_id}",
+                output_schema=schema,
+                schema_name="e2r_v5_phase106_historical_test",
+            )
+        except StructuredProviderUnavailable as exc:
+            self.historical_request_id = str(exc).rsplit(":", 1)[-1]
+        try:
+            transport.complete(
+                prompt=f"active research {target.target_id}",
+                output_schema=schema,
+                schema_name="e2r_v5_phase106_active_test",
+            )
+        except StructuredProviderUnavailable as exc:
+            self.active_request_id = str(exc).rsplit(":", 1)[-1]
+            raise
+        raise AssertionError("active transport request must remain pending")
+
+
 def _write_dummy_strong_bundle(path: Path) -> None:
     path.mkdir(parents=True)
     for name in (RECEIPT_MANIFEST_NAME, *REQUIRED_ARTIFACT_NAMES):
@@ -365,6 +406,48 @@ class E2RV6CurrentLiveCanaryRunnerTests(unittest.TestCase):
             self.assertFalse((root / "cutover" / "current_live_canaries").exists())
             self.assertEqual(result["gold_call_count"], 0)
             self.assertEqual(result["local_provider_call_count"], 0)
+
+    def test_pending_output_exposes_only_the_current_typed_request(self) -> None:
+        """An unanswered superseded journal row must not become active again."""
+
+        selection = _selection()
+        calls: list[str] = []
+        checkpoint_runner = _HistoricalThenActivePendingCheckpointRunner(calls)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            result = V6CurrentLiveCanaryRunner(
+                checkpoint_runner_factory=lambda _row: checkpoint_runner
+            ).run_checkpoint(
+                repo_root=REPO_ROOT,
+                selection=selection,
+                work_root=root / "work",
+                cutover_root=root / "cutover",
+                live_materialization_authorized=True,
+                checkpoint_resume=True,
+            )
+
+            self.assertEqual(result["status"], PHASE106_RUN_PENDING)
+            self.assertEqual(calls, ["000001"])
+            self.assertIsNotNone(checkpoint_runner.historical_request_id)
+            self.assertIsNotNone(checkpoint_runner.active_request_id)
+            self.assertNotEqual(
+                checkpoint_runner.historical_request_id,
+                checkpoint_runner.active_request_id,
+            )
+            self.assertEqual(
+                [row["request_id"] for row in result["pending_requests"]],
+                [checkpoint_runner.active_request_id],
+            )
+            journal = (
+                root
+                / "work"
+                / "research"
+                / str(selection["selections"][0]["archetype_id"])
+                / "000001"
+                / "collaboration_codex_subagent_provider"
+                / "requests"
+            )
+            self.assertEqual(len(tuple(journal.glob("*.json"))), 2)
 
     def test_terminal_target_opens_exact_distinct_blind_reviews_before_next_target(
         self,

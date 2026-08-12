@@ -802,6 +802,31 @@ score, Stage 또는 cutover authority가 아니다.
     fail-closed한다. 회귀 테스트는
     `same hash -> reopen`, `new hash -> reuse`, `missing binding -> reopen` 세 경우를 고정한다.
 
+43. **append-only journal의 과거 미응답을 현재 active 요청으로 다시 노출**
+
+    42번 수정으로 C15의 현재 memo는 올바르게 재사용되고 새 synthesis 요청
+    `513f...`가 생성됐다. 그러나 그 전에 잘못 생성된 component 요청 `f103...`은
+    응답 없이 immutable Collaboration journal에 남아 있었다. Phase106의 pending
+    formatter는 현재 실행을 멈춘 typed exception을 보지 않고 journal의 **모든**
+    미응답 request를 나열했다. 따라서 현재 synthesis가 완료돼도 옛 `f103...`을
+    다시 active 작업처럼 표시할 수 있었다.
+
+    쉬운 예: 오늘 진료 대기표는 513번인데, 전광판이 취소된 어제 103번까지
+    `현재 호출`로 표시한 상태다. 어제 표를 삭제하면 감사 장부가 깨지고, 가짜 진료
+    결과를 써 넣어도 안 된다. 오늘 실제 호출 번호만 창구에 보여 주되 어제 표는
+    `과거 미종결 이력`으로 원장에 보존해야 한다.
+
+    수정 후 pending formatter는 현재 invocation을 멈춘 typed
+    `StructuredProviderUnavailable` 또는 fact/current-run pending reason에서 exact
+    `COLLABREQ-*` identity를 복구한다. 그 exact active roster에 속한 unanswered
+    request만 operator에게 노출한다. 명시적 empty roster는 Collaboration 응답이 현재
+    blocker가 아니라는 뜻이며, journal-only isolated transport처럼 current-state
+    materialization이 없는 경우에만 기존 전체 미응답 fallback을 쓴다. 과거 `f103...`은
+    삭제하거나 가짜 응답으로 채우지 않는다. terminal provider audit가 append-only
+    request/active response/historical unanswered/quarantine 수를 계속 exact 검증한다.
+    회귀 테스트는 미응답 request 두 개가 있어도 typed exception이 가리킨 최신 한 개만
+    pending output에 나타나고, journal에는 두 request가 모두 보존되는지 검증한다.
+
 ## Goal 경계
 
 이 수정은 query template, score weight, Stage rule 또는 target-specific branch를 추가하지

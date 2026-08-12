@@ -13,6 +13,7 @@ from collections.abc import Callable, Mapping, Sequence
 import json
 import os
 from pathlib import Path
+import re
 import secrets
 import shutil
 import stat
@@ -80,6 +81,11 @@ CURRENT_LIVE_SUMMARY_NAME = "cross_archetype_canary_summary.json"
 
 
 CheckpointRunnerFactory = Callable[[Mapping[str, Any]], Any]
+
+
+_COLLABORATION_PENDING_REQUEST_RE = re.compile(
+    r"COLLABORATION_RESPONSE_PENDING:(COLLABREQ-[0-9a-f]{64})"
+)
 
 
 def _write_phase106_resume_binding(
@@ -212,13 +218,38 @@ def _default_checkpoint_runner(_row: Mapping[str, Any]) -> Any:
 
 def _pending_research_request_rows(
     target_root: Path,
+    *,
+    active_request_ids: Sequence[str] | None = None,
 ) -> tuple[Mapping[str, str | None], ...]:
+    """Expose unresolved requests that belong to the current stop boundary.
+
+    The Collaboration journal is append-only.  A corrected semantic path can
+    therefore leave an older request unanswered even after a newer checkpoint
+    supersedes it.  Treating every unanswered historical request as *active*
+    makes Phase106 route the obsolete request forever and prevents the current
+    Supervisor/synthesis leaf from advancing.
+
+    ``active_request_ids`` comes from the exact typed exception/current run
+    that stopped this invocation.  ``None`` preserves the journal-only fallback
+    used by isolated transports that do not materialize a researcher dossier;
+    an explicit empty roster means that no Collaboration response is the
+    current blocker.  Historical rows remain immutable and are still counted
+    by the terminal journal audit.
+    """
+
     journal = target_root / "collaboration_codex_subagent_provider"
     request_root = journal / "requests"
     response_root = journal / "responses"
     if not request_root.is_dir() or request_root.is_symlink():
         return ()
+    active = None if active_request_ids is None else frozenset(active_request_ids)
+    if active is not None and any(
+        re.fullmatch(r"COLLABREQ-[0-9a-f]{64}", value) is None
+        for value in active
+    ):
+        raise ValueError("active Collaboration request identity is invalid")
     pending: list[Mapping[str, str | None]] = []
+    validated_request_ids: set[str] = set()
     for path in sorted(request_root.glob("*.json")):
         if path.is_symlink() or not path.is_file():
             raise ValueError("Collaboration request journal contains an unsafe leaf")
@@ -230,10 +261,13 @@ def _pending_research_request_rows(
             _mapping(payload, context="Collaboration request")
         )
         request_id = str(request["request_id"])
+        validated_request_ids.add(request_id)
         if path.name != f"{request_id}.json":
             raise ValueError("Collaboration request path identity is invalid")
         response_path = response_root / f"{request_id}.json"
-        if not response_path.is_file():
+        if not response_path.is_file() and (
+            active is None or request_id in active
+        ):
             # FULL_RESEARCHER_MODE is the parent execution scope, not the
             # collaboration pass that must be answered.  Expose the immutable
             # pass_name from the request envelope so an operator cannot route
@@ -248,7 +282,35 @@ def _pending_research_request_rows(
                     "schema_name": str(request["schema_name"]),
                 }
             )
+    if active is not None and not active.issubset(validated_request_ids):
+        raise ValueError("active Collaboration request is absent from the journal")
     return tuple(pending)
+
+
+def _active_collaboration_request_ids(value: object) -> tuple[str, ...]:
+    """Recover exact current pending identities without reading old journal rows."""
+
+    found: set[str] = set()
+
+    def visit(item: object) -> None:
+        if isinstance(item, str):
+            found.update(
+                match.group(1)
+                for match in _COLLABORATION_PENDING_REQUEST_RE.finditer(item)
+            )
+            return
+        if isinstance(item, Mapping):
+            for nested in item.values():
+                visit(nested)
+            return
+        if isinstance(item, Sequence) and not isinstance(
+            item, (str, bytes, bytearray)
+        ):
+            for nested in item:
+                visit(nested)
+
+    visit(value)
+    return tuple(sorted(found))
 
 
 def _pending_result(
@@ -291,8 +353,12 @@ def _research_pending_result(
     row: Mapping[str, Any],
     target_root: Path,
     detail: str,
+    active_request_ids: Sequence[str] | None = None,
 ) -> Mapping[str, Any]:
-    request_rows = _pending_research_request_rows(target_root)
+    request_rows = _pending_research_request_rows(
+        target_root,
+        active_request_ids=active_request_ids,
+    )
     wait_marker = (
         "COLLABORATION_RESPONSE_PENDING" if request_rows else "SOURCE_PENDING"
     )
@@ -668,7 +734,7 @@ class V6CurrentLiveCanaryRunner:
                         repo_root=repo,
                         source_resume_mode="REUSE_READY_CHECKPOINT",
                     )
-                except FactExtractionCheckpointPending:
+                except FactExtractionCheckpointPending as exc:
                     return _research_pending_result(
                         selection=selection,
                         rows=rows,
@@ -676,6 +742,15 @@ class V6CurrentLiveCanaryRunner:
                         row=row,
                         target_root=target_root,
                         detail="FACT_EXTRACTION_CHECKPOINT_PENDING",
+                        active_request_ids=_active_collaboration_request_ids(
+                            (
+                                exc.audit,
+                                exc.fact_extraction.pending_reasons,
+                                exc.source_graph.checkpoint.get(
+                                    "pending_reasons"
+                                ),
+                            )
+                        ),
                     )
                 except StructuredProviderUnavailable as exc:
                     detail = str(exc)
@@ -688,6 +763,9 @@ class V6CurrentLiveCanaryRunner:
                         row=row,
                         target_root=target_root,
                         detail="RESEARCH_COLLABORATION_RESPONSE",
+                        active_request_ids=(
+                            _active_collaboration_request_ids(detail)
+                        ),
                     )
                 if getattr(run, "status", None) != PHASE106_TERMINAL_RESEARCH_STATUS:
                     return _research_pending_result(
@@ -697,6 +775,17 @@ class V6CurrentLiveCanaryRunner:
                         row=row,
                         target_root=target_root,
                         detail="SEMANTIC_CHECKPOINT_PENDING",
+                        active_request_ids=_active_collaboration_request_ids(
+                            (
+                                run.audit,
+                                run.dossier.pending_reasons,
+                                run.fact_extraction.pending_reasons,
+                                run.source_graph.checkpoint.get(
+                                    "pending_reasons"
+                                ),
+                                run.structured_materialization.pending_reasons,
+                            )
+                        ),
                     )
                 artifacts = build_selection_bound_canary_artifacts_from_output(
                     repo_root=repo,
