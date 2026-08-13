@@ -4356,6 +4356,180 @@ def _structured_role_only_reclassification(
     return tuple(sorted(current_roles - old_roles))
 
 
+def _validated_incomplete_scenario_role_projection(
+    *,
+    target_id: str,
+    as_of_date: str,
+    source_checkpoint: Mapping[str, Any],
+    authority_by_id: Mapping[str, Mapping[str, Any]],
+    convenience_rows: Sequence[Mapping[str, Any]],
+    committed_snapshot: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    """Identify one valid but not-yet-atomic structured-role rewrite.
+
+    Scenario-role migrations re-extract a selected document set as one atomic
+    transaction.  A result-last checkpoint is still useful between pages: it
+    carries accepted claims, dispositions and provider calls into the next
+    request.  It must not, however, replace research-epoch authority until all
+    selected documents are committed.
+
+    Easy example: when ten documents need a new ``FORWARD_GUIDANCE`` label,
+    page one may contain valid labels for eight documents.  Those eight labels
+    are continuation state, not an eight-tenths final score input.  Keep the old
+    epoch facts authoritative until the ten-document audit closes, then let the
+    ordinary exact attestation commit the complete replacement.
+    """
+
+    if committed_snapshot.get("leaf_commit_complete") is not True:
+        return None
+    result = committed_snapshot.get("result")
+    audit = committed_snapshot.get("audit")
+    if not isinstance(result, Mapping) or not isinstance(audit, Mapping):
+        return None
+
+    raw_selected = audit.get("scenario_role_reextraction_document_ids")
+    raw_committed = audit.get(
+        "scenario_role_reextraction_committed_document_ids"
+    )
+    scenario_declared = bool(
+        raw_selected
+        or raw_committed
+        or int(
+            audit.get("scenario_role_reextraction_selected_document_count")
+            or 0
+        )
+        or int(
+            audit.get("scenario_role_reextraction_completed_document_count")
+            or 0
+        )
+    )
+    if not scenario_declared:
+        return None
+    if (
+        isinstance(raw_selected, (str, bytes))
+        or not isinstance(raw_selected, Sequence)
+        or isinstance(raw_committed, (str, bytes))
+        or not isinstance(raw_committed, Sequence)
+    ):
+        raise ValueError("incomplete scenario-role audit roster is invalid")
+    selected = tuple(str(value or "").strip() for value in raw_selected)
+    committed = tuple(str(value or "").strip() for value in raw_committed)
+    selected_set = frozenset(selected)
+    committed_set = frozenset(committed)
+    selected_count = int(
+        audit.get("scenario_role_reextraction_selected_document_count") or 0
+    )
+    completed_count = int(
+        audit.get("scenario_role_reextraction_completed_document_count") or 0
+    )
+    if (
+        not selected_set
+        or any(not value for value in (*selected, *committed))
+        or len(selected) != len(selected_set)
+        or len(committed) != len(committed_set)
+        or selected_count != len(selected_set)
+        or completed_count != len(committed_set)
+        or not committed_set.issubset(selected_set)
+    ):
+        raise ValueError("incomplete scenario-role audit accounting is invalid")
+    if committed_set == selected_set:
+        return None
+    if (
+        str(result.get("status") or "") != "FACT_EXTRACTION_PENDING"
+        or str(audit.get("status") or "") != "FACT_EXTRACTION_AUDIT_PENDING"
+        or str(audit.get("extraction_semantics_version") or "")
+        != FACT_EXTRACTION_SEMANTICS_VERSION
+        or int(audit.get("scenario_role_invalidated_prior_claim_count") or 0)
+        <= 0
+        or str(result.get("target_id") or "") != target_id
+        or str(result.get("as_of_date") or "") != as_of_date
+        or not _fact_result_is_bound_to_source_checkpoint(
+            result=result,
+            source_checkpoint=source_checkpoint,
+            target_id=target_id,
+            as_of_date=as_of_date,
+        )
+    ):
+        raise ValueError("incomplete scenario-role projection is not current")
+    downstream_ids = frozenset(
+        _source_checkpoint_downstream_document_ids(source_checkpoint)
+    )
+    if not selected_set.issubset(downstream_ids):
+        raise ValueError("incomplete scenario-role documents left the source roster")
+
+    convenience_by_id = {
+        str(row.get("fact_id") or ""): dict(row)
+        for row in convenience_rows
+        if isinstance(row, Mapping) and str(row.get("fact_id") or "")
+    }
+    if len(convenience_by_id) != len(convenience_rows):
+        raise ValueError("incomplete scenario-role fact roster is ambiguous")
+    authority_ids = frozenset(authority_by_id)
+    convenience_ids = frozenset(convenience_by_id)
+    enriched_ids: list[str] = []
+    accepted_claims = tuple(committed_snapshot.get("accepted_claims") or ())
+    if any(not isinstance(row, Mapping) for row in accepted_claims):
+        raise ValueError("incomplete scenario-role claim roster is invalid")
+    claim_by_id = {
+        str(row.get("claim_id") or ""): row
+        for row in accepted_claims
+        if isinstance(row, Mapping) and str(row.get("claim_id") or "")
+    }
+    if len(claim_by_id) != len(accepted_claims):
+        raise ValueError("incomplete scenario-role claim ids are ambiguous")
+
+    for fact_id in sorted(authority_ids.intersection(convenience_ids)):
+        old = authority_by_id[fact_id]
+        current = convenience_by_id[fact_id]
+        if _canonical_fact_payload(old) == _canonical_fact_payload(current):
+            continue
+        added_roles = _structured_role_only_reclassification(old, current)
+        if not added_roles:
+            raise ValueError(
+                "incomplete scenario-role projection changed immutable fact semantics"
+            )
+        current_claim_ids = _fact_lineage_values(current, "claim_ids")
+        role_document_ids = {
+            str(claim_by_id[claim_id].get("document_id") or "")
+            for claim_id in current_claim_ids
+            if claim_id in claim_by_id
+            and set(
+                claim_by_id[claim_id].get("structured_evidence_roles") or ()
+            ).intersection(added_roles)
+        }
+        if not role_document_ids or not role_document_ids.issubset(selected_set):
+            raise ValueError(
+                "incomplete scenario-role fact lacks selected-document lineage"
+            )
+        enriched_ids.append(fact_id)
+
+    pending_new_ids = tuple(sorted(convenience_ids - authority_ids))
+    for fact_id in pending_new_ids:
+        source_ids = frozenset(
+            _fact_lineage_values(convenience_by_id[fact_id], "source_ids")
+        )
+        if not source_ids.issubset(selected_set):
+            raise ValueError(
+                "incomplete scenario-role projection contains unrelated new facts"
+            )
+    pending_retired_ids = tuple(sorted(authority_ids - convenience_ids))
+    for fact_id in pending_retired_ids:
+        source_ids = frozenset(
+            _fact_lineage_values(authority_by_id[fact_id], "source_ids")
+        )
+        if not source_ids.issubset(selected_set):
+            raise ValueError(
+                "incomplete scenario-role projection contains unrelated retirements"
+            )
+    return {
+        "selected_document_ids": tuple(sorted(selected_set)),
+        "committed_document_ids": tuple(sorted(committed_set)),
+        "enriched_existing_fact_ids": tuple(enriched_ids),
+        "pending_new_fact_ids": pending_new_ids,
+        "pending_retired_fact_ids": pending_retired_ids,
+    }
+
+
 def _fact_lineage_values(
     row: Mapping[str, Any],
     field: str,
@@ -5516,7 +5690,7 @@ def _load_authoritative_prior_fact_context(
     }
     current_ids = set(ledger.current_fact_ids)
     retired_ids = set(ledger.retired_fact_ids)
-    pending_retired_fact_ids = (
+    raw_pending_retired_fact_ids = (
         tuple(projection_receipt["pending_retired_fact_ids"])
         if projection_receipt is not None
         else _attested_pending_fact_retirement_ids(
@@ -5529,15 +5703,52 @@ def _load_authoritative_prior_fact_context(
             committed_snapshot=committed_snapshot,
         )
     )
-    enriched_existing_fact_ids: list[str] = []
+    raw_enriched_existing_fact_ids: list[str] = []
     for fact_id in sorted(current_ids.intersection(convenience_by_id)):
         if _canonical_fact_payload(authority_by_id[fact_id]) != (
             _canonical_fact_payload(convenience_by_id[fact_id])
         ):
-            enriched_existing_fact_ids.append(fact_id)
-    pending_new_fact_ids = tuple(
+            raw_enriched_existing_fact_ids.append(fact_id)
+    raw_pending_new_fact_ids = tuple(
         sorted(set(convenience_by_id) - current_ids - retired_ids)
     )
+    deferred_scenario_role_projection = None
+    if projection_receipt is None:
+        try:
+            deferred_scenario_role_projection = (
+                _validated_incomplete_scenario_role_projection(
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    source_checkpoint=source_checkpoint,
+                    authority_by_id=authority_by_id,
+                    convenience_rows=convenience_rows,
+                    committed_snapshot=committed_snapshot,
+                )
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            conflict_id = (
+                raw_enriched_existing_fact_ids[0]
+                if raw_enriched_existing_fact_ids
+                else raw_pending_new_fact_ids[0]
+                if raw_pending_new_fact_ids
+                else raw_pending_retired_fact_ids[0]
+                if raw_pending_retired_fact_ids
+                else "SCENARIO_ROLE_AUDIT"
+            )
+            raise ValueError(
+                "authoritative and convenience fact payloads conflict:"
+                f"{conflict_id}:{exc}"
+            ) from exc
+    if deferred_scenario_role_projection is not None:
+        # The result-last files remain the exact continuation checkpoint, but
+        # none of their partial atomic delta is score/research-epoch authority.
+        enriched_existing_fact_ids: tuple[str, ...] = ()
+        pending_new_fact_ids: tuple[str, ...] = ()
+        pending_retired_fact_ids: tuple[str, ...] = ()
+    else:
+        enriched_existing_fact_ids = tuple(raw_enriched_existing_fact_ids)
+        pending_new_fact_ids = raw_pending_new_fact_ids
+        pending_retired_fact_ids = raw_pending_retired_fact_ids
     if projection_receipt is not None and (
         tuple(sorted(projection_receipt["pending_new_fact_ids"]))
         != pending_new_fact_ids
@@ -5603,8 +5814,10 @@ def _load_authoritative_prior_fact_context(
             pending_new_fact_ids=pending_new_fact_ids,
             pending_retired_fact_ids=pending_retired_fact_ids,
         )
-    persisted_current_ids = tuple(
-        sorted(current_ids.intersection(convenience_by_id))
+    persisted_current_ids = (
+        tuple(sorted(current_ids))
+        if deferred_scenario_role_projection is not None
+        else tuple(sorted(current_ids.intersection(convenience_by_id)))
     )
     expectation = ledger.recovery_expectation(
         persisted_fact_ids=(
@@ -5701,6 +5914,39 @@ def _load_authoritative_prior_fact_context(
         ),
         "fact_projection_receipt_recovered": (
             projection_receipt_recovered
+        ),
+        "incomplete_scenario_role_projection_deferred": (
+            deferred_scenario_role_projection is not None
+        ),
+        "deferred_scenario_role_selected_document_ids": tuple(
+            (deferred_scenario_role_projection or {}).get(
+                "selected_document_ids"
+            )
+            or ()
+        ),
+        "deferred_scenario_role_committed_document_ids": tuple(
+            (deferred_scenario_role_projection or {}).get(
+                "committed_document_ids"
+            )
+            or ()
+        ),
+        "deferred_scenario_role_enriched_fact_ids": tuple(
+            (deferred_scenario_role_projection or {}).get(
+                "enriched_existing_fact_ids"
+            )
+            or ()
+        ),
+        "deferred_scenario_role_pending_new_fact_ids": tuple(
+            (deferred_scenario_role_projection or {}).get(
+                "pending_new_fact_ids"
+            )
+            or ()
+        ),
+        "deferred_scenario_role_pending_retired_fact_ids": tuple(
+            (deferred_scenario_role_projection or {}).get(
+                "pending_retired_fact_ids"
+            )
+            or ()
         ),
         "authoritative_current_fact_count": len(ledger.current_fact_ids),
         "persisted_current_fact_count": len(persisted_current_ids),

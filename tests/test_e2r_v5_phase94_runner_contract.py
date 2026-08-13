@@ -1403,6 +1403,118 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "complete exact audit"):
             attest(unattested)
 
+    def test_incomplete_v8_role_reextraction_defers_projection_until_atomic(self):
+        material = _authority_structured_role_reclassification_fixture()
+        old_fact = material["old_fact"]
+        current_fact = material["current_fact"]
+        source_checkpoint = copy.deepcopy(material["source_checkpoint"])
+        second_document = {
+            **source_checkpoint["evidence_documents"][0],
+            "document_id": "SGDOC-" + "e" * 24,
+        }
+        source_checkpoint["production_downstream_document_ids"] = [
+            source_checkpoint["evidence_documents"][0]["document_id"],
+            second_document["document_id"],
+        ]
+        source_checkpoint["evidence_documents"] = [
+            source_checkpoint["evidence_documents"][0],
+            second_document,
+        ]
+        pending_audit = {
+            **material["snapshot"]["audit"],
+            "status": "FACT_EXTRACTION_AUDIT_PENDING",
+            "extraction_semantics_version": FACT_EXTRACTION_SEMANTICS_VERSION,
+            "input_document_count": 2,
+            "scenario_role_invalidated_prior_claim_count": 1,
+            "scenario_role_reextraction_document_ids": list(
+                source_checkpoint["production_downstream_document_ids"]
+            ),
+            "scenario_role_reextraction_selected_document_count": 2,
+            "scenario_role_reextraction_committed_document_ids": [],
+            "scenario_role_reextraction_completed_document_count": 0,
+        }
+        snapshot = copy.deepcopy(material["snapshot"])
+        snapshot["audit"] = pending_audit
+        snapshot["result"]["audit"] = pending_audit
+        ledger = _authority_ledger((old_fact,))
+        epoch = SimpleNamespace(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            checkpoint_id=ledger.checkpoint_id,
+            checkpoint_hash=ledger.checkpoint_hash,
+            source_graph_checkpoint_id=source_checkpoint["checkpoint_id"],
+        )
+
+        def load_context(root, effective_snapshot):
+            with (
+                patch(
+                    "e2r.research_brain.researcher_mode."
+                    "current_researcher_mode."
+                    "load_authoritative_research_epoch_fact_ledger",
+                    return_value=ledger,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode."
+                    "current_researcher_mode.load_research_epoch_checkpoint",
+                    return_value=epoch,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode."
+                    "current_researcher_mode."
+                    "_load_committed_fact_result_snapshot",
+                    return_value=effective_snapshot,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode."
+                    "current_researcher_mode."
+                    "_attested_compiler_fact_addition_ids",
+                    side_effect=AssertionError(
+                        "partial role rewrite must not request final attestation"
+                    ),
+                ),
+            ):
+                return _load_authoritative_prior_fact_context(
+                    root,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=source_checkpoint,
+                )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "research_epochs.jsonl").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            (root / "research_epoch_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            context = load_context(root, snapshot)
+            assert context is not None
+            self.assertEqual(context["facts"], (old_fact,))
+            self.assertTrue(
+                context["incomplete_scenario_role_projection_deferred"]
+            )
+            self.assertEqual(context["enriched_existing_fact_ids"], ())
+            self.assertEqual(context["pending_new_fact_ids"], ())
+            self.assertEqual(context["pending_retired_fact_ids"], ())
+            self.assertEqual(
+                context["deferred_scenario_role_enriched_fact_ids"],
+                (old_fact["fact_id"],),
+            )
+            self.assertEqual(context["fact_projection_receipt_id"], "")
+            self.assertFalse((root / "fact_projection_receipt.json").exists())
+
+            semantic_drift = copy.deepcopy(snapshot)
+            drifted_fact = {**current_fact, "period": "2026Q2"}
+            semantic_drift["facts"] = (drifted_fact,)
+            semantic_drift["result"]["fact_compilation"]["facts"] = [
+                drifted_fact
+            ]
+            with self.assertRaisesRegex(
+                ValueError, "immutable fact semantics"
+            ):
+                load_context(root, semantic_drift)
+
     def test_authoritative_fact_context_attests_pending_new_and_recovers_mixed_gap(
         self,
     ):
