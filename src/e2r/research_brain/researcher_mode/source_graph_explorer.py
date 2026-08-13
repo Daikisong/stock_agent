@@ -675,15 +675,25 @@ class ResearcherSourceGraphAcquirer:
             if not checkpoint_nonresearch_only
             else None
         )
+        replay_supervisor_routes_exhausted = bool(
+            pending_query_generation_replay is not None
+            and _supervisor_explicitly_exhausted_source_routes(
+                pending_query_generation_replay.get("score_gap_context") or {}
+            )
+        )
         if (
             pending_query_generation_replay is not None
             and pending_query_generation_replay.get("replay_phase")
             == "POST_RESPONSE_SEMANTIC_RETRY"
-            and supervisor_routes_exhausted
+            and (
+                supervisor_routes_exhausted
+                or replay_supervisor_routes_exhausted
+            )
         ):
             # The exact provider response has already been consumed, and the
-            # newer canonical Supervisor snapshot says there is no remaining
-            # public source route.  Replaying the old frozen gap here would
+            # newer canonical Supervisor snapshot, or the exact frozen prompt
+            # that produced the now-consumed response, says there is no
+            # remaining public source route.  Replaying that gap here would
             # reopen query generation forever and prevent the Supervisor's
             # requested memo-only rewrite from becoming canonical.  An
             # AWAITING_COLLABORATION_RESPONSE boundary is never suppressed:

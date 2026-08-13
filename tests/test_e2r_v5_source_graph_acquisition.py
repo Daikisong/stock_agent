@@ -1825,6 +1825,74 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             exhausted.checkpoint,
         )
 
+    def test_consumed_empty_retry_honors_frozen_supervisor_route_exhaustion(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteQueryProvider(queries=())
+        search = RecordingSearchProvider({})
+        waiting = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+        )
+        provider.query_pending = False
+        consumed = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=waiting.checkpoint,
+        )
+        self.assertEqual(
+            consumed.checkpoint["pending_query_generation_replay_context"][
+                "replay_phase"
+            ],
+            "POST_RESPONSE_SEMANTIC_RETRY",
+        )
+
+        # Model the real async boundary: the request was issued from a frozen
+        # Supervisor prompt that had already closed public source routes, but
+        # the current downstream file temporarily fell back to PENDING while
+        # that exact collaboration response was being consumed.
+        replay_state = json.loads(json.dumps(consumed.checkpoint))
+        replay_state.pop("checkpoint_id")
+        replay_state.pop("checkpoint_hash")
+        replay_state["pending_query_generation_replay_context"][
+            "score_gap_context"
+        ]["prior_supervisor_gap"] = {
+            "status": "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+            "reasonable_positive_routes_remaining": False,
+            "new_source_family_directions": [],
+            "query_direction_briefs": [],
+            "source_family_gaps": [],
+            "failure_assessments": [],
+            "parser_or_extractor_failures": [],
+        }
+        replay_checkpoint = source_graph_module._finalize_checkpoint(
+            replay_state
+        )
+
+        exhausted = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=replay_checkpoint,
+            score_gap_context={},
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        self.assertEqual(exhausted.status, "STOPPED_ON_RESOLUTION")
+        self.assertEqual(
+            sum(
+                row["pass_name"] == "SOURCE_QUERY_GENERATION"
+                for row in provider.calls
+            ),
+            2,
+        )
+        self.assertNotIn(
+            "pending_query_generation_replay_context",
+            exhausted.checkpoint,
+        )
+
     def test_supervisor_route_exhaustion_does_not_suppress_concrete_repair(
         self,
     ) -> None:
