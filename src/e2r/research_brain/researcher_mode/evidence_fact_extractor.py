@@ -2141,7 +2141,15 @@ class ResearcherEvidenceFactExtractor:
                     recovered_retry_payload = (
                         _recover_validated_fact_extraction_retry_payload(
                             self.provider,
-                            primary_payload=attempt_base_payload,
+                            # A semantic rejection may happen on page two or
+                            # later.  In that case ``attempt_base_payload`` is
+                            # still the immutable page-one origin, while the
+                            # quarantined primary and its corrected retry are
+                            # bound to the current continuation payload.
+                            # Recover against the exact attempted page so a
+                            # clean process resume does not fall back to
+                            # waiting for the already-quarantined page.
+                            primary_payload=attempt_payload,
                             previously_accepted_claims=tuple(
                                 previously_accepted_claims.values()
                             ),
@@ -2152,7 +2160,6 @@ class ResearcherEvidenceFactExtractor:
                                 "COLLABORATION_RESPONSE_PENDING:"
                                 "COLLABREQ-"
                             )
-                            and attempt_payload == attempt_base_payload
                             and "fact_extraction_retry_context"
                             not in attempt_payload
                         )

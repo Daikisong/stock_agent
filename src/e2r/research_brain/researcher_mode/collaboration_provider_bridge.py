@@ -161,6 +161,48 @@ def _canonical_hash(value: Any) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def _fact_retry_base_matches_primary(
+    *,
+    retry_base_payload: Mapping[str, Any],
+    primary_payload: Mapping[str, Any],
+) -> bool:
+    """Match a fact retry to its exact primary, including paged retries.
+
+    Historical pagination retries were intentionally built from the immutable
+    page-one payload.  Their quarantined primary, however, is the continuation
+    page that failed semantic validation.  The only permitted difference is
+    therefore the deterministic continuation context itself.  Accepted-fact
+    equality is checked separately by the extractor before any retry is
+    consumed, so valid siblings from a quarantined response cannot be treated
+    as durable facts after a process restart.
+    """
+
+    if dict(retry_base_payload) == dict(primary_payload):
+        return True
+    continuation = primary_payload.get(
+        "fact_extraction_continuation_context"
+    )
+    if not isinstance(continuation, Mapping):
+        return False
+    page_number = continuation.get("page_number")
+    if (
+        isinstance(page_number, bool)
+        or not isinstance(page_number, int)
+        or page_number < 2
+        or not isinstance(
+            continuation.get("previously_accepted_facts"),
+            list,
+        )
+    ):
+        return False
+    without_continuation = dict(primary_payload)
+    without_continuation.pop(
+        "fact_extraction_continuation_context",
+        None,
+    )
+    return dict(retry_base_payload) == without_continuation
+
+
 def _journal_unique_strings(value: Any) -> tuple[str, ...]:
     if isinstance(value, (str, bytes)) or not isinstance(value, Sequence):
         return ()
@@ -1369,7 +1411,10 @@ class CollaborationCodexSubagentTransport:
                 continue
             retry_base_payload = dict(retry_payload)
             retry_base_payload.pop("fact_extraction_retry_context", None)
-            if retry_base_payload != primary_payload:
+            if not _fact_retry_base_matches_primary(
+                retry_base_payload=retry_base_payload,
+                primary_payload=primary_payload,
+            ):
                 continue
             validation_errors = retry_context.get("validation_errors")
             if (
@@ -2884,7 +2929,10 @@ class CollaborationCodexResearcherProvider(CodexResearcherProvider):
             return None
         retry_base_payload = dict(retry_payload)
         retry_base_payload.pop("fact_extraction_retry_context", None)
-        if retry_base_payload != safe_primary_payload:
+        if not _fact_retry_base_matches_primary(
+            retry_base_payload=retry_base_payload,
+            primary_payload=safe_primary_payload,
+        ):
             return None
         return dict(retry_payload)
 

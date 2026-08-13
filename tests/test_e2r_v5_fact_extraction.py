@@ -2609,6 +2609,186 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 ).exists()
             )
 
+    def test_clean_resume_consumes_semantic_retry_for_continuation_page(
+        self,
+    ) -> None:
+        document = dict(
+            _document(
+                "DOC-CONTINUATION-RETRY-RESUME",
+                "ISSUER_PRESENTATION",
+                "ISSUER",
+            )
+        )
+        text = "\n".join(
+            f"Current Corp material fact number {index}."
+            for index in range(FACT_EXTRACTION_PAGE_FACT_LIMIT)
+        )
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+        common = {
+            "target_id": TARGET,
+            "target_name": TARGET_NAME,
+            "target_aliases": (),
+            "archetype_id": ARCHETYPE,
+            "as_of_date": AS_OF_DATE,
+            "documents": (document,),
+            "open_objectives": (),
+        }
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            journal = root / "collaboration_codex_subagent_provider"
+
+            def fresh_extractor() -> ResearcherEvidenceFactExtractor:
+                provider = CollaborationCodexResearcherProvider.default()
+                provider.configure_response_cache(
+                    root / "research_provider_response_cache"
+                )
+                return ResearcherEvidenceFactExtractor(provider=provider)
+
+            first = fresh_extractor().extract(**common)
+            self.assertEqual(first.status, "FACT_EXTRACTION_PENDING")
+            primary_request = next(
+                json.loads(path.read_text(encoding="utf-8"))
+                for path in (journal / "requests").glob("COLLABREQ-*.json")
+            )
+            primary_payload = json.loads(
+                primary_request["prompt"].rsplit("\n", 1)[-1]
+            )
+            valid_first_page = BoundaryCompletePagedFactProvider().complete(
+                pass_name="EVIDENCE_FACT_EXTRACTION",
+                payload=primary_payload,
+            )
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=primary_request["request_id"],
+                response_payload=valid_first_page,
+                agent_id="continuation-page-one",
+                canonical_task_name="/root/continuation_page_one",
+                agent_model="codex-collaboration",
+            )
+
+            waiting_page_two = fresh_extractor().extract(**common)
+            self.assertEqual(
+                waiting_page_two.status,
+                "FACT_EXTRACTION_PENDING",
+            )
+            request_by_id = {
+                request["request_id"]: request
+                for request in (
+                    json.loads(path.read_text(encoding="utf-8"))
+                    for path in (journal / "requests").glob(
+                        "COLLABREQ-*.json"
+                    )
+                )
+            }
+            page_two_request = next(
+                request
+                for request in request_by_id.values()
+                if "fact_extraction_continuation_context"
+                in json.loads(request["prompt"].rsplit("\n", 1)[-1])
+                and "fact_extraction_retry_context"
+                not in json.loads(request["prompt"].rsplit("\n", 1)[-1])
+            )
+            invalid_page_two = {
+                "facts": [],
+                "document_dispositions": [
+                    {
+                        "document_id": document["document_id"],
+                        "status": "NO_MATERIAL_FACT",
+                        "rationale": (
+                            "이전 페이지 사실을 잊은 잘못된 최종 처분이다."
+                        ),
+                    }
+                ],
+                "unresolved_document_ids": [],
+                "unresolved_research_notes": [],
+                "extraction_complete": True,
+            }
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=page_two_request["request_id"],
+                response_payload=invalid_page_two,
+                agent_id="invalid-continuation-page",
+                canonical_task_name="/root/invalid_continuation_page",
+                agent_model="codex-collaboration",
+            )
+
+            waiting_retry = fresh_extractor().extract(**common)
+            self.assertEqual(waiting_retry.status, "FACT_EXTRACTION_PENDING")
+            request_by_id = {
+                request["request_id"]: request
+                for request in (
+                    json.loads(path.read_text(encoding="utf-8"))
+                    for path in (journal / "requests").glob(
+                        "COLLABREQ-*.json"
+                    )
+                )
+            }
+            retry_request = next(
+                request
+                for request in request_by_id.values()
+                if "fact_extraction_retry_context"
+                in json.loads(request["prompt"].rsplit("\n", 1)[-1])
+            )
+            retry_payload = json.loads(
+                retry_request["prompt"].rsplit("\n", 1)[-1]
+            )
+            # Historical retry requests are based on the immutable page-one
+            # payload; the extractor binds them back to this continuation by
+            # quarantine reason and the exact accepted-fact roster.
+            self.assertNotIn(
+                "fact_extraction_continuation_context",
+                retry_payload,
+            )
+            corrected_page_two = {
+                "facts": [],
+                "document_dispositions": [
+                    {
+                        "document_id": document["document_id"],
+                        "status": "FACTS_EXTRACTED",
+                        "rationale": (
+                            "이전 페이지의 검증된 사실을 보존한다."
+                        ),
+                    }
+                ],
+                "unresolved_document_ids": [],
+                "unresolved_research_notes": [],
+                "extraction_complete": True,
+            }
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=retry_request["request_id"],
+                response_payload=corrected_page_two,
+                agent_id="corrected-continuation-page",
+                canonical_task_name="/root/corrected_continuation_page",
+                agent_model="codex-collaboration",
+            )
+
+            resumed = fresh_extractor().extract(**common)
+
+            self.assertEqual(resumed.status, "FACT_EXTRACTION_COMPLETE")
+            self.assertEqual(
+                len(resumed.material_claims),
+                FACT_EXTRACTION_PAGE_FACT_LIMIT,
+            )
+            completed_call = next(
+                call
+                for call in reversed(resumed.provider_calls)
+                if call.status == "COMPLETE"
+            )
+            self.assertTrue(completed_call.validation_retry_used)
+            self.assertEqual(completed_call.provider_attempt_count, 3)
+            self.assertFalse(
+                (
+                    journal
+                    / "responses"
+                    / f"{page_two_request['request_id']}.json"
+                ).exists()
+            )
+
     def test_clean_resume_does_not_consume_retry_for_other_primary_context(
         self,
     ) -> None:
