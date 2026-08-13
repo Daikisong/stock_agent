@@ -206,6 +206,13 @@ _COLLABORATION_TRANSPORT_WAIT_RE = re.compile(
     + r")COLLABORATION_RESPONSE_PENDING:"
     r"COLLABREQ-[0-9a-f]{64}$"
 )
+_SATURATION_COLLABORATION_TRANSPORT_WAIT_RE = re.compile(
+    r"^(?:[A-Z][A-Z0-9_]*:)?"
+    r"SATURATION_PROVIDER_OR_OUTPUT_ERROR:"
+    r"StructuredProviderUnavailable:"
+    r"COLLABORATION_RESPONSE_PENDING:"
+    r"COLLABREQ-[0-9a-f]{64}$"
+)
 _FACT_TRANSPORT_PROGRESS_FEEDBACK_RE = re.compile(
     r"^FACT_EXTRACTION_RETRY_CONTEXT:"
     r"INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
@@ -2682,10 +2689,10 @@ def project_query_planner_failures(
 
 
 def _is_collaboration_transport_wait(value: Any) -> bool:
+    text = str(value or "").strip()
     return bool(
-        _COLLABORATION_TRANSPORT_WAIT_RE.fullmatch(
-            str(value or "").strip()
-        )
+        _COLLABORATION_TRANSPORT_WAIT_RE.fullmatch(text)
+        or _SATURATION_COLLABORATION_TRANSPORT_WAIT_RE.fullmatch(text)
     )
 
 

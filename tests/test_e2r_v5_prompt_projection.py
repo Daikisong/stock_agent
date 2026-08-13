@@ -1526,6 +1526,51 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             project_query_score_gap_context(context_b),
         )
 
+        saturation_roles = (
+            "RESEARCH_SUPERVISOR_A",
+            "RESEARCH_SUPERVISOR_B",
+            "INDEPENDENT_COMPLETENESS_REVIEWER",
+        )
+        saturation_context_a = {
+            "prior_research_epoch": {
+                "status": "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+                "next_actions": [
+                    (
+                        f"{role}:SATURATION_PROVIDER_OR_OUTPUT_ERROR:"
+                        "StructuredProviderUnavailable:"
+                        "COLLABORATION_RESPONSE_PENDING:"
+                        + request_a
+                    )
+                    for role in saturation_roles
+                ],
+            }
+        }
+        saturation_context_b = {
+            "prior_research_epoch": {
+                "status": "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+                "next_actions": [
+                    (
+                        f"{role}:SATURATION_PROVIDER_OR_OUTPUT_ERROR:"
+                        "StructuredProviderUnavailable:"
+                        "COLLABORATION_RESPONSE_PENDING:"
+                        + request_b
+                    )
+                    for role in saturation_roles
+                ],
+            }
+        }
+        projected_saturation = project_query_score_gap_context(
+            saturation_context_a
+        )
+        self.assertEqual(
+            projected_saturation,
+            project_query_score_gap_context(saturation_context_b),
+        )
+        self.assertEqual(
+            projected_saturation["prior_research_epoch"]["next_actions"],
+            [],
+        )
+
         changed_real_failure = {
             **real_failure,
             "failure_reason": "HTTP_503",
