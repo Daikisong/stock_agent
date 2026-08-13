@@ -7621,7 +7621,19 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             ["DURABLE_VISIBILITY", "FORWARD_GUIDANCE"],
         )
         self.assertEqual(
-            durable["llm_fact_extractable_roles"], ["FORWARD_GUIDANCE"]
+            durable["llm_fact_extractable_roles"],
+            ["DURABLE_VISIBILITY", "FORWARD_GUIDANCE"],
+        )
+        durable_contract = durable["fact_materialization_contracts"][
+            "DURABLE_VISIBILITY"
+        ]
+        self.assertTrue(
+            durable_contract[
+                "specific_business_segment_or_product_required"
+            ]
+        )
+        self.assertTrue(
+            durable_contract["silence_or_supply_discussion_is_not_contract"]
         )
         allowed = durable["fact_materialization_contracts"][
             "FORWARD_GUIDANCE"

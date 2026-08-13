@@ -141,7 +141,11 @@ PHASE86_COMPONENT_ROLE_COMPATIBILITY: Mapping[str, tuple[str, ...]] = {
         "FCF_REVISION",
     ),
     "CAPEX_SUPPLY_RESPONSE": ("CAPEX",),
-    "DURABLE_VISIBILITY": ("FORWARD_GUIDANCE",),
+    # A numeric issuer plan historically covered this contract through
+    # FORWARD_GUIDANCE.  A provider may now also nominate the narrower,
+    # qualitative DURABLE_VISIBILITY role when an issuer/customer official
+    # statement explicitly binds future demand or production visibility.
+    "DURABLE_VISIBILITY": ("DURABLE_VISIBILITY", "FORWARD_GUIDANCE"),
 }
 
 _PUBLIC_BROKER_PROTECTED_VALUATION_METRIC_IDS = frozenset(

@@ -91,6 +91,9 @@ OBJECTIVE_FACT_RELATIONS = frozenset(
     {"ADVANCE", "COUNTER", "SUPERSEDE"}
 )
 FACT_EXTRACTION_SEMANTICS_VERSION = (
+    "e2r_v5_structured_durable_visibility_roles_v8"
+)
+_PRE_STRUCTURED_DURABLE_VISIBILITY_ROLE_SEMANTICS_VERSION = (
     "e2r_v5_structured_scenario_input_roles_v7"
 )
 _PRE_STRUCTURED_SCENARIO_INPUT_ROLE_SEMANTICS_VERSION = (
@@ -105,6 +108,7 @@ _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION = (
 _HISTORICAL_CURRENT_LINEAGE_RECOVERY_SEMANTICS_VERSIONS = frozenset(
     {
         FACT_EXTRACTION_SEMANTICS_VERSION,
+        _PRE_STRUCTURED_DURABLE_VISIBILITY_ROLE_SEMANTICS_VERSION,
         _PRE_STRUCTURED_SCENARIO_INPUT_ROLE_SEMANTICS_VERSION,
         _PRE_STRUCTURED_REVISION_ROLE_SEMANTICS_VERSION,
     }
@@ -4741,14 +4745,16 @@ def _scenario_role_reextraction_document_ids(
     A coverage-only audit cannot change ``structured_evidence_roles`` on an
     already accepted fact because duplicate protection correctly tells the
     provider not to repeat the same economic identity.  Re-extract only stale
-    issuer documents that belong to a live gap and already contain a
-    machine-numeric OPEN/future claim.  The provider still owns the semantic
-    role nomination; this selector never awards a role or a point.
+    issuer/customer documents that belong to a live gap and already contain
+    an eligible OPEN/future claim.  The provider still owns the semantic role
+    nomination; this selector never awards a role or a point.
 
     Easy example: an old filing already contains an accepted ``19조원,
     2026년부터 투자`` fact with no structured role.  Re-reading that one
-    provider-call unit lets the LLM nominate FORWARD_GUIDANCE under v7 without
-    any issuer, sector, or archetype name in this rule.
+    provider-call unit lets the LLM nominate FORWARD_GUIDANCE.  Likewise, an
+    issuer statement that next year's full production has customer demand can
+    be re-read for DURABLE_VISIBILITY without any issuer, sector, or archetype
+    name in this rule.
     """
 
     document_ids = {
@@ -8500,6 +8506,13 @@ def _fact_semantics_upgrade_requires_reextraction(
 
     if previous_version == FACT_EXTRACTION_SEMANTICS_VERSION:
         return False
+    if previous_version == (
+        _PRE_STRUCTURED_DURABLE_VISIBILITY_ROLE_SEMANTICS_VERSION
+    ):
+        # v7 -> v8 changes only the bounded issuer/customer visibility-role
+        # nomination.  The scenario selector owns that migration so the full
+        # old corpus is not reopened.
+        return False
     if previous_version == _PRE_STRUCTURED_SCENARIO_INPUT_ROLE_SEMANTICS_VERSION:
         # v6 -> v7 changes only issuer scenario-role nomination.  The bounded
         # scenario selector owns that migration; treating the same documents
@@ -8530,11 +8543,12 @@ def _scenario_role_semantics_upgrade_requires_reassessment(
     previous_version: str,
     document: Mapping[str, Any] | None,
 ) -> bool:
-    """Route only the cumulative v5/v6 -> v7 issuer-role migration."""
+    """Route only cumulative typed issuer/customer role migrations."""
 
     return bool(
         previous_version
         in {
+            _PRE_STRUCTURED_DURABLE_VISIBILITY_ROLE_SEMANTICS_VERSION,
             _PRE_STRUCTURED_SCENARIO_INPUT_ROLE_SEMANTICS_VERSION,
             _PRE_STRUCTURED_REVISION_ROLE_SEMANTICS_VERSION,
         }
@@ -8548,6 +8562,7 @@ def _scenario_role_semantics_upgrade_requires_reassessment(
             "ISSUER_NEWSROOM",
             "FINANCIAL_STATEMENTS",
             "CASH_FLOW",
+            "CUSTOMER_OFFICIAL",
         }
     )
 
@@ -8572,15 +8587,8 @@ def _document_has_live_scenario_role_reassessment_candidate(
         "ISSUER_NEWSROOM",
         "FINANCIAL_STATEMENTS",
         "CASH_FLOW",
+        "CUSTOMER_OFFICIAL",
     }:
-        return False
-    document_objective_ids = {
-        str(value).strip()
-        for key in ("objective_ids", "historical_objective_ids")
-        for value in document.get(key) or ()
-        if str(value).strip()
-    }
-    if not document_objective_ids & coverage_gap_objective_ids:
         return False
     gap_component_ids = {
         str(objective_component_by_id.get(objective_id) or "").strip()
@@ -8600,12 +8608,27 @@ def _document_has_live_scenario_role_reassessment_candidate(
             }
             & gap_component_ids
         )
-        and "FORWARD_GUIDANCE"
-        not in {
-            str(value).strip().upper()
-            for value in claim.get("structured_evidence_roles") or ()
-        }
-        and _claim_has_machine_numeric_point_or_range(claim.get("value"))
+        and (
+            (
+                "FORWARD_GUIDANCE"
+                not in {
+                    str(value).strip().upper()
+                    for value in claim.get("structured_evidence_roles") or ()
+                }
+                and _claim_has_machine_numeric_point_or_range(
+                    claim.get("value")
+                )
+            )
+            or (
+                "valuation_rerating" in gap_component_ids
+                and "DURABLE_VISIBILITY"
+                not in {
+                    str(value).strip().upper()
+                    for value in claim.get("structured_evidence_roles") or ()
+                }
+                and _claim_has_nonempty_scalar_value(claim.get("value"))
+            )
+        )
         and _claim_period_is_forward_candidate(claim)
         for claim in claims
     )
@@ -8634,6 +8657,18 @@ def _claim_has_machine_numeric_point_or_range(value: Any) -> bool:
         values = tuple(value)
         return 1 <= len(values) <= 2 and all(finite_number(row) for row in values)
     return False
+
+
+def _claim_has_nonempty_scalar_value(value: Any) -> bool:
+    """Select a provider-owned qualitative/numeric visibility candidate."""
+
+    if isinstance(value, bool) or value is None:
+        return False
+    if isinstance(value, str):
+        return bool(value.strip())
+    return bool(
+        isinstance(value, (int, float)) and math.isfinite(float(value))
+    )
 
 
 def _claim_period_is_forward_candidate(claim: Mapping[str, Any]) -> bool:

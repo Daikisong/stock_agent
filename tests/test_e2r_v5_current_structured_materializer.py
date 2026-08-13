@@ -2541,6 +2541,81 @@ EV/EBITDA(배) 22.0 3.9 2.4 0.4"""
             {"ROLE_SOURCE_FAMILY_NOT_ALLOWED:FORWARD_GUIDANCE": 1},
         )
 
+    def test_issuer_qualitative_durable_visibility_covers_role(self):
+        facts, claims, documents = _structured_fact_bundle(
+            roles=("DURABLE_VISIBILITY",)
+        )
+
+        issuer_route, _, audit = (
+            structured_materializer_module._fact_structured_routes(
+                target_id="005930",
+                cutoff=date(2026, 7, 12),
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+            )
+        )
+
+        self.assertEqual(audit["accepted_structured_observation_count"], 1)
+        self.assertEqual(audit["rejection_counts"], {})
+        self.assertEqual(len(issuer_route.payload.structured_records), 1)
+        record = issuer_route.payload.structured_records[0]
+        self.assertEqual(record.evidence_roles, ("DURABLE_VISIBILITY",))
+        self.assertEqual(
+            record.value, "full customer demand for entire production"
+        )
+        self.assertEqual(
+            record.record_kind, "SOURCE_BACKED_DURABLE_VISIBILITY"
+        )
+        self.assertTrue(record.metadata["does_not_prove_contract_terms"])
+
+    def test_durable_visibility_rejects_weak_source_generic_scope_and_past_period(self):
+        facts, claims, documents = _structured_fact_bundle(
+            roles=("DURABLE_VISIBILITY",)
+        )
+
+        cases = (
+            (
+                facts,
+                claims,
+                ({**documents[0], "source_family": "TRUSTED_BUSINESS_MEDIA"},),
+                "ROLE_SOURCE_FAMILY_NOT_ALLOWED:DURABLE_VISIBILITY",
+            ),
+            (
+                facts,
+                (
+                    {
+                        **claims[0],
+                        "business_segment": "CORPORATE_GENERIC",
+                        "product_family": "UNKNOWN",
+                    },
+                ),
+                documents,
+                "DURABLE_VISIBILITY_REQUIRES_SPECIFIC_SCOPE",
+            ),
+            (
+                (replace(facts[0], period="2025Q4"),),
+                ({**claims[0], "period": "2025Q4"},),
+                documents,
+                "DURABLE_VISIBILITY_PERIOD_NOT_FORWARD",
+            ),
+        )
+        for case_facts, case_claims, case_documents, reason in cases:
+            with self.subTest(reason=reason):
+                issuer_route, _, audit = (
+                    structured_materializer_module._fact_structured_routes(
+                        target_id="005930",
+                        cutoff=date(2026, 7, 12),
+                        evidence_facts=case_facts,
+                        source_claims=case_claims,
+                        source_documents=case_documents,
+                    )
+                )
+                self.assertEqual(
+                    audit["accepted_structured_observation_count"], 0
+                )
+                self.assertEqual(audit["rejection_counts"], {reason: 1})
+
     def test_llm_selects_peer_direction_but_structured_pages_supply_values(self):
         transport = FixtureStructuredTransport()
         peer_provider = FixturePeerProvider()
@@ -3458,6 +3533,16 @@ def _structured_fact_bundle(roles=None):
             "period": "2026Q3",
             "predicate": "revenue_guidance",
         },
+        "DURABLE_VISIBILITY": {
+            "quote": (
+                "The company secured customer demand for its entire FY2027 "
+                "memory production."
+            ),
+            "value": "full customer demand for entire production",
+            "unit": "qualitative demand coverage",
+            "period": "FY2027 outlook stated 2026-07-08",
+            "predicate": "full_production_demand_coverage",
+        },
         "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION": {
             "quote": "2026Q1 depreciation and amortization was KRW 3.2 billion.",
             "value": "3.2",
@@ -3510,6 +3595,11 @@ def _structured_fact_bundle(roles=None):
                 "period": definition["period"],
                 "confidence": 0.9,
                 "structured_evidence_roles": [role],
+                "allowed_component_ids": (
+                    ["valuation_rerating"]
+                    if role == "DURABLE_VISIBILITY"
+                    else []
+                ),
             }
         )
         facts.append(
@@ -3532,6 +3622,11 @@ def _structured_fact_bundle(roles=None):
                 current_lifecycle="CURRENT",
                 source_independence_group="ISSUER:issuer.example.com",
                 confidence=0.9,
+                allowed_component_ids=(
+                    ("valuation_rerating",)
+                    if role == "DURABLE_VISIBILITY"
+                    else ()
+                ),
                 structured_evidence_roles=(role,),
             )
         )

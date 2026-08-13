@@ -35,6 +35,7 @@ from e2r.research_brain.researcher_mode.collaboration_provider_bridge import (
     _authority_recovery_fact_request_material,
     _canonical_hash,
     _legacy_valuation_fact_instruction,
+    _prior_durable_visibility_fact_instruction,
     _prior_revision_fact_instruction,
     _prior_structured_valuation_fact_output_schema,
 )
@@ -392,6 +393,48 @@ def _semantic_quarantine_worker(
 
 
 class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
+    def test_v7_fact_authority_recovery_excludes_new_v8_role(self) -> None:
+        payload = {
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": "2026-07-12",
+            "archetype_hypothesis": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            "fact_extraction_semantics_version": (
+                "e2r_v5_structured_scenario_input_roles_v7"
+            ),
+            "current_evidence_facts": {},
+            "score_gap_context": {},
+            "full_documents": [
+                {
+                    "document_id": "DOCUMENT-V7",
+                    "source_family": "ISSUER_NEWSROOM",
+                    "content_text": "literal issuer text",
+                }
+            ],
+        }
+
+        _safe, schema, prompt, prompt_hash, schema_hash = (
+            _authority_recovery_fact_request_material(
+                payload=payload,
+                fact_extraction_semantics_version=(
+                    "e2r_v5_structured_scenario_input_roles_v7"
+                ),
+            )
+        )
+
+        roles = schema["properties"]["facts"]["items"]["properties"][
+            "structured_evidence_roles"
+        ]
+        self.assertNotIn("DURABLE_VISIBILITY", roles["items"]["enum"])
+        self.assertEqual(
+            prompt.count(_prior_durable_visibility_fact_instruction()), 1
+        )
+        self.assertNotIn("DURABLE_VISIBILITY", prompt.rsplit("\n", 1)[0])
+        self.assertEqual(
+            prompt_hash,
+            hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+        )
+        self.assertEqual(schema_hash, _canonical_hash(schema))
+
     def test_v6_fact_instruction_recovery_is_frozen_across_v7_clarifications(
         self,
     ) -> None:

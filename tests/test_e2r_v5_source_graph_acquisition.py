@@ -1975,30 +1975,76 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             fetcher=fetcher,
             checkpoint=second_wait.checkpoint,
         )
-        third_wait = self._run(
+        self.assertEqual(
+            second_empty.status,
+            "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+        )
+        self.assertNotIn(
+            "pending_query_generation_replay_context",
+            second_empty.checkpoint,
+        )
+        handoff = second_empty.checkpoint[
+            "query_generation_supervisor_handoffs"
+        ][-1]
+        self.assertEqual(
+            handoff["reason"], "SEMANTIC_NO_NEW_ROUTE_FIXPOINT"
+        )
+        self.assertFalse(handoff["source_absence_proven"])
+        self.assertFalse(handoff["deterministic_fallback_query_used"])
+        self.assertFalse(handoff["production_score_authority"])
+
+        held_for_supervisor = self._run(
             provider=provider,
             search=search,
             fetcher=fetcher,
             checkpoint=second_empty.checkpoint,
         )
-        del third_wait
+        self.assertEqual(
+            held_for_supervisor.status,
+            "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+        )
         payloads = [
             row["payload"]
             for row in provider.calls
             if row["pass_name"] == "SOURCE_QUERY_GENERATION"
         ]
         self.assertEqual(payloads[3], payloads[4])
-        self.assertNotEqual(payloads[4], payloads[5])
-        second_retry = payloads[5]["score_gap_context"][
-            source_graph_module.QUERY_GENERATION_SEMANTIC_RETRY_CONTEXT_KEY
-        ]
-        self.assertEqual(second_retry["attempt"], 2)
-        self.assertEqual(len(second_retry["prompt_hash_lineage"]), 2)
-        self.assertEqual(len(second_retry["response_hash_lineage"]), 2)
-        self.assertFalse(second_retry["deterministic_fallback_query_allowed"])
-        self.assertFalse(second_retry["fixed_retry_cap_used"])
-        self.assertFalse(second_retry["production_score_authority"])
+        self.assertEqual(len(payloads), 5)
         self.assertEqual(search.calls, [])
+
+        reopened_for_changed_contract = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=held_for_supervisor.checkpoint,
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "status": "NEXT_RESEARCH_REQUIRED",
+                    "reasonable_positive_routes_remaining": True,
+                    "query_direction_briefs": [
+                        {
+                            "objective_id": "OBJECTIVE-1",
+                            "research_need": "new issuer detail route",
+                        }
+                    ],
+                }
+            },
+        )
+        self.assertEqual(
+            reopened_for_changed_contract.status,
+            "QUERY_GENERATION_PENDING",
+        )
+        payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+        ]
+        self.assertEqual(len(payloads), 6)
+        self.assertEqual(
+            payloads[-1]["score_gap_context"]["prior_supervisor_gap"]
+            ["query_direction_briefs"][0]["research_need"],
+            "new issuer detail route",
+        )
 
     def test_semantic_retry_context_preserves_duplicate_query_feedback(
         self,
@@ -4899,8 +4945,15 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             score_gap_context=mandatory_gap_context,
         )
 
-        self.assertEqual(second.status, "SOURCE_PROVIDER_PENDING")
-        self.assertFalse(second_provider.calls)
+        self.assertEqual(
+            second.status,
+            "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+        )
+        self.assertTrue(second_provider.calls)
+        self.assertIn(
+            "Current Corp another customer official route",
+            second.checkpoint["executed_queries"],
+        )
         self.assertTrue(
             any(
                 value

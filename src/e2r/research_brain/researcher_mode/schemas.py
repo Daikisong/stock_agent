@@ -267,6 +267,7 @@ class EvidenceFact:
             "FORWARD_BOOK_VALUE",
             "FORWARD_PB",
             "FORWARD_EV_EBITDA",
+            "DURABLE_VISIBILITY",
         }:
             raise ValueError("EvidenceFact contains unknown structured evidence role")
 

@@ -1713,6 +1713,15 @@ class E2RV5FactExtractionTests(unittest.TestCase):
     def test_base_semantics_upgrade_keeps_issuer_role_migration_separate(
         self,
     ) -> None:
+        previous_durable_visibility_boundary = (
+            "e2r_v5_structured_scenario_input_roles_v7"
+        )
+        self.assertFalse(
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version=previous_durable_visibility_boundary,
+                document={"source_family": "ISSUER_NEWSROOM"},
+            )
+        )
         previous_scenario_input_boundary = (
             "e2r_v5_structured_revision_roles_v6"
         )
@@ -1822,6 +1831,73 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 **kwargs,
             ),
             frozenset({document["document_id"]}),
+        )
+
+    def test_v7_qualitative_visibility_is_boundedly_selected_for_v8_rewrite(
+        self,
+    ) -> None:
+        document = dict(
+            _document(
+                "DOC-QUALITATIVE-DURABLE-VISIBILITY",
+                "CUSTOMER_OFFICIAL",
+                "CUSTOMER:customer.example",
+            )
+        )
+        claim = {
+            "document_id": document["document_id"],
+            "allowed_component_ids": ["valuation_rerating"],
+            "structured_evidence_roles": [],
+            "value": "full customer demand for entire production",
+            "period": "FY2027 outlook stated 2026-05-15",
+            "available_at": "2026-05-15",
+        }
+        selected = _scenario_role_reextraction_document_ids(
+            documents=(document,),
+            prior_material_claims=(claim,),
+            prior_document_dispositions=(
+                {
+                    "document_id": document["document_id"],
+                    "extraction_semantics_version": (
+                        "e2r_v5_structured_scenario_input_roles_v7"
+                    ),
+                },
+            ),
+            prior_provider_calls=(),
+            coverage_gap_objective_ids=frozenset(
+                {"OBJECTIVE-VALUATION"}
+            ),
+            objective_component_by_id={
+                "OBJECTIVE-VALUATION": "valuation_rerating"
+            },
+        )
+
+        self.assertEqual(selected, frozenset({document["document_id"]}))
+
+        wrong_component = {
+            **claim,
+            "allowed_component_ids": ["capital_allocation"],
+        }
+        self.assertEqual(
+            _scenario_role_reextraction_document_ids(
+                documents=(document,),
+                prior_material_claims=(wrong_component,),
+                prior_document_dispositions=(
+                    {
+                        "document_id": document["document_id"],
+                        "extraction_semantics_version": (
+                            "e2r_v5_structured_scenario_input_roles_v7"
+                        ),
+                    },
+                ),
+                prior_provider_calls=(),
+                coverage_gap_objective_ids=frozenset(
+                    {"OBJECTIVE-VALUATION"}
+                ),
+                objective_component_by_id={
+                    "OBJECTIVE-VALUATION": "valuation_rerating"
+                },
+            ),
+            frozenset(),
         )
 
     def test_v5_issuer_future_plan_is_atomically_rewritten_with_v7_role(

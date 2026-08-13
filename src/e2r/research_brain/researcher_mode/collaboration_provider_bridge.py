@@ -74,8 +74,11 @@ _USAGE_LIMIT_RE = re.compile(r"\busage\s+limit\b", re.IGNORECASE)
 _PRE_STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION = (
     "e2r_v5_source_boundary_context_v4"
 )
-_STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION = (
+_PRE_DURABLE_VISIBILITY_FACT_SEMANTICS_VERSION = (
     "e2r_v5_structured_scenario_input_roles_v7"
+)
+_STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION = (
+    "e2r_v5_structured_durable_visibility_roles_v8"
 )
 _PRE_REVISION_FACT_SEMANTICS_VERSION = (
     "e2r_v5_structured_revision_roles_v6"
@@ -86,6 +89,7 @@ _LEGACY_VALUATION_FACT_SEMANTICS_VERSION = (
 _AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS = frozenset(
     (
         _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION,
+        _PRE_DURABLE_VISIBILITY_FACT_SEMANTICS_VERSION,
         _PRE_REVISION_FACT_SEMANTICS_VERSION,
         _LEGACY_VALUATION_FACT_SEMANTICS_VERSION,
     )
@@ -103,11 +107,21 @@ _STRUCTURED_VALUATION_ROLES = (
     "FORWARD_BOOK_VALUE",
     "FORWARD_PB",
     "FORWARD_EV_EBITDA",
+    "DURABLE_VISIBILITY",
+)
+_PRE_DURABLE_VISIBILITY_STRUCTURED_VALUATION_ROLES = tuple(
+    role
+    for role in _STRUCTURED_VALUATION_ROLES
+    if role != "DURABLE_VISIBILITY"
 )
 _PRE_REVISION_STRUCTURED_VALUATION_ROLES = tuple(
     role
     for role in _STRUCTURED_VALUATION_ROLES
-    if role != "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION"
+    if role
+    not in {
+        "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION",
+        "DURABLE_VISIBILITY",
+    }
 )
 _LEGACY_STRUCTURED_VALUATION_ROLES = tuple(
     role
@@ -240,6 +254,32 @@ def _prior_structured_valuation_fact_output_schema(
     return prior
 
 
+def _prior_durable_visibility_fact_output_schema(
+    current_schema: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    """Derive the frozen v7 schema immediately before the qualitative role."""
+
+    try:
+        prior = json.loads(json.dumps(current_schema))
+        role_schema = prior["properties"]["facts"]["items"]["properties"][
+            "structured_evidence_roles"
+        ]
+        role_items = role_schema["items"]
+    except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+        return None
+    if (
+        not isinstance(role_schema, dict)
+        or not isinstance(role_items, dict)
+        or tuple(role_items.get("enum") or ()) != _STRUCTURED_VALUATION_ROLES
+        or role_schema.get("maxItems") != 1
+    ):
+        return None
+    role_items["enum"] = list(
+        _PRE_DURABLE_VISIBILITY_STRUCTURED_VALUATION_ROLES
+    )
+    return prior
+
+
 def _prior_revision_fact_output_schema(
     current_schema: Mapping[str, Any],
 ) -> Mapping[str, Any] | None:
@@ -294,10 +334,41 @@ def _legacy_valuation_fact_output_schema(
     return legacy
 
 
+def _prior_durable_visibility_fact_instruction() -> str:
+    """Rebuild the immutable v7 instruction from the current v8 text."""
+
+    current = _pass_instruction("EVIDENCE_FACT_EXTRACTION")
+    prior = current.replace(
+        "FORWARD_BOOK_VALUE, FORWARD_PB, FORWARD_EV_EBITDA, or "
+        "DURABLE_VISIBILITY only when ",
+        "FORWARD_BOOK_VALUE, FORWARD_PB, or FORWARD_EV_EBITDA only when ",
+        1,
+    ).replace(
+        "structured role. For numeric roles, keep value as only the reported "
+        "numeric point/range, unit separately, and the time horizon in period. ",
+        "structured role; keep value as only the reported numeric point/range, "
+        "unit separately, and the time horizon in period. ",
+        1,
+    ).replace(
+        "DURABLE_VISIBILITY includes an issuer- or customer-official, "
+        "target-attributable future-period statement that explicitly covers "
+        "demand, committed backlog, production, capacity, allocation, or "
+        "binding supply visibility for a specific business segment or product. "
+        "It may be qualitative, but must not turn a supply discussion, "
+        "aspiration, broker estimate, or silence into a contract, volume, price, "
+        "cancellation term, or prepayment. ",
+        "",
+        1,
+    )
+    if prior == current:
+        raise ValueError("prior durable-visibility fact instruction cannot be derived")
+    return prior
+
+
 def _prior_revision_fact_instruction() -> str:
     """Rebuild the immutable v6 instruction from the current v7 text."""
 
-    current = _pass_instruction("EVIDENCE_FACT_EXTRACTION")
+    current = _prior_durable_visibility_fact_instruction()
     # Authority recovery validates an immutable historical request, not merely
     # its JSON payload.  A semantics bump may change more than the enum: v7
     # also clarified which issuer-owned plans count as FORWARD_GUIDANCE and
@@ -335,7 +406,7 @@ def _prior_revision_fact_instruction() -> str:
 def _legacy_valuation_fact_instruction() -> str:
     """Rebuild the immutable v5 instruction from the current v7 text."""
 
-    current = _pass_instruction("EVIDENCE_FACT_EXTRACTION")
+    current = _prior_durable_visibility_fact_instruction()
     legacy = current.replace(
         "EPS_REVISION, OPERATING_PROFIT_REVISION, ",
         "",
@@ -389,6 +460,7 @@ def _authority_recovery_fact_request_material(
     ):
         return material
     if fact_extraction_semantics_version not in {
+        _PRE_DURABLE_VISIBILITY_FACT_SEMANTICS_VERSION,
         _PRE_REVISION_FACT_SEMANTICS_VERSION,
         _LEGACY_VALUATION_FACT_SEMANTICS_VERSION,
     }:
@@ -397,6 +469,14 @@ def _authority_recovery_fact_request_material(
         material
     )
     if (
+        fact_extraction_semantics_version
+        == _PRE_DURABLE_VISIBILITY_FACT_SEMANTICS_VERSION
+    ):
+        prior_schema = _prior_durable_visibility_fact_output_schema(
+            current_schema
+        )
+        prior_instruction = _prior_durable_visibility_fact_instruction()
+    elif (
         fact_extraction_semantics_version
         == _PRE_REVISION_FACT_SEMANTICS_VERSION
     ):

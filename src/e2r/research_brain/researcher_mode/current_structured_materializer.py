@@ -119,6 +119,7 @@ _FACT_STRUCTURED_ROLES = frozenset(
         "FORWARD_BOOK_VALUE",
         "FORWARD_PB",
         "FORWARD_EV_EBITDA",
+        "DURABLE_VISIBILITY",
     }
 )
 _BROKER_VALUATION_STRUCTURED_ROLES = frozenset(
@@ -181,6 +182,19 @@ FACT_STRUCTURED_ROLE_RESOLUTION_CONTRACTS: Mapping[
         "period_must_be_forward_from_source_availability_date": True,
         "issuer_source_required": True,
         "third_party_estimate_is_not_substitutable": True,
+    },
+    "DURABLE_VISIBILITY": {
+        "allowed_source_families": tuple(
+            sorted(_ISSUER_STRUCTURED_SOURCE_FAMILIES)
+        ),
+        "exact_quote_required": True,
+        "qualitative_or_numeric_value_required": True,
+        "period_must_be_forward_from_source_availability_date": True,
+        "specific_business_segment_or_product_required": True,
+        "valuation_component_eligibility_required": True,
+        "issuer_or_customer_official_source_required": True,
+        "third_party_estimate_is_not_substitutable": True,
+        "silence_or_supply_discussion_is_not_contract": True,
     },
     "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION": {
         "allowed_source_families": tuple(
@@ -3394,6 +3408,9 @@ def _fact_structured_routes(
             ):
                 reject("BROKER_STRUCTURED_CLAIM_REQUIRES_ONE_ROLE")
                 continue
+            if "DURABLE_VISIBILITY" in roles and len(roles) != 1:
+                reject("DURABLE_VISIBILITY_REQUIRES_ONE_ROLE")
+                continue
             if not set(roles).issubset(fact_roles):
                 reject("CLAIM_FACT_STRUCTURED_ROLE_MISMATCH")
                 continue
@@ -3425,22 +3442,46 @@ def _fact_structured_routes(
             # row such as ``수출 78.62%; 내수 10.13%`` remains ambiguous and is
             # still rejected instead of selecting a number deterministically.
             segment_only = set(roles) == {"SEGMENT_CONTRIBUTION"}
+            durable_visibility_only = set(roles) == {
+                "DURABLE_VISIBILITY"
+            }
             numeric_parser = (
                 _parse_segment_contribution_numeric
                 if segment_only
                 else _parse_reported_numeric
             )
-            parsed = numeric_parser(claim.get("value"), claim.get("unit"))
-            fact_parsed = numeric_parser(fact.get("value"), fact.get("unit"))
+            parsed = (
+                None
+                if durable_visibility_only
+                else numeric_parser(claim.get("value"), claim.get("unit"))
+            )
+            fact_parsed = (
+                None
+                if durable_visibility_only
+                else numeric_parser(fact.get("value"), fact.get("unit"))
+            )
             confidence = min(
                 _probability(fact.get("confidence"), default=0.0),
                 _probability(claim.get("confidence"), default=0.0),
             )
-            if parsed is None:
+            if durable_visibility_only:
+                claim_value = claim.get("value")
+                fact_value = fact.get("value")
+                if (
+                    isinstance(claim_value, bool)
+                    or claim_value is None
+                    or claim_value == ""
+                    or type(claim_value) is not type(fact_value)
+                    or claim_value != fact_value
+                    or str(fact.get("period") or "").strip() != period
+                ):
+                    reject("DURABLE_VISIBILITY_FACT_VALUE_PERIOD_MISMATCH")
+                    continue
+            elif parsed is None:
                 for _ in roles:
                     reject("TAGGED_VALUE_NOT_MACHINE_NUMERIC")
                 continue
-            if (
+            if not durable_visibility_only and (
                 fact_parsed is None
                 or not _parsed_reported_numeric_matches(fact_parsed, parsed)
                 or str(fact.get("period") or "").strip() != period
@@ -3456,7 +3497,10 @@ def _fact_structured_routes(
                     role in _BROKER_REVISION_STRUCTURED_ROLES
                 )
                 if (
-                    role != "FORWARD_GUIDANCE"
+                    role not in {
+                        "FORWARD_GUIDANCE",
+                        "DURABLE_VISIBILITY",
+                    }
                     and not broker_valuation_role
                     and not broker_revision_role
                     and lifecycle != "CURRENT"
@@ -3468,7 +3512,11 @@ def _fact_structured_routes(
                 ) and lifecycle not in {"CURRENT", "OPEN"}:
                     reject(f"ROLE_REQUIRES_CURRENT_OR_OPEN_LIFECYCLE:{role}")
                     continue
-                if role in {"SEGMENT_CONTRIBUTION", "FORWARD_GUIDANCE"}:
+                if role in {
+                    "SEGMENT_CONTRIBUTION",
+                    "FORWARD_GUIDANCE",
+                    "DURABLE_VISIBILITY",
+                }:
                     allowed_families = _ISSUER_STRUCTURED_SOURCE_FAMILIES
                 elif role == "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION":
                     allowed_families = _QOQ_STRUCTURED_SOURCE_FAMILIES
@@ -3481,7 +3529,84 @@ def _fact_structured_routes(
                 if source_family not in allowed_families:
                     reject(f"ROLE_SOURCE_FAMILY_NOT_ALLOWED:{role}")
                     continue
-                if role == "SEGMENT_CONTRIBUTION":
+                if role == "DURABLE_VISIBILITY":
+                    allowed_component_ids = {
+                        str(value).strip()
+                        for value in claim.get("allowed_component_ids") or ()
+                        if str(value).strip()
+                    }
+                    business_segment = str(
+                        claim.get("business_segment") or ""
+                    ).strip()
+                    product_family = str(
+                        claim.get("product_family") or ""
+                    ).strip()
+                    if "valuation_rerating" not in allowed_component_ids:
+                        reject(
+                            "DURABLE_VISIBILITY_REQUIRES_VALUATION_ELIGIBILITY"
+                        )
+                        continue
+                    if (
+                        business_segment
+                        in {"", "CORPORATE_GENERIC", "UNKNOWN"}
+                        and product_family
+                        in {"", "CORPORATE_GENERIC", "UNKNOWN"}
+                    ):
+                        reject(
+                            "DURABLE_VISIBILITY_REQUIRES_SPECIFIC_SCOPE"
+                        )
+                        continue
+                    if not _period_is_forward(
+                        period, date.fromisoformat(available_at)
+                    ):
+                        reject("DURABLE_VISIBILITY_PERIOD_NOT_FORWARD")
+                        continue
+                    issuer_metric_rows.append(
+                        StructuredMetricRecord(
+                            record_id="STRUCT-"
+                            + stable_hash(
+                                {
+                                    "fact_id": fact_id,
+                                    "claim_id": claim_id,
+                                    "role": role,
+                                    "value": claim.get("value"),
+                                }
+                            )[:24],
+                            target_id=target_id,
+                            as_of_date=cutoff.isoformat(),
+                            metric_id=_metric_slug(
+                                claim.get("predicate_family")
+                                or claim.get("normalized_object")
+                                or "durable_visibility"
+                            ),
+                            value=claim.get("value"),
+                            unit=str(claim.get("unit") or "QUALITATIVE"),
+                            period=period,
+                            evidence_roles=("DURABLE_VISIBILITY",),
+                            source_ids=(document_id,),
+                            source_route=(
+                                "ISSUER_OR_CUSTOMER_OFFICIAL_VISIBILITY"
+                            ),
+                            observed_at=observed_at,
+                            available_at=available_at,
+                            record_kind=(
+                                "SOURCE_BACKED_DURABLE_VISIBILITY"
+                            ),
+                            confidence=confidence,
+                            dataset="GENERIC",
+                            provenance="STRUCTURED_EXTRACTED",
+                            metadata={
+                                "fact_id": fact_id,
+                                "claim_id": claim_id,
+                                "exact_quote_verified": True,
+                                "llm_role_nomination_only": True,
+                                "structured_source": True,
+                                "specific_business_segment_or_product": True,
+                                "does_not_prove_contract_terms": True,
+                            },
+                        )
+                    )
+                elif role == "SEGMENT_CONTRIBUTION":
                     segment_id = _meaningful_segment_id(claim)
                     if segment_id is None:
                         reject("SEGMENT_ID_NOT_SPECIFIC")
@@ -3838,7 +3963,7 @@ def _fact_structured_routes(
         + len(broker_metric_rows)
     )
     audit = {
-        "schema_version": "e2r_v5_issuer_fact_materialization_audit_v1",
+        "schema_version": "e2r_v5_issuer_fact_materialization_audit_v2",
         "input_fact_count": len(evidence_facts),
         "input_claim_count": len(source_claims),
         "input_document_count": len(source_documents),
@@ -3859,8 +3984,9 @@ def _fact_structured_routes(
         "accepted_structured_observation_count": accepted_count,
         "rejection_counts": dict(sorted(rejection_counts.items())),
         "exact_quote_required": True,
-        "numeric_value_required": True,
-        "issuer_source_required_for_segment_and_guidance": True,
+        "numeric_value_required_for_numeric_roles": True,
+        "qualitative_value_allowed_only_for_durable_visibility": True,
+        "issuer_source_required_for_segment_guidance_and_visibility": True,
         "llm_score_authority": False,
     }
     issuer_route = (

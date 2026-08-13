@@ -371,6 +371,31 @@ class E2RV5StructuredFinancialEngineTests(unittest.TestCase):
             ],
         )
 
+        directly_covered = StructuredFinancialConsensusValuationEngine().research(
+            target_id=TARGET,
+            symbol=SYMBOL,
+            company_name="Current Target Corp",
+            as_of_date=AS_OF,
+            routes=(
+                route(
+                    "ISSUER_GUIDANCE",
+                    structured_records=(
+                        metric(
+                            "issuer_durable_visibility",
+                            "full customer demand for FY2027 production",
+                            "DURABLE_VISIBILITY",
+                        ),
+                    ),
+                ),
+            ),
+            required_roles_by_component=requirements,
+        )
+        self.assertEqual(directly_covered.status, "COMPLETE")
+        self.assertEqual(
+            directly_covered.covered_roles_by_component["valuation_rerating"],
+            ("DURABLE_VISIBILITY",),
+        )
+
     def test_issuer_seed_cannot_bypass_broker_valuation_contract(self) -> None:
         forged = StructuredMetricRecord(
             record_id="REC-FORGED-ISSUER-PB",

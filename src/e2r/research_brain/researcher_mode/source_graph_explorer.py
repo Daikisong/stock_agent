@@ -769,6 +769,10 @@ class ResearcherSourceGraphAcquirer:
             )
         )
         query_generation: SourceQueryGenerationResult | None = None
+        supervisor_query_contract_hash = (
+            _supervisor_query_contract_hash(effective_score_gap_context)
+        )
+        query_generation_supervisor_handoff = False
         pending_reasons: list[str] = list(checkpoint_quarantine_reasons)
         if invalidated_prior_fact_count:
             pending_reasons.append(
@@ -1195,6 +1199,26 @@ class ResearcherSourceGraphAcquirer:
         unresolved_objectives = tuple(
             row for row in objectives if str(row["objective_id"]) not in resolved
         )
+        prospective_query_generation_objectives = (
+            tuple(
+                row
+                for row in unresolved_objectives
+                if str(row["objective_id"])
+                in candidate_query_edge_gap_objective_ids
+            )
+            if candidate_query_edge_direction_priority
+            else unresolved_objectives
+        )
+        query_generation_supervisor_handoff = (
+            _query_generation_handoff_matches_supervisor_contract(
+                state,
+                supervisor_query_contract_hash=supervisor_query_contract_hash,
+                objective_ids={
+                    str(row["objective_id"])
+                    for row in prospective_query_generation_objectives
+                },
+            )
+        )
         supervisor_query_direction_priority = (
             _has_actionable_supervisor_query_direction(
                 effective_score_gap_context,
@@ -1364,25 +1388,14 @@ class ResearcherSourceGraphAcquirer:
             and not pending_query_rows
             and not blocked_official_first_rows
             and not supervisor_routes_exhausted
+            and not query_generation_supervisor_handoff
             and (
                 not pending_candidate_work
                 or candidate_query_edge_direction_priority
             )
-            and (
-                not repeated_source_family_lineage_failures
-                or candidate_query_edge_direction_priority
-                or pending_query_generation_replay is not None
-            )
         ):
             query_generation_objectives = (
-                tuple(
-                    row
-                    for row in unresolved_objectives
-                    if str(row["objective_id"])
-                    in candidate_query_edge_gap_objective_ids
-                )
-                if candidate_query_edge_direction_priority
-                else unresolved_objectives
+                prospective_query_generation_objectives
             )
             query_generation = ResearcherSourceQueryPlanner(
                 provider=self.query_provider
@@ -1409,6 +1422,16 @@ class ResearcherSourceGraphAcquirer:
                 ),
             )
             state["query_generation_history"].append(query_generation.to_dict())
+            query_generation_supervisor_handoff = (
+                _query_generation_reached_supervisor_handoff(
+                    _query_generation_history_for_supervisor_contract(
+                        state,
+                        supervisor_query_contract_hash=(
+                            supervisor_query_contract_hash
+                        ),
+                    )
+                )
+            )
             collaboration_transport_wait = (
                 _query_generation_has_collaboration_transport_wait(
                     query_generation.to_dict()
@@ -1417,6 +1440,7 @@ class ResearcherSourceGraphAcquirer:
             if (
                 query_generation.status == "PENDING"
                 and not query_generation.queries
+                and not query_generation_supervisor_handoff
                 and (
                     collaboration_transport_wait
                     or pending_query_generation_replay is not None
@@ -1474,7 +1498,33 @@ class ResearcherSourceGraphAcquirer:
                 }
             else:
                 state.pop("pending_query_generation_replay_context", None)
-            pending_reasons.extend(query_generation.feedback_for_next_llm_call)
+            if query_generation_supervisor_handoff:
+                state.setdefault(
+                    "query_generation_supervisor_handoffs", []
+                ).append(
+                    {
+                        "schema_version": (
+                            "e2r_v5_query_generation_supervisor_handoff_v1"
+                        ),
+                        "objective_ids": sorted(
+                            str(row["objective_id"])
+                            for row in query_generation_objectives
+                        ),
+                        "prompt_hash": query_generation.prompt_hash,
+                        "response_hash": query_generation.response_hash,
+                        "supervisor_query_contract_hash": (
+                            supervisor_query_contract_hash
+                        ),
+                        "reason": "SEMANTIC_NO_NEW_ROUTE_FIXPOINT",
+                        "source_absence_proven": False,
+                        "deterministic_fallback_query_used": False,
+                        "production_score_authority": False,
+                    }
+                )
+            else:
+                pending_reasons.extend(
+                    query_generation.feedback_for_next_llm_call
+                )
             query_failures.extend(
                 {
                     "query_id": "QUERY_GENERATION",
@@ -2531,7 +2581,12 @@ class ResearcherSourceGraphAcquirer:
         # this boundary is open cannot become canonical early; doing so would
         # mix two different evidence snapshots.  See the tracked Phase 106
         # incident note in docs/operational/e2r_v6_operational_cutover/.
-        elif query_generation and query_generation.status == "PENDING" and not query_generation.queries:
+        elif (
+            query_generation
+            and query_generation.status == "PENDING"
+            and not query_generation.queries
+            and not query_generation_supervisor_handoff
+        ):
             status = "QUERY_GENERATION_PENDING"
         elif still_pending_rank:
             status = "CANDIDATE_RANKING_PENDING"
@@ -2541,9 +2596,7 @@ class ResearcherSourceGraphAcquirer:
             status = "CHECKPOINT_PENDING"
         elif not unresolved_objectives:
             status = "STOPPED_ON_RESOLUTION"
-        elif repeated_source_family_lineage_failures or any(
-            "PROVIDER_ERROR" in value for value in pending_reasons
-        ):
+        elif any("PROVIDER_ERROR" in value for value in pending_reasons):
             status = "SOURCE_PROVIDER_PENDING"
         else:
             status = "EPOCH_COMPLETE_REQUIRES_SUPERVISOR"
@@ -3242,6 +3295,158 @@ def _query_generation_semantic_retry_context(
     }
 
 
+def _query_generation_reached_supervisor_handoff(
+    history: Sequence[Mapping[str, Any]],
+) -> bool:
+    """Return whether the LLM query lane reached a semantic fixed point.
+
+    An empty query response is never enough: the failure context must first be
+    returned to the query-generation LLM.  After that semantic retry, two
+    independently consumed responses may establish the same actionable state:
+    no valid query and no new source direction.  At that point another query
+    prompt cannot change the search graph, so authority returns to the
+    provider-backed Supervisor.  This is a state-convergence rule, not a retry
+    cap, source-absence proof, score, or Stage decision.
+
+    Example: ``search returned no result`` remains pending.  But if the LLM
+    reads that failure, proposes no route, then reads its own failure context
+    and again proposes no route or direction, the next useful actor is the
+    Supervisor rather than a third paraphrase of the same query.
+    """
+
+    confirmations: list[tuple[str, str]] = []
+    for raw in history:
+        if not isinstance(raw, Mapping):
+            continue
+        if raw.get("queries"):
+            # A valid new route starts a new semantic search lineage.
+            confirmations.clear()
+            continue
+        if _query_generation_has_collaboration_transport_wait(raw):
+            # A wait is not a consumed LLM judgment and must not count toward
+            # or erase convergence of the underlying semantic lineage.
+            continue
+        if (
+            str(raw.get("status") or "") != "PENDING"
+            or tuple(
+                _query_generation_semantic_retry_feedback(raw)
+            )
+            != ("LLM_RETURNED_NO_NEW_VALID_QUERY",)
+            or raw.get("new_source_directions")
+        ):
+            confirmations.clear()
+            continue
+        prompt_hash = str(raw.get("prompt_hash") or "")
+        response_hash = str(raw.get("response_hash") or "")
+        if (
+            not prompt_hash.startswith("QUERYPROMPT-")
+            or not response_hash.startswith("QUERYRESP-")
+            or raw.get("deterministic_fallback_query_used") is not False
+        ):
+            confirmations.clear()
+            continue
+        confirmations.append((prompt_hash, response_hash))
+    return bool(
+        len(confirmations) >= 2
+        and len({prompt for prompt, _ in confirmations[-2:]}) == 2
+    )
+
+
+def _query_generation_history_for_supervisor_contract(
+    state: Mapping[str, Any],
+    *,
+    supervisor_query_contract_hash: str,
+) -> tuple[Mapping[str, Any], ...]:
+    """Exclude semantic confirmations made under an older Supervisor brief."""
+
+    history = tuple(
+        row
+        for row in state.get("query_generation_history") or ()
+        if isinstance(row, Mapping)
+    )
+    handoffs = tuple(
+        row
+        for row in state.get("query_generation_supervisor_handoffs") or ()
+        if isinstance(row, Mapping)
+    )
+    if not handoffs:
+        return history
+    latest = handoffs[-1]
+    if (
+        str(latest.get("supervisor_query_contract_hash") or "")
+        == supervisor_query_contract_hash
+    ):
+        return history
+    boundary_prompt = str(latest.get("prompt_hash") or "")
+    boundary_response = str(latest.get("response_hash") or "")
+    boundary_index = -1
+    for index, row in enumerate(history):
+        if (
+            str(row.get("prompt_hash") or "") == boundary_prompt
+            and str(row.get("response_hash") or "") == boundary_response
+        ):
+            boundary_index = index
+    return history[boundary_index + 1 :]
+
+
+def _supervisor_query_contract_hash(
+    score_gap_context: Mapping[str, Any],
+) -> str:
+    """Bind a query-lane handoff to the exact Supervisor search contract."""
+
+    raw = score_gap_context.get("prior_supervisor_gap")
+    supervisor = dict(raw) if isinstance(raw, Mapping) else {}
+    contract = {
+        key: supervisor.get(key)
+        for key in (
+            "status",
+            "reasonable_positive_routes_remaining",
+            "missing_material_facts",
+            "new_source_family_directions",
+            "query_direction_briefs",
+            "source_family_gaps",
+            "parser_or_extractor_failures",
+            "failure_assessments",
+        )
+    }
+    return hashlib.sha256(
+        json.dumps(
+            contract,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            default=str,
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def _query_generation_handoff_matches_supervisor_contract(
+    state: Mapping[str, Any],
+    *,
+    supervisor_query_contract_hash: str,
+    objective_ids: set[str],
+) -> bool:
+    """Keep the query lane closed until Supervisor changes its instruction."""
+
+    rows = tuple(state.get("query_generation_supervisor_handoffs") or ())
+    if not rows:
+        return False
+    latest = rows[-1]
+    return bool(
+        isinstance(latest, Mapping)
+        and latest.get("schema_version")
+        == "e2r_v5_query_generation_supervisor_handoff_v1"
+        and latest.get("reason") == "SEMANTIC_NO_NEW_ROUTE_FIXPOINT"
+        and latest.get("source_absence_proven") is False
+        and latest.get("deterministic_fallback_query_used") is False
+        and latest.get("production_score_authority") is False
+        and set(str(value) for value in latest.get("objective_ids") or ())
+        == objective_ids
+        and str(latest.get("supervisor_query_contract_hash") or "")
+        == supervisor_query_contract_hash
+    )
+
+
 def _candidate_ranking_collaboration_request_ids(
     ranking: CandidateRankingResult,
 ) -> tuple[str, ...]:
@@ -3510,6 +3715,7 @@ def _new_acquisition_state(
         "status": "NEW",
         "resumed_from_checkpoint_id": None,
         "query_generation_history": [],
+        "query_generation_supervisor_handoffs": [],
         "generated_queries": [],
         "executed_queries": [],
         "query_failures": [],

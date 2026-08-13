@@ -476,6 +476,7 @@ EVIDENCE_FACT_EXTRACTION_SCHEMA: Mapping[str, Any] = {
                                 "FORWARD_BOOK_VALUE",
                                 "FORWARD_PB",
                                 "FORWARD_EV_EBITDA",
+                                "DURABLE_VISIBILITY",
                             ],
                         },
                         "maxItems": 1,
@@ -5153,16 +5154,25 @@ def _pass_instruction(pass_name: str) -> str:
             "for every document with one disposition. Tag SEGMENT_CONTRIBUTION, QOQ_GROWTH, "
             "FORWARD_GUIDANCE, EPS_REVISION, OPERATING_PROFIT_REVISION, "
             "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION, "
-            "FORWARD_BOOK_VALUE, FORWARD_PB, or FORWARD_EV_EBITDA only when "
+            "FORWARD_BOOK_VALUE, FORWARD_PB, FORWARD_EV_EBITDA, or "
+            "DURABLE_VISIBILITY only when "
             "the exact quote and value explicitly establish that "
-            "structured role; keep value as only the reported numeric point/range, unit separately, "
-            "and the time horizon in period. A revision role additionally requires a dated "
+            "structured role. For numeric roles, keep value as only the reported numeric "
+            "point/range, unit separately, and the time horizon in period. A revision role "
+            "additionally requires a dated "
             "full broker PDF whose exact quote identifies the forward metric and shows both "
             "the previous and revised estimates; value is the revised numeric point. Otherwise "
             "return an empty structured_evidence_roles array. "
             "FORWARD_GUIDANCE includes a numeric issuer-owned future operating, capacity, "
             "or capital plan whose period ends after the source became available; it does "
-            "not include a broker estimate. LATEST_ACTUAL_DEPRECIATION_AMORTIZATION requires "
+            "not include a broker estimate. "
+            "DURABLE_VISIBILITY includes an issuer- or customer-official, target-attributable "
+            "future-period statement that explicitly covers demand, committed backlog, "
+            "production, capacity, allocation, or binding supply visibility for a specific "
+            "business segment or product. It may be qualitative, but must not turn a supply "
+            "discussion, aspiration, broker estimate, or silence into a contract, volume, "
+            "price, cancellation term, or prepayment. "
+            "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION requires "
             "one reported issuer/regulatory numeric point for an already-ended period and "
             "must not be attached to a forecast. "
             "These tags are extraction context only and never assign points. Read prior "
