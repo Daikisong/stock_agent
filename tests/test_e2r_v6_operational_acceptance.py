@@ -932,6 +932,10 @@ class E2RV6OperationalAcceptanceTests(unittest.TestCase):
             calls[0][1:3],
             ["-m", "e2r.cli.run_e2r_researcher_mode_until_pass"],
         )
+        self.assertEqual(
+            calls[0][calls[0].index("--fact-documents-per-call") + 1],
+            "3",
+        )
         self.assertNotIn(
             "e2r.cli.select_e2r_v6_cross_archetype_canaries",
             calls[0],

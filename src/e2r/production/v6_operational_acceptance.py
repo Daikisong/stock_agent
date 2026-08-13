@@ -305,6 +305,8 @@ def run_operational_acceptance_phases(
                 "--require-researcher-parity", "true",
                 "--output-root", str(source_root),
                 "--research-provider", "codex-collaboration",
+                "--fact-documents-per-call",
+                str(OPERATIONAL_FACT_DOCUMENTS_PER_CALL),
             ],
         )
         current_wait_request_ids = _phase101_current_collaboration_wait_request_ids(
