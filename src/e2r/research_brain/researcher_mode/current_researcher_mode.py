@@ -2751,6 +2751,11 @@ def _upgrade_current_lineage_objective_reassessment_receipts(
                 )
                 or ()
             }
+            if not typed_ids.issubset(call_document_ids):
+                raise ValueError(
+                    "typed current-lineage objective reassessment is "
+                    "outside its provider call"
+                )
             reassessment_ids.update(typed_ids)
             continue
 
@@ -2936,12 +2941,14 @@ def _load_fact_checkpoint(
                 for claim in call["accepted_claims"]
             ]
         all_calls.append(call)
-    typed_current_lineage_reassessment_receipt_present = any(
-        bool(call.get("current_lineage_request_ids"))
+    typed_current_lineage_reassessment_receipt_document_ids = {
+        str(document_id)
+        for call in all_calls
+        if bool(call.get("current_lineage_request_ids"))
         and "current_lineage_objective_reassessment_document_ids"
         in call
-        for call in all_calls
-    )
+        for document_id in call.get("document_ids") or ()
+    }
     current_lineage_reassessment_receipt_ids = (
         _upgrade_current_lineage_objective_reassessment_receipts(
             all_calls,
@@ -3111,11 +3118,11 @@ def _load_fact_checkpoint(
             document_dispositions=persisted_dispositions,
         )
     )
-    if (
-        typed_current_lineage_reassessment_receipt_present
-        and not set(
-            audit_current_lineage_objective_reassessment_ids
-        ).issubset(current_lineage_reassessment_receipt_ids)
+    typed_scope_audit_ids = set(
+        audit_current_lineage_objective_reassessment_ids
+    ) & typed_current_lineage_reassessment_receipt_document_ids
+    if not typed_scope_audit_ids.issubset(
+        current_lineage_reassessment_receipt_ids
     ):
         raise ValueError(
             "fact objective reassessment audit is outside its typed receipts"
@@ -3123,13 +3130,15 @@ def _load_fact_checkpoint(
     outstanding_current_lineage_reassessment_ids = set(
         current_lineage_reassessment_receipt_ids
     )
-    if not outstanding_current_lineage_reassessment_ids:
-        # Compatibility for the one legacy no-claim edge that cannot be
-        # reconstructed from embedded accepted claims.  New recovery writes
-        # always carry the typed provider-call receipt above.
-        outstanding_current_lineage_reassessment_ids.update(
-            audit_current_lineage_objective_reassessment_ids
-        )
+    # Compatibility for a legacy no-claim edge that cannot be reconstructed
+    # from embedded accepted claims.  Scope this fallback per document: an
+    # unrelated typed receipt must not invalidate the legacy audit, while a
+    # typed call covering the same document remains authoritative and
+    # fail-closed above.
+    outstanding_current_lineage_reassessment_ids.update(
+        set(audit_current_lineage_objective_reassessment_ids)
+        - typed_current_lineage_reassessment_receipt_document_ids
+    )
     outstanding_current_lineage_reassessment_ids.intersection_update(
         current_ids
     )
@@ -4346,16 +4355,36 @@ def _attested_compiler_fact_addition_ids(
                 for call in provider_calls
                 if claim["claim_id"] in call.accepted_claim_ids
                 and call.status == "COMPLETE"
-                and call.provider_attempt_count == 1
+                and call.provider_attempt_count >= 1
                 and call.provider_name == COLLABORATION_PROVIDER_NAME
-                and call.prompt_hash == prompt_hash
-                and call.response_hash == response_hash
                 and source_ids.issubset(set(call.document_ids))
                 and not call.current_lineage_request_ids
                 and not call.semantics_migration_request_ids
+                and (
+                    (
+                        call.provider_attempt_count == 1
+                        and call.prompt_hash == prompt_hash
+                        and call.response_hash == response_hash
+                    )
+                    or (
+                        call.provider_attempt_count > 1
+                        and call.accepted_claims is not None
+                    )
+                )
             )
             if len(matching_calls) != 1:
                 raise ValueError("fact addition provider-call receipt is not exact")
+            # A paginated call stores its cumulative claim roster in the
+            # committed result while the top-level hashes identify the final
+            # completion page. Validate both that page and the claim's own
+            # page receipt; single-page calls retain exact hash equality.
+            if matching_calls[0].provider_attempt_count > 1:
+                required_lineages.add(
+                    (
+                        matching_calls[0].prompt_hash,
+                        str(matching_calls[0].response_hash or ""),
+                    )
+                )
             if (
                 matching_calls[0].accepted_claims is not None
                 and sum(
@@ -4634,8 +4663,14 @@ def _attested_pending_fact_retirement_ids(
         not current_calls
         or any(
             call.status != "COMPLETE"
-            or call.provider_attempt_count != 1
+            or call.provider_attempt_count < 1
             or call.provider_name != COLLABORATION_PROVIDER_NAME
+            or (
+                call.provider_attempt_count > 1
+                and call.accepted_claims is None
+            )
+            or bool(call.current_lineage_request_ids)
+            or bool(call.semantics_migration_request_ids)
             for call in current_calls
         )
         or not committed_set.issubset(
@@ -4652,6 +4687,14 @@ def _attested_pending_fact_retirement_ids(
             {
                 (call.prompt_hash, call.response_hash)
                 for call in current_calls
+            }
+            | {
+                (
+                    str(claim.get("provider_prompt_hash") or ""),
+                    str(claim.get("provider_response_hash") or ""),
+                )
+                for call in current_calls
+                for claim in call.accepted_claims or ()
             }
         )
     )

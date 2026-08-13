@@ -1099,6 +1099,96 @@ class NoNewFactCoverageChunkProvider(
 
 
 class E2RV5FactExtractionTests(unittest.TestCase):
+    def test_mixed_typed_receipts_preserve_only_unrelated_legacy_reassessment(
+        self,
+    ) -> None:
+        legacy_document_id = "DOC-LEGACY-REASSESSMENT"
+        typed_document_id = "DOC-UNRELATED-TYPED-RECEIPT"
+        typed_call = {
+            "batch_id": "FACTBATCH-TYPED",
+            "status": "COMPLETE",
+            "document_ids": [typed_document_id],
+            "accepted_claim_ids": [],
+            "rejected_proposal_count": 0,
+            "document_dispositions": [],
+            "pending_reasons": [],
+            "research_gap_feedback": [],
+            "provider_name": (
+                "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE"
+            ),
+            "prompt_hash": "FACTPROMPT-" + "1" * 24,
+            "response_hash": "FACTRESP-" + "2" * 24,
+            "provider_attempt_count": 0,
+            "current_lineage_request_ids": ["COLLABREQ-" + "3" * 64],
+            "current_lineage_response_ids": ["COLLABRESP-" + "4" * 64],
+            "current_lineage_original_batch_document_ids": [
+                typed_document_id
+            ],
+            "current_lineage_objective_reassessment_document_ids": [],
+            "extraction_semantics_version": (
+                "e2r_v5_structured_valuation_roles_v5"
+            ),
+        }
+
+        def load_with_typed_scope(document_id: str):
+            call = {**typed_call, "document_ids": [document_id]}
+            call["current_lineage_original_batch_document_ids"] = [
+                document_id
+            ]
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                for filename in (
+                    "material_fact_claims.jsonl",
+                    "fact_document_dispositions.jsonl",
+                    "fact_extraction_rejections.jsonl",
+                ):
+                    (root / filename).write_text("", encoding="utf-8")
+                (root / "fact_extraction_provider_calls.jsonl").write_text(
+                    json.dumps(call, sort_keys=True) + "\n",
+                    encoding="utf-8",
+                )
+                (root / "fact_extraction_result.json").write_text(
+                    json.dumps(
+                        {
+                            "target_id": TARGET,
+                            "as_of_date": AS_OF_DATE,
+                            "audit": {
+                                "current_fact_lineage_objective_reassessment_document_ids": [
+                                    legacy_document_id
+                                ]
+                            },
+                        },
+                        sort_keys=True,
+                    )
+                    + "\n",
+                    encoding="utf-8",
+                )
+                return _load_fact_checkpoint(
+                    root,
+                    source_graph=SimpleNamespace(
+                        target_id=TARGET,
+                        as_of_date=AS_OF_DATE,
+                        evidence_documents=(
+                            {"document_id": legacy_document_id},
+                            {"document_id": typed_document_id},
+                        ),
+                    ),
+                )
+
+        checkpoint = load_with_typed_scope(typed_document_id)
+        self.assertEqual(
+            checkpoint[
+                "prior_current_lineage_objective_reassessment_document_ids"
+            ],
+            (legacy_document_id,),
+        )
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "fact objective reassessment audit is outside its typed receipts",
+        ):
+            load_with_typed_scope(legacy_document_id)
+
     def test_objective_reassessment_is_an_exact_bounded_recovery_wait(self):
         reassessment = (
             "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"

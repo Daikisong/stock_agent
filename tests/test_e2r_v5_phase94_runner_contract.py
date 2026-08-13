@@ -1145,6 +1145,29 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             (positive["old_fact"]["fact_id"],),
         )
 
+        paginated = copy.deepcopy(positive)
+        paginated_call = dict(paginated["snapshot"]["provider_calls"][0])
+        paginated_call.update(
+            provider_attempt_count=2,
+            prompt_hash="FACTPROMPT-" + "7" * 24,
+            response_hash="FACTRESP-" + "8" * 24,
+            accepted_claims=[paginated["new_claim"]],
+        )
+        paginated["snapshot"]["provider_calls"] = (paginated_call,)
+        paginated["journal_payloads"][
+            (paginated_call["prompt_hash"], paginated_call["response_hash"])
+        ] = {
+            "facts": [],
+            "document_dispositions": [],
+            "unresolved_document_ids": [],
+            "unresolved_research_notes": [],
+            "extraction_complete": True,
+        }
+        self.assertEqual(
+            attest(paginated),
+            (paginated["old_fact"]["fact_id"],),
+        )
+
         replacement = copy.deepcopy(positive)
         replacement_compilation = EvidenceFactCompiler().compile(
             target_id="CURRENT-TARGET",
@@ -1436,6 +1459,67 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             retired,
             tuple(sorted(row["fact_id"] for row in authority_rows)),
         )
+
+        paginated = copy.deepcopy(snapshot)
+        paginated_call = dict(provider_call)
+        paginated_call["provider_attempt_count"] = 2
+        page_prompt_hash = "FACTPROMPT-" + "3" * 24
+        page_response_hash = "FACTRESP-" + "4" * 24
+        paginated_call["accepted_claim_ids"] = ["RFC-PAGINATED"]
+        paginated_call["accepted_claims"] = [
+            {
+                "claim_id": "RFC-PAGINATED",
+                "provider_prompt_hash": page_prompt_hash,
+                "provider_response_hash": page_response_hash,
+            }
+        ]
+        paginated["provider_calls"] = (paginated_call,)
+        with tempfile.TemporaryDirectory() as directory, patch(
+            "e2r.research_brain.researcher_mode.current_researcher_mode."
+            "_validated_official_fact_journal_payloads",
+            return_value={
+                (prompt_hash, response_hash): {"facts": []},
+                (page_prompt_hash, page_response_hash): {"facts": []},
+            },
+        ) as validate_journal:
+            self.assertEqual(
+                _attested_pending_fact_retirement_ids(
+                    root=Path(directory),
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=source_checkpoint,
+                    authority_by_id={
+                        row["fact_id"]: row for row in authority_rows
+                    },
+                    convenience_rows=(),
+                    committed_snapshot=paginated,
+                ),
+                tuple(sorted(row["fact_id"] for row in authority_rows)),
+            )
+        self.assertEqual(
+            set(validate_journal.call_args.kwargs["required_lineages"]),
+            {
+                (prompt_hash, response_hash),
+                (page_prompt_hash, page_response_hash),
+            },
+        )
+
+        unbound_paginated = copy.deepcopy(paginated)
+        del unbound_paginated["provider_calls"][0]["accepted_claims"]
+        with self.assertRaisesRegex(
+            ValueError, "fact retirement lacks exact current provider calls"
+        ):
+            _attested_pending_fact_retirement_ids(
+                root=Path("."),
+                target_id="CURRENT-TARGET",
+                as_of_date=AS_OF_DATE,
+                source_checkpoint=source_checkpoint,
+                authority_by_id={
+                    row["fact_id"]: row for row in authority_rows
+                },
+                convenience_rows=(),
+                committed_snapshot=unbound_paginated,
+            )
 
         partial = copy.deepcopy(snapshot)
         partial["audit"][
