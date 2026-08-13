@@ -95,6 +95,12 @@ OPERATIONAL_ACCEPTANCE_TEST_PASS = "E2R_V6_OPERATIONAL_ACCEPTANCE_CONTRACT_TEST_
 # quote/source lineage.  This is a transport batch, never a research-completion
 # count or a fixed top-N evidence filter.
 OPERATIONAL_FACT_DOCUMENTS_PER_CALL = 3
+# Phase101 can have a large sealed legacy-document roster to migrate before
+# receipts are exportable.  Keep this bounded, but let the extractor's stricter
+# 220k character budget decide the actual batch size instead of serialising the
+# migration one small document at a time.  Phase106/107 retain the more
+# conservative general-purpose operational batch above.
+PHASE101_FACT_DOCUMENTS_PER_CALL = 8
 OPERATIONAL_ACCEPTANCE_PENDING = "E2R_V6_OPERATIONAL_ACCEPTANCE_PENDING"
 OPERATIONAL_PHASE_DRIVER_SCHEMA = "e2r_v6_operational_phase_driver_v1"
 REVIEWER_GATE_PASS = "E2R_V6_OPERATIONAL_REVIEWER_K_V_PASS"
@@ -306,7 +312,7 @@ def run_operational_acceptance_phases(
                 "--output-root", str(source_root),
                 "--research-provider", "codex-collaboration",
                 "--fact-documents-per-call",
-                str(OPERATIONAL_FACT_DOCUMENTS_PER_CALL),
+                str(PHASE101_FACT_DOCUMENTS_PER_CALL),
             ],
         )
         current_wait_request_ids = _phase101_current_collaboration_wait_request_ids(
