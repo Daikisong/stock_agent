@@ -3275,6 +3275,13 @@ def _validated_pending_candidate_ranking_replay_context(
             "pending candidate ranking replay context must be an object"
         )
     if str(state.get("status") or "") not in {
+        # Query generation and candidate ranking are independent
+        # collaboration transports.  The checkpoint status prioritizes an
+        # empty-query semantic retry (QUERY_GENERATION_PENDING), while an
+        # already-open ranking request must still retain and replay its exact
+        # candidate batch.  Rejecting this valid overlap strands the ranking
+        # response before it can be consumed.
+        "QUERY_GENERATION_PENDING",
         "CANDIDATE_RANKING_PENDING",
         "CHECKPOINT_PENDING",
         "SOURCE_PROVIDER_PENDING",

@@ -2352,6 +2352,65 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             second.checkpoint,
         )
 
+    def test_pending_ranking_replays_while_query_generation_is_pending(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteRankingProvider(
+            queries=(QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+            material_titles=("never-material",),
+        )
+        url = "https://customer.example.com/ranking-with-query-wait"
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp ranking with query wait", url),)}
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=1,
+            max_fetches_per_checkpoint=1,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            config=config,
+        )
+        self.assertEqual(first.status, "CANDIDATE_RANKING_PENDING")
+        state = json.loads(json.dumps(first.checkpoint))
+        state.pop("checkpoint_id")
+        state.pop("checkpoint_hash")
+        # A separate empty-query collaboration wait has status priority over
+        # the already-open ranking wait.  Both replay contexts are valid and
+        # the ranking response must remain consumable.
+        state["status"] = "QUERY_GENERATION_PENDING"
+        state["pending_reasons"] = [
+            *state.get("pending_reasons", ()),
+            "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
+            + "COLLABREQ-"
+            + "a" * 64,
+        ]
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+
+        provider.ranking_pending = False
+        completed = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            config=config,
+            checkpoint=checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        candidate = completed.checkpoint["search_candidates"][0]
+        self.assertEqual(candidate["ranking_status"], "NOT_MATERIAL")
+        self.assertEqual(candidate["fetch_status"], "DISCOVERY_ONLY_NOT_FETCHED")
+        self.assertNotIn(
+            "pending_candidate_ranking_replay_context",
+            completed.checkpoint,
+        )
+
     def test_repeated_collaboration_ranking_wait_reuses_checkpoint_identity(
         self,
     ) -> None:
