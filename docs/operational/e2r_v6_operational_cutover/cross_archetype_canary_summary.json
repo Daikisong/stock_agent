@@ -1,0 +1,191 @@
+{
+  "as_of_date": "2026-08-09",
+  "canaries": [
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "canonical_stage": "0",
+      "component_score_vector": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 3.1,
+        "earnings_visibility": 8.8,
+        "eps_fcf_explosion": 7.8,
+        "information_confidence": 4.3,
+        "market_mispricing": 7.2,
+        "valuation_rerating": 3.6
+      },
+      "production_receipt_hash": "13d48e21de21e410d62290f6768a8d160d2e4e3dd543123cad4c3f9b39d033f5",
+      "production_receipt_id": "CANARYREC-d28c2f4e420fa476f2666d0f",
+      "result_id": "CANARYRUN-7b50dc28c265f7afa4acc678",
+      "result_payload_hash": "530ec4bc2cde6ce4f9be8906d2a9b2de9a0e28442e1a0975a9ee23f30685fa76",
+      "review_ids": [
+        "CANARYREV-58979457c7f5df7e7e6eb362",
+        "CANARYREV-04a9195e80b5dbf851606769"
+      ],
+      "review_receipt_hashes": [
+        "f290967955a94eda5f132c355af31e3f0529ba7b7e62ecf807f7628e446d83ff",
+        "b9bacf0508532225cb5b5825b7dabd7f4e05711f094111532b8867c82328c966"
+      ],
+      "reviewer_ids": [
+        "/root/hynix_epoch33_fact",
+        "/root/phase105_profile_response"
+      ],
+      "score_valid": true,
+      "selection_id": "SELREC-a8998c08eb6b3781a34337c0",
+      "stage_final": true,
+      "target_id": "058470",
+      "total_score": 42.8
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "canonical_stage": "0",
+      "component_score_vector": {
+        "bottleneck_pricing": 4.5,
+        "capital_allocation": 2.7,
+        "earnings_visibility": 4.7,
+        "eps_fcf_explosion": 3.6,
+        "information_confidence": 9.4,
+        "market_mispricing": 0.7,
+        "valuation_rerating": 0.6
+      },
+      "production_receipt_hash": "f56e428aeb10b0937a719f6b76232d75786ba2de95c760f26dfa874eaedb2533",
+      "production_receipt_id": "CANARYREC-605d94152e65272832262c50",
+      "result_id": "CANARYRUN-632655f1d5c5bec373093e4c",
+      "result_payload_hash": "a335951fac0e044956a8892d4271befd5e04a2e63bf2ab18bbe4c72ab5f79b91",
+      "review_ids": [
+        "CANARYREV-0f0d1cdf7de6d422986d5713",
+        "CANARYREV-69295474e574a98a67f1aed2"
+      ],
+      "review_receipt_hashes": [
+        "8125aef97eaa1fcfc54995136246b0ecfc99ba1e638080efe53737fbac2f93c9",
+        "0b1757a58460c80db12e38a67151a1d6cbc538f59a67e82d4f91cfacec64eb27"
+      ],
+      "reviewer_ids": [
+        "/root/hynix_epoch34_query",
+        "/root/phase105_profile_response"
+      ],
+      "score_valid": true,
+      "selection_id": "SELREC-5395eabd11d9432806a83c20",
+      "stage_final": true,
+      "target_id": "0004V0",
+      "total_score": 26.2
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "canonical_stage": "0",
+      "component_score_vector": {
+        "bottleneck_pricing": 7.8,
+        "capital_allocation": 1.9,
+        "earnings_visibility": 7.2,
+        "eps_fcf_explosion": 9.8,
+        "information_confidence": 16.0,
+        "market_mispricing": 4.7,
+        "valuation_rerating": 5.3
+      },
+      "production_receipt_hash": "ae78556623536b38e3f5c2e1692763ba997ca77e856f2bda65fe62ed14b31688",
+      "production_receipt_id": "CANARYREC-e93791caa173f6587872363d",
+      "result_id": "CANARYRUN-0673bf1d9f4d55dd6b0d583b",
+      "result_payload_hash": "de3562fcfe01848733d403680ea5b5c4ed0bc3c1801547c8decc1df8e96c7d2f",
+      "review_ids": [
+        "CANARYREV-73363c6c931a2d72f87d86d9",
+        "CANARYREV-1eb1980de431fa70a3522875"
+      ],
+      "review_receipt_hashes": [
+        "350a1680bc7c2dda77ce9aeb78c6a35a4ac35c62724f732a70a82c5cca718fe5",
+        "21b01297dea111bc1c0f989c583a69045c4b3bb90998599c9b82a71d692520d6"
+      ],
+      "reviewer_ids": [
+        "/root/hynix_epoch33_fact",
+        "/root/hynix_epoch34_query"
+      ],
+      "score_valid": true,
+      "selection_id": "SELREC-0d1cde67eef73b61b13098df",
+      "stage_final": true,
+      "target_id": "103140",
+      "total_score": 52.7
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "canonical_stage": "4C",
+      "component_score_vector": {
+        "bottleneck_pricing": 0.1,
+        "capital_allocation": 2.0,
+        "earnings_visibility": 2.8,
+        "eps_fcf_explosion": 0.45,
+        "information_confidence": 15.0,
+        "market_mispricing": 0.35,
+        "valuation_rerating": 0.45
+      },
+      "production_receipt_hash": "f6dfce2f9913217d1c5ef9a984fbc99056ac90fabbe0c818106456d5ec4cb841",
+      "production_receipt_id": "CANARYREC-3b23c5e8d60b5790a2d34ea8",
+      "result_id": "CANARYRUN-f8e7461e7e6d40b7de3e6695",
+      "result_payload_hash": "5c405610c4096ebe4a495c3473b8c8a66a070eeda50bbc7621b60bd6fa849025",
+      "review_ids": [
+        "CANARYREV-9fd2340ffb43fd7bef8096ea",
+        "CANARYREV-472de79b9dd8e00445b33428"
+      ],
+      "review_receipt_hashes": [
+        "5c2a3164ebd85b4b498a3d5ea4892d33d069ba6ba188a9def260ec68cdf1fda3",
+        "d2b29606acafe17dcad88e748d01fdb1e448abd7af5c6db36590d27c7feb5377"
+      ],
+      "reviewer_ids": [
+        "/root/hynix_epoch33_fact",
+        "/root/hynix_epoch34_query"
+      ],
+      "score_valid": true,
+      "selection_id": "SELREC-28f927e8085455e75aa8ce32",
+      "stage_final": true,
+      "target_id": "000100",
+      "total_score": 21.15
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "canonical_stage": "0",
+      "component_score_vector": {
+        "bottleneck_pricing": 1.8,
+        "capital_allocation": 2.4,
+        "earnings_visibility": 8.6,
+        "eps_fcf_explosion": 3.8,
+        "information_confidence": 5.4,
+        "market_mispricing": 1.6,
+        "valuation_rerating": 1.1
+      },
+      "production_receipt_hash": "1ea44c0faaaefb4ba45654402d46651f93022f7dc741434576ba6decbc8295e9",
+      "production_receipt_id": "CANARYREC-efeaa261e70432e2088ca5c1",
+      "result_id": "CANARYRUN-cbf4978a7a47aab1299dc1d8",
+      "result_payload_hash": "aad6e0028e31f7d2cef0596b87c29b4a87e4bbe012f37b81a595d65b0f9b099f",
+      "review_ids": [
+        "CANARYREV-d005c6f25b752c2048abea88",
+        "CANARYREV-ee8e8a2768f26c8f4514cb3c"
+      ],
+      "review_receipt_hashes": [
+        "4d98f3eda37b723a022c8486f43fcd295d12ab0413f19283b1029b10852717bd",
+        "6b6353055ad117f626111f39e7a4cefc3e0d36b7d8f74caf5f6b1ca525306d8b"
+      ],
+      "reviewer_ids": [
+        "/root/hynix_epoch33_fact",
+        "/root/hynix_epoch34_query"
+      ],
+      "score_valid": true,
+      "selection_id": "SELREC-55c4ffd46303b3b767c7481d",
+      "stage_final": true,
+      "target_id": "0007C0",
+      "total_score": 24.7
+    }
+  ],
+  "canary_count": 5,
+  "critical_count_sum": 0,
+  "independent_review_count": 10,
+  "production_readiness_authority": false,
+  "required_archetypes": [
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+    "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+    "C24_BIO_TRIAL_DATA_EVENT_RISK",
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
+  ],
+  "schema_version": "e2r_v6_cross_archetype_canary_summary_v1",
+  "score_or_stage_authority": false,
+  "selection_roster_hash": "1887305d605bcec097728e1384f00259cc5997bccce404b6be41a7c0647b5409",
+  "status": "E2R_V6_CROSS_ARCHETYPE_CANARY_SUMMARY_PASS",
+  "summary_id": "CANARYSUM-4126f9664aae37f484c50dfe"
+}
