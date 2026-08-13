@@ -4318,6 +4318,44 @@ _FACT_COMPILER_ADDITIVE_FIELDS = frozenset(
 )
 
 
+def _structured_role_only_reclassification(
+    old: Mapping[str, Any],
+    current: Mapping[str, Any],
+) -> tuple[str, ...]:
+    """Return newly added roles for one otherwise-identical compiled fact.
+
+    Structured roles are score-facing semantics, so they are not ordinary
+    corroboration metadata.  A current-semantics fact rewrite may nevertheless
+    add a role to the exact same fact and claim lineage.  Keep that migration
+    distinguishable from a general semantic mutation: every other compiled
+    field must remain byte-for-byte canonical, old roles must be preserved,
+    and at least one role must be added.
+    """
+
+    def roles(row: Mapping[str, Any]) -> frozenset[str]:
+        raw = row.get("structured_evidence_roles") or ()
+        if isinstance(raw, (str, bytes)) or not isinstance(raw, Sequence):
+            raise ValueError("fact structured role lineage must be an array")
+        values = tuple(str(value or "").strip() for value in raw)
+        if any(not value for value in values) or len(values) != len(set(values)):
+            raise ValueError("fact structured role lineage is invalid")
+        return frozenset(values)
+
+    old_without_roles = dict(old)
+    current_without_roles = dict(current)
+    old_without_roles.pop("structured_evidence_roles", None)
+    current_without_roles.pop("structured_evidence_roles", None)
+    if _canonical_json_payload(old_without_roles) != _canonical_json_payload(
+        current_without_roles
+    ):
+        return ()
+    old_roles = roles(old)
+    current_roles = roles(current)
+    if not old_roles < current_roles:
+        return ()
+    return tuple(sorted(current_roles - old_roles))
+
+
 def _fact_lineage_values(
     row: Mapping[str, Any],
     field: str,
@@ -4596,6 +4634,10 @@ def _attested_compiler_fact_addition_ids(
         current = convenience_by_id.get(fact_id)
         if old is None or current is None:
             raise ValueError("enriched fact is absent from an authority plane")
+        added_structured_roles = _structured_role_only_reclassification(
+            old,
+            current,
+        )
         old_stable = {
             key: value
             for key, value in old.items()
@@ -4606,8 +4648,10 @@ def _attested_compiler_fact_addition_ids(
             for key, value in current.items()
             if key not in _FACT_COMPILER_ADDITIVE_FIELDS
         }
-        if _canonical_json_payload(old_stable) != _canonical_json_payload(
-            current_stable
+        if (
+            not added_structured_roles
+            and _canonical_json_payload(old_stable)
+            != _canonical_json_payload(current_stable)
         ):
             raise ValueError("enriched fact changed immutable semantic metadata")
         old_claim_ids = frozenset(
@@ -4617,7 +4661,102 @@ def _attested_compiler_fact_addition_ids(
             _fact_lineage_values(current, "claim_ids")
         )
         added_claim_ids = current_claim_ids - old_claim_ids
-        if not added_claim_ids or not old_claim_ids.issubset(current_claim_ids):
+        if added_structured_roles:
+            audit = committed_snapshot.get("audit")
+            selected_document_ids = frozenset(
+                str(value)
+                for value in (
+                    (audit or {}).get(
+                        "scenario_role_reextraction_document_ids"
+                    )
+                    or ()
+                )
+                if str(value)
+            )
+            committed_document_ids = frozenset(
+                str(value)
+                for value in (
+                    (audit or {}).get(
+                        "scenario_role_reextraction_committed_document_ids"
+                    )
+                    or ()
+                )
+                if str(value)
+            )
+            role_claim_ids = frozenset(
+                claim_id
+                for claim_id in current_claim_ids
+                if claim_id in claim_by_id
+                and set(
+                    claim_by_id[claim_id].get(
+                        "structured_evidence_roles"
+                    )
+                    or ()
+                ).intersection(added_structured_roles)
+            )
+            role_document_ids = frozenset(
+                str(claim_by_id[claim_id].get("document_id") or "")
+                for claim_id in role_claim_ids
+            )
+            covered_added_roles = frozenset(
+                role
+                for claim_id in role_claim_ids
+                for role in (
+                    claim_by_id[claim_id].get(
+                        "structured_evidence_roles"
+                    )
+                    or ()
+                )
+                if role in added_structured_roles
+            )
+            selected_document_count = int(
+                (audit or {}).get(
+                    "scenario_role_reextraction_selected_document_count"
+                )
+                or 0
+            )
+            completed_document_count = int(
+                (audit or {}).get(
+                    "scenario_role_reextraction_completed_document_count"
+                )
+                or 0
+            )
+            scenario_audit_declared = bool(
+                selected_document_ids
+                or committed_document_ids
+                or selected_document_count
+                or completed_document_count
+            )
+            if (
+                not isinstance(audit, Mapping)
+                or (
+                    scenario_audit_declared
+                    and (
+                        not selected_document_ids
+                        or selected_document_ids
+                        != committed_document_ids
+                        or selected_document_count
+                        != len(selected_document_ids)
+                        or completed_document_count
+                        != len(committed_document_ids)
+                        or not role_document_ids.issubset(
+                            committed_document_ids
+                        )
+                    )
+                )
+                or added_claim_ids
+                or old_claim_ids != current_claim_ids
+                or not role_claim_ids
+                or covered_added_roles != frozenset(added_structured_roles)
+            ):
+                raise ValueError(
+                    "structured-role reclassification lacks a complete exact audit"
+                )
+            # The claim id is intentionally stable across a role-only rewrite.
+            # Re-attest the rewritten claim against its current official
+            # provider response below instead of pretending it is a new claim.
+            added_claim_ids = role_claim_ids
+        elif not added_claim_ids or not old_claim_ids.issubset(current_claim_ids):
             raise ValueError("enriched fact did not preserve exact claim lineage")
         added_claim_ids_by_fact[fact_id] = added_claim_ids
         for field in (

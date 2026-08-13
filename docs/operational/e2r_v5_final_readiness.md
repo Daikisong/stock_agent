@@ -2,8 +2,8 @@
 
 - exact verdict: `MEANINGFUL_E2R_RESEARCHER_PARITY_NOT_READY`
 - reviewer gate: `E2R_V5_INDEPENDENT_REVIEWER_GATE_FAIL`
-- reviewer critical sum: `2`
-- failed reviewers: `F, G`
+- reviewer critical sum: `4`
+- failed reviewers: `F, G, J`
 
 ## Historical parity
 
@@ -24,12 +24,12 @@
 ## Current decisions
 
 - 삼성전자 (005930): memos `7/7`, score valid `true`, FINAL StageCourt `true`
-- SK하이닉스 (000660): memos `7/7`, score valid `false`, FINAL StageCourt `false`
+- SK하이닉스 (000660): memos `0/7`, score valid `false`, FINAL StageCourt `false`
 
 ## Runtime
 
 - current full-test evidence: `PASS`
-- full-test count: `7136`
+- full-test count: `7141`
 - positive/known-bad capability audit: `PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS`
 - self-repair audit: `PHASE99_INTERNAL_SELF_REPAIR_PASS`
 - StageCourt acceptance: `FINAL_STAGECOURT_PENDING`

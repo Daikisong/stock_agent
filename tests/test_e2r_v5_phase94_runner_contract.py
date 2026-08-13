@@ -599,6 +599,113 @@ def _authority_fact_enrichment_fixture(
     }
 
 
+def _authority_structured_role_reclassification_fixture():
+    document = dict(
+        _document(
+            "SGDOC-" + "f" * 24,
+            "ISSUER_PRESENTATION",
+            "ISSUER:role.example",
+        )
+    )
+    proposal = dict(
+        FactProvider().complete(
+            pass_name="EVIDENCE_FACT_EXTRACTION",
+            payload={"full_documents": [document]},
+        )["facts"][0]
+    )
+    proposal["structured_evidence_roles"] = ["FORWARD_GUIDANCE"]
+    prompt_hash = stable_intelligence_id(
+        "FACTPROMPT", {"document_id": document["document_id"], "roles": "v7"}
+    )
+    response_hash = stable_intelligence_id(
+        "FACTRESP", {"document_id": document["document_id"], "roles": "v7"}
+    )
+    claim = _accepted_claim(
+        proposal,
+        document=document,
+        target_id="CURRENT-TARGET",
+        as_of_date=AS_OF_DATE,
+        provider_name=COLLABORATION_PROVIDER_NAME,
+        prompt_hash=prompt_hash,
+        response_hash=response_hash,
+        allowed_component_ids=("information_confidence",),
+    )
+    compilation = EvidenceFactCompiler().compile(
+        target_id="CURRENT-TARGET",
+        as_of_date=AS_OF_DATE,
+        accepted_claims=(claim,),
+    )
+    current_fact = compilation.facts[0].to_dict()
+    old_fact = {**current_fact, "structured_evidence_roles": []}
+    source_checkpoint = {
+        **_authority_source_checkpoint(document_id=document["document_id"]),
+        "evidence_documents": [document],
+    }
+    provider_call = {
+        "schema_version": "e2r_v5_fact_extraction_provider_call_v5",
+        "batch_id": "FACTBATCH-" + "f" * 24,
+        "status": "COMPLETE",
+        "document_ids": [document["document_id"]],
+        "accepted_claim_ids": [claim["claim_id"]],
+        "rejected_proposal_count": 0,
+        "document_dispositions": [],
+        "pending_reasons": [],
+        "research_gap_feedback": [],
+        "provider_name": COLLABORATION_PROVIDER_NAME,
+        "prompt_hash": prompt_hash,
+        "response_hash": response_hash,
+        "provider_attempt_count": 1,
+    }
+    audit = {
+        "input_document_count": 1,
+        "scenario_role_reextraction_document_ids": [document["document_id"]],
+        "scenario_role_reextraction_selected_document_count": 1,
+        "scenario_role_reextraction_committed_document_ids": [
+            document["document_id"]
+        ],
+        "scenario_role_reextraction_completed_document_count": 1,
+    }
+    snapshot = {
+        "target_id": "CURRENT-TARGET",
+        "as_of_date": AS_OF_DATE,
+        "result": {
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": AS_OF_DATE,
+            "status": "FACT_EXTRACTION_PENDING",
+            "pending_reasons": [
+                FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+            ],
+            "audit": audit,
+            "fact_compilation": {"facts": [current_fact]},
+        },
+        "audit": audit,
+        "facts": (current_fact,),
+        "accepted_claims": (claim,),
+        "claim_fact_links": tuple(
+            row.to_dict() for row in compilation.claim_fact_links
+        ),
+        "provider_calls": (provider_call,),
+        "leaf_commit_complete": True,
+        "atomic_snapshot_repair_required": False,
+        "leaf_mismatch_names": (),
+    }
+    return {
+        "old_fact": old_fact,
+        "current_fact": current_fact,
+        "source_checkpoint": source_checkpoint,
+        "snapshot": snapshot,
+        "journal_payloads": {
+            (prompt_hash, response_hash): {
+                "facts": [proposal],
+                "document_dispositions": [],
+                "unresolved_document_ids": [],
+                "unresolved_research_notes": [],
+                "extraction_complete": True,
+            }
+        },
+    }
+
+
 class E2RV5Phase94RunnerContractTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
 
@@ -1239,6 +1346,62 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self_supersession["snapshot"]["claim_fact_links"] = tuple(changed_links)
         with self.assertRaisesRegex(ValueError, "compiler replay|link drift"):
             attest(self_supersession)
+
+    def test_compiler_attests_exact_v7_structured_role_reclassification(self):
+        material = _authority_structured_role_reclassification_fixture()
+
+        def attest(snapshot):
+            with patch(
+                "e2r.research_brain.researcher_mode.current_researcher_mode."
+                "_validated_official_fact_journal_payloads",
+                return_value=material["journal_payloads"],
+            ):
+                return _attested_compiler_fact_addition_ids(
+                    root=Path("unused"),
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=material["source_checkpoint"],
+                    authority_by_id={
+                        material["old_fact"]["fact_id"]: material["old_fact"]
+                    },
+                    convenience_rows=(material["current_fact"],),
+                    enriched_fact_ids=(material["old_fact"]["fact_id"],),
+                    pending_new_fact_ids=(),
+                    committed_snapshot=snapshot,
+                )
+
+        self.assertEqual(
+            attest(material["snapshot"]),
+            (material["old_fact"]["fact_id"],),
+        )
+
+        later_checkpoint = copy.deepcopy(material["snapshot"])
+        later_checkpoint["audit"] = {
+            "input_document_count": 1,
+            "scenario_role_reextraction_document_ids": [],
+            "scenario_role_reextraction_selected_document_count": 0,
+            "scenario_role_reextraction_committed_document_ids": [],
+            "scenario_role_reextraction_completed_document_count": 0,
+        }
+        self.assertEqual(
+            attest(later_checkpoint),
+            (material["old_fact"]["fact_id"],),
+        )
+
+        unattested = copy.deepcopy(material["snapshot"])
+        unattested["audit"] = {
+            "input_document_count": 1,
+            "scenario_role_reextraction_document_ids": [
+                material["source_checkpoint"][
+                    "production_downstream_document_ids"
+                ][0]
+            ],
+            "scenario_role_reextraction_selected_document_count": 1,
+            "scenario_role_reextraction_committed_document_ids": [],
+            "scenario_role_reextraction_completed_document_count": 0,
+        }
+        with self.assertRaisesRegex(ValueError, "complete exact audit"):
+            attest(unattested)
 
     def test_authoritative_fact_context_attests_pending_new_and_recovers_mixed_gap(
         self,

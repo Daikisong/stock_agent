@@ -40,8 +40,10 @@ from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     _atomic_fact_lineage_rematerialization_document_ids,
     _batch_current_fact_lineage_pending_reasons,
     _current_fact_lineage_rematerialization_gaps,
+    _coverage_gap_objective_ids,
     _document_transport_chunks,
     _fact_semantics_upgrade_requires_reextraction,
+    _scenario_role_reextraction_document_ids,
     _source_boundary_context_by_document_id,
     fact_extraction_has_exact_checkpoint_recovery_wait,
     normalize_punctuation_only_fact_value,
@@ -408,6 +410,102 @@ class ObjectiveLocalFactProvider(FactProvider):
             ]
             fact["objective_relation"] = "ADVANCE"
         return response
+
+
+class FutureIssuerPlanFactProvider:
+    provider_name = "TEST_FUTURE_ISSUER_PLAN_PROVIDER"
+
+    def __init__(self, *, nominate_forward_guidance: bool) -> None:
+        self.nominate_forward_guidance = nominate_forward_guidance
+        self.calls: list[Mapping[str, Any]] = []
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        if pass_name != "EVIDENCE_FACT_EXTRACTION":
+            raise AssertionError(pass_name)
+        self.calls.append(payload)
+        documents = tuple(payload["full_documents"])
+        coverage_audit = (
+            "fact_extraction_coverage_audit_context" in payload
+        )
+        objective_ids_by_document = {
+            str(row["document_id"]): list(row["objective_ids"])
+            for row in payload["fact_extraction_scope_contract"][
+                "document_objective_ids"
+            ]
+        }
+        facts = []
+        if not coverage_audit:
+            facts = [
+                {
+                    "document_id": row["document_id"],
+                    "question_family_id": "future_capacity_investment",
+                    "subject_id": "target_future_capacity_plan",
+                    "subject": "Current Corp future capacity plan",
+                    "business_segment": "CORPORATE_GENERIC",
+                    "product_family": "CORPORATE_GENERIC",
+                    "scope_business_segment": "CORPORATE_GENERIC",
+                    "scope_product_family": "CORPORATE_GENERIC",
+                    "scope_technology_family": "CORPORATE_GENERIC",
+                    "scope_transaction_type": "GENERIC_INFORMATION",
+                    "scope_economic_mechanism": "INFORMATION_ONLY",
+                    "scope_confidence": 0.9,
+                    "economic_mechanism": "CAPACITY_INVESTMENT_PLAN",
+                    "mechanism_scope_id": (
+                        f"{TARGET}:CORPORATE_GENERIC:CAPITAL_ALLOCATION"
+                    ),
+                    "predicate": (
+                        "Current Corp plans KRW 19 billion of future "
+                        "capacity investment"
+                    ),
+                    "predicate_family": "FUTURE_CAPACITY_INVESTMENT_PLAN",
+                    "value": 19_000_000_000,
+                    "normalized_object": "future_capacity_investment",
+                    "unit": "KRW",
+                    "period": "2026 onward",
+                    "direction": "NEUTRAL",
+                    "current_lifecycle": "OPEN",
+                    "exact_quote": (
+                        "Current Corp will invest KRW 19 billion in a new "
+                        "capacity facility starting in July 2026."
+                    ),
+                    "material": True,
+                    "materiality": "CRITICAL",
+                    "materiality_rationale": (
+                        "The numeric issuer plan changes future capacity and "
+                        "capital requirements."
+                    ),
+                    "confidence": 0.95,
+                    "question_family_tags": ["future_capacity_investment"],
+                    "primitive_tags": [],
+                    "structured_evidence_roles": (
+                        ["FORWARD_GUIDANCE"]
+                        if self.nominate_forward_guidance
+                        else []
+                    ),
+                    "objective_ids": objective_ids_by_document[
+                        str(row["document_id"])
+                    ],
+                    "objective_relation": "ADVANCE",
+                }
+                for row in documents
+            ]
+        return {
+            "facts": facts,
+            "document_dispositions": [
+                {
+                    "document_id": row["document_id"],
+                    "status": "FACTS_EXTRACTED",
+                    "rationale": (
+                        "The complete issuer plan was reviewed under the "
+                        "current structured-role contract."
+                    ),
+                }
+                for row in documents
+            ],
+            "unresolved_document_ids": [],
+            "unresolved_research_notes": [],
+            "extraction_complete": True,
+        }
 
 
 class CoverageAuditOmissionProvider(ObjectiveLocalFactProvider):
@@ -1585,13 +1683,40 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             self.assertEqual(checkpoint["prior_material_claims"], ())
             self.assertEqual(checkpoint["prior_provider_calls"], ())
 
-    def test_structured_valuation_semantics_upgrade_reextracts_only_broker_pdf(
+    def test_structured_missing_role_routes_to_its_component_objective(
+        self,
+    ) -> None:
+        self.assertEqual(
+            _coverage_gap_objective_ids(
+                open_objectives=(
+                    {
+                        "objective_id": "OBJECTIVE-VALUATION",
+                        "component_id": "valuation_rerating",
+                    },
+                    {
+                        "objective_id": "OBJECTIVE-CAPITAL",
+                        "component_id": "capital_allocation",
+                    },
+                ),
+                score_gap_context={
+                    "prior_structured_source_gap": {
+                        "missing_roles_by_component": {
+                            "valuation_rerating": ["DURABLE_VISIBILITY"],
+                            "capital_allocation": [],
+                        }
+                    }
+                },
+            ),
+            frozenset({"OBJECTIVE-VALUATION"}),
+        )
+
+    def test_base_semantics_upgrade_keeps_issuer_role_migration_separate(
         self,
     ) -> None:
         previous_scenario_input_boundary = (
             "e2r_v5_structured_revision_roles_v6"
         )
-        self.assertTrue(
+        self.assertFalse(
             _fact_semantics_upgrade_requires_reextraction(
                 previous_version=previous_scenario_input_boundary,
                 document={"source_family": "OPENDART"},
@@ -1639,6 +1764,179 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             _fact_semantics_upgrade_requires_reextraction(
                 previous_version="pre_boundary_context_v3",
                 document={"source_family": "OPENDART"},
+            )
+        )
+
+    def test_scenario_role_rewrite_requires_gap_component_compatibility(
+        self,
+    ) -> None:
+        document = dict(
+            _document(
+                "DOC-SCENARIO-COMPONENT-SCOPE",
+                "OPENDART",
+                "OPENDART:current.example",
+            )
+        )
+        document["objective_ids"] = ["OBJECTIVE-VALUATION"]
+        claim = {
+            "document_id": document["document_id"],
+            "allowed_component_ids": ["capital_allocation"],
+            "structured_evidence_roles": [],
+            "value": 19_000_000_000,
+            "period": "2027 onward",
+            "available_at": "2026-05-15",
+        }
+        dispositions = (
+            {
+                "document_id": document["document_id"],
+                "extraction_semantics_version": (
+                    "e2r_v5_structured_revision_roles_v6"
+                ),
+            },
+        )
+        kwargs = {
+            "documents": (document,),
+            "prior_document_dispositions": dispositions,
+            "prior_provider_calls": (),
+            "coverage_gap_objective_ids": frozenset(
+                {"OBJECTIVE-VALUATION"}
+            ),
+            "objective_component_by_id": {
+                "OBJECTIVE-VALUATION": "valuation_rerating"
+            },
+        }
+        self.assertEqual(
+            _scenario_role_reextraction_document_ids(
+                prior_material_claims=(claim,),
+                **kwargs,
+            ),
+            frozenset(),
+        )
+        compatible = {
+            **claim,
+            "allowed_component_ids": ["valuation_rerating"],
+        }
+        self.assertEqual(
+            _scenario_role_reextraction_document_ids(
+                prior_material_claims=(compatible,),
+                **kwargs,
+            ),
+            frozenset({document["document_id"]}),
+        )
+
+    def test_v5_issuer_future_plan_is_atomically_rewritten_with_v7_role(
+        self,
+    ) -> None:
+        quote = (
+            "Current Corp will invest KRW 19 billion in a new capacity "
+            "facility starting in July 2026."
+        )
+        document = dict(
+            _document(
+                "DOC-FUTURE-ISSUER-PLAN",
+                "OPENDART",
+                "OPENDART:current.example",
+            )
+        )
+        document["content_text"] = quote
+        document["content_hash"] = hashlib.sha256(
+            quote.encode("utf-8")
+        ).hexdigest()
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "capital_allocation",
+        }
+        initial = ResearcherEvidenceFactExtractor(
+            provider=FutureIssuerPlanFactProvider(
+                nominate_forward_guidance=False
+            )
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(objective,),
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        self.assertEqual(initial.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(
+            initial.material_claims[0]["structured_evidence_roles"],
+            [],
+        )
+
+        old_version = "e2r_v5_structured_valuation_roles_v5"
+        prior_dispositions = tuple(
+            {**row, "extraction_semantics_version": old_version}
+            for row in initial.document_dispositions
+        )
+        prior_calls = tuple(
+            {
+                **row.to_dict(),
+                "extraction_semantics_version": old_version,
+            }
+            for row in initial.provider_calls
+        )
+        provider = FutureIssuerPlanFactProvider(
+            nominate_forward_guidance=True
+        )
+        rewritten = ResearcherEvidenceFactExtractor(
+            provider=provider
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(objective,),
+            current_facts=tuple(row.to_dict() for row in initial.facts),
+            prior_material_claims=initial.material_claims,
+            prior_document_dispositions=prior_dispositions,
+            prior_provider_calls=prior_calls,
+            prior_rejections=initial.rejections,
+            score_gap_context={
+                "prior_structured_source_gap": {
+                    "missing_roles_by_component": {
+                        "capital_allocation": ["DURABLE_VISIBILITY"]
+                    }
+                }
+            },
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(rewritten.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(rewritten.material_claims), 1)
+        self.assertEqual(
+            rewritten.material_claims[0]["structured_evidence_roles"],
+            ["FORWARD_GUIDANCE"],
+        )
+        self.assertEqual(
+            rewritten.facts[0].structured_evidence_roles,
+            ("FORWARD_GUIDANCE",),
+        )
+        self.assertEqual(
+            rewritten.audit[
+                "scenario_role_reextraction_selected_document_count"
+            ],
+            1,
+        )
+        self.assertEqual(
+            rewritten.audit[
+                "scenario_role_reextraction_completed_document_count"
+            ],
+            1,
+        )
+        self.assertEqual(
+            rewritten.audit["scenario_role_invalidated_prior_claim_count"],
+            1,
+        )
+        self.assertTrue(
+            all(
+                row.extraction_semantics_version
+                == FACT_EXTRACTION_SEMANTICS_VERSION
+                for row in rewritten.provider_calls
             )
         )
 
@@ -7346,6 +7644,85 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         )
         self.assertEqual(
             resumed.audit["base_reextraction_document_count"],
+            0,
+        )
+
+    def test_new_source_direction_does_not_replay_completed_document(self):
+        document = dict(
+            _document(
+                "DOC-GAP-REQUIRES-NEW-SOURCE",
+                "ISSUER_PRESENTATION",
+                "ISSUER",
+            )
+        )
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "information_confidence",
+        }
+        first = ResearcherEvidenceFactExtractor(
+            provider=ObjectiveLocalFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(objective,),
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        provider = ObjectiveLocalFactProvider()
+        resumed = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(objective,),
+            current_facts=tuple(
+                row.to_dict() for row in first.fact_compilation.facts
+            ),
+            prior_material_claims=first.material_claims,
+            prior_document_dispositions=first.document_dispositions,
+            prior_provider_calls=first.provider_calls,
+            prior_rejections=first.rejections,
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "missing_material_facts": [
+                        {
+                            "component_id": "information_confidence",
+                            "fact_need": "independent issuer corroboration",
+                        }
+                    ],
+                    "new_source_family_directions": [
+                        {
+                            "objective_id": "OBJECTIVE-1",
+                            "source_family": "CUSTOMER_OFFICIAL",
+                            "direction": "verify a new official identity",
+                        }
+                    ],
+                }
+            },
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(resumed.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(provider.calls, [])
+        self.assertEqual(resumed.audit["coverage_gap_objective_count"], 1)
+        self.assertEqual(
+            resumed.audit["new_source_direction_objective_count"],
+            1,
+        )
+        self.assertEqual(
+            resumed.audit[
+                "completed_document_coverage_audit_objective_count"
+            ],
+            0,
+        )
+        self.assertEqual(
+            resumed.audit["coverage_audit_required_document_count"],
             0,
         )
 

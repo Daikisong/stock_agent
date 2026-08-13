@@ -1317,8 +1317,8 @@ test_candidate_materiality_scope_attestation_binds_official_request (test_e2r_v5
 test_candidate_scope_attestation_fails_closed_on_request_tamper (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
 test_clean_resume_recovers_exact_peer_retry_after_primary_quarantine (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
 test_clean_resume_recovers_fact_pagination_origin_before_page_two (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
-test_concurrent_import_is_atomic_first_writer_wins (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... backfill_plan=/tmp/tmpj7sn956h/backfill_plan.json
-{"as_of_date": "2026-07-01", "blockers": ["CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE"], "canonical_stage": "0", "command": "run_e2r_census_mode", "command_hashes": {"commit_hash": "f3183e776281d5456c8be4b0ca4b6eee0310fcef", "config_hash": "457b61686be8ada34510692aa0397f98b22be4ba2ec1eedffbb89c018ecf1ab3", "corpus_hash": "f101882840c61f1d0250a3f50b2ad7307a834e15672ebc0a38776481e560d0b8", "dirty_status_hash": "e947ca655dcabcec5c7c5e0f0414dc9b9d7f1769a5ad05573e0def2565aecb22", "memory_hash": "98341bf8a27880cd5bee065340a3a16063986f74970b5899db4bca9f17336e12", "prompt_hash": "607819cc776d804ee9188351b88f09cd27e99ba9c42fda6df3c3e195424c7d45", "recipe_hash": "0ba8645a35367b4b56d316fa5c08ed3a40bd53d93a5c3bc8683e3a869e134ba0", "repo_dirty": true, "source_hash": "ec499d62a33b3face216285f6771a93131e6977789c867fec3fba4f65e967ea9"}, "command_run_id": "COMMAND-71e9f748c50588ba1ad1389a", "mode": "census_selective_deep", "output_paths": {"command_audit": "output/test_legacy_cli_lockout/command_run_reproducibility_audit.json", "command_manifest": "output/test_legacy_cli_lockout/command_run_manifest.json", "pending": "output/test_legacy_cli_lockout/current_operation_source_pending.json"}, "production_runtime_ready": false, "raw_reference_score": null, "schema_version": "e2r_current_operation_source_pending_v1", "score_valid": false, "status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY", "universe": "krx"}
+test_concurrent_import_is_atomic_first_writer_wins (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... backfill_plan=/tmp/tmpul8yqw7m/backfill_plan.json
+{"as_of_date": "2026-07-01", "blockers": ["CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE"], "canonical_stage": "0", "command": "run_e2r_census_mode", "command_hashes": {"commit_hash": "b7fc457c5ce4da502d5e1bf720e0f966f6d35c11", "config_hash": "457b61686be8ada34510692aa0397f98b22be4ba2ec1eedffbb89c018ecf1ab3", "corpus_hash": "f101882840c61f1d0250a3f50b2ad7307a834e15672ebc0a38776481e560d0b8", "dirty_status_hash": "104bb5db3b6eb76235c24b336c2f34986d0df78a8dc1a35a4868603cce925319", "memory_hash": "98341bf8a27880cd5bee065340a3a16063986f74970b5899db4bca9f17336e12", "prompt_hash": "607819cc776d804ee9188351b88f09cd27e99ba9c42fda6df3c3e195424c7d45", "recipe_hash": "0ba8645a35367b4b56d316fa5c08ed3a40bd53d93a5c3bc8683e3a869e134ba0", "repo_dirty": true, "source_hash": "ec499d62a33b3face216285f6771a93131e6977789c867fec3fba4f65e967ea9"}, "command_run_id": "COMMAND-f597da1d527cb42bece590a5", "mode": "census_selective_deep", "output_paths": {"command_audit": "output/test_legacy_cli_lockout/command_run_reproducibility_audit.json", "command_manifest": "output/test_legacy_cli_lockout/command_run_manifest.json", "pending": "output/test_legacy_cli_lockout/current_operation_source_pending.json"}, "production_runtime_ready": false, "raw_reference_score": null, "schema_version": "e2r_current_operation_source_pending_v1", "score_valid": false, "status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY", "universe": "krx"}
 {"canonical_readiness_eligible": false, "canonical_ready_label_allowed": false, "command": "run_e2r_census_v3_until_pass", "reason": "legacy command requires explicit diagnostic opt-in", "replacement": "python -m e2r.cli.run_e2r_current_operation", "status": "LEGACY_DIAGNOSTIC_ONLY"}
 INVALID_PARTIAL_OUTPUT
 NOT_READY
@@ -1329,10 +1329,10 @@ ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 dry_run=True
-planned_searches=/tmp/tmp5q00z_7f/out/planned_searches.json
-summary=/tmp/tmp5q00z_7f/out/case_coverage_summary.md
-matrix=/tmp/tmp5q00z_7f/out/archetype_case_matrix.csv
-weights=/tmp/tmp5q00z_7f/out/recommended_score_weights.md
+planned_searches=/tmp/tmpzn0fqsve/out/planned_searches.json
+summary=/tmp/tmpzn0fqsve/out/case_coverage_summary.md
+matrix=/tmp/tmpzn0fqsve/out/archetype_case_matrix.csv
+weights=/tmp/tmpzn0fqsve/out/recommended_score_weights.md
 ok
 test_dedicated_importer_cli_writes_only_validated_response_namespace (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
 test_default_composite_primary_keeps_normal_codex_cache_identity (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
@@ -1498,6 +1498,7 @@ test_same_source_id_cannot_fake_an_independent_confidence_gain (test_e2r_v5_evid
 test_writer_emits_exact_fact_graph_leaf_files (test_e2r_v5_evidence_fact_graph.E2RV5EvidenceFactGraphTests) ... ok
 test_wrong_component_mechanism_is_terminal_but_never_scored (test_e2r_v5_evidence_fact_graph.E2RV5EvidenceFactGraphTests) ... ok
 test_absent_v4_receipt_falls_through_to_normal_v5_extraction (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
+test_base_semantics_upgrade_keeps_issuer_role_migration_separate (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_batch_lineage_retry_does_not_absorb_unprocessed_gap_document (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_checkpoint_resume_does_not_repeat_completed_document_calls (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_checkpoint_resume_migrates_punctuation_only_claim_without_duplication (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
@@ -1543,6 +1544,7 @@ test_mixed_source_retirement_requires_surviving_old_lineage (test_e2r_v5_fact_ex
 test_mixed_typed_receipts_preserve_only_unrelated_legacy_reassessment (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_native_numeric_provider_value_and_zero_remain_numeric (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_new_document_precedes_stale_coverage_refresh (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
+test_new_source_direction_does_not_replay_completed_document (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_no_material_rationale_cannot_retire_current_roster_fact (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_noncanonical_scope_tokens_are_returned_to_llm_for_rewrite (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_numeric_scalar_string_restoration_is_quantitative_and_narrow (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
@@ -1566,6 +1568,7 @@ test_retry_repeating_accepted_quote_is_dropped_without_new_fact (test_e2r_v5_fac
 test_same_fact_id_cannot_drop_current_source_or_claim_lineage (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_same_lineage_set_cannot_change_primary_claim_in_place (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_same_quote_with_distinct_semantic_identity_is_not_dropped (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
+test_scenario_role_rewrite_requires_gap_component_compatibility (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_self_referential_fact_lineage_is_rejected (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_single_cli_timeout_leaves_only_that_document_pending (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_snippet_and_future_document_are_rejected_before_llm (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
@@ -1577,7 +1580,7 @@ test_stale_trusted_document_recovers_cross_objective_atomic_leg_once (test_e2r_v
 test_stale_trusted_document_with_prior_coverage_audit_is_not_replayed (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_structured_json_string_provider_value_restores_native_type (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_structured_json_string_value_restores_native_type_without_scalar_coercion (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
-test_structured_valuation_semantics_upgrade_reextracts_only_broker_pdf (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
+test_structured_missing_role_routes_to_its_component_objective (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_transport_fragment_normalizer_never_rewrites_normal_null_text (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_transport_fragment_provider_value_uses_normalized_object (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_transport_wide_provider_failure_opens_one_call_circuit_breaker (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
@@ -1586,6 +1589,7 @@ test_v4_broker_checkpoint_cannot_use_migration_receipt (test_e2r_v5_fact_extract
 test_v4_non_broker_checkpoint_is_atomically_recovered_from_receipt (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_v4_recovery_records_canonical_collaboration_under_fallback (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_v4_recovery_requires_the_exact_immutable_prompt_contract (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
+test_v5_issuer_future_plan_is_atomically_rewritten_with_v7_role (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_valid_fact_is_preserved_while_invalid_sibling_is_rewritten (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_wrong_business_segment_is_terminal_and_cannot_enter_fact_graph (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
 test_zero_gap_stale_trusted_documents_are_not_replayed_for_version_only (test_e2r_v5_fact_extraction.E2RV5FactExtractionTests) ... ok
@@ -1696,6 +1700,7 @@ test_authoritative_fact_context_preserves_no_gap_and_retirement (test_e2r_v5_pha
 test_authoritative_fact_context_unions_499_from_457_snapshot (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_authoritative_fact_recovery_freezes_exact_pending_source_snapshot (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_binding_resolver_failure_becomes_structured_pending_without_provider (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
+test_compiler_attests_exact_v7_structured_role_reclassification (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_compiler_corroboration_attestation_rejects_nonadditive_changes (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_complete_component_does_not_resolve_pending_source_query (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_complete_prior_memo_reuse_requires_stable_semantic_inputs (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
@@ -3423,7 +3428,7 @@ test_source_route_patterns_exist_for_mandatory_required_primitives (test_researc
 test_balanced_candidate_selection_audit_prioritizes_missing_canaries (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... ok
 test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... {
   "all_failure_classes_resolved": true,
-  "audit_hash": "4ebda037efbfec6e9556873437c62e30c26459f867748a51ba2daf0c3cb2f211",
+  "audit_hash": "d59318fb299bb452d513ee612292d3335fc007a002efadd2ec771485845c5529",
   "caller_attestation_trusted": false,
   "critical_count_sum": 0,
   "critical_counts": {
@@ -3468,10 +3473,10 @@ test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to
       "clean_rerun_verified": true,
       "failure_class": "RECEIPT_LINEAGE_BROKEN",
       "file_path": "src/e2r/example.py",
-      "first_parent": "d6bd6f1562a5f24ebc53b32b9f3787c50deb8d8b",
+      "first_parent": "5b465e1210c1e53d72b5146ef03575a5178260a9",
       "focused_tests_verified": true,
       "iteration_id": "E2RREPAIR-0123456789abcdef01234567",
-      "patch_commit": "2e685f5ce774c3cbff0b134c6e236cc1508dc2c9",
+      "patch_commit": "c39541bffef152f567ad74eb425eb987b5531079",
       "patch_commit_verified": true,
       "remaining_blocker_count": 0,
       "resolved": true,
@@ -3481,7 +3486,7 @@ test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to
   "iteration_count": 1,
   "iteration_roster_hash": "fd51155a695662b86207e47b411efb4cff4890316e2e4ba93ca43b01ffede8e2",
   "journal_path": "self_repair_iterations.jsonl",
-  "journal_sha256": "bc734dcdbe5c354921298a73cd397eb5dedaf96b337a153b7bce4ed93f2984f5",
+  "journal_sha256": "7eb1e6f9e2872826c7e9bced28cb2f61110994c352a41f7334e802f956385f7a",
   "production_readiness_authority": false,
   "schema_version": "e2r_v6_operational_self_repair_audit_v1",
   "score_or_stage_authority": false,
@@ -3505,11 +3510,11 @@ test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to
     "TRIGGER_LANE_DISCONNECTED": 0
   }
 }
-{"audit": {"all_failure_classes_resolved": true, "audit_hash": "4ebda037efbfec6e9556873437c62e30c26459f867748a51ba2daf0c3cb2f211", "caller_attestation_trusted": false, "critical_count_sum": 0, "critical_counts": {"after_hash_mismatch_count": 0, "before_hash_mismatch_count": 0, "clean_rerun_failure_count": 0, "duplicate_iteration_id_count": 0, "focused_test_failure_count": 0, "invalid_iteration_count": 0, "journal_empty_count": 0, "journal_missing_count": 0, "journal_parse_error_count": 0, "remaining_blocker_count": 0, "unknown_failure_class_count": 0, "unresolved_failure_class_count": 0, "unverifiable_patch_commit_count": 0}, "failure_class_counts": {"ABSOLUTE_PATH_IDENTITY": 0, "ARTIFACT_LIFECYCLE_CONTRADICTION": 0, "CLEAN_CLONE_DEPENDENCY": 0, "CROSS_ARCHETYPE_RESEARCH_INCOMPLETE": 0, "CURRENT_UNIVERSE_MATERIALIZATION_FAILED": 0, "FULL_TEST_STALE": 0, "L5_RESEARCH_INCOMPLETE": 0, "NATURAL_CANDIDATE_ZERO": 0, "PROVIDER_ROUTE_MISMATCH": 0, "RECEIPT_LINEAGE_BROKEN": 1, "RECEIPT_VALUE_MISSING": 0, "SCORE_STAGE_ATOMICITY_FAILURE": 0, "SECRET_LEAK": 0, "TARGET_SPECIFIC_OVERFIT": 0, "TRIGGER_LANE_DISCONNECTED": 0}, "fixed_iteration_count_is_completion_authority": false, "iteration_audits": [{"after_hash_recomputed": "9ef99f7ec60e17fecea712bc2edd911ab8c7eb5da960a24b36b3251755567a1d", "after_hash_verified": true, "before_hash_recomputed": "a94be6152ca489c4b76613643550f13f4cab89adcbe1aaa09c2a23a91273622d", "before_hash_verified": true, "clean_rerun_verified": true, "failure_class": "RECEIPT_LINEAGE_BROKEN", "file_path": "src/e2r/example.py", "first_parent": "d6bd6f1562a5f24ebc53b32b9f3787c50deb8d8b", "focused_tests_verified": true, "iteration_id": "E2RREPAIR-0123456789abcdef01234567", "patch_commit": "2e685f5ce774c3cbff0b134c6e236cc1508dc2c9", "patch_commit_verified": true, "remaining_blocker_count": 0, "resolved": true, "shape_valid": true}], "iteration_count": 1, "iteration_roster_hash": "fd51155a695662b86207e47b411efb4cff4890316e2e4ba93ca43b01ffede8e2", "journal_path": "self_repair_iterations.jsonl", "journal_sha256": "bc734dcdbe5c354921298a73cd397eb5dedaf96b337a153b7bce4ed93f2984f5", "production_readiness_authority": false, "schema_version": "e2r_v6_operational_self_repair_audit_v1", "score_or_stage_authority": false, "status": "E2R_V6_OPERATIONAL_SELF_REPAIR_PASS", "test_mode": false, "unresolved_failure_class_counts": {"ABSOLUTE_PATH_IDENTITY": 0, "ARTIFACT_LIFECYCLE_CONTRADICTION": 0, "CLEAN_CLONE_DEPENDENCY": 0, "CROSS_ARCHETYPE_RESEARCH_INCOMPLETE": 0, "CURRENT_UNIVERSE_MATERIALIZATION_FAILED": 0, "FULL_TEST_STALE": 0, "L5_RESEARCH_INCOMPLETE": 0, "NATURAL_CANDIDATE_ZERO": 0, "PROVIDER_ROUTE_MISMATCH": 0, "RECEIPT_LINEAGE_BROKEN": 0, "RECEIPT_VALUE_MISSING": 0, "SCORE_STAGE_ATOMICITY_FAILURE": 0, "SECRET_LEAK": 0, "TARGET_SPECIFIC_OVERFIT": 0, "TRIGGER_LANE_DISCONNECTED": 0}}, "status": "PASS"}
+{"audit": {"all_failure_classes_resolved": true, "audit_hash": "d59318fb299bb452d513ee612292d3335fc007a002efadd2ec771485845c5529", "caller_attestation_trusted": false, "critical_count_sum": 0, "critical_counts": {"after_hash_mismatch_count": 0, "before_hash_mismatch_count": 0, "clean_rerun_failure_count": 0, "duplicate_iteration_id_count": 0, "focused_test_failure_count": 0, "invalid_iteration_count": 0, "journal_empty_count": 0, "journal_missing_count": 0, "journal_parse_error_count": 0, "remaining_blocker_count": 0, "unknown_failure_class_count": 0, "unresolved_failure_class_count": 0, "unverifiable_patch_commit_count": 0}, "failure_class_counts": {"ABSOLUTE_PATH_IDENTITY": 0, "ARTIFACT_LIFECYCLE_CONTRADICTION": 0, "CLEAN_CLONE_DEPENDENCY": 0, "CROSS_ARCHETYPE_RESEARCH_INCOMPLETE": 0, "CURRENT_UNIVERSE_MATERIALIZATION_FAILED": 0, "FULL_TEST_STALE": 0, "L5_RESEARCH_INCOMPLETE": 0, "NATURAL_CANDIDATE_ZERO": 0, "PROVIDER_ROUTE_MISMATCH": 0, "RECEIPT_LINEAGE_BROKEN": 1, "RECEIPT_VALUE_MISSING": 0, "SCORE_STAGE_ATOMICITY_FAILURE": 0, "SECRET_LEAK": 0, "TARGET_SPECIFIC_OVERFIT": 0, "TRIGGER_LANE_DISCONNECTED": 0}, "fixed_iteration_count_is_completion_authority": false, "iteration_audits": [{"after_hash_recomputed": "9ef99f7ec60e17fecea712bc2edd911ab8c7eb5da960a24b36b3251755567a1d", "after_hash_verified": true, "before_hash_recomputed": "a94be6152ca489c4b76613643550f13f4cab89adcbe1aaa09c2a23a91273622d", "before_hash_verified": true, "clean_rerun_verified": true, "failure_class": "RECEIPT_LINEAGE_BROKEN", "file_path": "src/e2r/example.py", "first_parent": "5b465e1210c1e53d72b5146ef03575a5178260a9", "focused_tests_verified": true, "iteration_id": "E2RREPAIR-0123456789abcdef01234567", "patch_commit": "c39541bffef152f567ad74eb425eb987b5531079", "patch_commit_verified": true, "remaining_blocker_count": 0, "resolved": true, "shape_valid": true}], "iteration_count": 1, "iteration_roster_hash": "fd51155a695662b86207e47b411efb4cff4890316e2e4ba93ca43b01ffede8e2", "journal_path": "self_repair_iterations.jsonl", "journal_sha256": "7eb1e6f9e2872826c7e9bced28cb2f61110994c352a41f7334e802f956385f7a", "production_readiness_authority": false, "schema_version": "e2r_v6_operational_self_repair_audit_v1", "score_or_stage_authority": false, "status": "E2R_V6_OPERATIONAL_SELF_REPAIR_PASS", "test_mode": false, "unresolved_failure_class_counts": {"ABSOLUTE_PATH_IDENTITY": 0, "ARTIFACT_LIFECYCLE_CONTRADICTION": 0, "CLEAN_CLONE_DEPENDENCY": 0, "CROSS_ARCHETYPE_RESEARCH_INCOMPLETE": 0, "CURRENT_UNIVERSE_MATERIALIZATION_FAILED": 0, "FULL_TEST_STALE": 0, "L5_RESEARCH_INCOMPLETE": 0, "NATURAL_CANDIDATE_ZERO": 0, "PROVIDER_ROUTE_MISMATCH": 0, "RECEIPT_LINEAGE_BROKEN": 0, "RECEIPT_VALUE_MISSING": 0, "SCORE_STAGE_ATOMICITY_FAILURE": 0, "SECRET_LEAK": 0, "TARGET_SPECIFIC_OVERFIT": 0, "TRIGGER_LANE_DISCONNECTED": 0}}, "status": "PASS"}
 {
   "status": "NOT_READY",
   "paths": {
-    "summary": "/tmp/tmp4ban_2wq/out/summary.json"
+    "summary": "/tmp/tmpkez_aiyj/out/summary.json"
   }
 }
 ok
@@ -7270,17 +7275,17 @@ test_worldex_audit_opinion_with_samsung_customer_mention_does_not_create_samsung
 test_zoom_like_one_off_demand_news_is_marked_one_off (test_web_research_runner.WebResearchRunnerTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 7136 tests in 712.206s
+Ran 7141 tests in 683.256s
 
 OK
 {
-  "acceptance_report_path": "/home/eorb915/projects/stock_agent/output/tmpi3tkt6i1/research_to_runtime_acceptance_report.md",
-  "all_archetype_next_attempt_plan_path": "/home/eorb915/projects/stock_agent/output/tmpi3tkt6i1/all_archetype_next_runtime_attempt_plan_2026-07-05.json",
+  "acceptance_report_path": "/home/eorb915/projects/stock_agent/output/tmpow252b7y/research_to_runtime_acceptance_report.md",
+  "all_archetype_next_attempt_plan_path": "/home/eorb915/projects/stock_agent/output/tmpow252b7y/all_archetype_next_runtime_attempt_plan_2026-07-05.json",
   "all_archetype_next_attempt_plan_row_count": 36,
   "all_archetype_next_source_task_count": 126,
-  "all_archetype_runtime_execution_manifest_path": "/home/eorb915/projects/stock_agent/output/tmpi3tkt6i1/all_archetype_runtime_execution_manifest_2026-07-05.json",
+  "all_archetype_runtime_execution_manifest_path": "/home/eorb915/projects/stock_agent/output/tmpow252b7y/all_archetype_runtime_execution_manifest_2026-07-05.json",
   "all_archetype_runtime_execution_seed_event_count": 126,
-  "all_archetype_runtime_status_matrix_path": "/home/eorb915/projects/stock_agent/output/tmpi3tkt6i1/all_archetype_runtime_status_matrix_2026-07-05.json",
+  "all_archetype_runtime_status_matrix_path": "/home/eorb915/projects/stock_agent/output/tmpow252b7y/all_archetype_runtime_status_matrix_2026-07-05.json",
   "all_archetype_runtime_status_row_count": 36,
   "blockers": [
     "FULL_THESIS_ARCHETYPE_DIVERSITY_BELOW_MINIMUM",
@@ -7293,15 +7298,15 @@ OK
   "legacy_internal_meaningful_pass": false,
   "mandatory_replay_accepted_claim_count": 6,
   "mandatory_replay_source_proxy_repair_task_count": 18,
-  "matrix_path": "/home/eorb915/projects/stock_agent/output/tmpi3tkt6i1/research_to_runtime_parity_matrix_2026-07-05.json",
+  "matrix_path": "/home/eorb915/projects/stock_agent/output/tmpow252b7y/research_to_runtime_parity_matrix_2026-07-05.json",
   "max_iterations_requested": 1,
   "mode": "full_thesis_balanced",
   "planner_bias_status": "PLANNER_ARCHETYPE_ROUTING_BIAS_PASS",
-  "readiness_verdict_path": "/home/eorb915/projects/stock_agent/output/tmpi3tkt6i1/research_to_runtime_readiness_verdict.md",
+  "readiness_verdict_path": "/home/eorb915/projects/stock_agent/output/tmpow252b7y/research_to_runtime_readiness_verdict.md",
   "research_case_count": 11501,
   "research_memory_card_count": 36,
   "research_memory_followup_task_count": 0,
-  "root_cause_path": "/home/eorb915/projects/stock_agent/output/tmpi3tkt6i1/research_to_runtime_root_cause_2026-07-05.md",
+  "root_cause_path": "/home/eorb915/projects/stock_agent/output/tmpow252b7y/research_to_runtime_root_cause_2026-07-05.md",
   "self_repair_enabled": false,
   "self_repair_history": [
     {
@@ -7322,7 +7327,7 @@ OK
         "C24_BIO_TRIAL_DATA_EVENT_RISK",
         "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
       ],
-      "output_root": "/tmp/tmp7psdvr4d/runtime",
+      "output_root": "/tmp/tmpch9h_jdq/runtime",
       "required_positive_missing_rate": 0.0
     }
   ],
@@ -7330,8 +7335,8 @@ OK
   "self_repair_stop_reason": null,
   "source_route_pattern_count": 2049,
   "status": "LEGACY_DIAGNOSTIC_ONLY",
-  "summary_path": "/home/eorb915/projects/stock_agent/output/tmpi3tkt6i1/research_to_runtime_parity_matrix_2026-07-05.md",
-  "v2_audit_path": "/home/eorb915/projects/stock_agent/output/tmpi3tkt6i1/census_mode_v4_full_thesis_evidence_completion_audit_v2.json"
+  "summary_path": "/home/eorb915/projects/stock_agent/output/tmpow252b7y/research_to_runtime_parity_matrix_2026-07-05.md",
+  "v2_audit_path": "/home/eorb915/projects/stock_agent/output/tmpow252b7y/census_mode_v4_full_thesis_evidence_completion_audit_v2.json"
 }
 {
   "acceptance_report_path": "docs/operational/fake_acceptance.md",

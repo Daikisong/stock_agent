@@ -1168,6 +1168,20 @@ class ResearcherEvidenceFactExtractor:
             open_objectives=open_objectives,
             score_gap_context=score_gap_context or {},
         )
+        new_source_direction_objective_ids = (
+            _new_source_direction_objective_ids(
+                open_objective_ids=frozenset(objective_ids),
+                score_gap_context=score_gap_context or {},
+            )
+        )
+        # An explicit LLM-authored new-source direction means the completed
+        # old documents are known not to resolve that objective. Preserve the
+        # full gap for newly fetched documents and scenario-semantics repair,
+        # but do not turn it into a second full-corpus reread.
+        coverage_audit_gap_objective_ids = frozenset(
+            coverage_gap_objective_ids
+            - new_source_direction_objective_ids
+        )
         document_by_id = {
             str(row["document_id"]): row for row in prepared
         }
@@ -1392,19 +1406,33 @@ class ResearcherEvidenceFactExtractor:
                 prior_provider_calls=all_checkpoint_calls,
             )
         )
+        scenario_role_reextraction_document_ids = (
+            _scenario_role_reextraction_document_ids(
+                documents=prepared,
+                prior_material_claims=prior_material_claims,
+                prior_document_dispositions=all_prior_dispositions,
+                prior_provider_calls=all_checkpoint_calls,
+                coverage_gap_objective_ids=coverage_gap_objective_ids,
+                objective_component_by_id=objective_component_by_id,
+            )
+        )
+        atomic_semantics_reextraction_document_ids = frozenset(
+            set(boundary_context_reextraction_document_ids)
+            | set(scenario_role_reextraction_document_ids)
+        )
         # Authority restoration and a semantics rewrite are two different
         # commits.  Persist the exact historical intersection first; a clean
         # resume can then invalidate it and consume the newer semantics
         # response.  Applying both in this invocation would restore and drop
         # the same claims forever while the authority ledger stayed ahead.
-        deferred_boundary_context_reextraction_document_ids = frozenset(
-            boundary_context_reextraction_document_ids
+        deferred_atomic_semantics_reextraction_document_ids = frozenset(
+            atomic_semantics_reextraction_document_ids
             if current_lineage_recovery_succeeded
             else ()
         )
-        active_boundary_context_reextraction_document_ids = frozenset(
-            boundary_context_reextraction_document_ids
-            - deferred_boundary_context_reextraction_document_ids
+        active_atomic_semantics_reextraction_document_ids = frozenset(
+            atomic_semantics_reextraction_document_ids
+            - deferred_atomic_semantics_reextraction_document_ids
         )
         effective_current_facts = tuple(
             row
@@ -1415,10 +1443,10 @@ class ResearcherEvidenceFactExtractor:
                     for value in row.get("source_ids") or ()
                     if str(value)
                 }
-                & active_boundary_context_reextraction_document_ids
+                & active_atomic_semantics_reextraction_document_ids
             )
             and str(row.get("document_id") or "")
-            not in active_boundary_context_reextraction_document_ids
+            not in active_atomic_semantics_reextraction_document_ids
         )
         raw_coverage_complete_document_ids = {
             document_id
@@ -1467,7 +1495,7 @@ class ResearcherEvidenceFactExtractor:
                     previously_coverage_audited_document_ids
                 ),
                 coverage_gap_objective_ids=(
-                    coverage_gap_objective_ids
+                    coverage_audit_gap_objective_ids
                 ),
             )
             if extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
@@ -1478,7 +1506,7 @@ class ResearcherEvidenceFactExtractor:
             for document in prepared
             if bool(
                 set(document.get("objective_ids") or ())
-                & coverage_gap_objective_ids
+                & coverage_audit_gap_objective_ids
             )
         }
         live_gap_lineage_document_ids = {
@@ -1494,7 +1522,7 @@ class ResearcherEvidenceFactExtractor:
                     for value in document.get(key) or ()
                     if str(value).strip()
                 }
-                & coverage_gap_objective_ids
+                & coverage_audit_gap_objective_ids
             )
         }
         current_lineage_objective_reassessment_document_ids = tuple(
@@ -1552,7 +1580,7 @@ class ResearcherEvidenceFactExtractor:
                 in bounded_stale_coverage_refresh_document_ids
                 or bool(
                     set(document.get("objective_ids") or ())
-                    & coverage_gap_objective_ids
+                    & coverage_audit_gap_objective_ids
                 )
             )
         }
@@ -1560,7 +1588,7 @@ class ResearcherEvidenceFactExtractor:
             active_carried_coverage_refresh_document_ids
         )
         coverage_refresh_document_ids.difference_update(
-            active_boundary_context_reextraction_document_ids
+            active_atomic_semantics_reextraction_document_ids
         )
         new_unprocessed_document_ids = {
             str(document["document_id"])
@@ -1569,7 +1597,7 @@ class ResearcherEvidenceFactExtractor:
                 str(document["document_id"])
                 not in set(all_prior_disposition_ids)
                 or str(document["document_id"])
-                in active_boundary_context_reextraction_document_ids
+                in active_atomic_semantics_reextraction_document_ids
             )
             and str(document["document_id"])
             not in coverage_refresh_document_ids
@@ -1593,7 +1621,7 @@ class ResearcherEvidenceFactExtractor:
                 document_id: (
                     frozenset(
                         set(objective_scope_by_document[document_id])
-                        | set(coverage_gap_objective_ids)
+                        | set(coverage_audit_gap_objective_ids)
                     )
                     if document_id
                     in cross_objective_coverage_refresh_document_ids
@@ -1611,7 +1639,7 @@ class ResearcherEvidenceFactExtractor:
         retained_prior_disposition_ids = (
             set(all_prior_disposition_ids)
             - coverage_refresh_document_ids
-            - active_boundary_context_reextraction_document_ids
+            - active_atomic_semantics_reextraction_document_ids
         )
         dispositions: list[Mapping[str, Any]] = [
             row
@@ -1623,7 +1651,7 @@ class ResearcherEvidenceFactExtractor:
             dict(row)
             for row in prior_material_claims
             if str(row.get("document_id") or "")
-            not in active_boundary_context_reextraction_document_ids
+            not in active_atomic_semantics_reextraction_document_ids
         ]
         claim_ids = [str(row.get("claim_id") or "") for row in claims]
         if any(not value for value in claim_ids) or len(claim_ids) != len(set(claim_ids)):
@@ -1644,7 +1672,7 @@ class ResearcherEvidenceFactExtractor:
                 if isinstance(row, FactExtractionRejection)
                 else row.get("document_id") or ""
             )
-            not in active_boundary_context_reextraction_document_ids
+            not in active_atomic_semantics_reextraction_document_ids
         ]
         pending: list[str] = []
         if current_lineage_recovery is not None and not (
@@ -1689,7 +1717,7 @@ class ResearcherEvidenceFactExtractor:
                         str(document["document_id"])
                         not in set(all_prior_disposition_ids)
                         or str(document["document_id"])
-                        in active_boundary_context_reextraction_document_ids
+                        in active_atomic_semantics_reextraction_document_ids
                     )
                     and bool(
                         set(document.get("objective_ids") or ())
@@ -1726,7 +1754,7 @@ class ResearcherEvidenceFactExtractor:
                 for call in all_checkpoint_calls
                 if not (
                     set(call.document_ids)
-                    & active_boundary_context_reextraction_document_ids
+                    & active_atomic_semantics_reextraction_document_ids
                     and call.extraction_semantics_version
                     != FACT_EXTRACTION_SEMANTICS_VERSION
                 )
@@ -1754,7 +1782,7 @@ class ResearcherEvidenceFactExtractor:
             )
             and not (
                 set(row.document_ids)
-                & active_boundary_context_reextraction_document_ids
+                & active_atomic_semantics_reextraction_document_ids
                 and row.extraction_semantics_version
                 != FACT_EXTRACTION_SEMANTICS_VERSION
             )
@@ -1869,7 +1897,7 @@ class ResearcherEvidenceFactExtractor:
         canonical_state_refresh_barrier_count = 0
         if current_lineage_recovery_succeeded and (
             transport_documents
-            or deferred_boundary_context_reextraction_document_ids
+            or deferred_atomic_semantics_reextraction_document_ids
         ):
             # Journal recovery changes the canonical claim/fact/disposition
             # state.  Persist that atomic recovery before opening requests for
@@ -2708,7 +2736,7 @@ class ResearcherEvidenceFactExtractor:
                                 batch_transport_chunk_ids
                                 or batch_document_ids
                                 & (
-                                    active_boundary_context_reextraction_document_ids
+                                    active_atomic_semantics_reextraction_document_ids
                                     | set(coverage_refresh_document_ids)
                                 )
                             )
@@ -2796,12 +2824,12 @@ class ResearcherEvidenceFactExtractor:
             if _extraction_semantics_version(row)
             == FACT_EXTRACTION_SEMANTICS_VERSION
         }
-        completed_boundary_context_reextraction_document_ids = (
-            boundary_context_reextraction_document_ids
+        completed_atomic_semantics_reextraction_document_ids = (
+            atomic_semantics_reextraction_document_ids
             & current_semantics_disposition_ids
         )
-        # Boundary-context migration is one replacement transaction, even when
-        # its old provider call covered several canonical documents.  Do not
+        # A semantic migration is one replacement transaction, even when its
+        # old provider call covered several canonical documents.  Do not
         # expose a half-new/half-old fact graph: completed v7 page calls remain
         # resumable in the provider-call ledger, while the durable top-level
         # claim/disposition projection stays entirely on the baseline until
@@ -2812,10 +2840,18 @@ class ResearcherEvidenceFactExtractor:
         # makes the next invocation diagnose a false authority loss.  Keeping
         # both A and B on the baseline until B also finishes prevents that
         # restore/re-extract loop.
-        if not boundary_context_reextraction_document_ids.issubset(
+        if not atomic_semantics_reextraction_document_ids.issubset(
             current_semantics_disposition_ids
         ):
-            completed_boundary_context_reextraction_document_ids = frozenset()
+            completed_atomic_semantics_reextraction_document_ids = frozenset()
+        completed_boundary_context_reextraction_document_ids = frozenset(
+            set(completed_atomic_semantics_reextraction_document_ids)
+            & set(boundary_context_reextraction_document_ids)
+        )
+        completed_scenario_role_reextraction_document_ids = frozenset(
+            set(completed_atomic_semantics_reextraction_document_ids)
+            & set(scenario_role_reextraction_document_ids)
+        )
         completed_coverage_refresh_document_ids = {
             document_id
             for document_id in set(coverage_refresh_document_ids)
@@ -2863,13 +2899,13 @@ class ResearcherEvidenceFactExtractor:
             set(coverage_refresh_document_ids)
             | deferred_coverage_refresh_document_ids
         ) - completed_coverage_refresh_document_ids
-        incomplete_boundary_context_reextraction_document_ids = (
-            set(boundary_context_reextraction_document_ids)
-            - set(completed_boundary_context_reextraction_document_ids)
+        incomplete_atomic_semantics_reextraction_document_ids = (
+            set(atomic_semantics_reextraction_document_ids)
+            - set(completed_atomic_semantics_reextraction_document_ids)
         )
         incomplete_atomic_replacement_document_ids = (
             incomplete_coverage_refresh_document_ids
-            | incomplete_boundary_context_reextraction_document_ids
+            | incomplete_atomic_semantics_reextraction_document_ids
         )
         if incomplete_atomic_replacement_document_ids:
             # A coverage refresh is an atomic replacement of an already
@@ -3151,8 +3187,16 @@ class ResearcherEvidenceFactExtractor:
             current_semantics_disposition_ids.difference_update(
                 rematerialization_document_ids
             )
+            completed_atomic_semantics_reextraction_document_ids = (
+                completed_atomic_semantics_reextraction_document_ids
+                - rematerialization_document_ids
+            )
             completed_boundary_context_reextraction_document_ids = (
                 completed_boundary_context_reextraction_document_ids
+                - rematerialization_document_ids
+            )
+            completed_scenario_role_reextraction_document_ids = (
+                completed_scenario_role_reextraction_document_ids
                 - rematerialization_document_ids
             )
             completed_coverage_refresh_document_ids.difference_update(
@@ -3449,8 +3493,8 @@ class ResearcherEvidenceFactExtractor:
                 else 0
             ),
             "stale_semantics_checkpoint_reextracted": bool(
-                boundary_context_reextraction_document_ids
-                and boundary_context_reextraction_document_ids
+                atomic_semantics_reextraction_document_ids
+                and atomic_semantics_reextraction_document_ids
                 <= current_semantics_disposition_ids
             ),
             "stale_semantics_checkpoint_coverage_refreshed": bool(
@@ -3462,7 +3506,7 @@ class ResearcherEvidenceFactExtractor:
             ),
             "preserved_prior_claim_count": sum(
                 str(row.get("document_id") or "")
-                not in boundary_context_reextraction_document_ids
+                not in atomic_semantics_reextraction_document_ids
                 and str(row.get("document_id") or "")
                 not in rematerialization_document_ids
                 for row in prior_material_claims
@@ -3501,6 +3545,11 @@ class ResearcherEvidenceFactExtractor:
                 in boundary_context_reextraction_document_ids
                 for row in prior_material_claims
             ),
+            "scenario_role_invalidated_prior_claim_count": sum(
+                str(row.get("document_id") or "")
+                in scenario_role_reextraction_document_ids
+                for row in prior_material_claims
+            ),
             "prior_claim_source_provenance_rematerialized_count": sum(
                 row.get("source_provenance_rematerialized") is True
                 for row in prior_material_claims
@@ -3511,7 +3560,7 @@ class ResearcherEvidenceFactExtractor:
                 for claim in call.accepted_claims or ()
             ),
             "base_reextraction_document_count": len(
-                completed_boundary_context_reextraction_document_ids
+                completed_atomic_semantics_reextraction_document_ids
             ),
             "boundary_context_reextraction_selected_document_count": len(
                 boundary_context_reextraction_document_ids
@@ -3521,6 +3570,15 @@ class ResearcherEvidenceFactExtractor:
             ),
             "boundary_context_reextraction_committed_document_ids": sorted(
                 completed_boundary_context_reextraction_document_ids
+            ),
+            "scenario_role_reextraction_selected_document_count": len(
+                scenario_role_reextraction_document_ids
+            ),
+            "scenario_role_reextraction_completed_document_count": len(
+                completed_scenario_role_reextraction_document_ids
+            ),
+            "scenario_role_reextraction_committed_document_ids": sorted(
+                completed_scenario_role_reextraction_document_ids
             ),
             "source_boundary_context_document_count": len(
                 source_boundary_context_by_document_id
@@ -3532,6 +3590,9 @@ class ResearcherEvidenceFactExtractor:
             "boundary_context_reextraction_document_ids": sorted(
                 boundary_context_reextraction_document_ids
             ),
+            "scenario_role_reextraction_document_ids": sorted(
+                scenario_role_reextraction_document_ids
+            ),
             "production_objective_local_completion": (
                 extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
             ),
@@ -3540,6 +3601,12 @@ class ResearcherEvidenceFactExtractor:
             ),
             "coverage_gap_objective_count": len(
                 coverage_gap_objective_ids
+            ),
+            "new_source_direction_objective_count": len(
+                new_source_direction_objective_ids
+            ),
+            "completed_document_coverage_audit_objective_count": len(
+                coverage_audit_gap_objective_ids
             ),
             "coverage_audit_required_document_count": len(
                 coverage_required_document_ids
@@ -4656,6 +4723,82 @@ def _boundary_context_reextraction_document_ids(
     if not affected <= document_ids:
         raise ValueError(
             "boundary-context re-extraction escaped current document scope"
+        )
+    return frozenset(affected)
+
+
+def _scenario_role_reextraction_document_ids(
+    *,
+    documents: Sequence[Mapping[str, Any]],
+    prior_material_claims: Sequence[Mapping[str, Any]],
+    prior_document_dispositions: Sequence[Mapping[str, Any]],
+    prior_provider_calls: Sequence[FactExtractionProviderCall],
+    coverage_gap_objective_ids: frozenset[str],
+    objective_component_by_id: Mapping[str, str],
+) -> frozenset[str]:
+    """Select a bounded atomic rewrite for newly admitted issuer roles.
+
+    A coverage-only audit cannot change ``structured_evidence_roles`` on an
+    already accepted fact because duplicate protection correctly tells the
+    provider not to repeat the same economic identity.  Re-extract only stale
+    issuer documents that belong to a live gap and already contain a
+    machine-numeric OPEN/future claim.  The provider still owns the semantic
+    role nomination; this selector never awards a role or a point.
+
+    Easy example: an old filing already contains an accepted ``19조원,
+    2026년부터 투자`` fact with no structured role.  Re-reading that one
+    provider-call unit lets the LLM nominate FORWARD_GUIDANCE under v7 without
+    any issuer, sector, or archetype name in this rule.
+    """
+
+    document_ids = {
+        str(row.get("document_id") or "") for row in documents
+    }
+    document_by_id = {
+        str(row.get("document_id") or ""): row for row in documents
+    }
+    stale_document_ids = {
+        str(row.get("document_id") or "")
+        for row in prior_document_dispositions
+        if _scenario_role_semantics_upgrade_requires_reassessment(
+            previous_version=_extraction_semantics_version(row),
+            document=document_by_id.get(
+                str(row.get("document_id") or "")
+            ),
+        )
+    }
+    stale_document_ids.update(
+        document_id
+        for call in prior_provider_calls
+        for document_id in call.document_ids
+        if _scenario_role_semantics_upgrade_requires_reassessment(
+            previous_version=call.extraction_semantics_version,
+            document=document_by_id.get(document_id),
+        )
+    )
+    affected = {
+        document_id
+        for document_id in stale_document_ids
+        if _document_has_live_scenario_role_reassessment_candidate(
+            document=document_by_id.get(document_id),
+            claims=prior_material_claims,
+            coverage_gap_objective_ids=coverage_gap_objective_ids,
+            objective_component_by_id=objective_component_by_id,
+        )
+    }
+    if not affected:
+        return frozenset()
+    changed = True
+    while changed:
+        changed = False
+        for call in prior_provider_calls:
+            call_document_ids = set(call.document_ids)
+            if affected & call_document_ids and not call_document_ids <= affected:
+                affected.update(call_document_ids)
+                changed = True
+    if not affected <= document_ids:
+        raise ValueError(
+            "scenario-role re-extraction escaped current document scope"
         )
     return frozenset(affected)
 
@@ -8033,6 +8176,58 @@ def _bounded_stale_coverage_refresh_document_ids(
     return frozenset(selected)
 
 
+def _new_source_direction_objective_ids(
+    *,
+    open_objective_ids: frozenset[str],
+    score_gap_context: Mapping[str, Any],
+) -> frozenset[str]:
+    """Identify objectives whose LLM supervisor explicitly requires new sources.
+
+    This does not synthesize a query or declare old evidence absent.  It only
+    prevents an explicit ``new_source_family_directions`` instruction from
+    being misread as permission to replay every already-completed document.
+    Newly fetched documents remain eligible for normal extraction and audit.
+    """
+
+    result: set[str] = set()
+
+    def visit(value: Any) -> None:
+        if isinstance(value, Mapping):
+            raw_directions = value.get("new_source_family_directions")
+            if isinstance(raw_directions, Sequence) and not isinstance(
+                raw_directions,
+                (str, bytes),
+            ):
+                for row in raw_directions:
+                    if not isinstance(row, Mapping):
+                        continue
+                    objective_id = str(
+                        row.get("objective_id") or ""
+                    ).strip()
+                    source_family = str(
+                        row.get("source_family") or ""
+                    ).strip()
+                    direction = str(row.get("direction") or "").strip()
+                    if (
+                        objective_id in open_objective_ids
+                        and source_family
+                        and direction
+                    ):
+                        result.add(objective_id)
+            for nested in value.values():
+                visit(nested)
+            return
+        if isinstance(value, Sequence) and not isinstance(
+            value,
+            (str, bytes),
+        ):
+            for nested in value:
+                visit(nested)
+
+    visit(score_gap_context)
+    return frozenset(result)
+
+
 def _coverage_gap_objective_ids(
     *,
     open_objectives: Sequence[Mapping[str, Any]],
@@ -8091,11 +8286,26 @@ def _coverage_gap_objective_ids(
             return bool(tuple(value))
         return bool(value)
 
-    def visit(value: Any) -> None:
+    def visit(value: Any, *, inherited_gap: bool = False) -> None:
         if isinstance(value, Mapping):
             status = str(value.get("status") or "").strip().upper()
+            missing_roles_by_component = value.get(
+                "missing_roles_by_component"
+            )
+            if isinstance(missing_roles_by_component, Mapping):
+                unresolved_component_ids.update(
+                    str(component_id).strip()
+                    for component_id, roles in (
+                        missing_roles_by_component.items()
+                    )
+                    if str(component_id).strip()
+                    and isinstance(roles, Sequence)
+                    and not isinstance(roles, (str, bytes))
+                    and any(str(role).strip() for role in roles)
+                )
             declares_gap = (
-                any(
+                inherited_gap
+                or any(
                     value.get(key) is False
                     for key in incomplete_boolean_fields
                     if key in value
@@ -8155,15 +8365,20 @@ def _coverage_gap_objective_ids(
                 ).strip()
                 if component_id:
                     unresolved_component_ids.add(component_id)
-            for nested in value.values():
-                visit(nested)
+            for key, nested in value.items():
+                visit(
+                    nested,
+                    inherited_gap=(
+                        key in nonempty_gap_fields and nonempty(nested)
+                    ),
+                )
             return
         if isinstance(value, Sequence) and not isinstance(
             value,
             (str, bytes),
         ):
             for nested in value:
-                visit(nested)
+                visit(nested, inherited_gap=inherited_gap)
 
     visit(score_gap_context)
     unresolved_objective_ids.update(
@@ -8286,29 +8501,191 @@ def _fact_semantics_upgrade_requires_reextraction(
     if previous_version == FACT_EXTRACTION_SEMANTICS_VERSION:
         return False
     if previous_version == _PRE_STRUCTURED_SCENARIO_INPUT_ROLE_SEMANTICS_VERSION:
+        # v6 -> v7 changes only issuer scenario-role nomination.  The bounded
+        # scenario selector owns that migration; treating the same documents
+        # as generic stale coverage would reread the whole old corpus after
+        # the exact role transaction has already completed.
+        return False
+    if previous_version == _PRE_STRUCTURED_REVISION_ROLE_SEMANTICS_VERSION:
         return bool(
             document is not None
             and str(document.get("source_family") or "").upper()
-            in {
-                "OPENDART",
-                "KIND_KRX",
-                "ISSUER_EARNINGS_RELEASE",
-                "ISSUER_PRESENTATION",
-                "ISSUER_NEWSROOM",
-                "FINANCIAL_STATEMENTS",
-                "CASH_FLOW",
-            }
+            == "PUBLIC_BROKER_PDF"
         )
-    if previous_version in {
-        _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION,
-        _PRE_STRUCTURED_REVISION_ROLE_SEMANTICS_VERSION,
-    }:
+    if previous_version == _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION:
+        # v4 has a separate immutable-receipt authority recovery transaction;
+        # keep its original broker-only eligibility until that transaction is
+        # durably committed.  The recovered v5 checkpoint is then eligible for
+        # the separate scenario-role selector on a clean resume.
         return bool(
             document is not None
             and str(document.get("source_family") or "").upper()
             == "PUBLIC_BROKER_PDF"
         )
     return True
+
+
+def _scenario_role_semantics_upgrade_requires_reassessment(
+    *,
+    previous_version: str,
+    document: Mapping[str, Any] | None,
+) -> bool:
+    """Route only the cumulative v5/v6 -> v7 issuer-role migration."""
+
+    return bool(
+        previous_version
+        in {
+            _PRE_STRUCTURED_SCENARIO_INPUT_ROLE_SEMANTICS_VERSION,
+            _PRE_STRUCTURED_REVISION_ROLE_SEMANTICS_VERSION,
+        }
+        and document is not None
+        and str(document.get("source_family") or "").upper()
+        in {
+            "OPENDART",
+            "KIND_KRX",
+            "ISSUER_EARNINGS_RELEASE",
+            "ISSUER_PRESENTATION",
+            "ISSUER_NEWSROOM",
+            "FINANCIAL_STATEMENTS",
+            "CASH_FLOW",
+        }
+    )
+
+
+def _document_has_live_scenario_role_reassessment_candidate(
+    *,
+    document: Mapping[str, Any] | None,
+    claims: Sequence[Mapping[str, Any]],
+    coverage_gap_objective_ids: frozenset[str],
+    objective_component_by_id: Mapping[str, str],
+) -> bool:
+    """Bound an old issuer-role rewrite without assigning the role itself."""
+
+    if document is None or not coverage_gap_objective_ids:
+        return False
+    source_family = str(document.get("source_family") or "").upper()
+    if source_family not in {
+        "OPENDART",
+        "KIND_KRX",
+        "ISSUER_EARNINGS_RELEASE",
+        "ISSUER_PRESENTATION",
+        "ISSUER_NEWSROOM",
+        "FINANCIAL_STATEMENTS",
+        "CASH_FLOW",
+    }:
+        return False
+    document_objective_ids = {
+        str(value).strip()
+        for key in ("objective_ids", "historical_objective_ids")
+        for value in document.get(key) or ()
+        if str(value).strip()
+    }
+    if not document_objective_ids & coverage_gap_objective_ids:
+        return False
+    gap_component_ids = {
+        str(objective_component_by_id.get(objective_id) or "").strip()
+        for objective_id in coverage_gap_objective_ids
+        if str(objective_component_by_id.get(objective_id) or "").strip()
+    }
+    if not gap_component_ids:
+        return False
+    document_id = str(document.get("document_id") or "")
+    return any(
+        str(claim.get("document_id") or "") == document_id
+        and bool(
+            {
+                str(value).strip()
+                for value in claim.get("allowed_component_ids") or ()
+                if str(value).strip()
+            }
+            & gap_component_ids
+        )
+        and "FORWARD_GUIDANCE"
+        not in {
+            str(value).strip().upper()
+            for value in claim.get("structured_evidence_roles") or ()
+        }
+        and _claim_has_machine_numeric_point_or_range(claim.get("value"))
+        and _claim_period_is_forward_candidate(claim)
+        for claim in claims
+    )
+
+
+def _claim_has_machine_numeric_point_or_range(value: Any) -> bool:
+    """Recognize only finite numeric points/ranges for migration selection."""
+
+    def finite_number(candidate: Any) -> bool:
+        return bool(
+            not isinstance(candidate, bool)
+            and isinstance(candidate, (int, float))
+            and math.isfinite(float(candidate))
+        )
+
+    if finite_number(value):
+        return True
+    if isinstance(value, Mapping):
+        numeric = [
+            candidate
+            for key in ("low", "high", "min", "max", "midpoint")
+            if (candidate := value.get(key)) is not None
+        ]
+        return bool(numeric) and all(finite_number(row) for row in numeric)
+    if isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
+        values = tuple(value)
+        return 1 <= len(values) <= 2 and all(finite_number(row) for row in values)
+    return False
+
+
+def _claim_period_is_forward_candidate(claim: Mapping[str, Any]) -> bool:
+    """Conservatively select a possible future plan; never award a role."""
+
+    period = str(claim.get("period") or "").strip()
+    if not period:
+        return False
+    if re.search(
+        r"\b(?:next|forward|future|outlook|onward)\b|향후|차기|다음|이후",
+        period,
+        re.IGNORECASE,
+    ):
+        return True
+    try:
+        available = date.fromisoformat(
+            str(claim.get("available_at") or "")[:10]
+        )
+    except ValueError:
+        return False
+    years = [int(value) for value in re.findall(r"20\d{2}", period)]
+    if not years:
+        return False
+    if max(years) > available.year:
+        return True
+    if max(years) < available.year:
+        return False
+    if re.fullmatch(
+        rf"(?:FY)?{available.year}(?:년|[EF])?",
+        period.strip(),
+        re.IGNORECASE,
+    ):
+        return available.month < 12 or available.day < 31
+    quarters = [
+        int(next(value for value in groups if value))
+        for groups in re.findall(
+            rf"{available.year}(?:[-/]?|년)(?:Q([1-4])|([1-4])Q|([1-4])분기)",
+            period,
+            re.IGNORECASE,
+        )
+    ]
+    if quarters and max(quarters) * 3 > available.month:
+        return True
+    months = [
+        int(value)
+        for value in re.findall(
+            rf"{available.year}(?:[-/]|년)(\d{{1,2}})(?:월)?",
+            period,
+        )
+        if 1 <= int(value) <= 12
+    ]
+    return bool(months) and max(months) > available.month
 
 
 def _coerce_provider_call(
