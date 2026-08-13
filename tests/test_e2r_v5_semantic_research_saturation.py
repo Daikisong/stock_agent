@@ -3972,15 +3972,108 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             required_objective_ids=(OBJECTIVE_ID,),
         )
         self.assertEqual(bad_disposition, ())
-        missing_supersession = tuple(
+        counter_only = tuple(
             row for row in proof if row["route_kind"] != "SUPERSESSION"
         )
-        pending = ResearchSupervisor(
+        counter_only_ready = ResearchSupervisor(
             provider=Phase87SupervisorProvider("FORCE_READY")
         ).review_epoch(
-            **_supervisor_inputs(counter_proof=missing_supersession)
+            **_supervisor_inputs(counter_proof=counter_only)
         )
-        self.assertEqual(pending.status, "NEXT_RESEARCH_REQUIRED")
+        self.assertEqual(
+            counter_only_ready.status,
+            "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+        )
+
+    def test_counter_route_does_not_require_a_fabricated_supersession_event(
+        self,
+    ) -> None:
+        """Current official counterfacts can close a no-supersession target."""
+
+        secondary_objective_id = "OBJ-DIRECT-COUNTER-ONLY"
+        objective_component_by_id = {
+            OBJECTIVE_ID: "eps_fcf_explosion",
+            secondary_objective_id: "market_mispricing",
+        }
+        source = _source_checkpoint_with_updates(
+            _source_checkpoint(zero_results=True),
+            evidence_documents=[
+                {
+                    "document_id": "DOC-1",
+                    "target_id": TARGET,
+                    "published_at": "2026-06-20",
+                    "source_family": "OPENDART",
+                    "query_ids": [],
+                    "objective_ids": [
+                        OBJECTIVE_ID,
+                        secondary_objective_id,
+                    ],
+                    "evidence_eligible": True,
+                    "full_fetch_performed": True,
+                    "snippet_only": False,
+                    "full_text": "two current official counterfacts",
+                }
+            ],
+        )
+        facts = (
+            replace(
+                _fact("FACT-DIRECT-COUNTER-ONE", direction="COUNTER"),
+                allowed_component_ids=("eps_fcf_explosion",),
+            ),
+            replace(
+                _fact("FACT-DIRECT-COUNTER-TWO", direction="COUNTER"),
+                allowed_component_ids=("market_mispricing",),
+            ),
+        )
+        proof = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=source,
+            document_dispositions=(
+                {
+                    "document_id": "DOC-1",
+                    "status": "FACTS_EXTRACTED",
+                    "rationale": "official counterfacts extracted",
+                },
+            ),
+            evidence_facts=facts,
+            required_objective_ids=(OBJECTIVE_ID, secondary_objective_id),
+            objective_component_by_id=objective_component_by_id,
+        )
+
+        self.assertEqual({row["route_kind"] for row in proof}, {"COUNTER"})
+        self.assertEqual(
+            {row["objective_id"] for row in proof},
+            {OBJECTIVE_ID, secondary_objective_id},
+        )
+        self.assertTrue(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=source,
+                evidence_facts=facts,
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                objective_component_by_id=objective_component_by_id,
+                structured_result=_structured(),
+                materiality_scope_attestations={},
+            )
+        )
+
+        # One valid counterfact cannot silently cover a different objective.
+        self.assertFalse(
+            _counter_route_proof_complete(
+                tuple(
+                    row
+                    for row in proof
+                    if row["objective_id"] == OBJECTIVE_ID
+                ),
+                source_graph_checkpoint=source,
+                evidence_facts=facts,
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                objective_component_by_id=objective_component_by_id,
+                structured_result=_structured(),
+                materiality_scope_attestations={},
+            )
+        )
 
     def test_counter_route_accepts_exact_direct_official_fact_lineage(
         self,

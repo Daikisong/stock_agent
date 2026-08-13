@@ -2987,13 +2987,19 @@ def _counter_route_proof_complete(
         if route_basis == "DIRECT_SOURCE_BACKED_FACT":
             checked_objective_ids.add(objective_id)
     return bool(
-        # COUNTER and SUPERSESSION are real event kinds, so requiring both
-        # kinds for every objective would force the researcher to invent an
-        # event when no supersession happened.  Keep the two source-backed
-        # kinds mandatory across the research as a whole, while every required
-        # objective must still reach its own verified result-review boundary.
-        # Pending/zero-result/provider-error-only routes never satisfy it.
-        covered_route_kinds == {"COUNTER", "SUPERSESSION"}
+        # COUNTER and SUPERSESSION are event outcomes, not a mandatory pair of
+        # events that every target must experience.  Requiring both somewhere
+        # in the run creates a liveness bug for a target whose current official
+        # documents contain source-backed counterfacts but no claim was later
+        # resolved or superseded.  In that case the researcher must not invent
+        # a RESOLUTION fact merely to close this gate.
+        #
+        # At least one validated event row is still required, and every
+        # required objective must independently reach a verified boundary:
+        # either a source-backed event row above or an executed, durably
+        # reviewed counter/supersession query.  Pending, zero-result, bare
+        # provider-error, and objectives with no such boundary remain false.
+        covered_route_kinds
         and required_objective_ids.issubset(checked_objective_ids)
     )
 

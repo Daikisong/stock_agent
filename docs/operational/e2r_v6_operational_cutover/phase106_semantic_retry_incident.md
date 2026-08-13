@@ -1020,6 +1020,30 @@ score, Stage 또는 cutover authority가 아니다.
     `exhausted query marker + Supervisor routes=false -> exact memo rewrite request` 전이를
     검증한다.
 
+52. **실제로 없는 supersession 사건을 완료 조건으로 요구한 Supervisor 재검색 루프**
+
+    C28은 일곱 component 모두에서 current 공식 문서에 결속된 `COUNTER` fact를 갖고
+    있었다. 각 행은 objective→component→full official document→extractor disposition→fact
+    계보를 통과했고 Red Team도 완료됐다. 그런데 Supervisor의 마지막 boolean은 연구 전체에
+    `COUNTER`와 `SUPERSESSION` 사건 종류가 둘 다 실제로 존재할 때만 true였다. C28에는
+    과거 주장이 나중에 해소되거나 대체된 `RESOLUTION` 사건이 없었으므로 proof 7행이 모두
+    `COUNTER`였고, validator는 이를 미완료로 되돌렸다. Query planner는 새 verified identity가
+    없다고 정직하게 종료했지만 다음 epoch가 같은 counter 검사를 다시 열어 재검색 루프가 됐다.
+
+    쉬운 예: 일곱 과목 모두 반례를 확인했는데, 학교가 “이번 학기에 정정 공지가 적어도 한
+    건 실제로 발생해야 졸업”이라고 요구한 상태다. 정정할 사건이 없으면 학생은 정정 공지를
+    만들 수 없고, 같은 게시판만 영원히 다시 확인하게 된다.
+
+    수정 후 `COUNTER`와 `SUPERSESSION`은 **반드시 함께 발생해야 하는 사건 쌍**이 아니라
+    검증될 수 있는 대안적 사건 결과로 취급한다. 적어도 하나의 source-backed event row는
+    계속 필요하고, 모든 required objective는 자기 component에 결속된 공식 event fact 또는
+    실제 실행·검토된 counter/supersession query 경계에 각각 도달해야 한다. 따라서 한
+    objective라도 proof가 없거나 zero-result/provider-error뿐이면 계속 false다. 반대로 모든
+    objective에 공식 `COUNTER` fact가 있는데 실제 `RESOLUTION` 사건만 없다는 이유로는 재검색을
+    열지 않는다. 이 변경은 source absence를 선언하거나 LLM 추론을 점수로 쓰지 않으며, 없는
+    supersession fact를 만들어 내는 것도 금지한다. 회귀 테스트는 counter-only 완주와
+    objective 한 개 누락 fail-closed를 함께 고정한다.
+
 ## Goal 경계
 
 이 수정은 query template, score weight, Stage rule 또는 target-specific branch를 추가하지
