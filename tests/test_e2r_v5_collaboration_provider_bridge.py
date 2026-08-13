@@ -32,6 +32,9 @@ from e2r.research_brain.researcher_mode import (
     import_collaboration_response,
 )
 from e2r.research_brain.researcher_mode.collaboration_provider_bridge import (
+    _authority_recovery_fact_request_material,
+    _canonical_hash,
+    _legacy_valuation_fact_instruction,
     _prior_revision_fact_instruction,
     _prior_structured_valuation_fact_output_schema,
 )
@@ -687,6 +690,61 @@ class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
                 },
                 {("Q-A",), ("Q-B",)},
             )
+
+    def test_v5_fact_authority_recovery_rebuilds_frozen_contract(self) -> None:
+        payload = {
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": "2026-07-12",
+            "archetype_hypothesis": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            "fact_extraction_semantics_version": (
+                "e2r_v5_structured_valuation_roles_v5"
+            ),
+            "current_evidence_facts": {},
+            "score_gap_context": {},
+            "full_documents": [
+                {
+                    "document_id": "DOCUMENT-V5",
+                    "source_family": "OPENDART",
+                    "content_text": "literal filing text",
+                }
+            ],
+        }
+
+        _safe, schema, prompt, prompt_hash, schema_hash = (
+            _authority_recovery_fact_request_material(
+                payload=payload,
+                fact_extraction_semantics_version=(
+                    "e2r_v5_structured_valuation_roles_v5"
+                ),
+            )
+        )
+
+        roles = schema["properties"]["facts"]["items"]["properties"][
+            "structured_evidence_roles"
+        ]
+        self.assertEqual(
+            roles["items"]["enum"],
+            [
+                "SEGMENT_CONTRIBUTION",
+                "QOQ_GROWTH",
+                "FORWARD_GUIDANCE",
+                "FORWARD_BOOK_VALUE",
+                "FORWARD_PB",
+                "FORWARD_EV_EBITDA",
+            ],
+        )
+        self.assertEqual(roles["maxItems"], 1)
+        self.assertEqual(prompt.count(_legacy_valuation_fact_instruction()), 1)
+        self.assertNotIn("EPS_REVISION", prompt.rsplit("\n", 1)[0])
+        self.assertNotIn(
+            "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION",
+            prompt.rsplit("\n", 1)[0],
+        )
+        self.assertEqual(
+            prompt_hash,
+            hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+        )
+        self.assertEqual(schema_hash, _canonical_hash(schema))
 
     def test_v4_fact_semantics_migration_receipt_is_read_only_and_exact(
         self,

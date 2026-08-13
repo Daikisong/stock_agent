@@ -524,6 +524,9 @@ _CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_RE = re.compile(
 FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED = (
     "FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED"
 )
+_CURRENT_FACT_LINEAGE_RECOVERY_BINDING_REQUIRED = (
+    "CURRENT_FACT_LINEAGE_RECOVERY_BINDING_REQUIRED"
+)
 _CURRENT_FACT_LINEAGE_AUTHORITY_PROJECTION_MISMATCH = (
     "CURRENT_FACT_LINEAGE_AUTHORITY_PROJECTION_MISMATCH"
 )
@@ -562,6 +565,9 @@ def fact_extraction_has_exact_checkpoint_recovery_wait(
     refresh_count = reasons.count(
         FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
     )
+    recovery_binding_count = reasons.count(
+        _CURRENT_FACT_LINEAGE_RECOVERY_BINDING_REQUIRED
+    )
     authority_projection_mismatch_count = reasons.count(
         _CURRENT_FACT_LINEAGE_AUTHORITY_PROJECTION_MISMATCH
     )
@@ -596,10 +602,19 @@ def fact_extraction_has_exact_checkpoint_recovery_wait(
         and objective_reassessment_roster_is_unique
         and collaboration_count <= 1
         and refresh_count <= 1
+        and recovery_binding_count <= 1
         and authority_projection_mismatch_count <= 1
         and not (
             collaboration_count
             and (refresh_count or authority_projection_mismatch_count)
+        )
+        and not (
+            recovery_binding_count
+            and (
+                collaboration_count
+                or refresh_count
+                or authority_projection_mismatch_count
+            )
         )
         and not (
             refresh_count and authority_projection_mismatch_count
@@ -607,6 +622,7 @@ def fact_extraction_has_exact_checkpoint_recovery_wait(
         and (
             collaboration_count
             + refresh_count
+            + recovery_binding_count
             + authority_projection_mismatch_count
             + rematerialization_count
             + objective_reassessment_count
@@ -618,6 +634,7 @@ def fact_extraction_has_exact_checkpoint_recovery_wait(
             or objective_reassessment_count >= 1
             or collaboration_count == 1
             or refresh_count == 1
+            or recovery_binding_count == 1
             or authority_projection_mismatch_count == 1
         )
     )
@@ -6423,7 +6440,7 @@ def _replay_current_fact_lineage_group(
         current_lineage_original_batch_document_ids=(
             original_document_ids
         ),
-        extraction_semantics_version=FACT_EXTRACTION_SEMANTICS_VERSION,
+        extraction_semantics_version=fact_extraction_semantics_version,
     )
     return {
         "group_id": group_id,

@@ -80,10 +80,14 @@ _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION = (
 _PRE_REVISION_FACT_SEMANTICS_VERSION = (
     "e2r_v5_structured_revision_roles_v6"
 )
+_LEGACY_VALUATION_FACT_SEMANTICS_VERSION = (
+    "e2r_v5_structured_valuation_roles_v5"
+)
 _AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS = frozenset(
     (
         _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION,
         _PRE_REVISION_FACT_SEMANTICS_VERSION,
+        _LEGACY_VALUATION_FACT_SEMANTICS_VERSION,
     )
 )
 _PRE_STRUCTURED_VALUATION_ROLES = (
@@ -104,6 +108,11 @@ _PRE_REVISION_STRUCTURED_VALUATION_ROLES = tuple(
     role
     for role in _STRUCTURED_VALUATION_ROLES
     if role != "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION"
+)
+_LEGACY_STRUCTURED_VALUATION_ROLES = tuple(
+    role
+    for role in _PRE_REVISION_STRUCTURED_VALUATION_ROLES
+    if role not in {"EPS_REVISION", "OPERATING_PROFIT_REVISION"}
 )
 _REQUEST_ENVELOPE_KEYS = frozenset(
     {
@@ -219,6 +228,30 @@ def _prior_revision_fact_output_schema(
     return prior
 
 
+def _legacy_valuation_fact_output_schema(
+    current_schema: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    """Derive the frozen v5 schema before revision and D&A roles."""
+
+    try:
+        legacy = json.loads(json.dumps(current_schema))
+        role_schema = legacy["properties"]["facts"]["items"]["properties"][
+            "structured_evidence_roles"
+        ]
+        role_items = role_schema["items"]
+    except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+        return None
+    if (
+        not isinstance(role_schema, dict)
+        or not isinstance(role_items, dict)
+        or tuple(role_items.get("enum") or ()) != _STRUCTURED_VALUATION_ROLES
+        or role_schema.get("maxItems") != 1
+    ):
+        return None
+    role_items["enum"] = list(_LEGACY_STRUCTURED_VALUATION_ROLES)
+    return legacy
+
+
 def _prior_revision_fact_instruction() -> str:
     """Rebuild the immutable v6 instruction from the current v7 text."""
 
@@ -257,6 +290,46 @@ def _prior_revision_fact_instruction() -> str:
     return prior
 
 
+def _legacy_valuation_fact_instruction() -> str:
+    """Rebuild the immutable v5 instruction from the current v7 text."""
+
+    current = _pass_instruction("EVIDENCE_FACT_EXTRACTION")
+    legacy = current.replace(
+        "EPS_REVISION, OPERATING_PROFIT_REVISION, ",
+        "",
+        1,
+    ).replace(
+        "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION, ",
+        "",
+        1,
+    ).replace(
+        "A revision role additionally requires a dated full broker PDF whose "
+        "exact quote identifies the forward metric and shows both the previous "
+        "and revised estimates; value is the revised numeric point. ",
+        "",
+        1,
+    ).replace(
+        "FORWARD_GUIDANCE includes a numeric issuer-owned future operating, "
+        "capacity, or capital plan whose period ends after the source became "
+        "available; it does not include a broker estimate. ",
+        "",
+        1,
+    ).replace(
+        "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION requires one reported "
+        "issuer/regulatory numeric point for an already-ended period and "
+        "must not be attached to a forecast. ",
+        "",
+        1,
+    ).replace(
+        "These tags are extraction context only and never assign points.",
+        "Tags are extraction context only and never assign points.",
+        1,
+    )
+    if legacy == current:
+        raise ValueError("legacy valuation fact instruction cannot be derived")
+    return legacy
+
+
 def _authority_recovery_fact_request_material(
     *,
     payload: Mapping[str, Any],
@@ -273,23 +346,31 @@ def _authority_recovery_fact_request_material(
         == _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
     ):
         return material
-    if (
-        fact_extraction_semantics_version
-        != _PRE_REVISION_FACT_SEMANTICS_VERSION
-    ):
+    if fact_extraction_semantics_version not in {
+        _PRE_REVISION_FACT_SEMANTICS_VERSION,
+        _LEGACY_VALUATION_FACT_SEMANTICS_VERSION,
+    }:
         raise ValueError("fact authority recovery semantics are unsupported")
     safe_payload, current_schema, current_prompt, _prompt_hash, _schema_hash = (
         material
     )
-    prior_schema = _prior_revision_fact_output_schema(current_schema)
+    if (
+        fact_extraction_semantics_version
+        == _PRE_REVISION_FACT_SEMANTICS_VERSION
+    ):
+        prior_schema = _prior_revision_fact_output_schema(current_schema)
+        prior_instruction = _prior_revision_fact_instruction()
+    else:
+        prior_schema = _legacy_valuation_fact_output_schema(current_schema)
+        prior_instruction = _legacy_valuation_fact_instruction()
     if prior_schema is None:
-        raise ValueError("prior revision fact schema cannot be derived")
+        raise ValueError("historical fact schema cannot be derived")
     current_instruction = _pass_instruction("EVIDENCE_FACT_EXTRACTION")
     if current_prompt.count(current_instruction) != 1:
         raise ValueError("current fact instruction boundary is ambiguous")
     prior_prompt = current_prompt.replace(
         current_instruction,
-        _prior_revision_fact_instruction(),
+        prior_instruction,
         1,
     )
     return (

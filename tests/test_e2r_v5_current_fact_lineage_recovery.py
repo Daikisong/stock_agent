@@ -30,8 +30,10 @@ from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     write_researcher_fact_extraction_result,
 )
 from e2r.research_brain.researcher_mode.fact_lineage_materials import (
+    AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS,
     AuthoritativeResearchEpochFactLedger,
     CurrentFactLineageRecoveryBinding,
+    LEGACY_FACT_EXTRACTION_SEMANTICS_VERSION,
     PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION,
     validate_current_v5_fact_lineage_materials,
 )
@@ -299,6 +301,36 @@ def _bundle(root: Path):
 
 
 class CurrentFactLineageRecoveryTests(unittest.TestCase):
+    def test_authority_recovery_keeps_known_v5_journal_semantics(self):
+        self.assertIn(
+            LEGACY_FACT_EXTRACTION_SEMANTICS_VERSION,
+            AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS,
+        )
+        binding = CurrentFactLineageRecoveryBinding(
+            journal_root=".",
+            seed_source_document_ids=("SGDOC-HISTORICAL",),
+            journal_request_ids=("COLLABREQ-" + "a" * 64,),
+            journal_response_ids=("COLLABRESP-" + "b" * 64,),
+            fact_extraction_semantics_version=(
+                LEGACY_FACT_EXTRACTION_SEMANTICS_VERSION
+            ),
+        )
+        self.assertEqual(
+            binding.fact_extraction_semantics_version,
+            LEGACY_FACT_EXTRACTION_SEMANTICS_VERSION,
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "current fact lineage recovery semantics are unsupported",
+        ):
+            CurrentFactLineageRecoveryBinding(
+                journal_root=".",
+                seed_source_document_ids=("SGDOC-HISTORICAL",),
+                journal_request_ids=("COLLABREQ-" + "a" * 64,),
+                journal_response_ids=("COLLABRESP-" + "b" * 64,),
+                fact_extraction_semantics_version="UNKNOWN-HISTORICAL-VERSION",
+            )
+
     def test_committed_known_historical_recovery_receipt_remains_readable(self):
         historical = {
             "batch_id": "FACTBATCH-HISTORICAL",
@@ -474,6 +506,14 @@ class CurrentFactLineageRecoveryTests(unittest.TestCase):
         self.assertEqual(
             binding.fact_extraction_semantics_version,
             PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION,
+        )
+        self.assertEqual(
+            {
+                row.extraction_semantics_version
+                for row in result.provider_calls
+                if row.current_lineage_request_ids
+            },
+            {PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION},
         )
         self.assertEqual(provider.complete_call_count, 0)
         self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")

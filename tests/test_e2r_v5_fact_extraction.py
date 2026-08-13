@@ -1136,6 +1136,12 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 (authority_projection_mismatch, reassessment)
             )
         )
+        recovery_binding = "CURRENT_FACT_LINEAGE_RECOVERY_BINDING_REQUIRED"
+        self.assertTrue(
+            fact_extraction_has_exact_checkpoint_recovery_wait(
+                (recovery_binding, reassessment, incomplete)
+            )
+        )
 
         for invalid in (
             (reassessment, reassessment),
@@ -1148,6 +1154,9 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 "SGDOC-" + "A" * 24,
             ),
             (reassessment + ":SUFFIX",),
+            (recovery_binding, recovery_binding),
+            (recovery_binding + ":SUFFIX",),
+            (recovery_binding, collaboration),
             (reassessment, "CANDIDATE_RANKING_PENDING"),
             (
                 authority_projection_mismatch,
