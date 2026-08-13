@@ -102,6 +102,13 @@ _PRE_STRUCTURED_REVISION_ROLE_SEMANTICS_VERSION = (
 _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION = (
     "e2r_v5_source_boundary_context_v4"
 )
+_HISTORICAL_CURRENT_LINEAGE_RECOVERY_SEMANTICS_VERSIONS = frozenset(
+    {
+        FACT_EXTRACTION_SEMANTICS_VERSION,
+        _PRE_STRUCTURED_SCENARIO_INPUT_ROLE_SEMANTICS_VERSION,
+        _PRE_STRUCTURED_REVISION_ROLE_SEMANTICS_VERSION,
+    }
+)
 SOURCE_BOUNDARY_CONTEXT_CHARS = 4_000
 _TRUSTED_COVERAGE_REFRESH_SOURCE_TIERS = frozenset(
     {
@@ -396,8 +403,16 @@ class FactExtractionProviderCall:
                 and (
                     self.status != "COMPLETE"
                     or self.provider_attempt_count != 0
+                    # A committed checkpoint may legitimately contain an
+                    # exact recovery receipt produced by an earlier, known
+                    # fact schema.  The next run still has to migrate the
+                    # checkpoint, but it must first be able to read that
+                    # sealed receipt.  Keep this a closed allow-list so an
+                    # unknown historical schema continues to fail closed.
                     or self.extraction_semantics_version
-                    != FACT_EXTRACTION_SEMANTICS_VERSION
+                    not in (
+                        _HISTORICAL_CURRENT_LINEAGE_RECOVERY_SEMANTICS_VERSIONS
+                    )
                     or "COLLABORATION_CODEX_SUBAGENT"
                     not in self.provider_name
                     or not self.current_lineage_original_batch_document_ids

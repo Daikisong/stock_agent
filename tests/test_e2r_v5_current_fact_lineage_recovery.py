@@ -299,6 +299,48 @@ def _bundle(root: Path):
 
 
 class CurrentFactLineageRecoveryTests(unittest.TestCase):
+    def test_committed_known_historical_recovery_receipt_remains_readable(self):
+        historical = {
+            "batch_id": "FACTBATCH-HISTORICAL",
+            "status": "COMPLETE",
+            "document_ids": ["SGDOC-HISTORICAL"],
+            "accepted_claim_ids": [],
+            "rejected_proposal_count": 0,
+            "document_dispositions": [],
+            "pending_reasons": [],
+            "research_gap_feedback": [],
+            "provider_name": "COLLABORATION_CODEX_SUBAGENT",
+            "prompt_hash": "FACTPROMPT-HISTORICAL",
+            "response_hash": "FACTRESP-HISTORICAL",
+            "provider_attempt_count": 0,
+            "current_lineage_request_ids": ["COLLABREQ-" + "a" * 64],
+            "current_lineage_response_ids": ["COLLABRESP-" + "b" * 64],
+            "current_lineage_original_batch_document_ids": [
+                "SGDOC-HISTORICAL"
+            ],
+            "extraction_semantics_version": (
+                "e2r_v5_structured_valuation_roles_v5"
+            ),
+        }
+
+        restored = _coerce_provider_call(historical)
+
+        self.assertEqual(restored.provider_attempt_count, 0)
+        self.assertEqual(
+            restored.extraction_semantics_version,
+            "e2r_v5_structured_valuation_roles_v5",
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "current fact lineage recovery receipts are invalid",
+        ):
+            _coerce_provider_call(
+                {
+                    **historical,
+                    "extraction_semantics_version": "UNKNOWN-HISTORICAL-VERSION",
+                }
+            )
+
     def test_authority_recovery_selects_exact_prior_semantics_without_unneeded_rewrite(
         self,
     ):
