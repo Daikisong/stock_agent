@@ -2715,6 +2715,75 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         )
         self.assertEqual(len(provider.calls), 2)
 
+    def test_supervisor_rejects_same_exhausted_source_family(self) -> None:
+        class CorrectingAlternateRouteProvider(Phase87SupervisorProvider):
+            def __init__(self) -> None:
+                super().__init__("GAP")
+                self.invalidations: list[str] = []
+
+            def invalidate_last_response_cache(self, reason: str) -> None:
+                self.invalidations.append(reason)
+
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                if len(self.calls) == 1:
+                    return response
+                response["new_source_family_directions"] = [
+                    {
+                        **dict(response["new_source_family_directions"][0]),
+                        "source_family": "CUSTOMER_OFFICIAL",
+                        "direction": "다른 공식 source family를 검토한다.",
+                    }
+                ]
+                return response
+
+        inputs = dict(
+            _supervisor_inputs(
+                prior_failures=(
+                    {
+                        "failure_id": "FAIL-EXHAUSTED-ISSUER",
+                        "failure_kind": "SOURCE_FAMILY_COVERAGE",
+                        "failure_reason": (
+                            "REQUESTED_SOURCE_FAMILY_WITHOUT_"
+                            "ACCEPTED_CLAIM_FACT_LINEAGE"
+                        ),
+                        "objective_id": OBJECTIVE_ID,
+                        "source_family": "ISSUER_PRESENTATION",
+                        "attempted_source_families": [
+                            "ISSUER_PRESENTATION"
+                        ],
+                        "full_fetch_attempted": True,
+                        "retryable": True,
+                        "alternate_route_required": True,
+                        "absence_eligible": False,
+                        "zero_result_only": False,
+                    },
+                )
+            )
+        )
+        provider = CorrectingAlternateRouteProvider()
+
+        review = ResearchSupervisor(provider=provider).review_epoch(**inputs)
+
+        self.assertEqual(review.status, "NEXT_RESEARCH_REQUIRED")
+        self.assertEqual(len(provider.calls), 2)
+        self.assertEqual(len(provider.invalidations), 1)
+        retry_context = provider.calls[1]["payload"][
+            "supervisor_validation_retry_context"
+        ]
+        self.assertIn(
+            "repeated an exhausted source-family route",
+            retry_context["validation_error"],
+        )
+        self.assertEqual(
+            review.new_source_family_directions[0].source_family,
+            "CUSTOMER_OFFICIAL",
+        )
+
     def test_parser_failure_and_source_absence_are_distinct(self) -> None:
         parser_provider = Phase87SupervisorProvider("PARSER")
         parser_review = ResearchSupervisor(provider=parser_provider).review_epoch(

@@ -1033,6 +1033,45 @@ def _review_from_provider_response(
         raise ValueError(
             "supervisor source/query direction requires a concrete component fact gap"
         )
+    exhausted_source_family_routes = {
+        (str(failure.get("objective_id") or ""), source_family)
+        for failure in failure_by_id.values()
+        if failure.get("alternate_route_required") is True
+        and str(failure.get("objective_id") or "") in objective_ids
+        for source_family in {
+            str(value)
+            for value in (
+                failure.get("attempted_source_families")
+                or (failure.get("source_family"),)
+            )
+            if str(value)
+        }
+    }
+    repeated_exhausted_routes = sorted(
+        {
+            (row.objective_id, row.source_family)
+            for row in directions
+            if (row.objective_id, row.source_family)
+            in exhausted_source_family_routes
+        }
+    )
+    if repeated_exhausted_routes:
+        # ``alternate_route_required`` is a deterministic acquisition result,
+        # not a request to paraphrase the same source family.  Once the LLM
+        # planner cannot legally reopen that exact objective/family pair; doing
+        # so creates a self-output loop:
+        # Supervisor -> duplicate query -> no accepted lineage -> Supervisor.
+        # The provider may choose a genuinely different source family or close
+        # the executable route while preserving the evidence limitation.  The
+        # deterministic layer still does not invent a fallback query.
+        route_text = ",".join(
+            f"{objective_id}:{source_family}"
+            for objective_id, source_family in repeated_exhausted_routes
+        )
+        raise ValueError(
+            "supervisor repeated an exhausted source-family route:"
+            f"{route_text}"
+        )
     unresolved = _string_tuple(response.get("unresolved_material_questions"))
     next_actions = _string_tuple(response.get("next_actions"))
     counter_checked = _required_bool(response, "counter_and_supersession_checked")
