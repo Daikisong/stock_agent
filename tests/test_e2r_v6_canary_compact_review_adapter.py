@@ -159,7 +159,13 @@ class E2RV6CanaryCompactReviewAdapterTests(unittest.TestCase):
                 repo_root=REPO_ROOT,
             )
             self.assertEqual(len(reviews), 2)
-            self.assertEqual(len({row["reviewer_id"] for row in reviews}), 2)
+            self.assertEqual(
+                {row["reviewer_id"] for row in reviews},
+                {
+                    "CODEX_POST_RUN_REVIEWER_A",
+                    "CODEX_POST_RUN_REVIEWER_B",
+                },
+            )
             self.assertTrue(all(row["critical_count_sum"] == 0 for row in reviews))
 
     def test_same_agent_provenance_is_rejected(self) -> None:

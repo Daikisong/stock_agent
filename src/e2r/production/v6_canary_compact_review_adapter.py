@@ -38,6 +38,10 @@ BLIND_REVIEW_SCHEMA = "e2r_v6_compact_blind_review_response_v1"
 BLIND_REVIEW_PASS_NAME = "COMPACT_CANARY_BLIND_REVIEW"
 BLIND_REVIEW_OUTPUT_SCHEMA_NAME = "e2r_v5_compact_canary_blind_review"
 REVIEWER_SLOTS = ("A", "B")
+PORTABLE_REVIEWER_ROLE_IDS = {
+    "A": "CODEX_POST_RUN_REVIEWER_A",
+    "B": "CODEX_POST_RUN_REVIEWER_B",
+}
 
 _RESPONSE_KEYS = frozenset(
     {
@@ -390,7 +394,12 @@ def consume_blind_compact_review_responses(
             or payload.get("score_or_stage_authority") is not False
         ):
             raise ValueError("blind compact review response is incomplete or mismatched")
-        reviewer_id = str(envelope["provenance"]["canonical_task_name"])
+        # The task name proves that two distinct agents performed the reviews,
+        # but it is a runtime path (for example ``/root/worker_a``), not a
+        # portable reviewer identity.  The tracked artifact exposes the
+        # sealed slot as a stable role id; provider call and prompt/response
+        # hashes retain the exact review lineage.
+        reviewer_id = PORTABLE_REVIEWER_ROLE_IDS[slot]
         prompt_hash = str(request["prompt_hash"])
         response_hash = str(envelope["payload_hash"])
         identity = {
@@ -449,6 +458,7 @@ def consume_blind_compact_review_responses(
 
 __all__ = [
     "BLIND_REVIEW_SCHEMA",
+    "PORTABLE_REVIEWER_ROLE_IDS",
     "build_blind_compact_review_material",
     "compact_blind_review_output_schema",
     "consume_blind_compact_review_responses",

@@ -446,8 +446,10 @@ def _reviews(manifest: dict[str, object], artifacts: dict[str, object]) -> list[
     score = artifacts["score_receipt.json"]
     assert isinstance(score, dict)
     result = []
-    for suffix in ("a", "b"):
-        reviewer_id = f"/root/independent_{suffix}"
+    for suffix, reviewer_id in (
+        ("a", "CODEX_POST_RUN_REVIEWER_A"),
+        ("b", "CODEX_POST_RUN_REVIEWER_B"),
+    ):
         call_id = f"COLLAB-REVIEW-{manifest['target_id']}-{suffix}"
         receipt_scope = str(manifest["receipt_payload_hash"])
         prompt_hash = hashlib.sha256(

@@ -1850,6 +1850,10 @@ def _validate_reviews(
 ) -> None:
     if len(reviews) != 2:
         raise ValueError("exactly two independent reviews are required")
+    portable_reviewer_ids = {
+        "CODEX_POST_RUN_REVIEWER_A",
+        "CODEX_POST_RUN_REVIEWER_B",
+    }
     reviewer_ids: set[str] = set()
     provider_call_ids: set[str] = set()
     prompt_hashes: set[str] = set()
@@ -1862,7 +1866,7 @@ def _validate_reviews(
         prompt_hash = str(review.get("prompt_hash") or "")
         response_hash = str(review.get("response_hash") or "")
         if (
-            not reviewer_id
+            reviewer_id not in portable_reviewer_ids
             or not call_id
             or _HEX64.fullmatch(prompt_hash) is None
             or _HEX64.fullmatch(response_hash) is None
@@ -1924,6 +1928,8 @@ def _validate_reviews(
             or review.get("score_or_stage_authority") is not False
         ):
             raise ValueError("independent review did not reproduce the full compact receipt")
+    if reviewer_ids != portable_reviewer_ids:
+        raise ValueError("portable reviewer role roster is incomplete")
 
 
 def validate_selection_bound_canary_bundle(
