@@ -853,6 +853,72 @@ class CurrentFactLineageMaterialTests(unittest.TestCase):
                 self.assertEqual(result["status"], "INVALID")
                 self.assertEqual(result["materials"], [])
 
+    def test_current_hosted_codex_collaboration_model_labels_are_accepted(self):
+        for model in (
+            "gpt-5.6-sol",
+            "gpt-5.6-terra",
+            "gpt-5.6-luna",
+            "gpt-5.5",
+            "gpt-daybreak-blue-latest",
+        ):
+            with self.subTest(model=model), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                journal = root / "collaboration_codex_subagent_provider"
+                transport = CollaborationCodexSubagentTransport()
+                transport.configure_journal_root(journal)
+                document = _prompt_document("SGDOC-ONE", "OBJECTIVE-ONE")
+                payload = _prompt_payload([document], marker=model)
+                _write_pair(
+                    transport,
+                    journal,
+                    payload=payload,
+                    response=_response([document], []),
+                    agent_model=model,
+                )
+
+                result = validate_current_v5_fact_lineage_materials(
+                    journal_root=journal,
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    archetype_id=ARCHETYPE,
+                    current_documents=[_current_document(document)],
+                    current_fact_prompt_payload=payload,
+                )
+
+                self.assertEqual(
+                    result["status"],
+                    "READY_FOR_OFFICIAL_SEMANTIC_REPLAY",
+                )
+                self.assertEqual(len(result["materials"]), 1)
+
+    def test_current_hosted_codex_label_with_local_suffix_fails_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            journal = root / "collaboration_codex_subagent_provider"
+            transport = CollaborationCodexSubagentTransport()
+            transport.configure_journal_root(journal)
+            document = _prompt_document("SGDOC-ONE", "OBJECTIVE-ONE")
+            payload = _prompt_payload([document], marker="gpt-5.6-sol-local")
+            _write_pair(
+                transport,
+                journal,
+                payload=payload,
+                response=_response([document], []),
+                agent_model="gpt-5.6-sol-local",
+            )
+
+            result = validate_current_v5_fact_lineage_materials(
+                journal_root=journal,
+                target_id=TARGET,
+                as_of_date=AS_OF_DATE,
+                archetype_id=ARCHETYPE,
+                current_documents=[_current_document(document)],
+                current_fact_prompt_payload=payload,
+            )
+
+            self.assertEqual(result["status"], "INVALID")
+            self.assertEqual(result["materials"], [])
+
     def test_blind_envelope_and_epoch_head_tampering_fail_closed(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

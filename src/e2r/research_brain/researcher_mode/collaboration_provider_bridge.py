@@ -610,16 +610,24 @@ def _is_nonlocal_codex_collaboration_provenance(
     ``_validate_response_envelope`` proves that the provenance object is bound
     into the immutable response id.  The generic importer deliberately accepts
     future model labels, though, so fact-lineage reuse needs this additional
-    narrow policy boundary.  Historical official receipts use both
-    ``codex-collaboration`` and ``codex-gpt-5``; requiring one exact spelling
-    would incorrectly discard otherwise identical Codex lineage.
+    narrow policy boundary.  Historical official receipts use
+    ``codex-collaboration`` and ``codex-gpt-5`` while current orchestrated
+    Collaboration receipts expose hosted labels such as ``gpt-5.6-sol``.
+    Requiring one historical spelling would incorrectly discard otherwise
+    identical Codex lineage.
     """
 
     model = str(provenance.get("agent_model") or "").strip().casefold()
-    recognized_model = model == "codex-collaboration" or re.fullmatch(
-        r"codex-gpt-[0-9]+(?:\.[0-9]+)*",
-        model,
-    ) is not None
+    recognized_model = (
+        model == "codex-collaboration"
+        or re.fullmatch(r"codex-gpt-[0-9]+(?:\.[0-9]+)*", model) is not None
+        or re.fullmatch(
+            r"gpt-[0-9]+(?:\.[0-9]+)*(?:-(?:sol|terra|luna))?",
+            model,
+        )
+        is not None
+        or model == "gpt-daybreak-blue-latest"
+    )
     return (
         provenance.get("agent_surface") == "CODEX_COLLABORATION_SUBAGENT"
         and provenance.get("provenance_assurance")
@@ -2157,13 +2165,76 @@ class CollaborationCodexSubagentTransport:
                     continue
                 request_id = str(request["request_id"])
                 response_path = root / "responses" / f"{request_id}.json"
-                if not response_path.is_file():
-                    pending_request_ids.append(request_id)
-                    continue
-                envelope = _validate_response_envelope(
-                    request=request,
-                    envelope=_read_json_object(response_path),
+                continuation_page_number = int(
+                    (
+                        request_payload.get(
+                            "fact_extraction_continuation_context"
+                        )
+                        or {}
+                    ).get("page_number")
+                    or 1
                 )
+                if not response_path.is_file():
+                    retry_material = (
+                        self.validated_fact_extraction_retry_material(
+                            primary_prompt=str(request["prompt"]),
+                            output_schema=dict(request["output_schema"]),
+                            schema_name=str(request["schema_name"]),
+                        )
+                    )
+                    if not isinstance(retry_material, Mapping):
+                        pending_request_ids.append(request_id)
+                        continue
+                    retry_request = retry_material.get("retry_request")
+                    retry_payload = retry_material.get("retry_payload")
+                    retry_envelope = retry_material.get("retry_response")
+                    if not all(
+                        isinstance(value, Mapping)
+                        for value in (
+                            retry_request,
+                            retry_payload,
+                            retry_envelope,
+                        )
+                    ):
+                        invalid_matching_receipt = True
+                        continue
+                    assert isinstance(retry_request, Mapping)
+                    assert isinstance(retry_payload, Mapping)
+                    assert isinstance(retry_envelope, Mapping)
+                    (
+                        retry_safe_payload,
+                        retry_expected_schema,
+                        retry_expected_prompt,
+                        retry_expected_prompt_hash,
+                        retry_expected_schema_hash,
+                    ) = _authority_recovery_fact_request_material(
+                        payload=retry_payload,
+                        fact_extraction_semantics_version=(
+                            fact_extraction_semantics_version
+                        ),
+                    )
+                    if (
+                        retry_safe_payload != retry_payload
+                        or retry_request.get("prompt")
+                        != retry_expected_prompt
+                        or retry_request.get("prompt_hash")
+                        != retry_expected_prompt_hash
+                        or retry_request.get("output_schema")
+                        != retry_expected_schema
+                        or retry_request.get("output_schema_hash")
+                        != retry_expected_schema_hash
+                    ):
+                        invalid_matching_receipt = True
+                        continue
+                    request = retry_request
+                    request_payload = retry_payload
+                    envelope = retry_envelope
+                    request_id = str(request["request_id"])
+                else:
+                    envelope = _validate_response_envelope(
+                        request=request,
+                        envelope=_read_json_object(response_path),
+                    )
                 provenance = envelope.get("provenance")
                 if (
                     not isinstance(provenance, Mapping)
@@ -2207,13 +2278,7 @@ class CollaborationCodexSubagentTransport:
                     "response_payload": dict(envelope["payload"]),
                     "provenance": dict(provenance),
                     "continuation_page_number": int(
-                        (
-                            request_payload.get(
-                                "fact_extraction_continuation_context"
-                            )
-                            or {}
-                        ).get("page_number")
-                        or 1
+                        continuation_page_number
                     ),
                 }
             )

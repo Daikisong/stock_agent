@@ -789,9 +789,22 @@ def _ordered_journal_material_groups(
         if not isinstance(request_payload, Mapping):
             raise ValueError("fact lineage request payload is missing")
         context = request_payload.get("fact_extraction_continuation_context")
+        retry_context = request_payload.get("fact_extraction_retry_context")
+        if context is not None and retry_context is not None:
+            raise ValueError(
+                "fact lineage request has both continuation and retry context"
+            )
         if context is None:
-            page_number = 1
+            page_number = raw.get("continuation_page_number") or 1
+            if (
+                isinstance(page_number, bool)
+                or not isinstance(page_number, int)
+                or page_number < 1
+                or (retry_context is None and page_number != 1)
+            ):
+                raise ValueError("fact lineage material page is invalid")
             base_payload = dict(request_payload)
+            base_payload.pop("fact_extraction_retry_context", None)
         else:
             if not isinstance(context, Mapping):
                 raise ValueError("fact lineage continuation context is invalid")
@@ -804,6 +817,10 @@ def _ordered_journal_material_groups(
                 raise ValueError("fact lineage continuation page is invalid")
             base_payload = dict(request_payload)
             base_payload.pop("fact_extraction_continuation_context", None)
+            if raw.get("continuation_page_number") != page_number:
+                raise ValueError(
+                    "fact lineage continuation page metadata drifted"
+                )
         group_id = "FACTLINEAGECALL-" + _canonical_hash(base_payload)[:24]
         grouped.setdefault(group_id, []).append((page_number, dict(raw)))
     result: list[tuple[Mapping[str, Any], ...]] = []
@@ -837,6 +854,10 @@ def _validate_candidate_material_group(
     request_payload = dict(first_request)
     if "fact_extraction_continuation_context" in request_payload:
         raise ValueError("fact lineage call group lacks its base request")
+    request_payload.pop(
+        "fact_extraction_retry_context",
+        None,
+    )
     if (
         request_payload.get("target_id") != target_id
         or request_payload.get("as_of_date") != as_of_date
@@ -919,17 +940,36 @@ def _validate_candidate_material_group(
             "fact_extraction_continuation_context",
             None,
         )
+        retry_context = page_core.pop(
+            "fact_extraction_retry_context",
+            None,
+        )
+        if context is not None and retry_context is not None:
+            raise ValueError(
+                "fact lineage page has both continuation and retry context"
+            )
         if page_core != base_core:
             raise ValueError("fact lineage continuation base payload drifted")
         if page_index == 1:
             if context is not None:
                 raise ValueError("fact lineage first page is a continuation")
+            if retry_context is not None:
+                _validate_retry_context(
+                    retry_context,
+                    historical_document_ids=frozenset(historical_by_id),
+                )
         else:
-            _validate_continuation_context(
-                context,
-                page_number=page_index,
-                historical_document_ids=frozenset(historical_by_id),
-            )
+            if retry_context is not None:
+                _validate_retry_context(
+                    retry_context,
+                    historical_document_ids=frozenset(historical_by_id),
+                )
+            else:
+                _validate_continuation_context(
+                    context,
+                    page_number=page_index,
+                    historical_document_ids=frozenset(historical_by_id),
+                )
         facts = response_payload.get("facts")
         dispositions = response_payload.get("document_dispositions")
         unresolved = response_payload.get("unresolved_document_ids")
@@ -951,14 +991,23 @@ def _validate_candidate_material_group(
         if final_page:
             if unresolved or response_payload.get("extraction_complete") is not True:
                 raise ValueError("fact lineage final page is not terminal")
-        elif (
-            response_payload.get("extraction_complete") is not False
-            or not unresolved
-            or not set(str(value) for value in unresolved).issubset(
-                historical_by_id
+        else:
+            declared_open = (
+                response_payload.get("extraction_complete") is False
+                and bool(unresolved)
+                and set(str(value) for value in unresolved).issubset(
+                    historical_by_id
+                )
             )
-        ):
-            raise ValueError("fact lineage non-final page closed incorrectly")
+            full_page_requires_confirmation = (
+                len(facts) >= 12
+                and response_payload.get("extraction_complete") is True
+                and not unresolved
+            )
+            if not declared_open and not full_page_requires_confirmation:
+                raise ValueError(
+                    "fact lineage non-final page closed incorrectly"
+                )
     stale_ids = tuple(
         sorted(set(historical_by_id) - set(validated_current_ids))
     )
@@ -1000,6 +1049,37 @@ def _validate_continuation_context(
         or not isinstance(prior, list)
     ):
         raise ValueError("fact lineage continuation context is malformed")
+
+
+def _validate_retry_context(
+    context: Any,
+    *,
+    historical_document_ids: frozenset[str],
+) -> None:
+    if not isinstance(context, Mapping):
+        raise ValueError("fact lineage retry context is missing")
+    rewrite_attempt = context.get("rewrite_attempt")
+    validation_errors = context.get("validation_errors")
+    required_ids = context.get("required_document_ids")
+    prior = context.get("previously_accepted_facts")
+    if (
+        isinstance(rewrite_attempt, bool)
+        or rewrite_attempt not in (1, 2)
+        or context.get("maximum_rewrite_attempts") != 2
+        or not isinstance(validation_errors, list)
+        or not validation_errors
+        or any(
+            not isinstance(reason, str) or not reason.strip()
+            for reason in validation_errors
+        )
+        or not isinstance(required_ids, list)
+        or frozenset(str(value) for value in required_ids)
+        != historical_document_ids
+        or len(required_ids) != len(historical_document_ids)
+        or not isinstance(prior, list)
+        or any(not isinstance(row, Mapping) for row in prior)
+    ):
+        raise ValueError("fact lineage retry context is malformed")
 
 
 def _validated_current_documents(

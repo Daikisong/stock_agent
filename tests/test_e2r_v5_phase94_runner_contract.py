@@ -294,10 +294,14 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _historical_anchors,
     _load_authoritative_prior_fact_context,
     _load_committed_fact_result_snapshot,
+    _load_validated_fact_projection_receipt,
     _load_fact_checkpoint,
     _load_prior_research_context,
     _required_structured_roles_for_plans,
+    _restore_fact_checkpoint_from_projection_receipt,
     _structured_result_from_official,
+    _validated_embedded_fact_result_snapshot,
+    _write_fact_projection_receipt,
 )
 from e2r.research_brain.researcher_mode.fact_lineage_materials import (
     AuthoritativeResearchEpochFactLedger,
@@ -2028,6 +2032,235 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             )
             self.assertEqual(prior["prior_material_claims"], ())
             self.assertEqual(prior["prior_provider_calls"], ())
+
+    def test_pending_projection_receipt_restores_a_smaller_later_snapshot(self):
+        """A coverage write cannot erase an uncommitted full projection."""
+
+        material = _authority_fact_enrichment_fixture()
+        source_checkpoint = material["source_checkpoint"]
+        ledger = _authority_ledger(())
+        compilation = EvidenceFactCompiler().compile(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(material["old_claim"], material["new_claim"]),
+        )
+        document_ids = tuple(
+            source_checkpoint["production_downstream_document_ids"]
+        )
+        dispositions = tuple(
+            {
+                "document_id": document_id,
+                "status": "FACTS_EXTRACTED",
+                "rationale": "fixture projection is fully accounted",
+            }
+            for document_id in document_ids
+        )
+        result = {
+            "schema_version": "e2r_v5_researcher_fact_extraction_v1",
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": AS_OF_DATE,
+            "status": "FACT_EXTRACTION_PENDING",
+            "material_claims": [material["old_claim"], material["new_claim"]],
+            "fact_compilation": compilation.to_dict(),
+            "provider_calls": list(material["snapshot"]["provider_calls"]),
+            "rejections": [],
+            "document_dispositions": list(dispositions),
+            "pending_reasons": [
+                FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+            ],
+            "research_gap_feedback": [],
+            "audit": {"input_document_count": len(document_ids)},
+            "production_score_authority": False,
+        }
+        validated = _validated_embedded_fact_result_snapshot(
+            result,
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+        )
+        full_snapshot = {
+            **validated,
+            "leaf_commit_complete": True,
+            "atomic_snapshot_repair_required": False,
+            "leaf_mismatch_names": (),
+        }
+        projected_fact_ids = tuple(
+            sorted(row["fact_id"] for row in full_snapshot["facts"])
+        )
+        epoch = SimpleNamespace(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            checkpoint_id=ledger.checkpoint_id,
+            checkpoint_hash=ledger.checkpoint_hash,
+            source_graph_checkpoint_id=source_checkpoint["checkpoint_id"],
+        )
+        empty_compilation = EvidenceFactCompiler().compile(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(),
+        )
+        smaller_result = {
+            **result,
+            "material_claims": [],
+            "fact_compilation": empty_compilation.to_dict(),
+            "provider_calls": [],
+            "document_dispositions": [],
+            "audit": {"input_document_count": 0},
+        }
+        smaller_validated = _validated_embedded_fact_result_snapshot(
+            smaller_result,
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+        )
+        smaller_snapshot = {
+            **smaller_validated,
+            "leaf_commit_complete": True,
+            "atomic_snapshot_repair_required": False,
+            "leaf_mismatch_names": (),
+        }
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "research_epochs.jsonl").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            (root / "research_epoch_checkpoint.json").write_text(
+                "{}\n", encoding="utf-8"
+            )
+            receipt = _write_fact_projection_receipt(
+                root,
+                snapshot=full_snapshot,
+                ledger=ledger,
+                source_checkpoint=source_checkpoint,
+                pending_new_fact_ids=projected_fact_ids,
+                pending_retired_fact_ids=(),
+            )
+            _restore_fact_checkpoint_from_projection_receipt(
+                root,
+                snapshot=smaller_snapshot,
+            )
+            self.assertEqual(
+                _load_committed_fact_result_snapshot(
+                    root,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )["facts"],
+                (),
+            )
+
+            with (
+                patch(
+                    "e2r.research_brain.researcher_mode."
+                    "current_researcher_mode."
+                    "load_authoritative_research_epoch_fact_ledger",
+                    return_value=ledger,
+                ),
+                patch(
+                    "e2r.research_brain.researcher_mode."
+                    "current_researcher_mode.load_research_epoch_checkpoint",
+                    return_value=epoch,
+                ),
+            ):
+                context = _load_authoritative_prior_fact_context(
+                    root,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=source_checkpoint,
+                )
+
+            restored = _load_committed_fact_result_snapshot(
+                root,
+                target_id="CURRENT-TARGET",
+                as_of_date=AS_OF_DATE,
+            )
+            self.assertEqual(
+                tuple(sorted(row["fact_id"] for row in restored["facts"])),
+                projected_fact_ids,
+            )
+            assert context is not None
+            self.assertTrue(context["fact_projection_receipt_recovered"])
+            self.assertEqual(
+                context["fact_projection_receipt_id"],
+                receipt["receipt_id"],
+            )
+            self.assertEqual(
+                context["pending_new_fact_ids"],
+                projected_fact_ids,
+            )
+
+    def test_pending_projection_receipt_tampering_fails_closed(self):
+        material = _authority_fact_enrichment_fixture()
+        ledger = _authority_ledger(())
+        source_checkpoint = material["source_checkpoint"]
+        compilation = EvidenceFactCompiler().compile(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(material["old_claim"], material["new_claim"]),
+        )
+        result = {
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": AS_OF_DATE,
+            "status": "FACT_EXTRACTION_PENDING",
+            "material_claims": [material["old_claim"], material["new_claim"]],
+            "fact_compilation": compilation.to_dict(),
+            "provider_calls": list(material["snapshot"]["provider_calls"]),
+            "rejections": [],
+            "document_dispositions": [
+                {
+                    "document_id": document_id,
+                    "status": "FACTS_EXTRACTED",
+                    "rationale": "fixture projection is fully accounted",
+                }
+                for document_id in source_checkpoint[
+                    "production_downstream_document_ids"
+                ]
+            ],
+            "pending_reasons": [
+                FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+            ],
+            "research_gap_feedback": [],
+            "audit": {"input_document_count": 2},
+            "production_score_authority": False,
+        }
+        validated = _validated_embedded_fact_result_snapshot(
+            result,
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+        )
+        snapshot = {
+            **validated,
+            "leaf_commit_complete": True,
+            "atomic_snapshot_repair_required": False,
+            "leaf_mismatch_names": (),
+        }
+        pending_ids = tuple(
+            sorted(row["fact_id"] for row in snapshot["facts"])
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _write_fact_projection_receipt(
+                root,
+                snapshot=snapshot,
+                ledger=ledger,
+                source_checkpoint=source_checkpoint,
+                pending_new_fact_ids=pending_ids,
+                pending_retired_fact_ids=(),
+            )
+            receipt_path = root / "fact_projection_receipt.json"
+            tampered = json.loads(receipt_path.read_text(encoding="utf-8"))
+            tampered["projected_fact_profile"]["fact_count"] += 1
+            receipt_path.write_text(
+                json.dumps(tampered, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+
+            self.assertIsNone(
+                _load_validated_fact_projection_receipt(
+                    root,
+                    ledger=ledger,
+                    source_checkpoint=source_checkpoint,
+                )
+            )
 
     def test_binding_resolver_failure_becomes_structured_pending_without_provider(
         self,

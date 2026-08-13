@@ -58,6 +58,7 @@ from .evidence_fact_extractor import (
 )
 from .evidence_fact_compiler import EvidenceFactCompiler
 from .fact_lineage_materials import (
+    AuthoritativeResearchEpochFactLedger,
     load_authoritative_research_epoch_fact_ledger,
 )
 from .official_source_materializer import (
@@ -66,6 +67,7 @@ from .official_source_materializer import (
     OfficialSourceMaterializationResult,
     write_official_source_materialization,
 )
+from .prompt_projection import project_fact_extraction_evidence_context
 from .current_structured_materializer import (
     FACT_STRUCTURED_ROLE_RESOLUTION_CONTRACTS,
     CurrentStructuredMaterializationResult,
@@ -140,6 +142,7 @@ from .structured_source_routes import (
 
 
 CURRENT_RESEARCHER_MODE_SCHEMA_VERSION = "e2r_v5_current_researcher_mode_v1"
+FACT_PROJECTION_RECEIPT_FILENAME = "fact_projection_receipt.json"
 
 
 @dataclass(frozen=True)
@@ -3607,27 +3610,19 @@ def _embedded_mapping_rows(
     return rows
 
 
-def _load_committed_fact_result_snapshot(
-    root: Path,
+def _validated_embedded_fact_result_snapshot(
+    result: Mapping[str, Any],
     *,
     target_id: str,
     as_of_date: str,
 ) -> Mapping[str, Any]:
-    """Project only the result-last fact generation, never mixed new leaves.
+    """Validate one self-contained result-last fact generation.
 
-    The writer replaces six JSONL leaves and the standalone audit before it
-    replaces ``fact_extraction_result.json``.  A crash can therefore expose,
-    for example, a new 499-fact leaf beside the older 457-fact result marker.
-    The marker's embedded rows remain the committed generation; mismatching
-    leaves are repair work and must not silently become the next input.
+    The ordinary checkpoint and the durable pending-projection receipt use
+    the same embedded result contract.  Keeping one validator prevents the
+    receipt from becoming a weaker, second interpretation of fact lineage.
     """
 
-    result_path = root / FACT_EXTRACTION_OUTPUT_FILES["result"]
-    if not result_path.is_file():
-        raise ValueError(
-            "authoritative fact ledger requires a result-last fact checkpoint"
-        )
-    result = _read_json(result_path)
     if (
         str(result.get("target_id") or "") != target_id
         or str(result.get("as_of_date") or "") != as_of_date
@@ -3669,10 +3664,19 @@ def _load_committed_fact_result_snapshot(
         _coerce_provider_call(row)
     for row in embedded["rejections"]:
         _coerce_rejection(row)
+    claim_ids = tuple(
+        str(row.get("claim_id") or "").strip()
+        for row in embedded["accepted_claims"]
+    )
     disposition_ids = tuple(
         str(row.get("document_id") or "").strip()
         for row in embedded["document_dispositions"]
     )
+    if (
+        any(not value for value in claim_ids)
+        or len(claim_ids) != len(set(claim_ids))
+    ):
+        raise ValueError("fact result embedded material claims are not unique")
     if (
         any(not value for value in disposition_ids)
         or len(disposition_ids) != len(set(disposition_ids))
@@ -3686,7 +3690,8 @@ def _load_committed_fact_result_snapshot(
         accepted_claims=embedded["accepted_claims"],
     )
     if (
-        _canonical_json_payload(
+        recomputed.status != "FACT_COMPILATION_COMPLETE"
+        or _canonical_json_payload(
             tuple(row.to_dict() for row in recomputed.facts)
         )
         != _canonical_json_payload(embedded["facts"])
@@ -3698,6 +3703,55 @@ def _load_committed_fact_result_snapshot(
         raise ValueError(
             "fact result embedded compiler projection is inconsistent"
         )
+    return {
+        "schema_version": "e2r_v5_result_last_fact_snapshot_v1",
+        "target_id": target_id,
+        "as_of_date": as_of_date,
+        "result": dict(result),
+        "audit": dict(audit),
+        **embedded,
+        "production_score_authority": False,
+    }
+
+
+def _load_committed_fact_result_snapshot(
+    root: Path,
+    *,
+    target_id: str,
+    as_of_date: str,
+) -> Mapping[str, Any]:
+    """Project only the result-last fact generation, never mixed new leaves.
+
+    The writer replaces six JSONL leaves and the standalone audit before it
+    replaces ``fact_extraction_result.json``.  A crash can therefore expose,
+    for example, a new 499-fact leaf beside the older 457-fact result marker.
+    The marker's embedded rows remain the committed generation; mismatching
+    leaves are repair work and must not silently become the next input.
+    """
+
+    result_path = root / FACT_EXTRACTION_OUTPUT_FILES["result"]
+    if not result_path.is_file():
+        raise ValueError(
+            "authoritative fact ledger requires a result-last fact checkpoint"
+        )
+    result = _read_json(result_path)
+    snapshot = _validated_embedded_fact_result_snapshot(
+        result,
+        target_id=target_id,
+        as_of_date=as_of_date,
+    )
+    audit = snapshot["audit"]
+    embedded = {
+        key: snapshot[key]
+        for key in (
+            "accepted_claims",
+            "rejections",
+            "document_dispositions",
+            "provider_calls",
+            "facts",
+            "claim_fact_links",
+        )
+    }
 
     leaf_mismatches: list[str] = []
     for key in (
@@ -3736,17 +3790,366 @@ def _load_committed_fact_result_snapshot(
     ):
         leaf_mismatches.append("counterfacts")
     return {
-        "schema_version": "e2r_v5_result_last_fact_snapshot_v1",
-        "target_id": target_id,
-        "as_of_date": as_of_date,
-        "result": dict(result),
-        "audit": dict(audit),
-        **embedded,
+        **snapshot,
         "leaf_commit_complete": not leaf_mismatches,
         "atomic_snapshot_repair_required": bool(leaf_mismatches),
         "leaf_mismatch_names": tuple(leaf_mismatches),
         "production_score_authority": False,
     }
+
+
+def _fact_projection_receipt_hash(payload: Mapping[str, Any]) -> str:
+    return hashlib.sha256(
+        _canonical_json_payload(payload).encode("utf-8")
+    ).hexdigest()
+
+
+def _fact_projection_receipt_payload(
+    *,
+    snapshot: Mapping[str, Any],
+    ledger: AuthoritativeResearchEpochFactLedger,
+    source_checkpoint: Mapping[str, Any],
+    pending_new_fact_ids: Sequence[str],
+    pending_retired_fact_ids: Sequence[str],
+) -> Mapping[str, Any]:
+    """Seal a not-yet-epoch-committed fact generation before later work.
+
+    A coverage audit is allowed to write another fact result while the
+    append-only research epoch still points at the preceding generation.  The
+    receipt keeps the complete replacement generation independently durable,
+    so that later write cannot turn a valid 597-fact projection into an
+    apparent 344-fact authority loss.
+    """
+
+    if snapshot.get("leaf_commit_complete") is not True:
+        raise ValueError("fact projection receipt requires a committed snapshot")
+    result = snapshot.get("result")
+    if not isinstance(result, Mapping):
+        raise ValueError("fact projection receipt lacks its embedded result")
+    validated = _validated_embedded_fact_result_snapshot(
+        result,
+        target_id=ledger.target_id,
+        as_of_date=ledger.as_of_date,
+    )
+    fact_rows = tuple(validated["facts"])
+    projected_ids = frozenset(str(row["fact_id"]) for row in fact_rows)
+    pending_new = tuple(sorted(str(value) for value in pending_new_fact_ids))
+    pending_retired = tuple(
+        sorted(str(value) for value in pending_retired_fact_ids)
+    )
+    expected_new = projected_ids - frozenset(ledger.current_fact_ids) - frozenset(
+        ledger.retired_fact_ids
+    )
+    expected_retired = frozenset(ledger.current_fact_ids) - projected_ids
+    if (
+        frozenset(pending_new) != expected_new
+        or frozenset(pending_retired) != expected_retired
+    ):
+        raise ValueError("fact projection receipt delta is not exact")
+    expectation = ledger.recovery_expectation(
+        persisted_fact_ids=tuple(sorted(projected_ids)),
+        pending_new_fact_ids=pending_new,
+        pending_retired_fact_ids=pending_retired,
+    )
+    if expectation["status"] not in {
+        "PENDING_NEW_FACT_EPOCH_COMMIT_REQUIRED",
+        "PENDING_FACT_RETIREMENT_EPOCH_COMMIT_REQUIRED",
+        "PENDING_FACT_PROJECTION_EPOCH_COMMIT_REQUIRED",
+    }:
+        raise ValueError("fact projection receipt has no pending epoch delta")
+    downstream_ids = frozenset(
+        _source_checkpoint_downstream_document_ids(source_checkpoint)
+    )
+    disposition_ids = frozenset(
+        str(row.get("document_id") or "")
+        for row in validated["document_dispositions"]
+    )
+    fact_source_ids = frozenset(
+        str(value)
+        for row in fact_rows
+        for value in row.get("source_ids") or ()
+        if str(value)
+    )
+    if (
+        not disposition_ids
+        or not disposition_ids.issubset(downstream_ids)
+        or not fact_source_ids.issubset(downstream_ids)
+    ):
+        raise ValueError("fact projection receipt left the source checkpoint")
+    core = {
+        "schema_version": "e2r_v5_pending_fact_projection_receipt_v1",
+        "target_id": ledger.target_id,
+        "as_of_date": ledger.as_of_date,
+        "research_epoch_checkpoint_id": ledger.checkpoint_id,
+        "research_epoch_checkpoint_hash": ledger.checkpoint_hash,
+        "source_graph_checkpoint_id": str(
+            source_checkpoint.get("checkpoint_id") or ""
+        ),
+        "source_graph_checkpoint_hash": str(
+            source_checkpoint.get("checkpoint_hash") or ""
+        ),
+        "source_document_ids": sorted(disposition_ids),
+        "pending_new_fact_ids": list(pending_new),
+        "pending_retired_fact_ids": list(pending_retired),
+        "projected_fact_profile": dict(
+            project_fact_extraction_evidence_context(fact_rows)
+        ),
+        "fact_result": dict(result),
+        "production_score_authority": False,
+    }
+    receipt_hash = _fact_projection_receipt_hash(core)
+    return {
+        **core,
+        "receipt_id": "FACTPROJ-" + receipt_hash[:24],
+        "receipt_hash": receipt_hash,
+    }
+
+
+def _write_fact_projection_receipt(
+    root: Path,
+    *,
+    snapshot: Mapping[str, Any],
+    ledger: AuthoritativeResearchEpochFactLedger,
+    source_checkpoint: Mapping[str, Any],
+    pending_new_fact_ids: Sequence[str],
+    pending_retired_fact_ids: Sequence[str],
+) -> Mapping[str, Any]:
+    receipt = _fact_projection_receipt_payload(
+        snapshot=snapshot,
+        ledger=ledger,
+        source_checkpoint=source_checkpoint,
+        pending_new_fact_ids=pending_new_fact_ids,
+        pending_retired_fact_ids=pending_retired_fact_ids,
+    )
+    destination = root / FACT_PROJECTION_RECEIPT_FILENAME
+    content = (
+        json.dumps(receipt, ensure_ascii=False, indent=2, sort_keys=True)
+        + "\n"
+    )
+    descriptor, temporary_name = tempfile.mkstemp(
+        prefix=f".{destination.name}.",
+        suffix=".tmp",
+        dir=root,
+    )
+    temporary_path = Path(temporary_name)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+            handle.write(content)
+            handle.flush()
+            os.fsync(handle.fileno())
+        directory_descriptor = os.open(root, os.O_RDONLY)
+        try:
+            os.replace(temporary_path, destination)
+            os.fsync(directory_descriptor)
+        finally:
+            os.close(directory_descriptor)
+    finally:
+        temporary_path.unlink(missing_ok=True)
+    return receipt
+
+
+def _load_validated_fact_projection_receipt(
+    root: Path,
+    *,
+    ledger: AuthoritativeResearchEpochFactLedger,
+    source_checkpoint: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    path = root / FACT_PROJECTION_RECEIPT_FILENAME
+    if not path.is_file():
+        return None
+    receipt = _read_json(path)
+    receipt_hash = str(receipt.get("receipt_hash") or "")
+    receipt_id = str(receipt.get("receipt_id") or "")
+    core = {
+        key: value
+        for key, value in receipt.items()
+        if key not in {"receipt_id", "receipt_hash"}
+    }
+    if (
+        receipt.get("schema_version")
+        != "e2r_v5_pending_fact_projection_receipt_v1"
+        or receipt.get("target_id") != ledger.target_id
+        or receipt.get("as_of_date") != ledger.as_of_date
+        or receipt.get("research_epoch_checkpoint_id")
+        != ledger.checkpoint_id
+        or receipt.get("research_epoch_checkpoint_hash")
+        != ledger.checkpoint_hash
+        or receipt_hash != _fact_projection_receipt_hash(core)
+        or receipt_id != "FACTPROJ-" + receipt_hash[:24]
+        or receipt.get("production_score_authority") is not False
+    ):
+        return None
+    result = receipt.get("fact_result")
+    profile = receipt.get("projected_fact_profile")
+    if not isinstance(result, Mapping) or not isinstance(profile, Mapping):
+        return None
+    try:
+        snapshot = _validated_embedded_fact_result_snapshot(
+            result,
+            target_id=ledger.target_id,
+            as_of_date=ledger.as_of_date,
+        )
+        facts = tuple(snapshot["facts"])
+        if dict(project_fact_extraction_evidence_context(facts)) != dict(
+            profile
+        ):
+            return None
+        projected_ids = frozenset(str(row["fact_id"]) for row in facts)
+        pending_new = tuple(
+            sorted(str(value) for value in receipt.get("pending_new_fact_ids") or ())
+        )
+        pending_retired = tuple(
+            sorted(
+                str(value)
+                for value in receipt.get("pending_retired_fact_ids") or ()
+            )
+        )
+        if (
+            frozenset(pending_new)
+            != projected_ids
+            - frozenset(ledger.current_fact_ids)
+            - frozenset(ledger.retired_fact_ids)
+            or frozenset(pending_retired)
+            != frozenset(ledger.current_fact_ids) - projected_ids
+        ):
+            return None
+        expectation = ledger.recovery_expectation(
+            persisted_fact_ids=tuple(sorted(projected_ids)),
+            pending_new_fact_ids=pending_new,
+            pending_retired_fact_ids=pending_retired,
+        )
+        if expectation["status"] not in {
+            "PENDING_NEW_FACT_EPOCH_COMMIT_REQUIRED",
+            "PENDING_FACT_RETIREMENT_EPOCH_COMMIT_REQUIRED",
+            "PENDING_FACT_PROJECTION_EPOCH_COMMIT_REQUIRED",
+        }:
+            return None
+        downstream_ids = frozenset(
+            _source_checkpoint_downstream_document_ids(source_checkpoint)
+        )
+        source_document_ids = frozenset(
+            str(value) for value in receipt.get("source_document_ids") or ()
+        )
+        if (
+            not source_document_ids
+            or not source_document_ids.issubset(downstream_ids)
+            or source_document_ids
+            != frozenset(
+                str(row.get("document_id") or "")
+                for row in snapshot["document_dispositions"]
+            )
+            or not frozenset(
+                str(value)
+                for row in facts
+                for value in row.get("source_ids") or ()
+                if str(value)
+            ).issubset(downstream_ids)
+        ):
+            return None
+    except (KeyError, TypeError, ValueError):
+        return None
+    return {
+        **snapshot,
+        "leaf_commit_complete": True,
+        "atomic_snapshot_repair_required": False,
+        "leaf_mismatch_names": (),
+        "pending_new_fact_ids": pending_new,
+        "pending_retired_fact_ids": pending_retired,
+        "receipt_id": receipt_id,
+        "receipt_hash": receipt_hash,
+        "production_score_authority": False,
+    }
+
+
+def _restore_fact_checkpoint_from_projection_receipt(
+    root: Path,
+    *,
+    snapshot: Mapping[str, Any],
+) -> None:
+    """Restore a validated receipt generation with result-last atomicity."""
+
+    result = snapshot.get("result")
+    audit = snapshot.get("audit")
+    if not isinstance(result, Mapping) or not isinstance(audit, Mapping):
+        raise ValueError("fact projection receipt snapshot is incomplete")
+    jsonl_rows = {
+        key: tuple(snapshot.get(key) or ())
+        for key in (
+            "accepted_claims",
+            "rejections",
+            "document_dispositions",
+            "provider_calls",
+            "facts",
+            "claim_fact_links",
+        )
+    }
+    jsonl_rows["counterfacts"] = tuple(
+        row
+        for row in jsonl_rows["facts"]
+        if str(row.get("direction") or "") == EvidenceDirection.COUNTER.value
+    )
+    destinations = {
+        **{
+            key: root / FACT_EXTRACTION_OUTPUT_FILES[key]
+            for key in (
+                "accepted_claims",
+                "rejections",
+                "document_dispositions",
+                "provider_calls",
+                "facts",
+                "claim_fact_links",
+            )
+        },
+        "counterfacts": root / FACT_EXTRACTION_OUTPUT_FILES["counterfacts"],
+        "audit": root / FACT_EXTRACTION_OUTPUT_FILES["audit"],
+        "result": root / FACT_EXTRACTION_OUTPUT_FILES["result"],
+    }
+    serialized = {
+        destinations[key]: "".join(
+            json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n"
+            for row in rows
+        )
+        for key, rows in jsonl_rows.items()
+    }
+    serialized[destinations["audit"]] = (
+        json.dumps(dict(audit), ensure_ascii=False, indent=2, sort_keys=True)
+        + "\n"
+    )
+    serialized[destinations["result"]] = (
+        json.dumps(dict(result), ensure_ascii=False, indent=2, sort_keys=True)
+        + "\n"
+    )
+    temporary_paths: dict[Path, Path] = {}
+    try:
+        for destination, content in serialized.items():
+            descriptor, temporary_name = tempfile.mkstemp(
+                prefix=f".{destination.name}.",
+                suffix=".projection-repair.tmp",
+                dir=root,
+            )
+            temporary_path = Path(temporary_name)
+            temporary_paths[destination] = temporary_path
+            with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+                handle.write(content)
+                handle.flush()
+                os.fsync(handle.fileno())
+        directory_descriptor = os.open(root, os.O_RDONLY)
+        try:
+            for destination in serialized:
+                if destination == destinations["result"]:
+                    continue
+                os.replace(temporary_paths.pop(destination), destination)
+            os.fsync(directory_descriptor)
+            os.replace(
+                temporary_paths.pop(destinations["result"]),
+                destinations["result"],
+            )
+            os.fsync(directory_descriptor)
+        finally:
+            os.close(directory_descriptor)
+    finally:
+        for temporary_path in temporary_paths.values():
+            temporary_path.unlink(missing_ok=True)
 
 
 def _repair_fact_checkpoint_leaves_from_result_snapshot(
@@ -4933,20 +5336,59 @@ def _load_authoritative_prior_fact_context(
         )
         if committed_snapshot["leaf_commit_complete"] is not True:
             raise ValueError("fact checkpoint leaf repair did not commit")
+    projection_receipt = _load_validated_fact_projection_receipt(
+        root,
+        ledger=ledger,
+        source_checkpoint=source_checkpoint,
+    )
+    projection_receipt_recovered = False
+    if projection_receipt is not None:
+        committed_fact_ids = {
+            str(row.get("fact_id") or "")
+            for row in committed_snapshot.get("facts") or ()
+        }
+        receipt_fact_ids = {
+            str(row.get("fact_id") or "")
+            for row in projection_receipt.get("facts") or ()
+        }
+        same_fact_generation = _canonical_json_payload(
+            tuple(committed_snapshot.get("facts") or ())
+        ) == _canonical_json_payload(
+            tuple(projection_receipt.get("facts") or ())
+        )
+        if committed_fact_ids < receipt_fact_ids:
+            _restore_fact_checkpoint_from_projection_receipt(
+                root,
+                snapshot=projection_receipt,
+            )
+            committed_snapshot = _load_committed_fact_result_snapshot(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+            )
+            projection_receipt_recovered = True
+        elif not same_fact_generation:
+            # A non-subset current generation can be a legitimate later
+            # projection.  Do not roll it back to an older pending receipt.
+            projection_receipt = None
     convenience_rows = tuple(committed_snapshot["facts"])
     convenience_by_id = {
         str(row["fact_id"]): row for row in convenience_rows
     }
     current_ids = set(ledger.current_fact_ids)
     retired_ids = set(ledger.retired_fact_ids)
-    pending_retired_fact_ids = _attested_pending_fact_retirement_ids(
-        root=root,
-        target_id=target_id,
-        as_of_date=as_of_date,
-        source_checkpoint=source_checkpoint,
-        authority_by_id=authority_by_id,
-        convenience_rows=convenience_rows,
-        committed_snapshot=committed_snapshot,
+    pending_retired_fact_ids = (
+        tuple(projection_receipt["pending_retired_fact_ids"])
+        if projection_receipt is not None
+        else _attested_pending_fact_retirement_ids(
+            root=root,
+            target_id=target_id,
+            as_of_date=as_of_date,
+            source_checkpoint=source_checkpoint,
+            authority_by_id=authority_by_id,
+            convenience_rows=convenience_rows,
+            committed_snapshot=committed_snapshot,
+        )
     )
     enriched_existing_fact_ids: list[str] = []
     for fact_id in sorted(current_ids.intersection(convenience_by_id)):
@@ -4957,7 +5399,14 @@ def _load_authoritative_prior_fact_context(
     pending_new_fact_ids = tuple(
         sorted(set(convenience_by_id) - current_ids - retired_ids)
     )
-    if pending_new_fact_ids:
+    if projection_receipt is not None and (
+        tuple(sorted(projection_receipt["pending_new_fact_ids"]))
+        != pending_new_fact_ids
+        or tuple(sorted(projection_receipt["pending_retired_fact_ids"]))
+        != tuple(sorted(pending_retired_fact_ids))
+    ):
+        raise ValueError("fact projection receipt delta drifted after restore")
+    if pending_new_fact_ids and projection_receipt is None:
         _attested_pending_new_fact_ids(
             root=root,
             target_id=target_id,
@@ -4967,7 +5416,9 @@ def _load_authoritative_prior_fact_context(
             pending_new_fact_ids=pending_new_fact_ids,
             committed_snapshot=committed_snapshot,
         )
-    if enriched_existing_fact_ids or pending_new_fact_ids:
+    if (
+        enriched_existing_fact_ids or pending_new_fact_ids
+    ) and projection_receipt is None:
         try:
             _attested_compiler_fact_addition_ids(
                 root=root,
@@ -4990,6 +5441,29 @@ def _load_authoritative_prior_fact_context(
                 "authoritative and convenience fact payloads conflict:"
                 f"{conflict_id}:{exc}"
             ) from exc
+    if (
+        projection_receipt is None
+        and (pending_new_fact_ids or pending_retired_fact_ids)
+        and all(
+            key in committed_snapshot
+            for key in (
+                "accepted_claims",
+                "rejections",
+                "document_dispositions",
+                "provider_calls",
+                "facts",
+                "claim_fact_links",
+            )
+        )
+    ):
+        projection_receipt = _write_fact_projection_receipt(
+            root,
+            snapshot=committed_snapshot,
+            ledger=ledger,
+            source_checkpoint=source_checkpoint,
+            pending_new_fact_ids=pending_new_fact_ids,
+            pending_retired_fact_ids=pending_retired_fact_ids,
+        )
     persisted_current_ids = tuple(
         sorted(current_ids.intersection(convenience_by_id))
     )
@@ -5080,6 +5554,14 @@ def _load_authoritative_prior_fact_context(
         ),
         "atomic_fact_snapshot_leaf_mismatches": (
             atomic_snapshot_leaf_mismatches
+        ),
+        "fact_projection_receipt_id": (
+            str(projection_receipt.get("receipt_id") or "")
+            if projection_receipt is not None
+            else ""
+        ),
+        "fact_projection_receipt_recovered": (
+            projection_receipt_recovered
         ),
         "authoritative_current_fact_count": len(ledger.current_fact_ids),
         "persisted_current_fact_count": len(persisted_current_ids),

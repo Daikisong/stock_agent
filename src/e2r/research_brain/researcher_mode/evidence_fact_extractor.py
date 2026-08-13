@@ -1801,33 +1801,22 @@ class ResearcherEvidenceFactExtractor:
         )
         effective_score_gap_context = dict(score_gap_context or {})
         if current_lineage_objective_reassessment_document_ids:
-            raw_prior_feedback = effective_score_gap_context.get(
-                "prior_fact_extraction_feedback",
-                (),
-            )
-            if isinstance(raw_prior_feedback, (str, bytes)) or not (
-                isinstance(raw_prior_feedback, Sequence)
-            ):
-                raise ValueError(
-                    "current-lineage objective reassessment requires raw "
-                    "fact feedback rows"
-                )
+            # This is a bounded audit of an already accepted document against
+            # the current fact graph.  Historical per-call notes are durable
+            # diagnostics, but they are not part of this audit's semantic
+            # identity.  Carrying them into the prompt creates a moving
+            # request id when checkpoint cleanup removes one stale note per
+            # resume: the same completed response can then never be consumed.
+            # Current Supervisor gaps remain separately bound below through
+            # ``prior_supervisor_gap``.
             effective_score_gap_context[
                 "prior_fact_extraction_feedback"
             ] = list(
-                dict.fromkeys(
-                    (
-                        *(str(value) for value in raw_prior_feedback),
-                        *(
-                            "FACT_EXTRACTION_RETRY_CONTEXT:"
-                            "CURRENT_FACT_LINEAGE_OBJECTIVE_"
-                            "REASSESSMENT_REQUIRED:"
-                            + document_id
-                            for document_id in (
-                                current_lineage_objective_reassessment_document_ids
-                            )
-                        ),
-                    )
+                "FACT_EXTRACTION_RETRY_CONTEXT:"
+                "CURRENT_FACT_LINEAGE_OBJECTIVE_REASSESSMENT_REQUIRED:"
+                + document_id
+                for document_id in (
+                    current_lineage_objective_reassessment_document_ids
                 )
             )
         score_gap_prompt_context = project_fact_extraction_score_gap_context(
@@ -6218,9 +6207,12 @@ def _replay_current_fact_lineage_group(
     if not ordered:
         raise ValueError("current fact lineage call group is empty")
     base_payload = dict(ordered[0]["request_payload"])
+    base_payload.pop(
+        "fact_extraction_retry_context",
+        None,
+    )
     if (
         "fact_extraction_continuation_context" in base_payload
-        or "fact_extraction_retry_context" in base_payload
         or "fact_extraction_coverage_audit_context" in base_payload
     ):
         raise ValueError("current fact lineage call group lacks a plain base")
@@ -6277,6 +6269,7 @@ def _replay_current_fact_lineage_group(
     response_ids: list[str] = []
     final_prompt_hash = ""
     final_response_hash = ""
+    validation_retry_used = False
     for page_index, material in enumerate(ordered, start=1):
         if int(material.get("continuation_page_number") or 0) != page_index:
             raise ValueError("current fact lineage pages are not contiguous")
@@ -6287,17 +6280,64 @@ def _replay_current_fact_lineage_group(
             "fact_extraction_continuation_context",
             None,
         )
+        retry_context = request_core.pop(
+            "fact_extraction_retry_context",
+            None,
+        )
+        if continuation is not None and retry_context is not None:
+            raise ValueError(
+                "current fact lineage page has continuation and retry context"
+            )
         if request_core != base_payload:
             raise ValueError("current fact lineage continuation base drifted")
         if page_index == 1:
             if continuation is not None:
                 raise ValueError("current fact lineage first page is continuation")
-        elif continuation != _fact_extraction_continuation_context(
-            page_number=page_index,
-            required_document_ids=original_document_ids,
-            accepted_claims=tuple(accepted.values()),
-        ):
-            raise ValueError("current fact lineage continuation context drifted")
+        elif retry_context is None:
+            if continuation != _fact_extraction_continuation_context(
+                page_number=page_index,
+                required_document_ids=original_document_ids,
+                accepted_claims=tuple(accepted.values()),
+            ):
+                raise ValueError(
+                    "current fact lineage continuation context drifted"
+                )
+        if retry_context is not None:
+            expected_retry_facts = _fact_extraction_retry_accepted_facts(
+                tuple(accepted.values())
+            )
+            recovered_retry_facts = retry_context.get(
+                "previously_accepted_facts"
+            )
+            if (
+                retry_context.get("required_document_ids")
+                != list(original_document_ids)
+                or not isinstance(recovered_retry_facts, list)
+                or sorted(
+                    json.dumps(
+                        dict(row),
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    )
+                    for row in recovered_retry_facts
+                    if isinstance(row, Mapping)
+                )
+                != sorted(
+                    json.dumps(
+                        dict(row),
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    )
+                    for row in expected_retry_facts
+                )
+                or len(recovered_retry_facts) != len(expected_retry_facts)
+            ):
+                raise ValueError(
+                    "current fact lineage retry accepted facts drifted"
+                )
+            validation_retry_used = True
         prompt_hash = stable_intelligence_id(
             "FACTPROMPT",
             request_payload,
@@ -6374,15 +6414,43 @@ def _replay_current_fact_lineage_group(
         final_prompt_hash = prompt_hash
         final_response_hash = response_hash
         if page_index < len(ordered):
-            if (
-                response_payload.get("extraction_complete") is not False
-                or not page_pending
-                or any(
-                    reason != "LLM_DECLARED_FACT_EXTRACTION_INCOMPLETE"
-                    and not reason.startswith("UNRESOLVED_DOCUMENT:")
-                    for reason in page_pending
+            page_boundary_reached = (
+                len(tuple(response_payload.get("facts") or ()))
+                >= FACT_EXTRACTION_PAGE_FACT_LIMIT
+            )
+            unresolved_page_ids = {
+                str(value).strip()
+                for value in response_payload.get(
+                    "unresolved_document_ids"
                 )
-            ):
+                or ()
+                if str(value).strip()
+            }
+            pagination_only_pending = all(
+                reason == "LLM_DECLARED_FACT_EXTRACTION_INCOMPLETE"
+                or (
+                    reason.startswith("UNRESOLVED_DOCUMENT:")
+                    and reason.split(":", 1)[1]
+                    in set(original_document_ids)
+                )
+                for reason in page_pending
+            )
+            pagination_requested = (
+                bool(page_claims)
+                and pagination_only_pending
+                and (
+                    page_boundary_reached
+                    or (
+                        response_payload.get("extraction_complete")
+                        is not True
+                        and bool(unresolved_page_ids)
+                        and unresolved_page_ids.issubset(
+                            original_document_ids
+                        )
+                    )
+                )
+            )
+            if not pagination_requested:
                 raise ValueError("current fact lineage continuation did not stay open")
         else:
             if (
@@ -6437,7 +6505,7 @@ def _replay_current_fact_lineage_group(
         prompt_hash=final_prompt_hash,
         response_hash=final_response_hash,
         provider_attempt_count=0,
-        validation_retry_used=False,
+        validation_retry_used=validation_retry_used,
         completion_flag_reconciled=False,
         transport_chunk_ids=transport_chunk_ids,
         accepted_claims=projected_claims,

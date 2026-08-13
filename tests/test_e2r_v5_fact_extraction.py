@@ -6165,7 +6165,12 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             prior_current_lineage_objective_reassessment_document_ids=(
                 "DOC-CURRENT-LINEAGE-REASSESS",
             ),
-            score_gap_context={"prior_fact_extraction_feedback": []},
+            score_gap_context={
+                "prior_fact_extraction_feedback": [
+                    "UNRESOLVED_RESEARCH_NOTE:historical note one",
+                    "UNRESOLVED_RESEARCH_NOTE:historical note two",
+                ]
+            },
             extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
         )
         self.assertEqual(len(first_provider.calls), 1)
@@ -6226,9 +6231,10 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             open_objectives=(objective,),
             **checkpoint,
             score_gap_context={
-                "prior_fact_extraction_feedback": list(
-                    first.research_gap_feedback
-                )
+                "prior_fact_extraction_feedback": [
+                    *first.research_gap_feedback,
+                    "UNRESOLVED_RESEARCH_NOTE:different resume noise",
+                ]
             },
             extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
         )
