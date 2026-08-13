@@ -9093,6 +9093,102 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             context["resolved_objective_ids"],
         )
 
+    def test_resolved_retryable_fetch_failure_keeps_audit_without_reopening(
+        self,
+    ) -> None:
+        target_id = "CURRENT-TARGET"
+        as_of_date = "2026-06-29"
+        objectives = tuple(
+            {
+                "objective_id": f"OBJECTIVE-{component_id}",
+                "component_id": component_id,
+            }
+            for component_id in CANONICAL_COMPONENT_ORDER
+        )
+        raw_failure = {
+            "candidate_id": "CANDIDATE-RESOLVED-SNIPPET",
+            "failure_reason": "SNIPPET_ONLY_FULL_FETCH_REQUIRED",
+            "failure_stage": "FULL_DOCUMENT_FETCH",
+            "objective_ids": ["OBJECTIVE-capital_allocation"],
+            "query_ids": ["QUERY-RESOLVED-SNIPPET"],
+        }
+        failure_id = stable_intelligence_id(
+            "RSFAIL",
+            {**raw_failure, "failure_kind": "DOCUMENT_REJECTION"},
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "component_research_memos.jsonl").write_text(
+                "\n".join(
+                    json.dumps(
+                        {
+                            "component_id": component_id,
+                            "research_complete": True,
+                        }
+                    )
+                    for component_id in CANONICAL_COMPONENT_ORDER
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / "research_epoch_checkpoint.json").write_text(
+                json.dumps(
+                    {
+                        "checkpoint_id": "EPOCH-RESOLVED-RETRYABLE",
+                        "epoch": 4,
+                        "status": "NEXT_RESEARCH_REQUIRED",
+                        "supervisor_review": {
+                            "status": "NEXT_RESEARCH_REQUIRED",
+                            "missing_material_facts": [],
+                            "failure_assessments": [
+                                {
+                                    "failure_id": failure_id,
+                                    "classification": "FETCH_FAILURE",
+                                    "retryable": True,
+                                    "source_absence_claim_allowed": False,
+                                }
+                            ],
+                            "new_source_family_directions": [],
+                            "query_direction_briefs": [],
+                            "source_family_gaps": [],
+                            "parser_or_extractor_failures": [],
+                            "reasonable_positive_routes_remaining": False,
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "source_graph_checkpoint.json").write_text(
+                json.dumps(
+                    {
+                        "resolved_objective_ids": [
+                            row["objective_id"] for row in objectives
+                        ],
+                        "query_failures": [],
+                        "provider_failures": [],
+                        "rejected_documents": [raw_failure],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            context = _load_prior_research_context(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                objectives=objectives,
+            )
+
+        source_gap = context["supervisor_source_gap_context"]
+        self.assertIs(
+            source_gap["reasonable_positive_routes_remaining"], False
+        )
+        self.assertEqual(source_gap["failure_assessments"], [])
+        self.assertEqual(
+            set(context["resolved_objective_ids"]),
+            {row["objective_id"] for row in objectives},
+        )
+
     def test_score_supervisor_projection_keeps_all_three_exact_judge_ranges(
         self,
     ) -> None:

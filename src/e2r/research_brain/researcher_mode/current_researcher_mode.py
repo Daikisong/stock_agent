@@ -6521,10 +6521,27 @@ def _load_prior_research_context(
                     continue
                 row = dict(raw)
                 row.setdefault("failure_kind", kind)
-                objective_id = str(row.get("objective_id") or "")
+                # Keep failure identity identical to ResearchSupervisor's
+                # ``_normalize_failure`` contract.  Resolution is mutable
+                # routing state and must not participate in the durable id.
+                # Computing the id after attaching ``resolved`` produced a
+                # second RSFAIL id, so the persisted Supervisor assessment
+                # could no longer be enriched with its resolved objective.
+                failure_id = str(row.get("failure_id") or "").strip()
+                if not failure_id:
+                    failure_id = stable_intelligence_id("RSFAIL", row)
+                    row["failure_id"] = failure_id
+                objective_ids = {
+                    str(value).strip()
+                    for value in row.get("objective_ids") or ()
+                    if str(value).strip()
+                }
+                objective_id = str(row.get("objective_id") or "").strip()
+                if objective_id and objective_id != "MULTI_OBJECTIVE":
+                    objective_ids.add(objective_id)
                 if (
-                    objective_id
-                    and objective_id in resolved_source_objectives
+                    objective_ids
+                    and objective_ids.issubset(resolved_source_objectives)
                 ):
                     row.setdefault("resolved", True)
                     row.setdefault(
@@ -6541,10 +6558,6 @@ def _load_prior_research_context(
                     "NO_RESULT" in reason.upper()
                     or "ZERO_RESULT" in reason.upper()
                 )
-                failure_id = str(row.get("failure_id") or "").strip()
-                if not failure_id:
-                    failure_id = stable_intelligence_id("RSFAIL", row)
-                    row["failure_id"] = failure_id
                 if failure_id:
                     source_failure_by_id[failure_id] = row
     epoch_path = root / "research_epoch_checkpoint.json"
@@ -6638,6 +6651,8 @@ def _load_prior_research_context(
                     failure.get("retryable") is not True
                     or str(failure.get("classification") or "")
                     not in {"PARSER_EXTRACTOR_FAILURE", "FETCH_FAILURE"}
+                    or failure.get("resolved") is True
+                    or str(failure.get("resolved_by") or "").strip()
                 ):
                     continue
                 route_source_row(failure)

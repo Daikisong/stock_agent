@@ -8239,8 +8239,10 @@ def _supervisor_explicitly_exhausted_source_routes(
     is absent and does not certify research saturation.  It only says that the
     next action is no longer another source query.  We honor it only when the
     same canonical snapshot contains no concrete source direction and no
-    retryable parser/fetch repair.  Component memo rewrites and fresh judges
-    remain downstream obligations.
+    unresolved retryable parser/fetch repair.  A resolved failure remains in
+    the audit ledger even when its transport-level ``retryable`` bit is true;
+    it no longer owns current routing authority.  Component memo rewrites and
+    fresh judges remain downstream obligations.
     """
 
     supervisor = score_gap_context.get("prior_supervisor_gap")
@@ -8263,6 +8265,8 @@ def _supervisor_explicitly_exhausted_source_routes(
             and raw.get("retryable") is True
             and str(raw.get("classification") or "")
             in {"PARSER_EXTRACTOR_FAILURE", "FETCH_FAILURE"}
+            and raw.get("resolved") is not True
+            and not str(raw.get("resolved_by") or "").strip()
         ):
             return False
     # Closing the *query lane* is not the same as resolving a structured gap.

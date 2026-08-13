@@ -1912,6 +1912,33 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             )
         )
 
+    def test_supervisor_route_exhaustion_preserves_resolved_retryable_audit(
+        self,
+    ) -> None:
+        self.assertTrue(
+            source_graph_module._supervisor_explicitly_exhausted_source_routes(
+                {
+                    "prior_supervisor_gap": {
+                        "reasonable_positive_routes_remaining": False,
+                        "new_source_family_directions": [],
+                        "query_direction_briefs": [],
+                        "source_family_gaps": [],
+                        "parser_or_extractor_failures": [],
+                        "failure_assessments": [
+                            {
+                                "classification": "FETCH_FAILURE",
+                                "retryable": True,
+                                "resolved": True,
+                                "resolved_by": (
+                                    "SOURCE_GRAPH_OBJECTIVE_RESOLUTION"
+                                ),
+                            }
+                        ],
+                    }
+                }
+            )
+        )
+
     def test_supervisor_route_exhaustion_closes_only_query_lane_with_structured_gap(
         self,
     ) -> None:
