@@ -2759,10 +2759,22 @@ def build_counter_and_supersession_route_proof(
                 bucket["fact_ids"].add(fact.fact_id)
 
         # Direct source-backed proof does not inherit completion from a search
-        # result.  It is independently bound through the document objective,
-        # the deterministic objective/component map, the extractor
-        # disposition, and the fact's allowed component roster.
-        for objective_id in sorted(document_objectives & required):
+        # result.  The document's discovery objective remains provenance, but
+        # it is not the fact's semantic scope.  v9 extraction may validly
+        # reroute a fact from that discovery objective to another current-open
+        # objective when the fact's allowed-component roster says the
+        # mechanism is compatible.  Requiring the discovery objective to be
+        # identical here strands already audited official counterfacts and can
+        # make the supervisor gate impossible to close.
+        #
+        # The relaxed objective join is still target-local, official-only,
+        # full-document-only, extractor-verified, and component-exact.  It
+        # therefore cannot turn a peer/company-general snippet into proof.
+        if str(document.get("target_id") or "").strip() != str(
+            source_graph_checkpoint.get("target_id") or ""
+        ).strip():
+            continue
+        for objective_id in sorted(required):
             if (
                 str(document.get("source_family") or "").upper()
                 not in SOURCE_FAMILY_CLASSES["OFFICIAL"]
@@ -2772,6 +2784,10 @@ def build_counter_and_supersession_route_proof(
             if not component_id:
                 continue
             for fact in facts_by_document.get(document_id, ()):
+                if fact.target_id != str(
+                    source_graph_checkpoint.get("target_id") or ""
+                ).strip():
+                    continue
                 if component_id not in set(fact.allowed_component_ids):
                     continue
                 route_kind = None
@@ -2801,6 +2817,10 @@ def build_counter_and_supersession_route_proof(
                 )
                 bucket["document_ids"].add(document_id)
                 bucket["fact_ids"].add(fact.fact_id)
+                if objective_id not in document_objectives:
+                    bucket.setdefault(
+                        "target_wide_rerouted_document_ids", set()
+                    ).add(document_id)
 
     rows = []
     for (objective_id, route_kind, route_basis), lineage in sorted(
@@ -2831,6 +2851,15 @@ def build_counter_and_supersession_route_proof(
         }
         if route_basis == "DIRECT_SOURCE_BACKED_FACT":
             row["component_id"] = objective_components[objective_id]
+            rerouted_document_ids = sorted(
+                lineage.get("target_wide_rerouted_document_ids", set())
+            )
+            row["target_wide_mechanism_reroute"] = bool(
+                rerouted_document_ids
+            )
+            row["target_wide_rerouted_document_ids"] = (
+                rerouted_document_ids
+            )
         rows.append(row)
     return tuple(rows)
 
@@ -2958,16 +2987,26 @@ def _counter_route_proof_complete(
                 str(value) for value in document.get("objective_ids") or ()
             }
             if (
-                objective_id not in linked_objectives
-                or document.get("evidence_eligible") is not True
+                document.get("evidence_eligible") is not True
                 or document.get("full_fetch_performed") is not True
                 or bool(document.get("snippet_only"))
+            ):
+                return False
+            if (
+                route_basis == "EXECUTED_COUNTER_QUERY"
+                and objective_id not in linked_objectives
             ):
                 return False
             if (
                 route_basis == "DIRECT_SOURCE_BACKED_FACT"
                 and str(document.get("source_family") or "").upper()
                 not in SOURCE_FAMILY_CLASSES["OFFICIAL"]
+            ):
+                return False
+            if (
+                route_basis == "DIRECT_SOURCE_BACKED_FACT"
+                and str(document.get("target_id") or "").strip()
+                != str(source_graph_checkpoint.get("target_id") or "").strip()
             ):
                 return False
             if (
@@ -3001,6 +3040,12 @@ def _counter_route_proof_complete(
                 )
             ):
                 return False
+            if (
+                route_basis == "DIRECT_SOURCE_BACKED_FACT"
+                and fact.target_id
+                != str(source_graph_checkpoint.get("target_id") or "").strip()
+            ):
+                return False
             if route_kind == "COUNTER" and not (
                 fact.direction == "COUNTER"
                 and fact.current_lifecycle in {"CURRENT", "OPEN"}
@@ -3024,6 +3069,30 @@ def _counter_route_proof_complete(
         if row.get("parser_extractor_verified") is not True:
             return False
         if route_basis == "DIRECT_SOURCE_BACKED_FACT":
+            expected_rerouted_document_ids = sorted(
+                document_id
+                for document_id in proof_document_ids
+                if objective_id
+                not in {
+                    str(value)
+                    for value in document_by_id[document_id].get(
+                        "objective_ids"
+                    )
+                    or ()
+                }
+            )
+            if row.get("target_wide_mechanism_reroute") is not bool(
+                expected_rerouted_document_ids
+            ):
+                return False
+            if sorted(
+                _proof_ids(
+                    row,
+                    "target_wide_rerouted_document_ids",
+                    "target_wide_rerouted_document_id",
+                )
+            ) != expected_rerouted_document_ids:
+                return False
             checked_objective_ids.add(objective_id)
     return bool(
         # COUNTER and SUPERSESSION are event outcomes, not a mandatory pair of

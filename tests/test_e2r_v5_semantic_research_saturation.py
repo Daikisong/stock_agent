@@ -4268,6 +4268,112 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
                 materiality_scope_attestations={},
             )
         )
+
+    def test_counter_route_reroutes_official_fact_beyond_discovery_objective(
+        self,
+    ) -> None:
+        """Discovery provenance must not strand a target-local v9 fact."""
+
+        secondary_objective_id = "OBJ-TARGET-WIDE-MARKET"
+        objective_component_by_id = {
+            OBJECTIVE_ID: "eps_fcf_explosion",
+            secondary_objective_id: "market_mispricing",
+        }
+        source = _source_checkpoint_with_updates(
+            _source_checkpoint(zero_results=True),
+            evidence_documents=[
+                {
+                    "document_id": "DOC-1",
+                    "target_id": TARGET,
+                    "published_at": "2026-06-20",
+                    "source_family": "OPENDART",
+                    "query_ids": [],
+                    # The document was discovered for the EPS objective only.
+                    "objective_ids": [OBJECTIVE_ID],
+                    "evidence_eligible": True,
+                    "full_fetch_performed": True,
+                    "snippet_only": False,
+                    "full_text": "one official counter with two component scopes",
+                }
+            ],
+        )
+        facts = (
+            replace(
+                _fact("FACT-TARGET-WIDE-COUNTER", direction="COUNTER"),
+                allowed_component_ids=(
+                    "eps_fcf_explosion",
+                    "market_mispricing",
+                ),
+            ),
+        )
+        proof = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=source,
+            document_dispositions=(
+                {
+                    "document_id": "DOC-1",
+                    "status": "FACTS_EXTRACTED",
+                    "rationale": "official target-wide counter extracted",
+                },
+            ),
+            evidence_facts=facts,
+            required_objective_ids=(OBJECTIVE_ID, secondary_objective_id),
+            objective_component_by_id=objective_component_by_id,
+        )
+
+        by_objective = {row["objective_id"]: row for row in proof}
+        self.assertEqual(set(by_objective), {OBJECTIVE_ID, secondary_objective_id})
+        self.assertFalse(
+            by_objective[OBJECTIVE_ID]["target_wide_mechanism_reroute"]
+        )
+        self.assertTrue(
+            by_objective[secondary_objective_id][
+                "target_wide_mechanism_reroute"
+            ]
+        )
+        self.assertEqual(
+            by_objective[secondary_objective_id][
+                "target_wide_rerouted_document_ids"
+            ],
+            ["DOC-1"],
+        )
+        self.assertTrue(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=source,
+                evidence_facts=facts,
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                objective_component_by_id=objective_component_by_id,
+                structured_result=_structured(),
+                materiality_scope_attestations={},
+            )
+        )
+
+        # The same mechanism cannot cross a target boundary.
+        wrong_target_source = _source_checkpoint_with_updates(
+            source,
+            evidence_documents=[
+                {
+                    **dict(source["evidence_documents"][0]),
+                    "target_id": "OTHER-TARGET",
+                }
+            ],
+        )
+        self.assertEqual(
+            build_counter_and_supersession_route_proof(
+                source_graph_checkpoint=wrong_target_source,
+                document_dispositions=(
+                    {
+                        "document_id": "DOC-1",
+                        "status": "FACTS_EXTRACTED",
+                    },
+                ),
+                evidence_facts=facts,
+                required_objective_ids=(OBJECTIVE_ID, secondary_objective_id),
+                objective_component_by_id=objective_component_by_id,
+            ),
+            (),
+        )
         nonofficial_source = _source_checkpoint_with_updates(
             source,
             evidence_documents=[
