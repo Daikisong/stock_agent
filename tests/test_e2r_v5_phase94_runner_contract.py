@@ -1317,6 +1317,19 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             (paginated["old_fact"]["fact_id"],),
         )
 
+        # Historical normal-pagination snapshots persisted cumulative claim
+        # ids and exact page receipts, but not the optional embedded claim
+        # roster.  The attester must accept that result-last shape while still
+        # requiring both the claim page and final completion page journals.
+        paginated_without_embedded = copy.deepcopy(paginated)
+        paginated_without_embedded["snapshot"]["provider_calls"][0].pop(
+            "accepted_claims"
+        )
+        self.assertEqual(
+            attest(paginated_without_embedded),
+            (paginated_without_embedded["old_fact"]["fact_id"],),
+        )
+
         replacement = copy.deepcopy(positive)
         replacement_compilation = EvidenceFactCompiler().compile(
             target_id="CURRENT-TARGET",
@@ -1786,11 +1799,15 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         paginated_call["accepted_claims"] = [
             {
                 "claim_id": "RFC-PAGINATED",
+                "document_id": document_id,
                 "provider_prompt_hash": page_prompt_hash,
                 "provider_response_hash": page_response_hash,
             }
         ]
         paginated["provider_calls"] = (paginated_call,)
+        paginated["accepted_claims"] = (
+            paginated_call["accepted_claims"][0],
+        )
         with tempfile.TemporaryDirectory() as directory, patch(
             "e2r.research_brain.researcher_mode.current_researcher_mode."
             "_validated_official_fact_journal_payloads",
@@ -1823,8 +1840,33 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
 
         unbound_paginated = copy.deepcopy(paginated)
         del unbound_paginated["provider_calls"][0]["accepted_claims"]
+        with tempfile.TemporaryDirectory() as directory, patch(
+            "e2r.research_brain.researcher_mode.current_researcher_mode."
+            "_validated_official_fact_journal_payloads",
+            return_value={
+                (prompt_hash, response_hash): {"facts": []},
+                (page_prompt_hash, page_response_hash): {"facts": []},
+            },
+        ):
+            self.assertEqual(
+                _attested_pending_fact_retirement_ids(
+                    root=Path(directory),
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint=source_checkpoint,
+                    authority_by_id={
+                        row["fact_id"]: row for row in authority_rows
+                    },
+                    convenience_rows=(),
+                    committed_snapshot=unbound_paginated,
+                ),
+                tuple(sorted(row["fact_id"] for row in authority_rows)),
+            )
+
+        missing_paginated_claim = copy.deepcopy(unbound_paginated)
+        missing_paginated_claim["accepted_claims"] = ()
         with self.assertRaisesRegex(
-            ValueError, "fact retirement lacks exact current provider calls"
+            ValueError, "paginated fact provider-call claims are unavailable"
         ):
             _attested_pending_fact_retirement_ids(
                 root=Path("."),
@@ -1835,7 +1877,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     row["fact_id"]: row for row in authority_rows
                 },
                 convenience_rows=(),
-                committed_snapshot=unbound_paginated,
+                committed_snapshot=missing_paginated_claim,
             )
 
         partial = copy.deepcopy(snapshot)

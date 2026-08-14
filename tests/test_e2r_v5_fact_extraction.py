@@ -8146,6 +8146,14 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             FACT_EXTRACTION_PAGE_FACT_LIMIT,
         )
         self.assertEqual(result.audit["maximum_pagination_page_count"], 2)
+        self.assertEqual(len(result.provider_calls), 1)
+        completed_call = result.provider_calls[0]
+        self.assertEqual(completed_call.provider_attempt_count, 2)
+        self.assertIsNotNone(completed_call.accepted_claims)
+        self.assertEqual(
+            {row["claim_id"] for row in completed_call.accepted_claims or ()},
+            {row["claim_id"] for row in result.material_claims},
+        )
 
     def test_pagination_rejects_whitespace_only_quote_repetition(self) -> None:
         provider = WhitespaceVariantPagedFactProvider()

@@ -4700,6 +4700,73 @@ def _validated_official_fact_journal_payloads(
     return found
 
 
+def _provider_call_claim_receipts(
+    call: Any,
+    *,
+    claim_by_id: Mapping[str, Mapping[str, Any]],
+) -> tuple[Mapping[str, Any], ...]:
+    """Return the exact cumulative claims bound to one provider call.
+
+    Normal pagination historically persisted the cumulative claim ids on the
+    provider-call row but omitted the optional embedded claim objects.  Those
+    snapshots remain readable only when every id resolves to the exact claim
+    in the committed result-last roster.  The caller must additionally verify
+    each returned claim's page journal and the call's final-page journal.
+
+    Easy example: page 1 accepts A and page 2 accepts B.  The final call stores
+    ``[A, B]`` plus the page-2 hash.  If the embedded objects are absent, this
+    helper reconstructs A and B from the sealed claim roster; it never treats
+    the ids alone as evidence.
+    """
+
+    accepted_ids = tuple(str(value) for value in call.accepted_claim_ids)
+    if (
+        any(not value for value in accepted_ids)
+        or len(accepted_ids) != len(set(accepted_ids))
+    ):
+        raise ValueError("fact provider-call claim ids are missing or duplicated")
+    if call.accepted_claims is None:
+        if call.provider_attempt_count <= 1:
+            return ()
+        missing_ids = tuple(
+            claim_id for claim_id in accepted_ids if claim_id not in claim_by_id
+        )
+        if missing_ids:
+            raise ValueError(
+                "paginated fact provider-call claims are unavailable"
+            )
+        claim_rows = tuple(dict(claim_by_id[value]) for value in accepted_ids)
+    else:
+        claim_rows = tuple(dict(row) for row in call.accepted_claims)
+
+    embedded_by_id = {
+        str(row.get("claim_id") or ""): row for row in claim_rows
+    }
+    if (
+        len(embedded_by_id) != len(claim_rows)
+        or set(embedded_by_id) != set(accepted_ids)
+    ):
+        raise ValueError("fact provider-call claim roster is not exact")
+    call_document_ids = frozenset(str(value) for value in call.document_ids)
+    for claim_id in accepted_ids:
+        claim = embedded_by_id[claim_id]
+        committed_claim = claim_by_id.get(claim_id)
+        if (
+            committed_claim is None
+            or _canonical_json_payload(claim)
+            != _canonical_json_payload(committed_claim)
+            or str(claim.get("document_id") or "") not in call_document_ids
+            or not str(claim.get("provider_prompt_hash") or "").startswith(
+                "FACTPROMPT-"
+            )
+            or not str(claim.get("provider_response_hash") or "").startswith(
+                "FACTRESP-"
+            )
+        ):
+            raise ValueError("fact provider-call claim receipt drift")
+    return tuple(embedded_by_id[value] for value in accepted_ids)
+
+
 def _attested_compiler_fact_addition_ids(
     *,
     root: Path,
@@ -4977,6 +5044,21 @@ def _attested_compiler_fact_addition_ids(
         _coerce_provider_call(row)
         for row in committed_snapshot.get("provider_calls") or ()
     )
+    relevant_provider_calls: list[
+        tuple[Any, tuple[Mapping[str, Any], ...]]
+    ] = []
+    for call in provider_calls:
+        if not added_claim_ids.intersection(call.accepted_claim_ids):
+            continue
+        relevant_provider_calls.append(
+            (
+                call,
+                _provider_call_claim_receipts(
+                    call,
+                    claim_by_id=claim_by_id,
+                ),
+            )
+        )
     required_lineages: set[tuple[str, str]] = set()
     claim_semantics_version_by_id: dict[str, str] = {}
     for fact_id, fact_claim_ids in added_claim_ids_by_fact.items():
@@ -5072,8 +5154,8 @@ def _attested_compiler_fact_addition_ids(
             response_hash = str(claim.get("provider_response_hash") or "")
             required_lineages.add((prompt_hash, response_hash))
             matching_calls = tuple(
-                call
-                for call in provider_calls
+                (call, call_claim_rows)
+                for call, call_claim_rows in relevant_provider_calls
                 if claim["claim_id"] in call.accepted_claim_ids
                 and call.status == "COMPLETE"
                 and call.provider_attempt_count >= 1
@@ -5089,32 +5171,48 @@ def _attested_compiler_fact_addition_ids(
                     )
                     or (
                         call.provider_attempt_count > 1
-                        and call.accepted_claims is not None
+                        and sum(
+                            _canonical_json_payload(row)
+                            == _canonical_json_payload(claim)
+                            for row in call_claim_rows
+                        )
+                        == 1
                     )
                 )
             )
             if len(matching_calls) != 1:
                 raise ValueError("fact addition provider-call receipt is not exact")
+            matching_call, matching_call_claim_rows = matching_calls[0]
             claim_semantics_version_by_id[str(claim["claim_id"])] = str(
-                matching_calls[0].extraction_semantics_version
+                matching_call.extraction_semantics_version
             )
-            # A paginated call stores its cumulative claim roster in the
+            # A paginated call stores its cumulative claim ids in the
             # committed result while the top-level hashes identify the final
-            # completion page. Validate both that page and the claim's own
-            # page receipt; single-page calls retain exact hash equality.
-            if matching_calls[0].provider_attempt_count > 1:
+            # completion page. New writers also embed the cumulative claims,
+            # but older result-last snapshots may omit that optional field.
+            # In both shapes, validate the final page below and reconstruct
+            # the claim from its own exact official page receipt; single-page
+            # calls retain exact hash equality here.
+            if matching_call.provider_attempt_count > 1:
                 required_lineages.add(
                     (
-                        matching_calls[0].prompt_hash,
-                        str(matching_calls[0].response_hash or ""),
+                        matching_call.prompt_hash,
+                        str(matching_call.response_hash or ""),
                     )
                 )
+                required_lineages.update(
+                    (
+                        str(row.get("provider_prompt_hash") or ""),
+                        str(row.get("provider_response_hash") or ""),
+                    )
+                    for row in matching_call_claim_rows
+                )
             if (
-                matching_calls[0].accepted_claims is not None
+                matching_call.accepted_claims is not None
                 and sum(
                     _canonical_json_payload(row)
                     == _canonical_json_payload(claim)
-                    for row in matching_calls[0].accepted_claims
+                    for row in matching_call.accepted_claims
                 )
                 != 1
             ):
@@ -5409,10 +5507,6 @@ def _attested_pending_fact_retirement_ids(
             call.status != "COMPLETE"
             or call.provider_attempt_count < 1
             or call.provider_name != COLLABORATION_PROVIDER_NAME
-            or (
-                call.provider_attempt_count > 1
-                and call.accepted_claims is None
-            )
             or bool(call.current_lineage_request_ids)
             or bool(call.semantics_migration_request_ids)
             for call in current_calls
@@ -5426,6 +5520,29 @@ def _attested_pending_fact_retirement_ids(
         )
     ):
         raise ValueError("fact retirement lacks exact current provider calls")
+
+    committed_claim_rows = tuple(
+        row
+        for row in committed_snapshot.get("accepted_claims") or ()
+        if isinstance(row, Mapping)
+    )
+    claim_by_id = {
+        str(row.get("claim_id") or ""): dict(row)
+        for row in committed_claim_rows
+        if str(row.get("claim_id") or "")
+    }
+    if len(claim_by_id) != len(committed_claim_rows):
+        raise ValueError("fact retirement claim roster is ambiguous")
+    call_claim_rows = tuple(
+        (
+            call,
+            _provider_call_claim_receipts(
+                call,
+                claim_by_id=claim_by_id,
+            ),
+        )
+        for call in current_calls
+    )
     required_lineages = tuple(
         sorted(
             {
@@ -5437,8 +5554,8 @@ def _attested_pending_fact_retirement_ids(
                     str(claim.get("provider_prompt_hash") or ""),
                     str(claim.get("provider_response_hash") or ""),
                 )
-                for call in current_calls
-                for claim in call.accepted_claims or ()
+                for _call, claims in call_claim_rows
+                for claim in claims
             }
         )
     )
@@ -5447,11 +5564,7 @@ def _attested_pending_fact_retirement_ids(
         required_lineages=required_lineages,
     )
 
-    current_claim_ids = {
-        str(row.get("claim_id") or "")
-        for row in committed_snapshot.get("accepted_claims") or ()
-        if isinstance(row, Mapping) and str(row.get("claim_id") or "")
-    }
+    current_claim_ids = set(claim_by_id)
     for fact_id in absent_authority_ids:
         authority = authority_by_id[fact_id]
         source_ids = frozenset(

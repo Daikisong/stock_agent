@@ -2759,6 +2759,8 @@ class ResearcherEvidenceFactExtractor:
                             tuple(combined_batch_claims.values())
                             if not batch_pending
                             and (
+                                provider_attempt_count > 1
+                                or
                                 batch_transport_chunk_ids
                                 or batch_document_ids
                                 & (
