@@ -6,6 +6,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import tempfile
 import unittest
 import zipfile
@@ -270,6 +271,127 @@ class HistoricalReportFallbackStructuredTransport(FixtureStructuredTransport):
             params=params,
             headers=headers,
             timeout_seconds=timeout_seconds,
+        )
+
+
+class TargetTrailingFallbackStructuredTransport(FixtureStructuredTransport):
+    """Target CompanyGuide has forward values but no trailing snapshot."""
+
+    def get_text(self, *, url, params, headers, timeout_seconds):
+        response = super().get_text(
+            url=url,
+            params=params,
+            headers=headers,
+            timeout_seconds=timeout_seconds,
+        )
+        if str(params.get("cmp_cd") or "") != "005930":
+            return response
+        text = re.sub(
+            r'<ul class="company-header">.*?</ul>',
+            "",
+            response.text or "",
+            flags=re.DOTALL,
+        )
+        return replace(
+            response,
+            provider_request_id="FIXTURE-TARGET-FORWARD-ONLY",
+            content_hash=hashlib.sha256(text.encode()).hexdigest(),
+            text=text,
+        )
+
+    def get_json(self, *, url, params, headers, timeout_seconds):
+        corp_code = str(params.get("corp_code") or "")
+        if "list.json" in url and corp_code == "00126380":
+            del headers, timeout_seconds
+            self.calls.append(("json", url, dict(params)))
+            receipt_date = str(params["bgn_de"])
+            receipt_year = int(receipt_date[:4])
+            receipt_month = int(receipt_date[4:6])
+            if receipt_month == 5:
+                report_name = f"분기보고서 ({receipt_year}.03)"
+            elif receipt_month == 8:
+                report_name = f"반기보고서 ({receipt_year}.06)"
+            elif receipt_month == 11:
+                report_name = f"분기보고서 ({receipt_year}.09)"
+            elif receipt_month == 3:
+                report_name = f"사업보고서 ({receipt_year - 1}.12)"
+            else:
+                raise AssertionError(receipt_date)
+            payload = {
+                "status": "000",
+                "list": [
+                    {
+                        "corp_code": corp_code,
+                        "rcept_no": receipt_date + "000001",
+                        "rcept_dt": receipt_date,
+                        "report_nm": report_name,
+                    }
+                ],
+            }
+            return _json_response(
+                url, payload, request_id="FIXTURE-TARGET-FILING-PERIOD"
+            )
+        response = super().get_json(
+            url=url,
+            params=params,
+            headers=headers,
+            timeout_seconds=timeout_seconds,
+        )
+        if "fnlttSinglAcntAll" not in url or corp_code != "00126380":
+            return response
+        payload = dict(response.payload or {})
+        rows = list(payload.get("list") or ())
+        fiscal_year = int(params["bsns_year"])
+        report_code = str(params["reprt_code"])
+        if report_code == "11013":
+            receipt_date = f"{fiscal_year}0515"
+            parent_profit = 200 if fiscal_year == 2026 else 150
+        elif report_code == "11012":
+            receipt_date = f"{fiscal_year}0815"
+            parent_profit = 400
+        elif report_code == "11014":
+            receipt_date = f"{fiscal_year}1115"
+            parent_profit = 700
+        else:
+            receipt_date = f"{fiscal_year + 1}0331"
+            parent_profit = 1_000 if fiscal_year == 2025 else 900
+        identity = {
+            "corp_code": corp_code,
+            "bsns_year": str(fiscal_year),
+            "reprt_code": report_code,
+            "currency": "KRW",
+            "rcept_no": receipt_date + "000001",
+        }
+        rows.extend(
+            (
+                {
+                    **_dart_row(
+                        "BS",
+                        "지배기업의 소유주에게 귀속되는 자본",
+                        1_000_000_000,
+                    ),
+                    **identity,
+                    "account_id": (
+                        "ifrs-full_EquityAttributableToOwnersOfParent"
+                    ),
+                },
+                {
+                    **_dart_row(
+                        "IS",
+                        "지배기업의 소유주에게 귀속되는 당기순이익",
+                        parent_profit,
+                    ),
+                    **identity,
+                    "account_id": (
+                        "ifrs-full_ProfitLossAttributableToOwnersOfParent"
+                    ),
+                    "thstrm_add_amount": str(parent_profit),
+                },
+            )
+        )
+        payload["list"] = rows
+        return _json_response(
+            url, payload, request_id="FIXTURE-TARGET-PARENT-FINANCIALS"
         )
 
 
@@ -1272,6 +1394,211 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
                     for row in resumed.payload_manifest
                 )
             )
+
+    def test_forward_valuation_cannot_replace_missing_target_trailing_snapshot(
+        self,
+    ):
+        class ForwardOnlyTargetTransport(FixtureStructuredTransport):
+            def get_text(self, *, url, params, headers, timeout_seconds):
+                response = super().get_text(
+                    url=url,
+                    params=params,
+                    headers=headers,
+                    timeout_seconds=timeout_seconds,
+                )
+                if str(params.get("cmp_cd") or "") != "005930":
+                    return response
+                text = re.sub(
+                    r'<ul class="company-header">.*?</ul>',
+                    "",
+                    response.text or "",
+                    flags=re.DOTALL,
+                )
+                return replace(
+                    response,
+                    content_hash=hashlib.sha256(text.encode()).hexdigest(),
+                    text=text,
+                )
+
+        facts, claims, documents = _broker_valuation_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=ForwardOnlyTargetTransport(),
+                price_lookback_days=400,
+                peer_provider=FixturePeerProvider(),
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+                required_roles_by_component={
+                    "valuation_rerating": (
+                        "CURRENT_VALUATION",
+                        "TARGET_TRAILING_VALUATION",
+                    ),
+                },
+            )
+
+        roles = {
+            role
+            for row in result.engine_result.records
+            for role in row.evidence_roles
+        }
+        self.assertIn("FORWARD_PE", roles)
+        self.assertIn("FORWARD_PB", roles)
+        self.assertNotIn("TARGET_TRAILING_VALUATION", roles)
+        self.assertEqual(result.status, "SOURCE_PENDING")
+        self.assertIn(
+            "TARGET_TRAILING_VALUATION",
+            result.engine_result.missing_roles_by_component[
+                "valuation_rerating"
+            ],
+        )
+        self.assertIn(
+            "STRUCTURED_ROLE_MISSING:valuation_rerating:"
+            "TARGET_TRAILING_VALUATION",
+            result.pending_reasons,
+        )
+        self.assertEqual(
+            result.audit["target_trailing_valuation"]["status"], "PENDING"
+        )
+        self.assertFalse(
+            result.audit["target_trailing_valuation"][
+                "forward_multiple_is_substitute"
+            ]
+        )
+
+    def test_provider_target_trailing_snapshot_completes_separate_requirement(
+        self,
+    ):
+        facts, claims, documents = _structured_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=FixtureStructuredTransport(),
+                price_lookback_days=400,
+                peer_provider=FixturePeerProvider(),
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+                required_roles_by_component={
+                    "valuation_rerating": (
+                        "CURRENT_VALUATION",
+                        "TARGET_TRAILING_VALUATION",
+                    ),
+                },
+            )
+
+        self.assertEqual((result.status, result.pending_reasons), ("COMPLETE", ()))
+        self.assertEqual(
+            result.engine_result.missing_roles_by_component[
+                "valuation_rerating"
+            ],
+            (),
+        )
+        self.assertEqual(
+            result.audit["target_trailing_valuation"]["status"],
+            "RESOLVED_BY_COMPANYGUIDE_TRAILING_SNAPSHOT",
+        )
+
+    def test_official_target_trailing_fallback_derives_pb_and_positive_ttm_pe(
+        self,
+    ):
+        facts, claims, documents = _structured_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=TargetTrailingFallbackStructuredTransport(),
+                price_lookback_days=400,
+                peer_provider=FixturePeerProvider(),
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+                required_roles_by_component={
+                    "valuation_rerating": (
+                        "CURRENT_VALUATION",
+                        "TARGET_TRAILING_VALUATION",
+                    ),
+                },
+            )
+
+        self.assertEqual((result.status, result.pending_reasons), ("COMPLETE", ()))
+        derived = {
+            row.metric_id: row
+            for row in result.engine_result.records
+            if row.record_kind
+            == "OFFICIAL_DERIVED_TARGET_TRAILING_VALUATION"
+        }
+        self.assertEqual(
+            set(derived),
+            {"target_trailing_parent_pb", "target_trailing_parent_pe"},
+        )
+        self.assertAlmostEqual(derived["target_trailing_parent_pb"].value, 1.21)
+        self.assertAlmostEqual(
+            derived["target_trailing_parent_pe"].value,
+            1_210_000_000 / 1_050,
+        )
+        self.assertTrue(
+            all(
+                row.provenance == "DERIVED"
+                and row.input_record_ids
+                and len(row.source_ids) >= 3
+                and row.metadata["denominator_positive"]
+                and row.metadata["forward_value"] is False
+                for row in derived.values()
+            )
+        )
+        audit = result.audit["target_trailing_valuation"]
+        self.assertEqual(audit["status"], "RESOLVED")
+        self.assertEqual(audit["filing_metadata_fetch_count"], 3)
+        self.assertEqual(
+            audit["trailing_parent_net_income"]["derivation"],
+            "PRIOR_ANNUAL_PLUS_CURRENT_YTD_MINUS_PRIOR_YTD",
+        )
 
     def test_same_lane_cache_prefers_pre_cutoff_companyguide_snapshot(self):
         url = "https://comp.wisereport.co.kr/company/c1010001.aspx"

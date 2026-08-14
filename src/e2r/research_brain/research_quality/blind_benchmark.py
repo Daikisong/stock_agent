@@ -1,4 +1,12 @@
-"""Gold 조사와 production 조사를 격리한 뒤 material fact recall을 비교한다."""
+"""Gold 조사와 production 조사를 격리한 뒤 material fact recall을 비교한다.
+
+Post-run independent adjudication compares the core economic event rather than
+requiring the Gold and production lanes to use the same page, wording, numeric
+surface form, or atomic row shape.  The adjudicators must still preserve the
+target, time/currentness, subject and segment, economic direction, and business
+mechanism boundaries.  This deliberately leaves semantic judgment with the
+independent reviewers instead of adding keyword or Gold-specific auto-matching.
+"""
 
 from __future__ import annotations
 
@@ -19,12 +27,112 @@ PRODUCTION_LANE_FILE = "production_lane_manifest.json"
 POST_RUN_SEMANTIC_PRIMARY_FILE = "post_run_gold_semantic_primary.json"
 POST_RUN_SEMANTIC_REVIEW_DIRECTORY = "post_run_gold_semantic_reviews"
 POST_RUN_SEMANTIC_PRIMARY_SCHEMA_VERSION = (
-    "e2r_v5_post_run_gold_semantic_primary_v1"
+    "e2r_v6_post_run_gold_semantic_primary_v2"
 )
 POST_RUN_SEMANTIC_REVIEW_SCHEMA_VERSION = (
-    "e2r_v5_post_run_gold_semantic_review_v1"
+    "e2r_v6_post_run_gold_semantic_review_v2"
 )
 MINIMUM_INDEPENDENT_SEMANTIC_REVIEW_COUNT = 2
+POST_RUN_REVIEW_PROVIDER_ROUTE = "CODEX_COLLABORATION"
+
+# This metadata makes the human/Codex adjudication contract machine-visible in
+# the audit without changing the primary/review payload schemas.  In particular,
+# a component-local fact_role label is not a literal identity key: the same
+# dividend actual can be a capital-allocation COUNTER in one component and still
+# support a Gold shareholder-return event.  Its economic direction and event
+# must nevertheless remain compatible.
+POST_RUN_SEMANTIC_MATCH_CONTRACT = {
+    "contract_version": "CORE_ECONOMIC_EVENT_EQUIVALENCE_V1",
+    "equivalence_basis": "CORE_ECONOMIC_EVENT",
+    "literal_page_identity_required": False,
+    "literal_numeric_text_identity_required": False,
+    "canonical_numeric_meaning_required": True,
+    "compound_atomic_fact_sets_allowed": True,
+    "component_context_fact_role_identity_required": False,
+    "economic_direction_compatibility_required": True,
+    "source_quality_evaluated_separately": True,
+    "required_boundaries": (
+        "TARGET",
+        "AS_OF_AND_CURRENTNESS",
+        "SUBJECT",
+        "SEGMENT",
+        "CORE_ECONOMIC_EVENT",
+        "BUSINESS_MECHANISM",
+    ),
+    "prohibited_substitutions": (
+        "DIFFERENT_TARGET",
+        "INDUSTRY_GENERAL_WITHOUT_TARGET_ATTRIBUTION",
+        "WRONG_SEGMENT",
+    ),
+}
+
+
+def build_post_run_reviewer_identity(
+    *,
+    role_id: str,
+    provider_call_id: str,
+    prompt_hash: str,
+    response_hash: str,
+) -> Mapping[str, str]:
+    """Build one portable post-run reviewer identity.
+
+    Filesystem task names such as ``/root/reviewer_a`` are deliberately not
+    identities: they change across machines.  The role and provider-call
+    binding below is portable and can be recomputed in a clean clone.
+    """
+
+    core = {
+        "role_id": str(role_id).strip(),
+        "provider_route": POST_RUN_REVIEW_PROVIDER_ROUTE,
+        "provider_call_id": str(provider_call_id).strip(),
+        "prompt_hash": str(prompt_hash).strip(),
+        "response_hash": str(response_hash).strip(),
+    }
+    return {**core, "identity_hash": stable_hash(core)}
+
+
+def _validated_post_run_reviewer_identity(
+    value: Any,
+    *,
+    expected_role_id: str | None = None,
+) -> Mapping[str, str]:
+    if not isinstance(value, Mapping):
+        raise ValueError("post-run semantic reviewer identity is missing")
+    core = {
+        key: str(value.get(key) or "").strip()
+        for key in (
+            "role_id",
+            "provider_route",
+            "provider_call_id",
+            "prompt_hash",
+            "response_hash",
+        )
+    }
+    role_id = core["role_id"]
+    provider_call_id = core["provider_call_id"]
+    if expected_role_id is not None:
+        role_valid = role_id == expected_role_id
+    else:
+        role_valid = role_id.startswith("CODEX_POST_RUN_REVIEWER_")
+    portable_call_id = bool(provider_call_id) and all(
+        character.isalnum() or character in "-_.:"
+        for character in provider_call_id
+    )
+    lowercase_hex = set("0123456789abcdef")
+    hashes_valid = all(
+        len(core[key]) == 64
+        and set(core[key]).issubset(lowercase_hex)
+        for key in ("prompt_hash", "response_hash")
+    )
+    if (
+        not role_valid
+        or core["provider_route"] != POST_RUN_REVIEW_PROVIDER_ROUTE
+        or not portable_call_id
+        or not hashes_valid
+        or str(value.get("identity_hash") or "") != stable_hash(core)
+    ):
+        raise ValueError("post-run semantic reviewer identity is invalid")
+    return {**core, "identity_hash": stable_hash(core)}
 
 REQUIRED_GOLD_ROUTES = {
     "official_filing",
@@ -408,9 +516,11 @@ def _load_post_run_semantic_adjudication(
         or primary.get("production_score_authority") is not False
     ):
         raise ValueError("post-run semantic primary contract is invalid")
-    primary_reviewer_id = str(primary.get("reviewer_id") or "").strip()
-    if not primary_reviewer_id.startswith("/root/"):
-        raise ValueError("post-run semantic primary reviewer is invalid")
+    primary_reviewer_identity = _validated_post_run_reviewer_identity(
+        primary.get("reviewer_identity"),
+        expected_role_id="CODEX_POST_RUN_PRIMARY",
+    )
+    primary_reviewer_id = primary_reviewer_identity["role_id"]
     gold_ids = tuple(str(row["fact_id"]) for row in gold_facts)
     production_ids = tuple(str(row["fact_id"]) for row in production_facts)
     if primary.get("gold_fact_roster_hash") != stable_hash(sorted(gold_ids)):
@@ -494,6 +604,9 @@ def _load_post_run_semantic_adjudication(
             "post-run semantic adjudication lacks independent reviews"
         )
     reviewer_ids: list[str] = []
+    reviewer_identities: list[Mapping[str, str]] = []
+    provider_call_ids = {primary_reviewer_identity["provider_call_id"]}
+    identity_hashes = {primary_reviewer_identity["identity_hash"]}
     approval_by_gold_id = {gold_fact_id: 0 for gold_fact_id in gold_ids}
     for review_path in review_paths:
         review = _read_json(review_path)
@@ -506,14 +619,21 @@ def _load_post_run_semantic_adjudication(
             or review.get("production_score_authority") is not False
         ):
             raise ValueError("post-run semantic review contract is invalid")
-        reviewer_id = str(review.get("reviewer_id") or "").strip()
+        reviewer_identity = _validated_post_run_reviewer_identity(
+            review.get("reviewer_identity")
+        )
+        reviewer_id = reviewer_identity["role_id"]
         if (
-            not reviewer_id.startswith("/root/")
-            or reviewer_id == primary_reviewer_id
+            reviewer_id == primary_reviewer_id
             or reviewer_id in reviewer_ids
+            or reviewer_identity["provider_call_id"] in provider_call_ids
+            or reviewer_identity["identity_hash"] in identity_hashes
         ):
             raise ValueError("post-run semantic reviewer identity is invalid")
         reviewer_ids.append(reviewer_id)
+        reviewer_identities.append(reviewer_identity)
+        provider_call_ids.add(reviewer_identity["provider_call_id"])
+        identity_hashes.add(reviewer_identity["identity_hash"])
         review_rows = review.get("rows")
         if not isinstance(review_rows, list):
             raise ValueError("post-run semantic review rows are missing")
@@ -550,8 +670,15 @@ def _load_post_run_semantic_adjudication(
         "rows": accepted_rows,
         "audit": {
             "status": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION_VALID",
+            "semantic_match_contract": dict(
+                POST_RUN_SEMANTIC_MATCH_CONTRACT
+            ),
             "primary_reviewer_id": primary_reviewer_id,
+            "primary_reviewer_identity": dict(primary_reviewer_identity),
             "independent_reviewer_ids": reviewer_ids,
+            "independent_reviewer_identities": [
+                dict(row) for row in reviewer_identities
+            ],
             "independent_review_count": len(reviewer_ids),
             "minimum_independent_review_count": (
                 MINIMUM_INDEPENDENT_SEMANTIC_REVIEW_COUNT

@@ -1936,6 +1936,10 @@ def _phase101_current_collaboration_wait_request_ids(
         "current_structured_materialization.json",
         "business_model_memo.json",
         "researcher_mode_dossier.json",
+        "component_scoring_memo_run.json",
+        "deterministic_score_aggregation_run.json",
+        "research_epoch_checkpoint.json",
+        "stagecourt.json",
     )
     for target_id in PHASE101_TARGET_IDS:
         target_root = source_root / target_id

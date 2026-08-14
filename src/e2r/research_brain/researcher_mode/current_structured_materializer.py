@@ -133,6 +133,7 @@ _BROKER_VALUATION_STRUCTURED_SOURCE_FAMILIES = frozenset(
 )
 _COMPANYGUIDE_TARGET_SNAPSHOT_REQUIREMENTS = frozenset(
     {
+        "TARGET_TRAILING_VALUATION",
         "CONSENSUS_HISTORY",
         "EPS_REVISION",
         "OPERATING_PROFIT_REVISION",
@@ -673,6 +674,47 @@ class CurrentStructuredSourceMaterializer:
             attempts=attempts,
             manifests=manifests,
         )
+        target_trailing_required = any(
+            "TARGET_TRAILING_VALUATION" in set(roles)
+            for roles in (required_roles_by_component or {}).values()
+        )
+        companyguide_target_trailing_present = (
+            isinstance(companyguide_route, InMemoryStructuredSourceRoute)
+            and any(
+                "TARGET_TRAILING_VALUATION" in row.evidence_roles
+                for row in companyguide_route.payload.structured_records
+            )
+        )
+        target_trailing_route = None
+        target_trailing_audit: Mapping[str, Any] = {
+            "status": "NOT_REQUIRED",
+            "requirement": "TARGET_TRAILING_VALUATION",
+            "companyguide_target_trailing_present": (
+                companyguide_target_trailing_present
+            ),
+            "forward_multiple_is_substitute": False,
+        }
+        if target_trailing_required and not companyguide_target_trailing_present:
+            target_trailing_route, target_trailing_audit = (
+                self._target_official_trailing_valuation_route(
+                    target_id=target_id,
+                    target_name=target_name,
+                    cutoff=cutoff,
+                    listing_snapshot_date=trading_date,
+                    official=official,
+                    dart_route=dart_route,
+                    target_price_rows=peer_price_rows,
+                    cache_root=cache_root,
+                    checkpoint_resume=checkpoint_resume,
+                    attempts=attempts,
+                    manifests=manifests,
+                )
+            )
+        elif target_trailing_required:
+            target_trailing_audit = {
+                **dict(target_trailing_audit),
+                "status": "RESOLVED_BY_COMPANYGUIDE_TRAILING_SNAPSHOT",
+            }
         (
             issuer_route,
             broker_fact_route,
@@ -707,6 +749,7 @@ class CurrentStructuredSourceMaterializer:
             dart_route,
             price_route,
             peer_route,
+            *((target_trailing_route,) if target_trailing_route else ()),
         )
         engine = StructuredFinancialConsensusValuationEngine().research(
             target_id=target_id,
@@ -857,6 +900,7 @@ class CurrentStructuredSourceMaterializer:
             "issuer_fact_materialization": issuer_fact_audit,
             "peer_selection": peer_selection_audit,
             "companyguide_report_history": companyguide_report_audit,
+            "target_trailing_valuation": dict(target_trailing_audit),
             "fixed_transport_count_is_completion": False,
             "provider_failure_is_zero_score": False,
             "future_data_is_rejected": True,
@@ -951,6 +995,7 @@ class CurrentStructuredSourceMaterializer:
                     f"dart_{target_id}_{corp_code}_{period['fiscal_year']}_"
                     f"{period['report_code']}_{fs_div}"
                 )
+                manifest_start = len(manifests)
                 response = self._json(
                     target_id=target_id,
                     cutoff=cutoff,
@@ -979,6 +1024,15 @@ class CurrentStructuredSourceMaterializer:
                 rows = response.get("list")
                 if status != "000" or not isinstance(rows, list) or not rows:
                     continue
+                source_id = next(
+                    (
+                        str(row["source_id"])
+                        for row in reversed(manifests[manifest_start:])
+                        if row.get("provider_name") == "OpenDART"
+                        and row.get("source_role") == "FINANCIAL_ACTUALS"
+                    ),
+                    "",
+                )
                 payloads.append(
                     {
                         "payload": response,
@@ -989,6 +1043,7 @@ class CurrentStructuredSourceMaterializer:
                         "report_code": period["report_code"],
                         "corp_code": corp_code,
                         "fs_div": fs_div,
+                        "source_id": source_id,
                     }
                 )
                 break
@@ -1480,6 +1535,32 @@ class CurrentStructuredSourceMaterializer:
                 )
                 if target_row is None:
                     continue
+                target_close = _float(target_row.get("TDD_CLSPRC"))
+                target_market_cap = _float(target_row.get("MKTCAP"))
+                target_name = str(target_row.get("ISU_NM") or "").strip()
+                if (
+                    target_name
+                    and target_close is not None
+                    and target_close > 0
+                    and target_market_cap is not None
+                    and target_market_cap > 0
+                    and market_source_id
+                ):
+                    # The peer allowlist intentionally excludes the target,
+                    # but the target trailing-valuation fallback still needs
+                    # its exact-date official KRX numerator.  Preserve it in
+                    # the internal price rows without exposing it as a peer.
+                    peer_price_rows.append(
+                        {
+                            "peer_symbol": target_id,
+                            "peer_name": target_name,
+                            "close": target_close,
+                            "market_cap": target_market_cap,
+                            "observed_at": trading_date.isoformat(),
+                            "source_id": market_source_id,
+                            "target_valuation_input_only": True,
+                        }
+                    )
                 bar = _krx_stock_bar(target_row, target_id=target_id, cutoff=cutoff)
                 if bar is not None and market is None:
                     bars.append(bar)
@@ -2873,6 +2954,523 @@ class CurrentStructuredSourceMaterializer:
             }
         )
         return observation, audit
+
+    def _target_official_trailing_valuation_route(
+        self,
+        *,
+        target_id: str,
+        target_name: str,
+        cutoff: date,
+        listing_snapshot_date: date,
+        official: OfficialSourceMaterializationResult,
+        dart_route: Any,
+        target_price_rows: Sequence[Mapping[str, Any]],
+        cache_root: Path,
+        checkpoint_resume: bool,
+        attempts: list[CurrentStructuredFetchAttempt],
+        manifests: list[Mapping[str, Any]],
+    ):
+        """Recover a target trailing multiple from bounded official inputs.
+
+        The fallback is intentionally target-specific and trailing-only.  It
+        may aggregate an issuer's exact-date KRX common/preferred equity lines,
+        but it never re-labels a broker forward multiple as trailing.  P/B is
+        market capitalization divided by the newest cutoff-valid OpenDART
+        parent equity.  P/E is added only when three filing-bound parent-profit
+        observations can form a positive TTM denominator.
+        """
+
+        route_name = "TARGET_OFFICIAL_TRAILING_VALUATION"
+        audit: dict[str, Any] = {
+            "schema_version": "e2r_target_trailing_valuation_audit_v1",
+            "status": "PENDING",
+            "requirement": "TARGET_TRAILING_VALUATION",
+            "forward_multiple_is_substitute": False,
+            "route": "KRX_MARKET_CAP_X_OPENDART_PARENT_FINANCIALS",
+            "maximum_balance_sheet_candidates": 2,
+            "maximum_ttm_statement_inputs": 3,
+            "maximum_filing_metadata_fetches": 3,
+            "filing_metadata_fetch_count": 0,
+            "failure_reason": None,
+            "derived_metrics": [],
+        }
+
+        target_base_name = _krx_equity_issuer_name_key(target_name)
+        raw_exact_target_rows = tuple(
+            row
+            for row in target_price_rows
+            if str(row.get("peer_symbol") or "") == target_id
+            and _company_name_key(row.get("peer_name"))
+            == _company_name_key(target_name)
+            and str(row.get("observed_at") or "")[:10]
+            == listing_snapshot_date.isoformat()
+        )
+        target_row_signatures = {
+            (
+                _company_name_key(row.get("peer_name")),
+                _float(row.get("close")),
+                _float(row.get("market_cap")),
+                str(row.get("observed_at") or "")[:10],
+            )
+            for row in raw_exact_target_rows
+        }
+        if not raw_exact_target_rows or len(target_row_signatures) != 1:
+            audit["failure_reason"] = "POINT_IN_TIME_TARGET_KRX_IDENTITY_MISSING"
+            return UnavailableStructuredSourceRoute(
+                route_name, str(audit["failure_reason"])
+            ), audit
+        raw_issuer_price_rows = tuple(
+            row
+            for row in target_price_rows
+            if _krx_equity_issuer_name_key(row.get("peer_name"))
+            == target_base_name
+            and str(row.get("observed_at") or "")[:10]
+            == listing_snapshot_date.isoformat()
+        )
+        by_symbol: dict[str, list[Mapping[str, Any]]] = {}
+        for row in raw_issuer_price_rows:
+            by_symbol.setdefault(str(row.get("peer_symbol") or ""), []).append(row)
+        issuer_price_rows: list[Mapping[str, Any]] = []
+        for symbol, rows in sorted(by_symbol.items()):
+            signatures = {
+                (
+                    _company_name_key(row.get("peer_name")),
+                    _float(row.get("close")),
+                    _float(row.get("market_cap")),
+                    str(row.get("observed_at") or "")[:10],
+                )
+                for row in rows
+            }
+            if len(signatures) != 1:
+                audit["failure_reason"] = (
+                    "CONFLICTING_POINT_IN_TIME_KRX_EQUITY_LINE:" + symbol
+                )
+                return UnavailableStructuredSourceRoute(
+                    route_name, str(audit["failure_reason"])
+                ), audit
+            issuer_price_rows.append(
+                min(rows, key=lambda row: stable_hash(dict(row)))
+            )
+        issuer_price_rows = tuple(issuer_price_rows)
+        market_caps = tuple(_float(row.get("market_cap")) for row in issuer_price_rows)
+        if (
+            not issuer_price_rows
+            or any(value is None or value <= 0 for value in market_caps)
+        ):
+            audit["failure_reason"] = "POINT_IN_TIME_KRX_MARKET_CAP_MISSING"
+            return UnavailableStructuredSourceRoute(
+                route_name, str(audit["failure_reason"])
+            ), audit
+        market_cap = sum(float(value) for value in market_caps if value is not None)
+        market_source_ids = tuple(
+            dict.fromkeys(
+                str(row.get("source_id") or "") for row in issuer_price_rows
+            )
+        )
+        if not market_source_ids or any(not value for value in market_source_ids):
+            audit["failure_reason"] = "KRX_MARKET_CAP_SOURCE_LINEAGE_MISSING"
+            return UnavailableStructuredSourceRoute(
+                route_name, str(audit["failure_reason"])
+            ), audit
+        audit["krx_market_cap"] = {
+            "snapshot_date": listing_snapshot_date.isoformat(),
+            "market_cap_krw": market_cap,
+            "equity_line_symbols": sorted(
+                str(row.get("peer_symbol") or "") for row in issuer_price_rows
+            ),
+            "equity_line_count": len(issuer_price_rows),
+            "source_ids": list(market_source_ids),
+        }
+
+        corp_code = _official_corp_code(official)
+        if not corp_code:
+            audit["failure_reason"] = "TARGET_OPENDART_CORP_CODE_MISSING"
+            return UnavailableStructuredSourceRoute(
+                route_name, str(audit["failure_reason"])
+            ), audit
+        raw_entries = tuple(
+            row
+            for row in getattr(dart_route, "single_account_payloads", ())
+            if isinstance(row, Mapping)
+            and str(row.get("corp_code") or "").zfill(8) == corp_code
+            and str(row.get("fs_div") or "") == "CFS"
+            and isinstance(row.get("payload"), Mapping)
+            and str(row.get("source_id") or "")
+        )
+        if not raw_entries:
+            audit["failure_reason"] = "TARGET_OPENDART_CFS_PAYLOAD_MISSING"
+            return UnavailableStructuredSourceRoute(
+                route_name, str(audit["failure_reason"])
+            ), audit
+
+        def period_end(entry: Mapping[str, Any]) -> date:
+            return date.fromisoformat(str(entry["period_end"])[:10])
+
+        entries = tuple(sorted(raw_entries, key=period_end, reverse=True))
+        filing_cache: dict[str, tuple[str | None, Mapping[str, Any]]] = {}
+
+        def confirm_filing(
+            entry: Mapping[str, Any], row_audit: Mapping[str, Any]
+        ) -> tuple[str | None, Mapping[str, Any]]:
+            receipt_no = str(row_audit.get("rcept_no") or "")
+            if receipt_no in filing_cache:
+                return filing_cache[receipt_no]
+            if len(filing_cache) >= 3:
+                return None, {"status": "FILING_METADATA_BUDGET_EXHAUSTED"}
+            receipt_date = date.fromisoformat(str(row_audit["rcept_date"]))
+            role = (
+                "TARGET_TRAILING_FILING_PERIOD:"
+                f"{entry['fiscal_year']}:{entry['report_code']}"
+            )
+            manifest_start = len(manifests)
+            payload = self._json(
+                target_id=target_id,
+                cutoff=cutoff,
+                provider_name="OpenDART",
+                source_role=role,
+                cache_key=(
+                    f"dart_target_trailing_filing_{target_id}_{corp_code}_"
+                    f"{receipt_no}"
+                ),
+                cache_root=cache_root,
+                checkpoint_resume=checkpoint_resume,
+                url=_DART_DISCLOSURE_LIST_URL,
+                params={
+                    "crtfc_key": (
+                        os.environ.get("OPENDART_API_KEY")
+                        or os.environ.get("OPEN_DART_API_KEY")
+                    ),
+                    "corp_code": corp_code,
+                    "bgn_de": receipt_date.strftime("%Y%m%d"),
+                    "end_de": receipt_date.strftime("%Y%m%d"),
+                    "page_no": "1",
+                    "page_count": "100",
+                },
+                headers={},
+                attempts=attempts,
+                manifests=manifests,
+                effective_date=receipt_date.isoformat(),
+                rows_getter=lambda value: value.get("list") or (),
+            )
+            audit["filing_metadata_fetch_count"] += 1
+            if payload is None:
+                result = (None, {"status": "FILING_PROVIDER_ERROR"})
+                filing_cache[receipt_no] = result
+                return result
+            verified_period_end, filing_audit = _opendart_filing_period_end(
+                payload,
+                cutoff=cutoff,
+                expected_corp_code=corp_code,
+                expected_rcept_no=receipt_no,
+                expected_report_code=str(entry["report_code"]),
+                expected_period_end=period_end(entry),
+            )
+            filing_source_id = next(
+                (
+                    str(row["source_id"])
+                    for row in reversed(manifests[manifest_start:])
+                    if row.get("provider_name") == "OpenDART"
+                    and row.get("source_role") == role
+                ),
+                "",
+            )
+            result = (
+                filing_source_id
+                if verified_period_end is not None and filing_source_id
+                else None,
+                dict(filing_audit),
+            )
+            filing_cache[receipt_no] = result
+            return result
+
+        equity_value: float | None = None
+        equity_entry: Mapping[str, Any] | None = None
+        equity_audit: Mapping[str, Any] = {}
+        equity_filing_source_id = ""
+        equity_attempts: list[Mapping[str, Any]] = []
+        for entry in entries[:2]:
+            value, row_audit = _opendart_parent_equity(
+                entry["payload"],
+                cutoff=cutoff,
+                expected_corp_code=corp_code,
+                expected_fiscal_year=int(entry["fiscal_year"]),
+                expected_report_code=str(entry["report_code"]),
+            )
+            attempt_audit = {
+                "fiscal_year": entry["fiscal_year"],
+                "report_code": entry["report_code"],
+                "period_end": period_end(entry).isoformat(),
+                **dict(row_audit),
+            }
+            if value is not None:
+                filing_source_id, filing_audit = confirm_filing(entry, row_audit)
+                attempt_audit["filing_period_confirmation"] = dict(filing_audit)
+                if filing_source_id:
+                    equity_value = value
+                    equity_entry = entry
+                    equity_audit = row_audit
+                    equity_filing_source_id = filing_source_id
+                    equity_attempts.append(attempt_audit)
+                    break
+            equity_attempts.append(attempt_audit)
+        audit["parent_equity_attempts"] = equity_attempts
+        if equity_value is None or equity_entry is None or not equity_filing_source_id:
+            audit["failure_reason"] = "TARGET_PARENT_EQUITY_UNAVAILABLE"
+            return UnavailableStructuredSourceRoute(
+                route_name, str(audit["failure_reason"])
+            ), audit
+
+        market_input_id = "STRUCT-" + stable_hash(
+            {
+                "target_id": target_id,
+                "metric_id": "target_krx_market_cap",
+                "date": listing_snapshot_date.isoformat(),
+                "source_ids": market_source_ids,
+            }
+        )[:24]
+        equity_input_id = "STRUCT-" + stable_hash(
+            {
+                "target_id": target_id,
+                "metric_id": "target_parent_equity",
+                "period_end": period_end(equity_entry).isoformat(),
+                "source_id": equity_entry["source_id"],
+            }
+        )[:24]
+        equity_available_at = date.fromisoformat(str(equity_audit["rcept_date"]))
+        records: list[StructuredMetricRecord] = [
+            StructuredMetricRecord(
+                record_id=market_input_id,
+                target_id=target_id,
+                as_of_date=cutoff.isoformat(),
+                metric_id="target_krx_market_cap",
+                value=market_cap,
+                unit="KRW",
+                period=f"AS_OF_{listing_snapshot_date.isoformat()}",
+                evidence_roles=("TARGET_TRAILING_VALUATION_INPUT",),
+                source_ids=market_source_ids,
+                source_route=route_name,
+                observed_at=listing_snapshot_date.isoformat(),
+                available_at=listing_snapshot_date.isoformat(),
+                record_kind="OFFICIAL_TARGET_TRAILING_VALUATION_INPUT",
+                confidence=0.98,
+                dataset="VALUATION",
+                provenance="STRUCTURED_EXTRACTED",
+                metadata={
+                    "provider_name": "KRX",
+                    "point_in_time": True,
+                    "equity_line_symbols": audit["krx_market_cap"][
+                        "equity_line_symbols"
+                    ],
+                    "snippet_only": False,
+                },
+            ),
+            StructuredMetricRecord(
+                record_id=equity_input_id,
+                target_id=target_id,
+                as_of_date=cutoff.isoformat(),
+                metric_id="target_parent_equity",
+                value=equity_value,
+                unit="KRW",
+                period=period_end(equity_entry).isoformat(),
+                evidence_roles=("TARGET_TRAILING_VALUATION_INPUT",),
+                source_ids=(
+                    str(equity_entry["source_id"]),
+                    equity_filing_source_id,
+                ),
+                source_route=route_name,
+                observed_at=period_end(equity_entry).isoformat(),
+                available_at=equity_available_at.isoformat(),
+                record_kind="OFFICIAL_TARGET_TRAILING_VALUATION_INPUT",
+                confidence=0.98,
+                dataset="VALUATION",
+                provenance="STRUCTURED_EXTRACTED",
+                metadata={
+                    "provider_name": "OpenDART",
+                    "corp_code": corp_code,
+                    "report_code": equity_entry["report_code"],
+                    "rcept_no": equity_audit["rcept_no"],
+                    "filing_period_verified": True,
+                    "parent_attribution": True,
+                    "snippet_only": False,
+                },
+            ),
+        ]
+        pb_value = market_cap / equity_value
+        pb_source_ids = tuple(
+            dict.fromkeys(
+                (*market_source_ids, str(equity_entry["source_id"]), equity_filing_source_id)
+            )
+        )
+        records.append(
+            StructuredMetricRecord(
+                record_id="STRUCT-" + stable_hash(
+                    {
+                        "target_id": target_id,
+                        "metric_id": "target_trailing_parent_pb",
+                        "market_cap": market_cap,
+                        "parent_equity": equity_value,
+                        "source_ids": pb_source_ids,
+                    }
+                )[:24],
+                target_id=target_id,
+                as_of_date=cutoff.isoformat(),
+                metric_id="target_trailing_parent_pb",
+                value=pb_value,
+                unit="MULTIPLE",
+                period=f"TRAILING_AS_OF_{listing_snapshot_date.isoformat()}",
+                evidence_roles=(
+                    "TRAILING_PB",
+                    "CURRENT_VALUATION",
+                    "TARGET_TRAILING_VALUATION",
+                ),
+                source_ids=pb_source_ids,
+                source_route=route_name,
+                observed_at=listing_snapshot_date.isoformat(),
+                available_at=max(
+                    listing_snapshot_date, equity_available_at
+                ).isoformat(),
+                record_kind="OFFICIAL_DERIVED_TARGET_TRAILING_VALUATION",
+                confidence=0.98,
+                dataset="VALUATION",
+                provenance="DERIVED",
+                input_record_ids=(market_input_id, equity_input_id),
+                metadata={
+                    "derivation": "KRX_MARKET_CAP_DIV_OPENDART_PARENT_EQUITY",
+                    "numerator_positive": market_cap > 0,
+                    "denominator_positive": equity_value > 0,
+                    "forward_value": False,
+                    "point_in_time": True,
+                    "snippet_only": False,
+                },
+            )
+        )
+        audit["derived_metrics"].append(
+            {"metric_id": "target_trailing_parent_pb", "value": pb_value}
+        )
+
+        pe_result, pe_audit = _target_ttm_parent_net_income(
+            entries=entries,
+            cutoff=cutoff,
+            corp_code=corp_code,
+            confirm_filing=confirm_filing,
+        )
+        audit["trailing_parent_net_income"] = dict(pe_audit)
+        if pe_result is not None:
+            ttm_net_income = float(pe_result["value"])
+            net_income_source_ids = tuple(pe_result["source_ids"])
+            net_income_input_id = "STRUCT-" + stable_hash(
+                {
+                    "target_id": target_id,
+                    "metric_id": "target_trailing_parent_net_income",
+                    "value": ttm_net_income,
+                    "source_ids": net_income_source_ids,
+                }
+            )[:24]
+            records.append(
+                StructuredMetricRecord(
+                    record_id=net_income_input_id,
+                    target_id=target_id,
+                    as_of_date=cutoff.isoformat(),
+                    metric_id="target_trailing_parent_net_income",
+                    value=ttm_net_income,
+                    unit="KRW",
+                    period=str(pe_result["period"]),
+                    evidence_roles=("TARGET_TRAILING_VALUATION_INPUT",),
+                    source_ids=net_income_source_ids,
+                    source_route=route_name,
+                    observed_at=str(pe_result["period_end"]),
+                    available_at=str(pe_result["available_at"]),
+                    record_kind="OFFICIAL_TARGET_TRAILING_VALUATION_INPUT",
+                    confidence=0.96,
+                    dataset="VALUATION",
+                    provenance="STRUCTURED_EXTRACTED",
+                    metadata={
+                        "provider_name": "OpenDART",
+                        "corp_code": corp_code,
+                        "parent_attribution": True,
+                        "ttm_derivation": pe_result["derivation"],
+                        "component_values": pe_result["component_values"],
+                        "filing_periods_verified": True,
+                        "snippet_only": False,
+                    },
+                )
+            )
+            pe_value = market_cap / ttm_net_income
+            pe_source_ids = tuple(
+                dict.fromkeys((*market_source_ids, *net_income_source_ids))
+            )
+            records.append(
+                StructuredMetricRecord(
+                    record_id="STRUCT-" + stable_hash(
+                        {
+                            "target_id": target_id,
+                            "metric_id": "target_trailing_parent_pe",
+                            "market_cap": market_cap,
+                            "parent_ttm_net_income": ttm_net_income,
+                            "source_ids": pe_source_ids,
+                        }
+                    )[:24],
+                    target_id=target_id,
+                    as_of_date=cutoff.isoformat(),
+                    metric_id="target_trailing_parent_pe",
+                    value=pe_value,
+                    unit="MULTIPLE",
+                    period=str(pe_result["period"]),
+                    evidence_roles=(
+                        "TRAILING_PE",
+                        "CURRENT_VALUATION",
+                        "TARGET_TRAILING_VALUATION",
+                    ),
+                    source_ids=pe_source_ids,
+                    source_route=route_name,
+                    observed_at=listing_snapshot_date.isoformat(),
+                    available_at=max(
+                        listing_snapshot_date,
+                        date.fromisoformat(str(pe_result["available_at"])),
+                    ).isoformat(),
+                    record_kind="OFFICIAL_DERIVED_TARGET_TRAILING_VALUATION",
+                    confidence=0.96,
+                    dataset="VALUATION",
+                    provenance="DERIVED",
+                    input_record_ids=(market_input_id, net_income_input_id),
+                    metadata={
+                        "derivation": (
+                            "KRX_MARKET_CAP_DIV_OPENDART_TTM_PARENT_NET_INCOME"
+                        ),
+                        "numerator_positive": market_cap > 0,
+                        "denominator_positive": ttm_net_income > 0,
+                        "forward_value": False,
+                        "point_in_time": True,
+                        "snippet_only": False,
+                    },
+                )
+            )
+            audit["derived_metrics"].append(
+                {"metric_id": "target_trailing_parent_pe", "value": pe_value}
+            )
+
+        source_ids = tuple(
+            dict.fromkeys(
+                source_id for row in records for source_id in row.source_ids
+            )
+        )
+        audit.update(
+            {
+                "status": "RESOLVED",
+                "failure_reason": None,
+                "source_ids": list(source_ids),
+                "stop_condition": "TARGET_TRAILING_VALUATION_RESOLVED",
+            }
+        )
+        return InMemoryStructuredSourceRoute(
+            route_name,
+            StructuredSourcePayload(
+                route_name=route_name,
+                source_ids=source_ids,
+                structured_records=tuple(records),
+                diagnostics=audit,
+            ),
+        ), audit
 
 
     def _json(
@@ -4805,6 +5403,262 @@ def _opendart_parent_equity(
     }
 
 
+def _opendart_parent_net_income(
+    payload: Mapping[str, Any],
+    *,
+    cutoff: date,
+    expected_corp_code: str,
+    expected_fiscal_year: int,
+    expected_report_code: str,
+) -> tuple[float | None, Mapping[str, Any]]:
+    """Extract one identity/date-bound parent-profit observation.
+
+    Interim DART income statements expose cumulative values in
+    ``thstrm_add_amount``.  Q1 is already a single cumulative quarter, so the
+    ordinary current-period amount is accepted only for Q1.  Annual filings
+    use ``thstrm_amount``.  Generic consolidated net income is deliberately
+    rejected because it includes non-controlling interests.
+    """
+
+    status = str(payload.get("status") or "")
+    if status != "000":
+        return None, {"status": "DART_STATUS_ERROR", "dart_status": status}
+    rows = payload.get("list") or ()
+    if not isinstance(rows, (list, tuple)):
+        return None, {"status": "DART_ROWS_INVALID"}
+    candidates: list[tuple[float, date, Mapping[str, Any], str]] = []
+    rejected_reasons: dict[str, int] = {}
+    for raw in rows:
+        if not isinstance(raw, Mapping):
+            continue
+        if str(raw.get("sj_div") or "") not in {"IS", "CIS"}:
+            continue
+        if (
+            str(raw.get("account_id") or "").strip().casefold()
+            != "ifrs-full_profitlossattributabletoownersofparent"
+        ):
+            continue
+        corp_code = str(raw.get("corp_code") or "").strip()
+        if corp_code.isdigit():
+            corp_code = corp_code.zfill(8)
+        if corp_code != expected_corp_code:
+            rejected_reasons["CORP_CODE_MISMATCH"] = (
+                rejected_reasons.get("CORP_CODE_MISMATCH", 0) + 1
+            )
+            continue
+        if str(raw.get("bsns_year") or "") != str(expected_fiscal_year):
+            rejected_reasons["FISCAL_YEAR_MISMATCH"] = (
+                rejected_reasons.get("FISCAL_YEAR_MISMATCH", 0) + 1
+            )
+            continue
+        if str(raw.get("reprt_code") or "") != expected_report_code:
+            rejected_reasons["REPORT_CODE_MISMATCH"] = (
+                rejected_reasons.get("REPORT_CODE_MISMATCH", 0) + 1
+            )
+            continue
+        if str(raw.get("currency") or "") != "KRW":
+            rejected_reasons["NON_KRW_CURRENCY"] = (
+                rejected_reasons.get("NON_KRW_CURRENCY", 0) + 1
+            )
+            continue
+        rcept_no = str(raw.get("rcept_no") or "")
+        if not re.fullmatch(r"[0-9]{14}", rcept_no):
+            rejected_reasons["RECEIPT_DATE_INVALID"] = (
+                rejected_reasons.get("RECEIPT_DATE_INVALID", 0) + 1
+            )
+            continue
+        try:
+            received_at = date.fromisoformat(
+                f"{rcept_no[:4]}-{rcept_no[4:6]}-{rcept_no[6:8]}"
+            )
+        except ValueError:
+            rejected_reasons["RECEIPT_DATE_INVALID"] = (
+                rejected_reasons.get("RECEIPT_DATE_INVALID", 0) + 1
+            )
+            continue
+        if received_at > cutoff:
+            rejected_reasons["FUTURE_RECEIPT_REJECTED"] = (
+                rejected_reasons.get("FUTURE_RECEIPT_REJECTED", 0) + 1
+            )
+            continue
+        if expected_report_code == "11011":
+            amount_field = "thstrm_amount"
+        elif expected_report_code == "11013":
+            amount_field = (
+                "thstrm_add_amount"
+                if _float(raw.get("thstrm_add_amount")) is not None
+                else "thstrm_amount"
+            )
+        else:
+            amount_field = "thstrm_add_amount"
+        amount = _float(raw.get(amount_field))
+        if amount is None:
+            rejected_reasons["PARENT_PROFIT_AMOUNT_MISSING"] = (
+                rejected_reasons.get("PARENT_PROFIT_AMOUNT_MISSING", 0) + 1
+            )
+            continue
+        candidates.append((amount, received_at, raw, amount_field))
+    if not candidates:
+        return None, {
+            "status": "PARENT_NET_INCOME_ROW_MISSING",
+            "rejected_reasons": rejected_reasons,
+        }
+    distinct_amounts = {row[0] for row in candidates}
+    if len(distinct_amounts) != 1:
+        return None, {
+            "status": "PARENT_NET_INCOME_ROW_AMBIGUOUS",
+            "candidate_count": len(candidates),
+            "distinct_amount_count": len(distinct_amounts),
+            "rejected_reasons": rejected_reasons,
+        }
+    amount, received_at, selected, amount_field = min(
+        candidates, key=lambda row: stable_hash(row[2])
+    )
+    return amount, {
+        "status": "RESOLVED",
+        "candidate_count": len(candidates),
+        "account_id": str(selected.get("account_id") or ""),
+        "account_name": str(selected.get("account_nm") or ""),
+        "amount_field": amount_field,
+        "currency": "KRW",
+        "corp_code": expected_corp_code,
+        "fiscal_year": expected_fiscal_year,
+        "report_code": expected_report_code,
+        "rcept_no": str(selected.get("rcept_no") or ""),
+        "rcept_date": received_at.isoformat(),
+        "requested_fs_div": "CFS",
+        "parent_net_income_row_hash": stable_hash(selected),
+        "rejected_reasons": rejected_reasons,
+    }
+
+
+def _target_ttm_parent_net_income(
+    *,
+    entries: Sequence[Mapping[str, Any]],
+    cutoff: date,
+    corp_code: str,
+    confirm_filing: Callable[
+        [Mapping[str, Any], Mapping[str, Any]],
+        tuple[str | None, Mapping[str, Any]],
+    ],
+) -> tuple[Mapping[str, Any] | None, Mapping[str, Any]]:
+    """Build a positive trailing parent-profit denominator, when possible."""
+
+    audit: dict[str, Any] = {
+        "status": "PENDING",
+        "failure_reason": None,
+        "maximum_statement_inputs": 3,
+        "statement_inputs": [],
+    }
+
+    def end_date(entry: Mapping[str, Any]) -> date:
+        return date.fromisoformat(str(entry["period_end"])[:10])
+
+    if not entries:
+        audit["failure_reason"] = "NO_CFS_STATEMENT_INPUTS"
+        return None, audit
+    latest = max(entries, key=end_date)
+    latest_year = int(latest["fiscal_year"])
+    latest_quarter = latest.get("fiscal_quarter")
+    selected: list[tuple[str, Mapping[str, Any]]] = []
+    if latest_quarter is None:
+        selected = [("annual", latest)]
+        derivation = "LATEST_ANNUAL_PARENT_NET_INCOME"
+    else:
+        prior_annual = next(
+            (
+                row
+                for row in entries
+                if int(row["fiscal_year"]) == latest_year - 1
+                and row.get("fiscal_quarter") is None
+            ),
+            None,
+        )
+        prior_interim = next(
+            (
+                row
+                for row in entries
+                if int(row["fiscal_year"]) == latest_year - 1
+                and row.get("fiscal_quarter") == latest_quarter
+            ),
+            None,
+        )
+        if prior_annual is None or prior_interim is None:
+            audit["failure_reason"] = "TTM_COMPARABLE_PERIOD_INPUTS_MISSING"
+            return None, audit
+        selected = [
+            ("current_interim_cumulative", latest),
+            ("prior_annual", prior_annual),
+            ("prior_interim_cumulative", prior_interim),
+        ]
+        derivation = "PRIOR_ANNUAL_PLUS_CURRENT_YTD_MINUS_PRIOR_YTD"
+
+    values: dict[str, float] = {}
+    source_ids: list[str] = []
+    receipt_dates: list[date] = []
+    for label, entry in selected:
+        value, row_audit = _opendart_parent_net_income(
+            entry["payload"],
+            cutoff=cutoff,
+            expected_corp_code=corp_code,
+            expected_fiscal_year=int(entry["fiscal_year"]),
+            expected_report_code=str(entry["report_code"]),
+        )
+        input_audit = {
+            "input_role": label,
+            "fiscal_year": entry["fiscal_year"],
+            "report_code": entry["report_code"],
+            "period_end": end_date(entry).isoformat(),
+            **dict(row_audit),
+        }
+        if value is None:
+            audit["statement_inputs"].append(input_audit)
+            audit["failure_reason"] = f"{label.upper()}_PARENT_PROFIT_MISSING"
+            return None, audit
+        filing_source_id, filing_audit = confirm_filing(entry, row_audit)
+        input_audit["filing_period_confirmation"] = dict(filing_audit)
+        audit["statement_inputs"].append(input_audit)
+        statement_source_id = str(entry.get("source_id") or "")
+        if not statement_source_id or not filing_source_id:
+            audit["failure_reason"] = f"{label.upper()}_SOURCE_LINEAGE_MISSING"
+            return None, audit
+        values[label] = float(value)
+        source_ids.extend((statement_source_id, filing_source_id))
+        receipt_dates.append(date.fromisoformat(str(row_audit["rcept_date"])))
+
+    if derivation == "LATEST_ANNUAL_PARENT_NET_INCOME":
+        trailing_value = values["annual"]
+    else:
+        trailing_value = (
+            values["prior_annual"]
+            + values["current_interim_cumulative"]
+            - values["prior_interim_cumulative"]
+        )
+    if not math.isfinite(trailing_value) or trailing_value <= 0:
+        audit["failure_reason"] = "TTM_PARENT_NET_INCOME_NOT_POSITIVE"
+        audit["derived_value"] = trailing_value
+        return None, audit
+    result = {
+        "value": trailing_value,
+        "period": f"TTM_THROUGH_{end_date(latest).isoformat()}",
+        "period_end": end_date(latest).isoformat(),
+        "available_at": max(receipt_dates).isoformat(),
+        "source_ids": tuple(dict.fromkeys(source_ids)),
+        "derivation": derivation,
+        "component_values": values,
+    }
+    audit.update(
+        {
+            "status": "RESOLVED",
+            "failure_reason": None,
+            "derived_value": trailing_value,
+            "derivation": derivation,
+            "source_ids": list(result["source_ids"]),
+        }
+    )
+    return result, audit
+
+
 def _opendart_filing_period_end(
     payload: Mapping[str, Any],
     *,
@@ -4987,13 +5841,21 @@ def _companyguide_trailing_valuation_records(
             "trailing_pe",
             "TRAILING_PER",
             "MULTIPLE",
-            ("TRAILING_PE", "CURRENT_VALUATION"),
+            (
+                "TRAILING_PE",
+                "CURRENT_VALUATION",
+                "TARGET_TRAILING_VALUATION",
+            ),
         ),
         (
             "trailing_pb",
             "TRAILING_PBR",
             "MULTIPLE",
-            ("TRAILING_PB", "CURRENT_VALUATION"),
+            (
+                "TRAILING_PB",
+                "CURRENT_VALUATION",
+                "TARGET_TRAILING_VALUATION",
+            ),
         ),
         (
             "provider_previous_close",

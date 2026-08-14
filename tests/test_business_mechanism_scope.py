@@ -7,6 +7,7 @@ from pathlib import Path
 from e2r.production.v6_canary_selection import REQUIRED_ARCHETYPES
 from e2r.research_brain.scoring.business_mechanism_scope import (
     BusinessMechanismScope,
+    ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT,
     MechanismScopeValidator,
     audit_business_mechanism_scope,
     infer_business_mechanism_scope,
@@ -145,6 +146,65 @@ class BusinessMechanismScopeTests(unittest.TestCase):
         )
         self.assertEqual(scope.business_segment, "CORPORATE_GENERIC")
         self.assertEqual(scope.product_family, "CORPORATE_GENERIC")
+
+    def test_issuer_consolidated_actuals_are_common_eps_fcf_only_contract(
+        self,
+    ) -> None:
+        """가상 발행사의 연결 실제치는 섹터와 무관하게 같은 규칙을 쓴다."""
+
+        validator = MechanismScopeValidator()
+        contracts = load_mechanism_scope_contracts()
+        common = ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT
+        for archetype_id, contract in contracts.items():
+            for _, transaction_type, economic_mechanism in common.metric_scope_rows:
+                scope = BusinessMechanismScope(
+                    issuer_id="SYNTHETIC-TARGET",
+                    business_segment="CORPORATE_GENERIC",
+                    product_family="CORPORATE_GENERIC",
+                    technology_family="CORPORATE_GENERIC",
+                    customer_or_counterparty="",
+                    transaction_type=transaction_type,
+                    economic_mechanism=economic_mechanism,
+                    geography="GLOBAL",
+                    effective_period="2026Q1",
+                    scope_confidence=1.0,
+                )
+                self.assertTrue(
+                    validator.validate(
+                        scope=scope,
+                        contract=contract,
+                        component_id="eps_fcf_explosion",
+                    ).scope_match,
+                    archetype_id,
+                )
+                self.assertFalse(
+                    validator.validate(
+                        scope=scope,
+                        contract=contract,
+                        component_id="bottleneck_pricing",
+                    ).scope_match,
+                    archetype_id,
+                )
+
+        attributed = BusinessMechanismScope(
+            issuer_id="SYNTHETIC-TARGET",
+            business_segment="CORPORATE_GENERIC",
+            product_family="HBM",
+            technology_family="HBM",
+            customer_or_counterparty="",
+            transaction_type="CONSOLIDATED_REVENUE_ACTUAL",
+            economic_mechanism="CONSOLIDATED_EARNINGS_ACTUAL",
+            geography="GLOBAL",
+            effective_period="2026Q1",
+            scope_confidence=1.0,
+        )
+        self.assertFalse(
+            validator.validate(
+                scope=attributed,
+                contract=contracts["C06_HBM_MEMORY_CUSTOMER_CAPACITY"],
+                component_id="eps_fcf_explosion",
+            ).scope_match
+        )
 
     def test_operational_scope_audit_recomputes_from_frozen_leaves(self) -> None:
         audit = audit_business_mechanism_scope(repo_root=self.ROOT)

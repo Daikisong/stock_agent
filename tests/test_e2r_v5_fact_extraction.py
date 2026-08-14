@@ -25,6 +25,9 @@ from e2r.research_brain.researcher_mode.component_researcher import (
 from e2r.research_brain.planning.provider_transport import (
     StructuredProviderUnavailable,
 )
+from e2r.research_brain.scoring.business_mechanism_scope import (
+    load_mechanism_scope_contracts,
+)
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeConfig,
     _load_fact_checkpoint,
@@ -39,12 +42,15 @@ from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     TRANSPORT_FRAGMENT_VALUE_NORMALIZATION,
     _atomic_fact_lineage_rematerialization_document_ids,
     _batch_current_fact_lineage_pending_reasons,
+    _bounded_stale_coverage_refresh_document_ids,
     _current_fact_lineage_rematerialization_gaps,
     _coverage_gap_objective_ids,
     _document_transport_chunks,
     _fact_semantics_upgrade_requires_reextraction,
+    _fact_extraction_primary_payload,
     _scenario_role_reextraction_document_ids,
     _source_boundary_context_by_document_id,
+    _validate_response,
     fact_extraction_has_exact_checkpoint_recovery_wait,
     normalize_punctuation_only_fact_value,
 )
@@ -841,6 +847,57 @@ class WrongObjectiveThenCorrectProvider(ObjectiveLocalFactProvider):
         if "fact_extraction_retry_context" not in payload:
             for fact in response["facts"]:
                 fact["objective_ids"] = ["OBJECTIVE-OUTSIDE-DOCUMENT"]
+        return response
+
+
+class CrossObjectiveConsolidatedActualProvider(ObjectiveLocalFactProvider):
+    """발견 목적과 다른 현재 EPS/FCF 목적에 연결 실제치를 연결한다."""
+
+    exact_quote = (
+        "Synthetic Corp consolidated operating profit was KRW 42 billion in 2026Q1."
+    )
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        response["facts"] = [dict(row) for row in response["facts"]]
+        for fact in response["facts"]:
+            fact.update(
+                {
+                    "subject_id": "synthetic_issuer_consolidated",
+                    "subject": "Synthetic Corp consolidated results",
+                    "business_segment": "CORPORATE_GENERIC",
+                    "product_family": "CORPORATE_GENERIC",
+                    "scope_business_segment": "CORPORATE_GENERIC",
+                    "scope_product_family": "CORPORATE_GENERIC",
+                    "scope_technology_family": "CORPORATE_GENERIC",
+                    "scope_transaction_type": (
+                        "CONSOLIDATED_OPERATING_PROFIT_ACTUAL"
+                    ),
+                    "scope_economic_mechanism": (
+                        "CONSOLIDATED_EARNINGS_ACTUAL"
+                    ),
+                    "economic_mechanism": (
+                        "issuer-consolidated operating profit actual"
+                    ),
+                    "mechanism_scope_id": (
+                        "SYNTHETIC_ISSUER_CONSOLIDATED_EARNINGS"
+                    ),
+                    "predicate": "reported consolidated operating profit",
+                    "predicate_family": (
+                        "consolidated_operating_profit_actual"
+                    ),
+                    "value": 42,
+                    "normalized_object": (
+                        "consolidated_operating_profit_krw_42_billion"
+                    ),
+                    "unit": "KRW billion",
+                    "exact_quote": self.exact_quote,
+                    "objective_ids": ["OBJECTIVE-EPS"],
+                    "objective_relation": "ADVANCE",
+                }
+            )
         return response
 
 
@@ -7342,7 +7399,7 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                     "document_id": (
                         "DOC-STALE-TRUSTED-CROSS-OBJECTIVE"
                     ),
-                    "prior_current_objective_ids": [
+                    "discovery_objective_ids": [
                         "OBJECTIVE-CAPITAL"
                     ],
                     "current_open_objective_candidates": [
@@ -7858,7 +7915,162 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             )
         )
 
-    def test_production_rejects_fact_outside_document_objective_lineage(
+    def test_discovery_objective_is_provenance_and_open_objective_can_reroute(
+        self,
+    ) -> None:
+        provider = CrossObjectiveConsolidatedActualProvider()
+        document = dict(
+            _document(
+                "DOC-SYNTHETIC-CROSS-OBJECTIVE",
+                "ISSUER_EARNINGS_RELEASE",
+                "ISSUER",
+            )
+        )
+        document["objective_ids"] = ["OBJECTIVE-INFORMATION"]
+        text = f"{document['content_text']} {provider.exact_quote}"
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(
+                {
+                    "objective_id": "OBJECTIVE-INFORMATION",
+                    "component_id": "information_confidence",
+                },
+                {
+                    "objective_id": "OBJECTIVE-EPS",
+                    "component_id": "eps_fcf_explosion",
+                },
+            ),
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(result.material_claims), 1)
+        claim = result.material_claims[0]
+        self.assertEqual(claim["objective_ids"], ["OBJECTIVE-EPS"])
+        self.assertEqual(
+            claim["discovery_objective_ids"],
+            ["OBJECTIVE-INFORMATION"],
+        )
+        self.assertEqual(
+            claim["allowed_component_ids"],
+            ["eps_fcf_explosion"],
+        )
+        scope = provider.calls[0]["payload"][
+            "fact_extraction_scope_contract"
+        ]
+        self.assertEqual(
+            scope["objective_coverage_scope"],
+            "TARGET_WIDE_CURRENT_OPEN_OBJECTIVES",
+        )
+        self.assertEqual(
+            scope["document_discovery_objective_ids"],
+            [
+                {
+                    "document_id": "DOC-SYNTHETIC-CROSS-OBJECTIVE",
+                    "objective_ids": ["OBJECTIVE-INFORMATION"],
+                }
+            ],
+        )
+
+    def test_objective_local_no_fact_cannot_be_terminal_before_target_wide(
+        self,
+    ) -> None:
+        document = _document(
+            "DOC-SYNTHETIC-LOCAL-NO-FACT",
+            "ISSUER_PRESENTATION",
+            "ISSUER",
+        )
+        _, _, dispositions, pending, _, _ = _validate_response(
+            {
+                "facts": [],
+                "document_dispositions": [
+                    {
+                        "document_id": document["document_id"],
+                        "status": "NO_MATERIAL_FACT",
+                        "rationale": "No fact for the discovery objective.",
+                    }
+                ],
+                "unresolved_document_ids": [],
+                "unresolved_research_notes": [],
+                "extraction_complete": True,
+            },
+            batch_id="FACTBATCH-SYNTHETIC",
+            documents=(document,),
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            scope_contract=load_mechanism_scope_contracts()[ARCHETYPE],
+            provider_name="SYNTHETIC_PROVIDER",
+            prompt_hash="FACTPROMPT-SYNTHETIC",
+            response_hash="FACTRESP-SYNTHETIC",
+            objective_scope_by_document={
+                str(document["document_id"]): frozenset(
+                    {"OBJECTIVE-INFORMATION"}
+                )
+            },
+            objective_component_by_id={
+                "OBJECTIVE-INFORMATION": "information_confidence",
+                "OBJECTIVE-EPS": "eps_fcf_explosion",
+            },
+            extraction_semantics_version=(
+                "e2r_v5_structured_durable_visibility_roles_v8"
+            ),
+        )
+
+        self.assertEqual(
+            dispositions[0]["status"],
+            "NO_OBJECTIVE_LOCAL_FACT",
+        )
+        self.assertIn(
+            "TARGET_WIDE_OBJECTIVE_COVERAGE_REQUIRED:"
+            "DOC-SYNTHETIC-LOCAL-NO-FACT",
+            pending,
+        )
+
+    def test_v9_migration_rereads_existing_official_no_material_document(
+        self,
+    ) -> None:
+        official = _document(
+            "DOC-SYNTHETIC-OFFICIAL-MIGRATION",
+            "ISSUER_EARNINGS_RELEASE",
+            "ISSUER",
+        )
+        self.assertTrue(
+            _fact_semantics_upgrade_requires_reextraction(
+                previous_version=(
+                    "e2r_v5_structured_durable_visibility_roles_v8"
+                ),
+                document=official,
+            )
+        )
+        selected = _bounded_stale_coverage_refresh_document_ids(
+            documents=(official,),
+            prior_disposition_by_document_id={
+                str(official["document_id"]): {
+                    "document_id": official["document_id"],
+                    "status": "NO_MATERIAL_FACT",
+                    "accepted_fact_count": 0,
+                }
+            },
+            stale_semantics_document_ids={str(official["document_id"])},
+            coverage_complete_document_ids=set(),
+            previously_coverage_audited_document_ids={
+                str(official["document_id"])
+            },
+            coverage_gap_objective_ids=frozenset({"OBJECTIVE-EPS"}),
+        )
+        self.assertEqual(selected, frozenset({official["document_id"]}))
+
+    def test_production_rejects_unknown_or_closed_objective_id(
         self,
     ) -> None:
         provider = WrongObjectiveThenCorrectProvider()
@@ -7896,7 +8108,7 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         ]
         self.assertTrue(
             any(
-                "OBJECTIVE_ID_OUTSIDE_DOCUMENT_LINEAGE" in reason
+                "OBJECTIVE_ID_NOT_CURRENT_OPEN" in reason
                 for reason in retry_context["validation_errors"]
             )
         )
@@ -8514,12 +8726,29 @@ def _v4_migration_material(
         extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
     )
     current_payload = dict(capture.calls[0]["payload"])
-    historical_payload = {
-        **current_payload,
-        "fact_extraction_semantics_version": (
+    historical_payload = _fact_extraction_primary_payload(
+        target_id=TARGET,
+        target_name=TARGET_NAME,
+        target_aliases=(),
+        archetype_id=ARCHETYPE,
+        as_of_date=AS_OF_DATE,
+        extraction_semantics_version=(
             "e2r_v5_source_boundary_context_v4"
         ),
-    }
+        open_objectives=(objective,),
+        current_evidence_facts=current_payload["current_evidence_facts"],
+        score_gap_context=current_payload["score_gap_context"],
+        scope_contract=load_mechanism_scope_contracts()[ARCHETYPE],
+        batch=(document,),
+        objective_scope_by_document={
+            str(document["document_id"]): frozenset(
+                {str(objective["objective_id"])}
+            )
+        },
+        objective_component_by_id={
+            str(objective["objective_id"]): str(objective["component_id"])
+        },
+    )
     response = ObjectiveLocalFactProvider().complete(
         pass_name="EVIDENCE_FACT_EXTRACTION",
         payload=historical_payload,

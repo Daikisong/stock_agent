@@ -496,6 +496,7 @@ EVIDENCE_FACT_EXTRACTION_SCHEMA: Mapping[str, Any] = {
                         "type": "string",
                         "enum": [
                             "FACTS_EXTRACTED",
+                            "NO_OBJECTIVE_LOCAL_FACT",
                             "NO_MATERIAL_FACT",
                             "WRONG_TARGET_OR_SEGMENT",
                             "UNREADABLE",
@@ -5223,14 +5224,17 @@ def _pass_instruction(pass_name: str) -> str:
             "when each row has a materially distinct normalized predicate/object and objective "
             "effect; cosmetic relabeling is still a duplicate. "
             "When fact_extraction_scope_contract.mode is "
-            "PRODUCTION_OBJECTIVE_LOCAL, its narrower material_fact_definition "
-            "and completion_definition override document-wide exhaustive scope. "
-            "Return only facts that directly affect at least one objective id "
-            "linked to that document, copy every directly affected id into "
-            "objective_ids, and classify the effect as ADVANCE, COUNTER, or "
-            "SUPERSEDE. Do not turn general background or adjacent technical "
-            "history into production facts merely because it is economically "
-            "interesting. "
+            "PRODUCTION_OBJECTIVE_LOCAL, follow objective_coverage_scope. Under "
+            "TARGET_WIDE_CURRENT_OPEN_OBJECTIVES, document discovery objective ids "
+            "are provenance only: return a fact for any listed current open target "
+            "objective whose component is compatible with the literal mechanism, "
+            "copy every directly affected id into objective_ids, and classify the "
+            "effect as ADVANCE, COUNTER, or SUPERSEDE. Never cite an unknown or "
+            "closed objective. NO_OBJECTIVE_LOCAL_FACT means only that the discovery "
+            "objective had no fact and is nonterminal; NO_MATERIAL_FACT is allowed "
+            "only after target-wide current-objective coverage. Do not turn general "
+            "background or adjacent technical history into production facts merely "
+            "because it is economically interesting. "
             "Never use snippets, future outcomes, score, or Stage."
         )
     if pass_name == "RESEARCH_SUPERVISOR_REVIEW":

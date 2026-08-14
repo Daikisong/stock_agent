@@ -78,6 +78,9 @@ _PRE_DURABLE_VISIBILITY_FACT_SEMANTICS_VERSION = (
     "e2r_v5_structured_scenario_input_roles_v7"
 )
 _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION = (
+    "e2r_v5_cross_objective_consolidated_actuals_v9"
+)
+_PRE_CROSS_OBJECTIVE_FACT_SEMANTICS_VERSION = (
     "e2r_v5_structured_durable_visibility_roles_v8"
 )
 _PRE_REVISION_FACT_SEMANTICS_VERSION = (
@@ -89,6 +92,7 @@ _LEGACY_VALUATION_FACT_SEMANTICS_VERSION = (
 _AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS = frozenset(
     (
         _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION,
+        _PRE_CROSS_OBJECTIVE_FACT_SEMANTICS_VERSION,
         _PRE_DURABLE_VISIBILITY_FACT_SEMANTICS_VERSION,
         _PRE_REVISION_FACT_SEMANTICS_VERSION,
         _LEGACY_VALUATION_FACT_SEMANTICS_VERSION,
@@ -280,6 +284,34 @@ def _prior_durable_visibility_fact_output_schema(
     return prior
 
 
+def _pre_cross_objective_fact_output_schema(
+    current_schema: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    """Rebuild the immutable v8 schema before local/target-wide split."""
+
+    try:
+        prior = json.loads(json.dumps(current_schema))
+        status_schema = prior["properties"]["document_dispositions"][
+            "items"
+        ]["properties"]["status"]
+        status_enum = status_schema["enum"]
+    except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+        return None
+    expected = [
+        "FACTS_EXTRACTED",
+        "NO_OBJECTIVE_LOCAL_FACT",
+        "NO_MATERIAL_FACT",
+        "WRONG_TARGET_OR_SEGMENT",
+        "UNREADABLE",
+    ]
+    if status_enum != expected:
+        return None
+    status_schema["enum"] = [
+        value for value in status_enum if value != "NO_OBJECTIVE_LOCAL_FACT"
+    ]
+    return prior
+
+
 def _prior_revision_fact_output_schema(
     current_schema: Mapping[str, Any],
 ) -> Mapping[str, Any] | None:
@@ -334,10 +366,40 @@ def _legacy_valuation_fact_output_schema(
     return legacy
 
 
+def _pre_cross_objective_fact_instruction() -> str:
+    """Rebuild the immutable v8 instruction before target-wide coverage."""
+
+    current = _pass_instruction("EVIDENCE_FACT_EXTRACTION")
+    current_scope = (
+        "When fact_extraction_scope_contract.mode is "
+        "PRODUCTION_OBJECTIVE_LOCAL, follow objective_coverage_scope. Under "
+        "TARGET_WIDE_CURRENT_OPEN_OBJECTIVES, document discovery objective ids "
+        "are provenance only: return a fact for any listed current open target "
+        "objective whose component is compatible with the literal mechanism, "
+        "copy every directly affected id into objective_ids, and classify the "
+        "effect as ADVANCE, COUNTER, or SUPERSEDE. Never cite an unknown or "
+        "closed objective. NO_OBJECTIVE_LOCAL_FACT means only that the discovery "
+        "objective had no fact and is nonterminal; NO_MATERIAL_FACT is allowed "
+        "only after target-wide current-objective coverage. "
+    )
+    prior_scope = (
+        "When fact_extraction_scope_contract.mode is "
+        "PRODUCTION_OBJECTIVE_LOCAL, its narrower material_fact_definition and "
+        "completion_definition override document-wide exhaustive scope. Return "
+        "only facts that directly affect at least one objective id linked to "
+        "that document, copy every directly affected id into objective_ids, and "
+        "classify the effect as ADVANCE, COUNTER, or SUPERSEDE. "
+    )
+    prior = current.replace(current_scope, prior_scope, 1)
+    if prior == current:
+        raise ValueError("pre-cross-objective fact instruction cannot be derived")
+    return prior
+
+
 def _prior_durable_visibility_fact_instruction() -> str:
     """Rebuild the immutable v7 instruction from the current v8 text."""
 
-    current = _pass_instruction("EVIDENCE_FACT_EXTRACTION")
+    current = _pre_cross_objective_fact_instruction()
     prior = current.replace(
         "FORWARD_BOOK_VALUE, FORWARD_PB, FORWARD_EV_EBITDA, or "
         "DURABLE_VISIBILITY only when ",
@@ -454,12 +516,12 @@ def _authority_recovery_fact_request_material(
         pass_name="EVIDENCE_FACT_EXTRACTION",
         payload=payload,
     )
-    if (
-        fact_extraction_semantics_version
-        == _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
+    if fact_extraction_semantics_version == (
+        _STRUCTURED_VALUATION_FACT_SEMANTICS_VERSION
     ):
         return material
     if fact_extraction_semantics_version not in {
+        _PRE_CROSS_OBJECTIVE_FACT_SEMANTICS_VERSION,
         _PRE_DURABLE_VISIBILITY_FACT_SEMANTICS_VERSION,
         _PRE_REVISION_FACT_SEMANTICS_VERSION,
         _LEGACY_VALUATION_FACT_SEMANTICS_VERSION,
@@ -468,22 +530,32 @@ def _authority_recovery_fact_request_material(
     safe_payload, current_schema, current_prompt, _prompt_hash, _schema_hash = (
         material
     )
-    if (
+    pre_cross_schema = _pre_cross_objective_fact_output_schema(
+        current_schema
+    )
+    if pre_cross_schema is None:
+        raise ValueError("pre-cross-objective fact schema cannot be derived")
+    if fact_extraction_semantics_version == (
+        _PRE_CROSS_OBJECTIVE_FACT_SEMANTICS_VERSION
+    ):
+        prior_schema = pre_cross_schema
+        prior_instruction = _pre_cross_objective_fact_instruction()
+    elif (
         fact_extraction_semantics_version
         == _PRE_DURABLE_VISIBILITY_FACT_SEMANTICS_VERSION
     ):
         prior_schema = _prior_durable_visibility_fact_output_schema(
-            current_schema
+            pre_cross_schema
         )
         prior_instruction = _prior_durable_visibility_fact_instruction()
     elif (
         fact_extraction_semantics_version
         == _PRE_REVISION_FACT_SEMANTICS_VERSION
     ):
-        prior_schema = _prior_revision_fact_output_schema(current_schema)
+        prior_schema = _prior_revision_fact_output_schema(pre_cross_schema)
         prior_instruction = _prior_revision_fact_instruction()
     else:
-        prior_schema = _legacy_valuation_fact_output_schema(current_schema)
+        prior_schema = _legacy_valuation_fact_output_schema(pre_cross_schema)
         prior_instruction = _legacy_valuation_fact_instruction()
     if prior_schema is None:
         raise ValueError("historical fact schema cannot be derived")

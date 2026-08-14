@@ -85,6 +85,9 @@ from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
 from e2r.research_brain.researcher_mode.evidence_fact_compiler import (
     EvidenceFactCompiler,
 )
+from e2r.research_brain.researcher_mode.fact_lineage_materials import (
+    PRE_CROSS_OBJECTIVE_FACT_EXTRACTION_SEMANTICS_VERSION,
+)
 from e2r.research_brain.researcher_mode.collaboration_envelope_contract import (
     COLLABORATION_PROVIDER_NAME,
 )
@@ -1254,6 +1257,41 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertEqual(
             attest(positive),
             (positive["old_fact"]["fact_id"],),
+        )
+
+        historical = copy.deepcopy(positive)
+        historical_new_claim = dict(historical["new_claim"])
+        historical_new_claim.pop("discovery_objective_ids", None)
+        historical_compilation = EvidenceFactCompiler().compile(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            accepted_claims=(
+                historical["old_claim"],
+                historical_new_claim,
+            ),
+        )
+        historical["new_claim"] = historical_new_claim
+        historical["current_fact"] = historical_compilation.facts[0].to_dict()
+        historical["snapshot"]["accepted_claims"] = (
+            historical["old_claim"],
+            historical_new_claim,
+        )
+        historical["snapshot"]["facts"] = (
+            historical["current_fact"],
+        )
+        historical["snapshot"]["claim_fact_links"] = tuple(
+            row.to_dict()
+            for row in historical_compilation.claim_fact_links
+        )
+        historical["snapshot"]["provider_calls"][0][
+            "extraction_semantics_version"
+        ] = PRE_CROSS_OBJECTIVE_FACT_EXTRACTION_SEMANTICS_VERSION
+        self.assertEqual(
+            attest(
+                historical,
+                current_fact=historical["current_fact"],
+            ),
+            (historical["old_fact"]["fact_id"],),
         )
 
         paginated = copy.deepcopy(positive)
@@ -5095,6 +5133,45 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             "FAIL-CAPITAL",
         )
 
+    def test_resolved_retryable_source_failure_does_not_reopen_component(
+        self,
+    ) -> None:
+        routed = _component_supervisor_feedback_by_component(
+            {
+                "status": "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+                "component_status": {
+                    "valuation_rerating": "COMPLETE",
+                },
+                "component_findings": [],
+                "missing_material_facts": [],
+                "failure_assessments": [
+                    {
+                        "failure_id": "FAIL-RESOLVED-FETCH",
+                        "objective_id": "OBJ-VALUATION",
+                        "classification": "FETCH_FAILURE",
+                        "retryable": True,
+                        "resolved": True,
+                        "resolved_by": "SOURCE_GRAPH_OBJECTIVE_RESOLUTION",
+                    }
+                ],
+                "parser_or_extractor_failures": [
+                    {
+                        "failure_id": "FAIL-RESOLVED-PARSER",
+                        "objective_id": "OBJ-VALUATION",
+                        "classification": "PARSER_EXTRACTOR_FAILURE",
+                        "retryable": True,
+                        "resolved": True,
+                        "resolved_by": "CURRENT_FACT_COMPILATION",
+                    }
+                ],
+            },
+            objective_component_by_id={
+                "OBJ-VALUATION": "valuation_rerating",
+            },
+        )
+
+        self.assertEqual(routed, {})
+
     def test_provider_outage_recovers_only_hash_bound_prior_memo_body(self) -> None:
         memo = {
             "target_id": "CURRENT-TARGET",
@@ -6888,6 +6965,10 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         )
 
         requirements = _required_structured_roles_for_plans(plans)
+        production_requirements = _required_structured_roles_for_plans(
+            plans,
+            require_target_trailing_valuation=True,
+        )
 
         self.assertEqual(
             requirements["market_mispricing"], ("CURRENT_VALUATION",)
@@ -6901,6 +6982,14 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         )
         self.assertNotIn(
             "OWN_HISTORICAL_BAND", requirements["valuation_rerating"]
+        )
+        self.assertNotIn(
+            "TARGET_TRAILING_VALUATION",
+            requirements["valuation_rerating"],
+        )
+        self.assertIn(
+            "TARGET_TRAILING_VALUATION",
+            production_requirements["valuation_rerating"],
         )
 
     def test_missing_exact_archetype_anchors_use_generic_ordinal_guards(self) -> None:

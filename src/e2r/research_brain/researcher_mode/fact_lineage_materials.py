@@ -34,6 +34,9 @@ from .research_epoch import (
 
 
 CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION = (
+    "e2r_v5_cross_objective_consolidated_actuals_v9"
+)
+PRE_CROSS_OBJECTIVE_FACT_EXTRACTION_SEMANTICS_VERSION = (
     "e2r_v5_structured_durable_visibility_roles_v8"
 )
 PRE_DURABLE_VISIBILITY_FACT_EXTRACTION_SEMANTICS_VERSION = (
@@ -47,6 +50,7 @@ LEGACY_FACT_EXTRACTION_SEMANTICS_VERSION = (
 )
 AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS = (
     CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION,
+    PRE_CROSS_OBJECTIVE_FACT_EXTRACTION_SEMANTICS_VERSION,
     PRE_DURABLE_VISIBILITY_FACT_EXTRACTION_SEMANTICS_VERSION,
     PRIOR_FACT_EXTRACTION_SEMANTICS_VERSION,
     LEGACY_FACT_EXTRACTION_SEMANTICS_VERSION,
@@ -58,6 +62,27 @@ _STATIC_OBJECTIVE_SCOPE_KEYS = (
     "completion_definition",
     "deterministic_validation_scope",
     "llm_owns_economic_relevance",
+)
+_HISTORICAL_COMPATIBLE_OBJECTIVE_SCOPE_KEYS = (
+    "mode",
+    "allowed_objective_relations",
+    "llm_owns_economic_relevance",
+)
+_V9_ISSUER_CONSOLIDATED_TRANSACTION_TYPES = frozenset(
+    {
+        "CONSOLIDATED_REVENUE_ACTUAL",
+        "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "CONSOLIDATED_NET_INCOME_ACTUAL",
+        "CONSOLIDATED_OPERATING_CASH_FLOW_ACTUAL",
+        "CONSOLIDATED_CAPEX_ACTUAL",
+        "CONSOLIDATED_FREE_CASH_FLOW_ACTUAL",
+    }
+)
+_V9_ISSUER_CONSOLIDATED_ECONOMIC_MECHANISMS = frozenset(
+    {
+        "CONSOLIDATED_EARNINGS_ACTUAL",
+        "CONSOLIDATED_CASH_FLOW_ACTUAL",
+    }
 )
 _DOCUMENT_IDENTITY_KEYS = (
     "document_id",
@@ -458,7 +483,11 @@ def current_fact_semantics_contract(
     ):
         raise ValueError("fact lineage semantics contracts are incomplete")
     assert isinstance(objective_scope, Mapping)
-    if any(key not in objective_scope for key in _STATIC_OBJECTIVE_SCOPE_KEYS):
+    current_objective_scope_keys = (
+        *_STATIC_OBJECTIVE_SCOPE_KEYS,
+        "objective_coverage_scope",
+    )
+    if any(key not in objective_scope for key in current_objective_scope_keys):
         raise ValueError("fact lineage objective scope contract is incomplete")
     projection = {
         "fact_extraction_semantics_version": (
@@ -467,7 +496,7 @@ def current_fact_semantics_contract(
         "normalization_contract": dict(normalization),
         "deterministic_mechanism_scope_contract": dict(mechanism),
         "static_production_objective_scope_contract": {
-            key: objective_scope[key] for key in _STATIC_OBJECTIVE_SCOPE_KEYS
+            key: objective_scope[key] for key in current_objective_scope_keys
         },
     }
     return {
@@ -483,12 +512,25 @@ def _fact_semantics_compatibility_contract(
 ) -> Mapping[str, Any]:
     """Project fields that must remain stable across a typed-role upgrade."""
 
+    prompt_semantics_version = prompt_payload.get(
+        "fact_extraction_semantics_version"
+    )
+    if expected_semantics_version not in (
+        AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS
+    ):
+        raise ValueError("fact lineage recovery semantics identity mismatch")
+    compatible_prompt_versions = {expected_semantics_version}
     if (
         expected_semantics_version
-        not in AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS
-        or prompt_payload.get("fact_extraction_semantics_version")
-        != expected_semantics_version
+        != CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION
     ):
+        # A current prompt may be projected onto a sealed historical request.
+        # This is a read-only compatibility comparison; the journal candidate
+        # must still carry the exact requested historical semantics version.
+        compatible_prompt_versions.add(
+            CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION
+        )
+    if prompt_semantics_version not in compatible_prompt_versions:
         raise ValueError("fact lineage recovery semantics identity mismatch")
     normalization = prompt_payload.get("normalization_contract")
     mechanism = prompt_payload.get(
@@ -501,13 +543,58 @@ def _fact_semantics_compatibility_contract(
     ):
         raise ValueError("fact lineage semantics contracts are incomplete")
     assert isinstance(objective_scope, Mapping)
-    if any(key not in objective_scope for key in _STATIC_OBJECTIVE_SCOPE_KEYS):
+    objective_scope_keys = (
+        (
+            *_STATIC_OBJECTIVE_SCOPE_KEYS,
+            "objective_coverage_scope",
+        )
+        if expected_semantics_version
+        == CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION
+        else _HISTORICAL_COMPATIBLE_OBJECTIVE_SCOPE_KEYS
+    )
+    if any(key not in objective_scope for key in objective_scope_keys):
         raise ValueError("fact lineage objective scope contract is incomplete")
+    mechanism_projection = dict(mechanism)
+    if (
+        expected_semantics_version
+        != CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION
+    ):
+        if (
+            prompt_semantics_version
+            == CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION
+            and not isinstance(
+                mechanism_projection.get(
+                    "issuer_consolidated_actual_fact_encoding"
+                ),
+                Mapping,
+            )
+        ):
+            raise ValueError(
+                "current fact lineage consolidated actual contract is missing"
+            )
+        mechanism_projection.pop(
+            "issuer_consolidated_actual_fact_encoding",
+            None,
+        )
+        mechanism_projection["allowed_transaction_types"] = [
+            value
+            for value in mechanism_projection.get(
+                "allowed_transaction_types", ()
+            )
+            if value not in _V9_ISSUER_CONSOLIDATED_TRANSACTION_TYPES
+        ]
+        mechanism_projection["allowed_economic_mechanisms"] = [
+            value
+            for value in mechanism_projection.get(
+                "allowed_economic_mechanisms", ()
+            )
+            if value not in _V9_ISSUER_CONSOLIDATED_ECONOMIC_MECHANISMS
+        ]
     projection = {
         "normalization_contract": dict(normalization),
-        "deterministic_mechanism_scope_contract": dict(mechanism),
+        "deterministic_mechanism_scope_contract": mechanism_projection,
         "static_production_objective_scope_contract": {
-            key: objective_scope[key] for key in _STATIC_OBJECTIVE_SCOPE_KEYS
+            key: objective_scope[key] for key in objective_scope_keys
         },
     }
     return {
@@ -576,7 +663,7 @@ def validate_current_v5_fact_lineage_materials(
             _fact_semantics_compatibility_contract(
                 current_fact_prompt_payload,
                 expected_semantics_version=(
-                    CURRENT_FACT_EXTRACTION_SEMANTICS_VERSION
+                    fact_extraction_semantics_version
                 ),
             )
         )
@@ -1236,7 +1323,35 @@ def _historical_objective_scope(
         for row in request_payload.get("full_documents") or ()
         if isinstance(row, Mapping)
     }
-    if result != prompt_ids:
+    if scope.get("objective_coverage_scope") == (
+        "TARGET_WIDE_CURRENT_OPEN_OBJECTIVES"
+    ):
+        discovery_rows = scope.get("document_discovery_objective_ids")
+        if not isinstance(discovery_rows, list):
+            raise ValueError(
+                "fact lineage discovery objective provenance is missing"
+            )
+        discovery_ids = {
+            str(row.get("document_id") or ""): frozenset(
+                _mapping_string_tuple(row, "objective_ids")
+            )
+            for row in discovery_rows
+            if isinstance(row, Mapping)
+        }
+        if (
+            discovery_ids != prompt_ids
+            or set(result) != set(prompt_ids)
+            or any(
+                not discovery_ids[document_id].issubset(
+                    result[document_id]
+                )
+                for document_id in result
+            )
+        ):
+            raise ValueError(
+                "fact lineage target-wide/discovery objective scope mismatch"
+            )
+    elif result != prompt_ids:
         raise ValueError("fact lineage prompt/objective scope mismatch")
     return result
 

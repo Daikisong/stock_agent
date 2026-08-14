@@ -7,7 +7,19 @@ import unittest
 from pathlib import Path
 
 from e2r.production.metadata import stable_hash
-from e2r.research_brain.research_quality import BlindResearchQualityBenchmark
+from e2r.research_brain.research_quality import (
+    BlindResearchQualityBenchmark,
+    build_post_run_reviewer_identity,
+)
+
+
+def _portable_reviewer_identity(role_id: str):
+    return build_post_run_reviewer_identity(
+        role_id=role_id,
+        provider_call_id="COLLABCALL-" + role_id,
+        prompt_hash=stable_hash(("prompt", role_id)),
+        response_hash=stable_hash(("response", role_id)),
+    )
 
 
 class GoldResearchBlindnessTests(unittest.TestCase):
@@ -188,9 +200,11 @@ class GoldResearchBlindnessTests(unittest.TestCase):
                 )
             primary = {
                 "schema_version": (
-                    "e2r_v5_post_run_gold_semantic_primary_v1"
+                    "e2r_v6_post_run_gold_semantic_primary_v2"
                 ),
-                "reviewer_id": "/root/primary_reviewer",
+                "reviewer_identity": _portable_reviewer_identity(
+                    "CODEX_POST_RUN_PRIMARY"
+                ),
                 "gold_visible_only_post_run": True,
                 "score_or_stage_authority": False,
                 "production_score_authority": False,
@@ -217,9 +231,12 @@ class GoldResearchBlindnessTests(unittest.TestCase):
             for reviewer in ("reviewer_a", "reviewer_b"):
                 review = {
                     "schema_version": (
-                        "e2r_v5_post_run_gold_semantic_review_v1"
+                        "e2r_v6_post_run_gold_semantic_review_v2"
                     ),
-                    "reviewer_id": f"/root/{reviewer}",
+                    "reviewer_identity": _portable_reviewer_identity(
+                        "CODEX_POST_RUN_REVIEWER_"
+                        + reviewer.removeprefix("reviewer_").upper()
+                    ),
                     "primary_payload_hash": primary_hash,
                     "gold_visible_only_post_run": True,
                     "score_or_stage_authority": False,
@@ -316,9 +333,11 @@ class GoldResearchBlindnessTests(unittest.TestCase):
             )
             primary = {
                 "schema_version": (
-                    "e2r_v5_post_run_gold_semantic_primary_v1"
+                    "e2r_v6_post_run_gold_semantic_primary_v2"
                 ),
-                "reviewer_id": "/root/primary_reviewer",
+                "reviewer_identity": _portable_reviewer_identity(
+                    "CODEX_POST_RUN_PRIMARY"
+                ),
                 "gold_visible_only_post_run": True,
                 "score_or_stage_authority": False,
                 "production_score_authority": False,

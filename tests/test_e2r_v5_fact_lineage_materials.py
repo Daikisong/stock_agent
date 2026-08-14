@@ -180,16 +180,24 @@ def _prompt_payload(
     marker: str,
     semantics_version: str = FACT_EXTRACTION_SEMANTICS_VERSION,
 ):
-    objective_scope = {
+    discovery_objective_scope = {
         str(document["document_id"]): frozenset(
             str(value) for value in document["objective_ids"]
         )
         for document in documents
     }
+    current_open_objective_ids = frozenset(
+        objective_id
+        for values in discovery_objective_scope.values()
+        for objective_id in values
+    )
+    objective_scope = {
+        str(document["document_id"]): current_open_objective_ids
+        for document in documents
+    }
     objective_components = {
         objective_id: OBJECTIVE_COMPONENT
-        for values in objective_scope.values()
-        for objective_id in values
+        for objective_id in current_open_objective_ids
     }
     return _fact_extraction_primary_payload(
         target_id=TARGET,
@@ -208,6 +216,9 @@ def _prompt_payload(
         batch=documents,
         objective_scope_by_document=objective_scope,
         objective_component_by_id=objective_components,
+        discovery_objective_scope_by_document=(
+            discovery_objective_scope
+        ),
     )
 
 

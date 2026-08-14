@@ -4,6 +4,8 @@ from .blind_benchmark import (
     BlindResearchBenchmarkResult,
     BlindResearchQualityBenchmark,
     MaterialFactComparison,
+    POST_RUN_SEMANTIC_MATCH_CONTRACT,
+    build_post_run_reviewer_identity,
 )
 from .search_adequacy import (
     EvidenceSearchAdequacy,
@@ -31,6 +33,8 @@ __all__ = [
     "BlindResearchBenchmarkResult",
     "BlindResearchQualityBenchmark",
     "MaterialFactComparison",
+    "POST_RUN_SEMANTIC_MATCH_CONTRACT",
+    "build_post_run_reviewer_identity",
     "EvidenceSearchAdequacy",
     "audit_search_adequacy",
     "compile_dossier_search_adequacy",

@@ -28,6 +28,7 @@ from e2r.research_brain.planning.provider_transport import (
 from e2r.research_brain.scoring.business_mechanism_scope import (
     ArchetypeMechanismScopeContract,
     BusinessMechanismScope,
+    ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT,
     MechanismScopeValidator,
     load_mechanism_scope_contracts,
 )
@@ -91,6 +92,9 @@ OBJECTIVE_FACT_RELATIONS = frozenset(
     {"ADVANCE", "COUNTER", "SUPERSEDE"}
 )
 FACT_EXTRACTION_SEMANTICS_VERSION = (
+    "e2r_v5_cross_objective_consolidated_actuals_v9"
+)
+_PRE_CROSS_OBJECTIVE_CONSOLIDATED_ACTUALS_SEMANTICS_VERSION = (
     "e2r_v5_structured_durable_visibility_roles_v8"
 )
 _PRE_STRUCTURED_DURABLE_VISIBILITY_ROLE_SEMANTICS_VERSION = (
@@ -108,6 +112,7 @@ _PRE_STRUCTURED_VALUATION_ROLE_SEMANTICS_VERSION = (
 _HISTORICAL_CURRENT_LINEAGE_RECOVERY_SEMANTICS_VERSIONS = frozenset(
     {
         FACT_EXTRACTION_SEMANTICS_VERSION,
+        _PRE_CROSS_OBJECTIVE_CONSOLIDATED_ACTUALS_SEMANTICS_VERSION,
         _PRE_STRUCTURED_DURABLE_VISIBILITY_ROLE_SEMANTICS_VERSION,
         _PRE_STRUCTURED_SCENARIO_INPUT_ROLE_SEMANTICS_VERSION,
         _PRE_STRUCTURED_REVISION_ROLE_SEMANTICS_VERSION,
@@ -1096,6 +1101,16 @@ class ResearcherEvidenceFactExtractor:
             ).strip()
             for row in open_objectives
         }
+        # ``document.objective_ids`` records why the document was discovered;
+        # it is provenance, not an exclusive materiality filter.  Production
+        # validation therefore exposes every *current open* objective while
+        # preserving the original discovery roster separately in the prompt.
+        # A proposal still fails closed when it cites an unknown/closed id or
+        # when its mechanism coordinates do not allow that objective's
+        # component.
+        discovery_objective_scope_by_document: (
+            Mapping[str, frozenset[str]] | None
+        ) = None
         objective_scope_by_document: Mapping[str, frozenset[str]] | None = None
         if extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL":
             if not objective_ids:
@@ -1113,24 +1128,29 @@ class ResearcherEvidenceFactExtractor:
                     "production objectives require canonical component ids:"
                     + ",".join(invalid_objective_component_ids)
                 )
-            objective_scope_by_document = {
+            discovery_objective_scope_by_document = {
                 str(document["document_id"]): frozenset(
                     str(value).strip()
                     for value in document.get("objective_ids") or ()
-                    if str(value).strip() in objective_ids
+                    if str(value).strip()
                 )
                 for document in prepared
             }
             unlinked = sorted(
                 document_id
-                for document_id, linked_ids in objective_scope_by_document.items()
+                for document_id, linked_ids
+                in discovery_objective_scope_by_document.items()
                 if not linked_ids
             )
             if unlinked:
                 raise ValueError(
-                    "production evidence documents lack current objective lineage:"
+                    "production evidence documents lack discovery objective provenance:"
                     + ",".join(unlinked)
                 )
+            objective_scope_by_document = {
+                str(document["document_id"]): frozenset(objective_ids)
+                for document in prepared
+            }
         scope_contract = load_mechanism_scope_contracts().get(archetype_id)
         if scope_contract is None:
             raise ValueError("fact extraction archetype lacks mechanism-scope contract")
@@ -1223,6 +1243,9 @@ class ResearcherEvidenceFactExtractor:
                         objective_scope_by_document=(
                             objective_scope_by_document
                         ),
+                        discovery_objective_scope_by_document=(
+                            discovery_objective_scope_by_document
+                        ),
                         objective_component_by_id=objective_component_by_id,
                     )
                 )
@@ -1297,7 +1320,7 @@ class ResearcherEvidenceFactExtractor:
                     open_objectives=open_objectives,
                     scope_contract=scope_contract,
                     objective_scope_by_document=(
-                        objective_scope_by_document
+                        discovery_objective_scope_by_document
                     ),
                     objective_component_by_id=objective_component_by_id,
                     recovery_document_ids=(
@@ -1622,15 +1645,10 @@ class ResearcherEvidenceFactExtractor:
             coverage_refresh_document_ids = set()
         coverage_refresh_objective_scope_by_document = (
             {
-                document_id: (
-                    frozenset(
-                        set(objective_scope_by_document[document_id])
-                        | set(coverage_audit_gap_objective_ids)
-                    )
-                    if document_id
-                    in cross_objective_coverage_refresh_document_ids
-                    else objective_scope_by_document[document_id]
-                )
+                # A refresh under v9 always rechecks the full current target
+                # objective roster.  The original discovery ids remain prompt
+                # provenance and never become proof of relevance.
+                document_id: objective_scope_by_document[document_id]
                 for document in prepared
                 if (
                     document_id := str(document["document_id"])
@@ -1975,8 +1993,8 @@ class ResearcherEvidenceFactExtractor:
             objective_lineage_reassessment_rows = [
                 {
                     "document_id": document_id,
-                    "prior_current_objective_ids": sorted(
-                        objective_scope_by_document[document_id]
+                    "discovery_objective_ids": sorted(
+                        discovery_objective_scope_by_document[document_id]
                     ),
                     "current_open_objective_candidates": sorted(
                         batch_objective_scope_by_document[document_id]
@@ -1986,9 +2004,10 @@ class ResearcherEvidenceFactExtractor:
                 if (
                     coverage_only_batch
                     and objective_scope_by_document is not None
+                    and discovery_objective_scope_by_document is not None
                     and batch_objective_scope_by_document is not None
                     and batch_objective_scope_by_document[document_id]
-                    != objective_scope_by_document[document_id]
+                    != discovery_objective_scope_by_document[document_id]
                 )
             ]
             batch_transport_chunk_ids = _batch_transport_chunk_ids(batch)
@@ -2016,6 +2035,9 @@ class ResearcherEvidenceFactExtractor:
                 batch=batch,
                 objective_scope_by_document=(
                     batch_objective_scope_by_document
+                ),
+                discovery_objective_scope_by_document=(
+                    discovery_objective_scope_by_document
                 ),
                 objective_component_by_id=objective_component_by_id,
                 objective_lineage_reassessment_rows=(
@@ -3867,6 +3889,9 @@ def resolve_current_fact_lineage_recovery_binding(
         ).strip()
         for row in open_objectives
     }
+    discovery_objective_scope_by_document: (
+        Mapping[str, frozenset[str]] | None
+    ) = None
     objective_scope_by_document: Mapping[str, frozenset[str]] | None = None
     if extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL":
         if not objective_ids or any(
@@ -3874,50 +3899,65 @@ def resolve_current_fact_lineage_recovery_binding(
             for value in objective_component_by_id.values()
         ):
             raise ValueError("production objective scope is invalid")
-        objective_scope_by_document = {
+        discovery_objective_scope_by_document = {
             str(row["document_id"]): frozenset(
                 str(value).strip()
                 for value in row.get("objective_ids") or ()
-                if str(value).strip() in objective_ids
+                if str(value).strip()
             )
             for row in prepared
         }
-        if any(not values for values in objective_scope_by_document.values()):
+        if any(
+            not values
+            for values in discovery_objective_scope_by_document.values()
+        ):
             raise ValueError(
-                "production evidence documents lack current objective lineage"
+                "production evidence documents lack discovery objective provenance"
             )
+        objective_scope_by_document = {
+            str(row["document_id"]): frozenset(objective_ids)
+            for row in prepared
+        }
     scope_contract = load_mechanism_scope_contracts().get(archetype_id)
     if scope_contract is None:
         raise ValueError("fact extraction archetype lacks mechanism-scope contract")
-    prompt_payload = _fact_extraction_primary_payload(
+    projected_current_facts = _project_current_facts_with_accepted_claims(
+        current_facts=current_facts,
+        accepted_claims=prior_material_claims,
         target_id=target_id,
-        target_name=target_name,
-        target_aliases=target_aliases,
-        archetype_id=archetype_id,
         as_of_date=as_of_date,
-        extraction_semantics_version=FACT_EXTRACTION_SEMANTICS_VERSION,
-        open_objectives=open_objectives,
-        current_evidence_facts=(
-            _project_current_facts_with_accepted_claims(
-                current_facts=current_facts,
-                accepted_claims=prior_material_claims,
-                target_id=target_id,
-                as_of_date=as_of_date,
-            )
-        ),
-        score_gap_context=project_fact_extraction_score_gap_context(
-            score_gap_context or {}
-        ),
-        scope_contract=scope_contract,
-        batch=tuple(
-            document_by_id[document_id]
-            for document_id in seed_source_document_ids
-        ),
-        objective_scope_by_document=objective_scope_by_document,
-        objective_component_by_id=objective_component_by_id,
     )
     exact_bindings: list[CurrentFactLineageRecoveryBinding] = []
     for semantics_version in AUTHORITY_RECOVERY_FACT_SEMANTICS_VERSIONS:
+        # The validation side always describes today's contract.  The
+        # requested ``semantics_version`` selects which immutable historical
+        # journal family may satisfy that contract through the explicit
+        # compatibility projection in ``fact_lineage_materials``.  Building
+        # this prompt itself with an old version would make the current
+        # contract validator reject it before comparison.
+        prompt_payload = _fact_extraction_primary_payload(
+            target_id=target_id,
+            target_name=target_name,
+            target_aliases=target_aliases,
+            archetype_id=archetype_id,
+            as_of_date=as_of_date,
+            extraction_semantics_version=FACT_EXTRACTION_SEMANTICS_VERSION,
+            open_objectives=open_objectives,
+            current_evidence_facts=projected_current_facts,
+            score_gap_context=project_fact_extraction_score_gap_context(
+                score_gap_context or {}
+            ),
+            scope_contract=scope_contract,
+            batch=tuple(
+                document_by_id[document_id]
+                for document_id in seed_source_document_ids
+            ),
+            objective_scope_by_document=objective_scope_by_document,
+            objective_component_by_id=objective_component_by_id,
+            discovery_objective_scope_by_document=(
+                discovery_objective_scope_by_document
+            ),
+        )
         materials = validate_current_v5_fact_lineage_materials(
             journal_root=journal_root,
             target_id=target_id,
@@ -3958,6 +3998,9 @@ def resolve_current_fact_lineage_recovery_binding(
                 prior_document_dispositions=prior_document_dispositions,
                 scope_contract=scope_contract,
                 objective_scope_by_document=objective_scope_by_document,
+                discovery_objective_scope_by_document=(
+                    discovery_objective_scope_by_document
+                ),
                 objective_component_by_id=objective_component_by_id,
             )
         except (KeyError, TypeError, ValueError, RuntimeError):
@@ -4368,6 +4411,9 @@ def _fact_extraction_primary_payload(
     batch: Sequence[Mapping[str, Any]],
     objective_scope_by_document: Mapping[str, frozenset[str]] | None,
     objective_component_by_id: Mapping[str, str],
+    discovery_objective_scope_by_document: (
+        Mapping[str, frozenset[str]] | None
+    ) = None,
     objective_lineage_reassessment_rows: Sequence[Mapping[str, Any]] = (),
 ) -> Mapping[str, Any]:
     """Build the immutable fact prompt contract shared with migration replay."""
@@ -4375,6 +4421,9 @@ def _fact_extraction_primary_payload(
     batch_document_ids = {
         str(row["document_id"]) for row in batch
     }
+    target_wide_semantics = (
+        extraction_semantics_version == FACT_EXTRACTION_SEMANTICS_VERSION
+    )
     return scrub_blind_research_payload(
         {
             "target_id": target_id,
@@ -4420,10 +4469,36 @@ def _fact_extraction_primary_payload(
                     scope_contract.allowed_technology_families
                 ),
                 "allowed_transaction_types": list(
-                    scope_contract.allowed_transaction_types
+                    dict.fromkeys(
+                        (
+                            *scope_contract.allowed_transaction_types,
+                            *(
+                                tuple(
+                                    transaction_type
+                                    for _, transaction_type, _
+                                    in ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT.metric_scope_rows
+                                )
+                                if target_wide_semantics
+                                else ()
+                            ),
+                        )
+                    )
                 ),
                 "allowed_economic_mechanisms": list(
-                    scope_contract.allowed_economic_mechanisms
+                    dict.fromkeys(
+                        (
+                            *scope_contract.allowed_economic_mechanisms,
+                            *(
+                                tuple(
+                                    economic_mechanism
+                                    for _, _, economic_mechanism
+                                    in ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT.metric_scope_rows
+                                )
+                                if target_wide_semantics
+                                else ()
+                            ),
+                        )
+                    )
                 ),
                 "generic_company_allowed_components": list(
                     scope_contract.generic_company_allowed_components
@@ -4449,6 +4524,43 @@ def _fact_extraction_primary_payload(
                         "facts that are not attributable to the archetype business segment."
                     ),
                 },
+                **(
+                    {
+                        "issuer_consolidated_actual_fact_encoding": {
+                            "scope_business_segment": (
+                                ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT.scope_business_segment
+                            ),
+                            "scope_product_family": (
+                                ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT.scope_product_family
+                            ),
+                            "scope_technology_family": (
+                                ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT.scope_technology_family
+                            ),
+                            "allowed_only_for_components": [
+                                ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT.allowed_component_id
+                            ],
+                            "metric_scope_rows": [
+                                {
+                                    "metric": metric,
+                                    "scope_transaction_type": transaction_type,
+                                    "scope_economic_mechanism": economic_mechanism,
+                                }
+                                for metric, transaction_type, economic_mechanism
+                                in ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT.metric_scope_rows
+                            ],
+                            "instruction": (
+                                "Use this common contract only for issuer-consolidated "
+                                "reported actual revenue, operating profit, net income, "
+                                "operating cash flow, CAPEX, or free cash flow. It never "
+                                "attributes the consolidated value to an archetype "
+                                "segment, product, customer, or technology (for example, "
+                                "HBM). Plans, guidance, and estimates are not actuals."
+                            ),
+                        }
+                    }
+                    if target_wide_semantics
+                    else {}
+                ),
             },
             "full_documents": [
                 _document_prompt_row(
@@ -4463,6 +4575,15 @@ def _fact_extraction_primary_payload(
                 {
                     "fact_extraction_scope_contract": {
                         "mode": "PRODUCTION_OBJECTIVE_LOCAL",
+                        **(
+                            {
+                                "objective_coverage_scope": (
+                                    "TARGET_WIDE_CURRENT_OPEN_OBJECTIVES"
+                                )
+                            }
+                            if target_wide_semantics
+                            else {}
+                        ),
                         "allowed_objective_relations": sorted(
                             OBJECTIVE_FACT_RELATIONS
                         ),
@@ -4496,30 +4617,78 @@ def _fact_extraction_primary_payload(
                             }
                             for row in batch
                         ],
+                        **(
+                            {
+                                "document_discovery_objective_ids": [
+                                    {
+                                        "document_id": str(row["document_id"]),
+                                        "objective_ids": sorted(
+                                            (
+                                                discovery_objective_scope_by_document
+                                                or objective_scope_by_document
+                                            )[str(row["document_id"])]
+                                        ),
+                                    }
+                                    for row in batch
+                                ]
+                            }
+                            if target_wide_semantics
+                            else {}
+                        ),
                         "material_fact_definition": (
-                            "A source-backed fact is material in this "
-                            "production pass only when it directly "
-                            "advances, counters, or supersedes at least "
-                            "one document-linked current research "
-                            "objective, with the unresolved facts and "
-                            "questions in score_gap_context controlling "
-                            "the present research focus. General "
-                            "background, adjacent technology history, "
-                            "and facts that do not affect that focus "
-                            "must not be emitted."
+                            (
+                                "A source-backed fact is material in this "
+                                "production pass when it directly advances, "
+                                "counters, or supersedes at least one current "
+                                "open target research objective. The document's "
+                                "discovery objective is provenance only. General "
+                                "background and adjacent technology history must "
+                                "not be emitted."
+                            )
+                            if target_wide_semantics
+                            else (
+                                "A source-backed fact is material in this "
+                                "production pass only when it directly "
+                                "advances, counters, or supersedes at least "
+                                "one document-linked current research "
+                                "objective, with the unresolved facts and "
+                                "questions in score_gap_context controlling "
+                                "the present research focus. General "
+                                "background, adjacent technology history, "
+                                "and facts that do not affect that focus "
+                                "must not be emitted."
+                            )
                         ),
                         "completion_definition": (
-                            "extraction_complete means no further "
-                            "distinct objective-linked fact remains in "
-                            "the supplied document batch; it never "
-                            "means every generally economic sentence "
-                            "in the document was exhausted."
+                            (
+                                "extraction_complete means no further distinct "
+                                "target-wide current-objective fact remains in "
+                                "the supplied document batch; it never means "
+                                "every generally economic sentence was exhausted."
+                            )
+                            if target_wide_semantics
+                            else (
+                                "extraction_complete means no further "
+                                "distinct objective-linked fact remains in "
+                                "the supplied document batch; it never "
+                                "means every generally economic sentence "
+                                "in the document was exhausted."
+                            )
                         ),
                         "deterministic_validation_scope": (
-                            "objective roster, document lineage, exact "
-                            "quote, as_of_date, and closed-vocabulary "
-                            "mechanism coordinates plus objective-component "
-                            "compatibility only"
+                            (
+                                "current-open objective roster, discovery provenance, "
+                                "exact quote, as_of_date, and closed-vocabulary "
+                                "mechanism coordinates plus objective-component "
+                                "compatibility only"
+                            )
+                            if target_wide_semantics
+                            else (
+                                "objective roster, document lineage, exact "
+                                "quote, as_of_date, and closed-vocabulary "
+                                "mechanism coordinates plus objective-component "
+                                "compatibility only"
+                            )
                         ),
                         "llm_owns_economic_relevance": True,
                         **(
@@ -5255,12 +5424,22 @@ def _reconcile_transport_chunks(
             if str(row.get("document_id") or "") == document_id
         ]
         statuses = [str(row.get("status") or "") for row in rows]
+        coverage_scopes = {
+            str(row.get("objective_coverage_scope") or "")
+            for row in rows
+            if str(row.get("objective_coverage_scope") or "")
+        }
+        target_wide_coverage = coverage_scopes == {
+            "TARGET_WIDE_CURRENT_OPEN_OBJECTIVES"
+        }
         status = (
             "FACTS_EXTRACTED"
             if document_claims
             else "WRONG_TARGET_OR_SEGMENT"
             if statuses and all(value == "WRONG_TARGET_OR_SEGMENT" for value in statuses)
             else "NO_MATERIAL_FACT"
+            if target_wide_coverage
+            else "NO_OBJECTIVE_LOCAL_FACT"
         )
         rationales = tuple(
             dict.fromkeys(
@@ -5290,6 +5469,11 @@ def _reconcile_transport_chunks(
                 "accepted_fact_count": len(document_claims),
                 "source_absence_proven": False,
                 "production_score_authority": False,
+                "objective_coverage_scope": (
+                    "TARGET_WIDE_CURRENT_OPEN_OBJECTIVES"
+                    if target_wide_coverage
+                    else "DISCOVERY_OBJECTIVE_LOCAL"
+                ),
                 "transport_chunk_count": len(expected_chunk_ids),
                 "completed_transport_chunk_count": len(completed_chunk_ids),
                 "transport_chunk_ids": list(expected_chunk_ids),
@@ -5369,6 +5553,17 @@ def _validate_response(
         ).items()
         if str(document_id) in document_by_id
     }
+    target_wide_objective_coverage = bool(
+        extraction_semantics_version == FACT_EXTRACTION_SEMANTICS_VERSION
+        and objective_scope_by_document is not None
+        and objective_component_by_id
+        and all(
+            set(allowed_objective_ids)
+            == set(objective_component_by_id)
+            for allowed_objective_ids
+            in objective_scope_by_document.values()
+        )
+    )
     for index, raw_proposal in enumerate(raw_facts):
         proposal = _normalize_transport_fact_proposal(
             raw_proposal,
@@ -5505,12 +5700,32 @@ def _validate_response(
         document = document_by_id[document_id]
         if status not in {
             "FACTS_EXTRACTED",
+            "NO_OBJECTIVE_LOCAL_FACT",
             "NO_MATERIAL_FACT",
             "WRONG_TARGET_OR_SEGMENT",
             "UNREADABLE",
         } or not rationale:
             pending.append(f"INVALID_DOCUMENT_DISPOSITION:{document_id}")
             continue
+        if status == "NO_OBJECTIVE_LOCAL_FACT":
+            if target_wide_objective_coverage:
+                pending.append(
+                    "OBJECTIVE_LOCAL_NO_FACT_INVALID_AFTER_TARGET_WIDE_COVERAGE:"
+                    + document_id
+                )
+            else:
+                pending.append(
+                    "TARGET_WIDE_OBJECTIVE_COVERAGE_REQUIRED:" + document_id
+                )
+        if status == "NO_MATERIAL_FACT" and objective_scope_by_document is not None:
+            if not target_wide_objective_coverage:
+                # Preserve the truthful local result without allowing it to
+                # become terminal.  A later target-wide pass may still recover
+                # a fact for another current objective.
+                status = "NO_OBJECTIVE_LOCAL_FACT"
+                pending.append(
+                    "TARGET_WIDE_OBJECTIVE_COVERAGE_REQUIRED:" + document_id
+                )
         if status == "FACTS_EXTRACTED" and not accepted_by_document.get(document_id):
             pending.append(f"FACTS_EXTRACTED_WITHOUT_ACCEPTED_FACT:{document_id}")
         if status != "FACTS_EXTRACTED" and accepted_by_document.get(document_id):
@@ -5545,6 +5760,15 @@ def _validate_response(
                 "accepted_fact_count": accepted_by_document.get(document_id, 0),
                 "source_absence_proven": False,
                 "production_score_authority": False,
+                "objective_coverage_scope": (
+                    "TARGET_WIDE_CURRENT_OPEN_OBJECTIVES"
+                    if target_wide_objective_coverage
+                    else (
+                        "DISCOVERY_OBJECTIVE_LOCAL"
+                        if objective_scope_by_document is not None
+                        else "RESEARCH_BACKFILL_DOCUMENT"
+                    )
+                ),
                 **(
                     {
                         "transport_chunk_id": str(
@@ -5861,6 +6085,9 @@ def _recover_current_fact_lineage_authority_gap(
     prior_document_dispositions: Sequence[Mapping[str, Any]],
     scope_contract: ArchetypeMechanismScopeContract,
     objective_scope_by_document: Mapping[str, frozenset[str]] | None,
+    discovery_objective_scope_by_document: (
+        Mapping[str, frozenset[str]] | None
+    ),
     objective_component_by_id: Mapping[str, str],
 ) -> Mapping[str, Any]:
     """Replay an exact current-fact authority gap without calling a provider."""
@@ -5992,6 +6219,13 @@ def _recover_current_fact_lineage_authority_gap(
             expectation=expectation,
         )
 
+    recovery_semantics_version = (
+        recovery_binding.fact_extraction_semantics_version
+    )
+    # Validate the sealed historical materials against today's contract.
+    # Their own historical schema/instruction is preserved in the journal and
+    # used by the replay below; the comparison prompt must remain current so
+    # the compatibility projector can deliberately remove only v9 additions.
     prompt_payload = _fact_extraction_primary_payload(
         target_id=target_id,
         target_name=target_name,
@@ -6018,6 +6252,9 @@ def _recover_current_fact_lineage_authority_gap(
         ),
         objective_scope_by_document=objective_scope_by_document,
         objective_component_by_id=objective_component_by_id,
+        discovery_objective_scope_by_document=(
+            discovery_objective_scope_by_document
+        ),
     )
     material_result = validate_current_v5_fact_lineage_materials(
         journal_root=recovery_binding.journal_root,
@@ -6028,7 +6265,7 @@ def _recover_current_fact_lineage_authority_gap(
         current_fact_prompt_payload=prompt_payload,
         recovery_projection_document_ids=seed_source_document_ids,
         fact_extraction_semantics_version=(
-            recovery_binding.fact_extraction_semantics_version
+            recovery_semantics_version
         ),
     )
     if material_result.get("status") != (
@@ -7731,7 +7968,7 @@ def _objective_scope_rejection_reason(
     ):
         return "OBJECTIVE_IDS_MISSING_OR_DUPLICATED"
     if set(cited_objective_ids) - set(allowed_objective_ids):
-        return "OBJECTIVE_ID_OUTSIDE_DOCUMENT_LINEAGE"
+        return "OBJECTIVE_ID_NOT_CURRENT_OPEN"
     if (
         str(proposal.get("objective_relation") or "")
         not in OBJECTIVE_FACT_RELATIONS
@@ -7867,6 +8104,13 @@ def _accepted_claim(
             )
         ),
         "allowed_component_ids": list(allowed_component_ids),
+        "discovery_objective_ids": list(
+            dict.fromkeys(
+                str(value).strip()
+                for value in document.get("objective_ids") or ()
+                if str(value).strip()
+            )
+        ),
         "materiality_rationale": str(proposal["materiality_rationale"]).strip(),
         "deterministic_field_normalizations": list(
             dict.fromkeys(
@@ -8140,13 +8384,11 @@ def _bounded_stale_coverage_refresh_document_ids(
 ) -> frozenset[str]:
     """Select stale trusted documents only for a live lineage-scoped gap.
 
-    A semantics-version change is not itself a material research gap. Replaying
-    every legacy document merely because the extractor version changed is an
-    unbounded migration, not production research. A stale document is eligible
-    only when a current Supervisor/score gap names an objective already present
-    in its current or historical lineage. The provider still owns economic
-    relevance, while deterministic validation checks literal source support and
-    objective/mechanism component compatibility.
+    A semantics-version change is not itself a material research gap. The v9
+    exception is narrow: when any current objective has a live gap, stale
+    issuer/regulatory originals are re-read once because v8 could have hidden
+    a consolidated actual behind the document's discovery objective. Other
+    source tiers still require a live gap in their own objective lineage.
     """
 
     if not coverage_gap_objective_ids:
@@ -8160,21 +8402,40 @@ def _bounded_stale_coverage_refresh_document_ids(
             for value in document.get(key) or ()
             if str(value).strip()
         }
+        source_tier = _source_tier(
+            str(document.get("source_family") or "")
+        )
+        issuer_consolidated_migration_candidate = (
+            source_tier in {"REGULATORY_OFFICIAL", "ISSUER_OFFICIAL"}
+        )
         if (
             document_id not in stale_semantics_document_ids
             or document_id in coverage_complete_document_ids
-            or document_id in previously_coverage_audited_document_ids
-            or not (
-                document_objective_lineage
-                & coverage_gap_objective_ids
+            or (
+                document_id in previously_coverage_audited_document_ids
+                and not issuer_consolidated_migration_candidate
             )
-            or _source_tier(str(document.get("source_family") or ""))
-            not in _TRUSTED_COVERAGE_REFRESH_SOURCE_TIERS
+            or (
+                not issuer_consolidated_migration_candidate
+                and not (
+                    document_objective_lineage
+                    & coverage_gap_objective_ids
+                )
+            )
+            or source_tier not in _TRUSTED_COVERAGE_REFRESH_SOURCE_TIERS
         ):
             continue
         disposition = prior_disposition_by_document_id.get(document_id, {})
-        if (
-            str(disposition.get("status") or "") != "FACTS_EXTRACTED"
+        disposition_status = str(disposition.get("status") or "")
+        if issuer_consolidated_migration_candidate:
+            if disposition_status not in {
+                "FACTS_EXTRACTED",
+                "NO_MATERIAL_FACT",
+                "NO_OBJECTIVE_LOCAL_FACT",
+            }:
+                continue
+        elif (
+            disposition_status != "FACTS_EXTRACTED"
             or int(disposition.get("accepted_fact_count") or 0) <= 0
         ):
             continue
@@ -8506,6 +8767,18 @@ def _fact_semantics_upgrade_requires_reextraction(
 
     if previous_version == FACT_EXTRACTION_SEMANTICS_VERSION:
         return False
+    if previous_version == (
+        _PRE_CROSS_OBJECTIVE_CONSOLIDATED_ACTUALS_SEMANTICS_VERSION
+    ):
+        # v8 treated discovery-objective lineage as an exclusive scope and
+        # could terminally mark an issuer filing NO_MATERIAL before checking a
+        # different current component. Re-read only first-party issuer or
+        # regulatory documents under the target-wide v9 contract.
+        return bool(
+            document is not None
+            and _source_tier(str(document.get("source_family") or ""))
+            in {"REGULATORY_OFFICIAL", "ISSUER_OFFICIAL"}
+        )
     if previous_version == (
         _PRE_STRUCTURED_DURABLE_VISIBILITY_ROLE_SEMANTICS_VERSION
     ):

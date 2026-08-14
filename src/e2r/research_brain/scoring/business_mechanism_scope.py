@@ -14,6 +14,79 @@ DEFAULT_SCOPE_PATH = Path("configs/e2r_archetype_mechanism_scopes_v1.json")
 
 
 @dataclass(frozen=True)
+class IssuerConsolidatedActualScopeContract:
+    """아키타입과 무관한 연결 재무실적의 좁은 공통 허용 계약."""
+
+    allowed_component_id: str
+    scope_business_segment: str
+    scope_product_family: str
+    scope_technology_family: str
+    metric_scope_rows: tuple[tuple[str, str, str], ...]
+
+
+ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT = (
+    IssuerConsolidatedActualScopeContract(
+        allowed_component_id="eps_fcf_explosion",
+        scope_business_segment="CORPORATE_GENERIC",
+        scope_product_family="CORPORATE_GENERIC",
+        scope_technology_family="CORPORATE_GENERIC",
+        metric_scope_rows=(
+            (
+                "revenue",
+                "CONSOLIDATED_REVENUE_ACTUAL",
+                "CONSOLIDATED_EARNINGS_ACTUAL",
+            ),
+            (
+                "operating_profit",
+                "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+                "CONSOLIDATED_EARNINGS_ACTUAL",
+            ),
+            (
+                "net_income",
+                "CONSOLIDATED_NET_INCOME_ACTUAL",
+                "CONSOLIDATED_EARNINGS_ACTUAL",
+            ),
+            (
+                "operating_cash_flow",
+                "CONSOLIDATED_OPERATING_CASH_FLOW_ACTUAL",
+                "CONSOLIDATED_CASH_FLOW_ACTUAL",
+            ),
+            (
+                "capex",
+                "CONSOLIDATED_CAPEX_ACTUAL",
+                "CONSOLIDATED_CASH_FLOW_ACTUAL",
+            ),
+            (
+                "free_cash_flow",
+                "CONSOLIDATED_FREE_CASH_FLOW_ACTUAL",
+                "CONSOLIDATED_CASH_FLOW_ACTUAL",
+            ),
+        ),
+    )
+)
+
+
+def issuer_consolidated_actual_scope_match(
+    *, scope: "BusinessMechanismScope", component_id: str
+) -> bool:
+    """연결 실제치만 EPS/FCF 컴포넌트에 허용하고 사업부 귀속은 막는다."""
+
+    contract = ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT
+    return bool(
+        component_id == contract.allowed_component_id
+        and scope.business_segment == contract.scope_business_segment
+        and scope.product_family == contract.scope_product_family
+        and scope.technology_family == contract.scope_technology_family
+        and (scope.transaction_type, scope.economic_mechanism)
+        in {
+            (transaction_type, economic_mechanism)
+            for _, transaction_type, economic_mechanism
+            in contract.metric_scope_rows
+        }
+    )
+
+
+@dataclass(frozen=True)
 class BusinessMechanismScope:
     issuer_id: str
     business_segment: str
@@ -72,7 +145,17 @@ class MechanismScopeValidator:
         elif scope.product_family in contract.forbidden_product_families:
             reason = "WRONG_PRODUCT_FAMILY"
         elif scope.business_segment == "CORPORATE_GENERIC":
-            if component_id not in contract.generic_company_allowed_components:
+            if issuer_consolidated_actual_scope_match(
+                scope=scope,
+                component_id=component_id,
+            ):
+                reason = ""
+            elif (
+                scope.product_family != "CORPORATE_GENERIC"
+                or scope.technology_family != "CORPORATE_GENERIC"
+            ):
+                reason = "GENERIC_COMPANY_FACT_SCOPE_COORDINATES_INVALID"
+            elif component_id not in contract.generic_company_allowed_components:
                 reason = "GENERIC_COMPANY_FACT_COMPONENT_NOT_ALLOWED"
             elif scope.economic_mechanism != "INFORMATION_ONLY":
                 reason = "GENERIC_COMPANY_FACT_ARCHETYPE_LINK_MISSING"

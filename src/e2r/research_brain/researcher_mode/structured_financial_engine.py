@@ -70,6 +70,7 @@ STRUCTURED_ROUTE_CAPABILITIES: Mapping[str, tuple[str, ...]] = {
     "NAVER_FINANCE": ("CONSENSUS", "VALUATION"),
     "CONSENSUS_CSV": ("CONSENSUS", "REVISION", "VALUATION"),
     "PEER_STRUCTURED": ("VALUATION", "PEER_BAND"),
+    "TARGET_OFFICIAL_TRAILING_VALUATION": ("VALUATION",),
 }
 
 PHASE86_REQUIRED_ROLES_BY_COMPONENT: Mapping[str, tuple[str, ...]] = {
@@ -135,6 +136,11 @@ PHASE86_COMPONENT_ROLE_COMPATIBILITY: Mapping[str, tuple[str, ...]] = {
         "FORWARD_EV_EBITDA",
         "FORWARD_FCF_YIELD",
     ),
+    # A target's point-in-time trailing multiple is a different observation
+    # from a broker's forward multiple.  Keep this requirement deliberately
+    # narrow so CURRENT_PRICE, MARKET_CAP, FORWARD_PE, or FORWARD_PB cannot
+    # silently substitute for a failed target trailing snapshot.
+    "TARGET_TRAILING_VALUATION": ("TARGET_TRAILING_VALUATION",),
     "EARNINGS_REVISION": (
         "EPS_REVISION",
         "OPERATING_PROFIT_REVISION",

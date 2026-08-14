@@ -798,7 +798,11 @@ class CurrentResearcherModeTargetRunner:
                 audit=gate_audit,
             )
         required_structured_roles = _required_structured_roles_for_plans(
-            initial_plans
+            initial_plans,
+            require_target_trailing_valuation=(
+                config.source_acquisition_mode
+                == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
+            ),
         )
         structured_materialization = self.structured_materializer.materialize(
             target_id=target.target_id,
@@ -4974,6 +4978,7 @@ def _attested_compiler_fact_addition_ids(
         for row in committed_snapshot.get("provider_calls") or ()
     )
     required_lineages: set[tuple[str, str]] = set()
+    claim_semantics_version_by_id: dict[str, str] = {}
     for fact_id, fact_claim_ids in added_claim_ids_by_fact.items():
         current = convenience_by_id[fact_id]
         added_claim_rows = tuple(claim_by_id[value] for value in fact_claim_ids)
@@ -5090,6 +5095,9 @@ def _attested_compiler_fact_addition_ids(
             )
             if len(matching_calls) != 1:
                 raise ValueError("fact addition provider-call receipt is not exact")
+            claim_semantics_version_by_id[str(claim["claim_id"])] = str(
+                matching_calls[0].extraction_semantics_version
+            )
             # A paginated call stores its cumulative claim roster in the
             # committed result while the top-level hashes identify the final
             # completion page. Validate both that page and the claim's own
@@ -5244,6 +5252,26 @@ def _attested_compiler_fact_addition_ids(
                 )
             except (KeyError, TypeError, ValueError):
                 continue
+            claim_semantics_version = claim_semantics_version_by_id.get(
+                claim_id,
+                "",
+            )
+            if (
+                (
+                    claim_semantics_version
+                    and claim_semantics_version
+                    != FACT_EXTRACTION_SEMANTICS_VERSION
+                )
+                or (
+                    not claim_semantics_version
+                    and "discovery_objective_ids" not in claim
+                )
+            ):
+                # v9 records the document's discovery objective separately
+                # from the target-wide current objective binding.  Historical
+                # v5-v8 claims predate that additive provenance field, so an
+                # exact replay must compare them in their original shape.
+                candidate.pop("discovery_objective_ids", None)
             if _canonical_json_payload(candidate) == _canonical_json_payload(
                 claim
             ):
@@ -7166,6 +7194,7 @@ def _component_supervisor_feedback_by_component(
     for row in context.get("failure_assessments") or ():
         if (
             not isinstance(row, Mapping)
+            or row.get("resolved") is True
             or row.get("retryable") is not True
             or str(row.get("classification") or "")
             not in {"PARSER_EXTRACTOR_FAILURE", "FETCH_FAILURE"}
@@ -7187,6 +7216,8 @@ def _component_supervisor_feedback_by_component(
             else retryable_failure_by_id.get(str(raw))
         )
         if not isinstance(row, Mapping):
+            continue
+        if row.get("resolved") is True:
             continue
         component_id = component_for(row)
         if component_id:
@@ -7610,6 +7641,8 @@ def _unconsumed_component_supervisor_feedback(
 
 def _required_structured_roles_for_plans(
     plans: Sequence[ComponentResearchPlan],
+    *,
+    require_target_trailing_valuation: bool = False,
 ) -> Mapping[str, tuple[str, ...]]:
     """Use the archetype contract as the live structured completeness gate.
 
@@ -7637,6 +7670,15 @@ def _required_structured_roles_for_plans(
     if set(by_component) != set(CANONICAL_COMPONENT_ORDER):
         raise ValueError(
             "structured plan roster must contain exactly seven components"
+        )
+    if require_target_trailing_valuation:
+        by_component["valuation_rerating"] = tuple(
+            dict.fromkeys(
+                (
+                    *by_component["valuation_rerating"],
+                    "TARGET_TRAILING_VALUATION",
+                )
+            )
         )
     return {
         component_id: by_component[component_id]
