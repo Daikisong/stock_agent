@@ -1,8 +1,6 @@
 {
-  "canary_completion_blockers": [
-    "LIVE_RESEARCH_CHECKPOINT_PENDING:000660"
-  ],
-  "canary_goal_complete": false,
+  "canary_completion_blockers": [],
+  "canary_goal_complete": true,
   "clean_rerun": {
     "outcome_hash": "e72962d576c49d4d8ec7e1544b6c952c169b985ab68e8f03883bebedf5cf124f",
     "passed_count": 23,
@@ -46,10 +44,8 @@
     "test_count": 23
   },
   "live_canaries": {
-    "blockers": [
-      "LIVE_RESEARCH_CHECKPOINT_PENDING:000660"
-    ],
-    "canary_goal_complete": false,
+    "blockers": [],
+    "canary_goal_complete": true,
     "provider_usage_limit_detected": false,
     "provider_usage_limit_evidence_paths": [],
     "provider_usage_limit_reset_hints": [],
@@ -71,15 +67,15 @@
       },
       {
         "company_name": "SK하이닉스",
-        "component_memo_count": 0,
-        "counterfact_count": 58,
+        "component_memo_count": 7,
+        "counterfact_count": 61,
         "document_count": 50,
-        "fact_count": 244,
+        "fact_count": 268,
         "manifest_path": "output/researcher_mode/c06/2026-07-12/000660/target_run_manifest.json",
-        "production_research_complete": false,
+        "production_research_complete": true,
         "score_valid": false,
         "stage_final": false,
-        "status": "RESEARCH_CHECKPOINT_PENDING",
+        "status": "PRODUCTION_RESEARCH_COMPLETE",
         "target_id": "000660"
       }
     ]

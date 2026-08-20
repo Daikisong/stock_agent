@@ -28,4 +28,4 @@
 - `score_vector.json`: `present`
 - `atomic_stage_decision.json`: `present`
 - `stagecourt_trace.json`: `present`
-- `gold_fact_comparison.jsonl`: `missing`
+- `gold_fact_comparison.jsonl`: `present`
