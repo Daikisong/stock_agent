@@ -709,6 +709,9 @@ class E2RV6OperationalAcceptanceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp, patch(
             "e2r.production.v6_operational_acceptance._phase101_receipts_ready",
             return_value=True,
+        ), patch(
+            "e2r.production.v6_operational_acceptance._phase105_live_inputs_ready",
+            return_value=True,
         ):
             result = run_operational_acceptance_phases(
                 repo_root=tmp,
@@ -738,6 +741,74 @@ class E2RV6OperationalAcceptanceTests(unittest.TestCase):
         self.assertNotIn("reviewer_gate", result)
         self.assertNotIn("full_test_result", result)
 
+    def test_phase105_materializes_current_krx_inputs_before_selection(self):
+        calls: list[list[str]] = []
+
+        def runner(argv: object, _cwd: Path) -> subprocess.CompletedProcess[str]:
+            command = list(argv)  # type: ignore[arg-type]
+            calls.append(command)
+            status = (
+                "SOURCE_PENDING"
+                if command[2] == "e2r.cli.run_e2r_census_mode"
+                else "SELECTION_INPUT_PENDING"
+            )
+            return subprocess.CompletedProcess(
+                command,
+                2,
+                stdout=json.dumps({"status": status}),
+                stderr="",
+            )
+
+        with tempfile.TemporaryDirectory() as tmp, patch(
+            "e2r.production.v6_operational_acceptance._phase101_receipts_ready",
+            return_value=True,
+        ), patch(
+            "e2r.production.v6_operational_acceptance._phase105_live_inputs_ready",
+            side_effect=(False, True),
+        ), patch(
+            "e2r.production.v6_operational_acceptance._phase105_selection_ready",
+            return_value=False,
+        ), patch(
+            "e2r.production.v6_operational_acceptance._phase105_profile_ready",
+            return_value=False,
+        ):
+            result = run_operational_acceptance_phases(
+                repo_root=tmp,
+                output_root=Path(tmp) / "driver",
+                as_of_date="2026-08-21",
+                research_provider="codex-collaboration",
+                command_runner=runner,
+                test_mode=True,
+            )
+
+        modules = [command[2] for command in calls]
+        self.assertEqual(
+            modules,
+            [
+                "e2r.cli.run_e2r_census_mode",
+                "e2r.cli.select_e2r_v6_cross_archetype_canaries",
+                "e2r.cli.materialize_e2r_v6_issuer_business_profiles",
+            ],
+        )
+        census = calls[0]
+        self.assertEqual(
+            census[census.index("--as-of-date") + 1],
+            "2026-08-21",
+        )
+        self.assertEqual(
+            census[census.index("--materialize-live-input") + 1],
+            "true",
+        )
+        self.assertIn("--resume", census)
+        self.assertEqual(
+            result["blockers"],
+            ["PHASE105_ISSUER_PROFILE_PENDING"],
+        )
+        self.assertEqual(
+            result["phase_driver"]["command_attempts"][0]["step_id"],
+            "current_krx_input_materialization",
+        )
+
     def test_phase105_profile_is_materialized_then_exactly_passed_to_selector(self):
         calls: list[list[str]] = []
 
@@ -761,6 +832,9 @@ class E2RV6OperationalAcceptanceTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp, patch(
             "e2r.production.v6_operational_acceptance._phase101_receipts_ready",
+            return_value=True,
+        ), patch(
+            "e2r.production.v6_operational_acceptance._phase105_live_inputs_ready",
             return_value=True,
         ), patch(
             "e2r.production.v6_operational_acceptance._phase105_selection_ready",
@@ -825,6 +899,9 @@ class E2RV6OperationalAcceptanceTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp, patch(
             "e2r.production.v6_operational_acceptance._phase101_receipts_ready",
+            return_value=True,
+        ), patch(
+            "e2r.production.v6_operational_acceptance._phase105_live_inputs_ready",
             return_value=True,
         ), patch(
             "e2r.production.v6_operational_acceptance._phase105_selection_ready",
@@ -1393,6 +1470,9 @@ class E2RV6OperationalAcceptanceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp, patch(
             "e2r.production.v6_operational_acceptance._phase101_receipts_ready",
             side_effect=(False, True),
+        ), patch(
+            "e2r.production.v6_operational_acceptance._phase105_live_inputs_ready",
+            return_value=True,
         ):
             result = run_operational_acceptance_phases(
                 repo_root=tmp,

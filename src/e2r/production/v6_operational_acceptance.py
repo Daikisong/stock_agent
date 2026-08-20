@@ -19,6 +19,7 @@ from e2r.production.v6_canary_selection import (
     FORCED_SELECTION,
     ISSUER_PROFILE_MANIFEST_NAME,
     REQUIRED_ARCHETYPES,
+    load_current_live_selection_inputs,
     load_current_issuer_business_profile_manifest,
 )
 from e2r.production.v6_canary_selection import (
@@ -374,6 +375,8 @@ def run_operational_acceptance_phases(
                 checkpoint_writer(result)
             return result
 
+    live_root = repo / "output" / "live_materialization" / as_of_date
+    census_output = output / "current_krx_census_run"
     selection_path = final / "cross_archetype_canary_selection.json"
     issuer_profile_path = final / ISSUER_PROFILE_MANIFEST_NAME
     if _phase105_selection_ready(
@@ -383,6 +386,39 @@ def run_operational_acceptance_phases(
     ):
         skip("cross_archetype_canary_selection", _safe_json(selection_path))
     else:
+        # Phase105 consumes the same audited current KRX universe, trigger,
+        # depth, and planner leaves that Phase107 later publishes.  A fresh
+        # operational date therefore needs those live inputs before profile
+        # materialization or canary selection.  Reuse the canonical Census
+        # command and its checkpoint instead of accepting hand-authored rows
+        # or moving selection onto stale prior-date inputs.
+        if not _phase105_live_inputs_ready(repo, as_of_date):
+            input_attempt = invoke(
+                "current_krx_input_materialization",
+                "e2r.cli.run_e2r_census_mode",
+                [
+                    "--as-of-date", as_of_date,
+                    "--mode", "census_selective_deep",
+                    "--brain", "canonical_v1",
+                    "--universe", "krx",
+                    "--output-root", str(census_output),
+                    "--fail-on-critical", "true",
+                    "--materialize-live-input", "true",
+                    "--live-materialization-authorized", "true",
+                    "--run-profile", str(profile),
+                    "--resume", "true",
+                ],
+            )
+            if not _phase105_live_inputs_ready(repo, as_of_date):
+                reason = (
+                    "PHASE105_CURRENT_INPUT_COLLABORATION_PENDING"
+                    if _attempt_is_external_wait(input_attempt)
+                    else "PHASE105_CURRENT_INPUT_PENDING"
+                )
+                result = snapshot(pending_reason=reason)
+                if checkpoint_writer is not None:
+                    checkpoint_writer(result)
+                return result
         # First let the canonical selector close the phase from natural,
         # fully COMPLETE planner runs.  This read-only attempt avoids fetching
         # five official issuer profiles when the natural roster already meets
@@ -495,7 +531,6 @@ def run_operational_acceptance_phases(
     if _phase107_census_ready(final):
         skip("current_krx_census", _safe_json(final / "current_krx_census_summary.json"))
     else:
-        census_output = output / "current_krx_census_run"
         attempt = invoke(
             "current_krx_census",
             "e2r.cli.run_e2r_census_mode",
@@ -512,7 +547,6 @@ def run_operational_acceptance_phases(
                 "--resume", "true",
             ],
         )
-        live_root = repo / "output" / "live_materialization" / as_of_date
         if _attempt_is_external_wait(attempt):
             reason = "PHASE107_SOURCE_OR_PROVIDER_PENDING"
             result = snapshot(pending_reason=reason)
@@ -2106,6 +2140,26 @@ def _phase105_selection_ready(
     except (OSError, TypeError, ValueError, json.JSONDecodeError):
         return False
     return str(selection.get("selection_as_of_date") or "") == as_of_date
+
+
+def _phase105_live_inputs_ready(repo: Path, as_of_date: str) -> bool:
+    """Validate the exact current live inputs needed before Phase105.
+
+    Phase105 and Phase107 intentionally share one source-backed KRX snapshot.
+    Merely finding the directory is insufficient: the selector loader also
+    verifies universe provenance, trigger/depth audits, and planner call
+    lineage for the requested date.
+    """
+
+    live_root = repo / "output" / "live_materialization" / as_of_date
+    try:
+        load_current_live_selection_inputs(
+            live_root,
+            selection_as_of_date=as_of_date,
+        )
+    except (OSError, TypeError, ValueError, json.JSONDecodeError):
+        return False
+    return True
 
 
 def _phase105_profile_ready(path: Path, as_of_date: str) -> bool:
