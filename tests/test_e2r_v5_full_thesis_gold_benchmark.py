@@ -219,6 +219,19 @@ class E2RV5FullThesisGoldBenchmarkTests(unittest.TestCase):
             compiled["phase93_scope_truth"]["post_run_recall_attested"]
         )
 
+    def test_operational_post_run_requires_semantic_review_quorum(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            production = Path(tmp) / "production"
+            self._write_controlled_production(production)
+            with self.assertRaisesRegex(
+                ValueError, "post-run semantic adjudication is not ready"
+            ):
+                compare_phase93_gold_post_run(
+                    self.ROOT,
+                    production_root=production,
+                    require_post_run_semantic_adjudication=True,
+                )
+
     def test_incomplete_or_inexact_lane_is_rejected_before_gold_load(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             production = Path(tmp) / "production"

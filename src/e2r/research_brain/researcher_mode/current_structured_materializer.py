@@ -4182,9 +4182,13 @@ def _fact_structured_routes(
                             period=period,
                             evidence_roles=("DURABLE_VISIBILITY",),
                             source_ids=(document_id,),
-                            source_route=(
-                                "ISSUER_OR_CUSTOMER_OFFICIAL_VISIBILITY"
-                            ),
+                            # The enclosing typed route is ISSUER_GUIDANCE.
+                            # Keep that canonical transport identity on the
+                            # record as well; the structured engine rejects a
+                            # seed whose record route and envelope route
+                            # disagree.  The more specific visibility meaning
+                            # remains in evidence_roles and record_kind.
+                            source_route="ISSUER_GUIDANCE",
                             observed_at=observed_at,
                             available_at=available_at,
                             record_kind=(

@@ -713,10 +713,22 @@ class CurrentResearcherModeTargetRunner:
             **prior_fact,
         )
         write_researcher_fact_extraction_result(fact_extraction, root)
-        if fact_extraction.status != "FACT_EXTRACTION_COMPLETE":
+        source_collaboration_waiting = any(
+            "COLLABORATION_RESPONSE_PENDING:COLLABREQ-" in str(reason)
+            for reason in source_graph.checkpoint.get("pending_reasons") or ()
+        )
+        if (
+            source_collaboration_waiting
+            or fact_extraction.status != "FACT_EXTRACTION_COMPLETE"
+        ):
             # Upstream facts define every downstream prompt and deterministic
-            # input.  A pending exact Codex response is therefore a hard
-            # ordering boundary, not permission to open speculative requests.
+            # input.  A pending exact Codex source or fact response is
+            # therefore a hard ordering boundary, not permission to open
+            # speculative component requests on the older evidence snapshot.
+            #
+            # Easy example: while the query LLM is still deciding which new
+            # issuer report to search, rewriting seven component memos only
+            # creates stale responses.  Consume the query response first.
             source_ready = bool(
                 source_graph.status
                 in {
@@ -726,14 +738,18 @@ class CurrentResearcherModeTargetRunner:
                 and int(source_graph.audit.get("critical_count_sum") or 0) == 0
             )
             exact_completion_gate = (
-                "fact_extraction_complete"
-                if (
-                    source_ready
-                    or fact_extraction_has_exact_checkpoint_recovery_wait(
-                        fact_extraction.pending_reasons
+                "source_graph_checkpoint_ready"
+                if source_collaboration_waiting
+                else (
+                    "fact_extraction_complete"
+                    if (
+                        source_ready
+                        or fact_extraction_has_exact_checkpoint_recovery_wait(
+                            fact_extraction.pending_reasons
+                        )
                     )
+                    else "source_graph_checkpoint_ready"
                 )
-                else "source_graph_checkpoint_ready"
             )
             gate_audit = {
                 "schema_version": CURRENT_RESEARCHER_MODE_SCHEMA_VERSION,
@@ -771,7 +787,10 @@ class CurrentResearcherModeTargetRunner:
                 "completion_based_on_fixed_rounds": False,
                 "completion_gates": {
                     "source_graph_checkpoint_ready": source_ready,
-                    "fact_extraction_complete": False,
+                    "fact_extraction_complete": (
+                        fact_extraction.status
+                        == "FACT_EXTRACTION_COMPLETE"
+                    ),
                 },
                 "fact_count": len(fact_extraction.facts),
                 "document_count": len(source_graph.evidence_documents),
@@ -6131,8 +6150,12 @@ def _validated_multi_epoch_source_fact_binding(
     that leaf more than once before the research epoch commits.  The durable
     until-pass receipt preserves the exact research/source base; the caller
     separately proves that every authoritative fact source still belongs to
-    the current production document roster.  This is deliberately not named
-    an ancestry proof: it is a current-source fact-superset binding.
+    the current production document roster.  A cached
+    ``source_transport_chain_valid`` flag describes only the checkpoint that
+    produced the receipt and may legitimately be false before a later
+    multi-step resume, so it is not authority for this revalidation.  This is
+    deliberately not named an ancestry proof: it is a current-source
+    fact-superset binding.
     """
 
     progress_path = root / "until_pass_progress.json"
@@ -6235,7 +6258,6 @@ def _validated_multi_epoch_source_fact_binding(
         progress.get("schema_version")
         == "e2r_v5_phase94_until_pass_progress_v1"
         and progress.get("status") == "RESEARCH_CHECKPOINT_PENDING"
-        and progress.get("source_transport_chain_valid") is True
         and str(progress.get("target_id") or "") == target_id
         and str(progress.get("as_of_date") or "") == as_of_date
         and str(source_binding.get("target_id") or "") == target_id

@@ -257,60 +257,80 @@ def project_candidate_ranking_discovery_candidates(
     request when they are not present in the LLM prompt.
     """
 
-    return [
-        {
-            "candidate_id": row["candidate_id"],
-            "title": row.get("title"),
-            "url": row.get("url"),
-            "snippet": row.get("snippet"),
-            "source": row.get("source"),
-            "published_at": row.get("published_at"),
-            "is_pdf": bool(row.get("is_pdf")),
-            "is_news": bool(row.get("is_news")),
-            "is_disclosure": bool(row.get("is_disclosure")),
-            "query_ids": list(
-                row.get("materiality_query_ids")
-                or row.get("query_ids")
-                or ()
+    projected: list[Mapping[str, Any]] = []
+    for row in candidates:
+        reference_transport_context: dict[str, Any] = {
+            "parent_authority_verified": bool(
+                row.get("reference_expansion_parent_authority_verified")
             ),
-            "objective_ids": list(row.get("objective_ids") or ()),
-            "requested_source_families": list(
-                row.get("requested_source_families") or ()
+            "current_scope_inherited": bool(
+                row.get("reference_current_scope_inherited")
             ),
-            "verified_official_domain_candidate": bool(
-                row.get("verified_official_domain_candidate")
+            "metadata_sparse": bool(row.get("reference_metadata_sparse")),
+            "bounded_full_fetch_revalidation": bool(
+                row.get("sparse_reference_full_fetch_revalidation_pending")
             ),
-            "candidate_source_family_hint": row.get(
-                "candidate_source_family_hint"
+            "full_fetch_document_id": row.get("revalidation_document_id"),
+            "full_fetch_content_text": row.get(
+                "full_fetch_revalidation_content_text"
             ),
-            "graph_expansion_parent_document_ids": list(
-                row.get("graph_expansion_parent_document_ids") or ()
-            ),
-            "graph_expansion_parent_candidate_ids": list(
-                row.get("graph_expansion_parent_candidate_ids") or ()
-            ),
-            "reference_transport_context": {
-                "parent_authority_verified": bool(
-                    row.get("reference_expansion_parent_authority_verified")
-                ),
-                "current_scope_inherited": bool(
-                    row.get("reference_current_scope_inherited")
-                ),
-                "metadata_sparse": bool(row.get("reference_metadata_sparse")),
-                "bounded_full_fetch_revalidation": bool(
-                    row.get(
-                        "sparse_reference_full_fetch_revalidation_pending"
-                    )
-                ),
-                "full_fetch_document_id": row.get("revalidation_document_id"),
-                "full_fetch_content_text": row.get(
-                    "full_fetch_revalidation_content_text"
-                ),
-            },
-            "snippet_discovery_only": True,
         }
-        for row in candidates
-    ]
+        if "explicit_text_reference" in row:
+            reference_transport_context.update(
+                {
+                    "explicit_text_reference": bool(
+                        row.get("explicit_text_reference")
+                    ),
+                    "explicit_text_reference_parent_ids": list(
+                        row.get("explicit_text_reference_parent_ids") or ()
+                    ),
+                    "explicit_text_reference_parent_urls": list(
+                        row.get("explicit_text_reference_parent_urls") or ()
+                    ),
+                    "content_identity_verified": bool(
+                        row.get(
+                            "explicit_text_reference_content_identity_verified"
+                        )
+                    ),
+                }
+            )
+        projected.append(
+            {
+                "candidate_id": row["candidate_id"],
+                "title": row.get("title"),
+                "url": row.get("url"),
+                "snippet": row.get("snippet"),
+                "source": row.get("source"),
+                "published_at": row.get("published_at"),
+                "is_pdf": bool(row.get("is_pdf")),
+                "is_news": bool(row.get("is_news")),
+                "is_disclosure": bool(row.get("is_disclosure")),
+                "query_ids": list(
+                    row.get("materiality_query_ids")
+                    or row.get("query_ids")
+                    or ()
+                ),
+                "objective_ids": list(row.get("objective_ids") or ()),
+                "requested_source_families": list(
+                    row.get("requested_source_families") or ()
+                ),
+                "verified_official_domain_candidate": bool(
+                    row.get("verified_official_domain_candidate")
+                ),
+                "candidate_source_family_hint": row.get(
+                    "candidate_source_family_hint"
+                ),
+                "graph_expansion_parent_document_ids": list(
+                    row.get("graph_expansion_parent_document_ids") or ()
+                ),
+                "graph_expansion_parent_candidate_ids": list(
+                    row.get("graph_expansion_parent_candidate_ids") or ()
+                ),
+                "reference_transport_context": reference_transport_context,
+                "snippet_discovery_only": True,
+            }
+        )
+    return projected
 
 
 def candidate_materiality_full_prompt_input_hash(
@@ -377,6 +397,29 @@ def candidate_materiality_full_prompt_input_hash(
             },
             "snippet_discovery_only": True,
         }
+        if "explicit_text_reference" in reference:
+            projected["reference_transport_context"].update(
+                {
+                    "explicit_text_reference": bool(
+                        reference.get("explicit_text_reference")
+                    ),
+                    "explicit_text_reference_parent_ids": list(
+                        reference.get(
+                            "explicit_text_reference_parent_ids"
+                        )
+                        or ()
+                    ),
+                    "explicit_text_reference_parent_urls": list(
+                        reference.get(
+                            "explicit_text_reference_parent_urls"
+                        )
+                        or ()
+                    ),
+                    "content_identity_verified": bool(
+                        reference.get("content_identity_verified")
+                    ),
+                }
+            )
     else:
         projected = dict(
             project_candidate_ranking_discovery_candidates((candidate,))[0]
@@ -395,6 +438,20 @@ def candidate_materiality_full_prompt_input_hash(
                 if str(value).strip()
             }
         )
+    reference = projected.get("reference_transport_context")
+    if isinstance(reference, dict):
+        for key in (
+            "explicit_text_reference_parent_ids",
+            "explicit_text_reference_parent_urls",
+        ):
+            if key in reference:
+                reference[key] = sorted(
+                    {
+                        str(value).strip()
+                        for value in reference.get(key) or ()
+                        if str(value).strip()
+                    }
+                )
     return hashlib.sha256(
         json.dumps(
             projected,

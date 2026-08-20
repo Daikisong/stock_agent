@@ -29,6 +29,9 @@ from e2r.research_brain.researcher_mode import (
 from e2r.research_brain.researcher_mode import (
     current_structured_materializer as structured_materializer_module,
 )
+from e2r.research_brain.researcher_mode.structured_financial_engine import (
+    StructuredFinancialConsensusValuationEngine,
+)
 
 
 class FixtureStructuredTransport:
@@ -2894,7 +2897,30 @@ EV/EBITDA(배) 22.0 3.9 2.4 0.4"""
         self.assertEqual(
             record.record_kind, "SOURCE_BACKED_DURABLE_VISIBILITY"
         )
+        self.assertEqual(record.source_route, "ISSUER_GUIDANCE")
         self.assertTrue(record.metadata["does_not_prove_contract_terms"])
+
+        engine = StructuredFinancialConsensusValuationEngine().research(
+            target_id="005930",
+            symbol="005930",
+            company_name="Current Corp",
+            as_of_date="2026-07-12",
+            routes=(issuer_route,),
+            required_roles_by_component={
+                "valuation_rerating": ("DURABLE_VISIBILITY",),
+            },
+        )
+        self.assertEqual(engine.status, "COMPLETE")
+        self.assertEqual(
+            engine.covered_roles_by_component["valuation_rerating"],
+            ("DURABLE_VISIBILITY",),
+        )
+        self.assertFalse(
+            any(
+                rejection.reason == "STRUCTURED_RECORD_ROUTE_MISMATCH"
+                for rejection in engine.rejections
+            )
+        )
 
     def test_durable_visibility_rejects_weak_source_generic_scope_and_past_period(self):
         facts, claims, documents = _structured_fact_bundle(

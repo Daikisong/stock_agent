@@ -50,6 +50,10 @@ _EXACT_COLLABORATION_RESPONSE_WAIT_RE = re.compile(
     r"COLLABORATION_RESPONSE_PENDING:COLLABREQ-[0-9a-f]{64}"
 )
 
+_POST_RUN_SEMANTIC_ADJUDICATION_PENDING = (
+    "PENDING_POST_RUN_SEMANTIC_ADJUDICATION"
+)
+
 
 def _bool(value: str | bool) -> bool:
     if isinstance(value, bool):
@@ -349,7 +353,12 @@ def main(argv: list[str] | None = None) -> int:
     gold_critical_fact_miss_count = None
     comparison_executed = False
     post_run_pass_status = None
-    if production_complete and full_mandatory_target_roster_selected:
+    post_run_semantic_reviews_ready = bool(
+        production_complete
+        and full_mandatory_target_roster_selected
+        and reviewed_post_run_semantic_files_present(output_root)
+    )
+    if post_run_semantic_reviews_ready:
         # Deliberately imported data access happens only now, after the clean
         # production files and lane manifest have been closed.
         (
@@ -360,6 +369,7 @@ def main(argv: list[str] | None = None) -> int:
         try:
             comparison = compare_phase93_gold_post_run(
                 production_root=output_root,
+                require_post_run_semantic_adjudication=True,
             )
             comparison_executed = True
             write_phase93_post_run_comparison(
@@ -394,6 +404,38 @@ def main(argv: list[str] | None = None) -> int:
         post_run_status = comparison.status
         gold_critical_fact_miss_count = comparison.audit["critical_counts"].get(
             "critical_material_fact_recall_below_threshold_count"
+        )
+    elif production_complete and full_mandatory_target_roster_selected:
+        # Gold and the production lane intentionally use independent semantic
+        # vocabularies.  Literal-key fallback is useful for controlled
+        # fixtures, but it is not an operational recall verdict.  Wait for the
+        # sealed post-run primary adjudication plus two independent reviews
+        # instead of materializing a misleading 0%-recall failure.
+        post_run_status = _POST_RUN_SEMANTIC_ADJUDICATION_PENDING
+        write_json(
+            output_root / "post_run_gold_recall_audit.json",
+            {
+                "schema_version": (
+                    "e2r_v6_post_run_semantic_adjudication_pending_v1"
+                ),
+                "status": post_run_status,
+                "as_of_date": config.as_of_date,
+                "gold_visibility_during_production": False,
+                "comparison_executed": False,
+                "production_research_complete": True,
+                "required_primary_file": (
+                    "post_run_gold_semantic_primary.json"
+                ),
+                "required_review_directory": (
+                    "post_run_gold_semantic_reviews"
+                ),
+                "minimum_independent_review_count": 2,
+                "reason": (
+                    "Gold-to-production core-economic-event adjudication "
+                    "must complete after the production lane is sealed and "
+                    "before recall is computed."
+                ),
+            },
         )
     elif production_complete:
         post_run_status = "PENDING_FULL_MANDATORY_TARGET_ROSTER"

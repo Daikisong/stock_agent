@@ -2418,7 +2418,23 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             query_instruction,
         )
         self.assertIn(
+            "does not require a pre-known report id",
+            query_instruction,
+        )
+        self.assertIn(
+            "each one rather than selecting only the easiest route",
+            query_instruction,
+        )
+        self.assertIn(
             "Older evidence is not complete merely because it exists",
+            supervisor_instruction,
+        )
+        self.assertIn(
+            "Do not require a pre-known document id or URL",
+            supervisor_instruction,
+        )
+        self.assertIn(
+            "one corroborated counterparty, one broker report",
             supervisor_instruction,
         )
         self.assertIn(

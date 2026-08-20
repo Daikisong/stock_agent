@@ -502,7 +502,7 @@ def _load_post_run_semantic_adjudication(
     primary_path = root / POST_RUN_SEMANTIC_PRIMARY_FILE
     review_root = root / POST_RUN_SEMANTIC_REVIEW_DIRECTORY
     if not primary_path.is_file() and not review_root.exists():
-        return None
+        raise ValueError("post-run semantic adjudication is not ready")
     if not primary_path.is_file() or not review_root.is_dir():
         raise ValueError(
             "post-run semantic adjudication requires primary and review files"

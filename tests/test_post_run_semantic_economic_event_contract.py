@@ -157,6 +157,18 @@ class PostRunSemanticEconomicEventContractTests(unittest.TestCase):
                 encoding="utf-8",
             )
 
+    def test_explicit_post_run_root_without_reviews_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            _, gold_root, production_root = self._copy_fixture(tmp)
+            with self.assertRaisesRegex(
+                ValueError, "post-run semantic adjudication is not ready"
+            ):
+                BlindResearchQualityBenchmark().compare(
+                    gold_root=gold_root,
+                    production_root=production_root,
+                    post_run_semantic_adjudication_root=production_root,
+                )
+
     def test_customer_official_compound_event_does_not_require_same_named_page(
         self,
     ) -> None:

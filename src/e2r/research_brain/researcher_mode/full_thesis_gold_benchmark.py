@@ -367,8 +367,16 @@ def compare_phase93_gold_post_run(
     *,
     production_root: str | Path,
     gold_root: str | Path = PHASE93_GOLD_ROOT,
+    require_post_run_semantic_adjudication: bool = False,
 ) -> FullThesisPostRunComparison:
-    """Compute full-thesis recall only for a same-as-of, completed blind run."""
+    """Compute full-thesis recall only for a same-as-of, completed blind run.
+
+    Controlled fixtures may deliberately exercise the legacy exact semantic
+    key and therefore omit post-run review artifacts.  Operational callers
+    must set ``require_post_run_semantic_adjudication`` so the independent
+    primary plus review quorum remains a hard gate.  A partially written
+    adjudication is always invalid in either mode.
+    """
 
     root = Path(repo_root).resolve()
     production = Path(production_root)
@@ -402,10 +410,21 @@ def compare_phase93_gold_post_run(
             str(value) for value in corpus["manifest"]["component_ids"]
         ),
     )
+    semantic_primary = production / "post_run_gold_semantic_primary.json"
+    semantic_reviews = production / "post_run_gold_semantic_reviews"
+    semantic_adjudication_root = (
+        production
+        if (
+            require_post_run_semantic_adjudication
+            or semantic_primary.exists()
+            or semantic_reviews.exists()
+        )
+        else None
+    )
     blind = BlindResearchQualityBenchmark().compare(
         gold_root=gold,
         production_root=production,
-        post_run_semantic_adjudication_root=production,
+        post_run_semantic_adjudication_root=semantic_adjudication_root,
     )
     full_leakage = _audit_production_gold_leakage(
         corpus=corpus,

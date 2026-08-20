@@ -7195,6 +7195,142 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(existing["ranking_status"], "PENDING")
         self.assertEqual(existing["fetch_status"], "NOT_STARTED")
 
+    def test_distinct_explicit_text_reference_gets_one_semantic_recheck(
+        self,
+    ) -> None:
+        parent_url = "https://issuer.example.com/results-video/"
+        child_url = "https://issuer.example.com/results/"
+        parent = {
+            "candidate_id": "PARENT",
+            "url": parent_url,
+            "normalized_url": parent_url.rstrip("/"),
+            "discovered_text_referenced_urls": [child_url],
+        }
+        child = {
+            "candidate_id": "CHILD",
+            "url": child_url,
+            "normalized_url": child_url.rstrip("/"),
+            "title": "Referenced by candidate PARENT",
+            "snippet": None,
+            "graph_expansion_parent_candidate_ids": ["PARENT"],
+            "reference_discovery_only": True,
+            "reference_expansion_parent_authority_verified": True,
+            "reference_current_scope_inherited": True,
+            "materiality_query_ids": ["QUERY"],
+            "objective_ids": ["OBJECTIVE"],
+            "requested_source_families": ["ISSUER_EARNINGS_RELEASE"],
+            "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+            "materiality_decision_id": "DECISION",
+            "ranking_status": "NOT_MATERIAL",
+            "fetch_status": "DISCOVERY_ONLY_NOT_FETCHED",
+        }
+        child["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(child)
+        )
+        decision = {
+            "decision_id": "DECISION",
+            "candidate_id": "CHILD",
+            "material_relevance": False,
+            "objective_ids": ["OBJECTIVE"],
+            "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        }
+
+        reopened = source_graph_module._reopen_distinct_explicit_text_reference_candidates(
+            [parent, child],
+            evidence_documents=(),
+            materiality_decisions=[decision],
+        )
+
+        self.assertEqual(reopened, 1)
+        self.assertEqual(child["ranking_status"], "PENDING")
+        self.assertEqual(child["fetch_status"], "NOT_STARTED")
+        self.assertNotIn("materiality_decision_id", child)
+        self.assertTrue(child["explicit_text_reference"])
+        self.assertFalse(
+            child["explicit_text_reference_content_identity_verified"]
+        )
+        self.assertEqual(
+            child["explicit_text_reference_parent_urls"],
+            [parent_url.rstrip("/")],
+        )
+        self.assertEqual(
+            child["explicit_text_reference_ranking_semantics_version"],
+            source_graph_module.EXPLICIT_TEXT_REFERENCE_RANKING_SEMANTICS_VERSION,
+        )
+        projection = (
+            source_graph_module.project_candidate_ranking_discovery_candidates(
+                [child]
+            )[0]
+        )
+        context = projection["reference_transport_context"]
+        self.assertTrue(context["explicit_text_reference"])
+        self.assertFalse(context["content_identity_verified"])
+        self.assertEqual(
+            context["explicit_text_reference_parent_urls"],
+            [parent_url.rstrip("/")],
+        )
+
+        self.assertEqual(
+            source_graph_module._reopen_distinct_explicit_text_reference_candidates(
+                [parent, child],
+                evidence_documents=(),
+                materiality_decisions=[decision],
+            ),
+            0,
+        )
+
+    def test_page_href_without_retained_text_does_not_reopen_reference(
+        self,
+    ) -> None:
+        parent_url = "https://issuer.example.com/results-video/"
+        child_url = "https://issuer.example.com/menu/"
+        parent = {
+            "candidate_id": "PARENT",
+            "url": parent_url,
+            "normalized_url": parent_url.rstrip("/"),
+            "discovered_page_referenced_urls": [child_url],
+            "discovered_text_referenced_urls": [],
+        }
+        child = {
+            "candidate_id": "CHILD",
+            "url": child_url,
+            "normalized_url": child_url.rstrip("/"),
+            "title": "Referenced by candidate PARENT",
+            "snippet": None,
+            "graph_expansion_parent_candidate_ids": ["PARENT"],
+            "reference_discovery_only": True,
+            "reference_expansion_parent_authority_verified": True,
+            "reference_current_scope_inherited": True,
+            "materiality_query_ids": ["QUERY"],
+            "objective_ids": ["OBJECTIVE"],
+            "requested_source_families": ["ISSUER_NEWSROOM"],
+            "matched_requested_source_family": "ISSUER_NEWSROOM",
+            "materiality_decision_id": "DECISION",
+            "ranking_status": "NOT_MATERIAL",
+            "fetch_status": "DISCOVERY_ONLY_NOT_FETCHED",
+        }
+        child["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(child)
+        )
+
+        reopened = source_graph_module._reopen_distinct_explicit_text_reference_candidates(
+            [parent, child],
+            evidence_documents=(),
+            materiality_decisions=[
+                {
+                    "decision_id": "DECISION",
+                    "candidate_id": "CHILD",
+                    "material_relevance": False,
+                    "objective_ids": ["OBJECTIVE"],
+                    "matched_requested_source_family": "ISSUER_NEWSROOM",
+                }
+            ],
+        )
+
+        self.assertEqual(reopened, 0)
+        self.assertEqual(child["ranking_status"], "NOT_MATERIAL")
+        self.assertNotIn("explicit_text_reference", child)
+
     def test_reference_scope_adoption_preserves_terminal_transport(
         self,
     ) -> None:
@@ -8599,6 +8735,49 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             [candidate],
             resolved_objective_ids=set(),
             ranking_transport_candidate_ids=set(),
+        )
+
+        self.assertEqual(candidate["ranking_status"], "PENDING")
+        self.assertNotIn(
+            "objective_resolution_transport_disposition",
+            candidate,
+        )
+
+    def test_superseded_objective_pending_candidate_is_explicit_and_reversible(
+        self,
+    ) -> None:
+        candidate = {
+            "candidate_id": "SUPERSEDED-RANKING-TAIL",
+            "objective_ids": ["OBJECTIVE-OLD"],
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+            "snippet_discovery_only": True,
+            "snippet_evidence_eligible": False,
+        }
+
+        source_graph_module._reconcile_resolved_scope_candidate_ranking_statuses(
+            [candidate],
+            resolved_objective_ids=set(),
+            ranking_transport_candidate_ids=set(),
+            active_objective_ids={"OBJECTIVE-CURRENT"},
+        )
+
+        self.assertEqual(
+            candidate["ranking_status"],
+            "SUPERSEDED_SCOPE_NOT_RANKED",
+        )
+        self.assertEqual(
+            candidate["objective_resolution_transport_disposition"],
+            "RANKING_NOT_REQUIRED_SCOPE_SUPERSEDED",
+        )
+        self.assertFalse(candidate["score_authority"])
+        self.assertFalse(candidate["snippet_evidence_eligible"])
+
+        source_graph_module._reconcile_resolved_scope_candidate_ranking_statuses(
+            [candidate],
+            resolved_objective_ids=set(),
+            ranking_transport_candidate_ids=set(),
+            active_objective_ids={"OBJECTIVE-OLD"},
         )
 
         self.assertEqual(candidate["ranking_status"], "PENDING")

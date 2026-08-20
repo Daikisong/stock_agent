@@ -818,7 +818,11 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             "status": "RESEARCH_CHECKPOINT_PENDING",
             "target_id": "CURRENT-TARGET",
             "as_of_date": AS_OF_DATE,
-            "source_transport_chain_valid": True,
+            # This flag belongs to the old receipt-producing checkpoint.  A
+            # later collaboration resume may advance more than one source
+            # epoch before the fact epoch commits, so current validation uses
+            # the bound base plus the cumulative fact/document superset.
+            "source_transport_chain_valid": False,
             "source_checkpoint_binding": {
                 "target_id": "CURRENT-TARGET",
                 "as_of_date": AS_OF_DATE,
@@ -5497,6 +5501,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 "CURRENT-A",
                 "CURRENT-B",
             ),
+            semantic_reviews_ready: bool = False,
         ):
             with tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
@@ -5584,6 +5589,11 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                         "e2r.cli.run_e2r_researcher_mode_until_pass."
                         "_research_provider_manifest",
                         return_value={"provider_name": "TEST"},
+                    ),
+                    patch(
+                        "e2r.cli.run_e2r_researcher_mode_until_pass."
+                        "reviewed_post_run_semantic_files_present",
+                        return_value=semantic_reviews_ready,
                     ),
                     patch(
                         "e2r.cli.run_e2r_researcher_mode_until_pass."
@@ -5703,10 +5713,31 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             partial_complete[5]["reason"],
         )
 
-        post_run_fail = execute(
+        semantic_pending = execute(
             second_status=(
                 "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
             )
+        )
+        self.assertEqual(semantic_pending[0], 2)
+        self.assertEqual(semantic_pending[2], 0)
+        self.assertEqual(semantic_pending[6], 0)
+        self.assertNotIn("post_run_gold_opened", semantic_pending[1])
+        self.assertFalse(semantic_pending[3]["comparison_executed"])
+        self.assertEqual(
+            semantic_pending[3]["post_run_gold_status"],
+            "PENDING_POST_RUN_SEMANTIC_ADJUDICATION",
+        )
+        self.assertEqual(
+            semantic_pending[5]["schema_version"],
+            "e2r_v6_post_run_semantic_adjudication_pending_v1",
+        )
+        self.assertFalse(semantic_pending[5]["comparison_executed"])
+
+        post_run_fail = execute(
+            second_status=(
+                "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+            ),
+            semantic_reviews_ready=True,
         )
         self.assertEqual(post_run_fail[0], 2)
         self.assertEqual(post_run_fail[2], 1)
@@ -7312,6 +7343,87 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             "fact_extraction_complete",
         )
 
+    def test_pending_source_query_opens_no_stale_component_requests(
+        self,
+    ) -> None:
+        class PendingQueryProvider(Phase94IntegrationProvider):
+            def complete(self, *, pass_name, payload):
+                if pass_name == "SOURCE_QUERY_GENERATION":
+                    self.calls.append(
+                        {"pass_name": pass_name, "payload": payload}
+                    )
+                    raise StructuredProviderUnavailable(
+                        "COLLABORATION_RESPONSE_PENDING:COLLABREQ-" + "b" * 64
+                    )
+                return super().complete(pass_name=pass_name, payload=payload)
+
+        provider = PendingQueryProvider()
+        structured_materializer = Phase94IntegrationStructuredMaterializer()
+        runner = CurrentResearcherModeTargetRunner(
+            provider=provider,
+            official_materializer=Phase94IntegrationOfficialMaterializer(),
+            structured_materializer=structured_materializer,
+            source_acquirer=ResearcherSourceGraphAcquirer(
+                query_provider=provider,
+                search_provider=EmptySearchProvider(),
+                page_fetcher=PageFetcher(fixture_text_by_url={}),
+            ),
+            fact_extractor=ResearcherEvidenceFactExtractor(
+                provider=provider,
+                documents_per_call=1,
+            ),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            config = CurrentResearcherModeConfig(
+                as_of_date="2026-06-29",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                output_root=directory,
+                live_materialization_authorized=True,
+                checkpoint_resume=True,
+                gold_lane_isolated=True,
+                require_researcher_parity=True,
+                latest_trading_snapshot_date="2026-06-29",
+                source_acquisition_mode="TEST",
+            )
+            with self.assertRaises(FactExtractionCheckpointPending) as caught:
+                runner.run_checkpoint(
+                    config=config,
+                    target=CurrentResearchTarget(
+                        symbol="CURRENT-TARGET",
+                        company_name="Current Corp",
+                        official_domains=("example.com",),
+                    ),
+                    repo_root=self.ROOT,
+                )
+
+        audit = caught.exception.audit
+        self.assertEqual(
+            audit["exact_completion_gate"],
+            "source_graph_checkpoint_ready",
+        )
+        self.assertEqual(
+            audit["fact_extraction_status"],
+            "FACT_EXTRACTION_COMPLETE",
+        )
+        self.assertTrue(
+            audit["completion_gates"]["fact_extraction_complete"]
+        )
+        self.assertFalse(audit["downstream_pipeline_started"])
+        self.assertEqual(structured_materializer.calls, [])
+        self.assertFalse(
+            any(
+                row["pass_name"]
+                in {
+                    "STRUCTURED_PEER_SELECTION",
+                    "BUSINESS_MODEL_RESEARCH",
+                    "COMPONENT_RESEARCH",
+                    "COMPONENT_SCORING_MEMO",
+                    "STAGECOURT",
+                }
+                for row in provider.calls
+            )
+        )
+
     def test_query_wait_snapshot_replays_only_to_recover_pending_facts(
         self,
     ) -> None:
@@ -7447,48 +7559,59 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     documents_per_call=1,
                 ),
             )
-            result = runner.run_checkpoint(
-                config=CurrentResearcherModeConfig(
-                    as_of_date=as_of_date,
-                    archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-                    output_root=directory,
-                    live_materialization_authorized=True,
-                    checkpoint_resume=True,
-                    gold_lane_isolated=True,
-                    require_researcher_parity=True,
-                    latest_trading_snapshot_date=as_of_date,
-                    source_acquisition_mode="TEST",
-                ),
-                target=target,
-                repo_root=self.ROOT,
-                source_resume_mode="REUSE_READY_CHECKPOINT",
-            )
+            with self.assertRaises(FactExtractionCheckpointPending) as caught:
+                runner.run_checkpoint(
+                    config=CurrentResearcherModeConfig(
+                        as_of_date=as_of_date,
+                        archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                        output_root=directory,
+                        live_materialization_authorized=True,
+                        checkpoint_resume=True,
+                        gold_lane_isolated=True,
+                        require_researcher_parity=True,
+                        latest_trading_snapshot_date=as_of_date,
+                        source_acquisition_mode="TEST",
+                    ),
+                    target=target,
+                    repo_root=self.ROOT,
+                    source_resume_mode="REUSE_READY_CHECKPOINT",
+                )
 
+            pending = caught.exception
             self.assertTrue(
-                result.audit["source_checkpoint_readonly_replayed"]
-            )
-            self.assertTrue(
-                result.audit[
-                    "source_checkpoint_fact_extraction_recovery_replayed"
-                ]
-            )
-            self.assertFalse(
-                result.audit[
-                    "source_checkpoint_downstream_recovery_replayed"
-                ]
-            )
-            self.assertTrue(
-                result.source_graph.audit[
+                pending.source_graph.audit[
                     "fact_extraction_recovery_replay"
                 ]
             )
             self.assertEqual(
-                result.source_graph.checkpoint["checkpoint_id"],
+                pending.source_graph.checkpoint["checkpoint_id"],
                 pending_checkpoint["checkpoint_id"],
             )
+            self.assertEqual(
+                pending.fact_extraction.status,
+                "FACT_EXTRACTION_COMPLETE",
+            )
+            self.assertEqual(
+                pending.audit["exact_completion_gate"],
+                "source_graph_checkpoint_ready",
+            )
+            self.assertFalse(pending.audit["downstream_pipeline_started"])
             self.assertTrue(
                 any(
                     row["pass_name"] == "EVIDENCE_FACT_EXTRACTION"
+                    for row in provider.calls
+                )
+            )
+            self.assertFalse(
+                any(
+                    row["pass_name"]
+                    in {
+                        "STRUCTURED_PEER_SELECTION",
+                        "BUSINESS_MODEL_RESEARCH",
+                        "COMPONENT_RESEARCH",
+                        "COMPONENT_SCORING_MEMO",
+                        "STAGECOURT",
+                    }
                     for row in provider.calls
                 )
             )

@@ -90,6 +90,9 @@ NAVIGATION_ONLY_REFERENCE_POLICY_VERSION = (
 SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION = (
     "e2r_v5_ranker_bound_weak_discovery_override_v2"
 )
+EXPLICIT_TEXT_REFERENCE_RANKING_SEMANTICS_VERSION = (
+    "e2r_v5_distinct_explicit_text_reference_ranking_v1"
+)
 
 # A production fetch remains bounded, while the complete fetched text stays
 # large enough for ordinary issuer filings to reach the downstream semantic
@@ -939,6 +942,11 @@ class ResearcherSourceGraphAcquirer:
         )
         _retire_nonmaterial_sparse_reference_transports(
             _mutable_candidates(),
+            materiality_decisions=ranking_rows,
+        )
+        _reopen_distinct_explicit_text_reference_candidates(
+            _mutable_candidates(),
+            evidence_documents=evidence_documents,
             materiality_decisions=ranking_rows,
         )
         _reconcile_terminal_candidate_ranking_fetch_handoff(
@@ -1805,6 +1813,7 @@ class ResearcherSourceGraphAcquirer:
             ranking_transport_candidate_ids=(
                 candidate_ranking_transport_candidate_ids
             ),
+            active_objective_ids=set(objective_by_id),
         )
         candidate_by_id = {
             str(row.get("candidate_id") or ""): row for row in candidates
@@ -7717,6 +7726,7 @@ def _reconcile_resolved_scope_candidate_ranking_statuses(
     *,
     resolved_objective_ids: set[str],
     ranking_transport_candidate_ids: set[str],
+    active_objective_ids: set[str] | None = None,
 ) -> None:
     """Make resolved ranking suppression explicit and reversible.
 
@@ -7747,10 +7757,11 @@ def _reconcile_resolved_scope_candidate_ranking_statuses(
             ).strip()
             or candidate.get("alternate_route_required") is True
         )
-        if (
-            ranking_status != "RESOLVED_SCOPE_NOT_RANKED"
-            and disposition
-        ):
+        terminal_scope_statuses = {
+            "RESOLVED_SCOPE_NOT_RANKED",
+            "SUPERSEDED_SCOPE_NOT_RANKED",
+        }
+        if ranking_status not in terminal_scope_statuses and disposition:
             candidate.pop(
                 "objective_resolution_transport_disposition",
                 None,
@@ -7760,15 +7771,31 @@ def _reconcile_resolved_scope_candidate_ranking_statuses(
                 None,
             )
             disposition = ""
+        scope_is_active = bool(
+            active_objective_ids is None
+            or candidate_objective_ids & active_objective_ids
+        )
         should_restore = bool(
-            ranking_status == "RESOLVED_SCOPE_NOT_RANKED"
-            and disposition == "RANKING_NOT_REQUIRED_SCOPE_RESOLVED"
-            and (
-                candidate_id in ranking_transport_candidate_ids
-                or not candidate_objective_ids.issubset(
-                    resolved_objective_ids
+            (
+                ranking_status == "RESOLVED_SCOPE_NOT_RANKED"
+                and disposition == "RANKING_NOT_REQUIRED_SCOPE_RESOLVED"
+                and (
+                    candidate_id in ranking_transport_candidate_ids
+                    or not candidate_objective_ids.issubset(
+                        resolved_objective_ids
+                    )
+                    or has_current_provenance_work
                 )
-                or has_current_provenance_work
+            )
+            or (
+                ranking_status == "SUPERSEDED_SCOPE_NOT_RANKED"
+                and disposition
+                == "RANKING_NOT_REQUIRED_SCOPE_SUPERSEDED"
+                and (
+                    candidate_id in ranking_transport_candidate_ids
+                    or scope_is_active
+                    or has_current_provenance_work
+                )
             )
         )
         if should_restore:
@@ -7787,15 +7814,29 @@ def _reconcile_resolved_scope_candidate_ranking_statuses(
             ranking_status != "PENDING"
             or str(candidate.get("fetch_status") or "") != "NOT_STARTED"
             or candidate_id in ranking_transport_candidate_ids
-            or not _candidate_scope_is_fully_resolved(
-                candidate,
-                resolved_objective_ids,
-            )
-            ):
+        ):
             continue
-        candidate["ranking_status"] = "RESOLVED_SCOPE_NOT_RANKED"
+        superseded_scope = bool(
+            active_objective_ids is not None
+            and candidate_objective_ids
+            and candidate_objective_ids.isdisjoint(active_objective_ids)
+            and not has_current_provenance_work
+        )
+        resolved_scope = _candidate_scope_is_fully_resolved(
+            candidate,
+            resolved_objective_ids,
+        )
+        if not superseded_scope and not resolved_scope:
+            continue
+        candidate["ranking_status"] = (
+            "SUPERSEDED_SCOPE_NOT_RANKED"
+            if superseded_scope
+            else "RESOLVED_SCOPE_NOT_RANKED"
+        )
         candidate["objective_resolution_transport_disposition"] = (
-            "RANKING_NOT_REQUIRED_SCOPE_RESOLVED"
+            "RANKING_NOT_REQUIRED_SCOPE_SUPERSEDED"
+            if superseded_scope
+            else "RANKING_NOT_REQUIRED_SCOPE_RESOLVED"
         )
         candidate[
             "objective_resolution_suppressed_objective_ids"
@@ -8804,6 +8845,178 @@ def _retire_nonmaterial_sparse_reference_transports(
         candidate.pop("sparse_reference_transport_revalidation_attempted", None)
         retired += 1
     return retired
+
+
+def _reopen_distinct_explicit_text_reference_candidates(
+    candidates: Sequence[dict[str, Any]],
+    *,
+    evidence_documents: Sequence[Mapping[str, Any]],
+    materiality_decisions: Sequence[Mapping[str, Any]],
+) -> int:
+    """Re-rank one old sparse child when its fetched parent cites the URL.
+
+    A sparse child historically exposed only a parent id to the semantic
+    ranker. That was not enough to distinguish a genuinely duplicated URL
+    from a different article linked in the parent's retained body. Re-open
+    only a same-host, explicitly cited, requested-family child with an exact
+    bound false decision, and do it once under a versioned contract. The LLM
+    still decides materiality and deterministic code still requires a full
+    fetch before evidence can exist.
+
+    Easy example: ``results-video/`` can contain a literal link to
+    ``results/``. Similar names and a parent edge do not prove identical
+    content; only a later content-hash comparison can do that.
+    """
+
+    decision_by_id = {
+        str(row.get("decision_id") or ""): row
+        for row in materiality_decisions
+        if str(row.get("decision_id") or "")
+    }
+    candidate_by_id = {
+        str(row.get("candidate_id") or ""): row
+        for row in candidates
+        if str(row.get("candidate_id") or "")
+    }
+    document_by_id = {
+        str(row.get("document_id") or ""): row
+        for row in evidence_documents
+        if str(row.get("document_id") or "")
+    }
+    reopened = 0
+    for candidate in candidates:
+        if (
+            candidate.get(
+                "explicit_text_reference_ranking_semantics_version"
+            )
+            == EXPLICIT_TEXT_REFERENCE_RANKING_SEMANTICS_VERSION
+            or str(candidate.get("ranking_status") or "")
+            != "NOT_MATERIAL"
+            or str(candidate.get("fetch_status") or "")
+            != "DISCOVERY_ONLY_NOT_FETCHED"
+            or not _candidate_is_reference_only(candidate)
+            or not _candidate_reference_metadata_is_sparse(candidate)
+            or candidate.get("reference_expansion_parent_authority_verified")
+            is not True
+        ):
+            continue
+        child_url = str(
+            candidate.get("normalized_url")
+            or candidate.get("url")
+            or ""
+        )
+        child_normalized = _normalize_url(child_url)
+        child_host = _normalized_host(child_url)
+        if not child_normalized or not child_host:
+            continue
+
+        explicit_parent_ids: list[str] = []
+        explicit_parent_urls: list[str] = []
+        for parent_id in candidate.get(
+            "graph_expansion_parent_candidate_ids"
+        ) or ():
+            parent = candidate_by_id.get(str(parent_id))
+            if parent is None:
+                continue
+            parent_url = str(
+                parent.get("normalized_url") or parent.get("url") or ""
+            )
+            if (
+                _normalized_host(parent_url) != child_host
+                or _normalize_url(parent_url) == child_normalized
+                or child_normalized
+                not in {
+                    _normalize_url(str(value))
+                    for value in parent.get(
+                        "discovered_text_referenced_urls"
+                    )
+                    or ()
+                    if str(value).strip()
+                }
+            ):
+                continue
+            explicit_parent_ids.append(str(parent_id))
+            explicit_parent_urls.append(_normalize_url(parent_url))
+        for parent_id in candidate.get(
+            "graph_expansion_parent_document_ids"
+        ) or ():
+            parent = document_by_id.get(str(parent_id))
+            if parent is None:
+                continue
+            parent_url = str(
+                parent.get("canonical_url") or parent.get("url") or ""
+            )
+            parent_text = str(
+                parent.get("content_text")
+                or parent.get("full_text")
+                or parent.get("content")
+                or ""
+            )
+            if (
+                _normalized_host(parent_url) != child_host
+                or _normalize_url(parent_url) == child_normalized
+                or not any(
+                    str(value).strip() in parent_text
+                    for value in (
+                        candidate.get("url"),
+                        candidate.get("normalized_url"),
+                    )
+                    if str(value or "").strip()
+                )
+            ):
+                continue
+            explicit_parent_ids.append(str(parent_id))
+            explicit_parent_urls.append(_normalize_url(parent_url))
+        if not explicit_parent_ids:
+            continue
+
+        decision = decision_by_id.get(
+            str(candidate.get("materiality_decision_id") or "")
+        )
+        requested_source_families = tuple(
+            str(value)
+            for value in candidate.get("requested_source_families") or ()
+            if str(value).strip()
+        )
+        scope_hash = _candidate_materiality_scope_hash(candidate)
+        if (
+            not _candidate_materiality_decision_binds_scope(
+                candidate=candidate,
+                decision=decision,
+                scope_hash=scope_hash,
+                requested_source_families=requested_source_families,
+            )
+            or not isinstance(decision, Mapping)
+            or decision.get("material_relevance") is not False
+            or str(
+                candidate.get("matched_requested_source_family") or ""
+            )
+            not in set(requested_source_families)
+        ):
+            continue
+
+        candidate[
+            "explicit_text_reference_ranking_semantics_version"
+        ] = EXPLICIT_TEXT_REFERENCE_RANKING_SEMANTICS_VERSION
+        candidate["explicit_text_reference"] = True
+        candidate["explicit_text_reference_parent_ids"] = list(
+            dict.fromkeys(explicit_parent_ids)
+        )
+        candidate["explicit_text_reference_parent_urls"] = list(
+            dict.fromkeys(explicit_parent_urls)
+        )
+        candidate["explicit_text_reference_content_identity_verified"] = (
+            False
+        )
+        _invalidate_candidate_materiality_for_scope_change(
+            candidate,
+            prior_scope_hash=scope_hash,
+            current_scope_hash=scope_hash,
+            reason="DISTINCT_EXPLICIT_TEXT_REFERENCE_REASSESSMENT",
+            force=True,
+        )
+        reopened += 1
+    return reopened
 
 
 def _reconcile_terminal_candidate_ranking_fetch_handoff(
