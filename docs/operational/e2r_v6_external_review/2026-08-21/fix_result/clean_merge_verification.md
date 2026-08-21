@@ -123,16 +123,18 @@ raw/cache를 복사하지 않은 detached worktree에서 GitHub `offline-contrac
 - PR delta 금지 경로: `.e2r_cache/**`, `data/cache/**`, `output/**` 추가 0개
 - Gate 1 tracked-receipt consistency: 4/4 PASS
 - production static audit: `E2R_V6_PRODUCTION_STATIC_AUDIT_PASS`, critical 0
-- full discovery: `PYTHONPATH=src python -m unittest discover -s tests -v` → 7,210 tests, failure 0, error 0, `OK (skipped=10)`, 563.000초
+- full discovery: `E2R_RUN_LIVE_TESTS=0 PYTHONPATH=src python -m unittest discover -s tests -v` → 7,210 tests, failure 0, error 0, `OK (skipped=38)`, 487.750초
 - Phase100: 15/15 PASS, failure/error/skip 0
 - `python -m compileall -q src tests`: exit 0
 - 테스트 뒤 `git status --porcelain --untracked-files=all`: 빈 결과
 
-skip 10개 중 3개는 기존 ignored live artifact 의존 테스트이고, 7개는 clean PR에 게시하지 않은 과거 live reviewer raw leaf가 있어야 실행할 수 있는 변조 테스트다. 이 7개는 raw leaf가 없을 때 성공으로 위장하지 않고 skip 사유를 명시한다. 대신 같은 class의 tracked reviewer receipt 검사는 역사적 영수증의 status/critical/roster 일관성을 확인한다.
+skip 38개 중 기존 10개는 ignored/raw live leaf 의존 테스트다. 추가 28개는 19개 unique real-provider 통합 테스트가 discovery import 중 일부 중복 수집된 횟수까지 포함한 값이다. real-provider 테스트는 `E2R_RUN_LIVE_TESTS=1`을 명시한 별도 승인 실행에서만 동작한다. raw leaf가 필요한 7개 과거 reviewer 변조 테스트도 성공으로 위장하지 않고 skip 사유를 명시한다. 대신 같은 class의 tracked reviewer receipt 검사는 역사적 영수증의 status/critical/roster 일관성을 확인한다.
 
 쉬운 예: 원본 계약서가 없는 환경에서 계약서 문구 변조 테스트를 억지로 PASS시키지 않는다. 해당 변조 테스트는 `raw leaf 미게시`로 skip하고, 배포된 결재 영수증은 “과거 영수증 일관성” 범위에서만 검사한다.
 
 workflow의 초기 `Verify tracked receipts offline` 단계는 아직 저장소에 없는 Phase101 미래 경로를 요구했다. 현재 PR 검증 단계는 실제 게시된 `Frozen000660Gate1AcceptanceTest`를 실행한다. main 전환용 Phase101 검증 경로는 `main-authority` job에 그대로 남아 있으며 이번 Gate 1 PR의 완료 증명으로 사용하지 않는다.
+
+첫 후속 GitHub run `32536834778`은 checkout/receipt/static audit까지 통과한 뒤 full discovery에서 failure 4, error 23으로 실패했다. 모두 Gate 1 로직이 아니라 `offline-contract` 안에서 OpenDART/KRX real-provider 통합 테스트를 실행한 환경 분리 결함이었다. 이후 workflow에 `E2R_RUN_LIVE_TESTS=0`을 고정하고 real-provider 테스트에 명시적 opt-in decorator를 추가했다. credential 부재 live path는 Stage 0, `score_valid=false`, `MISSING_CREDENTIAL:*` pending으로 검증한다.
 
 ## Git payload hard gate
 

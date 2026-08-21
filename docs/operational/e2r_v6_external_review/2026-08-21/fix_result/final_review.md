@@ -117,11 +117,11 @@ legacy copy-on-write 실행 영수증에는 신규 request/query/fetch/document/
 - 초기 branch 내부 영수증: focused 221개 PASS
 - 초기 branch 내부 영수증: full discovery 7,204개 PASS, 실패 0, 오류 0, skip 0
 - 초기 branch 내부 영수증: Phase100 15개 PASS
-- 독립 검수 수정 후 raw 없는 clean checkout: full discovery 7,210개, 실패 0, 오류 0, `OK (skipped=10)`
+- 독립 검수와 offline/live 분리 수정 후 raw 없는 clean checkout: full discovery 7,210개, 실패 0, 오류 0, `OK (skipped=38)`
 - 같은 clean checkout: Gate 1 receipt 4/4 PASS, production static audit critical 0, Phase100 15/15 PASS, compileall PASS, 테스트 후 Git status clean
 - 독립 GitHub Actions: 현재 head가 green이 되기 전에는 clean PR readiness를 선언하지 않음
 
-skip 10개는 ignored/raw live leaf 의존성이 명시된 테스트다. 그중 7개 과거 live reviewer 변조 검사는 raw leaf 미게시 상태에서 skip하며, tracked 결과를 fresh recomputation으로 부르지 않는다.
+skip 38개는 기존 ignored/raw leaf skip 10개와 real-provider 통합 테스트 19종의 discovery occurrence 28개다. real-provider 테스트는 `E2R_RUN_LIVE_TESTS=1` 승인 lane에서만 실행한다. 과거 tracked 결과를 fresh recomputation으로 부르지 않는다.
 
 ## 20. Gate 1 Reviewer
 
