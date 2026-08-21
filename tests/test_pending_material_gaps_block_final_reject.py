@@ -1,9 +1,11 @@
 import unittest
 
 from e2r.production.cutover_shadow import ProductionCutoverConfig, build_production_cutover_bundle
+from tests.live_test_policy import requires_live_test
 
 
 class PendingMaterialGapsBlockFinalRejectTests(unittest.TestCase):
+    @requires_live_test
     def test_pending_rows_have_recheck_reason_and_low_scores_are_watch_only(self):
         bundle = build_production_cutover_bundle(
             config=ProductionCutoverConfig(as_of_date="2026-06-30"),

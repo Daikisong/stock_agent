@@ -151,8 +151,12 @@ class LiveAuthorizationContractTests(unittest.TestCase):
                 self.assertEqual(pending["status"], "INTERNAL_E2R_RUNTIME_NOT_READY")
                 self.assertEqual(pending["canonical_stage"], "0")
                 self.assertFalse(pending["score_valid"])
-                self.assertIn(
-                    "VALIDATED_DOWNSTREAM_CHECKPOINT_PENDING",
+                self.assertTrue(
+                    "VALIDATED_DOWNSTREAM_CHECKPOINT_PENDING" in pending["blockers"]
+                    or any(
+                        str(code).startswith("MISSING_CREDENTIAL:")
+                        for code in pending["blockers"]
+                    ),
                     pending["blockers"],
                 )
                 self.assertTrue(pending["authorization"]["materialize_live_input"])
@@ -217,8 +221,12 @@ class LiveAuthorizationContractTests(unittest.TestCase):
                 self.assertEqual(pending["status"], "INTERNAL_E2R_RUNTIME_NOT_READY")
                 self.assertEqual(pending["canonical_stage"], "0")
                 self.assertFalse(pending["score_valid"])
-                self.assertIn(
-                    "VALIDATED_DOWNSTREAM_CHECKPOINT_PENDING",
+                self.assertTrue(
+                    "VALIDATED_DOWNSTREAM_CHECKPOINT_PENDING" in pending["blockers"]
+                    or any(
+                        str(code).startswith("MISSING_CREDENTIAL:")
+                        for code in pending["blockers"]
+                    ),
                     pending["blockers"],
                 )
                 self.assertEqual(

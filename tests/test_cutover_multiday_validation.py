@@ -4,9 +4,11 @@ import tempfile
 from pathlib import Path
 
 from e2r.production.cutover_shadow import ProductionCutoverConfig, build_production_cutover_bundle
+from tests.live_test_policy import requires_live_test
 
 
 class CutoverMultidayValidationTests(unittest.TestCase):
+    @requires_live_test
     def test_multiday_report_exposes_required_counts(self):
         bundle = build_production_cutover_bundle(
             config=ProductionCutoverConfig(as_of_date="2026-06-30"),
@@ -39,6 +41,7 @@ class CutoverMultidayValidationTests(unittest.TestCase):
         frozen_rows = [row for row in rows if row["run_kind"] == "frozen"]
         self.assertTrue(frozen_rows)
 
+    @requires_live_test
     def test_frozen_repeat_variance_uses_watchlist_score_stage_hash(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

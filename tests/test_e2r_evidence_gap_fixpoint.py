@@ -1045,6 +1045,7 @@ class Gate1WorkflowRegressionTest(unittest.TestCase):
             "tests.test_e2r_evidence_gap_fixpoint.Frozen000660Gate1AcceptanceTest",
             workflow,
         )
+        self.assertIn('E2R_RUN_LIVE_TESTS: "0"', workflow)
 
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@ from e2r.production.official_live_shadow import (
     _codex_planner_command,
     _real_codex_planner_runs_for_events,
 )
+from tests.live_test_policy import requires_live_test
 
 
 class CutoverPlannerProviderIdentityTests(unittest.TestCase):
@@ -30,6 +31,7 @@ class CutoverPlannerProviderIdentityTests(unittest.TestCase):
         self.assertNotIn("local-provider", command)
         self.assertNotIn("model_provider=local", command)
 
+    @requires_live_test
     def test_planner_report_counts_model_null_as_blocker_not_ready_claim(self):
         bundle = build_production_cutover_bundle(
             config=ProductionCutoverConfig(as_of_date="2026-06-30"),

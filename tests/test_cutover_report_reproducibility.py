@@ -6,6 +6,7 @@ from pathlib import Path
 
 from e2r.cli.audit_operational_report_reproducibility import audit_report_reproducibility
 from e2r.production.cutover_shadow import ProductionCutoverConfig, build_production_cutover_bundle
+from tests.live_test_policy import requires_live_test
 
 
 def _git(repo: Path, *args: str) -> str:
@@ -13,6 +14,7 @@ def _git(repo: Path, *args: str) -> str:
 
 
 class CutoverReportReproducibilityTests(unittest.TestCase):
+    @requires_live_test
     def test_metadata_contains_required_hashes(self):
         bundle = build_production_cutover_bundle(
             config=ProductionCutoverConfig(as_of_date="2026-06-30"),

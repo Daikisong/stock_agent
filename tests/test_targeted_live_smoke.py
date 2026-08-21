@@ -20,6 +20,7 @@ from e2r.research_brain.runtime.live_materialization.targeted_smoke import (
     _search_result_matches_llm_query,
     _select_claim_documents,
 )
+from tests.live_test_policy import requires_live_test
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,6 +55,7 @@ class TargetedLiveSmokeTest(unittest.TestCase):
             self.assertFalse(target["score_valid"])
             self.assertEqual(target["canonical_stage"], "0")
             self.assertTrue(target["full_thesis_status"]["status"].endswith("PENDING"))
+    @requires_live_test
     def test_current_krx_universe_yields_one_rule_sample_for_every_large_sector(self) -> None:
         config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
         universe = _read_jsonl(

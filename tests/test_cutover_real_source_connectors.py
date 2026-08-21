@@ -3,8 +3,10 @@ from datetime import date
 
 from e2r.production.source_connectors import build_default_source_provider_registry
 from e2r.production.cutover_shadow import ProductionCutoverConfig, build_production_cutover_bundle
+from tests.live_test_policy import requires_live_test
 
 
+@requires_live_test
 class CutoverRealSourceConnectorsTests(unittest.TestCase):
     def test_live_mode_provider_failure_is_not_counted_as_live_fetch(self):
         registry = build_default_source_provider_registry(".")
