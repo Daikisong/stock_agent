@@ -1,0 +1,49 @@
+{
+  "active_gap": {
+    "affected_component_ids": [
+      "earnings_visibility",
+      "information_confidence"
+    ],
+    "blocked_component_ids": [],
+    "capped_component_ids": [
+      "earnings_visibility",
+      "information_confidence"
+    ],
+    "disposition_id": "EGAPDISP-5f2f9b9418ecc7f2b9eed09e",
+    "gap_class": "CORROBORATION_CAP",
+    "gap_key": "EGAP-8a77a498da7b841002b8f40d"
+  },
+  "as_of_date": "2026-07-12",
+  "audit_date": "2026-08-22",
+  "hard_fail_conditions": {
+    "source_absence_fact_created_count": 0,
+    "third_same_gap_source_query_generation_count": 0,
+    "unrelated_component_fact_disappearance_count": 0
+  },
+  "identical_rerun": {
+    "accepted_lineage_changed": false,
+    "affected_component_reopened_count": 0,
+    "all_seven_component_decision_ids_stable": true,
+    "fact_snapshot_changed": false,
+    "same_gap_reopened_count": 0,
+    "source_corpus_changed": false,
+    "unrelated_component_reopened_count": 0
+  },
+  "preserved_unrelated_components": [
+    "eps_fcf_explosion",
+    "bottleneck_pricing",
+    "market_mispricing",
+    "valuation_rerating",
+    "capital_allocation"
+  ],
+  "reopen_conditions": [
+    "FACT_SNAPSHOT_CHANGED",
+    "ACCEPTED_LINEAGE_ROSTER_CHANGED",
+    "GENUINELY_NEW_SOURCE_ROUTE",
+    "PROVIDER_OR_PARSER_RECOVERED",
+    "NEW_CURRENT_EVENT"
+  ],
+  "schema_version": "e2r_v6_gate1_dependency_invalidation_audit_v1",
+  "target_id": "000660",
+  "verdict": "PASS"
+}

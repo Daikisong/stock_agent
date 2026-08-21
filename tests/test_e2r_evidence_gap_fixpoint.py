@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import json
 import unittest
+from pathlib import Path
 
 from e2r.research_brain.researcher_mode.evidence_gap import (
     EvidenceGapAuditLineage,
@@ -585,6 +587,83 @@ class SemanticNoNewRouteFixpointTest(unittest.TestCase):
                 disposition=disposition,
                 candidate_key=assessment.key,
             )
+
+
+class Frozen000660Gate1AcceptanceTest(unittest.TestCase):
+    """Receipt-backed acceptance fixture for the frozen 000660 snapshot."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.receipt_root = (
+            Path(__file__).resolve().parents[1]
+            / "docs"
+            / "operational"
+            / "e2r_v6_external_review"
+            / "2026-08-21"
+            / "fix_result"
+        )
+
+    def _json(self, name: str) -> dict[str, object]:
+        return json.loads(
+            (self.receipt_root / name).read_text(encoding="utf-8")
+        )
+
+    def _jsonl(self, name: str) -> list[dict[str, object]]:
+        return [
+            json.loads(line)
+            for line in (self.receipt_root / name)
+            .read_text(encoding="utf-8")
+            .splitlines()
+            if line.strip()
+        ]
+
+    def test_000660_snapshot_reaches_component_memos_after_fixpoint(
+        self,
+    ) -> None:
+        fixpoint = self._json("fixpoint_audit.json")
+        memos = self._jsonl("000660_component_memos_compact.jsonl")
+
+        self.assertEqual(fixpoint["status"], "PASS")
+        self.assertTrue(fixpoint["query_lane_exhausted"])
+        self.assertEqual(len(memos), 7)
+        self.assertTrue(all(row["research_complete"] for row in memos))
+
+    def test_000660_snapshot_completes_7_components_and_21_judges(
+        self,
+    ) -> None:
+        memos = self._jsonl("000660_component_memos_compact.jsonl")
+        judges = self._jsonl("000660_judge_decisions_compact.jsonl")
+        decisions = self._jsonl("000660_final_component_decisions.jsonl")
+
+        self.assertEqual(len({row["component_id"] for row in memos}), 7)
+        self.assertEqual(len(judges), 21)
+        self.assertEqual(len(decisions), 7)
+        self.assertTrue(all(row["status"] == "COMPLETE" for row in decisions))
+
+    def test_identical_000660_rerun_creates_no_new_query(self) -> None:
+        audit = self._json("identical_rerun_audit.json")
+        deltas = audit["deltas"]
+
+        self.assertIsInstance(deltas, dict)
+        self.assertEqual(deltas["new_source_query_generation_request_count"], 0)
+        self.assertEqual(deltas["new_search_provider_call_count"], 0)
+        self.assertEqual(deltas["new_fetch_count"], 0)
+        self.assertEqual(deltas["same_gap_reopened_count"], 0)
+
+    def test_identical_000660_rerun_has_zero_score_stage_variance(
+        self,
+    ) -> None:
+        audit = self._json("identical_rerun_audit.json")
+        deltas = audit["deltas"]
+        terminal = audit["terminal_state"]
+
+        self.assertIsInstance(deltas, dict)
+        self.assertIsInstance(terminal, dict)
+        self.assertEqual(deltas["recomputed_score_variance"], 0)
+        self.assertEqual(deltas["recomputed_stage_variance"], 0)
+        self.assertEqual(terminal["total_points"], 70.2)
+        self.assertEqual(terminal["canonical_stage"], "2")
+        self.assertTrue(terminal["score_valid"])
 
 
 if __name__ == "__main__":
