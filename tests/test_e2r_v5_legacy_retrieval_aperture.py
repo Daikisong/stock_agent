@@ -33,15 +33,34 @@ class E2RV5LegacyRetrievalApertureTests(unittest.TestCase):
             str(row["target_id"]): row for row in cls.snapshot["targets"]
         }
 
-    def test_committed_snapshot_and_audit_are_fully_reproducible(self) -> None:
-        rebuilt = build_legacy_retrieval_shadow_snapshot(self.ROOT)
-        self.assertEqual(rebuilt, self.snapshot)
+    def test_committed_snapshot_and_audit_rebuild_or_fail_closed(self) -> None:
         committed = json.loads(
             (
                 self.ROOT
                 / "docs/operational/e2r_v5_legacy_retrieval_parity.json"
             ).read_text(encoding="utf-8")
         )
+        try:
+            rebuilt = build_legacy_retrieval_shadow_snapshot(self.ROOT)
+        except FileNotFoundError as exc:
+            # Clean packaging intentionally excludes the legacy raw output tree.
+            # In that environment the committed audit is a historical receipt,
+            # and the raw rebuild must fail closed instead of being reported as
+            # a fresh clean-clone reproduction.
+            self.assertIn("legacy shadow source artifacts missing", str(exc))
+            self.assertIn("output/", str(exc))
+            self.assertNotEqual(self.audit["status"], PHASE92_PASS)
+            self.assertEqual(self.audit["critical_count_sum"], 1)
+            self.assertEqual(
+                self.audit["critical_counts"][
+                    "shadow_snapshot_rebuild_mismatch_count"
+                ],
+                1,
+            )
+            self.assertEqual(committed["status"], PHASE92_PASS)
+            self.assertEqual(committed["critical_count_sum"], 0)
+            return
+        self.assertEqual(rebuilt, self.snapshot)
         self.assertEqual(self.audit, committed)
         self.assertEqual(self.audit["status"], PHASE92_PASS)
         self.assertEqual(self.audit["critical_count_sum"], 0)
