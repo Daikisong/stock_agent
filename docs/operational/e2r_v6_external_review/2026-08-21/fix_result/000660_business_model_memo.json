@@ -1,0 +1,87 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "as_of_date": "2026-07-12",
+  "business_model_summary": "SK하이닉스는 DRAM·HBM 중심의 자본집약적 메모리 제조사다. AI 서버용 HBM 수요, 제품 믹스와 ASP가 매출·이익을 키우고, 선단공정·EUV·첨단 패키징 투자와 수율·감가상각·운전자본·세금이 FCF 전환을 좌우한다. HBM4 고객 요청 물량 양산과 ASIC 공동개발은 상용 수요를 지지하지만, 실명 고객별 확정 물량·가격·기간·취소보호·선수금·RPO까지 증명하지는 않는다.",
+  "capacity_and_supply_constraints": [
+    "메모리 전반 가동률과 HBM 패키징·수율 병목",
+    "M15X와 P&T7 증설은 공급 기반을 늘리지만 집행기간과 비용이 크다",
+    "브로커 CAPA 전망과 고객 요청 물량은 HBM 전용 sold-out 기간이나 고객별 allocation을 정량 증명하지 않는다"
+  ],
+  "confidence": 0.88,
+  "cost_and_cash_drivers": [
+    "HBM의 큰 die와 수율이 원가와 공급량에 미치는 영향",
+    "M15X·EUV·용인 인프라·P&T7 첨단 패키징 투자와 감가상각",
+    "영업현금흐름에서 CAPEX·세금·재고 등 운전자본을 차감한 FCF 전환",
+    "ADR 조달·현금·차입을 함께 사용하는 투자재원 구조"
+  ],
+  "customer_and_channel_dependencies": [
+    "주요 고객과 공급 물량·가격을 월별 또는 분기별 합의한다",
+    "상위 익명 고객의 연결 매출 비중이 높아 고객 집중 위험이 있다",
+    "고객 요청 HBM4 양산과 ASIC 협업은 직접 수요 경로지만 고객 실명과 계약조건은 공개되지 않았다"
+  ],
+  "fact_ids": [
+    "EFACT-0017d198c525e83abc3cd53e",
+    "EFACT-992f55758706446e53a38d38",
+    "EFACT-008d86b190177715c94e3977",
+    "EFACT-00d92ff690094ac0fc5892a2",
+    "EFACT-01bd5bf11e7ea117a9c03d52",
+    "EFACT-0295af0d92028218f77266f2",
+    "EFACT-032d8176aaa9e163e28dec03",
+    "EFACT-03933d87dba15a6ea1834562",
+    "EFACT-0548906d522ad9190ac33644",
+    "EFACT-090f8f72448959824cda66ea",
+    "EFACT-0acf42f2a7b3a54791c685ca",
+    "EFACT-0b646e9fc534aca87ab01c17",
+    "EFACT-0c3469f2afeb9c7c1e060e5c",
+    "EFACT-0c40e76ca25aec1371ba3790",
+    "EFACT-9657d8948101c516333a456b",
+    "EFACT-967f5b986a5ad74930421875",
+    "EFACT-9d3abfee72c1257fc8d9164d",
+    "EFACT-9deebb8473a44150b981c991",
+    "EFACT-9fdeaa2b756caf1fc9e5d690",
+    "EFACT-f86978c738cf0ab0f2cc5fe4",
+    "EFACT-f9993e88cad0558124e8a118",
+    "EFACT-f9fa114a3daa17bcad2e20e9",
+    "EFACT-fb9d043777dd8f6494d571c3",
+    "EFACT-fbebe9bd766d3ccabf23232b",
+    "EFACT-fd4139addbcd7b73fde272d4",
+    "EFACT-fd7995c7d059c87c9d390d9b",
+    "EFACT-fe3de19254ddabef098a6b03",
+    "EFACT-ff11c94625e0328af0a31c0d"
+  ],
+  "memo_id": "BMMEMO-4c3c238032aed7a0766819e6",
+  "research_complete": true,
+  "revenue_engines": [
+    "DRAM과 HBM의 출하량·제품 믹스·ASP 상승",
+    "AI 서버용 HBM 수요 확대와 HBM4 세대 전환",
+    "고객 요청 물량 양산 및 ASIC 공동개발을 통한 상용화 경로"
+  ],
+  "schema_version": "e2r_business_model_memo_v1",
+  "source_ids": [
+    "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+    "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+    "OFFICIALDOC-517ee88c46b03a911ecddcca",
+    "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+    "OFFICIALDOC-7ad7370ba36a061011a502fc",
+    "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+    "SGDOC-3fa5f1bda504b0cb332bde68",
+    "SGDOC-4ad58a46779d88509f7896e6",
+    "SGDOC-66906bdb3ebcd1c94bb85268",
+    "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+    "SGDOC-74492633cf8cbe35a5220a22",
+    "SGDOC-7620fd80beb92f0461d44a2d",
+    "SGDOC-82c4d529809691327e652074",
+    "SGDOC-a496f2fff2b891528afafbfd",
+    "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+    "SGDOC-cec48c4b300fe56a6ba42cb7",
+    "SGDOC-e387fbf074539d32a618025a",
+    "SGDOC-e4e768107cc43f617507017f"
+  ],
+  "target_id": "000660",
+  "uncertainties": [
+    "HBM별 realized ASP·수율·전용 CAPA·마진·FCF가 전사 또는 DRAM 수치와 완전히 분리되지 않는다",
+    "signed HBM 계약의 기간·물량·가격·취소·선수금·backlog/RPO가 공식 자료로 충분히 확인되지 않았다",
+    "브로커 전망과 장기 투자계획은 실제 실적·집행과 다를 수 있다",
+    "고객 실명과 제품별 매출 귀속이 공개되지 않았다"
+  ]
+}

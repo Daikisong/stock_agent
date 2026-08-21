@@ -2486,6 +2486,56 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             run.supervisor_review.unresolved_material_questions[0],
         )
 
+    def test_nonretryable_duplicate_zero_result_does_not_reopen_complete_memos(
+        self,
+    ) -> None:
+        class ClosedDuplicateProvider(Phase87SupervisorProvider):
+            def complete(self, *, pass_name, payload):
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                response["failure_assessments"] = [
+                    {
+                        **row,
+                        "classification": "DUPLICATE_QUERY",
+                        "retryable": False,
+                        "source_absence_claim_allowed": False,
+                        "rationale": (
+                            "다른 accepted route로 memo가 완결돼 같은 빈 query는 "
+                            "현재 material gap을 재개방하지 않는다."
+                        ),
+                    }
+                    for row in response["failure_assessments"]
+                ]
+                return response
+
+        review = ResearchSupervisor(
+            provider=ClosedDuplicateProvider("FORCE_READY")
+        ).review_epoch(
+            **_supervisor_inputs(
+                prior_failures=(
+                    {
+                        "failure_id": "FAIL-ZERO-CLOSED-DUPLICATE",
+                        "failure_kind": "QUERY_FAILURE",
+                        "failure_reason": "SEARCH_NO_RESULT_NOT_SATURATION",
+                        "absence_eligible": False,
+                        "zero_result_only": True,
+                    },
+                )
+            )
+        )
+
+        self.assertEqual(
+            review.status,
+            "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+        )
+        self.assertTrue(review.ready_for_independent_saturation_review)
+        self.assertFalse(review.failure_assessments[0].retryable)
+        self.assertEqual(
+            review.failure_assessments[0].classification,
+            "DUPLICATE_QUERY",
+        )
+
     def test_material_score_disagreement_reaches_supervisor_and_reopens_only_its_memo(
         self,
     ) -> None:
