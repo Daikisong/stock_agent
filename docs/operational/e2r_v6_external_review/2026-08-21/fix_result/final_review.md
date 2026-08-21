@@ -108,13 +108,16 @@ canonical Stage는 `2`, 상태는 `FINAL`이다. Green gate에서 `customer_preo
 
 ## 18. 동일 입력 재실행
 
-신규 request/query/fetch/document/fact는 0이고 score와 Stage variance도 0이다.
+legacy copy-on-write 실행 영수증에는 신규 request/query/fetch/document/fact 0, score와 Stage variance 0으로 기록돼 있다. 이 clean PR의 테스트는 그 compact 영수증끼리 값이 맞는지 확인한다. PR에는 996개 fact 원장이 없으므로 clean clone에서 70.2와 Stage 2를 새로 산출하는 raw replay는 아니다.
+
+쉬운 예: 계산 과정을 원재료부터 다시 실행한 것이 아니라, 계산서·검수표·최종 영수증에 모두 70.2가 적혀 있는지 대조한 것이다.
 
 ## 19. 테스트
 
-- focused: 221개 PASS
-- full discovery: 7,204개 PASS, 실패 0, 오류 0, skip 0
-- Phase100 재컴파일 검증: 15개 PASS
+- 초기 branch 내부 영수증: focused 221개 PASS
+- 초기 branch 내부 영수증: full discovery 7,204개 PASS, 실패 0, 오류 0, skip 0
+- 초기 branch 내부 영수증: Phase100 15개 PASS
+- 독립 GitHub Actions: 현재 head가 green이 되기 전에는 clean PR readiness를 선언하지 않음
 
 ## 20. Gate 1 Reviewer
 
@@ -133,5 +136,7 @@ Gate 1 외부 검토 후 original goal의 Phase101부터 순서대로 진행하�
 ## 23. Verdict
 
 `C06_ANALYST_MODE_RECOVERY_PASS`
+
+이 verdict는 000660 legacy 실행 및 tracked receipt의 내부 일관성에 관한 것이다. generic 운영 코드와 clean PR 병합 가능 여부는 독립 검수 수정 후 GitHub Actions green과 재검토를 별도로 통과해야 한다.
 
 `MEANINGFUL_E2R_OPERATIONAL_MARKET_CUTOVER_READY`는 이번 범위에서 평가하지 않았고 선언하지 않는다.

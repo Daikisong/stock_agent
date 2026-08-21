@@ -14,7 +14,10 @@ class AcceptanceProbeNotOrganicTests(unittest.TestCase):
     def test_controlled_probe_claim_is_excluded_from_scoring_plane(self) -> None:
         report = json.loads((ROOT / "docs/operational/e2r_live_acceptance_report.json").read_text())
         claim_id = report["accepted_claim_proof"]["claim_id"]
-        current_rows = [json.loads(line) for line in (ROOT / "output/current_operation/live_2026-07-10/accepted_claims.jsonl").read_text().splitlines() if line.strip()]
+        # The clean repository intentionally excludes the original output/**
+        # claim ledger.  The tracked acceptance receipt retains the complete
+        # probe row needed for this separation check.
+        current_rows = [dict(report["accepted_claim_proof"])]
         partition = partition_scoring_evidence(current_rows, controlled_probe_claim_ids=(claim_id,))
         audit = audit_probe_separation(partition=partition, scoring_decisions=())
         self.assertEqual(len(partition.organic_rows), 0)

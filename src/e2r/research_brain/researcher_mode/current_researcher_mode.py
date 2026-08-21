@@ -58,9 +58,12 @@ from .evidence_fact_extractor import (
 )
 from .evidence_fact_compiler import EvidenceFactCompiler
 from .evidence_gap import (
+    CORE_EVIDENCE_SOURCE_FAMILIES,
     EvidenceGapClass,
     EvidenceGapDisposition,
+    EvidenceGapKey,
     accepted_lineage_profile,
+    fact_has_core_economic_role,
     latest_evidence_gap_dispositions,
 )
 from .fact_lineage_materials import (
@@ -131,6 +134,7 @@ from .source_graph_explorer import (
     source_graph_checkpoint_audit_binding,
     source_graph_legacy_text_cap_document_ids,
     source_graph_pending_source_repair_ids,
+    _current_query_generation_evidence_gap,
     _supervisor_explicitly_exhausted_source_routes,
     validated_official_first_resolution_query_ids,
     validate_source_graph_checkpoint,
@@ -423,11 +427,16 @@ class CurrentResearcherModeTargetRunner:
             facts=prior_context["facts"],
             archetype_id=config.archetype_id,
         )
-        stable_gap_disposition_available = bool(
+        pending_lineage_gaps = tuple(
+            prior_context["source_queries_without_accepted_fact_lineage"]
+        )
+        current_nonblocking_gap_coverage_complete = bool(
             prior_source_checkpoint is not None
             and _source_checkpoint_has_current_nonblocking_gap_disposition(
                 prior_source_checkpoint,
                 evidence_gap_state=evidence_gap_state,
+                objectives=objective_rows,
+                pending_lineage_failures=pending_lineage_gaps,
             )
         )
         authoritative_fact_lineage_recovery_required = bool(
@@ -446,12 +455,12 @@ class CurrentResearcherModeTargetRunner:
         )
         source_context_requires_acquisition = bool(
             not authoritative_fact_lineage_recovery_required
-            and not stable_gap_disposition_available
             and (
                 prior_context["source_transport_pending_objective_ids"]
-                or prior_context[
-                    "source_queries_without_accepted_fact_lineage"
-                ]
+                or (
+                    pending_lineage_gaps
+                    and not current_nonblocking_gap_coverage_complete
+                )
                 # A newer Supervisor can explicitly close every public route
                 # after an older checkpoint recorded accepted-lineage waits.
                 # Re-run the deterministic acquirer once so it can prune those
@@ -2037,32 +2046,79 @@ def _source_checkpoint_has_current_nonblocking_gap_disposition(
     checkpoint: Mapping[str, Any],
     *,
     evidence_gap_state: Mapping[str, Any],
+    objectives: Sequence[Mapping[str, Any]],
+    pending_lineage_failures: Sequence[Mapping[str, Any]],
 ) -> bool:
-    """Honor a fixpoint only for the exact current fact/lineage snapshot."""
+    """Return true only when exact dispositions cover every pending gap.
+
+    A nonblocking disposition for gap A must never suppress a core gap B or
+    unrelated transport work.  Pending source-family failures are grouped by
+    stable objective, reconstructed against the current fact/lineage snapshot,
+    and matched by full gap key rather than a global boolean.
+    """
 
     dispositions = tuple(
         EvidenceGapDisposition.from_dict(row)
         for row in checkpoint.get("evidence_gap_dispositions") or ()
         if isinstance(row, Mapping)
     )
-    if not dispositions:
+    if not dispositions or not pending_lineage_failures:
         return False
     current = latest_evidence_gap_dispositions(dispositions)
-    return any(
-        row.query_lane_exhausted
-        and row.assessment.gap_class
-        in {
-            EvidenceGapClass.CORROBORATION_CAP,
-            EvidenceGapClass.MONITORING_GAP,
-        }
-        and row.key.fact_snapshot_hash
-        == str(evidence_gap_state.get("fact_snapshot_hash") or "")
-        and row.key.accepted_lineage_roster_hash
-        == str(
-            evidence_gap_state.get("accepted_lineage_roster_hash") or ""
+
+    def covered_nonblocking_gap(gap_key: EvidenceGapKey) -> bool:
+        return any(
+            row.query_lane_exhausted
+            and row.assessment.gap_class
+            in {
+                EvidenceGapClass.CORROBORATION_CAP,
+                EvidenceGapClass.MONITORING_GAP,
+            }
+            and row.key.gap_key == gap_key.gap_key
+            for row in current.values()
         )
-        for row in current.values()
+
+    combined_gap = _current_query_generation_evidence_gap(
+        target_id=str(checkpoint.get("target_id") or ""),
+        as_of_date=str(checkpoint.get("as_of_date") or ""),
+        objectives=objectives,
+        lineage_failures=pending_lineage_failures,
+        evidence_gap_state=evidence_gap_state,
     )
+    if combined_gap is None:
+        return False
+    combined_key, combined_assessment = combined_gap
+    if combined_assessment.gap_class == EvidenceGapClass.CORE_SCORE_BLOCKER:
+        return False
+    # Source Graph can persist one disposition for the exact combined roster.
+    # Accept it without requiring the same planner response to be split into
+    # artificial per-objective confirmations.
+    if covered_nonblocking_gap(combined_key):
+        return True
+
+    failures_by_objective: dict[str, list[Mapping[str, Any]]] = {}
+    for failure in pending_lineage_failures:
+        objective_id = str(failure.get("objective_id") or "").strip()
+        if not objective_id:
+            return False
+        failures_by_objective.setdefault(objective_id, []).append(failure)
+
+    for objective_id in sorted(failures_by_objective):
+        current_gap = _current_query_generation_evidence_gap(
+            target_id=str(checkpoint.get("target_id") or ""),
+            as_of_date=str(checkpoint.get("as_of_date") or ""),
+            objectives=objectives,
+            lineage_failures=tuple(failures_by_objective[objective_id]),
+            evidence_gap_state=evidence_gap_state,
+        )
+        if current_gap is None:
+            return False
+        gap_key, gap_assessment = current_gap
+        if gap_assessment.gap_class == EvidenceGapClass.CORE_SCORE_BLOCKER:
+            return False
+        if not covered_nonblocking_gap(gap_key):
+            return False
+    return True
 
 
 def _source_checkpoint_requires_exhausted_lineage_reconciliation(
@@ -6365,19 +6421,58 @@ def _deterministic_evidence_gap_state(
         claim_fact_links,
         active_fact_ids=active_fact_ids,
     )
-    component_fact_counts = {component_id: 0 for component_id in CANONICAL_COMPONENT_ORDER}
+    component_fact_counts = {
+        component_id: 0 for component_id in CANONICAL_COMPONENT_ORDER
+    }
+    core_economic_role_fact_counts = {
+        component_id: 0 for component_id in CANONICAL_COMPONENT_ORDER
+    }
+    source_family_fact_counts = {
+        component_id: {} for component_id in CANONICAL_COMPONENT_ORDER
+    }
+    source_family_by_document_id: dict[str, str] = {}
+    source_checkpoint_path = root / "source_graph_checkpoint.json"
+    if source_checkpoint_path.is_file():
+        source_checkpoint = _read_json(source_checkpoint_path)
+        source_family_by_document_id = {
+            str(row.get("document_id") or ""): str(
+                row.get("source_family") or ""
+            )
+            for row in source_checkpoint.get("evidence_documents") or ()
+            if isinstance(row, Mapping)
+            and str(row.get("document_id") or "")
+            and str(row.get("source_family") or "")
+        }
     for row in facts:
         if str(row.get("current_lifecycle") or "") in {
             "RESOLVED",
             "SUPERSEDED",
         }:
             continue
+        source_families = {
+            source_family_by_document_id.get(str(source_id or ""), "")
+            for source_id in row.get("source_ids") or ()
+        }
+        source_families.discard("")
         for component_id in row.get("allowed_component_ids") or ():
             normalized = str(component_id or "")
             if normalized in component_fact_counts:
                 component_fact_counts[normalized] += 1
+                for source_family in source_families:
+                    family_counts = source_family_fact_counts[normalized]
+                    family_counts[source_family] = int(
+                        family_counts.get(source_family) or 0
+                    ) + 1
+                if (
+                    source_families & CORE_EVIDENCE_SOURCE_FAMILIES
+                    and fact_has_core_economic_role(
+                        row,
+                        component_id=normalized,
+                    )
+                ):
+                    core_economic_role_fact_counts[normalized] += 1
     return {
-        "schema_version": "e2r_deterministic_evidence_gap_state_v1",
+        "schema_version": "e2r_deterministic_evidence_gap_state_v2",
         "archetype_id": archetype_id,
         "input_fact_count": int(projection["input_fact_count"]),
         "current_fact_count": int(projection["fact_count"]),
@@ -6390,6 +6485,22 @@ def _deterministic_evidence_gap_state(
             lineage["accepted_lineage_roster_hash"]
         ),
         "source_backed_fact_count_by_component": component_fact_counts,
+        "core_economic_role_fact_count_by_component": (
+            core_economic_role_fact_counts
+        ),
+        "source_backed_fact_count_by_component_and_source_family": (
+            source_family_fact_counts
+        ),
+        "source_family_binding_complete": all(
+            not row.get("source_ids")
+            or all(
+                str(source_id or "") in source_family_by_document_id
+                for source_id in row.get("source_ids") or ()
+            )
+            for row in facts
+            if str(row.get("current_lifecycle") or "")
+            not in {"RESOLVED", "SUPERSEDED"}
+        ),
         "every_current_fact_individually_citable": bool(
             projection["every_current_fact_individually_citable"]
         ),

@@ -56,6 +56,7 @@ from .evidence_gap import (
     MissingSourceRole,
     NoNewRouteConfirmation,
     SemanticNoNewRouteFixpoint,
+    classify_missing_source_role,
     latest_evidence_gap_dispositions,
 )
 from .schemas import ComponentResearchPlan, EvidenceFact
@@ -1495,7 +1496,15 @@ class ResearcherSourceGraphAcquirer:
                     else "REAL_LLM"
                 ),
             )
-            state["query_generation_history"].append(query_generation.to_dict())
+            query_generation_row = dict(query_generation.to_dict())
+            if current_evidence_gap is not None:
+                gap_key, _ = current_evidence_gap
+                query_generation_row.update(
+                    _query_generation_evidence_gap_binding(gap_key)
+                )
+            state["query_generation_history"].append(
+                query_generation_row
+            )
             query_generation_supervisor_handoff = (
                 _query_generation_reached_supervisor_handoff(
                     _query_generation_history_for_supervisor_contract(
@@ -3229,7 +3238,7 @@ def _validated_evidence_gap_state(
         return None
     if not isinstance(value, Mapping):
         raise ValueError("deterministic evidence gap state must be an object")
-    if value.get("schema_version") != "e2r_deterministic_evidence_gap_state_v1":
+    if value.get("schema_version") != "e2r_deterministic_evidence_gap_state_v2":
         raise ValueError("deterministic evidence gap state schema mismatch")
     if (
         value.get("prompt_or_supervisor_prose_in_identity") is not False
@@ -3255,6 +3264,36 @@ def _validated_evidence_gap_state(
         for count in component_counts.values()
     ):
         raise ValueError("deterministic component fact counts are invalid")
+    core_role_counts = value.get(
+        "core_economic_role_fact_count_by_component"
+    )
+    family_counts = value.get(
+        "source_backed_fact_count_by_component_and_source_family"
+    )
+    if (
+        not isinstance(core_role_counts, Mapping)
+        or set(core_role_counts) != set(component_counts)
+        or any(
+            isinstance(count, bool) or int(count) < 0
+            for count in core_role_counts.values()
+        )
+        or not isinstance(family_counts, Mapping)
+        or set(family_counts) != set(component_counts)
+        or any(
+            not isinstance(counts, Mapping)
+            or any(
+                not str(source_family or "").strip()
+                or isinstance(count, bool)
+                or int(count) < 0
+                for source_family, count in counts.items()
+            )
+            for counts in family_counts.values()
+        )
+        or not isinstance(value.get("source_family_binding_complete"), bool)
+    ):
+        raise ValueError(
+            "deterministic source-family economic-role coverage is invalid"
+        )
     return json.loads(json.dumps(value, ensure_ascii=False, default=str))
 
 
@@ -3301,13 +3340,13 @@ def _current_query_generation_evidence_gap(
     # template.  Missing customer-direct corroboration of an information
     # claim also bounds the durability/visibility component when that
     # component already has source-backed inputs.  It never opens a query.
-    component_counts = evidence_gap_state[
-        "source_backed_fact_count_by_component"
+    core_role_counts = evidence_gap_state[
+        "core_economic_role_fact_count_by_component"
     ]
     if (
         "information_confidence" in affected_components
         and "CUSTOMER_OFFICIAL" in source_families
-        and int(component_counts.get("earnings_visibility") or 0) > 0
+        and int(core_role_counts.get("earnings_visibility") or 0) > 0
     ):
         affected_components.add("earnings_visibility")
     affected_components.discard("")
@@ -3320,6 +3359,15 @@ def _current_query_generation_evidence_gap(
             "EGAPOBJSET", {"objective_ids": list(objective_ids)}
         )
     )
+    missing_source_role = (
+        classify_missing_source_role(
+            required_source_families=source_families,
+            affected_component_ids=tuple(affected_components),
+            core_economic_role_fact_count_by_component=core_role_counts,
+        )
+        if evidence_gap_state.get("source_family_binding_complete") is True
+        else MissingSourceRole.CORE_SCORE_SOURCE
+    )
     key = EvidenceGapKey(
         target_id=target_id,
         as_of_date=as_of_date,
@@ -3327,6 +3375,9 @@ def _current_query_generation_evidence_gap(
         objective_identity=objective_identity,
         affected_component_ids=tuple(affected_components),
         required_source_family=source_families,  # type: ignore[arg-type]
+        # Keep the existing semantic identity stable.  The deterministic
+        # source-family/economic-role policy changes the assessment class,
+        # not the identity of the already-observed accepted-lineage gap.
         economic_mechanism_id="CUSTOMER_OR_INDEPENDENT_CORROBORATION",
         predicate_or_fact_need_id="ACCEPTED_CLAIM_FACT_LINEAGE",
         fact_snapshot_hash=str(evidence_gap_state["fact_snapshot_hash"]),
@@ -3337,7 +3388,7 @@ def _current_query_generation_evidence_gap(
     source_backed_components = tuple(
         sorted(
             component_id
-            for component_id, count in component_counts.items()
+            for component_id, count in core_role_counts.items()
             if int(count or 0) > 0
         )
     )
@@ -3346,22 +3397,48 @@ def _current_query_generation_evidence_gap(
     )
     assessment = EvidenceGapAssessment.classify(
         key=key,
-        missing_source_role=(
-            MissingSourceRole.INDEPENDENT_CORROBORATION
-            if component_range_bounded
-            else MissingSourceRole.CORE_SCORE_SOURCE
-        ),
+        missing_source_role=missing_source_role,
         source_backed_component_ids=source_backed_components,
         component_range_bounded=component_range_bounded,
         could_change_score=True,
         could_change_stage=True,
         could_change_hard_break=False,
         economic_reason=(
-            "Current source-backed component inputs exist, while requested "
-            "independent source-family claim/fact lineage remains unconfirmed."
+            "The missing source role is derived from the requested source "
+            "family and primary economic-role coverage; raw component fact "
+            "count is diagnostic only."
         ),
     )
     return key, assessment
+
+
+def _query_generation_evidence_gap_binding(
+    key: EvidenceGapKey,
+) -> Mapping[str, Any]:
+    """Bind one planner response to its exact deterministic gap snapshot."""
+
+    return {
+        "evidence_gap_key": key.gap_key,
+        "semantic_gap_id": key.semantic_gap_id,
+        "objective_identity": key.objective_identity,
+        "fact_snapshot_hash": key.fact_snapshot_hash,
+        "accepted_lineage_roster_hash": (
+            key.accepted_lineage_roster_hash
+        ),
+        "required_source_family": key.required_source_family,
+    }
+
+
+def _query_generation_row_matches_evidence_gap(
+    row: Mapping[str, Any],
+    *,
+    key: EvidenceGapKey,
+) -> bool:
+    expected = _query_generation_evidence_gap_binding(key)
+    return all(
+        str(row.get(field) or "") == str(value)
+        for field, value in expected.items()
+    )
 
 
 def _query_generation_confirmations_for_gap(
@@ -3370,15 +3447,20 @@ def _query_generation_confirmations_for_gap(
     key: EvidenceGapKey,
     parser_or_fetch_repair_pending: bool,
 ) -> tuple[NoNewRouteConfirmation, ...]:
+    matching_history = tuple(
+        row
+        for row in history
+        if _query_generation_row_matches_evidence_gap(row, key=key)
+    )
     request_id_by_prompt: dict[str, str] = {}
-    for row in history:
+    for row in matching_history:
         prompt_hash = str(row.get("prompt_hash") or "")
         for reason in row.get("feedback_for_next_llm_call") or ():
             match = re.search(r"COLLABREQ-[0-9a-f]{64}", str(reason or ""))
             if prompt_hash and match is not None:
                 request_id_by_prompt[prompt_hash] = match.group(0)
     confirmations = []
-    for row in history:
+    for row in matching_history:
         prompt_hash = str(row.get("prompt_hash") or "")
         response_hash = str(row.get("response_hash") or "")
         if (

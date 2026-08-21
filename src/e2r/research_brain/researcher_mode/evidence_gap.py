@@ -97,6 +97,147 @@ _SOURCE_CORPUS_FIELDS = (
     "snippet_only",
 )
 
+# Source-family policy is intentionally economic-role based.  It does not
+# synthesize a query and it never branches on a target, sector, archetype, or
+# missing-slot name.  A missing primary filing/financial lane is always a
+# core gap.  A supporting/independent lane may be a corroboration cap only
+# after every affected component already has source-backed evidence for a
+# material economic role.
+CORE_REQUIRED_SOURCE_FAMILIES = frozenset(
+    {
+        "OPENDART",
+        "KIND_KRX",
+        "ISSUER_EARNINGS_RELEASE",
+        "ISSUER_PRESENTATION",
+        "FINANCIAL_STATEMENTS",
+        "SEGMENT_DATA",
+        "CASH_FLOW",
+        "MARKET_CAP_PRICE",
+        "CONSENSUS_REVISION",
+        "VALUATION_MULTIPLES",
+    }
+)
+SUPPORTING_CORROBORATION_SOURCE_FAMILIES = frozenset(
+    {
+        "ISSUER_NEWSROOM",
+        "CUSTOMER_OFFICIAL",
+        "REUTERS",
+        "TRUSTED_BUSINESS_MEDIA",
+        "PUBLIC_BROKER_PDF",
+        "INDUSTRY_REPORT",
+        "NAVER_DISCOVERY",
+        "GENERAL_WEB_DISCOVERY",
+    }
+)
+CORE_EVIDENCE_SOURCE_FAMILIES = frozenset(
+    {*CORE_REQUIRED_SOURCE_FAMILIES, "ISSUER_NEWSROOM"}
+)
+
+_COMMON_CORE_ECONOMIC_ROLE_MARKERS = frozenset(
+    {
+        "ACTUAL",
+        "ISSUER_OFFICIAL",
+        "SEGMENT_CONTRIBUTION",
+        "QOQ_GROWTH",
+        "FORWARD_GUIDANCE",
+        "EPS_REVISION",
+        "OPERATING_PROFIT_REVISION",
+        "DURABLE_VISIBILITY",
+        "CONSOLIDATED_REVENUE",
+        "CONSOLIDATED_NET_INCOME",
+        "OPERATING_PROFIT",
+        "BASIC_EARNINGS_PER_SHARE",
+        "BASIC_EPS",
+        "CASH_FLOW",
+        "CASH_BALANCE",
+        "CAPEX",
+        "CAPACITY_UTILIZATION",
+        "CONTRACT_LIABILITY",
+        "CUSTOMER_COMMITMENT",
+    }
+)
+_CORE_ECONOMIC_ROLE_MARKERS_BY_COMPONENT = {
+    "eps_fcf_explosion": frozenset(
+        {
+            "EARNINGS",
+            "EPS",
+            "FCF",
+            "FREE_CASH_FLOW",
+            "NET_INCOME",
+            "REVENUE",
+            "MARGIN",
+            "PROFIT",
+            "CASH_OUTFLOW",
+        }
+    ),
+    "earnings_visibility": frozenset(
+        {
+            "BACKLOG",
+            "RPO",
+            "CONTRACT",
+            "ORDER",
+            "GUIDANCE",
+            "REVISION",
+            "DEMAND_VISIBILITY",
+            "CAPACITY",
+            "SUPPLY_RESPONSE",
+            "CUSTOMER_COMMITMENT",
+        }
+    ),
+    "bottleneck_pricing": frozenset(
+        {
+            "ASP",
+            "PRICE",
+            "PRICING",
+            "CAPACITY",
+            "UTILIZATION",
+            "SHORTAGE",
+            "SUPPLY_RESPONSE",
+            "CUSTOMER_COMMITMENT",
+        }
+    ),
+    "market_mispricing": frozenset(
+        {
+            "CONSENSUS",
+            "REVISION",
+            "VALUATION",
+            "FORWARD_PB",
+            "FORWARD_EV_EBITDA",
+            "MARKET_CAP",
+        }
+    ),
+    "valuation_rerating": frozenset(
+        {
+            "VALUATION",
+            "FORWARD_PB",
+            "FORWARD_BOOK_VALUE",
+            "FORWARD_EV_EBITDA",
+            "MARKET_CAP",
+        }
+    ),
+    "capital_allocation": frozenset(
+        {
+            "CAPEX",
+            "INVESTMENT",
+            "DIVIDEND",
+            "BUYBACK",
+            "TREASURY_SHARE",
+            "BORROWINGS",
+            "CASH_BALANCE",
+        }
+    ),
+    "information_confidence": frozenset(
+        {
+            "REGULATORY",
+            "FILED",
+            "ISSUER_OFFICIAL",
+            "REPORTS",
+            "SOURCE_LINEAGE",
+            "INFORMATION_CONFIDENCE",
+        }
+    ),
+}
+
 
 def _canonical_hash(value: Any) -> str:
     return hashlib.sha256(
@@ -140,6 +281,90 @@ def _mapping(row: Mapping[str, Any] | Any) -> Mapping[str, Any]:
         if isinstance(value, Mapping):
             return value
     raise TypeError("evidence gap state rows must be mappings or expose to_dict")
+
+
+def fact_has_core_economic_role(
+    row: Mapping[str, Any],
+    *,
+    component_id: str,
+) -> bool:
+    """Return whether one fact covers a material role for a component.
+
+    Only structured role/tag fields and symbolic predicates participate.
+    Free-form mechanism prose is deliberately excluded, so a sentence such
+    as ``company profile`` cannot become core evidence merely because a model
+    wrote persuasive prose around it.
+    """
+
+    roles = {
+        str(value).strip().upper()
+        for field in (
+            "structured_evidence_roles",
+            "primitive_tags",
+            "question_family_tags",
+        )
+        for value in row.get(field) or ()
+        if str(value).strip()
+    }
+    predicate = str(row.get("predicate") or "").strip()
+    if predicate and _STABLE_TOKEN.fullmatch(predicate) is not None:
+        roles.add(predicate.upper())
+    allowed = (
+        _COMMON_CORE_ECONOMIC_ROLE_MARKERS
+        | _CORE_ECONOMIC_ROLE_MARKERS_BY_COMPONENT.get(
+            component_id, frozenset()
+        )
+    )
+    return any(
+        role == marker
+        or role.startswith(marker + "_")
+        or role.endswith("_" + marker)
+        or (len(marker) >= 5 and marker in role)
+        for role in roles
+        for marker in allowed
+    )
+
+
+def classify_missing_source_role(
+    *,
+    required_source_families: Sequence[str],
+    affected_component_ids: Sequence[str],
+    core_economic_role_fact_count_by_component: Mapping[str, Any],
+) -> MissingSourceRole:
+    """Classify a source gap without using raw fact count as authority.
+
+    Missing primary filings/financial lanes are core even when a component
+    happens to contain a weak profile fact. Supporting source families are
+    corroboration only when every affected component already has at least one
+    primary, economic-role-matched fact. Unknown families fail closed.
+    """
+
+    families = {
+        str(value).strip().upper()
+        for value in required_source_families
+        if str(value).strip()
+    }
+    affected = {
+        str(value).strip()
+        for value in affected_component_ids
+        if str(value).strip()
+    }
+    if (
+        not families
+        or not affected
+        or families & CORE_REQUIRED_SOURCE_FAMILIES
+        or not families.issubset(
+            SUPPORTING_CORROBORATION_SOURCE_FAMILIES
+        )
+    ):
+        return MissingSourceRole.CORE_SCORE_SOURCE
+    if all(
+        int(core_economic_role_fact_count_by_component.get(component_id) or 0)
+        > 0
+        for component_id in affected
+    ):
+        return MissingSourceRole.INDEPENDENT_CORROBORATION
+    return MissingSourceRole.CORE_SCORE_SOURCE
 
 
 def accepted_lineage_profile(

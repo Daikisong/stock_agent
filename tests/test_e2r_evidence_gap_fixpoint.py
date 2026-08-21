@@ -18,9 +18,18 @@ from e2r.research_brain.researcher_mode.evidence_gap import (
     accepted_lineage_profile,
     canonical_current_pending_request_ids,
     derive_objective_identity,
+    fact_has_core_economic_role,
     guard_source_query_generation,
     latest_evidence_gap_dispositions,
     source_corpus_profile,
+)
+from e2r.research_brain.researcher_mode.current_researcher_mode import (
+    _source_checkpoint_has_current_nonblocking_gap_disposition,
+)
+from e2r.research_brain.researcher_mode.source_graph_explorer import (
+    _current_query_generation_evidence_gap,
+    _query_generation_confirmations_for_gap,
+    _query_generation_evidence_gap_binding,
 )
 
 
@@ -588,9 +597,357 @@ class SemanticNoNewRouteFixpointTest(unittest.TestCase):
                 candidate_key=assessment.key,
             )
 
+    def test_empty_responses_for_another_gap_do_not_close_current_gap(
+        self,
+    ) -> None:
+        current = self._assessment()
+        other_key = EvidenceGapKey(
+            **{
+                **current.key.identity_payload(),
+                "objective_identity": "SGOBJ-other-gap",
+            }
+        )
+        history = []
+        for ordinal in (1, 2):
+            row = {
+                "prompt_hash": f"QUERYPROMPT-other-{ordinal}",
+                "response_hash": f"QUERYRESP-other-{ordinal}",
+                "queries": [],
+                "new_source_directions": [],
+                "unresolved_research_notes": ["다른 공백은 미확인이다."],
+                "feedback_for_next_llm_call": [],
+                "provider_error": False,
+            }
+            row.update(_query_generation_evidence_gap_binding(other_key))
+            history.append(row)
+
+        confirmations = _query_generation_confirmations_for_gap(
+            history=history,
+            key=current.key,
+            parser_or_fetch_repair_pending=False,
+        )
+        fixpoint = SemanticNoNewRouteFixpoint(
+            key=current.key,
+            confirmations=confirmations,
+        )
+
+        self.assertEqual((), confirmations)
+        self.assertFalse(fixpoint.reached)
+
+        same_gap_history = []
+        for ordinal in (1, 2):
+            row = {
+                "prompt_hash": f"QUERYPROMPT-current-{ordinal}",
+                "response_hash": f"QUERYRESP-current-{ordinal}",
+                "queries": [],
+                "new_source_directions": [],
+                "unresolved_research_notes": ["현재 공백은 미확인이다."],
+                "feedback_for_next_llm_call": [],
+                "deterministic_fallback_query_used": False,
+            }
+            row.update(
+                _query_generation_evidence_gap_binding(current.key)
+            )
+            same_gap_history.append(row)
+        exact_confirmations = _query_generation_confirmations_for_gap(
+            history=(*history, *same_gap_history),
+            key=current.key,
+            parser_or_fetch_repair_pending=False,
+        )
+        self.assertEqual(2, len(exact_confirmations))
+        self.assertTrue(
+            SemanticNoNewRouteFixpoint(
+                key=current.key,
+                confirmations=exact_confirmations,
+            ).reached
+        )
+
+
+class EvidenceGapIntegrationPolicyTest(unittest.TestCase):
+    def _state(
+        self,
+        *,
+        raw_counts: dict[str, int],
+        core_role_counts: dict[str, int],
+    ) -> dict[str, object]:
+        return {
+            "schema_version": "e2r_deterministic_evidence_gap_state_v2",
+            "archetype_id": "TEST_ARCHETYPE",
+            "fact_snapshot_hash": "a" * 64,
+            "accepted_lineage_roster_hash": "b" * 64,
+            "source_backed_fact_count_by_component": raw_counts,
+            "core_economic_role_fact_count_by_component": core_role_counts,
+            "source_backed_fact_count_by_component_and_source_family": {
+                component_id: {} for component_id in raw_counts
+            },
+            "source_family_binding_complete": True,
+        }
+
+    def _current_gap(
+        self,
+        *,
+        objectives: tuple[dict[str, str], ...],
+        failures: tuple[dict[str, str], ...],
+        state: dict[str, object],
+    ) -> tuple[EvidenceGapKey, EvidenceGapAssessment]:
+        result = _current_query_generation_evidence_gap(
+            target_id="TEST_TARGET",
+            as_of_date="2026-07-12",
+            objectives=objectives,
+            lineage_failures=failures,
+            evidence_gap_state=state,
+        )
+        self.assertIsNotNone(result)
+        return result  # type: ignore[return-value]
+
+    def test_weak_profile_fact_does_not_hide_missing_primary_source(
+        self,
+    ) -> None:
+        self.assertFalse(
+            fact_has_core_economic_role(
+                {
+                    "predicate": "COMPANY_PROFILE",
+                    "structured_evidence_roles": ["GENERAL_PROFILE"],
+                },
+                component_id="eps_fcf_explosion",
+            )
+        )
+        objectives = (
+            {
+                "objective_id": "OBJ-FCF",
+                "component_id": "eps_fcf_explosion",
+            },
+        )
+        failures = (
+            {
+                "objective_id": "OBJ-FCF",
+                "source_family": "CASH_FLOW",
+            },
+        )
+        _, assessment = self._current_gap(
+            objectives=objectives,
+            failures=failures,
+            state=self._state(
+                raw_counts={"eps_fcf_explosion": 1},
+                core_role_counts={"eps_fcf_explosion": 0},
+            ),
+        )
+
+        self.assertEqual(
+            EvidenceGapClass.CORE_SCORE_BLOCKER,
+            assessment.gap_class,
+        )
+        self.assertTrue(assessment.global_score_block)
+
+    def test_customer_gap_is_cap_after_primary_economic_evidence_exists(
+        self,
+    ) -> None:
+        self.assertTrue(
+            fact_has_core_economic_role(
+                {
+                    "predicate": "consolidated_net_income",
+                    "structured_evidence_roles": ["ACTUAL"],
+                },
+                component_id="eps_fcf_explosion",
+            )
+        )
+        objectives = (
+            {
+                "objective_id": "OBJ-CUSTOMER",
+                "component_id": "information_confidence",
+            },
+        )
+        failures = (
+            {
+                "objective_id": "OBJ-CUSTOMER",
+                "source_family": "CUSTOMER_OFFICIAL",
+            },
+        )
+        _, assessment = self._current_gap(
+            objectives=objectives,
+            failures=failures,
+            state=self._state(
+                raw_counts={
+                    "information_confidence": 3,
+                    "earnings_visibility": 4,
+                },
+                core_role_counts={
+                    "information_confidence": 2,
+                    "earnings_visibility": 2,
+                },
+            ),
+        )
+
+        self.assertEqual(
+            EvidenceGapClass.CORROBORATION_CAP,
+            assessment.gap_class,
+        )
+        self.assertFalse(assessment.global_score_block)
+
+    def test_one_cap_disposition_does_not_cover_another_core_gap(
+        self,
+    ) -> None:
+        customer_objective = {
+            "objective_id": "OBJ-CUSTOMER",
+            "component_id": "information_confidence",
+        }
+        customer_failure = {
+            "objective_id": "OBJ-CUSTOMER",
+            "source_family": "CUSTOMER_OFFICIAL",
+        }
+        state = self._state(
+            raw_counts={
+                "information_confidence": 3,
+                "earnings_visibility": 4,
+                "eps_fcf_explosion": 1,
+            },
+            core_role_counts={
+                "information_confidence": 2,
+                "earnings_visibility": 2,
+                "eps_fcf_explosion": 0,
+            },
+        )
+        _, cap_assessment = self._current_gap(
+            objectives=(customer_objective,),
+            failures=(customer_failure,),
+            state=state,
+        )
+        cap_disposition = EvidenceGapDisposition.unresolved(
+            assessment=cap_assessment,
+            attempted_route_signatures=("ROUTE-CUSTOMER",),
+            no_new_route_confirmation_ids=("CONFIRM-1", "CONFIRM-2"),
+        )
+        checkpoint = {
+            "target_id": "TEST_TARGET",
+            "as_of_date": "2026-07-12",
+            "evidence_gap_dispositions": [cap_disposition.to_dict()],
+        }
+        fcf_objective = {
+            "objective_id": "OBJ-FCF",
+            "component_id": "eps_fcf_explosion",
+        }
+        fcf_failure = {
+            "objective_id": "OBJ-FCF",
+            "source_family": "CASH_FLOW",
+        }
+
+        covered = _source_checkpoint_has_current_nonblocking_gap_disposition(
+            checkpoint,
+            evidence_gap_state=state,
+            objectives=(customer_objective, fcf_objective),
+            pending_lineage_failures=(customer_failure, fcf_failure),
+        )
+
+        self.assertFalse(covered)
+
+    def test_each_pending_nonblocking_gap_requires_its_own_disposition(
+        self,
+    ) -> None:
+        objectives = (
+            {
+                "objective_id": "OBJ-CUSTOMER",
+                "component_id": "information_confidence",
+            },
+            {
+                "objective_id": "OBJ-BROKER",
+                "component_id": "market_mispricing",
+            },
+        )
+        failures = (
+            {
+                "objective_id": "OBJ-CUSTOMER",
+                "source_family": "CUSTOMER_OFFICIAL",
+            },
+            {
+                "objective_id": "OBJ-BROKER",
+                "source_family": "PUBLIC_BROKER_PDF",
+            },
+        )
+        state = self._state(
+            raw_counts={
+                "information_confidence": 3,
+                "earnings_visibility": 4,
+                "market_mispricing": 2,
+            },
+            core_role_counts={
+                "information_confidence": 2,
+                "earnings_visibility": 2,
+                "market_mispricing": 1,
+            },
+        )
+        dispositions = []
+        for failure in failures:
+            _, assessment = self._current_gap(
+                objectives=objectives,
+                failures=(failure,),
+                state=state,
+            )
+            dispositions.append(
+                EvidenceGapDisposition.unresolved(
+                    assessment=assessment,
+                    attempted_route_signatures=("ROUTE",),
+                    no_new_route_confirmation_ids=(
+                        "CONFIRM-1",
+                        "CONFIRM-2",
+                    ),
+                ).to_dict()
+            )
+        checkpoint = {
+            "target_id": "TEST_TARGET",
+            "as_of_date": "2026-07-12",
+            "evidence_gap_dispositions": dispositions,
+        }
+
+        _, combined_assessment = self._current_gap(
+            objectives=objectives,
+            failures=failures,
+            state=state,
+        )
+        combined_checkpoint = {
+            **checkpoint,
+            "evidence_gap_dispositions": [
+                EvidenceGapDisposition.unresolved(
+                    assessment=combined_assessment,
+                    attempted_route_signatures=("ROUTE-COMBINED",),
+                    no_new_route_confirmation_ids=(
+                        "CONFIRM-1",
+                        "CONFIRM-2",
+                    ),
+                ).to_dict()
+            ],
+        }
+
+        self.assertTrue(
+            _source_checkpoint_has_current_nonblocking_gap_disposition(
+                checkpoint,
+                evidence_gap_state=state,
+                objectives=objectives,
+                pending_lineage_failures=failures,
+            )
+        )
+        self.assertTrue(
+            _source_checkpoint_has_current_nonblocking_gap_disposition(
+                combined_checkpoint,
+                evidence_gap_state=state,
+                objectives=objectives,
+                pending_lineage_failures=failures,
+            )
+        )
+        self.assertFalse(
+            _source_checkpoint_has_current_nonblocking_gap_disposition(
+                {
+                    **checkpoint,
+                    "evidence_gap_dispositions": dispositions[:1],
+                },
+                evidence_gap_state=state,
+                objectives=objectives,
+                pending_lineage_failures=failures,
+            )
+        )
+
 
 class Frozen000660Gate1AcceptanceTest(unittest.TestCase):
-    """Receipt-backed acceptance fixture for the frozen 000660 snapshot."""
+    """Tracked-receipt consistency checks for the frozen 000660 run."""
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -640,7 +997,7 @@ class Frozen000660Gate1AcceptanceTest(unittest.TestCase):
         self.assertEqual(len(decisions), 7)
         self.assertTrue(all(row["status"] == "COMPLETE" for row in decisions))
 
-    def test_identical_000660_rerun_creates_no_new_query(self) -> None:
+    def test_tracked_rerun_receipt_reports_no_new_query(self) -> None:
         audit = self._json("identical_rerun_audit.json")
         deltas = audit["deltas"]
 
@@ -650,7 +1007,7 @@ class Frozen000660Gate1AcceptanceTest(unittest.TestCase):
         self.assertEqual(deltas["new_fetch_count"], 0)
         self.assertEqual(deltas["same_gap_reopened_count"], 0)
 
-    def test_identical_000660_rerun_has_zero_score_stage_variance(
+    def test_tracked_rerun_receipt_reports_zero_score_stage_variance(
         self,
     ) -> None:
         audit = self._json("identical_rerun_audit.json")
@@ -664,6 +1021,26 @@ class Frozen000660Gate1AcceptanceTest(unittest.TestCase):
         self.assertEqual(terminal["total_points"], 70.2)
         self.assertEqual(terminal["canonical_stage"], "2")
         self.assertTrue(terminal["score_valid"])
+
+
+class Gate1WorkflowRegressionTest(unittest.TestCase):
+    def test_portable_checkout_checks_pr_delta_not_base_output_tree(
+        self,
+    ) -> None:
+        workflow = (
+            Path(__file__).resolve().parents[1]
+            / ".github"
+            / "workflows"
+            / "e2r_v6_operational_cutover_verify.yml"
+        ).read_text(encoding="utf-8")
+
+        self.assertNotIn("test ! -d output", workflow)
+        self.assertIn("git diff --name-only", workflow)
+        self.assertIn(".e2r_cache/*|data/cache/*|output/*", workflow)
+        self.assertIn(
+            "git status --porcelain --untracked-files=all",
+            workflow,
+        )
 
 
 if __name__ == "__main__":
