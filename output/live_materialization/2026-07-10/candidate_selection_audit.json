@@ -1,0 +1,34 @@
+{
+  "acquisition_eligible_count": 40,
+  "as_of_date": "2026-07-10",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "acquisition_budget_exceeded": 0,
+    "brain_budget_exceeded": 0,
+    "deep_budget_exceeded": 0,
+    "duplicate_depth_target": 0,
+    "eligible_depth_decision_count_mismatch": 0,
+    "forced_archetype_quota": 0,
+    "not_selected_without_reason": 0,
+    "official_light_budget_exceeded": 0,
+    "selected_deep_empty": 0,
+    "unbounded_candidate": 0
+  },
+  "depth_decision_count": 2542,
+  "depth_distribution": {
+    "L1_BASELINE": 2123,
+    "L2_OFFICIAL_LIGHT": 379,
+    "L3_RESEARCH_BRAIN": 40
+  },
+  "eligible_universe_count": 2542,
+  "forced_archetype_quota_count": 0,
+  "hard_acceptance_pass": true,
+  "not_selected_count": 2502,
+  "not_selected_without_reason_count": 0,
+  "schema_version": "e2r_live_depth_selection_audit_v1",
+  "selected_brain_count": 40,
+  "selected_deep_count": 40,
+  "selected_official_light_count": 419,
+  "status": "CURRENT_DEPTH_SELECTION_PASS",
+  "unbounded_candidate_count": 0
+}

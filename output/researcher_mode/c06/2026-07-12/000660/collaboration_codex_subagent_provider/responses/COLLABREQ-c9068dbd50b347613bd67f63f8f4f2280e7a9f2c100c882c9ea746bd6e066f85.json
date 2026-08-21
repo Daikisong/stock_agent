@@ -1,0 +1,40 @@
+{
+  "output_schema_hash": "ec0f431a29b162372012c0cd696ab9900d51ff6ba3053d54f28ea097c60e9ea0",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-8653a337d4832bd76afdab9b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "t.me/kirsofficial은 특정 보고서 원문이 아니라 텔레그램 채널 홈 주소다. published_at, snippet, full_fetch_content_text와 full_fetch_document_id가 모두 없고 parent_authority_verified=false이므로 PUBLIC_BROKER_PDF·VALUATION_MULTIPLES·INDUSTRY_REPORT 어느 요청 source family도 검증하지 못한다. 부모 문서가 이 채널을 참조했다는 사실만으로 현재 valuation_rerating 근거를 새로 만들 수 없어 nonmaterial로 분류한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "a27b9e6933090b492d486c1915b3e58a5097a1ca687831550e0280edfdc673c4",
+  "production_score_authority": false,
+  "prompt_hash": "86b43caf37663cc70c47cc9f90f106df75fddfe8e1121ac33bfa24f307f614ae",
+  "provenance": {
+    "agent_id": "root-phase101-c06-ranking",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_ranking",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c9068dbd50b347613bd67f63f8f4f2280e7a9f2c100c882c9ea746bd6e066f85",
+  "response_id": "COLLABRESP-219e3cb191f0fca64e621b3a10599346b97aeedda86fcc46512535c2900baf8d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

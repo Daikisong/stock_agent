@@ -1,0 +1,77 @@
+{
+  "output_schema_hash": "2ff85f9c082bf035858a1df1b9e11f5066425d8dacf24e71272e151dab88a505",
+  "payload": {
+    "allowed_range": [
+      3.0,
+      5.2
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-cf3c9742b856a43c5c18a073의 약한 positive 중간값 0.36보다 현재 HBM 매출 두 배 이상 성장, 고객 요청 HBM4 양산, DRAM 매출 actual이 분명히 강하다.",
+      "ORDTRANSFER-c54e0c02076da1642b64c8df의 medium positive 범위 4.32~5.52가 가장 가까운 positive 비교다. 현재 실물 증거는 이 범위를 지지하지만 혼재한 valuation과 HBM-only 경제성 공백 때문에 중간값 4.92보다 보수적으로 본다.",
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a의 strong positive 11.4~12.0에는 명시적 장기 order visibility와 공급 잠김에 가까운 경제적 서명이 필요하다. 현재 고객 요청 양산·수요초과는 긍정적이지만 계약 가격·물량·기간·allocation 보호가 없어 그 수준에 미달한다.",
+      "ORDTRANSFER-a99b35934948524825bcefbe의 zero counter 0.0~0.6보다 현재 source-backed HBM 성장·양산·메모리 수익전환이 훨씬 강해 0점대는 부적절하다.",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b의 weak counter 2.83~4.03이 가장 가까운 counter 비교다. 고객집중·재고·계약손실과 비싼 일부 valuation은 유사한 제약이지만 현재 양산·수요·매출 actual 때문에 하단보다는 높게 본다.",
+      "ORDTRANSFER-75306723611a10615f950fec의 strong counter 11.4~12.0은 사실 서명이 다른 low-confidence ordinal proxy라 현재 점수를 상단으로 끌 근거가 아니다. 현재 자료 자체의 valuation 분모와 계약경제 경계를 우선한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c07ed486e6d67134d19d6951",
+      "EFACT-c418009dc8a6493dd0a098b4"
+    ],
+    "disagreements": [
+      "Researcher의 positive case보다 memory-wide 가동률·투자계획의 HBM 귀속을 더 크게 할인한다. 이들은 HBM 전용 수치 CAPA나 고객별 잠김 물량이 아니다.",
+      "낮은 forward PE를 단독 rerating 신호로 보지 않는다. 높은 forward EV/EBITDA·PB, 낮은 forward FCF yield와 높은 trailing 지표가 동시에 존재해 분모별 신호가 충돌한다.",
+      "고객 요청 HBM4 양산과 ASIC 협업은 실행·관계 증거이지만 signed purchase economics가 아니므로 계약 가시성 공백을 해소하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 4.0,
+    "rationale": "Skeptic 평가는 12점 중 4.0점이다. 긍정 측면에서는 FY2025 HBM 매출이 전년 대비 두 배 이상 성장했고, HBM4가 고객 요청 수량으로 현재 양산 중이며, HBM이 2026Q1 가격상승과 고부가 제품 판매에 기여했다. 별도 DRAM 매출의 전년 대비 증가, 메모리 설비 100% 평균가동, 수요가 공급역량을 웃돈다는 issuer 설명, M15X·용인·패키징 투자도 rerating의 실물 기반이다. 그러나 100% 가동과 투자계획은 memory-wide이고 HBM 전용 CAPA 잠김이나 고객 allocation이 아니다. Forward PE 6.13배만 낮은 반면 forward EV/EBITDA 27.21배, forward PB 6.91배, forward FCF yield 1.78%, trailing PE 20.68배와 PB 9.46배가 혼재한다. HBM-only 매출액·mix·margin·CAPEX·FCF bridge와 signed 가격·물량·기간·취소조건이 없고, 복수 10% 초과 고객집중, 재고평가충당, 재공품과 계약손실충당이 상단을 제약한다. 따라서 nearest medium-positive와 weak-counter anchor 사이에 중심을 두되 actual 양산·매출을 반영해 zero/weak 하단보다 높게 둔다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-58437e66a64e47597ab0071d",
+      "EFACT-65b0834b92258006acfacf85",
+      "EFACT-793b1cbbdc783d3329b6d6c8",
+      "EFACT-8745489d83eba20d5f7d2efb",
+      "EFACT-9657d8948101c516333a456b",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-ba66b6dd060612b4ef02b2c0",
+      "EFACT-bb91ecbbd8d864664f4994f5",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-e7b5a6f6472ae963fe820932",
+      "EFACT-fbebe9bd766d3ccabf23232b",
+      "EFACT-fd7995c7d059c87c9d390d9b",
+      "EFACT-fe3de19254ddabef098a6b03"
+    ],
+    "why_not_higher": "HBM4 양산과 HBM 매출 성장에도 HBM-only 이익·FCF·CAPEX denominator, signed 고객 가격·물량·기간·취소조건, HBM 전용 CAPA 잠김이 없다. 높은 forward EV/EBITDA·PB, 낮은 FCF yield, 고객집중과 재고·계약손실 위험까지 있어 medium anchor 상단 이상은 정당화되지 않는다.",
+    "why_not_lower": "HBM 매출 두 배 이상 성장, 고객 요청 HBM4 현재 양산, HBM 가격상승 기여, DRAM 매출 확대, 메모리 100% 평균가동과 수요초과는 모두 current source-backed evidence다. 따라서 단순 계획만 있는 weak/zero 사례처럼 3점 미만으로 내리기는 어렵다."
+  },
+  "payload_hash": "64f57fdc473dd95a902deb61be4157bb10de06fbb90ce074c00ecff43a8813bd",
+  "production_score_authority": false,
+  "prompt_hash": "c75838edfff5a60b2649344370b5d7575add8edd7f4376692fcbc1bb03fa67de",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d7ef4b6cacb714bfc89c62195b5d8530d8ee8cfcdb02d12576fad482765e562d",
+  "response_id": "COLLABRESP-faa2a558c6082b4ca0237ab22dbd7479f9c7bae9faa749a1d68ef9400c1c0cc8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

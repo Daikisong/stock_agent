@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a518fc42ff709614d8144124",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.02,
+        "rationale": "네이버 프리미엄콘텐츠의 시장 브리핑으로 PUBLIC_BROKER_PDF 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b1720c26ea5970791b401921",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.06,
+        "rationale": "키움증권 보고서를 재전한 뉴스 기사다. 원 증권사 PDF가 아니므로 HBM4/가격협상 full source를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7226322d9baf5f14150276cb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.05,
+        "rationale": "제3자 뉴스 기사이며 PUBLIC_BROKER_PDF 원문이 아니다. full-CAPA/LTA snippet은 발견 단서일 뿐이다."
+      },
+      {
+        "candidate_id": "SGCAND-3705d3c5b6aa8881008f652e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "네이버 종목 토론글로 원문 리서치가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-fc6ddf17a6ee1dbf0bbbd32b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.06,
+        "rationale": "조선비즈 기사가 유진투자증권 의견을 재전한 것이며 요청된 broker PDF 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4d07c3163eb9387f7d40e322",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.07,
+        "rationale": "네이버 프리미엄콘텐츠의 UBS 전망 요약으로 원 PUBLIC_BROKER_PDF가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-20512494d345ca51840d3c21",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.05,
+        "rationale": "커뮤니티가 DS투자증권·Nomura 내용을 재전한 페이지로 원 broker PDF가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5ae7389f1fa8392c2a06af5a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.06,
+        "rationale": "커뮤니티 재전 글이며 SK증권 원문 PDF가 아니다. 장기공급계약 가시화 snippet만으로 full-source 검증은 불가하다."
+      },
+      {
+        "candidate_id": "SGCAND-7bdbc081b001db160c344397",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "SK Inc.의 2023 분기보고서 PDF로 증권사 리서치가 아니며 대상·family가 틀리다."
+      },
+      {
+        "candidate_id": "SGCAND-c0483581357cc64d4755d307",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "네이버 종목 토론글로 source provenance와 full-report 요건을 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f2bbad517945525a409cde98",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "네이버 종목 토론글이며 HBM 병목 분석 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4b039ead015f586d3520e733",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.03,
+        "rationale": "매일경제 기사로 증권사 전망을 다루지만 PUBLIC_BROKER_PDF 원문이 아니고 일반 CAPEX 논의에 그친다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 roster에서 요청 family와 목적을 함께 충족하는 원본 broker full-report route는 확인되지 않았다. 이는 관련 증거의 부재가 아니라 후보 적합성 판정이다.",
+      "기사·커뮤니티 snippet의 LTA, ASP, CAPA 서술은 원문 fetch 전 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "de3a3d60a8973b1d99b2c261247f74c2fac67ea03897eea774f9abcfa4cbcd18",
+  "production_score_authority": false,
+  "prompt_hash": "cf15f213205a186338df84caaa090df179caeabc117e9a9b924dc945a9154cdb",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8c7ef65b54aec0743bbd200219742f8983d8a2807f8069e83cc22b8365762062",
+  "response_id": "COLLABRESP-3256d379007a9c2e0039db79ff3e87e12ee6adc825456f71161bbb97da169eab",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

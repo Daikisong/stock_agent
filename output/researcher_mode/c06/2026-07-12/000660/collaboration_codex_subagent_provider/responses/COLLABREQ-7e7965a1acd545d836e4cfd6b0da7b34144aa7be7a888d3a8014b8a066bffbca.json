@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "실제 상장 시점의 최종 등록·발행사 자료가 앞선 ADR offering 문서를 갱신했는지 확인하고, HBM 별도 숫자가 있을 때만 segment contribution 후보로 사용합니다.",
+      "발행사 공식 CEO 발표·뉴스룸·IR에서 HBM 시장의 미래 CAGR 또는 TAM을 찾되, 시장 전체 전망과 SK하이닉스 자체 매출·출하 가이던스를 분리합니다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK hynix SKHY final registration statement HBM revenue percentage segment note July 2026",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "기존 ADR query는 offering 단계의 DRAM·NAND 매출 구분과 전망 범위를 찾았지만, 실제 상장 시점의 최종 등록자료에서 HBM이 별도 매출 비중 또는 segment note로 추가·갱신됐는지는 확인하지 못했습니다. 2026-07-12 이전 공개된 최종 규제·발행사 문서만 확인해 HBM 숫자형 contribution을 찾고, DRAM 전체나 브로커 추정치를 HBM point로 대체하지 않기 위한 별도 문서 경로입니다.",
+        "source_families": [
+          "KIND_KRX",
+          "OPENDART",
+          "ISSUER_PRESENTATION",
+          "ISSUER_NEWSROOM",
+          "GENERAL_WEB_DISCOVERY"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 공식 HBM 시장 수요 CAGR TAM 2027 2030 CEO 발표 2026",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "기존 query는 회사의 2026·2027 출하량, 매출액, 생산능력 및 LTA 조건을 직접 찾는 경로였습니다. 이번에는 발행사가 cutoff 이전 공식 발표에서 제시한 HBM 시장 수요의 미래 CAGR·TAM 같은 숫자형 point/range를 찾아 구조적 수요 지속기간을 독립적으로 검증합니다. 시장 전망은 회사 매출 가이던스와 구분하고 반대 전망이나 갱신치도 함께 확인합니다.",
+        "source_families": [
+          "ISSUER_NEWSROOM",
+          "ISSUER_PRESENTATION",
+          "ISSUER_EARNINGS_RELEASE"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "최종 등록자료에도 HBM 별도 매출·이익 point가 없으면 DRAM·NAND 합계나 전사 수치를 SEGMENT_CONTRIBUTION으로 재분류하지 않습니다.",
+      "HBM 시장 CAGR·TAM은 수요 지속성의 보조 근거일 뿐, 회사의 계약 물량·가격·취소불능 매출을 직접 확정하지 않습니다."
+    ]
+  },
+  "payload_hash": "4d339da7ec538652446a9a9b270295dbed17cae4c1307eab03a67d7502612ea0",
+  "production_score_authority": false,
+  "prompt_hash": "dd554496ca248fd984fd3da509bbbb7ee7ad824785a15a0c36b8f97a9770aaa4",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7e7965a1acd545d836e4cfd6b0da7b34144aa7be7a888d3a8014b8a066bffbca",
+  "response_id": "COLLABRESP-3cd3e4951ed9687c39abe6e866ac49d32543d6204f0ccaf7ea4eb135055078ed",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

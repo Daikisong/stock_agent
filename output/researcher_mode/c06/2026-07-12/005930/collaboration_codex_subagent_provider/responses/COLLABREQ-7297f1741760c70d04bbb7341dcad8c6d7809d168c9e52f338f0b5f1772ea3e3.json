@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-8aebb93609a4a38f56fe2114",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2023년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-8b75af834effbf8e2e7af762",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "검증된 발행사 연계 컨퍼런스 페이지이지만 supplied metadata가 현재 HBM 고객·capacity·실적을 특정하지 않거나 오래된 분기를 가리키며, 후속 2025~2026 원문이 현재 상태를 통제한다."
+      },
+      {
+        "candidate_id": "SGCAND-8bb7ae912310ca63a9cdbeb4",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.45,
+        "rationale": "검증된 발행사 도메인의 Memory Business 전용 프레젠테이션 원문이다. 메모리 공급·capacity·고객 수요 전략을 직접 확인할 수 있는 경로이며, 발행일과 현재성은 full-fetch 후 검증해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-8e4bbd93b01c5b33e6e99cb8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "검증된 발행사 최신 재무 원문 경로지만 파일 성격이 전사 현금흐름·재무상태·자본변동 등으로 메모리/HBM 귀속이 없거나 current graph의 동분기 전체 보고서·컨퍼런스 원문과 중복된다."
+      },
+      {
+        "candidate_id": "SGCAND-8ef906f4101494da18116f22",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "외부 AOD 호스트의 오래된 컨퍼런스 재생 경로이며 verified issuer provenance가 없고 candidate family도 요청된 family와 일치하지 않아 material 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8f5eed0fdc41a2195438ca9f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "외부 AOD 호스트의 오래된 컨퍼런스 재생 경로이며 verified issuer provenance가 없고 candidate family도 요청된 family와 일치하지 않아 material 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8f705e94d6bb9a54541bc2d0",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "검증된 발행사 연계 컨퍼런스 페이지이지만 supplied metadata가 현재 HBM 고객·capacity·실적을 특정하지 않거나 오래된 분기를 가리키며, 후속 2025~2026 원문이 현재 상태를 통제한다."
+      },
+      {
+        "candidate_id": "SGCAND-91f78c07cb33cf78527ff7e5",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "검증된 발행사 연계 2025년 3분기 컨퍼런스 랜딩이지만 해당 분기 영문 conference PDF와 보고서가 이미 current graph에서 full-fetch·검토되었다. 새 독립 원문이 아닌 중복 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-92b71e40ae22a0a5afa7e018",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2016년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-931b3ace20d51e49163dc2aa",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 CFO 전략 프레젠테이션이지만 메모리/HBM 귀속과 현재 기간이 metadata에서 확인되지 않아 earnings_visibility를 직접 해결할 경로로 분류하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-93da26d6dc59c22860c11b54",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "linkedin.com의 소셜 프로필·공유·전송 링크로, 요청된 issuer/customer/industry/trusted-media 원문 provenance와 후보 본문을 제공하지 않아 full-fetch 대상이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-947225d56c468dba3f3df5a3",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.05,
+        "rationale": "검증된 발행사 2024년 재무·실적 원문 경로지만 2025년 3·4분기와 2026년 1분기 메모리/HBM 자료 및 실제 HBM4 양산 상태가 현재성을 대체했다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "SGCAND-8bb7ae912310ca63a9cdbeb4의 materiality는 supplied URL·official provenance에 따른 full-fetch 경로 판정이다. 원문 발행일·본문·as_of_date와 objective-local 사실은 fetch 후 검증해야 하며 현재 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "40d07b9b939c54ba9cc360da0b76f08a06bf377ec049f94cbe10a2429abfc540",
+  "production_score_authority": false,
+  "prompt_hash": "508a0ceff5698ce9ac7e2022b0e332537b75098b655aa36693c3cbe13f4efe36",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7297f1741760c70d04bbb7341dcad8c6d7809d168c9e52f338f0b5f1772ea3e3",
+  "response_id": "COLLABRESP-c695b7a8f799591dfdfd2095a2420754ca0ae87797a19273f45a49d7b590c85d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "861a9c664b67221591b6bfb8fb499c78a609f9e11f4b35e6d60b791d47048ec6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7c43d14bb9c0674c4693cf8a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "ETF 관련 제3자 뉴스의 부수적 종목 언급으로 요청된 공식 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8c7ab7172fbd0bccf92e345f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스 주식을 경품으로 언급한 무관한 제3자 기사다."
+      },
+      {
+        "candidate_id": "SGCAND-db7546092689cf9208593b4f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "다른 회사 주가 페이지이고 기준일 이후 값까지 포함해 대상 목적에 부적합하다."
+      },
+      {
+        "candidate_id": "SGCAND-44b5351d0415fad448ad2a67",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "2025년 제3자 산업 뉴스로 현재 공식 수치·설명 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6ca6ea5cdcfb33446b1166fc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "다른 반도체 업체 전망을 다룬 블로그로 발행사 공식 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-99effa2626d1159caa5bb4a7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.01,
+        "rationale": "과거 실적과 기대를 재전한 제3자 기사로 현재 공식 프레젠테이션·공시가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a668b96bee42ebe399156e9b",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.04,
+        "rationale": "SK하이닉스 KIND 분기보고서이지만 2024년 1분기 자료로 현재 2026년 목적의 공백을 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-ad378b5494cfbe874f7c6f19",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "일반 종목 뉴스 묶음으로 대상 발행사의 공식 실적·공시 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-10291ec65e14919839302113",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "장비업체 이해관계를 다룬 2025년 제3자 기사로 요청 원천과 현재 목적에 부적합하다."
+      },
+      {
+        "candidate_id": "SGCAND-229ddc079f374f8999420af9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "HBM 테마 블로그로 공식 실적·공시 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-33ea46b67a9ee60a2984253e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "2025년 실적을 요약한 제3자 기사로 현재 요청된 공식 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e439aedf98475b8355c970fc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "다른 소재업체 프로필인 제3자 기사로 대상 회사 가치평가 목적과 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에는 요청된 공식 원천이면서 현재 목적을 해소할 material 후보가 없다."
+    ]
+  },
+  "payload_hash": "27048e8e29ae023672e7db4f42c93bd7f1c663ef696481197edbec427f9532d2",
+  "production_score_authority": false,
+  "prompt_hash": "2290c72f082c38811898caa78593b5fce219906ed0882cc792ef15415d4276a4",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1df14c50fb7c126a1609ae223d6efed0c15d0d0708456c3c33e1e0b34b90aee8",
+  "response_id": "COLLABRESP-8b2f1d7dbf511fe0df6060075056c9b8620dfaf21c0096c2c9da1779f5ccd6fa",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "output_schema_hash": "e7a733a147d6964e75528742897823ca5094ca593a9f54b8723c700910cfd090",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-fb569db8872c7fe7d1deb152",
+        "rationale": "2026-07-08 SK하이닉스 뉴스룸의 풀스택 AI 메모리 전략 원문을 현재 canonical 222건과 blind 의미 중복 대조했다. 이 문서를 수집한 eps_fcf_explosion 목적의 미해결 초점은 회사가 제시한 숫자형 HBM 매출 성장 가이던스 또는 수치형 세그먼트 기여인데, 본문에는 매출 점값·범위·기간, HBM 이익·마진·FCF 귀속, 고객 구매물량·가격·구매의무가 없다. HBM4 개발·양산, TSMC 베이스다이, M15X·용인·P&T7 생산·패키징 기반, 고객 ASIC 협력은 더 구체적인 current fact로 이미 반영돼 있으며, 엔비디아 장기 기술 파트너십 문장은 차세대 메모리 공동개발 방향만 말하고 공급계약·배정·매출전환을 확정하지 않는다. SOCAMM2와 AI-NAND 설명은 현재 HBM 중심 목적의 인접 제품 배경이고, 2026-07-12 이후 연관기사 제목은 미래 데이터라 사용하지 않았다. 따라서 침묵을 부재로 추론하지 않고 이 문서에서 새 objective-linked material fact를 만들지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "이 정성적 전략 문서는 회사의 숫자형 HBM 매출 성장 가이던스나 수치형 HBM 세그먼트 기여를 제공하지 않아 해당 source gap을 해소하지 못한다. 이는 가이던스가 존재하지 않는다는 증거가 아니라 이 문서의 범위 한계다."
+    ]
+  },
+  "payload_hash": "c92e91f2948a77b469618cbb4637b0a0b6b2a5b2e752bad002ac17dcec9aab11",
+  "production_score_authority": false,
+  "prompt_hash": "25286a690c6d9eb4e1433b6ad92c710a180caeb87887dd64871c37581d3f8be1",
+  "provenance": {
+    "agent_id": "hynix_current_leaves",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_current_leaves",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3fdedf09528d0162aca924f571fa21ea3646ea193e9308f2fa5e2ee62da7430f",
+  "response_id": "COLLABRESP-bed4f9c989ffb22cf6a3d197a77a6c879ca10f1adc3b865ebf63b7a113fc8f4c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,249 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7b79d2e3f3fe9059239c09ae",
+        "rationale": "canonical parent의 transport chunk 0/3 전체를 검토했다. prior 190에 없는 서버 수요 actual·서버 DRAM 추가 수요 outlook·PC/모바일 demand counter·공급 부족 지속·D램 점유율 5건을 추출했다. 메모리 매출·ASP·생산량·가동률·시설투자·HBM4 출하와 재무제표 수치는 prior current graph의 동일 객체라 중복하지 않았다. 이 disposition은 chunk 0에만 해당하며 parent 문서 전체의 완료를 주장하지 않는다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7b79d2e3f3fe9059239c09ae",
+        "economic_mechanism": "데이터센터 AI CAPEX 확대와 Agentic AI 초기 수요가 서버 메모리 수요 강세로 이어져 판매·가격의 매출 전환 기반을 강화한다.",
+        "exact_quote": "2026년 1분기 메모리 시장은 데이터센터 업체들의 AI 인프라 확보를 위한 CAPEX 확대 및\nAgentic AI 초기 수요에 힘입어 서버향 중심의 수요 강세가 한층 더 확연해졌습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사 분기보고서가 현재 메모리 수요의 직접 동인과 서버 중심 강도를 명시한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION:SERVER_DEMAND_2026Q1",
+        "normalized_object": "AI CAPEX 및 Agentic AI 기반 서버향 메모리 수요 강세",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 데이터센터 AI CAPEX 확대와 Agentic AI 초기 수요로 서버향 메모리 수요 강세가 더 뚜렷해졌다",
+        "predicate_family": "MEMORY_SERVER_DEMAND_STRENGTH",
+        "primitive_tags": [
+          "data_center_capex",
+          "agentic_ai",
+          "server_memory_demand"
+        ],
+        "product_family": "서버향 메모리",
+        "question_family_id": "memory_server_demand_strength_actual",
+        "question_family_tags": [
+          "memory_server_demand_strength_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 시장의 2026년 1분기 서버향 수요 강세",
+        "subject_id": "005930:MEMORY:SERVER_DEMAND_STRENGTH:2026-Q1",
+        "unit": "qualitative actual",
+        "value": "server-centered demand strength became more evident"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7b79d2e3f3fe9059239c09ae",
+        "economic_mechanism": "Hyperscaler AI 서비스와 기업용 LLM 도입 가속은 범용 서버 역할과 서버 DRAM 추가 수요를 예상보다 빠르게 늘릴 수 있다.",
+        "exact_quote": "하반기로 갈수록 Hyperscaler 업체의 AI 서비스 확대 및 주요 LLM 업체들의 기업향 서비스\n본격 도입에 따라 Agentic AI 확산이 예상보다 더욱 가속화 될 전망됩니다. 이에, AI 서버 외\n에도 다양한 워크로드에 특화된 범용 서버의 역할이 중요해지고 있어 서버향 DRAM 및\nSSD의 추가 수요도 예상 대비 가파른 증가가 예상됩니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사가 서버 DRAM의 추가 수요 방향과 기대 대비 강도를 직접 제시하지만 수치 가이던스는 아니다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:MARKET_EXPECTATION_GAP:SERVER_DEMAND_2026H2",
+        "normalized_object": "Agentic AI 확산 기반 서버 DRAM 추가 수요 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-H2E",
+        "predicate": "삼성전자는 2026년 하반기 Agentic AI 확산 가속으로 서버 DRAM 추가 수요가 예상보다 가파르게 늘 것으로 전망했다",
+        "predicate_family": "SERVER_DRAM_INCREMENTAL_DEMAND_OUTLOOK",
+        "primitive_tags": [
+          "hyperscaler_ai_services",
+          "enterprise_llm",
+          "server_dram_demand"
+        ],
+        "product_family": "서버 DRAM",
+        "question_family_id": "server_dram_incremental_demand_outlook",
+        "question_family_tags": [
+          "server_dram_incremental_demand_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 서버 DRAM 하반기 추가 수요 전망",
+        "subject_id": "005930:DRAM:SERVER_INCREMENTAL_DEMAND:2026-H2",
+        "unit": "qualitative outlook",
+        "value": "additional server DRAM demand expected to increase more steeply than anticipated"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-7b79d2e3f3fe9059239c09ae",
+        "economic_mechanism": "부품 가격 상승에 따른 세트 가격 인상과 메모리 탑재량 변화는 PC·모바일 최종 수요 및 메모리 판매량을 낮출 수 있다.",
+        "exact_quote": "다만, PC/모바일은 주요 부품 가\n격 상승에 따른 Set 가격 인상 및 메모리 탑재량 변화로 일부 수요 영향이 예상되나, 공급사\n들의 서버 중심 공급 대응 영향으로 전반적인 공급 부족 현상은 지속될 전망입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "서버 수요 강세의 반대편에서 PC·모바일 판매량 전환을 약화할 수 있는 발행사 명시 counter다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:RISK_COUNTER:PC_MOBILE_DEMAND",
+        "normalized_object": "PC·모바일 메모리 수요 압박",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026E",
+        "predicate": "삼성전자는 부품 가격 상승에 따른 세트 가격 인상과 메모리 탑재량 변화가 PC·모바일 수요에 영향을 줄 것으로 예상했다",
+        "predicate_family": "PC_MOBILE_MEMORY_DEMAND_PRESSURE",
+        "primitive_tags": [
+          "component_price_increase",
+          "set_price_increase",
+          "memory_content_change",
+          "demand_risk"
+        ],
+        "product_family": "PC·모바일 메모리",
+        "question_family_id": "pc_mobile_memory_demand_pressure",
+        "question_family_tags": [
+          "pc_mobile_memory_demand_pressure"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "부품 가격 및 메모리 탑재량 변화에 따른 PC·모바일 메모리 수요 압박",
+        "subject_id": "005930:MEMORY:PC_MOBILE_DEMAND_PRESSURE:2026",
+        "unit": "qualitative risk",
+        "value": "set price increases and memory-content changes may affect PC/mobile demand"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7b79d2e3f3fe9059239c09ae",
+        "economic_mechanism": "공급사의 서버 중심 물량 대응으로 전체 메모리 공급 부족이 지속되면 가격과 판매 우선순위의 공급자 우위가 유지된다.",
+        "exact_quote": "다만, PC/모바일은 주요 부품 가\n격 상승에 따른 Set 가격 인상 및 메모리 탑재량 변화로 일부 수요 영향이 예상되나, 공급사\n들의 서버 중심 공급 대응 영향으로 전반적인 공급 부족 현상은 지속될 전망입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 문장의 PC·모바일 counter와 구별되는 전체 공급 부족 지속 객체로 가격·이익 지속성에 직접 영향을 준다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:CAPACITY_SCARCITY:2026",
+        "normalized_object": "서버 중심 공급 대응에 따른 메모리 공급 부족 지속",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026E",
+        "predicate": "삼성전자는 공급사의 서버 중심 공급 대응으로 전반적인 메모리 공급 부족이 지속될 것으로 전망했다",
+        "predicate_family": "MEMORY_SUPPLY_SHORTAGE_PERSISTENCE",
+        "primitive_tags": [
+          "server_centered_supply",
+          "supply_shortage",
+          "capacity_scarcity"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_supply_shortage_persistence_outlook",
+        "question_family_tags": [
+          "memory_supply_shortage_persistence_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 공급 부족 지속 전망",
+        "subject_id": "005930:MEMORY:SUPPLY_SHORTAGE_PERSISTENCE:2026",
+        "unit": "qualitative outlook",
+        "value": "overall supply shortage expected to persist"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7b79d2e3f3fe9059239c09ae",
+        "economic_mechanism": "D램 금액 기준 세계시장점유율은 업황 개선이 삼성전자 D램 매출 점유로 전환된 현재 위치를 정량화한다.",
+        "exact_quote": "< DRAM 시장점유율 추이 >\n제 품 2026년 1분기 2025년 2024년\nDRAM 38.4% 34.0% 41.5%\n※ 시장점유율은 외부조사기관인 DRAMeXchange의 세계시장점유율 자료(금액 기준)를 활용하였으며,\n2026년 1분기 시장점유율은 당사 추정치입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 D램 매출 점유율을 점값으로 제공하되 발행사 추정치라는 한계를 함께 보존한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:REVENUE_CONVERSION:MARKET_SHARE_2026Q1",
+        "normalized_object": "D램 금액 기준 세계시장점유율 추정",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "삼성전자는 DRAMeXchange 금액 기준 자료를 활용해 2026년 1분기 자사 D램 세계시장점유율을 38.4%로 추정했다",
+        "predicate_family": "DRAM_REVENUE_MARKET_SHARE_ESTIMATE",
+        "primitive_tags": [
+          "dram_market_share",
+          "revenue_share",
+          "issuer_estimate"
+        ],
+        "product_family": "D램",
+        "question_family_id": "dram_revenue_market_share_estimate",
+        "question_family_tags": [
+          "dram_revenue_market_share_estimate"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 1분기 D램 금액 기준 세계시장점유율 추정",
+        "subject_id": "005930:DRAM:REVENUE_MARKET_SHARE:2026-Q1",
+        "unit": "percent revenue market share",
+        "value": 38.4
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "a93c7e97e324af2aecfa3b720fd5166071ba6d0eb389124fe6328da6ee1649c9",
+  "production_score_authority": false,
+  "prompt_hash": "47c793043ba651bf31dc16ff8f19c30b85670121ef5fcb6ca7de313a1eea2c32",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-447bb00a8124f634659ed3dc26a8401cfc776d77a9254cd001d896157a7128cb",
+  "response_id": "COLLABRESP-1e5dbe83906e981ac1325d51e2b4384598f7df4d9284c083c442489aa0397eb6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

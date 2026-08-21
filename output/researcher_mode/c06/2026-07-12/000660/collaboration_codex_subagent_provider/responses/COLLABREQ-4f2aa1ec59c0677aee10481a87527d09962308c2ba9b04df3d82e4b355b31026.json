@@ -1,0 +1,39 @@
+{
+  "output_schema_hash": "e7a733a147d6964e75528742897823ca5094ca593a9f54b8723c700910cfd090",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-f1d67bbd5257b4ea3cff7750",
+        "rationale": "이 공식 뉴스룸 문서는 HBM 혁신의 역사, 현재 AI 인프라 기술 제공, ADR 상장 비전을 설명하지만, 연결된 eps_fcf_explosion 목적을 직접 진전·반박·대체하는 매출, 마진, 현금흐름, 정량 가이던스 또는 사업부 기여 수치를 제시하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "HBM 관련 매출·마진·FCF 귀속 또는 정량 forward guidance는 이 문서로 해소되지 않아 다른 source에서 계속 확인해야 한다."
+    ]
+  },
+  "payload_hash": "825e83a9306351e45ed07fd9ce91fc39ded1f9eccf17cac471f3897a29ca8316",
+  "production_score_authority": false,
+  "prompt_hash": "da005ca810c0a248953e505b9bde9f5e4710c34b4c6d65e1f5dd2522f059e423",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4f2aa1ec59c0677aee10481a87527d09962308c2ba9b04df3d82e4b355b31026",
+  "response_id": "COLLABRESP-9b90a70e6c068d4ca9a6ad8730d9435e41dc5d56f69063bbe2d4812f6872ce9e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

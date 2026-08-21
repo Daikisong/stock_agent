@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "독립 검토 결과, 최종 STOPPED snapshot의 7개 component memo는 모두 COMPLETE이고 지지 증거뿐 아니라 HBM 귀속, 계약 구속력, 경쟁 공급, 감익 duration 및 현금전환 counter를 함께 반영한다. 현재 memo-bound 21개 A/S/C 범위는 7개 component 모두에서 교차하며, 최신 Red Team RTMEMO-0daf395e8f0c458162163b9f와 Synthesis SYNMEMO-096cde26f6dd63cc22a43b58도 같은 7개 memo 계보에 연결되어 있다. Structured result는 COMPLETE이고 component별 required role 공백이 없으며, Supervisor의 counter·supersession 검증과 모든 연구 목적의 해결 상태는 STOPPED_ON_RESOLUTION source graph와 일치한다. 과거 provider 오류, fetch·발행일 검증 실패, zero-result 및 반복 횟수는 자료 부재나 saturation의 증거로 사용하지 않았다. 현재 검증된 증거·counter·structured 상태를 독립적으로 대조한 결과, 계약 비공개·HBM 단독 손익·ROIC·독립 고객확인 같은 제한은 기존 component 판단의 counterweight와 향후 monitoring으로 남지만 현재 판정을 바꿀 구체적이고 실행 가능한 material source/query route는 아니다. 따라서 reasonable route와 unresolved material question 없이 saturation 승인을 할 수 있다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "b3feba08d98b23689f180000d97f1dcc1094ed656e22bf0972150cdd56f08567",
+  "production_score_authority": false,
+  "prompt_hash": "3aadaa47aefe021168662cfd3cf4a31641b7ebe1327eb86df9db34570866e0b1",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d771064272cbd9943773e0f59a6bf1ce5c2c220471ff63c400718f40751e6d2c",
+  "response_id": "COLLABRESP-c18843a152113e306951d1ab26c93bcf92ee446e9c8158184ff534ef05704dc1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

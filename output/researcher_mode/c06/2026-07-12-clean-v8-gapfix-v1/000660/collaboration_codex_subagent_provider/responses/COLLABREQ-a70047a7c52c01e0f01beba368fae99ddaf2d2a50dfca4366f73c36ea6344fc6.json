@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-ac71a727e0513cac514cd9fb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·요약/검색 경로로 original broker PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-154a96bb1e37210b1f6539c7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·요약/검색 경로로 original broker PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1b27ba5dd6a9e3da77eb1c5d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.98,
+        "rationale": "SK증권 공식 도메인의 2026-05-06 target-direct full PDF로, 000660 HBM 매출 비중·실적 가정·P/E valuation bridge를 후속 원문 검증할 수 있는 material route다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-42cf93c516976a58ff761874",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·요약/검색 경로로 original broker PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6ee84431643bcc2d7fb40ef2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·요약/검색 경로로 original broker PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-be89aa6c7f2a11f473237c62",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.1,
+        "rationale": "신한투자증권 공식 strategy landing provenance는 맞지만 generic·future market page이고 000660 target report identity가 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-cd15fecc869c6167ad8763d9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·요약/검색 경로로 original broker PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d53a02987d054a92c8984362",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·요약/검색 경로로 original broker PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ee8aefcb2623b9a5669afc40",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·요약/검색 경로로 original broker PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-253e2a9cff2183c9df8c914e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·요약/검색 경로로 original broker PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-25535211228e722f5d634226",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·요약/검색 경로로 original broker PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5ba2d3a70ff5c484c3a88cd2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·요약/검색 경로로 original broker PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P1 12개 exact-once 분류. target-direct official broker full PDF 1개만 material route다.",
+      "metadata/snippet 및 third-party retelling은 evidence나 source absence 판정이 아니다."
+    ]
+  },
+  "payload_hash": "0b2b06e6751d189f3b70fdd4179f23ba0f82eaf8d3ced1df6a73626fc0613d3b",
+  "production_score_authority": false,
+  "prompt_hash": "d298eb4b258a9c99b0b537e0a670019a4285448cad02bd69e835c7a18798198c",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a70047a7c52c01e0f01beba368fae99ddaf2d2a50dfca4366f73c36ea6344fc6",
+  "response_id": "COLLABRESP-f29f720a92d9f1b1cae81f36e63c4f885870d8124fbfb7fcdf2c308577346558",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

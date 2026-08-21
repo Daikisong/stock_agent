@@ -1,0 +1,54 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "NVIDIA 소유 product catalog, platform documentation, newsroom 및 event/session의 cutoff 이전 full document에서 Samsung HBM3E/HBM4 기술 관계를 검증하고, technical corroboration과 signed procurement economics를 별도 disposition한다.",
+      "OpenAI 소유 partnership, infrastructure, newsroom 및 event 자료의 cutoff 이전 full document에서 Samsung memory-support 관계 범위를 검증하고, LOI·plan·forecast와 구매의무를 분리한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "site:nvidia.com \"Samsung Electronics\" (HBM3E OR HBM4) (qualification OR platform OR supply) GTC",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "기존 NVIDIA 검색은 일반 웹에서 official이라는 단어를 붙인 범용 검색이었다. 이 제안은 NVIDIA 소유 도메인과 product/platform/event 맥락으로 제한해 삼성 HBM 관계의 기술 corroboration 또는 반증을 찾는 별도 bounded route이며, 구매가격·물량·배정·기간은 추론하지 않는다.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "site:openai.com \"Samsung Electronics\" (partnership OR \"memory support\" OR wafer) infrastructure Korea",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "기존 OpenAI 검색은 일반 웹의 partnership·인프라 문구에 머물렀다. 이 제안은 OpenAI 소유 도메인의 partnership/infrastructure 원문으로 한정해 삼성 memory-support 관계 범위를 독립 확인하거나 제한하는 별도 route이며 LOI·수요 전망을 signed procurement로 바꾸지 않는다.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "각 query의 material 후보가 full fetch와 as-of 검증을 통과하기 전에는 NVIDIA 또는 OpenAI 관계의 evidence가 아니며, 결과가 비어도 source absence나 관계 부재를 뜻하지 않는다.",
+      "고객 공식 기술·관계 corroboration이 발견되더라도 삼성 HBM의 signed 가격·물량·allocation·기간·취소조건은 별도 미확인 상태로 유지한다."
+    ]
+  },
+  "payload_hash": "afbca0cf5834146925c7e466ca59550642e0699712379b8ab3e65d5c769be50d",
+  "production_score_authority": false,
+  "prompt_hash": "bc504ea9b7be4dff997b292e0224fa44291124641ab13ffe28d479572b1d6e1b",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-72c8272be814f6321dc88993cbb9df7883604f5e2b5cee080445eb552e727a91",
+  "response_id": "COLLABRESP-52b0bc43b49cb5966060c1d09d240441dec505d0c1b8d72f616e364676bd71b7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

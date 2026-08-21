@@ -1,0 +1,2184 @@
+{
+  "as_of_date": "2026-07-10",
+  "rows": [
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "000040",
+      "target_name": "KR모터스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "000210",
+      "target_name": "DL",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "000320",
+      "target_name": "노루홀딩스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "000640",
+      "target_name": "동아쏘시오홀딩스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "000660",
+      "target_name": "SK하이닉스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "000720",
+      "target_name": "현대건설",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "001120",
+      "target_name": "LX인터내셔널",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "001200",
+      "target_name": "유진투자증권",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "001260",
+      "target_name": "남광토건",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "001270",
+      "target_name": "부국증권",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "001450",
+      "target_name": "현대해상",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "001500",
+      "target_name": "현대차증권",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "001510",
+      "target_name": "SK증권",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "001840",
+      "target_name": "이화공영",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "002170",
+      "target_name": "SYTS",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "002320",
+      "target_name": "한진",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "002390",
+      "target_name": "한독",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "002720",
+      "target_name": "국제약품",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "002880",
+      "target_name": "디와이에이",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "003090",
+      "target_name": "대웅",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "003100",
+      "target_name": "선광",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "003470",
+      "target_name": "유안타증권",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "003530",
+      "target_name": "한화투자증권",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "003540",
+      "target_name": "대신증권",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "003960",
+      "target_name": "사조대림",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "004020",
+      "target_name": "현대제철",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "004540",
+      "target_name": "깨끗한나라",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "005380",
+      "target_name": "현대차",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "005500",
+      "target_name": "삼진제약",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "005690",
+      "target_name": "파미셀",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [
+        "customer_preorder_or_allocation",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "medium_term_revision_visibility",
+        "revenue_visibility_contract"
+      ],
+      "maximum_depth": "L4_ACQUISITION",
+      "next_action": "RECHECK_OFFICIAL_SOURCE",
+      "provider_gaps": [],
+      "source_gaps": [
+        "one current primitive closed; remaining full-thesis primitives require source repair"
+      ],
+      "target_id": "005930",
+      "target_name": "삼성전자",
+      "terminal_status": "SOURCE_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "005940",
+      "target_name": "NH투자증권",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "006280",
+      "target_name": "녹십자",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "006490",
+      "target_name": "프리티",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "006800",
+      "target_name": "미래에셋증권",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "007330",
+      "target_name": "푸른저축은행",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "007980",
+      "target_name": "TP",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "008290",
+      "target_name": "원풍물산",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "008870",
+      "target_name": "금비",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "008930",
+      "target_name": "한미사이언스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "009160",
+      "target_name": "SIMPAC",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "009540",
+      "target_name": "HD한국조선해양",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "009620",
+      "target_name": "삼보산업",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "009730",
+      "target_name": "이렘",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "009810",
+      "target_name": "플레이그램",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "010140",
+      "target_name": "삼성중공업",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "011040",
+      "target_name": "경동제약",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "011320",
+      "target_name": "유니크",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "012340",
+      "target_name": "뉴인텍",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "012630",
+      "target_name": "HDC",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "0126Z0",
+      "target_name": "삼성에피스홀딩스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "012750",
+      "target_name": "에스원",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "013120",
+      "target_name": "동원개발",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "013360",
+      "target_name": "일성건설",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "013570",
+      "target_name": "디와이",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "013580",
+      "target_name": "계룡건설",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "013700",
+      "target_name": "까뮤이앤씨",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "014130",
+      "target_name": "한익스프레스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "014570",
+      "target_name": "고려제약",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "016790",
+      "target_name": "현대사료",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "018700",
+      "target_name": "졸스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "021880",
+      "target_name": "메이슨캐피탈",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "023440",
+      "target_name": "제이스코홀딩스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "024830",
+      "target_name": "세원물산",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "025440",
+      "target_name": "DH오토웨어",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "025870",
+      "target_name": "신라에스지",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "030350",
+      "target_name": "드래곤플라이",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [
+        "nrr",
+        "retention_or_renewal",
+        "arr_growth_visible"
+      ],
+      "maximum_depth": "L4_ACQUISITION",
+      "next_action": "RECHECK_OFFICIAL_SOURCE",
+      "provider_gaps": [],
+      "source_gaps": [
+        "material source gap remains after unrelated official documents were rejected"
+      ],
+      "target_id": "031860",
+      "target_name": "디에이치엑스컴퍼니",
+      "terminal_status": "SOURCE_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "032960",
+      "target_name": "동일기연",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "033200",
+      "target_name": "모아텍",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "035610",
+      "target_name": "솔본",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "036690",
+      "target_name": "코맥스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [
+        "raw_material_cost_risk",
+        "inventory_cycle",
+        "opm_expansion_pctp"
+      ],
+      "maximum_depth": "L4_ACQUISITION",
+      "next_action": "RETRY_PROVIDER",
+      "provider_gaps": [
+        "material provider gap remains after bounded official-first execution"
+      ],
+      "source_gaps": [],
+      "target_id": "038870",
+      "target_name": "에코심플렉스",
+      "terminal_status": "PROVIDER_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "038880",
+      "target_name": "아이에이",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "040350",
+      "target_name": "크레오에스지",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "041520",
+      "target_name": "이엘씨",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "041590",
+      "target_name": "플래스크",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "043090",
+      "target_name": "더테크놀로지",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "043100",
+      "target_name": "알파AI",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "043220",
+      "target_name": "티에스넥스젠",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "044180",
+      "target_name": "KD",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "046070",
+      "target_name": "코다코",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "049180",
+      "target_name": "셀루메드",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "050090",
+      "target_name": "비케이홀딩스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "052020",
+      "target_name": "에스티큐브",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "052770",
+      "target_name": "아이톡시",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "054180",
+      "target_name": "메디콕스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "058450",
+      "target_name": "한주에이알티",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "060240",
+      "target_name": "스타코링크",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "064090",
+      "target_name": "인크레더블버즈",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "065150",
+      "target_name": "대산F&B",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "065170",
+      "target_name": "비엘팜텍",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "065570",
+      "target_name": "삼영이엔씨",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "065690",
+      "target_name": "파커스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "066410",
+      "target_name": "버킷스튜디오",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "066790",
+      "target_name": "씨씨에스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "066900",
+      "target_name": "디에이피",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "067630",
+      "target_name": "HLB생명과학",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "067770",
+      "target_name": "세진티에스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "068240",
+      "target_name": "다원시스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "068940",
+      "target_name": "셀피글로벌",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "069920",
+      "target_name": "엑시온그룹",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "071850",
+      "target_name": "캐스텍코리아",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "073190",
+      "target_name": "듀오백",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "073570",
+      "target_name": "리튬포어스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "073640",
+      "target_name": "테라사이언스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "078860",
+      "target_name": "아이오케이이엔엠",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "079950",
+      "target_name": "인베니아",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "079970",
+      "target_name": "투비소프트",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "080720",
+      "target_name": "한국유니온제약",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "082660",
+      "target_name": "코스나인",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "088290",
+      "target_name": "이원컴포텍",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "091440",
+      "target_name": "한울소재과학",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "092190",
+      "target_name": "서울바이오시스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "096610",
+      "target_name": "알에프세미",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "099520",
+      "target_name": "DGI",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "106080",
+      "target_name": "케이이엠텍",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "109960",
+      "target_name": "앱토크롬",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "121800",
+      "target_name": "비덴트",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "121850",
+      "target_name": "코이즈",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "123840",
+      "target_name": "뉴온",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "140410",
+      "target_name": "메지온",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "160190",
+      "target_name": "하이젠알앤엠",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "168330",
+      "target_name": "내츄럴엔도텍",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "175140",
+      "target_name": "휴먼테크놀로지",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "175250",
+      "target_name": "아이큐어",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "177350",
+      "target_name": "베셀",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "179900",
+      "target_name": "유티아이",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "180400",
+      "target_name": "DXVX",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "182400",
+      "target_name": "엔케이젠바이오텍코리아",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "183300",
+      "target_name": "코미코",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "183490",
+      "target_name": "엔지켐생명과학",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "188260",
+      "target_name": "세니젠",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "191410",
+      "target_name": "육일씨엔에쓰",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "195990",
+      "target_name": "루트K",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "196300",
+      "target_name": "HLB펩",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "196490",
+      "target_name": "디에이테크놀로지",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "214610",
+      "target_name": "롤링스톤",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "217480",
+      "target_name": "에스디생명공학",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "219550",
+      "target_name": "디와이디",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "221800",
+      "target_name": "지구홀딩스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "224060",
+      "target_name": "더코디",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "225430",
+      "target_name": "케이엠제약",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "234920",
+      "target_name": "자이글",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "241820",
+      "target_name": "피씨엘",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "244460",
+      "target_name": "올리패스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "245620",
+      "target_name": "EDGC",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "246250",
+      "target_name": "에스엘에스바이오",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "246720",
+      "target_name": "아스타",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "258830",
+      "target_name": "세종메디칼",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "263050",
+      "target_name": "유틸렉스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "269620",
+      "target_name": "시스웍",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [
+        "raw_material_cost_risk",
+        "inventory_cycle",
+        "utilization_rate"
+      ],
+      "maximum_depth": "L4_ACQUISITION",
+      "next_action": "RECHECK_OFFICIAL_SOURCE",
+      "provider_gaps": [],
+      "source_gaps": [
+        "material source gap remains after unrelated official documents were rejected"
+      ],
+      "target_id": "270520",
+      "target_name": "앱튼",
+      "terminal_status": "SOURCE_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "276040",
+      "target_name": "스코넥",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "276730",
+      "target_name": "한울앤제주",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "277410",
+      "target_name": "인산가",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "284620",
+      "target_name": "카이노스메드",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "286750",
+      "target_name": "나노실리칸첨단소재",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "288330",
+      "target_name": "파라택시스코리아",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "294090",
+      "target_name": "이오플로우",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "294140",
+      "target_name": "레몬",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "297090",
+      "target_name": "씨에스베어링",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "298060",
+      "target_name": "풍전약품",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "309710",
+      "target_name": "아이티켐",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "312610",
+      "target_name": "에이에프더블류",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "313760",
+      "target_name": "캐리",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "327260",
+      "target_name": "RF머트리얼즈",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "331380",
+      "target_name": "포커스에이아이",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "340360",
+      "target_name": "다보링크",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "340930",
+      "target_name": "성원에너텍",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "352770",
+      "target_name": "셀레스트라",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "361610",
+      "target_name": "SK아이이테크놀로지",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "377030",
+      "target_name": "비트맥스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "377460",
+      "target_name": "큐에이드",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "380540",
+      "target_name": "옵티코어",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "393970",
+      "target_name": "대진첨단소재",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "399720",
+      "target_name": "가온칩스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "412540",
+      "target_name": "제일엠앤에스",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "418250",
+      "target_name": "시큐레터",
+      "terminal_status": "BUDGET_PENDING"
+    },
+    {
+      "material_gap_ids": [],
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "COMPLETE_MATERIAL_GAPS",
+      "provider_gaps": [],
+      "source_gaps": [
+        "selected deep candidate did not enter the bounded Brain/acquisition budget"
+      ],
+      "target_id": "440110",
+      "target_name": "파두",
+      "terminal_status": "BUDGET_PENDING"
+    }
+  ],
+  "schema_version": "e2r_live_census_operational_v1"
+}

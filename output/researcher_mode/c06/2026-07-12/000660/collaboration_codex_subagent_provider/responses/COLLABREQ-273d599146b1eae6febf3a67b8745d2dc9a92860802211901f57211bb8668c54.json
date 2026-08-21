@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "78f6ec730c9bba023cc96969dcb1022845b6d59ba8b14867a6639f617a0389ef",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-829ee8d0d56484c5c77c904a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Annual Report' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-046b0ef4a9c5a8ff585f530a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "StockTitan의 SEC prospectus 재게시/요약은 SK하이닉스 issuer 또는 OPENDART 원문 provenance가 아니므로 공식-source 요청을 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c7fe401f4d3f0e92a033d61b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "PUBLIC_BROKER_PDF discovery provenance은 일치하지만, 이 자료는 '2023년 Tech 연간전망 Withering the downturn'라는 다른 회사·펀드·과거 업황 중심 자료로 공급된 metadata에서 현재 SK하이닉스 HBM valuation objective를 직접 진전·반박·대체하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-859dc5a889a38aa30bcb312e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'NEUBERGER BERMAN INVESTMENT FUNDS PLC 2024 ANNUAL REPORT' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-b9ae47626d2d8cf4f9d42109",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "PUBLIC_BROKER_PDF discovery provenance은 일치하지만, 이 자료는 '반도체 Overweight Keyword: 공급 제한, 주가 선반영'라는 다른 회사·펀드·과거 업황 중심 자료로 공급된 metadata에서 현재 SK하이닉스 HBM valuation objective를 직접 진전·반박·대체하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-89e5337ab8bd0c0d85e64231",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Annual report and audited financial statements - 블랙록' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-d219500b286356b117709002",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "PUBLIC_BROKER_PDF discovery provenance은 일치하지만, 이 자료는 '피에스케이 (319660) PR Strip 중심 성장 지속'라는 다른 회사·펀드·과거 업황 중심 자료로 공급된 metadata에서 현재 SK하이닉스 HBM valuation objective를 직접 진전·반박·대체하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-81359a7a32aaa901aac31c15",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Annual report and audited financial statements - 블랙록' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-ae8fcf5e35952e2109f2e02f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "PUBLIC_BROKER_PDF discovery provenance은 일치하지만, 이 자료는 '오킨스전자 (080580) 반도체 테스트 시장의 올라운더'라는 다른 회사·펀드·과거 업황 중심 자료로 공급된 metadata에서 현재 SK하이닉스 HBM valuation objective를 직접 진전·반박·대체하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c8946c511032fa66c63fd60c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Annual report and audited financial statements - 블랙록' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-d0ba8b09d3329d9edd468a78",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "PUBLIC_BROKER_PDF discovery provenance은 일치하지만, 이 자료는 '오션브릿지 (241790) 이차전지 장비로 반도체 장비의 아쉬움을 달랜다'라는 다른 회사·펀드·과거 업황 중심 자료로 공급된 metadata에서 현재 SK하이닉스 HBM valuation objective를 직접 진전·반박·대체하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-eb6f31ef039b2574faaab713",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Annual report and audited financial statements - 블랙록' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "MATERIAL은 full-fetch 우선순위일 뿐 snippet을 evidence로 인정한 것이 아니다. 원문 fetch 뒤 publication/as_of_date, target attribution, source provenance와 exact quote를 별도 검증해야 한다."
+    ]
+  },
+  "payload_hash": "880d3583cc9d981d04e69244505a5d425285112540df35d17d187ba826924b86",
+  "production_score_authority": false,
+  "prompt_hash": "9fa7ad8e471f9d3acb41478918524aadfb13a5f7822a5aa7c404d3bbc0f7fd93",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-273d599146b1eae6febf3a67b8745d2dc9a92860802211901f57211bb8668c54",
+  "response_id": "COLLABRESP-a84b4cc64d8f2da7698044347036f6ceebe3509d8c2f6e3fcd53da07271aa38e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

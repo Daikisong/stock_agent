@@ -1,0 +1,102 @@
+{
+  "output_schema_hash": "fc622c00f7411df1efdf840d2686b8a8b06f3b07a247be79b41caf511bb7764e",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-845528b86fbded65f2e5f4ce",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'Korean Ramen' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e26a8224a58c1fd80f673559",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'Advancing ESG Practices and Enhancing Environmental Regulation Efficiency in Korea (II)' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-32b3cf46a7189797e4b3fd72",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'semiconductors' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e9dfbbc31115ede8fcf263e6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'Baillie Gifford Worldwide Emerging Markets Leading Companies Fund' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-28289e6d9bad98aea2934e57",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'South Korea Faces Economic Turmoil Amid Political Instability and Global Trade Challenges' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-454e699db6efbb86cb69e0fe",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'AV AV CONCEPT HOLDINGS LIMITED' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7b99360fb006a87d91880e35",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'U.S.-China AI Hegemony War' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에는 요청한 두 공식 원문 경로가 없다. HBM KPI와 고객 구매약정·선급금 공백은 unresolved이며 snippet은 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "eec870395062a183ba9e4090b52c9191fa39a55e4a73ca2d23dfb1ad4a1d37b6",
+  "production_score_authority": false,
+  "prompt_hash": "fdc8c7c4b8becae467f0eb9cf2817c8b84975209de603f4b0209447631b2f885",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-efa0b56314042a8f9e7dda544ec0117c703f85ca5294ef0bd760785af97a3816",
+  "response_id": "COLLABRESP-f7a575de71b1e10897e06529ff202bda6cbd20d9866e6abde7692c692ce223a8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

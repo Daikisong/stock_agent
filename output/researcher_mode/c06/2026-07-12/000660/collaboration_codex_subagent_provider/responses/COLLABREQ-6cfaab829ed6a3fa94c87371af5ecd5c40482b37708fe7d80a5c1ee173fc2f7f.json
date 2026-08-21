@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "868c7c7cdd3258048a388d9f56dec3dd50f46dc8a5a17396fa2499b7882743e1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-b98cc69c7239a30716a83c2d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 discovery metadata가 요청된 SK하이닉스 issuer earnings release·presentation 또는 OPENDART·KIND_KRX 원문 provenance를 충족하지 않거나 target·문서 유형이 다르다. 제3자 기사·블로그·브로커 자료와 기준일 뒤 일정이 섞인 snippet은 발견 메타데이터일 뿐이므로 material evidence나 full-fetch 후보로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-89e0dbe125db27b2bcb90d8d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 discovery metadata가 요청된 SK하이닉스 issuer earnings release·presentation 또는 OPENDART·KIND_KRX 원문 provenance를 충족하지 않거나 target·문서 유형이 다르다. 제3자 기사·블로그·브로커 자료와 기준일 뒤 일정이 섞인 snippet은 발견 메타데이터일 뿐이므로 material evidence나 full-fetch 후보로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c7312fb680abc5a651101fdc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 discovery metadata가 요청된 SK하이닉스 issuer earnings release·presentation 또는 OPENDART·KIND_KRX 원문 provenance를 충족하지 않거나 target·문서 유형이 다르다. 제3자 기사·블로그·브로커 자료와 기준일 뒤 일정이 섞인 snippet은 발견 메타데이터일 뿐이므로 material evidence나 full-fetch 후보로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-17797084392469d97a98803a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 discovery metadata가 요청된 SK하이닉스 issuer earnings release·presentation 또는 OPENDART·KIND_KRX 원문 provenance를 충족하지 않거나 target·문서 유형이 다르다. 제3자 기사·블로그·브로커 자료와 기준일 뒤 일정이 섞인 snippet은 발견 메타데이터일 뿐이므로 material evidence나 full-fetch 후보로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-375d877aabb96544cee88e56",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 discovery metadata가 요청된 SK하이닉스 issuer earnings release·presentation 또는 OPENDART·KIND_KRX 원문 provenance를 충족하지 않거나 target·문서 유형이 다르다. 제3자 기사·블로그·브로커 자료와 기준일 뒤 일정이 섞인 snippet은 발견 메타데이터일 뿐이므로 material evidence나 full-fetch 후보로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-fddd781af7f83d59d2d972c2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 discovery metadata가 요청된 SK하이닉스 issuer earnings release·presentation 또는 OPENDART·KIND_KRX 원문 provenance를 충족하지 않거나 target·문서 유형이 다르다. 제3자 기사·블로그·브로커 자료와 기준일 뒤 일정이 섞인 snippet은 발견 메타데이터일 뿐이므로 material evidence나 full-fetch 후보로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b36758f340adb896ede6a067",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 discovery metadata가 요청된 SK하이닉스 issuer earnings release·presentation 또는 OPENDART·KIND_KRX 원문 provenance를 충족하지 않거나 target·문서 유형이 다르다. 제3자 기사·블로그·브로커 자료와 기준일 뒤 일정이 섞인 snippet은 발견 메타데이터일 뿐이므로 material evidence나 full-fetch 후보로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f7befbfdd80fbb9892d4a460",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 discovery metadata가 요청된 SK하이닉스 issuer earnings release·presentation 또는 OPENDART·KIND_KRX 원문 provenance를 충족하지 않거나 target·문서 유형이 다르다. 제3자 기사·블로그·브로커 자료와 기준일 뒤 일정이 섞인 snippet은 발견 메타데이터일 뿐이므로 material evidence나 full-fetch 후보로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-d4597e722ecb35ae99d13b72",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 discovery metadata가 요청된 SK하이닉스 issuer earnings release·presentation 또는 OPENDART·KIND_KRX 원문 provenance를 충족하지 않거나 target·문서 유형이 다르다. 제3자 기사·블로그·브로커 자료와 기준일 뒤 일정이 섞인 snippet은 발견 메타데이터일 뿐이므로 material evidence나 full-fetch 후보로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-21a6723850da9303b4e148ec",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 discovery metadata가 요청된 SK하이닉스 issuer earnings release·presentation 또는 OPENDART·KIND_KRX 원문 provenance를 충족하지 않거나 target·문서 유형이 다르다. 제3자 기사·블로그·브로커 자료와 기준일 뒤 일정이 섞인 snippet은 발견 메타데이터일 뿐이므로 material evidence나 full-fetch 후보로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8541b8733671791fe2dd0aa8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 discovery metadata가 요청된 SK하이닉스 issuer earnings release·presentation 또는 OPENDART·KIND_KRX 원문 provenance를 충족하지 않거나 target·문서 유형이 다르다. 제3자 기사·블로그·브로커 자료와 기준일 뒤 일정이 섞인 snippet은 발견 메타데이터일 뿐이므로 material evidence나 full-fetch 후보로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7570cc13366709f3aff20c9d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 discovery metadata가 요청된 SK하이닉스 issuer earnings release·presentation 또는 OPENDART·KIND_KRX 원문 provenance를 충족하지 않거나 target·문서 유형이 다르다. 제3자 기사·블로그·브로커 자료와 기준일 뒤 일정이 섞인 snippet은 발견 메타데이터일 뿐이므로 material evidence나 full-fetch 후보로 승격하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "12개 후보를 각각 정확히 한 번 분류했다. material 후보는 0개이며, 모든 snippet은 discovery metadata로만 취급하고 full document evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "c442d9b5ed2ec1e6ff10b4d5dba21083cee98e9fee4d2df10369506e8bdd0dbd",
+  "production_score_authority": false,
+  "prompt_hash": "1f7a0273b3489734af0de442a81a0b16ee1dedd8e3768e3d1d37cc0c8eddf6e3",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6cfaab829ed6a3fa94c87371af5ecd5c40482b37708fe7d80a5c1ee173fc2f7f",
+  "response_id": "COLLABRESP-79f4120b190a546b4e7137b7ec4cb904ca9d42706590e8c63259b09ec6b8a885",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

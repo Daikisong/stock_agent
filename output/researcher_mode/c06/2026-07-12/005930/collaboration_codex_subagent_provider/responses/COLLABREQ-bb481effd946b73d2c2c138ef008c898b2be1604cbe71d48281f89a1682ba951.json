@@ -1,0 +1,63 @@
+{
+  "output_schema_hash": "5f8a475fdee5406c09e33688c77d936238d26a72ed0c7983f4ab482f15500289",
+  "payload": {
+    "allowed_range": [
+      16.5,
+      18.6
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200는 POSITIVE 역할의 STRONG ordinal anchor이며 허용 대역은 18.05~19.00점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "ORDTRANSFER-054f760d026b470c39e27df1는 COUNTER 역할의 STRONG ordinal anchor이며 허용 대역은 18.05~19.00점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "긍정 사실의 실현 정도는 강하지만, ordinal anchor의 상단은 미해결 귀속·지속성 자료가 닫힐 때만 정당화된다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0b6b02299ea60f931cf17c4e",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-cc2cfc3b24f0987278efc0b7",
+      "EFACT-f05a97edeb8f85d49353381e"
+    ],
+    "disagreements": [
+      "현재의 실적·판매·공급 사실을 단순한 기대만으로 낮춰 보는 해석에는 동의하지 않는다.",
+      "반대로 전사·메모리 수치를 HBM 단독 경제성으로 간주하거나 미해결 supervisor gap을 닫힌 것으로 보는 해석에도 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-054f760d026b470c39e27df1"
+    ],
+    "proposed_points": 17.7,
+    "rationale": "공급 병목과 가격 전환의 모든 긍정 사실을 검토했다. 가동률 100%, 완판된 HBM4 생산여력, 낮은 재고와 수요 초과가 동시에 나타나 단순 업황 기대가 아니라 실제 공급 제약이 확인된다. 이 제약은 범용 D램 가격 급등과 고속 HBM4 프리미엄으로 전환됐고, HBM 투입이 범용 공급을 줄이는 구조가 병목을 강화한다. 다만 공시 가동률은 시간 기준이므로 HBM 전용 웨이퍼 투입·수율·패키징 처리량을 직접 측정하지 않는다. 가격 상승 속도 둔화, 큰 물량 증가 없는 가격 의존, 수요 둔화와 아직 확정되지 않은 대규모 증설 계획은 현재 프리미엄의 정상화 경로다. 추가로 HBM 전용 웨이퍼 투입·수율·적층·패키징 처리량과 증설 램프·가격 둔화의 결합이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다. 따라서 강한 현재 성과는 인정하되 제품별 귀속과 지속성이 확인된 최상단으로 보지는 않았다.",
+    "support_fact_ids": [
+      "EFACT-13d6da3b116a9a0ad8043f62",
+      "EFACT-1df441a716b0204f7b107e70",
+      "EFACT-477c6cb45b164685a2a345e8",
+      "EFACT-4e0d88dc056c9e8dcd45ea47",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-a2243488e8b8f0197fd8bd56",
+      "EFACT-b676fc3afacb1117c1ba65be",
+      "EFACT-fd86be3f3b91aa151f046cfb"
+    ],
+    "why_not_higher": "HBM 전용 CAPA·수율·패키징 처리량이 없고, 가격 상승 둔화와 CAPEX 공급 대응 및 가격 의존 위험이 있어 만점 수준의 지속성을 확정할 수 없다. 시간 가동률과 현재 가격 상승만으로 HBM 병목 위치·지속기간을 확정할 수 없다.",
+    "why_not_lower": "8개의 current positive 사실이 공급 병목과 가격 전환의 실제 전환을 보여 주고 있어 counter만으로 확인된 성과를 무효화할 수 없다."
+  },
+  "payload_hash": "66e55259fe9dcf6b630cb3f9049bdff077314a7b943271d3d4931e6ee72804ce",
+  "production_score_authority": false,
+  "prompt_hash": "84a28a90a671f6eea30af67328887a076f78f62013e177c1b1cd9b19e49ac806",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bb481effd946b73d2c2c138ef008c898b2be1604cbe71d48281f89a1682ba951",
+  "response_id": "COLLABRESP-967307d06c684e9693c7579c135fb7a2403a8d29741f9194f6dc5d94b00d5de4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

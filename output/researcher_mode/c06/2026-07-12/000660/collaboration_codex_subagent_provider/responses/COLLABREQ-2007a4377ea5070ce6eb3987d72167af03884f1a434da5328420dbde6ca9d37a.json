@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "fff29d84a81bcfb7f85123ac620fba50a1cd3cab3a32055a5da8375fe8a2f367",
+  "payload": {
+    "allowed_range": [
+      4.8,
+      6.4
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df의 MEDIUM 구간 4.32~5.52는 낮은 신뢰도의 ordinal proxy다. 현재 사례는 낮은 forward peer 배수·높은 ROE·이익 revision·HBM 차등 SOTP와 PBR band 상단 돌파라는 직접 valuation bridge가 있어 그 anchor의 중단 이상이 타당하다.",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b의 COUNTER WEAK 구간 2.828571~4.028571보다 현재 positive fact의 직접성이 강해 4점 이하로 내리기 어렵다. 다만 이 anchor도 낮은 신뢰도의 ordinal 기준일 뿐이며 trailing 고배수, 낮은 FCF yield, FY2027~2028 감익과 경쟁 공급 counter 때문에 STRONG anchor의 11.4점 이상과는 큰 거리를 둔다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-f2bc7dd32e2c1bc4f926425e",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "disagreements": [
+      "HBM SOTP의 8.5배는 forward 기간이 명시되지 않아 구조화 FY2026~FY2028 EV/EBITDA와 동일한 배수 근거로 합칠 수 없다.",
+      "Peer P/E·EV/EBITDA와 FY2027~FY2028 감익은 모두 broker 추정치이므로 issuer actual이나 확정 duration으로 볼 수 없지만, 서로 반대 방향의 추정 불확실성을 범위에 동시에 반영해야 한다.",
+      "PBR band 상단 돌파와 EPS·PER 동반 상승은 regime 변화의 관찰이면서 동시에 기대가 이미 가격에 반영됐다는 counter도 될 수 있어 상단 점수의 단독 근거가 될 수 없다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 5.6,
+    "rationale": "Skeptic 관점에서도 FY2026~2027 직접 memory peer 대비 낮은 P/E·EV/EBITDA와 높은 ROE(EFACT-122bf71db78558e5780ed3c8), 큰 영업이익·순이익 revision(EFACT-132f5e71cb14a5afb42a7881), HBM에 8.5배를 적용한 차등 SOTP(EFACT-3e4c5596b1c40a463ba54d38), EPS와 PER의 동반 상승 및 PBR band 상단 돌파(EFACT-b3d48bea9ae741feec4d4a05)는 valuation regime 변화의 실질 근거다. 그러나 2025년 실적 상향에도 매크로 불확실성으로 Target PBR이 낮아진 사례(EFACT-1f6b2504a0b9dfbc74daf456), FY2026 급증 뒤 FY2027~2028 이익·EPS 감익 전망(EFACT-c73c140216de4b1a236ccbe5), CSP CapEx 실행 미달과 FCF·차입 부담(EFACT-f2bc7dd32e2c1bc4f926425e), 삼성전자·Micron 출하에 따른 HBM3E 공급 확대(EFACT-fa0c552bb4992e26e213ad41)는 배수 확장의 duration과 집중도에 직접 반대한다. 현재 trailing P/E 20.68배·P/B 9.46배와 forward FCF yield 1.78%도 낮은 forward P/E가 현금가치의 저평가가 아니라 cycle peak 분모일 가능성을 남긴다. 따라서 재평가 근거는 인정하되 사업 phase, 고객·CSP 수요 집중, 경쟁 공급과 현금전환 불확실성을 반영해 12점 만점의 중간 구간으로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-122bf71db78558e5780ed3c8",
+      "EFACT-132f5e71cb14a5afb42a7881",
+      "EFACT-3e4c5596b1c40a463ba54d38",
+      "EFACT-b3d48bea9ae741feec4d4a05"
+    ],
+    "why_not_higher": "현재 trailing P/E·P/B가 높고 forward FCF yield가 낮으며 FY2027~FY2028 감익, CSP 재원 제약, 경쟁사 공급 확대가 scarcity premium과 이익 duration을 줄일 수 있다. HBM 단독 actual 마진·FCF와 signed 고객조건도 없어 낮은 forward 배수를 구조적 재평가로 확정할 수 없다.",
+    "why_not_lower": "낮은 forward 상대배수와 높은 ROE가 직접 peer 표에서 확인되고, 이익 revision·HBM 차등 SOTP·PBR band 상단 돌파가 서로 다른 방식으로 valuation bridge를 지지한다. 이 네 support fact를 무시해 weak counter anchor 수준 이하로 내릴 근거는 없다."
+  },
+  "payload_hash": "312d52f5dd1e894cb200a98112ecd51ca94df7a319ff1e41091875abf2db36a1",
+  "production_score_authority": false,
+  "prompt_hash": "49f2cff0d932d1d34cb73711d2c04ba6e513d7ec8d7f43101a22fbadedd450bb",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2007a4377ea5070ce6eb3987d72167af03884f1a434da5328420dbde6ca9d37a",
+  "response_id": "COLLABRESP-52ef90683499e9856234568393907ba4d4d9d09394a829d8e90276b40c2c0c01",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "기업 단독 valuation 표가 아니라 Samsung Electronics가 포함된 global semiconductor 또는 DRAM comparables 표가 있는 전체 원문 PDF를 우선 확인합니다.",
+      "peer band는 배수 값뿐 아니라 peer roster, 동일 forward 기간, 기준일과 비교 통계가 함께 보이는 표를 요구하며 포털 요약이나 다른 산업 비교표는 제외합니다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 글로벌 반도체 comparables PER PBR 2026 PDF",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "남은 PEER_BAND 공백만 겨냥해 삼성전자와 글로벌 반도체 비교기업을 동일 기준일·동일 forward 기간으로 나열한 원 증권사 PDF 표를 찾습니다. 2026-07-12까지 공개된 자료에서 peer roster, 배수 종류, 기준 기간과 중앙값·범위가 확인돼야 하며 삼성전자 단독 historical band나 목표주가 표는 대체할 수 없습니다. 이전 동종기업 검색과 어휘 및 표 탐색 경로를 바꿨습니다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "Samsung Electronics DRAM peer valuation table 2026",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "한국어 검색에서 다른 산업 자료가 섞인 실패를 보완하기 위해 영어권 원 보고서의 DRAM peer comparison 표를 찾습니다. cutoff 이전 자료에서 Samsung Electronics를 포함한 비교기업 범위와 같은 기간의 valuation multiple을 확인하고, 산업 평균만 있거나 대상 기업이 빠진 표는 PEER_BAND 해결로 보지 않습니다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF",
+          "INDUSTRY_REPORT"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "현재 PEER_BAND의 LLM fact-extractable role 계약이 비어 있으므로 발견 문서는 source candidate이며 downstream 구조화 계약이 수용하기 전에는 공백을 닫지 않습니다.",
+      "FORWARD_EV_EBITDA와 OWN_HISTORICAL_BAND는 이미 covered role이므로 이번 query가 같은 삼성전자 단독 배수만 반복해서 찾으면 새 진전이 아닙니다."
+    ]
+  },
+  "payload_hash": "5c19139558f696dbeb2af06266b23653dc3bb4a180e8eec773f719192f0930ad",
+  "production_score_authority": false,
+  "prompt_hash": "394f123873e601e171d599cc4d376d420215ebc148fbae4b26e0c5c5cd15ec26",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a5e85b816a8407e4faef4210371fbc38a4e59b6d729069955ceef4b7563794ed",
+  "response_id": "COLLABRESP-9709dd5bec826c7de4eedff51e85b243e2f6c8150b0e183796437c24ed3dc2a4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

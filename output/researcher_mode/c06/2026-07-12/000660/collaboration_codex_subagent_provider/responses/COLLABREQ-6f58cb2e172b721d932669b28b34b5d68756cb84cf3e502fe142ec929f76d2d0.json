@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "7ae920b06bd6263417f575b06bfc5f7d39c17a95255d7e1ca84bfd395413d63e",
+  "payload": {
+    "allowed_range": [
+      4.8,
+      6.6
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df의 LOW-confidence MEDIUM positive ordinal band와 ORDTRANSFER-c2ec77e0538ebb9af9ce204b의 LOW-confidence WEAK counter ordinal band를 함께 사용했다. 정확한 경제 사례가 아니므로 anchor 수치를 그대로 이전하지 않고, 거시 할인·감익·경쟁 공급 counter를 actual 성장과 대칭적으로 보정했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "disagreements": [
+      "positive case는 peer discount와 HBM SOTP를 강조하지만, 추정치 기준 차이와 이미 반영된 P/B 프리미엄 및 peak duration을 충분히 할인해야 한다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 5.7,
+    "rationale": "모든 counterfact는 이익 상향에도 배수 하향이 가능하고 FY2026 peak 뒤 FY2027~2028 감익이 예상되며 경쟁사 공급 확대로 scarcity premium이 줄 수 있음을 보여준다. P/B 프리미엄도 이미 존재하고 HBM 단독 현금·계약조건이 없다. 다만 actual HBM 성장, 전사 이익과 다수 valuation bridge는 재평가 근거 자체를 부정하지 못한다.",
+    "support_fact_ids": [
+      "EFACT-027939805cca9c1f11e1e81e",
+      "EFACT-122bf71db78558e5780ed3c8",
+      "EFACT-3e4c5596b1c40a463ba54d38",
+      "EFACT-7ccc530bd085e12d2428c531",
+      "EFACT-b3d48bea9ae741feec4d4a05",
+      "EFACT-b74e88a671a1247b0ce230d5"
+    ],
+    "why_not_higher": "거시 불확실성의 실제 multiple 할인 사례, FY2027 이후 감익 추정, 경쟁사 공급 확대와 비구속 LTA 정보가 valuation duration 상단을 막는다.",
+    "why_not_lower": "HBM actual 성장과 전사 actual 이익, peer/SOTP 및 관찰된 EPS·PER 동반 상승이 있어 재평가 근거가 없는 weak 사례로 볼 수 없다."
+  },
+  "payload_hash": "736fa2ad7d4d1beb04b35f64ca92e56a5f270e9cd68a5fbb264f2fda06d23bf3",
+  "production_score_authority": false,
+  "prompt_hash": "0b2314e9f0406a66b28a81422aa83a2f0edf60a752826b8e8ac312dda1519d40",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6f58cb2e172b721d932669b28b34b5d68756cb84cf3e502fe142ec929f76d2d0",
+  "response_id": "COLLABRESP-c8ce1ef70021225682bad4c3783f09aed9682b52708a1ef35c1c87cc26e816e2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

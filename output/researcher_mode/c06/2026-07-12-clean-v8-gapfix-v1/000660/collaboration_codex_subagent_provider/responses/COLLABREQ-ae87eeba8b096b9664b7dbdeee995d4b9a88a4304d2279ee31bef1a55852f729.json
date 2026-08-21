@@ -1,0 +1,58 @@
+{
+  "output_schema_hash": "f400148ddd5fd07abbd247d6bffc4efd895ecfcdb6f9dad385cfde94e8cb3dda",
+  "payload": {
+    "allowed_range": [
+      14.8,
+      16.8
+    ],
+    "anchor_comparisons": [
+      "양의 중간 anchor CANCH-0714e46eb37d4c4b066de92c [13.68,16.08]보다 연결 순이익·DRAM 매출·영업현금 actual과 HBM 가격 기여가 함께 있어 중심을 다소 높게 본다.",
+      "counter anchor CANCH-17745cd4887afd21639e9dd6 [10.32,12.72]보다 actual·revision 기반은 강하지만 HBM 단독 earnings·FCF bridge 부재 때문에 strong band로 올리지는 않는다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-22b3c14ea08f7a3f6c58b170",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332"
+    ],
+    "disagreements": [
+      "HBM이 가격 상승 제품군에 포함됐다는 사실은 양의 연결고리지만 HBM 단독 이익 금액이나 FCF attribution은 아니다.",
+      "Forward revision은 기대치이며 2026년 actual 달성과 동일하지 않다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-0714e46eb37d4c4b066de92c",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 15.8,
+    "rationale": "연결 순이익과 영업현금, DRAM 매출의 큰 actual 개선 및 HBM 가격 상승 기여가 현재 이익·현금 방향을 강하게 지지한다. 구조화 actual earnings와 revision도 같은 방향이다. 다만 연결·DRAM 범위를 HBM 단독 EPS·FCF로 바꾸지 않고 CAPEX·재고·재공품 손실을 모두 차감해 중상단으로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-0295af0d92028218f77266f2",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-d2e799df4d980691c6707a9e"
+    ],
+    "why_not_higher": "HBM 단독 매출·마진·EPS·FCF bridge가 없고 CAPEX 현금유출, 재고평가충당금과 재공품 손실이 현금전환을 제약한다.",
+    "why_not_lower": "순이익·DRAM 매출·영업현금 actual이 크게 개선됐고 HBM 가격 기여와 forward revision까지 같은 양의 방향을 보인다."
+  },
+  "payload_hash": "bb3641ba2427086554bd12d5cb0ba5b699be1feaa989fdbc26ca66769f64ba0f",
+  "production_score_authority": false,
+  "prompt_hash": "087f16ac17566fea8492fec4822bd044c88b84b74983c91121a8f4910dbb29d0",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ae87eeba8b096b9664b7dbdeee995d4b9a88a4304d2279ee31bef1a55852f729",
+  "response_id": "COLLABRESP-8d87b4ca97fc72cd9492bea2f38b7d50548aff1d6a36073fc15666735924971b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

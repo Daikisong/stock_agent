@@ -1,0 +1,63 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      5.5,
+      8.2
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a는 POSITIVE 역할의 STRONG ordinal anchor이며 허용 대역은 11.40~12.00점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "ORDTRANSFER-75306723611a10615f950fec는 COUNTER 역할의 STRONG ordinal anchor이며 허용 대역은 11.40~12.00점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "두 anchor 모두 exact match가 아니므로 현재 support·counter의 균형과 component 최대점수에 맞춰 보수적으로 보간했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-07ca574cbad488f436ca70d6",
+      "EFACT-9cdcaad56af436ed1ac5bc6f",
+      "EFACT-a79b8e5bedf94ee44504539e",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "analyst의 경제 메커니즘 확인은 수용하지만 미해결 귀속·계약·지속성 자료 때문에 상단 일반화는 제한한다.",
+      "skeptic의 하방 위험은 수용하지만 이미 실현된 current positive 사실을 제거하는 수준의 감액은 과도하다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a",
+      "ORDTRANSFER-75306723611a10615f950fec"
+    ],
+    "proposed_points": 6.8,
+    "rationale": "HBM4 상용화에 따른 재평가의 support와 counter를 모두 같은 component 척도에서 비교했다. 긍정 측면은 HBM4가 시험·수율 단계에서 양산, 지속 납품, 누적 매출로 연속 전환됐다. 이는 과거 경쟁력 할인 사유가 실제 상용 성과로 바뀐 경로이며, 아직 남은 peer 대비 선행 배수 할인은 성과가 지속될 경우 재평가 여지를 만든다. 반면 반대 측면은 PBR은 이미 2024년 초보다 크게 올라 회복 기대의 일부가 반영됐다. HBM4 초기 마진이 전작보다 낮을 수 있고 고객 제품 일정 지연이나 정기 공급사 평가가 물량과 실적을 바꾸면 양산·매출의 지속성이 약해질 수 있다. 추가로 HBM4 초기 제품 마진, 고객 플랫폼 일정과 공급사 평가에 따른 allocation·납품 변화이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다. blind ordinal anchor는 exact match가 아니므로 현재 fact shape와 미해결 gap 사이의 중간 대역으로 보정했다.",
+    "support_fact_ids": [
+      "EFACT-3c095c9436a1460d04797e97",
+      "EFACT-3e5de9f21e03d4bc9871d258",
+      "EFACT-43ac847658ecf13550362d92",
+      "EFACT-60c77b3224c68e190899ad88",
+      "EFACT-7d49113d90b5216890ebb0bc",
+      "EFACT-ba3851ffc2538f67427b0ec3",
+      "EFACT-c8d894a7d67c2050fd2961da",
+      "EFACT-cf374d280bd2cbced74132b9"
+    ],
+    "why_not_higher": "고객별 수량·마진·장기 점유율이 없고 PBR 재평가가 이미 진행됐으며 초기 수익성·고객 일정·재평가 배분 위험이 남아 만점 지속성을 확정할 수 없다. 상용화 확인이 지속적 재평가로 이어지는지는 제품 수익성과 고객 배분에 달려 있다.",
+    "why_not_lower": "수율과 최종 시험, NVIDIA 플랫폼 양산, 북미 고객 지속 납품, 누적 10억달러 매출이 경쟁력 회복을 기술이 아닌 실제 상용화 경로로 확인한다. 기존 current positive facts는 그대로 유효하다."
+  },
+  "payload_hash": "e86bff1d7ad20dae9aa2fdf9443f1b48bf409c1230840fbfe05a14a059de6d5a",
+  "production_score_authority": false,
+  "prompt_hash": "3065c3d814f6dc6179a75e26338dd14c0129f838c03d1093ef55d8e82523872b",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-34985de0de79c5f2dd910af568a5cf844edb75aaf2aa94188ee19316980874ad",
+  "response_id": "COLLABRESP-99e5a9f2c45cec2e4862d457964151344632995e67224d478ed675c18ea3b32b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

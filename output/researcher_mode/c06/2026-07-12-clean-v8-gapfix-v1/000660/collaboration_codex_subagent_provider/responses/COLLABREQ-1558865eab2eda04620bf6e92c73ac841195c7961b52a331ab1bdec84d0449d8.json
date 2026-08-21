@@ -1,0 +1,574 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "rationale": "Continuation page 2 re-reviewed the full 120,010-character PUBLIC_BROKER_PDF and strict-deduplicated the 12 prior facts. In source order it adds twelve distinct target-linked atoms after the prior 3Q2025 DRAM ASP forecast: HBM die/yield constraint; R&D-led ASP competition; first-mover effect; unnamed key-customer delivery history; limited continuing CAPEX; FY2026 HBM-share outlook; FY2026 industry-cycle outlook; tight supply; advanced-node high-margin product-mix outlook; VFO North American adoption outlook; a 2.5x FY2026E P/B input; and the dated KRW 560,000 target price. Every row remains broker analysis or forecast and is not promoted to issuer actual, issuer guidance, signed HBM pricing/volume/allocation/duration, or HBM-only earnings. The twelve-fact page cap is reached while later target-specific valuation, earnings, cash-flow, and recommendation-history rows remain, so continuation is required.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker characterizes HBM as a specialty product with a larger die and lower yield. That directly identifies a manufacturing-capacity and cost counterweight, but it is broker analysis rather than an issuer-reported yield metric or HBM-only realized margin.",
+        "exact_quote": "다이 사이즈가 크고 수율은 낮아지는 specialty 성격의 HBM",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Die size and yield directly constrain HBM capacity conversion and temper pricing-led earnings upside.",
+        "mechanism_scope_id": "000660:HBM:DIE_YIELD_CONSTRAINT",
+        "normalized_object": "Broker-reported HBM larger-die and lower-yield constraint",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "reported 2025-10-22",
+        "predicate": "broker_reports_hbm_larger_die_and_lower_yield",
+        "predicate_family": "BROKER_HBM_DIE_YIELD_CONSTRAINT",
+        "primitive_tags": [
+          "HBM_YIELD_CONSTRAINT",
+          "CAPACITY_SCARCITY"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_die_size_and_yield_constraint",
+        "question_family_tags": [
+          "hbm_yield",
+          "die_size",
+          "capacity_constraint"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix HBM product economics",
+        "subject_id": "000660:HYNIX_HBM_DIE_YIELD_PROFILE",
+        "unit": "qualitative broker product profile",
+        "value": "larger die and lower yield"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker says HBM competition is shifting from scale-based cost reduction to R&D-based ASP competition. This is a product-economics thesis about pricing power, not a disclosed realized ASP, customer price, or signed pricing term.",
+        "exact_quote": "과거 규모의 경\n◼\n제에 기반한 비용 절감 경쟁에서 R&D에 기반한 ASP 경쟁으로 변화하는 제품.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The asserted competitive axis links product differentiation to potential ASP durability while preserving that no realized price is disclosed.",
+        "mechanism_scope_id": "000660:HBM:RND_ASP_COMPETITION",
+        "normalized_object": "Broker thesis that HBM competition shifts toward R&D-based ASP",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "reported 2025-10-22",
+        "predicate": "broker_describes_shift_to_rnd_based_asp_competition",
+        "predicate_family": "BROKER_HBM_RND_ASP_COMPETITION",
+        "primitive_tags": [
+          "PRICING_POWER",
+          "PRODUCT_DIFFERENTIATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_rnd_based_asp_competition",
+        "question_family_tags": [
+          "hbm_pricing",
+          "rnd_competition",
+          "asp"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix HBM pricing competition",
+        "subject_id": "000660:HYNIX_HBM_RND_ASP_COMPETITION",
+        "unit": "qualitative broker product-economics thesis",
+        "value": "R&D-based ASP competition"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.89,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker identifies a multi-generation first-mover effect as one support for SK hynix's HBM position. This is independent broker analysis, not a quantified issuer market-share actual.",
+        "exact_quote": "다세대에 걸친 시장 선점 효과",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "A multi-generation lead is a distinct durability driver for commercialization and earnings visibility.",
+        "mechanism_scope_id": "000660:HBM:MULTIGENERATION_FIRST_MOVER",
+        "normalized_object": "Broker-reported multi-generation HBM first-mover effect",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "reported 2025-10-22",
+        "predicate": "broker_attributes_hbm_position_to_multigeneration_first_mover_effect",
+        "predicate_family": "BROKER_HBM_MULTIGENERATION_FIRST_MOVER_EFFECT",
+        "primitive_tags": [
+          "FIRST_MOVER_EFFECT",
+          "PRODUCT_COMMERCIALIZATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_multigeneration_first_mover_effect",
+        "question_family_tags": [
+          "hbm_first_mover",
+          "competitive_position"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix HBM competitive position",
+        "subject_id": "000660:HYNIX_HBM_FIRST_MOVER_EFFECT",
+        "unit": "qualitative competitive-position driver",
+        "value": "multi-generation first-mover effect"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.87,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker cites a long delivery history to the company's most important customer as another HBM-position driver. The quote does not name the customer here or disclose signed price, volume, allocation, duration, or termination terms.",
+        "exact_quote": "가\n장 중요한 고객사로의 오랜 납품 이력",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Delivery history can support qualification durability, while the unnamed and non-contractual nature remains an information-confidence limitation.",
+        "mechanism_scope_id": "000660:HBM:KEY_CUSTOMER_DELIVERY_HISTORY",
+        "normalized_object": "Broker-reported long HBM delivery history to an unnamed key customer",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "history reported 2025-10-22",
+        "predicate": "broker_cites_long_delivery_history_to_key_customer",
+        "predicate_family": "BROKER_HBM_KEY_CUSTOMER_DELIVERY_HISTORY",
+        "primitive_tags": [
+          "CUSTOMER_RELATIONSHIP_HISTORY",
+          "INFORMATION_ONLY"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_key_customer_delivery_history",
+        "question_family_tags": [
+          "customer_history",
+          "hbm_delivery",
+          "information_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix HBM customer relationship history",
+        "subject_id": "000660:HYNIX_HBM_KEY_CUSTOMER_HISTORY",
+        "unit": "qualitative broker relationship history",
+        "value": "long delivery history to most important customer"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker describes HBM CAPEX as limited but continuing. This is a qualitative investment characterization, not issuer CAPEX guidance, an executed spend amount, or a committed customer capacity allocation.",
+        "exact_quote": "제한적이기는 하나 지속되는 CAPEX 투자",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The fact advances supply-response visibility while its explicitly limited scale counters unrestricted capacity assumptions.",
+        "mechanism_scope_id": "000660:HBM:LIMITED_CONTINUING_CAPEX",
+        "normalized_object": "Broker-reported limited but continuing HBM CAPEX",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "reported 2025-10-22",
+        "predicate": "broker_describes_limited_but_continuing_hbm_capex",
+        "predicate_family": "BROKER_HBM_LIMITED_CONTINUING_CAPEX",
+        "primitive_tags": [
+          "SUPPLY_RESPONSE",
+          "CAPACITY_INVESTMENT"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_limited_continuing_capex",
+        "question_family_tags": [
+          "hbm_capex",
+          "capacity_investment",
+          "limited_scale"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix HBM capacity investment",
+        "subject_id": "000660:HYNIX_HBM_LIMITED_CONTINUING_CAPEX",
+        "unit": "qualitative broker investment characterization",
+        "value": "limited but continuing CAPEX"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker forecasts that SK hynix's HBM market share will remain robust through 2026. It is a forward broker expectation, not a reported FY2026 share actual or issuer guidance.",
+        "exact_quote": "당사의 HBM 시장 내 점유율은\n2026년까지도 견조할 전망.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Share durability directly affects HBM earnings visibility but remains a broker forecast pending actual share evidence.",
+        "mechanism_scope_id": "000660:HBM:SHARE_OUTLOOK_FY2026",
+        "normalized_object": "Broker forecast of robust SK hynix HBM share through FY2026",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "through FY2026 forecast",
+        "predicate": "broker_forecasts_hbm_share_robust_through_2026",
+        "predicate_family": "BROKER_HBM_SHARE_RESILIENCE_FORECAST",
+        "primitive_tags": [
+          "MARKET_SHARE_DURABILITY",
+          "PRODUCT_COMMERCIALIZATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_share_resilience_forecast",
+        "question_family_tags": [
+          "hbm_market_share",
+          "fy2026_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix HBM market-share outlook",
+        "subject_id": "000660:HYNIX_HBM_SHARE_FY2026",
+        "unit": "qualitative market-share outlook",
+        "value": "robust through 2026"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker expected the semiconductor cycle to post a third consecutive year of double-digit growth in 2026. This is an industry outlook used as issuer context, not SK hynix revenue guidance or an HBM-only growth rate.",
+        "exact_quote": "반도체 사이클이 내년에도 3년 연속 두 자릿수 성장할 것으로 기대",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The demand-cycle outlook is material context for earnings visibility but cannot be attributed to HBM-only issuer economics.",
+        "mechanism_scope_id": "000660:MEMORY:CYCLE_GROWTH_FY2026",
+        "normalized_object": "Broker FY2026 semiconductor-cycle double-digit growth outlook",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "broker_expects_third_consecutive_double_digit_cycle_growth_year",
+        "predicate_family": "BROKER_MEMORY_CYCLE_DOUBLE_DIGIT_GROWTH_OUTLOOK",
+        "primitive_tags": [
+          "MEMORY_DEMAND_OUTLOOK",
+          "INFORMATION_ONLY"
+        ],
+        "product_family": "Memory",
+        "question_family_id": "memory_cycle_double_digit_growth_outlook",
+        "question_family_tags": [
+          "memory_cycle",
+          "industry_growth",
+          "fy2026"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix memory-cycle demand backdrop",
+        "subject_id": "000660:MEMORY_CYCLE_GROWTH_FY2026",
+        "unit": "qualitative industry growth outlook",
+        "value": "third consecutive year of double-digit growth"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker characterizes the supply environment as tight. The statement is a qualitative broker view and does not establish sold-out duration, allocated HBM volume, or a signed customer commitment.",
+        "exact_quote": "타이트한 공급 현황",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Tight supply directly advances bottleneck-pricing research while the lack of duration and allocation terms remains explicit.",
+        "mechanism_scope_id": "000660:MEMORY:TIGHT_SUPPLY_OUTLOOK",
+        "normalized_object": "Broker-reported tight memory supply environment",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "outlook reported 2025-10-22",
+        "predicate": "broker_characterizes_memory_supply_as_tight",
+        "predicate_family": "BROKER_MEMORY_TIGHT_SUPPLY_OUTLOOK",
+        "primitive_tags": [
+          "CAPACITY_SCARCITY",
+          "SUPPLY_TIGHTNESS"
+        ],
+        "product_family": "Memory",
+        "question_family_id": "memory_tight_supply_outlook",
+        "question_family_tags": [
+          "tight_supply",
+          "memory_capacity"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix memory supply environment",
+        "subject_id": "000660:MEMORY_TIGHT_SUPPLY:20251022",
+        "unit": "qualitative broker supply characterization",
+        "value": "tight supply"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.87,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker expects SK hynix to be a major beneficiary of leading-node, high-margin product monetization. This is a forward mix thesis, not a reported segment margin or HBM-only profit bridge.",
+        "exact_quote": "선단\n◼\n공정 중심의 제품 고수익화의 가장 큰 수혜 기업으로 자리매김할 수 있을 것.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "A high-margin product-mix thesis is directly relevant to pricing and earnings visibility while remaining non-actual and non-HBM-exclusive.",
+        "mechanism_scope_id": "000660:MEMORY:ADVANCED_NODE_HIGH_MARGIN_BENEFIT",
+        "normalized_object": "Broker outlook for SK hynix benefit from advanced-node high-margin memory products",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "outlook reported 2025-10-22",
+        "predicate": "broker_expects_benefit_from_advanced_node_high_margin_products",
+        "predicate_family": "BROKER_ADVANCED_NODE_HIGH_MARGIN_PRODUCT_BENEFIT",
+        "primitive_tags": [
+          "PRODUCT_MIX",
+          "PRICING_POWER"
+        ],
+        "product_family": "Memory",
+        "question_family_id": "advanced_node_high_margin_product_benefit",
+        "question_family_tags": [
+          "advanced_node",
+          "high_margin_mix",
+          "broker_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix advanced-node memory mix",
+        "subject_id": "000660:HYNIX_ADVANCED_NODE_HIGH_MARGIN_BENEFIT",
+        "unit": "qualitative broker product-mix outlook",
+        "value": "major beneficiary of leading-node product high-marginization"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker expects long-term North American customer adoption of stacked memory using VFO. This is an adoption expectation, not an achieved qualification, named-customer award, signed contract, shipment, or revenue actual.",
+        "exact_quote": "장기적으로는 VFO 기술을 도입하여\n적층한 메모리 제품의 북미 고객사 채택 기대",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Potential customer adoption is material to commercialization but the evidence boundary remains a broker expectation without contract or qualification completion.",
+        "mechanism_scope_id": "000660:DRAM:VFO_NORTH_AMERICA_ADOPTION_OUTLOOK",
+        "normalized_object": "Broker expectation of North American adoption for VFO stacked memory",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "long-term outlook reported 2025-10-22",
+        "predicate": "broker_expects_north_american_customer_adoption_of_vfo_stacked_memory",
+        "predicate_family": "BROKER_VFO_NORTH_AMERICAN_ADOPTION_OUTLOOK",
+        "primitive_tags": [
+          "QUALIFICATION_OUTLOOK",
+          "PRODUCT_COMMERCIALIZATION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "vfo_north_american_customer_adoption_outlook",
+        "question_family_tags": [
+          "vfo",
+          "north_america",
+          "customer_adoption"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix VFO stacked-memory adoption",
+        "subject_id": "000660:HYNIX_VFO_NORTH_AMERICA_ADOPTION",
+        "unit": "qualitative qualification outlook",
+        "value": "North American customer adoption expected"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker applied a 2.5x target P/B multiple to its 2026 BPS forecast. This is a broker valuation input, not an issuer metric, an HBM-only denominator, or a current as-of-date market multiple.",
+        "exact_quote": "2026년 BPS에 Target P/B 2.5배 적용한 560,000원으로 목표주가를 상향 및 투자의견 ‘BUY’ 유지.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit multiple is necessary to reconstruct the broker's valuation bridge while its dated, forecast-based nature limits current use.",
+        "mechanism_scope_id": "000660:MEMORY:EUGENE_TARGET_PB_2026",
+        "normalized_object": "Eugene 2.5x target P/B applied to FY2026E BPS",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026E valuation basis reported 2025-10-22",
+        "predicate": "broker_applies_target_pb_multiple_to_2026_bps",
+        "predicate_family": "BROKER_TARGET_PB_MULTIPLE",
+        "primitive_tags": [
+          "TARGET_PB",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_target_pb_multiple",
+        "question_family_tags": [
+          "target_pb",
+          "valuation_bridge",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Eugene SK hynix valuation method",
+        "subject_id": "000660:EUGENE_TARGET_PB:20251022",
+        "unit": "x P/B",
+        "value": 2.5
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker raised its SK hynix target price to KRW 560,000 while maintaining BUY. This is a dated broker expectation, not an issuer forecast, realized price, HBM-only valuation, or current investment instruction.",
+        "exact_quote": "2026년 BPS에 Target P/B 2.5배 적용한 560,000원으로 목표주가를 상향 및 투자의견 ‘BUY’ 유지.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The target price records the dated market-expectation endpoint but must remain separate from issuer economics and current valuation evidence.",
+        "mechanism_scope_id": "000660:MEMORY:EUGENE_TARGET_PRICE_20251022",
+        "normalized_object": "Eugene SK hynix target price raised to KRW 560,000",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "reported 2025-10-22",
+        "predicate": "broker_raises_target_price_to_560000",
+        "predicate_family": "BROKER_TARGET_PRICE",
+        "primitive_tags": [
+          "TARGET_PRICE",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_target_price",
+        "question_family_tags": [
+          "target_price",
+          "market_expectation",
+          "broker_valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Eugene SK hynix target price",
+        "subject_id": "000660:EUGENE_TARGET_PRICE:20251022",
+        "unit": "KRW per share",
+        "value": 560000
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-6e405a0dc5bd4f8f2cf7ed5f"
+    ],
+    "unresolved_research_notes": [
+      "Continuation page 2 reached the twelve-fact cap. Later source-order SK hynix rows remain, including current-price/upside, dated FY2025-FY2027 broker estimates, cash-flow and CAPEX forecasts, valuation rows, and recommendation-history calibration; a continuation must strict-deduplicate the 24 cumulative accepted facts.",
+      "NAND-only Bit Growth and ASP atoms in the shared 3Q2025 sentence are not emitted because NAND is outside the C06 mechanism-scope contract, and no NAND figure is attributed to HBM.",
+      "All selected evidence is PUBLIC_BROKER_PDF analysis or forecast. It does not establish issuer actuals or guidance, named-customer signed terms, HBM allocation, or HBM-only earnings and cash flow."
+    ]
+  },
+  "payload_hash": "6dd0f356c534a8621d9b111485cde875fb0ca3faa392301c53b00a37a0f056a8",
+  "production_score_authority": false,
+  "prompt_hash": "3aca480bf7bc4af8ef82809171318ff14ff3f4060b65e1eae113e24d00a03acb",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1558865eab2eda04620bf6e92c73ac841195c7961b52a331ab1bdec84d0449d8",
+  "response_id": "COLLABRESP-d53d5984b60393d890182a61f15faa61abc6d1a2757814b058ca17c3f03e9213",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "744a48df81396a3c04f7dd2bdd190da9ed944a5b26a9ceb90e34c0c5325513a1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-55603d9e89033bc7421d03ae",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.1,
+        "rationale": "신한증권 generic landing page로 target report 제목·issuer·peer valuation 내용이 식별되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-89fc065f3d129019c2535eac",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "한국IR협의회의 펨트론 168360 보고서로 다른 issuer이며 public broker source family도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-582d6388582fa4701b6c0d5f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "2026-07-27 삼성중공업 보고서로 cutoff 이후이자 wrong issuer다."
+      },
+      {
+        "candidate_id": "SGCAND-48b70a474779164225eb7977",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.31,
+        "rationale": "2026-06-12 유안타 Daily의 삼성전자 단독 목표가격·메모리 요약으로 peer P/B 수치가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-87cfebee211b870d1d1f4d75",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.04,
+        "rationale": "Bondweb Daily 집계는 거시·다종목 추천 목록이며 삼성전자 peer valuation 원문 provenance가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-19dc1ec66ffd52e389fb393b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "신한증권의 탄소섬유·타이어코드 기업 보고서로 삼성전자와 다른 subject다."
+      },
+      {
+        "candidate_id": "SGCAND-cce77ee6eee724f74f36d350",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "한국IR협의회 베뉴지 019010 보고서의 PBR로 삼성전자 반도체 peer와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-ef491c1c07669fac06bc0ab9",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.33,
+        "rationale": "2026-06-23 유안타 Daily의 반복 삼성전자 추천 행으로 peer identity와 동일 기간 P/B table이 없다."
+      },
+      {
+        "candidate_id": "SGCAND-93d74e7a6c9f3e59a32cad3f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.1,
+        "rationale": "신한증권 generic landing page는 target issuer와 valuation table을 식별하지 못해 material route로 확정할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-448bd24384c22edb4fc707d8",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.2,
+        "rationale": "삼성증권 시장전략은 삼성전자·SK하이닉스를 top pick으로 나열할 뿐 같은 기간 peer P/B 수치가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-c4b0da8daeb1084c01f1b10a",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "2026-07-14 IT 서비스 Daily로 cutoff 이후이며 삼성SDS·LG CNS 등 다른 issuer가 중심이다."
+      },
+      {
+        "candidate_id": "SGCAND-dc06cb31fde9b8e61cc316a8",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.33,
+        "rationale": "2026-06-19 유안타 Daily의 삼성전자 단독 추천 행은 peer band에 필요한 identity·metric·period를 제공하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "ranking_complete는 이 partition의 후보 분류 완료만 뜻한다. material 후보는 full fetch 후 2026-07-12 cutoff, 삼성전자 subject, peer identity, 동일 forecast period 및 numeric P/B를 검증해야 한다."
+    ]
+  },
+  "payload_hash": "80b6c7247b15e58ad10277347a30be2adaec141d27abeb7eb4d7f3aa299adeae",
+  "production_score_authority": false,
+  "prompt_hash": "9330b7c0516492d1a4d4a2beb737a326d60c75297566ac6b3c74e1c04309fbe3",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fbaf37d4e0373d946b4a126be76261e24412c7e49856cfdf32944f50e199d501",
+  "response_id": "COLLABRESP-0aaa0582ea52b4d6dd8e939c0f1ba9e36c03dfd3156b9585bb829f92ad360698",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

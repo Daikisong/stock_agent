@@ -1,0 +1,98 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "국내 상장사 중 삼성전자 DS 메모리의 HBM·DRAM 수요, 가격, 제품 믹스와 CAPA 사이클을 가장 직접적으로 공유하는 비교 대상이다. 다만 삼성전자 연결 전체와 단순 배수 비교를 할 때는 사업 포트폴리오 차이를 별도로 조정해야 한다.",
+        "confidence": 0.99,
+        "material_differences": [
+          "SK하이닉스는 메모리 중심 사업구조인 반면 삼성전자는 메모리 외 Foundry·System LSI·DX 사업을 함께 보유한다.",
+          "같은 HBM·DRAM 사이클에 노출되더라도 삼성전자의 연결 손익과 자본배분에는 비메모리·세트 사업이 크게 혼합된다.",
+          "현재 prompt에는 두 회사의 동일 시점 trailing valuation 값이 제공되지 않았다."
+        ],
+        "peer_name": "SK하이닉스",
+        "peer_symbol": "000660",
+        "shared_economic_drivers": [
+          "DRAM·NAND 메모리 업황과 가격 사이클",
+          "AI 서버용 HBM 수요와 첨단 메모리 제품 믹스",
+          "대규모 반도체 CAPA 투자와 수율·가동률이 이익 및 현금흐름에 미치는 영향"
+        ]
+      },
+      {
+        "comparability_rationale": "직접 메모리 peer는 아니지만 반도체 제조 CAPA·가동률·수율·가격 믹스의 경제성을 비교하는 인접 제조 peer다. 따라서 HBM 가격 또는 고객 잠김의 직접 대용물이 아니라 제조 자본집약도와 사이클 민감도의 보조 비교로만 사용해야 한다.",
+        "confidence": 0.74,
+        "material_differences": [
+          "DB하이텍은 성숙공정 Foundry 중심으로 삼성전자의 HBM·DRAM 메모리 제품과 직접 경쟁하지 않는다.",
+          "삼성전자는 메모리·Foundry·System LSI와 세트 사업을 포함한 훨씬 큰 복합 기업이므로 규모와 자본집약도 구성이 다르다.",
+          "현재 prompt에는 DB하이텍의 동일 시점 trailing valuation 값이 제공되지 않았다."
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "반도체 웨이퍼 생산설비의 가동률·수율·CAPA가 원가와 이익에 미치는 영향",
+          "반도체 업황과 고객 주문 변화에 따른 설비투자 회수 위험",
+          "기술 노드와 제품 믹스에 따른 ASP 및 마진 변화"
+        ]
+      },
+      {
+        "comparability_rationale": "제품 믹스·고객 채택·전자 수요 민감도를 보는 인접 반도체 peer지만, 메모리 제조와 CAPA 경제성에는 직접 대응하지 않는다. 삼성전자 비메모리 설계 사업을 보조적으로 비교할 때만 제한적으로 적합하다.",
+        "confidence": 0.63,
+        "material_differences": [
+          "LX세미콘은 Fabless 시스템반도체 업체로 자체 대규모 웨이퍼 CAPA를 운영하는 메모리 제조사가 아니다.",
+          "HBM·DRAM 가격과 수율, 메모리 CAPA 잠김을 직접 공유하지 않으며 주요 제품·고객 구조가 다르다.",
+          "현재 prompt에는 LX세미콘의 동일 시점 trailing valuation 값이 제공되지 않았다."
+        ],
+        "peer_name": "LX세미콘",
+        "peer_symbol": "108320",
+        "shared_economic_drivers": [
+          "반도체 제품 믹스와 고객 수요가 매출·마진에 미치는 영향",
+          "신제품 설계 경쟁력과 고객 채택에 따른 실적 변동",
+          "전자기기 최종수요 및 반도체 재고 사이클 노출"
+        ]
+      },
+      {
+        "comparability_rationale": "HBM CAPA 확장과 첨단 패키징 투자 사이클을 관찰하는 인접 공급망 peer다. HBM 수요 방향을 보조 확인할 수 있으나 삼성전자의 메모리 제조·가격·고객계약 valuation peer로 직접 사용해서는 안 된다.",
+        "confidence": 0.61,
+        "material_differences": [
+          "한미반도체는 HBM 생산업체가 아니라 후공정 장비 공급사이므로 메모리 가격·재고·수율의 직접 경제성이 다르다.",
+          "장비 주문은 고객 CAPEX의 선행·변동성을 반영하지만 삼성전자의 메모리 판매량과 계약 현금흐름을 대체하지 않는다.",
+          "현재 prompt에는 한미반도체의 동일 시점 trailing valuation 값이 제공되지 않았다."
+        ],
+        "peer_name": "한미반도체",
+        "peer_symbol": "042700",
+        "shared_economic_drivers": [
+          "AI·HBM 투자 사이클과 첨단 패키징 수요",
+          "고객 CAPEX와 생산능력 확대에 따른 주문 변동",
+          "첨단 공정 기술 경쟁력과 고객 인증이 매출 가시성에 미치는 영향"
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "SK하이닉스를 메모리·HBM 직접 peer로 두고, DB하이텍·LX세미콘·한미반도체를 각각 제조 CAPA, Fabless 제품 믹스, HBM 장비 투자 사이클의 인접 peer로 분리했다. 예를 들어 SK하이닉스는 같은 메모리 가격 사이클을 보지만 한미반도체는 메모리 가격이 아니라 고객의 장비 발주를 본다는 차이가 있다. 현재 prompt에 valuation 수치가 없으므로 어떤 배수도 생성하지 않았으며 structured 값의 PIT 검증 전에는 PEER_BAND를 확정할 수 없다.",
+    "unresolved_research_notes": [
+      "2026-07-12 기준 point_in_time_structured_peer_identity_roster가 0건이므로 선택 peer의 동일 시점 trailing P/E·P/B 등 구조화 valuation 값은 prompt로 검증되지 않았다.",
+      "SK하이닉스 외 3개사는 Foundry·Fabless·장비의 인접 peer이므로 하나의 메모리 배수 밴드로 섞지 말고 차이 조정과 실제 PIT structured fetch 검증이 필요하다."
+    ]
+  },
+  "payload_hash": "52f7da09df565832955f1b3de56a861953e7135efab9b1a7105ffe7274f9a6b5",
+  "production_score_authority": false,
+  "prompt_hash": "87c4e1bdbcda5dde6b8779c40277254eede600c293af65d245f1429df3f527a0",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-15e1e73e2645b21962bb8eebb925fd8d947298f8ea9f1e39742d7e0cb880f9fe",
+  "response_id": "COLLABRESP-18e5e4a1fd5b460cae7c8a2ad1af53099c8b8547f6ff21f806ccb9135d2852c1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

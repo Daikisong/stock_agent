@@ -1,0 +1,132 @@
+{
+  "output_schema_hash": "78f6ec730c9bba023cc96969dcb1022845b6d59ba8b14867a6639f617a0389ef",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-fbb81e8ace4b5e360a8ee140",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'https://www.sec.gov/Archives/edgar/data/1350869/000183988225000849/0001839882-25-000849.txt' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-5ad0e471730e487e8eac136f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Q2 FY2026 conference-call 커뮤니티 게시물은 기준일 이후 결과를 가리키고 issuer source도 아니므로 미래누수 방지상 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-8cdd49cc2c2ff9096572da1e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'https://www.sec.gov/Archives/edgar/data/1288795/000199937126000267/0001999371-26-000267.txt' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-3a64e8a1a59eaf5874c423f5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'라운지 | 개미스쿨' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-7e4c3bffc3053ca115e1fa14",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "PUBLIC_BROKER_PDF discovery provenance은 일치하지만, 이 자료는 '에이팩트 (200470) 바닥 딛고, 흑자전환을 향해'라는 다른 회사·펀드·과거 업황 중심 자료로 공급된 metadata에서 현재 SK하이닉스 HBM valuation objective를 직접 진전·반박·대체하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-9f24b190b89517614a48cc0d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "PUBLIC_BROKER_PDF discovery provenance은 일치하지만, 이 자료는 '2023 산업별 투자전략'라는 다른 회사·펀드·과거 업황 중심 자료로 공급된 metadata에서 현재 SK하이닉스 HBM valuation objective를 직접 진전·반박·대체하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a831ff84de615fd40a4e4cad",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Taiwan Semiconductor Manufacturing Company Limited (TSM) Stock Price, Quote, News & Analysis' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-39deefa7c5244fca4a4c0b66",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "PUBLIC_BROKER_PDF discovery provenance은 일치하지만, 이 자료는 '에스티아이 (039440) 다시 성장할 2025년'라는 다른 회사·펀드·과거 업황 중심 자료로 공급된 metadata에서 현재 SK하이닉스 HBM valuation objective를 직접 진전·반박·대체하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-64a7caf6708f55c42b756d60",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'by TradingView' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-8c0a1892915e38402513da06",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.92,
+        "rationale": "2026년 메모리 가격·투자·판매 확대와 SK하이닉스 개별 분석을 함께 담은 broker research 경로여서 현재 valuation-earnings bridge와 공급 대응을 검증할 수 있다."
+      },
+      {
+        "candidate_id": "SGCAND-fb53401787d0271a6c0235da",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Disco Corporation (DSCSY) Stock Price, Quote, News & Analysis' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-031e41b2185360aaec60e7f5",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.98,
+        "rationale": "기준일 이전 2026-06-22 SK하이닉스 개별 보고서이며 P/E와 유사기업 비교를 직접 다루므로 current valuation과 peer band 확인에 가장 직접적인 full-fetch 경로다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "MATERIAL은 full-fetch 우선순위일 뿐 snippet을 evidence로 인정한 것이 아니다. 원문 fetch 뒤 publication/as_of_date, target attribution, source provenance와 exact quote를 별도 검증해야 한다."
+    ]
+  },
+  "payload_hash": "20582ae73c2484f347efa27e4ec27202b954e8d733b0bdf365d718ce554b52d1",
+  "production_score_authority": false,
+  "prompt_hash": "64740b9b96cbf5d51190cfbaeb20ffd0e0d6c57b39714bc0d67ef0e2a716b497",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d34fb8e83f6b8f2ca4607df9c4d0980894cae93aaa700965d73e20e52e0ad62f",
+  "response_id": "COLLABRESP-128a1bc02c501715998d1d88d03a9dc4cc8d83c4507030964b733e15d2774bec",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

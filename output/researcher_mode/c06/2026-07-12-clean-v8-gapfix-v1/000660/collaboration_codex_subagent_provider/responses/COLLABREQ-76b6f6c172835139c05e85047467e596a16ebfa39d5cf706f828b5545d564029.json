@@ -1,0 +1,105 @@
+{
+  "output_schema_hash": "c7059c48c3e9bc686d2380142b811e32c0f16eb0a66ada10d279d1fa7c4584a2",
+  "payload": {
+    "confidence": 0.8,
+    "counter_case": "교환사채의 주식 교환과 성장투자 재원 수요는 순환원 효과를 낮출 수 있다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0"
+    ],
+    "positive_case": "15,300,000주 자기주식 소각으로 발행주식수를 실제 줄였다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 85,
+        "reason": "부채 감소와 희석 구조를 동시에 보여주는 직접 counter로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 224,
+        "reason": "실제 자기주식 소각을 직접 주주환원 evidence로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 295,
+        "reason": "차입금 상환은 자본여력 맥락이지만 소각과 교환사채보다 자본배분 의사결정에 간접적이다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 312,
+        "reason": "순현금 상태는 투자여력이지 실제 배분 실행 자체는 아니다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 345,
+        "reason": "재고 증가는 운전자본 counter지만 직접적인 자본배분 정책 evidence보다 후순위다."
+      }
+    ],
+    "proposed_score_lower": 2.0,
+    "proposed_score_mid": 3.0,
+    "proposed_score_upper": 3.5,
+    "research_complete": true,
+    "researcher_summary": "자기주식 소각은 직접적인 환원이지만 교환사채 행사와 대규모 성장투자가 주주환원 상단을 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "실제 자기주식 소각은 발행주식수를 줄인 직접적인 주주환원 실행이다.",
+        "fact_row_index": 224,
+        "source_economic_mechanism": "2026년 1분기 중 자기주식 15,300,000주를 이익소각해 발행주식수를 직접 줄였다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_TREASURY_SHARE_RETIREMENT",
+        "source_value_json": "15300000"
+      },
+      {
+        "component_interpretation": "교환사채 행사는 부채를 줄이지만 주식 유통과 희석 구조에 대한 counter다.",
+        "fact_row_index": 85,
+        "source_economic_mechanism": "2026년 1분기 중 해외 교환사채 USD 510.8백만이 자기주식 6,179,194주로 교환돼 부채를 줄이는 대신 주식 유통과 희석 구조에 영향을 줬다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_EXCHANGEABLE_BOND_EXERCISE",
+        "source_value_json": "\"USD 510,800,000 exchanged for 6,179,194 shares\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      224,
+      85
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "KIND_KRX",
+      "PUBLIC_BROKER_PDF"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "향후 배당·소각 규모의 지속성은 확정되지 않았다",
+      "HBM 투자회수와 주주환원 사이의 장기 배분 규칙이 공개되지 않았다"
+    ],
+    "why_not_higher": "교환사채 행사와 대규모 성장투자 부담이 남아 있다.",
+    "why_not_lower": "대규모 자기주식 소각이 실제로 실행됐다."
+  },
+  "payload_hash": "b8aef29e2eec284f2ef26544cfb0095f00c4961647a24597bf083962db24655f",
+  "production_score_authority": false,
+  "prompt_hash": "46a3fa8c1eec006773f75a7395be5fabe074c0069ef5535a64c62fb0fd034b99",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-76b6f6c172835139c05e85047467e596a16ebfa39d5cf706f828b5545d564029",
+  "response_id": "COLLABRESP-a9fdb26e936d8c52c173a127abeb3467f89f4be649ea36eb62ef0f3f1f7992f4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

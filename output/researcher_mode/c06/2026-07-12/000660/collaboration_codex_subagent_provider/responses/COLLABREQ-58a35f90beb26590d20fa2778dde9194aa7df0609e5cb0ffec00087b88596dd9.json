@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "af6a09607a327476ccec9812ec08734f108bccfa93c2358405b7e196421354fb",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4486576cbfc4b35a1d3a2f9b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "반도체 피크아웃 넘어선다···메모리 3사, ‘리스크 없는’ 영토 확장 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-3404bb72ef0c2d6823d10e98",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "2024 ISSUE REPORT AI가 견인하는 HBM 시장 현황 및 전망 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-599ff07a3253a5a47f7dfe13",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스, 엔비디아 HBM 제1공급사 위엄…목표가 11%↑-한투 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-71680ad2fb3f4c04239bf9c9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "메모리 거인 SK하이닉스 미국 상장 임박: 알아두어야 할 몇 가지 핵심 정보 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-7dd16197bac66255bd7acb32",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "서울경제 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-daf8e7db6d7482131c15e1be",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "하닉의 HBM3 독점은 내년 중반까지 이상무, 아무말 대잔치 뉴스기사: 마이크론 .... 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-38bd36f9433322ef9acc3e6a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스 주가 300만 원 시대 오나? 지금 안 사면 10년 후 후회할 3가지 이유 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-7e2ba905bdb5a77d8aad2503",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "밀려드는 HBM에…SK하이닉스, 청주에 20조 투자해 D램 생산 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-9937df271d9c68e1a1733d87",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "HBM4 `절대 1위` 외친 SK하이닉스…\"2월 양산·3배 성장\" 맞불 놓는 `삼성전자` 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-bc100696263903f1622afdc6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "엔비디아 훈풍 타고 날아오른 SK하이닉스...오는 3월 호재 더 남았다 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-18c95a14f27e66d95f6fe5c6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "마이크론 ‘영업이익률 81%’ 기록… 삼성·SK 주도 HBM 판도 뒤흔드나 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-086ef136e244a692de2459be",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "[기업家] SK그룹 ① ㅣ 리밸런싱·AI·글로벌 확장…변화의 중심에 서다 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "60eddd8af724fead038743439a3783727f18367df93ae7755c42fcaf850f608a",
+  "production_score_authority": false,
+  "prompt_hash": "d45332b0ed9167b10b085828412fb4866f0f147f0530c6150f2b5cc8e1264c67",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-58a35f90beb26590d20fa2778dde9194aa7df0609e5cb0ffec00087b88596dd9",
+  "response_id": "COLLABRESP-31bc83cd1fe64174cb8cbbb90f495c6e08591a6c98d5a9092044ae999c147a19",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

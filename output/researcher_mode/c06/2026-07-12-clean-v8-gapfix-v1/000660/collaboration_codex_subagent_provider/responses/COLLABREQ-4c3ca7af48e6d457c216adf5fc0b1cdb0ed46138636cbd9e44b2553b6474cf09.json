@@ -1,0 +1,360 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "The full target-relevant portion of the broker compilation was audited in source order. This final page adds seven distinct superseded recommendation-history calibration rows after strict deduplication against 264 prior accepted facts. The March 2024 current target row was not repeated because the prior roster already contains the same KRW 190,000-to-220,000 revision event; subsequent pages concern other issuers or generic broker disclosures rather than new target-direct facts.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "Consolidated broker valuation, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker's dated recommendation history records a Buy rating and KRW 190,000 six-month target price, with average and high/low realized-price gaps of -21.94% and -9.53%; this is a superseded calibration observation, not current valuation or HBM economics.",
+        "exact_quote": "2024.01.15 매수 190,000원 6개월 -21.94% -9.53%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated row is useful only as historical broker-calibration evidence for valuation and market-expectation objectives; the later March 2024 revision superseded it.",
+        "mechanism_scope_id": "C06_MEMORY_VALUATION_ANALYSIS",
+        "normalized_object": "SK Securities Buy recommendation, KRW 190,000 six-month target, average gap -21.94%, high/low gap -9.53%",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "recommendation dated 2024-01-15; 6-month horizon",
+        "predicate": "broker_historical_target_price",
+        "predicate_family": "BROKER_TARGET_PRICE_HISTORY",
+        "primitive_tags": [
+          "target_price",
+          "buy_rating",
+          "realized_gap",
+          "historical"
+        ],
+        "product_family": "Issuer-wide target-price history",
+        "question_family_id": "BROKER_TARGET_PRICE_HISTORY",
+        "question_family_tags": [
+          "VALUATION",
+          "BROKER_TARGET_PRICE",
+          "RECOMMENDATION_HISTORY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix SK Securities target-price history dated 2024-01-15",
+        "subject_id": "000660:SKSEC:TARGET_PRICE_HISTORY:2024-01-15",
+        "unit": "KRW target price",
+        "value": 190000
+      },
+      {
+        "business_segment": "Consolidated broker valuation, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker's dated recommendation history records a Buy rating and KRW 160,000 six-month target price, with average and high/low realized-price gaps of -21.54% and -11.00%; it is historical calibration only.",
+        "exact_quote": "2023.07.25 매수 160,000원 6개월 -21.54% -11.00%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row calibrates a historical broker target and realized gap but cannot act as current valuation, issuer guidance, or HBM evidence.",
+        "mechanism_scope_id": "C06_MEMORY_VALUATION_ANALYSIS",
+        "normalized_object": "SK Securities Buy recommendation, KRW 160,000 six-month target, average gap -21.54%, high/low gap -11.00%",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "recommendation dated 2023-07-25; 6-month horizon",
+        "predicate": "broker_historical_target_price",
+        "predicate_family": "BROKER_TARGET_PRICE_HISTORY",
+        "primitive_tags": [
+          "target_price",
+          "buy_rating",
+          "realized_gap",
+          "historical"
+        ],
+        "product_family": "Issuer-wide target-price history",
+        "question_family_id": "BROKER_TARGET_PRICE_HISTORY",
+        "question_family_tags": [
+          "VALUATION",
+          "BROKER_TARGET_PRICE",
+          "RECOMMENDATION_HISTORY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix SK Securities target-price history dated 2023-07-25",
+        "subject_id": "000660:SKSEC:TARGET_PRICE_HISTORY:2023-07-25",
+        "unit": "KRW target price",
+        "value": 160000
+      },
+      {
+        "business_segment": "Consolidated broker valuation, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker's dated recommendation history records a Buy rating and KRW 130,000 six-month target price, with average and high/low realized-price gaps of -11.71% and -8.08%; it is superseded historical calibration.",
+        "exact_quote": "2023.05.31 매수 130,000원 6개월 -11.71% -8.08%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row is a dated valuation-calibration observation only and is not current or HBM-attributed evidence.",
+        "mechanism_scope_id": "C06_MEMORY_VALUATION_ANALYSIS",
+        "normalized_object": "SK Securities Buy recommendation, KRW 130,000 six-month target, average gap -11.71%, high/low gap -8.08%",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "recommendation dated 2023-05-31; 6-month horizon",
+        "predicate": "broker_historical_target_price",
+        "predicate_family": "BROKER_TARGET_PRICE_HISTORY",
+        "primitive_tags": [
+          "target_price",
+          "buy_rating",
+          "realized_gap",
+          "historical"
+        ],
+        "product_family": "Issuer-wide target-price history",
+        "question_family_id": "BROKER_TARGET_PRICE_HISTORY",
+        "question_family_tags": [
+          "VALUATION",
+          "BROKER_TARGET_PRICE",
+          "RECOMMENDATION_HISTORY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix SK Securities target-price history dated 2023-05-31",
+        "subject_id": "000660:SKSEC:TARGET_PRICE_HISTORY:2023-05-31",
+        "unit": "KRW target price",
+        "value": 130000
+      },
+      {
+        "business_segment": "Consolidated broker valuation, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker's dated recommendation history records a Buy rating and KRW 110,000 six-month target price, with average and high/low realized-price gaps of -17.51% and 0.27%; it is superseded historical calibration.",
+        "exact_quote": "2023.03.30 매수 110,000원 6개월 -17.51% 0.27%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The target and realized gaps provide historical calibration but no current target, issuer guidance, contract, or HBM-only fact.",
+        "mechanism_scope_id": "C06_MEMORY_VALUATION_ANALYSIS",
+        "normalized_object": "SK Securities Buy recommendation, KRW 110,000 six-month target, average gap -17.51%, high/low gap 0.27%",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "recommendation dated 2023-03-30; 6-month horizon",
+        "predicate": "broker_historical_target_price",
+        "predicate_family": "BROKER_TARGET_PRICE_HISTORY",
+        "primitive_tags": [
+          "target_price",
+          "buy_rating",
+          "realized_gap",
+          "historical"
+        ],
+        "product_family": "Issuer-wide target-price history",
+        "question_family_id": "BROKER_TARGET_PRICE_HISTORY",
+        "question_family_tags": [
+          "VALUATION",
+          "BROKER_TARGET_PRICE",
+          "RECOMMENDATION_HISTORY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix SK Securities target-price history dated 2023-03-30",
+        "subject_id": "000660:SKSEC:TARGET_PRICE_HISTORY:2023-03-30",
+        "unit": "KRW target price",
+        "value": 110000
+      },
+      {
+        "business_segment": "Consolidated broker valuation, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker's dated recommendation history records a Buy rating and KRW 120,000 six-month target price, with average and high/low realized-price gaps of -28.53% and -20.92%; it is superseded historical calibration.",
+        "exact_quote": "2022.10.27 매수 120,000원 6개월 -28.53% -20.92%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row is historical broker-calibration evidence only; it is stale and not attributable to HBM economics.",
+        "mechanism_scope_id": "C06_MEMORY_VALUATION_ANALYSIS",
+        "normalized_object": "SK Securities Buy recommendation, KRW 120,000 six-month target, average gap -28.53%, high/low gap -20.92%",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "recommendation dated 2022-10-27; 6-month horizon",
+        "predicate": "broker_historical_target_price",
+        "predicate_family": "BROKER_TARGET_PRICE_HISTORY",
+        "primitive_tags": [
+          "target_price",
+          "buy_rating",
+          "realized_gap",
+          "historical"
+        ],
+        "product_family": "Issuer-wide target-price history",
+        "question_family_id": "BROKER_TARGET_PRICE_HISTORY",
+        "question_family_tags": [
+          "VALUATION",
+          "BROKER_TARGET_PRICE",
+          "RECOMMENDATION_HISTORY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix SK Securities target-price history dated 2022-10-27",
+        "subject_id": "000660:SKSEC:TARGET_PRICE_HISTORY:2022-10-27",
+        "unit": "KRW target price",
+        "value": 120000
+      },
+      {
+        "business_segment": "Consolidated broker valuation, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker's dated recommendation history records a Buy rating and KRW 130,000 six-month target price, with average and high/low realized-price gaps of -28.33% and -21.15%; it is superseded historical calibration.",
+        "exact_quote": "2022.06.20 매수 130,000원 6개월 -28.33% -21.15%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated broker row calibrates an old recommendation only and does not support a current target or HBM attribution.",
+        "mechanism_scope_id": "C06_MEMORY_VALUATION_ANALYSIS",
+        "normalized_object": "SK Securities Buy recommendation, KRW 130,000 six-month target, average gap -28.33%, high/low gap -21.15%",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "recommendation dated 2022-06-20; 6-month horizon",
+        "predicate": "broker_historical_target_price",
+        "predicate_family": "BROKER_TARGET_PRICE_HISTORY",
+        "primitive_tags": [
+          "target_price",
+          "buy_rating",
+          "realized_gap",
+          "historical"
+        ],
+        "product_family": "Issuer-wide target-price history",
+        "question_family_id": "BROKER_TARGET_PRICE_HISTORY",
+        "question_family_tags": [
+          "VALUATION",
+          "BROKER_TARGET_PRICE",
+          "RECOMMENDATION_HISTORY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix SK Securities target-price history dated 2022-06-20",
+        "subject_id": "000660:SKSEC:TARGET_PRICE_HISTORY:2022-06-20",
+        "unit": "KRW target price",
+        "value": 130000
+      },
+      {
+        "business_segment": "Consolidated broker valuation, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker's dated recommendation history records a Buy rating and KRW 160,000 six-month target price, with average and high/low realized-price gaps of -28.26% and -16.88%; it is superseded historical calibration.",
+        "exact_quote": "2022.02.08 매수 160,000원 6개월 -28.26% -16.88%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row is a superseded historical target-price calibration and does not establish current issuer or HBM economics.",
+        "mechanism_scope_id": "C06_MEMORY_VALUATION_ANALYSIS",
+        "normalized_object": "SK Securities Buy recommendation, KRW 160,000 six-month target, average gap -28.26%, high/low gap -16.88%",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "recommendation dated 2022-02-08; 6-month horizon",
+        "predicate": "broker_historical_target_price",
+        "predicate_family": "BROKER_TARGET_PRICE_HISTORY",
+        "primitive_tags": [
+          "target_price",
+          "buy_rating",
+          "realized_gap",
+          "historical"
+        ],
+        "product_family": "Issuer-wide target-price history",
+        "question_family_id": "BROKER_TARGET_PRICE_HISTORY",
+        "question_family_tags": [
+          "VALUATION",
+          "BROKER_TARGET_PRICE",
+          "RECOMMENDATION_HISTORY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix SK Securities target-price history dated 2022-02-08",
+        "subject_id": "000660:SKSEC:TARGET_PRICE_HISTORY:2022-02-08",
+        "unit": "KRW target price",
+        "value": 160000
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "e5c4a909083188bf359dbbbdfa6422f8baa0d97f77de3a26d090c7e5e93756b3",
+  "production_score_authority": false,
+  "prompt_hash": "ab70a0f958eb0a8367e44a0f75dfcc4acb436421caee37325884c41470c1c8dd",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4c3ca7af48e6d457c216adf5fc0b1cdb0ed46138636cbd9e44b2553b6474cf09",
+  "response_id": "COLLABRESP-2a42c881f5c9cc6aa4afb31dcf0c5d5cab006ad1a7c8b60aa2b5887832c0e81a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

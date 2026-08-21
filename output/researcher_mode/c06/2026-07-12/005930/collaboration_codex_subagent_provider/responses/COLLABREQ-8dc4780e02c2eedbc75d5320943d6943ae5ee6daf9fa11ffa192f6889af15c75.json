@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "490110d92341a79daf7e8a281153aa7d96072ebe37f4354e685b7d607c29eb92",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a52709d44baa6cd76a62f145",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-5a408f958903effdfe8fea84",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "일반 웹 또는 제3자 경로로 요청된 source family의 검증 가능한 대상 full-fetch 원문이 아니며, 현재 삼성전자 HBM·메모리 objective를 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-77dd9c81fea96af591029cea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-e2fc32bd2e4a1f80f2b15be5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-eb79f9fb8da076ac3a3e58d4",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.03,
+        "rationale": "증권사 소유의 직접 리서치 경로여서 provenance는 맞지만, supplied title과 route는 타 종목·일반 데일리·시장 브리프 중심이라 삼성전자 HBM 귀속 valuation·revision·capital allocation을 해소하는 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c6c3981a148c71164d22a2e5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "일반 웹 또는 제3자 경로로 요청된 source family의 검증 가능한 대상 full-fetch 원문이 아니며, 현재 삼성전자 HBM·메모리 objective를 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a096e41810586e354590c528",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-1ceda4db82768c77a0bc2037",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.03,
+        "rationale": "증권사 소유의 직접 리서치 경로여서 provenance는 맞지만, supplied title과 route는 타 종목·일반 데일리·시장 브리프 중심이라 삼성전자 HBM 귀속 valuation·revision·capital allocation을 해소하는 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-42d468a76473db3439a95e5d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-374930863cf4d14ee18636a6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "일반 웹 또는 제3자 경로로 요청된 source family의 검증 가능한 대상 full-fetch 원문이 아니며, 현재 삼성전자 HBM·메모리 objective를 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-6cf257f4d7fd3cf17e717613",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-16e6a189ac665ccaf952ed53",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.03,
+        "rationale": "증권사 소유의 직접 리서치 경로여서 provenance는 맞지만, supplied title과 route는 타 종목·일반 데일리·시장 브리프 중심이라 삼성전자 HBM 귀속 valuation·revision·capital allocation을 해소하는 원문이 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "c6b422601114876b3e6e3a3a8aea19223a71f77d5bd4cad7c705692464b66af2",
+  "production_score_authority": false,
+  "prompt_hash": "d404f86b928c67768af664ed84327bcea36ca7ff1069a2a12451613845bb3dd4",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8dc4780e02c2eedbc75d5320943d6943ae5ee6daf9fa11ffa192f6889af15c75",
+  "response_id": "COLLABRESP-2ad457e85d37a323c3ffc993822e489ee0c729ae1d14f9d2ce0209c12c53b943",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

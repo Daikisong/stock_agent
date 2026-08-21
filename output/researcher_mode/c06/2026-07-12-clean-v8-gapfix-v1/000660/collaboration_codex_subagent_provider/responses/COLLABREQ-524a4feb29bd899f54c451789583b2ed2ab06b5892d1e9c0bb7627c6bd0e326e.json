@@ -1,0 +1,195 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "공시 actual 순이익·영업현금흐름과 CAPEX counter가 함께 반영됐고, HBM-only 귀속 한계는 점수 범위의 상단 제한으로 이미 처리됐다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "제품 실행·고객 공동개발과 고객 집중·계약조건 미확인이 같은 memo에 반영됐다. 미확인 계약조건은 EGAPDISP-5f2f9b9418ecc7f2b9eed09e의 CORROBORATION_CAP이며 현재 snapshot에서 재검색 blocker가 아니다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "100% 가동과 HBM 실행을 증설·HBM-only CAPA 및 realized ASP 미분리 counter와 함께 평가해 bounded 판단이 완결됐다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "actual·revision·현재 valuation 자료와 상반된 시장 기대가 함께 검토됐고 Judge 간 material disagreement가 없다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 및 forward valuation 시나리오와 earnings bridge 한계가 동일 memo에 반영돼 추가 자료 없이도 제한된 점수 범위를 판정할 수 있다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "부채·현금창출·소각의 positive와 CAPEX·희석 counter가 공식·구조화 자료로 함께 검토됐다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "공식 공시와 issuer 자료의 계보는 확인됐고 독립 고객 corroboration 제한은 CORROBORATION_CAP으로 confidence 상단에 반영됐다. 같은 route를 다시 열 조건은 현재 snapshot에 없다."
+      }
+    ],
+    "component_memos_sufficient": true,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-a9ecc7f58ceb426406c7d75b",
+        "rationale": "as_of_date 이후 locator 4건은 미래누수 차단이 정상 동작한 결과이며 current evidence gap이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-052a6db63ca3b5df321ba85e",
+        "rationale": "full fetch 뒤 미래 문서로 확인된 7건은 적법하게 제외됐으며 재시도 대상이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-3cce993b5c91302b09341496",
+        "rationale": "snippet-only 1건은 full-document evidence가 아니므로 제외됐고 다른 accepted lineage로 해당 memo 판단이 완결됐다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-93ef77aa16dc6b14446d4e72",
+        "rationale": "snippet-only 후보를 다시 여는 것은 현재 완료된 bottleneck memo와 accepted lineage를 바꾸지 않는 반복 route다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-31bd78e52f06a6a1b38eca52",
+        "rationale": "발행일을 검증할 수 없는 2건은 as-of evidence로 채택할 수 없으며 current score의 필수 source가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-8511d52e1648a2d0cd3a0ac2",
+        "rationale": "미래 문서 7건을 배제한 query 결과이며 같은 결과를 다시 fetch하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-195580559f234e36e5507d6e",
+        "rationale": "full document가 아닌 snippet 1건은 evidence가 아니고 해당 objective는 다른 source-backed facts로 판정됐다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-d6a8270b26617a13243f8a36",
+        "rationale": "실패한 snippet route를 반복해도 새 accepted lineage가 생긴다는 근거가 없고 component memo는 이미 counter까지 완결됐다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-c872690e19484550998adafa",
+        "rationale": "발행일 미상 문서 2건은 as-of 검증 불가로 제외됐으며 이를 자료 부재로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-057882123ed251b89e53096a",
+        "rationale": "미래 날짜 query 2건은 검증기가 정상 차단했으며 재실행하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY는 현재 snapshot에서 새 합법 query가 없다는 기록이며 동일 semantic query를 다시 열지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-21a36d25a8da69fee0e18997",
+        "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-d5ae73aeae8a077698c8758a",
+        "rationale": "zero-result 6건은 source absence나 saturation 증명이 아니다. 다만 component 판단은 다른 accepted facts로 완결됐고 같은 empty route 반복은 새 material fact를 만들 합리적 경로가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-0ad9517335e04a03077d8323",
+        "rationale": "CUSTOMER_OFFICIAL 미확인은 EGAPDISP-5f2f9b9418ecc7f2b9eed09e에서 CORROBORATION_CAP으로 disposition 됐고 동일 route 재개방 조건이 충족되지 않았다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-496f4ed79919c72c9f45e008",
+        "rationale": "KIND_KRX route는 full-fetch 시도 후 accepted claim lineage가 없었지만 capital memo는 다른 공식 facts로 완결됐으므로 같은 family 반복은 불필요하다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-d773e89b6755685635b1ae7a",
+        "rationale": "PUBLIC_BROKER_PDF route는 이미 full-fetch됐고 accepted lineage가 없는 시도를 같은 objective들에 반복해도 현재 완결된 memo를 바꿀 합리적 근거가 없다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [],
+    "new_source_family_directions": [],
+    "next_actions": [],
+    "query_direction_briefs": [],
+    "rationale": "7개 component memo, 21개 Judge, Red Team, synthesis, structured records와 counter/supersession route가 모두 완결됐다. 남은 HBM-only 귀속·signed 계약조건·HBM-only CAPA/ASP 한계는 점수 상단과 confidence를 제한하지만 current score를 무효화할 material gap은 아니다. EGAPDISP-5f2f9b9418ecc7f2b9eed09e는 같은 corroboration query lane을 닫고 새 evidence가 생길 때만 재개방하도록 규정하므로 신규 source/query direction 없이 independent saturation review로 진행한다.",
+    "ready_for_independent_saturation_review": true,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "c2a0b823101f33dced16fe85439cda2ab6e68ff9f583c1d2a2d01ec41653a53d",
+  "production_score_authority": false,
+  "prompt_hash": "7749dc321e285c09b8d5290e81c8dd912741b51a556331b88de19f6b07020fa0",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-524a4feb29bd899f54c451789583b2ed2ab06b5892d1e9c0bb7627c6bd0e326e",
+  "response_id": "COLLABRESP-3adcf24db02cb0dac0a7e85a8e5ae25435cde0fdb6cdb2d784f508a8a91d4860",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

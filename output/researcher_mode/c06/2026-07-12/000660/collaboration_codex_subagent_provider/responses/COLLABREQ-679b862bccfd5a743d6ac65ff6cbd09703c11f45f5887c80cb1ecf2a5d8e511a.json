@@ -1,0 +1,45 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Use NVIDIA's official May 2026 earnings-call transcript or prepared remarks published on or before 2026-07-12 as a customer-official route distinct from GTC and SEC annual or quarterly filings.",
+      "Require the full official transcript to name both SK hynix and HBM when interpreting supply commitments, capacity agreements, booked periods, advance payments, or cancellation terms; do not promote snippets."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK hynix NVIDIA May 2026 earnings call HBM supply commitments capacity agreements",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "The prior customer-official routes covered GTC, the FY2026 annual report, and a 2026 Form 10-Q, but not NVIDIA's May 2026 earnings-call transcript or prepared remarks. Review that distinct current customer communication only for explicit joint attribution to SK hynix and HBM, including a booked period, quantity, non-cancellable commitment, advance payment, or capacity agreement; generic HBM demand or NVIDIA-wide supply commentary does not resolve the objective.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "The customer earnings call may discuss HBM supply only in aggregate or omit supplier names. If SK hynix and HBM are not jointly explicit, keep DURABLE_VISIBILITY unresolved.",
+      "No genuinely new official document class was identified for FORWARD_GUIDANCE or SEGMENT_CONTRIBUTION beyond the 31 executed queries, so no synonym variants were proposed for those gaps."
+    ]
+  },
+  "payload_hash": "2e7aa5f7954c094970edb78db96806a7d6e58dceb7598c372326249c8e6be834",
+  "production_score_authority": false,
+  "prompt_hash": "789bcef1328ec80754b2c741e8509f3003b6a86f318f6840df83b4b48285315e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-679b862bccfd5a743d6ac65ff6cbd09703c11f45f5887c80cb1ecf2a5d8e511a",
+  "response_id": "COLLABRESP-9f83877be702b4c9ce39e39708cedc1e07a49112f6ed6527341943c371dda394",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

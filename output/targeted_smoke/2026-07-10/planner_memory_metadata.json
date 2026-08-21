@@ -1,0 +1,15 @@
+{
+  "critical_count_sum": 0,
+  "edge_count": 44221,
+  "file_hashes": {
+    "edges": "1e87dd019aeaa8e896ed5dd070dc24e34f9ae0c0653a8d29cc7a406a9d958b37",
+    "index": "b2a672cc342a50ce9bc39102488986c0169116592476d06832f7e3e4da615513",
+    "manifest": "ee2eb9befe723b4a34e7c45568f7b7b721a947717874b4cdf576880bbec688ba",
+    "nodes": "a5e8dba03f3939842f9dafc97848142be3f94ff2baba72988bcc4a07f557ae3a"
+  },
+  "graph_id": "memory-graph-7a282044ac4a53f898efc731",
+  "index_entry_count": 25532,
+  "manifest_status": "SEMANTIC_MEMORY_GRAPH_COMPILER_PASS",
+  "node_count": 25532,
+  "schema_version": "e2r_live_memory_load_v1"
+}

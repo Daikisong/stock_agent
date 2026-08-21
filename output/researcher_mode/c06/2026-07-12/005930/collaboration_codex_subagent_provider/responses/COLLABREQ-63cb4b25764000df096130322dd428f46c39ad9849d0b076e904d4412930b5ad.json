@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-f56641316126052c9c44eaae",
+        "rationale": "루빈 25% 감산의 직접 원인은 SK하이닉스·마이크론 HBM4 인증 지연이며 삼성전자 HBM4 12단 양산·11.7Gbps·1c/4nm·16단 확장 내용은 기존 official/current canonical과 중복된다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "21cb03021e49ebb36cb4615202eb076dd3e14a524017499a555a91133bee82e9",
+  "production_score_authority": false,
+  "prompt_hash": "70e27f0a15ee2ca80d686d792b448189f596992d19b8ef6d7644b845863da5b7",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-63cb4b25764000df096130322dd428f46c39ad9849d0b076e904d4412930b5ad",
+  "response_id": "COLLABRESP-5e91a5ea67d89f0e838968a9da85985fcd7544638fa6c72845f998e75c35de49",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

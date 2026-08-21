@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "2d9854ad3e4dc0a54f039c283be4adf9036f2cb73b0b111afaa1ac77b2f36903",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-c7aec931a1bf826ab9e67f96",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party result story does not have issuer-owned earnings, presentation, or cash-flow provenance."
+      },
+      {
+        "candidate_id": "SGCAND-4b8f56f78ff10528dfa365a6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party 2024 result report is stale and not an issuer-owned requested-family source."
+      },
+      {
+        "candidate_id": "SGCAND-ec125f79f233f96bd5065b99",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A blog describing post-cutoff 2026 second-quarter results is not current eligible evidence or issuer-owned."
+      },
+      {
+        "candidate_id": "SGCAND-9015867e474428f255f77c63",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This broker PDF covers STI, not SK hynix, and PUBLIC_BROKER_PDF is not among the requested families."
+      },
+      {
+        "candidate_id": "SGCAND-da1670620512ce63c908643f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A portal-hosted conference-call note is a third-party retelling rather than an issuer source."
+      },
+      {
+        "candidate_id": "SGCAND-d37fe5b0d3b4fae822e4624e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This post-cutoff third-party Alphabet earnings note is wrong-target and outside requested provenance."
+      },
+      {
+        "candidate_id": "SGCAND-2868c990f8fe24d6ce31365a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This post-cutoff third-party transcript concerns Samsung Electronics, not the target."
+      },
+      {
+        "candidate_id": "SGCAND-656520e1bfa1ae4e52f2884b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A 2024 third-party news retelling is stale and is not an issuer-owned source in a requested family."
+      },
+      {
+        "candidate_id": "SGCAND-d9e418af12a1e7af313766f2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "The supplied KIND filing metadata identifies SK Square businesses, not SK hynix, and supports no requested source-family match."
+      },
+      {
+        "candidate_id": "SGCAND-dfb4bc9321387ba4d94728af",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A paid-portal analysis is not an issuer earnings release, issuer presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-fe4ceede67fdac365026d657",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party Nanya report is wrong-target and outside the requested source families."
+      },
+      {
+        "candidate_id": "SGCAND-f80d837b68dde620ad97a3c6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A blog explanation of a filing is a third-party derivative, not an issuer-owned original source."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No eligible current SK hynix issuer earnings release, presentation, or cash-flow source appears in this partition."
+    ]
+  },
+  "payload_hash": "5d5c60a3f29920faa1ceb189e7b5f73bcaed159be079e58dc31d0c197d381824",
+  "production_score_authority": false,
+  "prompt_hash": "a9db5adaa43e99f102cb52063be5b0d380b3b29d75a474df28f2c9d6d149a697",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3df661dfcad350cd5f6a375943c58425f07a49f50c3443147c339e7db1601a34",
+  "response_id": "COLLABRESP-e4238fe7c9b089422633ea6b2c3756122722ca1e8c0f4d6af507a315c81ed83e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

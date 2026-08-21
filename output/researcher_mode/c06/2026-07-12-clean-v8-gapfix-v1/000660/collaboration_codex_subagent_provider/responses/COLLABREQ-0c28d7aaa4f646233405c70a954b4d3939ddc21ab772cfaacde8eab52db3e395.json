@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "rationale": "The supplied transport chunk 1 of 2 (characters 215997-344806; 128,809 characters) was independently re-reviewed from start to finish under continuation page 3 and coverage-audit round 1. The only target-specific span is Yuanta's SK hynix recommendation-history table. All nine completed historical target rows in that table are already losslessly represented by the 18 previously accepted atomic average-price and highest-or-lowest-price gap facts. The remaining 2026-04-09 KRW 1,800,000 row has no reported evaluation-window gap and its target-price meaning was already accepted from chunk 0, so it is not repeated or promoted into a new fact. All other chunk text concerns other issuers, unrelated businesses, generic material, or boilerplate. No distinct omitted target fact remains in this literal chunk; no issuer actual, guidance, HBM-only economics, customer allocation, or signed-contract term is inferred from the broker history or from silence. FACTS_EXTRACTED is retained because this continuation carries 18 previously accepted facts for the document, although this page adds zero new facts.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "98cfdcd98a11c5d696cb86f1b697747db66068a482d31f2bbdd8182717b66550",
+  "production_score_authority": false,
+  "prompt_hash": "e8af69600fc47480101fc8247db8158e742d6b0d00a5bfc671defef959d06e03",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0c28d7aaa4f646233405c70a954b4d3939ddc21ab772cfaacde8eab52db3e395",
+  "response_id": "COLLABRESP-725136e842439d062cfd3c48cce69bdbfb96eea94b1018f047b9d60b71b599a0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

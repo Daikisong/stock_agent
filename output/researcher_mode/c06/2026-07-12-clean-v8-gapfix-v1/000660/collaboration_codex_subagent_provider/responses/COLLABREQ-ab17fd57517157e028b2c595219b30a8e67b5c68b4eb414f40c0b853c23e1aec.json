@@ -1,0 +1,53 @@
+{
+  "output_schema_hash": "1bb25c1fa47ac17ccc872e64d937fc766b0f11343245c133516c958411945671",
+  "payload": {
+    "allowed_range": [
+      11.0,
+      14.0
+    ],
+    "anchor_comparisons": [
+      "positive anchor ORDTRANSFER-79ec36a5021be9c2294bf200와 비교해 확인된 positive는 유지하되 미확인 항목만 상단에서 제한한다",
+      "counter anchor ORDTRANSFER-9205e8ab347aff38184b148a와 비교하면 현재 source-backed evidence가 0점 상태보다 강하다"
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-e07c96dd341557a589ae5fb5"
+    ],
+    "disagreements": [
+      "분석가보다 귀속·계약·지속성의 미확인 항목을 더 크게 본다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "proposed_points": 12.5,
+    "rationale": "M15X 증산 여력과 고객 집중, HBM 전용 CAPA·ASP·allocation 미공개가 영구 병목 주장에 반대된다. 그럼에도 현재 설비 가동과 고객 요청 HBM4 양산이 수요와 공급제약의 실제 연결을 보여준다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-fe3de19254ddabef098a6b03"
+    ],
+    "why_not_higher": "M15X 증산 여력과 고객 집중, HBM 전용 CAPA·ASP·allocation 미공개가 영구 병목 주장에 반대된다.",
+    "why_not_lower": "현재 설비 가동과 고객 요청 HBM4 양산이 수요와 공급제약의 실제 연결을 보여준다."
+  },
+  "payload_hash": "64541a8ae4fefcb407d03db2c4add75438cfe175ee1c3f7b60895bdac87977ca",
+  "production_score_authority": false,
+  "prompt_hash": "5f0f9086b4f2170c549381f61e6ea18ab54e498567b3b6e6610cb65a4601fadd",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ab17fd57517157e028b2c595219b30a8e67b5c68b4eb414f40c0b853c23e1aec",
+  "response_id": "COLLABRESP-5ac15094c1f4f57b22f39f2543f40dfb88946c83f73d785fcbf0562a93aa15e6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

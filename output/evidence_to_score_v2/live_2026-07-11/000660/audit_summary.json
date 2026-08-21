@@ -1,0 +1,26 @@
+{
+  "accepted_mapping_count": 37,
+  "adjudicated_claim_count": 59,
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "as_of_date": "2026-07-11",
+  "company_name": "SK하이닉스",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "accepted_mapping_missing": 0,
+    "claim_compiler_critical_count": 0,
+    "organic_accepted_claim_missing": 0,
+    "organic_document_missing": 0,
+    "probe_contamination_count": 0,
+    "target_contamination_count": 0
+  },
+  "failure_class": "IMPACT_MAPPING_FAILED",
+  "next_action": "READJUDICATE_CLAIM_PRIMITIVE_EDGE",
+  "organic_accepted_claim_count": 33,
+  "raw_assertion_count": 60,
+  "readiness_eligible": false,
+  "schema_version": "e2r_adaptive_organic_claim_closure_v1",
+  "score_type": "NO_SCORE",
+  "source_document_count": 2,
+  "status": "ORGANIC_CLAIM_CLOSURE_PASS",
+  "target_id": "000660"
+}

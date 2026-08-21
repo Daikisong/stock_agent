@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "073ddf7b025c358fe930e2a593682c145a653cdb06ff4a243b8f750ef2fc2835",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5b4f99b4cf7ea407af7e3602",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.88,
+        "rationale": "A 2026 broker industry report directly discusses HBM and server-DRAM demand with SK hynix in scope; the original report can inform the HBM earnings and valuation mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-9bd1fb1bbc70b0b89020b6a9",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.9,
+        "rationale": "Business-media coverage directly raises a current counterclaim that SK hynix HBM4 customer qualification may be delayed, which is material to qualification confidence and shipment timing."
+      },
+      {
+        "candidate_id": "SGCAND-a6749abccc473c8a687aaf03",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.05,
+        "rationale": "This personal web dashboard is neither a public broker report nor an industry report and offers no source-family-valid original document for the objective."
+      },
+      {
+        "candidate_id": "SGCAND-17d12b244272b459b88f8c23",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.08,
+        "rationale": "The broker PDF is a 2021 foundry-focused report; it does not resolve the current HBM earnings or valuation mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-48c374169b76454cb114a7a3",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.93,
+        "rationale": "Current business-media coverage reports HBM4 customer production timing, HBM4E sampling, and possible shipment reductions, providing both positive and counter evidence for information confidence."
+      },
+      {
+        "candidate_id": "SGCAND-1e22d62d4549edaeb1ed024c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.12,
+        "rationale": "The third-party cleanroom-equipment report is only indirect capex context and does not match the requested issuer, filing, earnings-release, or cash-flow families on this query edge."
+      },
+      {
+        "candidate_id": "SGCAND-2b1627d822077e66fcdda882",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.75,
+        "rationale": "The broker report directly discusses 2026 HBM supply allocation and conservative DRAM capacity decisions, which is material to supply tightness and the valuation bridge."
+      },
+      {
+        "candidate_id": "SGCAND-4b02f4747418a39779766ad7",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.18,
+        "rationale": "This broad 2024 outlook is stale and the supplied metadata does not show a current target-specific HBM earnings or multiple bridge."
+      },
+      {
+        "candidate_id": "SGCAND-f061806dd1b444b02d4bd50d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "A purported 2Q 2026 conference-call article has no cutoff-valid publication metadata and is a third-party page rather than any requested issuer, filing, or cash-flow source family."
+      },
+      {
+        "candidate_id": "SGCAND-5efeacf768214e58a4e6a16f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "This personal dashboard concerns Samsung rather than SK hynix and is not a requested broker or industry source."
+      },
+      {
+        "candidate_id": "SGCAND-8b6ac81d7cac7d0abb1ad39d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The broker PDF is an election-policy document and does not address the target or the HBM valuation mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-f4f1cc28dd4826b7548f7a7f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "This personal essay concerns Samsung and generic valuation concepts, not the target or a requested original source family."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Full-text and publication-date eligibility must still be verified during bounded fetch; snippets were used only for discovery routing."
+    ]
+  },
+  "payload_hash": "7d2f466278cc4c2d4588cb8a1d04e7ca87791c3cf481be1021a797b3d1dcad64",
+  "production_score_authority": false,
+  "prompt_hash": "39b1389b6941c47120bb2e603ad10577041da761caead999f1dea68a926a56ef",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-42e1bc9293bdefd672aa7e27a35ce43e8776e2befda17570405b40c195965348",
+  "response_id": "COLLABRESP-de76df8e5e03c1fd44cbc9979a063f7d5602849cfa59b5d84f638930cb557a74",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

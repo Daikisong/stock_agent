@@ -1,0 +1,84 @@
+{
+  "output_schema_hash": "2aa2068441c0afd368451f442d212ab1426e39e77461819a63f5b6c851c22ca7",
+  "payload": {
+    "challenged_fact_row_indices": [
+      1,
+      36,
+      45,
+      91,
+      155,
+      199,
+      217,
+      220,
+      227,
+      238,
+      239,
+      250,
+      268,
+      276
+    ],
+    "confidence": 0.91,
+    "recommended_research_directions": [
+      "향후 정기 issuer 실적자료와 공시에서 HBM 또는 memory 제품군의 actual 매출·마진·현금기여가 새로 분리되는지 모니터링한다.",
+      "향후 issuer 또는 고객 공식자료에서 HBM4 인증·양산·구매의무와 계약 기간·물량·가격·취소·위약 조건이 공개되는지 확인한다.",
+      "후속 actual에서 경쟁사 HBM 출하와 고객 플랫폼 일정이 SK하이닉스 점유율·ASP·배정량·믹스에 미친 영향을 확인한다.",
+      "향후 현금흐름표와 투자 공시에서 운전자본 정상화, Capex 집행, FCF 및 증설 회수 경로가 계획대로 실현되는지 확인한다.",
+      "동일 기간·동일 기준의 actual consensus와 valuation 자료가 새로 제공되면 FY2027 이후 이익 duration과 기대 반영 정도를 재검증한다."
+    ],
+    "resolved_challenges": [
+      "전사·DRAM actual과 HBM 단독 손익을 혼동하는 귀속 위험은 7개 현재 메모 모두 제품별 매출액·마진·FCF 미공개를 명시하고 actual·issuer plan·broker estimate를 구분해 제한했다.",
+      "강한 실적과 낮은 추정 배수만으로 추가 재평가를 확정하는 위험은 갱신된 valuation 메모와 market 메모가 이익 상향 중 Target PBR 하향, FY2027 이후 감익 추정, 경쟁 공급 확대 및 이미 진행된 배수 확장을 직접 반영해 완화했다.",
+      "고객 공급 논의와 구속력 있는 장기 계약을 동일시하는 위험은 earnings와 information 메모가 월·분기 물량·가격 합의 및 비공개 취소·위약 조건을 명시해 경계를 유지했다.",
+      "브로커 forward 수치와 issuer guidance 또는 actual을 혼동하는 위험은 EPS·market·valuation·information 메모가 추정치, 내부 수치 불일치 및 확정 수치 guidance 부재를 별도로 표시해 통제했다."
+    ],
+    "review_complete": true,
+    "reviewed_component_ids": [
+      "eps_fcf_explosion",
+      "earnings_visibility",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation",
+      "information_confidence"
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "ISSUER_GUIDANCE",
+      "PUBLIC_BROKER_PDF",
+      "PUBLIC_BROKER_REPORT",
+      "TRUSTED_BUSINESS_MEDIA",
+      "COMPANYGUIDE",
+      "KRX_PRICE_MARKET_CAP"
+    ],
+    "unresolved_challenges": [
+      "HBM 또는 최소 memory 제품군의 actual 매출액·영업이익·마진·현금흐름 분해가 없어 전사 이익·FCF 확대를 HBM 단독 경제성으로 귀속할 수 없다.",
+      "고객명, 인증 주체·일자, 계약 기간·확정 물량·가격·취소권·위약금·선수금이 공개되지 않아 공급 논의와 LTA 평가의 durable commitment 강도를 확정할 수 없다.",
+      "삼성전자·Micron·CXMT 공급 확대와 고객 플랫폼 지연은 전망 또는 보도 단계가 섞여 있어 실제 점유율·ASP·배정량·제품 믹스 변화의 크기가 미확정이다.",
+      "매출채권·재고 증가와 대규모 유형자산 취득이 강한 영업현금흐름을 흡수하므로 HBM 증설의 증분 ROIC와 장기 FCF 전환은 확인되지 않았다.",
+      "FY2027~FY2028 감익 전망, CSP CapEx 재원 부담과 이미 진행된 PBR·PER 확장은 현재 낮은 추정 배수가 정상화 여지인지 cycle peak 할인인지 구분하기 어렵게 한다.",
+      "동일 기간·동일 기준의 consensus와 독립 고객 증거가 부족하고 일부 broker 수치가 서로 달라 surprise 및 forward valuation의 정밀 비교 신뢰도가 제한된다."
+    ]
+  },
+  "payload_hash": "4cd3ac8ca03ff6484656d3464a8cdbda0a940d604d067e5c059134a74b265a8e",
+  "production_score_authority": false,
+  "prompt_hash": "fe7daf9a504974b6c5407c9f803a2594c0acc42cdbd3df941bad14f02f727023",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-140753b2d4d6ead628133a4601297d1194d63dafb2905520da1bc79d79136eb8",
+  "response_id": "COLLABRESP-4c9ca384106e622849a6d8d3d5b421cb4d23cc9e4344ce159eda16ea32c41f31",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

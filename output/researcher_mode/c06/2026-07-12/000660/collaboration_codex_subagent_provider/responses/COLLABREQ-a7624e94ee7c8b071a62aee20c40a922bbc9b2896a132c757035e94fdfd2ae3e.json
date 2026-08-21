@@ -1,0 +1,46 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Use the latest NVIDIA Form 10-Q filed on or before 2026-07-12 as a customer regulatory-document route distinct from the previously searched annual report.",
+      "Require the full filing to name both SK hynix and HBM when interpreting inventory purchase obligations, capacity agreements, advance payments, duration, or cancellation terms; otherwise keep DURABLE_VISIBILITY unresolved."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK hynix NVIDIA 2026 Form 10-Q HBM inventory purchase obligations capacity agreements",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "Prior search covered NVIDIA fiscal 2026 annual report, while the latest Form 10-Q available on or before the cutoff is a distinct current-period regulatory document class. Review its inventory purchase obligations, capacity agreements, and related advance-payment language only for an explicit joint attribution to SK hynix and HBM; generic NVIDIA commitments or unnamed suppliers do not resolve the objective.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL",
+          "FINANCIAL_STATEMENTS"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "The quarterly filing may disclose only aggregate or unnamed-supplier commitments. Do not infer SK hynix or HBM attribution from NVIDIA-wide purchase obligations.",
+      "FORWARD_GUIDANCE and SEGMENT_CONTRIBUTION still have no genuinely new official document class beyond the 30 executed queries, so no synonym variants were proposed for those gaps."
+    ]
+  },
+  "payload_hash": "5420b8b159e764be2c37ad19de540c84410262ba2de4354df68587b2821afa5c",
+  "production_score_authority": false,
+  "prompt_hash": "574c1316e1cf3b82c51575a8c1e4abba69c2453af5a8d15ad114e36105e434a6",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a7624e94ee7c8b071a62aee20c40a922bbc9b2896a132c757035e94fdfd2ae3e",
+  "response_id": "COLLABRESP-12b7656020b4028b5b9144d3bda96ff1702bb477887efdbf01db4f54928c7532",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

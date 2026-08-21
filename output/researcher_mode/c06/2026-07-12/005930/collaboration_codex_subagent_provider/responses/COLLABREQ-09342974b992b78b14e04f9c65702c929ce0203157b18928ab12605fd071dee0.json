@@ -1,0 +1,70 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-afbd6b4c02e89fb50c071163",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/%ec%82%bc%ec%84%b1%ec%a0%84%ec%9e%90-%ea%b0%a4%eb%9f%ad%ec%8b%9c-s26-%ec%9a%b8%ed%8a%b8%eb%9d%bc-%eb%a1%a4%eb%9d%bc%ed%8c%94%eb%a3%a8%ec%9e%90-%eb%b8%8c%eb%9d%bc%ec%a7%88-2026)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b1e8fb9bce8edbe345c56c63",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/ssd/automotive-ssd/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b2700b23ecf9547398b59626",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/foundry/safe/3dcode/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b3a1353a8f266ba9bcc05c41",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/mcp/umcp/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "12b38f034108531739a5be25a0a59197d54e50a696a5d1f8569b7d75093001ab",
+  "production_score_authority": false,
+  "prompt_hash": "a994c135a871682a2ca943d3c3e72fce6594e2dcb7ea0ae312cf2e6fdfe75eeb",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch9_rankings",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-09342974b992b78b14e04f9c65702c929ce0203157b18928ab12605fd071dee0",
+  "response_id": "COLLABRESP-2752997101a6475b3c7fb9874baf8556cd140e3e72e5a8ac5b0ca077deb49d91",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

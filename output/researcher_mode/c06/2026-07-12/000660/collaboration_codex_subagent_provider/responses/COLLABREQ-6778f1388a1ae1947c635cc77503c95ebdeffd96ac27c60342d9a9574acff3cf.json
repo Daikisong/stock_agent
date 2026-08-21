@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "semantic retry attempt 4까지의 37개 prior query와 failure ledger에는 issuer guidance, filing, IR, official customer filing, broker archive 및 exact document-identity 복구 경로가 이미 포함되어 있으며, 현재 입력에는 이들과 의미상 구별되는 검증된 공식 문서 class 또는 identity가 없다.",
+      "FORWARD_GUIDANCE는 issuer가 기간과 숫자를 명시한 미래 매출·이익·출하·Capex guidance가 없어 계속 미해결이다. 브로커 추정치나 기존 질문의 동의어 변형은 issuer guidance를 대체하지 않는다.",
+      "SEGMENT_CONTRIBUTION은 HBM 또는 최소 memory 제품군의 실제 매출·영업이익·마진·현금흐름 기여가 공시되지 않아 미해결이며, 전사·DRAM 수치를 HBM에 귀속하지 않는다.",
+      "DURABLE_VISIBILITY는 target-attributable 기간·확정 물량 또는 CAPA와 취소권·위약금·선수금이 있는 고객 commitment 원문이 없어 미해결이다. 공급 논의나 요청수요를 계약으로 승격하지 않는다.",
+      "새 verified official route가 없는 상태에서 단어만 바꾼 query를 내면 prior query와 semantic duplicate가 되므로 suggested_queries를 비워 둔다."
+    ]
+  },
+  "payload_hash": "980d1de8dbc579e89e310fa65148ff2794723f4504b64ae2d5828ae0efac5e08",
+  "production_score_authority": false,
+  "prompt_hash": "17d4cfa90dff45f4a625d8a6de958fc503a530d07a4182b8fe990a2844bd7ecb",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6778f1388a1ae1947c635cc77503c95ebdeffd96ac27c60342d9a9574acff3cf",
+  "response_id": "COLLABRESP-bd733a6e88fbffc9cbcf677e13affb9fa6029de40b4cb2f7f34b026295ce6265",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

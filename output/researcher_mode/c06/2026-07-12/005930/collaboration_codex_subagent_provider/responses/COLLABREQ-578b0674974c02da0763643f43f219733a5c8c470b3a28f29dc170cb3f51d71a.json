@@ -1,0 +1,139 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-a2ec513d371fb456e55772b9",
+        "rationale": "2024년 1분기 연결 현금흐름표 전행을 검토했다. 수치는 전사 연결 기준이며 메모리 사업의 이익·FCF로 직접 귀속되지 않는다. 이 eps_fcf_explosion 전용 문서 scope에서 전사 현금흐름을 메모리 fact로 재분류하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-a35777d581991d420d6dd356",
+        "rationale": "2025년 9개월 연결 현금흐름표 전행을 검토했다. 영업현금흐름·유형자산 취득·자기주식 취득은 모두 전사 수치이고 메모리 단독 귀속이 없어 현재 목적의 신규 fact로 사용하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-a7abfdebb6754bc4f52bb458",
+        "rationale": "2025년 반기 연결 주석 전행을 검토했다. 2025년 2분기 및 상반기 메모리 제품 매출은 current graph에 이미 exact fact로 수용됐고, 나머지 현금흐름·재고·유형자산·DS 손익은 전사 또는 DS 혼합 범위라 메모리 이익·FCF로 재귀속하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-ae1af3fd657cb363ba38d5ff",
+        "rationale": "기사 전행에서 current 222에 없는 메모리 재고 1~2주 및 2018년 이후 최저 추정, 그리고 2027년까지 사실상 완판 추정을 분리 추출했다. Q1 DS 영업이익 전망은 메모리 단독 귀속이 아니며, D램 가격 전망·HBM 생산 확대·HBM4 출하는 later/current facts와 중복 또는 superseded라 재발행하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.91,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-ae1af3fd657cb363ba38d5ff",
+        "economic_mechanism": "낮은 메모리 재고 주수는 급증하는 수요를 흡수할 완충재고가 작다는 뜻으로, 공급 부족과 가격·이익 지속성을 강화한다.",
+        "exact_quote": "KB증권은 삼성전자 DS부문의 올해 1분기 영업이익을 37조원으로 전망하며 \"3월 현재 메모리 반도체 재고가 1∼2주 수준에 불과해 2018년 이후 최저치를 기록하고 있지만 수요는 범용D램, 기업용SSD 등을 중심으로 급증해 메모리는 사실상 내년까지 완판된 것으로 추정한다\"고 밝혔다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존의 정성적 재고 타이트 fact를 1~2주라는 직접 수치로 보강한다. 발행사 공시가 아닌 KB증권 추정이라는 한계는 confidence에 반영한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:CAPACITY_SCARCITY:INVENTORY_WEEKS_2026-03",
+        "normalized_object": "메모리 재고 주수 추정",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03 current",
+        "predicate": "KB증권은 2026년 3월 삼성전자 메모리 반도체 재고가 1~2주로 2018년 이후 최저라고 추정했다",
+        "predicate_family": "MEMORY_INVENTORY_WEEKS_SCARCITY_ESTIMATE",
+        "primitive_tags": [
+          "memory_inventory",
+          "inventory_weeks",
+          "capacity_scarcity",
+          "broker_estimate"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_inventory_weeks_scarcity",
+        "question_family_tags": [
+          "memory_inventory_weeks_scarcity"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 3월 메모리 재고 주수와 희소성",
+        "subject_id": "005930:MEMORY:INVENTORY_WEEKS:2026-03",
+        "unit": "weeks of inventory",
+        "value": "1-2"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-ae1af3fd657cb363ba38d5ff",
+        "economic_mechanism": "낮은 재고와 범용 D램·기업용 SSD 수요 급증을 근거로 메모리 공급 여력이 다음 해까지 사실상 소진됐다는 추정은 가격과 매출 가시성의 기간을 늘린다.",
+        "exact_quote": "KB증권은 삼성전자 DS부문의 올해 1분기 영업이익을 37조원으로 전망하며 \"3월 현재 메모리 반도체 재고가 1∼2주 수준에 불과해 2018년 이후 최저치를 기록하고 있지만 수요는 범용D램, 기업용SSD 등을 중심으로 급증해 메모리는 사실상 내년까지 완판된 것으로 추정한다\"고 밝혔다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 HBM4 생산여력 완판보다 넓은 메모리 범위와 다음 해까지의 추정 기간을 제시한다. 실제 계약·구매의무가 확인된 것은 아니므로 formal commitment로 해석하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:CAPACITY_SCARCITY:SOLD_OUT_2027E",
+        "normalized_object": "메모리 사실상 완판 기간 추정",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "through 2027E",
+        "predicate": "KB증권은 수요 급증으로 삼성전자 메모리가 2027년까지 사실상 완판된 것으로 추정했다",
+        "predicate_family": "MEMORY_SOLD_OUT_HORIZON_ESTIMATE",
+        "primitive_tags": [
+          "memory_sold_out",
+          "demand_surge",
+          "supply_horizon",
+          "broker_estimate"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_sold_out_horizon_estimate",
+        "question_family_tags": [
+          "memory_sold_out_horizon_estimate"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리의 2027년까지 사실상 완판 추정",
+        "subject_id": "005930:MEMORY:SOLD_OUT_HORIZON:2027E",
+        "unit": "estimated supply booking horizon",
+        "value": "effectively sold out through 2027"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "5e99d11486b171e62738b1689e3751a519fde957a864173090ad238d01b1033f",
+  "production_score_authority": false,
+  "prompt_hash": "5ae04fe0ccac37003cf55a5d602bcb352bb3f297539eb255afe658d4272cd638",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-578b0674974c02da0763643f43f219733a5c8c470b3a28f29dc170cb3f51d71a",
+  "response_id": "COLLABRESP-7cbb03aa6cf2eed9de1ac03ab6dc8b477374448d80724645b2c8339aae9878de",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

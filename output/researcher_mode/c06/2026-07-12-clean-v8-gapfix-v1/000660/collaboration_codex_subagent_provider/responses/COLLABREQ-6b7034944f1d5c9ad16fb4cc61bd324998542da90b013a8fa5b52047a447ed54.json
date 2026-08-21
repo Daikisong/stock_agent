@@ -1,0 +1,155 @@
+{
+  "output_schema_hash": "aae7d8e8e15e1b1e5e7d68baadb0c1b0afc25677eba82d680019d54f28639084",
+  "payload": {
+    "confidence": 0.8,
+    "counter_case": "매출채권 증가와 교환사채 주식 교환이 현금회수 및 희석 counter로 남는다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc",
+      "ORDTRANSFER-55039467f24da62ebee5fae7",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88",
+      "ORDTRANSFER-a07945c19eb9b2b62790d62e",
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-c1052e06818f90d4a44560f0"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0"
+    ],
+    "positive_case": "금융부채 감소와 15,300,000주 자기주식 소각이 실제로 실행됐다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 142,
+        "reason": "금융부채 감소를 자본여력 positive로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 398,
+        "reason": "채권 증가를 현금회수 counter로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 422,
+        "reason": "중복 운전자본 counter를 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 430,
+        "reason": "중복 재무부담 counter를 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 533,
+        "reason": "추가 positive는 부채감소·소각보다 간접적이다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 689,
+        "reason": "부채 감소와 희석 구조의 양면성을 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 828,
+        "reason": "실제 자기주식 소각을 직접 환원 근거로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 899,
+        "reason": "차입 상환은 부채감소 근거와 중복된다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 916,
+        "reason": "순현금 여력은 실제 배분 실행 자체가 아니다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 949,
+        "reason": "재고 counter는 채권 증가보다 직접성이 낮다."
+      }
+    ],
+    "proposed_score_lower": 2.0,
+    "proposed_score_mid": 3.0,
+    "proposed_score_upper": 3.5,
+    "research_complete": true,
+    "researcher_summary": "부채 감소와 자기주식 소각은 긍정적이지만 채권 증가와 교환사채의 희석 구조가 순자본배분 효과를 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "금융부채 감소는 자본여력 개선을 지지한다.",
+        "fact_row_index": 142,
+        "source_economic_mechanism": "연결 금융부채 범주 합계가 2025년 말 40,872,970백만원에서 2026년 1분기 말 36,477,745백만원으로 감소해 재무부담 변화를 보여준다.",
+        "source_period_json": "\"2026-03-31 vs 2025-12-31\"",
+        "source_predicate": "연결 금융부채 범주 합계는 2026년 1분기 말 36,477,745백만원으로 전기말 40,872,970백만원보다 감소했다.",
+        "source_value_json": "\"36,477,745 vs 40,872,970\""
+      },
+      {
+        "component_interpretation": "채권 증가는 현금회수와 운전자본 부담의 counter다.",
+        "fact_row_index": 398,
+        "source_economic_mechanism": "연결 채권 장부금액의 큰 증가는 매출 성장과 함께 운전자본 회수 부담을 확대할 수 있다. HBM 단독 채권이나 부실 증가로 귀속하지 않는다.",
+        "source_period_json": "\"2026-03-31 vs 2025-12-31\"",
+        "source_predicate": "연결 매출채권 및 기타채권 장부금액 합계는 2025년 말 19,005,457백만원에서 2026년 1분기 말 34,708,542백만원으로 증가했다.",
+        "source_value_json": "\"34,708,542 vs 19,005,457\""
+      },
+      {
+        "component_interpretation": "교환사채 행사는 부채를 줄이지만 주식 유통과 희석 구조에 대한 counter다.",
+        "fact_row_index": 689,
+        "source_economic_mechanism": "2026년 1분기 중 해외 교환사채 USD 510.8백만이 자기주식 6,179,194주로 교환돼 부채를 줄이는 대신 주식 유통과 희석 구조에 영향을 줬다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_EXCHANGEABLE_BOND_EXERCISE",
+        "source_value_json": "\"USD 510,800,000 exchanged for 6,179,194 shares\""
+      },
+      {
+        "component_interpretation": "자기주식 소각은 발행주식수를 줄인 직접적인 주주환원 실행이다.",
+        "fact_row_index": 828,
+        "source_economic_mechanism": "2026년 1분기 중 자기주식 15,300,000주를 이익소각해 발행주식수를 직접 줄였다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_TREASURY_SHARE_RETIREMENT",
+        "source_value_json": "15300000"
+      }
+    ],
+    "selected_fact_row_indices": [
+      142,
+      398,
+      689,
+      828
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "KIND_KRX",
+      "PUBLIC_BROKER_PDF"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "향후 배당·소각 규모의 지속성이 확정되지 않았다",
+      "HBM 투자회수와 주주환원 사이의 장기 배분 규칙이 공개되지 않았다"
+    ],
+    "why_not_higher": "채권 증가와 교환사채 희석 구조, 성장투자 부담이 남아 있다.",
+    "why_not_lower": "금융부채 감소와 대규모 자기주식 소각이 실제 확인된다."
+  },
+  "payload_hash": "695d1c9f56dada78a92dee40c653c709559c3493f8c5e04d81fe8ddaf3f3e93d",
+  "production_score_authority": false,
+  "prompt_hash": "68d0c048cab0750577c8c18ec01851a9cda92227054ca662bde5513c1dab3c9a",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6b7034944f1d5c9ad16fb4cc61bd324998542da90b013a8fa5b52047a447ed54",
+  "response_id": "COLLABRESP-0757844d4d0d31153f02af6997cd90f9d18f606ea27b12e389ec78a54169f640",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

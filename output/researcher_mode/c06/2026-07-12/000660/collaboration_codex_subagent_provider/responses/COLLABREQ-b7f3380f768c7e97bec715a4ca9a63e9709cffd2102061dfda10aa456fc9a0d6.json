@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "48d3b7a885a34860970d637ef748fc553885214fc85fb0bce8c695bb2e18b232",
+  "payload": {
+    "allowed_range": [
+      7.1,
+      9.5
+    ],
+    "anchor_comparisons": [
+      "현재 근거는 실제 HBM 매출 성장, HBM 고배수 SOTP, peer 상대가치와 관찰된 multiple 변화가 함께 있어 POSITIVE MEDIUM anchor보다 구체적이다.",
+      "POSITIVE STRONG anchor와 비교하면 HBM 단독 이익·현금흐름 및 binding customer commitment가 없어 같은 확정성을 부여할 수 없다.",
+      "COUNTER STRONG anchor가 환기하는 감익·공급경쟁 상단 제약을 반영하되 현재의 직접 매출·가치 전환 근거까지 상쇄하지 않는다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "disagreements": [
+      "인접 peer P/B band의 존재를 직접 HBM pure-play 저평가 증명으로 확대하지 않는다.",
+      "HBM 고배수 SOTP를 실현된 시장배수나 binding 계약 duration으로 보지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a",
+      "ORDTRANSFER-75306723611a10615f950fec"
+    ],
+    "proposed_points": 8.3,
+    "rationale": "실제 HBM 매출 성장, HBM과 일반 memory의 SOTP 배수 차등, 추정 peer 수익성·배수와 EPS·PER/PBR 변화가 valuation bridge를 지지한다. 동일시점 adjacent peer P/B band도 재현 가능한 비교축을 추가한다. 다만 직접 HBM peer가 아니고 band 분산이 크며 DURABLE_VISIBILITY가 없어 강하지만 상단 미만으로 평가한다.",
+    "support_fact_ids": [
+      "EFACT-122bf71db78558e5780ed3c8",
+      "EFACT-3e4c5596b1c40a463ba54d38",
+      "EFACT-b3d48bea9ae741feec4d4a05",
+      "EFACT-b74e88a671a1247b0ce230d5"
+    ],
+    "why_not_higher": "HBM 단독 이익·FCF와 binding customer commitment가 없고 adjacent peer의 큰 분산, 감익·경쟁 공급 counter가 상단을 제한한다.",
+    "why_not_lower": "실제 HBM 매출 성장, 명시적 SOTP 차등, peer 비교와 관찰된 multiple 변화가 서로 다른 축에서 같은 valuation 전환을 지지한다."
+  },
+  "payload_hash": "a6d46e0e0febcc3981215cc5443445d899fa3af14252d504a11af27ec0e70620",
+  "production_score_authority": false,
+  "prompt_hash": "b477470253e3c2b0b5a2240ad33e92b60d9c79b8c08415d04b695521187af3fc",
+  "provenance": {
+    "agent_id": "root-phase101-c06-val-analyst",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_val_analyst",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b7f3380f768c7e97bec715a4ca9a63e9709cffd2102061dfda10aa456fc9a0d6",
+  "response_id": "COLLABRESP-b6877de078f6a4f353a9667cb885cb8f9f295bc42bedbd4b58633f74d489fc4a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

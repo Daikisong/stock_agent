@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-5b8fbc3e674628ce3da19c21",
+        "rationale": "Chunk 0's memory ASP, production output and utilization, HBM4 shipment, persistent supply-shortage outlook, and HBM4 supply-to-major-customers statements duplicate already accepted current issuer facts. The companywide customer roster and Foundry contract do not establish HBM- or memory-specific earnings visibility, so no distinct objective-linked fact remains in this chunk.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "935619f5f7b1f1d7194be82ede8753426437ec750ae1fa63ceff1b81c7017e9c",
+  "production_score_authority": false,
+  "prompt_hash": "0a179c08e61f33080cc271bbd7973300f127d9170350c8520765ea66c7fceaa3",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7e37273b770d3986d77e032bb0b139cb42a96d6d8872211c900b338f67d8658f",
+  "response_id": "COLLABRESP-783196988714064b57fe3962cca39b1bf6520a23e0730c104349a2135d80ad9e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

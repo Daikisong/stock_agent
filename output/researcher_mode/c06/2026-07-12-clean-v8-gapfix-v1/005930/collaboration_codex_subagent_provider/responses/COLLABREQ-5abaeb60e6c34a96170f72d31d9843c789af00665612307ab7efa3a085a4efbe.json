@@ -1,0 +1,44 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "STRUCTCAND-f6fb158d7f15b0bdbb8f52f6의 exact PUBLIC_BROKER_PDF 원문 회수: DB, 2026-07-08, provider report 1111300, file 1F01620260708_005930_d.pdf, title '메모리가 다했다'."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "삼성전자 DB 1111300 1F01620260708_005930_d.pdf \"메모리가 다했다\"",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "prompt가 식별한 2026-07-08 DB 보고서의 broker·provider report id·exact file name·title을 함께 고정해, CompanyGuide 메타데이터가 아니라 원문 PDF 또는 원문으로 이어지는 provider route를 회수한다. 원문에서 기간이 맞는 삼성전자 이익 분모, memory/HBM 가정, 연결된 valuation multiple이 함께 있는지만 검증한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "보고서 제목·요약·목표주가 메타데이터는 evidence가 아니다. full PDF가 회수된 뒤에만 기간 일치 이익 분모와 memory/HBM 가정, valuation multiple의 연결을 exact quote로 확인할 수 있다.",
+      "이미 실행된 AMD CUSTOMER_OFFICIAL route는 재검색하지 않으며, AMD 기술 corroboration의 accepted-claim/fact lineage 수리는 source query가 아니라 별도 계보 작업이다."
+    ]
+  },
+  "payload_hash": "edd1630e0a15e96edebd91942c1eaecadb27dd5e7f45f2f5b0ef0506526d56ae",
+  "production_score_authority": false,
+  "prompt_hash": "8f9dae191e670f3d2fc8c2782138ccbc5ef06cd5feaf5d181ad3e6e566ce5b25",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5abaeb60e6c34a96170f72d31d9843c789af00665612307ab7efa3a085a4efbe",
+  "response_id": "COLLABRESP-884146ba8e72ddc29e5ba2bfd55d793bb847ab38d0f9ba9b83a15b6ccdba5f07",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

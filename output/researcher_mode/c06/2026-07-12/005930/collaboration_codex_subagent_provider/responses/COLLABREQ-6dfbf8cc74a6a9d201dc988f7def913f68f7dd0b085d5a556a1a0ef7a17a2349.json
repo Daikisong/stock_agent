@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "rationale": "Page 2 independently rechecked the complete supplied chunk against all twelve exact previously accepted semantic identities. No additional distinct 005930/C06 valuation-rerating fact remains. The residual semiconductor operating tables, industry-only HBM/DRAM discussion, unrelated-company sections, recommendation history, and repeated valuation charts are outside the objective-local PEER_BAND focus or repeat the accepted mechanisms. FACTS_EXTRACTED is retained because this continuation is explicitly bound to twelve prior accepted facts.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "8e2b04f34d4c4f2b8874c60a233947f97887ce4836edf959185fbc7276dce6ea",
+  "production_score_authority": false,
+  "prompt_hash": "0bca38b37376f20bac16888ead5ccc6ec67a12f06d14ff3d61db107564cb97b5",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6dfbf8cc74a6a9d201dc988f7def913f68f7dd0b085d5a556a1a0ef7a17a2349",
+  "response_id": "COLLABRESP-a2742b36d167f644a536064a38287af929ca1376b2901a342f611667464775be",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

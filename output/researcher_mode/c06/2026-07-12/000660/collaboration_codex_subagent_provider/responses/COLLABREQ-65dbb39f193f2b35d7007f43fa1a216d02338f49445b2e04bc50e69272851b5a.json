@@ -1,0 +1,199 @@
+{
+  "output_schema_hash": "2d31ad9067a303f4e40525c923492de165ee1da261aeb7792c72cc46ff2b226e",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+        "rationale": "continuation 이전 accepted 3건을 누적 보존하고 이번 page에서 distinct 0건을 추가했다. 추가 사실이 없는 문서도 prior accepted 때문에 FACTS_EXTRACTED로 유지한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "rationale": "continuation 이전 accepted 6건을 누적 보존하고 이번 page에서 distinct 0건을 추가했다. 추가 사실이 없는 문서도 prior accepted 때문에 FACTS_EXTRACTED로 유지한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "rationale": "continuation 이전 accepted 6건을 누적 보존하고 이번 page에서 distinct 0건을 추가했다. 추가 사실이 없는 문서도 prior accepted 때문에 FACTS_EXTRACTED로 유지한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-05b7a9d03e5a17bb237f32fa",
+        "rationale": "continuation 이전 accepted 1건을 누적 보존하고 이번 page에서 distinct 0건을 추가했다. 추가 사실이 없는 문서도 prior accepted 때문에 FACTS_EXTRACTED로 유지한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-2585d63d70d2e243b822c981",
+        "rationale": "continuation 이전 accepted 3건을 누적 보존하고 이번 page에서 distinct 0건을 추가했다. 추가 사실이 없는 문서도 prior accepted 때문에 FACTS_EXTRACTED로 유지한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "rationale": "continuation 이전 accepted 6건을 누적 보존하고 이번 page에서 distinct 3건을 추가했다. 추가 사실이 없는 문서도 prior accepted 때문에 FACTS_EXTRACTED로 유지한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "rationale": "continuation 이전 accepted 9건을 누적 보존하고 이번 page에서 distinct 0건을 추가했다. 추가 사실이 없는 문서도 prior accepted 때문에 FACTS_EXTRACTED로 유지한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "rationale": "continuation 이전 accepted 15건을 누적 보존하고 이번 page에서 distinct 0건을 추가했다. 추가 사실이 없는 문서도 prior accepted 때문에 FACTS_EXTRACTED로 유지한다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "메모리 공급 부족은 단기 가격 지지 요인이지만, 부족 심화에 따른 과도한 가격 상승은 중장기 시장 축소와 AI 산업 발전 저해로 이어질 수 있어 지속 가능한 이익 확대의 반대 위험이다.",
+        "exact_quote": "이미 메모리 반도체 시장은 공급이 수요를 따라가기 어려운 상황이며, 이러한 부족이 더욱 심화될 경우 과도한 가격 상승은 물론, 중장기적으로 시장 축소와 AI산업 발전의 장애로 이어질 수 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공급부족을 일방적 가격상승 호재로 보지 못하게 하는 issuer 명시 반대위험이며, 중장기 수요와 이익 지속성 판단에 직접 연결된다.",
+        "mechanism_scope_id": "000660:MEMORY:SUPPLY_SHORTAGE_MARKET_CONTRACTION_RISK",
+        "normalized_object": "메모리 공급 부족의 과도한 가격·시장축소 위험",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-06-29 current and medium-to-long-term risk",
+        "predicate": "메모리 공급 부족이 심해지면 과도한 가격 상승과 중장기 시장 축소 위험이 발생할 수 있다",
+        "predicate_family": "MEMORY_SUPPLY_SHORTAGE_MARKET_CONTRACTION_RISK",
+        "primitive_tags": [
+          "MEMORY_SUPPLY_SHORTAGE",
+          "EXCESSIVE_PRICE_RISK",
+          "MARKET_CONTRACTION_RISK"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_SUPPLY_SHORTAGE_MARKET_CONTRACTION_RISK",
+        "question_family_tags": [
+          "MEMORY_SUPPLY_SHORTAGE_MARKET_CONTRACTION_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "메모리 공급 부족의 가격·시장 위험",
+        "subject_id": "000660:MEMORY:SUPPLY_SHORTAGE_MARKET_RISK",
+        "unit": "qualitative",
+        "value": "supply shortage; excessive price increase; medium-to-long-term market contraction risk"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "용인 4번째 팹 완공 목표를 12년 앞당겨도 빠른 D램 수요를 모두 감당하지 못한다는 issuer 설명은 수요 강도를 뒷받침하지만, 동시에 생산능력 부족으로 물량·현금 전환이 제한될 수 있음을 보여 준다.",
+        "exact_quote": "SK하이닉스는 빠르게 늘어나는 D램 수요에 맞춰 당초 2045년 완공을 예정했던 용인 클러스터의 일정을 12년 앞당겨 2033년까지 4번째 팹의 건설을 완료하는 것을 목표로 하고 있습니다. 이후 생산을 위한 설비와 장비 등이 단계적으로 투자되면 용인 클러스터에는 총 600조 원이 투입됩니다.\n이처럼 일정을 앞당겨 착실히 팹을 구축하고 있지만, 이마저도 빠른 수요 증가를 모두 감당하기에는 충분하지 않습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 사실이 투자액과 집행기간을 다뤘다면 이 사실은 일정 단축 후에도 남는 생산능력 부족을 다뤄, 수요 강도와 물량 전환 한계를 별도로 보여 준다.",
+        "mechanism_scope_id": "000660:MEMORY:YONGIN_CAPACITY_SUFFICIENCY_VS_DRAM_DEMAND",
+        "normalized_object": "용인 증설 일정 단축 이후에도 남는 D램 수요 대비 생산능력 부족",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "through 2033 and subsequent demand ramp",
+        "predicate": "용인 클러스터 4번째 팹 일정을 12년 앞당겨도 빠른 D램 수요를 모두 감당하기에는 충분하지 않다",
+        "predicate_family": "YONGIN_CAPACITY_SUFFICIENCY_VS_DRAM_DEMAND",
+        "primitive_tags": [
+          "YONGIN_CAPACITY",
+          "DRAM_DEMAND",
+          "CAPACITY_INSUFFICIENCY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "YONGIN_CAPACITY_SUFFICIENCY_VS_DRAM_DEMAND",
+        "question_family_tags": [
+          "YONGIN_CAPACITY_SUFFICIENCY_VS_DRAM_DEMAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "용인 클러스터 일정과 D램 수요 감당 충분성",
+        "subject_id": "000660:MEMORY:YONGIN_CAPACITY_SUFFICIENCY",
+        "unit": "qualitative with years",
+        "value": "schedule accelerated by 12 years to 2033; capacity still insufficient for all rapid DRAM demand"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "issuer는 용인·청주 생산이 본격화된 뒤에도 메모리 수요가 계속 증가할 것으로 보며, 긴 팹 건설 기간 때문에 후속 거점을 미리 준비해야 한다고 설명했다. 이는 공급 확충 이후의 수요 지속성과 추가 CAPA 필요성을 연결한다.",
+        "exact_quote": "이처럼 용인과 청주에서 생산 기반을 넓혀 가고 있지만, 메모리 수요는 용인과 청주의 생산이 본격화된 이후에도 계속 늘어날 전망입니다. 늘어나는 수요에 차질 없이 대응하려면 또 하나의 대형 거점이 필요합니다. 새로운 팹은 부지 선정에서 인프라 구축, 건설에 이르기까지 오랜 시간이 걸립니다. 용인 클러스터를 조성하는 데에도 약 9년이 소요됐습니다. 미래의 수요에 맞춰 제때 생산에 들어가려면, 다음 거점에 대한 준비를 지금부터 시작해야 하는 이유입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "용인 일정 충분성과 별개로 기존 거점 가동 이후에도 이어지는 수요 기간과 신규 팹 리드타임을 직접 연결해 중장기 공급 대응 필요성을 보여 준다.",
+        "mechanism_scope_id": "000660:MEMORY:POST_RAMP_MEMORY_DEMAND_DURATION",
+        "normalized_object": "용인·청주 가동 이후 메모리 수요 지속과 후속 거점 리드타임",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "after Yongin and Cheongju production ramp; approximately 9-year site lead time",
+        "predicate": "용인·청주 생산 본격화 이후에도 메모리 수요 증가가 이어져 장기 리드타임의 추가 거점이 필요하다",
+        "predicate_family": "POST_RAMP_MEMORY_DEMAND_DURATION",
+        "primitive_tags": [
+          "POST_RAMP_DEMAND",
+          "FAB_LEAD_TIME",
+          "FOLLOW_ON_CAPACITY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "POST_RAMP_MEMORY_DEMAND_DURATION",
+        "question_family_tags": [
+          "POST_RAMP_MEMORY_DEMAND_DURATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "용인·청주 생산 본격화 이후 메모리 수요 지속성",
+        "subject_id": "000660:MEMORY:POST_YONGIN_CHEONGJU_DEMAND_DURATION",
+        "unit": "qualitative with years",
+        "value": "demand expected to keep growing after Yongin and Cheongju ramp; Yongin site formation took about 9 years"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "fcbe677d48a8e97949c2fc79d6d33d8f9ef3a567d45a418f6cd8518de8432b1a",
+  "production_score_authority": false,
+  "prompt_hash": "84fffaac882ba59719a8f64b0edba767041404c621842ae27e1aafbebd562443",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-65dbb39f193f2b35d7007f43fa1a216d02338f49445b2e04bc50e69272851b5a",
+  "response_id": "COLLABRESP-a53c16d20ab848842479da726f08cc8eb4336bdec3591adb09b10ee040162a8c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

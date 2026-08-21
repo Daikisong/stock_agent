@@ -1,0 +1,120 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-21c7f6b6f7c4b91761844ecb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 관련 개인 Naver blog로 target 005930과 다르고 original broker source도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5247df99b6eb349dc156f4c1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "신한투자증권 공식 research landing이어서 requested family는 맞지만 snippet은 8월 19일 daily로 cutoff 이후이고 삼성전자 valuation gap과 연결된 target report가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8e8e7f98edb7a64a8d523de4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 조정과 KOSPI forward PER를 다루지만 개인 Naver blog의 재서술이다. original broker full report 또는 verified landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d38408e747f03ebca1937c6c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "cutoff 부근 삼성전자 가격을 다루는 개인 blog일 뿐 PUBLIC_BROKER_PDF 원문·landing이 아니며 valuation denominator의 source authority가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-3b4665fc35500a9543542d88",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2025년 미국주식 일반 blog로 target·period·objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-48aee3791ebcd0513d7271c5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "에스피지 wrong-subject blog이고 2026-07-22 내용으로 cutoff 이후다."
+      },
+      {
+        "candidate_id": "SGCAND-77a4319f5f888602817bbd33",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "신한투자증권 official landing으로 family는 맞지만 8월 19일 daily generic page이며 cutoff 이후·target non-specific라 material route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9e5da26a810a1ddb5b286090",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "broker-owned landing이지만 동일한 8월 19일 daily metadata로 cutoff 이후이며 삼성전자 valuation report identity가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-6fc8ce276155e154e0d6dc3d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "신한투자증권 landing이라 family match는 가능하나 post-cutoff 8월 19일 generic daily page이고 target gap에 objective-bound하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-801bafa99e919e2884de9cbd",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "broker official landing이지만 8월 19일 post-cutoff daily metadata이며 삼성전자 current multiple·denominator bridge를 가리키지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-54bc9efe5f3800deca34038e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "신한투자증권 landing으로 source family는 맞지만 cutoff 이후 8월 19일 generic daily page이고 target-specific full source가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 roster의 broker-owned landing 6개는 동일한 post-cutoff 8월 19일 generic daily metadata이며 target valuation report identity가 아니다. material 0은 cutoff 이전 broker source의 부재나 research completion을 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "d414ebd1a06510d2bddfedf9f07cad488a206f7c79f7ca92208842f0b45d6ccd",
+  "production_score_authority": false,
+  "prompt_hash": "782a2cfa84ec85ceb45af3c6e16aebbfa1120934a41b9d69023c58bfd508d96f",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ed021d44a40de9a950f92c6e453ca9073ad8dc131146190afe11d6b060083829",
+  "response_id": "COLLABRESP-7296a62baa445d94e5587a6ba455271475aedb4802352f3c6faf105b4d7e3a83",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

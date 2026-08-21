@@ -1,0 +1,186 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "연결 actual·DS 메모리 성과와 HBM-only EPS·FCF 귀속 한계, CAPEX·운전자본 counter가 memo에 함께 반영되고 deterministic disagreement가 없다. OpenAI candidate 결과는 이 component를 재개방하지 않는다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "양산·가동 actual과 MOU·LOI·협의 및 signed contract economics의 경계를 이미 유지한다. 고객별 계약조건 비공개는 counterweight이며, 직전 21건 material0은 계약 부재 증명이 아니다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "가동률·ASP·capacity tightness와 HBM-only locked capacity·실현가격·기간 미확인의 경계가 반영되고 material disagreement가 없다. 검색 실패를 shortage 부재로 해석하지 않는다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "forward/trailing multiple과 revision의 기간·denominator 차이를 보존하며 deterministic score summary가 valid이고 disagreement가 없다. metadata-only broker roster는 evidence가 아니지만 memo insufficiency 자체를 만들지 않는다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "actual execution과 HBM-only earnings bridge·contract·denominator 한계를 조건부 범위로 반영한다. 단일 no-result 또는 unfetched metadata를 completion이나 source absence로 사용하지 않는다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "OCF·주주환원 actual과 CAPEX·자본약정·운전자본·차입 counter가 함께 반영되고 checkpoint상 objective가 resolved다. 이는 score나 Stage 권한이 아니라 memo coverage 판정이다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "OpenAI 공식 Stargate partnership·memory-support 원문의 pre-cutoff publication 상태와 관계 범위를 full-fetch·accepted claim/fact lineage로 확인하고 LOI·계획과 signed 계약조건을 구분할 필요가 있다."
+        ],
+        "rationale": "직전 21개 후보는 모두 material0이지만 이는 source absence가 아니다. 동시에 checkpoint에는 material이지만 fetch rejected인 후보와 research-pending query가 남아 있어 OpenAI 공식 원문·날짜 revalidation의 bounded route가 아직 실행 가능하다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-4a09852cabf968a8d4e9c5ce",
+        "rationale": "Cutoff 이후 locator date 후보는 현재 판단에서 제외하며 source absence가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-2f5ba2b1fd280981afbd3251",
+        "rationale": "Full fetch 후 미래 문서로 확인된 4건은 as_of 누수를 막기 위해 제외한다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-3fac4f0f038171b3db7a7b0b",
+        "rationale": "Publication date를 cutoff 기준으로 검증할 수 없는 문서는 현재 evidence-eligible하지 않지만 내용·source 부재를 증명하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-e4e36ba1dec3bf95565da816",
+        "rationale": "Full-document 단계에서 미래 문서로 판정된 4건은 현재 snapshot에서 사용할 수 없다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-50b01ee66fb70d67784761de",
+        "rationale": "Full fetch 뒤에도 publication date가 검증되지 않은 결과는 채택하지 않되 source absence로 확대하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY는 saturation proof가 아니며 현재 material-fetch-rejected 및 pending route가 남아 있다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-3966f483106272d23cd48594",
+        "rationale": "12건의 query provider error는 transport 실패로 사실 또는 source absence가 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-b7c982be24bd51146eafb902",
+        "rationale": "단일 SEARCH_NO_RESULT는 valuation source absence나 semantic completion을 증명하지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-fbae1be843b3f6094a73511a",
+        "rationale": "CUSTOMER_OFFICIAL accepted claim/fact lineage가 없고 full fetch가 완료되지 않아 coverage가 부족하며, 계약 부재로 해석할 수 없다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-66a93060cac94c19c5e1edc9",
+        "rationale": "PUBLIC_BROKER_PDF accepted lineage 부재는 discovery metadata가 evidence가 아니라는 뜻이며 expectation fact 부재가 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "information_confidence",
+        "direction": "RESOLUTION",
+        "fact_need": "2026-07-12 이전 OpenAI 공식 원문이 확인하는 삼성 Stargate partnership·memory-support scope와 binding 상태를 publication-date 검증을 거친 source-backed fact로 확인한다.",
+        "why_material": "issuer-affiliated 설명을 넘어선 독립 official corroboration은 information confidence를 바꿀 수 있다. 원문이 LOI·지원 계획만 확인하면 signed price·volume·allocation·duration gap은 그대로 유지되어야 한다."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": true,
+        "direction": "OpenAI 공식 newsroom/index/partnership catalog에서 Stargate의 Samsung memory-support original을 bounded하게 재발견하고, material-fetch-rejected 원문의 publication date와 full content를 재검증한다.",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "21개 최신 후보는 nonmaterial이지만 source absence가 아니며, checkpoint에는 이 objective의 material-fetch-rejected 후보와 pending query가 남아 있다. 동일한 제3자 후보 반복이 아니라 OpenAI official catalog·원문 revalidation으로 좁힌다.",
+        "source_family": "CUSTOMER_OFFICIAL"
+      }
+    ],
+    "next_actions": [
+      "정보신뢰도 objective의 OpenAI CUSTOMER_OFFICIAL catalog/original revalidation을 bounded하게 실행하고 full document·publication date·claim/fact lineage를 검증한다.",
+      "유효 fact가 생기면 information_confidence memo와 독립 judges를 갱신한 뒤 Red Team·Synthesis를 재결합한다. 다시 material0·fetch failure이면 부재로 선언하지 않고 novelty failure로 기록해 Supervisor가 route executable 여부를 재판정한다."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "직전 21개 nonmaterial 제3자·KIND·broker·목록 후보를 다시 제출하는 것",
+          "검색 스니펫이나 material0을 evidence 또는 source absence로 사용하는 것",
+          "AMD official corroboration을 OpenAI 관계의 대체 증거로 사용하는 것"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "research_need": "OpenAI official-domain의 pre-cutoff Stargate partnership 원문과 publication metadata를 확인해 Samsung memory-support scope, LOI·계획 표현, signed purchase·price·volume·allocation·duration 표현을 구분한다."
+      }
+    ],
+    "rationale": "7개 memo, structured data, Red Team, counter-route proof와 deterministic score summary는 유효하고 material disagreement는 없다. 다만 21개 material0는 부재·완료 증명이 아니며, checkpoint에 OpenAI 관계 objective의 material-fetch-rejected 후보와 pending query가 남아 있다. 그러므로 정보신뢰도에 한정한 official original/date revalidation route를 fail-open하되 다른 component를 억지로 재개방하지 않는다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "Pre-cutoff OpenAI official original이 확인하는 삼성 Stargate memory-support 관계의 범위와 binding 상태는 무엇이며, publication date를 검증할 수 있는가?"
+    ]
+  },
+  "payload_hash": "92acd286e41068cd3ff5c8add5aeba9a608b7207555ae878bdaa7701933c1547",
+  "production_score_authority": false,
+  "prompt_hash": "ec3c3b0e0169c733552141cc5edcd0ecb073b4e430f413a6b990f8695bb082c4",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d33e9556106b69112961de3d4d4a1ada5aff34eead34e938433a07e03ba4fd01",
+  "response_id": "COLLABRESP-dd404fc12d07e66e6eac48f6a79c45b997fc462ed7bd23815aad4baaa01def57",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

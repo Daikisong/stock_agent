@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "b84ead111945075ad6654621287531140a0432b172af3363373abd25408f28b5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-d82b534f9b12e03eeed1ea7c",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "KIND 증권신고서 정정 경로이나 모집액 수요예측 문구인 다른 발행인 자료로, SK하이닉스 2026 주총 경영계획과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-789f8939a257d3dc7a3ac399",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.05,
+        "rationale": "SK하이닉스를 포함한 4대 그룹 주총을 전망한 제3자 기사로 요청된 발행사/KIND 원문 family를 충족하지 않고 구체적인 issuer 숫자형 전망도 없다."
+      },
+      {
+        "candidate_id": "SGCAND-ae134e9d09821a8945663ca1",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "KIND 경로이나 평택 소재 다른 회사의 2025 임시주총 이사 선임 안건으로 대상 발행인과 연구 목적이 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-22bbe3fbd0f4e2ae6bf5513e",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "KIND 경로이나 2024 회계기간 메타데이터만 보이는 다른 회사 자료로, SK하이닉스 2026 주총 미래 실적 계획을 식별하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-3436a832592c58f1f5db35fe",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "KIND 경로이나 제34기 결산·자금대여 안건인 다른 회사 공고로, SK하이닉스의 2026 숫자형 경영계획 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4cd9b5c9b1eb33dd04c95d8b",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.2,
+        "rationale": "KIND에 제출된 SK하이닉스 2023 지속가능경영보고서 원문 경로지만 HBM3 양산·ESG의 과거 설명이며 2026 정기주총의 미래 매출·실적 point 또는 range를 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-bfe2f1aa4dfba6e5cf1b394a",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "KIND 분할 신고서 정정 경로이나 분할존속법인 임원 위험 문구로, SK하이닉스 2026 주총 경영계획과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-f9fb3aa30b4c893bdc863708",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "KIND 경로이나 대여·고문 위촉 등 다른 회사 이사회 안건으로 대상 발행인과 숫자형 전망 목적이 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-31a3def3eb2f9bdb14b9822a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.05,
+        "rationale": "2021년 SK하이닉스 사장 발언을 재전한 제3자 기사로 요청된 발행사/KIND 원문 family가 아니며 현재 2026 전망을 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-311de5b6651b584dbe565048",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.2,
+        "rationale": "2026 SK하이닉스 주총을 다룬 제3자 미리보기로 검색 주제는 맞지만 요청된 발행사 뉴스룸·발표자료·KIND 원문이 아니며 숫자형 공식 전망으로 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-4be53aeb9ac88aa9b6db3d47",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "삼영전자 주가 페이지가 SK하이닉스 종목명을 부수적으로 노출한 일반 웹 결과로 발행인·문서 목적·source family가 모두 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-6c63b36ee93fa4d9da550245",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "KIND 경로이나 Taisi Technology 현물투자와 지급보증 등 다른 회사 안건으로 SK하이닉스 2026 주총 경영계획과 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "SK하이닉스 2023 지속가능경영보고서와 제3자 2026 주총 미리보기는 현재 숫자형 issuer guidance gap을 해소하지 않으므로 fetch 대상에서 제외했다."
+    ]
+  },
+  "payload_hash": "0a677820cc34c3debd16663fff0d962a1407d4addb54525f7745a07e79098da6",
+  "production_score_authority": false,
+  "prompt_hash": "a45a23035539a537cf515626924226d39a537efdea0102e606d27ce6a4a54227",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6dcf9c2ac0f726f74058866bb75195b771d59b1691dda2d135a0271edd337390",
+  "response_id": "COLLABRESP-ba081239f9fd63c2d1d8ebfa13b38b241539ca40e6523870bddc7e65ade53090",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

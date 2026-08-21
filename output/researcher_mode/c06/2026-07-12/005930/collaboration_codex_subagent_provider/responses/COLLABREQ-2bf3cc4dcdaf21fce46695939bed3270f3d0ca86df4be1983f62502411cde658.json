@@ -1,0 +1,70 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-caeb2527caaf32af628e8189",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "검증된 발행사 2024년 재무·실적 자료 경로지만 현재 HBM4 상용화, 고객 일정, 메모리 capacity 및 2025~2026년 실적보다 이전이며 후속 원문으로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-caee112a1a015561c83d4af3",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "검증된 발행사 2019년 재무·실적 자료 경로지만 현재 HBM4 상용화, 고객 일정, 메모리 capacity 및 2025~2026년 실적보다 이전이며 후속 원문으로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-cb59bf340252f74417d63f3d",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "검증된 발행사 2018년 재무·실적 자료 경로지만 현재 HBM4 상용화, 고객 일정, 메모리 capacity 및 2025~2026년 실적보다 이전이며 후속 원문으로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-cc3a3ff42bc5fef44582982d",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "검증된 발행사 2022년 재무·실적 자료 경로지만 현재 HBM4 상용화, 고객 일정, 메모리 capacity 및 2025~2026년 실적보다 이전이며 후속 원문으로 대체된 역사자료다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "4f29af73ef59cec4ba9b185325b4065c4a865f635cabe8f884785d2313a48f19",
+  "production_score_authority": false,
+  "prompt_hash": "579036119e32d1937575bbf3fdf7a28450811dade1ef7a9e183987b513212413",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2bf3cc4dcdaf21fce46695939bed3270f3d0ca86df4be1983f62502411cde658",
+  "response_id": "COLLABRESP-8eb5ecc6965516db976ab2a4d60995e91913c70ee9d98e41aca4fc6bab2be2c5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

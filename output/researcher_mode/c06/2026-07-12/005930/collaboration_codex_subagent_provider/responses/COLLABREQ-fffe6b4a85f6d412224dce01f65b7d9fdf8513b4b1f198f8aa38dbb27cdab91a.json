@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-21bea206d0a4c4228645badd",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "This verified issuer event, presentation, or conference route matches the presentation family, but its historical subject and period do not materially resolve the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-259155b27def7e69193f0b2a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The supplied legacy or third-party route is not verified as an eligible issuer source and therefore matches no requested source family."
+      },
+      {
+        "candidate_id": "SGCAND-2730c40ffe8156992f7b4fbd",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "This verified issuer event, presentation, or conference route matches the presentation family, but its historical subject and period do not materially resolve the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-273cbb1dc60aa72f6a7a5bcb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The supplied legacy or third-party route is not verified as an eligible issuer source and therefore matches no requested source family."
+      },
+      {
+        "candidate_id": "SGCAND-29e6d80057949f40cf62a354",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "This verified issuer event, presentation, or conference route matches the presentation family, but its historical subject and period do not materially resolve the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-2a2be6d5d5a88318e1aedff2",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "This verified issuer event, presentation, or conference route matches the presentation family, but its historical subject and period do not materially resolve the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-2bea0724ff4bfc738d8a3454",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "This verified issuer event, presentation, or conference route matches the presentation family, but its historical subject and period do not materially resolve the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-2fe81fb8b0917687d6ab658d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The supplied legacy or third-party route is not verified as an eligible issuer source and therefore matches no requested source family."
+      },
+      {
+        "candidate_id": "SGCAND-30904f609816014581f15afe",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "This verified Samsung financial-report component matches the issuer earnings family, but the historical period is long superseded and cannot materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-3160dbd9c345434dc96adf77",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The supplied legacy or third-party route is not verified as an eligible issuer source and therefore matches no requested source family."
+      },
+      {
+        "candidate_id": "SGCAND-31a2180d5c9724bba9a62fb8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The page or document is not an earnings, cash-flow, or eligible issuer-presentation source for the supplied objective."
+      },
+      {
+        "candidate_id": "SGCAND-31ffac56c514a6c3c40c558a",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "This verified Samsung financial-report component matches the issuer earnings family, but the historical period is long superseded and cannot materially resolve the current EPS/FCF objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "This partition is fully classified. The supplied candidates are historical, unrelated, or unverified for the current objective; titles, snippets, and reference metadata were not treated as evidence."
+    ]
+  },
+  "payload_hash": "ed1d3d967cdfa149efde26ed7bb6c06ebe516c2ed7e6864306fa9661c1b46473",
+  "production_score_authority": false,
+  "prompt_hash": "37752f4e8d9f7ba377c456392af08b721776e0c88ca97b794358046e36c9b806",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fffe6b4a85f6d412224dce01f65b7d9fdf8513b4b1f198f8aa38dbb27cdab91a",
+  "response_id": "COLLABRESP-41c6b21c7cc8ad699fb47950fc0fb3a88f5ca04d2a5bc677d8616257358f11d3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

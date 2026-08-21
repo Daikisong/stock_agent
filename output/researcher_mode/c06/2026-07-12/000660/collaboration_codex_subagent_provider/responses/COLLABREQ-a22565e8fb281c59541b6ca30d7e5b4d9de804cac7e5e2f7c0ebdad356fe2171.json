@@ -1,0 +1,130 @@
+{
+  "output_schema_hash": "a82661a369c258f7d81ec4f0a18155406e1bb6d4f2066d30b57ae4d646369d49",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-648111c4425156a615c9906f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "요청한 발행사 공식 HBM CAGR·TAM 자료가 아니라 제3자 게시물·브로커 자료 또는 무관한 문서이며, issuer 숫자형 전망을 검증할 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7c1ee4793a21902a551ad550",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "요청한 발행사 공식 HBM CAGR·TAM 자료가 아니라 제3자 게시물·브로커 자료 또는 무관한 문서이며, issuer 숫자형 전망을 검증할 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-fe44cea1af12441d655ad4b6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "요청한 발행사 공식 HBM CAGR·TAM 자료가 아니라 제3자 게시물·브로커 자료 또는 무관한 문서이며, issuer 숫자형 전망을 검증할 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-10774cc9bb8bb0b8078cfd6d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "요청한 발행사 공식 HBM CAGR·TAM 자료가 아니라 제3자 게시물·브로커 자료 또는 무관한 문서이며, issuer 숫자형 전망을 검증할 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5f37e2125163c3d8095593c7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "요청한 발행사 공식 HBM CAGR·TAM 자료가 아니라 제3자 게시물·브로커 자료 또는 무관한 문서이며, issuer 숫자형 전망을 검증할 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-046b0ef4a9c5a8ff585f530a",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.98,
+        "rationale": "제목과 URL이 SKHY Rule 424(b)(4) prospectus filing을 직접 가리키는 미러·landing route다. 최종 원문 연결과 HBM 별도 수치 존재 여부를 full fetch로 확인할 가치가 있다."
+      },
+      {
+        "candidate_id": "SGCAND-934d16c0f97e2194f6ab4238",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "요청한 발행사 공식 HBM CAGR·TAM 자료가 아니라 제3자 게시물·브로커 자료 또는 무관한 문서이며, issuer 숫자형 전망을 검증할 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c14b62463251465c80a7d8c6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "요청한 발행사 공식 HBM CAGR·TAM 자료가 아니라 제3자 게시물·브로커 자료 또는 무관한 문서이며, issuer 숫자형 전망을 검증할 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6f40f574d32bcd5067cef3f6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "요청한 발행사 공식 HBM CAGR·TAM 자료가 아니라 제3자 게시물·브로커 자료 또는 무관한 문서이며, issuer 숫자형 전망을 검증할 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b63a5836159dec5a2cef8e14",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "요청한 발행사 공식 HBM CAGR·TAM 자료가 아니라 제3자 게시물·브로커 자료 또는 무관한 문서이며, issuer 숫자형 전망을 검증할 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ebbbbfbb9870161738954e68",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "요청한 발행사 공식 HBM CAGR·TAM 자료가 아니라 제3자 게시물·브로커 자료 또는 무관한 문서이며, issuer 숫자형 전망을 검증할 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-126953c18ca13b7ae5179abf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "요청한 발행사 공식 HBM CAGR·TAM 자료가 아니라 제3자 게시물·브로커 자료 또는 무관한 문서이며, issuer 숫자형 전망을 검증할 원문 경로가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "선택 후보의 snippet은 discovery metadata일 뿐이며, full prospectus fetch·as-of-date·원문 HBM 수치 검증 전에는 evidence로 사용할 수 없다."
+    ]
+  },
+  "payload_hash": "cd9b9020ae151d6be8d7dabcde109f800a8abcf819ded1be92c1ca6a6bc85b53",
+  "production_score_authority": false,
+  "prompt_hash": "000fb7d33c6895fd8a89857d88dc3149220d02f69356b66dd407ea55637ceb77",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a22565e8fb281c59541b6ca30d7e5b4d9de804cac7e5e2f7c0ebdad356fe2171",
+  "response_id": "COLLABRESP-145a90ae8d7dba78f3dc1a61afa29f42df51b87b0c0b87761dd8a5150c0b6fdc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

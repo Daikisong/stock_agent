@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6b8412d13eaf6c84c390f094",
+        "rationale": "Chunk 0 is primarily the sustainability report's CEO, governance, and environmental material. It describes broad AI-driven semiconductor demand and HBM4 power-efficiency improvements, but provides no HBM-specific customer commitment, qualification, booked period, revenue conversion, or memory-attributed profit; the stated companywide and mixed-DS profit figures cannot be attributed to HBM earnings visibility. The remaining content concerns environmental operations, so no distinct objective-linked fact remains in this chunk.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "3bcc6d2c8ff85aac661f0e7834cf93a315ec874f693b9076dc86b557fb094911",
+  "production_score_authority": false,
+  "prompt_hash": "9dcbe839212ab1ef2e97312e5ef8829ece47ce3083702c4b795cb1668e9ef3d2",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8ce418a141740f9775d6755a25ca479a3baad8eac65379474374c81159e7dc29",
+  "response_id": "COLLABRESP-7aff1f5967181007a06eb20c67b24bc37690b3ab1045cce101a86b14b4d57ff9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

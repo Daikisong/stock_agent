@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-a2896129b64338f2472d6d28",
+        "rationale": "같은 문서 571줄을 continuation 기준으로 다시 끝까지 확인했다. 앞 페이지의 12건이 현재 valuation_rerating objective에 직접 영향을 주는 서로 다른 사실을 모두 포함한다. 나머지는 목표주가·매매 지시, NAND 세부 추정, 반복 본문·표·차트 OCR, 면책문구이거나 기존 canonical 및 앞 페이지와 같은 경제적 의미여서 반복하지 않는다. 따라서 새 fact는 없고 이 문서의 추출을 완료한다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "211c05f81ef97ec64fb7a59b862b705793f49d83414845f246e9e72e8ad4ed96",
+  "production_score_authority": false,
+  "prompt_hash": "1d5a18ca62d655ef0ffe14c9b263bab6fba47a4da4f23ef959814d543b6aa5c6",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-08acdc656dbef9bd3a3d6ef5da55ee6c1292223bf51192c2b1287a3634cc8be9",
+  "response_id": "COLLABRESP-d8441a7be2c5f0eaef71734f5594b5968becf2682a2abb7eba61eae55ec0b9e0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,258 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0de2740a0c3d0f9f8210e198",
+        "rationale": "12단 HBM3E 인증 지연과 같은 문서의 인증 통과 resolution, HBM3E 최대 30% 가격 인하, HBM4 초기 견적 6~8% 할인, 당시 HBM4 공식 승인 부재를 양면·시점 구분해 5건 추출했다. 경쟁사 수치, 전망성 점유율·이익, speculative 수율 우려와 일반 산업 설명은 target-direct material fact에서 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.78,
+        "current_lifecycle": "RESOLVED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0de2740a0c3d0f9f8210e198",
+        "economic_mechanism": "12단 HBM3E 출하가 경쟁사보다 6~12개월 늦어 2025년 4분기에 시작됐다는 보도는 고객 인증 지연이 시장 선점과 출하 전환을 늦춘 실행 counter를 수치화한다.",
+        "exact_quote": "삼성은 2025년 4분기에 들어서야 엔비디아를 향한 12단 HBM3E 출하를 시작했다. 해당 분기 예상 출하량은 수만 대 수준에 그쳐 경쟁사들에 비해 시기적으로 너무 늦었다는 평가가 지배적이다. 경쟁사인 SK하이닉스나 마이크론보다 6~12개월 늦어진 셈이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 all-customer 판매 fact만으로는 보이지 않는 과거 인증 지연 기간과 초기 출하 한계를 직접 보여주되, 같은 문서의 후속 인증 통과 fact와 함께 resolved 상태로 기록한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM3E_12H:QUALIFICATION_SHIPMENT_DELAY:2025",
+        "normalized_object": "HBM3E 12-layer qualification and shipment delay",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q4 versus competitor starts in 2024-H2 to 2025-H1",
+        "predicate": "삼성전자 12단 HBM3E 출하는 2025년 4분기에 시작돼 경쟁사보다 6~12개월 늦었다",
+        "predicate_family": "HBM3E_12H_QUALIFICATION_SHIPMENT_DELAY",
+        "primitive_tags": [
+          "HBM3E",
+          "QUALIFICATION_DELAY",
+          "SHIPMENT_DELAY"
+        ],
+        "product_family": "HBM3E 12단",
+        "question_family_id": "HBM3E_12H_QUALIFICATION_DELAY",
+        "question_family_tags": [
+          "HBM3E_12H_QUALIFICATION_DELAY",
+          "QUALIFICATION_EXECUTION",
+          "SHIPMENT_LAG"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 12단 HBM3E 인증·출하 지연",
+        "subject_id": "005930:MEMORY:HBM3E_12H:QUALIFICATION_DELAY:2025",
+        "unit": "months of delay",
+        "value": "6-12 months later than competitors"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.76,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-0de2740a0c3d0f9f8210e198",
+        "economic_mechanism": "약 18개월의 반복 테스트와 수정 후 2025년 하반기에 모든 인증 관문을 통과해 세 번째 승인 공급업체가 됐다는 보도는 앞선 인증 지연이 고객 승인으로 전환된 resolution을 제공한다.",
+        "exact_quote": "약 18개월에 걸친 반복적인 테스트와 수정을 거쳐 삼성전자는 2025년 하반기에 마침내 모든 인증 관문을 통과했다. 이로써 SK하이닉스와 마이크론에 이어 엔비디아의 세 번째 HBM3E 승인 공급업체로 합류했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "과거 인증 지연 counter를 같은 문서 안에서 해소하는 승인 상태이며, 이후 HBM3E 판매 확대와 연결되는 정보 신뢰도 보강 fact다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM3E_12H:QUALIFICATION_PASS:2025-H2",
+        "normalized_object": "HBM3E 12-layer qualification passed after extended remediation",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2025-H2",
+        "predicate": "삼성전자는 약 18개월의 테스트와 수정 후 2025년 하반기에 12단 HBM3E 인증 관문을 통과해 엔비디아의 세 번째 승인 공급업체가 됐다",
+        "predicate_family": "HBM3E_12H_QUALIFICATION_RESOLUTION",
+        "primitive_tags": [
+          "HBM3E",
+          "QUALIFICATION_PASS",
+          "APPROVED_SUPPLIER"
+        ],
+        "product_family": "HBM3E 12단",
+        "question_family_id": "HBM3E_12H_QUALIFICATION_RESOLUTION",
+        "question_family_tags": [
+          "HBM3E_12H_QUALIFICATION_RESOLUTION",
+          "QUALIFICATION_STATE",
+          "EXECUTION_RESOLUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 12단 HBM3E 인증 통과",
+        "subject_id": "005930:MEMORY:HBM3E_12H:QUALIFICATION_PASS:2025-H2",
+        "unit": "qualification status",
+        "value": "all qualification gates passed after about 18 months; third approved supplier"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.74,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0de2740a0c3d0f9f8210e198",
+        "economic_mechanism": "삼성전자가 2026년 HBM3E 가격 하락 국면에서 12단 제품 가격을 최대 30% 낮추고 있다는 보도는 물량 회복을 위해 가격을 양보한 직접적인 HBM 가격·마진 counter다.",
+        "exact_quote": "2026년 HBM3E의 평균 가격 하락이 예상되는 가운데 삼성은 이미 HBM3E 12단 스택 제품의 최대 30% 가격 인하를 주도하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 HBM 출하·믹스 확대 fact와 별개로 판매 회복 과정의 가격 양보 폭을 수치화한다. 실현 ASP나 계약 가격으로 확대하지 않고 기사에 적힌 최대 인하 전략만 기록한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM3E_12H:PRICE_CUT:2026",
+        "normalized_object": "maximum HBM3E 12-layer price reduction",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026 HBM3E pricing outlook as of 2025-10-28",
+        "predicate": "삼성전자가 12단 HBM3E 스택 제품의 가격을 최대 30% 인하하고 있다고 보도됐다",
+        "predicate_family": "HBM3E_12H_PRICE_CUT",
+        "primitive_tags": [
+          "HBM3E",
+          "PRICE_DISCOUNT",
+          "PRICING_COUNTER"
+        ],
+        "product_family": "HBM3E 12단",
+        "question_family_id": "HBM3E_12H_PRICE_CUT",
+        "question_family_tags": [
+          "HBM3E_12H_PRICE_CUT",
+          "HBM_PRICING_POWER",
+          "MARGIN_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 12단 HBM3E 가격 인하 전략",
+        "subject_id": "005930:MEMORY:HBM3E_12H:PRICE_CUT:2026",
+        "unit": "percent maximum price cut",
+        "value": 30
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.73,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0de2740a0c3d0f9f8210e198",
+        "economic_mechanism": "삼성전자가 HBM4 초기 견적을 경쟁사보다 6~8% 낮게 제시했다는 보도는 차세대 제품에서도 시장 진입을 위해 가격 우위를 사용한 counter이며, 이후 고속 제품의 가격 프리미엄과 구별되는 초기 견적 상태다.",
+        "exact_quote": "그러나 삼성은 HBM4 초기 견적부터 SK하이닉스·마이크론보다 6~8%가량 저렴하게 제시하며 추격의 고삐를 바짝 죄고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4 가격 프리미엄이 확인된 후속 fact와 시간·가격 단계가 다른 초기 견적 counter를 제공한다. 실제 체결 가격이나 물량은 문서에 없어 추가하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:INITIAL_QUOTE_DISCOUNT:2026",
+        "normalized_object": "HBM4 initial quote discount versus competitors",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026 HBM4 initial quotation as of 2025-10-28",
+        "predicate": "삼성전자가 HBM4 초기 견적을 SK하이닉스·마이크론보다 6~8% 낮게 제시했다고 보도됐다",
+        "predicate_family": "HBM4_INITIAL_QUOTE_DISCOUNT",
+        "primitive_tags": [
+          "HBM4",
+          "INITIAL_QUOTE",
+          "PRICE_DISCOUNT"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_INITIAL_QUOTE_DISCOUNT",
+        "question_family_tags": [
+          "HBM4_INITIAL_QUOTE_DISCOUNT",
+          "HBM_PRICING_POWER",
+          "COMPETITIVE_PRICING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 초기 견적 가격",
+        "subject_id": "005930:MEMORY:HBM4:INITIAL_QUOTE_DISCOUNT:2026",
+        "unit": "percent relative quotation discount",
+        "value": "6-8% below SK hynix and Micron"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.77,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0de2740a0c3d0f9f8210e198",
+        "economic_mechanism": "2025년 10월 28일 현재 삼성전자 HBM4가 엔비디아의 공식 공급 승인을 받지 못했다는 보도는 당시 qualification gap을 명시하며, 이후 2025년 12월 SiP 평가와 2026년 출하로 넘어가기 전의 historical counter다.",
+        "exact_quote": "하지만 공격적인 가격 정책에도 아직 엔비디아로부터 HBM4 공급에 대한 공식 승인을 받지는 못했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "당시 공식 승인 부재를 정확한 날짜의 historical counter로 남기되, 현재 상태로 오인하지 않도록 이후 SiP 평가·출하 fact에 의해 superseded된 lifecycle로 제한한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:OFFICIAL_APPROVAL_PENDING:2025-10-28",
+        "normalized_object": "HBM4 official customer approval pending",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "as of 2025-10-28",
+        "predicate": "2025년 10월 28일 현재 삼성전자 HBM4는 엔비디아의 공식 공급 승인을 받지 못한 상태였다",
+        "predicate_family": "HBM4_OFFICIAL_APPROVAL_PENDING",
+        "primitive_tags": [
+          "HBM4",
+          "APPROVAL_PENDING",
+          "QUALIFICATION_COUNTER"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_OFFICIAL_APPROVAL_PENDING",
+        "question_family_tags": [
+          "HBM4_OFFICIAL_APPROVAL_PENDING",
+          "QUALIFICATION_STATE",
+          "HISTORICAL_EXECUTION_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 공식 고객 승인 상태",
+        "subject_id": "005930:MEMORY:HBM4:OFFICIAL_APPROVAL:2025-10-28",
+        "unit": "qualification status",
+        "value": "official Nvidia supply approval not yet received"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "774897ffef9d89f1d99c86e728036725f1a41b6886d6da052d3efcd853cde03a",
+  "production_score_authority": false,
+  "prompt_hash": "4dd15e985064ab8cec60f1731b51d2a6d0a188cf57d2fa4245ac8c50b298d853",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e35df9358ae82da50f94388ccad2bfe6b7615839744e23ded0e222dd884c5f8f",
+  "response_id": "COLLABRESP-2ec8753d98e2cabfa84fb5a5df7b70da7b84684bb2ace3294d91bb95216c1949",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

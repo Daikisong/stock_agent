@@ -1,0 +1,103 @@
+{
+  "output_schema_hash": "490110d92341a79daf7e8a281153aa7d96072ebe37f4354e685b7d607c29eb92",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-678b83eb8ab598c500c73ef0",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.01,
+        "rationale": "대신증권의 직접 원문 다운로드 경로이므로 PUBLIC_BROKER_PDF fetch route에는 해당한다. 그러나 제목 날짜가 as_of_date 이후인 2026-08-03이고 discovery snippet도 삼성전자 HBM 귀속 컨센서스·valuation이 아니라 대덕전자 2Q26 review를 가리켜 current market_mispricing 목적의 as-of 적격 원문 후보가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-674062dd06101e90250319cb",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.01,
+        "rationale": "대신증권의 직접 원문 다운로드 경로이므로 PUBLIC_BROKER_PDF fetch route에는 해당한다. 그러나 제목 날짜가 as_of_date 이후인 2026-08-03이고 discovery snippet도 삼성전자 HBM 귀속 컨센서스·valuation이 아니라 대덕전자 2Q26 review를 가리켜 current market_mispricing 목적의 as-of 적격 원문 후보가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-459446a9cab3e8aee92cd5d1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.01,
+        "rationale": "대신증권의 직접 원문 다운로드 경로이므로 PUBLIC_BROKER_PDF fetch route에는 해당한다. 그러나 제목 날짜가 as_of_date 이후인 2026-08-03이고 discovery snippet도 삼성전자 HBM 귀속 컨센서스·valuation이 아니라 대덕전자 2Q26 review를 가리켜 current market_mispricing 목적의 as-of 적격 원문 후보가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b14c47b1775c0e64f042f4bc",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.01,
+        "rationale": "대신증권의 직접 원문 다운로드 경로이므로 PUBLIC_BROKER_PDF fetch route에는 해당한다. 그러나 제목 날짜가 as_of_date 이후인 2026-08-03이고 discovery snippet도 삼성전자 HBM 귀속 컨센서스·valuation이 아니라 대덕전자 2Q26 review를 가리켜 current market_mispricing 목적의 as-of 적격 원문 후보가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2a289ad48a45e6ee332332ec",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.01,
+        "rationale": "대신증권의 직접 원문 다운로드 경로이므로 PUBLIC_BROKER_PDF fetch route에는 해당한다. 그러나 제목 날짜가 as_of_date 이후인 2026-08-03이고 discovery snippet도 삼성전자 HBM 귀속 컨센서스·valuation이 아니라 대덕전자 2Q26 review를 가리켜 current market_mispricing 목적의 as-of 적격 원문 후보가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cdebc6bb8dd7a646ba787ae9",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.01,
+        "rationale": "대신증권의 직접 원문 다운로드 경로이므로 PUBLIC_BROKER_PDF fetch route에는 해당한다. 그러나 제목 날짜가 as_of_date 이후인 2026-08-03이고 discovery snippet도 삼성전자 HBM 귀속 컨센서스·valuation이 아니라 대덕전자 2Q26 review를 가리켜 current market_mispricing 목적의 as-of 적격 원문 후보가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d7154cffa9c60ed9ba0c6857",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "네이버 유료 콘텐츠 URL은 요청된 CONSENSUS_REVISION·PUBLIC_BROKER_PDF·REUTERS·TRUSTED_BUSINESS_MEDIA의 검증 가능한 원문 provenance route로 식별되지 않는다. 제목 날짜도 as_of_date 이후인 2026-07-15이고 snippet은 삼성전자 HBM earnings bridge가 아닌 단기 수급 브리핑이므로 material fetch 후보가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "7개 후보를 요청 순서대로 exact-once 판정했으며 discovery snippet은 fetch-route와 범위 판단에만 사용하고 EvidenceFact 또는 점수 증거로 승격하지 않았다.",
+      "as_of_date 2026-07-12 이후로 표시된 후보와 target-attributed HBM market-mispricing 원문이 아닌 후보는 full fetch 우선순위에서 제외했다."
+    ]
+  },
+  "payload_hash": "3a2ea9fc136e1fae7f010c67ee3e5e56609b4fe47fe9809f221cdc6fbd8c8a32",
+  "production_score_authority": false,
+  "prompt_hash": "92ce2b888411a8fb13e225d90ea5fc038c32a7c4c08690c3f47efb4f89697812",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2397c1aef5c72d3c378d828cddc83f275df8ef73be299f90993b1d3694f93c65",
+  "response_id": "COLLABRESP-493892a8d359606baf47c79b2acf534f0f5dc3092f65da285d1aa7f88d059d25",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

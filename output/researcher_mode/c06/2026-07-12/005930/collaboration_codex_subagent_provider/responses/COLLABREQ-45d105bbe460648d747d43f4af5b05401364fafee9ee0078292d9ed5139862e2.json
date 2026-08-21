@@ -1,0 +1,138 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-8ed346960bf4942ba072d556",
+        "rationale": "2025년 1분기 발표자료 전행을 current 200 fact와 대조했다. D램 출하·ASP, HBM 판매 감소, 메모리 매출과 현금흐름은 직전 동일 원문 계보 및 공식 fact에 이미 수용됐고, 나머지 제품 계획은 현재 eps_fcf_explosion의 신규 이익·FCF 전환을 추가로 입증하지 않아 중복하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-8fc65ff7e0886f1d44028c6c",
+        "rationale": "2026년 2분기 잠정실적 기사 전행을 대조했다. 전사 매출·영업이익·컨센서스와 DS 추정치는 메모리 단독 귀속이 아니며, 메모리 ASP 및 고부가 판매의 실적 기여와 성과급 충당금은 current graph의 기존 의미와 중복된다. 전사 수치를 메모리 이익으로 재귀속하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-901f7176da159909609063ae",
+        "rationale": "발행사의 2026년 1분기 실적·전망 자료 전행을 검토했다. DS/메모리 매출, 영업현금흐름, 유형자산 증가, 제한된 가용량, 서버 DRAM 수요 및 HBM4 판매 계획은 current graph의 공식 DART·발행사 fact와 동일 의미다. 수치 없는 제품 계획을 신규 forward guidance로 승격하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-92422a7b89ab4fd7884f1b9c",
+        "rationale": "기사 전행에서 current graph에 없는 메모리 가격의 기대 상회→DS 이익 전환 positive와, 가격 둔화→연간 컨센서스 상단 미달 counter를 각각 추출했다. 전사 잠정실적·연간 컨센서스 숫자와 HBM/서버 DRAM 수요 전망은 메모리 단독 귀속 부족 또는 기존 fact 중복으로 재발행하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-92422a7b89ab4fd7884f1b9c",
+        "economic_mechanism": "D램과 낸드의 평균판매가격 상승폭이 기존 가정을 웃돌면 메모리 가격 전환이 DS 이익을 통해 전사 실적에 반영된다.",
+        "exact_quote": "특히 D램과 낸드 평균판매가격 상승폭이 기존 가정을 웃돌면서 DS부문 이익이 전사 실적을 견인하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 분기의 메모리 가격이 기존 기대를 웃돌았고 그 차이가 DS 이익으로 전환됐다는 연결을 직접 제시한다. 다만 개별 제품의 이익액이나 상승률은 이 문장에서 공개되지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP:ASP_2026Q2",
+        "normalized_object": "메모리 ASP 기대 상회와 DS 이익 전환",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2",
+        "predicate": "2026년 2분기 D램과 낸드 평균판매가격 상승폭이 기존 가정을 웃돌며 DS부문 이익이 전사 실적을 견인했다",
+        "predicate_family": "MEMORY_ASP_EXPECTATION_BEAT_EARNINGS_CONVERSION",
+        "primitive_tags": [
+          "dram_asp",
+          "memory_pricing",
+          "expectation_beat",
+          "ds_earnings_conversion"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_asp_expectation_gap_earnings_conversion",
+        "question_family_tags": [
+          "memory_asp_expectation_gap_earnings_conversion"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 2분기 메모리 ASP 기대 상회와 DS 이익 전환",
+        "subject_id": "005930:MEMORY:ASP_EXPECTATION_GAP:2026-Q2",
+        "unit": "qualitative actual expectation gap",
+        "value": "DRAM and NAND ASP increases exceeded prior assumptions and drove DS earnings"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-92422a7b89ab4fd7884f1b9c",
+        "economic_mechanism": "메모리 가격 상승세가 둔화되면 하반기 DS 이익 전환 강도가 약해져 연간 영업이익 컨센서스 상단 달성이 어려워질 수 있다.",
+        "exact_quote": "또 메모리 가격 상승세가 둔화되거나 DX 부문 등 세트 사업의 마진 압박이 커질 경우 연간 컨센서스 상단을 넘어서기는 쉽지 않을 수 있다는 분석도 이어진다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 가격 강세가 연간 실적 기대에 전환되는 논리의 명시적 반대 조건이다. DX 요인도 함께 언급되므로 메모리 가격 둔화 조건만 보수적으로 사용한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:RISK_COUNTER:PRICE_DECELERATION_2026H2",
+        "normalized_object": "메모리 가격 둔화에 따른 연간 이익 컨센서스 상단 미달 위험",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-H2E",
+        "predicate": "메모리 가격 상승세가 둔화되면 삼성전자의 2026년 연간 영업이익이 컨센서스 상단을 넘기 어려울 수 있다는 위험이 제기됐다",
+        "predicate_family": "MEMORY_PRICE_DECELERATION_CONSENSUS_RISK",
+        "primitive_tags": [
+          "memory_price_deceleration",
+          "earnings_risk",
+          "consensus_upper_bound"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_price_deceleration_consensus_risk",
+        "question_family_tags": [
+          "memory_price_deceleration_consensus_risk"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 하반기 메모리 가격 둔화에 따른 연간 실적 위험",
+        "subject_id": "005930:MEMORY:PRICE_DECELERATION_RISK:2026-H2",
+        "unit": "conditional earnings risk",
+        "value": "memory price deceleration could prevent annual operating profit from exceeding the upper consensus range"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "97ce9bb8585c8ec29a95f06ed2414754624514d7e31b8986250c17928f805e1e",
+  "production_score_authority": false,
+  "prompt_hash": "a0d7875427afecfcc42cf4545b1443bfa40bfa4d044dded2e0efe790b64fea4a",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-45d105bbe460648d747d43f4af5b05401364fafee9ee0078292d9ed5139862e2",
+  "response_id": "COLLABRESP-e65c0b5895fa2480d0b84b0df85f7c037fa655727097a19bd4f1306644365768",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

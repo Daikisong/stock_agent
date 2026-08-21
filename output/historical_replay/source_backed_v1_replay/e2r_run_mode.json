@@ -1,0 +1,7 @@
+{
+  "mode": "HISTORICAL_REPLAY",
+  "output_namespace": "historical_replay",
+  "production_runtime_ready": false,
+  "run_id": "HREPLAY-ac6559e7c76e820678b48b8f",
+  "schema_version": "e2r_run_mode_marker_v1"
+}

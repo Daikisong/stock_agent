@@ -1,0 +1,39 @@
+{
+  "output_schema_hash": "e7a733a147d6964e75528742897823ca5094ca593a9f54b8723c700910cfd090",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7e8793cb449d75de2a1c5155",
+        "rationale": "2026-06-08 SK하이닉스 공식 뉴스룸의 엔비디아 장기 기술 파트너십 원문 전체를 blind로 검토하고 current canonical 228건 및 현재 eps_fcf_explosion 목적의 미해결 초점과 대조했다. 원문은 차세대 AI 메모리 공동개발, 엔비디아 인프라 로드맵에 맞춘 지속 공급 방향, 베라 루빈·베라 CPU·RTX 스파크·젯슨 토르용 메모리 개발 계획을 제시하지만, 특정 HBM 제품·수량·가격·기간·고객 구매의무·배정·매출·마진·현금흐름을 제시하지 않는다. 따라서 기술 파트너십을 장기 공급계약이나 확정 매출로 확대하지 않았다. CUDA-X·PhysicsNeMo 기반 설계 시뮬레이션, Omniverse·OpenUSD·cuOpt·Metropolis 기반 디지털 트윈은 정성적 기술·운영 계획이며 처리량·원가·CapEx·FCF 개선 수치가 없어 현재 목적의 직접 경제 사실로 만들지 않았다. HBM4 고객·플랫폼 관계, AI 인프라 수요, 공정 협력 및 제품 개발은 기존 canonical 사실과 의미가 겹치거나 현재 objective gap에 인접한 제품·기술 설명이다. 2026-07-12 이후 연관기사 제목도 사용하지 않았다. 이 문서에는 숫자형 FORWARD_GUIDANCE나 HBM SEGMENT_CONTRIBUTION을 포함한 비중복 objective-linked material fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "이 장기 기술 파트너십 자료는 공동개발·지속 공급 방향을 설명하지만 계약 기간, 구매의무, 공급량, 가격, HBM 매출·이익·마진·FCF 기여를 공개하지 않는다. 이는 그러한 경제효과가 없다는 증거가 아니라 이 문서로 숫자형 FORWARD_GUIDANCE나 SEGMENT_CONTRIBUTION을 확정할 수 없다는 범위 한계다."
+    ]
+  },
+  "payload_hash": "240793c48607465160d822be2adb56d5df97283023af6096f181516b1913dd79",
+  "production_score_authority": false,
+  "prompt_hash": "0dd86e3f788f3dc36aebd89760b7c9faaac132b1e52b945ea8e6076272b83874",
+  "provenance": {
+    "agent_id": "hynix_current_leaves",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_current_leaves",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-00760c7c615ff372f496e16c3225f59199a59bede54ccdcd18e763fc9e072743",
+  "response_id": "COLLABRESP-6198dc33e3b19b103ef522ba22c1f6302e08be28831e52d488fc8eca32ef5a59",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "output_schema_hash": "145511269b191002ba99121de5750d5bdfb402af9873b0ef3de4b0646dee6965",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-75e811994f37002d67e44a7c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.55,
+        "rationale": "2026년 보고서가 최종 고객 SK하이닉스의 HBM 중심 실적 변화를 명시하는 직접 broker PDF 경로이므로 간접 주장에 머무는지 원문에서 target attribution을 검증할 가치가 있다."
+      },
+      {
+        "candidate_id": "SGCAND-d464baad979ae8892343706b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'SK Hynix Nasdaq Listing: Should investors buy it over Micron? - Global Markets News' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-3e4f252b92bc5a05e6255ce5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Stock market news for June 24, 2026' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-943d0d98d30a2459531412ef",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'by duydaocoin' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-e890f890ad892b170347902b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "제3자 블로그의 SEC filing 해설은 issuer 원문이 아니므로 HBM capex 언급만으로 요청된 공식 source family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-4902226465e29cea42736612",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "제목상 2026-07-29 실적은 as_of_date=2026-07-12 이후이며 제3자 페이지이므로 미래누수와 source provenance 양쪽에서 부적격이다."
+      },
+      {
+        "candidate_id": "SGCAND-a28745346da2bbb359ac1330",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'퍼플렉시티 기업 분석 프롬프트 - 기업 실적/재무/경쟁력 분석' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-e68e6637b1a74fff49168a5c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'SK Hynix Set to List on Nasdaq: Complete Analysis of the $29 Billion IPO | Bee Network' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-3526fb4e0a38ee6bedd69b69",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'https://www.sec.gov/Archives/edgar/data/1288795/000183988225000845/0001839882-25-000845.txt' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-98e709b5e5f4a9cc8e779a3a",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "PUBLIC_BROKER_PDF discovery provenance은 일치하지만, 이 자료는 '원익머트리얼즈 (104830) 제품 믹스 개선과 원가개선 효과 지속 전망'라는 다른 회사·펀드·과거 업황 중심 자료로 공급된 metadata에서 현재 SK하이닉스 HBM valuation objective를 직접 진전·반박·대체하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-835200742c3e24edb127e1e6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "제목상 Q2 FY2026 transcript는 기준일 뒤 2026-07-29 결과를 가리키며 issuer 원문도 아니어서 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-f38f71cf7e734636a739ecc8",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "PUBLIC_BROKER_PDF discovery provenance은 일치하지만, 이 자료는 '원익IPS(240810) 한국 반도체 장비 대표주'라는 다른 회사·펀드·과거 업황 중심 자료로 공급된 metadata에서 현재 SK하이닉스 HBM valuation objective를 직접 진전·반박·대체하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "MATERIAL은 full-fetch 우선순위일 뿐 snippet을 evidence로 인정한 것이 아니다. 원문 fetch 뒤 publication/as_of_date, target attribution, source provenance와 exact quote를 별도 검증해야 한다."
+    ]
+  },
+  "payload_hash": "795f2a7f6d46efffc48e17560c40bbc7a870fd716cdb2f349c2b245d87d95dff",
+  "production_score_authority": false,
+  "prompt_hash": "52c8b63b90c99ba0de1b3dce7bb9a2af076d451d8e5f061dd68185f56de785d8",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-554cdbcbc75ed4da81a4d0be73a4387ff4ecb4073a52c26142ca846064b7e300",
+  "response_id": "COLLABRESP-aba32c2444e8b9016f5302e6397904b9cd5f305a4c2a58aa8146c31a63f01f14",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4b4e4143104e863514e7c151",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-4ea2282f9c1066570a59579e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-4ef62e0edb4d70c74fb2f6d4",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-5051c1da545b9b03a776b841",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 공유·영상 채널·단축 링크로 canonical 기사 본문이 아니며, target-direct 경제 claim을 검증할 full 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5404a338d2d49d79fd4e94e4",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-591cfb910d2144859938e953",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-5b078a2e785dc0d0ef62a21e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "법률·쿠키·윤리·지속가능성 안내 페이지로 HBM·메모리 실적, 고객 약정, CAPA나 수익성의 현재 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5e5b658a42995c1023e8e547",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "법률·쿠키·윤리·지속가능성 안내 페이지로 HBM·메모리 실적, 고객 약정, CAPA나 수익성의 현재 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-642796fb8a9a81cf253004a4",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-69df31eacecc87f700f9e10a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "요청한 issuer-newsroom provenance의 target-direct 개별 원문이 아니며 현재 HBM 경제 메커니즘을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-6b5c6dd23acc40c66835c6ed",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "요청한 issuer-newsroom provenance의 target-direct 개별 원문이 아니며 현재 HBM 경제 메커니즘을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-6c559a55d36d16377694182e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "f01ceded9cc62bc8d593a25d959a9d5de352f3e4c28ec4bc347b6a4bfb4ff10c",
+  "production_score_authority": false,
+  "prompt_hash": "f625dc42f60260a38daa98ae38e57b732f6852ab3f9a745b16e1f860f3cf0421",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d0020841b3cff172b30b05fa35c469b54178e782c976090a527995027fbab1b1",
+  "response_id": "COLLABRESP-643f6aefcf3cc8476d8a097eda4fc2185fc20c9bf807d58304ab6f46074b4630",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

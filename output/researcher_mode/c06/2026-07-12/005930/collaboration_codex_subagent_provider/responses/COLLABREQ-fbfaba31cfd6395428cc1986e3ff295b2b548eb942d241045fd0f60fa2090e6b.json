@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-8ab370a82a43d2cf35977765",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "Social sharing route is discovery metadata, not an eligible requested issuer source."
+      },
+      {
+        "candidate_id": "SGCAND-8b16eeb3fb08344867a097f1",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.65,
+        "rationale": "Verified issuer presentation route for a recent earnings period; full-document fetch can materially test earnings and cash-conversion claims."
+      },
+      {
+        "candidate_id": "SGCAND-8c125b04e43d03b782bb2523",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.1,
+        "rationale": "Verified issuer cash-flow document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-8c80b4593bacdeb47614616b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "Unverified legacy audio route lacks sufficient issuer provenance for a requested source-family match."
+      },
+      {
+        "candidate_id": "SGCAND-8c9f345e9b1b383fb13da9f2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The page is unrelated to the earnings and cash-conversion objective and matches no requested source family."
+      },
+      {
+        "candidate_id": "SGCAND-8cc207872005ef70b2df9075",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The page is unrelated to the earnings and cash-conversion objective and matches no requested source family."
+      },
+      {
+        "candidate_id": "SGCAND-8dbb23178ad4107847b28220",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.05,
+        "rationale": "Generic issuer disclosure landing page is not tied by the supplied metadata to an earnings or cash-flow document."
+      },
+      {
+        "candidate_id": "SGCAND-8dce47a1abbe0f7f4b5bc92d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The page is unrelated to the earnings and cash-conversion objective and matches no requested source family."
+      },
+      {
+        "candidate_id": "SGCAND-8e3b954816ff83b919754bb2",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.92,
+        "rationale": "Verified issuer presentation route for a recent earnings period; full-document fetch can materially test earnings and cash-conversion claims."
+      },
+      {
+        "candidate_id": "SGCAND-8ea8d13f08bd059bf3aee039",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.3,
+        "rationale": "Verified issuer current-period auxiliary statement, but this document type alone does not materially resolve EPS or FCF conversion."
+      },
+      {
+        "candidate_id": "SGCAND-8ed9ee4b45a5b4aaeabff993",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "Social sharing route is discovery metadata, not an eligible requested issuer source."
+      },
+      {
+        "candidate_id": "SGCAND-8f23ff851d7f6c0cf31258a1",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.2,
+        "rationale": "Verified issuer cash-flow document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Classification covers this transport roster only. Material routes still require bounded full-document fetch and source-backed extraction; snippets and discovery metadata are not evidence."
+    ]
+  },
+  "payload_hash": "bb251d53759970c9479d59d9dceeaa61bea00fe51f72d847760c70cb2047cba1",
+  "production_score_authority": false,
+  "prompt_hash": "d73ff6ac771614088ac6e2d9e55e194168245c7e1d7e69c19f70a23734d393a8",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fbfaba31cfd6395428cc1986e3ff295b2b548eb942d241045fd0f60fa2090e6b",
+  "response_id": "COLLABRESP-3af6b8337c00fd551ed5b293a972ad374c469ef3ecd222d92b1dfd51e315c5db",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

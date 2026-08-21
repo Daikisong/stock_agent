@@ -1,0 +1,316 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-00001237ec54c303cb80b817",
+        "rationale": "Extracted the six distinct target and memory-peer forward PER/PBR profiles that directly affect the objective; other document content is outside the production objective-local scope.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-00001237ec54c303cb80b817",
+        "economic_mechanism": "The report places 삼성전자 in the same semiconductor peer table and same forecast periods, providing a directly comparable point for Samsung Electronics memory peer valuation.",
+        "exact_quote": "삼성전자 한국 229,129 20,715 -1.8 7.5 18.3 15.3 12.3 1.1 1.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This same-table, same-period valuation profile directly advances the unresolved Samsung memory PEER_BAND objective.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_FORWARD_VALUATION",
+        "normalized_object": "삼성전자 FY2025F-FY2026F PER/PBR peer profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F-FY2026F; consensus as of 2025-07-25",
+        "predicate": "Daishin reports 삼성전자 FY2025F and FY2026F PER/PBR in the semiconductor peer table",
+        "predicate_family": "MEMORY_PEER_FORWARD_MULTIPLE_PROFILE",
+        "primitive_tags": [
+          "MEMORY_PEER",
+          "PER",
+          "PBR",
+          "FY2025F",
+          "FY2026F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_FORWARD_VALUATION",
+        "question_family_tags": [
+          "PEER_VALUATION",
+          "FORWARD_PE",
+          "FORWARD_PB"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 forward valuation profile",
+        "subject_id": "005930_MEMORY",
+        "unit": "times",
+        "value": "PER 15.3x (2025F), 12.3x (2026F); PBR 1.1x (2025F), 1.0x (2026F)"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-00001237ec54c303cb80b817",
+        "economic_mechanism": "The report places SK하이닉스 in the same semiconductor peer table and same forecast periods, providing a directly comparable point for Samsung Electronics memory peer valuation.",
+        "exact_quote": "SK하이닉스 한국 63,321 27,136 -1.1 -7.0 44.3 6.3 5.8 1.8 1.4",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This same-table, same-period valuation profile directly advances the unresolved Samsung memory PEER_BAND objective.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_FORWARD_VALUATION",
+        "normalized_object": "SK하이닉스 FY2025F-FY2026F PER/PBR peer profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F-FY2026F; consensus as of 2025-07-25",
+        "predicate": "Daishin reports SK하이닉스 FY2025F and FY2026F PER/PBR in the semiconductor peer table",
+        "predicate_family": "MEMORY_PEER_FORWARD_MULTIPLE_PROFILE",
+        "primitive_tags": [
+          "MEMORY_PEER",
+          "PER",
+          "PBR",
+          "FY2025F",
+          "FY2026F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_FORWARD_VALUATION",
+        "question_family_tags": [
+          "PEER_VALUATION",
+          "FORWARD_PE",
+          "FORWARD_PB"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 memory peer forward valuation profile",
+        "subject_id": "000660_MEMORY_PEER",
+        "unit": "times",
+        "value": "PER 6.3x (2025F), 5.8x (2026F); PBR 1.8x (2025F), 1.4x (2026F)"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-00001237ec54c303cb80b817",
+        "economic_mechanism": "The report places Micron in the same semiconductor peer table and same forecast periods, providing a directly comparable point for Samsung Electronics memory peer valuation.",
+        "exact_quote": "마이크론 미국 36,722 10,077 -2.7 -12.6 39.5 14.3 9.1 2.4 1.9",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This same-table, same-period valuation profile directly advances the unresolved Samsung memory PEER_BAND objective.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_FORWARD_VALUATION",
+        "normalized_object": "Micron FY2025F-FY2026F PER/PBR peer profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F-FY2026F; consensus as of 2025-07-25",
+        "predicate": "Daishin reports Micron FY2025F and FY2026F PER/PBR in the semiconductor peer table",
+        "predicate_family": "MEMORY_PEER_FORWARD_MULTIPLE_PROFILE",
+        "primitive_tags": [
+          "MEMORY_PEER",
+          "PER",
+          "PBR",
+          "FY2025F",
+          "FY2026F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_FORWARD_VALUATION",
+        "question_family_tags": [
+          "PEER_VALUATION",
+          "FORWARD_PE",
+          "FORWARD_PB"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Micron memory peer forward valuation profile",
+        "subject_id": "MICRON_MEMORY_PEER",
+        "unit": "times",
+        "value": "PER 14.3x (2025F), 9.1x (2026F); PBR 2.4x (2025F), 1.9x (2026F)"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-00001237ec54c303cb80b817",
+        "economic_mechanism": "The report places Western Digital in the same semiconductor peer table and same forecast periods, providing a directly comparable point for Samsung Electronics memory peer valuation.",
+        "exact_quote": "WesternDigital 미국 9,393 2,251 1.2 10.0 68.8 14.2 12.3 4.2 3.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This same-table, same-period valuation profile directly advances the unresolved Samsung memory PEER_BAND objective.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_FORWARD_VALUATION",
+        "normalized_object": "Western Digital FY2025F-FY2026F PER/PBR peer profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F-FY2026F; consensus as of 2025-07-25",
+        "predicate": "Daishin reports Western Digital FY2025F and FY2026F PER/PBR in the semiconductor peer table",
+        "predicate_family": "MEMORY_PEER_FORWARD_MULTIPLE_PROFILE",
+        "primitive_tags": [
+          "MEMORY_PEER",
+          "PER",
+          "PBR",
+          "FY2025F",
+          "FY2026F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_FORWARD_VALUATION",
+        "question_family_tags": [
+          "PEER_VALUATION",
+          "FORWARD_PE",
+          "FORWARD_PB"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Western Digital memory peer forward valuation profile",
+        "subject_id": "WDC_MEMORY_PEER",
+        "unit": "times",
+        "value": "PER 14.2x (2025F), 12.3x (2026F); PBR 4.2x (2025F), 3.5x (2026F)"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-00001237ec54c303cb80b817",
+        "economic_mechanism": "The report places Sandisk in the same semiconductor peer table and same forecast periods, providing a directly comparable point for Samsung Electronics memory peer valuation.",
+        "exact_quote": "Sandisk 미국 7,265 633 0.7 -10.1 29.3 16.6 7.9 0.6 0.6",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This same-table, same-period valuation profile directly advances the unresolved Samsung memory PEER_BAND objective.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_FORWARD_VALUATION",
+        "normalized_object": "Sandisk FY2025F-FY2026F PER/PBR peer profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F-FY2026F; consensus as of 2025-07-25",
+        "predicate": "Daishin reports Sandisk FY2025F and FY2026F PER/PBR in the semiconductor peer table",
+        "predicate_family": "MEMORY_PEER_FORWARD_MULTIPLE_PROFILE",
+        "primitive_tags": [
+          "MEMORY_PEER",
+          "PER",
+          "PBR",
+          "FY2025F",
+          "FY2026F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_FORWARD_VALUATION",
+        "question_family_tags": [
+          "PEER_VALUATION",
+          "FORWARD_PE",
+          "FORWARD_PB"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Sandisk memory peer forward valuation profile",
+        "subject_id": "SANDISK_MEMORY_PEER",
+        "unit": "times",
+        "value": "PER 16.6x (2025F), 7.9x (2026F); PBR 0.6x (2025F), 0.6x (2026F)"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-00001237ec54c303cb80b817",
+        "economic_mechanism": "The report places Kioxia in the same semiconductor peer table and same forecast periods, providing a directly comparable point for Samsung Electronics memory peer valuation.",
+        "exact_quote": "kioxia 일본 10,609 1,783 4.4 -2.9 31.4 9.0 6.7 1.5 1.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This same-table, same-period valuation profile directly advances the unresolved Samsung memory PEER_BAND objective.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_FORWARD_VALUATION",
+        "normalized_object": "Kioxia FY2025F-FY2026F PER/PBR peer profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F-FY2026F; consensus as of 2025-07-25",
+        "predicate": "Daishin reports Kioxia FY2025F and FY2026F PER/PBR in the semiconductor peer table",
+        "predicate_family": "MEMORY_PEER_FORWARD_MULTIPLE_PROFILE",
+        "primitive_tags": [
+          "MEMORY_PEER",
+          "PER",
+          "PBR",
+          "FY2025F",
+          "FY2026F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_FORWARD_VALUATION",
+        "question_family_tags": [
+          "PEER_VALUATION",
+          "FORWARD_PE",
+          "FORWARD_PB"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Kioxia memory peer forward valuation profile",
+        "subject_id": "KIOXIA_MEMORY_PEER",
+        "unit": "times",
+        "value": "PER 9.0x (2025F), 6.7x (2026F); PBR 1.5x (2025F), 1.3x (2026F)"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "The report provides a dated peer valuation matrix, but PEER_BAND engine-role materialization remains deterministic downstream work; no snippet was used."
+    ]
+  },
+  "payload_hash": "2c411bd5905e5f4e56b46ede7032a2ffc3718c4be66b732625bbb5c993c506a0",
+  "production_score_authority": false,
+  "prompt_hash": "41f29c50705bd308b067dc50c8608168167fa1459f5a945391e28dc5afc787dc",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b479a8b8e02a9fab9ba6c6979cf8c49569bee8a391382fb0340527a0139297f9",
+  "response_id": "COLLABRESP-4278d20f6640d13dac418252845fbdd17e15f3bf390fb9bc2069ea6acc5e5b89",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

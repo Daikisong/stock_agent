@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a710af12457d025ddfd55b71",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.1,
+        "rationale": "The verified Samsung financial-report component matches the issuer earnings family, but its historical period is superseded for the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-a7214f860209ca10406411bf",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "The verified Samsung financial-report component matches the issuer earnings family, but its historical period is superseded for the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-a75e7e1b215423f3122d53b4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The page concerns an unrelated consumer, governance, policy, or application topic and does not match the requested earnings or cash-flow source families."
+      },
+      {
+        "candidate_id": "SGCAND-a7a3d34db1076530949c0429",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.1,
+        "rationale": "The verified Samsung financial-report component matches the issuer earnings family, but its historical period is superseded for the current EPS/FCF objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "The supplied roster is fully classified. Material routes still require bounded full-source retrieval and source-backed extraction; snippets, titles, and reference metadata remain non-evidence."
+    ]
+  },
+  "payload_hash": "672f90d00af89413d792f27769f6e3b0590edcdc6e939a8fce36c0480cf043b1",
+  "production_score_authority": false,
+  "prompt_hash": "644dacbc2f6d3a4ef292c120d872be621e6015b55bbe3414eaab8f21fd90e06f",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-78a7dd8d240da39c93013a89c57886f354db3fc7423085e546e6ca170afb73d7",
+  "response_id": "COLLABRESP-363a25ec5015454ddca0a8bb60d8778f3933fd5c96229924166b6213ad366c9d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

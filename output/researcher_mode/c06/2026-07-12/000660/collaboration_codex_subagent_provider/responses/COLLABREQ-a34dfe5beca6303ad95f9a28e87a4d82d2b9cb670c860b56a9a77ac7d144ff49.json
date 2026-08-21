@@ -1,0 +1,79 @@
+{
+  "output_schema_hash": "2aa2068441c0afd368451f442d212ab1426e39e77461819a63f5b6c851c22ca7",
+  "payload": {
+    "challenged_fact_row_indices": [
+      1,
+      36,
+      45,
+      91,
+      155,
+      199,
+      217,
+      220,
+      227,
+      238,
+      239,
+      250,
+      268,
+      276
+    ],
+    "confidence": 0.93,
+    "recommended_research_directions": [
+      "향후 issuer 또는 고객 공식 원문에서 named qualification 결과와 signed 계약의 기간·물량·가격·취소·위약·선수금이 함께 확인되는지 감시하되, 현재 없는 조건을 추정하지 않는다.",
+      "후속 확정 공시에서 HBM 또는 최소 memory 제품군의 실제 매출·마진·현금흐름·Capex 귀속과 운전자본 변화를 전사 수치와 분리해 추적한다.",
+      "고객 CapEx actual·FCF·차입, 경쟁사 HBM 출하·qualification actual 및 SK하이닉스 제품 믹스·ASP actual을 같은 기간으로 비교해 병목과 premium 지속성을 재검증한다.",
+      "청주·용인 등 증설의 이사회 승인, 장비 입고, 가동·수율 및 실제 현금회수 이정표를 issuer plan 및 broker estimate와 분리해 확인한다."
+    ],
+    "resolved_challenges": [
+      "eps_fcf_explosion: 전사 actual 이익·현금흐름과 FY2025 HBM 매출 성장은 확인되지만, FY2026 이후 감익을 예상한 broker duration 경로와 미국 CSP CapEx 실행·FCF·차입 부담은 지속 확대 가정의 counter다. 전사·DRAM 수치를 HBM 단독 반복 FCF로 귀속하지 않는다.",
+      "earnings_visibility: HBM4 양산·고객 성능요구 충족과 생산 진행은 실행 위험을 낮추지만, 물량·가격의 월·분기 합의, 고객 일정에 따른 HBM4 출하 전환 지연과 CXMT 생산 확대 계획은 durable visibility를 제한한다. 이는 확정 취소나 실제 경쟁 점유율 하락으로 확대하지 않는다.",
+      "bottleneck_pricing: 높은 가동률과 웨이퍼·TSV 집약도는 물리적 제약을 지지하지만, 삼성전자 공급망 진입, HBM3E 공급사 확대와 PC DRAM 가격 부담에 따른 수요 둔화는 scarcity premium의 지속성 counter다. 경쟁 전망을 실제 가격 인하로 단정하지 않는다.",
+      "market_mispricing: actual 이익과 revision이 강해도 매크로 불확실성으로 Target PBR이 하향된 관찰, DRAM 가격 상승폭 둔화의 역사적 피크 관계와 동일 보고서 내 상회·하회 기준 차이는 낮은 배수가 단순 오가격이라는 해석을 제한한다.",
+      "valuation_rerating: peer discount·SOTP와 재평가 촉매는 존재하지만, FY2026 이후 감익 추정, macro·multiple 할인, 경쟁 공급 확대는 premium의 기간과 상단을 제한한다. Broker forecast와 역사적 관계는 actual valuation outcome이 아니다.",
+      "capital_allocation: 영업현금흐름과 유동성은 투자 여력을 지지하지만 2026년 1분기 매출채권·재고 증가의 현금 흡수는 이익의 FCF 전환을 낮춘다. 이 counter는 전사 운전자본이며 HBM 단독 ROIC나 회수기간을 직접 보여주지는 않는다.",
+      "information_confidence: 새 memo는 issuer가 확인한 양산·고객 성능요구·actual HBM 매출 성장과, 월·분기 합의·단일 사업부문 공시·broker forecast 내부 불일치를 같은 기준에서 분리한다. Primary evidence는 강하지만 독립 고객 확인, signed 계약조건과 HBM 단독 손익이 없으므로 actual을 plan·estimate·durable commitment로 확대하지 않는다."
+    ],
+    "review_complete": true,
+    "reviewed_component_ids": [
+      "eps_fcf_explosion",
+      "earnings_visibility",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation",
+      "information_confidence"
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "PUBLIC_BROKER_PDF",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "unresolved_challenges": [
+      "HBM 고객명, qualification 주체·일자와 signed 계약의 기간·확정 물량·가격·취소권·위약금·선수금은 current 공식 근거에서 확인되지 않았다.",
+      "전사·DRAM actual과 FY2025 HBM 성장 방향은 확인되지만 HBM 단독 매출액·마진·영업현금흐름·Capex·FCF 귀속은 단일 사업부문 공시 때문에 닫히지 않았다.",
+      "FY2026 이후 이익과 scarcity premium의 duration은 고객 CapEx 재원, 제품 일정, 수요 가격탄력성과 삼성전자·Micron·CXMT 공급 확대에 노출된다.",
+      "장기 생산거점과 HBM4 관련 투자 계획이 actual 생산·출하·현금회수로 전환되는 시점과 규모는 운전자본·Capex 및 장비·건설 실행 위험 때문에 미확정이다."
+    ]
+  },
+  "payload_hash": "efc901218c1a2bcb9a8d455148e694fceb80d49bfdd3737f38a5e721caaebb3b",
+  "production_score_authority": false,
+  "prompt_hash": "336db54c7197dcf8c452911446d1473cf880099d65158d5ffb1a254a785595dc",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a34dfe5beca6303ad95f9a28e87a4d82d2b9cb670c860b56a9a77ac7d144ff49",
+  "response_id": "COLLABRESP-279ef9f8c80636efdc1ed9ef7446beb2cca37dc18f7ebf750dec04e3261816e9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

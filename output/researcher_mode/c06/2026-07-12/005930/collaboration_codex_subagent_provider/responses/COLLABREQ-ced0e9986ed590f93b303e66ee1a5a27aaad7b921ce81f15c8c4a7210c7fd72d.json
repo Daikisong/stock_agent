@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "93a25d343df7712880774655e2badb43539d0b7f2be64245b8ab8f1d79d6855f",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7719f8dd333f6772a4f09478",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.05,
+        "rationale": "키움증권 소유 경로로 requested PUBLIC_BROKER_PDF provenance는 맞지만, 동일 candidate의 full fetch가 이미 발행일 미확인으로 거절되어 cutoff 적합 원문으로 사용할 수 없는 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-5929d717061941914d9c793f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-5e82fe8f7015a261cf34abe5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "일반 웹 분석 페이지이며 이미 SGDOC-c59f1c8e625877cf695485f4로 full-fetch된 경로다. 요청된 broker valuation provenance가 아니고 새 원문도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7b64ef0d0ba989b17872df2f",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.9,
+        "rationale": "2026년 4월 삼성전자의 P4·1c DRAM 설비 발주와 HBM 양산능력 확대를 다룬 ZDNet의 직접 기사 URL이다. cutoff 이전의 구체적 메모리 capacity·투자 메커니즘을 검증할 수 있는 full-fetch 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-4d21532190e5e42849a0f5de",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "일반 웹 또는 제3자 경로로 요청된 source family의 검증 가능한 대상 full-fetch 원문이 아니며, 현재 삼성전자 HBM·메모리 objective를 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-74da56675946212544f844c9",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.95,
+        "rationale": "2026-06-23 발행된 직접 비즈니스 미디어 기사로, 평택 P5와 DRAM 공급능력 확대 및 HBM 수요의 연결을 확인할 수 있는 cutoff 이전 full-fetch 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-c9f71c0b1e78d7648ad1e7c7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-9ced68a74d4b17186f35ab25",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-c07aaf456bb1dbc01610272d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-f4917c4c49ad39a3da0ea90d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-401cf748e7c6fd8f09d5f4e8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-e4b17220977c15f15730779c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "MATERIAL로 판정한 ZDNet 및 글로벌이코노믹 직접 기사 2건은 snippet이 아니라 full document를 fetch해 발행일과 본문을 검증해야 한다."
+    ]
+  },
+  "payload_hash": "320e1d17cb4334462819dfa4a02c617b0ba435e6c14d5a3c1106b9ad0fc7117f",
+  "production_score_authority": false,
+  "prompt_hash": "c232f22e6c2711ea4b9bb2b22eb045cf3976bea5c7a2e701bc63ba6b65e3b9fb",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ced0e9986ed590f93b303e66ee1a5a27aaad7b921ce81f15c8c4a7210c7fd72d",
+  "response_id": "COLLABRESP-02f63d26d2687a7c4c45fd9d1b8a6ee62d33fe878e928c62ed47eba78fedfe65",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

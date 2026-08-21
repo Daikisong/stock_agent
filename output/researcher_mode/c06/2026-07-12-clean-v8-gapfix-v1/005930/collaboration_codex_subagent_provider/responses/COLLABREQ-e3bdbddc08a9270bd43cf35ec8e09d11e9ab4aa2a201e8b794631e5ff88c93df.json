@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      4.4,
+      7.0
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-e743368708b3aee88a83287c의 6.45 midpoint는 actual operating delta와 낮은 일부 forward multiple을 반영할 positive 중심이나, source proxy transfer라 exact score는 아니다.",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89의 5.0 midpoint는 expectation-gap 사실이 비어 있고 valuation 지표가 혼재한 downside 중심으로 range 하단을 설정한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [
+      "actual business improvement와 market mispricing은 별개이며, 현재 prompt에는 동일 broker·분모의 전후 expectation 변화가 없다.",
+      "forward PE의 저평가 신호와 trailing PE·PB, EV/EBITDA, FCF yield 및 latest EPS DOWN이 충돌해 range를 넓게 유지한다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "proposed_points": 5.7,
+    "rationale": "HBM4 양산과 record memory result, 서버향 판매, 메모리 매출·ASP actual을 positive anchor 쪽에 반영했다. 그러나 시장 기대 대비 차이를 직접 입증하는 full-report estimate bridge가 없고 valuation denominator와 revision 방향이 혼재한다. 두 ordinal transfer의 중첩 구간을 중심으로 5.7점을 두되 uncertainty 때문에 4.4~7.0을 허용한다.",
+    "support_fact_ids": [
+      "EFACT-05b30f0f3ba8322c10a60fc3",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-939b29c020b166da3e38d343",
+      "EFACT-cbd2e7a3a3670eba7a113d19",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "기대 대비 미반영을 증명할 same-broker revision bridge가 없고 valuation·EPS/OP 신호가 충돌하며 NVIDIA HBM economics도 미확정이다.",
+    "why_not_lower": "실현된 메모리 매출·ASP와 HBM4 양산, record performance, 일부 낮은 forward multiple이 제한적인 mispricing 가능성을 뒷받침한다."
+  },
+  "payload_hash": "f228cba0536df0a0b68a9e5cd66d49e3c2c3f740c006e24eb0e2542ecdb63943",
+  "production_score_authority": false,
+  "prompt_hash": "0e9457472543573cf2b5cc7e71d3372e064cf438d6f52385fa855a4daa515cb6",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e3bdbddc08a9270bd43cf35ec8e09d11e9ab4aa2a201e8b794631e5ff88c93df",
+  "response_id": "COLLABRESP-1cda40a31b46e6741026d84d4a6572095afe3bf7b0fe96d112fb13d9194f6ff5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

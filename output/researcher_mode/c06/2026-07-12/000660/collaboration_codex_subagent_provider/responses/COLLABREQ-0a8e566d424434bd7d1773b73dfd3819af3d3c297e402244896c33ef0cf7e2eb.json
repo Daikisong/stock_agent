@@ -1,0 +1,492 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "rationale": "2026-06-22 한화리서치 원문 887줄 전체를 Gold-blind로 전수 검토하고 current canonical 228건과 의미 중복을 대조했다. 기존의 FY2027 peer P/E·PEG 비교, 과거 Target P/E 11배, 산업 LTA 가시성, issuer의 미확정 LTA 논의, 기존 브로커 forward earnings·FCF 경로 및 HBM 매출비중은 반복하지 않았다. 새 objective-linked 사실은 12MF P/E 6.6배와 글로벌·Micron 10배 이상 기준의 현재 peer 할인, 12MF EPS 429,777원과 Target P/E 10배의 최신 산식, 브로커가 파악한 LTA 체결·보호장치 및 감익기 마진 하한, HBM 영업이익 비중과 가격·수익성 지속성, 연내 ADR을 통한 미국 peer 비교평가 경로, 6월 기준 forward earnings·FCF 갱신, 그리고 정확성·완전성 비보장이다. 브로커 파악을 issuer 확정계약으로, ADR 목표를 상장 완료로, 전망치를 회사 guidance나 미래 성과로 확대하지 않았고 더 남은 독립 objective-linked 사실은 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "economic_mechanism": "한화리서치는 글로벌 반도체 종목 가운데 2026년 예상 및 12개월 선행 P/E가 10배 이하인 종목이 없고 같은 메모리 사업의 Micron도 선행 P/E 10배 이상인 반면, SK하이닉스는 12개월 선행 P/E 6.6배라고 비교했다. 이는 같은 시점의 peer 비교에 근거한 valuation 할인이지 향후 주가 결과를 뜻하지 않는다.",
+        "exact_quote": "아래 [그림4, 5]에서 확인할 수 있듯이 글로벌 반도체 종목들 중\n지배주주순이익 19,789 42,919 217,232 318,894\nEPS 27,182 58,955 321,737 472,307 '26F P/E, 12MF P/E 기준 10배 이하의 멀티플을 부여받고 있는 종\n순차입금 13,554 -242 -180,885 -458,510\n목은 단 하나도 없음. 이는 성장주의 대표격이라고 할 수 있는 테\nPER 101.7 46.9 8.6 5.9\nPBR 27.2 16.7 5.8 3.0 크 섹터 내에서는 당연한 현상이라고 할 수 있음. 심지어는 동사와\nEV/EBITDA 55.0 32.2 6.3 3.4\n완벽히 같은 사업을 영위하고 있는 Micron Technology 마저도 이\n배당수익률 0.1 0.1 0.1 0.1\nROE 31.1 44.2 94.3 64.0 제 FW P/E 10배 이상을 부여받고 있음. 그럼에도 불구하고 동사의\n12MF P/E는 6.6배로 여전히 글로벌 테크 종목들의 기본 배수도\n주가 추이\n부여받지 못하고 있는 상황.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 시점의 글로벌 반도체 및 직접 메모리 peer와 비교한 12MF P/E 할인은 현재 미해결 PEER_BAND와 재평가 여지를 직접 검증한다.",
+        "mechanism_scope_id": "000660:MEMORY:12MF_PE_GLOBAL_PEER_DISCOUNT",
+        "normalized_object": "SK하이닉스 12MF P/E 6.6배와 글로벌 반도체 peer 10배 이상 기준의 할인",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "12MF valuation as of 2026-06-19, reported 2026-06-22",
+        "predicate": "한화리서치 기준 SK하이닉스의 12개월 선행 P/E는 6.6배로, 2026년 예상 및 12개월 선행 P/E가 10배 이하인 글로벌 반도체 peer가 없고 Micron도 선행 P/E 10배 이상이라는 비교 기준보다 낮았다",
+        "predicate_family": "CURRENT_12MF_PE_GLOBAL_PEER_DISCOUNT",
+        "primitive_tags": [
+          "VALUATION",
+          "PEER_COMPARISON",
+          "FORWARD_PE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "SKHYNIX_12MF_PE_GLOBAL_PEER_DISCOUNT",
+        "question_family_tags": [
+          "SKHYNIX_12MF_PE_GLOBAL_PEER_DISCOUNT",
+          "PEER_BAND",
+          "FORWARD_PE",
+          "MICRON"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 12개월 선행 P/E의 글로벌 반도체 peer 대비 할인",
+        "subject_id": "000660:MEMORY:12MF_PE_GLOBAL_PEER_DISCOUNT",
+        "unit": "x",
+        "value": "SK hynix 12MF P/E 6.6x; no cited global semiconductor peer below 10x on 2026F or 12MF P/E; Micron forward P/E above 10x"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "economic_mechanism": "보고서는 12MF EPS 429,777원에 글로벌 반도체 종목의 최소 12MF P/E라고 정의한 10배를 적용해 목표가격 4,300,000원을 산출하고, 6월 19일 종가 2,764,000원 대비 차이를 55.6%로 제시했다. 이는 EPS 분모와 적용 배수가 모두 있는 브로커 valuation 시나리오이며 투자 결과를 보장하지 않는다.",
+        "exact_quote": "[표3] SK하이닉스 P/E 밸류에이션\n12MF 비고\n12MF EPS(원) 429,777\nTarget P/E(배) 10 글로벌 반도체 종목들의 최소 12MF P/E\n목표주가(원) 4,300,000\n현재주가(원) 2,764,000 6월 19일 종가\n상승여력(%) 55.6\n자료: 한화투자증권 리서치센터",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 가격과 12MF EPS 분모, 적용 P/E와 산출가격이 모두 연결된 최신 valuation bridge이므로 목표가격만 있는 비경제적 신호가 아니다.",
+        "mechanism_scope_id": "000660:MEMORY:TARGET_PER_12MF_EPS_BRIDGE",
+        "normalized_object": "12MF EPS 429,777원과 글로벌 peer 최소 P/E 10배의 목표가격 산식",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "12MF target valuation with close price on 2026-06-19",
+        "predicate": "한화리서치는 SK하이닉스 12MF EPS 429,777원에 글로벌 반도체 종목의 최소 12MF P/E 10배를 적용해 목표가격 4,300,000원을 산출했고 6월 19일 종가 2,764,000원 대비 55.6% 차이를 제시했다",
+        "predicate_family": "TARGET_PER_GLOBAL_SEMICONDUCTOR_FLOOR_METHOD",
+        "primitive_tags": [
+          "VALUATION",
+          "FORWARD_EPS",
+          "TARGET_PE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "TARGET_PER_GLOBAL_SEMICONDUCTOR_FLOOR_METHOD",
+        "question_family_tags": [
+          "TARGET_PER_GLOBAL_SEMICONDUCTOR_FLOOR_METHOD",
+          "FORWARD_EPS",
+          "TARGET_PE",
+          "SCENARIO_SENSITIVITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 12MF EPS 기반 목표 P/E valuation bridge",
+        "subject_id": "000660:MEMORY:TARGET_PER_12MF_EPS_BRIDGE",
+        "unit": "KRW, x and %",
+        "value": "12MF EPS KRW 429777; target P/E 10x; target price KRW 4300000; close KRW 2764000; stated gap 55.6%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.86,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "economic_mechanism": "한화리서치는 SK하이닉스가 LTA를 활발히 체결 중이고 해당 계약에 메모리 가격 하방 방지 및 성실 이행을 위한 법적 장치가 있으며 비중도 빠르게 늘고 있다고 파악했다. 이는 issuer가 조건을 공개한 확정계약 공시가 아니라 독립 브로커의 파악이므로 고객·기간·물량·가격·위약금이 확정됐다고 확대하지 않는다.",
+        "exact_quote": "동사는 현재 활발하게 LTA를 체결하고 있는 것으로 파악되며 체결중인 LTA는 메\n모리 가격의 하방을 막는 장치 및 계약의 성실한 이행을 위한 법적 장치가 모두 마\n련되어 있음. 이러한 LTA의 비중은 빠른 속도로 늘어나고 있으며 이로 인해 과거\n대비 훨씬 높은 수준의 마진율이 감익기에도 담보될 것으로 예상됨.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격 하방과 계약 이행 보호를 갖춘 LTA의 체결·비중 확대는 unresolved DURABLE_VISIBILITY와 이익 변동성 축소 논리를 직접 진전시킨다.",
+        "mechanism_scope_id": "000660:MEMORY:LTA_EXECUTION_DOWNSIDE_PROTECTION",
+        "normalized_object": "브로커가 파악한 LTA 체결 활동과 가격 하방·이행 보호",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current LTA activity assessed 2026-06-22",
+        "predicate": "한화리서치는 SK하이닉스가 LTA를 활발히 체결 중이고 체결 중인 LTA에는 메모리 가격 하방 방지와 성실 이행을 위한 법적 장치가 있으며 LTA 비중이 빠르게 늘고 있다고 파악했다",
+        "predicate_family": "BROKER_LTA_EXECUTION_AND_DOWNSIDE_PROTECTION",
+        "primitive_tags": [
+          "MEMORY",
+          "LTA",
+          "CONTRACT_QUALITY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_LTA_EXECUTION_AND_DOWNSIDE_PROTECTION",
+        "question_family_tags": [
+          "BROKER_LTA_EXECUTION_AND_DOWNSIDE_PROTECTION",
+          "DURABLE_VISIBILITY",
+          "CUSTOMER_COMMITMENT",
+          "CONTRACT_PROTECTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 LTA 체결 활동과 가격·이행 보호장치에 대한 브로커 파악",
+        "subject_id": "000660:MEMORY:LTA_EXECUTION_DOWNSIDE_PROTECTION",
+        "unit": "qualitative broker contract assessment",
+        "value": "broker assessment of active LTA execution, price-downside protection, legal performance protection and rapidly rising LTA share; exact terms undisclosed"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "economic_mechanism": "한화리서치는 과거 감익기에 SK하이닉스 영업이익률이 평균 10% 미만까지 하락하거나 적자로 전환됐던 것과 달리, 현재 체결 중이라고 파악한 LTA로 향후 감익기 영업이익률이 최소 30% 수준일 것으로 판단했다. 이는 계약 원문이나 회사 보장이 아니라 브로커의 미래 추정이므로 숫자를 확정 하한으로 보지 않는다.",
+        "exact_quote": "과거\n대비 훨씬 높은 수준의 마진율이 감익기에도 담보될 것으로 예상됨. 과거 감익기에\n동사 영업이익률은 평균적으로 10% 미만까지 떨어지곤 했으며 적자 전환을 하는\n경우도 있었음. 하지만 현재 체결되고 있는 LTA로 인해 향후 감익기에서는 최소\n30% 수준의 영업이익률이 보장될 것으로 판단함.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "과거 감익기 대비 제시된 영업이익률 하한은 LTA가 earnings duration과 적용 valuation multiple을 얼마나 바꿀 수 있다는 주장인지 수치로 보여준다.",
+        "mechanism_scope_id": "000660:MEMORY:LTA_DOWNTURN_MARGIN_FLOOR",
+        "normalized_object": "LTA에 따른 감익기 영업이익률 약 30% 하한 브로커 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "future memory downturn outlook reported 2026-06-22",
+        "predicate": "한화리서치는 과거 감익기 SK하이닉스 영업이익률이 평균 10% 미만까지 내려가거나 적자로 전환됐지만 현재 체결 중인 LTA 때문에 향후 감익기에는 최소 30% 수준일 것으로 판단했다",
+        "predicate_family": "BROKER_LTA_DOWNTURN_MARGIN_FLOOR",
+        "primitive_tags": [
+          "MEMORY",
+          "LTA",
+          "OPERATING_MARGIN"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_LTA_DOWNTURN_MARGIN_FLOOR",
+        "question_family_tags": [
+          "BROKER_LTA_DOWNTURN_MARGIN_FLOOR",
+          "DURABLE_VISIBILITY",
+          "OPERATING_MARGIN",
+          "DOWNTURN"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 LTA 기반 감익기 영업이익률 하한 전망",
+        "subject_id": "000660:MEMORY:LTA_DOWNTURN_MARGIN_FLOOR",
+        "unit": "% operating margin",
+        "value": "historical downturn operating margin below 10% or loss; broker-estimated future downturn floor about 30% with current LTAs"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "economic_mechanism": "한화리서치는 현재 SK하이닉스 영업이익 중 HBM 비중을 약 20%로 추정하고 중장기적으로 증가할 것으로 예상했다. 이는 HBM 매출비중과 구분되는 이익 기여 추정이며 회사가 공시한 세그먼트 손익으로 확대하지 않는다.",
+        "exact_quote": "또한 동사의 영업이익 내에서\nHBM이 차지하는 비중은 현재 20% 내외로 추정되며 이 비중은 중장기적으로 지\n속 증가할 것으로 기대됨.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM의 전사 영업이익 기여를 직접 수치화해 HBM earnings bridge와 재평가 논리의 현재 규모를 보완한다.",
+        "mechanism_scope_id": "000660:HBM:OPERATING_PROFIT_SHARE",
+        "normalized_object": "현재 HBM 영업이익 기여 비중 약 20%와 중장기 증가 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current estimate as of 2026-06-22; medium- to long-term increase outlook",
+        "predicate": "한화리서치는 현재 SK하이닉스 영업이익에서 HBM이 차지하는 비중을 약 20%로 추정했고 중장기적으로 증가할 것으로 예상했다",
+        "predicate_family": "HBM_OPERATING_PROFIT_SHARE_ESTIMATE",
+        "primitive_tags": [
+          "HBM",
+          "OPERATING_PROFIT",
+          "EARNINGS_MIX"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_OPERATING_PROFIT_SHARE_ESTIMATE",
+        "question_family_tags": [
+          "HBM_OPERATING_PROFIT_SHARE_ESTIMATE",
+          "SEGMENT_CONTRIBUTION",
+          "HBM_MARGIN_BRIDGE",
+          "EARNINGS_MIX"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK하이닉스 영업이익 내 HBM 비중 추정",
+        "subject_id": "000660:HBM:OPERATING_PROFIT_SHARE",
+        "unit": "% of operating profit",
+        "value": 20
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "economic_mechanism": "한화리서치는 HBM이 범용 메모리보다 안정적인 가격 추세를 보이고 다음 해에는 범용 메모리 수익성을 다시 웃돌 것으로 예상해 이익 지속성 장치로 평가했다. 이는 HBM 실제 ASP나 확정 마진을 공개한 것이 아닌 제품 특성 및 브로커 전망이다.",
+        "exact_quote": "HBM은 범용 메모리 대비 매우 안정적인 가격 트렌드를\n보여주는 제품이며 내년에는 다시 한 번 범용 메모리의 수익성을 앞지를 것으로\n예상되는 바 이익의 지속성을 담보해주는 중요한 장치로 역할할 것.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 가격·수익성의 변동성 완화 주장은 지속 가능한 이익에 더 높은 multiple을 적용하는 valuation 논리를 직접 뒷받침한다.",
+        "mechanism_scope_id": "000660:HBM:PRICE_STABILITY_PROFITABILITY_OUTLOOK",
+        "normalized_object": "HBM 가격 안정성과 2027년 범용 메모리 상회 수익성 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current price-trend assessment and FY2027 profitability outlook reported 2026-06-22",
+        "predicate": "한화리서치는 HBM이 범용 메모리 대비 안정적인 가격 추세를 보이며 다음 해에는 범용 메모리 수익성을 다시 앞설 것으로 예상해 이익 지속성 장치로 평가했다",
+        "predicate_family": "HBM_PRICE_STABILITY_PROFITABILITY_OUTLOOK",
+        "primitive_tags": [
+          "HBM",
+          "PRICING",
+          "PROFITABILITY"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_PRICE_STABILITY_PROFITABILITY_OUTLOOK",
+        "question_family_tags": [
+          "HBM_PRICE_STABILITY_PROFITABILITY_OUTLOOK",
+          "DURABLE_VISIBILITY",
+          "PRICING_POWER",
+          "EARNINGS_DURATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 가격 안정성과 범용 메모리 대비 수익성 전망",
+        "subject_id": "000660:HBM:PRICE_STABILITY_PROFITABILITY_OUTLOOK",
+        "unit": "qualitative product pricing and profitability outlook",
+        "value": "more stable price trend than conventional memory; profitability expected to exceed conventional memory in 2027"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "economic_mechanism": "보고서는 SK하이닉스가 연내 ADR 상장을 목표로 하고 있으며, 상장 시 미국 증시의 유사기업과 비교 평가를 받을 기회가 가까워진다고 봤다. 이는 valuation 비교대상이 국내 시장에서 미국 peer로 넓어질 수 있다는 브로커의 재평가 경로이며 상장 완료나 재평가 실현을 뜻하지 않는다.",
+        "exact_quote": "이에 더해 동\n사는 연내 ADR 상장을 목표로 하고 있으며 ADR의 상장과 함께 미 증시 내에서\n유사 기업들과 비교 평가를 받을 수 있는 기회가 가까워지고 있음. 동사의 압도적\n인 밸류에이션 매력과 동종 업체들 대비 가지는 기술력의 우위 등을 감안했을 때\nADR은 동사가 다시 한 번 재평가 받을 수 있는 절호의 기회가 될 것.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "미국 상장 peer와의 비교평가 가능성은 국내 할인 해소를 설명하는 별도의 valuation catalyst이며 계획 상태라는 조건도 명시돼 있다.",
+        "mechanism_scope_id": "000660:MEMORY:ADR_US_PEER_RERATING_PATH",
+        "normalized_object": "연내 ADR 상장 목표와 미국 peer 비교평가를 통한 재평가 경로",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "ADR listing target within calendar 2026, assessed 2026-06-22",
+        "predicate": "한화리서치는 SK하이닉스가 연내 ADR 상장을 목표로 하며 상장 시 미국 증시 유사기업과 비교 평가받을 기회가 생겨 재평가 경로가 될 수 있다고 판단했다",
+        "predicate_family": "ADR_US_PEER_RERATING_PATH",
+        "primitive_tags": [
+          "VALUATION",
+          "ADR",
+          "PEER_COMPARISON"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "ADR_US_PEER_RERATING_PATH",
+        "question_family_tags": [
+          "ADR_US_PEER_RERATING_PATH",
+          "ADR",
+          "US_PEER",
+          "VALUATION_CATALYST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연내 ADR 상장 목표와 미국 peer 비교평가 경로",
+        "subject_id": "000660:CORPORATE:ADR_US_PEER_RERATING_PATH",
+        "unit": "qualitative listing and valuation-path assessment",
+        "value": "year-end ADR listing target; potential US-listed peer comparison and rerating route; completion not established"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "economic_mechanism": "한화리서치의 2026년 6월 전망은 SK하이닉스 전사 매출·영업이익과 DRAM 매출·영업이익을 FY2026E와 FY2027E에 걸쳐 제시해 P/E 분모의 이익 경로를 수치화한다. 이는 기존 current fact의 2026년 4월 브로커 전망보다 늦은 추정치이지만 회사 공식 guidance가 아니다.",
+        "exact_quote": "[표1] SK하이닉스 실적 추이 및 전망 (단위: 십억 원))\n1Q25 2Q25 3Q25 4Q25 1Q26 2Q26E 3Q26E 4Q26E 2025 2026E 2027E\n매출액 17,639 22,232 24,449 32,827 52,576 82,508 97,702 106,647 96,765 339,433 506,832\nDRAM 13,970 17,008 19,062 25,399 40,913 61,861 73,274 80,001 75,142 256,049 387,034\nNAND 3,220 4,738 5,092 7,335 11,240 20,322 24,143 26,364 20,299 82,068 118,476\n기타 450 487 295 93 427 325 285 283 1,325 1,320 1,322\n영업이익 7,441 9,213 11,383 19,170 37,610 64,000 78,512 86,527 47,104 266,650 419,522\nDRAM 7,553 9,408 11,072 17,077 31,912 50,726 61,550 68,001 45,019 212,189 334,512\nNAND -27 -267 288 1,975 5,654 13,209 16,900 18,455 1,957 54,217 84,824\n기타 -85 72 23 118 44 64 62 72 128 243 186\n영업이익률(%) 42% 41% 47% 58% 72% 78% 80% 81% 49% 79% 83%\nDRAM 54% 55% 58% 67% 78% 82% 84% 85% 60% 83% 86%\nNAND -1% -6% 6% 27% 50% 65% 70% 70% 10% 66% 72%\n당기순이익 8,108 6,996 12,598 15,246 40,346 49,951 60,242 66,779 42,948 217,318 319,022\n지배주주순이익 8,107 6,997 12,595 15,220 40,330 49,931 60,218 66,753 42,919 217,232 318,894\n자료: SK하이닉스, 한화투자증권 리서치센터",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "최신 전사 및 DRAM 이익 전망은 12MF EPS·P/E 재평가 논리의 earnings denominator와 메모리 귀속을 직접 갱신한다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_EARNINGS_PATH:2026_2027",
+        "normalized_object": "FY2026E~FY2027E 전사·DRAM 매출 및 영업이익 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026E-FY2027E forecast published 2026-06-22",
+        "predicate": "한화리서치는 SK하이닉스 매출을 FY2026E 339,433십억원과 FY2027E 506,832십억원, 영업이익을 266,650십억원과 419,522십억원으로 전망했고 DRAM 매출·영업이익도 각각 256,049·387,034십억원과 212,189·334,512십억원으로 추정했다",
+        "predicate_family": "BROKER_FORWARD_MEMORY_EARNINGS_PATH",
+        "primitive_tags": [
+          "MEMORY",
+          "DRAM",
+          "OPERATING_PROFIT"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "BROKER_FORWARD_MEMORY_EARNINGS_PATH_JUNE2026",
+        "question_family_tags": [
+          "BROKER_FORWARD_MEMORY_EARNINGS_PATH",
+          "FORWARD_EARNINGS",
+          "DRAM_CONTRIBUTION",
+          "VALUATION_DENOMINATOR"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026E~FY2027E 전사·DRAM 손익 전망",
+        "subject_id": "000660:MEMORY:FORWARD_EARNINGS_PATH:2026_2027",
+        "unit": "KRW billion",
+        "value": "revenue FY2026E 339433/FY2027E 506832; operating profit 266650/419522; DRAM revenue 256049/387034; DRAM operating profit 212189/334512"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "economic_mechanism": "한화리서치는 FY2026E와 FY2027E 영업현금흐름을 각각 226,337십억원과 331,425십억원, 설비투자를 42,080십억원과 50,683십억원, FCF를 180,763십억원과 279,910십억원으로 전망했다. 이는 이익 전망이 실제 현금 전환으로 이어진다는 valuation 입력의 최신 브로커 추정이며 회사 공식 guidance가 아니다.",
+        "exact_quote": "현금흐름표 (단위: 십억 원) 주요지표 (단위: 원, 배)\n12월 결산 2023 2024 2025 2026E 2027E 12월 결산 2023 2024 2025 2026E 2027E\n영업현금흐름 4,278 29,796 53,373 226,337 331,425 주당지표\n당기순이익 -9,138 19,797 42,948 217,318 319,022 EPS -12,517 27,182 58,955 321,737 472,307\n자산상각비 13,674 12,582 13,930 18,591 24,731 BPS 73,495 101,515 165,544 477,232 921,834\n운전자본증감 794 -5,600 -2,881 -9,026 -12,281 DPS 1,200 2,204 3,000 3,000 3,000\n매출채권 감소(증가) -1,406 -5,098 -5,584 -32,393 -24,385 CFPS 8,098 50,619 84,870 329,610 482,257\n재고자산 감소(증가) 2,288 167 -1,059 -16,155 -5,774 ROA(%) -8.9 18.0 29.0 70.5 52.4\n매입채무 증가(감소) 83 -1,103 980 39,608 17,935 ROE(%) -15.6 31.1 44.2 94.3 64.0\n투자현금흐름 -7,335 -18,005 -48,054 -53,426 -52,543 ROIC(%) -7.5 25.1 43.5 173.1 208.9\n유형자산처분(취득) -6,785 -15,898 -27,374 -42,066 -50,683 Multiples(x,%)\n무형자산 감소(증가) -454 -697 -1,058 -832 -832 PER -11.3 101.7 46.9 8.6 5.9\n투자자산 감소(증가) 140 -1,415 -16,843 -10,964 -769 PBR 1.9 27.2 16.7 5.8 3.0\n재무현금흐름 5,697 -8,704 -1,445 -2,951 -2,026 PSR 3.1 30.4 20.7 5.8 3.9\n차입금의 증가(감소) 6,507 -7,977 171 -2,902 0 PCR 17.5 54.6 32.6 8.4 5.7\n자본의 증가(감소) -801 -732 -1,616 -2,087 -2,026 EV/EBITDA 21.7 55.0 32.2 6.3 3.4\n배당금의 지급 -826 -826 -1,681 -2,095 -2,026 배당수익률 0.8 0.1 0.1 0.1 0.1\n총현금흐름 5,895 36,851 61,785 234,914 343,706 안정성(%)\n(-)운전자본증가(감소) 2,081 -2,018 4,536 11,253 12,281 부채비율 87.5 62.2 45.9 29.4 18.1\n(-)설비투자 8,325 15,946 27,519 42,080 50,683 Net debt/Equity 48.3 18.3 -0.2 -53.2 -69.8\n(+)자산매각 1,086 -650 -913 -817 -832 Net debt/EBITDA 434.4 37.6 -0.4 -63.4 -103.2\nFree Cash Flow -3,425 22,273 28,817 180,763 279,910 유동비율 145.0 169.3 185.8 371.1 608.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "최신 forward operating cash flow·CapEx·FCF 경로는 P/E 기반 재평가가 현금 전환으로도 뒷받침되는지 직접 갱신한다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_FCF_PATH:2026_2027",
+        "normalized_object": "FY2026E~FY2027E 영업현금흐름·설비투자·FCF 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026E-FY2027E forecast published 2026-06-22",
+        "predicate": "한화리서치는 SK하이닉스 FY2026E와 FY2027E 영업현금흐름을 226,337십억원과 331,425십억원, 설비투자를 42,080십억원과 50,683십억원, Free Cash Flow를 180,763십억원과 279,910십억원으로 전망했다",
+        "predicate_family": "BROKER_FORWARD_FCF_PATH",
+        "primitive_tags": [
+          "MEMORY",
+          "FCF",
+          "CASH_CONVERSION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_FORWARD_FCF_PATH_JUNE2026",
+        "question_family_tags": [
+          "BROKER_FORWARD_FCF_PATH",
+          "FORWARD_FCF",
+          "OPERATING_CASH_FLOW",
+          "CAPEX"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026E~FY2027E 잉여현금흐름 전망",
+        "subject_id": "000660:MEMORY:FORWARD_FCF_PATH:2026_2027",
+        "unit": "KRW billion",
+        "value": "operating cash flow FY2026E 226337/FY2027E 331425; capex 42080/50683; FCF 180763/279910"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "economic_mechanism": "한화투자증권은 분석 내용이 신뢰할 만한 자료나 정보출처에서 얻어졌지만 정확성과 완전성을 보장하지 않는다고 명시했다. 따라서 같은 문서의 LTA 체결 상태, 감익기 마진 하한, HBM 이익 기여, ADR 재평가, forward earnings와 FCF는 독립 브로커 추정으로 취급해야 하며 issuer 확정 사실이나 보장으로 높일 수 없다.",
+        "exact_quote": "이 자료에 수록된 내용은 당사 리서치센터가 신뢰할 만한 자료나 정보출처로부터 얻은 것이지만, 당사는 그 정확성이나 완\n전성을 보장할 수 없습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "이 문서의 LTA·HBM·ADR·실적·FCF 추정 전부의 증거 확실성을 직접 제한하는 명시적 source-quality counterfact다.",
+        "mechanism_scope_id": "000660:MEMORY:BROKER_RESEARCH_ACCURACY_LIMIT",
+        "normalized_object": "브로커 분석자료의 정확성·완전성 비보장",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "report published 2026-06-22",
+        "predicate": "한화투자증권은 SK하이닉스 분석자료의 내용이 신뢰할 만한 자료나 정보출처에서 얻어졌지만 정확성이나 완전성을 보장할 수 없다고 명시했다",
+        "predicate_family": "BROKER_RESEARCH_ACCURACY_COMPLETENESS_LIMIT",
+        "primitive_tags": [
+          "VALUATION",
+          "SOURCE_QUALITY",
+          "UNCERTAINTY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_RESEARCH_ACCURACY_COMPLETENESS_LIMIT",
+        "question_family_tags": [
+          "BROKER_RESEARCH_ACCURACY_COMPLETENESS_LIMIT",
+          "SOURCE_QUALITY",
+          "FORECAST_UNCERTAINTY",
+          "INDEPENDENT_VERIFICATION_LIMIT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "한화리서치 SK하이닉스 분석자료의 정확성·완전성 한계",
+        "subject_id": "000660:MEMORY:BROKER_RESEARCH_ACCURACY_LIMIT",
+        "unit": "qualitative source-quality limitation",
+        "value": "accuracy and completeness not guaranteed"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "LTA 고객·기간·물량·가격·취소권·위약금 원문과 HBM 세그먼트 공식 손익은 공개되지 않았다. 이 제3자 브로커 자료의 수치 전망은 issuer FORWARD_GUIDANCE를 대체하지 않으며, PEER_BAND는 출력 schema에 해당 structured_evidence_role enum이 없어 의미 fact로만 보존했다."
+    ]
+  },
+  "payload_hash": "397d2979a443f20cad7f88f8376121b3d0607c3717ed603cf66659cee2ee8fe9",
+  "production_score_authority": false,
+  "prompt_hash": "c297fe0d5da3abf91b165592dabb57a1864ee38e01212357cdc8e5f4236cf889",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0a8e566d424434bd7d1773b73dfd3819af3d3c297e402244896c33ef0cf7e2eb",
+  "response_id": "COLLABRESP-a88dffcb2e4a5420889cfb57515036227095dafbca05c417c3bdb6bb57147212",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

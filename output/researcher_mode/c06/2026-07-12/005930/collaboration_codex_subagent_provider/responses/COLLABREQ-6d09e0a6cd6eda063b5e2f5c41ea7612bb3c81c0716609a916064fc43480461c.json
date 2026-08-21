@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-556f847e7b65081da32fdbb4",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.9,
+        "rationale": "발행사 반도체 뉴스 인덱스로, 현재 HBM 수요·공급·양산 업데이트 원문을 찾는 직접적인 탐색 경로다. 이 분류는 URL·reference metadata의 경로 적합성만 판단하며 snippet을 증거로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-570975ece6ed62d1a0eaca48",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/foundry/safe/osat/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문으로 이어지는 구체적 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-57e88047dfb4f15822292643",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 공급된 provenance가 요청된 source family를 입증하지 못하고, 소셜 공유·관계사·불완전 링크는 현재 연구목표의 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-58ff173c6faeebdde8ee16be",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 공급된 provenance가 요청된 source family를 입증하지 못하고, 소셜 공유·관계사·불완전 링크는 현재 연구목표의 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5955e5b3dd9c00b58c72bd89",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.58,
+        "rationale": "발행사 행사 인덱스로, 고객 기술 세션이나 HBM 제품 상태를 확인할 공식 자료로 이어질 수 있는 경로다. 이 분류는 URL·reference metadata의 경로 적합성만 판단하며 snippet을 증거로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-5978cd158ab985793b9161cf",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/us/event/foundry-events-2022/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문으로 이어지는 구체적 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5a5f30997e5c8bc929ecd8e1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 공급된 provenance가 요청된 source family를 입증하지 못하고, 소셜 공유·관계사·불완전 링크는 현재 연구목표의 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5a8ad93fd6a0ca44f146b1a6",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/power-ic/accessory-power-ic/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문으로 이어지는 구체적 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5b078a2e785dc0d0ef62a21e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/cookie-policy/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문으로 이어지는 구체적 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5cd85632b209836637b1ae5f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/image-sensor/tof-sensor/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문으로 이어지는 구체적 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6093d71f16845eefc1055208",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/foundry/tech-archives/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문으로 이어지는 구체적 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-64a353dcf18ade2e478a5934",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/sustainability/labor-human-rights/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문으로 이어지는 구체적 경로가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "material 후보는 아직 증거가 아니며 원문 full-fetch와 내용 검증이 필요하다."
+    ]
+  },
+  "payload_hash": "5eca83e485516214c6c0702b1f675501d3eccabca74c83e5e7070fd8ec862ddd",
+  "production_score_authority": false,
+  "prompt_hash": "119074cdacd7d24f1fc2cfe701e0fac7b14441efc66a3694e390566df6769823",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch9_rankings",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6d09e0a6cd6eda063b5e2f5c41ea7612bb3c81c0716609a916064fc43480461c",
+  "response_id": "COLLABRESP-c412a9ca1e4876921ac09ccc2bc23989bf81687b3c4cca5dc99387dcd810e514",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "output_schema_hash": "ba8068018073e89d464685247f5b32e1314f5919c0de54ffb7d2f0603497f0ec",
+  "payload": {
+    "allowed_range": [
+      3.2,
+      4.1
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797의 LOW-confidence STRONG positive ordinal band와 ORDTRANSFER-994f92d663d0b49c624b1803의 LOW-confidence STRONG counter ordinal band를 함께 비교했다. 두 anchor 모두 현재 HBM facts의 exact match가 아니므로 점수 눈금 참고로만 사용했고, issuer actual 확인과 독립 corroboration·계약·segment 정밀도 부재를 함께 반영했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-dcd0816b6ba04c76c69e7a4b",
+      "EFACT-e2b5d15b4400874c34e4f2a2"
+    ],
+    "disagreements": [
+      "issuer primary evidence의 구체성을 인정하되 같은 issuer 계열 진술을 독립 고객 corroboration으로 확대하거나 공급 논의를 확정 구매의무로 해석해서는 안 된다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "proposed_points": 3.7,
+    "rationale": "issuer 원문이 HBM4 양산 진입·대규모 생산, 고객 성능요구 충족과 FY2025 HBM 매출 2배 이상 actual 성장을 직접 확인하므로 실행 및 결과의 primary evidence는 강하다. 다만 공급 논의는 signed commitment가 아니며 월·분기 합의, 단일 사업부문 공시와 broker 전망 내부 불일치가 duration과 정밀도를 제한한다.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-a74dac2b9e727f8592e52c41",
+      "EFACT-b74e88a671a1247b0ce230d5",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "named customer의 독립 공식 확인, qualification 일자, 계약 원문과 HBM 단독 손익·현금흐름이 없고 broker 전망 내부 불일치도 있어 full-strong 정보 신뢰도는 지지되지 않는다.",
+    "why_not_lower": "양산 진입, 고객 성능요구 충족, 대규모 생산과 actual HBM 매출 성장이 issuer 원문으로 구체적으로 확인되므로 단순 계획 또는 정보 부재 수준으로 낮추는 것도 맞지 않는다."
+  },
+  "payload_hash": "4b1cd00fa35dc8ff77c3722b0297b2293b8537786c1976ac60244a91c6603015",
+  "production_score_authority": false,
+  "prompt_hash": "c9dca91614c58c68f6fd904f7764f1251b982b9d107da140c57a7654b302b7a2",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-85ea1a774701f26fdc5256cbadef7ab6e449c087872f0f8f0fffc83c7f70d372",
+  "response_id": "COLLABRESP-507eb5157bbca5b208974bba5b7678d37ac690b7d2d656efee72dd7cb488ac9e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,258 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "rationale": "full document 4,197줄과 PDF 중복 렌더링을 Gold-blind로 전수 검토하고 current canonical 122건과 의미 중복을 대조했다. DRAM 가격 상승폭 둔화의 valuation 피크 반증, HBM의 Blended ASP·CAPA 잠식 기반 이익 효율, HBM3E 가격·믹스 bridge, AMD·Microsoft 경로의 수요 다변화, 추론용 자체 칩의 칩당 HBM 탑재량 반증 등 서로 다른 5개 valuation_rerating 사실을 추출했다. 2024~2025 목표주가·현재주가·매매 지시, 기간이 지난 P/B·P/E·BPS·실적 추정과 수정표, 최신 canonical이 대체한 일반 DRAM CAPA·CXMT 위험·HBM 양산 일정, 삼성전자·NAND·비메모리 자료, 차트만으로 읽히지 않는 수치와 표준 면책문구는 제외했다. 더 남은 objective-linked 사실이나 반증은 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "economic_mechanism": "보고서는 과거 DRAM 사이클에서 가격 하락폭의 축소가 주가 저점, 가격 상승폭의 축소가 주가·업황 고점과 연결됐다고 분석했다. 2024년 3분기 업계 DRAM 가격 상승률은 전분기 15~18%에서 약 10%로, SK하이닉스의 2024년 2분기 상승률은 직전 분기 21%에서 14%로 둔화됐다는 관찰은 이익이 늘어도 valuation이 먼저 수축할 수 있다는 반증이다. 이는 반복 가능성을 검토하는 역사적 관계이지 2026년 주가 고점을 확정하는 신호가 아니다.",
+        "exact_quote": "메모리 반도체 업체들의 주가가 하락세로 들어섰다. 이는 DRAM 업황의 피크아웃 시그널이\n포착되었기 때문이다. 과거 DRAM 싸이클 상에서 DRAM 가격의 상승폭이 전분기대비 축소\n된 경우에 주가 및 업황의 피크아웃이었던 적이 많다. 24년 3분기 DRAM 가격 상승폭은\n10% 수준으로 전분기 15~18%대비 축소될 것으로 추정된다. SK하이닉스의 DRAM 가격 상\n승폭은 24년 2분기 14%로 전분기 21%에서 축소되었다. 하나증권은 22년 9월에 작성한 보\n고서를 통해서 22년 4분기 DRAM 가격의 하락폭이 30%로 극대화된 이후에 23년 1분기 가\n격 하락폭이 20%로 축소되면 주가가 바닥일 가능성에 대해 언급한 바 있다. 실제로 23년\n1분기 이후에 삼성전자와 SK하이닉스의 주가는 상승세로 전환되었다. 이와 반대 경우인\nDRAM 가격의 상승폭 축소는 주가의 고점일 가능성이 높은데, 실제로 22년 7월 이후 반도\n체 업체들의 주가도 하향 추세로 접어들었다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 가격 상승이 계속돼도 증가폭 둔화가 먼저 valuation 수축으로 이어질 수 있다는 관계는 SK하이닉스 저배수의 지속 가능성을 검증하는 핵심 counter-risk다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM_ASP_DECELERATION_VALUATION_PEAK_SIGNAL",
+        "normalized_object": "DRAM 가격 상승폭 둔화가 선행하는 메모리 valuation 피크 위험",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "historical DRAM cycles through 3Q2024E; analysis published 2024-09-24",
+        "predicate": "과거 DRAM 사이클에서 가격 상승폭 축소는 주가·업황 고점과 연결됐고 2024년 3분기 업계 상승률과 2024년 2분기 SK하이닉스 상승률에서 둔화가 관찰됐다",
+        "predicate_family": "DRAM_ASP_DECELERATION_VALUATION_PEAK_SIGNAL",
+        "primitive_tags": [
+          "DRAM",
+          "ASP_DECELERATION",
+          "MARKET_EXPECTATION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_DECELERATION_VALUATION_PEAK_SIGNAL",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "PEAK_SIGNAL",
+          "VALUATION_CYCLE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "DRAM 가격 상승폭 둔화와 메모리 주가·업황 피크 신호",
+        "subject_id": "INDUSTRY:DRAM:ASP_QOQ_DECELERATION_PEAK_SIGNAL",
+        "unit": "% QoQ and qualitative historical relationship",
+        "value": "industry 3Q2024E DRAM ASP growth about 10% QoQ versus prior 15-18%; SK hynix 2Q2024 DRAM ASP growth 14% versus prior 21%; historical peak-signal relationship"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.93,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "economic_mechanism": "HBM은 DRAM Blended ASP를 높이는 동시에 일반 DRAM CAPA를 잠식해, HBM 수혜가 집중된 SK하이닉스가 더 적은 생산능력으로 더 많은 이익을 창출할 수 있게 했다는 분석이다. 이는 기존 DRAM 가격 사이클과 생산능력 규모만으로 역사적 valuation band를 적용하기 어렵게 만드는 구조적 이익 효율 근거다.",
+        "exact_quote": "다만, 과거와 다른 점도 상기할 필요는 있다. 금번 업싸이클이 과거와 다른 점은 HBM이다.\nHBM은 기존과 다른 차원의 DRAM이라는 점과 더불어 그로 인한 Blended ASP의 변화와\nCAPA 잠식 효과를 야기했다. 해당 수혜가 집중된 SK하이닉스가 더 적은 CAPA에도 불구하\n고 더 많은 이익을 창출하기도 했다. 과거와는 다른 패턴의 싸이클이 전개되었기 때문에 과\n거와는 다른 주가 흐름을 시현할 가능성 또한 열려 있다는 판단이다. 아울러 DRAM 가격의\n상승폭 축소 외에는 피크아웃을 논할 데이터 포인트가 아직 보이진 않는다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM이 가격과 CAPA 양쪽을 통해 이익 효율을 바꾸는 구조는 SK하이닉스에 기존 시클리컬 P/B band보다 높은 배수를 적용할 수 있는지 직접 설명한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_BLENDED_ASP_CAPACITY_PROFIT_RERATING",
+        "normalized_object": "HBM 가격·생산능력 구조가 만든 SK하이닉스의 이익 효율과 과거 사이클 차별화",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "structural cycle assessment current as of 2024-09-24",
+        "predicate": "HBM의 Blended ASP 상승과 CAPA 잠식 효과로 SK하이닉스가 더 적은 CAPA에도 더 많은 이익을 창출해 과거 DRAM 사이클과 다른 패턴을 보였다고 분석됐다",
+        "predicate_family": "HBM_BLENDED_ASP_CAPACITY_PROFIT_EFFICIENCY",
+        "primitive_tags": [
+          "HBM",
+          "PROFIT_EFFICIENCY",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_BLENDED_ASP_CAPACITY_CANNIBALIZATION_RERATING",
+        "question_family_tags": [
+          "HBM_RERATING",
+          "BLENDED_ASP",
+          "CAPACITY_CANNIBALIZATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "HBM의 Blended ASP·CAPA 잠식과 SK하이닉스 이익 효율",
+        "subject_id": "000660:HBM:BLENDED_ASP_CAPACITY_PROFIT_EFFICIENCY",
+        "unit": "qualitative valuation-earnings bridge",
+        "value": "HBM-driven blended-ASP uplift and capacity cannibalization enabled higher profit with less capacity"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "economic_mechanism": "하나증권은 일반 DRAM 가격이 2024년 3분기 약 10% 오르는 가운데 HBM 믹스가 약 5%포인트를 더해 SK하이닉스 Blended DRAM ASP 상승률을 14%로 유지시키고, HBM3E 가격은 기존 제품보다 10% 이상 높을 것으로 가정했다. 이는 HBM 프리미엄이 범용 DRAM 가격 둔화를 전사 가격과 valuation 분모에서 완충하는 정량 bridge이며 확정 판가나 issuer guidance는 아니다.",
+        "exact_quote": "하나증권은 SK하이닉스의 24년 3분기 DRAM 가격 상승폭은 14%로 전분기대비 유지될 것\n으로 전망중이다. 이는 기존 싸이클과는 다른 양상으로, HBM 매출 비중 확대로 인해\nBlended ASP 상승폭이 여타 업체들과 다르게 전개될 것으로 판단하기 때문이다. 현재 일반\nDRAM의 전분기대비 가격 상승폭은 10% 내외로 추정되며, 하나증권은 HBM으로 인해 추\n가적으로 5% 내외의 가격 상승이 가능할 것으로 가정하고 있다. 24년 2분기부터 HBM 3E\n공급이 시작되었고, 3분기에는 물량이 극대화되기 시작하기 때문이다. HBM 3E 가격이 기존\n제품대비 10% 이상 상승할 것으로 가정했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 프리미엄이 범용 DRAM 가격 둔화를 얼마나 상쇄하는지 정량화한 자료는 HBM 기반 실적 차별화와 re-rating의 earnings bridge를 직접 검증한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM3E_BLENDED_ASP_PREMIUM_3Q2024E",
+        "normalized_object": "HBM3E 프리미엄과 믹스가 만든 SK하이닉스 Blended DRAM ASP 방어",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E forecast published 2024-09-24",
+        "predicate": "HBM 믹스가 일반 DRAM 가격 상승률에 약 5%포인트를 더하고 HBM3E가 기존 제품보다 10% 이상 높은 가격을 받아 SK하이닉스의 2024년 3분기 Blended DRAM ASP 상승률을 14%로 유지할 것으로 추정됐다",
+        "predicate_family": "HBM3E_BLENDED_ASP_PREMIUM_BRIDGE",
+        "primitive_tags": [
+          "HBM",
+          "ASP",
+          "MIX_EFFECT"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM3E_BLENDED_ASP_PREMIUM_BRIDGE",
+        "question_family_tags": [
+          "HBM3E",
+          "BLENDED_ASP",
+          "PRICE_PREMIUM"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "HBM3E의 SK하이닉스 2024년 3분기 Blended DRAM ASP 기여 전망",
+        "subject_id": "000660:HBM3E:BLENDED_ASP_PREMIUM_3Q2024E",
+        "unit": "% QoQ, percentage points and % price premium",
+        "value": "3Q2024E SK hynix blended DRAM ASP +14% QoQ; general DRAM about +10%; HBM contribution about +5pp; HBM3E price premium above 10%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "economic_mechanism": "AMD의 2024년 2분기 데이터센터 매출이 전년동기 대비 115% 늘었고 MI325X가 Microsoft 수주를 받았다는 보고는 Nvidia 중심이던 HBM 최종 수요가 다른 가속기와 고객으로 넓어졌다는 독립 수요 근거다. 이는 SK하이닉스의 공급계약·물량 의무나 Microsoft의 직접 HBM 구매를 입증하지 않는다.",
+        "exact_quote": "2025년에도 HBM 수요는 견조할 전망이다. Nvidia의 Blackwell 출시 지연 우려가 있는 상황\n이지만, 빅테크 업체들의 Capex는 증가할 것으로 전망되고 있어 수요 자체가 없어지는 것\n은 아니다. 일부 설계 변경이 진행된 B100은 연내 출시가 가능할 전망이다. AMD의 MI300X\n및 MI325X도 HBM 수요를 자극하고 있다. AMD의 24년 2분기 Datacenter향 매출액은 전\n년동기대비 115% 증가했다. 1년 늦었지만, 전년동기대비 2배 이상의 매출액 달성은 Nvidia\n의 초기 H100 수요 폭증 때와 유사한 모습이다. 아울러 연내 출시 예정인 MI325X는\nMicrosoft로부터 수주를 받았다는 언급도 있었다. 금번 싸이클의 시작이 Microsoft-Open\nAI의 Chat GPT 공개 이후였던 점을 감안하면 AMD의 이번 수주는 유의미하다는 판단이다.\n아울러 Nvidia가 독과점했던 HBM의 수요가 다변화된다는 측면에서 HBM의 수요 질 자체가\n개선된 점도 긍정적이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 수요가 단일 GPU 공급자에서 다변화되는지는 수요 duration과 고객집중 위험을 동시에 바꿔 valuation premium의 지속성을 직접 좌우한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_AMD_MICROSOFT_DEMAND_DIVERSIFICATION",
+        "normalized_object": "AMD·Microsoft 경로가 확장한 HBM 수요처와 수요 질",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024 actual and 2024 product-order report; outlook published 2024-09-24",
+        "predicate": "AMD 데이터센터 매출의 2024년 2분기 115% 증가와 MI325X의 Microsoft 수주 언급을 근거로 Nvidia 독점형 HBM 수요가 다변화돼 수요 질이 개선됐다고 분석됐다",
+        "predicate_family": "HBM_ACCELERATOR_CUSTOMER_DEMAND_DIVERSIFICATION",
+        "primitive_tags": [
+          "HBM",
+          "AI_ACCELERATOR",
+          "DEMAND_QUALITY"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_DEMAND_DIVERSIFICATION_AMD_MICROSOFT",
+        "question_family_tags": [
+          "HBM_DEMAND",
+          "AMD",
+          "CUSTOMER_DIVERSIFICATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "AMD AI 가속기와 Microsoft 수주에 따른 HBM 수요처 다변화",
+        "subject_id": "INDUSTRY:HBM:AMD_MICROSOFT_DEMAND_DIVERSIFICATION_2024",
+        "unit": "% YoY and qualitative customer diversification",
+        "value": "AMD 2Q2024 datacenter revenue +115% YoY; MI325X Microsoft order reported; HBM demand diversification beyond Nvidia"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "economic_mechanism": "추론 시장에서 고객별 자체 칩이 늘면 HBM 수요처와 맞춤 대응은 넓어지지만, 각 칩의 HBM 탑재량은 Nvidia 범용 GPU보다 낮아질 수 있다는 분석이다. 따라서 고객 다변화를 곧바로 칩당 HBM 증가나 총수요 확정으로 해석할 수 없으며, 수요 질 개선과 content dilution을 함께 봐야 한다.",
+        "exact_quote": "AI향 수요 관련한 일부 우려가 있지만, 현재 Training 시장 중심으로 성장하는 AI 수요는\n2025년 이후부터 추론 중심의 시장으로 옮겨갈 것이다. Nvidia의 범용 GPU에 의존하는\nTraining 시장과 달리 추론 시장은 AI에 투자하는 다수의 고객사들의 자체 칩이 활용될 가\n능성이 높다. 고객사 별로 자신의 비즈니스에 최적화된 AI 서비스 제공을 위해 자체 칩을\n개발중에 있다. 해당 칩들 개별로는 HBM 탑재량이 낮아질 수 있지만, HBM이 고객사 별로\n다양하게 대응해야 하는 점을 감안하면 공급 측면에서도 플러스 요인은 상존한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "추론 수요 확장이 HBM 총수요와 valuation duration으로 이어지려면 고객 수 증가뿐 아니라 칩당 탑재량 감소 가능성도 함께 반영해야 한다.",
+        "mechanism_scope_id": "000660:MEMORY:INFERENCE_CUSTOM_ASIC_HBM_CONTENT_MIX_RISK",
+        "normalized_object": "추론용 자체 칩의 HBM 수요 다변화와 칩당 content dilution의 혼합 효과",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "post-2025 inference-market outlook published 2024-09-24",
+        "predicate": "추론 시장의 고객별 자체 칩 확산은 HBM 고객 대응을 다변화하지만 개별 칩의 HBM 탑재량은 낮아질 수 있다고 분석됐다",
+        "predicate_family": "INFERENCE_CUSTOM_ASIC_HBM_CONTENT_MIX_RISK",
+        "primitive_tags": [
+          "HBM",
+          "ASIC",
+          "DEMAND_MIX"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "INFERENCE_CUSTOM_ASIC_HBM_CONTENT_MIX_RISK",
+        "question_family_tags": [
+          "INFERENCE_AI",
+          "CUSTOM_ASIC",
+          "HBM_CONTENT_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "추론용 자체 칩 확산의 HBM 고객 다변화와 칩당 탑재량 반증",
+        "subject_id": "INDUSTRY:HBM:INFERENCE_CUSTOM_ASIC_CONTENT_MIX",
+        "unit": "qualitative demand-mix counterfact",
+        "value": "more customer-specific inference chips with potentially lower HBM content per chip and greater supplier customization breadth"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "c55b5e2b2549d010cf11e51e9c9df751e29fc5b77812fb789a9fcfe0fb7840fe",
+  "production_score_authority": false,
+  "prompt_hash": "5ad1810f9da41c95b04a885054955f0616ff603dcbadb712f83347cb53e48e91",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-94e684cba8aa3fd005588242b3c08389cf5c2d76f3d348fffa19d0da152784df",
+  "response_id": "COLLABRESP-da38c2d121614662583ea0a127ed89913333ac8a8706569feb9da55af9c6c524",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

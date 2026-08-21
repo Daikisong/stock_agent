@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-f96e0ad729ad998272b6393d",
+        "rationale": "Independent coverage audit of literal transport chunk 1 of 2 confirms no omitted target-direct economic identity. The sole SK hynix recommendation-history table is already losslessly represented by the accepted same-report current target and completed historical calibration facts; all remaining content is non-target or boilerplate.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "9e091d60ba7fa44cc64d96dced565b36b00d5b0e30cffeb43b032bf291dce6d5",
+  "production_score_authority": false,
+  "prompt_hash": "816f95edbce9d326aa26e4089811193cc297bd5bbab11de1f3db372445b0798a",
+  "provenance": {
+    "agent_id": "/root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/direct_fact_review",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2988c54a659ccb251b038303f4d6e8968d865a5719d463ff4c7a62af680a42a9",
+  "response_id": "COLLABRESP-084c9215b66731894ac8561625f61465e644d08de2320d497708b3ff3787cb4a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

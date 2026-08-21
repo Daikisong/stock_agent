@@ -1,0 +1,88 @@
+Samsung tipped to supply HBM3 to Nvidia for Chinese market - KED Global
+Samsung tipped to supply HBM3 to Nvidia for Chinese market - KED Global
+Samsung tipped to supply HBM3 to Nvidia for Chinese market - KED Global
+Samsung tipped to supply HBM3 to Nvidia for Chinese market - KED Global
+Samsung Electronics Co. has passed Nvidia Corp.’s qualification tests for its fourth-generation high-bandwidth memory, or HBM3 chips, for use in its AI a
+Samsung Electronics Co. has passed Nvidia Corp.’s qualification tests for its fourth-generation high-bandwidth memory, or HBM3 chips, for use in its AI a
+Samsung Electronics Co. has passed Nvidia Corp.’s qualification tests for its fourth-generation high-bandwidth memory, or HBM3 chips, for use in its AI a
+Samsung tipped to supply HBM3 to Nvidia for Chinese market
+The Korean chipmaker's next-generation memory HBM3E is undergoing Nvidia’s qualification tests
+Nvidia secures HBM3E, the 5th-generation HBM, from SK Hynix
+Jeong-Soo Hwang
+2
+2024-07-24 16:51:55
+hjs@hankyung.com
+Korean chipmakers
+Samsung Electronics Co. has passed
+Nvidia Corp.’s qualification tests
+for its fourth-generation high-bandwidth memory, or HBM3 chips, for use in its AI application processors for the first time, Reuters reported on Tuesday. The report raised market expectations that Samsung’s fifth-generation HBM, or HBM3E, would also be cleared by the AI chipset maker soon.
+Samsung's HBM3 chips will, for now, only be used in a less sophisticated Nvidia graphics processing unit (GPU), the H20, tailored for the Chinese market, according to the report citing unidentified multiple sources. The South Korean chipmaker could begin supplying the HBM3 to Nvidia as early as August.
+It was not immediately clear if Nvidia would use Samsung's HBM3 chips in its other AI processors, or if the chips would have to pass additional tests before that could happen, Reuters added.
+The H20 is the most advanced of three GPUs Nvidia has tailored for the Chinese market after the US tightened export restrictions in 2023.
+Samsung unveiled the industry's first 12-layer HBM3E in February this year (Courtesy of Samsung Electronics)
+HBM3E
+The report relieved investor doubts about whether Samsung’s HBM3E, the most advanced memory in the high-value, high-performance chip segment, could pass Nvidia’s quality tests.
+In May, Reuters reported Samsung’s HBM3E has yet to meet Nvidia's standards. Samsung denied the report as untrue.
+The world’s No. 1 memory chipmaker is striving to catch up with local rival SK Hynix Inc. the unrivaled leader in the market of HBM chips, essential for processing a vast amount of data for generative AI applications.
+Samsung began mass production of HBM3 chips in the third quarter of last year.
+But SK Hynix stays ahead in the race. This year, the world’s No. 2 memory chip producer became the industry’s first to
+mass-produce the HBM3E
+, for shipment to Nvidia.
+SK Hynix controls 53% of the HBM market, trailed by Samsung with a 38% share. Micron Technology Inc. claims the remainder of the market.
+SK Hynix's HBM3 chips
+TECHNOLOGY WAR
+HBM is made of vertically interconnected multiple dynamic random access memory chips. It saves space and reduces power consumption.
+The HBM3E chip SK Hynix began supplying to Nvidia in March this year is composed of eight layers of DRAMs. Micron also launched the mass production of 8-layer HBM3E in February this year for supply to Nvidia.
+In February of this year, Samsung unveiled a more advanced HBM:
+the industry’s first 12-layer HBM3E
+that boasts the largest memory capacity of 36 GB for HBM.
+But it has not yet passed Nvidia’s qualification tests.
+Samsung was reportedly seeking to verify with Nvidia the qualifications of its 8-layer and 12-layer HBM3E chips by the end of the third quarter and fourth quarter of this year, respectively.
+Write to
+Jeong-Soo Hwang at
+hjs@hankyung.com
+Yeonhee Kim edited this article.
+#SamsungElectronics
+#Nvidia
+#HBM3E
+#HBM3
+#8layerHBM3E
+#12layerHBM3E
+#SKHynix
+#highbandwidthmemory
+Samsung to mass-produce HBM4 on 4 nm foundry process
+Choi Siyoung, Samsung Electronics' foundry chief, gives a keynote speech at Samsung Foundry Forum 2024 in Seoul on July 9, 2024 (File photo by Samsung Electronics)
+Samsung Electronics Co., the world’s top memory chipmaker, plans to use its cutting-edge 4-nanometer (nm) foundry process for
+HBM chip war intensifies as SK Hynix hunts for Samsung talent
+SK Hynix's advanced chipset
+South Korean chipmaker SK Hynix Inc., just like its global peers, has largely designed and produced semiconductors in-house, including high-bandwidth memory (HBM), an AI chip, whose demand is growing explosively.For the next-generation AI chip, HBM4, however, the com
+Samsung launches dedicated HBM, advanced chip packaging teams
+A researcher in a Samsung Electronics chip cleanroom
+Samsung Electronics Co., the world’s largest memory chipmaker, has officially launched a team dedicated to developing advanced high-bandwidth (HBM) memory, a core chip in powering artificial intelligence (AI) devices.The Suwon, South Ko
+Samsung to launch 3D HBM chip packaging service in 2024
+Samsung Foundry Forum 2024 held in San Jose, California on June 12-13
+SAN JOSE -- Samsung Electronics Co. will launch three-dimensional (3D) packaging services for high-bandwidth memory (HBM) within the year, a technology expected to be introduced for the artificial intelligence chip&rsquo
+SK Hynix works on next-generation HBM chip supply plans for 2025
+SK Hynix executives discuss AI memory leadership and future HBM market trends at a roundtable discussion in May 2024
+South Korea’s SK Hynix Inc. said on Thursday it is working on next year’s supply plans for its high-bandwidth memory (HBM) chips as clients are advancing their produc
+SK Hynix mulls HBM production in Japan, US
+SK Group Chairman Chey Tae-won
+SK Hynix Inc. is investigating the possibility of building a plant for high-bandwidth memory (HBM), vital for generative artificial intelligence, in other countries such as Japan and the US, if it needs to expand its capacity, its parent group Chairman Chey Tae-wo
+Samsung Electronics replaces chip head amid HBM crisis
+Samsung's new chip business head Jun Young-hyun
+Samsung Electronics Co., the world’s top memory chipmaker, on Tuesday replaced its semiconductor business chief as the South Korean company struggles to catch up to its crosstown rival SK Hynix Inc. in the booming artificial intelligence chi
+SK Hynix’s HBM chip orders fully booked; 12-layer HBM3E in Q3: CEO
+SK Hynix CEO Kwak Noh-jung unveils its HBM chip development roadmap at a press conference at the company's headquarters on May 2, 2024
+ICHEON, Gyeonggi Province – SK Hynix Inc., the world’s second-largest memory chipmaker after Samsung Electronics Co., said on Thursday its capacity
+Samsung set to triple HBM output in 2024 to lead AI chip era
+Choi Jin-hyeok, corporate EVP and head of the R&D Center, Samsung Semiconductor US, speaks at Memcon 2024
+SILICON VALLEY – Samsung Electronics Co., the world’s largest memory chipmaker, will likely triple its high bandwidth memory (HBM) chip production volume this year from last
+Samsung rallies on expectations of Nvidia’s HBM order
+Nvidia CEO Jensen Huang talks about processing units during the keynote address of GTC in San Jose, Calif., on March 18, 2024. (Courtesy of AP via Yonhap)
+SAN JOSE, Calif. – Samsung Electronics Co.'s stock zoomed on Wednesday after the world’s most famous AI chip provider Nvidia Cor
+SK Hynix mass-produces HBM3E chip to supply Nvidia
+(Courtesy of SK Hynix)
+SK Hynix Inc., the world’s No. 2 memory chipmaker, began mass-producing HBM3E, the best-performing DRAM chip for AI applications, for the first time in the industry to supply Nvidia Corp., the leading global semiconductor designer. SK Hynix said on Tuesday it p
+Samsung doubles down in HBM race with largest memory
+Samsung's HBM3E 12H (Courtesy of Samsung Electronics)
+Samsung Electronics Co. has developed the industry’s first 36-gigabyte (GB) 12-layer high-value, high-performance memory chip in a bid to restore its reputation as a memory giant in the burgeoning high bandwidth memory (HBM) market cur

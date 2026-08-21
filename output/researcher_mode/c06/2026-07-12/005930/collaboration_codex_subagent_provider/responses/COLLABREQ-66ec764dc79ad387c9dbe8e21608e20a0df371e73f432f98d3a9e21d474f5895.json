@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "744a48df81396a3c04f7dd2bdd190da9ed944a5b26a9ceb90e34c0c5325513a1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-8ae1e6c1581a41c3d6263f38",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.01,
+        "rationale": "Scribd 재게시 페이지는 원 발행사·원문 내용·current target valuation을 확인할 수 없는 제3자 route다."
+      },
+      {
+        "candidate_id": "SGCAND-14db6efb66a839cafb21d932",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.33,
+        "rationale": "2026-06-24 유안타 Daily의 삼성전자 단독 목표가격·이익 요약은 동일 peer·period·P/B 비교표 단서가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-50d3f5055ca4f4807f814c7a",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "한국카본 017960의 PBR band로 숫자가 있어도 삼성전자 또는 반도체 peer subject가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b8acbbc02ed9bc2134d7d554",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "GTC 현장 탐방 및 전기전자 top picks 보고서로 삼성전자 peer P/B의 동일 기준 수치를 제시할 단서가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-6fd09cd134b1cac6b7be078d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "한국경제 재게시 증권업 보고서로 한국투자증권·삼성증권이 subject이며 삼성전자 005930와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-0513df0f87d18513a557f859",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "대덕전자 353200 보고서의 PCB peer multiples로 삼성전자 memory peer band가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5f869cb3161787d999f796ca",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.32,
+        "rationale": "2026-06-25 유안타 Daily에 반복된 삼성전자 단독 추천 문구이며 peer identity와 같은 기간 P/B 수치가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-fd86fe9e40cc5ed7631382f3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "독립 CTT 리서치의 에프에스티 EUV 장비 보고서로 issuer와 requested broker source provenance가 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b8d4f7bd4c4532511755dc02",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.05,
+        "rationale": "하나 Daily의 다종목 추천 목록으로 삼성전자 이름 외에 peer valuation 자료가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-4a2444d5c7af67ca9f6c941c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.06,
+        "rationale": "2025년 발간된 광범위한 2026 포럼 자료로 삼성전자와 peer의 동일 기준 P/B 표가 snippet에 식별되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b2408de99981f6eb3951b763",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.3,
+        "rationale": "2026-06-18 유안타 Daily의 삼성전자 추천 요약은 target price와 메모리 전망뿐이며 peer band 입력이 없다."
+      },
+      {
+        "candidate_id": "SGCAND-bbea8c415ea2a9c3e7269c8d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "다올 조선 보고서로 선박·조선 peer group이 subject이며 삼성전자 반도체 valuation과 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "ranking_complete는 이 partition의 후보 분류 완료만 뜻한다. material 후보는 full fetch 후 2026-07-12 cutoff, 삼성전자 subject, peer identity, 동일 forecast period 및 numeric P/B를 검증해야 한다."
+    ]
+  },
+  "payload_hash": "c8fe1792648a764a8b36c5707fa5898d1a15b00e943e05ed837d4f0a86e2b058",
+  "production_score_authority": false,
+  "prompt_hash": "e27c3a9cce2e3c6be80b5544d4eed6fec55e5581d3273fb26a3d411dc14ff436",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-66ec764dc79ad387c9dbe8e21608e20a0df371e73f432f98d3a9e21d474f5895",
+  "response_id": "COLLABRESP-c62c2cb59e9fd800df0a09fa32dec4c16892ba89ac14fd71344eec3b88b10016",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

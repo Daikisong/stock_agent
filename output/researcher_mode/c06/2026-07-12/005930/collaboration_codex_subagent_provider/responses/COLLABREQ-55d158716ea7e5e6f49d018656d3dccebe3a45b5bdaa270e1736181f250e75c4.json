@@ -1,0 +1,301 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2e4333b061bb93c1522b143d",
+        "rationale": "발행사 2024년 1분기 earnings call에서 current canonical에 없는 당시 메모리 흑자전환, DRAM bit 출하 감소, DRAM ASP 상승, 재고평가 충당금 환입, 2024년 HBM bit 공급 확대 및 committed supply 고객 협의 완료만 추출했다. NAND 단독 facts, 비메모리 사업, 현재 시점에 기간이 끝난 2024~2025 전망·계획과 HBM3E 제품 일정은 current guidance로 재사용하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2e4333b061bb93c1522b143d",
+        "economic_mechanism": "출하량보다 ASP 개선에 집중한 제품 포트폴리오가 2024년 1분기 메모리 사업의 흑자전환으로 이어졌다.",
+        "exact_quote": "So this helped turn around the Memory business to profit\nfor both DRAM and NAND.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical에는 2026년 1분기 메모리 수익성 개선은 있으나 2024년 1분기 발행사 확인 흑자전환 point는 없다. 영업이익 금액이나 HBM 단독 이익은 원문에 없어 추론하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:PROFIT_TURNAROUND:2024-Q1",
+        "normalized_object": "2024년 1분기 메모리 사업 흑자전환",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q1",
+        "predicate": "삼성전자 메모리 사업이 2024년 1분기에 흑자전환했다",
+        "predicate_family": "MEMORY_PROFIT_TURNAROUND",
+        "primitive_tags": [
+          "MEMORY_PROFIT",
+          "TURNAROUND",
+          "ACTUAL_EARNINGS"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PROFIT_TURNAROUND",
+        "question_family_tags": [
+          "MEMORY_PROFIT_TURNAROUND",
+          "MEMORY_EARNINGS_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 사업 2024년 1분기 흑자전환",
+        "subject_id": "005930:MEMORY:PROFIT_TURNAROUND:2024-Q1",
+        "unit": "profit status",
+        "value": "returned to profit"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-2e4333b061bb93c1522b143d",
+        "economic_mechanism": "DRAM bit 출하량이 전분기 대비 mid-teens 감소해 같은 분기 흑자전환이 물량 증가보다 가격·믹스 개선에 의존했음을 보여준다.",
+        "exact_quote": "As for bit growth, DRAM declined by mid-10%, NAND by a low-single digit, but\nthe rise in ASP was actually above market expectations, nearly 20% for DRAM,\nlow-30% for NAND.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "발행사가 같은 분기의 가격·수익 개선과 함께 제시한 실제 DRAM volume counter다. 'mid-10%'를 임의의 단일 숫자로 정규화하지 않고 범위 표현을 유지한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:BIT_SHIPMENT_CHANGE:2024-Q1",
+        "normalized_object": "2024년 1분기 DRAM bit 출하량 QoQ mid-teens 감소",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-Q1 vs 2023-Q4",
+        "predicate": "삼성전자 DRAM bit 출하량이 2024년 1분기에 전분기 대비 mid-teens 감소했다",
+        "predicate_family": "DRAM_BIT_SHIPMENT_QOQ_CHANGE",
+        "primitive_tags": [
+          "DRAM_BIT_GROWTH",
+          "VOLUME_DECLINE",
+          "EARNINGS_COUNTER"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_BIT_SHIPMENT_QOQ_CHANGE",
+        "question_family_tags": [
+          "DRAM_BIT_SHIPMENT_QOQ_CHANGE",
+          "MEMORY_VOLUME_PRICE_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024년 1분기 DRAM bit 출하 변화",
+        "subject_id": "005930:MEMORY:DRAM:BIT_SHIPMENT_CHANGE:2024-Q1",
+        "unit": "percent range",
+        "value": "mid-teens decline"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2e4333b061bb93c1522b143d",
+        "economic_mechanism": "DRAM ASP가 전분기 대비 약 20% 올라 bit 출하 감소를 상쇄하고 메모리 흑자전환을 이끌었다.",
+        "exact_quote": "As for bit growth, DRAM declined by mid-10%, NAND by a low-single digit, but\nthe rise in ASP was actually above market expectations, nearly 20% for DRAM,\nlow-30% for NAND.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 2026년 메모리 ASP 및 2026년 3분기 D램 전망과 다른 2024년 1분기 발행사 actual이다. 'nearly'를 반영해 약 20%로만 기록한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:ASP_CHANGE:2024-Q1",
+        "normalized_object": "2024년 1분기 DRAM ASP QoQ 약 20% 상승",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q1 vs 2023-Q4",
+        "predicate": "삼성전자 DRAM ASP가 2024년 1분기에 전분기 대비 약 20% 상승했다",
+        "predicate_family": "DRAM_ASP_QOQ_CHANGE_ACTUAL",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "REALIZED_PRICING",
+          "QOQ_CHANGE"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_ASP_QOQ_CHANGE_ACTUAL",
+        "question_family_tags": [
+          "DRAM_ASP_QOQ_CHANGE_ACTUAL",
+          "MEMORY_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024년 1분기 DRAM ASP 변화",
+        "subject_id": "005930:MEMORY:DRAM:ASP_CHANGE:2024-Q1",
+        "unit": "percent",
+        "value": 20
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2e4333b061bb93c1522b143d",
+        "economic_mechanism": "메모리 가격 상승이 재고평가손실 충당금 환입으로 이어져 2024년 1분기 이익에 비반복적 보탬을 줬다.",
+        "exact_quote": "And due to rise in pricing, we were able to write-back\nprovisioning on inventory valuation loss, which also contributed to our profits.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "발행사가 흑자전환의 일부가 영업 믹스 외 재고평가 충당금 환입에서 왔음을 직접 설명한 이익 질 fact다. 환입액은 제시되지 않아 금액을 만들지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:INVENTORY_PROVISION_WRITEBACK:2024-Q1",
+        "normalized_object": "메모리 가격 상승에 따른 재고평가 충당금 환입 이익 기여",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q1",
+        "predicate": "메모리 가격 상승에 따른 재고평가손실 충당금 환입이 삼성전자 2024년 1분기 메모리 이익에 기여했다",
+        "predicate_family": "MEMORY_INVENTORY_VALUATION_PROVISION_WRITEBACK",
+        "primitive_tags": [
+          "INVENTORY_VALUATION",
+          "PROVISION_WRITEBACK",
+          "NONRECURRING_PROFIT_SUPPORT"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_INVENTORY_VALUATION_PROVISION_WRITEBACK",
+        "question_family_tags": [
+          "INVENTORY_PROVISION_WRITEBACK",
+          "MEMORY_EARNINGS_QUALITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 재고평가 충당금 환입",
+        "subject_id": "005930:MEMORY:INVENTORY_PROVISION_WRITEBACK:2024-Q1",
+        "unit": "earnings contribution",
+        "value": "inventory valuation loss provision writeback contributed to profit"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2e4333b061bb93c1522b143d",
+        "economic_mechanism": "삼성전자가 2024년 HBM bit 공급을 전년 대비 3배 이상으로 확대했다고 밝혀 AI 메모리 수요에 대응하는 공급 기반의 크기를 제시했다.",
+        "exact_quote": "In 2024, our HBM bit supply actually has been expanded by more than threefold\nversus last year. And we have already completed discussions with our customers\nfor that committed supply.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 2026년 HBM4 공급 facts와 다른 2024년 발행사 HBM 공급 규모 비교다. 공급 확대를 실제 고객 매출 또는 전량 출하로 해석하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:BIT_SUPPLY_EXPANSION:FY2024",
+        "normalized_object": "2024년 HBM bit 공급 전년 대비 3배 이상 확대",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024 vs FY2023",
+        "predicate": "삼성전자가 2024년 HBM bit 공급을 전년 대비 3배 이상으로 확대했다고 밝혔다",
+        "predicate_family": "HBM_BIT_SUPPLY_YOY_EXPANSION",
+        "primitive_tags": [
+          "HBM_SUPPLY",
+          "YOY_EXPANSION",
+          "CAPACITY_RESPONSE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_BIT_SUPPLY_YOY_EXPANSION",
+        "question_family_tags": [
+          "HBM_BIT_SUPPLY_EXPANSION",
+          "HBM_CAPACITY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024년 HBM bit 공급 확대",
+        "subject_id": "005930:MEMORY:HBM:BIT_SUPPLY_EXPANSION:FY2024",
+        "unit": "times YoY",
+        "value": ">3"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2e4333b061bb93c1522b143d",
+        "economic_mechanism": "전년 대비 확대된 2024년 HBM 공급 물량에 관해 고객 협의가 이미 완료됐다는 발행사 설명은 단순 생산계획보다 높은 배정 가시성을 제공한다.",
+        "exact_quote": "In 2024, our HBM bit supply actually has been expanded by more than threefold\nversus last year. And we have already completed discussions with our customers\nfor that committed supply.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사가 2024년 확대 공급 물량의 고객 협의 완료를 직접 밝혔다. 고객명·구매의무·취소제한·가격·계약기간은 제시되지 않아 법적 확정계약으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:COMMITTED_SUPPLY_DISCUSSIONS:FY2024",
+        "normalized_object": "2024년 HBM committed supply 고객 협의 완료",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024",
+        "predicate": "삼성전자가 2024년 HBM committed supply에 대한 고객 협의를 완료했다고 밝혔다",
+        "predicate_family": "HBM_COMMITTED_SUPPLY_CUSTOMER_DISCUSSIONS",
+        "primitive_tags": [
+          "HBM_CUSTOMER_DISCUSSIONS",
+          "COMMITTED_SUPPLY",
+          "ALLOCATION_VISIBILITY"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_COMMITTED_SUPPLY_CUSTOMER_DISCUSSIONS",
+        "question_family_tags": [
+          "HBM_COMMITTED_SUPPLY_DISCUSSIONS",
+          "HBM_CUSTOMER_ALLOCATION_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024년 HBM committed supply 고객 협의",
+        "subject_id": "005930:MEMORY:HBM:COMMITTED_SUPPLY_DISCUSSIONS:FY2024",
+        "unit": "discussion status",
+        "value": "customer discussions completed for committed supply"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "2024년 2분기 HBM3E 12H 양산·매출 인식, 2024년 말 HBM3E 믹스, 2025년 HBM 공급 계획과 서버 SSD 성장 전망은 현재 시점에 기간이 끝난 과거 전망이라 current FORWARD_GUIDANCE로 만들지 않았다.",
+      "NAND 및 서버 SSD 단독 수치·전망은 deterministic mechanism scope의 금지 product family라 제외했다.",
+      "메모리 투자가 포함된 DS 9.7조원 CAPEX는 Foundry·System LSI 혼합 수치라 메모리 CAPEX로 귀속하지 않았다.",
+      "System LSI·Foundry·Display·MX·VD의 실적과 전망은 target 메모리 objective 밖이라 제외했다."
+    ]
+  },
+  "payload_hash": "0fc9e015baa573a5160a80b05ae941f192d3ca420a150fbf2ea41da2c3c514e0",
+  "production_score_authority": false,
+  "prompt_hash": "cf17441f5ef9724353b830fbf155d92dcb1ddd91b3d3bbf5f69da45d445f3c48",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-55d158716ea7e5e6f49d018656d3dccebe3a45b5bdaa270e1736181f250e75c4",
+  "response_id": "COLLABRESP-a881b4ea4cb2abb0205915c512f63a0d16d2e6e236209dd123d67f81e78f0352",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

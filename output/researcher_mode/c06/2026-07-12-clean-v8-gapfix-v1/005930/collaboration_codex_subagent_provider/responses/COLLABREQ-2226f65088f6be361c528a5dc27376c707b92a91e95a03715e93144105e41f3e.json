@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-e5ec703c409301f3dd77a087",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 채널 또는 공유용 링크로 원문 내용·발행일·대상 귀속을 보존하는 독립 full-fetch 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e63f86e958ba214fd317e5eb",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 또는 발견 경로이지만 현재 C06 목적의 시점 특정 HBM 고객·공급·CAPA·가격·실적 원문으로 확인되지 않아 material route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e6593a46da60ce73a3f453ef",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 회사·채용·홈 landing page로 시점 특정 HBM·메모리 고객·공급·수익성 원문을 특정하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-e6cb05a35aaa82bb598f3041",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e710c797003c7a1087632d8e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "개인정보·로그인·연락처·뉴스레터 페이지로 경제적 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e733c8f5b99562c129b2cb6c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e859469c5ee9511b0d7e3186",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e87e3bcb63542a9fcb685967",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 반도체 경로이나 Foundry 공정·생태계·행사 페이지로 DS 메모리 HBM의 고객·공급·수익성 메커니즘과 범위가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-e88648352090404ac00e1112",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 회사·채용·홈 landing page로 시점 특정 HBM·메모리 고객·공급·수익성 원문을 특정하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-e94b03599ad8634b4d99520d",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ea1e2d83d9c5a536b22af5a5",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ea86bd13470a98e629393009",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 반도체 경로이나 Foundry 공정·생태계·행사 페이지로 DS 메모리 HBM의 고객·공급·수익성 메커니즘과 범위가 다르다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "4e07e23318409a4312e2ed27f2fd5b74d9875ec84da353161ac3ff0286052e12",
+  "production_score_authority": false,
+  "prompt_hash": "2eee5da16fcf2b2e45b76cb76ae2b1db84e10fee7ae02140fbb2633b5bdcd364",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2226f65088f6be361c528a5dc27376c707b92a91e95a03715e93144105e41f3e",
+  "response_id": "COLLABRESP-c2f85fb45fc4718cca85afc65aa6c272b5f037f7f8470388eb5473b402a24ed6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

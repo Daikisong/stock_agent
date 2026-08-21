@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      11.6,
+      14.4
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23는 POSITIVE ordinal anchor로 [6.84, 8.74] 범위를 제시한다. 현재 사실과 정확한 기업·기간 대응은 아니므로 점수 scale 경계로만 사용한다.",
+      "ORDTRANSFER-9205e8ab347aff38184b148a는 COUNTER ordinal anchor로 [4.478571, 6.378571] 범위를 제시한다. 현재 사실과 정확한 기업·기간 대응은 아니므로 점수 scale 경계로만 사용한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c07ed486e6d67134d19d6951",
+      "EFACT-c418009dc8a6493dd0a098b4"
+    ],
+    "disagreements": [
+      "메모리 전체 100% 가동률을 HBM 전용 sold-out 또는 장기 allocation으로 해석하는 데 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "proposed_points": 13.0,
+    "rationale": "메모리 100% 가동과 HBM 가격 상승 주도는 병목·가격력의 직접 positive이고 제품 실행·고객 협업도 뒷받침한다. 다만 메모리 전체 capacity는 HBM 전용 locked CAPA가 아니며 월/분기 가격 합의와 고객·재고 위험을 반영해 13.0점으로 보정한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "HBM 전용 CAPA, 장기 backlog·allocation·선수금과 정량 ASP actual이 없다.",
+    "why_not_lower": "100% 메모리 가동, HBM 가격 주도, 제품 실행 및 고객 ASIC 협업이라는 직접 positive가 있다."
+  },
+  "payload_hash": "d550eb2112d1b3e11b4311a8ed43a35aa1264b7e57143bb36b7a7baa384a848e",
+  "production_score_authority": false,
+  "prompt_hash": "e74c19f7d66e716937013d860a0e8f5538bc4d20bd5aa642b17af8fe8c959072",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-97994e589d41781b179a469d9c20942be593ead0985cee2ed365d1cd32a28f8f",
+  "response_id": "COLLABRESP-71f9803296df0f97debb8f33df1dc7780965f805d73ae7b0886df9aa770f6be4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

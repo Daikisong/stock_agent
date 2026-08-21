@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      14.3,
+      17.5
+    ],
+    "anchor_comparisons": [
+      "CANCH-0f9dd0807dd915f5d67d49eb는 POSITIVE 역할의 STRONG ordinal anchor이며 허용 대역은 17.01~19.11점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 MEDIUM와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "CANCH-1aa76cb8e89d85cd78d325f4는 COUNTER 역할의 MEDIUM ordinal anchor이며 허용 대역은 9.95~12.05점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "두 anchor 모두 exact match가 아니므로 현재 support·counter의 균형과 component 최대점수에 맞춰 보수적으로 보간했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-80daa96c00cd5d7b5782c27a",
+      "EFACT-a79b8e5bedf94ee44504539e",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "analyst의 경제 메커니즘 확인은 수용하지만 미해결 귀속·계약·지속성 자료 때문에 상단 일반화는 제한한다.",
+      "skeptic의 하방 위험은 수용하지만 이미 실현된 current positive 사실을 제거하는 수준의 감액은 과도하다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-0f9dd0807dd915f5d67d49eb",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 16.0,
+    "rationale": "계약·주문 기반 실적 가시성의 support와 counter를 모두 같은 component 척도에서 비교했다. 긍정 측면은 이미 확보한 고객 구매주문, 완료된 중장기 물량 계약, 구속력 있는 다년계약과 완판된 HBM4 생산여력은 2026년 출하량을 단순 수요 기대보다 강하게 고정한다. 구조화 리비전 이력에서도 영업이익 방향은 상승이고 장기간 EPS 추정 상향 폭이 컸다. 반면 반대 측면은 계약 세부가 NDA로 닫혀 구매의무·취소·가격조정 조건을 검증할 수 없다. LTA 가격이 현물 상승을 늦게 반영할 수 있고 고객 제품 출하 지연은 HBM4 매출 인식과 이익 기여를 뒤로 미룰 수 있으며, 성과평가에 따른 물량 배분도 고정되지 않는다. 추가로 공개 가능한 HBM 계약기간·물량·가격조정·선수금·취소·위약 조건과 qualification·allocation 기준이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다. blind ordinal anchor는 exact match가 아니므로 현재 fact shape와 미해결 gap 사이의 중간 대역으로 보정했다.",
+    "support_fact_ids": [
+      "EFACT-16ee255de13b7acf64e98eaa",
+      "EFACT-1ec0fca52ff40b01ed1890f6",
+      "EFACT-83b9afe8727ec3fd962620a4",
+      "EFACT-8b6707b4ab45897a5a448a93",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-d05fe1b53b1bb5081130ea1c"
+    ],
+    "why_not_higher": "구매주문과 계약 존재는 강하지만 NDA로 구매의무·가격·취소조건을 확인할 수 없고 고객 일정 및 LTA 가격 지연 위험이 남는다. 계약 존재와 실제 구매의무·마진·인식시점 가시성을 구분한다.",
+    "why_not_lower": "발행사가 구매주문 확보, 중장기 계약 완료, 다년계약의 구속력과 HBM4 완판을 각각 확인해 단순 전망보다 높은 물량 가시성이 있다. 기존 current positive facts는 그대로 유효하다."
+  },
+  "payload_hash": "b325963f4811df50e9a53d8603b8612830f513eeb40b4b8dc71d54ce4e862904",
+  "production_score_authority": false,
+  "prompt_hash": "84db1161fee5b58e8d81d6597a060fc547dfde60f53e7b97c444da6c37c83bd9",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-51cb22f1f4760077cb55aef31a4e94b51db084e7e406b85620d77e9cb5d4927d",
+  "response_id": "COLLABRESP-1c4ec04c071bfc9c9e54d9eaf239085c834064a19960b9f11c0ba4953130519b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

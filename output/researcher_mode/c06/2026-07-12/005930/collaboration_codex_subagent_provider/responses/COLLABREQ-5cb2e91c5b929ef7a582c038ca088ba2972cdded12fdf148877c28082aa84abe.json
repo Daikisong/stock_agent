@@ -1,0 +1,73 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0d47071adfd4d63f2079aedc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "언론·뉴스 재전 경로로서 고객사 공식 원문이 아니다. 관련 주제를 언급하더라도 스니펫은 discovery metadata일 뿐이며 CUSTOMER_OFFICIAL provenance가 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-32f2a209b6f1b1360d443361",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "글로벌 3대 메모리 제조사의 최신 동향 &gt; 하드웨어 뉴스 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-0a4111ca423c967f08818461",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "언론·뉴스 재전 경로로서 고객사 공식 원문이 아니다. 관련 주제를 언급하더라도 스니펫은 discovery metadata일 뿐이며 CUSTOMER_OFFICIAL provenance가 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-7ac8dcd4f8953836c37bfa11",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "증권·자문 PDF 경로는 고객사 공식 원문이 아니다. 스니펫이나 보고서 해석으로 고객 qualification, 플랫폼 통합 또는 공급 관계를 입증할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "모든 후보를 discovery route로만 판정했으며 스니펫을 EvidenceFact나 점수 근거로 사용하지 않았다.",
+      "이 partition에서는 요청된 CUSTOMER_OFFICIAL 고객사 원문 경로가 확인되지 않았다. 제3자 재전과 삼성전자 자체 발행자료는 고객사 독립 확인을 대체하지 않는다."
+    ]
+  },
+  "payload_hash": "a7a29e97f004530b5853cd281b02575a98e34c0a343f92070d71863c36a2d098",
+  "production_score_authority": false,
+  "prompt_hash": "b24966fa870759f9e9f05a26d650639a8dd7a18f8af1b8cc2a30eeb6232e5bae",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5cb2e91c5b929ef7a582c038ca088ba2972cdded12fdf148877c28082aa84abe",
+  "response_id": "COLLABRESP-a73750089ec86e9898e8d0f68872f600ccfb07e3ba264ffe7d00c0342d684f93",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

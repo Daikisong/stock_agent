@@ -1,0 +1,326 @@
+DS Tech 이수림 – Telegram
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림입니다.
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림입니다.
+DS Tech 이수림
+@dssemicon
+4.17K
+subscribers
+491
+photos
+141
+files
+1.04K
+links
+DS투자증권 반도체 Analyst 이수림입니다.
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+DS Tech 이수림
+4.17K subscribers
+DS Tech 이수림
+삼성전자_기업리포트_250106.pdf
+943.1 KB
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+[반도체] 삼성전자 - 4Q24 Pre: 컨센서스 하회
+투자의견 : 매수(유지)
+목표주가 : 77,000원(하향)
+현재주가 : 54,400원(01/03)
+Upside : 41.5%
+1. 4Q24 Preview: 수요 부진 속 비용 증가
+- 삼성전자 4Q24 매출액 76.3조원(-4% QoQ, +13% YoY), 영업이익 7.5조원(-18% QoQ, +166% YoY, OPM 10%) 전망
+- 사업부별 영업이익은 DS 3.6조원(메모리 5.5조원, SLSI/파운드리 -1.9조원), DX 2.5조원, SDC 1조원 등으로 세부 추정
+- HBM과 서버용 DDR5를 제외한 PC, 모바일 중심으로 고객사들의 재고 조정이 다시 시작되며 범용 메모리 수요가 예상보다 부진
+2. 상반기까지는 분위기 반전이 쉽지 않을 것
+- 4분기는 전분기 대비 DRAM B/G -7% 감소와 ASP 1% 증가를, NAND B/G -4%와 ASP -7% 감소 추정
+- eSSD 역시 아직까지는 가격 방어가 되고 있지만 내년에는 고객사들의 가격 저항이 높아질 것이라 판단
+- SDC는 북미 고객사향 OLED 패널 경쟁 심화에 따른 ASP 하락으로 매출과 영업이익 감소 전망하며 내년 1분기까지 영향
+3. 투자의견 매수, 목표주가 77,000원으로 하향
+- 4Q24 영업이익을 기존 추정 대비 -25% 조정하며 2025년 추정 영업이익 역시 34.9조원으로 -24% 조정
+- 다만 1분기를 지나면서 업황 반전이 나타날 수 있다는 판단
+- 또한 중국 정부의 2025년 적극적인 부양책 실시와 내수 촉진을 통한 수요 반등에 대한 기대감도 배제할 수 없음
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+1.33K
+views
+22:13
+DS Tech 이수림
+148
+views
+22:55
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+01/06 테크 주요 뉴스
+◆ “들어봤나 16층”...SK하이닉스, CES서 업계 최고층 HBM3E 선보인다
+https://bit.ly/40jOlBC
+◆ 한국 반도체 수출지형도 대변화…중 의존 낮아지고 미·대만 비중 커져
+https://bit.ly/40j9XxZ
+◆ 반도체 특별법, '주 52시간 예외' 빠진 패스트트랙 통과 가능할까
+https://bit.ly/3BTYrje
+◆ 데이터센터發 호재에...'아픈 손가락' SK하이닉스 中다롄 공장 몸집 커졌다
+https://bit.ly/4hlCatR
+◆ Foxconn, AI 수요에 대한 기록적인 4분기 매출로 추정치를 상회
+https://bit.ly/4amAeyZ
+◆ 마이크론, 새해에도 D램 설비투자 활발…삼성·SK '추격'
+https://bit.ly/4iWOYZb
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+매일경제
+“들어봤나 16층”...SK하이닉스, CES서 업계 최고층 HBM3E 선보인다 - 매일경제
+SK하이닉스가 오는 7∼10일(현지 시간) 미국 라스베이거스에서 열리는 ‘CES 2025’에 참가해 ‘풀 스택 인공지능(AI) 메모리 프로바이더’(전방위 AI 메모리 공급자)로서 청사진을 제시한다고 3일 밝혔다. SK하이닉스는 ‘혁신적인 AI 기술로 지속가능한 미래를 만든다’를 주제로 SK텔레콤, SKC, SK엔무브 등 SK 관계사들과 공동 전시관을 운영한
+169
+views
+23:02
+DS Tech 이수림
+-폭스콘 AI 서버 수요 호조로 4분기 사상 최대 매출 기록
+-스마트폰 등 컨슈머 수요는 전년동기대비 flat한 수준으로 유지
+https://finance.yahoo.com/news/foxconn-fourth-quarter-revenue-15-074825675.html
+Yahoo Finance
+Foxconn beats estimates with record fourth-quarter revenue on AI demand
+Taiwan's Foxconn, the world's largest contract electronics maker, beat expectations to post its highest-ever revenue for the fourth quarter on continued strong demand for artificial intelligence (AI) servers. Revenue for Apple's biggest iPhone assembler…
+198
+views
+00:41
+DS Tech 이수림
+DS Tech 이수림
+https://n.news.naver.com/article/001/0015141238?sid=104
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+01/07 테크 주요 뉴스
+◆ SK하이닉스, 25년 HBM 캐파 월 17만장까지 확대
+https://bit.ly/4abppzp
+◆ AI 서버 시장, 2025년까지 계속 성장할 것이며 관련 산업 가치는 2,980억 달러에 이를 것으로 예상
+https://bit.ly/4gKhkEg
+◆ TSMC의 3nm 웨이퍼 가격 현재 18,000달러이며 10년 동안 3배 이상 증가
+https://bit.ly/4gUZi28
+◆ CXMT, DDR5 양산 시작, 주요 중국 서버 제조업체의 검증을 받은 것으로 알려짐
+https://bit.ly/4gOFGgf
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+다음 - 서울경제
+[단독] SK, 올 HBM 캐파 月17만장까지 확대
+[서울경제] SK하이닉스가 올해 고대역폭메모리(HBM)용 D램 생산 능력을 12인치 웨이퍼 기준 월 17만 장까지 확대한다. 최대 고객사인 엔비디아 외에도 굴지의 인공지능(AI) 칩 회사들의 수요 폭증에 대응하기 위한 움직임으로 풀이된다. 6일 업계에 따르면 SK하이닉스 경영진은 지난해 월 10만 장이었던 HBM용 D램 생산 능력을 올해 말까지 70% 늘
+168
+views
+23:52
+DS Tech 이수림
+https://www.youtube.com/live/k82RwXqZHY8
+YouTube
+NVIDIA CEO Jensen Huang Keynote at CES 2025
+Watch NVIDIA CEO Jensen Huang unveil groundbreaking RTX 50 series GPUs powered by the Blackwell architecture. Witness revolutionary advancements in AI, accelerated computing, and industrial digitalization transforming every industry.
+0:00:00 CES 2025 Keynote…
+160
+views
+00:48
+DS Tech 이수림
+https://n.news.naver.com/article/016/0002412488
+Naver
+[속보] 젠슨 황 “신규 블랙웰 기반 플랫폼에 HBM 576개 탑재”
+젠슨 황 엔비디아 CEO. 김민지 기자 젠슨 황 엔비디아 CEO가 6일(현지시간) 미국 라스베이거스 만달레이베이 컨벤션센터에서 진행된 ‘CES 2025’ 기조연설에서 엔비디아의 최신 GB200 NVL72 플랫폼에 고
+169
+views
+04:07
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+01/08 테크 주요 뉴스
+◆ NVIDIA, CES에서 MediaTek과의 공동 개발 칩을 탑재한 개인용 AI 컴퓨터 공개
+https://bit.ly/4074pVV
+◆ 미국, CXMT, 텐센트, CATL 등을 군사 지원과 관련된 중국 기업 목록에 추가
+https://bit.ly/4abqKqc
+◆ 인텔, 18A 노드로 제조된 최초의 프로세서인 Panther Lake, 2H25 출시 확정
+https://bit.ly/40q6kWQ
+◆ AMD, 델에 공급 확대..."인텔에 타격"
+https://bit.ly/3ZZ5DTa
+◆ 中 국책펀드, 반도체 공급망 확충에 32조원 우선 투입
+https://bit.ly/3DNsQjS
+◆ 젠슨 황 엔비디아, 'RTX' 공개하며...삼성·SK아닌 "마이크론 탑재"
+https://bit.ly/3ZZqiGw
+◆ NXP, 중국 시장의 불확실성 속에서도 인도가 2030년까지 전체 반도체 매출의 8-10% 차지할 것으로 예측
+https://bit.ly/40a39RM
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+[News] NVIDIA Unveils Personal AI Computers with MediaTek Co-Developed Chip at CES; Secures Toyota Deal | TrendForce News
+In addition to the RTX 50 series, NVIDIA has introduced more novelties at CES 2025. Dressed himself in an extra shiny leather jacket, NVIDIA CEO Jense...
+199
+views
+22:30
+DS Tech 이수림
+Forwarded from
+AWAKE - 실시간 주식 공시 정리채널
+2025.01.08 08:36:20
+기업명: 삼성전자(시가총액: 330조 7,260억)
+보고서명: 연결재무제표기준영업(잠정)실적(공정공시)
+매출액 : 750,000억(예상치 : 772,407억)
+영업익 : 65,000억(예상치 : 81,694억)
+순이익 : -(예상치 : 76,789억)
+**최근 실적 추이**
+2024.4Q 750,000억/ 65,000억/ -
+2024.3Q 790,987억/ 91,834억/ 101,009억
+2024.2Q 740,683억/ 104,439억/ 98,413억
+2024.1Q 719,156억/ 66,060억/ 67,547억
+2023.4Q 677,799억/ 28,247억/ 63,448억
+공시링크:
+https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250108800024
+회사정보:
+https://finance.naver.com/item/main.nhn?code=005930
+79
+views
+23:36
+DS Tech 이수림
+「삼성전자 2024년 4분기 잠정실적』 설명자료
+2024 년 4분기 잠정실적이 시장 기대를 크게 하회하는 상황에서 확정 실적 발표일까지 시장과 투자자들의 혼선을 완화하고 실적에 대한 이해를 돕기 위해 주요 하락 요인에 대해 설명하고자 함
+* DS는 IT 향 제품 중심의 업황 악화로 매출 및 이익 하락
+- 메모리 사업은 PC/모바일 중심 Conventional 제품 수요 약세 속 고용량 제품 판매 확대로 4분기 메모리 역대 최대 매출 달성에도 불구, 미래 기술 리더십 확보를 위한 연구개발비 증가 및 선단공정 생산능력 확대를 위한 초기 램프업 비용 증가 영향으로 실적 감소
+- 비메모리 사업은 모바일 등 주요 응용처 수요 부진 가운데, 가동률 하락 및 연구개발비 증가 영향으로 실적 하락
+* DX는 모바일 신제품 출시 효과 감소 및 업체간 경쟁 심화로 실적 감소
+490
+views
+edited
+23:58
+DS Tech 이수림
+삼성전자 4Q24 잠정 실적 관련 사업부별 당사 영업이익 추정치 공유드립니다.
+전사 6.5조원
+- DS 3조원(메모리 5.4조원, LSI/파운드리 -2.4조원)
+- DX 2.4조원
+- SDC 0.8조원
+- Harman 0.3조원
+❤
+3
+226
+views
+01:18
+DS Tech 이수림
+삼성전자_잠정실적_250108.pdf
+545.8 KB
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+[반도체] 삼성전자 4Q24 잠정실적 Comment
+1. 4Q24 영업이익 6.5조원으로 낮아진 눈높이를 하회
+- 매출액 75조원(+11% YoY, -5% QoQ), 영업이익 6.5조원(+130% YoY, -29% QoQ, OPM 8.7%)
+- 전반적인 비용 증가와 더불어 LSI/Foundry 부문의 저조한 가동률이 마진 훼손에 영향을 크게 미쳤을 것이라는 판단
+2. [사업부별 실적 추정]
+- DS 2.9조원 (DRAM 4.8조, NAND 0.5조, LSI/Foundry -2.4조)
+- DX 2.4조원 (VD/CE 0.2조, MX/NW 2.2조)
+- SDC 0.8조원
+- Harman 0.4조원
+3. 투자의견 매수, 목표주가 77,000원 유지
+- Foundry 부문 적자(-2.4조원)가 3분기(-1.5조원) 대비 확대되었으며 비슷한 기조가 1Q25에도 이어질 것으로 전망
+- 이는 1분기에도 Foundry의 유의미한 가동률 상승이 전망되지 않으며, 공정 개선 및 시제품 개발을 위한 지속적인 웨이퍼 투입에 기인
+- 다만 하반기 DRAM 가격 반등 전망하며 1분기 기점으로 실적 바닥과 업황 반전의 기회를 찾을 수 있다는 판단
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+1.48K
+views
+edited
+06:31
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+01/09 테크 주요 뉴스
+◆ SK하이닉스, CES서 HBM3E 16단 실물 공개...엔비디아와 협력 뽐내
+https://bit.ly/3DJaDnA
+◆ AWS, 조지아의 클라우드 및 AI 인프라에 최소 110억 달러 투자 계획
+https://bit.ly/4jaP2nY
+◆ Micron, HBM3e 제품을 위한 싱가포르의 HBM Advanced Packaging 시설 건설 착수
+https://bit.ly/4gD4vf3
+◆ [CES 2025] 엔비디아 차세대 PC용 GPU엔 마이크론이 독점 공급?… 젠슨 황 발언의 오해와 진실은
+https://bit.ly/4a6xUMd
+◆ TSMC, Apple의 두 번째 칩을 수주했으며 Nvidia가 대기 중이라는 루머
+https://bit.ly/4gLOZO2
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+ZDNet Korea
+SK하이닉스, CES서 HBM3E 16단 실물 공개...엔비디아와 협력 뽐내
+SK하이닉스가 이달 7일부터 10일까지 미국 라스베이거스에서 개최되는 세계 최대 IT 전시회 ‘CES 2025’에서 5세대 HBM(고대역폭메모리) HBM3E 16단 제품 실물을 공개해 관람객으로부터 주목을 받았다. HBM3E 16단은 현존 최고 사양의 제품이다.SK하이닉스는 SK그룹과 공동...
+191
+views
+22:38
+DS Tech 이수림
+GDDR7은 3사가 모두 공급
+https://m.sedaily.com/NewsView/2GNMK5YAV6#cb
+서울경제
+[속보] 젠슨 황 "RTX 50 GDDR7, 삼성이 초도 공급"
+산업 > IT 뉴스: 젠슨 황 엔비디아 최고경영자(CEO)가 CES 2025에서 촉발한 그래픽메모리(GDDR)7 논란에 “삼성전자(005930)가 초도 공급을 맡는...
+222
+views
+23:02
+DS Tech 이수림
+https://www.mk.co.kr/news/world/11213365
+매일경제
+[속보] “美, AI칩 수출통제 전세계로 확대…한국 등 동맹은 예외” - 매일경제
+미국 바이든 행정부가 인공지능(AI) 개발에 필요한 반도체를 동맹국에만 제한 없이 수출하고 나머지 국가에는 구매할 수 있는 양을 한정하는 새로운 수출통제를 계획하고 있다고 블룸버그통신이 8일(현지시간) 보도했다. 바이든 행정부는 AI 개발이 우방국에서 집중적으로 이뤄지고, 세계 기업들이 미국의 기준을 따르도록 하기 위해 데이터센터에 사용되는 AI 반도체의
+194
+views
+23:41
+DS Tech 이수림
+SK하이닉스_기업리포트_250110.pdf
+881.8 KB
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+[반도체] SK하이닉스 - 4Q24 Pre: HBM이 주는 안정감
+투자의견 : 매수(유지)
+목표주가 : 290,000원(유지)
+현재주가 : 205,000원(01/09)
+Upside : 41.5%
+1. 4Q24 Preview: 큰 이변 없이 기대를 부합할 것
+- 매출액 19.9조원(+13.4% QoQ, +76.3% YoY), 영업이익 8.2조원(+16.5% QoQ, +2,267.1% YoY, OPM 41.1%)으로 컨센서스 부합하는 실적을 전망
+- 전분기 대비 DRAM B/G +6%, ASP +6% 증가 및 NAND B/G +8% 증가와 ASP -6% 감소 추정
+- HBM 매출비중 4분기 DRAM 내 42%, 2024년 연간 전사 매출비중 20%, DRAM 내 매출비중 30% 차지 추정
+2. 커스텀 메모리 시장으로의 진입
+- Rubin향 HBM4 수요 대응을 위해 올해 하반기 HBM4 양산에 돌입하고 2026년 상반기 공급을 확대할 계획
+- HBM4에서 주목해야 할 점은 커스텀 HBM의 본격화 모멘텀
+- TSMC 파운드리 공정을 활용한 HBM4 베이스 다이로 현재 주요 고객사 이외에도 빅테크 고객사를 확보하기에 가장 유리한 지위에 있다는 판단
+3. 투자의견 매수, 목표주가 290,000원 유지
+- 2025년 HBM 매출비증은 DRAM 내 44%까지 확대되며 동사의 실적 안정성이 더욱 높아질 것
+- HBM4에서는 주문형 메모리의 성격이 더욱 강해질 것으로 전망
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+1.91K
+views
+edited
+22:03
+DS Tech 이수림
+200
+views
+05:48
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+TSMC 월별 매출의 Historical Data입니다.
+*위 내용은 공개 실적발표 내용으로 별도의 승인절차 없이 제공됩니다.
+❤
+1
+199
+views
+05:50
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+1월 1~10일 반도체 수출액 잠정치
+DRAM 5.6억달러
+(-13% MoM, -13% QoQ, +30% YoY)
+DRAM 모듈 2.8억달러
+(-43% MoM, +76% QoQ, +182% YoY)
+NAND 1.0억달러
+(-39% MoM, -30% QoQ, -58% YoY)
+MCP 4.5억달러
+(-41% MoM, -17% QoQ, +32% YoY)
+SSD 1.1억달러
+(-45% MoM, +28% QoQ, -13% YoY)
+(각 증감률은 모두 1~10일 기준)
+(수출단가의 경우 당월분만 1~10일 기준)
+241
+views
+01:36

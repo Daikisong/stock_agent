@@ -1,0 +1,32 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "직전 38개 검색에는 현재 prompt가 식별한 공식 발행사·고객·브로커 경로와 NH·미래에셋 exact archive 시도가 이미 포함되어 있고, 이번 retry에는 그 계보와 다른 새 verified 문서 class·문서 identity·locator가 없다. 따라서 동일 query의 동의어 변형이나 실패한 locator를 반복하지 않는다.",
+      "빈 suggested_queries는 공개 사실의 부재나 의미 포화를 증명하지 않는다. 현재 근거가 정당화하는 다음 작업은 새 검색이 아니라 earnings_visibility, bottleneck_pricing, capital_allocation 재작성 memo를 새 독립 judge들이 다시 검토하는 것이다."
+    ]
+  },
+  "payload_hash": "2c053ed78b25e8ada87838fa5322f34c8a40b300c688ba807c6cd403df9bc53b",
+  "production_score_authority": false,
+  "prompt_hash": "31dd3e5b7af38b1bfd8f6941ff3f4bd6cbae0b357401c7a661e917ae114f90e4",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8035dea72fb181fc410d5f3284b5c7c85f0899e0537d2978fc8010735dabbca7",
+  "response_id": "COLLABRESP-08b2b14b5ec0fd83075d9142dfb38ceda1492020f80080a84654c9f628ec1cc4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

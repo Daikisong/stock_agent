@@ -1,0 +1,91 @@
+{
+  "output_schema_hash": "44f0ffbd106d6ef02aafb2674643ad9e311c68a32b75ecbbca9d606387f07c45",
+  "payload": {
+    "business_model_summary": "삼성전자 DS 메모리 사업은 D램·낸드·HBM을 생산해 서버·AI용 고부가 제품 믹스, ASP 상승, HBM 출하 확대를 매출과 수익성으로 전환한다. 선단공정·HBM4 생산능력에 대한 투자와 제한된 공급 여력은 고객 구매주문·다년계약·완판 상태를 통해 가동률과 판매 가시성을 높이지만, 대규모 시설투자와 운전자본 흡수 때문에 회계상 이익이 현금으로 전환되는 속도는 달라질 수 있다. 또한 HBM의 연 단위 가격협상, 고객 NDA와 최종제품 출시 일정, 범용 D램 경쟁 공급, 모바일·PC 수요가 실제 수익성과 계약 가시성의 변동요인이다.",
+    "capacity_and_supply_constraints": [
+      "회사는 투자·증설 계획을 반영해도 2026년 고객 메모리 수요가 공급을 초과할 것으로 예상했으며, 현재 HBM4 생산 여력은 완판 상태라고 설명했다.",
+      "준비된 2026년 HBM 생산능력에 고객 구매주문이 이미 확보돼 공급 확대가 단순 계획보다 강한 주문 기반을 갖는다.",
+      "평택 P4의 1c D램 월 생산능력과 차세대 기술 투자가 공급 대응 기반을 늘리지만, HBM의 맞춤형 전공정과 첨단 패키징 병목 때문에 CAPEX가 즉시 공급으로 전환되지는 않는다.",
+      "낮은 재고와 제한된 공급 가용성은 가격에는 우호적이지만 추가 수요를 단기에 판매량으로 전환하는 데 물량 제약을 만든다."
+    ],
+    "confidence": 0.91,
+    "cost_and_cash_drivers": [
+      "2026년 1분기 연결 영업활동현금흐름은 40,274,106백만원이었지만 매출채권 증가와 재고자산 증가가 각각 현금흐름을 27,680,587백만원, 2,211,569백만원 줄여 운전자본이 현금 전환의 핵심 변수임을 보여준다.",
+      "2026년 1분기 DS 신·증설 및 보완 시설투자 101,927억원과 메모리 선단공정 전환 투자는 미래 공급능력을 늘리는 대신 현재 현금지출을 요구한다.",
+      "연구개발비와 선단공정 초기 램프업 비용은 고부가 제품 전환 과정의 선행비용이며, 수요가 약할 때 가격·믹스 개선의 이익 효과를 일부 상쇄할 수 있다."
+    ],
+    "customer_and_channel_dependencies": [
+      "북미 팹리스 고객에 대한 HBM4 지속 납품과 일부 고객과 완료된 중장기 계약은 고객 승인·제품 일정·배정이 매출 실현의 핵심 경로임을 보여준다.",
+      "고객사 NDA 때문에 HBM qualification과 다년계약의 상대방·물량·가격·해지조건을 외부에서 완전히 검증할 수 없다.",
+      "2027년 수요 사전접수는 가시성을 높이지만 그 자체가 구매의무나 물량 확약은 아니며, 고객 최종제품 출하가 지연되면 HBM4 실적 기여도 함께 늦어진다.",
+      "HBM은 연 단위, 범용 D램은 분기 단위로 가격을 협상하므로 현물가격 급등기에는 범용 D램이 가격을 더 빨리 반영하고 LTA는 단기 수익성 상승을 제한할 수 있다."
+    ],
+    "fact_row_indices": [
+      7,
+      19,
+      46,
+      60,
+      71,
+      72,
+      77,
+      84,
+      93,
+      116,
+      118,
+      119,
+      123,
+      129,
+      141,
+      155,
+      168,
+      175,
+      192,
+      196,
+      206,
+      212,
+      215,
+      216,
+      270,
+      291,
+      304,
+      317,
+      321,
+      322
+    ],
+    "research_complete": true,
+    "revenue_engines": [
+      "D램·낸드 가격 상승과 AI용 고부가 제품 수요가 메모리 수익성 개선으로 연결되며, D램 ASP 상승은 출하량 변동을 상쇄하는 핵심 매출 레버다.",
+      "서버향 메모리 판매 확대와 HBM bit 출하 증가, 11.7Gbps HBM4의 고객 납품은 AI 메모리 수요가 실제 판매량으로 전환되는 경로다.",
+      "표준 제품보다 가격대가 높은 고속 HBM4와 고부가 제품 믹스는 같은 출하량에서도 매출과 이익 기여도를 높인다.",
+      "완료된 중장기 물량계약, 상당한 구속력이 있다고 설명된 다년계약, 준비된 HBM 생산능력에 대한 구매주문은 계획 생산량의 판매 가시성을 높인다."
+    ],
+    "uncertainties": [
+      "메모리 이익은 출하량보다 가격 지속성에 더 민감하다는 분석이 있어 ASP 상승 둔화가 영업레버리지를 반대로 되돌릴 수 있다.",
+      "중국 업체의 범용 D램 공급 확대와 메모리 가격 급등에 따른 스마트폰·PC 출하 감소는 가격과 최종수요를 동시에 약화시킬 수 있다.",
+      "NDA로 계약·qualification 세부조건을 확인하기 어렵고, 수요 접수나 협상 진행을 확정 구매의무로 간주할 수 없다.",
+      "고객사 제품 출시 지연은 HBM4 공급이 준비돼도 해당 기간의 매출·이익 전환을 늦출 수 있다.",
+      "운전자본 증가, 선단공정 투자, 연구개발·램프업 비용은 강한 회계상 이익과 별개로 현금흐름과 초기 수익성을 낮출 수 있다."
+    ]
+  },
+  "payload_hash": "fd1703812fe0078d8d36139b2e637fe9c470c5ebb82996b4fc45b3d37c5f4f46",
+  "production_score_authority": false,
+  "prompt_hash": "5117792ea4bba0d783e69e041ea90d288437eaedd324d0491f649f80a3ef7302",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4b66c4bbb393e6db620f68576d310823e5406af39e6609dc91709915b3c9b04d",
+  "response_id": "COLLABRESP-97833066ba05b09fab1b76e44cd82e7c55ba5fb0143b57acf28c373494ec0eb1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

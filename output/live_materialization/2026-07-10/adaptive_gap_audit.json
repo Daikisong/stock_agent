@@ -1,0 +1,24 @@
+{
+  "adaptive_attempt_count": 9,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "identical_retry": 0,
+    "provider_failure_low_score": 0,
+    "retry_without_failure_reason": 0,
+    "round_limit_score_valid_true": 0,
+    "silent_claim_overwrite": 0,
+    "unresolved_material_gap_final_score": 0
+  },
+  "hard_acceptance_pass": true,
+  "ledger_entry_count": 30,
+  "new_llm_query_count": 18,
+  "planning_complete_count": 9,
+  "production_runtime_ready": false,
+  "schema_version": "e2r_live_adaptive_gap_audit_v1",
+  "score_valid_true_count": 0,
+  "status": "ADAPTIVE_GAP_CLOSURE_PASS",
+  "terminal_status_counts": {
+    "PROVIDER_PENDING": 3,
+    "SOURCE_PENDING": 6
+  }
+}

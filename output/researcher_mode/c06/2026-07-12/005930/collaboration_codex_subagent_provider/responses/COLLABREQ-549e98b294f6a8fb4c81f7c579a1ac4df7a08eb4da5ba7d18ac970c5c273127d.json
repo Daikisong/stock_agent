@@ -1,0 +1,54 @@
+{
+  "output_schema_hash": "868c7c7cdd3258048a388d9f56dec3dd50f46dc8a5a17396fa2499b7882743e1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-aa8547e93dded8027fd7aeda",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제목과 URL의 대상은 SK hynix(000660)이며 2023년 1분기 제3자 transcript입니다. 삼성전자(005930)의 2026년 HBM4 투자·wafer capacity를 확인할 수 없고, GENERAL_WEB_DISCOVERY 소유자는 요청된 ISSUER_EARNINGS_RELEASE 또는 ISSUER_PRESENTATION provenance가 아닙니다. snippet은 discovery metadata일 뿐이며 대상·소유자 불일치가 명확하므로 full fetch도 필요하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-b89256ebdcb7c6bc840e0745",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "DRAMWatch 일반 시장 데이터 landing page로 삼성·HBM을 함께 언급하지만 삼성전자 발행 실적자료나 presentation이 아닙니다. 발행일도 없고 HBM4 전용 CAPEX·wafer capacity 원문도 제공되지 않아 요청 source family와 capital_allocation objective를 해결하지 못합니다. snippet을 evidence로 승격할 수 없으며, URL 소유자 불일치가 확정적이므로 이 요청 범위에서는 full fetch가 필요하지 않습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "공급된 후보 2건을 각각 한 번씩 분류했지만 요청된 issuer source family에 맞는 material 후보는 0건입니다.",
+      "ranking_complete=true는 이 2건의 transport roster 분류 완료만 뜻하며, 삼성전자 HBM4 전용 투자·wafer capacity 근거가 확보되었다는 뜻이 아닙니다.",
+      "두 search snippet은 discovery metadata일 뿐 evidence가 아니며, 원문 발행자와 대상이 요청 범위에 맞지 않아 full-fetch handoff 대상으로 선택하지 않았습니다."
+    ]
+  },
+  "payload_hash": "3c0cea6b59dc0587d1129b03e33a16655dac240e922f48bd341b1a1bdbd4d286",
+  "production_score_authority": false,
+  "prompt_hash": "8394ee08097479ec53dfd8a8da00fe684242e74693ce11b9819f05ac0172b4bd",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-549e98b294f6a8fb4c81f7c579a1ac4df7a08eb4da5ba7d18ac970c5c273127d",
+  "response_id": "COLLABRESP-9438fe96c01fb0448e487f63b1af2eb2afe7d47b9e400e6c6e5f3ffc6a6dbbf1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

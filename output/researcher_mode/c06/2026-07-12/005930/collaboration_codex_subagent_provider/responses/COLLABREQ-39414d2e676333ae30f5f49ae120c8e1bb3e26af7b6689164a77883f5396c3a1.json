@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-42e192cd9d8340a4abdd889d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The CSR magazine does not match a requested financial source family or the earnings-conversion objective."
+      },
+      {
+        "candidate_id": "SGCAND-43bac583bcedad95d3b6cc13",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A board-committee page is unrelated to the requested current financial mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-45c2d55ac6646c6e755bdc50",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A service-center locator is unrelated to semiconductor earnings and cash flow."
+      },
+      {
+        "candidate_id": "SGCAND-4bd3abb85c6a86eda6f59605",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The generic support portal does not establish a requested issuer financial source."
+      },
+      {
+        "candidate_id": "SGCAND-4e8c1b1fc5683436e9ecd5dd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The code-of-conduct page is unrelated to the stated objective."
+      },
+      {
+        "candidate_id": "SGCAND-504311302208698e6997e671",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The locale redirection endpoint is not a material document route for the requested financial sources."
+      },
+      {
+        "candidate_id": "SGCAND-5065c09f3a6778d64fa1bf65",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "Ownership structure does not resolve the current memory earnings or cash-conversion mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-51c6ef97a83f8bb39c42d7ac",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The membership-points page is unrelated to the research objective."
+      },
+      {
+        "candidate_id": "SGCAND-52cd5022b24cd9974a632df6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "This LinkedIn sharing endpoint neither owns nor establishes a requested issuer financial source."
+      },
+      {
+        "candidate_id": "SGCAND-5395fab12fa0b6cc3e5c8a2e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The environmental sustainability page is outside the supplied financial objective and requested families."
+      },
+      {
+        "candidate_id": "SGCAND-5581c72c7d09f738964e1a75",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The Dacor site is a separate consumer-appliance source and does not match the requested issuer financial provenance."
+      },
+      {
+        "candidate_id": "SGCAND-5794547a2d2ecf9c9c42316e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The third-party commerce event page is unrelated to the current economic mechanism."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate in this partition provides a material requested financial source; this local roster is nevertheless fully classified."
+    ]
+  },
+  "payload_hash": "63b3c755adff01f46e7ea2a9687ca403a6f6367d4d387d5506a61cacb68e03e7",
+  "production_score_authority": false,
+  "prompt_hash": "37c962c191457991ed8f8e2654f7b455b23fda2aa0aa342ce7730b06f473cf70",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-39414d2e676333ae30f5f49ae120c8e1bb3e26af7b6689164a77883f5396c3a1",
+  "response_id": "COLLABRESP-7d189079085982100bd8074f448612b1a5f5db3d4cefeea3c01988bfc8634739",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

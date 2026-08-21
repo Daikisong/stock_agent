@@ -1,0 +1,130 @@
+{
+  "output_schema_hash": "145511269b191002ba99121de5750d5bdfb402af9873b0ef3de4b0646dee6965",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5b4f99b4cf7ea407af7e3602",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.9,
+        "rationale": "2026년 HBM·서버 DRAM 수요와 SK하이닉스가 포함된 메모리 업황을 다루는 직접 broker PDF 경로여서 valuation_rerating의 HBM 수요·실적 연결을 원문에서 확인할 가치가 있다."
+      },
+      {
+        "candidate_id": "SGCAND-7f1ce5b2f94c3237df455aae",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "제3자 Stifel-hosted prospectus는 후보가 요청한 SK하이닉스 issuer/OPENDART provenance로 확인되지 않아 원문 내용과 별개로 이 edge에서는 source-family match가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9ce225b77ea4ba9207dc98b7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'SK Hynix plans $29B US listing as arbitrage investors seek clarity on ADR fungibility' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-b61735ccdc41bd5420d9726d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "SEC filing route는 OPENDART가 아니고 snippet도 본문 경제 근거를 식별하지 못하므로 요청된 source-family edge에서 material로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-74bdce094934054c8694f9af",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "PUBLIC_BROKER_PDF discovery provenance은 일치하지만, 이 자료는 '심텍 (222800) AI 시대 핵심 부품 파트너'라는 다른 회사·펀드·과거 업황 중심 자료로 공급된 metadata에서 현재 SK하이닉스 HBM valuation objective를 직접 진전·반박·대체하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a9efc42ba3cd77eb0cafabc3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'SK Hynix Dethroned Samsung After 26 Years: Now Choosing DDR5 Profits Over HBM4 Ramp' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-7a9766074285bbf463e2ca08",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'SK hynix to list ADSs on Nasdaq Global Select | SKHY SEC Filing - Form F-1/A' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-908dd85125570027d821d837",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Memory Leader SK hynix, Now at 2X with SKHL' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-936df9832655953702aec901",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'SKHY Stock | SK Hynix Price, Quote, News & Analysis - TipRanks.com' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-e4446ca0566f38fdce4bb17d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'SK Hynix Nasdaq Listing: SKHY ADR Guide | Markets.com' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-51b6be8823dd6ae682851af1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Investing — Trading Ideas on TradingView' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-6e9115a72d19e503851d319b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'https://www.sec.gov/Archives/edgar/data/1316463/000183988225000847/0001839882-25-000847.txt' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "MATERIAL은 full-fetch 우선순위일 뿐 snippet을 evidence로 인정한 것이 아니다. 원문 fetch 뒤 publication/as_of_date, target attribution, source provenance와 exact quote를 별도 검증해야 한다."
+    ]
+  },
+  "payload_hash": "1c8e324501997ff88a04cb26f8a1bd1f5e046fa40534942cdc3a2e30d506d9fd",
+  "production_score_authority": false,
+  "prompt_hash": "932c0563ddfdd70283554de1c3f8e9bcbce374d00217a3744d41d87a0be1abf6",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8faceed0fd983a706ba96b0accfd842e05f7f27a7fc130d9c697e88526f88e54",
+  "response_id": "COLLABRESP-6d4d26088519bf9a770b6f6df61eea74ae0a0fe97b100b47de064149e8a8098a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

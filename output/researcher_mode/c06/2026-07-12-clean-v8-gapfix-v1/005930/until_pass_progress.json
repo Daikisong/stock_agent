@@ -1,0 +1,59 @@
+{
+  "as_of_date": "2026-07-12",
+  "collaboration_response_waiting": true,
+  "completion_based_on_fixed_rounds": false,
+  "completion_gates": {
+    "counter_thesis_complete": false,
+    "deterministic_stagecourt_final": false,
+    "deterministic_total_score_complete": true,
+    "fact_extraction_complete": true,
+    "master_canary_leaf_contract": true,
+    "no_unresolved_material_judge_disagreement": true,
+    "production_semantic_saturation_certified": false,
+    "seven_component_research_complete": true,
+    "source_graph_checkpoint_ready": true,
+    "structured_valuation_revision_complete": true
+  },
+  "research_epoch_checkpoint_binding": {
+    "as_of_date": "2026-07-12",
+    "checkpoint_hash": "c60be9c460bf2c9c6cbb7c982a9ebb42221181426c6b2377c050c1b92304b147",
+    "checkpoint_id": "REPOCH-e3951353c2bd8a61af026efa",
+    "epoch": 99,
+    "source_graph_checkpoint_id": "SGCHECK-464fc2384d2ecb94f7b4ff60",
+    "target_id": "005930"
+  },
+  "schema_version": "e2r_v5_phase94_until_pass_progress_v1",
+  "seen_semantic_state_count": 1,
+  "semantic_signature": "6657d55d21e33f94e4c086555dc0cc74880bbebb8a411b809ad76e8a18ab6d45",
+  "semantic_state_component_hashes": {
+    "aggregation_pending": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "aggregation_status": "00a1bfdefae72b72e81da647f4b70686c964cedf8379c606f1145a02e81ec121",
+    "component_states": "f03341a250bcfc51751b53947551d7594b8b3de2fdb2770c159f92f18ac2b537",
+    "fact_extraction_pending": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "fact_extraction_status": "fb035c265a8cf2b4b8933ff861af059367c5998056032b1bd44741d0b3f84834",
+    "fact_ids": "d7e3483f996c7cd38a655ced737be411c6dbd6cec9553f60ebfd40588510607a",
+    "source_graph_status": "b003a017db5bc378050c4d3d08d965186beb89fd59dad00fa9cd90bd7fb03034",
+    "stagecourt_status": "76ba303a2169d314bec492e91b2a2d713a97db04089a3c9c5c10340dbdcfa998",
+    "structured_record_ids": "b26e9166de08f4359a5a99722c6f7dfa66febf7c9774918643a6170e3045804b",
+    "structured_status": "0ba9a455349c3f02ebe6f28595a29e30a4d03a954f412f2688924056e81a7067",
+    "supervisor_state": "b2625e9c6a4bed391144cca5c365be9d895087aca8117c195000bd4aae83b5c0"
+  },
+  "source_checkpoint_binding": {
+    "as_of_date": "2026-07-12",
+    "checkpoint_hash": "5da84e34e4948a885c434d676db814857630cf22b15b859adc1b189e65e108bf",
+    "checkpoint_id": "SGCHECK-464fc2384d2ecb94f7b4ff60",
+    "epoch": 69,
+    "target_id": "005930"
+  },
+  "source_transport_advanced": false,
+  "source_transport_chain_valid": false,
+  "source_transport_work": {
+    "pending_fetch_count": 0,
+    "pending_query_count": 0,
+    "pending_ranking_count": 0,
+    "state_hash": "c006a95ade6e5b46395183ee4bea9cd221ff4a486f496da5f2aeea11fa0dfc9a"
+  },
+  "status": "RESEARCH_CHECKPOINT_PENDING",
+  "target_id": "005930",
+  "transport_budget_treated_as_completion": false
+}

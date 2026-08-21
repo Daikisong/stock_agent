@@ -1,0 +1,42 @@
+{
+  "cache_value_hash": "765cee6bd1d1566f580af2cefef262c3ef79ccf961ac00df13068ea9cbc6523f",
+  "canonical_url": "https://opendart.fss.or.kr/api/list.json",
+  "content_hash": "e2852e477775552f27093b276d84ed25f26530fee87c9673b1c288f675c164d7",
+  "payload": {
+    "list": [
+      {
+        "corp_cls": "K",
+        "corp_code": "00535676",
+        "corp_name": "테크윙",
+        "flr_nm": "테크윙",
+        "rcept_dt": "20260515",
+        "rcept_no": "20260515902262",
+        "report_nm": "유형자산처분결정(자율공시)              ",
+        "rm": "코",
+        "stock_code": "089030"
+      },
+      {
+        "corp_cls": "K",
+        "corp_code": "00535676",
+        "corp_name": "테크윙",
+        "flr_nm": "테크윙",
+        "rcept_dt": "20260515",
+        "rcept_no": "20260515001350",
+        "report_nm": "분기보고서 (2026.03)",
+        "rm": "",
+        "stock_code": "089030"
+      }
+    ],
+    "message": "정상",
+    "page_count": 100,
+    "page_no": 1,
+    "status": "000",
+    "total_count": 2,
+    "total_page": 1
+  },
+  "provider_request_id": "HTTP-e2852e477775552f2709",
+  "request_fingerprint": "cc3448eee2667ee08933c02c87b51e814415ecf92f5eaa693f2d35d3cd5385ba",
+  "schema_version": "e2r_v5_current_structured_cache_v2",
+  "status_code": 200,
+  "text": null
+}

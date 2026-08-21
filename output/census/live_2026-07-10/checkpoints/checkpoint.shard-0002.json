@@ -1,0 +1,9 @@
+{
+  "as_of_date": "2026-07-10",
+  "content_hash": "cc0bbee13c93436b0bb8a2813910a79e57371e5bc9dd030f1b689065c9d40a96",
+  "row_count": 645,
+  "schema_version": "e2r_live_census_operational_v1",
+  "shard_count": 4,
+  "shard_index": 2,
+  "status": "COMPLETE"
+}

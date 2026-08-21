@@ -1,0 +1,76 @@
+{
+  "output_schema_hash": "a903fdb73cfeb0cc6d9abd5ef2cf5a0c1a0801098d99ed9867fdccf1045d9cfe",
+  "payload": {
+    "confidence": 0.82,
+    "counter_case": "CAPEX 부담과 HBM-only 매출·마진·FCF bridge 부재 때문에 전사 현금창출을 HBM 단독 폭발로 해석할 수 없다.",
+    "historical_anchor_ids": [
+      "CANCH-2fb324f77e56e0e487863c17",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "nearest_counter_anchor_ids": [
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "nearest_positive_anchor_ids": [
+      "CANCH-2fb324f77e56e0e487863c17"
+    ],
+    "positive_case": "2026년 1분기 실제 이익과 영업현금흐름이 함께 확대되어 전사 EPS와 현금창출 기반이 확인된다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 46,
+        "reason": "공시된 실제 영업현금흐름 개선을 EPS·FCF 전환의 핵심 positive로 유지한다."
+      }
+    ],
+    "proposed_score_lower": 16.0,
+    "proposed_score_mid": 18.5,
+    "proposed_score_upper": 21.0,
+    "research_complete": true,
+    "researcher_summary": "실제 순이익과 영업현금흐름은 강하지만 대규모 CAPEX와 HBM 단독 현금전환 미분리 때문에 상단을 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "전사 영업현금흐름의 실제 개선은 이익의 현금전환을 지지하지만 HBM 단독 FCF로 귀속하지 않는다.",
+        "fact_row_index": 46,
+        "source_economic_mechanism": "연결 영업현금흐름의 전년 동기 대비 확대가 전사 현금전환 개선을 보여주지만 HBM FCF는 아니다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "2026년 1분기 연결 영업활동 현금흐름은 26,330,119백만원으로 전년 동기 9,023,671백만원보다 컸다.",
+        "source_value_json": "\"26,330,119 vs 9,023,671\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      46
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "HBM 단독 매출·마진·FCF bridge가 분리되지 않는다",
+      "브로커 outer-year 전망은 실제 실적이나 issuer guidance가 아니다"
+    ],
+    "why_not_higher": "대규모 CAPEX와 HBM-only cash conversion 미분리가 남아 있다.",
+    "why_not_lower": "공시 actual 순이익과 영업현금창출이 함께 강하다."
+  },
+  "payload_hash": "ea93071153f78a3c57cfdfabdd21c803baf0de0e3727b771b530c4f3b4f8bc65",
+  "production_score_authority": false,
+  "prompt_hash": "d229c271c406d8bfeb7b8ddce190e5559b07d47befd482124fa61b456f45105f",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-91ea097d6ab8d6b15ee85690f2389cf2339a925b098d42b02bfa70e9d435585f",
+  "response_id": "COLLABRESP-c7c3f818fced73ec376958d96cc736dff7d96930a8e8b20040b7fe658ad40cf6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

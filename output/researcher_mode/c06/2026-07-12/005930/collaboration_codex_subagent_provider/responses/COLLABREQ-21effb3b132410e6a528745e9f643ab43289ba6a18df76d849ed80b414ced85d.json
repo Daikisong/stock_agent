@@ -1,0 +1,47 @@
+{
+  "output_schema_hash": "fe4264173cf26ca593375367131c42d7bf3835bd12a01013b96a113337442b1d",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2e88fbb76e10b4bea3ae48d4",
+        "rationale": "문서 전체를 current 333 facts와 대조했다. 2026년 2분기 D램 ASP 상승률·메모리 이익·공급부족 기간·장기공급계약 확대 서술은 더 구체적이거나 더 최신인 current canonical facts와 의미가 겹친다. 전사 컨센서스와 성과급은 메모리 병목에 단독 귀속할 수 없고, NAND 및 타사 실적·주가 전망은 허용 범위 밖이므로 신규 사실로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-32a0cf049fc23e335af60048",
+        "rationale": "전문을 재검토했으나 18일 파업 예고, 클린룸 복구 최소 2~3일, 비정상 중단 시 장비·웨이퍼 손실, 엔비디아·AMD의 공급 안정성 평가와 물량 배분 통제는 동일 문서의 durable canonical facts로 이미 수용됐다. 파업 예고를 실제 생산중단으로 승격하거나 일반 공급망 우려를 추가 사실로 쪼개지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-343646b534c801ed00a13eb8",
+        "rationale": "44,146자 Tech Weekly 전체를 valuation_rerating 목적과 current facts에 대조했다. 삼성전자 12개월 선행 P/B 0.9배 해석과 삼성전자·SK하이닉스·Micron 등 동일 시점 PER/PBR peer profile은 이 문서에서 이미 durable facts로 수용됐다. 2025년 1c D램 투자·HBM4 샘플 전망은 후속 실제 facts로 대체됐고, 타사·전자부품·산업 표와 투자 의견은 삼성전자 메모리의 신규 가치평가 사실이 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "edd5db6ff40aeeb2c88c78be9998e6a8d2b13d7522a276c9be9378169bfbc3c1",
+  "production_score_authority": false,
+  "prompt_hash": "a548e449f77419c495f3d824a594ade34ba9c3db3aaeefab7821d0ff8e837a01",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-21effb3b132410e6a528745e9f643ab43289ba6a18df76d849ed80b414ced85d",
+  "response_id": "COLLABRESP-606954bf36d40b817f7016c7ceaf6151226a2c355f6442d9a4d026ce7f11d152",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

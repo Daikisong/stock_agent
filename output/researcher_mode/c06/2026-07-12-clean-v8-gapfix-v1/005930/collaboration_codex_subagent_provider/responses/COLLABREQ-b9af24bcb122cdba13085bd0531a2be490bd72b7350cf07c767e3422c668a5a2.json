@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1270e09695170b35a746ceca",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.88,
+        "rationale": "삼성전자 반도체 공식 HBM 태그 landing으로, 2026년 HBM4·HBM4E 원문 페이지에 직접 도달 가능한 bounded route다."
+      },
+      {
+        "candidate_id": "SGCAND-fb06df9897505ef83f47bfff",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.12,
+        "rationale": "삼성전자 공식 도메인으로 요청 family provenance는 맞지만, 이 후보의 제목·메타는 구형 또는 다른 제품/일반 navigation·사양에 그쳐 현재 HBM 경제 메커니즘의 material gap을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-3c4decd980e0ffbfe925d6d7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "삼성전자 issuer 원문이 아닌 제3자·타사 또는 일반 검색 경로이며, 요청된 source-family provenance와 target-direct full-document route를 충족하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-8641d3d5242b12f67a723146",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.12,
+        "rationale": "삼성전자 공식 도메인으로 요청 family provenance는 맞지만, 이 후보의 제목·메타는 구형 또는 다른 제품/일반 navigation·사양에 그쳐 현재 HBM 경제 메커니즘의 material gap을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-b897b201e770b9cc9402d858",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.12,
+        "rationale": "삼성전자 공식 도메인으로 요청 family provenance는 맞지만, 이 후보의 제목·메타는 구형 또는 다른 제품/일반 navigation·사양에 그쳐 현재 HBM 경제 메커니즘의 material gap을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-c8a52d7904f50b989fb89a30",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.12,
+        "rationale": "삼성전자 공식 도메인으로 요청 family provenance는 맞지만, 이 후보의 제목·메타는 구형 또는 다른 제품/일반 navigation·사양에 그쳐 현재 HBM 경제 메커니즘의 material gap을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-85ca1787f97946be13bb24b4",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.12,
+        "rationale": "삼성전자 공식 도메인으로 요청 family provenance는 맞지만, 이 후보의 제목·메타는 구형 또는 다른 제품/일반 navigation·사양에 그쳐 현재 HBM 경제 메커니즘의 material gap을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-132942b1876381c27115f0a7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "삼성전자 issuer 원문이 아닌 제3자·타사 또는 일반 검색 경로이며, 요청된 source-family provenance와 target-direct full-document route를 충족하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-2bb6bf205be8907508982942",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.12,
+        "rationale": "삼성전자 공식 도메인으로 요청 family provenance는 맞지만, 이 후보의 제목·메타는 구형 또는 다른 제품/일반 navigation·사양에 그쳐 현재 HBM 경제 메커니즘의 material gap을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-ba7a29231a11f0f64ed44d58",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.12,
+        "rationale": "삼성전자 공식 도메인으로 요청 family provenance는 맞지만, 이 후보의 제목·메타는 구형 또는 다른 제품/일반 navigation·사양에 그쳐 현재 HBM 경제 메커니즘의 material gap을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-163731622e027cbbf0234c9c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.12,
+        "rationale": "삼성전자 공식 도메인으로 요청 family provenance는 맞지만, 이 후보의 제목·메타는 구형 또는 다른 제품/일반 navigation·사양에 그쳐 현재 HBM 경제 메커니즘의 material gap을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-54280367e4dd49a31828b015",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.88,
+        "rationale": "삼성전자 반도체 공식 GTC 2026 페이지로, HBM4 상용화와 AI 고객 생태계 설명을 full fetch로 검증할 수 있다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "published_at 메타가 비어 있어 material 후보는 full fetch 단계에서 원문 게시일이 as_of_date=2026-07-12 이전인지 검증해야 한다.",
+      "snippet은 discovery metadata일 뿐이며 material 후보도 원문 fetch·target 귀속·exact quote 검증 전에는 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "538e72fc6ef560f4a69bd0638c71e6e0acf1c93e962d533973fb6e1dd2e48b69",
+  "production_score_authority": false,
+  "prompt_hash": "a86ab016749fc574bfc08c5a208d2afbf8b927fde8948d751172e0adb2554fd2",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b9af24bcb122cdba13085bd0531a2be490bd72b7350cf07c767e3422c668a5a2",
+  "response_id": "COLLABRESP-5e02ffcfe7527695112384d8aedd067306e077c318cbd8ca8368ff6ef31dcd0b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

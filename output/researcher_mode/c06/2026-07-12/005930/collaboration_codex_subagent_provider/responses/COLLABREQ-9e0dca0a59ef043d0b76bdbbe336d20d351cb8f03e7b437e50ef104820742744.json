@@ -1,0 +1,243 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-327de968dbdafd1f120e37e2",
+        "rationale": "원문 전체에서 eps_fcf_explosion objective에 직접 닿는 메모리 이익 귀속·93.2조원 사업부 이익 추정·DS 성과급 충당 및 이익연동 비용·DS 연간 이익 정성 전망 5건을 추출했다. 총회사 실적, 주가, DX/비메모리 손실, 타사·산업 일반론은 objective-local fact에서 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.85,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-327de968dbdafd1f120e37e2",
+        "economic_mechanism": "증권사들은 사업부별 공식 실적 발표 전인 잠정실적 단계에서 2분기 영업이익 대부분을 메모리 사업에 귀속시켰다.",
+        "exact_quote": "증권사들은 이번 분기에도 영업이익 대부분이 메모리 반도체 사업에서 나왔을 것이라고 보고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "총이익을 메모리 사업에 직접 귀속해 eps_fcf_explosion의 핵심인 메모리 이익 전환을 뒷받침하되 사업부 공식 발표 전 추정이라는 한계를 보존한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION",
+        "normalized_object": "메모리 반도체의 전사 영업이익 기여",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2 잠정실적",
+        "predicate": "2026년 2분기 영업이익 대부분이 메모리 반도체 사업에서 발생한 것으로 증권사들이 추정했다",
+        "predicate_family": "SEGMENT_PROFIT_ATTRIBUTION",
+        "primitive_tags": [
+          "segment_profit",
+          "memory_attribution"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "memory_profit_attribution",
+        "question_family_tags": [
+          "memory_profit_attribution"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 2분기 메모리 이익 기여",
+        "subject_id": "005930:MEMORY:Q2_PROFIT_ATTRIBUTION",
+        "unit": "qualitative share estimate",
+        "value": "영업이익 대부분(증권사 추정)"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-327de968dbdafd1f120e37e2",
+        "economic_mechanism": "메리츠증권 추정이 메모리 사업의 현재 분기 영업이익 규모를 93조2000억원으로 수치화해 메모리 매출의 이익 전환 규모를 제시한다.",
+        "exact_quote": "메모리(D램·낸드플래시) 사업부 영업이익은 93조2000억 원, 비메모리(시스템LSI·파운드)는 영업손실 3조2000억 원으로 추정했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 귀속 영업이익의 구체적 규모를 제시하는 직접적인 현재 이익 전환 근거이며, 증권사 추정치라는 성격은 confidence에 반영했다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION",
+        "normalized_object": "메모리 사업부 영업이익 추정치",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2 잠정실적",
+        "predicate": "메모리 사업부의 2026년 2분기 영업이익이 93조2000억원으로 추정됐다",
+        "predicate_family": "MEMORY_OPERATING_PROFIT_ESTIMATE",
+        "primitive_tags": [
+          "operating_profit",
+          "memory_attribution"
+        ],
+        "product_family": "메모리(D램·낸드플래시)",
+        "question_family_id": "memory_operating_profit_estimate",
+        "question_family_tags": [
+          "memory_operating_profit_estimate"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 사업부 2026년 2분기 영업이익 추정",
+        "subject_id": "005930:MEMORY:Q2_OPERATING_PROFIT",
+        "unit": "KRW million",
+        "value": 93200000
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.88,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-327de968dbdafd1f120e37e2",
+        "economic_mechanism": "DS 특별성과급을 포함한 상반기 성과급 충당금이 2분기 잠정실적에 비용으로 반영돼 강한 메모리 이익의 보고 이익 전환을 낮췄으며 실제 현금 지급 시점은 문서에 없다.",
+        "exact_quote": "게다가 이번 실적에는 반도체(DS) 특별성과급을 포함한 올 1·2분기 성과급 충당금 18조~19조 원이 반영된 것으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 이익의 보고 영업이익 전환을 낮춘 대규모 비용 추정치로 earnings quality를 직접 제한한다. 다만 충당금이므로 현금 지급으로 확대 해석하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:RISK_COUNTER",
+        "normalized_object": "DS 특별성과급 포함 상반기 성과급 충당금",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-H1 accrual reflected in 2026-Q2 provisional result",
+        "predicate": "2026년 2분기 실적에 DS 특별성과급을 포함한 상반기 성과급 충당금 18조~19조원이 반영된 것으로 추정됐다",
+        "predicate_family": "DS_BONUS_ACCRUAL",
+        "primitive_tags": [
+          "bonus_accrual",
+          "earnings_quality"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "ds_bonus_accrual_earnings_effect",
+        "question_family_tags": [
+          "ds_bonus_accrual_earnings_effect"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DS 특별성과급 충당금",
+        "subject_id": "005930:MEMORY:DS_BONUS_ACCRUAL",
+        "unit": "KRW trillion",
+        "value": "18-19"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-327de968dbdafd1f120e37e2",
+        "economic_mechanism": "기존 성과급까지 포함한 반도체 성과급이 반도체 영업이익의 12.5%로 예상돼 현재 이익 급증분 중 임직원 보상비로 귀속될 몫을 보여준다.",
+        "exact_quote": "기존 성과급까지 포함해 반도체 영업이익의 12.5%가 성과급으로 지급될 것으로 예상된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "강한 반도체 영업이익 전부가 잉여현금흐름으로 남지 않는 보상비 연동 구조를 수치로 제시하지만, 실제 지급 시기와 현금흐름은 확인되지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:RISK_COUNTER",
+        "normalized_object": "반도체 영업이익 대비 성과급 지급 비율",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026 expected compensation formula",
+        "predicate": "기존 성과급을 포함한 반도체 성과급 지급액이 반도체 영업이익의 12.5%로 예상됐다",
+        "predicate_family": "SEMICONDUCTOR_BONUS_PROFIT_SHARE",
+        "primitive_tags": [
+          "profit_share",
+          "compensation_cost"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "semiconductor_bonus_profit_share",
+        "question_family_tags": [
+          "semiconductor_bonus_profit_share"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 반도체 성과급 이익 연동률",
+        "subject_id": "005930:MEMORY:BONUS_PROFIT_SHARE",
+        "unit": "percent",
+        "value": 12.5
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.68,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-327de968dbdafd1f120e37e2",
+        "economic_mechanism": "DS 경영진 발언으로 보도된 올해 이익의 장기 누적 이익 초과 전망은 현재 메모리 업사이클의 연간 이익 규모가 이례적이라는 정성적 신호지만 공식 수치 가이던스는 아니다.",
+        "exact_quote": "김용관 DS 경영전략총괄 사장은 이달 초 임직원 타운홀 미팅에서 \"반도체 사업을 시작한 40년간 누적 이익보다 올해 한 해 이익이 더 많을 것\"이라고 말한 것으로 알려졌다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 연간 반도체 이익의 지속 강도를 뒷받침하는 target-direct 발언 보도지만, 공식 가이던스·수치 범위가 아니므로 보조 근거로만 쓴다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION",
+        "normalized_object": "DS 연간 이익의 장기 누적 이익 대비 규모",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026",
+        "predicate": "DS 경영전략총괄 사장이 올해 한 해 반도체 이익이 지난 40년 누적 이익보다 많을 것이라고 말했다고 보도됐다",
+        "predicate_family": "DS_FULL_YEAR_PROFIT_OUTLOOK",
+        "primitive_tags": [
+          "qualitative_outlook",
+          "profit_duration"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "ds_full_year_profit_outlook",
+        "question_family_tags": [
+          "ds_full_year_profit_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DS 2026년 연간 이익 전망 발언",
+        "subject_id": "005930:MEMORY:FY2026_DS_PROFIT_OUTLOOK",
+        "unit": "qualitative comparative outlook",
+        "value": "FY2026 profit greater than prior 40-year cumulative profit"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "ddad9dcfdfddf36bc35440a2243a94d32a50ed8067dd5af50fcedbeb928692f3",
+  "production_score_authority": false,
+  "prompt_hash": "7bf43b9b650197d7d747fe69563d63be7e63e369d3507e7b50664a40bec42f9a",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9e0dca0a59ef043d0b76bdbbe336d20d351cb8f03e7b437e50ef104820742744",
+  "response_id": "COLLABRESP-da305b826798417f51689b3f5e31bd66ba99ee751a85ac6efaec9b62a1abfa72",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

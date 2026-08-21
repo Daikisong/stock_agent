@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "RESEARCH_SUPERVISOR_A 재검토에서 7개 component memo와 21개 Judge, Red Team, synthesis, structured records가 모두 완결됐고 material disagreement가 없다. CORROBORATION_CAP은 earnings_visibility와 information_confidence의 점수·confidence 상단 제한으로 이미 반영됐으며 현재 frozen fact·source snapshot을 바꿀 genuinely new route가 없다. zero-result나 source silence를 completion 또는 absence 근거로 사용하지 않고 independent saturation 승인을 낸다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "556f644a03d61a957f475c91bc34ebb899a22d485bd8c00c8b4187f7c2fef3b3",
+  "production_score_authority": false,
+  "prompt_hash": "a5376f0ca6bb50a2136567c4ecb82c1dc4a4ed040277ffc96e969f2ab4e000b4",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8eed050bf852aef5844e1b3e6e28b435f5dea9786b8ec0f8f6bdaefa8a871e23",
+  "response_id": "COLLABRESP-eff285465c41ae840f0c51009d3dd15a7b5ca0cfeb392ef22f98c0ff0a6dab46",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

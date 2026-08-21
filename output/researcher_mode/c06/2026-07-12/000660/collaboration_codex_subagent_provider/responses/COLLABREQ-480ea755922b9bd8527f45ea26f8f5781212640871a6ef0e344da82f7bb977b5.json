@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "099a29fc86a0058baeafcdd07be7f2fc9484d5d71a1e933a6b2b6ed951cd33bf",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-ab9b17f4630ff197d8b560b6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-081d099ad7d888b01d822bef",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보는 NVIDIA가 소유한 customer-official 원문 경로가 아니라 제3자 기사·요약이다. Rubin·HBM4를 언급해도 발견 snippet은 증거가 아니며 요청 source-family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-242ed949160e8684ac69ec4a",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.95,
+        "rationale": "BNK투자증권이 직접 소유한 SK하이닉스 기업분석 PDF이며, 발견 메타데이터에 2026년 PBR과 EV/EBITDA 표가 함께 노출된다. 두 valuation query의 원문 점값·기간·분모를 확인할 수 있는 핵심 fetch 경로다. snippet 자체는 증거로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2f0c58a227b887ae20876e63",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-435990bb01062881db539869",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보는 NVIDIA가 소유한 customer-official 원문 경로가 아니라 제3자 기사·요약이다. Rubin·HBM4를 언급해도 발견 snippet은 증거가 아니며 요청 source-family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-5b4f99b4cf7ea407af7e3602",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.64,
+        "rationale": "하나증권이 직접 제공하는 2026년 반도체 산업 PDF로, SK하이닉스와 HBM·서버 DRAM 수요 구조를 다룬다. 현재 BPS/PBR 배수의 HBM 실적 연결 여부를 원문 표에서 확인할 가치가 있는 보조 fetch 경로다. snippet은 발견 메타데이터일 뿐 증거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7f1ce5b2f94c3237df455aae",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-a6749abccc473c8a687aaf03",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "개인 GitHub 리서치 대시보드는 SK하이닉스 issuer 발표자료·실적발표나 public broker PDF가 아니다. EPS·PER 표현이 있어도 요청된 원문 계열을 충족하지 않아 material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-854f45c9ac0006bac8af51ef",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-881e6a51344da2b6524ab3fb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보는 NVIDIA가 소유한 customer-official 원문 경로가 아니라 제3자 기사·요약이다. Rubin·HBM4를 언급해도 발견 snippet은 증거가 아니며 요청 source-family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ac71a727e0513cac514cd9fb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-f0f2f6fc85299ddb809b69fc",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.03,
+        "rationale": "BNK투자증권 직접 PDF라는 source-family는 맞지만 분석 대상이 SK스퀘어다. SK하이닉스 지분가치가 언급돼도 SK하이닉스 자체의 current BPS/PBR 또는 EV/EBITDA 점값·분모를 검증하는 문서가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 모든 후보를 정확히 한 번씩 분류했다. material 후보도 아직 원문 fetch·parse 전이며, 발견 snippet은 증거로 사용하지 않았다."
+    ]
+  },
+  "payload_hash": "f8c855e2f48e396cda564fcbb77cd9703af7d11c2c930ecfa81685cfb2850037",
+  "production_score_authority": false,
+  "prompt_hash": "5b5c366b6867c529eb88b1eabde5386bcf4c39c78f2aa449394ecd305c862631",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-480ea755922b9bd8527f45ea26f8f5781212640871a6ef0e344da82f7bb977b5",
+  "response_id": "COLLABRESP-35a169cea75a895098c7c59d2724718e9d53cc27db6f1190541c5c7f6c6183c3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

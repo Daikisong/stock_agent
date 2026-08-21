@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-f96e0ad729ad998272b6393d",
+        "rationale": "Transport chunk 0 of 2 was exhaustively reviewed target-wide. Its SK hynix section is a mirror of the already accepted Yuanta 2026-04-09 report lineage, including quarterly DRAM, consolidated forecast, valuation, cash-flow and calibration atoms, so this literal chunk has no distinct new economic identity. Other issuers and sectors are non-target. Broker estimates are not promoted to issuer guidance, HBM-only economics, customer allocation, or signed-contract terms. This chunk itself is complete; deterministic transport aggregation separately requires the other canonical chunk.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "67a127fd34cb19bf9b2028059ba87112eb60f556fd3ec4a0aa42f6efea7d063a",
+  "production_score_authority": false,
+  "prompt_hash": "2241575677abbe04886b0ffb90d1ed9405637b398154fffe2662e7b1f3e25f50",
+  "provenance": {
+    "agent_id": "/root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/direct_fact_review",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a80b5c66620cb1fc980c3f14ec21f015639b4fa8f65f8e03cbb7f25f6ba620f8",
+  "response_id": "COLLABRESP-1fabf4f3c663f9f84e04dd8ffd9806856e423ef0abd54ceb5b57051d55a8cd71",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

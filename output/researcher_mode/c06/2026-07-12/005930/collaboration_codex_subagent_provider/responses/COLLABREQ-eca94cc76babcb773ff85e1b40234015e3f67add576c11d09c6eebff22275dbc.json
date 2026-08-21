@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0aedaee6e00ed718ef3ef50b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The sustainability overview does not match a requested earnings, presentation, or cash-flow source for this objective."
+      },
+      {
+        "candidate_id": "SGCAND-0af3a948575c3ffe93710032",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.72,
+        "rationale": "The official consolidated 2025 second-quarter package is a direct route to financial and cash-flow history useful for the current conversion bridge, subject to full-document review and supersession checks."
+      },
+      {
+        "candidate_id": "SGCAND-0d6274cbd6ec200264b8482d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A generic investor FAQ is not identified as a requested current earnings or cash-flow document."
+      },
+      {
+        "candidate_id": "SGCAND-0f0ca81ef3dc36ea2885227b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The Facebook profile is a social landing page and does not establish a requested issuer financial source."
+      },
+      {
+        "candidate_id": "SGCAND-10c66f408cb1a76346117599",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The company-information page is a generic corporate profile rather than a current financial mechanism source."
+      },
+      {
+        "candidate_id": "SGCAND-11c22950784201c833bebafb",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.06,
+        "rationale": "The official 2023 third-quarter presentation route matches provenance but is too old and superseded to be material to the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-148bec90bfd0cde305343b17",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A retail-store page is unrelated to semiconductor earnings and cash conversion."
+      },
+      {
+        "candidate_id": "SGCAND-14cdc7879e30e2c69afb7272",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The membership page is unrelated to the requested research mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-14d642bd17f3d41025672e22",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.1,
+        "rationale": "The official business overview matches presentation provenance but lacks a current earnings, profitability, or cash-flow event in the supplied metadata."
+      },
+      {
+        "candidate_id": "SGCAND-156d42a0aa3d6d026442439c",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 1.0,
+        "rationale": "The official 2026 first-quarter investor presentation route is the most current direct issuer source for the open earnings-conversion mechanism and counterevidence review."
+      },
+      {
+        "candidate_id": "SGCAND-1643020620f1d0f32bdfc959",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "This LinkedIn share endpoint is not a requested issuer financial source."
+      },
+      {
+        "candidate_id": "SGCAND-1904983b1da6076f07ab0022",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "The official 2023 second-quarter presentation route matches provenance but is superseded historical context for the current investigation."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "The selected current and 2025 issuer routes require full-document fetch and date-specific supersession review before use."
+    ]
+  },
+  "payload_hash": "f323eaee8281453d725b00bf9d34bc73dc53252a260f161365faaaf817a9065c",
+  "production_score_authority": false,
+  "prompt_hash": "dae74b4ba6db48554bb0f202f404257eb9c7c6f25fa5b5c31425e6cb639f2452",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-eca94cc76babcb773ff85e1b40234015e3f67add576c11d09c6eebff22275dbc",
+  "response_id": "COLLABRESP-c8b74f9bee24ddede1ebb4a3ceb55f2c313c44917ebec21d616469af48a525f8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

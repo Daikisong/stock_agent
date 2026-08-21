@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "0d46f9c3455c8dcd683d37ef77bc48e13a19dd68ad5cf0f81b0a3141a8aee7be",
+  "payload": {
+    "allowed_range": [
+      2.4,
+      3.5
+    ],
+    "anchor_comparisons": [
+      "The positive ordinal anchor's 3.8-4.0 band represents near-complete allocation quality. Current liquidity, operating cash flow, HBM4 infrastructure investment and executed share cancellation are supportive, but HBM-specific return data are absent.",
+      "The counter anchor's 0.6-1.0 band is too low because actual cash reserves, operating cash generation and shareholder-return execution provide more than an unsupported capital-allocation narrative."
+    ],
+    "counter_fact_ids": [
+      "EFACT-09bca4086b235701b1d84801",
+      "EFACT-38d8612a550c7b15e83db302",
+      "EFACT-5a65baeee25b1b83354b8cf0",
+      "EFACT-60fb6751333ef31d586334e5",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-9cdcaad56af436ed1ac5bc6f",
+      "EFACT-c8cce781c38410832d5bd2a8"
+    ],
+    "disagreements": [
+      "I place modestly more weight than the memo midpoint on actual liquidity, operating cash flow and completed share cancellation.",
+      "I do not allocate company cash, operating cash flow or the FCF forecast to HBM alone."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "proposed_points": 2.9,
+    "rationale": "Large current cash and operating cash flow provide funding capacity, HBM4 integrated infrastructure shows a supply-stability purpose and the share cancellation demonstrates executed return. The company-level FCF outlook further supports residual-cash potential, but it remains a forecast. The record supports good allocation capacity without proving HBM-specific investment returns.",
+    "support_fact_ids": [
+      "EFACT-037c307f30be846aa6604c82",
+      "EFACT-4ca12a741765c57da0832791",
+      "EFACT-91896907330221fdcfdd97b2",
+      "EFACT-9c8e2f378d921c9782b5b6ac",
+      "EFACT-f8f6e5abba8d72973f8cbc55"
+    ],
+    "why_not_higher": "A higher value requires HBM-specific capital spending, depreciation, working capital, free cash flow and return-on-invested-capital evidence after the capacity ramp.",
+    "why_not_lower": "A lower value would ignore substantial actual liquidity and operating cash generation, purpose-linked infrastructure investment and executed shareholder return."
+  },
+  "payload_hash": "e6aa4086b60332168e58193dde9aa0f9cda402f154c62cd52f69571196dffcc4",
+  "production_score_authority": false,
+  "prompt_hash": "c97f08d2fd08934cd4bc3e043fc48b14e88cd661984cbfac5065a3262e313b2e",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5c6679326025537a0e4e43d6dfc11d906c74c772f6f608fabac3749ac6713eee",
+  "response_id": "COLLABRESP-2827cdd167b7dc6d80824f12b799a5d2d1f8f747a650e52f84b258d2da4b3479",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

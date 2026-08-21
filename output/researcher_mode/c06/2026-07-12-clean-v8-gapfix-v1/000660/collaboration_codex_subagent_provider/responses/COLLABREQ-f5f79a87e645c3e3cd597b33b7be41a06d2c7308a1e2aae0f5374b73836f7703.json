@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "rationale": "Continuation page4 final audit에서 prior26 이후 literal chunk0의 target-direct objective-local distinct 원자가 없음을 확인했다. VEU 역사표, forbidden NAND 점유율, target 비귀속 중국 HBM 일반론과 이미 채택된 FY2026 DRAM capacity 비교는 재추출하지 않았다. Prior26이 존재하므로 cumulative disposition은 FACTS_EXTRACTED이며 이 literal chunk page chain을 empty-final로 종료한다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "ad5c7c9915c0a289877aadc327d9e1a24a80df389019b9431c9423ab41df504a",
+  "production_score_authority": false,
+  "prompt_hash": "68c2a833b799fdb3ea1b3e421cd760aa79f2944314ff03e7d61d108e3855ba51",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f5f79a87e645c3e3cd597b33b7be41a06d2c7308a1e2aae0f5374b73836f7703",
+  "response_id": "COLLABRESP-a5dfa0d7e3cc3b20c59fe045f679102e21875bafead5e28b1546536a12eb75b9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

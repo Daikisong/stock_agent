@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "rationale": "The supplied chunk was reviewed in full against the current durable ledger. Twelve objective-local valuation facts from this same transport chunk are already durably accepted, including Samsung Electronics' FY2026 BPS/P-B scenarios, the HBM-competitiveness valuation bridge, the conditional HBM4 upper-band case, valuation risk counters, and same-report peer-band context. No additional distinct 005930/C06 valuation-rerating fact remains. Other-company, industry-general, NAND/LPDDR, wrong-segment, axis-only, repeated chart, and recommendation-history material was excluded. FACTS_EXTRACTED preserves the already accepted facts while this empty final page avoids duplicating them.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "94eaa162a345310ed53df50fa03b011a7decf69c41275fc9868e8db083c20101",
+  "production_score_authority": false,
+  "prompt_hash": "8f36a1e4d7dd36faed06681e943a2253e8c0aa847e391f77b81032bf9a1b6aa5",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-70cc376dfee5958eb7b676b34959ceccfd9b8d8d7574ad164f6e0bfb97b8eacc",
+  "response_id": "COLLABRESP-b2ecea35b0dea31d03d075f7a55c4b9f63c3efff26d0024aed79d823b1045652",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

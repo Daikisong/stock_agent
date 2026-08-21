@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-479d0b9302e2110fed271dc2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "GENERAL_WEB_DISCOVERY 출처이며 AMD 또는 다른 명명 고객의 공식 제품·플랫폼 원문이 아니다. 스니펫만으로 고객 qualification·호환성·가용 상태를 입증할 수 없고 CUSTOMER_OFFICIAL provenance 경로도 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-1c5ff40da3efdf8fbdc8eeac",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "GENERAL_WEB_DISCOVERY 출처이며 AMD 또는 다른 명명 고객의 공식 제품·플랫폼 원문이 아니다. 스니펫만으로 고객 qualification·호환성·가용 상태를 입증할 수 없고 CUSTOMER_OFFICIAL provenance 경로도 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-756e9f6a92e9a146afd3965a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "GENERAL_WEB_DISCOVERY 출처이며 AMD 또는 다른 명명 고객의 공식 제품·플랫폼 원문이 아니다. 스니펫만으로 고객 qualification·호환성·가용 상태를 입증할 수 없고 CUSTOMER_OFFICIAL provenance 경로도 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-6801ab873495b8db670df270",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "GENERAL_WEB_DISCOVERY 출처이며 AMD 또는 다른 명명 고객의 공식 제품·플랫폼 원문이 아니다. 스니펫만으로 고객 qualification·호환성·가용 상태를 입증할 수 없고 CUSTOMER_OFFICIAL provenance 경로도 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-3afd9ee2cc07db763f0307d0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "GENERAL_WEB_DISCOVERY 출처이며 AMD 또는 다른 명명 고객의 공식 제품·플랫폼 원문이 아니다. 스니펫만으로 고객 qualification·호환성·가용 상태를 입증할 수 없고 CUSTOMER_OFFICIAL provenance 경로도 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c58edc73b7d88d997afad738",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "GENERAL_WEB_DISCOVERY 출처이며 AMD 또는 다른 명명 고객의 공식 제품·플랫폼 원문이 아니다. 스니펫만으로 고객 qualification·호환성·가용 상태를 입증할 수 없고 CUSTOMER_OFFICIAL provenance 경로도 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-7a46541190e7ec2d4b5f5790",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "GENERAL_WEB_DISCOVERY 출처이며 AMD 또는 다른 명명 고객의 공식 제품·플랫폼 원문이 아니다. 스니펫만으로 고객 qualification·호환성·가용 상태를 입증할 수 없고 CUSTOMER_OFFICIAL provenance 경로도 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-f48430d9449f013d0634394f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "TRUSTED_BUSINESS_MEDIA 출처이며 AMD 또는 다른 명명 고객의 공식 제품·플랫폼 원문이 아니다. 스니펫만으로 고객 qualification·호환성·가용 상태를 입증할 수 없고 CUSTOMER_OFFICIAL provenance 경로도 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-46d6ca005dd88fd500ae6a91",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "GENERAL_WEB_DISCOVERY 출처이며 AMD 또는 다른 명명 고객의 공식 제품·플랫폼 원문이 아니다. 스니펫만으로 고객 qualification·호환성·가용 상태를 입증할 수 없고 CUSTOMER_OFFICIAL provenance 경로도 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-3695d00ff10a213a09ce0145",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "GENERAL_WEB_DISCOVERY 출처이며 AMD 또는 다른 명명 고객의 공식 제품·플랫폼 원문이 아니다. 스니펫만으로 고객 qualification·호환성·가용 상태를 입증할 수 없고 CUSTOMER_OFFICIAL provenance 경로도 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c92844f7c78aa8e3a1176cba",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "GENERAL_WEB_DISCOVERY 출처이며 AMD 또는 다른 명명 고객의 공식 제품·플랫폼 원문이 아니다. 스니펫만으로 고객 qualification·호환성·가용 상태를 입증할 수 없고 CUSTOMER_OFFICIAL provenance 경로도 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-22b8df0d261d111cdc7c4710",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "GENERAL_WEB_DISCOVERY 출처이며 AMD 또는 다른 명명 고객의 공식 제품·플랫폼 원문이 아니다. 스니펫만으로 고객 qualification·호환성·가용 상태를 입증할 수 없고 CUSTOMER_OFFICIAL provenance 경로도 없어 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "모든 후보는 discovery route로만 판정했으며 스니펫을 EvidenceFact로 사용하지 않았다.",
+      "직접 AMD 고객사 공식 원문은 roster에서 확인되지 않았다. material NVIDIA 공식 경로도 full-fetch 후 cutoff 게시일과 원문 문맥을 검증해야 한다."
+    ]
+  },
+  "payload_hash": "37125cbc6f391752ce64f6d1ab212849235235a76227cd005a4efa6eb10a6cbe",
+  "production_score_authority": false,
+  "prompt_hash": "0d4abda08f1298ca801b30133b837feca1b90b1da00a5763105cd4ed8dc8a81c",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-be4105bb206ca2a3877ef15142e913feb7363ad90363a5cf23476c919de58a56",
+  "response_id": "COLLABRESP-d5e9548555c50c24c387097dff25f3303efec230af7b5b9d32e57594e0a54b76",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

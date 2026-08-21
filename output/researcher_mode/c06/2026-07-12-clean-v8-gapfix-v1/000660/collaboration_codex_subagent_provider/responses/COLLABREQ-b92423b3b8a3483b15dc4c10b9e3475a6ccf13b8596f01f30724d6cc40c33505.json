@@ -1,0 +1,115 @@
+{
+  "output_schema_hash": "5410bc37f717fe4cab975608486fe90b0032a9eb5ac77dc3edd43f05dc9946c8",
+  "payload": {
+    "confidence": 0.78,
+    "counter_case": "고객 집중과 재협의 관행, HBM 전용 CAPA 미분리가 지속기간 상단을 제한한다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200"
+    ],
+    "positive_case": "100% 메모리 가동률과 HBM 가격 상승 기여는 병목과 가격력을 지지한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 25,
+        "reason": "재협의 관행은 pricing duration의 counter로 요약"
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 34,
+        "reason": "고객 집중 counter 유지"
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 95,
+        "reason": "공시된 100% 가동률 유지"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 154,
+        "reason": "평균원가 생산능력은 HBM 전용 CAPA가 아님"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 390,
+        "reason": "재고 충당은 직접 bottleneck 근거보다 후순위"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 399,
+        "reason": "재공품 충당은 직접 pricing 근거가 아님"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 531,
+        "reason": "가격 상승 정성 근거는 다음 chunk와 종합"
+      }
+    ],
+    "proposed_score_lower": 11.0,
+    "proposed_score_mid": 14.0,
+    "proposed_score_upper": 16.0,
+    "research_complete": true,
+    "researcher_summary": "가동률과 가격상승 제품군은 공급 긴장을 지지하지만 HBM 전용 sold-out·실현 ASP·고객 allocation은 확인되지 않았다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "전사 메모리 공급 긴장은 확인되지만 HBM 전용 CAPA lock으로 확대하지 않는다.",
+        "fact_row_index": 95,
+        "source_economic_mechanism": "2026년 1분기 반도체 생산실적은 11,465,147백만원이며 생산설비 평균가동률은 100%였다. 이는 메모리 전반의 현재 설비 활용도를 보여주지만 HBM 전용 가동률이나 장기 예약 물량을 뜻하지 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "OPERATED_MEMORY_PRODUCTION_FACILITIES_AT_FULL_UTILIZATION",
+        "source_value_json": "\"production output KRW 11,465,147 million; average utilization 100%\""
+      },
+      {
+        "component_interpretation": "강한 대형 고객 수요와 동시에 고객 협상력·집중 위험을 반영한다.",
+        "fact_row_index": 34,
+        "source_economic_mechanism": "고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.",
+        "source_value_json": "\"7,780,590 and 6,536,458 vs 4,786,233\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      95,
+      34
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "HBM 전용 CAPA와 realized ASP가 없다",
+      "구조적 쇼티지를 확정할 signed allocation이 없다"
+    ],
+    "why_not_higher": "메모리-wide 지표를 HBM-only 구조적 쇼티지로 승격할 수 없다.",
+    "why_not_lower": "실제 100% 가동과 HBM 가격 상승 제품군 근거가 있다."
+  },
+  "payload_hash": "2b7db48b896ec9d8376b4ba2ad1e3816135fea57589ba251a907bf07fe59b88d",
+  "production_score_authority": false,
+  "prompt_hash": "a842f964f526fbc3d000e455544998d81c0f240047b227051401176563e63e58",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b92423b3b8a3483b15dc4c10b9e3475a6ccf13b8596f01f30724d6cc40c33505",
+  "response_id": "COLLABRESP-13564cdac006bb3dcfa7dbd3a4605736f962a5a9c41d16bd3837eb780a9668ef",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

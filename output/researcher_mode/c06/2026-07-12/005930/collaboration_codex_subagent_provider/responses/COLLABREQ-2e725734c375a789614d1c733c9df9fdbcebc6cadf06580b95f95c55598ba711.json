@@ -1,0 +1,84 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-eb3930d5cdb87e17720917f4",
+        "rationale": "NVIDIA 공식 원문 전체에서 삼성전자 HBM4를 NVIDIA AI 인프라용 제품 및 양사 기술 협력에 직접 귀속한 고유 사실 1건을 추출했다. 일반 GTC·한국 AI 생태계 서술, 삼성전자 비HBM 제품, SK하이닉스·현대자동차 내용은 objective-local target-direct HBM 사실이 아니므로 제외했다. 제품 소개를 qualification·계약·구매의무·배정 물량·실제 탑재로 확대하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-eb3930d5cdb87e17720917f4",
+        "economic_mechanism": "NVIDIA 공식 블로그가 삼성전자의 HBM4를 NVIDIA AI 인프라를 위해 설계된 메모리 기술 라인업으로 직접 귀속하고 양사 협력을 명시해, 제3자 보도와 구별되는 고객 공식 기술 참여 근거를 제공한다. 이 제품 소개는 qualification 통과, 구매계약, 배정 물량 또는 실제 탑재를 뜻하지 않는다.",
+        "exact_quote": "별도로 마련된 ‘NVIDIA Gallery’에서는 NVIDIA AI 인프라를 위해 설계된 HBM4, SOCAMM2, PM1763 등 최첨단 메모리 기술 라인업을 소개하며 NVIDIA와의 협력을 강조했습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객사인 NVIDIA의 공식 원문이 삼성전자와 HBM4를 NVIDIA AI 인프라 및 기술 협력에 직접 연결하므로, 기존 언론·증권사 기반 고객 귀속과 구분되는 information_confidence objective의 핵심 독립 공식 근거다. 다만 계약·qualification·실제 공급 범위는 확인하지 않는다.",
+        "mechanism_scope_id": "005930_MEMORY_HBM4_PRODUCT_PROFILE_NVIDIA_AI_INFRA",
+        "normalized_object": "삼성전자 HBM4의 NVIDIA AI 인프라용 제품 설계·협력 귀속",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "GTC 2026; 2026-03-19 공개",
+        "predicate": "NVIDIA 공식 블로그는 삼성전자가 NVIDIA AI 인프라를 위해 설계된 HBM4를 소개하며 NVIDIA와의 협력을 강조했다고 밝혔다",
+        "predicate_family": "HBM4_NVIDIA_CUSTOMER_OFFICIAL_PRODUCT_PROFILE",
+        "primitive_tags": [
+          "SAMSUNG_ELECTRONICS",
+          "HBM4",
+          "NVIDIA_AI_INFRASTRUCTURE",
+          "CUSTOMER_OFFICIAL",
+          "TECHNICAL_COOPERATION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_NVIDIA_CUSTOMER_OFFICIAL_TECHNICAL_PARTICIPATION",
+        "question_family_tags": [
+          "information_confidence",
+          "HBM4_NVIDIA_AI_INFRA",
+          "customer_official_corroboration"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4의 NVIDIA AI 인프라용 제품 귀속",
+        "subject_id": "005930_HBM4_NVIDIA_AI_INFRA_PRODUCT_PROFILE",
+        "unit": "고객 공식 제품·협력 상태",
+        "value": "NVIDIA AI 인프라용으로 설계된 삼성전자 HBM4 제품 라인업 및 기술 협력 소개"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "7d3605a793b1ddf3f17dd5e7582cf34360e9159228e663c2fdc883bb4a2ab726",
+  "production_score_authority": false,
+  "prompt_hash": "f61a3d8c018e961c1174f4dfa81255d2f9a0f1b67dee09c1d71fda6af10650f1",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2e725734c375a789614d1c733c9df9fdbcebc6cadf06580b95f95c55598ba711",
+  "response_id": "COLLABRESP-971a0ee7116fc9124b3bd251927e3b57d6c86312a8b766097adaa752fb18752c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

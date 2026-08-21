@@ -1,0 +1,146 @@
+{
+  "output_schema_hash": "8756afb8bce0a51a7635e766e99492b90d5edc62df80e10afb194efb050d92dd",
+  "payload": {
+    "confidence": 0.72,
+    "counter_case": "고객 집중, CAPEX, 서로 다른 valuation 분모와 HBM-only 귀속 부재가 상단을 제한한다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df"
+    ],
+    "positive_case": "M15X·용인 생산기반 확대와 AI 메모리 수요는 durable denominator를 지지한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 25,
+        "reason": "월·분기 가격 재협의는 durable multiple 상단 제한으로 요약"
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 34,
+        "reason": "고객 집중 할인 유지"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 95,
+        "reason": "가동률은 valuation 직접 분모보다 운영 근거"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 211,
+        "reason": "DRAM 매출은 HBM-only rerating 근거가 아님"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 325,
+        "reason": "패키징 계획은 선택한 M15X·용인 계획과 종합"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 390,
+        "reason": "재고 충당은 보조 downside"
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 392,
+        "reason": "중장기 CAPA 확장 근거 유지"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 399,
+        "reason": "재공품 충당은 보조 downside"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 466,
+        "reason": "정성 수요 outlook은 확정 계약이 아님"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 531,
+        "reason": "가격 상승은 다음 chunk의 valuation 분모와 종합"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 574,
+        "reason": "memory-wide shortage는 HBM-only allocation이 아님"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 579,
+        "reason": "고부가 제품 basket은 HBM-only mix가 아님"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 588,
+        "reason": "재공품은 direct multiple 근거가 아님"
+      }
+    ],
+    "proposed_score_lower": 6.0,
+    "proposed_score_mid": 8.0,
+    "proposed_score_upper": 10.0,
+    "research_complete": true,
+    "researcher_summary": "중장기 수요·CAPA 경로는 있으나 고객 집중과 HBM-only 분모 미분리 때문에 multiple rerating은 중간 범위다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "중장기 생산기반 확대는 durable earnings denominator를 지지하지만 HBM 전용 확정 allocation은 아니다.",
+        "fact_row_index": 392,
+        "source_economic_mechanism": "To prioritize customer-demand fulfillment, the issuer plans early maximization of M15X production capacity and stable mid-to-long-term capacity expansion through Yongin Fab 1; the quote does not identify HBM-only capacity or committed customer allocation.",
+        "source_period_json": "\"early and mid-to-long term from 2026-01-28\"",
+        "source_predicate": "plans early production maximization and mid-to-long-term capacity expansion",
+        "source_value_json": "\"M15X early production maximization and Yongin Fab 1 mid-to-long-term production-base expansion\""
+      },
+      {
+        "component_interpretation": "고객 집중은 장기 multiple 상단에 할인 요인이다.",
+        "fact_row_index": 34,
+        "source_economic_mechanism": "고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.",
+        "source_value_json": "\"7,780,590 and 6,536,458 vs 4,786,233\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      392,
+      34
+    ],
+    "source_coverage": [
+      "ISSUER_NEWSROOM",
+      "OPENDART",
+      "PUBLIC_BROKER_PDF",
+      "KRX_PRICE_MARKET_CAP"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "PE·PB·EV/EBITDA의 기간과 분모가 혼재한다",
+      "peer band는 보조적이며 target own-history가 우선이다"
+    ],
+    "why_not_higher": "HBM-only earnings bridge와 직접 비교 가능한 peer band가 제한적이다.",
+    "why_not_lower": "실제 이익과 중장기 공급기반 확장 근거가 존재한다."
+  },
+  "payload_hash": "b9eae34afa48d17816fd742b10e6bd95cc18461a772b9afe90c406f24aeb6179",
+  "production_score_authority": false,
+  "prompt_hash": "ddb5ee129b415f3c240a7c48a041fea56ee834da76c8ebf20cbf13d8aa6654e5",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-02803b0eb2c9083548c55d0c47c1c54b8b401dc78e68a3d4b60168d67d7b6695",
+  "response_id": "COLLABRESP-504aa85037c4b36e445481808bd84c6b3c9346ff8531e6723c8cb5f2cd2ff136",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

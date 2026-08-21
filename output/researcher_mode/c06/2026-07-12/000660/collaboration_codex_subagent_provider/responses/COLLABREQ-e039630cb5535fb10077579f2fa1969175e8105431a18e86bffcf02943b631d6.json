@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      13.6,
+      15.1
+    ],
+    "anchor_comparisons": [
+      "CANCH-fe4be151b6e34320ddc5f6a7의 strong ordinal band 14.28~16.38은 현재 HBM4 실행·3년 수요·연간 DRAM 수요 커버와 가장 가까운 positive 기준이다. 다만 현재 계약조건 공개 수준은 band 중앙 이상을 자동 정당화하지 않는다.",
+      "CANCH-1aa76cb8e89d85cd78d325f4의 counter band 9.95~12.05는 고객 lock·margin bridge 약화 위험을 포착한다. 현재도 월·분기 합의와 지연 위험은 남지만 실제 생산·연간 수요 확보가 있어 이 band와는 명확히 구분된다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-c890adf15151ce383d70cf81",
+      "EFACT-dde9f3ef4ad310f18beb72e8"
+    ],
+    "disagreements": [
+      "두 anchor 모두 exact anchor가 아니라 ordinal anchor이므로 특정 중앙값을 기계적으로 복사하지 않는다.",
+      "조건부 LTA의 valuation 효과는 실제 체결 전까지 positive 실행 사실과 동일 가중치로 보지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-fe4be151b6e34320ddc5f6a7",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 14.3,
+    "rationale": "support 7건과 counter 3건을 동일 scale에 놓았다. HBM4 양산·성능 충족·대규모 생산, 3년 요청수요의 CAPA 초과와 FY2026 DRAM 생산 수요 확보는 positive anchor 하단에 진입할 근거다. 그러나 공급 논의·LTA는 미체결이고 물량·가격은 단기 협의이며 고객 플랫폼 및 경쟁사 CAPA 위험이 남는다. 따라서 counter band를 넘되 positive anchor의 중앙값 아래에 가까운 14.3점과 13.6~15.1 범위가 ordinal anchor에 가장 일관된다.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-62c3b9f322f3a062b5e74751",
+      "EFACT-a74dac2b9e727f8592e52c41",
+      "EFACT-d7a582ebff38082719fe2983",
+      "EFACT-e0438e911cc6bbc80ba6e3f4",
+      "EFACT-e269e2b69e9152111e463563",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "positive anchor 상단은 더 강한 계약 duration과 현금흐름 잠금이 필요하다. 현재는 미체결 LTA, 월·분기 가격·물량 합의, 고객 플랫폼 지연, CXMT 증설 때문에 상단 비교가 어렵다.",
+    "why_not_lower": "고객 수요가 공급능력을 장기간 초과하고 FY2026 DRAM 수요가 생산량 전체를 커버하며 HBM4가 실제 양산 단계에 있어 counter anchor의 고객 lock 부재 패턴만으로 설명되지 않는다."
+  },
+  "payload_hash": "e715663a0f2434a1784e18dbf8e179b271e2482f25d2a530ee41df8c5b32fa03",
+  "production_score_authority": false,
+  "prompt_hash": "80b9a0193e8e121e333c22a464c73595febf676a06c5ee0a996b15788b4b42d8",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e039630cb5535fb10077579f2fa1969175e8105431a18e86bffcf02943b631d6",
+  "response_id": "COLLABRESP-c40ad3b44c8455d5084ab8af0f3e56dabae9c0340d07b17f0f94bbf3c4e7b08d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Resolve the official Mirae Asset Securities landing record identified by messageId 2339731 and verify that it links to the direct official file at img.securities.miraeasset.com/ezrlink/report/183/20260511111814160_en.pdf. Treat both identifiers as transport hints only until canonical full fetch succeeds.",
+      "After fetch, verify publisher ownership, 2026-05-11 availability, SK hynix target identity, complete PDF text, and any explicit FY2026/FY2027 HBM revenue or operating-profit rows with units and assumptions. Do not promote snippets, URL tokens, or the read-only lead."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 미래에셋 20260511111814160_en.pdf messageId 2339731",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "The prior publisher-and-date query returned 99 candidates without the original report, while a read-only source-repair lead now supplies two exact transport identities that are absent from all 34 executed queries: the Mirae Asset direct-file token 20260511111814160_en.pdf and official landing record messageId 2339731. This is a new exact retrieval route rather than a synonym rewrite. Use it only to let canonical search, ranking, fetch, and validation confirm the official domain, landing-to-file relationship, publication date, SK hynix target, and full report; neither URL identity nor any claimed report contents are facts at query-generation time.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "The exact official file and messageId are source-repair identities, not evidence. If the landing page does not resolve to the file, the PDF is unavailable, or target/date/authorship do not match, keep the report unresolved and accept no fact.",
+      "Any figures in the fetched report would be Mirae Asset analyst estimates. They may support an independent eps_fcf_explosion forecast bridge or counterevidence, but cannot substitute for issuer-only FORWARD_GUIDANCE or SEGMENT_CONTRIBUTION and cannot alone prove DURABLE_VISIBILITY."
+    ]
+  },
+  "payload_hash": "ae5860416ca12ae01f4ee826e91f4a9526b1660fba04d47ab936402bf39c9f2b",
+  "production_score_authority": false,
+  "prompt_hash": "3fb15d92224489db81a0b46669c1044984f11c90720c1be961a4f0a8fc61720d",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b0d04dccdca2fdb44d42d4ddc6a05e6e773f6f2bd1bacd6e2b7c2a5c72fb6e5e",
+  "response_id": "COLLABRESP-02e13bcc2c34cf7318566781741cb96b58e6942456f8b38edd4a7111956b7a6e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

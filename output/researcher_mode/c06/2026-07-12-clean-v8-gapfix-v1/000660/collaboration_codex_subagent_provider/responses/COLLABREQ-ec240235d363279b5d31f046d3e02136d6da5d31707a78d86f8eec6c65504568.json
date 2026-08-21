@@ -1,0 +1,578 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "rationale": "Continuation page 8 adds 12 distinct source-order margin atoms after the exact prior 84: six remaining consolidated operating-margin forecasts and six DRAM operating-margin forecasts. The literal chunk still contains FY2026 DRAM margin plus consolidated pretax- and net-margin forecasts.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The quarterly operating-margin estimate converts the broker's consolidated revenue and operating-profit forecasts into an issuer-wide profitability measure; it is neither issuer guidance nor HBM-only margin.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659\nDRAM 14,037 17,124 19,084 22,576 26,937 29,143 29,423 28,555 44,732 72,821 114,058\nNAND 3,229 4,728 4,989 5,965 6,455 6,732 6,951 6,457 19,274 18,911 26,596\n기타 373 380 376 505 461 523 491 529 2,187 1,634 2,005\n영업이익 7,441 9,213 11,383 15,214 19,291 21,431 21,774 18,170 23,467 43,251 80,665\nDRAM 7,500 9,500 11,500 14,743 18,144 19,799 19,927 17,190 20,959 43,243 75,060\nNAND 15 -202 -94 522 1,193 1,684 1,896 1,033 2,800 241 5,806\n기타 -75 -85 -22 -50 -46 -52 -49 -53 -292 -233 -201\n세전이익 9,299 8,723 14,790 15,321 19,775 21,961 22,341 18,668 23,885 48,133 82,744\n순이익 8,108 6,996 12,598 11,644 15,029 16,690 16,979 14,188 19,797 39,346 62,886\n이익률(%)\n영업이익 42 41 47 52 57 59 59 51 35 46 57",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 1Q26 consolidated margin is a direct quarterly profitability input in the broker earnings bridge, without product-level attribution.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CONSOLIDATED-BROKER-MARGIN",
+        "normalized_object": "SK hynix 1Q26 consolidated operating-margin Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26E",
+        "predicate": "Daishin forecasts SK hynix consolidated operating margin at 57% in 1Q26.",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "consolidated_margin",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings margin",
+        "question_family_id": "daishin_skh_consolidated_operating_margin_1q26e",
+        "question_family_tags": [
+          "earnings",
+          "operating_margin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated operating-margin broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:1Q26E:DAISHIN_20251128",
+        "unit": "percent",
+        "value": 57
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The quarterly operating-margin estimate converts the broker's consolidated revenue and operating-profit forecasts into an issuer-wide profitability measure; it is neither issuer guidance nor HBM-only margin.",
+        "exact_quote": "영업이익 42 41 47 52 57 59 59 51 35 46 57",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 2Q26 consolidated margin is the broker model's direct quarterly revenue-to-profit conversion point.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CONSOLIDATED-BROKER-MARGIN",
+        "normalized_object": "SK hynix 2Q26 consolidated operating-margin Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E",
+        "predicate": "Daishin forecasts SK hynix consolidated operating margin at 59% in 2Q26.",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "consolidated_margin",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings margin",
+        "question_family_id": "daishin_skh_consolidated_operating_margin_2q26e",
+        "question_family_tags": [
+          "earnings",
+          "operating_margin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated operating-margin broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:2Q26E:DAISHIN_20251128",
+        "unit": "percent",
+        "value": 59
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The quarterly operating-margin estimate converts the broker's consolidated revenue and operating-profit forecasts into an issuer-wide profitability measure; it is neither issuer guidance nor HBM-only margin.",
+        "exact_quote": "영업이익 42 41 47 52 57 59 59 51 35 46 57",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 3Q26 consolidated margin extends the broker's peak quarterly profitability assumption.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CONSOLIDATED-BROKER-MARGIN",
+        "normalized_object": "SK hynix 3Q26 consolidated operating-margin Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E",
+        "predicate": "Daishin forecasts SK hynix consolidated operating margin at 59% in 3Q26.",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "consolidated_margin",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings margin",
+        "question_family_id": "daishin_skh_consolidated_operating_margin_3q26e",
+        "question_family_tags": [
+          "earnings",
+          "operating_margin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated operating-margin broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:3Q26E:DAISHIN_20251128",
+        "unit": "percent",
+        "value": 59
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The 4Q26 consolidated operating-margin estimate drops from 3Q26, providing an issuer-wide broker profitability counter that cannot be attributed to HBM alone.",
+        "exact_quote": "영업이익 42 41 47 52 57 59 59 51 35 46 57",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit decline to 51% is counterevidence to uninterrupted quarterly margin expansion in the broker model.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CONSOLIDATED-BROKER-MARGIN",
+        "normalized_object": "SK hynix 4Q26 consolidated operating-margin Daishin broker forecast and sequential counter",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q26E",
+        "predicate": "Daishin forecasts SK hynix consolidated operating margin at 51% in 4Q26, below 59% in 3Q26.",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "consolidated_margin",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings margin",
+        "question_family_id": "daishin_skh_consolidated_operating_margin_4q26e",
+        "question_family_tags": [
+          "earnings",
+          "operating_margin",
+          "counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated operating-margin broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:4Q26E:DAISHIN_20251128",
+        "unit": "percent",
+        "value": 51
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The annual operating-margin estimate is a broker-derived consolidated profitability measure and neither issuer guidance nor HBM-only margin.",
+        "exact_quote": "영업이익 42 41 47 52 57 59 59 51 35 46 57",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2025 annual margin is a distinct period-level consolidated broker profitability input.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CONSOLIDATED-BROKER-MARGIN",
+        "normalized_object": "SK hynix FY2025 consolidated operating-margin Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "Daishin forecasts SK hynix consolidated operating margin at 46% for FY2025.",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "consolidated_margin",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings margin",
+        "question_family_id": "daishin_skh_consolidated_operating_margin_fy2025e",
+        "question_family_tags": [
+          "earnings",
+          "operating_margin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated annual operating-margin broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:FY2025E:DAISHIN_20251128",
+        "unit": "percent",
+        "value": 46
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The annual operating-margin estimate is a broker-derived consolidated profitability measure and neither issuer guidance nor HBM-only margin.",
+        "exact_quote": "영업이익 42 41 47 52 57 59 59 51 35 46 57",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2026 annual margin is the broker's consolidated full-year profitability assumption and remains external modeling.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CONSOLIDATED-BROKER-MARGIN",
+        "normalized_object": "SK hynix FY2026 consolidated operating-margin Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "Daishin forecasts SK hynix consolidated operating margin at 57% for FY2026.",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "consolidated_margin",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings margin",
+        "question_family_id": "daishin_skh_consolidated_operating_margin_fy2026e",
+        "question_family_tags": [
+          "earnings",
+          "operating_margin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated annual operating-margin broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:FY2026E:DAISHIN_20251128",
+        "unit": "percent",
+        "value": 57
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker's DRAM operating-margin forecast links segment revenue to segment profit; it does not isolate HBM margin or represent issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659\nDRAM 14,037 17,124 19,084 22,576 26,937 29,143 29,423 28,555 44,732 72,821 114,058\nNAND 3,229 4,728 4,989 5,965 6,455 6,732 6,951 6,457 19,274 18,911 26,596\n기타 373 380 376 505 461 523 491 529 2,187 1,634 2,005\n영업이익 7,441 9,213 11,383 15,214 19,291 21,431 21,774 18,170 23,467 43,251 80,665\nDRAM 7,500 9,500 11,500 14,743 18,144 19,799 19,927 17,190 20,959 43,243 75,060\nNAND 15 -202 -94 522 1,193 1,684 1,896 1,033 2,800 241 5,806\n기타 -75 -85 -22 -50 -46 -52 -49 -53 -292 -233 -201\n세전이익 9,299 8,723 14,790 15,321 19,775 21,961 22,341 18,668 23,885 48,133 82,744\n순이익 8,108 6,996 12,598 11,644 15,029 16,690 16,979 14,188 19,797 39,346 62,886\n이익률(%)\n영업이익 42 41 47 52 57 59 59 51 35 46 57\nDRAM 53 55 60 65 67 68 68 60 47 59 66",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 4Q25 DRAM margin explicitly quantifies segment-level profit conversion while preserving the non-HBM-specific denominator.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-MARGIN-CONVERSION",
+        "normalized_object": "SK hynix 4Q25 DRAM segment operating-margin Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25E",
+        "predicate": "Daishin forecasts SK hynix DRAM segment operating margin at 65% in 4Q25.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "DRAM_margin",
+          "broker_forecast"
+        ],
+        "product_family": "DRAM segment operating margin",
+        "question_family_id": "daishin_skh_dram_operating_margin_4q25e",
+        "question_family_tags": [
+          "earnings",
+          "segment_margin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix DRAM segment operating-margin broker forecast",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN:4Q25E:DAISHIN_20251128",
+        "unit": "percent",
+        "value": 65
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker's DRAM operating-margin forecast links segment revenue to segment profit; it does not isolate HBM margin or represent issuer guidance.",
+        "exact_quote": "DRAM 53 55 60 65 67 68 68 60 47 59 66",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 1Q26 DRAM margin directly advances the segment-level broker profit-conversion path.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-MARGIN-CONVERSION",
+        "normalized_object": "SK hynix 1Q26 DRAM segment operating-margin Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26E",
+        "predicate": "Daishin forecasts SK hynix DRAM segment operating margin at 67% in 1Q26.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "DRAM_margin",
+          "broker_forecast"
+        ],
+        "product_family": "DRAM segment operating margin",
+        "question_family_id": "daishin_skh_dram_operating_margin_1q26e",
+        "question_family_tags": [
+          "earnings",
+          "segment_margin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix DRAM segment operating-margin broker forecast",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN:1Q26E:DAISHIN_20251128",
+        "unit": "percent",
+        "value": 67
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker's DRAM operating-margin forecast links segment revenue to segment profit; it does not isolate HBM margin or represent issuer guidance.",
+        "exact_quote": "DRAM 53 55 60 65 67 68 68 60 47 59 66",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 2Q26 DRAM margin directly quantifies the peak segment profitability assumption.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-MARGIN-CONVERSION",
+        "normalized_object": "SK hynix 2Q26 DRAM segment operating-margin Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E",
+        "predicate": "Daishin forecasts SK hynix DRAM segment operating margin at 68% in 2Q26.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "DRAM_margin",
+          "broker_forecast"
+        ],
+        "product_family": "DRAM segment operating margin",
+        "question_family_id": "daishin_skh_dram_operating_margin_2q26e",
+        "question_family_tags": [
+          "earnings",
+          "segment_margin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix DRAM segment operating-margin broker forecast",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN:2Q26E:DAISHIN_20251128",
+        "unit": "percent",
+        "value": 68
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker's DRAM operating-margin forecast links segment revenue to segment profit; it does not isolate HBM margin or represent issuer guidance.",
+        "exact_quote": "DRAM 53 55 60 65 67 68 68 60 47 59 66",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 3Q26 DRAM margin holds the peak segment profitability level in the broker model.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-MARGIN-CONVERSION",
+        "normalized_object": "SK hynix 3Q26 DRAM segment operating-margin Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E",
+        "predicate": "Daishin forecasts SK hynix DRAM segment operating margin at 68% in 3Q26.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "DRAM_margin",
+          "broker_forecast"
+        ],
+        "product_family": "DRAM segment operating margin",
+        "question_family_id": "daishin_skh_dram_operating_margin_3q26e",
+        "question_family_tags": [
+          "earnings",
+          "segment_margin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix DRAM segment operating-margin broker forecast",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN:3Q26E:DAISHIN_20251128",
+        "unit": "percent",
+        "value": 68
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The 4Q26 DRAM operating-margin estimate falls from 3Q26, providing segment-level broker counterevidence without implying an HBM-only margin.",
+        "exact_quote": "DRAM 53 55 60 65 67 68 68 60 47 59 66",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The drop to 60% is an explicit segment-margin counter to uninterrupted profitability expansion.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-MARGIN-CONVERSION",
+        "normalized_object": "SK hynix 4Q26 DRAM segment operating-margin Daishin broker forecast and sequential counter",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q26E",
+        "predicate": "Daishin forecasts SK hynix DRAM segment operating margin at 60% in 4Q26, below 68% in 3Q26.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "DRAM_margin",
+          "broker_forecast"
+        ],
+        "product_family": "DRAM segment operating margin",
+        "question_family_id": "daishin_skh_dram_operating_margin_4q26e",
+        "question_family_tags": [
+          "earnings",
+          "segment_margin",
+          "counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix DRAM segment operating-margin broker forecast",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN:4Q26E:DAISHIN_20251128",
+        "unit": "percent",
+        "value": 60
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The annual DRAM operating-margin estimate links segment revenue to segment profit and does not isolate HBM economics.",
+        "exact_quote": "DRAM 53 55 60 65 67 68 68 60 47 59 66",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2025 DRAM margin is a distinct annual segment profit-conversion point in the broker model.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-MARGIN-CONVERSION",
+        "normalized_object": "SK hynix FY2025 DRAM segment operating-margin Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "Daishin forecasts SK hynix DRAM segment operating margin at 59% for FY2025.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "DRAM_margin",
+          "broker_forecast"
+        ],
+        "product_family": "DRAM segment operating margin",
+        "question_family_id": "daishin_skh_dram_operating_margin_fy2025e",
+        "question_family_tags": [
+          "earnings",
+          "segment_margin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix DRAM segment annual operating-margin broker forecast",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN:FY2025E:DAISHIN_20251128",
+        "unit": "percent",
+        "value": 59
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-b06350879c518ec49fa8cd5c"
+    ],
+    "unresolved_research_notes": [
+      "Continue source order for FY2026 DRAM operating margin and remaining quarterly/annual consolidated pretax- and net-income margins. Preserve margin denominator, quarter versus annual period, consolidated versus DRAM versus HBM-only attribution, broker-estimate lifecycle, and explicit 4Q26 counter direction; canonical parent chunk 1/2 remains separate."
+    ]
+  },
+  "payload_hash": "2adf7d06371642c52dcc8eb0182b2f9e8ca5282a6a90b815b61ab9a16508c3e3",
+  "production_score_authority": false,
+  "prompt_hash": "fa2db82a78cddf451c01a1eb3d63c4dc4550026321477a36b40a51a7aec64e5e",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ec240235d363279b5d31f046d3e02136d6da5d31707a78d86f8eec6c65504568",
+  "response_id": "COLLABRESP-f7b4af5abb03eed7088898c9cd19a49548a1a88be6c37f2a0da453b5daa425a1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

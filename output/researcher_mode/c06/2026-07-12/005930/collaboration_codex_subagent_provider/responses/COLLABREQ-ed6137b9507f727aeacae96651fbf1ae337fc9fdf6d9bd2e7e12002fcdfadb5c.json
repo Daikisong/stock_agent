@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-59cbba5833b75487626f46b1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The generic consumer AI-products page does not establish a requested financial source or memory earnings mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-5a599d6c440803817a2f2360",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A SmartThings accessories catalogue is unrelated to the open objective."
+      },
+      {
+        "candidate_id": "SGCAND-5bd54da3a635d3d6b1c10444",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.54,
+        "rationale": "The official 2025 first-quarter presentation can supply a trailing-period baseline for the current earnings bridge, provided later-period supersession is applied."
+      },
+      {
+        "candidate_id": "SGCAND-5bf44d2eb5d516dc27bcace6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The opaque third-party short link has no supplied issuer financial provenance or snippet sufficient to match a requested family."
+      },
+      {
+        "candidate_id": "SGCAND-5cbf866af07d87e81fbd7943",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A consumer login and email-check route is unrelated to the research objective."
+      },
+      {
+        "candidate_id": "SGCAND-5d12fd7b0617ab745d889294",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A consumer moving-display catalogue is unrelated to semiconductor earnings and cash flow."
+      },
+      {
+        "candidate_id": "SGCAND-609509f5780df4bfcf36a037",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A consumer audio catalogue is unrelated to the financial mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-64e0784ff32624a1be6fd07b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The newsroom operating-policy page does not match a requested financial source family."
+      },
+      {
+        "candidate_id": "SGCAND-651ba43495fcfbe8c4821931",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.22,
+        "rationale": "The official 2025 fourth-quarter balance sheet matches the issuer reporting package but does not by itself resolve profit attribution or cash conversion."
+      },
+      {
+        "candidate_id": "SGCAND-657e45cfa4d34adbffdad547",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.16,
+        "rationale": "The official 2024 second-quarter presentation route matches provenance but is superseded by later reporting periods."
+      },
+      {
+        "candidate_id": "SGCAND-658ae019fa727bff186915d6",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.98,
+        "rationale": "The official earnings-release landing page is a direct route to current original issuer results and accompanying financial documents required by the open objective."
+      },
+      {
+        "candidate_id": "SGCAND-65ff6f1bc2094477da4691de",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.08,
+        "rationale": "The official 2023 fourth-quarter presentation route matches provenance but is superseded historical context."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "The earnings-release route and 2025 presentation require full fetch; older presentations cannot override later-period disclosures."
+    ]
+  },
+  "payload_hash": "25203fad7e1e28cc03409cf5632c32caaf5dcfeffccafdd78faf0799e90e940c",
+  "production_score_authority": false,
+  "prompt_hash": "a9c15c1d69149952f78372d01232f6e6b28e3dfb787b0992ae8a50201afd1ea7",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ed6137b9507f727aeacae96651fbf1ae337fc9fdf6d9bd2e7e12002fcdfadb5c",
+  "response_id": "COLLABRESP-445fb353b1dad8745495460210fa6350dc8a5a0efa4608a2a2fc2aa3f8b15b1e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

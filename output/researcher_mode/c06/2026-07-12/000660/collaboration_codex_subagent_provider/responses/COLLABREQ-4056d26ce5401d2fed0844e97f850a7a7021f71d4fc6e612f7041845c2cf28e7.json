@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "fc622c00f7411df1efdf840d2686b8a8b06f3b07a247be79b41caf511bb7764e",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-e35aa4e18f75d27e431fc884",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'2024 Annual Report - Compal' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-66e1e5e53a69afcabe337510",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'Will Korea-U.S. Tariff Negotiations End with Mutual Satisfactions?' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-398a87c4210ac539cff058f7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'Artificial Intelligence Index Report' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-4a29d0844458526ef321a5d6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'Micron Semiconductor Manufacturing Project, Clay, NY Final Environmental Impact Statement' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2e4728f33e46257b45a081d4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'Middle East Shock Brings Triple Crisis to Korean Economy' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-cc61d485552933a5eeca22db",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'South Korean Manufacturing Faces Crisis Amid Chinese Oversupply and Export Push' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2a891f51422593faa27fda32",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'Micron Semiconductor Manufacturing Project - FEIS - Appendix A-D' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-307d6f0fa86f0f908abecc9f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'November 2025' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-6fde1f3d12ed8315bb0f6899",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'Annual Report 2025' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-5c3df281e40f8208fe5c1d2b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'NOMURA FUNDS IRELAND PLC' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-fed104ed59387594af0e586d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'NOMURA FUNDS IRELAND PLC - Ltd' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7a2ec0f7de156bc570c1cb05",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'Monday, June 15, 2026' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에는 요청한 두 공식 원문 경로가 없다. HBM KPI와 고객 구매약정·선급금 공백은 unresolved이며 snippet은 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "12ef5b86cd082ff6dddfe0e6f6324e804187a995683e552c9f711b94d45162d6",
+  "production_score_authority": false,
+  "prompt_hash": "525a6ef6c8fa95dcbf0f4d857792690ea2f8f8277252c471725643d41f7a50dc",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4056d26ce5401d2fed0844e97f850a7a7021f71d4fc6e612f7041845c2cf28e7",
+  "response_id": "COLLABRESP-754da1676aaa84a14d06c0597f01f1f0d091d7619a1ef24d499f0516e58950a1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

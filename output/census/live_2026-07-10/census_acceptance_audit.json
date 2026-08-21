@@ -1,0 +1,46 @@
+{
+  "as_of_date": "2026-07-10",
+  "baseline_lane_count": 10168,
+  "census_source_corpus_hash": "8b5f48d1c9b313a8d3b8d05ff04a8d057bc726bf661e3140fe04cdcea4ff2721",
+  "checkpoint_count": 4,
+  "critical_count_sum": 0,
+  "current_source_corpus_hash": "8b5f48d1c9b313a8d3b8d05ff04a8d057bc726bf661e3140fe04cdcea4ff2721",
+  "eligible_count": 2542,
+  "hard_acceptance_counts": {
+    "baseline_lane_count_mismatch": 0,
+    "census_source_corpus_hash_missing_or_invalid": 0,
+    "claimless_nonzero_score_count": 0,
+    "current_census_source_corpus_hash_mismatch": 0,
+    "current_source_corpus_hash_missing_or_invalid": 0,
+    "duplicate_claim_reference_count": 0,
+    "duplicate_symbol_count": 0,
+    "missing_symbol_count": 0,
+    "provider_pending_without_failure_count": 0,
+    "source_timeline_count_mismatch": 0,
+    "stage0_without_source_attempt_count": 0,
+    "symbol_outside_eligible_count": 0,
+    "unknown_default_count": 0
+  },
+  "merged_stage_map_hash": "e437939a2f09b13940491f757d8b06d107526a447bb0b1935ec491ada4a07f29",
+  "production_runtime_ready": false,
+  "reused_shard_count": 4,
+  "schema_version": "e2r_live_census_operational_v1",
+  "selected_deep_count": 180,
+  "shard_count": 4,
+  "source_corpus_hash": "8b5f48d1c9b313a8d3b8d05ff04a8d057bc726bf661e3140fe04cdcea4ff2721",
+  "source_corpus_hash_audit": {
+    "census_source_corpus_hash": "8b5f48d1c9b313a8d3b8d05ff04a8d057bc726bf661e3140fe04cdcea4ff2721",
+    "critical_count_sum": 0,
+    "critical_counts": {
+      "census_source_corpus_hash_missing_or_invalid": 0,
+      "current_census_source_corpus_hash_mismatch": 0,
+      "current_source_corpus_hash_missing_or_invalid": 0
+    },
+    "current_source_corpus_hash": "8b5f48d1c9b313a8d3b8d05ff04a8d057bc726bf661e3140fe04cdcea4ff2721",
+    "schema_version": "e2r_live_census_operational_v1",
+    "status": "CURRENT_CENSUS_SOURCE_CORPUS_HASH_PASS"
+  },
+  "source_timeline_count": 2542,
+  "stage_map_count": 2542,
+  "status": "CENSUS_SELECTIVE_DEEP_PASS"
+}

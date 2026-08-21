@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2466c6a8727cd5542c49b574",
+        "rationale": "독립 coverage 재감사 결과 신규 objective-linked fact가 없다. Durable 9건이 이미 이 보고서의 HBM·메모리 매출, 메모리 영업이익·마진, 영업이익 추정치 revision, forward BPS/PBR/EV-EBITDA 및 목표 PBR 방법론을 보존한다. DRAM 가격·메모리 장기공급계약 관련 broker 추정도 현재 ledger의 동일 경제 의미와 중복되며 issuer-confirmed contract term으로 승격할 수 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "b99a7e26753ee3b685a5ebf442a09048847bad1a940e37bc289af5dfcab91ae9",
+  "production_score_authority": false,
+  "prompt_hash": "9287a18f7f592016ecf54413c7bb63a2bfd5483661e19e6b084bd6bc891e9231",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-dabeda8edbd881dc0103aa0737b887a69d228baa6d377240ed6bc7cb6f6cc689",
+  "response_id": "COLLABRESP-2f31c23775b1a54fdc8f4c29da053a1cddd822f241cc785a7e61692805dd8dc9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

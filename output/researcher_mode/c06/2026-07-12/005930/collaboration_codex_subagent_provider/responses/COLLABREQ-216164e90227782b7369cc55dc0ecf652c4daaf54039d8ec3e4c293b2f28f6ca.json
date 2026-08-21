@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-aecd1d645fcfcccaf1870d5f",
+        "rationale": "2024-08-21 산업보고서 8,821줄 전체를 검토했다. 삼성전자 직접 내용은 당시 2025년 HBM 전환·DRAM 공급부족과 P3/P4 약 170K/M 증설 전망이며 현재 598개 사실의 후속 actual·최신 전망으로 대체됐다. 나머지 PER/PBR/현금흐름 표는 소부장·해외 장비사 자료이고 삼성전자 현재 valuation bridge가 아니므로 신규 사실로 승격하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "0b47be87832447b6eb4baa22ac80c12ff5ccaa3ecf3c628dfd97bc0fc2901034",
+  "production_score_authority": false,
+  "prompt_hash": "38a372c4babf8c77e062be512ea1af71eed594d9e2132066478a329207d98c3e",
+  "provenance": {
+    "agent_id": "root-phase101-c06-facts",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_facts",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-216164e90227782b7369cc55dc0ecf652c4daaf54039d8ec3e4c293b2f28f6ca",
+  "response_id": "COLLABRESP-a1adde5c1ef24bcda3ae200359d3919d473e92be0c1afa69e838a6812b2c0561",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "1cbce832a48aa497bfb333df736bd652a58616042ae6d417377ea338efff3e37",
+  "payload": {
+    "allowed_range": [
+      2.0,
+      3.2
+    ],
+    "anchor_comparisons": [
+      "1.5~2.0점 COUNTER WEAK anchor보다 현재 공식 HBM 사실은 강하지만, 정보 제한 counterfacts가 광범위해 강한 확신으로 이동하기 어렵다.",
+      "4.75~5.0점 COUNTER STRONG anchor가 상징하는 고점 확신과 비교하면 단일 issuer 집중, 비검증 release, 계약·segment 공백 때문에 현저히 낮아야 한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-9e6b13a8d7ba3ffb86d2467e",
+      "EFACT-a943dca289563cc8583d4b78",
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-cd10742dea3f5402040d6cbc",
+      "EFACT-dcd0816b6ba04c76c69e7a4b",
+      "EFACT-e2b5d15b4400874c34e4f2a2",
+      "EFACT-fc43dd3418fa06939957246d"
+    ],
+    "disagreements": [
+      "네 개 issuer 발표를 네 개의 독립 확인으로 세는 데 동의하지 않는다. 동일 source group의 실행 서술이며 고객·감사·계약 원문 검증이 빠져 있다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-90c2b7d4695e62e277703a64",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "proposed_points": 2.6,
+    "rationale": "모든 counterfact를 반영하면 정보의 양과 검증 독립성은 다르다. 1Q26 release는 검토 미완료이고 별도 독립 검증이 없으며 forward statements의 결과 차이 가능성이 명시됐다. 물량·가격은 월·분기 합의이고 HBM 전용 계약조건이 없으며, 단일 사업부문 공시로 HBM 재무 분해가 불가능하다. 두 브로커 자료에는 컨센서스 기준과 매출 전망 내부 불일치도 있다. 네 support facts는 중요하지만 동일 issuer independence group에 집중된다.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-a74dac2b9e727f8592e52c41",
+      "EFACT-b74e88a671a1247b0ce230d5",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "HBM별 계약·물량·가격·마진과 독립 인증이 없고 잠정·비검증·내부 불일치가 동시에 존재해 strong confidence band를 지지하지 않는다.",
+    "why_not_lower": "공식 자료가 HBM4 양산과 성능요구 충족, HBM 매출 성장, 공급 논의를 구체적으로 명시하므로 정보가 없는 weak 사례는 아니다."
+  },
+  "payload_hash": "75be0534de08d9c9ec0d07ff032d080bd58711a637602c98370748e069029eb9",
+  "production_score_authority": false,
+  "prompt_hash": "6e91d15a459c285274787e689ad9abb00b2cafb549346fd25670d75a1561b41a",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-308edf373e8faceb8392a96f4ff75b913ad28e0c1d4c394de450eace11849261",
+  "response_id": "COLLABRESP-91abed6854b30c0e9617693338299902cbcc2a6fdc908172284bd238393610f8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-cd868041dc3496853d994125",
+        "rationale": "문서 전체는 Samsung Semiconductor, Inc.의 2025년 3월 표준 판매약관으로, 모든 제품에 공통 적용되는 주문 수락·가격·배송·취소·보증·수출통제 조건만 규정한다. 특정 고객, HBM 또는 메모리 제품, 확정 물량, 가격, 공급 기간이나 실제 주문을 식별하지 않으므로 연결된 earnings_visibility objective를 직접 진전·반박·대체하지 않는다. 주문 확인이 수락이 아니고 납기일이 추정치라는 일반 조항도 실제 HBM 고객 약정의 존재나 부재로 일반화할 수 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "7f4a595540c0a11a753f98beae752adf3141b1a018a2b85b8b789f2d92ee5c8b",
+  "production_score_authority": false,
+  "prompt_hash": "08a8949cb584e4316e7c6638a4b07fad8d7264a16659146332456de5c7c7b66e",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-08d246a76fba60c3ed2681ef9b48435f79fa294b30c20db0ed169f2a591b868c",
+  "response_id": "COLLABRESP-fb6a2bd7d2d6a21a572398051f3e5aef06653c78d876c8b8643a5e417aaac1a3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

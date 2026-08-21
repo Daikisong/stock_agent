@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "744a48df81396a3c04f7dd2bdd190da9ed944a5b26a9ceb90e34c0c5325513a1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-e35be2a72a176aba6ff47c85",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "삼성전기 009150 보고서로 삼성전자 005930가 아닌 다른 issuer의 MLCC·PCB valuation이다."
+      },
+      {
+        "candidate_id": "SGCAND-da8e1d26666ea02139f037d1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.04,
+        "rationale": "2023년 발간 2024 산업전망은 시점이 오래되고 광범위한 종목 목록만 있어 현재 peer band를 만들 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-1716cb0ffac9e6e2e2b01993",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "2026-07-01 sector update snippet은 자동차·로봇 전략으로 삼성전자 peer valuation을 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-0ea48882ed10b75bec743faf",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.03,
+        "rationale": "2024년 발간 2025 리서치포럼의 거시전망으로 현재 삼성전자 개별 peer multiple 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-90b100f32b7260c7cc9014f8",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "이수페타시스 007660 보고서로 PCB 업체의 ASP와 valuation이며 삼성전자 peer band subject가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a391aa4d326005a50a5bb330",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.35,
+        "rationale": "유안타 Daily의 삼성전자 목표가격·2Q26 메모리 요약은 target 단독 추천 문구이고 peer identity·동일 기간 P/B 표가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-0b49769c59cf56edfbf27796",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.07,
+        "rationale": "다종목 Daily 추천 목록에 삼성전자 이름만 있어 peer multiple의 수치·기간·비교 기준이 없다."
+      },
+      {
+        "candidate_id": "SGCAND-a5504bb3b17afb781bf4b0e0",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "전기전자 업종 Daily로 삼성전기·LG전자·LG이노텍 주가 흐름이 중심이며 삼성전자 peer band를 확인하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c4d8204cb3226370ddc4363d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "삼성중공업 010140 보고서이고 파일 날짜도 2026-07-13으로 cutoff 이후라 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-6f5dd011eef895d70c4d514e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "기가비스 420770 보고서로 subject와 경제 메커니즘이 삼성전자 valuation objective와 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-8d89cfc1a45f861dae7446b2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "한국경제 재게시 증권업 보고서로 한국금융지주·증권사 PBR을 다루며 삼성전자 반도체 peer 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9b1d5c51d6b6e28b722b2574",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.93,
+        "rationale": "2026-02-24 하나증권 반도체 산업 원문에 삼성전자와 SK하이닉스의 전용 섹션이 있어 같은 forecast period의 peer valuation 표를 확인할 강한 route다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "ranking_complete는 이 partition의 후보 분류 완료만 뜻한다. material 후보는 full fetch 후 2026-07-12 cutoff, 삼성전자 subject, peer identity, 동일 forecast period 및 numeric P/B를 검증해야 한다."
+    ]
+  },
+  "payload_hash": "09a1777df33c35ddc9bf19bf81361711fdb01f95e22063ecc5c93d78c8954175",
+  "production_score_authority": false,
+  "prompt_hash": "c461949ed091bc72f7e8fcb1a2de307a7c00f33c23c806b5594731562ed91a77",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-18f3f1134d32161d9af098abcfd713d46e517e911376089f26b318248a522c21",
+  "response_id": "COLLABRESP-86307bc92777ca4956441cfbe4b04e14c7269c4ac97a0dd6af07d6823e9dc53f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

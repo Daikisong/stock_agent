@@ -1,0 +1,586 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Accepted the next 12 target-direct, non-NAND source-order revision atoms after strict deduplication against 108 embedded prior facts: four DRAM revenue revisions, four consolidated operating-profit revisions, and four DRAM operating-profit revisions. Each preserves the revised point, previous point, reported rate, quarter, and historical broker lifecycle.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker DRAM revenue forecast revision; it does not isolate HBM revenue or constitute issuer guidance.",
+        "exact_quote": "DRAM 7,557 9,746 10,964 11,451 7,594 8,784 9,783 11,165 0% 11% 12% 3%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the reported new, old, and rounded revision rate for a historical DRAM forecast without assigning the number to HBM.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 1Q2024 DRAM revenue revised to KRW 7,557 billion from KRW 7,594 billion, reported revision rate 0 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "broker revised DRAM revenue forecast",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_REVENUE_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "broker_revision",
+          "dram_revenue",
+          "quarterly_forecast"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "sksec_skh_dram_revenue_revision_1q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM",
+        "subject_id": "000660:DRAM_REVENUE_REVISION:1Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 7557
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker DRAM revenue forecast revision; it does not isolate HBM revenue or constitute issuer guidance.",
+        "exact_quote": "DRAM 7,557 9,746 10,964 11,451 7,594 8,784 9,783 11,165 0% 11% 12% 3%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the reported new, old, and revision rate for a historical DRAM forecast without assigning the number to HBM.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 2Q2024 DRAM revenue revised to KRW 9,746 billion from KRW 8,784 billion, up 11 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker revised DRAM revenue forecast",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_REVENUE_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "broker_revision",
+          "dram_revenue",
+          "quarterly_forecast"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "sksec_skh_dram_revenue_revision_2q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM",
+        "subject_id": "000660:DRAM_REVENUE_REVISION:2Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 9746
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker DRAM revenue forecast revision; it does not isolate HBM revenue or constitute issuer guidance.",
+        "exact_quote": "DRAM 7,557 9,746 10,964 11,451 7,594 8,784 9,783 11,165 0% 11% 12% 3%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the reported new, old, and revision rate for a historical DRAM forecast without assigning the number to HBM.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 3Q2024 DRAM revenue revised to KRW 10,964 billion from KRW 9,783 billion, up 12 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker revised DRAM revenue forecast",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_REVENUE_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "broker_revision",
+          "dram_revenue",
+          "quarterly_forecast"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "sksec_skh_dram_revenue_revision_3q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM",
+        "subject_id": "000660:DRAM_REVENUE_REVISION:3Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 10964
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker DRAM revenue forecast revision; it does not isolate HBM revenue or constitute issuer guidance.",
+        "exact_quote": "DRAM 7,557 9,746 10,964 11,451 7,594 8,784 9,783 11,165 0% 11% 12% 3%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the reported new, old, and revision rate for a historical DRAM forecast without assigning the number to HBM.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 4Q2024 DRAM revenue revised to KRW 11,451 billion from KRW 11,165 billion, up 3 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "broker revised DRAM revenue forecast",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_REVENUE_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "broker_revision",
+          "dram_revenue",
+          "quarterly_forecast"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "sksec_skh_dram_revenue_revision_4q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM",
+        "subject_id": "000660:DRAM_REVENUE_REVISION:4Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 11451
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated operating-profit forecast revision; it is not issuer guidance or HBM-only operating profit.",
+        "exact_quote": "영업이익 1,619 2,540 3,665 3,896 975 2,374 3,368 4,367 66% 7% 9% -11%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker table explicitly reports the revised and previous operating-profit estimates, but the revision is historical and superseded.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 1Q2024 consolidated operating profit revised to KRW 1,619 billion from KRW 975 billion, up 66 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "broker revised consolidated operating profit forecast",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "broker_revision",
+          "operating_profit",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_consolidated_operating_profit_revision_1q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_REVISION:1Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 1619
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated operating-profit forecast revision; it is not issuer guidance or HBM-only operating profit.",
+        "exact_quote": "영업이익 1,619 2,540 3,665 3,896 975 2,374 3,368 4,367 66% 7% 9% -11%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker table explicitly reports the revised and previous operating-profit estimates, but the revision is historical and superseded.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 2Q2024 consolidated operating profit revised to KRW 2,540 billion from KRW 2,374 billion, up 7 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker revised consolidated operating profit forecast",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "broker_revision",
+          "operating_profit",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_consolidated_operating_profit_revision_2q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_REVISION:2Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 2540
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated operating-profit forecast revision; it is not issuer guidance or HBM-only operating profit.",
+        "exact_quote": "영업이익 1,619 2,540 3,665 3,896 975 2,374 3,368 4,367 66% 7% 9% -11%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker table explicitly reports the revised and previous operating-profit estimates, but the revision is historical and superseded.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 3Q2024 consolidated operating profit revised to KRW 3,665 billion from KRW 3,368 billion, up 9 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker revised consolidated operating profit forecast",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "broker_revision",
+          "operating_profit",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_consolidated_operating_profit_revision_3q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_REVISION:3Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 3665
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated operating-profit forecast revision; it is not issuer guidance or HBM-only operating profit.",
+        "exact_quote": "영업이익 1,619 2,540 3,665 3,896 975 2,374 3,368 4,367 66% 7% 9% -11%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker table explicitly reports a negative revised-versus-previous operating-profit estimate, but the revision is historical and superseded.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 4Q2024 consolidated operating profit revised to KRW 3,896 billion from KRW 4,367 billion, down 11 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "broker revised consolidated operating profit forecast",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "broker_revision",
+          "operating_profit",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_consolidated_operating_profit_revision_4q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_REVISION:4Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 3896
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker DRAM operating-profit forecast revision; it is not an HBM-only profit revision.",
+        "exact_quote": "DRAM 2,265 3,296 4,357 4,812 2,026 3,103 3,780 4,734 12% 6% 15% 2%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker table explicitly reports revised and previous DRAM operating-profit estimates, while remaining non-HBM and superseded.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix DRAM 1Q2024 operating profit revised to KRW 2,265 billion from KRW 2,026 billion, up 12 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "broker revised DRAM operating profit forecast",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_PROFIT_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "broker_revision",
+          "dram_operating_profit",
+          "quarterly_forecast"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "sksec_skh_dram_operating_profit_revision_1q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "bottleneck_pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 DRAM",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT_REVISION:1Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 2265
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker DRAM operating-profit forecast revision; it is not an HBM-only profit revision.",
+        "exact_quote": "DRAM 2,265 3,296 4,357 4,812 2,026 3,103 3,780 4,734 12% 6% 15% 2%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker table explicitly reports revised and previous DRAM operating-profit estimates, while remaining non-HBM and superseded.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix DRAM 2Q2024 operating profit revised to KRW 3,296 billion from KRW 3,103 billion, up 6 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker revised DRAM operating profit forecast",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_PROFIT_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "broker_revision",
+          "dram_operating_profit",
+          "quarterly_forecast"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "sksec_skh_dram_operating_profit_revision_2q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "bottleneck_pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 DRAM",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT_REVISION:2Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 3296
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker DRAM operating-profit forecast revision; it is not an HBM-only profit revision.",
+        "exact_quote": "DRAM 2,265 3,296 4,357 4,812 2,026 3,103 3,780 4,734 12% 6% 15% 2%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker table explicitly reports revised and previous DRAM operating-profit estimates, while remaining non-HBM and superseded.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix DRAM 3Q2024 operating profit revised to KRW 4,357 billion from KRW 3,780 billion, up 15 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker revised DRAM operating profit forecast",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_PROFIT_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "broker_revision",
+          "dram_operating_profit",
+          "quarterly_forecast"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "sksec_skh_dram_operating_profit_revision_3q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "bottleneck_pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 DRAM",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT_REVISION:3Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 4357
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker DRAM operating-profit forecast revision; it is not an HBM-only profit revision.",
+        "exact_quote": "DRAM 2,265 3,296 4,357 4,812 2,026 3,103 3,780 4,734 12% 6% 15% 2%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker table explicitly reports revised and previous DRAM operating-profit estimates, while remaining non-HBM and superseded.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix DRAM 4Q2024 operating profit revised to KRW 4,812 billion from KRW 4,734 billion, up 2 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "broker revised DRAM operating profit forecast",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_PROFIT_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "broker_revision",
+          "dram_operating_profit",
+          "quarterly_forecast"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "sksec_skh_dram_operating_profit_revision_4q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "bottleneck_pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 DRAM",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT_REVISION:4Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 4812
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact upper bound was reached. Continue the supplied source in order for remaining target-direct, non-NAND operating-margin and controlling-net-income revision atoms and later model tables, preserving new-versus-old values, reported revision rates, segment scope, and SUPERSEDED lifecycle."
+    ]
+  },
+  "payload_hash": "dc5026d37e8c8d6dc2f4d5caee861732ac2eb2938a962d4ba27020b10cc3fdc1",
+  "production_score_authority": false,
+  "prompt_hash": "615cfa440566e9f6cf8d4e6f4ab208d3027a2f44e9da1a5ad88f47f493407f0a",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7190e3d88fbfbfc3e1a2798ddec8c26558a699eaeab176487ad9d0a252241a69",
+  "response_id": "COLLABRESP-c298943ebb11384ed529fec3a3da06bf4828688a0a5b20c31922b59fd0265ab7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

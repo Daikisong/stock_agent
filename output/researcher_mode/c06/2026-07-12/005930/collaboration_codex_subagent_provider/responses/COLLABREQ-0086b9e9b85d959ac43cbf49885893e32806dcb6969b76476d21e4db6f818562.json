@@ -1,0 +1,82 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7b8aeea84fde447cd66ce952",
+        "rationale": "현재 graph에 이미 있는 1c·4nm 구성, 11.7Gbps 성능, HBM3E 고객 확대와 이후 실제 양산으로 대체된 전망은 제외했다. 기존 공식 SiP 최고등급 사실에 없던 NVIDIA 고객 귀속을 독립적으로 명시한 SiP 시험 최고 점수 보도만 information_confidence objective에 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.74,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7b8aeea84fde447cd66ce952",
+        "economic_mechanism": "독립 매체는 삼성전자 HBM4가 NVIDIA의 SiP 시험에서 최고 점수를 받았다고 보도해, 기존 공식 자료가 고객명을 밝히지 않은 최종 SiP 최고등급 결과를 NVIDIA qualification으로 구체화한다. 시험 점수가 곧 공급계약·물량·가격을 뜻하지는 않는다.",
+        "exact_quote": "In particular, Samsung Electronics recently received the highest score in NVIDIA's HBM4 SiP (System in Package) testing, indicating a positive signal for HBM4 supply.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명명 고객 NVIDIA의 SiP qualification 결과를 독립 출처가 구체적으로 귀속해 HBM4 고객 승인 상태의 정보 신뢰도를 높인다. 다만 일반 웹 매체 보도이며 계약 조건은 없어 시험 결과 이상으로 확장하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:NVIDIA:SIP_TEST_RESULT",
+        "normalized_object": "NVIDIA HBM4 SiP 시험 최고 점수",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-12-28 보도 현재",
+        "predicate": "Korea Business Daily는 삼성전자 HBM4가 NVIDIA SiP 시험에서 최고 점수를 받았다고 보도했다",
+        "predicate_family": "HBM4_NVIDIA_SIP_TEST_HIGHEST_SCORE",
+        "primitive_tags": [
+          "HBM4",
+          "NVIDIA",
+          "SIP_TEST",
+          "HIGHEST_SCORE"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_NVIDIA_SIP_TEST_HIGHEST_SCORE",
+        "question_family_tags": [
+          "HBM4_NVIDIA_SIP_TEST_HIGHEST_SCORE",
+          "HBM4_NAMED_CUSTOMER_QUALIFICATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4의 NVIDIA SiP 시험 결과",
+        "subject_id": "005930:MEMORY:HBM4:NVIDIA:SIP_TEST:2025-12",
+        "unit": "qualification test score status",
+        "value": "highest score in NVIDIA HBM4 SiP testing"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "ecd906854be531158d2de82d72ca7c93b1175ae32bf7fc8aa6f1884421230d7a",
+  "production_score_authority": false,
+  "prompt_hash": "f7c329554779f3ee454073dcc8f933cca7779fb9b5eb541bb522c65cee7bc90d",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0086b9e9b85d959ac43cbf49885893e32806dcb6969b76476d21e4db6f818562",
+  "response_id": "COLLABRESP-55808e308a05e26518247c98e91e5c43982ffa9fc578e008c01e56cfa4e20492",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "6a78e6527f986d0f9706a7344702065093e4737570a4582be5d765c6d6c9d465",
+  "payload": {
+    "allowed_range": [
+      15.8,
+      18.8
+    ],
+    "anchor_comparisons": [
+      "CANCH-2fb324f77e56e0e487863c17는 POSITIVE 역할의 STRONG ordinal anchor이며 허용 대역은 18.96~21.36점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 MEDIUM와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "CANCH-d3ec23639ebd5c1f8d20fd03는 COUNTER 역할의 STRONG ordinal anchor이며 허용 대역은 20.80~23.20점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "counter anchor는 하방 검증용이며, 현재 확인된 실적·공급 성과까지 부정하는 영점 기준으로 사용하지 않았다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-2bf2934ad088b585cc89843a",
+      "EFACT-992faa8a46788f671cefe250",
+      "EFACT-e449f48cdf920d528532a37f",
+      "EFACT-f05a97edeb8f85d49353381e",
+      "EFACT-f6519571c11130bacb0af98d"
+    ],
+    "disagreements": [
+      "긍정 사실이 있다는 이유만으로 제품별 수익성·계약 강도·지속기간까지 확인됐다고 보는 해석에 동의하지 않는다.",
+      "다만 실현된 매출·이익·생산·납품 사실까지 전부 추정으로 취급하는 극단적 하방에도 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-2fb324f77e56e0e487863c17",
+      "CANCH-d3ec23639ebd5c1f8d20fd03"
+    ],
+    "proposed_points": 17.3,
+    "rationale": "메모리 이익과 현금전환의 모든 counter를 검토했다. 메모리 이익이 큰 물량 증가보다 가격 급등에 의존하면 가격 상승률 둔화 때 추정치가 빠르게 꺾일 수 있다. 재고평가 충당금·성과급·선단공정 램프업 비용도 보고이익을 낮추며, 연결 FCF는 전사 수치여서 HBM 자체 현금전환을 증명하지 않는다. 추가로 HBM별 매출·마진·영업현금흐름·CAPEX를 연결하는 공식 product/segment bridge이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다. 긍정 사실인 HBM과 고용량 DDR5 판매 확대가 DRAM ASP를 높이고 메모리 매출과 영업이익의 기록으로 이어졌다. 2026년 1분기 메모리 매출 급증과 큰 이익 기여, 양(+)의 연결 FCF가 함께 확인돼 회계이익이 현금으로 이어지는 경로가 열려 있다.도 확인되지만, 계약조건·제품별 마진·귀속 bridge가 닫히지 않아 하방을 넓게 유지했다.",
+    "support_fact_ids": [
+      "EFACT-71eb35cf12f591c101571b4e",
+      "EFACT-cb2550bcc2cd6b3a1bd34e00",
+      "EFACT-d91f57ec5514398fe1ab72a9",
+      "EFACT-e854b59aa43bb7f73c1e0835",
+      "EFACT-f8f6e5abba8d72973f8cbc55",
+      "EFACT-f979df4935e2c87e7d55a6ed"
+    ],
+    "why_not_higher": "5개의 current/open counter와 미해결 공식 자료 gap이 남아 메모리 이익과 현금전환의 상단 확정을 막는다.",
+    "why_not_lower": "공식 메모리 제품매출, 기록적 메모리 매출·영업이익, 컨센서스 상회, 양(+)의 실제 FCF가 이익 폭발과 현금전환을 동시에 지지한다. 기존 current positive facts는 그대로 유효하다."
+  },
+  "payload_hash": "e8a1d33ddffa9f3e58c006da9b1334e85144f854ee6883f3e8565b40cb026935",
+  "production_score_authority": false,
+  "prompt_hash": "ee1b1d94a1124f818b6e7d3b8c1bd0eebc8cd18deabb8e20d8046e123df4ab01",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-544539c0e74daa0667baa927fbf40ffeb0994ef508442be3ceb9a66641f49c23",
+  "response_id": "COLLABRESP-8e95c4e1508d633f05990159cf08327156de1e9e5d7d3fb9139735265ff83ebb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

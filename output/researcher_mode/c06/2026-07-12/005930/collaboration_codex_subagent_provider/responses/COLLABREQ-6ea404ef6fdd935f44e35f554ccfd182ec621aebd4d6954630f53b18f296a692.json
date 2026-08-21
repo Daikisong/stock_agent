@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-44b293695607d9a0d214afae",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified Samsung financial-report component matches the issuer earnings family, but its historical period is superseded for the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-4bc184209dbfc43120dd954a",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "The verified Samsung financial-report component matches the issuer earnings family, but its historical period is superseded for the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-5036e5ff04990cf2432703fd",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified Samsung document contains cash-flow reporting, but its historical period is superseded and does not materially resolve current earnings conversion."
+      },
+      {
+        "candidate_id": "SGCAND-5200612a7f96e43fa9636ca9",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "The verified Samsung document contains cash-flow reporting, but its historical period is superseded and does not materially resolve current earnings conversion."
+      },
+      {
+        "candidate_id": "SGCAND-5494c43543064002eefa2042",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified Samsung financial-report component matches the issuer earnings family, but its historical period is superseded for the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-5549c2f3061f7f5d23152b8a",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified Samsung financial-report component matches the issuer earnings family, but its historical period is superseded for the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-58997f6272bf01740bde7e50",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "The verified Samsung document contains cash-flow reporting, but its historical period is superseded and does not materially resolve current earnings conversion."
+      },
+      {
+        "candidate_id": "SGCAND-59084c9a3d2a2bb905816d7c",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "The verified Samsung financial-report component matches the issuer earnings family, but its historical period is superseded for the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-5be4121c922efee580264874",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "The verified Samsung financial-report component matches the issuer earnings family, but its historical period is superseded for the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-5cdfd97a029d5afc6c880852",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "The verified Samsung financial-report component matches the issuer earnings family, but its historical period is superseded for the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-61a221f7664e4713ec96aedc",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified Samsung document contains cash-flow reporting, but its historical period is superseded and does not materially resolve current earnings conversion."
+      },
+      {
+        "candidate_id": "SGCAND-64ce35ee3da9fd404f9dd0ab",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "The verified Samsung financial-report component matches the issuer earnings family, but its historical period is superseded for the current EPS/FCF objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "The supplied roster is fully classified. Material routes still require bounded full-source retrieval and source-backed extraction; snippets, titles, and reference metadata remain non-evidence."
+    ]
+  },
+  "payload_hash": "1acd28b2d86bdad38dac1e78911ab2de1c0d4f550820d64fc29e9982e8b9c85f",
+  "production_score_authority": false,
+  "prompt_hash": "227de390cf215df4864f720e4d208223b34246acca44e066527e69d6af9d86e8",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6ea404ef6fdd935f44e35f554ccfd182ec621aebd4d6954630f53b18f296a692",
+  "response_id": "COLLABRESP-e27fa45b46997665edd1b282d2c2ba7905ae256ead2802f9bb694022efc1f2d1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

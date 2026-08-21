@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "독립 검토 결과, 현재 7개 component memo는 모두 COMPLETE이고 각 메모는 지지 증거뿐 아니라 귀속·계약·경쟁·현금전환 counter를 함께 반영한다. 현재 memo-bound 21개 judge의 A/S/C 허용범위는 7개 component 모두에서 교차하며, 최신 red-team과 synthesis도 같은 7개 memo 계보에 연결되어 있다. Structured record는 COMPLETE이고 component별 required role 공백이 없으며, Supervisor가 확인한 counter·supersession proof와 모든 연구 목적의 해결 상태도 현재 source graph와 일치한다. 과거 provider 오류, fetch·날짜 검증 실패와 zero-result는 자료 부재나 saturation의 증거로 사용하지 않았다. 대신 현재 검증된 증거·counter·structured 상태와 실행 가능한 source/query direction이 남지 않았다는 점을 확인했다. HBM 단독 손익·ROIC, 비공개 계약조건과 독립 고객확인 같은 제한은 기존 점수의 counterweight 및 향후 monitoring으로 남지만, 현재 판정을 바꿀 구체적이고 실행 가능한 material question이나 source route는 아니다. 따라서 unresolved material question 없이 독립 saturation 승인을 할 수 있다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "0f3ab1fac4963b702c225d30feb5b1da9c16ddfd35a783d4c1abd94af1392daa",
+  "production_score_authority": false,
+  "prompt_hash": "8e8a19f5e02f74d40fd1b856d99a8105f33b509330dc86cdbbd0a47347455769",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1b50a508a48d000b6071bff4c5f93c0d570ade074e470a9d0e0112c36791d322",
+  "response_id": "COLLABRESP-13323cb04df6435e51ff3d88422598fa7d20c14903f5e6ab08ebc0ef76a832f5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

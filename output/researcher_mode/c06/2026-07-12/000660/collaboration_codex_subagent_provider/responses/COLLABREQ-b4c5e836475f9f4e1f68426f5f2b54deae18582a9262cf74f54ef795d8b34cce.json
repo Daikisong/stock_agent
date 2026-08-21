@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      5.8,
+      7.0
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df과 ORDTRANSFER-c2ec77e0538ebb9af9ce204b은 LOW-confidence ordinal scale만 제공하며 current HBM economics의 exact anchor가 아니다. actual과 valuation bridge가 MEDIUM 상단을 지지하지만 계약·제품별 현금과 duration 불확실성 때문에 STRONG과 거리를 뒀다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "disagreements": [
+      "analyst는 actual과 복수 valuation bridge를 더 높게 평가하고 skeptic은 peak duration을 더 중시하지만, 두 역할 모두 재평가 경로는 존재하되 strong 확정은 아니라는 점에 수렴한다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 6.4,
+    "rationale": "6개 support와 3개 counter를 같은 12점 척도에서 보정했다. actual HBM 성장·전사 이익과 peer/SOTP·historical band 근거는 중간 이상이며, 브로커 LTA 귀속과 감익·경쟁 공급·거시 할인은 상단을 제한한다. 구조화 valuation·계획은 actual로 오귀속하지 않았다.",
+    "support_fact_ids": [
+      "EFACT-027939805cca9c1f11e1e81e",
+      "EFACT-122bf71db78558e5780ed3c8",
+      "EFACT-3e4c5596b1c40a463ba54d38",
+      "EFACT-7ccc530bd085e12d2428c531",
+      "EFACT-b3d48bea9ae741feec4d4a05",
+      "EFACT-b74e88a671a1247b0ce230d5"
+    ],
+    "why_not_higher": "STRONG band를 뒷받침할 HBM 단독 현금과 구속력 있는 duration 증거가 없고, 감익·경쟁 공급·거시 counter가 material하다.",
+    "why_not_lower": "actual HBM 성장과 전사 수익 전환, SOTP·peer·historical regime 근거가 함께 있어 medium 이하로만 제한하면 current evidence를 과소평가한다."
+  },
+  "payload_hash": "7387decfc385a2c197160375750a34fa1491060deef72ac095f187520f240fe0",
+  "production_score_authority": false,
+  "prompt_hash": "c3393706abcaceffc9b0775d975de070c0574124914b12cdf29b5c8b7e034a79",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b4c5e836475f9f4e1f68426f5f2b54deae18582a9262cf74f54ef795d8b34cce",
+  "response_id": "COLLABRESP-22cdeee119333d9e53c45f80e4638ff58cc19844e215d83880331b98e6c82777",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

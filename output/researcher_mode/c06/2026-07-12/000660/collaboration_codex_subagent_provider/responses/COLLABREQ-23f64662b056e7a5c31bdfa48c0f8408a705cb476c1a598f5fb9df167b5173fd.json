@@ -1,0 +1,131 @@
+{
+  "output_schema_hash": "ebaa078c7d4942f1cf5b68e48203f9c4e2222f1b997abf613ddbf8e6e945dd91",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-9a242577a9a25a707fdc25c0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Third-party article, portal, or supplier retelling of a contract; it is not an original KIND or OpenDART route for this requested source-family edge, and the snippet cannot be promoted to evidence."
+      },
+      {
+        "candidate_id": "SGCAND-caab44214ee78751a23e9d5d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Third-party article, portal, or supplier retelling of a contract; it is not an original KIND or OpenDART route for this requested source-family edge, and the snippet cannot be promoted to evidence."
+      },
+      {
+        "candidate_id": "SGCAND-3b14a14c0496bc23476a3bb7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Third-party article, portal, or supplier retelling of a contract; it is not an original KIND or OpenDART route for this requested source-family edge, and the snippet cannot be promoted to evidence."
+      },
+      {
+        "candidate_id": "SGCAND-6ea0b4b5c9ee05a372a5d999",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Third-party article, portal, or supplier retelling of a contract; it is not an original KIND or OpenDART route for this requested source-family edge, and the snippet cannot be promoted to evidence."
+      },
+      {
+        "candidate_id": "SGCAND-3e4a78c5b9beff76d1487eea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Third-party article, portal, or supplier retelling of a contract; it is not an original KIND or OpenDART route for this requested source-family edge, and the snippet cannot be promoted to evidence."
+      },
+      {
+        "candidate_id": "SGCAND-e392518917f8c712dfce0694",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Third-party article, portal, or supplier retelling of a contract; it is not an original KIND or OpenDART route for this requested source-family edge, and the snippet cannot be promoted to evidence."
+      },
+      {
+        "candidate_id": "SGCAND-3d6311a256825fec1c56c900",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Third-party article, portal, or supplier retelling of a contract; it is not an original KIND or OpenDART route for this requested source-family edge, and the snippet cannot be promoted to evidence."
+      },
+      {
+        "candidate_id": "SGCAND-675c99ea7a25c05a368ed951",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Third-party article, portal, or supplier retelling of a contract; it is not an original KIND or OpenDART route for this requested source-family edge, and the snippet cannot be promoted to evidence."
+      },
+      {
+        "candidate_id": "SGCAND-4c4a2961cf9d3e33f9e7f21b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Third-party article, portal, or supplier retelling of a contract; it is not an original KIND or OpenDART route for this requested source-family edge, and the snippet cannot be promoted to evidence."
+      },
+      {
+        "candidate_id": "SGCAND-7d9c7de9f222737e4a357b63",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The candidate is not an original KIND or OpenDART contract-disclosure route material to the supplied objective; its snippet is discovery-only."
+      },
+      {
+        "candidate_id": "SGCAND-e8d7c642bde72fc5120b2864",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.98,
+        "rationale": "Direct KIND contract-disclosure route with explicit HBM4 tester and target-counterparty discovery metadata; full fetch is required before any factual use."
+      },
+      {
+        "candidate_id": "SGCAND-3632c826f5cad197be48e5f4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Third-party article, portal, or supplier retelling of a contract; it is not an original KIND or OpenDART route for this requested source-family edge, and the snippet cannot be promoted to evidence."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Every candidate in this partition was classified exactly once; snippets were used only to decide full-fetch routing.",
+      "Material direct KIND routes still require full fetch and target/issuer/scope verification before they can support any fact."
+    ]
+  },
+  "payload_hash": "c88f9e5901c8ce31da4d4a3110a42d3a0c771d33c37bbb88b8ed70ec35855019",
+  "production_score_authority": false,
+  "prompt_hash": "3bc5f7e9b9361c6a13f35373d3c2205f58ada6ad942d9e8ccef627adae6ca066",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-23f64662b056e7a5c31bdfa48c0f8408a705cb476c1a598f5fb9df167b5173fd",
+  "response_id": "COLLABRESP-6643f7ebee67eba9ed174ae5e821de2338b003809a25a2f60d3e2fd8a74adaf0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

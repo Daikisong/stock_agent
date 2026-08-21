@@ -1,0 +1,606 @@
+{
+  "output_schema_hash": "d0527c3d8a1434224ba4318e6b5e9559eada01e1a04d85eef612013c51460e2a",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-873a1c4cc82e5d546940cf16",
+        "rationale": "2025년 4분기 actual, 2026~2027 메모리 공급부족·sold-out·LTA 및 HBM4 출하 전망을 canonical 281건과 대조했으며 동일 수치·의미가 더 직접적인 issuer 및 current facts로 이미 수용돼 중복 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-8b2633299108ce81ca29d502",
+        "rationale": "기사의 전사 잠정실적·성과급·HBM4 매출·고객·가격은 canonical 중복 또는 메모리 단독 귀속 부족으로 제외하고, prior281에 없는 HBM4E 신뢰성 테스트 수율 진행도만 objective-direct fact로 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-8cf9d8a0bfb0ab6a286ec74e",
+        "rationale": "마이크론 계약 수치와 산업 일반론은 제외하고, 기존 패키징 병목 current fact와 다른 장기 시간축인 병목 완전 해소 이후 공급충격 counter만 신규 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-8ed346960bf4942ba072d556",
+        "rationale": "2025년 1분기 공식 영문 자료의 메모리 매출·ASP 하락·HBM3E 대응·현금흐름을 canonical issuer/DART facts와 대조했으며 동일 period와 의미가 이미 존재해 중복 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-901f7176da159909609063ae",
+        "rationale": "2026년 1분기 공식 자료의 메모리 매출·DS 이익·공급부족·HBM4E 샘플 계획·현금흐름을 current canonical issuer facts와 대조했으며 동일 fact가 이미 더 직접적으로 수용돼 중복 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-909d4d9d02c7a65cc6aa32fd",
+        "rationale": "HBM4 매출·메모리 actual·ASP·중장기 고객물량은 canonical current facts와 중복이다. 3분기 HBM4 매출비중 전망은 revenue fact로 문서의 bottleneck_pricing objective에 직접 결박되지 않아 추가하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-92422a7b89ab4fd7884f1b9c",
+        "rationale": "전사 잠정실적 반복은 제외하고, 메모리 가격·수요에 귀속된 연간 이익 컨센서스 상향과 하반기 분기 이익·가격 지속성 전제의 양면 facts를 신규 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-9529917baecfb8a6889872bc",
+        "rationale": "2025년 3분기 컨퍼런스콜의 HBM3E·2026 HBM 수요확보·메모리 수요초과·선단공정 전환 내용을 canonical issuer facts와 전수 대조했으며 동일 발언이 이미 current graph에 존재해 중복 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-9722c9772bc9be4d112e14b0",
+        "rationale": "수출·장비주·peer 수치와 전사 이익 전망은 문서의 bottleneck objective에 직접 귀속되지 않는다. 삼성전자 HBM4 수율·고객 일정 위험은 수치나 새 사건이 없는 일반 확인 항목이어서 fact로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-98a3668eb03159e1f12b25ee",
+        "rationale": "키움증권 재가공 기사에서 메모리 단독 이익, 기간 명시 PER·PBR·ROE, 고부가 점유율 검증 간극, 높은 ROE 지속 조건, 최종수요와 중국 공급 counter를 추출했다. 목표주가·투자권고·전사 FCF 및 verified broker structured role 승격은 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-9a1ac6d87b7c2aefa4f9f502",
+        "rationale": "2024년 4분기 컨퍼런스콜의 D램 ASP·HBM 매출 증가·수요약세·선단전환·자사주 관련 발언은 canonical issuer facts 또는 문서 objective 밖 전사 내용으로 이미 accounting되어 추가하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-9b6ebaa634afd3f67ee79a78",
+        "rationale": "2026년 2분기 잠정 전사실적·성과급·DS 추정과 범용 D램 58~63% 가격 상승은 canonical에 동일한 current facts가 있으며 DX·주가 내용은 bottleneck objective 밖이라 중복 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.78,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-8b2633299108ce81ca29d502",
+        "economic_mechanism": "HBM4E 신뢰성 테스트 수율이 70%를 넘어섰다는 보도는 차세대 HBM의 개발 진행도를 수치화하지만, 기사 자체가 양산 안정권으로 제시한 80%에는 아직 못 미친다.",
+        "exact_quote": "삼성전자는 차세대 제품인 HBM4E 개발 스케줄에도 리더십을 굳건히 하고 있다. 최근 사내 경영현황설명회에서 HBM4E 신뢰성 테스트 수율이 70%를 웃도는 수준까지 올라왔다고 밝힌 것으로 알려졌다. 통상 양산 안정권을 80%로 보는 만큼, 개발 막바지 단계에 진입했다는 방증이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "차세대 HBM의 수익 전환 전제인 qualification 진행을 구체적 수율로 제시한다. 다만 사내 설명회에 관한 제3자 보도이며 고객 승인이나 양산 완료로 확대하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:QUALIFICATION_EXECUTION:HBM4E_RELIABILITY",
+        "normalized_object": "HBM4E 신뢰성 테스트 수율 진행도",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "as of 2026-07-07",
+        "predicate": "삼성전자 HBM4E 신뢰성 테스트 수율이 70%를 웃도는 수준까지 올라온 것으로 보도됐다.",
+        "predicate_family": "HBM4E_RELIABILITY_TEST_YIELD_PROGRESS",
+        "primitive_tags": [
+          "HBM",
+          "qualification_in_progress"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "HBM4E_RELIABILITY_YIELD_PROGRESS",
+        "question_family_tags": [
+          "HBM4E",
+          "qualification",
+          "yield"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4E 신뢰성 테스트 수율",
+        "subject_id": "005930:HBM4E_QUALIFICATION",
+        "unit": "percent yield",
+        "value": "above 70%"
+      },
+      {
+        "business_segment": "메모리 산업",
+        "confidence": 0.8,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-8cf9d8a0bfb0ab6a286ec74e",
+        "economic_mechanism": "현재 HBM 공급을 막는 첨단 패키징 병목이 대규모 투자로 완전히 해소될 경우, 현재의 공급 부족 논리가 장기적으로 공급충격 위험으로 반전될 수 있다.",
+        "exact_quote": "현재 메모리 공급 부족의 핵심 원인은 웨이퍼\n(\n원판\n)\n생산량이 아니라 실리콘관통전극\n(TSV)\n을 비롯한 첨단 패키징\n(Advanced Packaging)\n의 병목 현상이다\n.\n즉 현재는 디램을 더 만들 수 없어서가 아니라\n'HBM\n으로 조립할 수 없어서\n'\n공급이 막혀 있는 상태다\n.\n마이크론을 포함해 삼성전자와\nSK\n하이닉스가 사상 최고 수준의\nCAPEX\n를 집행하며 차세대 미세공정 전환과 패키징 증설에 속도를 내고 있어\n,\n이 첨단 패키징 병목이 완전히 해소되는 장기 시점이 곧 시장의 공급 쇼크 시점이 될 수 있다\n.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존의 '패키징 병목이 즉시 과잉을 막는다'는 current fact와 반대 시간축을 보완한다. 공급충격의 발생을 확정하지 않고 조건부 장기 counter로 유지했다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:SUPPLY_RESPONSE:PACKAGING_BOTTLENECK_RESOLUTION",
+        "normalized_object": "첨단 패키징 병목 완전 해소 이후 HBM 공급충격 위험",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "long term after packaging capacity expansion",
+        "predicate": "삼성전자 등 메모리 업체의 증설로 첨단 패키징 병목이 완전히 해소되는 장기 시점이 시장 공급충격 시점이 될 수 있다는 분석이 제시됐다.",
+        "predicate_family": "HBM_PACKAGING_BOTTLENECK_RESOLUTION_SUPPLY_SHOCK_RISK",
+        "primitive_tags": [
+          "capacity",
+          "oversupply_risk"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_PACKAGING_BOTTLENECK_RESOLUTION_SUPPLY_SHOCK",
+        "question_family_tags": [
+          "HBM",
+          "advanced_packaging",
+          "supply_shock"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 공급망의 패키징 병목 해소 이후 공급충격 위험",
+        "subject_id": "005930:HBM_CAPACITY_CYCLE_RISK",
+        "unit": "scenario",
+        "value": "long-term supply shock possible after packaging bottleneck resolution"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-92422a7b89ab4fd7884f1b9c",
+        "economic_mechanism": "메모리 수요와 가격 상승이 이어지며 시장의 삼성전자 연간 영업이익 전망 구간이 1분기 전후보다 2분기 이후 상향된 것으로 보도됐다.",
+        "exact_quote": "삼성전자의 올해 연간 영업이익 전망치는 1분기 전후 200~300조원대 초반에서 2분기를 거치며 300조원 중후반대까지 증가한 상황이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 가격·수요를 원인으로 설명한 시장 기대의 기간별 상향 방향을 보완한다. 단일 증권사 확정치가 아닌 기사상 전망 구간으로 유지했다.",
+        "mechanism_scope_id": "005930:MEMORY:MARKET_EXPECTATION_GAP:ANNUAL_OPERATING_PROFIT_REVISION:2026",
+        "normalized_object": "메모리 가격 강세를 반영한 2026년 연간 영업이익 전망 구간 상향",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E revision from around 2026-Q1 to 2026-Q2",
+        "predicate": "삼성전자 2026년 연간 영업이익 전망치는 1분기 전후 200조~300조원대 초반에서 2분기 이후 300조원 중후반대로 높아진 것으로 보도됐다.",
+        "predicate_family": "MEMORY_DRIVEN_ANNUAL_OPERATING_PROFIT_CONSENSUS_REVISION",
+        "primitive_tags": [
+          "earnings_revision",
+          "market_expectation"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_EARNINGS_CONSENSUS_REVISION",
+        "question_family_tags": [
+          "memory_earnings",
+          "consensus_revision",
+          "annual_operating_profit"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 호황 기반 연간 영업이익 컨센서스",
+        "subject_id": "005930:MEMORY_EARNINGS_EXPECTATION",
+        "unit": "KRW trillion forecast range",
+        "value": "from KRW 200tn-low 300tn range to mid-high KRW 300tn range"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-92422a7b89ab4fd7884f1b9c",
+        "economic_mechanism": "연간 컨센서스 상회 기대에는 하반기 매 분기 약 100조원의 영업이익과 DS 수익성·메모리 가격 강세 지속이라는 높은 전제가 포함돼, 현재 이익 폭증의 지속성에 조건이 붙는다.",
+        "exact_quote": "상반기까지 확인된 메모리 가격 상승과 AI 수요는 연간 컨센서스 상회 기대를 키우고 있지만 현재 시장은 하반기 분기 100조원 안팎의 영업이익을 전제하고 있다. 이에 3분기 이후에도 DS부문 수익성과 메모리 가격 강세가 이어질지가 삼성전자의 연간 컨센서스를 상회 여부를 가를 핵심 변수가 될 전망이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 컨센서스의 하반기 분기별 이익 전제와 그 전제가 의존하는 메모리 가격·DS 수익성을 명시해 지속성 counter를 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:RISK_COUNTER:ANNUAL_CONSENSUS_PRECONDITION:2026H2",
+        "normalized_object": "연간 컨센서스 상회를 위한 하반기 메모리 이익 지속 전제",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-H2",
+        "predicate": "삼성전자 2026년 연간 컨센서스 상회에는 하반기 분기당 약 100조원 영업이익과 DS 수익성·메모리 가격 강세 지속이 핵심 전제로 분석됐다.",
+        "predicate_family": "MEMORY_EARNINGS_CONSENSUS_UPSIDE_PRECONDITION",
+        "primitive_tags": [
+          "earnings_visibility",
+          "price_durability"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_EARNINGS_CONSENSUS_UPSIDE_PRECONDITION",
+        "question_family_tags": [
+          "memory_earnings",
+          "durability",
+          "consensus_precondition"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연간 컨센서스 상회의 하반기 메모리 이익 전제",
+        "subject_id": "005930:MEMORY_EARNINGS_DURABILITY",
+        "unit": "KRW trillion operating profit per quarter",
+        "value": "about KRW 100tn operating profit per quarter in 2026-H2"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-98a3668eb03159e1f12b25ee",
+        "economic_mechanism": "키움증권의 메모리 단독 연간 영업이익 추정치는 현재 밸류에이션 배수의 분모가 되는 메모리 이익 규모를 직접 수치화한다.",
+        "exact_quote": "연간 추정치에서도 같은 흐름이 확인된다. 키움증권은 2026년 삼성전자의 연결 영업이익을 372조9000억원으로 추정했다. 이 가운데 DS 부문 영업이익은 366조원, 메모리 영업이익은 367조9000억원으로 제시됐다. DRAM 영업이익은 275조1000억원, NAND 영업이익은 92조8000억원으로 분석됐다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 메모리 귀속이 명시된 독립 증권사 전망치로 valuation earnings bridge의 추정치 분산을 보완한다. 기사 재가공이므로 structured role은 부여하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:VALUATION_EARNINGS_BRIDGE:OPERATING_PROFIT:FY2026E:KIWOOM",
+        "normalized_object": "키움증권 2026년 메모리 영업이익 추정",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "키움증권은 삼성전자 메모리 영업이익을 2026년 367조9000억원으로 추정했다.",
+        "predicate_family": "MEMORY_OPERATING_PROFIT_ESTIMATE",
+        "primitive_tags": [
+          "memory_attribution",
+          "earnings_estimate"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_OPERATING_PROFIT_ESTIMATE",
+        "question_family_tags": [
+          "memory_operating_profit",
+          "forward_estimate",
+          "valuation_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 메모리 영업이익 추정",
+        "subject_id": "005930:MEMORY_OPERATING_PROFIT:FY2026E",
+        "unit": "KRW trillion",
+        "value": 367.9
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-98a3668eb03159e1f12b25ee",
+        "economic_mechanism": "고부가 HBM4·eSSD 점유율 확대가 실적으로 확인되지 않으면 범용 메모리 가격 상승만으로 현재 이익 전망을 장기간 유지하기 어렵다는 분석은 재평가의 질적 지속성에 검증 공백을 남긴다.",
+        "exact_quote": "다만 점유율 확대가 실적으로 확인되기 전까지는 기대와 검증의 간극이 남아 있다. 삼성전자가 고부가 메모리에서 점유율을 회복하면 밸류에이션 논리는 강화되지만, 범용 제품 중심의 가격 상승만으로는 현재 이익 전망을 장기간 유지하기 어렵다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 rerating이 단순 가격 상승이 아니라 고부가 제품 점유율의 실제 실적 전환에 의존한다는 직접 counter다. 점유율 실패를 확정하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:AI_MEMORY:RISK_COUNTER:SHARE_VALIDATION_GAP",
+        "normalized_object": "고부가 메모리 점유율 확대와 현재 이익 전망 사이의 검증 간극",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-H2 outlook as of 2026-06-29",
+        "predicate": "고부가 메모리 점유율 확대가 실적으로 확인되기 전에는 검증 간극이 남고 범용 제품 가격 상승만으로 현재 이익 전망을 장기간 유지하기 어렵다고 분석됐다.",
+        "predicate_family": "HIGH_VALUE_MEMORY_SHARE_VALIDATION_GAP",
+        "primitive_tags": [
+          "valuation_durability",
+          "verification_gap"
+        ],
+        "product_family": "HBM4·eSSD",
+        "question_family_id": "HIGH_VALUE_MEMORY_SHARE_VALIDATION_GAP",
+        "question_family_tags": [
+          "HBM4",
+          "eSSD",
+          "share_validation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4·eSSD 점유율 확대의 실적 검증 간극",
+        "subject_id": "005930:HIGH_VALUE_MEMORY_SHARE_VALIDATION",
+        "unit": "validation status",
+        "value": "high-value memory share expansion not yet verified in results"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-98a3668eb03159e1f12b25ee",
+        "economic_mechanism": "키움증권의 2026년 예상 PER은 메모리 이익 전망이 반영된 시장가격의 이익 대비 배수를 기간과 함께 제시한다.",
+        "exact_quote": "밸류에이션 분석에서는 2026년 예상 PER이 7.8배, PBR이 3.5배로 제시됐다. ROE는 53.9%로 추정됐다. 주가가 이미 큰 폭으로 오른 상황에서도 이익 증가 속도가 더 빠르면 PER 부담은 제한될 수 있다는 논리다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 denominator가 명시된 독립 forward multiple로 기존 증권사 수치와 함께 기대 분산을 보완한다. 재가공 기사이므로 structured broker role은 부여하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:VALUATION:FORWARD_PE:FY2026E:KIWOOM",
+        "normalized_object": "키움증권 2026년 예상 PER",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "키움증권은 삼성전자의 2026년 예상 PER을 7.8배로 제시했다.",
+        "predicate_family": "MEMORY_FORWARD_PE_ESTIMATE",
+        "primitive_tags": [
+          "current_forward_multiple"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_FORWARD_PE_ESTIMATE",
+        "question_family_tags": [
+          "forward_PE",
+          "valuation",
+          "memory_earnings"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 이익 전망 기반 2026년 예상 PER",
+        "subject_id": "005930:MEMORY_FORWARD_VALUATION:KIWOOM",
+        "unit": "multiple",
+        "value": 7.8
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-98a3668eb03159e1f12b25ee",
+        "economic_mechanism": "키움증권의 2026년 예상 PBR은 현재 재평가가 장부가치 대비 어느 수준까지 반영됐는지 기간과 배수로 보여준다.",
+        "exact_quote": "밸류에이션 분석에서는 2026년 예상 PER이 7.8배, PBR이 3.5배로 제시됐다. ROE는 53.9%로 추정됐다. 주가가 이미 큰 폭으로 오른 상황에서도 이익 증가 속도가 더 빠르면 PER 부담은 제한될 수 있다는 논리다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 배수가 명시된 독립 PBR 전망이다. PUBLIC_BROKER_PDF verified ingress가 아니므로 FORWARD_PB structured role은 의도적으로 비웠다.",
+        "mechanism_scope_id": "005930:MEMORY:VALUATION:FORWARD_PB:FY2026E:KIWOOM",
+        "normalized_object": "키움증권 2026년 예상 PBR",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "키움증권은 삼성전자의 2026년 예상 PBR을 3.5배로 제시했다.",
+        "predicate_family": "MEMORY_FORWARD_PB_ESTIMATE",
+        "primitive_tags": [
+          "current_forward_multiple"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_FORWARD_PB_ESTIMATE",
+        "question_family_tags": [
+          "forward_PB",
+          "valuation",
+          "memory_earnings"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 이익 전망 기반 2026년 예상 PBR",
+        "subject_id": "005930:MEMORY_FORWARD_VALUATION:KIWOOM",
+        "unit": "multiple",
+        "value": 3.5
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-98a3668eb03159e1f12b25ee",
+        "economic_mechanism": "키움증권의 2026년 예상 ROE는 높은 메모리 이익이 자본수익률로 전환될 것으로 보는 rerating 전제를 수치화한다.",
+        "exact_quote": "밸류에이션 분석에서는 2026년 예상 PER이 7.8배, PBR이 3.5배로 제시됐다. ROE는 53.9%로 추정됐다. 주가가 이미 큰 폭으로 오른 상황에서도 이익 증가 속도가 더 빠르면 PER 부담은 제한될 수 있다는 논리다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 PBR을 정당화하는 자본수익률 전제를 기간과 수치로 제시한다. 실현 actual이나 지속성을 확정하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:VALUATION_EARNINGS_BRIDGE:ROE:FY2026E:KIWOOM",
+        "normalized_object": "키움증권 2026년 예상 ROE",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "키움증권은 삼성전자의 2026년 ROE를 53.9%로 추정했다.",
+        "predicate_family": "MEMORY_FORWARD_ROE_ESTIMATE",
+        "primitive_tags": [
+          "ROE",
+          "rerating"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_FORWARD_ROE_ESTIMATE",
+        "question_family_tags": [
+          "forward_ROE",
+          "valuation_earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 이익 전망 기반 2026년 예상 ROE",
+        "subject_id": "005930:MEMORY_FORWARD_VALUATION:KIWOOM",
+        "unit": "percent",
+        "value": 53.9
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-98a3668eb03159e1f12b25ee",
+        "economic_mechanism": "3배대 PBR은 과거 대비 낮지 않으므로 고부가 메모리 믹스가 높은 ROE를 오래 유지하지 못하면 현재 rerating의 정당화가 약해진다.",
+        "exact_quote": "다만 PBR 3배대는 과거 삼성전자 밸류에이션과 비교하면 낮은 구간이라고 보기 어렵다. 높은 ROE가 실제로 지속돼야 현재 주가 수준을 정당화할 수 있다. 따라서 투자자는 이익 추정치의 규모뿐 아니라 고부가 메모리 비중 확대가 ROE를 얼마나 오래 유지할 수 있는지를 확인해야 한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "높은 forward ROE 수치와 별개로 그 지속성을 current valuation의 명시적 조건으로 제시하는 counter다.",
+        "mechanism_scope_id": "005930:MEMORY:RISK_COUNTER:PBR_ROE_DURABILITY",
+        "normalized_object": "PBR 3배대와 높은 ROE 지속성 조건",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026 valuation outlook as of 2026-06-29",
+        "predicate": "삼성전자 PBR 3배대는 과거 대비 낮은 구간이 아니며 현재 주가를 정당화하려면 높은 ROE가 지속돼야 한다는 분석이 제시됐다.",
+        "predicate_family": "MEMORY_VALUATION_ROE_DURABILITY_RISK",
+        "primitive_tags": [
+          "rerating_risk",
+          "profitability_durability"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_VALUATION_ROE_DURABILITY_RISK",
+        "question_family_tags": [
+          "PBR",
+          "ROE_durability",
+          "valuation_counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 고PBR 정당화를 위한 높은 ROE 지속성",
+        "subject_id": "005930:MEMORY_VALUATION_DURABILITY",
+        "unit": "valuation condition",
+        "value": "PBR in 3x range requires sustained high ROE"
+      },
+      {
+        "business_segment": "메모리 전방 수요",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-98a3668eb03159e1f12b25ee",
+        "economic_mechanism": "부품가격 상승으로 PC·스마트폰 고객이 추가 메모리 구매에 보수적으로 변하면 최종수요가 가격 상승을 따라오지 못해 이익 전망의 가격 전제가 약해질 수 있다.",
+        "exact_quote": "이 과정에서 PC 제조사와 스마트폰 업체들이 추가 메모리 구매에 보수적으로 선회하고 있다는 분석도 제시됐다. 메모리 가격 상승이 실적을 끌어올리더라도 최종 수요가 따라오지 못하면 하반기 가격 상승률이 기대를 넘어설 가능성은 낮아진다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격 상승의 2차 수요 파괴 경로를 고객 구매행동으로 구체화한다. 구매 감소 규모나 확정 주문 취소는 발명하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:RISK_COUNTER:END_DEMAND_PURCHASE_CAUTION",
+        "normalized_object": "PC·스마트폰 고객의 추가 메모리 구매 보수화",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-H2 outlook as of 2026-06-29",
+        "predicate": "PC 제조사와 스마트폰 업체가 추가 메모리 구매에 보수적으로 선회한 것으로 분석됐다.",
+        "predicate_family": "MEMORY_END_DEMAND_PURCHASE_CAUTION",
+        "primitive_tags": [
+          "demand_risk",
+          "price_elasticity"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_END_DEMAND_PURCHASE_CAUTION",
+        "question_family_tags": [
+          "memory_demand",
+          "PC",
+          "smartphone"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 PC·스마트폰 고객의 추가 메모리 구매 보수화",
+        "subject_id": "005930:MEMORY_END_DEMAND_RISK",
+        "unit": "demand behavior",
+        "value": "PC and smartphone customers becoming cautious on incremental memory purchases"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-98a3668eb03159e1f12b25ee",
+        "economic_mechanism": "중국 메모리 업체가 범용 D램 공급을 늘리면 현재의 가격 상승 탄력이 제한돼 높은 메모리 이익과 rerating의 지속성이 약해질 수 있다.",
+        "exact_quote": "중국 메모리 업체의 점유율 상승도 하반기 리스크다. 삼성전자가 HBM4와 eSSD에서 점유율을 높일 경우 고부가 제품 중심의 이익 개선이 가능하다. 반대로 중국 업체가 범용 DRAM과 NAND에서 공급을 확대하면 가격 상승 탄력은 제한될 수 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "범용 D램 공급 확대가 가격 상승률과 메모리 이익 전망을 훼손하는 직접 counter다. NAND는 허용 product scope에서 제외해 predicate에 포함하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:RISK_COUNTER:CHINA_SUPPLY_EXPANSION",
+        "normalized_object": "중국 범용 D램 공급 확대에 따른 가격 상승 탄력 제한",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-H2 outlook as of 2026-06-29",
+        "predicate": "중국 업체가 범용 D램 공급을 확대하면 삼성전자 메모리 가격 상승 탄력이 제한될 수 있다고 분석됐다.",
+        "predicate_family": "CHINA_DRAM_SUPPLY_PRICE_UPSIDE_RISK",
+        "primitive_tags": [
+          "supply_response",
+          "competitive_risk"
+        ],
+        "product_family": "범용 D램",
+        "question_family_id": "CHINA_MEMORY_SUPPLY_PRICE_UPSIDE_RISK",
+        "question_family_tags": [
+          "DRAM",
+          "China_supply",
+          "pricing_risk"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 범용 메모리 가격의 중국 공급 확대 위험",
+        "subject_id": "005930:MEMORY_SUPPLY_COMPETITION_RISK",
+        "unit": "risk scenario",
+        "value": "China DRAM supply expansion could limit price upside"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "fb9cf3f972b835c2709e3e7bad76a7ad8ad6dce5bf84a5357e62cd7bacf2f25e",
+  "production_score_authority": false,
+  "prompt_hash": "c4eaa00896f3b44e80b1fdc1896fc9b59e74162f54dd195e9b88c83757cc9f3a",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8a0eb005bbb4efea8becb057fd8756e1942f40b21a809e6b68870a4ff9bf1152",
+  "response_id": "COLLABRESP-4ba20fc873fd0c6dacb211131fb703574572aa553abfa291b08563ec16f58798",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

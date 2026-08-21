@@ -1,0 +1,442 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "rationale": "full document 1,959줄을 Gold-blind로 전수 검토하고 current canonical 142건과 의미 중복을 대조했다. 과거 PBR 방법론의 실적 변동성 근거, HBM 차별 이익에 따른 PBR Band 상단 돌파와 EPS·PER 동반 상승, PER 전환의 이익 안정성 논리, 최초 적용에 따른 배수 합리성 불확실성, Micron 대비 Target PER 비교, 그리고 SK증권의 FY2026E·FY2027E PBR 및 EV/EBITDA 추정치 등 valuation_rerating에 직접 연결되는 서로 다른 9건을 추출했다. 이미 canonical에 있는 장기공급계약·공급부족·HBM 수익성·BPS·ROE·실적 추정의 같은 경제 의미, 삼성전자 구간, 목표주가·매매 지시, 반복 렌더링·차트 OCR·면책문구는 제외했다. 더 남은 distinct objective-linked 사실이나 반증은 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "economic_mechanism": "AI 사이클 이전 메모리 산업은 고정비 비중과 가격 변동에 따른 이익 탄력성이 커 실적 신뢰도가 낮았고, 상대적으로 안정적인 장부가치를 분모로 한 PBR이 주가를 더 잘 설명했다. 이는 현재 multiple 전환을 평가할 때 넘어야 할 역사적 기준이며, 현재도 같은 변동성이 지속된다는 뜻으로 확대하지 않는다.",
+        "exact_quote": "역사적으로 메모리 주식의 Valuation tool은 PBR이었다.\n2010 년 초반 스마트폰 사이클, 이후 서버, 코로나 사이클을 거치며 메모리 산업은\n불황과 호황의 차이가 극명했기 때문이다. 메모리 산업의 비용 상당부분이 고정비이\n므로 메모리 가격 변동에 따른 높은 이익 탄력성은 양날의 검이었다. 변동이 심한\nEarnings보다 안정적인 Book value 기반의 Valuation이 효과적이었다.\n또한 거시경제에 연동되는 전형적인 Cyclical 산업이었다.\n2010년 이후 AI 사이클 이전까지 그 어떤 사이클도 거시경제의 방향에서 벗어나지\n못했다. 실적도, 주가도 마찬가지였다. 그 과정에서 PBR은 주가를 잘 설명했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "과거 PBR의 경제적 근거를 명시해야 AI 사이클의 이익 안정성이 실제로 valuation 방법론을 바꿀 정도인지 재평가할 수 있다.",
+        "mechanism_scope_id": "000660:MEMORY:LEGACY_PBR_VOLATILITY_BASELINE",
+        "normalized_object": "메모리 이익 변동성과 안정적 장부가치에 기반한 역사적 PBR 기준",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "pre-AI memory cycles since 2010; assessment published 2025-11-03",
+        "predicate": "AI 사이클 이전 메모리는 높은 실적 변동성 때문에 안정적인 Book value 기반 PBR로 평가하는 것이 효과적이었다",
+        "predicate_family": "LEGACY_MEMORY_PBR_VOLATILITY_BASELINE",
+        "primitive_tags": [
+          "MEMORY",
+          "PBR",
+          "EARNINGS_VOLATILITY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "LEGACY_MEMORY_PBR_VOLATILITY_BASELINE",
+        "question_family_tags": [
+          "VALUATION_METHOD",
+          "BOOK_VALUE",
+          "CYCLICALITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "AI 사이클 이전 메모리 PBR 방법론의 실적 변동성 근거",
+        "subject_id": "000660:MEMORY:LEGACY_PBR_VOLATILITY_BASELINE",
+        "unit": "qualitative valuation-method rationale",
+        "value": "high earnings volatility made stable book value a more effective valuation basis"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "economic_mechanism": "SK증권은 HBM 경쟁력에서 나온 SK하이닉스의 차별적 이익이 과거 PBR Band 상단 돌파로 연결되고, 단순 불황 탈출 구간이 아닌데도 EPS 상향과 PER 상승이 동시에 나타난 점을 Value 확장의 신호로 해석했다. 이는 관찰된 valuation regime 변화이지 미래 주가 성과의 보장은 아니다.",
+        "exact_quote": "오랫동안 메모리 업종 주가를 설명해 온 PBR은 기능을 잃기 시작하고 있다.\nAI 사이클 시작 이후 HBM 에서의 높은 경쟁력을 기반으로 한 차별적인 이익을 시\n현한 SK 하이닉스의 PBR은 과거 Band 상단을 상향 돌파하기 시작했기 때문이다.\n2010 년 이후 단 한 번도 그 기능을 잃지 않았다는 점을 감안하면, AI 사이클에서\n과거와는 명백히 다른 Value의 확장이 진행되고 있음을 보여준다.\n최근 메모리 업종에 EPS의 상향과 PER의 상승이 동반되고 있다.\n과거 메모리 업종의 EPS 상향과 PER 상승이 동반되는 경우는 불황에서 호황으로\n턴어라운드 되기 시작하는 구간이었다. 이 시기에는 업황의 탄력적 반등의 기대감이\n주가에 반영되므로 EPS의 상향보다 주가의 상승 탄력성이 더 높다. 이 경우를 제외\n하면 보통 호황에서 저PER, 불황에서 고 PER이 일반적이다.\n현재 메모리 업종은 불황에서 호황으로 턴어라운드 하는 구간이 아니다. 2023년 AI\n사이클 시작 업황은 턴어라운드하기 시작했고, 최근까지 호황이 지속되었다. AI 사이\n클에서의 메모리 업종에 대한 평가가 급격히 바뀌기 시작하는 초입이라고 판단한다.\n메모리 업종에 대한 PBR Valuation을 유지하는게 맞는지 고민해야 할 시점이다.\nPBR의 근거가 높은 실적 변동성이었다면, AI 사이클 내 실적 안정성 강화와 구조적\n성장이 장기화 될 경우 PBR은 점점 명분을 잃기 시작할 것이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 차별 이익과 EPS·PER 동반 상승이 역사적 PBR Band 이탈로 연결된 관찰은 multiple 재평가가 실제로 시작됐는지 직접 검증한다.",
+        "mechanism_scope_id": "000660:HBM:PBR_BAND_BREAKOUT_EPS_PER_RERATING",
+        "normalized_object": "HBM 차별 이익에 따른 과거 PBR Band 상단 돌파와 EPS·PER 동반 상승",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "AI cycle from 2023 through assessment published 2025-11-03",
+        "predicate": "HBM 경쟁력 기반의 차별 이익으로 SK하이닉스 PBR이 과거 Band 상단을 돌파했고 EPS 상향과 PER 상승도 동반됐다",
+        "predicate_family": "HBM_PBR_BAND_BREAKOUT_EPS_PER_RERATING",
+        "primitive_tags": [
+          "HBM",
+          "PBR_BAND",
+          "EPS_PER"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_PBR_BAND_BREAKOUT_EPS_PER_RERATING",
+        "question_family_tags": [
+          "VALUATION_RERATING",
+          "HISTORICAL_BAND",
+          "EXPECTATION_CHANGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 이익과 역사적 PBR Band 상단 돌파",
+        "subject_id": "000660:HBM:PBR_BAND_BREAKOUT_EPS_PER_RERATING",
+        "unit": "qualitative historical-band and earnings-multiple direction",
+        "value": "PBR moved above its historical upper band while EPS upgrades and PER expansion occurred together"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.93,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "economic_mechanism": "SK증권은 AI 사이클에서 메모리 실적 변동성이 낮아지고 장기 성장성과 거시경제 비연동 이익 흐름에 대한 신뢰가 높아진다는 판단으로 valuation 방법론을 PBR에서 PER로 변경했다. 이는 분석사의 방법론 판단이며 issuer 확정 가이던스나 실적 보장은 아니다.",
+        "exact_quote": "SK증권은 AI 사이클 내 메모리 업종의 Valuation 방법론을 PER로 변경한다.\n실적 변동성 하락, 장기 성장성 제고 및 거시경제를 이기는 이익 흐름이 실적에 대\n한 신뢰를 높이기 시작할 것이기 때문이다. 또한 이는 EBITDA의 구조적 상승을 의\n미하는 바, 메모리 업종의 주주환원정책 강화로 이어질 것으로 전망한다.\n이는 PER로의 변경에 따라 높아질 기업가치를 재차 정당화 할 것이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "PBR에서 PER로의 명시적 방법론 전환과 그 근거는 SK하이닉스의 valuation_rerating 논리를 직접 구성한다.",
+        "mechanism_scope_id": "000660:MEMORY:PER_METHOD_TRANSITION_EARNINGS_STABILITY",
+        "normalized_object": "실적 변동성 하락과 장기 성장성에 근거한 메모리 PER 방법론 전환",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "AI-cycle valuation methodology outlook published 2025-11-03",
+        "predicate": "SK증권은 실적 변동성 하락과 장기 성장성 및 거시경제 비연동 이익 흐름을 근거로 메모리 valuation 방법론을 PER로 변경했다",
+        "predicate_family": "MEMORY_PER_METHOD_TRANSITION_EARNINGS_STABILITY",
+        "primitive_tags": [
+          "MEMORY",
+          "PER",
+          "EARNINGS_STABILITY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_PER_METHOD_TRANSITION_EARNINGS_STABILITY",
+        "question_family_tags": [
+          "VALUATION_METHOD",
+          "DURABLE_VISIBILITY",
+          "EARNINGS_DURATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK증권의 메모리 PER valuation 방법론 전환",
+        "subject_id": "000660:MEMORY:PER_METHOD_TRANSITION_EARNINGS_STABILITY",
+        "unit": "qualitative valuation-method change",
+        "value": "PBR-to-PER method change based on lower earnings volatility and higher long-term growth confidence"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "economic_mechanism": "한국 메모리에 PER을 적용하는 것은 이 보고서가 최초 국면으로 평가한 만큼 Target PER 수준의 합리성에 대한 시장 의구심이 불가피하다고 스스로 제한했다. 즉 방법론 전환 논리가 있더라도 적정 배수의 검증 이력은 짧다는 counterfact다.",
+        "exact_quote": "한국 메모리에 대한 PER 적용은 최초의 국면이므로, Target PER 수준에 대한 합리\n성에 대한 의구심 국면은 필연적일 것으로 예상한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "새 valuation regime의 적정 배수가 충분히 검증되지 않았다는 명시적 한계는 multiple 확장 논리의 확신도를 직접 제약한다.",
+        "mechanism_scope_id": "000660:MEMORY:FIRST_PER_REGIME_MULTIPLE_UNCERTAINTY",
+        "normalized_object": "한국 메모리 최초 PER 적용 국면의 Target multiple 합리성 불확실성",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "valuation assessment published 2025-11-03",
+        "predicate": "한국 메모리에 PER을 처음 적용하는 국면이어서 Target PER 수준의 합리성에 대한 의구심이 불가피하다고 평가됐다",
+        "predicate_family": "FIRST_MEMORY_PER_REGIME_MULTIPLE_UNCERTAINTY",
+        "primitive_tags": [
+          "MEMORY",
+          "PER",
+          "MODEL_UNCERTAINTY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FIRST_MEMORY_PER_REGIME_MULTIPLE_UNCERTAINTY",
+        "question_family_tags": [
+          "VALUATION_RISK",
+          "MULTIPLE_VALIDATION",
+          "COUNTEREVIDENCE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "한국 메모리 최초 PER 적용의 적정 배수 불확실성",
+        "subject_id": "000660:MEMORY:FIRST_PER_REGIME_MULTIPLE_UNCERTAINTY",
+        "unit": "qualitative valuation-model uncertainty",
+        "value": "target PER reasonableness remains subject to inevitable market doubt in the first application regime"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "economic_mechanism": "SK증권은 SK하이닉스에 적용한 Target PER 11배가 Micron의 2026년 예상 PER 13배보다 낮다는 점을 배수 합리성의 peer anchor로 제시했다. 이는 분석사 목표 배수의 상대 비교이며 현재 시장 PER이나 확정 성과로 해석하지 않는다.",
+        "exact_quote": "이를 감안하면, 글로벌 AI 관련 핵심 수혜주인 TSMC, 엔비디아의 PER 대비 삼성\n전자, SK 하이닉스, 마이크론 등 메모리 공급자들의 PER 은 저렴하다. 또한 삼성전\n자의 Target PER 15X는 과거 12M Fwd. P/E Band 상단, SK하이닉스의 Target\nPER 11X는 마이크론의 2026년 예상 PER 13X 이하라는 점에서 과하지 않다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 메모리 peer의 명시적 2026년 PER 비교는 SK하이닉스 valuation multiple의 상대적 위치를 직접 검증하는 PEER_BAND 관찰이다.",
+        "mechanism_scope_id": "000660:MEMORY:TARGET_PER_MICRON_2026_PEER_ANCHOR",
+        "normalized_object": "SK하이닉스 Target PER과 Micron FY2026E PER의 상대 배수",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "Micron FY2026E peer comparison published 2025-11-03",
+        "predicate": "SK하이닉스 Target PER 11배가 Micron의 2026년 예상 PER 13배보다 낮은 peer anchor로 제시됐다",
+        "predicate_family": "TARGET_PER_MICRON_FORWARD_PEER_ANCHOR",
+        "primitive_tags": [
+          "MEMORY",
+          "PER",
+          "PEER_BAND"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "TARGET_PER_MICRON_FORWARD_PEER_ANCHOR",
+        "question_family_tags": [
+          "PEER_VALUATION",
+          "FORWARD_PER",
+          "RELATIVE_MULTIPLE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 Target PER과 Micron 2026E PER 비교",
+        "subject_id": "000660:MEMORY:TARGET_PER_MICRON_2026_PEER_ANCHOR",
+        "unit": "x",
+        "value": "SK hynix target P/E 11.0x; Micron FY2026E P/E 13.0x"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "economic_mechanism": "SK증권의 2025년 11월 3일 실적·투자지표 표는 SK하이닉스 FY2026E PBR을 2.3배로 추정했다. 이는 해당 브로커의 forward point estimate이며 다른 시점·기관 추정치를 대체하지 않는다.",
+        "exact_quote": "구분 단위 2025E 2026E 2027E\nScale-out 사이클의 본질은 메모리 전반의 수요 성장이다. 이는 SK 하이닉스의 실적\n매출액 십억원 91,231 130,225 153,665\n차별화 수준이 최근 2년 대비 희석될 수 밖에 없음을 의미한다. 다만 시장 우려와 달리\n영업이익 십억원 42,156 76,039 92,968\n순이익(지배주주) 십억원 39,480 65,908 77,792 HBM4 경쟁 우위 지속에 따른 차별화 된 HBM 수익성과 메모리 공급부족이 HBM 의\nEPS 원 54,231 90,533 106,857\n가치까지 제고하고 있다는 점에 주목한다. 수익성 우위와 P/E Valuation 으로의 변경\nPER 배 10.3 6.2 5.2\n논리인 실적 안정성과 꾸준한 성장성 관점에서 업종 내 가장 돋보일 것으로 전망한다.\nPBR 배 3.6 2.3 1.6\nEV/EBITDA 배 7.1 3.9 2.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 분모가 명시된 forward PBR은 valuation_rerating의 현재 구조화 배수 입력을 직접 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:SKS_FORWARD_PB_FY2026E",
+        "normalized_object": "SK증권 SK하이닉스 FY2026E PBR 추정치",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "SK증권은 SK하이닉스 FY2026E PBR을 2.3배로 추정했다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "MEMORY",
+          "PBR",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 FY2026E PBR",
+        "subject_id": "000660:MEMORY:SKS_FORWARD_PB_FY2026E",
+        "unit": "x",
+        "value": 2.3
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "economic_mechanism": "SK증권의 2025년 11월 3일 실적·투자지표 표는 SK하이닉스 FY2027E PBR을 1.6배로 추정했다. 이는 해당 브로커의 forward point estimate이며 다른 시점·기관 추정치를 대체하지 않는다.",
+        "exact_quote": "구분 단위 2025E 2026E 2027E\nScale-out 사이클의 본질은 메모리 전반의 수요 성장이다. 이는 SK 하이닉스의 실적\n매출액 십억원 91,231 130,225 153,665\n차별화 수준이 최근 2년 대비 희석될 수 밖에 없음을 의미한다. 다만 시장 우려와 달리\n영업이익 십억원 42,156 76,039 92,968\n순이익(지배주주) 십억원 39,480 65,908 77,792 HBM4 경쟁 우위 지속에 따른 차별화 된 HBM 수익성과 메모리 공급부족이 HBM 의\nEPS 원 54,231 90,533 106,857\n가치까지 제고하고 있다는 점에 주목한다. 수익성 우위와 P/E Valuation 으로의 변경\nPER 배 10.3 6.2 5.2\n논리인 실적 안정성과 꾸준한 성장성 관점에서 업종 내 가장 돋보일 것으로 전망한다.\nPBR 배 3.6 2.3 1.6\nEV/EBITDA 배 7.1 3.9 2.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 분모가 명시된 forward PBR은 valuation_rerating의 장기 배수 경로를 직접 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:SKS_FORWARD_PB_FY2027E",
+        "normalized_object": "SK증권 SK하이닉스 FY2027E PBR 추정치",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E",
+        "predicate": "SK증권은 SK하이닉스 FY2027E PBR을 1.6배로 추정했다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "MEMORY",
+          "PBR",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 FY2027E PBR",
+        "subject_id": "000660:MEMORY:SKS_FORWARD_PB_FY2027E",
+        "unit": "x",
+        "value": 1.6
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "economic_mechanism": "SK증권의 2025년 11월 3일 실적·투자지표 표는 SK하이닉스 FY2026E EV/EBITDA를 3.9배로 추정했다. 이는 해당 브로커의 forward point estimate이며 다른 시점·기관 추정치를 대체하지 않는다.",
+        "exact_quote": "구분 단위 2025E 2026E 2027E\nScale-out 사이클의 본질은 메모리 전반의 수요 성장이다. 이는 SK 하이닉스의 실적\n매출액 십억원 91,231 130,225 153,665\n차별화 수준이 최근 2년 대비 희석될 수 밖에 없음을 의미한다. 다만 시장 우려와 달리\n영업이익 십억원 42,156 76,039 92,968\n순이익(지배주주) 십억원 39,480 65,908 77,792 HBM4 경쟁 우위 지속에 따른 차별화 된 HBM 수익성과 메모리 공급부족이 HBM 의\nEPS 원 54,231 90,533 106,857\n가치까지 제고하고 있다는 점에 주목한다. 수익성 우위와 P/E Valuation 으로의 변경\nPER 배 10.3 6.2 5.2\n논리인 실적 안정성과 꾸준한 성장성 관점에서 업종 내 가장 돋보일 것으로 전망한다.\nPBR 배 3.6 2.3 1.6\nEV/EBITDA 배 7.1 3.9 2.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 분모가 명시된 forward EV/EBITDA는 기존 canonical에 없던 구조화 valuation 배수 역할을 직접 채운다.",
+        "mechanism_scope_id": "000660:MEMORY:SKS_FORWARD_EV_EBITDA_FY2026E",
+        "normalized_object": "SK증권 SK하이닉스 FY2026E EV/EBITDA 추정치",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "SK증권은 SK하이닉스 FY2026E EV/EBITDA를 3.9배로 추정했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "MEMORY",
+          "EV_EBITDA",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스 FY2026E EV/EBITDA",
+        "subject_id": "000660:MEMORY:SKS_FORWARD_EV_EBITDA_FY2026E",
+        "unit": "x",
+        "value": 3.9
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "economic_mechanism": "SK증권의 2025년 11월 3일 실적·투자지표 표는 SK하이닉스 FY2027E EV/EBITDA를 2.7배로 추정했다. 이는 해당 브로커의 forward point estimate이며 다른 시점·기관 추정치를 대체하지 않는다.",
+        "exact_quote": "구분 단위 2025E 2026E 2027E\nScale-out 사이클의 본질은 메모리 전반의 수요 성장이다. 이는 SK 하이닉스의 실적\n매출액 십억원 91,231 130,225 153,665\n차별화 수준이 최근 2년 대비 희석될 수 밖에 없음을 의미한다. 다만 시장 우려와 달리\n영업이익 십억원 42,156 76,039 92,968\n순이익(지배주주) 십억원 39,480 65,908 77,792 HBM4 경쟁 우위 지속에 따른 차별화 된 HBM 수익성과 메모리 공급부족이 HBM 의\nEPS 원 54,231 90,533 106,857\n가치까지 제고하고 있다는 점에 주목한다. 수익성 우위와 P/E Valuation 으로의 변경\nPER 배 10.3 6.2 5.2\n논리인 실적 안정성과 꾸준한 성장성 관점에서 업종 내 가장 돋보일 것으로 전망한다.\nPBR 배 3.6 2.3 1.6\nEV/EBITDA 배 7.1 3.9 2.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 분모가 명시된 forward EV/EBITDA는 valuation_rerating의 장기 배수 경로를 구조화한다.",
+        "mechanism_scope_id": "000660:MEMORY:SKS_FORWARD_EV_EBITDA_FY2027E",
+        "normalized_object": "SK증권 SK하이닉스 FY2027E EV/EBITDA 추정치",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E",
+        "predicate": "SK증권은 SK하이닉스 FY2027E EV/EBITDA를 2.7배로 추정했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "MEMORY",
+          "EV_EBITDA",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스 FY2027E EV/EBITDA",
+        "subject_id": "000660:MEMORY:SKS_FORWARD_EV_EBITDA_FY2027E",
+        "unit": "x",
+        "value": 2.7
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "5419d0e3705b06d600efb1e5ffb7d52940cf79ab51af5804ef1c7bd02bd9fa78",
+  "production_score_authority": false,
+  "prompt_hash": "117e9874634e7ba6d090741826901d1bc9a2f70993c06f7cc13e3d5b714267ac",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cdb7c2f7887d498bcb16ea9332c379c74dc9b9f6fcbd5070988c8266298f1cec",
+  "response_id": "COLLABRESP-d74f6efbf7b7bc65f1f1a25f49685dd9034a40d6c27be575bf788066cad7319d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

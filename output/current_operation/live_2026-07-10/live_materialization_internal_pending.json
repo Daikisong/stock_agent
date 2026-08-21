@@ -1,0 +1,25 @@
+{
+  "as_of_date": "2026-07-10",
+  "authorization": {
+    "blocker_codes": [],
+    "input_manifest": null,
+    "live_materialization_authorized": true,
+    "materialize_live_input": true,
+    "path": "LIVE_MATERIALIZATION",
+    "profile_error_category": "TypeError",
+    "run_mode": "LIVE_DAILY_INCREMENTAL",
+    "run_profile": "configs/e2r_production_daily_v1.json"
+  },
+  "blockers": [
+    "LIVE_MATERIALIZATION_ORCHESTRATION_FAILED"
+  ],
+  "canonical_stage": "0",
+  "materializer_called": false,
+  "mode": "production_bounded",
+  "production_runtime_ready": false,
+  "raw_reference_score": null,
+  "schema_version": "e2r_live_materialization_internal_pending_v1",
+  "score_valid": false,
+  "status": "INTERNAL_E2R_RUNTIME_NOT_READY",
+  "universe": "krx"
+}

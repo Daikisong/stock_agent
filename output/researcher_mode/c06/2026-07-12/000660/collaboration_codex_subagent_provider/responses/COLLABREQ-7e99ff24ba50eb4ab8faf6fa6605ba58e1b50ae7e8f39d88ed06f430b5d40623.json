@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "3885e06527a44286bfd9318a7e97f4727d7002753186fba579331bc5de08b8ba",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f47745b22c143ca6b45dc5a7",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.05,
+        "rationale": "The Taiwan IT report focuses on PCB and modular interconnect vendors, not SK hynix HBM earnings or valuation."
+      },
+      {
+        "candidate_id": "SGCAND-4a93b0f33c879a2128fb34ab",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "The broad 2025 Korea market-strategy report supplies market-index valuation bands rather than target-specific HBM economics."
+      },
+      {
+        "candidate_id": "SGCAND-113a9ced8ba1cc43edaf9345",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The Telegram page discusses another issuer and is not a requested original source family."
+      },
+      {
+        "candidate_id": "SGCAND-44f7d8d8850901c1f0059924",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "This old document concerns SK Telecom and a historical acquisition effect, not the current SK hynix HBM valuation mechanism."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Full-text and publication-date eligibility must still be verified during bounded fetch; snippets were used only for discovery routing."
+    ]
+  },
+  "payload_hash": "a006d02a87c95166be53e55ed4c279d0eb2578784c092311c52e9c99217ac3a6",
+  "production_score_authority": false,
+  "prompt_hash": "f9374ff96756b717c3089192b68b69771dda736469041611034c8d56c865d2a4",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7e99ff24ba50eb4ab8faf6fa6605ba58e1b50ae7e8f39d88ed06f430b5d40623",
+  "response_id": "COLLABRESP-9be34b5f96dbd8b0b62ac17c5a92b81a90dcdece11285a8153a2cb868d5afbb9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "valuation_rerating의 DURABLE_VISIBILITY에는 forward period가 명시된 SK하이닉스 issuer 또는 customer-official exact quote가 필요하지만, 이 prompt는 기존에 실행한 issuer/newsroom·IR 경로와 별개인 새 verified 공식 문서 identity를 제공하지 않는다.",
+      "CompanyGuide의 PUBLIC_BROKER_PDF 후보들은 discovery metadata일 뿐이며, 계약상 issuer/customer-official DURABLE_VISIBILITY를 대체할 수 없다. 이미 실행된 LS·미래에셋·KB·대신 exact report query의 제목·파일명 변형도 재제안하지 않는다.",
+      "따라서 suggested_queries를 비운다. 기존 검색의 NO_RESULT나 이전 empty 응답은 source absence 또는 semantic completion의 증거가 아니며, 새 공식 문서 identity가 생기면 그때 bounded query로 검증해야 한다."
+    ]
+  },
+  "payload_hash": "93a6339debd8223a5051eaa218f374e4ebf84283d6db4538effb48eb55dced43",
+  "production_score_authority": false,
+  "prompt_hash": "a468cc6f5132febd21038e6494d5b0b2ed5e71c99b6d5f85f212041b4e9addf0",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-85e010b6c7381f8f5f8d78306f1409a8b08c12c973a6ac9dc83ccf3c060471f0",
+  "response_id": "COLLABRESP-d91df4c2d3526dcd7fd20c3080a41007c99e280cac0f91fd20a759eecbb019ba",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

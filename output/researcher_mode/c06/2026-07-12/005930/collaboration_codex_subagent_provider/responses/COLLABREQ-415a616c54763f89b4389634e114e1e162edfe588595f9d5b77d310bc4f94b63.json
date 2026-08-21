@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2103a8a634f59ad8a214e603",
+        "rationale": "전송 청크 2/3의 원문 전체를 검토하고 current 520개 fact/522개 claim 및 직전 청크 0/3의 accepted claim 8건과 의미 중복을 대조했다. 이 청크는 DX 제품·네트워크 및 DS·SDC 연구개발 부록이다. MEMORY 범위에서 LPCAMM, LPDDR5X, DDR5, GDDR7, CXL과 과거 HBM3E 제품 개발 이력이 나오지만, HBM3E 8·12단 양산·샘플 제공 및 2024년 상반기 양산 예정은 이후의 실제 HBM3E 판매 확대·믹스 전환·고객 확대 fact로 대체됐다. 제품 사양과 연구개발 이력만으로 현재 고객 인증, 구매의무, 수주잔고, 매출·마진 전환을 새로 입증하지 않으며 NAND·SSD·System LSI·Foundry·Display·DX 정보는 scope 밖이다. 따라서 이 청크에는 새 objective-local material fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "9687f5fb2f18e5ce67aaf9ed5eaad79ff8ab88ace94a772cc08a5eda69c4b8e3",
+  "production_score_authority": false,
+  "prompt_hash": "27c85925f049108d0b0ab56bb32af39387da2570efe622c8cbaef1f399bb82e6",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-415a616c54763f89b4389634e114e1e162edfe588595f9d5b77d310bc4f94b63",
+  "response_id": "COLLABRESP-2116298210f6c3cdf8ab4e71c32893625eff76499c98a9657e3cba99cef4d3a5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

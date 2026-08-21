@@ -1,0 +1,28 @@
+{
+  "as_of_date": "2026-07-10",
+  "candidate_event_count": 419,
+  "candidate_symbol_count": 419,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "duplicate_trigger_emitted": 0,
+    "full_universe_trigger_scan_not_attempted": 0,
+    "future_trigger": 0,
+    "market_trigger_to_score": 0,
+    "news_snippet_to_score": 0,
+    "symbol_without_required_baseline_for_trigger_scan": 0,
+    "trigger_without_source_ref": 0,
+    "wrong_subject_trigger": 0
+  },
+  "eligible_universe_count": 2542,
+  "full_universe_trigger_scan_attempted": true,
+  "future_trigger_count": 0,
+  "hard_acceptance_pass": true,
+  "market_trigger_to_score_count": 0,
+  "news_snippet_to_score_count": 0,
+  "raw_trigger_signal_count": 452,
+  "schema_version": "e2r_live_trigger_fusion_audit_v1",
+  "status": "CURRENT_TRIGGER_FUSION_PASS",
+  "trigger_signal_count": 446,
+  "trigger_without_source_ref_count": 0,
+  "wrong_subject_trigger_count": 0
+}

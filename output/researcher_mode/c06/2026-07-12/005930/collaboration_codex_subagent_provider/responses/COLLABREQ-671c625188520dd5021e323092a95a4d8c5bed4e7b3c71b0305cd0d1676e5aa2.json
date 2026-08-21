@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "ed8bffb268fec77cfc844c32dcf17c93759c76c34f135bd51d3cae35ddc37564",
+  "payload": {
+    "allowed_range": [
+      16.0,
+      18.7
+    ],
+    "anchor_comparisons": [
+      "positive anchor 17.01~19.11점은 strong visibility 기준이다. 현재도 구매주문, 완료 계약, 구속력 있는 다년계약과 HBM4 완판이 있어 이 band에 가깝지만 계약 세부 비공개로 midpoint보다 약간 낮춘다.",
+      "counter anchor 9.95~12.05점은 물량·가격 가시성이 약한 ordinal 기준이다. 현재는 발행사 확인 구매주문과 계약 완료가 있어 이보다 명확히 높다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-80daa96c00cd5d7b5782c27a",
+      "EFACT-a79b8e5bedf94ee44504539e",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "research memo midpoint 16.7보다 구매주문과 계약 완료의 현재성을 조금 더 높게 반영해 17.4를 제안한다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-0f9dd0807dd915f5d67d49eb",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 17.4,
+    "rationale": "계획 HBM 생산능력에 실제 구매주문이 확보됐고 일부 고객과 중장기 물량 계약이 완료됐다. 다년계약의 구속력, 공급계약 중 장기 비중과 HBM4 완판이 물량 가시성을 서로 보강한다. 계약 가격·취소조건은 비공개지만 현재 주문·계약 근거는 단순 수요 전망보다 강하다.",
+    "support_fact_ids": [
+      "EFACT-16ee255de13b7acf64e98eaa",
+      "EFACT-1ec0fca52ff40b01ed1890f6",
+      "EFACT-83b9afe8727ec3fd962620a4",
+      "EFACT-8b6707b4ab45897a5a448a93",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-d05fe1b53b1bb5081130ea1c"
+    ],
+    "why_not_higher": "NDA로 물량·가격조정·취소·위약 조건을 검증할 수 없고 LTA 가격 지연, 고객 일정 및 평가에 따른 배분 변경이 남는다.",
+    "why_not_lower": "구매주문 확보, 중장기 계약 완료, 구속력 있는 다년계약과 HBM4 생산여력 완판이 실제 출하 가시성을 직접 지지한다."
+  },
+  "payload_hash": "b2fc21f26708f925e2274d493a5269e0e9925e1d6d41604e3169e756925539a1",
+  "production_score_authority": false,
+  "prompt_hash": "74f11fca290c06b20b469cb90b48f49e2181b2b444edd7f86b3c4e545496fa96",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-671c625188520dd5021e323092a95a4d8c5bed4e7b3c71b0305cd0d1676e5aa2",
+  "response_id": "COLLABRESP-48a04358306fe69b10362cf380e8bc4902dd2319baba86185e87ae5a75639b14",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

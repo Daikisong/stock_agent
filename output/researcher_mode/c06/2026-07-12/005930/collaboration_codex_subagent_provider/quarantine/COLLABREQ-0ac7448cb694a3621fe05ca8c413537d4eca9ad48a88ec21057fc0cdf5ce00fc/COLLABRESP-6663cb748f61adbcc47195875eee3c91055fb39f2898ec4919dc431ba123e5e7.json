@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-01f86f5e744fdaaac5e2ffe8",
+        "rationale": "The complete 49,860-character IBK report was reviewed again against the durable current fact ledger. Its objective-local Samsung Electronics valuation evidence is already represented by accepted facts from this exact document: the relative discount to the market and Micron, the common 10x operating-profit valuation frame, Samsung Electronics and SK hynix forward-multiple profiles, and both applied-PBR anchors. Remaining company forecasts, target-price tables, price performance, and non-Samsung sections either repeat those valuation semantics or do not add a distinct fact to the sole valuation_rerating objective. No duplicate fact is emitted.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "df1065807c93060ad35ce5c098ac939b52ab5cc2b59cfa1b4922bd5ea75b65b6",
+  "production_score_authority": false,
+  "prompt_hash": "fc5bba6cdea1244285243e70664fc48b662385959e3ea1f1f846ba6103044fb2",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0ac7448cb694a3621fe05ca8c413537d4eca9ad48a88ec21057fc0cdf5ce00fc",
+  "response_id": "COLLABRESP-6663cb748f61adbcc47195875eee3c91055fb39f2898ec4919dc431ba123e5e7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

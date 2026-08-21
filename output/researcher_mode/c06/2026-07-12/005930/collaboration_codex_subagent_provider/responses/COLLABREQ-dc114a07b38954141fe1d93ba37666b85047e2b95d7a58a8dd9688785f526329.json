@@ -1,0 +1,45 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "증권사 목표가·peer 표가 아닌 독립 신용평가기관의 cutoff 적격 issuer credit report 또는 surveillance 원문에서 메모리/HBM 투자, CAPEX funding, 현금흐름 및 재무완충력의 명시적 연결과 반대 위험을 확인한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 2026 신용평가 보고서 메모리 HBM CAPEX 현금흐름",
+        "objective_id": "SGOBJ-44161aa1a529ae8101bf12b1",
+        "rationale": "기존 38개 query는 issuer 실적·IR, 고객 HBM 인증·플랫폼, 증권사 valuation PDF, 거래소 시설투자, 장비 공급 및 NH·미래에셋 archive에 집중됐다. 독립 신용평가기관의 dated issuer report 또는 surveillance는 이들과 다른 document class로서 메모리/HBM 투자와 전사 CAPEX·현금흐름·재무완충력·하방 위험의 연결을 검증할 수 있다. Full document가 HBM 또는 memory 투자 귀속을 명시할 때만 capital_allocation 근거로 사용하고, 전사 현금흐름을 HBM project return으로 치환하지 않는다.",
+        "source_families": [
+          "INDUSTRY_REPORT",
+          "GENERAL_WEB_DISCOVERY"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "신용평가 원문이 전사 재무만 다루고 HBM 또는 memory 투자 귀속을 명시하지 않으면 capital_allocation gap을 해결하지 못하므로 nonmaterial로 처리해야 한다.",
+      "이 새 문서 class의 제안은 원문 존재·fetch 성공·사실 확인을 뜻하지 않으며, 같은 snapshot의 supervisor 판단에 선반영할 수 없다."
+    ]
+  },
+  "payload_hash": "ee1d6b8dd0dd00b30bee7743690a7f46ea687d4414b20c9e72ae02da6badb09e",
+  "production_score_authority": false,
+  "prompt_hash": "0ea35436dff171a91dbbc5805558626d942045e032e19c96cb724ea23462a8d7",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-dc114a07b38954141fe1d93ba37666b85047e2b95d7a58a8dd9688785f526329",
+  "response_id": "COLLABRESP-5d727d035ccd16caf39c79c04a99b07ff60e755f170711facba069f565fd1d84",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "검색 결과의 보도기사나 snippet이 아니라 Samsung Electronics 원 earnings-call transcript 또는 첨부 presentation을 우선 회수합니다.",
+      "HBM4·메모리 귀속이 명시된 투자·wafer capacity만 capital_allocation 후보로 넘기고, DS 전체 CAPEX나 숫자 없는 일반 투자계획은 기존 gap을 해결한 것으로 보지 않습니다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "Samsung Electronics 1Q 2026 earnings call transcript HBM4 capex wafer capacity",
+        "objective_id": "SGOBJ-44161aa1a529ae8101bf12b1",
+        "rationale": "prior query `삼성전자 2026 HBM 생산능력 투자 계획 IR`은 accepted claim/fact lineage를 만들지 못했고, current facts의 DS CAPEX는 Foundry·System LSI가 섞여 HBM 투자로 귀속할 수 없습니다. 발행사의 정확한 1Q 2026 earnings-call 원문에서 HBM4 전용 capex, wafer capacity 또는 memory-specific supply response를 찾아 혼합 DS 수치와 구분하는 새로운 official-source route입니다.",
+        "source_families": [
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_PRESENTATION"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "이번 semantic retry는 LLM_RETURNED_NO_NEW_VALID_QUERY를 반복하지 않도록, prior query without accepted fact lineage가 명시된 capital_allocation objective에 새 exact-document route를 생성했습니다.",
+      "원문 발간일은 2026-07-12 이하이어야 하며, 원문 quote와 HBM·메모리 귀속이 확인되기 전에는 증거가 아닙니다.",
+      "제안 query와 후속 문서에는 점수·Stage 권한이 없습니다."
+    ]
+  },
+  "payload_hash": "f666adde808114b59ba6b49d53abc1d52a480cf7b08137c0304bb9520635394a",
+  "production_score_authority": false,
+  "prompt_hash": "50553d2e14ba1586375536aac752149bc1a06c59ec9877612734d4a291954c68",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8804cf4767d00f45cfed02fafc566085290e539ffa16ac616f92e4001419afa9",
+  "response_id": "COLLABRESP-295c8df28dd2081882d3c13024855e3e6ec26a73c445f8c810d13d814f1ce297",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

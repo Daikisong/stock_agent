@@ -1,0 +1,84 @@
+{
+  "output_schema_hash": "2aa2068441c0afd368451f442d212ab1426e39e77461819a63f5b6c851c22ca7",
+  "payload": {
+    "challenged_fact_row_indices": [
+      1,
+      16,
+      23,
+      36,
+      89,
+      91,
+      94,
+      100,
+      123,
+      188,
+      199,
+      217,
+      227,
+      238,
+      250,
+      268,
+      270,
+      276,
+      278
+    ],
+    "confidence": 0.91,
+    "recommended_research_directions": [
+      "issuer 또는 named customer 공식 원문에서 HBM 계약의 기간·물량·가격·취소·위약·선수금과 qualification 결과가 함께 확인될 때 durable visibility를 재검증한다.",
+      "후속 확정 공시에서 HBM 또는 최소 memory별 매출·마진·현금흐름·Capex 귀속과 운전자본 변화를 추적해 전사 actual의 HBM 기여를 분리한다.",
+      "분기별 고객 Capex actual·FCF, 경쟁사 HBM4 양산·인증 actual, SK하이닉스 제품 믹스·ASP actual을 함께 비교해 병목과 scarcity premium의 지속성을 감시한다.",
+      "용인·청주·M15X의 이사회 승인, 장비 입고, 클린룸 가동과 actual 생산·현금회수 이정표를 계획 숫자와 분리해 확인한다."
+    ],
+    "resolved_challenges": [
+      "eps_fcf_explosion의 actual 전사 매출·영업이익·영업현금흐름 개선은 확인된다. 그러나 운전자본 증가와 금융상품평가이익을 분리하면 HBM 단독 반복 FCF 폭발로는 증명되지 않는다.",
+      "earnings_visibility의 HBM4 양산 진입과 고객 성능요구 충족은 준비 단계 위험을 낮춘다. 다만 고객명·인증 일자·확정 물량·가격·취소 조건 부재 때문에 durable backlog로 확대할 수 없다.",
+      "bottleneck_pricing의 웨이퍼·TSV 집약도와 전사 높은 가동률은 물리적 제약을 지지한다. 반면 과도한 가격 상승의 수요 파괴와 경쟁 공급 확대를 고려하면 병목이 영구적인 가격 프리미엄을 보장하지 않는다.",
+      "market_mispricing과 valuation_rerating의 actual 이익 개선·peer discount·SOTP는 재평가 논리를 제공한다. 실적 상향에도 배수가 하향된 관찰과 FY2026 이후 감익 추정은 낮은 배수가 단순 오가격이 아닐 가능성을 남긴다.",
+      "capital_allocation의 actual 영업현금흐름과 순현금성 유동성은 투자 여력을 지지한다. 그러나 운전자본 흡수, 대규모 Capex, 건설·장비 실행 위험과 교환사채의 주식수 효과를 제외한 HBM 단독 ROIC는 확인되지 않는다.",
+      "information_confidence는 issuer·공시·독립 자료의 범위가 넓고 actual·estimate 구분도 명시돼 있다. 동시에 단일 부문 공시, 잠정자료 비검증, broker 표 내부 불일치로 제품별 손익·계약 품질의 정밀 검증은 제한된다."
+    ],
+    "review_complete": true,
+    "reviewed_component_ids": [
+      "eps_fcf_explosion",
+      "earnings_visibility",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation",
+      "information_confidence"
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "unresolved_challenges": [
+      "HBM 공급의 고객명, 인증 주체·일자, 계약 기간·확정 물량·가격 체계·취소권·위약금·선수금이 issuer 또는 customer official 원문에 없다.",
+      "전사와 DRAM actual은 강하지만 HBM 단독 매출액·마진·영업현금흐름·Capex·FCF가 없어 7개 component의 제품 귀속을 완전히 닫을 수 없다.",
+      "FY2026 이후 이익 duration은 broker 간 경로가 다르고 고객 Capex의 FCF·차입 부담, 경쟁사 HBM 공급 확대와 수요 가격탄력성에 노출된다.",
+      "장기 생산거점과 HBM4 통합은 이사회 승인, 건설·장비 수급, 테스트 복잡도와 고객 일정에 노출돼 계획 CAPA가 적시에 cash로 전환될지 미확정이다."
+    ]
+  },
+  "payload_hash": "e88ae0798ba4ec3445b9374a4f3d5fb383f3fe748af5010fc0cacb68fa17dd30",
+  "production_score_authority": false,
+  "prompt_hash": "4a5a7952b1e72d8d07f89db1fa62e34779089614f7c85020a4510120db9513a2",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d776fd1d8e83454fce99f46f7143c700dd3b70ec1d1ad7170f6b1ccf149cc380",
+  "response_id": "COLLABRESP-c83b37c9bdccebc48fd9760f6bac8e2a21385410d52031bd3e068d45339a998e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5cb5fcc6c7e21b7031e884c5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「[INSS 이슈브리프] 글로벌 AI 책임 강국 구현을 위한 전력안보 확립(771호).pdf」는 www.inss.re.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-9d3cf954398ab60729171add",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「2022년 글로벌 과학기술 & ICT 정책･기술 동향 분석」는 www.kistep.re.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-e9dda312de363353e5520a12",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「IT 하드웨어(반도체/디스플레이/부품)김운호 - إحصائيات وتحليلات قناة ....」는 telemetr.io의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-2674f8a797309767dbeea196",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「2007년 10월 24일 (수)」는 www.hanaw.com의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-5e7980dfa6b740536f8daeb7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「2023년 전략적 R&D예산 배분 및 편성을 위한 정책기반 구축에 관한 연구」는 www.kistep.re.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-edcf6c88bb9595d474be7dc5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「엔비디아 생태계에 대한 업계·규제적 대응 현황」는 rd.kdb.co.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-cc026eb4fe18b867cc8db4d9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「2007년 10월 24일 (수)」는 www.hanaw.com의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-923e4e765c0d00d0c588d073",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「20240524181232166K_02.pdf (imeritz.com)」는 home.imeritz.com의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-2201cc6e5012e49149183ab6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「카이에 de market」는 t.me의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-112417e061557425ab2ec0dd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「[주식] AI와 함께하는 주식투자 시나리오( 5/22 마감 )」는 damoang.net의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-1578b5ebe2deefb579eeedea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「포스트 코로나 시대의 산업입지정책 방향과 지역산업의 대응」는 www.kicox.or.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-2cf60eee21967a3ce1a07296",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「2025년 글로벌 과학기술 & ICT 정책･기술 동향 분석」는 www.kistep.re.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P4의 supplied candidate 12개를 모두 exact-once 검토했으며 NVIDIA/OpenAI 소유 CUSTOMER_OFFICIAL full route는 없었다.",
+      "Snippet과 metadata는 discovery-only이며, 제3자·broker·issuer·navigation 경로는 이 counterparty-official objective의 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "79418ffc3f0e39978aea944fccd6bbba230f0b9b120758daf8ea94dd5696eacb",
+  "production_score_authority": false,
+  "prompt_hash": "1e29a5077b1be174e17bc2d9db4278dfd027f9330bd6c1c1d1adc84b0751080a",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2fc5187b798f535faa5eca7f6d759ed75fd5edafe4f50b2817c68a1e2835f6db",
+  "response_id": "COLLABRESP-a8c0a85fd81f7363300cadfcc3967acc74cc4dc390188c7468f4c18cf493572f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "현재 prompt의 37개 executed query와 failure ledger를 의미 단위로 대조했다. issuer earnings·IR, OPENDART/KIND 공시, 주주총회·영업실적 전망, ADR/registration statement, 지속가능경영보고서, customer GTC·annual report·Form 10-Q·earnings call, exact broker-file route가 이미 실행됐으며 단어만 바꾼 재검색은 새 route가 아니다.",
+      "FORWARD_GUIDANCE와 SEGMENT_CONTRIBUTION은 각각 issuer가 제시한 기간·숫자형 미래 point/range와 issuer 공시의 HBM 또는 memory 실제 손익·마진·현금흐름 분해가 없어 미해결이다. 전사·DRAM actual이나 broker forecast를 이 역할로 대체하지 않는다.",
+      "DURABLE_VISIBILITY는 target-attributable HBM의 기간·확정 물량 또는 CAPA와 취소권·위약금·선수금 조건을 함께 밝힌 issuer/customer 공식 원문이 없어 미해결이다. 기존 KIND 공급계약, NVIDIA annual report·Form 10-Q·earnings call route의 동의어를 반복하지 않는다.",
+      "information-confidence의 독립 customer corroboration도 미해결이지만 current prompt는 새 customer filing·release의 검증된 문서 identity를 제공하지 않는다. CompanyGuide의 structured rows는 broker metadata이며 issuer/customer 공식 evidence role을 대신하지 않는다.",
+      "새로 검증 가능한 공식 문서 identity 또는 document class가 current prompt에 없어 suggested_queries를 비워 둔다. 이는 자료의 source absence를 증명하지 않으며, 이번 exact context에서 의미상 신규이고 실행 가능한 query를 만들 근거가 없다는 PENDING 판단이다."
+    ]
+  },
+  "payload_hash": "bd529ab6f6e1f5abca0bf2fde1ce8a433bb1daa7d2521008226297700307e9a4",
+  "production_score_authority": false,
+  "prompt_hash": "8832ef69b4a0d44044ab1c683407ea2f974927fc35309f26b5c594920c0ce9af",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3310222a23e5e6ae684149a7d7fc427e996ace7e87d05db1ae2584aebeff189e",
+  "response_id": "COLLABRESP-497c4e6fbdc84ad35e86a49a21ebe74e592ec2d6b2afd64c1ccaeba38c6c2c12",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

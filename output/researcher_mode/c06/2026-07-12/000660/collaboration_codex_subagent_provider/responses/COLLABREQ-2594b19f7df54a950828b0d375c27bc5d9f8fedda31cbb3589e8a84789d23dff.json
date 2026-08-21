@@ -1,0 +1,52 @@
+{
+  "output_schema_hash": "ebaa078c7d4942f1cf5b68e48203f9c4e2222f1b997abf613ddbf8e6e945dd91",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-56e6265c7a1179142a3f0d30",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The KIND-owned URL supports KIND_KRX provenance, but the docpath parameter is empty. With no disclosure, file, or target identity, this generic viewer endpoint is not a resolvable full-fetch route for the objective."
+      },
+      {
+        "candidate_id": "SGCAND-8c374979e0e11aaf77a1557f",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The generic noToc shell is KIND-owned and therefore matches KIND_KRX provenance, but it contains no target, filing, or document identity and cannot route to a full source. Parent-reference metadata alone does not make it material."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "The repeated graph-expansion roster contains only two generic KIND framework URLs; neither supplies a resolvable document path or filing identity for a target-scoped fetch."
+    ]
+  },
+  "payload_hash": "2f49e978d95af6e7c9a923878aa56ad2557f291f9f5d203cd3015fea4117a905",
+  "production_score_authority": false,
+  "prompt_hash": "83ac146c6d45ab5577084951474603ab7fb47ffde41e10648fd8580ea04d46c8",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2594b19f7df54a950828b0d375c27bc5d9f8fedda31cbb3589e8a84789d23dff",
+  "response_id": "COLLABRESP-3ce1dd5daa50c8cbeb810182c6c03ab94ff0720a4d7caac5ea2025afb7b65d3a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

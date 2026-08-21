@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "INDEPENDENT_COMPLETENESS_REVIEWER로서 frozen 996 current/open facts, 36 source documents, 7 component memos, 21 Judge decisions, Red Team 및 Supervisor 결론의 계보를 교차 확인했다. 확인되지 않은 세부조건은 memo와 점수 범위에 명시됐고 새 검색 blocker로 승격되지 않았다. 반복 query, zero-result, provider failure를 source absence나 completion 증명으로 쓰지 않았으며 현재 evidence로 semantic saturation이 충족된다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "b2bc9dd907315b024338eb8baf012c77436414981ba26f35f43eb73d0f1b7db4",
+  "production_score_authority": false,
+  "prompt_hash": "f8ff2130ce129e2cbb074ab003742313dd935b92e1f5a5db6cb7a627886e97ed",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1b7a0a947dcae29e3d8859f39ae9411a93878ef5e1bf87f62f814d59ac3a4bdd",
+  "response_id": "COLLABRESP-79839141c8dca4ea6eea2e7ea9e6693c08d2723cafbf99eed56ac1e655f9e963",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

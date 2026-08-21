@@ -1,0 +1,168 @@
+{
+  "output_schema_hash": "6fa3ce0b80dbd69f8adf82aa033bf8ec1745f2d609c0e6accc8573451387d0ad",
+  "payload": {
+    "confidence": 0.66,
+    "counter_case": "분기보고서의 서술형·위험 공시 범위가 제한되고 signed 고객 계약의 핵심 조건을 독립 확인하지 못했다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-2dbb3edefb6849e18a361416",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64",
+      "ORDTRANSFER-994f92d663d0b49c624b1803",
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-9e4c777f0c9f76d9f38a2702"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25"
+    ],
+    "positive_case": "공식 감사의견과 발행사 직접 HBM 제품 실행 공시가 재무·사업 정보의 신뢰도를 지지한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 34,
+        "reason": "중립 계약 맥락은 정보 신뢰도의 직접 근거가 아니다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 43,
+        "reason": "유사 공시범위 counter는 313·647과 중복된다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 264,
+        "reason": "추가 positive는 감사의견·발행사 실행보다 간접적이다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 313,
+        "reason": "분기보고서 서술형 분석 범위 제한을 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 359,
+        "reason": "적정 감사의견을 재무보고 신뢰도 positive로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 467,
+        "reason": "중복 정보범위 counter를 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 495,
+        "reason": "중복 공시 counter를 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 508,
+        "reason": "중복 불확실성 counter를 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 647,
+        "reason": "연차 수준 위험공시가 모두 포함되지 않는 직접 counter를 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 698,
+        "reason": "중립 계약부채는 HBM 약정으로 귀속할 수 없다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 731,
+        "reason": "중립 수익인식 맥락은 계약 투명성을 직접 높이지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 850,
+        "reason": "발행사 직접 HBM 제품 실행 공시를 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 963,
+        "reason": "고객 공동개발은 계약조건 공백을 해소하지 않아 중복 positive에서 제외한다."
+      }
+    ],
+    "proposed_score_lower": 2.5,
+    "proposed_score_mid": 3.2,
+    "proposed_score_upper": 3.8,
+    "research_complete": true,
+    "researcher_summary": "적정 감사의견과 발행사 직접 공시는 신뢰도를 지지하지만 분기 공시범위와 고객별 계약조건 미확인 때문에 CORROBORATION_CAP을 적용한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "분기보고서의 서술형 분석 범위 제한은 정보 완결성의 counter다.",
+        "fact_row_index": 313,
+        "source_economic_mechanism": "분기보고서 형식상 예측정보, 영업실적, 유동성·자금조달, 부외거래에 대한 경영진 분석이 기재되지 않아 서술형 가시성 확인 범위가 제한된다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "기업공시서식 기준 때문에 분기보고서의 경영진단 및 분석의견 하위 항목들이 기재되지 않았다.",
+        "source_value_json": "\"Management discussion sections not provided in quarterly filing format\""
+      },
+      {
+        "component_interpretation": "적정 감사의견은 규제 공시 actual의 신뢰도를 지지한다.",
+        "fact_row_index": 359,
+        "source_economic_mechanism": "삼정회계법인의 적정의견과 의견변형·계속기업 불확실성·강조사항·핵심감사사항 없음은 규제 공시 actual의 재무보고 신뢰도를 지지한다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 감사보고서와 연결감사보고서는 삼정회계법인의 적정의견이며 표상 추가 제한사항은 모두 해당사항 없음이다.",
+        "source_value_json": "\"Unmodified opinion; no listed modification or uncertainty\""
+      },
+      {
+        "component_interpretation": "분기 공시만으로 모든 재무위험 정보가 완결되지 않는다는 직접 counter다.",
+        "fact_row_index": 647,
+        "source_economic_mechanism": "분기 연결재무제표가 연차 보고서의 모든 재무위험 공시를 포함하지 않아 리스크 정보의 현재 범위가 제한된다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "중간 연결재무제표에는 연차 연결재무제표가 요구하는 모든 재무위험관리 및 공시사항이 포함되지 않는다.",
+        "source_value_json": "\"Not all annual financial risk disclosures are included\""
+      },
+      {
+        "component_interpretation": "발행사 직접 HBM 실행 공시는 정보 신뢰도를 지지하지만 고객별 계약경제까지 채우지는 않는다.",
+        "fact_row_index": 850,
+        "source_economic_mechanism": "회사는 HBM의 Time to Market 실현과 대역폭·밀도·Core Die 적층 단수 향상, 성능·품질을 제품 실행 기반으로 설명했다. 같은 문장의 기존 고객 ASIC 협업 사실과 구별되는 제품 상용화 실행력이다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "REPORTS_HBM_TIME_TO_MARKET_AND_PERFORMANCE_EXECUTION",
+        "source_value_json": "\"HBM Time to Market realized with higher bandwidth, density and Core Die stacking\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      313,
+      359,
+      647,
+      850
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF",
+      "KIND_KRX"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "고객 공식 계약조건의 독립 corroboration이 없다",
+      "분기 공시가 연차 보고서의 모든 위험·경영진 분석을 포함하지 않는다"
+    ],
+    "why_not_higher": "CORROBORATION_CAP 대상인 고객 공식 계약조건과 일부 위험 공시가 완결되지 않았다.",
+    "why_not_lower": "적정 감사의견과 발행사 직접 제품 실행 공시가 확인된다."
+  },
+  "payload_hash": "7ed5995d4f14121b7e36cf2d1e63b43e7cf8880282007cf711a405e340f26768",
+  "production_score_authority": false,
+  "prompt_hash": "fb27affe72bf7690d3b309193f58eb8c964a8b8fe519c8d1c0856a7ae7a0d51b",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4db3c08618ea729eeaf19aaf0e5023a9b17098054fc378cfa1ef47c7fc267d66",
+  "response_id": "COLLABRESP-df4e67917661f2889c73cc3430449a2d4dd08e3a74f346d135474e1b64cace18",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-81f7f76effcd55845f30e428",
+      "CRMEMO-8496044fbbc4ca15486333ef",
+      "CRMEMO-3ec47cfffb8cd6e555131c17",
+      "CRMEMO-c88a0fddbea7cc558300a9ca",
+      "CRMEMO-c9259d36a1f0ff8d655ffbda",
+      "CRMEMO-98400f666b2a9889b8f84026",
+      "CRMEMO-d936e5d4f25fe8e268b58b67"
+    ],
+    "confidence": 0.85,
+    "cross_component_support": [
+      "FY2025 및 1Q26 연결 actual, FY2025 HBM 매출 2배 이상 성장, HBM4 양산 진입·대규모 생산은 제품 실행이 전사 이익 확대와 연결됐다는 eps_fcf_explosion·earnings_visibility·information_confidence의 공통 지지축이다.",
+      "1Q26 평균가동률 100%, 제한된 공급 속 HBM·서버 DRAM 가격 상승, DRAM ASP 상승은 bottleneck_pricing의 실제 가격 전이를 지지하며 높은 이익률과 forward 이익 상향의 valuation 분모를 보완한다.",
+      "낮은 forward P/E·EV/EBITDA, 높은 peer ROE, HBM SOTP 프리미엄과 EPS·PER 동반 확장은 market_mispricing과 valuation_rerating이 공유하는 재평가 bridge다. 이는 현재 trailing 배수나 미래 수익률 보장이 아니라 이익 분모 대비 상대가치 근거다.",
+      "영업현금흐름·순현금성 유동성과 수요연계 투자 원칙은 capital_allocation의 실행 여력을 지지하고, 고객 요구수요와 공급능력 간 격차 및 생산 램프의 실물 근거와 결합한다.",
+      "현재 memo-bound A/S/C가 모두 존재하는 6개 구성요소는 3자 허용범위가 겹친다: eps_fcf_explosion [16.0,16.5], earnings_visibility [14.2,14.5], bottleneck_pricing [14.0,15.0], market_mispricing [7.5,7.5], capital_allocation [2.7,2.8], information_confidence [3.2,3.4]."
+    ],
+    "cross_component_tensions": [
+      "강한 전사 actual과 FY2025 HBM 매출 성장은 확인됐지만 단일 반도체 사업부문 공시 때문에 HBM 또는 memory 단독 이익·마진·영업현금흐름·FCF 귀속은 확인되지 않는다. 제품 기여와 전사 손익을 같은 것으로 취급할 수 없다.",
+      "고객 수요 확보·공급 논의와 HBM4 생산 램프는 visibility를 높이지만 물량·가격의 월·분기 합의, signed 계약조건 부재와 고객 플랫폼 지연은 duration과 구매의무를 제한한다.",
+      "100% 가동률·DRAM ASP 상승·물리적 CAPA 제약은 scarcity premium을 지지하지만 삼성전자·Micron·CXMT 공급 확대, PC 수요 탄력과 HBM4 일정 위험은 병목의 기간과 가격 전가 상단을 낮춘다.",
+      "낮은 forward 배수와 이익 추정 상향은 재평가 여지를 보이지만 높은 trailing P/E·P/B, forward FCF yield 1.78%, FY2027~FY2028 감익 전망과 이익 상향에도 목표 P/B가 낮아진 사례는 이미 반영된 기대와 duration 위험을 보여준다.",
+      "장기 생산벨트 투자와 수요연계 집행은 공급 대응을 지원하지만 매출채권·재고 증가와 대규모 유형자산 현금유출은 FCF 전환 및 자본회수 속도를 낮춘다.",
+      "새 valuation memo CRMEMO-c9259d36a1f0ff8d655ffbda에 정확히 묶인 Analyst·Skeptic·Calibration 응답은 현재 pending이므로 valuation_rerating의 3자 교집합과 material disagreement는 아직 판정할 수 없다. 이전 memo-bound 판단을 새 memo에 이월하지 않는다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "7개 component memo와 RTMEMO-b76caa733d25d4c811fc7364를 모두 검토했다. 실제 이익·HBM 매출·생산·가동률·가격 전이와 forward 이익/peer valuation은 구조적 개선을 지지하지만, 계약의 binding terms, HBM 단독 손익·현금 귀속, 경쟁 공급, 고객 일정, FY2026 이후 duration 및 대규모 투자 후 FCF가 상단을 제한한다. Judge 관점에서는 정확히 memo-bound 결과가 있는 6개 구성요소의 3자 교집합이 모두 존재하지만, 새 valuation memo의 세 역할 응답이 pending이므로 그 구성요소의 material disagreement는 미판정으로 남긴다. synthesis_complete는 이 support·counter·review gap을 전수 검토했다는 뜻이며 점수·Stage 또는 투자결론을 의미하지 않는다.",
+    "unresolved_material_questions": [
+      "공식 issuer 또는 고객 자료에서 HBM 공급의 기간·물량·가격·취소·위약·선수금 조건이 확인되는가, 아니면 월·분기 재합의 구조가 계속되는가?",
+      "HBM 또는 memory 단독 매출·마진·영업현금흐름·FCF bridge가 전사 actual과 분리되어 확인되는가?",
+      "FY2026 이익 급증 뒤 FY2027~FY2028 감익 전망이 실제 수요·가격·믹스와 함께 유지되는가, 그리고 CSP FCF·차입 부담이 HBM 주문 duration에 어떤 영향을 주는가?",
+      "HBM4 고객 플랫폼 일정과 삼성전자·Micron·CXMT의 실제 인증·출하가 scarcity premium 및 고객 배분 우위를 얼마나 낮추는가?",
+      "운전자본 증가와 장기 생산벨트 투자 뒤 실제 FCF·ROIC가 개선되어 높은 current valuation과 장기 증설을 정당화하는가?",
+      "새 valuation memo에 대한 독립 A/S/C 세 역할의 허용범위가 겹치는가? 현재 세 응답이 없어 material disagreement 해소를 주장할 수 없다."
+    ]
+  },
+  "payload_hash": "de1a36681513b694d93927d0c77d6bbcbffb4f307596caafceefac0e0370764a",
+  "production_score_authority": false,
+  "prompt_hash": "1329a9e02212113c419189d68dc649d730b474efc8a43e928f83ee53c58a6aa4",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c91716b09c3eeedb0e63beaf5f3c6e9b1d4ba99f8582fb7cad82fed04e934b6b",
+  "response_id": "COLLABRESP-992c17d6ed718b2c2a424155674c0abe949130fb786bbd2e073be52b9520b496",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

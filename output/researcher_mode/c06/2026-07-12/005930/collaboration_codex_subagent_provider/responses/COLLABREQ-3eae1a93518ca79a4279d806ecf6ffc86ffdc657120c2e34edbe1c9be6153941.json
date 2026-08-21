@@ -1,0 +1,74 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5701afa1df0caa4ada745e42",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-bbb1b4de7fb4541f37b35ac2",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-315beb1a0123059bb23d15a0",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-a9f75055fce6912890cc51e6",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "current 9개 partition의 100개 후보를 exact-once로 분류했으며 검색 snippet은 EvidenceFact로 사용하지 않았습니다.",
+      "동일 현대차증권 보고서의 landing page와 PDF transport는 원문 회수 후 내용 hash로 중복 제거해야 합니다.",
+      "material route도 peer 명단·동일 기준일과 forward 기간·valuation 단위를 원문에서 검증하기 전에는 점수·Stage 권한이 없습니다."
+    ]
+  },
+  "payload_hash": "a57ac36391d23ae5df6dadb955249c48434f08609ae6546995e93611df4b2185",
+  "production_score_authority": false,
+  "prompt_hash": "4097b64db180b38ee8544ddb426d491ba595c2eceb73775e3c062f23a4a968b4",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3eae1a93518ca79a4279d806ecf6ffc86ffdc657120c2e34edbe1c9be6153941",
+  "response_id": "COLLABRESP-5dc916855b332abad31e841effa89930c63c15682af917bc90f1d04a82e4a6de",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

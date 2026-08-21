@@ -1,0 +1,270 @@
+{
+  "output_schema_hash": "e7a733a147d6964e75528742897823ca5094ca593a9f54b8723c700910cfd090",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "rationale": "2026-06-29 SK하이닉스 공식 FACT 원문 전체와 Q&A 19개를 Gold-blind로 전수 검토하고 current canonical 223건과 의미 중복을 대조했다. 이미 반영된 총 1,100조원 및 용인 600조원·청주 100조원·서남권 400조원 투자 배분은 다시 추출하지 않았다. 새 objective-linked 재료는 2033년 이정표가 용인 네 번째 팹의 첫 클린룸 완공이고 600조원 집행은 이후에도 계속된다는 기간 한계, 서남권 규모·일정의 수요 및 이사회 승인 조건, 청주 신규 팹 세부 계획의 이사회 승인 조건, 영업이익 창출 현금흐름 기반의 단계 조달과 미확정 추가 재원, 그리고 건설 인력·장비 수급 위험과 단계 가동 완화 계획이다. 청주 100조원을 HBM 전용으로 확대하지 않았고, 글로벌 파트너 조달을 확정 약정으로 확대하지 않았다. AI 데이터센터 전망은 제3자 산업 배경이고, 일반 공급부족·HBM 웨이퍼 집약도·수요 가시성·고객 장기협력·생산기반 추가 설명은 기존 canonical 사실과 의미가 겹치거나 현재 objective gap에 인접한 설명이라 중복 생성하지 않았다. 2026-07-12 이후 연관기사도 사용하지 않았으며 더 남은 독립 objective-linked 사실은 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "용인 클러스터의 2033년 이정표는 네 번째 팹 전체 투자 완료가 아니라 첫 번째 클린룸 완공을 뜻한다. 나머지 클린룸과 생산 설비·장비 투자는 수요에 맞춰 2033년 이후에도 단계적으로 이어지므로, 용인 600조원은 2033년까지 일괄 집행되는 금액이 아니라 장기간의 공급능력 확대와 현금지출 계획이다.",
+        "exact_quote": "2033년은 용인 클러스터의 4번째 팹의 건설이 완료되는 시점으로 4번째 팹의 첫번째 클린룸이 완공되는 시기를 의미합니다. 이후 나머지 클린룸 등 생산 설비와 장비 투자는 수요에 맞춰 단계적으로 진행되는 만큼 총 600조 원에 해당되는 투자는 2033년 이후에도 이어지게 됩니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "600조원 투자액의 실제 집행 기간과 2033년 이정표의 범위는 장기 공급능력 확대 속도와 FCF 현금지출 기간을 직접 제한한다.",
+        "mechanism_scope_id": "000660:MEMORY:YONGIN_600TN_CAPEX_EXECUTION_HORIZON",
+        "normalized_object": "용인 600조원 투자의 2033년 이후 단계 집행 기간",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "long-term plan announced 2026-06-29; investment continues after 2033",
+        "predicate": "용인 클러스터의 2033년 이정표는 네 번째 팹의 첫 번째 클린룸 완공이며 나머지 클린룸·생산 설비·장비를 포함한 총 600조원 투자는 2033년 이후에도 이어진다",
+        "predicate_family": "MEMORY_CAPEX_EXECUTION_HORIZON",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPEX",
+          "CAPACITY",
+          "YONGIN"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "YONGIN_600TN_CAPEX_EXECUTION_HORIZON",
+        "question_family_tags": [
+          "YONGIN_600TN_CAPEX_EXECUTION_HORIZON",
+          "CAPEX_TIMING",
+          "FCF_CAPEX_COUNTER",
+          "FIRST_CLEANROOM_MILESTONE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 용인 클러스터 600조원 투자 집행 기간",
+        "subject_id": "000660:MEMORY:YONGIN_600TN_CAPEX_EXECUTION_HORIZON",
+        "unit": "KRW trillion and facility milestone",
+        "value": "2033 milestone is Fab 4 first-cleanroom completion; remaining cleanrooms, production facilities and equipment investment within KRW 600tn continues after 2033"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "서남권 400조원 메모리 전공정 클러스터는 확정된 일괄 집행안이 아니라 준비와 집행이 단계적인 계획이다. 구체적인 규모와 일정은 수요에 따라 달라질 수 있고 향후 이사회 승인을 거쳐 확정되므로, 이를 고정된 생산능력 또는 확정 현금지출 일정으로 해석할 수 없다.",
+        "exact_quote": "서남권 클러스터는 이천, 청주, 용인에 이은 새로운 생산 거점으로, 메모리 생산(전공정)을 중심으로 조성할 계획입니다. 부지 확보와 팹 건설, 생산 설비 도입 등을 포함해 총 400조 원이 단계적으로 투입될 예정입니다. 다만 부지 선정과 인프라 구축에는 오랜 시간이 걸리는 만큼, 준비는 지금부터 착수하지만 집행은 단계적으로 이뤄질 계획입니다. 용인에 이어 생산 능력의 공백이 생기지 않도록 일정을 준비하고 있으며, 구체적인 규모와 일정은 수요 상황에 따라 달라질 수 있고 향후 이사회 승인 등을 거쳐 단계적으로 확정해 나갈 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "400조원 공급투자의 규모·시점이 수요와 이사회 승인에 조건부라는 사실은 생산능력 및 FCF 전망에서 확정 계획과 조건부 계획을 구분하게 한다.",
+        "mechanism_scope_id": "000660:MEMORY:SOUTHWEST_CLUSTER_CAPEX_CONDITIONALITY",
+        "normalized_object": "서남권 400조원 메모리 클러스터의 수요·이사회 승인 조건",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "long-term phased plan announced 2026-06-29; exact scale and schedule not yet fixed",
+        "predicate": "서남권 메모리 전공정 클러스터의 400조원 투자는 단계적 계획이며 구체 규모·일정은 수요 상황에 따라 변동할 수 있고 향후 이사회 승인을 거쳐 확정된다",
+        "predicate_family": "MEMORY_CAPEX_DEMAND_AND_APPROVAL_CONDITIONALITY",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPEX",
+          "CAPACITY",
+          "SOUTHWEST_CLUSTER"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "SOUTHWEST_MEMORY_CLUSTER_CAPEX_CONDITIONALITY",
+        "question_family_tags": [
+          "SOUTHWEST_MEMORY_CLUSTER_CAPEX_CONDITIONALITY",
+          "CAPEX_CONDITIONALITY",
+          "BOARD_APPROVAL",
+          "DEMAND_LINKED_EXECUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 서남권 메모리 클러스터 400조원 계획의 조건",
+        "subject_id": "000660:MEMORY:SOUTHWEST_CLUSTER_CAPEX_CONDITIONALITY",
+        "unit": "KRW trillion and qualitative execution conditions",
+        "value": "KRW 400tn phased plan; exact scale and schedule demand-dependent; future board approval required"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "청주 100조원은 NAND 신규 팹·생산장비와 HBM 후공정 첨단 패키징을 함께 포함하는 혼합 메모리 투자다. 이 가운데 신규 팹의 구체 일정과 투자 계획은 향후 이사회 승인 후 확정되므로, 100조원 전체를 HBM 전용 확정 투자나 확정 집행 일정으로 볼 수 없다.",
+        "exact_quote": "청주에는 100조 원이 투입됩니다. 이는 낸드 신규 팹을 짓고 생산 장비를 갖추면서, HBM 후공정을 위한 첨단 패키징 역량 강화 등에 쓰일 예정입니다. 신규 팹에 대한 구체적인 일정과 투자 계획은 향후 이사회를 거쳐 확정될 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "청주 투자의 제품 배분과 신규 팹 승인 조건은 HBM 공급능력 귀속과 투자 집행 시점, FCF 부담을 과대평가하지 않게 한다.",
+        "mechanism_scope_id": "000660:MEMORY:CHEONGJU_CAPEX_BOARD_APPROVAL_CONDITION",
+        "normalized_object": "청주 100조원 혼합 메모리 투자의 세부 이사회 승인 조건",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "long-term plan announced 2026-06-29; detailed new-fab plan pending future board approval",
+        "predicate": "청주 100조원은 NAND 신규 팹·장비와 HBM 후공정 패키징 역량에 함께 쓰이며 신규 팹의 구체 일정·투자 계획은 향후 이사회 승인을 거쳐 확정된다",
+        "predicate_family": "MIXED_MEMORY_CAPEX_BOARD_APPROVAL_CONDITION",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPEX",
+          "HBM_PACKAGING",
+          "CHEONGJU"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CHEONGJU_MEMORY_CAPEX_BOARD_APPROVAL_CONDITION",
+        "question_family_tags": [
+          "CHEONGJU_MEMORY_CAPEX_BOARD_APPROVAL_CONDITION",
+          "MIXED_MEMORY_CAPEX",
+          "BOARD_APPROVAL",
+          "HBM_BACKEND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 청주 100조원 혼합 메모리 투자 세부 승인 조건",
+        "subject_id": "000660:MEMORY:CHEONGJU_CAPEX_BOARD_APPROVAL_CONDITION",
+        "unit": "KRW trillion and qualitative approval condition",
+        "value": "KRW 100tn mixed NAND-fab, equipment and HBM-backend plan; detailed new-fab schedule and investment plan subject to future board approval"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "SK하이닉스는 1,100조원 장기 메모리 투자를 수요 가시성에 맞춰 단계 집행하고 재원도 집행 시점에 맞춰 조달할 계획이다. 기본 재원은 영업이익에서 창출되는 현금흐름이지만, 시장 상황에 따라 조달 규모·시점을 조절하고 글로벌 파트너 협력 등 다양한 방식도 검토한다. 따라서 투자 재원이 이미 전액 확보됐거나 외부 파트너 조달이 확정됐다고 볼 수 없으며, 향후 영업현금흐름과 FCF 전환은 투자 집행에 직접 노출된다.",
+        "exact_quote": "이번 투자는 한 번에 집행되는 것이 아니라 수요 가시성에 맞춰 장기간에 걸쳐 단계적으로 이뤄집니다. 따라서 재원 역시 한꺼번에 마련하는 것이 아니라, 집행 시점에 맞춰 단계적으로 조달해 나가게 됩니다. 기본적으로는 회사의 영업이익에서 창출되는 현금흐름을 바탕으로 하되, 투자 원칙(CapEx Discipline)에 입각해 시장 상황을 살펴가며 조달의 규모와 시점을 유연하게 조절해 나가겠습니다. 이 과정에서 글로벌 파트너들과의 협력을 비롯해 다양한 조달 방안을 함께 검토하고 있으며, 구체적인 방식과 조건은 투자 집행 단계에 맞춰 확정해 나갈 계획입니다. 이러한 원칙 위에서 안정적이고 지속 가능한 투자를 이어가겠습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "대규모 메모리 투자 재원을 영업이익 창출 현금흐름에 두고 추가 조달 조건을 미확정으로 남긴 정책은 향후 FCF 전환과 자금조달 위험을 직접 규정한다.",
+        "mechanism_scope_id": "000660:MEMORY:LONG_TERM_CAPEX_FUNDING_AND_PACING",
+        "normalized_object": "1,100조원 메모리 투자의 현금흐름 기반 단계 조달과 미확정 추가 재원",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "long-term investment plan announced 2026-06-29; financing terms to be set at execution stages",
+        "predicate": "SK하이닉스는 1,100조원 장기 투자를 수요 가시성에 맞춰 단계적으로 집행·조달하고 영업이익 창출 현금흐름을 기본 재원으로 삼되 글로벌 파트너 협력 등 추가 조달 방안을 검토한다",
+        "predicate_family": "MEMORY_CAPEX_FUNDING_AND_PACING",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPEX",
+          "CASH_FLOW",
+          "FUNDING"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "LONG_TERM_MEMORY_CAPEX_FUNDING_AND_PACING",
+        "question_family_tags": [
+          "LONG_TERM_MEMORY_CAPEX_FUNDING_AND_PACING",
+          "OPERATING_CASH_FLOW",
+          "CAPEX_DISCIPLINE",
+          "FUNDING_CONDITIONALITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1,100조원 장기 메모리 투자 재원과 조달 시점",
+        "subject_id": "000660:MEMORY:LONG_TERM_CAPEX_FUNDING_AND_PACING",
+        "unit": "qualitative funding policy",
+        "value": "phased demand-visibility-linked funding; operating-profit-generated cash flow as base; financing size and timing flexible; partner and other methods under review with terms unresolved"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "SK하이닉스는 업계 전반의 대형 프로젝트 동시 진행으로 건설 인력과 장비 수급이 타이트해질 수 있음을 공식적으로 인정했다. 팹별 클린룸 가동 시점을 나눠 자원을 배분할 계획이지만 이는 완화 계획이지 수급 제약이 해소됐다는 증거는 아니므로, 장기 생산능력 확대 일정과 투자 집행에 실행 위험이 남는다.",
+        "exact_quote": "대규모 프로젝트가 업계 전반에서 동시다발적으로 진행되는 만큼, 건설 인력과 장비 수급이 타이트해질 수 있다는 점은 충분히 인식하고 있습니다. 이에 SK하이닉스는 팹별 클린룸 가동 시점을 단계적으로 나눠 준비하는 등, 한정된 자원을 효율적으로 배분해 건설이 차질 없이 진행되도록 대응해 나갈 계획입니다. 아울러 이러한 연속적인 투자가 국내 건설 경기와 연관 산업 전반에 활력을 더하는 계기가 될 것으로도 기대하고 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "건설 인력·장비 제약과 단계 가동 계획은 생산능력 확대의 실행 속도와 장기 투자 현금지출 일정에 직접 영향을 주는 공식 counterfact다.",
+        "mechanism_scope_id": "000660:MEMORY:FAB_CONSTRUCTION_RESOURCE_CONSTRAINT",
+        "normalized_object": "복수 메모리 팹 건설의 인력·장비 수급 제약과 단계 가동 완화",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "multi-fab long-term construction plan announced 2026-06-29",
+        "predicate": "업계의 대형 프로젝트 동시 진행으로 건설 인력·장비 수급이 타이트해질 수 있어 SK하이닉스는 팹별 클린룸 가동 시점을 단계적으로 나눠 대응할 계획이다",
+        "predicate_family": "MEMORY_CAPEX_EXECUTION_RESOURCE_RISK",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPEX",
+          "CONSTRUCTION",
+          "EXECUTION_RISK"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_FAB_CONSTRUCTION_RESOURCE_CONSTRAINT",
+        "question_family_tags": [
+          "MEMORY_FAB_CONSTRUCTION_RESOURCE_CONSTRAINT",
+          "CAPEX_EXECUTION_RISK",
+          "CONSTRUCTION_LABOR",
+          "EQUIPMENT_SUPPLY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 복수 팹 건설의 인력·장비 수급 위험과 완화 계획",
+        "subject_id": "000660:MEMORY:FAB_CONSTRUCTION_RESOURCE_CONSTRAINT",
+        "unit": "qualitative execution risk and mitigation",
+        "value": "construction labor and equipment may tighten; cleanroom activation timing to be staggered as mitigation"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "이 자료는 연도별·분기별 실제 CapEx, 투자 후 생산능력 증가량, 영업현금흐름·FCF 금액, 확정된 외부 조달액·파트너·조건, 또는 HBM 세그먼트 매출·이익 기여를 제공하지 않는다. 따라서 숫자형 FORWARD_GUIDANCE나 SEGMENT_CONTRIBUTION gap은 직접 해소하지 않는다."
+    ]
+  },
+  "payload_hash": "6c193fde0c7b963c620d6a2b825196f1b10f70d00df72b502404470903d74e0c",
+  "production_score_authority": false,
+  "prompt_hash": "2953c7ed6a19e913256973289d9f5b6de7769748b9e63cdcca1275f38cbd3778",
+  "provenance": {
+    "agent_id": "hynix_current_leaves",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_current_leaves",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-561adffe749c92f8590cc506865d09d41d977083ad7ee86240cee20efdc073eb",
+  "response_id": "COLLABRESP-ba9d05165613b28066431f6ad791954f459e4510bdd93e254abdfecf84bbc2ab",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

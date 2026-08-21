@@ -1,0 +1,44 @@
+{
+  "output_schema_hash": "87d3c66f564a2179cc4a1c335203172b75ba4ad6a971f0dc4b406e1ae6e503bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "rationale": "같은 문서의 연결 계약자산 77,038백만원은 current canonical fact로 이미 exact quote와 함께 반영되어 반복하지 않았다. 나머지 매출채권·재고·차입금·설비투자 수치는 기존 fact와 중복되고, 기타 전사 항목은 현재 HBM·메모리 objective에 직접 귀속되지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+        "rationale": "별도재무제표 계약자산 110,705백만원은 현재 연결 계약자산 fact보다 범위가 좁은 전사 수치이고 HBM·DRAM 고객 계약에 귀속되지 않는다. 나머지 별도 재무·위험·투자 항목도 연결 기준 current facts와 겹치거나 현재 objective에 직접 영향을 주지 않아 추가 fact로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "두 문서의 계약자산 수치는 전사 연결·별도 잔액일 뿐 HBM·DRAM 고객 계약, 수주잔고, RPO 또는 구매의무를 입증하지 않는다."
+    ]
+  },
+  "payload_hash": "13141d124a7322180f0475d6dbb4308c25b980f0b2215d262ed06c7fad07fa2d",
+  "production_score_authority": false,
+  "prompt_hash": "9ee2e80e201cf3d8a71c94dc44c21d398f2f1523c0eaa866bcae4aca25a00284",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-49601e84ae0c4973552e0fabe1b1a4835d15097cd14c75ef6784b0f4fb76d0ca",
+  "response_id": "COLLABRESP-d66579f37865b16d3cdf33bd3810ff6df1f4b0e6f2bec0327fd78170a8792626",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

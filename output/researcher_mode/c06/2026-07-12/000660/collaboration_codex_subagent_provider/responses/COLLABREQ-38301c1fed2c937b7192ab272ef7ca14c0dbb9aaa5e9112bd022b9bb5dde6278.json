@@ -1,0 +1,36 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "Semantic retry attempt 2 reviewed all 37 executed literals, both preceding no-new-query outcomes, and the seven projected failure groups. No newly verified target-official document class, canonical document identity, or customer-official identity is present; another literal would only restate an executed earnings, filing, IR, customer-filing, broker-report, or supply-contract route.",
+      "The 35 SEARCH_PROVIDER_ERROR members require idempotent transport replay of their existing SGQUERY identities, not newly worded queries. Rephrasing a failed search would break lineage without creating a different evidence route, and provider failure cannot be converted into source absence.",
+      "The two valuation members marked alternate_route_required and the remaining snippet-only failures require full-fetch repair using their existing candidate or query identities. The prompt supplies no new verified landing page, direct file identity, or official domain path that would support a distinct bounded source-repair query, and snippets cannot be promoted to evidence.",
+      "FORWARD_GUIDANCE remains unresolved because no new issuer-issued numeric forward point or range is identified. SEGMENT_CONTRIBUTION remains unresolved because the issuer still reports a single operating segment and no new issuer table separates actual HBM or memory revenue, profit, margin, or cash flow.",
+      "DURABLE_VISIBILITY remains unresolved because no new issuer or customer document discloses committed period, volume or capacity together with binding price, cancellation, penalty, or prepayment terms. Broker rows discussing LTAs or HBM forecasts are metadata-only third-party estimates and cannot substitute for the issuer-only role.",
+      "The prior PEER_BAND reference is a structured-data verification matter, not a reason to open another source query. Until a genuinely new provider-backed official identity appears, the honest result is zero suggested queries with the source roles still unresolved."
+    ]
+  },
+  "payload_hash": "d225c3cab603094702e02193462c4e83570f9866cf8524ebc0be33b6270304bc",
+  "production_score_authority": false,
+  "prompt_hash": "c6c1f1b1d494f1258a00d79f55f55059512c6d7f716846fe6426a2d5562de464",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-38301c1fed2c937b7192ab272ef7ca14c0dbb9aaa5e9112bd022b9bb5dde6278",
+  "response_id": "COLLABRESP-121d4eb400357b489667dee117689e213fb3ed4a0f398af1518d5e095eab53ec",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

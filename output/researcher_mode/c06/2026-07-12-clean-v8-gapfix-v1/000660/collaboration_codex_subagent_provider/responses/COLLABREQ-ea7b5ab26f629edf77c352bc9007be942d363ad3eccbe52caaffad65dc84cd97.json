@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "656e30c5b0d86a58057dcd0ada669bc596a56cfea507f4daebe45c0130166390",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-6c5d12e67bb8385ceb25c9e6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party 기사·요약·calendar·generic homepage/portal로 requested original KIND_KRX 또는 broker full-source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d62ae67767a4705b6d273690",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party 기사·요약·calendar·generic homepage/portal로 requested original KIND_KRX 또는 broker full-source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-df401bb004796f403413b540",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "full broker PDF provenance는 맞지만 generic market/strategy 자료이고 000660 target objective의 직접 문서 identity가 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-44706e3b93cea5be706734a1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party 기사·요약·calendar·generic homepage/portal로 requested original KIND_KRX 또는 broker full-source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7ed964d828057bfc8c610033",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party 기사·요약·calendar·generic homepage/portal로 requested original KIND_KRX 또는 broker full-source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3a842145e3ccfefb313540c0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party 기사·요약·calendar·generic homepage/portal로 requested original KIND_KRX 또는 broker full-source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5ea16a9e2e34efea12eb9f0e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party 기사·요약·calendar·generic homepage/portal로 requested original KIND_KRX 또는 broker full-source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8a7a4a8f85b7195f15e5e6c4",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "full broker PDF provenance는 맞지만 generic market/strategy 자료이고 000660 target objective의 직접 문서 identity가 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-3a64e8a1a59eaf5874c423f5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party 기사·요약·calendar·generic homepage/portal로 requested original KIND_KRX 또는 broker full-source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-927124fb2ffe85864ba09c16",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.98,
+        "rationale": "KIND 공식 external disclosure의 2026-07-10 target-direct 유상증자/ADR 원문 route다. capital-allocation 구조를 full-fetch 검증할 수 있어 material이며 snippet 자체는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-396b56ede9e1881d839b9a9a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party 기사·요약·calendar·generic homepage/portal로 requested original KIND_KRX 또는 broker full-source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-529a2c87db16e54f33054cfb",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.92,
+        "rationale": "증권사 file-server의 2026-04-08 target-direct full PDF route로 000660 valuation 상향 근거를 원문 검증할 수 있어 material이다. snippet 숫자는 evidence로 사용하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P0 roster 12개 exact-once; target-direct KIND disclosure와 broker full PDF 2개를 material fetch route로 선정했다.",
+      "material 판정은 fetch route eligibility이며 snippet/metadata를 evidence나 source absence로 승격하지 않는다."
+    ]
+  },
+  "payload_hash": "b8d75f844d5f19c0065e7385a905e1ba432aa32077502c0ee352cd6ca0663281",
+  "production_score_authority": false,
+  "prompt_hash": "6436c15df7af8e2582446b1806f6038462f92096eed5d31f5b202dfd9050cfb2",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ea7b5ab26f629edf77c352bc9007be942d363ad3eccbe52caaffad65dc84cd97",
+  "response_id": "COLLABRESP-1ce8621ee7290aa22e3b9c6917851fa56131d686566bfe79b70cdd707320fe7f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

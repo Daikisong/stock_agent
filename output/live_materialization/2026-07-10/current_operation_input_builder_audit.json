@@ -1,0 +1,24 @@
+{
+  "as_of_date": "2026-07-10",
+  "atomic_decision_count": 3,
+  "baseline_lane_count": 10168,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "authorized_live_run_manifest_missing_exit": 0,
+    "materialized_manifest_schema_error": 0,
+    "materializer_evaluator_as_of_mismatch": 0,
+    "user_manual_manifest_required": 0
+  },
+  "deep_execution_count": 180,
+  "hard_acceptance_pass": true,
+  "production_runtime_ready": false,
+  "profile_id": "census_selective_deep_v1",
+  "profile_max_deep_candidates": 180,
+  "runtime_max_deep_candidates": 180,
+  "schema_version": "e2r_current_operation_input_builder_audit_v1",
+  "selected_target_count": 180,
+  "source_task_count": 9,
+  "test_mode": false,
+  "trigger_count": 446,
+  "universe_count": 2542
+}

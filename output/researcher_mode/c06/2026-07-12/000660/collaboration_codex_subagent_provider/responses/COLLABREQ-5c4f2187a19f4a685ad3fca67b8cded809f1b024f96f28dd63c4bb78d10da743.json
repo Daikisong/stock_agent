@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "861a9c664b67221591b6bfb8fb499c78a609f9e11f4b35e6d60b791d47048ec6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-2a338a8c60ce338695383ce2",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.9,
+        "rationale": "검증된 SK하이닉스 공식 도메인의 FY2025 경영실적 발표 원문으로, 2026년 HBM 공급·실적 가시성과 전환 설명을 확인할 수 있는 직접 fetch 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-3c72d689ebb1791965c161c3",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.05,
+        "rationale": "공식 1Q25 실적 발표이지만 1Q26 자료까지 나온 현재 시점에는 공급·수요 설명이 오래되어 최신 valuation_rerating 공백을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-55b5d71516f9aaec53c2f15e",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.68,
+        "rationale": "검증된 공식 2Q25 실적 발표로, 2026년 HBM 가시수요와 이에 맞춘 공급투자 설명이 있을 수 있어 현재 공급 지속성의 원천 확인 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-6569cc322007e5980e2bebd7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "외부 동영상 embed 주소만으로는 요청된 공시·발행사 실적 원천의 문서 성격을 확인할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-6d769995b57aeb472342e2ef",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.08,
+        "rationale": "공식 실적 페이지가 참조한 1Q26 인포그래픽 ZIP이지만 이미 확보된 본문을 보조하는 압축 자산으로, 새 durable visibility나 peer band를 제공할 가능성이 낮다."
+      },
+      {
+        "candidate_id": "SGCAND-7144bc5fa5999fe766bc6ae4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "공식 사이트의 지속가능성 페이지로 요청된 기업설명회 자료가 아니며 HBM 이익·FCF 목적과도 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8b87d239ace04b08ab5a581f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "별도 지속가능경영 사이트 랜딩으로 기업설명회·공시 원문이 아니고 현재 HBM 이익 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-a37f2d444e3c88aae77f606f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "공식 뉴스룸의 주주총회 기사이지만 요청된 실적 발표 원천이 아니며 현재 공급계약·가치평가 공백을 직접 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ac5bb9d097a58aa4043e40b1",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.06,
+        "rationale": "공식 실적 페이지가 참조한 1Q26 보도자료 DOCX이지만 이미 확보된 웹 본문의 다운로드 사본이어서 새 목적 사실을 기대하기 어렵다."
+      },
+      {
+        "candidate_id": "SGCAND-c0dab0b0e0e2df24733dfa48",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "공식 사이트의 지속가능성 하위 페이지로 기업설명회 자료가 아니며 HBM 이익 기여를 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c44479df9662c2421ab53e7d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "지속가능성 하위 페이지로 요청된 KIND·DART·발행사 프레젠테이션 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ec196f877cb15e39c60090b9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "지속가능성 하위 페이지로 HBM 매출·이익·FCF의 현재 경제 메커니즘과 관련이 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "material 후보도 full fetch 전에는 증거가 아니며, FY2025·2Q25 원문의 기준일과 중복 여부를 fetch 후 다시 확인해야 한다."
+    ]
+  },
+  "payload_hash": "ffa55d970a6454d9efecf2d425fec94cb9ba1bcfbe085413664a3697949485b9",
+  "production_score_authority": false,
+  "prompt_hash": "9788778192985b4fb39f2472d9515f1f9f0001ed008c9d736ff162522e532a80",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5c4f2187a19f4a685ad3fca67b8cded809f1b024f96f28dd63c4bb78d10da743",
+  "response_id": "COLLABRESP-be6b99cb79ef2dddeb2399c4aeb2c28816bd009d628b9e7e89656e496fc03368",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "Semantic retry attempt 3 reviewed all 37 executed literal queries, the preceding no-new-query lineage, and the current grouped failure ledger. No newly verified target-official document class, canonical document identity, or customer-official identity is supplied; another literal would only paraphrase an already executed earnings, filing, IR, customer, broker-report, or supply-contract route.",
+      "SEARCH_PROVIDER_ERROR and QUERY_PROVIDER_ERROR are transport failures, not source absence. They require idempotent replay of the existing request and SGQUERY identities rather than newly worded queries that would break lineage.",
+      "The alternate-route and snippet-only members require full-document fetch repair using their existing candidate or query identities. The prompt supplies no new verified landing page, direct file identity, or official domain path that would constitute a distinct bounded source-repair query, and snippets cannot be promoted to evidence.",
+      "FORWARD_GUIDANCE remains unresolved because no new issuer-issued numeric forward point or range is identified. SEGMENT_CONTRIBUTION remains unresolved because no new issuer table separates actual HBM or memory revenue, profit, margin, or cash flow from company-wide figures.",
+      "DURABLE_VISIBILITY remains unresolved because no new issuer or customer document discloses committed period, volume or capacity together with binding price, cancellation, penalty, or prepayment terms. Broker estimates and supply discussions cannot substitute for this issuer-only role.",
+      "PEER_BAND remains a structured verification matter rather than grounds for another literal source query. Until a genuinely new provider-backed official identity appears, zero suggested queries is the honest outcome."
+    ]
+  },
+  "payload_hash": "fec2fdffcafdc0ca47655982488c136a660531989b41b91c995da438dbc0eb71",
+  "production_score_authority": false,
+  "prompt_hash": "0c8613c0077652500c8bbaedf6f1df082f83a0d07fdaff8a641fa49521d7088b",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4131ec912189b3f0caa1fb92f09428299f30d16e61299d0aada404fd04168c16",
+  "response_id": "COLLABRESP-8e616988e35bd0772dbafef0a6f7ecd55c86c6ae9418b38ffae4da551b6c4694",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "rationale": "Coverage round1에서 supplied literal chunk0 219,972자를 처음부터 끝까지 독립 재독하고 embedded prior26과 exact·semantic dedup했다. 누락된 target-direct atom은 BUY와 목표주가 850,000원을 결합한 broker valuation view 1개였다. 다른 target mentions는 prior HBM/수요/quant/capacity 사실의 반복이거나, target 비귀속 산업 차트·NAND·VEU·타사/CXMT 배경이어서 제외했다. 이 가격 의견을 issuer actual·guidance, signed HBM contract 또는 HBM-only earnings로 승격하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권 포럼 자료가 제시한 SK하이닉스 BUY 의견과 주당 목표가격이다. 하나의 브로커 valuation view이며 issuer actual·guidance, signed HBM 계약, HBM 물량·가격 또는 HBM-only 이익 전망이 아니다.",
+        "exact_quote": "SK하이닉스(000660) IBUY I TP 850,000원",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "2025-11-19 하나증권 full broker report의 target-direct valuation view로 valuation_rerating·market_mispricing·information_confidence에 보조적으로 관련된다. 목표주가만으로 HBM earnings bridge나 계약을 입증하지 않으므로 비핵심으로 제한한다.",
+        "mechanism_scope_id": "000660:HANA_FORUM_20251119:BUY_TARGET_PRICE_850K:MECHANISM",
+        "normalized_object": "Hana 2025-11-19 포럼 자료는 SK하이닉스에 BUY와 목표주가 850,000원을 제시했다",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "broker view published 2025-11-19",
+        "predicate": "하나증권 포럼 자료는 SK하이닉스를 BUY, 목표주가 850,000원으로 제시했다",
+        "predicate_family": "BROKER_TARGET_VALUATION_VIEW",
+        "primitive_tags": [
+          "BROKER_BUY_RATING",
+          "PUBLIC_BROKER_TARGET_PRICE",
+          "VALUATION_VIEW"
+        ],
+        "product_family": "Issuer-wide memory valuation view",
+        "question_family_id": "broker_target_valuation_view",
+        "question_family_tags": [
+          "BROKER_BUY_RATING",
+          "BROKER_TARGET_PRICE",
+          "TARGET_PRICE_WITHOUT_HBM_ONLY_ATTRIBUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 브로커 가치평가 의견",
+        "subject_id": "000660:HANA_FORUM_20251119:BUY_TARGET_PRICE_850K",
+        "unit": "KRW/share",
+        "value": 850000
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "04fc06b18e704bf7f3d77232e30981bf45cd70131e4150e5145aa30520075b38",
+  "production_score_authority": false,
+  "prompt_hash": "584433b5690597f50fcbb52780ed86c01a11799ac77787d7c9d7766050fb0a1e",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-abc7a6b89cd27fcd6f30e542bedf27d06fc11bc11aa07fb9b40b4bfbb053a5b0",
+  "response_id": "COLLABRESP-31f711887062e40dade42cd00c1a09cda87b44f50d4c76b6e963889733f09b47",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

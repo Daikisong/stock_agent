@@ -1,0 +1,137 @@
+{
+  "output_schema_hash": "520ee7bfcd42cd7960b33e317b11d9314675fd3874644601de57bb856c07c8fb",
+  "payload": {
+    "confidence": 0.76,
+    "counter_case": "M15X 증산 여력과 고객 집중, HBM 전용 CAPA·ASP·allocation 미공개가 영구 병목 주장에 반대된다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-054f760d026b470c39e27df1",
+      "ORDTRANSFER-5aadf9d29303975e658a6c23",
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-81a57e040e267483ef68f5f2",
+      "ORDTRANSFER-9205e8ab347aff38184b148a",
+      "ORDTRANSFER-bc978faa90a05601db10cc5f"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200"
+    ],
+    "positive_case": "현재 설비 가동과 고객 요청 HBM4 양산이 수요와 공급제약의 실제 연결을 보여준다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 25,
+        "reason": "계약 맥락은 HBM 전용 병목이나 가격을 직접 증명하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 34,
+        "reason": "고객 수요 강도와 집중 위험을 함께 보여준다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 95,
+        "reason": "현재 100% 가동률을 공급제약 positive로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 154,
+        "reason": "중립적 공급 맥락은 더 직접적인 가동률 evidence보다 후순위다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 390,
+        "reason": "가격 counter는 M15X 증산 여력보다 직접성이 낮다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 399,
+        "reason": "일반 메모리 counter를 최소 핵심 roster에서 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 531,
+        "reason": "추가 positive는 가동률과 고객 요청 양산 근거에 중복된다."
+      }
+    ],
+    "proposed_score_lower": 11.0,
+    "proposed_score_mid": 14.0,
+    "proposed_score_upper": 16.0,
+    "research_complete": true,
+    "researcher_summary": "100% 가동과 고객 요청 HBM4 양산은 병목 경제성을 지지하지만 추가 증산 여력과 계약가격 미확인이 구조적 scarcity 상단을 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "고객 집중은 수요 강도를 보여주면서 단일 고객 의존 위험을 높인다.",
+        "fact_row_index": 34,
+        "source_economic_mechanism": "고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.",
+        "source_value_json": "\"7,780,590 and 6,536,458 vs 4,786,233\""
+      },
+      {
+        "component_interpretation": "전사 메모리 100% 가동률은 현재 공급 제약을 지지하지만 HBM 전용 sold-out을 증명하지 않는다.",
+        "fact_row_index": 95,
+        "source_economic_mechanism": "2026년 1분기 반도체 생산실적은 11,465,147백만원이며 생산설비 평균가동률은 100%였다. 이는 메모리 전반의 현재 설비 활용도를 보여주지만 HBM 전용 가동률이나 장기 예약 물량을 뜻하지 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "OPERATED_MEMORY_PRODUCTION_FACILITIES_AT_FULL_UTILIZATION",
+        "source_value_json": "\"production output KRW 11,465,147 million; average utilization 100%\""
+      },
+      {
+        "component_interpretation": "추가 증산 여력은 병목이 영구 고정됐다는 주장에 대한 counter다.",
+        "fact_row_index": 672,
+        "source_economic_mechanism": "The broker sees additional M15X investment and capacity headroom, a conditional supply-upside counter to a fixed-capacity scarcity thesis rather than an announced issuer plan.",
+        "source_period_json": "\"FY2026 outlook\"",
+        "source_predicate": "broker identifies conditional M15X investment and capacity upside",
+        "source_value_json": "\"추가 투자 및 증산 여력\""
+      },
+      {
+        "component_interpretation": "고객 요청 HBM4 양산은 수요와 생산 실행을 연결하지만 가격·물량·기간 보호를 증명하지 않는다.",
+        "fact_row_index": 769,
+        "source_economic_mechanism": "The issuer reports that HBM4 is currently in mass production for quantities requested by customers, directly linking customer demand to production execution while disclosing no named customer, signed purchase contract, numeric volume, price, duration, or allocation protection.",
+        "source_period_json": "\"current as of 2026-01-28\"",
+        "source_predicate": "is mass-producing customer-requested quantities",
+        "source_value_json": "\"customer-requested quantities currently in mass production\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      34,
+      95,
+      672,
+      769
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "HBM 전용 CAPA와 sold-out 기간이 정량 공개되지 않았다",
+      "실현 HBM ASP와 계약별 가격보호가 확인되지 않았다"
+    ],
+    "why_not_higher": "HBM 전용 CAPA 잠김, realized ASP, 고객별 allocation 보호가 확인되지 않았다.",
+    "why_not_lower": "100% 가동과 고객 요청 HBM4 양산이 공식 자료에서 확인된다."
+  },
+  "payload_hash": "6d9fd1152a5c47a4c0f63c7549b8b81abc30a5c70aa4767781e774c4d2b6a920",
+  "production_score_authority": false,
+  "prompt_hash": "cf3b365a66212c4c401198f560bd04173ece8f95d9532335d7bbae7bc654d706",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-93407328d918e50ea8401ab1617b1050f2824340f2f520a78c0e4285d1cbbf8c",
+  "response_id": "COLLABRESP-3eb0882d798767fc749ee0181e6230bfc0898910d8df3c91b7036f8641bc32ac",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

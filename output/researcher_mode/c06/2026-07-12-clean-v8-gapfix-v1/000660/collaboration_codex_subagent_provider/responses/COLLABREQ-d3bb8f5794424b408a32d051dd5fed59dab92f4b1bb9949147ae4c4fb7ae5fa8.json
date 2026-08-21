@@ -1,0 +1,76 @@
+{
+  "output_schema_hash": "11e0af1d325b6feeec76a822677bca446411bbedaee2b660fb899cfa19c6c8fb",
+  "payload": {
+    "challenged_fact_row_indices": [
+      12,
+      34,
+      95,
+      122,
+      313,
+      359,
+      392,
+      398,
+      647,
+      653,
+      670,
+      672,
+      689,
+      759,
+      763,
+      769,
+      828,
+      850
+    ],
+    "confidence": 0.84,
+    "recommended_research_directions": [],
+    "resolved_challenges": [
+      "연결 actual 이익·영업현금흐름과 HBM 제품·매출 실행은 source-backed fact로 분리됐고 forward 추정과 섞이지 않았다.",
+      "고객 집중, CAPEX, 운전자본, 교환사채 희석, 추가 증산 여력이 각 positive thesis의 counter로 명시됐다.",
+      "HBM4 고객 요청 양산과 ASIC 공동개발은 상용화 경로로만 사용됐으며 signed 계약의 존재나 조건으로 확대되지 않았다.",
+      "적정 감사의견은 재무 actual 신뢰도를 지지하지만 분기 공시 범위 제한을 상쇄하지 않는 것으로 처리됐다."
+    ],
+    "review_complete": true,
+    "reviewed_component_ids": [
+      "eps_fcf_explosion",
+      "earnings_visibility",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation",
+      "information_confidence"
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF",
+      "KIND_KRX",
+      "KRX_PRICE_MARKET_CAP"
+    ],
+    "unresolved_challenges": [
+      "HBM-only 매출·마진·FCF bridge는 전사 actual과 완전히 분리되지 않는다.",
+      "고객별 signed 물량·가격·기간·취소보호·선수금·backlog/RPO는 독립 확인되지 않았다.",
+      "HBM 전용 CAPA 잠김·sold-out 기간·realized ASP는 정량 확인되지 않았다."
+    ]
+  },
+  "payload_hash": "102261822e18c7f4929e82950265b71323d2e2326c8115f1e5b88708c7c0a51c",
+  "production_score_authority": false,
+  "prompt_hash": "4faf89ac744dcd8a8147b30bef2ba65994f1d998fff27a5a036c6499c0787752",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d3bb8f5794424b408a32d051dd5fed59dab92f4b1bb9949147ae4c4fb7ae5fa8",
+  "response_id": "COLLABRESP-f9dc228703b4edf6862c0b08ff43a90f16d6f6c79fe479577963976f8c1a309c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

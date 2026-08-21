@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "8392ff7273630732db1ccbd70c5a62a2a936adeb7927340fb423017d2ade23d8",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9529917baecfb8a6889872bc",
+        "rationale": "2025년 3분기 컨퍼런스콜 전문을 current bottleneck_pricing objective 기준으로 전수 재검토했다. DRAM ASP 상승, HBM 계획물량의 고객수요 확보, 공급 제약과 고객수요 초과 등 직접 관련 경제 의미는 current canonical fact graph에 이미 source-backed로 존재하므로 중복 fact를 추가하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "1a28f25ceefadbf3a0272d931ed39932428c5f1092aed6dd00e50b35d8b64f31",
+  "production_score_authority": false,
+  "prompt_hash": "2a88b25fb4d5c8c771d598c3c3dd9b3310429a3d277fb0deec0fe97726fe2a1d",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8409a4c1a9f05795a034b0eda252529b7102982f4bc527d6885d78da5acc2754",
+  "response_id": "COLLABRESP-8fdfea26935df0b548a7a591e7bc4e9f92e40e4523d450d4927c7d56a3fe4544",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

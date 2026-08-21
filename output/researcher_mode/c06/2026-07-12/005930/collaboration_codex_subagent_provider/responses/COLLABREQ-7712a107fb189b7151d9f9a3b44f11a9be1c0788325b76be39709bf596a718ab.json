@@ -1,0 +1,203 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-320c387fb661f417457b0eb1",
+        "rationale": "문서 전체를 검토해 현재 eps_fcf_explosion objective에 직접 연결되는 HBM4 매출 전환·상대 수익성·DS 이익 기여·메모리 판매/가격 실적 전환 사실 4건을 exact quote로 추출했으며, DX·타사·일반 회사 전망 등 objective 밖 내용은 배제했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-320c387fb661f417457b0eb1",
+        "economic_mechanism": "HBM4 양산 출하가 약 130일 안에 누적 매출 10억달러로 전환돼 신제품의 실적 기여 속도를 보여준다.",
+        "exact_quote": "삼성전자는 HBM4를 첫 양산 출하한 이후 130여일 만에 매출 10억 달러를 돌파한 바 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 HBM4의 제품 출시가 실제 매출로 빠르게 전환된 규모와 속도를 직접 제시해 eps_fcf_explosion objective를 진전시킨다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:REVENUE_CONVERSION",
+        "normalized_object": "HBM4 첫 양산 출하 후 누적 매출",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "첫 양산 출하 후 약 130일",
+        "predicate": "HBM4 첫 양산 출하 후 약 130일 만에 누적 매출 10억달러를 돌파했다",
+        "predicate_family": "PRODUCT_REVENUE_CONVERSION",
+        "primitive_tags": [
+          "hbm4_commercialization",
+          "revenue_conversion"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "hbm4_revenue_conversion",
+        "question_family_tags": [
+          "hbm4_revenue_conversion"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 매출 전환",
+        "subject_id": "005930:MEMORY:HBM4:REVENUE_CONVERSION",
+        "unit": "USD",
+        "value": 1000000000
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-320c387fb661f417457b0eb1",
+        "economic_mechanism": "전작 대비 높은 HBM4 수익성이 HBM 판매 확대의 이익 전환 품질을 높이는 제품 믹스 효과를 제공한다.",
+        "exact_quote": "HBM4는 전작보다 수익성이 월등히 높은 것으로 알려졌다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4 매출 증가가 단순 물량 증가가 아니라 더 높은 제품 수익성으로 이어질 수 있다는 직접적인 이익 메커니즘이다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:REVENUE_CONVERSION",
+        "normalized_object": "HBM4 상대 수익성",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-07-07 현재",
+        "predicate": "HBM4의 수익성이 전작보다 월등히 높은 것으로 알려졌다",
+        "predicate_family": "PRODUCT_PROFITABILITY_PROFILE",
+        "primitive_tags": [
+          "product_mix",
+          "profitability"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "hbm4_profitability_profile",
+        "question_family_tags": [
+          "hbm4_profitability_profile"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 상대 수익성",
+        "subject_id": "005930:MEMORY:HBM4:PROFITABILITY",
+        "unit": "relative profitability",
+        "value": "전작 대비 월등히 높은 수익성"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-320c387fb661f417457b0eb1",
+        "economic_mechanism": "사업부문별 잠정실적이 공개되지 않은 상태에서 DS부문이 전사 이익 대부분을 낸 것으로 추정돼 메모리 업황의 전사 이익 전환을 뒷받침하지만 추정 불확실성이 남는다.",
+        "exact_quote": "이날 잠정 실적은 사업부문별로는 공개되지 않았지만, 반도체 사업을 하는 디바이스솔루션(DS)부문에서 전사 이익의 대부분이 나온 것으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 분기 이익 급증의 사업부 귀속을 메모리 중심 DS부문으로 좁혀 eps_fcf_explosion의 실제 이익 원천을 뒷받침하며, 동시에 이는 회사 공시가 아닌 추정임을 그대로 보존한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION",
+        "normalized_object": "DS부문 전사 이익 기여",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2 잠정실적",
+        "predicate": "2026년 2분기 전사 이익 대부분이 DS부문에서 나온 것으로 추정됐다",
+        "predicate_family": "SEGMENT_PROFIT_CONTRIBUTION",
+        "primitive_tags": [
+          "segment_profit",
+          "earnings_attribution"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_profit_contribution",
+        "question_family_tags": [
+          "memory_profit_contribution"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DS부문 이익 기여",
+        "subject_id": "005930:MEMORY:DS_PROFIT_CONTRIBUTION",
+        "unit": "qualitative share estimate",
+        "value": "전사 이익의 대부분(추정)"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.88,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-320c387fb661f417457b0eb1",
+        "economic_mechanism": "AI 고부가 메모리 판매 확대와 범용 메모리 가격 급등이 함께 작용해 메모리 매출과 영업이익의 기록적 실적으로 전환됐다는 복합 이익 메커니즘이다.",
+        "exact_quote": "고대역폭메모리(HBM) 등 인공지능(AI) 고부가가치 메모리 판매를 확대했을 뿐만 아니라, 범용 메모리의 가격이 급등하면서 매출과 영업이익 모두 기록적인 실적을 낸 것으로 분석된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 분기 실적 강도의 두 직접 동인인 고부가 제품 판매량과 범용 메모리 가격을 하나의 매출·이익 전환 메커니즘으로 결박한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION",
+        "normalized_object": "메모리 판매·가격의 매출 및 영업이익 전환",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2",
+        "predicate": "고부가 메모리 판매 확대와 범용 메모리 가격 급등이 기록적 매출과 영업이익의 원인으로 분석됐다",
+        "predicate_family": "MEMORY_SALES_PRICE_EARNINGS_BRIDGE",
+        "primitive_tags": [
+          "high_value_memory_sales",
+          "memory_pricing",
+          "earnings_conversion"
+        ],
+        "product_family": "HBM 및 범용 메모리",
+        "question_family_id": "memory_sales_price_earnings_bridge",
+        "question_family_tags": [
+          "memory_sales_price_earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 판매·가격의 실적 전환",
+        "subject_id": "005930:MEMORY:SALES_PRICE_EARNINGS_BRIDGE",
+        "unit": "earnings driver combination",
+        "value": "AI 고부가 메모리 판매 확대 및 범용 메모리 가격 급등"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "7907a4a533d36bd733439aa92b5bed4009fec1a48229030aec71149dee5f8059",
+  "production_score_authority": false,
+  "prompt_hash": "c0e7f5038352c3dac35c0405bdffc68c6677f32e27d7a1fc35cb8cca328455e9",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7712a107fb189b7151d9f9a3b44f11a9be1c0788325b76be39709bf596a718ab",
+  "response_id": "COLLABRESP-b6cad776d144a4152661489c4ff2d6da4e7cdad0ea3d478e2f2958eb7247f7c0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

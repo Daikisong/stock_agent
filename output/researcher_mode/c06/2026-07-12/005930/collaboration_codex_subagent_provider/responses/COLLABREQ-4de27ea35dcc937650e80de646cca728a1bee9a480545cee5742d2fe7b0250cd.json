@@ -1,0 +1,155 @@
+{
+  "output_schema_hash": "50e9b24076957d0d9f2938f114392431d2a42f70ff2d2c73e20f5dd230627aa5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5627c33fb7c33d1f2c22ba68",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "KIND_KRX 투자설명서이지만 2024년 구주주·일반공모 청약 일정에 관한 문서입니다. 삼성전자 issuer filing이나 HBM4·메모리 신규시설투자 결정과 대상·문서 유형이 달라 full fetch가 필요한 후보로 볼 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-aa8d6a8b332100e978e18e38",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`3월 4주 주요 제조업 전망`은 TRUSTED_BUSINESS_MEDIA 경로의 후보로, 요청된 OPENDART·KIND_KRX 삼성전자 원 공시가 아닙니다. snippet에 삼성전자·HBM·투자 표현이 있더라도 제3자 기사·블로그·다른 문서 family의 요약이므로 HBM4·메모리 신규시설투자 직접성과 issuer provenance를 충족하지 못합니다. snippet은 evidence가 아니며 owner mismatch가 명확해 이 요청의 full-fetch handoff 후보로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-ef7acde97ec5a7e70e06807c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`(공개컨콜) [스코프노트] 삼성전자 : 4Q25 사상 최대 실적, HBM 중심 메모리 실적 ....`은 GENERAL_WEB_DISCOVERY 경로의 후보로, 요청된 OPENDART·KIND_KRX 삼성전자 원 공시가 아닙니다. snippet에 삼성전자·HBM·투자 표현이 있더라도 제3자 기사·블로그·다른 문서 family의 요약이므로 HBM4·메모리 신규시설투자 직접성과 issuer provenance를 충족하지 못합니다. snippet은 evidence가 아니며 owner mismatch가 명확해 이 요청의 full-fetch handoff 후보로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-8187dce32eda8a3e04d2b5c9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '맑고 화창' 네패스아크·주성엔지니어링·지앤비...`은 TRUSTED_BUSINESS_MEDIA 경로의 후보로, 요청된 OPENDART·KIND_KRX 삼성전자 원 공시가 아닙니다. snippet에 삼성전자·HBM·투자 표현이 있더라도 제3자 기사·블로그·다른 문서 family의 요약이므로 HBM4·메모리 신규시설투자 직접성과 issuer provenance를 충족하지 못합니다. snippet은 evidence가 아니며 owner mismatch가 명확해 이 요청의 full-fetch handoff 후보로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-c94ad4e9ca11f645a11f7a26",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`[스코프노트] 삼성전자 : AI 수요 견조 속 메모리·SSD 수급 타이트… 2026년 선단....`은 GENERAL_WEB_DISCOVERY 경로의 후보로, 요청된 OPENDART·KIND_KRX 삼성전자 원 공시가 아닙니다. snippet에 삼성전자·HBM·투자 표현이 있더라도 제3자 기사·블로그·다른 문서 family의 요약이므로 HBM4·메모리 신규시설투자 직접성과 issuer provenance를 충족하지 못합니다. snippet은 evidence가 아니며 owner mismatch가 명확해 이 요청의 full-fetch handoff 후보로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-32e07efcfab511760db761b1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`SK하이닉스, 청주 낸드팹 증설 검토`은 TRUSTED_BUSINESS_MEDIA 경로의 후보로, 요청된 OPENDART·KIND_KRX 삼성전자 원 공시가 아닙니다. snippet에 삼성전자·HBM·투자 표현이 있더라도 제3자 기사·블로그·다른 문서 family의 요약이므로 HBM4·메모리 신규시설투자 직접성과 issuer provenance를 충족하지 못합니다. snippet은 evidence가 아니며 owner mismatch가 명확해 이 요청의 full-fetch handoff 후보로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-a2360e4bfc2202f9ad7feb63",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`삼성전자 2025년 3분기 실적발표 컨퍼런스콜 전문`은 TRUSTED_BUSINESS_MEDIA 경로의 후보로, 요청된 OPENDART·KIND_KRX 삼성전자 원 공시가 아닙니다. snippet에 삼성전자·HBM·투자 표현이 있더라도 제3자 기사·블로그·다른 문서 family의 요약이므로 HBM4·메모리 신규시설투자 직접성과 issuer provenance를 충족하지 못합니다. snippet은 evidence가 아니며 owner mismatch가 명확해 이 요청의 full-fetch handoff 후보로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-db264bcb8522e75dd375b243",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`삼성전자, 110조 투자 AI반도체 시대 주도권 잡는다`은 TRUSTED_BUSINESS_MEDIA 경로의 후보로, 요청된 OPENDART·KIND_KRX 삼성전자 원 공시가 아닙니다. snippet에 삼성전자·HBM·투자 표현이 있더라도 제3자 기사·블로그·다른 문서 family의 요약이므로 HBM4·메모리 신규시설투자 직접성과 issuer provenance를 충족하지 못합니다. snippet은 evidence가 아니며 owner mismatch가 명확해 이 요청의 full-fetch handoff 후보로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-0c8598e417727909b8c4b2ca",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`삼성전자 2026년 2분기 실적발표 컨퍼런스콜 전문`은 TRUSTED_BUSINESS_MEDIA 경로의 후보로, 요청된 OPENDART·KIND_KRX 삼성전자 원 공시가 아닙니다. snippet에 삼성전자·HBM·투자 표현이 있더라도 제3자 기사·블로그·다른 문서 family의 요약이므로 HBM4·메모리 신규시설투자 직접성과 issuer provenance를 충족하지 못합니다. snippet은 evidence가 아니며 owner mismatch가 명확해 이 요청의 full-fetch handoff 후보로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-d97a4707949e4947d7ace359",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`삼성 파운드리 - 나무위키`은 GENERAL_WEB_DISCOVERY 경로의 후보로, 요청된 OPENDART·KIND_KRX 삼성전자 원 공시가 아닙니다. snippet에 삼성전자·HBM·투자 표현이 있더라도 제3자 기사·블로그·다른 문서 family의 요약이므로 HBM4·메모리 신규시설투자 직접성과 issuer provenance를 충족하지 못합니다. snippet은 evidence가 아니며 owner mismatch가 명확해 이 요청의 full-fetch handoff 후보로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e9a99faa1964ce68460bc603",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '미소천사' 레이저쎌·HPSP·그린리소스·신성이엔...`은 TRUSTED_BUSINESS_MEDIA 경로의 후보로, 요청된 OPENDART·KIND_KRX 삼성전자 원 공시가 아닙니다. snippet에 삼성전자·HBM·투자 표현이 있더라도 제3자 기사·블로그·다른 문서 family의 요약이므로 HBM4·메모리 신규시설투자 직접성과 issuer provenance를 충족하지 못합니다. snippet은 evidence가 아니며 owner mismatch가 명확해 이 요청의 full-fetch handoff 후보로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-db6aa068a1de0cebc1b735b3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`[현장] \"삼성 이즈 백\" 환호와 기대 가득했던 삼성전자 주주총회`은 TRUSTED_BUSINESS_MEDIA 경로의 후보로, 요청된 OPENDART·KIND_KRX 삼성전자 원 공시가 아닙니다. snippet에 삼성전자·HBM·투자 표현이 있더라도 제3자 기사·블로그·다른 문서 family의 요약이므로 HBM4·메모리 신규시설투자 직접성과 issuer provenance를 충족하지 못합니다. snippet은 evidence가 아니며 owner mismatch가 명확해 이 요청의 full-fetch handoff 후보로 선택하지 않습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "epoch87 partition 2의 current 후보 12건을 exact-once로 분류했습니다.",
+      "이 partition에는 OPENDART·KIND_KRX 삼성전자 원 공시이면서 HBM4·메모리 신규시설투자를 직접 확인하기 위해 full fetch할 후보가 없습니다.",
+      "ranking_complete는 supplied partition roster 분류 완료만 뜻하며 source gap이나 전체 research 완료를 뜻하지 않습니다.",
+      "검색 snippet은 모두 discovery metadata로만 유지하고 evidence로 승격하지 않았습니다."
+    ]
+  },
+  "payload_hash": "be7456198c46287460f17a4220d4bd53c296010895efeab1dcd3149604b2606f",
+  "production_score_authority": false,
+  "prompt_hash": "92791c7b8e01e1b4d69d40339c95faf81b93e1d044444519849e6a0a6daab998",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4de27ea35dcc937650e80de646cca728a1bee9a480545cee5742d2fe7b0250cd",
+  "response_id": "COLLABRESP-0af5fd56e7addb464d3f7bf6c66b1bbd26d9c960648415d394f1b20223de143e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

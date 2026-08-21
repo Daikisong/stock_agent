@@ -1,0 +1,325 @@
+DS Tech 이수림 – Telegram
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림입니다.
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림입니다.
+DS Tech 이수림
+@dssemicon
+4.08K
+subscribers
+489
+photos
+140
+files
+1.03K
+links
+DS투자증권 반도체 Analyst 이수림입니다.
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+DS Tech 이수림
+4.08K subscribers
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+Micron FY 1Q25 실적발표 주요 Comment
+◆ HBM 관련 Comment
+- 당분기 HBM 매출 전분기 대비 2배 이상 증가
+- 당분기 HBM의 GPM은 DRAM과 전사 마진을 초과
+- HBM 고객 확대 : 이번 달 2번째 고객에게 대량 출하 시작했으며 CQ1에 3번째 고객에게 대량 출하 시작할 것
+- HBM TAM은 25년 300억 달러 초과, 28년에는 24년의 160억 달러 대비 4배 증가, 30년에는 1,000억 달러 초과 전망
+- HBM4 CY 26년 양산 예상
+◆ DRAM 관련 Comment
+- 선단 DRAM 공급 여전히 타이트한 상황
+- CY 25년 1감마로 EUV 이용하여 램프업 예정
+- FY 25년 DRAM 전체 매출 수십억 달러 전망
+◆ 수요 및 공급 전망
+- DRAM 수요 24년 +high-teens%, 25년 +mid-teens% 증가 전망
+- DRAM 공급 25년 수요와 비슷하게 증가 전망하나 선단 공정의 수급은 여전히 타이트할 것
+- NAND 수요 24년과 25년 모두 +low-double% 증가 전망
+- NAND 공급은 수요 증가 전망의 감소에 맞게 밸런싱 필요
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+Telegram
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림입니다.
+689
+views
+edited
+21:59
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+Micron FY 1Q25 실적발표 주요 QnA
+Q. 5월 분기 DRAM과 NAND 모두에서 계절적 또는 주기적 상승이 있을 것이라는 확신의 근거
+전방 시장의 재고 조정과 CQ1에 존재하는 전형적인 계절적 요인에 기인
+소비자 시장에서 고객 재고가 봄에 개선될 것으로 예상
+재고를 구축했기 때문에 판매량보다 구매량이 적고, CQ4에 재고가 개선된 것을 확인했으며, CQ1에 재고가 더 개선될 것으로 예상
+데이터 센터 구축이 진행되고 있는 상황에서 AR 수요 증가에 힘입어 데이터 센터 스토리지 수요가 하반기에도 계속 증가할 것으로 예상
+Q. FY 25년 하반기 매출 전망
+소비자 중심 시장에서의 재고 개선, 데이터 센터, SSD, 수요 회복, 그리고 HBM의 지속적인 모멘텀이 있을 것
+올해 하반기에는 HBM 점유율이 DRAM 점유율과 일치하도록 하는 것을 목표
+AI 스마트폰, AI PC의 보급률 높아질 것이며, DRAM 콘텐츠도 증가할 것
+Q. HBM TAM 증가 요인
+고객들과의 최근 추정치와 AI 데이터 센터와 관련된 모든 구축 및 엄청난 기회 바탕
+HBM은 2025년에도 여전히 공급이 부족
+당분기 계획보다 더 많은 HBM을 제공했고 수율도 계획보다 앞서는 중
+Q. 차분기 매출 감소에도 불구 GPM은 1%p 하락 전망인데 HBM 호재로 인한 건지?
+전체 사업의 믹스 측면에서 DRAM 매출이 증가했고, DRAM 제품 믹스 측면에서도 긍정적인 효과
+NAND 시장 상황이 개선되기 시작하려면 차분기에 상당한 시간이 걸리면서 총마진에 부정적 효과
+Q. 장기적인 HBM 시장에서의 점유율 전망과 당사 HBM은 가격 우선인지 공급 우선인지?
+HBM 고객 확대해가고 있으며 25년 하반기 DRAM 점유율과 동일한 점유율 달성 목표
+이는 상당한 성능과 와트당 성능 이점을 가진 강력한 제품을 기반으로 구축된 것
+그것은 당연히 시장에서 다른 제품에 비해 프리미엄 가격을 책정하는 데 도움이 됨
+Q. HBM3e 12단, HBM4 등 세대 거듭할수록 다이 크기 비율 증가 등을 감안할 때 이익률 부정적 영향 가능성?
+HBM3e의 거래비는 3, HBM4의 거래비는 그보다 높을 것이라 언급했었음
+HBM의 가치는 계속해서 증가
+전체적으로 HBM의 가치는 8에서 12로, 그리고 나중에 HBM4로, 그리고 미래에는 HBM4E를 통해 커스터마이징 옵션을 추가할 수 있게 됨에 따라 계속해서 성장할 것
+Q. DRAM 시장 내년 공급과 수요 같아지고 재고 과잉이 오면 시장은 어떻게 될 지?
+선단 공정은 수급 타이트한 상황이며 이는 HBM 뿐 아니라 LP5, DDR5도 같은 상황
+HBM 수요 증가하면서 비HBM 부담 커지고 선단 공정 공급에 대한 부담 더 커질 것
+따라서 선단 공정의 경우 여전히 수급 타이트하면서 호의적인 환경 전망
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+Telegram
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림입니다.
+❤
+2
+👍
+1
+1.88K
+views
+edited
+22:55
+DS Tech 이수림
+https://m.yna.co.kr/view/AKR20241219171200009
+연합뉴스
+[속보] "美, SK하이닉스와 6천600억원 규모 보조금 최종계약"<블룸버그> | 연합뉴스
+(
+255
+views
+12:00
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+12월 1~20일 반도체 수출액 잠정치
+DRAM 12.9억달러
+(+7% MoM, +13% QoQ, +45% YoY)
+DRAM 모듈 12.6억달러
+(+113% MoM, +85% QoQ, +55% YoY)
+NAND 2.7억달러
+(-11% MoM, -26% QoQ, -34% YoY)
+MCP 19.8억달러
+(-6% MoM, +7% QoQ, +54% YoY)
+SSD 5.6억달러
+(+8% MoM, +25% QoQ, +132% YoY)
+(각 증감률은 모두 1~20일 기준)
+(수출단가의 경우 당월분만 1~20일 기준)
+277
+views
+01:05
+DS Tech 이수림
+https://news.koreadaily.com/2024/12/20/society/international/20241220124335425.html
+Koreadaily - 미주중앙일보
+美, 삼성전자 보조금 최종 결정…26% 줄어든 47.5억 달러 지급
+미국 정부가 미국 텍사스주 테일러시에 대규모 반도체 생산시설을 짓고 있는 삼성전자에 47억4500만 달러(약 6조9000억원)의 보조금을 지급하기로 최종 결정했다. 확정된 보조금 ...
+299
+views
+01:06
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+12월 반도체 수출액 잠정치
+DRAM 21.0억달러
+(+15% MoM, +11% QoQ, +44% YoY)
+DRAM 모듈 23.6억달러
+(+55% MoM, +31% QoQ, +41% YoY)
+NAND 6.1억달러
+(+28% MoM, -2% QoQ, -2% YoY)
+MCP 43.3억달러
+(+21% MoM, +14% QoQ, +72% YoY)
+SSD 12.5억달러
+(+9% MoM, +1% QoQ, +161% YoY)
+247
+views
+01:26
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+01/02 테크 주요 뉴스
+◆ 트렌드포스, 올해 1분기 DRAM 가격 8~13%, NAND 가격 10~15% 하락 예상
+HBM3e는 2025년에도 타이트한 공급이 유지 전망
+HBM 외에 DDR5·기업용 SSD 등 서버용 제품의 가격 하락은 이르면 2분기 또는 하반기에는 회복될 가능성
+https://bit.ly/4h0xGbP
+◆ 작년 전체 수출 6,838억 달러, 반도체 수출 1,419억 달러로 모두 '역대 최대'
+https://bit.ly/4gRgbet
+◆ “TSMC 2나노 웨이퍼당 4400만원”… 애플마저 가격 부담에 양산 시기 ‘저울질’
+https://bit.ly/4j1sxlp
+◆ 삼성전자, 2나노 파운드리 고객사 추가 수주… “초기 수율 확보 청신호”
+https://bit.ly/3PniGZu
+◆ 삼성전자, 로봇 개발 기업 '레인보우 로보틱스' 자회사 편입
+https://bit.ly/40gC2WE
+◆ 엔비디아, 로봇용 소형 컴퓨터 '젯슨 토르' 내년 출시
+https://bit.ly/3DEJEJN
+◆ 엔비디아, 1조 들여 인수한 런AI 기술 오픈 소스로 공개
+https://bit.ly/3VXpFfF
+◆ 美 반도체 규제 무색… 中 바이트댄스, 엔비디아 칩 10조원어치 조달 계획
+https://bit.ly/3W1G6aB
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+연합뉴스
+"올해 초 메모리값 일제히 하락"…'믿을맨'은 또 HBM?
+(서울=연합뉴스) 강태우 기자 = 지난 2023년 매서웠던 '반도체 혹한기'를 겪은 뒤 지난해 겨우 한숨을 돌렸던 삼성전자와 SK하이닉스가 새해...
+177
+views
+21:59
+DS Tech 이수림
+주요 글로벌
+반도체 및 AI 밸류체인 기업 4분기 실적발표 일정
+01/08
+삼성전자(잠정)
+01/13
+Nanya
+01/16
+TSMC
+01/21
+UMC
+01/22
+Seagate
+01/23
+SK하이닉스
+,
+Disco
+01/24
+TI
+01/29
+Advantest
+01/30
+ASML
+,
+Lam Research
+,
+MS
+,
+Meta
+,
+WDC
+01/31
+삼성전자
+,
+Intel
+,
+Apple
+,
+Teradyne
+,
+KLA
+02/03
+Murata
+02/04
+Palantir
+02/05
+AMD
+,
+Alphabet
+02/06
+Qualcomm
+,
+TEL
+,
+ARM
+02/07
+Amazon
+,
+Mediatek
+,
+Kokusai
+,
+Fortinet
+02/10
+On-Semi
+02/11
+Amkor
+02/13
+ASE
+02/14
+AMAT
+,
+SuperMicro
+02/21
+BESI
+, Paloalto
+02/26
+Intuit
+02/27
+Nvidia
+02/28
+Dell
+위 일정은 컨퍼런스 콜의 한국 시간 기준으로 예정 일정입니다.
+확정 일자의 경우
+볼드체
+로 구분지어놨습니다.
+변동사항은 매주 월요일 업데이트해드리겠습니다.
+(02/04 기준 업데이트 완료)
+❤
+1
+271
+views
+edited
+01:12
+DS Tech 이수림
+DS Tech 이수림
+pinned «
+주요 글로벌 반도체 및 AI 밸류체인 기업 4분기 실적발표 일정 01/08 삼성전자(잠정) 01/13 Nanya 01/16 TSMC 01/21 UMC 01/22 Seagate 01/23 SK하이닉스, Disco 01/24 TI 01/29 Advantest 01/30 ASML, Lam Research, MS, Meta, WDC 01/31 삼성전자, Intel, Apple, Teradyne, KLA 02/03 Murata…
+»
+01:15
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+01/03 테크 주요 뉴스
+◆ Nvidia, 차세대 GB300 AI 서버 2025년 2분기 출시 예정이며, 3분기 시범 생산 시작 예정
+https://bit.ly/40fUApU
+◆ 엔비디아도 '맞춤형칩'…메모리 격변 예고
+https://bit.ly/4iXU5Iu
+◆ Nvidia와 Qualcomm, 삼성전자의 2나노로 전환하는 방안 검토 중
+https://bit.ly/40fQOgn
+◆ 中 CXMT DDR5, 삼성전자 동급제품보다 40% 커..."4~5년 전 기술 수준"
+https://bit.ly/4iY0mnz
+◆ TSMC, 2025년 CoWoS CAPA 75K로 확장 예정
+https://bit.ly/4j3DN0D
+◆ SK하이닉스, 브로드컴에 대규모 HBM 공급
+https://bit.ly/4iXU2wi
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+Naver
+엔비디아도 '맞춤형칩'…메모리 격변 예고
+인공지능(AI) 가속기 시장의 절대 강자인 엔비디아가 이번에는 ‘주문형 반도체(ASIC)’ 시장에 진출한다. 절대 성능은 뛰어나지만 가격이 비싼 엔비디아의 AI 칩 대신 가격이 싸고 한 가지 기능에만 특화된 브로드컴
+228
+views
+23:02
+DS Tech 이수림
+https://www.ebn.co.kr/news/articleView.html?idxno=1647603
+이비엔(EBN)뉴스센터
+[피플] 곽노정 SK하이닉스 대표 "HBM 4세대 올 하반기 양산 가능" - 이비엔(EBN)뉴스센터
+SK하이닉스가 6세대 HBM(고대역폭메모리)인 HBM4를 올해 하반기 양산에 돌입한다. 주요 고객사인 엔비디아의 요청에 양산 일정으로 앞당긴 것으로 보인다.3일
+❤
+1
+👍
+1
+249
+views
+00:37
+DS Tech 이수림
+https://n.news.naver.com/article/001/0015141238?sid=104
+Naver
+MS "AI 데이터센터 구축에 연간 800억달러 투자할 것"
+"미 정부, 중국과의 AI 경쟁 이기려면 수출 규제 완화해야" 촉구 임미나 특파원 = 마이크로소프트(MS)가 인공지능(AI) 기술 구현을 위한 데이터센터에 연간 800억달러(약 117조7천600억원)를 투자한다고 3
+229
+views
+03:49

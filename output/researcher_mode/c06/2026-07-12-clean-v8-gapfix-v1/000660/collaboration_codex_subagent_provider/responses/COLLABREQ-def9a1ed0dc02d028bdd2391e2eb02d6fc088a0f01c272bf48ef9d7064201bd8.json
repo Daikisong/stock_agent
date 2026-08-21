@@ -1,0 +1,614 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "No additional distinct fact remains after ten prior accepted issuer-wide ADR decision atoms; no HBM, signed-customer, or durable-visibility upgrade is inferred.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "No additional objective-local fact remains after the current broker estimates and historical target-price calibration rows were fully accounted; none is promoted to issuer guidance or HBM-only economics.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "No additional distinct fact remains after twenty-two prior accepted official ADR and issuer-wide capital atoms; none is promoted to HBM-only economics or customer visibility.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Twelve next source-order revision atoms were extracted from the historical broker table: DRAM margin three, consolidated EBITDA three, commodity-DRAM ASP three, and ASP-growth three. Every old value, revised value, rate or percentage-point change, period, and denominator remains explicit; all facts are SUPERSEDED.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DRAM historical broker revision, not HBM-only",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker revision raises 2Q24F DRAM operating margin from 37.6 to 40.4 percent, a 2.8-percentage-point increase. It is superseded broad DRAM evidence, not current HBM-only margin.",
+        "exact_quote": "영업이익률 26.2 26.8 29.9 28.3 30.4 30.1 2.1 3.6 0.2\nDRAM 37.6 39.1 43.6 40.4 43.6 43.8 2.8 4.6 0.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old, revised, and change values preserve the DRAM margin denominator while keeping the stale estimate out of current HBM economics.",
+        "mechanism_scope_id": "000660:DRAM:OPERATING_MARGIN_REVISION:2Q24F:MIRAE",
+        "normalized_object": "Historical 2Q24F DRAM operating margin revised to 40.4% from 37.6%, up 2.8 percentage points",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F revision; report published 2024-05-16",
+        "predicate": "was revised upward by the historical broker from 37.6 percent to",
+        "predicate_family": "HISTORICAL_DRAM_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "2Q24_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM segment operating-margin revision",
+        "question_family_id": "HISTORICAL_DRAM_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "DRAM_OPERATING_MARGIN",
+          "FORECAST_REVISION",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 2Q24F DRAM operating-margin revision",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN_REVISION:2Q24F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 40.4
+      },
+      {
+        "business_segment": "DRAM historical broker revision, not HBM-only",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker revision raises FY2024F DRAM operating margin from 39.1 to 43.6 percent, a 4.6-percentage-point increase. It is superseded broad DRAM evidence, not current HBM-only margin.",
+        "exact_quote": "영업이익률 26.2 26.8 29.9 28.3 30.4 30.1 2.1 3.6 0.2\nDRAM 37.6 39.1 43.6 40.4 43.6 43.8 2.8 4.6 0.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old, revised, and change values preserve the DRAM margin denominator while keeping the stale estimate out of current HBM economics.",
+        "mechanism_scope_id": "000660:DRAM:OPERATING_MARGIN_REVISION:FY2024F:MIRAE",
+        "normalized_object": "Historical FY2024F DRAM operating margin revised to 43.6% from 39.1%, up 4.6 percentage points",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F revision; report published 2024-05-16",
+        "predicate": "was revised upward by the historical broker from 39.1 percent to",
+        "predicate_family": "HISTORICAL_DRAM_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "Y2024F_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM segment operating-margin revision",
+        "question_family_id": "HISTORICAL_DRAM_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "DRAM_OPERATING_MARGIN",
+          "FORECAST_REVISION",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024F DRAM operating-margin revision",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN_REVISION:FY2024F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 43.6
+      },
+      {
+        "business_segment": "DRAM historical broker revision, not HBM-only",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker revision raises FY2025F DRAM operating margin from 43.6 to 43.8 percent, a 0.3-percentage-point increase. It is superseded broad DRAM evidence, not current HBM-only margin.",
+        "exact_quote": "영업이익률 26.2 26.8 29.9 28.3 30.4 30.1 2.1 3.6 0.2\nDRAM 37.6 39.1 43.6 40.4 43.6 43.8 2.8 4.6 0.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old, revised, and change values preserve the DRAM margin denominator while keeping the stale estimate out of current HBM economics.",
+        "mechanism_scope_id": "000660:DRAM:OPERATING_MARGIN_REVISION:FY2025F:MIRAE",
+        "normalized_object": "Historical FY2025F DRAM operating margin revised to 43.8% from 43.6%, up 0.3 percentage points",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F revision; report published 2024-05-16",
+        "predicate": "was revised upward by the historical broker from 43.6 percent to",
+        "predicate_family": "HISTORICAL_DRAM_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "Y2025F_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM segment operating-margin revision",
+        "question_family_id": "HISTORICAL_DRAM_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "DRAM_OPERATING_MARGIN",
+          "FORECAST_REVISION",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025F DRAM operating-margin revision",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN_REVISION:FY2025F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 43.8
+      },
+      {
+        "business_segment": "Consolidated historical broker revision, not HBM-only",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker revision raises 2Q24F consolidated EBITDA from KRW 7,124 billion to KRW 7,562 billion, a 6.1 percent increase. It is superseded issuer-wide evidence, not HBM-only EBITDA.",
+        "exact_quote": "EBITDA 7,124 29,496 37,438 7,562 32,702 37,686 6.1 10.9 0.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old and revised consolidated EBITDA points preserve the stale earnings denominator without conversion to operating profit or HBM-only economics.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:EBITDA_REVISION:2Q24F:MIRAE",
+        "normalized_object": "Historical 2Q24F consolidated EBITDA revised to KRW 7,562 billion from KRW 7,124 billion, up 6.1%",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F revision; report published 2024-05-16",
+        "predicate": "was revised upward by the historical broker from KRW 7,124 billion to",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_REVISION",
+        "primitive_tags": [
+          "2Q24_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory EBITDA revision",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_REVISION",
+        "question_family_tags": [
+          "EBITDA",
+          "FORECAST_REVISION",
+          "CONSOLIDATED_SCOPE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 2Q24F consolidated EBITDA revision",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_REVISION:2Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 7562
+      },
+      {
+        "business_segment": "Consolidated historical broker revision, not HBM-only",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker revision raises FY2024F consolidated EBITDA from KRW 29,496 billion to KRW 32,702 billion, a 10.9 percent increase. It is superseded issuer-wide evidence, not HBM-only EBITDA.",
+        "exact_quote": "EBITDA 7,124 29,496 37,438 7,562 32,702 37,686 6.1 10.9 0.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old and revised consolidated EBITDA points preserve the stale earnings denominator without conversion to operating profit or HBM-only economics.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:EBITDA_REVISION:FY2024F:MIRAE",
+        "normalized_object": "Historical FY2024F consolidated EBITDA revised to KRW 32,702 billion from KRW 29,496 billion, up 10.9%",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F revision; report published 2024-05-16",
+        "predicate": "was revised upward by the historical broker from KRW 29,496 billion to",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_REVISION",
+        "primitive_tags": [
+          "Y2024F_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory EBITDA revision",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_REVISION",
+        "question_family_tags": [
+          "EBITDA",
+          "FORECAST_REVISION",
+          "CONSOLIDATED_SCOPE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024F consolidated EBITDA revision",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_REVISION:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 32702
+      },
+      {
+        "business_segment": "Consolidated historical broker revision, not HBM-only",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker revision raises FY2025F consolidated EBITDA from KRW 37,438 billion to KRW 37,686 billion, a 0.7 percent increase. It is superseded issuer-wide evidence, not HBM-only EBITDA.",
+        "exact_quote": "EBITDA 7,124 29,496 37,438 7,562 32,702 37,686 6.1 10.9 0.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old and revised consolidated EBITDA points preserve the stale earnings denominator without conversion to operating profit or HBM-only economics.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:EBITDA_REVISION:FY2025F:MIRAE",
+        "normalized_object": "Historical FY2025F consolidated EBITDA revised to KRW 37,686 billion from KRW 37,438 billion, up 0.7%",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F revision; report published 2024-05-16",
+        "predicate": "was revised upward by the historical broker from KRW 37,438 billion to",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_REVISION",
+        "primitive_tags": [
+          "Y2025F_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory EBITDA revision",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_REVISION",
+        "question_family_tags": [
+          "EBITDA",
+          "FORECAST_REVISION",
+          "CONSOLIDATED_SCOPE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025F consolidated EBITDA revision",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_REVISION:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 37686
+      },
+      {
+        "business_segment": "Commodity DRAM historical broker revision, not HBM-only",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker revision raises 2Q24F commodity DRAM ASP from USD 0.36 to USD 0.38 per Gb, a 4.6 percent increase. It is superseded forecast pricing, not realized or HBM-only ASP.",
+        "exact_quote": "ASP($/Gb) 0.36 0.37 0.41 0.38 0.40 0.42 4.6 8.1 0.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old and revised commodity-DRAM ASP preserves product and unit boundaries without promotion to realized HBM pricing.",
+        "mechanism_scope_id": "000660:DRAM:ASP_REVISION:2Q24F:MIRAE",
+        "normalized_object": "Historical 2Q24F commodity DRAM ASP revised to USD 0.38 per Gb from USD 0.36, up 4.6%",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F revision; report published 2024-05-16",
+        "predicate": "was revised upward by the historical broker from USD 0.36 per Gb to",
+        "predicate_family": "HISTORICAL_DRAM_ASP_REVISION",
+        "primitive_tags": [
+          "2Q24_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "Commodity DRAM ASP revision",
+        "question_family_id": "HISTORICAL_DRAM_ASP_REVISION",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "FORECAST_REVISION",
+          "COMMODITY_PRICING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 2Q24F DRAM ASP revision",
+        "subject_id": "000660:DRAM_ASP_REVISION:2Q24F:MIRAE_2024-05-16",
+        "unit": "USD per Gb",
+        "value": 0.38
+      },
+      {
+        "business_segment": "Commodity DRAM historical broker revision, not HBM-only",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker revision raises FY2024F commodity DRAM ASP from USD 0.37 to USD 0.40 per Gb, a 8.1 percent increase. It is superseded forecast pricing, not realized or HBM-only ASP.",
+        "exact_quote": "ASP($/Gb) 0.36 0.37 0.41 0.38 0.40 0.42 4.6 8.1 0.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old and revised commodity-DRAM ASP preserves product and unit boundaries without promotion to realized HBM pricing.",
+        "mechanism_scope_id": "000660:DRAM:ASP_REVISION:FY2024F:MIRAE",
+        "normalized_object": "Historical FY2024F commodity DRAM ASP revised to USD 0.40 per Gb from USD 0.37, up 8.1%",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F revision; report published 2024-05-16",
+        "predicate": "was revised upward by the historical broker from USD 0.37 per Gb to",
+        "predicate_family": "HISTORICAL_DRAM_ASP_REVISION",
+        "primitive_tags": [
+          "Y2024F_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "Commodity DRAM ASP revision",
+        "question_family_id": "HISTORICAL_DRAM_ASP_REVISION",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "FORECAST_REVISION",
+          "COMMODITY_PRICING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024F DRAM ASP revision",
+        "subject_id": "000660:DRAM_ASP_REVISION:FY2024F:MIRAE_2024-05-16",
+        "unit": "USD per Gb",
+        "value": 0.4
+      },
+      {
+        "business_segment": "Commodity DRAM historical broker revision, not HBM-only",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker revision raises FY2025F commodity DRAM ASP from USD 0.41 to USD 0.42 per Gb, a 0.5 percent increase. It is superseded forecast pricing, not realized or HBM-only ASP.",
+        "exact_quote": "ASP($/Gb) 0.36 0.37 0.41 0.38 0.40 0.42 4.6 8.1 0.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old and revised commodity-DRAM ASP preserves product and unit boundaries without promotion to realized HBM pricing.",
+        "mechanism_scope_id": "000660:DRAM:ASP_REVISION:FY2025F:MIRAE",
+        "normalized_object": "Historical FY2025F commodity DRAM ASP revised to USD 0.42 per Gb from USD 0.41, up 0.5%",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F revision; report published 2024-05-16",
+        "predicate": "was revised upward by the historical broker from USD 0.41 per Gb to",
+        "predicate_family": "HISTORICAL_DRAM_ASP_REVISION",
+        "primitive_tags": [
+          "Y2025F_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "Commodity DRAM ASP revision",
+        "question_family_id": "HISTORICAL_DRAM_ASP_REVISION",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "FORECAST_REVISION",
+          "COMMODITY_PRICING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025F DRAM ASP revision",
+        "subject_id": "000660:DRAM_ASP_REVISION:FY2025F:MIRAE_2024-05-16",
+        "unit": "USD per Gb",
+        "value": 0.42
+      },
+      {
+        "business_segment": "Commodity DRAM historical broker revision, not HBM-only",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker revision raises 2Q24F commodity DRAM ASP quarter-on-quarter growth from 7 to 12 percent, a 5-percentage-point increase. It remains a superseded forecast rather than realized or HBM-only pricing.",
+        "exact_quote": "ASP change 7.0 58.0 13.0 12.0 70.8 5.0 5.0 12.8 -8.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old and revised rate preserves period and commodity-DRAM boundaries while retaining the superseded lifecycle.",
+        "mechanism_scope_id": "000660:DRAM:ASP_QOQ_GROWTH_REVISION:2Q24F:MIRAE",
+        "normalized_object": "Historical 2Q24F commodity DRAM ASP QoQ growth revised to 12% from 7%, up 5 percentage points",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F revision; report published 2024-05-16",
+        "predicate": "was revised upward by the historical broker from 7 percent to",
+        "predicate_family": "HISTORICAL_DRAM_ASP_GROWTH_REVISION",
+        "primitive_tags": [
+          "2Q24_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "Commodity DRAM ASP growth revision",
+        "question_family_id": "HISTORICAL_DRAM_ASP_GROWTH_REVISION",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "QOQ_GROWTH",
+          "FORECAST_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix 2Q24F DRAM ASP growth revision",
+        "subject_id": "000660:DRAM_ASP_QOQ_GROWTH_REVISION:2Q24F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 12
+      },
+      {
+        "business_segment": "Commodity DRAM historical broker revision, not HBM-only",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker revision raises FY2024F commodity DRAM ASP annual growth from 58 to 70.8 percent, a 12.8-percentage-point increase. It remains a superseded forecast rather than realized or HBM-only pricing.",
+        "exact_quote": "ASP change 7.0 58.0 13.0 12.0 70.8 5.0 5.0 12.8 -8.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old and revised rate preserves period and commodity-DRAM boundaries while retaining the superseded lifecycle.",
+        "mechanism_scope_id": "000660:DRAM:ASP_YOY_GROWTH_REVISION:FY2024F:MIRAE",
+        "normalized_object": "Historical FY2024F commodity DRAM ASP annual growth revised to 70.8% from 58%, up 12.8 percentage points",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F revision; report published 2024-05-16",
+        "predicate": "was revised upward by the historical broker from 58 percent to",
+        "predicate_family": "HISTORICAL_DRAM_ASP_GROWTH_REVISION",
+        "primitive_tags": [
+          "Y2024F_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "Commodity DRAM ASP growth revision",
+        "question_family_id": "HISTORICAL_DRAM_ASP_GROWTH_REVISION",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "ANNUAL_GROWTH",
+          "FORECAST_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024F DRAM ASP growth revision",
+        "subject_id": "000660:DRAM_ASP_YOY_GROWTH_REVISION:FY2024F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 70.8
+      },
+      {
+        "business_segment": "Commodity DRAM historical broker revision, not HBM-only",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker revision cuts FY2025F commodity DRAM ASP annual growth from 13 to 5 percent, a 8-percentage-point decrease. It remains a superseded forecast rather than realized or HBM-only pricing.",
+        "exact_quote": "ASP change 7.0 58.0 13.0 12.0 70.8 5.0 5.0 12.8 -8.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old and revised rate preserves period and commodity-DRAM boundaries while retaining the superseded lifecycle.",
+        "mechanism_scope_id": "000660:DRAM:ASP_YOY_GROWTH_REVISION:FY2025F:MIRAE",
+        "normalized_object": "Historical FY2025F commodity DRAM ASP annual growth revised to 5% from 13%, down 8 percentage points",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F revision; report published 2024-05-16",
+        "predicate": "was revised downward by the historical broker from 13 percent to",
+        "predicate_family": "HISTORICAL_DRAM_ASP_GROWTH_REVISION",
+        "primitive_tags": [
+          "Y2025F_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "Commodity DRAM ASP growth revision",
+        "question_family_id": "HISTORICAL_DRAM_ASP_GROWTH_REVISION",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "ANNUAL_GROWTH",
+          "FORECAST_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025F DRAM ASP growth revision",
+        "subject_id": "000660:DRAM_ASP_YOY_GROWTH_REVISION:FY2025F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 5
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "Distinct historical target-valuation, consolidated statements, cash-flow, per-share, and leverage model atoms remain in SGDOC-f87582d14c66af24ff78d6d8."
+    ]
+  },
+  "payload_hash": "7d35ab8e25a954721d2ff2fb3f77b15a54149ca7b4c8c9c5ae3f71f574ec9cf9",
+  "production_score_authority": false,
+  "prompt_hash": "a2370fe7c9ef33325879e71a317e51747a799b77a3a2a115a56aec17807c39a4",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-def9a1ed0dc02d028bdd2391e2eb02d6fc088a0f01c272bf48ef9d7064201bd8",
+  "response_id": "COLLABRESP-9c049fae6b7a3bcf1216da104628ac9391eb916dcaaf8f55de535c4e06620a69",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

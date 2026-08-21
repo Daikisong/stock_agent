@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-d04b626dd17de3a6b1ad3aa1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "AMD 공식 도메인의 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. AMD 제품·기술·회사 일반 자료만으로 target의 HBM4 성능, 양산 ramp 또는 공급관계를 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-bd29bb4620ea599abafbaf6e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "AMD 공식 도메인의 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. AMD 제품·기술·회사 일반 자료만으로 target의 HBM4 성능, 양산 ramp 또는 공급관계를 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ceb8f9d82eca7df494804c52",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "AMD 공식 도메인의 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. AMD 제품·기술·회사 일반 자료만으로 target의 HBM4 성능, 양산 ramp 또는 공급관계를 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-046d5e1cba25a42096570d7e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "AMD 공식 도메인의 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. AMD 제품·기술·회사 일반 자료만으로 target의 HBM4 성능, 양산 ramp 또는 공급관계를 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6313a944d6b4267f48cc6ff2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "AMD 공식 도메인의 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. AMD 제품·기술·회사 일반 자료만으로 target의 HBM4 성능, 양산 ramp 또는 공급관계를 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1a97fa1fabe7eaf00452bc4b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "AMD 공식 도메인의 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. AMD 제품·기술·회사 일반 자료만으로 target의 HBM4 성능, 양산 ramp 또는 공급관계를 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7154852ede6fce126c0d7c04",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "AMD 공식 도메인의 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. AMD 제품·기술·회사 일반 자료만으로 target의 HBM4 성능, 양산 ramp 또는 공급관계를 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a3d1795769cfaa12fedf128c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "AMD 공식 도메인의 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. AMD 제품·기술·회사 일반 자료만으로 target의 HBM4 성능, 양산 ramp 또는 공급관계를 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1bf8d93f0262d888da16708b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "AMD 공식 도메인의 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. AMD 제품·기술·회사 일반 자료만으로 target의 HBM4 성능, 양산 ramp 또는 공급관계를 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-73e1bc10a8473bb74d24619b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "AMD 공식 도메인의 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. AMD 제품·기술·회사 일반 자료만으로 target의 HBM4 성능, 양산 ramp 또는 공급관계를 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-df43b792cf16a2e5bd44f561",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "AMD 공식 도메인의 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. AMD 제품·기술·회사 일반 자료만으로 target의 HBM4 성능, 양산 ramp 또는 공급관계를 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4f67ad74b454fd8e906cae57",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "AMD 공식 도메인의 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. AMD 제품·기술·회사 일반 자료만으로 target의 HBM4 성능, 양산 ramp 또는 공급관계를 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "d867272ce46e180582f7653d9a1a2dd07622ba716b38e9a366d3a4d21745bd5a",
+  "production_score_authority": false,
+  "prompt_hash": "05564395cdb88cdba36698e4ae0866e15c7de358600d522d06965ae8c7285c3a",
+  "provenance": {
+    "agent_id": "root-phase101-c06-ranking",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_ranking",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4aef7c558ac0aac2d7e4574d03169a4ed942f3ee9ffe32ff6f63882c696d4ce7",
+  "response_id": "COLLABRESP-71fd5961f149588dc7e622d1a5d8218ade1c2e151c8f969df178822d8ce9966a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

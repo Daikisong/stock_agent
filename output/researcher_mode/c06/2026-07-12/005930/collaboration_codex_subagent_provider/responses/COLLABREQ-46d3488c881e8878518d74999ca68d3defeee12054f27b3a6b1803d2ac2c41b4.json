@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2103a8a634f59ad8a214e603",
+        "rationale": "전송 청크 1/3의 원문 전체를 검토하고 current 512개 fact/514개 claim 및 직전 청크 0/3의 accepted claim 8건과 의미 중복을 대조했다. 이 청크는 연결·별도 재무제표 후반, 별도 DS 세그먼트 수치, 계열사·관계자 거래, 주주환원·지배구조·감사 및 부록 전반을 담는다. 별도 DS 매출·영업이익과 DS 재고는 Memory 외 Foundry·System LSI가 섞여 있어 MEMORY 또는 HBM 실적으로 귀속할 수 없고, 반도체 계열사 거래도 제품별 메모리 귀속이 없다. 전사 현금흐름·계약부채·설비약정·배당·자사주와 감사검토 정보는 이 문서에 연결된 earnings_visibility objective의 MEMORY 범위를 직접 진전·반박·대체하지 않는다. 따라서 이 청크에는 새 objective-local material fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "17e9e3a31e4fcbb34b156bfb47a47bb5c31023b42569fcfeeb420879f80e3026",
+  "production_score_authority": false,
+  "prompt_hash": "748f1067209423ab522994a4bff91b1e2b28021321490aef5c11dc9355ef6c5e",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-46d3488c881e8878518d74999ca68d3defeee12054f27b3a6b1803d2ac2c41b4",
+  "response_id": "COLLABRESP-22d2115e41652c53d0258efdb2c5bbdbc6c39e66de7ca475d8ce8938a642a740",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,354 @@
+{
+  "output_schema_hash": "af87799ae5cca477e0e559e411a5dccc349ab0d3a958ee645b26ab61cd0cc0ab",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-1712d24c0cd2bd852b1554d1",
+        "rationale": "기사 전체를 prior252와 대조해 목표주가·주가상승·HBM4E 샘플·자사주 전망은 원시 모멘텀 또는 다른 objective/기존 fact와 중복 제거하고, 동일 시점의 12개월 선행 PBR·PER와 글로벌 메모리 동종사 평균을 직접 비교한 비중복 상대가치 2건만 추출했다. 일반 웹 기사이므로 구조화 FORWARD_PB 역할은 부여하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-17c5799ec0a8905cf7fdc772",
+        "rationale": "기사 전체를 prior252와 대조해 전사 잠정실적·목표주가·HBM 기술리더십 전망은 메모리 병목의 직접 사실이 아니거나 기존 current facts와 중복 제거하고, 삼성전자 컨벤셔널 D램 연간 ASP 상승률 전망 상향 1건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-186cad596bd913960cffc961",
+        "rationale": "기사 전체를 prior252와 대조했으나 삼성전자 HBM4 매출 10억달러, 2027년 메모리 공급부족, 일부 고객과의 메모리 다년계약 완료는 각각 current canonical facts에 이미 존재한다. 마이크론 실적·계약 수치와 삼성·SK 합산 전망은 삼성전자 objective-direct 비중복 fact가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-18c5e97423462bfe7e4a153b",
+        "rationale": "기사 전체를 prior252와 대조해 2분기 D램 가격 58~63%, 2028년 공급 개선 가능성, 증설 효과 지연 및 삼성 HBM4 점유 추정은 기존 fact와 중복 또는 제3자 추정으로 제거했다. 비중복인 2026년 D램·HBM 공급 부족률, 2026년 D램 연간 평균가격 전망, 2027년 D램 부족률 전망 상향과 2028년 지속기간 4건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-1712d24c0cd2bd852b1554d1",
+        "economic_mechanism": "삼성전자의 12개월 선행 PBR이 글로벌 메모리 동종사 평균보다 낮다는 증권사 비교는 현재 주가가 반영한 순자산 기준 기대 격차를 수치화한다.",
+        "exact_quote": "김영건 미래에셋증권 연구원은 \"삼성전자의 현 주가 기준 12개월 선행 PBR(주가순자산비율) 및 PER(주가수익비율) 배수는 각각 2.3배, 5.7배로 글로벌 메모리 2개사인 마이크론과 키오시아 평균(각각 6.2배, 10.1배)에 크게 미치지 못하고 있다\"며 삼성전자 목표가 상향 조정 이유를 설명했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "목표주가만이 아니라 동일 시점의 삼성전자와 글로벌 메모리 동종사의 12개월 선행 PBR을 같은 문장에서 비교해 시장 기대 격차를 직접 보여준다. PUBLIC_BROKER_PDF가 아니므로 구조화 FORWARD_PB 역할은 부여하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_PB:PEER_GAP:2026-05-31",
+        "normalized_object": "삼성전자 12개월 선행 PBR",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "12-month forward as of 2026-05-31",
+        "predicate": "미래에셋증권은 삼성전자의 현 주가 기준 12개월 선행 PBR 2.3배가 마이크론·키오시아 평균 6.2배에 크게 못 미친다고 설명했다",
+        "predicate_family": "MEMORY_FORWARD_PB_PEER_GAP",
+        "primitive_tags": [
+          "FORWARD_PB",
+          "PEER_COMPARISON",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_FORWARD_PB_PEER_GAP",
+        "question_family_tags": [
+          "MEMORY_FORWARD_PB_PEER_GAP",
+          "RELATIVE_VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 12개월 선행 PBR의 글로벌 메모리 동종사 대비 격차",
+        "subject_id": "005930:MEMORY_FORWARD_VALUATION",
+        "unit": "times",
+        "value": 2.3
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-1712d24c0cd2bd852b1554d1",
+        "economic_mechanism": "삼성전자의 12개월 선행 PER이 글로벌 메모리 동종사 평균보다 낮다는 증권사 비교는 메모리 이익 전망 대비 현재 시장 평가의 상대 격차를 수치화한다.",
+        "exact_quote": "김영건 미래에셋증권 연구원은 \"삼성전자의 현 주가 기준 12개월 선행 PBR(주가순자산비율) 및 PER(주가수익비율) 배수는 각각 2.3배, 5.7배로 글로벌 메모리 2개사인 마이크론과 키오시아 평균(각각 6.2배, 10.1배)에 크게 미치지 못하고 있다\"며 삼성전자 목표가 상향 조정 이유를 설명했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "목표주가만이 아니라 삼성전자와 글로벌 메모리 동종사의 동일한 12개월 선행 PER을 비교해 메모리 이익 대비 시장 기대 격차를 직접 보여준다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_PE:PEER_GAP:2026-05-31",
+        "normalized_object": "삼성전자 12개월 선행 PER",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "12-month forward as of 2026-05-31",
+        "predicate": "미래에셋증권은 삼성전자의 현 주가 기준 12개월 선행 PER 5.7배가 마이크론·키오시아 평균 10.1배에 크게 못 미친다고 설명했다",
+        "predicate_family": "MEMORY_FORWARD_PE_PEER_GAP",
+        "primitive_tags": [
+          "FORWARD_PE",
+          "PEER_COMPARISON",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_FORWARD_PE_PEER_GAP",
+        "question_family_tags": [
+          "MEMORY_FORWARD_PE_PEER_GAP",
+          "RELATIVE_VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 12개월 선행 PER의 글로벌 메모리 동종사 대비 격차",
+        "subject_id": "005930:MEMORY_FORWARD_VALUATION",
+        "unit": "times",
+        "value": 5.7
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-17c5799ec0a8905cf7fdc772",
+        "economic_mechanism": "컨벤셔널 D램 ASP 상승률 전망치의 큰 폭 상향은 공급 병목이 삼성전자 메모리의 연간 실현가격과 이익 추정으로 전환될 것으로 보는 증권사 기대를 수치화한다.",
+        "exact_quote": "채민숙 한국투자증권 연구원은 \"올해 컨벤셔널 D램의 평균판매단가(ASP) 상승률 전망을 기존 186%에서 221%로, 낸드는 92%에서 248%로 변경한다\"며 \"이를 반영해 올해와 내년 영업이익 추정치를 기존 202조원 277조원에서 302조원, 392조원으로 각각 상향 조정한다\"고 설명했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 D램의 연간 가격 전망이 기존 186%에서 221%로 상향된 사실은 일반적인 가격 강세 서술과 달리 전망 변화의 크기를 직접 제시한다. 발행사 가이던스가 아니므로 구조화 FORWARD_GUIDANCE 역할은 부여하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:ASP_FORECAST_REVISION:FY2026",
+        "normalized_object": "삼성전자 컨벤셔널 D램 ASP 전년 대비 상승률 전망",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E vs FY2025",
+        "predicate": "한국투자증권은 삼성전자의 2026년 컨벤셔널 D램 ASP 상승률 전망을 186%에서 221%로 상향했다",
+        "predicate_family": "DRAM_ASP_FORECAST_REVISION",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "FORECAST_REVISION"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_ASP_FORECAST_REVISION",
+        "question_family_tags": [
+          "DRAM_ASP_FORECAST_REVISION",
+          "DRAM_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 컨벤셔널 D램 ASP 상승률 전망",
+        "subject_id": "005930:DRAM_PRICING",
+        "unit": "percent YoY",
+        "value": 221
+      },
+      {
+        "business_segment": "메모리 산업",
+        "confidence": 0.83,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-18c5e97423462bfe7e4a153b",
+        "economic_mechanism": "2026년 D램 공급이 수요보다 4.9% 부족하다는 골드만삭스 추정은 삼성전자가 참여하는 D램 시장의 공급자 우위와 가격 병목의 현재 강도를 정량화한다.",
+        "exact_quote": "D\n램은 수요 대비 공급이\n4.9%\n모자라고\n,\n낸드는\n4.2%, AI\n용 핵심 부품인\nHBM\n은\n5.1%\n부족하다\n.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "일반적인 공급부족 표현을 넘어 D램의 수요 대비 부족률을 정량화해 현재 병목의 규모를 검증할 수 있게 한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:SUPPLY_SHORTFALL:2026",
+        "normalized_object": "D램 수요 대비 공급 부족률",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "골드만삭스는 2026년 D램 공급이 수요보다 4.9% 부족하다고 추정했다",
+        "predicate_family": "DRAM_SUPPLY_SHORTFALL",
+        "primitive_tags": [
+          "DRAM",
+          "SUPPLY_SHORTFALL",
+          "DEMAND_SUPPLY_GAP"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_2026_SUPPLY_SHORTFALL",
+        "question_family_tags": [
+          "DRAM_2026_SUPPLY_SHORTFALL",
+          "MEMORY_CAPACITY_SCARCITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "2026년 D램 산업 공급 부족률",
+        "subject_id": "005930:DRAM_INDUSTRY_SUPPLY_DEMAND",
+        "unit": "percent of demand shortfall",
+        "value": 4.9
+      },
+      {
+        "business_segment": "메모리 산업",
+        "confidence": 0.83,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-18c5e97423462bfe7e4a153b",
+        "economic_mechanism": "2026년 HBM 공급이 수요보다 5.1% 부족하다는 골드만삭스 추정은 삼성전자 HBM의 고객배정·가격 병목이 놓인 산업 수급 강도를 정량화한다.",
+        "exact_quote": "D\n램은 수요 대비 공급이\n4.9%\n모자라고\n,\n낸드는\n4.2%, AI\n용 핵심 부품인\nHBM\n은\n5.1%\n부족하다\n.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 HBM의 개별 수주 추정과 별도로 산업 HBM 수급의 부족률을 직접 수치화해 병목의 외부 강도를 검증한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:SUPPLY_SHORTFALL:2026",
+        "normalized_object": "HBM 수요 대비 공급 부족률",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "골드만삭스는 2026년 HBM 공급이 수요보다 5.1% 부족하다고 추정했다",
+        "predicate_family": "HBM_SUPPLY_SHORTFALL",
+        "primitive_tags": [
+          "HBM",
+          "SUPPLY_SHORTFALL",
+          "DEMAND_SUPPLY_GAP"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_2026_SUPPLY_SHORTFALL",
+        "question_family_tags": [
+          "HBM_2026_SUPPLY_SHORTFALL",
+          "HBM_CAPACITY_SCARCITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "2026년 HBM 산업 공급 부족률",
+        "subject_id": "005930:HBM_INDUSTRY_SUPPLY_DEMAND",
+        "unit": "percent of demand shortfall",
+        "value": 5.1
+      },
+      {
+        "business_segment": "메모리 산업",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-18c5e97423462bfe7e4a153b",
+        "economic_mechanism": "2026년 연간 D램 평균가격이 전년보다 326% 오를 것이라는 골드만삭스 전망은 공급 부족이 메모리 가격으로 전환되는 연간 강도를 수치화한다.",
+        "exact_quote": "골드만삭스는\n2026\n년 연간\nD\n램 평균가격이 한 해 전보다\n326%\n오를 것으로 봤다\n.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "분기 D램 고정거래가격 58~63% 상승은 prior252에 이미 있어 중복 제거했고, 별개의 연간 평균가격 상승률 전망 326%만 추출했다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:INDUSTRY_AVERAGE_PRICE:2026",
+        "normalized_object": "D램 산업 연간 평균가격 전년 대비 상승률 전망",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E vs FY2025",
+        "predicate": "골드만삭스는 2026년 연간 D램 평균가격이 전년보다 326% 오를 것으로 전망했다",
+        "predicate_family": "DRAM_ANNUAL_AVERAGE_PRICE_OUTLOOK",
+        "primitive_tags": [
+          "DRAM",
+          "AVERAGE_PRICE",
+          "ANNUAL_PRICE_OUTLOOK"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_2026_ANNUAL_PRICE_OUTLOOK",
+        "question_family_tags": [
+          "DRAM_2026_ANNUAL_PRICE_OUTLOOK",
+          "DRAM_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "2026년 D램 산업 연간 평균가격 전망",
+        "subject_id": "005930:DRAM_INDUSTRY_PRICING",
+        "unit": "percent YoY",
+        "value": 326
+      },
+      {
+        "business_segment": "메모리 산업",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-18c5e97423462bfe7e4a153b",
+        "economic_mechanism": "2027년 D램 공급 부족률 전망이 2.5%에서 5.9%로 상향되고 품귀가 2028년까지 이어질 수 있다는 평가는 병목의 강도와 지속기간이 함께 커졌음을 보여준다.",
+        "exact_quote": "골드만삭스는 한발 더 나아갔다\n. 2027\n년\nD\n램 공급 부족 전망치를 기존\n2.5%\n에서\n5.9%\n로 두 배 가까이 키웠다\n.\n품귀가\n2028\n년까지 이어진다는 뜻이다\n.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존의 정성적 2027년 공급부족 전망과 달리 부족률 전망의 상향 전후 수치와 2028년까지의 기간을 함께 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:SUPPLY_SHORTFALL_REVISION:2027",
+        "normalized_object": "D램 수요 대비 공급 부족률 전망 상향",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E; shortage horizon through FY2028E",
+        "predicate": "골드만삭스는 2027년 D램 공급 부족 전망을 2.5%에서 5.9%로 높이고 품귀가 2028년까지 이어질 것으로 봤다",
+        "predicate_family": "DRAM_SUPPLY_SHORTFALL_REVISION",
+        "primitive_tags": [
+          "DRAM",
+          "SUPPLY_SHORTFALL",
+          "FORECAST_REVISION"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_2027_SUPPLY_SHORTFALL_REVISION",
+        "question_family_tags": [
+          "DRAM_2027_SUPPLY_SHORTFALL_REVISION",
+          "MEMORY_CAPACITY_SCARCITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "2027년 D램 산업 공급 부족률 전망 상향",
+        "subject_id": "005930:DRAM_INDUSTRY_SUPPLY_DEMAND",
+        "unit": "percent of demand shortfall",
+        "value": 5.9
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "2054bec77a2fd158c0c24270b5230a904d423a1a10ece2b0c48efa16b1be1caa",
+  "production_score_authority": false,
+  "prompt_hash": "5ef5a383493e295f3350e4b8141257b5f0f4f63606cde3097e5d4a3afebf5690",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ad4b6cd64e77478a65382975c869fee5ffabf7cf2d2cbda83b4d34cf24839a7f",
+  "response_id": "COLLABRESP-c95974d063b73ec6e1f0e2aba18ef60bcfc1a3e7f867ac13e61c73644f7a44ce",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

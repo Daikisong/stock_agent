@@ -1,0 +1,400 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "rationale": "Across the exact continuation lineage, 32 distinct issuer facts were extracted: the prior 24 plus eight final source-order facts on end-investor allocation, board/delegated execution, plan uncertainty, and depositary governance/agreement status. Full remainder review found no further distinct target-wide current-objective fact.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-82c4d529809691327e652074",
+        "rationale": "Full repeated review found only a Nvidia-centered statement that generically included SK hynix among memory vendors, without target-specific product, volume, price, allocation, cancellation, or signed-contract terms; no distinct target-direct fact remains.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-93b35ee380e600a2c404d37c",
+        "rationale": "Full repeated review found only qualitative historical lists of upward estimate revisions with no attributable SK hynix metric, magnitude, denominator, or distinct current objective mechanism.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_END_INVESTOR_ALLOCATION_PROCESS",
+        "exact_quote": "따라서 국내의 통상적인 주식의 제3자 배정과는 달리, ADR이나 본건 신주에 대해서는 특정한 개인 또는 기관 배정이 사전에 예정되어 있지 아니합니다. ADR은 해외 발행 절차를 통해 확정된 투자자들(이하 본 보고서상 \"투자자\"라 함은 특별히 별도로 언급하지 않는 한 ADR 투자자를 의미합니다)이 발행일 당일에 취득하게 되고, 원주는 발행과 동시에 곧바로 해외 예탁기관인 Citibank, N.A.(이하 \"해외 예탁기관\")에 예탁되는 바, 실제로 원주는 국내 보관기관(Custodian)인 한국예탁결제원이 해외 예탁기관을 대신하여 보관하게 됩니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The official filing distinguishes the economic ADR investors from the depositary allottee and prevents treating Citibank as a preselected capital provider.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "ADR end investors are not predesignated and are determined through the overseas issuance procedure",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 ADR offering plan as of 2026-07-06",
+        "predicate": "has no predetermined specific end investor and will allocate ADRs through the overseas offering process",
+        "predicate_family": "ADR_END_INVESTOR_ALLOCATION_PROCESS",
+        "primitive_tags": [
+          "capital_allocation",
+          "ADR",
+          "bookbuilding_investors"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "kind_adr_end_investor_allocation_process",
+        "question_family_tags": [
+          "kind_adr_end_investor_allocation_process",
+          "ADR_ALLOCATION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 ADR 최종 투자자 배정",
+        "subject_id": "000660:ADR:END_INVESTOR_ALLOCATION",
+        "unit": "allocation status",
+        "value": "no predetermined individual or institution"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_LISTING_GOVERNANCE",
+        "exact_quote": "6) 당사는 2026년 6월 24일자 이사회에서 본건 신주의 발행 및 한국거래소 추가상장, 본건 ADR의 발행 및 미국 나스닥 증권거래소(Nasdaq Global Select Market) 신규상장을 결의하는 한편, 다음의 사항의 결정 권한을 대표이사 또는 대표이사가 지정하는 자에게 위임하였습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This adds the official KRX additional-listing resolution and identifies the precise board governance step without treating subsequent listing as completed.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "board resolution covers KRX additional listing of new shares and Nasdaq Global Select Market ADR listing",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-06-24 board meeting",
+        "predicate": "board resolved KRX additional listing together with ADR issuance and Nasdaq Global Select Market listing",
+        "predicate_family": "ADR_BOARD_LISTING_RESOLUTION",
+        "primitive_tags": [
+          "capital_allocation",
+          "board_resolution",
+          "KRX_listing"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "kind_adr_board_listing_resolution",
+        "question_family_tags": [
+          "kind_adr_board_listing_resolution",
+          "ADR_GOVERNANCE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 ADR 및 신주 상장 결의",
+        "subject_id": "000660:ADR:LISTING_RESOLUTION",
+        "unit": "board resolution",
+        "value": "KRX additional listing and Nasdaq Global Select Market new listing"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_FINAL_TERMS_GOVERNANCE",
+        "exact_quote": "(i) 상기 이사회가 결의한 본건 신주의 최대 모집 한도 수량(17,790,000주)의 범위 내에서, 본건 ADR의 상장 공모 절차에서의 수요예측 결과를 반영하여 본건 신주 및 본건 ADR의 발행수량, 본건 신주 및 본건 ADR의 주당 발행가액 등 본건 신주발행 및 본건 ADR 발행의 세부적인 조건과 일정을 결정ㆍ변경할 권한",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer explicitly leaves final quantity, price, and schedule to delegated execution, so the disclosed maximum and reference values are not final economics.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "final ADR and underlying-share quantities, prices, conditions, and schedules remain delegated decisions",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "after 2026-06-24 board resolution",
+        "predicate": "delegated authority to determine or change final quantities, per-share prices, conditions, and schedules within the maximum share limit",
+        "predicate_family": "ADR_FINAL_TERMS_DELEGATION",
+        "primitive_tags": [
+          "capital_allocation",
+          "delegated_authority",
+          "pricing_uncertainty"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "kind_adr_terms_delegation",
+        "question_family_tags": [
+          "kind_adr_terms_delegation",
+          "ADR_TERMS_UNCERTAINTY"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 ADR 최종 발행조건",
+        "subject_id": "000660:ADR:FINAL_TERMS_AUTHORITY",
+        "unit": "delegated authority",
+        "value": "delegated to CEO or designee within 17,790,000-share maximum"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_REGULATORY_EXECUTION_GOVERNANCE",
+        "exact_quote": "(ii) 본건 신주발행, 본건 ADR 발행 및 국내외 상장과 관련하여 국내외 유관기관에 제출하는 제반신고서(국내 증권신고서, 외국환거래신고 및 미국 Form F-1 등) 및 공시서류의 준비, 제출 및 서명 권한",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The board's delegated filing authority documents the regulatory execution path without upgrading preparation authority into completed approvals.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "delegated authority for domestic securities, foreign-exchange, and Form F-1 filings",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "after 2026-06-24 board resolution",
+        "predicate": "delegated preparation, submission, and signature authority for domestic and overseas ADR-related filings",
+        "predicate_family": "ADR_REGULATORY_FILING_DELEGATION",
+        "primitive_tags": [
+          "information_confidence",
+          "filing_authority",
+          "ADR"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "kind_adr_regulatory_filing_authority",
+        "question_family_tags": [
+          "kind_adr_regulatory_filing_authority",
+          "REGULATORY_EXECUTION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 ADR 규제신고 집행권한",
+        "subject_id": "000660:ADR:REGULATORY_FILINGS",
+        "unit": "delegated authority",
+        "value": "domestic securities report, FX report, and U.S. Form F-1"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_AGREEMENT_EXECUTION_GOVERNANCE",
+        "exact_quote": "(iii) 본건 신주발행, 본건 ADR 발행 및 국내외 상장과 관련하여 체결하는 인수계약(Underwriting Agreement), 예탁계약(Deposit Agreement)를 포함한 제반 계약 및 서류의 준비, 작성, 협상, 조건결정, 서명, 체결 및 교부 권한",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The filing evidences delegated negotiation and execution authority, not completed agreement terms, so it must not be upgraded to a signed financing contract.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "underwriting and deposit agreement terms and execution remain within delegated authority",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "after 2026-06-24 board resolution",
+        "predicate": "delegated authority to prepare, negotiate, set terms, sign, execute, and deliver underwriting and deposit agreements",
+        "predicate_family": "ADR_AGREEMENT_EXECUTION_DELEGATION",
+        "primitive_tags": [
+          "capital_allocation",
+          "underwriting_agreement",
+          "deposit_agreement"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "kind_adr_agreement_execution_authority",
+        "question_family_tags": [
+          "kind_adr_agreement_execution_authority",
+          "AGREEMENT_STATUS"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 ADR 인수·예탁계약",
+        "subject_id": "000660:ADR:AGREEMENT_EXECUTION",
+        "unit": "agreement status",
+        "value": "Underwriting Agreement and Deposit Agreement execution authority"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "FACILITY_INVESTMENT_PLAN_UNCERTAINTY",
+        "exact_quote": "(주1) 상기 금액은 추정치이며, 향후 시장 환경 및 공정 사양 변경 등에 따라 변동될 수 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This explicit caveat limits the certainty of the accepted Yongin and Cheongju plan amounts and prevents treating planned totals as actual CAPEX.",
+        "mechanism_scope_id": "000660_CORPORATE_FACILITY_INVESTMENT",
+        "normalized_object": "Yongin and Cheongju facility-plan amounts are estimates, not final executed CAPEX",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-08 to 2030-12 disclosed plan",
+        "predicate": "states that disclosed facility-investment amounts are estimates subject to market and process-specification changes",
+        "predicate_family": "FACILITY_INVESTMENT_ESTIMATE_UNCERTAINTY",
+        "primitive_tags": [
+          "capital_allocation",
+          "capex_plan",
+          "estimate_uncertainty"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "kind_facility_plan_estimate_uncertainty",
+        "question_family_tags": [
+          "kind_facility_plan_estimate_uncertainty",
+          "CAPEX_PLAN_COUNTER"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 시설투자 계획금액",
+        "subject_id": "000660:FACILITY_PLAN:ESTIMATE_UNCERTAINTY",
+        "unit": "plan status",
+        "value": "estimated and variable"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_DEPOSITARY_GOVERNANCE",
+        "exact_quote": "본건 유상증자의 배정대상자인 해외 예탁기관은 당사 및 당사 최대주주와 「자본시장과 금융투자업에 관한 법률」 시행령 제2조 제4호에 따른 특수관계인에 해당하지 아니하며, 당사는 해외 예탁기관과 본건 신주의 예탁 및 본건 ADR의 발행에 관한 예탁계약(Deposit Agreement, 이하 \"예탁계약\")을 체결할 예정입니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The official related-party statement is a governance fact about the depositary allottee and does not imply that Citibank is the economic end investor.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "Citibank N.A. is not a statutory related party of SK hynix or its controlling shareholder",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "as disclosed 2026-07-06",
+        "predicate": "states that the overseas depositary is not a statutory related party of the issuer or controlling shareholder",
+        "predicate_family": "ADR_DEPOSITARY_RELATED_PARTY_STATUS",
+        "primitive_tags": [
+          "information_confidence",
+          "related_party",
+          "depositary"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "kind_citibank_related_party_status",
+        "question_family_tags": [
+          "kind_citibank_related_party_status",
+          "ADR_GOVERNANCE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스와 Citibank N.A.의 관계",
+        "subject_id": "000660:CITIBANK:RELATED_PARTY_STATUS",
+        "unit": "relationship status",
+        "value": "not a related party"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_DEPOSIT_AGREEMENT_STATUS",
+        "exact_quote": "본건 유상증자의 배정대상자인 해외 예탁기관은 당사 및 당사 최대주주와 「자본시장과 금융투자업에 관한 법률」 시행령 제2조 제4호에 따른 특수관계인에 해당하지 아니하며, 당사는 해외 예탁기관과 본건 신주의 예탁 및 본건 ADR의 발행에 관한 예탁계약(Deposit Agreement, 이하 \"예탁계약\")을 체결할 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The literal future-tense wording preserves the agreement as planned and prevents upgrading it to an already signed deposit contract.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "deposit agreement with Citibank N.A. remains planned as of the filing",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "as of 2026-07-06",
+        "predicate": "plans to enter a deposit agreement with the overseas depositary",
+        "predicate_family": "ADR_DEPOSIT_AGREEMENT_PLANNED",
+        "primitive_tags": [
+          "capital_allocation",
+          "deposit_agreement",
+          "planned_not_final"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "kind_deposit_agreement_planned_status",
+        "question_family_tags": [
+          "kind_deposit_agreement_planned_status",
+          "AGREEMENT_STATUS"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스-Citibank ADR 예탁계약",
+        "subject_id": "000660:CITIBANK:DEPOSIT_AGREEMENT",
+        "unit": "agreement status",
+        "value": "planned, not stated as executed"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "aa835efe31afb74c83bb33f786187dfa79ddc6416a1f6796f0cb09cf911adf6d",
+  "production_score_authority": false,
+  "prompt_hash": "0303cc85f5bfd28b87bc508574bcf9d69f5c2664f98751bc60eb271e457927a2",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-22616b74b097d6e6dd45c74db2f1c55f160fa786fa0e7ff59260d070297b4a56",
+  "response_id": "COLLABRESP-6201138d01963f00fa05f2ee7a56f2e7f62a2e0cbf29e5016046a5a7c598a7af",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

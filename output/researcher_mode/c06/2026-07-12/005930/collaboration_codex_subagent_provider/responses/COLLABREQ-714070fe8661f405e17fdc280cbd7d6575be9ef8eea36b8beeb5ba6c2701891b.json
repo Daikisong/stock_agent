@@ -1,0 +1,486 @@
+{
+  "output_schema_hash": "941a6a3304dade20707c7c53093163ba7438345d1c920a1dc5a6520bf0b78e88",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-19304237bd707c56cb7cc504",
+        "rationale": "TSMC의 파운드리 실적과 CoWoS 패키징 수요를 다룬 자료로 삼성전자 메모리의 가격·배정·CAPA를 직접 입증하지 않는다. 인접 패키징 병목을 삼성전자 메모리 fact로 전용하지 않았다.",
+        "status": "WRONG_TARGET_OR_SEGMENT"
+      },
+      {
+        "document_id": "SGDOC-1b9ad26760e77e9121279ce6",
+        "rationale": "문서의 12개월 선행 PBR·PER과 역사적 PBR 고점 서술을 prior259와 대조했다. 더 늦은 2026-05-31 동일 종목의 선행 PBR·PER 및 동종사 비교가 이미 canonical에 있어 이 문서의 2026-05-14 값은 현재 objective에 새 의미를 더하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-1cd271c692678276cc3465d7",
+        "rationale": "후속 분기 가격 전망, 전사 잠정실적과 NAND 수치는 기존 fact·금지 제품 또는 현재 objective 비직접 항목으로 제외하고, 삼성전자 2026년 1분기 D램 ASP와 D램 영업이익률의 비중복 추정 2건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-2466c6a8727cd5542c49b574",
+        "rationale": "공개 증권사 PDF 전체를 prior259와 대조해 현재가격·목표가·파운드리·NAND·주주환원 전망은 중복 또는 scope 밖으로 제외했다. 비중복 메모리/HBM 매출·영업이익 경로 3건과 2026E BPS·PBR·EV/EBITDA 구조화 값 3건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-26039c5b365a4f880e4dfeef",
+        "rationale": "본문은 짧은 검색성 설명과 화면 요소 중심이며, 삼성전자 메모리의 현재 가격·CAPA·계약을 원문 수치로 직접 입증하는 비중복 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-26852010af1d289e0790b475",
+        "rationale": "2026년 2분기 전사 잠정 매출·영업이익과 DS 중심 이익 서술은 prior259의 더 구체적인 메모리 귀속 추정과 중복되거나 전사 수치여서 bottleneck_pricing의 비중복 직접 fact가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-26af3dda0c44006e8a641599",
+        "rationale": "2025년 1분기 컨퍼런스콜 전체를 prior259와 대조했다. 당시 HBM 판매 감소·가격 하락, 서버 D램 성장, HBM3E 샘플, HBM4 일정은 기존 canonical에 있거나 이후 실적으로 대체돼 현재 objective에 비중복 fact가 남지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-2cfbdc698f1110356f57351e",
+        "rationale": "마이크론 수치, 애플 가격정책, 일반 업황 서술은 타사 또는 배경으로 제외했다. prior259의 단순 스마트폰·PC 출하 감소 전망과 구별되는 20% 감소 스트레스에서도 공급 부족이 해소되지 않는다는 LPDDR 병목 내구성 1건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-2e88fbb76e10b4bea3ae48d4",
+        "rationale": "D램·NAND 가격 전망, 공급부족 기간, 장기계약 및 성과급 서술을 prior259와 대조했으나 더 최신 수치 또는 동일 의미가 이미 canonical에 있다. NAND 고유 내용은 허용 제품 범위 밖이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-344a10e00a7671ebc85cc88e",
+        "rationale": "문서의 핵심 수치와 반응은 마이크론 실적·주가 또는 시장 합산 평가이며, 삼성전자 직접 내용도 당일 주가와 일반 업황 기대에 그쳐 현재 삼성전자 메모리 병목의 비중복 원문 fact가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-34b40004b02ec9b3d06322d1",
+        "rationale": "2026년 2분기 D램 가격·메모리 매출·하반기 가격 전망 및 장기계약의 가격상승 제한은 prior259의 더 최신 수치와 동일 의미 fact에 이미 반영돼 있다. 전사·비메모리 항목은 scope 밖이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-3a0a575285c9380044c2279a",
+        "rationale": "2026년 2분기 전사 실적과 메모리 영업이익 추정은 이후 더 높은 최신 추정치가 canonical에 있고, 일반 메모리 가격 상승 서술도 기존 fact와 중복돼 비중복 objective-direct fact가 남지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-1cd271c692678276cc3465d7",
+        "economic_mechanism": "삼성전자 D램 ASP가 전 분기 대비 두 배로 추정된 것은 공급 제약이 분기 실현가격으로 전환된 강도를 직접 수치화한다.",
+        "exact_quote": "서프라이즈의 핵심은 메모리 부문이다. 1분기 ASP는 전 분기 대비 DRAM이 100%, NAND가 95% 상승한 것으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "후속 분기의 더 높은 가격 전망과 별개로 2026년 1분기 삼성전자 D램 가격의 실제 분기 전환 강도를 비중복 수치로 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:ASP_QOQ:2026Q1",
+        "normalized_object": "삼성전자 D램 ASP 전 분기 대비 상승률 추정",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1 vs 2025Q4",
+        "predicate": "증권사들은 삼성전자의 2026년 1분기 D램 ASP가 전 분기 대비 100% 상승한 것으로 추정했다",
+        "predicate_family": "DRAM_ASP_QOQ_ESTIMATE",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "QOQ_PRICE_REALIZATION"
+        ],
+        "product_family": "D램",
+        "question_family_id": "SAMSUNG_DRAM_QUARTERLY_ASP_REALIZATION",
+        "question_family_tags": [
+          "SAMSUNG_DRAM_QUARTERLY_ASP_REALIZATION",
+          "DRAM_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 1분기 D램 ASP",
+        "subject_id": "005930:DRAM_PRICING",
+        "unit": "percent QoQ",
+        "value": 100
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.83,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-1cd271c692678276cc3465d7",
+        "economic_mechanism": "D램의 높은 분기 영업이익률 추정은 가격 급등이 삼성전자 메모리 이익으로 전환된 정도를 보여준다.",
+        "exact_quote": "영업이익률(OPM)은 DRAM 78%, NAND 57%로 이익 극대화가 진행 중이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 이익이 아니라 삼성전자 D램에 귀속된 분기 영업이익률 추정치여서 가격 병목의 이익 전환을 직접 검증한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:OPM:2026Q1",
+        "normalized_object": "삼성전자 D램 영업이익률 추정",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1",
+        "predicate": "증권사들은 삼성전자의 2026년 1분기 D램 영업이익률을 78%로 추정했다",
+        "predicate_family": "DRAM_OPERATING_MARGIN_ESTIMATE",
+        "primitive_tags": [
+          "DRAM",
+          "OPERATING_MARGIN",
+          "PROFIT_CONVERSION"
+        ],
+        "product_family": "D램",
+        "question_family_id": "SAMSUNG_DRAM_QUARTERLY_MARGIN_CONVERSION",
+        "question_family_tags": [
+          "SAMSUNG_DRAM_QUARTERLY_MARGIN_CONVERSION",
+          "MEMORY_PROFIT_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 1분기 D램 영업이익률",
+        "subject_id": "005930:DRAM_MARGIN_CONVERSION",
+        "unit": "percent",
+        "value": 78
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-2466c6a8727cd5542c49b574",
+        "economic_mechanism": "공개 증권사 보고서의 2026년 예상 BPS는 메모리 이익 전망이 주당 순자산으로 연결되는 분모를 제공한다.",
+        "exact_quote": "표 1 삼성전자 목표주가 산정 PBR Multiple Valuation\n2025 2026E 비고\nBPS (원) 62,995 94,604 2026년 BPS 적용",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "PUBLIC_BROKER_PDF가 미래 기간과 원/주 단위의 단일 BPS 값을 명시해 FORWARD_BOOK_VALUE 구조화 공백을 직접 채운다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_BOOK_VALUE:FY2026E",
+        "normalized_object": "삼성전자 FY2026E BPS",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "흥국증권은 삼성전자의 2026년 예상 BPS를 주당 94,604원으로 제시했다",
+        "predicate_family": "FORWARD_BOOK_VALUE_ESTIMATE",
+        "primitive_tags": [
+          "BPS",
+          "FORWARD_BOOK_VALUE",
+          "FY2026E"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "SAMSUNG_FORWARD_BOOK_VALUE",
+          "FORWARD_VALUATION_DENOMINATOR"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "삼성전자 2026년 주당순자산 전망",
+        "subject_id": "005930:FORWARD_BOOK_VALUE",
+        "unit": "KRW per share",
+        "value": 94604
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.87,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-2466c6a8727cd5542c49b574",
+        "economic_mechanism": "2026년 예상 PBR은 메모리 이익 급증을 반영한 주가가 예상 순자산 대비 어느 수준에 거래되는지 수치화한다.",
+        "exact_quote": "결산기 2024 2025 2026E 2027E 2028E 결산기 2024 2025 2026E 2027E 2028E\nPer share Data 영업현금 72,983 85,315 215,398 339,655 385,518\nEPS 5,433 7,250 41,002 53,959 59,936 당기순이익 34,451 45,207 238,865 316,084 351,128\nBPS 57,663 62,995 94,604 138,521 184,468 자산상각비 42,631 46,927 49,592 55,053 61,277\nDPS 1,446 1,668 4,195 5,095 5,700 운전자본증감 (1,568) (9,614) (72,701) (29,556) (20,481)\nMultiples(x,%) 매출채권감소(증가) (3,139) (2,535) (34,819) (20,238) (18,632)\nPER 9.8 16.5 4.5 3.5 3.1 재고자산감소(증가) 2,541 (3,591) (19,868) (11,403) (9,208)\nPBR 0.9 1.9 2.0 1.3 1.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "PUBLIC_BROKER_PDF의 기간 헤더와 배수 행이 2026E 단일 PBR 값을 함께 제시해 FORWARD_PB 구조화 공백을 직접 채운다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_PB:FY2026E",
+        "normalized_object": "삼성전자 FY2026E PBR",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "흥국증권의 주요 투자지표 표는 삼성전자의 2026년 예상 PBR을 2.0배로 제시했다",
+        "predicate_family": "FORWARD_PB_ESTIMATE",
+        "primitive_tags": [
+          "PBR",
+          "FORWARD_PB",
+          "FY2026E"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_PB",
+        "question_family_tags": [
+          "SAMSUNG_FORWARD_PB",
+          "FORWARD_VALUATION_MULTIPLE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 2026년 예상 PBR",
+        "subject_id": "005930:FORWARD_PB",
+        "unit": "times",
+        "value": 2.0
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.87,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-2466c6a8727cd5542c49b574",
+        "economic_mechanism": "2026년 예상 EV/EBITDA는 메모리 업사이클에서 형성될 EBITDA 대비 기업가치 배수를 제공한다.",
+        "exact_quote": "결산기 2024 2025 2026E 2027E 2028E 결산기 2024 2025 2026E 2027E 2028E\nPer share Data 영업현금 72,983 85,315 215,398 339,655 385,518\nEPS 5,433 7,250 41,002 53,959 59,936 당기순이익 34,451 45,207 238,865 316,084 351,128\nBPS 57,663 62,995 94,604 138,521 184,468 자산상각비 42,631 46,927 49,592 55,053 61,277\nDPS 1,446 1,668 4,195 5,095 5,700 운전자본증감 (1,568) (9,614) (72,701) (29,556) (20,481)\nMultiples(x,%) 매출채권감소(증가) (3,139) (2,535) (34,819) (20,238) (18,632)\nPER 9.8 16.5 4.5 3.5 3.1 재고자산감소(증가) 2,541 (3,591) (19,868) (11,403) (9,208)\nPBR 0.9 1.9 2.0 1.3 1.0 매입채무증가(감소) (1,539) (3,257) (23,283) 208 6,041\nEV/ EBITDA 3.5 7.5 3.2 1.8 1.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "PUBLIC_BROKER_PDF의 기간 헤더와 배수 행이 2026E 단일 EV/EBITDA 값을 함께 제시해 FORWARD_EV_EBITDA 구조화 공백을 직접 채운다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EV_EBITDA:FY2026E",
+        "normalized_object": "삼성전자 FY2026E EV/EBITDA",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "흥국증권의 주요 투자지표 표는 삼성전자의 2026년 예상 EV/EBITDA를 3.2배로 제시했다",
+        "predicate_family": "FORWARD_EV_EBITDA_ESTIMATE",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "FORWARD_EV_EBITDA",
+          "FY2026E"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "SAMSUNG_FORWARD_EV_EBITDA",
+          "FORWARD_VALUATION_MULTIPLE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2026년 예상 EV/EBITDA",
+        "subject_id": "005930:FORWARD_EV_EBITDA",
+        "unit": "times",
+        "value": 3.2
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.87,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2466c6a8727cd5542c49b574",
+        "economic_mechanism": "HBM 매출 전망이 2026년 27.5조원에서 2027년 62.8조원으로 확대되는 경로는 HBM 상용화가 삼성전자 메모리 가치평가에 기여할 예상 규모를 직접 보여준다.",
+        "exact_quote": "HBM 1.3 1.3 2.7 3.3 4.1 5.5 7.7 10.1 8.6 27.5 62.8",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM이 단순 제품 인증·출하 서술에 머물지 않고 삼성전자에 귀속된 2026E·2027E 매출액으로 제시돼 미래 이익 기대의 제품별 연결고리를 만든다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:REVENUE_TRAJECTORY:2026E_2027E",
+        "normalized_object": "삼성전자 HBM 매출 전망 경로",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E and FY2027E",
+        "predicate": "흥국증권은 삼성전자 HBM 매출을 2026년 27.5조원, 2027년 62.8조원으로 전망했다",
+        "predicate_family": "HBM_REVENUE_FORECAST_TRAJECTORY",
+        "primitive_tags": [
+          "HBM",
+          "REVENUE_FORECAST",
+          "EARNINGS_BRIDGE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SAMSUNG_HBM_REVENUE_TRAJECTORY",
+        "question_family_tags": [
+          "SAMSUNG_HBM_REVENUE_TRAJECTORY",
+          "HBM_EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 매출 전망",
+        "subject_id": "005930:HBM_REVENUE",
+        "unit": "KRW trillion",
+        "value": "KRW 27.5 trillion FY2026E; KRW 62.8 trillion FY2027E"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.87,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2466c6a8727cd5542c49b574",
+        "economic_mechanism": "메모리 매출 전망은 HBM 매출 경로를 포함한 삼성전자 DS 메모리의 가치평가 분자 성장을 수치화한다.",
+        "exact_quote": "Memory 19.2 21.2 26.7 37.1 66.7 91.1 100.4 110.1 104.1 368.3 509.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 매출이 아니라 삼성전자 메모리 사업에 귀속된 2026E·2027E 매출액을 제시해 미래 가치배수의 메모리 earnings bridge를 직접 보완한다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE_TRAJECTORY:2026E_2027E",
+        "normalized_object": "삼성전자 메모리 매출 전망 경로",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E and FY2027E",
+        "predicate": "흥국증권은 삼성전자 메모리 매출을 2026년 368.3조원, 2027년 509.3조원으로 전망했다",
+        "predicate_family": "MEMORY_REVENUE_FORECAST_TRAJECTORY",
+        "primitive_tags": [
+          "MEMORY",
+          "REVENUE_FORECAST",
+          "EARNINGS_BRIDGE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_MEMORY_REVENUE_TRAJECTORY",
+        "question_family_tags": [
+          "SAMSUNG_MEMORY_REVENUE_TRAJECTORY",
+          "MEMORY_EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 매출 전망",
+        "subject_id": "005930:MEMORY_REVENUE",
+        "unit": "KRW trillion",
+        "value": "KRW 368.3 trillion FY2026E; KRW 509.3 trillion FY2027E"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.87,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2466c6a8727cd5542c49b574",
+        "economic_mechanism": "메모리 영업이익 전망은 가격·매출 증가가 삼성전자 DS 메모리의 미래 이익으로 전환되는 규모를 수치화한다.",
+        "exact_quote": "Memory 3.3 3.0 7.6 17.9 46.9 67.1 73.7 81.6 31.9 269.4 376.8",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 이익이 아니라 삼성전자 메모리 사업에 귀속된 2026E·2027E 영업이익을 제시해 미래 배수와 메모리 수익성 사이의 연결고리를 직접 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:OPERATING_PROFIT_TRAJECTORY:2026E_2027E",
+        "normalized_object": "삼성전자 메모리 영업이익 전망 경로",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E and FY2027E",
+        "predicate": "흥국증권은 삼성전자 메모리 영업이익을 2026년 269.4조원, 2027년 376.8조원으로 전망했다",
+        "predicate_family": "MEMORY_OPERATING_PROFIT_FORECAST_TRAJECTORY",
+        "primitive_tags": [
+          "MEMORY",
+          "OPERATING_PROFIT_FORECAST",
+          "EARNINGS_BRIDGE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_MEMORY_OPERATING_PROFIT_TRAJECTORY",
+        "question_family_tags": [
+          "SAMSUNG_MEMORY_OPERATING_PROFIT_TRAJECTORY",
+          "MEMORY_PROFIT_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 영업이익 전망",
+        "subject_id": "005930:MEMORY_OPERATING_PROFIT",
+        "unit": "KRW trillion",
+        "value": "KRW 269.4 trillion FY2026E; KRW 376.8 trillion FY2027E"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.79,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2cfbdc698f1110356f57351e",
+        "economic_mechanism": "스마트폰·PC 출하량이 20% 감소하는 스트레스 시나리오에서도 공급 부족이 해소되지 않는다는 증권사 분석은 LPDDR 병목이 단순 최종수요 강세에만 의존하지 않음을 보여준다.",
+        "exact_quote": "김록호 하나증권 연구원은 연초부터 2026년 글로벌 스마트폰과 PC 출하량이 전년 대비 10% 감소할 것으로 예상했고, 워스트 시나리오로 20% 감소를 가정해도 공급 부족이 풀리지 않을 것으로 봤다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 canonical에 있는 출하 감소 전망과 달리 그보다 큰 20% 감소에도 LPDDR 공급 부족이 지속된다는 스트레스 결론을 비중복으로 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:LPDDR_SHORTAGE_STRESS:FY2026E",
+        "normalized_object": "LPDDR 공급 부족의 최종수요 감소 스트레스 내구성",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "하나증권은 2026년 스마트폰과 PC 출하량이 20% 감소해도 메모리 공급 부족이 풀리지 않을 것으로 분석했다",
+        "predicate_family": "LPDDR_SHORTAGE_DEMAND_STRESS_SCENARIO",
+        "primitive_tags": [
+          "LPDDR",
+          "DEMAND_STRESS",
+          "SUPPLY_SHORTAGE"
+        ],
+        "product_family": "D램",
+        "question_family_id": "SAMSUNG_LPDDR_SHORTAGE_DEMAND_STRESS",
+        "question_family_tags": [
+          "SAMSUNG_LPDDR_SHORTAGE_DEMAND_STRESS",
+          "MEMORY_SHORTAGE_DURABILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 LPDDR 공급 부족의 수요 스트레스 내구성",
+        "subject_id": "005930:DRAM_SUPPLY_DEMAND_RESILIENCE",
+        "unit": "scenario",
+        "value": "Supply shortage persists under 20% smartphone and PC shipment decline scenario"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "3f1534832fa1663fc706723e28788bd2008c05735e13df3543a8ad701a375dc8",
+  "production_score_authority": false,
+  "prompt_hash": "0269cea96f930311e3cd9415ecd5f4ffbb8fc9aa21c91da9a2007aa3faabd7bc",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-714070fe8661f405e17fdc280cbd7d6575be9ef8eea36b8beeb5ba6c2701891b",
+  "response_id": "COLLABRESP-3f17b7937e44d46d33546b584e87d53620ddb1326b4dee1a9b215117ea7c3b45",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

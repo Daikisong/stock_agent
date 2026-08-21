@@ -1,0 +1,33 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "현재 Supervisor context의 unresolved_material_questions는 비어 있고 별도 executable route가 제시되지 않았다. 기존 삼성전자 2026년 1분기 실적발표 HBM query는 검색됐지만 accepted fact lineage로 이어지지 않았으며, 이를 동의어로 반복하지 않는다.",
+      "기존 HBM4 뉴스룸 query의 일부 full-fetch 결과는 as-of 이후 문서이거나 발행일을 검증하지 못했다. 날짜가 확인되지 않은 동일 경로를 새 query로 포장하지 않으며, 이는 source absence를 뜻하지 않는다.",
+      "CompanyGuide structured report 후보는 metadata discovery hint일 뿐 이번 prompt에 새 Supervisor-selected document identity가 없으므로 임의의 broker·파일명 query를 추가하지 않는다."
+    ]
+  },
+  "payload_hash": "507edd76e59bca6b194f1fb475040f3ca5d3bf1ee5c3830f6376e5bf8cd285bd",
+  "production_score_authority": false,
+  "prompt_hash": "78b8778b7a48657b9168b2c061a2719c1a17459f8637310bc3818954f1d04087",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cffe371c5341bb8bb3d299305099253e567d255dda46e3fe53ebd12a87a72759",
+  "response_id": "COLLABRESP-b479f57b53fe7d49504364209989c7e20afd553db39c2185a8134c50a7fe8258",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

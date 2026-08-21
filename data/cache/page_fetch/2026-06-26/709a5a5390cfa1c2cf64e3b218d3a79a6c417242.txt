@@ -1,0 +1,407 @@
+ 
+   
+ 
+ 
+ 
+ 
+2026년 6월 24일 I Global Asset Research 
+주간 강테마(신고가로 보는 글로벌 테마) 
+MLCC 공급 Red Red, 가격 Green Green 
+ 
+주간 테마 리뷰: 메모리/스토리지_부족한 만큼 가격이 오른다 
+지난주 글로벌 증시는 매크로 불확실성을 소화하면서 다시 AI 주도주에 집중했다. 그중에서
+도 메모리/스토리지는 팀 쿡 CEO의 메모리 대란 발언, HDD 쇼티지 등으로 AI 테마 내에
+서 가장 강한 성과를 기록했다. 주간 기준 평균 신고가 빈도수 3.1회, 평균 수익률 
++20.8%로 AI 테마 평균을 상회하며 핵심 테마로 부각됐다. 
+DRAM, NAND, HDD  모두 AI 데이터센터 투자 확대로 수요☞공급 불균형이 심화됐다. 테마 
+내에서 Kioxia(+33.7%), Western Digital(+32.5%), SK하이닉스(+28.5%) 등이 20% 이상 상
+승하며 가장 아웃퍼폼한 주가 흐름을 기록했다. Kioxia는 낸드 가격 상승과 LTA 확대 기대
+감, Western Dig ital은 HDD 투트랙 전략과 높은 AI·클라우드 매출 노출도가 부각됐다. SK하
+이닉스는 주요 고객사향 12단 HBM4E 샘플 출하 소식으로 2027년 HBM4E 양산 물량 선점 
+기대감이 반영됐다. 
+주간 테마 전망: MLCC_전자산업의 쌀에서 AI 시대의 금쌀로 
+가격 인상 기대감이 유효한 MLCC를 주요 테마로 제시한다. AI 서버용 MLCC는 범용 제품
+보다 사양이 높아 가격이 높고, 투입량이 일반 서버 2,000개에서 AI 서버는 25,000개로 증
+가하며 P, Q가 증가한다. Murata 나카지마 노리오 사장은 현재 MLCC 수요가 공급 능력의 
+2배 수준이라 언급하며 강력한 수요 분위기를 재확인했다. 
+AI발 수요 증가가 범용 MLCC에도 긍정적인 영향을 주고있다. AI 서버용 고사양 제품 중심
+으로 생산이 집중되자 범용 제품 생산 여력이 감소하면서 Taiyo Yuden, Walsin 등 기업들이 
+소비자용(범용) MLCC 가격을 각각 +6~13%, +5~15% 인상했다. 
+강력한 수요에 Murata, 삼성전기 등 1티어 기업들의 가동률이 90% 이상 상회하고 있어 증
+설을 통해 초과 수요를 대응하고 있다. 2티어 기업인 Taiyo Yuden은 1QCY26 기준 85%를 
+하회하는 가동률을 기록했으나 2분기 90%, 3 분기 95% 수준을 전망하면서 수요가 전반적
+으로 확산되는 걸 확인할 수 있다. Murata의 800억엔, 삼성전기 750억원 투자 발표에도 불
+구하고 증설 기간이 약 12~18개월 이상 소요돼 공급 부족은 2027년까지 지속될 전망이다. 
+AI발 수요 증가, 고사양 AI 서버용 제품 중심의 생산능력 재배분, 제한적인 물량 증설 속도
+를 고려하면 MLCC는 가격 인상 기대감으로 새롭게 부각될 수 있는 테마로 판단한다. 
+ 
+ 
+  
+ Equity   
+    
+ Compliance Notice   
+ 본 조사자료는 고객의 투자에 정보를 제공
+할 목적으로 작성되었으며, 어떠한 경우에도 
+무단 복제 및 배포 될 수 없습니다. 또한 본 
+자료에 수록된 내용은 당사가 신뢰할 만한 
+자료 및 정보로 얻어진 것이나, 그 정확성이
+나 완전성을 보장할 수 없으므로 투자자 자
+신의 판단과 책임하에 최종결정을 하시기 
+바랍니다. 따라서 어떠한 경우에도 본 자료
+는 고객의 주식투자의 결과에 대한 법적 책
+임소재의 증빙자료로 사용될 수 없습니다. 
+  
+ 
+ 
+  
+ Analyst 강윤형 kangyh@hanafn.com 
+   
+ 
+ 
+  
+ 
+ 
+  글로벌투자전략 
+ 
+ 
+ 
+하나증권•2 
+ 
+  1. 주간 테마 리뷰 
+  메모리/스토리지: 부족한 만큼 가격이 오른다 
+  지난주 글로벌 증시는 FOMC 이후 매크로 불확실성을 소화하면서 다시 AI 주도주에 집중
+했다. 그중에서도 메모리/스토리지는 팀 쿡 CEO의 메모리 대란 발언, HDD(Hard Disk 
+Dirve) 쇼티지, 마이크론 실적 기대감 등으로 AI 테마 내에서 가장 강한 성과를 보였다. 
+메모리/스토리지 테마는 높은 신고가 빈도수와 수익률을 기록하면서 주도 테마 움직임을 
+보였다. 주간 기준 평균 신고가 빈도수 3.1회, 평균 수익률 +20.8%를 기록했다. AI 테마의 
+평균 빈도수 2.5회, 평균 수익률 +13.2%를 상회했고, 메모리/스토리지 제외 시 AI 테마는 
+평균 빈도수 2.3회, 평균 수익률 +11.3%에 그쳤다. 수익률과 신고가 강도를 고려하면 메
+모리/스토리지가 AI 테마 내에서 가장 강한 성과를 보인 핵심 테마로 판단된다. 
+ 
+ 
+도표 1. 메모리/스토리지 신고가 기업 
+국가명 종목명 
+한국 SK하이닉스, 삼성전자 등 
+미국 Western Digital, Micron Technology, Seagate Technlogy, Sandisk 등 
+일본 Kioxia 등 
+자료: FnGuide, Factset, 하나증권 
+ 
+ 
+  메모리는 연산 중 데이터를 임시로 저장해서 계산할 때 잠깐 올려주는 작업 공간인 책상
+으로 생각할 수 있다. 여기에는 DRAM/HBM 등이 속해있다. 스토리지는 데이터를 저장하
+여 책장/창고와 같은 개념이다. NAND/SSD, HDD(Hard Disk Dr ive) 등이 스토리지이다. 
+NAND/SSD와 HDD는 반도체/비반도체로 구분된다. 
+DRAM, NAND, HDD 모두 AI 영향으로 수요·공급 불균형이 지속되고 있다. AI 데이터센터 
+투자 경쟁에 DRAM, NAND 가격이 전년대비 4~6배 이상 급등했다. TrendForce에 따르면 
+HBM이 Bit 기준으로 2025년 말 8% 정도이나 웨이퍼 기준으로 18%를 차지했고 2027년
+에는 Bit 비중 13%에 웨이퍼 30%를 차지할 것으로 전망한다. 이렇게 HBM이 생산 확대
+되면서 범용 DRAM 공급이 부족해져 가격이 상승했다.  
+NAND는 AI 수요로 NAND 계약 가격이 2분기에 +70~75% 증가할 것으로 전망된다. 키
+옥시아는 낸드 가격 상승 국면에도 신중한 설비투자 전략을 결정하면서 공급 부족이 지속
+될 것으로 예상된다. FY2026~2028 연평균 4,700억엔으로 전년대비 증가했으나 FY2023 
+5,104억엔 대비 10% 낮은 수준을 제시하면서 공급 과잉을 사전 차단하는 것으로 보인다. 
+HDD도 AI 추론 및 에이전틱 AI로 클라우드 서비스 업체의 HDD 수요가 급증했으나 공급
+이 제한되면서 연일 강세를 보이고 있다. 연간 수요가 40~50%씩 성장할 것으로 전망되
+나 공급 증가는 30~35% 수준으로 2026~2028년에 300~400EB(엑사바이트) 규모가 부족
+할 것으로 추산된다. Western Digital의 최근 실적 발표에서 2027~2028년까지 LTA 체결
+을 하면서 강력한 HDD 수요를 확인할 수 있었다. 
+테마 내 7개 종목 중 Kioxia(+33.7%), Western Digital(+32.5%), SK하이닉스(+28.5%) 등
+ 
+  글로벌투자전략 
+ 
+ 
+ 
+하나증권•3 
+이 20%를 넘는 수익률을 기록했다. Kioxia는 낸드 가격 상승세와 지난 2일 진행한 인베스
+터 데이가 재부각되면서 상승했다. 데이터센터 및 엔터프라이즈 매출 비중이 FY2028까지 
+60% 이상, 2028년 예상 출하량의 50%를 LTA로 커버 계획 발표 모멘텀이 지속됐다. 
+HDD 기업인 Western Digital(+32.5%, 이하 WDC)와 Seagate Technology(+14.9%, 이하 
+STX)가 HDD 쇼티지 전망에 상승했다. 수익률 차이는 매출 비중과 기술 로드맵 차이에서 
+발생했다. WDC는 AI·클라우드 매출 노출도가 90%(STX 80%) 이고 ePMR/HAMR 투트랙 
+및 UltraSMR 확대 전략으로 수익성이 극대화되면서 데이터센터 CapEx 수혜가 더 직접적
+이다. 이에 단기 마진 극대화가 부각된 WDC가 더 높은 수익률을 기록했다. 
+SK하이닉스(+28.5%)는 주요 고객사에 12단 HBM4E 샘플 출하 소식에 메모리 3사 중에서 
+가장 높은 수익률을 기록했다. 하반기 출하 일정에서 2027년 출시 예정인 ‘베라 루빈 울
+트라’에 탑재될 HBM4E 물량에 대응하기 위해 예상보다 일찍 샘플을 공급했다. 삼성전자
+가 지난 5월 HBM4E 샘플 출하한 만큼 2027년 양산 물량 선점 경쟁이 본격화되고 있다. 
+ 
+ 
+도표 2. 메모리/스토리지 신고가 기업 정리 
+종목명 기업 개요 및 신고가 이유 
+Kioxia Holdings 
+(285A.JP) 
+• 일본 대표 NAND Flash 및 SSD 기업으로 지난 12일 일본 시가총액 1위 등극 후 16일 50조엔 상회 
+• NAND 계약 가격 급등과 AI 추론 확산에 따른 eSSD 수요 증가 수혜. 2028년 예상 출하량의 50%를 LTA로 커버하겠다 계획 제시 
+Western Digial 
+(WDC.US) 
+• HDD 중심 기업으로 ePMR/HAMR 투트랙 및 UltraSMR 확대 전략으로 고객의 기술 전환 리스크 줄이기 위해 ePMR과 HAMR 병행 
+• AI 추론과 데이터센터 수요로 HDD 수요가 연 40~50% 증가, 공급 30~35% 증가로 쇼티지 전망 
+SK하이닉스 
+(000660.KS) 
+• 글로벌 DRAM, NAND, HBM 메모리 기업으로 2025년 말 엔비디아 HBM4 물량 배정에서 50%대 중반 추정 
+• 주요 고객사에 12단 HBM4E 샘플 출하 소식에 신고가 돌파 
+Micron Technology 
+(MU.US) 
+• 메모리 3사 기업 중 미국 대표 메모리 기업으로 오는 24일 실적 발표 예정 
+• 3QFY26 Preview 매출액 350.2억 달러(YoY +276.5%), EPS 20.05 달러(YoY +949%) 전망 
+Seagate Technology 
+(STX.US) 
+• HDD 중심 기업으로 HAMR 플랫폼 기반 제품에 집중. 데이터센터향 nearline HDD와 HAMR 기반 Mozaic 플랫폼을 주력으로 사업 영위 
+• AI 추론과 데이터센터 수요로 HDD 수요가 연 40~50% 증가, 공급 30~35% 증가로 쇼티지 전망 
+주: 코스피 200, 코스닥 150, S&P 500, 니케이 225 종목 중 
+자료: 하나증권 
+ 
+ 
+  글로벌투자전략 
+ 
+ 
+ 
+하나증권•4 
+ 
+ 
+도표 3. DRAM, NAND, HDD 구분  도표 4. DRAM, NAND 가격 추이 
+ DRAM NAND HDD 
+ 
+0
+10
+20
+30
+40
+50
+6/2025 8/2025 10/2025 12/2025 2/2026 4/2026 6/2026
+($) DDR5 16Gb DDR4 8Gb QLC 1Tb TLC 1Tb TLC 512Gb
+ 
+분류 메모리/반도체 스토리지/반도체 스토리지/비반도체 
+역할 
+연산 중 필요한 데이
+터를 임시로 저장하
+고 빠르게 불러옴 
+데이터를 전기적으
+로 저장하는 반도체 
+기반 저장장치 
+자기 디스크에 데이터 
+저장하는 대용량 저장
+장치 
+수요 측면 AI GPU용 HBM 수요 
+증가 
+AI 추론용 고속 스토
+리지 수요 증가 
+AI 데이터 보관용 대용
+량 스토리지 수요 증가 
+공급 측면 HBM이 범용 DRAM 
+공급 잠식 
+보수적 투자로 공급 
+제한 
+증설 제한으로 nearline 
+HDD 공급 부족 
+관련 기업 삼성전자, Micron,  
+SK하이닉스 등 
+Kioxia, Micron,  
+삼성전자, Sandisk, 
+SK하이닉스 등 
+Seagate Technology, 
+Western Digital 등 
+주: NAND는 기술적으로 비휘발성 메모리 반도체이나 SSD 형태로 데이터 저장 기능 수행 
+자료: FactSet, 하나증권 
+ 자료: Bloomberg, 하나증권 
+ 
+ 
+도표 5. 웨이퍼 및 Bit 내 HBM 비중 
+15
+18
+22
+30
+5
+8 9
+13
+0
+5
+10
+15
+20
+25
+30
+35
+2024 2025 2026F 2027F
+(%) 웨이퍼 기준 HBM 비중 Bit 기준 HBM 비중
+ 
+자료: TrendForce, 하나증권 
+ 
+  글로벌투자전략 
+ 
+ 
+ 
+하나증권•5 
+ 
+  2. 주간 테마 전망 
+  MLCC: 전자산업의 쌀에서 AI 시대의 금쌀로 
+  가격 인상 기대감이 유효한 MLCC를 차기 테마로 제시한다. AI 서버용 MLCC 수요가 증가
+하면서 주요 기업들이 AI 서버용 MLCC 중심으로 생산 확대했고, 범용 MLCC 생산 여력 
+감소로 가격 협상력 강화 모멘텀이 부각되고 있다. 
+MLCC는 적층세라믹콘덴서로 전기를 짧게 저장했다가 방출하고 전원 노이즈를 잡아주는 
+수동부품이다. 회로에 늘 일정한 양의 전기가 흐르도록 조율하는 댐의 역할, 불규칙하게 
+흔들리는 노이즈를 걸러내는 필터 역할을 한다. MLCC는 스마트폰, PC, 전장 등 모든 전자
+기기에 들어가고 최근에는 AI 서버용 MLCC가 주가 상승 요인으로 작용하며 글로벌 
+MLCC 기업들의 주가 상승을 견인하고 있다. 
+MLCC는 AI로 인해 P, Q가 상승하는 국면에 있다. AI 서버용은 초소형, 초고용량, 고온, 고
+전압 등 공정 난이도가 더 높기 때문에 범용 MLCC보다 최소 3배 이상 비싸고, 현재 AI 
+서버용 MLCC 초과 수요로 Murata Manufacturing(이하 Murata), Taiyo Yuden, 삼성전기 
+등 가격 상승 움직임이 포착되고 있다. Murata 나카지마 노리오 사장은 현재 MLCC 수요
+가 공급능력의 2배 수준이라 언급하면서 강력한 수요 현황을 확인했다. 
+AI 서버에서 MLCC 투입량이 대폭 증가하면서 절대적인 수요량이 급증하고 있다. 일반 서
+버에서는 MLCC가 2,000개가 필요한 반면 AI 서버에서는 약 25,000개로 증가하고 랙 단위
+로 볼 경우 Blackwell NVL72 랙 기준 44만개로 시장에서 추산한다. Murata와 Taiyo 
+Yuden은 2030년까지 AI 서버용 MLCC가 연평균 30~32% 성장할 것으로 예상하면서 서
+버향 MLCC 수요가 지속적으로 증가할 것으로 기대된다. 
+AI 서버용 MLCC 외에도 범용 MLCC 기대감도 시장에 확산되고 있다. AI 서버용 MLCC 중
+심으로 생산 확대하는 과정에서 범용 MLCC 생산 여력이 감소했고, 고객들의 선제적 재고 
+확보 움직임에 범용 제품 중심으로 가격 인상 움직임이 포착되고 있다. 지난 4월 Taiyo 
+Yuden은 소비자용 제품 가격을 +6~13%, 5월 Walsin은 소비자용 MLCC를 +5~15% 인
+상했다. 
+현재 MLCC 티어 1 기업인 Murata, 삼성전기의 가동률이 풀가동에 가까운 90%를 상회
+하고 있어 추가 증설을 통한 수요 대응 전략을 펼치고 있다. Murata는 800억엔 추가 투자
+를 통해 연간 생산능력 20% 확대할 계획을, 삼성전기는 필리핀 공장에 750억원 규모 투
+자로 MLCC 증설 작업을 발표 및 진행했다. 추가 증설 발표에도 불구하고 약 12~18개월 
+소요되는 긴 증설 기간에 공급 부족은 2027년까지 지속될 전망이다. 
+AI 서버용 MLCC 시장의 80%를 차지하는 티어 1 기업들의 생산 여력이 수요를 못 쫓아
+가면서 티어 2 기업인 Taiyo Yuden 까지 낙수효과가 나타나고 있다. MLCC 가동률이 
+1QCY26 기준 85%를 하회했으나 2분기 현재 90%, 3QCY26에는 95% 수준을 전망하면
+서 강력한 수요가 확인됐다. 그리고 지난 17일 Taiyo Yuden CEO  사세 가쓰야는 하이퍼
+스케일러 동향에 따라 기존 MLCC Capa 성장률 10%를 15%로 상향할 수 있다 언급하면
+서 추가적인 증설로 Q의 확대가 기대된다. 
+AI발 수요 증가, 고사양 AI 서버용 제품 중심의 생산능력 재배분, 제한적인 물량 증설이 
+맞물리면서 MLCC 가격 인상 기대감은 당분간 지속될 가능성이 높다. 지난 19일 글로벌 
+ 
+  글로벌투자전략 
+ 
+ 
+ 
+하나증권•6 
+증시가 혼조세 보인 가운데 한국, 일본 MLCC 기업들이 신고가를 기록했다. 이에 MLCC 
+테마를 AI 밸류체인 내에서 메모리/스토리지에 이어 새롭게 부각될 수 있는 테마로 제시
+한다. 
+ 
+ 
+도표 6. AI 서버용 MLCC 시장 점유율  도표 7. 주요 기업 가동률 
+Murata
+45%
+삼성전기
+40%
+Taiyo 
+Yuden, TDK, 
+Yageo 등
+15%
+ 
+ 
+40
+60
+80
+100
+1Q23 3Q23 1Q24 3Q24 1Q25 3Q25 1Q26
+(%) 삼성전기 Murata Taiyo Yuden
+ 
+자료: 각 사, 하나증권  자료: 각사, 하나증권 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  글로벌투자전략 
+ 
+ 
+ 
+하나증권•7 
+ 
+ 
+도표 8. 주요 이벤트 
+날짜 주요 이벤트 주요 이벤트 
+6/24(수) • 실적 발표: 마이크론 테크놀로지 
+• BOJ 6월 금정위 요약본 공개 
+• 3QFY26 Preview 매출액 350.2억 달러(YoY +276.5%), EPS 20.05 달러(YoY 
++949%) 전망 
+• 장기공급계약(SCA/LTA) 관련 코멘트 주목 요망 
+6/25(목) • 우크라이나 재건 회의(URC) 2026(~26) 
+• 미국 5월 PCE, PCE 근원 
+• PCE 물가지수(MoM, YoY): 이전치 +0.4%, +3.8% 
+• PCE 근원 물가지수(MoM, YoY): 이전치 +0.2%, +3.3% 
+6/26(금) 
+• 미국 러셀 1000/2000/3000 리밸런싱 
+• 미국 6월 미시간 소비자신뢰, 기대, 경기현황[F] 
+• 미국 6월 미시간 1년, 5~10년 인플레이션[F] 
+• 6월 29일부터 리밸런싱 반영된 지수 구성으로 거래 
+• 러셀 1000(대형주), 2000(소형주), 3000(미국 시장) 
+• 6월 리컨스티튜션 때 소형주 편입/편출, 1000 ↔ 2000 이동, Growth/Value 
+스타일 지수 비중 변화 등 수급 변화 이벤트 
+• 스페이스X(SPCX.US) 러셀 지수 편입 대상(러셀 1000/ 3000)  
+6/29(월) • 국내 외환시장 24시간 개장 시범 거래 
+• MSCI 선진국 지수 편입 위한 외환시장 구조 개선의 일환 
+• 7/6 본 거래 개시 목표 
+6/30(화) • 6월 DRAM, NAND FLASH 계약 가격 발표 
+• 5월 PC DRAM: 1Q26 +110~115%, 2Q26 +45~50% → 3Q26 +8~13% 전망 
+• 5월 NAND: SLC MoM +3~16%, MLC MoM +10% 
+주: 현지 시간 기준 
+자료: 하나증권 
+ 
+ 
+  글로벌투자전략 
+ 
+ 
+ 
+하나증권•8 
+ 
+Appendix: 6/15~6/19. 한국, 미국, 일본 신고가(시가총액 순) 
+한국 미국 일본 
+종목명 업종 종목명 업종 종목명 업종 
+삼성전자 정보기술 Micron Technology, Inc. 정보기술 Kioxia Holdings Corporation 정보기술 
+SK하이닉스 정보기술 Advanced Micro Devices, 
+Inc. 정보기술 Mitsubishi UFJ Financial 
+Group, Inc. 금융 
+SK스퀘어 정보기술 Intel Corporation 정보기술 Tokyo Electron Ltd. 정보기술 
+삼성전기 정보기술 Applied Materials, Inc. 정보기술 FAST RETAILING CO., LTD. 자유소비재 
+삼성생명 금융 Lam Research Corporation 정보기술 Sumitomo Mitsui Financial 
+Group, Inc. 금융 
+KB금융 금융 Caterpillar Inc. 산업재 Advantest Corp. 정보기술 
+SK 에너지 GE Aerospace 산업재 Murata Manufacturing Co., 
+Ltd. 정보기술 
+하나금융지주 금융 Morgan Stanley 금융 Mizuho Financial Group, 
+Inc. 금융 
+대한항공 산업재 KLA Corporation 정보기술 Panasonic Holdings 
+Corporation 자유소비재 
+신세계 자유소비재 Sandisk Corporation 정보기술 Disco Corporation 정보기술 
+롯데쇼핑 경기관련소비재 Goldman Sachs Group, Inc. 금융 ORIX Corporation 금융 
+디앤디파마텍 건강관리 Western Digital 
+Corporation 정보기술 IBIDEN CO., LTD. 정보기술 
+피에스케이 정보기술 Citigroup Inc. 금융 MS&AD Insurance Group 
+Holdings, Inc. 금융 
+HPSP 정보기술 Seagate Technology 
+Holdings PLC 정보기술 Daiichi Life Group. Inc. 금융 
+심텍 정보기술 Howmet Aerospace Inc. 산업재 Ajinomoto Co., Inc. 필수소비재 
+현대백화점 경기관련소비재 Cummins Inc. 산업재 Lasertec Corp. 정보기술 
+현대해상 금융 Bank of New York Mellon 
+Corp 금융 Resona Holdings, Inc. 금융 
+에스엘 자유소비재 Monster Beverage 
+Corporation 필수소비재 Nomura Holdings, Inc. 금융 
+HL만도 자유소비재 Hilton Worldwide Holdings 
+Inc. 자유소비재 Sumitomo Mitsui Trust 
+Group, Inc. 금융 
+후성 소재 Teradyne, Inc. 정보기술 SCREEN Holdings Co., Ltd 정보기술 
+  W.W. Grainger, Inc. 산업재 Ebara Corporation 산업재 
+  Dominion Energy Inc 유틸리티 Daiwa Securities Group Inc. 금융 
+  Delta Air Lines, Inc. 산업재 Taiyo Yuden Co., Ltd. 정보기술 
+  Rockwell Automation, Inc. 산업재 Asahi Kasei Corporation 소재 
+  Edwards Lifesciences 
+Corporation 건강관리 T&D Holdings, Inc. 금융 
+  State Street Corporation 금융 Kirin Holdings Co. Ltd. 필수소비재 
+  Westinghouse Air Brake 
+Technologies Corporation 산업재 Japan Exchange Group, Inc. 금융 
+  Humana Inc. 건강관리 NGK Corp. 산업재 
+  Interactive Brokers Group, 
+Inc. Class A 금융 Yokohama Financial Group, 
+Inc. 금융 
+  Live Nation Entertainment, 
+Inc. 커뮤니케이션 서비스 Chiba Bank, Ltd. 금융 
+자료: FnGuide, Factset, 하나증권 
+ 
+ 

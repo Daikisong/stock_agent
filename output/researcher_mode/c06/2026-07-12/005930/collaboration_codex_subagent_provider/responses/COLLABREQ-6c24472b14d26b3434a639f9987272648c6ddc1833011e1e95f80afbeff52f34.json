@@ -1,0 +1,125 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-c006035ba7693df93f76d5f6",
+        "rationale": "현재 graph의 공식 2026년 1분기 메모리 매출·실적 surprise, HBM4 양산·11.7Gbps 및 다른 기업·주가·투자 내용은 중복 또는 objective 범위 밖이라 제외했다. 후속 시점의 삼성전자 DRAM 점유율 보도와 그 보도 신뢰도를 직접 제한하는 잠재 이해상충·개인의견 공시를 함께 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.62,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c006035ba7693df93f76d5f6",
+        "economic_mechanism": "Financial Express는 삼성전자가 2026년 1분기 DRAM 점유율 38%로 SK하이닉스 29%를 앞서 1위를 되찾았다고 기술한다. 이는 2025년 1분기 35.8%였던 기존 점유율 사실의 후속 시점이지만, 점유율 산정기관과 매출·출하량 기준이 기사에 없어 보도치 이상으로 확정하지 않는다.",
+        "exact_quote": "Samsung actually reclaimed the top spot in DRAM market share in the first quarter of 2026, with 38% share against SK hynix’s 29%.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 경쟁 지위의 최신 후속 시점과 정량 점유율을 제시해 메모리 사업 정보의 현재성을 높인다. 다만 산정기관·점유율 기준이 없어 일반 웹 보도치로 신뢰도를 할인한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:MARKET_SHARE:2026-Q1",
+        "normalized_object": "2026년 1분기 삼성전자 DRAM 시장점유율",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "Financial Express는 삼성전자가 2026년 1분기 DRAM 점유율 38%로 1위를 되찾았다고 보도했다",
+        "predicate_family": "SAMSUNG_DRAM_MARKET_SHARE_2026Q1",
+        "primitive_tags": [
+          "DRAM",
+          "MARKET_SHARE",
+          "2026_Q1",
+          "SECONDARY_REPORT"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SAMSUNG_DRAM_MARKET_SHARE_2026Q1",
+        "question_family_tags": [
+          "SAMSUNG_DRAM_MARKET_SHARE_2026Q1",
+          "MEMORY_COMPETITIVE_POSITION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 1분기 DRAM 시장점유율",
+        "subject_id": "005930:MEMORY:DRAM:MARKET_SHARE:2026-Q1",
+        "unit": "% DRAM market share",
+        "value": 38
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-c006035ba7693df93f76d5f6",
+        "economic_mechanism": "기사 자체는 운영자·직원·기고자가 논의된 발행사 관련 증권 포지션을 보유할 수 있고 내용과 데이터 해석은 작성자의 개인 의견이라고 공시한다. 따라서 기사에서 출처가 별도로 명시되지 않은 삼성전자 DRAM 점유율·실적·기술 비교의 독립성과 검증 수준에 직접 한계가 있다.",
+        "exact_quote": "The website managers, its employee(s), and contributors/writers/authors of articles have or may have an outstanding buy or sell position or holding in the securities, options on securities or other related investments of issuers and/or companies discussed therein. The content of the articles and the interpretation of data are solely the personal views of the contributors/ writers/authors.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "이 문서의 삼성전자 관련 수치가 별도 1차 출처 없이 제시돼 있어, 작성·운영 주체의 포지션 보유 가능성과 개인 의견 공시는 문서 전체의 정보 신뢰도를 직접 제한한다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:SOURCE_CONFLICT_DISCLOSURE:SGDOC-C006035B",
+        "normalized_object": "기사 작성·운영 주체의 잠재 이해상충과 개인 의견 한계",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-07-08 기사",
+        "predicate": "Financial Express 기사는 운영자·작성자의 관련 증권 포지션 보유 가능성과 내용·데이터 해석이 개인 의견임을 공시했다",
+        "predicate_family": "ARTICLE_CONFLICT_AND_PERSONAL_VIEW_DISCLOSURE",
+        "primitive_tags": [
+          "POTENTIAL_CONFLICT_OF_INTEREST",
+          "PERSONAL_VIEWS",
+          "SOURCE_DISCLOSURE"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ARTICLE_CONFLICT_AND_PERSONAL_VIEW_DISCLOSURE",
+        "question_family_tags": [
+          "ARTICLE_CONFLICT_AND_PERSONAL_VIEW_DISCLOSURE",
+          "SOURCE_QUALITY_LIMITATION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "Financial Express 기사의 이해상충·개인의견 공시",
+        "subject_id": "005930:SOURCE:FINANCIALEXPRESS:CONFLICT_DISCLOSURE:SGDOC-C006035B",
+        "unit": "source-quality disclosure",
+        "value": "possible securities positions; content and data interpretation are contributors’ personal views"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "c9c8d2f0226c21680ea28d1247fd8e992b9f688a183cb179594e1d9f440d63d8",
+  "production_score_authority": false,
+  "prompt_hash": "cffbaa436f7217e454d9c99c6d6e717fe3d85ca13c2d5950ef1d6b93f0ccecf9",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6c24472b14d26b3434a639f9987272648c6ddc1833011e1e95f80afbeff52f34",
+  "response_id": "COLLABRESP-e15fcc04dcb5de3481bf565d9b2a6f6faa8c2497a893e34266fe56343ec2b8d2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

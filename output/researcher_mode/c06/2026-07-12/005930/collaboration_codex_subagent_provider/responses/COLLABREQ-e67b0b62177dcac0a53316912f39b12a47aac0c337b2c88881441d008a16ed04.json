@@ -1,0 +1,34 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "current score_gap_context에서 prior_structured_source_gap은 COMPLETE이고 모든 component가 RESEARCH_READY이며 missing role과 pending reason이 없습니다.",
+      "현재 남은 SUPERVISOR_SYNTHESIS_LINEAGE_PENDING은 새 source 검색으로 해결할 evidence gap이 아니라 Research Supervisor 재개가 필요한 orchestration 상태입니다.",
+      "과거 fetch·provider failure의 transport 개수만을 이유로 이미 실행한 19개 query를 바꾸어 반복하지 않았으며, semantic completion을 transport count로 뒤집지 않았습니다.",
+      "새 query를 발명하지 않는 이 응답에도 점수·Stage 권한은 없습니다."
+    ]
+  },
+  "payload_hash": "db831b2c963df959cdd1f17a210a91d4424057ceebb4eaf6d2bf4af57272544e",
+  "production_score_authority": false,
+  "prompt_hash": "3595780b914cb38647f447b3493903885ffaced5790def1fd962bf8294f42a5e",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e67b0b62177dcac0a53316912f39b12a47aac0c337b2c88881441d008a16ed04",
+  "response_id": "COLLABRESP-1ce981e86b8b07eb7152b01f10f9ea55b66285a5b1a2d36ba31b661c53725773",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

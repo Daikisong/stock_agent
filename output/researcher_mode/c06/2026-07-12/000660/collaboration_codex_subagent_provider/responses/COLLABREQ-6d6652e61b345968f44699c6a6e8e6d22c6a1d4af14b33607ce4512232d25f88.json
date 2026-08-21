@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "440f751adf84a9ff0717a9e567773b20d2339cf7b0e4323e7233fbbdc95ae950",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-c11e4bef01a2237ec944c629",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "기준일 이후 2분기 행사 기사이며 제3자 매체라 현재 판단에 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-177c048bf11601d6fadfc79d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "삼성전자 공식 실적 자료로 대상 회사가 다르며 후보가 요청한 SK하이닉스 원천을 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2f464c908a0291947afd4682",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "SK하이닉스 실적을 보도한 제3자 기사로 공식 실적 발표·공시 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-61956f33692bda9de02c8f65",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "다른 회사 프로필의 부수적 SK하이닉스 언급으로 요청 원천과 목적에 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-802bb8c948ffd04db1d5d5b7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "장비 구매를 다룬 제3자 기사로 발행사 공식 실적·공시 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6fdf7a2eaa707feb23192ca4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "삼성전자 노사 기사로 대상 회사의 HBM 이익·FCF 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-93128dc1bca63b750e10c943",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "과거 실적을 재전한 제3자 기사로 요청된 공식 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9378087b8fdb22ff7b0c96e7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "다른 소재업체 프로필로 대상 발행사의 가치평가 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-f0f75d1e554aeda4a3ec1a20",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.06,
+        "rationale": "SK하이닉스의 KIND 반기보고서지만 2025년 상반기 자료여서 현재 2026년 HBM 수익·현금흐름 공백을 직접 해결하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-39af8c23c274b4521ce1533f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "다른 장비업체 대표 프로필인 제3자 기사로 요청 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4367ff77688335a9f693a6e5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "삼성전자 중심의 제3자 산업 기사로 SK하이닉스 공식 원천을 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c5982d5df08768be59bf061f",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.01,
+        "rationale": "KIND 사업보고서이지만 제목·내용상 다른 발행사 자료라 대상 회사 목적에 부적합하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에는 요청된 공식 원천이면서 현재 목적을 해소할 material 후보가 없다."
+    ]
+  },
+  "payload_hash": "5b4f4294bdefe31299b226a4d9fe5e8f3c53b30e96055d57319faa7ba71bbfca",
+  "production_score_authority": false,
+  "prompt_hash": "8489c24700ff5f0a1a82c1d066c77a6ffd292d835ac317932a16544555ff057e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6d6652e61b345968f44699c6a6e8e6d22c6a1d4af14b33607ce4512232d25f88",
+  "response_id": "COLLABRESP-7a97e337be41d1d263a596fe213b0f6cab62776151108b967c29cb9346d99b68",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

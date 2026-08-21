@@ -1,0 +1,53 @@
+{
+  "output_schema_hash": "365eb686ff1927214d582d41845966dfa63065e3dcf134d04d123454d7e188a6",
+  "payload": {
+    "allowed_range": [
+      6.0,
+      8.0
+    ],
+    "anchor_comparisons": [
+      "positive anchor ORDTRANSFER-c54e0c02076da1642b64c8df와 비교해 확인된 positive는 유지하되 미확인 항목만 상단에서 제한한다",
+      "counter anchor ORDTRANSFER-c2ec77e0538ebb9af9ce204b와 비교하면 현재 source-backed evidence가 0점 상태보다 강하다"
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca"
+    ],
+    "disagreements": [
+      "분석가보다 귀속·계약·지속성의 미확인 항목을 더 크게 본다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 7,
+    "rationale": "고객 집중과 대규모 투자, HBM-only margin·현금회수·계약조건 미공개가 높은 multiple의 지속성을 제한한다. 그럼에도 HBM 매출이 실제 두 배 넘게 성장해 record result에 기여했고 생산기반 확장도 이어진다.",
+    "support_fact_ids": [
+      "EFACT-793b1cbbdc783d3329b6d6c8",
+      "EFACT-e7b5a6f6472ae963fe820932",
+      "EFACT-fbebe9bd766d3ccabf23232b"
+    ],
+    "why_not_higher": "고객 집중과 대규모 투자, HBM-only margin·현금회수·계약조건 미공개가 높은 multiple의 지속성을 제한한다.",
+    "why_not_lower": "HBM 매출이 실제 두 배 넘게 성장해 record result에 기여했고 생산기반 확장도 이어진다."
+  },
+  "payload_hash": "1499db48d3f3036e2ec4001afe186b49d9202c94952c61927ff0dbfc47912f6a",
+  "production_score_authority": false,
+  "prompt_hash": "370fa94d6e87ec73ad5f6a190766ab90071ed2f1aeaf99de683075df27af6fd6",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-33680919ed5d3c254a1e4fb001fa860fdcac39a5807f2a5b5cd3c69d40d8e6e9",
+  "response_id": "COLLABRESP-5933fd14ad0a231e6acaac8fc34b20dd28b7b382b92fba31c48b841caba6b712",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

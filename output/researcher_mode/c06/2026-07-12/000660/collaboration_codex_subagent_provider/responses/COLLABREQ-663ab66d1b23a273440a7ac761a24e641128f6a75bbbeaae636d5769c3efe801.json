@@ -1,0 +1,114 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "국내 상장사 중 자체 웨이퍼 팹을 보유해 설비집약도, 감가상각, 수율과 가동률의 이익 민감도를 비교할 수 있는 제조업 peer다. 메모리 수급 자체의 직접 peer는 아니므로 파운드리 사업 차이를 명시적으로 할인한다.",
+        "confidence": 0.78,
+        "material_differences": [
+          "메모리와 HBM 제조사가 아니라 특화 공정 파운드리이므로 DRAM·NAND ASP와 bit shipment를 직접 공유하지 않는다",
+          "고객 위탁생산 모델과 SK하이닉스의 자체 메모리 제품 판매 모델은 가격 결정과 재고 위험이 다르다",
+          "사업 규모·공정 세대·고객 구성이 달라 절대 배수는 설비집약 반도체 제조업의 보조 기준으로만 해석해야 한다"
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "자체 반도체 팹의 설비투자·감가상각·가동률·수율이 이익과 현금흐름을 좌우한다",
+          "B2B 반도체 고객의 재고조정과 제품 가격·믹스 변화에 따른 업황 순환에 노출된다",
+          "생산능력 제약과 선단·특화 공정 투자 시점이 수익성 및 자본효율에 영향을 준다"
+        ]
+      },
+      {
+        "comparability_rationale": "직접 메모리 peer는 아니지만 HBM 생산능력 확대와 첨단 패키징 투자라는 핵심 경제 동인을 가장 직접적으로 공유하는 국내 상장 장비 peer다. 장비 수주 모델 차이를 전제로 HBM 투자 사이클의 보조 비교에 사용한다.",
+        "confidence": 0.72,
+        "material_differences": [
+          "메모리를 직접 생산·판매하지 않는 장비업체여서 메모리 ASP와 재고 평가손익에 직접 노출되지 않는다",
+          "수주형 장비 매출과 소수 고객 투자 일정의 영향이 커 SK하이닉스의 대량 제품 판매 모델과 다르다",
+          "팹 감가상각보다 장비 제품 믹스와 고객 집중도가 수익성을 더 크게 좌우한다"
+        ],
+        "peer_name": "한미반도체",
+        "peer_symbol": "042700",
+        "shared_economic_drivers": [
+          "HBM 후공정 장비 수요가 AI 가속기와 고대역폭메모리 증설 사이클에 연동된다",
+          "고객 설비투자 계획과 장비 수주·납품 시점이 매출 가시성과 이익 변동을 좌우한다",
+          "반도체 고성능화와 첨단 패키징 투자 확대가 중장기 성장의 공통 수요 동인이다"
+        ]
+      },
+      {
+        "comparability_rationale": "메모리 후공정과 패키징의 물량·가동률·설비투자 민감도를 공유해 AI 메모리 생산 확대의 제조업 파급을 비교할 수 있다. 전공정 통합 메모리사와 OSAT의 가치사슬 차이는 별도로 반영한다.",
+        "confidence": 0.7,
+        "material_differences": [
+          "웨이퍼 전공정과 메모리 제품 가격을 통제하지 않는 OSAT 사업으로 SK하이닉스보다 부가가치 사슬의 후단에 있다",
+          "고객 위탁 물량과 단가에 대한 의존도가 높아 HBM 자체 ASP·계약 구조와 직접 비교하기 어렵다",
+          "규모·재무레버리지·해외 생산거점 구성이 달라 배수의 절대 수준보다 후공정 사이클 보조 기준에 적합하다"
+        ],
+        "peer_name": "하나마이크론",
+        "peer_symbol": "067310",
+        "shared_economic_drivers": [
+          "메모리 반도체 출하량과 후공정·패키징 수요가 매출 및 설비 가동률에 영향을 준다",
+          "후공정 생산능력 투자와 감가상각 부담이 현금흐름 및 자본효율을 좌우한다",
+          "AI 메모리와 고성능 패키징 수요 확대가 제품 믹스 개선의 공통 동인이다"
+        ]
+      },
+      {
+        "comparability_rationale": "메모리 선단공정과 생산능력 투자의 방향을 공유하는 국내 상장 전공정 장비 peer로, SK하이닉스의 Capex 사이클과 자본집약적 성장 국면을 교차 확인하는 보조 비교기업이다.",
+        "confidence": 0.64,
+        "material_differences": [
+          "메모리 제품 판매사가 아닌 전공정 장비업체로 메모리 ASP와 bit shipment에 직접 노출되지 않는다",
+          "고객 투자 프로젝트별 수주와 매출 인식 변동성이 메모리 제조사의 반복 제품매출과 다르다",
+          "장비 포트폴리오와 고객 집중도가 높아 SK하이닉스의 제품·고객 믹스와 동일시할 수 없다"
+        ],
+        "peer_name": "원익IPS",
+        "peer_symbol": "240810",
+        "shared_economic_drivers": [
+          "DRAM·NAND 선단공정 전환과 신규 팹 투자가 반도체 장비 수요를 결정한다",
+          "고객 Capex의 시기와 강도가 수주잔고·매출 인식·영업레버리지에 영향을 준다",
+          "미세공정 난이도 상승과 생산능력 확충이 장기 기술투자의 공통 동인이다"
+        ]
+      },
+      {
+        "comparability_rationale": "직접 메모리 peer는 아니지만 국내 상장 반도체 제품회사로서 기술 기반 제품 믹스, 고객 채택, 재고 사이클의 영향을 비교할 수 있다. 자산경량 팹리스와 메모리 제조업의 차이를 큰 할인 요인으로 둔다.",
+        "confidence": 0.58,
+        "material_differences": [
+          "메모리·HBM이 아닌 시스템반도체 설계 중심이며 주요 전방시장이 디스플레이로 다르다",
+          "팹리스 모델이라 대규모 웨이퍼 팹 Capex와 감가상각 구조를 공유하지 않는다",
+          "고객 집중도와 파운드리 외주 원가가 중요해 메모리 공급규율·ASP 사이클의 직접 비교에는 한계가 있다"
+        ],
+        "peer_name": "LX세미콘",
+        "peer_symbol": "108320",
+        "shared_economic_drivers": [
+          "반도체 제품 수요·재고조정·파운드리 원가와 제품 믹스가 매출총이익률에 영향을 준다",
+          "고성능·고부가 반도체 설계 경쟁력과 고객 채택이 성장성과 가격 프리미엄을 좌우한다",
+          "글로벌 전자·IT 수요 사이클과 공급망 변화에 따른 실적 변동을 공유한다"
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "기존에 trailing_parent_pb가 검증된 DB하이텍을 유지하고, KRX 2026-07-10 identity plane에서 issuer-name 기준 단일 equity line인 한미반도체·하나마이크론·원익IPS·LX세미콘을 추가했다. 모두 target 000660과 다른 정확한 6자리 symbol-name 조합이며, 메모리 제조의 직접 동종성 대신 팹·HBM 투자·후공정·반도체 제품 사이클이라는 구체적 경제 동인을 사용했다. 구조화 배수 값은 제안하지 않고 후속 KRX·OpenDART 검증에 맡긴다.",
+    "unresolved_research_notes": [
+      "국내 상장시장에는 삼성전자를 제외하면 DRAM·NAND·HBM을 함께 직접 생산하는 동종사가 없어, 선택 peer는 설비집약 제조·HBM 장비·메모리 후공정·반도체 제품 사이클의 보조 비교군이다.",
+      "삼성전자 005930은 retry audit의 복수 상장 equity line 범위 실패가 반복되어 이번 완전 집합에서 제외했다."
+    ]
+  },
+  "payload_hash": "9fde7d716f10e9bf2d6345e165b3f6b152e4898bbb7e2fc1a1dd4cecebf1e2ab",
+  "production_score_authority": false,
+  "prompt_hash": "e1324a4334992e65a060539fdcb071a028daf15776350281ae351baac06549ea",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-663ab66d1b23a273440a7ac761a24e641128f6a75bbbeaae636d5769c3efe801",
+  "response_id": "COLLABRESP-b6b3788595ddc8e9c932d299e6e3840dee36a3d3ec030492a3ca00b3cdbb41f2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

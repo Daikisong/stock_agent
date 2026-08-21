@@ -1,0 +1,23 @@
+{
+  "as_of_date": "2026-07-10",
+  "by_lifecycle": {
+    "LATEST_REGULAR_REPORT_CANDIDATE": 1,
+    "OPEN_CANDIDATE": 5,
+    "OPEN_CANDIDATE_REQUIRES_LIFECYCLE_REFRESH": 113,
+    "REQUIRES_CURRENT_LIFECYCLE_ADJUDICATION": 282,
+    "RESOLVED": 3,
+    "SHORT_LIVED_INVESTIGATION_TRIGGER": 42
+  },
+  "by_provider": {
+    "KRX": 163,
+    "OpenDART": 404
+  },
+  "by_trigger_type": {
+    "MARKET": 42,
+    "OFFICIAL": 282,
+    "REPORT": 1,
+    "RISK": 121
+  },
+  "schema_version": "e2r_live_trigger_source_distribution_v1",
+  "trigger_signal_count": 446
+}

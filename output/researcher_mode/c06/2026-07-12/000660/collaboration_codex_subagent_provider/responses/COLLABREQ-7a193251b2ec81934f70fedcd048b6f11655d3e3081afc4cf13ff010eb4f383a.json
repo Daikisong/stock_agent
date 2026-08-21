@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "bae53379d452ea93c99277440efed4e3cb3d1bbccb540a10fbcbd91183a91de3",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a7155e959d03d7dcb8dcc92d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Micron: AI Capex spending spree continues, is the memory supercycle finally about to start? - Longbridge”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-f0290a2bcfbab3c83bc9d9d1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “UNIVERSAL REGISTRATION DOCUMENT 2019 Annual financial report - Veolia in Nederland”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-0ca8f9f1ad3faa3f6b433bf6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “2023 Annual Report - Compal”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-48fdd80a277bf0e2a9c7abaf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “intc-20211225”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-57ae2be7ad3e23fb4e53cf40",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Asus 2019 Annual Report”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-386b58546450549b337b8df3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “2020 ICT Industry Outlook of Korea”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-c526f3e27baa9f2c425fc341",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 TRUSTED_BUSINESS_MEDIA 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Intel Reports Fourth-Quarter and Full-Year 2020 Financial Results :: Intel Corporation (INTC)”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-b63a5836159dec5a2cef8e14",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “지속가능한 한국형 무역·통상 전략”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-c49e7fc3e88a4c2fe6ebee2f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “‘Realizing Happiness’”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-1e3c6203469d414314fe297d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Compal Electronics, Inc. 2020 Annual Report”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-653a22c8d9ff06c1f201e62e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Wistron Corporation 2024 Annual Report”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-66e1e5e53a69afcabe337510",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Will Korea-U.S. Tariff Negotiations End with Mutual Satisfactions?”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 12개 후보를 입력 순서대로 정확히 한 번씩 분류했다. verified issuer-domain 후보가 없고 모든 candidate source-family hint가 요청된 SK하이닉스 issuer earnings release·presentation·newsroom 범위 밖이므로 material fetch 후보가 없다.",
+      "모든 published_at이 비어 있고 snippet은 discovery metadata일 뿐이므로 발행일·원문·수치 귀속을 증명하지 않는다. FORWARD_GUIDANCE, SEGMENT_CONTRIBUTION, DURABLE_VISIBILITY 공백은 계속 미해결이다."
+    ]
+  },
+  "payload_hash": "109c9f120ebfdc884884975dac86d6cea2db1b8df507aeb5c70a3dcd0b4950e6",
+  "production_score_authority": false,
+  "prompt_hash": "c5bbab5cbf1db8eb3f57ffa8012ff672bf0c4c1ee443848dc6baa05fcb98c96d",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7a193251b2ec81934f70fedcd048b6f11655d3e3081afc4cf13ff010eb4f383a",
+  "response_id": "COLLABRESP-cd046742dd25561fe89c29b3bfb786ee2a25f639c2114d12848c79484b58fdcc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

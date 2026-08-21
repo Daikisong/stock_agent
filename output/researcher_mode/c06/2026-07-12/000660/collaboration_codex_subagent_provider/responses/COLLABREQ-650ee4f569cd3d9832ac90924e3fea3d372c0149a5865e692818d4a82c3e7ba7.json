@@ -1,0 +1,114 @@
+{
+  "output_schema_hash": "af6a09607a327476ccec9812ec08734f108bccfa93c2358405b7e196421354fb",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-832d60eb205c3cb9eac769ac",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.05,
+        "rationale": "SK하이닉스 공식 뉴스룸 후보지만 URL은 FMS 2026의 HBF 행사·제품 소개를 가리킨다. published_at이 비어 기준일 내 이용 가능성도 확인되지 않았고, HBF/NAND 제품 내용은 이번 HBM·DRAM 매출·이익·FCF objective를 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-878eac33a25507d387b6de4e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스와 NVIDIA의 AI 팩토리용 메모리 기술 파트너십 보도자료로 보이는 S3 DOCX지만 transport가 issuer 도메인 후보로 검증하지 않았고 family hint도 GENERAL_WEB_DISCOVERY다. 요청 family를 충족하지 못한 상태에서 파트너십 제목을 매출·이익·FCF로 확대하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8f1c786fbbb2a3bce5968bfa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Omniverse 제품 페이지이며 SK하이닉스의 요청된 issuer source가 아니다. 고객측 플랫폼 설명은 목표 회사의 메모리 매출이나 FCF 증거로 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-bfbcd615c555de040a3a8de1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA intelligent video analytics 플랫폼 페이지로 대상과 요청 source family가 다르며, SK하이닉스의 segment contribution·guidance·FCF를 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ca9469be9d0a157610107ecc",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.1,
+        "rationale": "검증된 SK하이닉스 뉴스룸 원문이지만 Nasdaq ADR 상장 기념식 콘텐츠다. 공식성은 있어도 이번 메모리 실적·마진·현금흐름 objective에 필요한 경제 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cc7da611c028663698d97fd0",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.8,
+        "rationale": "검증된 SK하이닉스 뉴스룸 도메인의 FACT 원문 경로이고, authority-verified 부모 문서에서 현재 objective scope를 상속한 reference다. 제목·snippet은 희소하지만 공식 원문으로 이어지는 경로는 fetch 후 구체적 투자 조건, 현금흐름 재원 또는 메모리 실적 귀속을 확인할 수 있으므로 material discovery route로 유지한다."
+      },
+      {
+        "candidate_id": "SGCAND-e3e7e09f8cbc4bae824aef74",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "YouTube embedded video URL로 요청된 SK하이닉스 issuer newsroom·earnings·presentation provenance가 아니며, 영상 embed만으로 citable 실적 원문이나 FCF 자료가 되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f72df441560968269881299f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Rubin 기술 페이지로 SK하이닉스 issuer source가 아니다. 고객 플랫폼 사양을 목표 회사의 HBM 공급량, 매출, 이익 또는 FCF로 직접 확대할 수 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "공급된 8개 discovery candidate를 각각 정확히 한 번 분류했다. 두 파티션을 합친 전역 20개 roster에서도 중복·누락 없이 exact-once다.",
+      "SGCAND-cc7da611c028663698d97fd0는 fetch 우선순위만 부여한 공식 원문 경로이며, 아직 document evidence나 점수 재료가 아니다. full fetch에서 as_of_date 이용 가능성과 구체적 역할 충족을 확인해야 한다.",
+      "published_at이 비어 있거나 issuer provenance가 검증되지 않은 후보는 기준일 내 증거 또는 issuer 원문으로 간주하지 않았다."
+    ]
+  },
+  "payload_hash": "ae6d6b38279a05b2cbfb55d6ee6b1af6a1d76dc4b50cbb2f2d89d0b48ec42417",
+  "production_score_authority": false,
+  "prompt_hash": "74395bc53cc9dd7295a2c0e5c4aada7109417081d466d0534788fd12004f55a2",
+  "provenance": {
+    "agent_id": "hynix_epoch32_rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch32_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-650ee4f569cd3d9832ac90924e3fea3d372c0149a5865e692818d4a82c3e7ba7",
+  "response_id": "COLLABRESP-de4de42452417c3abaa7c8bdca9f000c9faaf8c985a8d20dd114daeed3fe5553",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      5.7,
+      7.7
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-e743368708b3aee88a83287c는 POSITIVE ordinal anchor로 [5.7, 7.2] 범위를 제시한다. 현재 사실과 정확한 기업·기간 대응은 아니므로 점수 scale 경계로만 사용한다.",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89는 COUNTER ordinal anchor로 [4.25, 5.75] 범위를 제시한다. 현재 사실과 정확한 기업·기간 대응은 아니므로 점수 scale 경계로만 사용한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c07ed486e6d67134d19d6951",
+      "EFACT-c418009dc8a6493dd0a098b4"
+    ],
+    "disagreements": [
+      "current price·multiple 또는 revision 방향만으로 실제 market mispricing이 입증됐다는 해석에는 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "proposed_points": 6.7,
+    "rationale": "DRAM actual 성장, 100% 가동과 HBM 가격·제품·고객 실행은 기대 재평가의 positive다. 하지만 valuation과 revision 구조화 plane은 저평가 자체를 증명하지 않고 HBM actual-versus-expectation bridge가 없으며 고객·재고 위험도 남아 6.7점이 적정하다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "HBM 단독 earnings surprise와 시장 기대치의 직접 bridge 및 독립 mispricing 증명이 없다.",
+    "why_not_lower": "actual DRAM 성장과 HBM 실행, current valuation·earnings revision 비교 plane이 있어 재평가 가능성을 0에 가깝게 둘 수 없다."
+  },
+  "payload_hash": "b0e0a14b564901ef77393c27c4085c70fbd793b149cbc1750c530a1411a88d3e",
+  "production_score_authority": false,
+  "prompt_hash": "e39710bd912de8b3fd8de3e9bde5fa71e84e32fd071d73030388cfd89799cde0",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cbab798ade8b9f9a5349f708ebaa258740d501e3fea53b5ec0ceed03e500d695",
+  "response_id": "COLLABRESP-816f38950101282680fb0e646b56be1a4cf1ac68f2796de5ebc1e54b7ef0cb94",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "현재 memo는 강한 연결 영업이익·영업현금흐름과 DS 메모리 actual, HBM 단독 이익·FCF 귀속 한계를 모두 담고 있다. 그러나 memo-bound A/S/C allowed range의 공통 교집합이 비어 있으므로 새 source를 요구하기보다 동일 evidence의 연결·DS·HBM 귀속과 CAPEX·운전자본 가중치를 semantic rewrite하고 새 독립 judges로 합의를 검증해야 한다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "HBM4 실제 출하와 서버향 판매는 확인됐지만 OpenAI LOI·지원 계획, 엔비디아 공급 협의, AMD MOU는 signed 계약·backlog와 다르다. 이 구분은 current facts에 이미 있으나 A/S/C 교집합이 비어 있어 actual shipment, qualification, plan·LOI·MOU, binding contract 단계를 동일 evidence로 재정렬한 memo와 새 judges가 필요하다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "메모리 100% 가동·ASP 상승과 HBM 전용 CAPA·packaging·yield·allocation 부재를 함께 반영했고 memo-bound A/S/C 교집합 [13.8,15.8]도 존재한다. 남은 HBM 전용 병목 한계는 현재 범위에 반영된 counterweight이며 새 source route를 열 만큼 구체적인 실행 가능 gap은 prompt에 없다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "실제 운영 delta와 시장 기대 미반영 증명의 경계를 명시하고 혼재한 valuation·revision을 반영했으며 A/S/C 교집합 [5.1,6.5]가 존재한다. 현재 가격 반영 정도의 불확실성은 점수 범위의 monitoring 한계이지 새 verified source identity가 있는 material gap은 아니다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "forward PE, EV/EBITDA, PB, FCF yield의 혼재와 peer 사업 믹스 한계를 함께 반영했고 A/S/C 교집합 [4.2,4.7]이 존재한다. Structured report 후보 metadata는 evidence가 아니며 full-document로 해결할 구체적인 새 후보를 prompt가 제시하지 않으므로 현재 memo를 충분하다고 본다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "자기주식·배당·조달 접근성과 자본약정·운전자본 유출·희석을 함께 반영했고 A/S/C 교집합 [2.1,2.3]이 존재한다. HBM 전용 ROIC 부재는 전사 capital-allocation 범위의 명시된 한계이며 현재 prompt에 별도 실행 가능한 source route가 없다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "규제공시의 형식적 신뢰도와 OpenAI·엔비디아·AMD 관계·계획의 계약 경제성 및 독립 corroboration 부족을 모두 담고 있지만 memo-bound A/S/C 교집합이 비어 있다. 새 사실을 발명하지 말고 issuer actual과 계획, counterparty corroboration, 계약·quality 비공개의 가중치를 동일 evidence로 semantic rewrite한 뒤 새 judges로 검증해야 한다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": false,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-11f05de07efa5852c6e71412",
+        "rationale": "as_of 이후 문서 4건이 FULL_DOCUMENT_FETCH 단계에서 차단되고 objective resolution으로 닫혔다. 올바른 미래누수 차단이며 현재 source absence 또는 재검색 필요의 증거가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-8568fc999932ab4900c09b60",
+        "rationale": "이 그룹은 과거 MULTI_OBJECTIVE query-generation collaboration response pending에서 생긴 provider/transport 오류 3건이다. 현재 source graph의 성공한 후속 query 계보와 구분해 보존하며, 자료가 없다는 뜻으로 사용할 수 없다. deterministic lineage에서 해소되기 전까지 provider 실패로 남긴다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-8ce8e0d17715285b367c314b",
+        "rationale": "full fetch 뒤 publication date를 검증하지 못한 문서 1건은 objective resolution으로 닫힌 date-validation/fetch 실패다. 해당 문서가 현재 evidence가 될 수 없다는 뜻이지 source family 전체의 부재가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-93582c8d3e4a290b445687a0",
+        "rationale": "query의 FULL_DOCUMENT_FETCH 단계에서 publication date를 확인하지 못한 1건이며 alternate_route_required=false와 objective resolution으로 terminal 처리됐다. 동일 route 반복이나 source absence 주장은 허용되지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-944cf2283ff44162e1cf00f0",
+        "rationale": "as_of 이후 문서 rejection 4건은 evidence eligibility 전에 올바르게 차단되고 objective resolution으로 닫혔다. fixed rounds나 유효 source 부재의 근거로 확대하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [],
+    "new_source_family_directions": [],
+    "next_actions": [
+      "eps_fcf_explosion memo를 current facts만으로 semantic rewrite하고 새 ANALYST, SKEPTIC, CALIBRATION_JUDGE를 독립 실행한다.",
+      "earnings_visibility memo에서 actual shipment, qualification, LOI·MOU·negotiation, signed contract·backlog 단계를 재분류하고 새 세 역할 judges를 실행한다.",
+      "information_confidence memo에서 규제공시 신뢰도와 고객 관계·계획의 독립 corroboration 및 계약 경제성 한계를 별도로 가중하고 새 세 역할 judges를 실행한다.",
+      "세 revised memo의 A/S/C 3-way 교집합을 재검증한 뒤 current facts와 새 memos를 bind해 Red Team과 Synthesis를 갱신한다.",
+      "기존 full-document current counter facts를 objective/component에 다시 lossless bind해 bottleneck_pricing, market_mispricing, valuation_rerating을 포함한 7개 objective의 counter/supersession proof를 재검증하며 새 검색이나 zero-result completion은 만들지 않는다.",
+      "FAILGROUP-8568fc999932ab4900c09b60의 과거 collaboration provider 오류가 성공한 후속 query-generation 계보로 deterministic 해소됐는지 확인하되 이를 source absence로 닫지 않는다."
+    ],
+    "query_direction_briefs": [],
+    "rationale": "현재 source graph는 38개 eligible full documents와 실행된 query를 보유하고 EPOCH_COMPLETE_REQUIRES_SUPERVISOR 상태이며 structured result도 COMPLETE이고 7개 component의 missing structured role이 없다. 따라서 fetch rejection, future leakage, 과거 provider 오류를 source absence나 fixed-round saturation 증거로 쓰지 않으며 새 positive source/query route도 발명하지 않는다. 다만 current synthesis가 확인한 eps_fcf_explosion, earnings_visibility, information_confidence의 3-way allowed-range 교집합은 여전히 비어 있어 component_memos_sufficient=false이고 same-evidence semantic rewrite와 새 독립 judges가 필요하다. 또한 deterministic direct-source counter proof는 7개 중 4개 objective에만 명시적으로 연결되어 counter_and_supersession_checked=false다. 그러므로 structured_data_complete=true, reasonable_positive_routes_remaining=false이지만 ready_for_independent_saturation_review=false이며 상태는 NEXT_RESEARCH_REQUIRED다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "동일 evidence에서 연결·DS 메모리 actual과 HBM 단독 이익·FCF 귀속 한계를 eps_fcf_explosion의 일관된 A/S/C 범위로 조정할 수 있는가?",
+      "HBM4 실제 출하와 OpenAI LOI·엔비디아 협의·AMD MOU 및 binding 계약·backlog 부재를 earnings_visibility의 일관된 A/S/C 범위로 조정할 수 있는가?",
+      "규제공시 기본 신뢰도와 HBM 고객·계약·qualification·마진의 독립 검증 한계를 information_confidence의 일관된 A/S/C 범위로 조정할 수 있는가?",
+      "현재 direct official counter proof가 연결된 4개 objective 외 bottleneck_pricing, market_mispricing, valuation_rerating objective도 기존 current evidence만으로 objective-bound counter/supersession 검증을 완료할 수 있는가?"
+    ]
+  },
+  "payload_hash": "c7950be342f616041028bf800de2ca0556ebd50803ba50fd34364b6153f8c734",
+  "production_score_authority": false,
+  "prompt_hash": "bf448fef0a70f4ede4ff0440d950186e4185839044cce083090f53852d597a64",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e38c306349e30d3e60148274c2aeebc2fe58aad2f71dee1ae488a3a5b534fadc",
+  "response_id": "COLLABRESP-30c160a66a3e418277e83072d13404bbaa629f420bc95214cff0896ca0ad499f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

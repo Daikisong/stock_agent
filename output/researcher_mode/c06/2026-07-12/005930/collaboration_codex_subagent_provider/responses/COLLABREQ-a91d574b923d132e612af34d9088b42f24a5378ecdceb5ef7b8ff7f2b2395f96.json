@@ -1,0 +1,546 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "rationale": "Prior 12건을 반복하지 않고 삼성전자 DRAM/HBM demand와 2026 valuation bridge 및 2027 정상화 counter 12건을 추가 추출했다. 동일 supplied chunk의 valuation objective-local 잔여를 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "범용 DRAM 판가 상승은 메모리 매출과 이익 추정의 가격 축을 강화한다.",
+        "exact_quote": "공격적판가정책속,4Q25범용DRAM가격상승률은경\n쟁사대비높은40%성장수준에서형성될것.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 DRAM 이익 bridge의 단기 가격 가정을 직접 제시한다.",
+        "mechanism_scope_id": "005930:DRAM:PRICE_GROWTH:4Q25:DAISHIN",
+        "normalized_object": "4Q25 범용 DRAM 가격 40% 상승",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q4F",
+        "predicate": "대신증권은 삼성전자의 4Q25 범용 DRAM 가격 상승률을 경쟁사보다 높은 40%로 전망했다.",
+        "predicate_family": "DRAM_PRICE_GROWTH_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "ASP"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_PRICING_BRIDGE",
+        "question_family_tags": [
+          "DRAM_PRICE",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 4Q25 범용 DRAM 가격",
+        "subject_id": "005930:DRAM:PRICE_GROWTH:4Q25:DAISHIN",
+        "unit": "percent",
+        "value": 40
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "고객 측 GPU 출하 계획 상향이 HBM3E 요청 확대와 매출 기대를 지지한다.",
+        "exact_quote": "Nvidia의GB300출하목표상향효과로업계전반에걸쳐\n2026년 HBM3e 물량 요청이 확대. 이에 따른 낙수효과\n기대.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 HBM qualification 이후 수요·매출 연결을 독립 broker가 제시한다.",
+        "mechanism_scope_id": "005930:HBM3E:DEMAND:2026:DAISHIN",
+        "normalized_object": "2026 HBM3E 물량 요청 확대",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 Nvidia GB300 출하 목표 상향으로 2026년 HBM3E 물량 요청이 확대됐다고 분석했다.",
+        "predicate_family": "HBM3E_DEMAND_EXPANSION_FORECAST",
+        "primitive_tags": [
+          "HBM3E",
+          "DEMAND"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "HBM_DEMAND_BRIDGE",
+        "question_family_tags": [
+          "HBM3E",
+          "CUSTOMER_DEMAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 HBM3E 물량 요청",
+        "subject_id": "005930:HBM3E:DEMAND:2026:DAISHIN",
+        "unit": "qualitative",
+        "value": "2026 HBM3E request expansion"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "메모리 이익 급증을 반영한 전사 EPS가 forward valuation의 분모가 된다.",
+        "exact_quote": "EPS 2,131 4,950 5,618 10,349 5,262",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 earnings bridge와 연결된 2026 forward EPS다.",
+        "mechanism_scope_id": "005930:EPS:2026:DAISHIN",
+        "normalized_object": "2026 EPS 10,349원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 EPS를 10,349원으로 전망했다.",
+        "predicate_family": "FORWARD_EPS",
+        "primitive_tags": [
+          "EPS",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "FORWARD_EARNINGS_BRIDGE",
+        "question_family_tags": [
+          "FORWARD_EPS",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 EPS",
+        "subject_id": "005930:EPS:2026:DAISHIN",
+        "unit": "KRW per share",
+        "value": 10349
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "메모리 이익 확대가 forward PER을 낮춰 rerating 여력을 만든다는 broker 가정이다.",
+        "exact_quote": "PER 36.8 10.7 12.5 6.8 13.4",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 earnings 분모가 있는 target-specific forward multiple이다.",
+        "mechanism_scope_id": "005930:PER:2026:DAISHIN",
+        "normalized_object": "2026 PER 6.8배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 PER을 6.8배로 전망했다.",
+        "predicate_family": "FORWARD_PER",
+        "primitive_tags": [
+          "PER",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "FORWARD_VALUATION_MULTIPLE",
+        "question_family_tags": [
+          "FORWARD_PER",
+          "VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 PER",
+        "subject_id": "005930:PER:2026:DAISHIN",
+        "unit": "times",
+        "value": 6.8
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "forward book value는 PBR rerating 판단의 분모다.",
+        "exact_quote": "BPS 52,002 57,663 62,377 71,505 73,391",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2026 PBR의 직접 분모를 제공한다.",
+        "mechanism_scope_id": "005930:BPS:2026:DAISHIN",
+        "normalized_object": "2026 BPS 71,505원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 BPS를 71,505원으로 전망했다.",
+        "predicate_family": "FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "BPS",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "FORWARD_BOOK_VALUE",
+          "VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "삼성전자 2026 BPS",
+        "subject_id": "005930:BPS:2026:DAISHIN",
+        "unit": "KRW per share",
+        "value": 71505
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "메모리 이익 개선과 book-value 성장에 대한 forward PBR 평가다.",
+        "exact_quote": "PBR 1.5 0.9 1.6 1.4 1.4",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 book-value 분모가 명시된 target-specific forward PBR이다.",
+        "mechanism_scope_id": "005930:PBR:2026:DAISHIN",
+        "normalized_object": "2026 PBR 1.4배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 PBR을 1.4배로 전망했다.",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "PBR",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "FORWARD_VALUATION_MULTIPLE",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 2026 PBR",
+        "subject_id": "005930:PBR:2026:DAISHIN",
+        "unit": "times",
+        "value": 1.4
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "메모리 이익 개선이 equity return으로 전환되는 정도가 PBR 정당화를 좌우한다.",
+        "exact_quote": "ROE 4.1 9.0 9.3 15.5 7.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "forward PBR과 함께 rerating의 수익성 근거를 제공한다.",
+        "mechanism_scope_id": "005930:ROE:2026:DAISHIN",
+        "normalized_object": "2026 ROE 15.5%",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 ROE를 15.5%로 전망했다.",
+        "predicate_family": "FORWARD_ROE",
+        "primitive_tags": [
+          "ROE",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "RETURN_ON_EQUITY",
+        "question_family_tags": [
+          "FORWARD_ROE",
+          "VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 ROE",
+        "subject_id": "005930:ROE:2026:DAISHIN",
+        "unit": "percent",
+        "value": 15.5
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "새 Value-up 프로그램과 Capex discipline 공식화는 메모리 공급 규율과 rerating 기대를 잇는다.",
+        "exact_quote": "삼성전자의변화가능성에주목.2026년은기존주주환원정책(2024-2026년)의마지막해.Value\nup프로그램이새롭게발표될가능성도유효.CapexDiscipline을공식화하는것이주가와사업의지\n속가능한성장모두에있어중요.해당가능성이유효하다는판단.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공급 규율과 주주환원 정책이 valuation rerating을 연결하는 target-specific 전망이다.",
+        "mechanism_scope_id": "005930:VALUEUP:2026:DAISHIN",
+        "normalized_object": "2026 Value-up·Capex discipline 공식화 가능성",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 2026년 삼성전자의 새 Value-up 프로그램 발표 가능성과 Capex discipline 공식화의 중요성을 제시했다.",
+        "predicate_family": "VALUE_UP_CAPEX_DISCIPLINE_EXPECTATION",
+        "primitive_tags": [
+          "CAPEX",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "CAPEX_DISCIPLINE_RERATING",
+        "question_family_tags": [
+          "VALUE_UP",
+          "CAPEX_DISCIPLINE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 Value-up 가능성",
+        "subject_id": "005930:VALUEUP:2026:DAISHIN",
+        "unit": "qualitative",
+        "value": "possible new Value-up program and formal Capex discipline"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "2026 이익 급증 뒤 EPS 정상화 전망은 낮은 2026 multiple의 지속성을 제한한다.",
+        "exact_quote": "EPS 2,131 4,950 5,618 10,349 5,262",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2026 rerating 분모가 다음 해 유지되지 않을 수 있다는 직접 counter다.",
+        "mechanism_scope_id": "005930:EPS:2027:COUNTER:DAISHIN",
+        "normalized_object": "2027 EPS 5,262원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2027F",
+        "predicate": "대신증권은 삼성전자 EPS가 2026년 10,349원에서 2027년 5,262원으로 낮아질 것으로 전망했다.",
+        "predicate_family": "FORWARD_EPS_NORMALIZATION_COUNTER",
+        "primitive_tags": [
+          "EPS",
+          "COUNTER"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "FORWARD_EARNINGS_COUNTER",
+        "question_family_tags": [
+          "FORWARD_EPS",
+          "NORMALIZATION_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2027 EPS counter",
+        "subject_id": "005930:EPS:2027:DAISHIN",
+        "unit": "KRW per share",
+        "value": 5262
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "이익 정상화로 PER이 재상승하면 2026 저평가가 단순 cycle peak 착시일 수 있다.",
+        "exact_quote": "PER 36.8 10.7 12.5 6.8 13.4",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "낮은 2026 PER의 지속성에 직접 반대되는 forward counter다.",
+        "mechanism_scope_id": "005930:PER:2027:COUNTER:DAISHIN",
+        "normalized_object": "2027 PER 13.4배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2027F",
+        "predicate": "대신증권은 삼성전자 PER이 2026년 6.8배에서 2027년 13.4배로 높아질 것으로 전망했다.",
+        "predicate_family": "FORWARD_PER_NORMALIZATION_COUNTER",
+        "primitive_tags": [
+          "PER",
+          "COUNTER"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "FORWARD_VALUATION_COUNTER",
+        "question_family_tags": [
+          "FORWARD_PER",
+          "NORMALIZATION_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2027 PER counter",
+        "subject_id": "005930:PER:2027:DAISHIN",
+        "unit": "times",
+        "value": 13.4
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "ROE 하락 전망은 2026의 PBR rerating 근거가 cycle peak일 위험을 보여준다.",
+        "exact_quote": "ROE 4.1 9.0 9.3 15.5 7.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "PBR 정당화에 필요한 equity return의 지속성 counter다.",
+        "mechanism_scope_id": "005930:ROE:2027:COUNTER:DAISHIN",
+        "normalized_object": "2027 ROE 7.3%",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2027F",
+        "predicate": "대신증권은 삼성전자 ROE가 2026년 15.5%에서 2027년 7.3%로 낮아질 것으로 전망했다.",
+        "predicate_family": "FORWARD_ROE_NORMALIZATION_COUNTER",
+        "primitive_tags": [
+          "ROE",
+          "COUNTER"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "RETURN_ON_EQUITY_COUNTER",
+        "question_family_tags": [
+          "FORWARD_ROE",
+          "NORMALIZATION_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2027 ROE counter",
+        "subject_id": "005930:ROE:2027:DAISHIN",
+        "unit": "percent",
+        "value": 7.3
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "전사 영업이익 정상화 전망은 메모리 업사이클 이익의 지속성을 제한한다.",
+        "exact_quote": "영업이익 6,567 32,726 40,022 92,172 44,980",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 기반 2026 이익 급증이 지속되지 않는다는 broker counter다.",
+        "mechanism_scope_id": "005930:OPERATING_PROFIT:2027:COUNTER:DAISHIN",
+        "normalized_object": "2027 영업이익 44.980조원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2027F",
+        "predicate": "대신증권은 삼성전자 영업이익이 2026년 92.172조원에서 2027년 44.980조원으로 낮아질 것으로 전망했다.",
+        "predicate_family": "FORWARD_OPERATING_PROFIT_NORMALIZATION_COUNTER",
+        "primitive_tags": [
+          "OPERATING_PROFIT",
+          "COUNTER"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "FORWARD_EARNINGS_COUNTER",
+        "question_family_tags": [
+          "FORWARD_OPERATING_PROFIT",
+          "NORMALIZATION_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2027 영업이익 counter",
+        "subject_id": "005930:OPERATING_PROFIT:2027:DAISHIN",
+        "unit": "KRW billion",
+        "value": 44980
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "0282209342931bc6706c8ce94bbfa8421b74abc73660488b9d35028acfe97aef",
+  "production_score_authority": false,
+  "prompt_hash": "d4f8f995714d8527b3612e198f7d82fca338e0b714153b0c217625314f25a5ba",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a91d574b923d132e612af34d9088b42f24a5378ecdceb5ef7b8ff7f2b2395f96",
+  "response_id": "COLLABRESP-825ddc2d62bd3897476d8077817181c65035c75d97b5a467eea3b21880037dfe",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

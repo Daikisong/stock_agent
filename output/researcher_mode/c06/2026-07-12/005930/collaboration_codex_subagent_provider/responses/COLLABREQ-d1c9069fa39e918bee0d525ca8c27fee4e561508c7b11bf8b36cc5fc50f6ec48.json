@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-9165ebe101c1d699318eaf4c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "This unverified third-party page is unrelated to the EPS/FCF objective and cannot satisfy an issuer-source request."
+      },
+      {
+        "candidate_id": "SGCAND-91f1baf8062ad731c66d35fd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "This is a social sharing or profile route rather than an eligible issuer earnings or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-9234bd0fd563f50c53e55858",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified issuer presentation route matches the requested family, but its reporting period is superseded for the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-92ddb8cf676636735da05e30",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "The verified Samsung document contains cash-flow reporting, but its dated period is superseded for the current EPS/FCF investigation."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "All candidates in this partition were classified. Any material discovery route still needs bounded full-source retrieval and evidence extraction; snippets and transport metadata remain non-evidence."
+    ]
+  },
+  "payload_hash": "5af68b55a653ab59f4a08f4820e88314d57b782459180586a46a9869ebab2f4f",
+  "production_score_authority": false,
+  "prompt_hash": "b54c562b6c5afc67814cb7fefe1c1a8399217eb788c5ba42fc62797859fc20d8",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d1c9069fa39e918bee0d525ca8c27fee4e561508c7b11bf8b36cc5fc50f6ec48",
+  "response_id": "COLLABRESP-2a17801b968839e6e112aa44a619dd18359153886138fa5ebad8f0511e6a18e7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

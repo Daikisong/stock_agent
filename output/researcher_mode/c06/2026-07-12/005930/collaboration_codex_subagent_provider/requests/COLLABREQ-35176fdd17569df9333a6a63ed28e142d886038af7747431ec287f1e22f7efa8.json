@@ -1,0 +1,172 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "allowed_range": {
+        "items": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "anchor_comparisons": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "counter_fact_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "disagreements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "nearest_anchor_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "proposed_points": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "rationale": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "support_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-13d6da3b116a9a0ad8043f62",
+            "EFACT-1df441a716b0204f7b107e70",
+            "EFACT-3c095c9436a1460d04797e97",
+            "EFACT-477c6cb45b164685a2a345e8",
+            "EFACT-4e0d88dc056c9e8dcd45ea47",
+            "EFACT-8f02d2ea380eb4c09635924f",
+            "EFACT-a2243488e8b8f0197fd8bd56",
+            "EFACT-b676fc3afacb1117c1ba65be",
+            "EFACT-fd86be3f3b91aa151f046cfb"
+          ],
+          "type": "string"
+        },
+        "maxItems": 9,
+        "minItems": 9,
+        "prefixItems": [
+          {
+            "enum": [
+              "EFACT-13d6da3b116a9a0ad8043f62"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-1df441a716b0204f7b107e70"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-3c095c9436a1460d04797e97"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-477c6cb45b164685a2a345e8"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-4e0d88dc056c9e8dcd45ea47"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-8f02d2ea380eb4c09635924f"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-a2243488e8b8f0197fd8bd56"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-b676fc3afacb1117c1ba65be"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-fd86be3f3b91aa151f046cfb"
+            ],
+            "type": "string"
+          }
+        ],
+        "type": "array"
+      },
+      "why_not_higher": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "why_not_lower": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "anchor_comparisons",
+      "proposed_points",
+      "allowed_range",
+      "rationale",
+      "disagreements",
+      "support_fact_ids",
+      "counter_fact_ids",
+      "nearest_anchor_ids",
+      "why_not_higher",
+      "why_not_lower"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "46789d39fa9ccf9c76e85fe03fc8cb03f702e6b8e597c0eec7a595adf7da4d16",
+  "pass_name": "COMPONENT_ANALYST_JUDGE",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nFirst decode every evidence_fact_projection.facts row positionally with evidence_fact_projection.fact_fields. Each row preserves one exact fact_id and its economic meaning. Resolve source_independence_group_index through source_independence_group_dictionary. The count/hash rosters account only for repeated lineage; they are not omitted research, a top-N selection, or permission to skip rows. Review all fact_count rows. Act as the independent positive analyst for exactly one broad component. Derive proposed component points and an allowed range from current support facts, economic strength, duration, and cash conversion. Account for every supplied positive component fact and compare the case with at least one nearest blind historical anchor. Explain both why the score is not higher and why it is not lower.\nReturn exactly one JSON object matching the supplied schema.\n{\"allowed_counter_fact_ids\": [\"EFACT-0b6b02299ea60f931cf17c4e\", \"EFACT-7df33da3760e73919a0a0f31\", \"EFACT-cc2cfc3b24f0987278efc0b7\", \"EFACT-f05a97edeb8f85d49353381e\"], \"allowed_nearest_anchor_ids\": [\"ORDTRANSFER-79ec36a5021be9c2294bf200\", \"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"allowed_support_fact_ids\": [\"EFACT-13d6da3b116a9a0ad8043f62\", \"EFACT-1df441a716b0204f7b107e70\", \"EFACT-3c095c9436a1460d04797e97\", \"EFACT-477c6cb45b164685a2a345e8\", \"EFACT-4e0d88dc056c9e8dcd45ea47\", \"EFACT-8f02d2ea380eb4c09635924f\", \"EFACT-a2243488e8b8f0197fd8bd56\", \"EFACT-b676fc3afacb1117c1ba65be\", \"EFACT-fd86be3f3b91aa151f046cfb\"], \"component_id\": \"bottleneck_pricing\", \"component_max_points\": 19.0, \"component_research_memo\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"component_max_points\": 19.0, \"counter_case\": \"100% 가동률·재고·공급충족률과 범용 D램 가격은 혼합 메모리 지표다. CAPEX가 공급을 늘릴 수 있고 가격 상승률 둔화와 물량 없는 가격 의존은 현재 고마진의 정상화 위험을 높인다.\", \"counter_fact_ids\": [\"EFACT-0b6b02299ea60f931cf17c4e\", \"EFACT-7df33da3760e73919a0a0f31\", \"EFACT-cc2cfc3b24f0987278efc0b7\", \"EFACT-f05a97edeb8f85d49353381e\"], \"historical_anchor_ids\": [\"ORDTRANSFER-79ec36a5021be9c2294bf200\", \"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"memo_id\": \"CRMEMO-de7ce2210903df136e91ed78\", \"nearest_counter_anchor_ids\": [\"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"nearest_positive_anchor_ids\": [\"ORDTRANSFER-79ec36a5021be9c2294bf200\"], \"positive_case\": \"HBM4 CAPA 완판과 안정 수율, 11.7Gbps 제품 가격 프리미엄이 직접 확인되고 맞춤 설계·첨단 패키징의 공급 시차가 단순 증설의 즉시 완화를 막는다.\", \"positive_fact_ids\": [\"EFACT-13d6da3b116a9a0ad8043f62\", \"EFACT-1df441a716b0204f7b107e70\", \"EFACT-3c095c9436a1460d04797e97\", \"EFACT-477c6cb45b164685a2a345e8\", \"EFACT-4e0d88dc056c9e8dcd45ea47\", \"EFACT-8f02d2ea380eb4c09635924f\", \"EFACT-a2243488e8b8f0197fd8bd56\", \"EFACT-b676fc3afacb1117c1ba65be\", \"EFACT-fd86be3f3b91aa151f046cfb\"], \"research_complete\": true, \"researcher_role\": \"BottleneckPricingResearcher\", \"researcher_summary\": \"HBM4 생산여력 완판, 안정 수율과 고속 제품 가격 프리미엄은 HBM 직접 병목·가격 전환 근거다. 전체 메모리의 100% 시간 가동률, 타이트한 재고와 역대 최저 공급 충족률, 증설 후에도 수요가 공급을 넘는다는 전망도 병목을 보강한다. 다만 범용 D램 58~63% 가격 상승과 혼합 메모리 지표를 HBM 전용 병목으로 치환하지 않았다. 대규모 CAPEX, 하반기 가격 상승 둔화, 물량보다 가격 의존과 일시적 고마진 평가는 병목의 지속기간을 제한한다.\", \"resolution_fact_ids\": [\"EFACT-fe451e028faf5fceae252dd5\"], \"source_coverage\": [\"OPENDART\", \"ISSUER_GUIDANCE\", \"ISSUER_NEWSROOM\", \"PUBLIC_BROKER_REPORT\", \"TRUSTED_BUSINESS_MEDIA\", \"GENERAL_WEB_DISCOVERY\"], \"structured_metrics\": {}, \"target_id\": \"005930\", \"uncertainties\": [\"보고서 1093762와 1F00120260504_005930_a.pdf 원문이 회수되지 않아 snippet을 HBM 전용 병목·가격 증거로 쓰지 않았다.\", \"HBM 전용 웨이퍼·적층·패키징 CAPA, 단계별 수율, backlog와 고객별 배정량이 없다.\", \"HBM4 가격 프리미엄의 절대 ASP, 계약기간과 현금 마진이 공개되지 않았다.\", \"전체 메모리 가동률·재고·공급충족률과 범용 D램 가격을 HBM 전용 지표로 분해할 수 없다.\", \"메모리 CAPEX의 규모·가동 시점과 가격 정상화 속도가 공급 부족의 지속기간을 바꿀 수 있다.\"]}, \"conditional_judge_rules\": {\"empty_support_plane\": {\"condition\": \"allowed_support_fact_ids is empty\", \"required_allowed_range\": [0, 0], \"required_proposed_points\": 0, \"required_support_fact_ids\": []}, \"positive_points_require_support\": \"proposed_points greater than zero requires at least one exact id from allowed_support_fact_ids in support_fact_ids\"}, \"evidence_fact_projection\": {\"advisory_tags_are_not_score_gates\": true, \"allowed_component_coverage\": {\"bottleneck_pricing\": 14, \"capital_allocation\": 14, \"earnings_visibility\": 14, \"eps_fcf_explosion\": 14, \"information_confidence\": 14, \"market_mispricing\": 14, \"valuation_rerating\": 14}, \"as_of_date_coverage\": {\"2026-07-12\": 14}, \"claim_id_roster\": {\"count\": 14, \"roster_hash\": \"0f3e04ecc678ad7fdb9de6be3e0afdeb07e4358d2f333e1a9d0d1468a23720ae\"}, \"corroborating_independence_group_roster\": {\"count\": 12, \"roster_hash\": \"efe19ff64b3bcd4188bd73571ac632f43f2a596921664a609a6ac31aa4a5354f\"}, \"every_fact_id_preserved\": true, \"every_fact_lineage_accounted_by_count_and_hash\": true, \"fact_count\": 14, \"fact_fields\": [\"fact_row_index\", \"fact_id\", \"subject\", \"business_segment\", \"product_family\", \"economic_mechanism\", \"predicate\", \"value\", \"unit\", \"period\", \"direction\", \"current_lifecycle\", \"confidence\", \"structured_evidence_roles\", \"source_independence_group_index\", \"corroborating_independence_group_count\"], \"fact_roster_hash\": \"4b8f63c58dd2fd8529af8c1bfb464898d6082249f71a348fe50b8229dc5abba7\", \"facts\": [[0, \"EFACT-0b6b02299ea60f931cf17c4e\", \"삼성전자·SK하이닉스 범용 메모리 마진 지속성\", \"메모리 산업\", \"범용 메모리\", \"범용 메모리 마진 약 80%가 일시적이라는 전문가 평가는 현재 가격 병목이 높은 이익으로 전환되는 현상을 영구 구조로 외삽할 수 없다는 정상화 counter를 제공한다.\", \"이형수 HSL파트너스 대표는 현재 약 80%인 범용 메모리 반도체 마진율을 일시적 현상으로 평가했다\", \"about 80%, assessed as temporary\", \"percent margin assessment\", \"current as of 2026-05-29\", \"COUNTER\", \"CURRENT\", 0.68, [], 0, 1], [1, \"EFACT-13d6da3b116a9a0ad8043f62\", \"2026년 2분기 범용 D램 가격 전분기 대비 상승률\", \"DS 메모리\", \"범용 D램\", \"범용 D램 가격의 큰 폭 상승은 같은 판매량의 메모리 매출과 이익 전환을 확대한다.\", \"트렌드포스에 따르면 2026년 2분기 범용 D램 가격은 전분기 대비 58~63% 상승했다\", \"58-63\", \"percent QoQ range\", \"2026-Q2\", \"POSITIVE\", \"CURRENT\", 0.9, [], 8, 1], [2, \"EFACT-1df441a716b0204f7b107e70\", \"삼성전자 메모리 재고 수준\", \"DS 메모리\", \"메모리\", \"역대 최저 수준의 타이트한 메모리 재고 운영은 재고 부담보다 공급 여유가 제한된 현재 수급 상태를 나타낸다.\", \"삼성전자 메모리 재고가 역대 최저 수준으로 타이트하게 운영되고 있다고 설명됐다\", \"record-low and tight inventory level\", \"inventory condition\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 0.76, [], 9, 1], [3, \"EFACT-3c095c9436a1460d04797e97\", \"삼성전자 HBM4 생산 수율 안정성\", \"DS 메모리\", \"HBM4\", \"HBM4에 적용된 1c D램 공정의 안정적 수율은 양산 실행 위험을 낮춰 현재 공급과 매출 전환의 지속 가능성을 보강한다.\", \"삼성전자가 1c D램 공정을 적용한 HBM4에서 안정적인 수율을 확보했다고 밝혔다\", \"stable yields\", \"production yield status\", \"2026-Q1 current as of 2026-03-17\", \"POSITIVE\", \"CURRENT\", 0.8, [], 7, 1], [4, \"EFACT-477c6cb45b164685a2a345e8\", \"삼성전자 메모리 생산라인 가동률\", \"DS 메모리\", \"메모리\", \"MEMORY_CAPACITY_UTILIZATION\", \"2026년 1분기 DS 메모리 생산라인의 가동 가능 시간과 실제 가동 시간이 모두 21,600시간으로 공시 가동률이 100%였다\", 1.0, \"ratio\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [], 2, 1], [5, \"EFACT-4e0d88dc056c9e8dcd45ea47\", \"삼성전자 메모리 고객수요 대비 공급 충족률\", \"DS 메모리\", \"메모리\", \"삼성전자의 메모리 공급 역량이 고객 수요에 크게 못 미치고 공급 충족률이 역대 최저라는 설명은 현재 생산·재고 여유보다 수요가 큰 직접적인 공급 병목을 나타낸다.\", \"삼성전자의 메모리 공급 역량이 고객 수요에 크게 못 미치며 수요 대비 공급 충족률이 역대 최저 수준을 기록했다\", \"record-low supply fulfillment rate\", \"supply-demand condition\", \"2026-Q1 as of 2026-04-30\", \"POSITIVE\", \"CURRENT\", 0.86, [], 3, 1], [6, \"EFACT-7df33da3760e73919a0a0f31\", \"삼성전자 메모리 2026년 시설투자 전망\", \"DS 메모리\", \"메모리\", \"2026년 메모리 대규모 CAPEX 증가 전망은 제한된 공급에 대응하는 증설 여력을 높이는 동시에, 이익이 FCF로 전환되는 과정의 현금지출 부담을 키우는 양면 요인이다.\", \"삼성전자는 2026년 세부 투자계획이 미확정인 상태에서 메모리 대규모 CAPEX 증가를 예상했다\", \"large memory capex increase expected; detailed plan not finalized\", \"investment outlook\", \"FY2026E\", \"COUNTER\", \"OPEN\", 0.93, [], 11, 1], [7, \"EFACT-8f02d2ea380eb4c09635924f\", \"삼성전자 HBM4 생산여력 완판\", \"DS 메모리\", \"HBM4\", \"HBM4 생산여력이 완판됐다는 회사 측 설명은 양산·출하를 넘어 현재 계획 생산능력이 고객 수요로 소진된 상태를 나타낸다.\", \"삼성전자가 HBM4 생산 여력이 완판된 상태라고 밝혔다\", \"production capacity sold out\", \"capacity booking status\", \"2026-04-30 현재\", \"POSITIVE\", \"CURRENT\", 0.84, [], 9, 1], [8, \"EFACT-a2243488e8b8f0197fd8bd56\", \"삼성전자 11.7Gbps HBM4의 표준 HBM4 대비 가격 프리미엄\", \"DS 메모리\", \"11.7Gbps HBM4\", \"11.7Gbps HBM4의 표준 10.3Gbps 제품 대비 높은 가격대는 고속 제품 믹스가 매출과 수익성에 기여하는 경로다.\", \"11.7Gbps HBM4의 가격대는 표준 10.3Gbps HBM4보다 높게 형성됐다\", \"higher price band than standard 10.3Gbps HBM4\", \"qualitative price premium\", \"2026 through 2026-07-07\", \"POSITIVE\", \"CURRENT\", 0.88, [], 8, 1], [9, \"EFACT-b676fc3afacb1117c1ba65be\", \"삼성전자 HBM 생산 확대와 범용 D램 공급·가격\", \"DS 메모리\", \"HBM·D램\", \"HBM 생산 확대가 적층 D램 투입을 늘려 범용 D램 공급을 줄이고 범용 메모리 가격 상승을 강화하는 생산 믹스의 기회비용을 제시한다.\", \"HBM 생산 확대에 따른 적층 D램 투입 증가가 범용 D램 공급을 줄여 범용 메모리 가격 상승에 기여했다\", \"HBM expansion increased stacked-DRAM use, reduced conventional DRAM supply, and raised conventional memory prices\", \"supply-price mechanism\", \"2026-Q2 현재\", \"POSITIVE\", \"CURRENT\", 0.86, [], 6, 1], [10, \"EFACT-cc2cfc3b24f0987278efc0b7\", \"삼성전자 하반기 D램 가격 상승 속도\", \"DS 메모리\", \"D램\", \"하반기에도 가격은 오르지만 상승 속도가 둔화될 것이라는 전망은 현재의 급격한 가격 상승률을 그대로 연장할 수 없다는 병목 가격의 속도 counter다.\", \"삼성증권은 2026년 하반기 D램 가격 상승 속도가 다소 둔화될 것으로 전망했다.\", \"price increases expected to decelerate\", null, \"2026-H2E\", \"COUNTER\", \"OPEN\", 0.86, [], 5, 1], [11, \"EFACT-f05a97edeb8f85d49353381e\", \"삼성전자 2026년 2분기 메모리 실적의 가격 의존 위험\", \"DS 메모리\", \"메모리\", \"메모리 물량이 크게 늘지 않은 상태에서 가격 급등에 의존한 이익은 가격 사이클이 둔화될 때 지속성이 약해질 수 있다.\", \"삼성전자 메모리 실적이 큰 물량 증가 없이 가격 급등에 의존한다는 불안이 제기됐다\", \"earnings depend on price surge without large volume growth\", \"earnings sustainability risk\", \"2026-Q2 current risk\", \"COUNTER\", \"OPEN\", 0.84, [], 10, 1], [12, \"EFACT-fd86be3f3b91aa151f046cfb\", \"삼성전자 2026년 메모리 고객수요와 공급능력\", \"DS 메모리\", \"메모리\", \"투자와 증설 계획을 반영한 뒤에도 2026년 고객 메모리 수요가 삼성전자의 공급을 초과할 것으로 예상돼 수요-공급 병목의 지속성을 보여준다.\", \"삼성전자는 2026년 고객 메모리 수요가 투자·증설 계획을 고려한 공급을 초과할 것으로 예상했다\", \"customer demand expected to exceed supply after investment and capacity expansion\", \"supply-demand state\", \"FY2026E\", \"POSITIVE\", \"OPEN\", 0.96, [], 1, 1], [13, \"EFACT-fe451e028faf5fceae252dd5\", \"삼성전자 HBM 공급망의 맞춤형 설계·첨단 패키징 병목\", \"메모리 산업\", \"HBM\", \"HBM은 맞춤형 전공정 설계와 첨단 패키징 병목 때문에 단순 자본지출 둔화가 곧바로 공급과잉으로 바뀌지 않는다는 반론이 있어, 수요 둔화 위험과 공급 탄력성 사이의 시차를 설명한다.\", \"HBM의 맞춤형 전공정 설계와 첨단 패키징 병목 때문에 단순 자본지출 둔화가 즉시 대규모 공급과잉으로 이어지지 않는다는 반론이 제시됐다.\", \"capex slowdown does not immediately create oversupply\", null, \"2026-06-30 current analysis\", \"RESOLUTION\", \"OPEN\", 0.82, [], 4, 1]], \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"primitive_tag_roster_hash\": \"458c8444b56194f8d87364a3608714b3ca9dce019ff11ae3cd240a1dbf2e267e\", \"prompt_projection_is_research_cap\": false, \"question_family_tag_roster_hash\": \"d40053da7d279cdec20a1be6b615c24ec0f7fd1ef699a5b81d6ad3fea76c147a\", \"quote_id_roster\": {\"count\": 14, \"roster_hash\": \"e745c3ba759e50e38c4d7364d70bb682a93e2637d7c0626a7bba6dfb3d80bd59\"}, \"repeated_lineage_arrays_omitted_from_semantic_rows\": true, \"schema_version\": \"e2r_v5_citable_fact_prompt_projection_v3\", \"score_authority\": false, \"source_id_roster\": {\"count\": 12, \"roster_hash\": \"ff819bbf664dab5ed96c24ec0c5516691b2eae471ea5c75f3f7e0c5507dbfd36\"}, \"source_independence_group_dictionary\": [\"GENERAL_WEB_DISCOVERY:weekly.donga.com\", \"ISSUER_NEWSROOM:irsvc.teletogether.com\", \"OPENDART:opendart\", \"TRUSTED_BUSINESS_MEDIA:4th.kr\", \"TRUSTED_BUSINESS_MEDIA:g-enews.com\", \"TRUSTED_BUSINESS_MEDIA:ggilbo.com\", \"TRUSTED_BUSINESS_MEDIA:ilyo.co.kr\", \"TRUSTED_BUSINESS_MEDIA:koreaittimes.com\", \"TRUSTED_BUSINESS_MEDIA:kukinews.com\", \"TRUSTED_BUSINESS_MEDIA:ohmynews.com\", \"TRUSTED_BUSINESS_MEDIA:sedaily.com\", \"TRUSTED_BUSINESS_MEDIA:thelec.kr\"], \"target_id_coverage\": {\"005930\": 14}}, \"historical_component_anchors\": [{\"anchor_id\": \"ORDTRANSFER-79ec36a5021be9c2294bf200\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"reinsurance_rate_cycle_reserve_earnings_visibility\"], \"max_points\": 19.0, \"points_lower\": 18.05, \"points_mid\": 19.0, \"points_upper\": 19.0, \"role\": \"POSITIVE\", \"score_band\": \"STRONG\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-9205e8ab347aff38184b148a\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 19.0, \"points_lower\": 4.478571, \"points_mid\": 5.428571, \"points_upper\": 6.378571, \"role\": \"COUNTER\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}], \"independent_role_mandate\": [\"CURRENT_ECONOMIC_STRENGTH\", \"POSITIVE_THESIS\", \"DURATION_AND_CASH_CONVERSION\"], \"judge_pass_name\": \"COMPONENT_ANALYST_JUDGE\", \"judge_role\": \"ANALYST\", \"required_judge_output_fields\": [\"allowed_range\", \"anchor_comparisons\", \"counter_fact_ids\", \"disagreements\", \"nearest_anchor_ids\", \"proposed_points\", \"rationale\", \"support_fact_ids\", \"why_not_higher\", \"why_not_lower\"]}",
+  "prompt_hash": "a984bcf54a2b33ab95737e57cb3088c1ec54e65620039ed3f92d00b69da856d4",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-35176fdd17569df9333a6a63ed28e142d886038af7747431ec287f1e22f7efa8",
+  "request_identity": {
+    "output_schema_hash": "46789d39fa9ccf9c76e85fe03fc8cb03f702e6b8e597c0eec7a595adf7da4d16",
+    "pass_name": "COMPONENT_ANALYST_JUDGE",
+    "prompt_hash": "a984bcf54a2b33ab95737e57cb3088c1ec54e65620039ed3f92d00b69da856d4",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_component_analyst_judge",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

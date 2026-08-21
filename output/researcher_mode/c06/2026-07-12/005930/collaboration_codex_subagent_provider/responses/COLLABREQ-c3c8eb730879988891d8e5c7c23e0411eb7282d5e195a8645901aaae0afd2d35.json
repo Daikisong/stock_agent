@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1968a55b50973ffdf3de2fcc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "The sparse newsroom audio reference does not identify a requested financial source family or expose enough metadata to resolve the objective."
+      },
+      {
+        "candidate_id": "SGCAND-20c352fb2cfa1fe72be6dc01",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.08,
+        "rationale": "The official 2023 fourth-quarter presentation route matches provenance but is superseded historical context."
+      },
+      {
+        "candidate_id": "SGCAND-2115b1ff098d77477b112d10",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A consumer audio catalogue is unrelated to semiconductor earnings or cash conversion."
+      },
+      {
+        "candidate_id": "SGCAND-217fca8d6285cddbc2352748",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.86,
+        "rationale": "The official annual-reports landing page is a useful route to the full original financial and cash-flow reports needed for the current mechanism; the exact report must be fetched and checked."
+      },
+      {
+        "candidate_id": "SGCAND-21ec3a5821cf6e60e7d71e61",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The CSR portal does not match the requested financial source families or objective."
+      },
+      {
+        "candidate_id": "SGCAND-22a586b2f0aa05444cf47bae",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The design site is unrelated to the earnings-conversion investigation."
+      },
+      {
+        "candidate_id": "SGCAND-242da702a8c500639f19b14c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A 404 page cannot provide a requested source or material document route."
+      },
+      {
+        "candidate_id": "SGCAND-25e1197defb4f20fb4322029",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The retail-store page is unrelated to the open objective."
+      },
+      {
+        "candidate_id": "SGCAND-26fbbfb619ad7222d919231e",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.8,
+        "rationale": "The official 2025 third-quarter presentation is recent issuer material that can bridge earnings trends and counters into the current period, subject to supersession review."
+      },
+      {
+        "candidate_id": "SGCAND-28fbf9df190ff6aae72ae220",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A consumer benefits page is unrelated to the financial objective."
+      },
+      {
+        "candidate_id": "SGCAND-29006dbcddb6e283b07ff822",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A projector catalogue is unrelated to semiconductor earnings and cash conversion."
+      },
+      {
+        "candidate_id": "SGCAND-29525d8c7ee00e3d5c825cf1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The third-party book-commerce page is not a requested issuer source and is unrelated to the research mechanism."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Annual-report and recent presentation routes need bounded full-document retrieval; snippets and landing metadata are not evidence."
+    ]
+  },
+  "payload_hash": "0dc18a46fbc079e6870782169904f4bcdd245cfbbc3d4435d9b94d159fe23a32",
+  "production_score_authority": false,
+  "prompt_hash": "0408997f733cedfae4c7590baa8a12778db12582035138839248b175a715d065",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c3c8eb730879988891d8e5c7c23e0411eb7282d5e195a8645901aaae0afd2d35",
+  "response_id": "COLLABRESP-87f0c9f9c4cc8d587ac66c3ff7b47b00c66a0ab042d6ffb76fd7e0be7a98dc89",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

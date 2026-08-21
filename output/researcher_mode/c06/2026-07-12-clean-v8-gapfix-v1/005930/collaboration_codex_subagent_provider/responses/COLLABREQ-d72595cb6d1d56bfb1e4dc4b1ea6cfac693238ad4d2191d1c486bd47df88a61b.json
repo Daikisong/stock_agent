@@ -1,0 +1,55 @@
+{
+  "output_schema_hash": "049ea93c8c930ce08510030247389aa044d4c196a1f6ab4ece10308d1637f4fe",
+  "payload": {
+    "allowed_range": [
+      2.7,
+      4.2
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df has a low-confidence ordinal 4.32-5.52 positive band. The revised facts are source-backed, but the anchor's middle band should not be exceeded merely because a low forward PE uses a large forecast earnings denominator.",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b has a low-confidence ordinal 2.83-4.03 counter band. Denominator mismatch and missing HBM cash attribution place the case near this band even though actual memory and shipment execution prevent a bottom score."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [
+      "A realized operating improvement does not by itself establish undervaluation when the valuation denominator is consolidated, estimated, and different across PE, PB, EV/EBITDA, and FCF yield.",
+      "The AMD historical HBM3E relationship verifies product execution but does not disclose current HBM economics, customer concentration, or contractual durability."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 3.4,
+    "rationale": "The revised selected facts correctly remove future MOU alignment from the support plane, but they still do not solve valuation attribution. Actual HBM4 shipment, AMD-confirmed HBM3E supply, memory revenue, and ASP are operating evidence, not a period-matched HBM earnings denominator. The 5.59x forward PE and 2.99x forward PB depend on consolidated estimates, while 21.86x trailing PE, 3.84x trailing PB, 18.88x forward EV/EBITDA, and 1.99% forward FCF yield are materially less supportive. With NVIDIA supply only discussed and no fixed allocation, price, or cash bridge, rerating confidence remains close to the counter anchor.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "The prompt lacks HBM-specific earnings and FCF, has conflicting forward and trailing valuation measures, and contains no confirmed NVIDIA allocation, price, volume, duration, or cancellation protection.",
+    "why_not_lower": "Actual HBM4 shipments, customer-official HBM3E supply history, actual memory revenue, and realized ASP improvement make the operating case materially stronger than a product-plan or target-price-only narrative."
+  },
+  "payload_hash": "b9ac3e6bb1761da634a5cc00b08add75310c14ee399f391636e22c93355e5521",
+  "production_score_authority": false,
+  "prompt_hash": "a09a60fd0a2e8851c50416e5f7cf64df9c01a6ba4d03d8075f9b99ff53d82d90",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d72595cb6d1d56bfb1e4dc4b1ea6cfac693238ad4d2191d1c486bd47df88a61b",
+  "response_id": "COLLABRESP-26ec1e0ec3d6c725db847571603bc86cdf150307bcb811bb0865b3fc8615e910",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

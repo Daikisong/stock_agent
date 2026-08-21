@@ -1,0 +1,121 @@
+{
+  "output_schema_hash": "fd8388b71763d0f2ba479b414fb00cb0477f43bf1f4ff96b116fa6fa07c9c1c1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-19ef5a4db5c5631cb5dbf6aa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "공식 도메인의 일반 footer 경로이지만 제목·날짜·첨부 문서가 없고 ISSUER_PRESENTATION 또는 CASH_FLOW 원문으로 식별되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-48ee022c7d21972688a20640",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "webundefined로 끝나는 CDN 오류 경로이며 발행사 원문이나 full-fetch 가능한 연구 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4fa674bf7354779f32a5fded",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "웹 접근성 기관 게시판으로 대상 회사 IR·현금흐름 문서의 소유자나 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-51f36fd41be2b9999e61039e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "공식 도메인이지만 일반 정책성 footer 경로이고 분기 IR 발표자료·현금흐름 첨부의 식별자가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-62dc9a89a3cb82c2502e2d48",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "공식 사이트의 일반 지원 경로일 뿐 요청된 발표자료나 현금흐름 원문으로 이어진다는 메타데이터가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-7e2229873e2a677c8e8119e9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "그룹 윤리경영 사이트로 대상 회사의 HBM 투자·현금흐름 발표자료 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-80ad2294810ff81c1c94ff6f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "LinkedIn 회사 프로필은 제3자 플랫폼이며 요청된 공식 발표자료·현금흐름 full-document 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-815d6fa41b1e2c4921d277f9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "외부 기관 홈페이지로 대상 회사 원문 문서의 소유자·날짜·첨부 식별을 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-820e8ecd193417c6a564a7ef",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "YouTube embed 링크는 공식 소유권과 원문 문서 provenance가 검증되지 않았고 IR PDF나 뉴스룸 원문을 full-fetch하는 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c2af077248b7468381278f9e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "공식 도메인의 일반 footer 경로이지만 요청된 발표자료·현금흐름 문서와 연결되는 제목·날짜·첨부가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-f70bd36dec41bf25e27369af",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "Instagram 프로필은 제3자 소셜 플랫폼이며 검증 가능한 발행사 IR·현금흐름 원문 경로가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 roster는 직전 공식 IR 랜딩에서 확장된 footer·외부 링크이며 PUBLIC_BROKER_PDF 후보를 포함하지 않는다.",
+      "snippet이나 참조 관계 자체는 증거가 아니고, 11개 모두 요청 문서군의 날짜·대상·원문 첨부를 full-fetch할 수 없어 material로 선별하지 않았다."
+    ]
+  },
+  "payload_hash": "24e189609a0a9ce826c11221d42e78839b25b4362e2f2c8cf4cc0113dd986332",
+  "production_score_authority": false,
+  "prompt_hash": "b6a9d5f7e5d7284f368181e4e2c18e5e3b6fad125c1453e9e5de8867323a4abd",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e299c112eca579478a40a7f62a6c67a88e6491471e585683abd62eb6f357e626",
+  "response_id": "COLLABRESP-b55f2ce619f89c8ae8b270a0f6017564ba63a1321351f5d0069c0bb278c2f83f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

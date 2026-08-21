@@ -1,0 +1,155 @@
+{
+  "output_schema_hash": "50e9b24076957d0d9f2938f114392431d2a42f70ff2d2c73e20f5dd230627aa5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-58c2e2a2255d095ee99cfaa1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`美 '반도체 관세' 본격화…韓정부·업계 긴장 속 대응책 모색` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-79aece324c1219ecd5c862cb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`서울경제` 후보는 GENERAL_WEB_DISCOVERY 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-18ca83a1f656ea04ce5a1ffa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '덩실덩실' 그린광학·네오셈·SFA반도체·쎄크... ...` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-20514870c0e45af684800a9c",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "KIND_KRX 증권신고서라는 source family는 맞지만 2026년 지분증권 정정 안내이며, 삼성전자·HBM4·메모리 신규시설투자 결정의 표제나 직접 내용이 없습니다. 요청 문서 유형과 대상이 달라 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-6d6d0f7c574e445357697d16",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "KIND_KRX의 2024년 증권신고서(지분증권)이며 snippet상 발행사는 반도체 검사장비 사업자입니다. 삼성전자 issuer filing도, HBM4·메모리 신규시설투자 결정도 아니므로 full fetch 없이 비관련으로 분류할 수 있습니다."
+      },
+      {
+        "candidate_id": "SGCAND-1f1cc32e1f78f280f3715c95",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "KIND_KRX 분기보고서지만 snippet은 NEXTIN Japan·넥스레이 등 다른 발행사의 자회사 변동을 설명합니다. 삼성전자 HBM4·메모리 투자와 대상·내용이 모두 달라 full fetch 대상이 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-6aa11dfdf90fd8a5a97c57a4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '덩실덩실' SFA반도체·한미반도체·제이엔비... '한...` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-38f8025e554980b886401132",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '봄날의 햇살' 라온테크·쎄크·원익홀딩스·로보...` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-a606a9da726d6a2e0a846f83",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`한미반도체 주가 전망 2026 1분기 쇼크 후 반등` 후보는 GENERAL_WEB_DISCOVERY 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-bc7344f06794d99d1ba70286",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '함박웃음' 한화비전·아스플로·에이팩트... '한숨...` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-18418ba6f35ec4aa2ba8399c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '함박웃음' 알에스오토메이션·그린광학·한미반도...` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-f64081deb2dbe310fd8873d3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`[삼성전자(주) 연혁과 역사] 1969년 1월13일 삼성전자공업주식회사 설립` 후보는 GENERAL_WEB_DISCOVERY 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "epoch86 partition 7의 후보 12건을 각각 한 번씩 분류했습니다.",
+      "요청된 OPENDART·KIND_KRX 삼성전자 원 공시이면서 HBM4·메모리 신규시설투자를 직접 가리키는 full-fetch 후보는 이 partition에 없습니다.",
+      "ranking_complete=true는 이 partition transport roster의 분류 완료만 뜻하며, 신규시설투자 근거 확보나 전체 research 완료를 뜻하지 않습니다.",
+      "모든 snippet은 discovery metadata로만 취급했고 evidence로 승격하지 않았습니다."
+    ]
+  },
+  "payload_hash": "ae1343b1ddf8dabed39bdd845385257702a950eac6d0b7faed92f1b139e6bbf0",
+  "production_score_authority": false,
+  "prompt_hash": "579df8c95a6528da591ebcea1ce5c23f4deb78d3f03fb129bf00ecb7426d50a4",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e8355a5987ec2450dd563b0995dc53e93e5d67294bd38db78483e4c52c546d2c",
+  "response_id": "COLLABRESP-a9b4b79f5d0505f4accc7e7f4d1b5cb929e03e50a7914b9bdb5831357ef20121",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

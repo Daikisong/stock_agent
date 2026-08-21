@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7d978cfe6b8fa5980bfb25ec",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.05,
+        "rationale": "NVIDIA Certified Systems 공식 landing이지만 Samsung 또는 HBM memory supplier relationship을 명시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-9d465ad939f486df6a9c7608",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA RTX PRO workstation 페이지로 Samsung HBM 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-1178ff435fa935546fc6884b",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Quadro G-SYNC 설치문서로 Samsung HBM qualification·supply와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-25f83c589a4f2af53384510e",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA RTX 5060 소비자 GPU 공식 페이지로 HBM을 사용하지 않으며 Samsung relationship scope가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-4e6b06e1213edc578c241fde",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA-hosted NetApp data 세션으로 Samsung HBM 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-49165449a942f5094036f808",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Quadro GV100 공식 자료는 HBM2 사양이지만 Samsung 공급자 또는 current HBM3E/HBM4 관계를 명시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a6b07a29b3e340663cf9f303",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 접근성 안내로 Samsung HBM 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-bb4427dfe51c84a628d2d737",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Quadro 색상 기술문서로 Samsung HBM 관계와 제품·기간이 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-bcb919bc2b0c1ebbf89b1f3f",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA DualNet 기술문서로 Samsung HBM qualification·platform alignment와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-da85850712e7109e7408d101",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA GTC pricing landing으로 Samsung HBM 관련 content route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b97847803f38a5811b07303c",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA T4 공식 제품문서의 qualification은 시스템 설계 지침이며 Samsung HBM3E/HBM4 supplier qualification을 뜻하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-3c1ae3f5c6ee207f0e27ba22",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA GeForce gaming PC 페이지로 Samsung HBM relationship과 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "NVIDIA official provenance와 Samsung HBM 관계 materiality를 분리했다. 이 12건의 material 0은 공식 relationship 자료 부재를 증명하지 않는다."
+    ]
+  },
+  "payload_hash": "2b46f11de6945a4dcff855d8d4cf31b211c8fe9a66df233ecb48d30190979c79",
+  "production_score_authority": false,
+  "prompt_hash": "68baf2e15c072dc62a6eba7593bfc999000d45bb2ff1629e527d9cfc314fe73b",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2e074f8606a621fd742e371fc83de5a1c17109a643492bc7ccffc667883078d8",
+  "response_id": "COLLABRESP-0c0f9b00ad8a4a729593f2bfcfb49ba3b1031a652ed64b67e8dda710a4f6bebf",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

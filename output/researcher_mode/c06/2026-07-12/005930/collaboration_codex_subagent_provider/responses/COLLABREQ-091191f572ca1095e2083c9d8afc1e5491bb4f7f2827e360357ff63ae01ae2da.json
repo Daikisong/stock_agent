@@ -1,0 +1,44 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "2026-07-08 한국투자 full PDF에서 동일 기간·동일 P/B peer table을 우선 확인하고, 표가 없으면 서술형 저평가 자료를 PEER_BAND 대체로 쓰지 말고 point-in-time structured peer route로 남긴다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 한국투자 2Q26 PBR 비교 PDF",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "공급된 STRUCTCAND-f5eee9ecb938221ddd24dc40(2026-07-08, 한국투자) 메타데이터를 단서로 cutoff 2026-07-12 이전의 원문 PDF를 찾고, 동일 추정기간·동일 P/B 기준의 peer 수치 범위와 반대 사례를 확인한다. 메타데이터나 서술형 저평가만으로는 PEER_BAND를 닫지 않으며 원문 숫자와 point-in-time structured peer 검증이 함께 있어야 한다. 기존 글로벌·메모리 generic 검색 및 구형 특정 리포트 검색과 다른 최신 한국투자 full-document route다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF",
+          "VALUATION_MULTIPLES"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "PEER_BAND 계약은 llm_fact_extractable_roles와 fact_materialization_contracts가 비어 있으므로 이 검색의 문서나 메타데이터 자체는 gap을 닫지 않는다. exact peer identity, period, metric, numeric band가 구조화 valuation engine에서 검증되어야 한다."
+    ]
+  },
+  "payload_hash": "9cef5852f028948592be5349cbb69e34a46e38c8b126c924a1f5e45c9dd020fa",
+  "production_score_authority": false,
+  "prompt_hash": "e7f409a686fdd30e6ae4c42fdd60cb8d62046979857ef6f4b8baf9e321155bce",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-091191f572ca1095e2083c9d8afc1e5491bb4f7f2827e360357ff63ae01ae2da",
+  "response_id": "COLLABRESP-c60a6c2d8ebf6d2b7d85c8be3f3070f62d8e7edca04bdaf1d4baac6661b4025a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "allowed_range": {
+        "items": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "anchor_comparisons": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "counter_fact_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "disagreements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "nearest_anchor_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "proposed_points": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "rationale": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "support_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-437433ffa125207e6f71a099",
+            "EFACT-59fe4fe59aecdedfd2cd7aac",
+            "EFACT-e00a584221085d366d802f39",
+            "EFACT-fd7995c7d059c87c9d390d9b"
+          ],
+          "type": "string"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "prefixItems": [
+          {
+            "enum": [
+              "EFACT-437433ffa125207e6f71a099"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-59fe4fe59aecdedfd2cd7aac"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-e00a584221085d366d802f39"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-fd7995c7d059c87c9d390d9b"
+            ],
+            "type": "string"
+          }
+        ],
+        "type": "array"
+      },
+      "why_not_higher": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "why_not_lower": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "anchor_comparisons",
+      "proposed_points",
+      "allowed_range",
+      "rationale",
+      "disagreements",
+      "support_fact_ids",
+      "counter_fact_ids",
+      "nearest_anchor_ids",
+      "why_not_higher",
+      "why_not_lower"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "8b1ce741841953139ad6de0d6be2510acd73dac54a4a20e1a0f653ea08d08c5b",
+  "pass_name": "COMPONENT_ANALYST_JUDGE",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nFirst decode every evidence_fact_projection.facts row positionally with evidence_fact_projection.fact_fields. Each row preserves one exact fact_id and its economic meaning. Resolve source_independence_group_index through source_independence_group_dictionary. The count/hash rosters account only for repeated lineage; they are not omitted research, a top-N selection, or permission to skip rows. Review all fact_count rows. Act as the independent positive analyst for exactly one broad component. Derive proposed component points and an allowed range from current support facts, economic strength, duration, and cash conversion. Account for every supplied positive component fact and compare the case with at least one nearest blind historical anchor. Explain both why the score is not higher and why it is not lower.\nReturn exactly one JSON object matching the supplied schema.\n{\"allowed_counter_fact_ids\": [\"EFACT-0acf42f2a7b3a54791c685ca\", \"EFACT-4e2037f2e29108c0d4b9e66c\", \"EFACT-720c15b2be6d3b574ccae715\", \"EFACT-77cefacbebfbafb1aa209ddb\", \"EFACT-7c51dbf39047c0fb2e983332\", \"EFACT-a696155e4f4ed8929c20afd4\"], \"allowed_nearest_anchor_ids\": [\"ORDTRANSFER-09ab96433f8087166845bf25\", \"ORDTRANSFER-90c2b7d4695e62e277703a64\"], \"allowed_support_fact_ids\": [\"EFACT-437433ffa125207e6f71a099\", \"EFACT-59fe4fe59aecdedfd2cd7aac\", \"EFACT-e00a584221085d366d802f39\", \"EFACT-fd7995c7d059c87c9d390d9b\"], \"component_id\": \"information_confidence\", \"component_max_points\": 5.0, \"component_research_memo\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"component_max_points\": 5.0, \"counter_case\": \"HBM 계약·고객·품질·마진·현금전환은 독립 source로 corroborate되지 않았다. 고객은 익명이고 계약부채를 HBM backlog로 볼 수 없으며, MD&A와 분기 위험공시 범위도 제한된다. 보증·재고·재공품 충당금은 audited actual이지만 HBM 귀속은 없다.\", \"counter_fact_ids\": [\"EFACT-0acf42f2a7b3a54791c685ca\", \"EFACT-4e2037f2e29108c0d4b9e66c\", \"EFACT-720c15b2be6d3b574ccae715\", \"EFACT-77cefacbebfbafb1aa209ddb\", \"EFACT-7c51dbf39047c0fb2e983332\", \"EFACT-a696155e4f4ed8929c20afd4\"], \"historical_anchor_ids\": [\"ORDTRANSFER-09ab96433f8087166845bf25\", \"ORDTRANSFER-90c2b7d4695e62e277703a64\"], \"memo_id\": \"CRMEMO-80cb0de6b0599152dc281125\", \"nearest_counter_anchor_ids\": [\"ORDTRANSFER-90c2b7d4695e62e277703a64\"], \"nearest_positive_anchor_ids\": [\"ORDTRANSFER-09ab96433f8087166845bf25\"], \"positive_case\": \"독립 감사인의 적정의견과 규제공시 actual은 DRAM 매출, 수익 인식, 계약부채 및 위험 충당금의 신뢰 가능한 기초를 제공한다. HBM Time to Market과 고객 ASIC 협업도 issuer가 설명한 제품 실행·상용화 경로를 확인한다.\", \"positive_fact_ids\": [\"EFACT-437433ffa125207e6f71a099\", \"EFACT-59fe4fe59aecdedfd2cd7aac\", \"EFACT-e00a584221085d366d802f39\", \"EFACT-fd7995c7d059c87c9d390d9b\"], \"research_complete\": true, \"researcher_role\": \"InformationConfidenceResearcher\", \"researcher_summary\": \"OPENDART actual과 독립 감사 적정의견은 DRAM 매출, 고객 집중, 계약부채, 수익인식, 재고·보증·재공품 위험을 규제공시 기반으로 확인한다. 그러나 HBM 제품 실행과 고객 ASIC 협업은 issuer 단일 independence group에 머물며 고객명·계약조건·품질·마진·현금전환의 독립 corroboration이 없다. 빈 corroboration count는 source absence가 아니고, prompt에 명명된 실행 가능한 counterparty route도 없으므로 새 query를 억지로 만들지 않는다. 감사된 actual의 신뢰도와 HBM 세부 공백을 함께 반영한다.\", \"resolution_fact_ids\": [], \"source_coverage\": [\"OPENDART\", \"ISSUER_NEWSROOM\"], \"structured_metrics\": {}, \"target_id\": \"000660\", \"uncertainties\": [\"HBM 고객별 계약가격·물량·기간·취소조건·backlog가 공개되지 않았다.\", \"HBM 제품 품질·마진·현금전환에 대한 독립 고객사 corroboration이 없다.\", \"Issuer HBM 실행·협업 설명은 단일 source independence group이며 source absence를 뜻하지 않는다.\", \"계약부채·보증·재고·재공품 수치를 HBM에 귀속할 근거가 없다.\"]}, \"conditional_judge_rules\": {\"empty_support_plane\": {\"condition\": \"allowed_support_fact_ids is empty\", \"required_allowed_range\": [0, 0], \"required_proposed_points\": 0, \"required_support_fact_ids\": []}, \"positive_points_require_support\": \"proposed_points greater than zero requires at least one exact id from allowed_support_fact_ids in support_fact_ids\"}, \"evidence_fact_projection\": {\"advisory_tags_are_not_score_gates\": true, \"allowed_component_coverage\": {\"bottleneck_pricing\": 6, \"capital_allocation\": 10, \"earnings_visibility\": 6, \"eps_fcf_explosion\": 6, \"information_confidence\": 10, \"market_mispricing\": 6, \"valuation_rerating\": 6}, \"as_of_date_coverage\": {\"2026-07-12\": 10}, \"claim_id_roster\": {\"count\": 10, \"roster_hash\": \"bf3244c289bfeab5ae526c4f2ddc2d48b075d9d51ce582baa9264efa3bf7d20b\"}, \"corroborating_independence_group_roster\": {\"count\": 1, \"roster_hash\": \"f92624313baa0aaca744d69e2eb15bdf7e807a1a80c07fe08f13d2d9613c97c9\"}, \"every_fact_id_preserved\": true, \"every_fact_lineage_accounted_by_count_and_hash\": true, \"fact_count\": 10, \"fact_fields\": [\"fact_row_index\", \"fact_id\", \"subject\", \"business_segment\", \"product_family\", \"economic_mechanism\", \"predicate\", \"value\", \"unit\", \"period\", \"direction\", \"current_lifecycle\", \"confidence\", \"structured_evidence_roles\", \"source_independence_group_index\", \"corroborating_independence_group_count\"], \"fact_roster_hash\": \"d0d68747ee994c2f4d206024ba11ea09d8c89b43560d8c2b779adcb80139fb94\", \"facts\": [[0, \"EFACT-0acf42f2a7b3a54791c685ca\", \"SK하이닉스 연결 주요 고객 매출 집중도 변화\", \"Memory\", \"Memory products\", \"고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.\", \"고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.\", \"7,780,590 and 6,536,458 vs 4,786,233\", \"백만원\", \"2026-Q1 vs 2025-Q1\", \"COUNTER\", \"CURRENT\", 0.98, [], 0, 1], [1, \"EFACT-437433ffa125207e6f71a099\", \"SK하이닉스 DRAM\", \"메모리\", \"DRAM\", \"SK하이닉스 별도 기준 2026년 1분기 DRAM 매출 실제치는 39,758,279백만원이었다. HBM 단독 매출로 재분류하지 않는다.\", \"REPORTS_Q1_2026_DRAM_REVENUE\", 39758279, \"KRW million\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [\"SEGMENT_CONTRIBUTION\"], 0, 1], [2, \"EFACT-4e2037f2e29108c0d4b9e66c\", \"SK하이닉스 분기보고서 경영진단 및 분석의견 미기재\", \"Corporate\", \"Management reporting\", \"분기보고서 형식상 예측정보, 영업실적, 유동성·자금조달, 부외거래에 대한 경영진 분석이 기재되지 않아 서술형 가시성 확인 범위가 제한된다.\", \"기업공시서식 기준 때문에 분기보고서의 경영진단 및 분석의견 하위 항목들이 기재되지 않았다.\", \"Management discussion sections not provided in quarterly filing format\", null, \"2026-Q1\", \"COUNTER\", \"CURRENT\", 0.99, [], 0, 1], [3, \"EFACT-59fe4fe59aecdedfd2cd7aac\", \"SK하이닉스 2026년 1분기 감사 및 연결감사 의견\", \"Corporate\", \"Financial reporting\", \"삼정회계법인의 적정의견과 의견변형·계속기업 불확실성·강조사항·핵심감사사항 없음은 규제 공시 actual의 재무보고 신뢰도를 지지한다.\", \"2026년 1분기 감사보고서와 연결감사보고서는 삼정회계법인의 적정의견이며 표상 추가 제한사항은 모두 해당사항 없음이다.\", \"Unmodified opinion; no listed modification or uncertainty\", null, \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 0.99, [], 0, 1], [4, \"EFACT-720c15b2be6d3b574ccae715\", \"SK하이닉스 연결 판매보증충당부채\", \"전사/지역 공시\", \"전사 메모리/자본 공시\", \"2026년 1분기말 연결 판매보증충당부채는 178,142백만원이며 품질보증수리·현금보상·제품교환 예상액을 반영한다.\", \"REPORTS_CONSOLIDATED_SALES_WARRANTY_PROVISION\", 178142, \"KRW million\", \"2026-03-31\", \"COUNTER\", \"CURRENT\", 0.98, [], 0, 1], [5, \"EFACT-77cefacbebfbafb1aa209ddb\", \"SK하이닉스 반도체 재고자산\", \"반도체\", \"메모리 재고\", \"2026년 1분기말 재고 취득원가 16,385,847백만원에 평가충당금 411,714백만원을 반영해 장부잔액을 15,974,133백만원으로 낮췄다.\", \"REPORTS_INVENTORY_VALUATION_ALLOWANCE\", 411714, \"KRW million\", \"2026-03-31\", \"COUNTER\", \"CURRENT\", 0.99, [], 0, 1], [6, \"EFACT-7c51dbf39047c0fb2e983332\", \"SK하이닉스 중국 생산 재공품\", \"메모리\", \"메모리 웨이퍼 재공품\", \"2026년 1분기말 중국 종속기업 생산 재공품의 구매·추가가공·판매에서 예상되는 손실을 반영한 계약손실충당부채가 162,582백만원으로 전기초 153,267백만원보다 늘었다.\", \"REPORTS_CONTRACT_LOSS_PROVISION_FOR_WAFER_WORK_IN_PROCESS\", 162582, \"KRW million\", \"2026-03-31\", \"COUNTER\", \"CURRENT\", 0.98, [], 0, 1], [7, \"EFACT-a696155e4f4ed8929c20afd4\", \"SK하이닉스 중간 연결재무제표 위험 공시 범위\", \"Corporate\", \"Financial reporting\", \"분기 연결재무제표가 연차 보고서의 모든 재무위험 공시를 포함하지 않아 리스크 정보의 현재 범위가 제한된다.\", \"중간 연결재무제표에는 연차 연결재무제표가 요구하는 모든 재무위험관리 및 공시사항이 포함되지 않는다.\", \"Not all annual financial risk disclosures are included\", null, \"2026-Q1\", \"COUNTER\", \"CURRENT\", 0.99, [], 0, 1], [8, \"EFACT-e00a584221085d366d802f39\", \"SK하이닉스 HBM 제품 실행력\", \"메모리 반도체\", \"HBM\", \"회사는 HBM의 Time to Market 실현과 대역폭·밀도·Core Die 적층 단수 향상, 성능·품질을 제품 실행 기반으로 설명했다. 같은 문장의 기존 고객 ASIC 협업 사실과 구별되는 제품 상용화 실행력이다.\", \"REPORTS_HBM_TIME_TO_MARKET_AND_PERFORMANCE_EXECUTION\", \"HBM Time to Market realized with higher bandwidth, density and Core Die stacking\", \"qualitative\", \"2026-Q1 disclosure\", \"POSITIVE\", \"CURRENT\", 0.98, [], 0, 1], [9, \"EFACT-fd7995c7d059c87c9d390d9b\", \"SK하이닉스 HBM 고객 ASIC 개발 협업\", \"메모리\", \"HBM\", \"HBM 성능·품질을 기반으로 고객과 ASIC 개발 협업을 진행해 고객 요구가 제품 개발에 연결되는 상용화 경로를 형성한다.\", \"COLLABORATING_WITH_CUSTOMERS_ON_ASIC_DEVELOPMENT_FOR_HBM\", \"고객들과 ASIC 개발 협력\", \"status\", \"2026-Q1 disclosure\", \"POSITIVE\", \"CURRENT\", 0.88, [], 0, 1]], \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"primitive_tag_roster_hash\": \"c4e28fcd17bbf32d69c753790a6f4e90619cf5c825c7347f7cfbaa08b5ecda8e\", \"prompt_projection_is_research_cap\": false, \"question_family_tag_roster_hash\": \"d30718a59305db46cd813c4eb6e23aca0d31b8a3a7ebc5fe895024e198a9b7c6\", \"quote_id_roster\": {\"count\": 10, \"roster_hash\": \"311d087dc48f5f82c3fd5f9b0bd948ee00972c016f185f039849fc10442042f1\"}, \"repeated_lineage_arrays_omitted_from_semantic_rows\": true, \"schema_version\": \"e2r_v5_citable_fact_prompt_projection_v3\", \"score_authority\": false, \"source_id_roster\": {\"count\": 5, \"roster_hash\": \"75b0d98352a19f6a79615ce3a2c4d13b5b2e66592db8fb0f8016d0f6d65d8866\"}, \"source_independence_group_dictionary\": [\"OPENDART:opendart\"], \"target_id_coverage\": {\"000660\": 10}}, \"historical_component_anchors\": [{\"anchor_id\": \"ORDTRANSFER-09ab96433f8087166845bf25\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 5.0, \"points_lower\": 1.75, \"points_mid\": 2.0, \"points_upper\": 2.25, \"role\": \"POSITIVE\", \"score_band\": \"MEDIUM\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-90c2b7d4695e62e277703a64\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"execution_or_budget_to_company_cash_bridge\"], \"max_points\": 5.0, \"points_lower\": 1.5, \"points_mid\": 1.75, \"points_upper\": 2.0, \"role\": \"COUNTER\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}], \"independent_role_mandate\": [\"CURRENT_ECONOMIC_STRENGTH\", \"POSITIVE_THESIS\", \"DURATION_AND_CASH_CONVERSION\"], \"judge_pass_name\": \"COMPONENT_ANALYST_JUDGE\", \"judge_role\": \"ANALYST\", \"required_judge_output_fields\": [\"allowed_range\", \"anchor_comparisons\", \"counter_fact_ids\", \"disagreements\", \"nearest_anchor_ids\", \"proposed_points\", \"rationale\", \"support_fact_ids\", \"why_not_higher\", \"why_not_lower\"]}",
+  "prompt_hash": "bc21359ba5ffc492539598d2c9a7e9641768e0eb399d53152815e396f648c71c",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6c3b21682d905e02bb19096bd26eee8cd1c442bdb74079d35ce08e0a5094b079",
+  "request_identity": {
+    "output_schema_hash": "8b1ce741841953139ad6de0d6be2510acd73dac54a4a20e1a0f653ea08d08c5b",
+    "pass_name": "COMPONENT_ANALYST_JUDGE",
+    "prompt_hash": "bc21359ba5ffc492539598d2c9a7e9641768e0eb399d53152815e396f648c71c",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_component_analyst_judge",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

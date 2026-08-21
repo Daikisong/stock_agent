@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "9abf7a6a930f3d937702db33761bd87b12f546dfa8c95c4897d7947b5b1f25a0",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-bca0d1a0c6b414b71d2becfe",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.58,
+        "rationale": "현재 discovery 메타데이터상 삼성전자의 HBM·메모리 귀속 추정치, 컨센서스 또는 밸류에이션 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-c23dba1e816ecd00223c6ffb",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.08,
+        "rationale": "Naver discovery provenance는 맞지만 제목상 다른 기업이 주대상이어서 삼성전자 objective를 직접 해결할 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-77d4e82513fadeeeb5563aec",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.44,
+        "rationale": "현재 discovery 메타데이터상 삼성전자의 HBM·메모리 귀속 추정치, 컨센서스 또는 밸류에이션 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-8a677a3765cd1c3d1b8f59b9",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.58,
+        "rationale": "현재 discovery 메타데이터상 삼성전자의 HBM·메모리 귀속 추정치, 컨센서스 또는 밸류에이션 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-3f57c6eb382445a09d019076",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.88,
+        "rationale": "현재 discovery 메타데이터상 삼성전자의 HBM·메모리 귀속 추정치, 컨센서스 또는 밸류에이션 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-46dd0be72dd1090683cc1c9f",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.08,
+        "rationale": "Naver discovery provenance는 맞지만 현재 제목·범위가 기술적 주가 해설, 단순 일정 또는 일반 논평에 가까워 objective의 경제 메커니즘을 직접 확인하기 어렵습니다."
+      },
+      {
+        "candidate_id": "SGCAND-bde1908541abee6a4b36f35a",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.9,
+        "rationale": "현재 discovery 메타데이터상 삼성전자의 메모리 ASP·공급제약·수요 또는 실적 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-c2284b4518e6f533fc27f9e1",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.08,
+        "rationale": "Naver discovery provenance는 맞지만 현재 제목·범위가 기술적 주가 해설, 단순 일정 또는 일반 논평에 가까워 objective의 경제 메커니즘을 직접 확인하기 어렵습니다."
+      },
+      {
+        "candidate_id": "SGCAND-110c6fc4f3d870919276e2e5",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.74,
+        "rationale": "현재 discovery 메타데이터상 삼성전자의 메모리 ASP·공급제약·수요 또는 실적 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-3388ffc348fdfa47b28f049f",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.08,
+        "rationale": "Naver discovery provenance는 맞지만 현재 제목·범위가 기술적 주가 해설, 단순 일정 또는 일반 논평에 가까워 objective의 경제 메커니즘을 직접 확인하기 어렵습니다."
+      },
+      {
+        "candidate_id": "SGCAND-4055b6e4834bde01a065a7da",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.54,
+        "rationale": "현재 discovery 메타데이터상 삼성전자의 메모리 ASP·공급제약·수요 또는 실적 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-752f33a06a0619c0b4586b86",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.58,
+        "rationale": "현재 discovery 메타데이터상 삼성전자의 HBM·메모리 귀속 추정치, 컨센서스 또는 밸류에이션 연결을 확인할 원문 fetch 후보입니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "각 partition 후보는 current discovery 메타데이터로 exact-once 분류했으며 snippet은 증거로 사용하지 않았습니다.",
+      "material 판정은 원문 fetch 우선순위일 뿐 원문·as-of-date 검증 전 EvidenceFact, 점수 또는 Stage 권한이 아닙니다."
+    ]
+  },
+  "payload_hash": "1710a28a018682b83b217da927daa52735a438ebfb0734465e428614ca514f72",
+  "production_score_authority": false,
+  "prompt_hash": "4c9cb1ecd5604933cf9187e9f48c6ce9a807cd50cc9b926199020b176211feac",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-908a2126a476e93c59474b9b75d54143f5ae69bbace6b5a90debbe036d6ba6f1",
+  "response_id": "COLLABRESP-1f237c2597a1e15ba36a2dea4cc7e617fc5b25a3a5fc9ae87ccf080b15ecc520",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-354e50f321ca58da91fdc881",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The asiatimes.com discovery candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL May 2026 earnings-call transcript or prepared-remarks route. Its title, URL, and supplied provenance do not provide the requested full-fetch path or SK hynix-specific commitment scope."
+      },
+      {
+        "candidate_id": "SGCAND-799f302962d60dd972f2db9f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.zerohedge.com discovery candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL May 2026 earnings-call transcript or prepared-remarks route. Its title, URL, and supplied provenance do not provide the requested full-fetch path or SK hynix-specific commitment scope."
+      },
+      {
+        "candidate_id": "SGCAND-0362d0157e688ea607749d9a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.myasset.com discovery candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL May 2026 earnings-call transcript or prepared-remarks route. Its title, URL, and supplied provenance do not provide the requested full-fetch path or SK hynix-specific commitment scope."
+      },
+      {
+        "candidate_id": "SGCAND-c7417eaf211c3dfe5fff4030",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The stocktwits.com discovery candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL May 2026 earnings-call transcript or prepared-remarks route. Its title, URL, and supplied provenance do not provide the requested full-fetch path or SK hynix-specific commitment scope."
+      },
+      {
+        "candidate_id": "SGCAND-6e0630ef7c03af7fdf2191b9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.fusionww.com discovery candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL May 2026 earnings-call transcript or prepared-remarks route. Its title, URL, and supplied provenance do not provide the requested full-fetch path or SK hynix-specific commitment scope."
+      },
+      {
+        "candidate_id": "SGCAND-4f34341db197a4fb968b9625",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The sherwood.news discovery candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL May 2026 earnings-call transcript or prepared-remarks route. Its title, URL, and supplied provenance do not provide the requested full-fetch path or SK hynix-specific commitment scope."
+      },
+      {
+        "candidate_id": "SGCAND-70bd645d142161a6fa822934",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.investing.com discovery candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL May 2026 earnings-call transcript or prepared-remarks route. Its title, URL, and supplied provenance do not provide the requested full-fetch path or SK hynix-specific commitment scope."
+      },
+      {
+        "candidate_id": "SGCAND-598f1d2fc251ec15ece510d1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The tech-insider.org discovery candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL May 2026 earnings-call transcript or prepared-remarks route. Its title, URL, and supplied provenance do not provide the requested full-fetch path or SK hynix-specific commitment scope."
+      },
+      {
+        "candidate_id": "SGCAND-f5547705bd8d07c29dae2835",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.tradingkey.com discovery candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL May 2026 earnings-call transcript or prepared-remarks route. Its title, URL, and supplied provenance do not provide the requested full-fetch path or SK hynix-specific commitment scope."
+      },
+      {
+        "candidate_id": "SGCAND-03305641fdb5bec2ded1b516",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.seoulz.com discovery candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL May 2026 earnings-call transcript or prepared-remarks route. Its title, URL, and supplied provenance do not provide the requested full-fetch path or SK hynix-specific commitment scope."
+      },
+      {
+        "candidate_id": "SGCAND-515aa80e8e9e8c91a2573e43",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.tomshardware.com discovery candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL May 2026 earnings-call transcript or prepared-remarks route. Its title, URL, and supplied provenance do not provide the requested full-fetch path or SK hynix-specific commitment scope."
+      },
+      {
+        "candidate_id": "SGCAND-835ddce0f5e5796e22ada270",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The securities.miraeasset.com discovery candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL May 2026 earnings-call transcript or prepared-remarks route. Its title, URL, and supplied provenance do not provide the requested full-fetch path or SK hynix-specific commitment scope."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate in this partition supplies a verified NVIDIA-owned May 2026 earnings-call transcript or prepared-remarks route available by 2026-07-12; the requested CUSTOMER_OFFICIAL source remains unresolved.",
+      "All candidates were classified from discovery metadata for fetch routing only; no snippet was treated as evidence."
+    ]
+  },
+  "payload_hash": "250353259fb42e945f159278975745c0ff1f9dd65a0d8e03975326683580fe94",
+  "production_score_authority": false,
+  "prompt_hash": "15415ff35b49e337123a90ff23a1fd5cb85faf009ee931a4d6c18e4cb9d44263",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-adcf7686f8ec0ce9032d75289b00e50a96e2610705878fbf5486c92457bc3cce",
+  "response_id": "COLLABRESP-1f64900bf92f3ca7167ebe36122b2f9a578086ab598d21ee8d7afa327fe4c4b8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

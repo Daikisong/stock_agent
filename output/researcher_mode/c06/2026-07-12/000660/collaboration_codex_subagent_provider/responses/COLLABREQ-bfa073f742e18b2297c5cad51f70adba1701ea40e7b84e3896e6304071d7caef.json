@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "af6a09607a327476ccec9812ec08734f108bccfa93c2358405b7e196421354fb",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f5cfa1ffa1b4ff61583c52b5",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 SK하이닉스 국문 뉴스룸의 이용 가이드 페이지로 issuer provenance는 맞지만, HBM·메모리 매출, 이익 또는 현금흐름 전환과 관련된 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-fbcf902940ec7232d417a5c7",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 SK하이닉스 영문 뉴스룸의 contact-us 페이지로 source-family provenance는 맞지만, 특정 실적발표·발표자료나 HBM 이익·FCF 전환 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e258898cba9ca1ecea1bf517",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 매체의 삼성전자·SK하이닉스 HBM4 해설로 URL 소유자와 candidate hint가 요청된 issuer 뉴스룸·실적발표·발표자료 provenance를 충족하지 않는다. snippet은 discovery metadata일 뿐 원문 근거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-73d65268de10efdc5f06b492",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "미국 보조금과 HBM 패키징 투자에 관한 제3자 기사다. 경제적으로 관련될 수 있어도 이번 query가 요구한 SK하이닉스 issuer-owned source family가 아니며 snippet을 실적·FCF evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-b76d2d0d06e7482bca0336da",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "마이크론 실적과 증권사 추정 SK하이닉스 HBM 전망을 섞은 제3자 기사다. SK하이닉스 issuer 실적발표·발표자료 원문이 아니고 추정치를 회사 가이던스로 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-a5e9b45a7cfd9f20e8c2e58c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "마이크론 전망을 다룬 제3자 언론 기사로 요청된 SK하이닉스 issuer-owned source family가 아니다. 경쟁사 일반 전망을 target의 HBM 매출·이익·FCF 근거로 대체할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-605c717528970859f98ee854",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 HBM mix를 인용한 제3자 매체 기사이며, URL owner와 discovery provenance가 issuer 뉴스룸·실적발표·발표자료를 충족하지 않는다. 인용 snippet만으로 회사 원문 수치나 현금흐름을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-3d22b5f887be72e70ff34208",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성전자 목표주가를 다룬 제3자 블로그로 target도 다르고 issuer-owned 원문도 아니다. SK하이닉스 HBM 이익·FCF objective와 연결할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-142c23c2925b584bb468e8ee",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "CXL 팹리스 스타트업의 자금조달을 다룬 제3자 분석으로 SK하이닉스 issuer 실적·발표자료 원문이 아니며, target의 메모리 이익과 현금흐름을 귀속할 근거가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-3b0f60b62663b71722781d95",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "마이크론 분기 실적을 SK하이닉스의 간접 신호로 해석한 제3자 기사다. 요청된 SK하이닉스 issuer-owned provenance가 아니며 경쟁사 실적을 target의 매출·이익·FCF로 확대할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-8bd8401d67cb7459285934f9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "마이크론 실적과 국내 메모리주 전망을 재서술한 제3자 기사로 issuer 뉴스룸·실적발표·발표자료 원문 요청을 충족하지 않는다. 장기계약·공급부족 headline도 target source-backed evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-23a28c69114853d755c7295b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "주가 전망·투자전략을 다룬 제3자 블로그로 요청된 issuer-owned source family가 아니며, 검증 가능한 SK하이닉스 HBM 매출·이익·현금흐름 원문도 제시하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "공급된 partition 2의 12개 후보를 각각 정확히 한 번 판정했다. 공식 도메인의 guideline/contact 두 건은 provenance만 맞고 immaterial하며, 나머지 10건은 모두 이번 query의 issuer-owned source-family edge를 충족하지 않는다.",
+      "제3자 기사 중 HBM·투자·경쟁사 실적을 다룬 항목이 있어도 snippet은 evidence가 아니며, 필요한 회사 원문 경로는 LLM query planning의 후속 source-family 방향으로 다시 찾아야 한다."
+    ]
+  },
+  "payload_hash": "99c0c36118608f1b11c430285da773a5700cd75c8c389edd8faaf7f0644a1da4",
+  "production_score_authority": false,
+  "prompt_hash": "6f5f1709cbcfe20fa40cd2495533ae239988a56a2915d34f3fd541efadc86518",
+  "provenance": {
+    "agent_id": "hynix_current_leaves",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_current_leaves",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bfa073f742e18b2297c5cad51f70adba1701ea40e7b84e3896e6304071d7caef",
+  "response_id": "COLLABRESP-4ce6f16b618987c3bf1ad936ffee9e2a73161ee16ae04a33b667e99687f28660",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "91071446c208f5af1b093f56db0cfcb0d6956cafdb678ff4117f0d174504e7e1",
+  "payload": {
+    "allowed_range": [
+      8.8,
+      12.3
+    ],
+    "anchor_comparisons": [
+      "The counter anchor's 7.77-9.87 band is relevant because contract terms and customer-level allocation remain unverifiable, but current issuer-stated orders and completed arrangements support a value modestly above that band.",
+      "The positive anchor's 14.28-16.38 band requires more durable and auditable conversion than is shown while LTA pricing can lag, performance reviews affect allocation and customer product delays reduce contribution."
+    ],
+    "counter_fact_ids": [
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-80daa96c00cd5d7b5782c27a",
+      "EFACT-a79b8e5bedf94ee44504539e",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "The memo midpoint overstates contract quality because the binding economic terms are not externally auditable.",
+      "Sold-out planned capacity and purchase orders do not establish realized shipment timing or cash collection when customer schedules can move."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-fe4be151b6e34320ddc5f6a7",
+      "CANCH-a55bc660ba3191bbb73fafc7"
+    ],
+    "proposed_points": 10.6,
+    "rationale": "Every counterfact impairs the quality or timing of visibility. NDA prevents validation of quantity, price, cancellation and minimum-purchase terms; long-term arrangements can delay market-price realization; customer performance reviews condition allocation; and downstream product delays have already reduced expected contribution. Positive facts show demand and orders, but the 30% statistic covers memory broadly and the customer-official technology mention is neither qualification nor a purchase contract.",
+    "support_fact_ids": [
+      "EFACT-16ee255de13b7acf64e98eaa",
+      "EFACT-1ec0fca52ff40b01ed1890f6",
+      "EFACT-6430c66a53268479f230de39",
+      "EFACT-83b9afe8727ec3fd962620a4",
+      "EFACT-8b6707b4ab45897a5a448a93",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-d05fe1b53b1bb5081130ea1c"
+    ],
+    "why_not_higher": "There is no customer-level committed volume, price, cancellation protection, allocation history or realized shipment bridge, and customer schedule delay is already a current counterfact.",
+    "why_not_lower": "The record is stronger than a weak-visibility profile because issuer statements identify purchase orders, completed longer-term arrangements and sold-out planned capacity rather than only pipeline interest."
+  },
+  "payload_hash": "db0e00504dc2e9eca9a1e1556660118487d3179e1f5bfc3f73368f3f0e783d45",
+  "production_score_authority": false,
+  "prompt_hash": "3fadf87474d84f2da53e24d646b7e662929a0fbe8b91b68c9d48f4c089e813bd",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-84dcb94483ffd093e398aeb41a86f212f8c5b78a2a288b26a2928ce55a952dfe",
+  "response_id": "COLLABRESP-5548fca478debb773f4146f044b31db223ed58503488663435dc812b15bcb79c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

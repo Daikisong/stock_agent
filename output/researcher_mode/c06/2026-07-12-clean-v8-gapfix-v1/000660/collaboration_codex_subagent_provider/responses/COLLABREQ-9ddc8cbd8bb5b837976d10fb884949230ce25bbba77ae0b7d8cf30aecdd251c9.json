@@ -1,0 +1,582 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "rationale": "Coverage continuation page 2 adds 12 distinct omitted source-order atoms after prior 123: three remaining total-DRAM shipment YoY rates, two annual total-DRAM ASP estimates, five total-DRAM ASP QoQ rates, and two total-DRAM ASP YoY rates. Additional ASP YoY and conventional-DRAM rows remain in literal chunk 0/2.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The YoY shipment-growth forecast quantifies the broker's total-DRAM volume path; it is neither HBM-only shipment visibility nor issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n환율(KRW/USD) 1,453 1,404 1,385 1,420 1,400 1,350 1,350 1,350 1,365 1,415 1,363\nDRAM출하량(십억Gb) 18.7 23.4 25.3 26.4 27.5 28.9 29.3 28.8 75.0 93.8 114.4\nQoQ -7 25 8 4 4 5 1 -2\nYoY 16 19 32 31 47 23 16 9 16 25 22",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This closes the remaining forward-quarter YoY leg in the total-DRAM shipment model while preserving its broad-DRAM scope.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-SHIPMENT-GROWTH",
+        "normalized_object": "SK hynix 4Q26 total DRAM shipment YoY Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q26E",
+        "predicate": "Daishin forecasts SK hynix total DRAM shipment volume to grow 9% YoY in 4Q26.",
+        "predicate_family": "BROKER_TOTAL_DRAM_SHIPMENT_YOY_FORECAST",
+        "primitive_tags": [
+          "DRAM_volume",
+          "broker_forecast"
+        ],
+        "product_family": "Total DRAM shipments",
+        "question_family_id": "daishin_skh_total_dram_shipment_yoy_4q26e",
+        "question_family_tags": [
+          "dram_shipments",
+          "yoy_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix total DRAM shipment-volume YoY broker forecast",
+        "subject_id": "000660:DRAM_TOTAL_SHIPMENTS_YOY:4Q26E:DAISHIN_20251128",
+        "unit": "percent YoY",
+        "value": 9
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The annual YoY shipment-growth forecast is a broker estimate for total DRAM volume and does not isolate HBM or imply issuer guidance.",
+        "exact_quote": "DRAM출하량(십억Gb) 18.7 23.4 25.3 26.4 27.5 28.9 29.3 28.8 75.0 93.8 114.4\nQoQ -7 25 8 4 4 5 1 -2\nYoY 16 19 32 31 47 23 16 9 16 25 22",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2025 YoY rate is a distinct annual growth formula associated with the stated total-DRAM shipment forecast.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-SHIPMENT-GROWTH",
+        "normalized_object": "SK hynix FY2025 total DRAM shipment YoY Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "Daishin forecasts SK hynix total DRAM shipment volume to grow 25% YoY in FY2025.",
+        "predicate_family": "BROKER_TOTAL_DRAM_SHIPMENT_YOY_FORECAST",
+        "primitive_tags": [
+          "DRAM_volume",
+          "broker_forecast"
+        ],
+        "product_family": "Total DRAM shipments",
+        "question_family_id": "daishin_skh_total_dram_shipment_yoy_fy2025e",
+        "question_family_tags": [
+          "dram_shipments",
+          "yoy_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix total DRAM annual shipment-volume YoY broker forecast",
+        "subject_id": "000660:DRAM_TOTAL_SHIPMENTS_YOY:FY2025E:DAISHIN_20251128",
+        "unit": "percent YoY",
+        "value": 25
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The annual YoY shipment-growth forecast is a broker estimate for total DRAM volume and does not isolate HBM or imply issuer guidance.",
+        "exact_quote": "DRAM출하량(십억Gb) 18.7 23.4 25.3 26.4 27.5 28.9 29.3 28.8 75.0 93.8 114.4\nQoQ -7 25 8 4 4 5 1 -2\nYoY 16 19 32 31 47 23 16 9 16 25 22",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2026 YoY rate is a distinct annual growth formula tied to the total-DRAM shipment forecast, not an HBM-only value.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-SHIPMENT-GROWTH",
+        "normalized_object": "SK hynix FY2026 total DRAM shipment YoY Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "Daishin forecasts SK hynix total DRAM shipment volume to grow 22% YoY in FY2026.",
+        "predicate_family": "BROKER_TOTAL_DRAM_SHIPMENT_YOY_FORECAST",
+        "primitive_tags": [
+          "DRAM_volume",
+          "broker_forecast"
+        ],
+        "product_family": "Total DRAM shipments",
+        "question_family_id": "daishin_skh_total_dram_shipment_yoy_fy2026e",
+        "question_family_tags": [
+          "dram_shipments",
+          "yoy_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix total DRAM annual shipment-volume YoY broker forecast",
+        "subject_id": "000660:DRAM_TOTAL_SHIPMENTS_YOY:FY2026E:DAISHIN_20251128",
+        "unit": "percent YoY",
+        "value": 22
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The annual total-DRAM ASP forecast is a broker pricing assumption; it is not HBM-only price, issuer guidance, or a signed customer price.",
+        "exact_quote": "DRAMASP/Gb(USD) 0.51 0.52 0.54 0.60 0.70 0.75 0.74 0.73 0.43 0.55 0.73",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2025 total-DRAM ASP is a distinct annual broker pricing input and retains the broad-DRAM denominator.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-ASP-FORECAST",
+        "normalized_object": "SK hynix FY2025 total DRAM ASP per Gb Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "Daishin forecasts SK hynix total DRAM ASP per Gb at USD 0.55 for FY2025.",
+        "predicate_family": "BROKER_TOTAL_DRAM_ASP_PER_GB_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Total DRAM ASP",
+        "question_family_id": "daishin_skh_total_dram_asp_fy2025e",
+        "question_family_tags": [
+          "dram_pricing",
+          "annual_asp"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix total DRAM annual ASP per Gb broker forecast",
+        "subject_id": "000660:DRAM_TOTAL_ASP_PER_GB:FY2025E:DAISHIN_20251128",
+        "unit": "USD per Gb",
+        "value": 0.55
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The annual total-DRAM ASP forecast is a broker pricing assumption; it is not HBM-only price, issuer guidance, or a signed customer price.",
+        "exact_quote": "DRAMASP/Gb(USD) 0.51 0.52 0.54 0.60 0.70 0.75 0.74 0.73 0.43 0.55 0.73",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2026 total-DRAM ASP is a distinct annual broker pricing input and cannot be read as HBM contract pricing.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-ASP-FORECAST",
+        "normalized_object": "SK hynix FY2026 total DRAM ASP per Gb Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "Daishin forecasts SK hynix total DRAM ASP per Gb at USD 0.73 for FY2026.",
+        "predicate_family": "BROKER_TOTAL_DRAM_ASP_PER_GB_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Total DRAM ASP",
+        "question_family_id": "daishin_skh_total_dram_asp_fy2026e",
+        "question_family_tags": [
+          "dram_pricing",
+          "annual_asp"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix total DRAM annual ASP per Gb broker forecast",
+        "subject_id": "000660:DRAM_TOTAL_ASP_PER_GB:FY2026E:DAISHIN_20251128",
+        "unit": "USD per Gb",
+        "value": 0.73
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The QoQ total-DRAM ASP change is an explicit broker pricing-growth assumption and does not establish HBM-only or contract pricing.",
+        "exact_quote": "DRAMASP/Gb(USD) 0.51 0.52 0.54 0.60 0.70 0.75 0.74 0.73 0.43 0.55 0.73\nQoQ 0 1 5 11 16 7 -0 -1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 4Q25 QoQ rate directly quantifies the broker's pricing acceleration assumption.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-ASP-GROWTH",
+        "normalized_object": "SK hynix 4Q25 total DRAM ASP QoQ Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25E",
+        "predicate": "Daishin forecasts SK hynix total DRAM ASP to rise 11% QoQ in 4Q25.",
+        "predicate_family": "BROKER_TOTAL_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Total DRAM ASP",
+        "question_family_id": "daishin_skh_total_dram_asp_qoq_4q25e",
+        "question_family_tags": [
+          "dram_pricing",
+          "qoq_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix total DRAM ASP QoQ broker forecast",
+        "subject_id": "000660:DRAM_TOTAL_ASP_QOQ:4Q25E:DAISHIN_20251128",
+        "unit": "percent QoQ",
+        "value": 11
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The QoQ total-DRAM ASP change is an explicit broker pricing-growth assumption and does not establish HBM-only or contract pricing.",
+        "exact_quote": "DRAMASP/Gb(USD) 0.51 0.52 0.54 0.60 0.70 0.75 0.74 0.73 0.43 0.55 0.73\nQoQ 0 1 5 11 16 7 -0 -1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 1Q26 QoQ rate is the peak forward pricing acceleration in the stated broker row.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-ASP-GROWTH",
+        "normalized_object": "SK hynix 1Q26 total DRAM ASP QoQ Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26E",
+        "predicate": "Daishin forecasts SK hynix total DRAM ASP to rise 16% QoQ in 1Q26.",
+        "predicate_family": "BROKER_TOTAL_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Total DRAM ASP",
+        "question_family_id": "daishin_skh_total_dram_asp_qoq_1q26e",
+        "question_family_tags": [
+          "dram_pricing",
+          "qoq_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix total DRAM ASP QoQ broker forecast",
+        "subject_id": "000660:DRAM_TOTAL_ASP_QOQ:1Q26E:DAISHIN_20251128",
+        "unit": "percent QoQ",
+        "value": 16
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The QoQ total-DRAM ASP change is an explicit broker pricing-growth assumption and does not establish HBM-only or contract pricing.",
+        "exact_quote": "DRAMASP/Gb(USD) 0.51 0.52 0.54 0.60 0.70 0.75 0.74 0.73 0.43 0.55 0.73\nQoQ 0 1 5 11 16 7 -0 -1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 2Q26 rate preserves the decelerating but still positive broker pricing path.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-ASP-GROWTH",
+        "normalized_object": "SK hynix 2Q26 total DRAM ASP QoQ Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E",
+        "predicate": "Daishin forecasts SK hynix total DRAM ASP to rise 7% QoQ in 2Q26.",
+        "predicate_family": "BROKER_TOTAL_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Total DRAM ASP",
+        "question_family_id": "daishin_skh_total_dram_asp_qoq_2q26e",
+        "question_family_tags": [
+          "dram_pricing",
+          "qoq_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix total DRAM ASP QoQ broker forecast",
+        "subject_id": "000660:DRAM_TOTAL_ASP_QOQ:2Q26E:DAISHIN_20251128",
+        "unit": "percent QoQ",
+        "value": 7
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker models total-DRAM ASP as effectively flat QoQ in 3Q26; this is a broad-DRAM pricing plateau, not an HBM contract term.",
+        "exact_quote": "DRAMASP/Gb(USD) 0.51 0.52 0.54 0.60 0.70 0.75 0.74 0.73 0.43 0.55 0.73\nQoQ 0 1 5 11 16 7 -0 -1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit -0 row value marks the modeled end of sequential pricing acceleration and is economically distinct from positive growth quarters.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-ASP-GROWTH",
+        "normalized_object": "SK hynix 3Q26 total DRAM ASP approximately flat QoQ Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E",
+        "predicate": "Daishin forecasts SK hynix total DRAM ASP QoQ growth at approximately 0% in 3Q26 (shown as -0).",
+        "predicate_family": "BROKER_TOTAL_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Total DRAM ASP",
+        "question_family_id": "daishin_skh_total_dram_asp_qoq_3q26e",
+        "question_family_tags": [
+          "dram_pricing",
+          "qoq_growth",
+          "plateau"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix total DRAM ASP QoQ broker forecast",
+        "subject_id": "000660:DRAM_TOTAL_ASP_QOQ:3Q26E:DAISHIN_20251128",
+        "unit": "percent QoQ",
+        "value": 0
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker forecasts a sequential decline in total-DRAM ASP in 4Q26, providing broad-DRAM pricing counterevidence without HBM-only or contract-price attribution.",
+        "exact_quote": "DRAMASP/Gb(USD) 0.51 0.52 0.54 0.60 0.70 0.75 0.74 0.73 0.43 0.55 0.73\nQoQ 0 1 5 11 16 7 -0 -1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The negative 4Q26 QoQ rate is explicit counterevidence to an uninterrupted pricing-upcycle assumption.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-ASP-GROWTH",
+        "normalized_object": "SK hynix 4Q26 total DRAM ASP QoQ decline Daishin broker counter forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q26E",
+        "predicate": "Daishin forecasts SK hynix total DRAM ASP to decline 1% QoQ in 4Q26.",
+        "predicate_family": "BROKER_TOTAL_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Total DRAM ASP",
+        "question_family_id": "daishin_skh_total_dram_asp_qoq_4q26e",
+        "question_family_tags": [
+          "dram_pricing",
+          "qoq_growth",
+          "counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix total DRAM ASP QoQ broker forecast",
+        "subject_id": "000660:DRAM_TOTAL_ASP_QOQ:4Q26E:DAISHIN_20251128",
+        "unit": "percent QoQ",
+        "value": -1
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The YoY total-DRAM ASP change is a broker pricing-growth assumption and does not establish HBM-only pricing or signed contract economics.",
+        "exact_quote": "DRAMASP/Gb(USD) 0.51 0.52 0.54 0.60 0.70 0.75 0.74 0.73 0.43 0.55 0.73\nQoQ 0 1 5 11 16 7 -0 -1\nYoY 51 29 16 18 36 44 38 22 81 26 34",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 4Q25 YoY rate is a distinct broker pricing-growth leg and retains the total-DRAM denominator.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-ASP-GROWTH",
+        "normalized_object": "SK hynix 4Q25 total DRAM ASP YoY Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25E",
+        "predicate": "Daishin forecasts SK hynix total DRAM ASP to rise 18% YoY in 4Q25.",
+        "predicate_family": "BROKER_TOTAL_DRAM_ASP_YOY_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Total DRAM ASP",
+        "question_family_id": "daishin_skh_total_dram_asp_yoy_4q25e",
+        "question_family_tags": [
+          "dram_pricing",
+          "yoy_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix total DRAM ASP YoY broker forecast",
+        "subject_id": "000660:DRAM_TOTAL_ASP_YOY:4Q25E:DAISHIN_20251128",
+        "unit": "percent YoY",
+        "value": 18
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The YoY total-DRAM ASP change is a broker pricing-growth assumption and does not establish HBM-only pricing or signed contract economics.",
+        "exact_quote": "DRAMASP/Gb(USD) 0.51 0.52 0.54 0.60 0.70 0.75 0.74 0.73 0.43 0.55 0.73\nQoQ 0 1 5 11 16 7 -0 -1\nYoY 51 29 16 18 36 44 38 22 81 26 34",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 1Q26 YoY rate is a distinct total-DRAM broker pricing-growth point in the forward path.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-ASP-GROWTH",
+        "normalized_object": "SK hynix 1Q26 total DRAM ASP YoY Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26E",
+        "predicate": "Daishin forecasts SK hynix total DRAM ASP to rise 36% YoY in 1Q26.",
+        "predicate_family": "BROKER_TOTAL_DRAM_ASP_YOY_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Total DRAM ASP",
+        "question_family_id": "daishin_skh_total_dram_asp_yoy_1q26e",
+        "question_family_tags": [
+          "dram_pricing",
+          "yoy_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix total DRAM ASP YoY broker forecast",
+        "subject_id": "000660:DRAM_TOTAL_ASP_YOY:1Q26E:DAISHIN_20251128",
+        "unit": "percent YoY",
+        "value": 36
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-b06350879c518ec49fa8cd5c"
+    ],
+    "unresolved_research_notes": [
+      "Continue the coverage audit in source order for remaining total-DRAM ASP YoY rates and distinct conventional-DRAM shipment/ASP atoms. Preserve formula and period headers, broker lifecycle, total versus conventional DRAM versus HBM-only scope, and counter direction; canonical parent chunk 1/2 remains separate."
+    ]
+  },
+  "payload_hash": "96a6d3e20ab550704c9f2dd27cb41355ec848c7c7585ed672be4998174a0c327",
+  "production_score_authority": false,
+  "prompt_hash": "95f607db576040f875d26cbb8f470c38d027ca3434e876a3526ba25c1d4d7b86",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9ddc8cbd8bb5b837976d10fb884949230ce25bbba77ae0b7d8cf30aecdd251c9",
+  "response_id": "COLLABRESP-fd68c3aed2e570ea2d88bab0b009c645dbdb4b44cd39526f02c5ad74d779e8f7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

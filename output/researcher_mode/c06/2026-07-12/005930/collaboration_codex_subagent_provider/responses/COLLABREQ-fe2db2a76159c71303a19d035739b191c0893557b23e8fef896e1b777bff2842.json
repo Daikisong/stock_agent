@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "80b8634d3760c4b5dfa305af8504eb776c0094b7ee9a8fbc984b6443e70ad101",
+  "payload": {
+    "allowed_range": [
+      1.4,
+      2.8
+    ],
+    "anchor_comparisons": [
+      "Both cross-sector anchors are low-confidence ordinal references near the ceiling; neither can establish product-level return on invested capital for the current mixed corporate and memory evidence.",
+      "The positive anchor supports simultaneous investment and return capacity, while the counter anchor highlights how commitments and working capital can absorb apparent cash strength."
+    ],
+    "counter_fact_ids": [
+      "EFACT-09bca4086b235701b1d84801",
+      "EFACT-38d8612a550c7b15e83db302",
+      "EFACT-60fb6751333ef31d586334e5",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-c8cce781c38410832d5bd2a8"
+    ],
+    "disagreements": [
+      "The positive case gives insufficient weight to working-capital timing and assumes mixed corporate cash metrics imply attractive HBM-specific investment returns."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "proposed_points": 2.0,
+    "rationale": "Cash resources are significant, but KRW 27.5 trillion of unperformed asset commitments, a KRW 27.7 trillion receivables drag, broader working-capital outflow, treasury-share cash use, and an unfinalized large memory investment plan compete for the same funds. The broker free-cash-flow estimate is not issuer guidance.",
+    "support_fact_ids": [
+      "EFACT-4ca12a741765c57da0832791",
+      "EFACT-91896907330221fdcfdd97b2",
+      "EFACT-9c8e2f378d921c9782b5b6ac"
+    ],
+    "why_not_higher": "Product-level returns and detailed memory spending are missing, while commitments and working capital can materially reduce residual cash.",
+    "why_not_lower": "Observed operating cash flow, cash balances, and executed share cancellation demonstrate real allocation capacity rather than mere policy language."
+  },
+  "payload_hash": "f57607f321fc1a5ac57747fcdef05b4c86b242e01ee73f2d03eeee029d5ebf23",
+  "production_score_authority": false,
+  "prompt_hash": "2bb8500889fc521569c6ba5942a091f0bcf2563f2b494063d0302810aad6c2a2",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fe2db2a76159c71303a19d035739b191c0893557b23e8fef896e1b777bff2842",
+  "response_id": "COLLABRESP-4e30db8af6da08ac1f9b2bb6f99f6ff14df551c2e4de324e7658e9d8b3a73b79",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

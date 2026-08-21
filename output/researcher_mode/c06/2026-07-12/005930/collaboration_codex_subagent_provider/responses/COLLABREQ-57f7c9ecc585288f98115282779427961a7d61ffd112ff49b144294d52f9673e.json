@@ -1,0 +1,403 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-71d93141bd9a229dfbd074be",
+        "rationale": "전체 문서의 valuation·peer 관련 표와 본문을 검토했고, 반복 표를 합친 뒤 삼성전자와 SK하이닉스의 공정 PBR 및 동기간 forward multiple profile만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "rationale": "전체 문서를 검토했고, 삼성전자와 SK하이닉스의 같은 연도 축 forward valuation profile을 peer-band 근거로 추출했으며 배터리 기업 표와 비메모리 내용은 objective-local 범위에서 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-8ddd1ee3063fc1b630079137",
+        "rationale": "전체 문서를 검토했고, 삼성전자와 SK하이닉스의 FY2025F~FY2026F forward multiple profile만 peer-band 근거로 추출했으며 목표주가 단독·자체 역사 밴드·비메모리 내용은 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "메모리 valuation context",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-71d93141bd9a229dfbd074be",
+        "economic_mechanism": "삼성전자의 2026년 예상 BPS에 2026~2030년 ROE와 5년 평균 자본비용을 연결한 목표 PBR은 메모리 peer band의 삼성전자 좌표를 제공한다.",
+        "exact_quote": "[도표 3] 삼성전자 목표주가 산정\n비고 (단위: 원, 배)\n26F BPS 79,910\nTarget P/B 26~30F ROE 23.4%와 5년 평균 COE 8.6%적용 2.7\nTarget Price(원) 220,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "미충족 valuation_rerating:PEER_BAND에 삼성전자의 동일 방법론 기준 공정 PBR 좌표를 직접 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_BAND",
+        "normalized_object": "삼성전자 forward ROE·COE 기반 Target P/B",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F BPS; FY2026F-FY2030F ROE; report date 2026-02-11",
+        "predicate": "교보증권은 삼성전자에 2026~2030년 ROE 23.4%와 5년 평균 COE 8.6%를 적용해 Target P/B 2.7배를 산정했다",
+        "predicate_family": "SAMSUNG_MEMORY_FAIR_PBR",
+        "primitive_tags": [
+          "PBR",
+          "FORWARD_ROE",
+          "COST_OF_EQUITY"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_BAND",
+        "question_family_tags": [
+          "VALUATION_RERATING",
+          "PEER_BAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 메모리 공정가치 PBR",
+        "subject_id": "005930:MEMORY_FAIR_PBR",
+        "unit": "times",
+        "value": 2.7
+      },
+      {
+        "business_segment": "메모리 valuation context",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-71d93141bd9a229dfbd074be",
+        "economic_mechanism": "같은 보고서와 방법론으로 산정한 SK하이닉스 목표 PBR은 삼성전자 공정 PBR과 직접 비교 가능한 메모리 peer band의 비교 좌표다.",
+        "exact_quote": "[도표 4] SK하이닉스 목표주가 산정\n비고 (단위: 원, 배)\n26F BPS 300,770\nTarget P/B 26~30F ROE 44.4%와 5년 평균 COE 10.85%적용 4.08\nTarget Price(원) 1,200,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자와 동일 보고서·동일 산식의 메모리 peer 공정 PBR을 제공해 상대 band를 직접 구성한다.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_BAND",
+        "normalized_object": "SK하이닉스 forward ROE·COE 기반 Target P/B",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F BPS; FY2026F-FY2030F ROE; report date 2026-02-11",
+        "predicate": "교보증권은 SK하이닉스에 2026~2030년 ROE 44.4%와 5년 평균 COE 10.85%를 적용해 Target P/B 4.08배를 산정했다",
+        "predicate_family": "SK_HYNIX_MEMORY_PEER_FAIR_PBR",
+        "primitive_tags": [
+          "PBR",
+          "FORWARD_ROE",
+          "COST_OF_EQUITY",
+          "SK_HYNIX"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_BAND",
+        "question_family_tags": [
+          "VALUATION_RERATING",
+          "PEER_BAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 비교기업 SK하이닉스 메모리 공정가치 PBR",
+        "subject_id": "005930:MEMORY_PEER:000660:FAIR_PBR",
+        "unit": "times",
+        "value": 4.08
+      },
+      {
+        "business_segment": "메모리 valuation context",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-71d93141bd9a229dfbd074be",
+        "economic_mechanism": "동일 보고서의 SK하이닉스 예상 valuation profile과 비교 가능한 삼성전자 예상 PER·PBR·EV/EBITDA가 메모리 peer band의 target-side 좌표를 제공한다.",
+        "exact_quote": "Forecast earnings & Valuation\n12결산(십억원) 2023.12 2024.12 2025.12E 2026.12E 2027.12E\n매출액(십억원) 258,935 300,871 333,569 468,289 478,739\nYoY(%) -14.3 16.2 10.9 40.4 2.2\n영업이익(십억원) 6,567 32,726 43,577 155,365 169,570\nOP마진(%) 2.5 10.9 13.1 33.2 35.4\n순이익(십억원) 15,487 34,451 45,061 124,994 139,615\nEPS(원) 2,225 5,433 7,233 20,410 22,821\nYoY(%) -75.2 144.1 33.1 182.2 11.8\nPER(배) 35.3 9.8 16.6 8.2 7.3\nIT 최보영 PCR(배) 9.2 4.1 7.8 3.3 3.2\nPBR(배) 1.5 0.9 1.9 2.1 1.7\n3771-9724, 20190031@iprovest.com\nEV/EBITDA(배) 10.0 3.6 8.8 5.1 4.2\nROE(%) 4.1 9.0 10.8 25.3 22.6",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 보고서의 peer profile과 같은 연도 축으로 직접 비교되어 미충족 PEER_BAND를 구성한다.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_BAND",
+        "normalized_object": "삼성전자 FY2025E-FY2027E forward multiple profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E-FY2027E; report date 2026-02-11",
+        "predicate": "교보증권은 삼성전자의 FY2025E~FY2027E PER·PBR·EV/EBITDA 예상 profile을 제시했다",
+        "predicate_family": "SAMSUNG_MEMORY_PEER_FORWARD_VALUATION_PROFILE",
+        "primitive_tags": [
+          "PER",
+          "PBR",
+          "EV_EBITDA",
+          "SAMSUNG_ELECTRONICS"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_BAND",
+        "question_family_tags": [
+          "VALUATION_RERATING",
+          "PEER_BAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 forward valuation profile",
+        "subject_id": "005930:MEMORY_VALUATION_PROFILE",
+        "unit": "times",
+        "value": "PER 16.6x/8.2x/7.3x; PBR 1.9x/2.1x/1.7x; EV/EBITDA 8.8x/5.1x/4.2x for FY2025E/FY2026E/FY2027E"
+      },
+      {
+        "business_segment": "메모리 valuation context",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-71d93141bd9a229dfbd074be",
+        "economic_mechanism": "삼성전자와 같은 보고서·연도 축의 SK하이닉스 예상 PER·PBR·EV/EBITDA는 메모리 peer band의 직접 비교 좌표를 제공한다.",
+        "exact_quote": "Forecast earnings & Valuation\n12결산(십억원) 2023.12 2024.12 2025.12E 2026.12E 2027.12E\n매출액(십억원) 32,766 66,193 97,147 184,876 202,920\nYoY(%) -26.6 102.0 46.8 90.3 9.8\n영업이익(십억원) -7,730 23,467 47,206 122,105 135,505\nOP마진(%) -23.6 35.5 48.6 66.0 66.8\n순이익(십억원) -9,138 19,797 43,569 104,592 115,459\nEPS(원) -12,517 27,182 59,823 143,611 158,531\nYoY(%) 적전 흑전 120.1 140.1 10.4\nIT 최보영\nPER(배) -11.3 6.4 10.9 6.2 5.6\n3771-9724, 20190031@iprovest.com PCR(배) 17.4 3.4 4.6 2.1 2.0\nPBR(배) 1.9 1.7 4.1 2.9 1.9\nEV/EBITDA(배) 21.2 3.8 8.1 4.4 3.4\nROE(%) 46 -15.6 31.1 45.9 62.4 41.8",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 profile과 같은 보고서·같은 연도 축으로 직접 비교되어 미충족 PEER_BAND를 구성한다.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_BAND",
+        "normalized_object": "SK하이닉스 FY2025E-FY2027E forward multiple profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E-FY2027E; report date 2026-02-11",
+        "predicate": "교보증권은 SK하이닉스의 FY2025E~FY2027E PER·PBR·EV/EBITDA 예상 profile을 제시했다",
+        "predicate_family": "SK_HYNIX_MEMORY_PEER_FORWARD_VALUATION_PROFILE",
+        "primitive_tags": [
+          "PER",
+          "PBR",
+          "EV_EBITDA",
+          "SK_HYNIX"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_BAND",
+        "question_family_tags": [
+          "VALUATION_RERATING",
+          "PEER_BAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 비교기업 SK하이닉스 forward valuation profile",
+        "subject_id": "005930:MEMORY_PEER:000660:VALUATION_PROFILE",
+        "unit": "times",
+        "value": "PER 10.9x/6.2x/5.6x; PBR 4.1x/2.9x/1.9x; EV/EBITDA 8.1x/4.4x/3.4x for FY2025E/FY2026E/FY2027E"
+      },
+      {
+        "business_segment": "메모리 valuation context",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "economic_mechanism": "동일 보고서의 SK하이닉스 예상 valuation profile과 비교 가능한 삼성전자 예상 PER·PBR·EV/EBITDA가 메모리 peer band의 target-side 좌표를 제공한다.",
+        "exact_quote": "Forecast earnings & Valuation\n12결산(십억원) 2023.12 2024.12 2025.12E 2026.12E 2027.12E\n매출액(십억원) 258,935 300,871 327,645 389,377 424,966\nYoY(%) -14.3 16.2 8.9 18.8 9.1\n영업이익(십억원) 6,567 32,726 39,118 78,149 80,744\nOP마진(%) 2.5 10.9 11.9 20.1 19.0\n순이익(십억원) 15,487 34,451 33,971 64,197 66,314\nEPS(원) 2,225 5,433 5,404 10,387 10,736\nYoY(%) -75.2 144.1 -0.5 92.2 3.4\nPER(배) 35.3 9.8 18.1 9.4 9.1\nPCR(배) 9.2 4.1 7.1 4.7 4.5\nPBR(배) 1.5 0.9 1.6 1.4 1.3\nEV/EBITDA(배) 10.0 3.6 6.6 4.2 3.9\nROE(%) 4.1 9.0 8.2 14.2 13.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 보고서의 peer profile과 같은 연도 축으로 직접 비교되어 미충족 PEER_BAND를 구성한다.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_BAND",
+        "normalized_object": "삼성전자 FY2025E-FY2027E forward multiple profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E-FY2027E; report date 2025-11-11",
+        "predicate": "교보증권은 삼성전자의 FY2025E~FY2027E PER·PBR·EV/EBITDA 예상 profile을 제시했다",
+        "predicate_family": "SAMSUNG_MEMORY_PEER_FORWARD_VALUATION_PROFILE",
+        "primitive_tags": [
+          "PER",
+          "PBR",
+          "EV_EBITDA",
+          "SAMSUNG_ELECTRONICS"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_BAND",
+        "question_family_tags": [
+          "VALUATION_RERATING",
+          "PEER_BAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 forward valuation profile",
+        "subject_id": "005930:MEMORY_VALUATION_PROFILE",
+        "unit": "times",
+        "value": "PER 18.1x/9.4x/9.1x; PBR 1.6x/1.4x/1.3x; EV/EBITDA 6.6x/4.2x/3.9x for FY2025E/FY2026E/FY2027E"
+      },
+      {
+        "business_segment": "메모리 valuation context",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "economic_mechanism": "삼성전자와 같은 보고서·연도 축의 SK하이닉스 예상 PER·PBR·EV/EBITDA는 메모리 peer band의 직접 비교 좌표를 제공한다.",
+        "exact_quote": "Forecast earnings & Valuation\n12결산(십억원) 2023.12 2024.12 2025.12E 2026.12E 2027.12E\n매출액(십억원) 32,766 66,193 90,951 130,710 136,588\nYoY(%) -26.6 102.0 37.4 43.7 4.5\n영업이익(십억원) -7,730 23,467 40,469 67,847 71,231\nOP마진(%) -23.6 35.5 44.5 51.9 52.2\n순이익(십억원) -9,138 19,797 38,165 58,788 61,466\nEPS(원) -12,517 27,182 52,403 80,718 84,396\nYoY(%) 적전 흑전 92.8 54.0 4.6\nPER(배) -11.3 6.4 11.1 7.2 6.9\nPCR(배) 17.4 3.4 5.1 3.7 3.7\nPBR(배) 1.9 1.7 3.8 2.5 1.9\nEV/EBITDA(배) 21.2 3.8 7.9 4.5 3.6\nROE(%) -15.6 31.1 41.4 42.2 31.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 profile과 같은 보고서·같은 연도 축으로 직접 비교되어 미충족 PEER_BAND를 구성한다.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_BAND",
+        "normalized_object": "SK하이닉스 FY2025E-FY2027E forward multiple profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E-FY2027E; report date 2025-11-11",
+        "predicate": "교보증권은 SK하이닉스의 FY2025E~FY2027E PER·PBR·EV/EBITDA 예상 profile을 제시했다",
+        "predicate_family": "SK_HYNIX_MEMORY_PEER_FORWARD_VALUATION_PROFILE",
+        "primitive_tags": [
+          "PER",
+          "PBR",
+          "EV_EBITDA",
+          "SK_HYNIX"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_BAND",
+        "question_family_tags": [
+          "VALUATION_RERATING",
+          "PEER_BAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 비교기업 SK하이닉스 forward valuation profile",
+        "subject_id": "005930:MEMORY_PEER:000660:VALUATION_PROFILE",
+        "unit": "times",
+        "value": "PER 11.1x/7.2x/6.9x; PBR 3.8x/2.5x/1.9x; EV/EBITDA 7.9x/4.5x/3.6x for FY2025E/FY2026E/FY2027E"
+      },
+      {
+        "business_segment": "메모리 valuation context",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-8ddd1ee3063fc1b630079137",
+        "economic_mechanism": "동일 보고서의 SK하이닉스 예상 valuation profile과 비교 가능한 삼성전자 예상 PER·PBR·EV/EBITDA가 메모리 peer band의 target-side 좌표를 제공한다.",
+        "exact_quote": "Financial Data\n(십억원) 2022 2023 2024 2025F 2026F\n매출액 302,231 258,935 300,871 314,977 329,044\n영업이익 43,377 6,567 32,726 28,166 39,168\n영업이익률(%) 14.4 2.5 10.9 8.9 11.9\n세전이익 46,440 11,006 37,530 35,142 45,863\n지배주주지분순이익 54,730 14,473 33,621 29,601 38,585\nEPS(원) 8,969 2,225 5,433 4,760 6,265\n증감률(%) 40.7 -75.2 144.2 -12.4 31.6\nROE(%) 17.1 4.1 9.0 7.5 9.4\nPER(배) 6.2 35.3 9.8 14.7 11.2\nPBR(배) 1.1 1.5 0.9 1.2 1.1\nEV/EBITDA(배) 3.2 9.7 3.5 5.0 4.1\n자료: SK하이닉스, DS투자증권 리서치센터, K-IFRS 연결기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 보고서의 peer profile과 같은 연도 축으로 직접 비교되어 미충족 PEER_BAND를 구성한다.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_BAND",
+        "normalized_object": "삼성전자 FY2025F-FY2026F forward multiple profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F-FY2026F; published 2025-08-20",
+        "predicate": "DS투자증권은 삼성전자의 FY2025F~FY2026F PER·PBR·EV/EBITDA 예상 profile을 제시했다",
+        "predicate_family": "SAMSUNG_MEMORY_PEER_FORWARD_VALUATION_PROFILE",
+        "primitive_tags": [
+          "PER",
+          "PBR",
+          "EV_EBITDA",
+          "SAMSUNG_ELECTRONICS"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_BAND",
+        "question_family_tags": [
+          "VALUATION_RERATING",
+          "PEER_BAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 forward valuation profile",
+        "subject_id": "005930:MEMORY_VALUATION_PROFILE",
+        "unit": "times",
+        "value": "PER 14.7x/11.2x; PBR 1.2x/1.1x; EV/EBITDA 5.0x/4.1x for FY2025F/FY2026F"
+      },
+      {
+        "business_segment": "메모리 valuation context",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-8ddd1ee3063fc1b630079137",
+        "economic_mechanism": "삼성전자와 같은 보고서·연도 축의 SK하이닉스 예상 PER·PBR·EV/EBITDA는 메모리 peer band의 직접 비교 좌표를 제공한다.",
+        "exact_quote": "Financial Data\n(십억원) 2022 2023 2024 2025F 2026F\n매출액 44,622 32,766 66,193 86,698 99,691\n영업이익 6,809 -7,730 23,467 38,321 45,500\n영업이익률(%) 15.3 -23.6 35.5 44.2 45.6\n세전이익 4,003 -11,658 22,586 37,102 44,264\n지배주주지분순이익 2,230 -9,112 19,789 28,918 34,500\nEPS(원) 3,063 -12,517 27,182 39,722 47,390\n증감률(%) -76.8 적전 흑전 46.1 19.3\nROE(%) 3.6 -15.6 31.1 33.2 29.4\nPER(배) 24.5 -11.3 6.4 6.7 5.6\nPBR(배) 0.9 1.9 1.7 1.9 1.5\nEV/EBITDA(배) 3.5 21.7 3.9 3.7 2.7\n자료: SK하이닉스, DS투자증권 리서치센터, K-IFRS 연결기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 profile과 같은 보고서·같은 연도 축으로 직접 비교되어 미충족 PEER_BAND를 구성한다.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_BAND",
+        "normalized_object": "SK하이닉스 FY2025F-FY2026F forward multiple profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F-FY2026F; published 2025-08-20",
+        "predicate": "DS투자증권은 SK하이닉스의 FY2025F~FY2026F PER·PBR·EV/EBITDA 예상 profile을 제시했다",
+        "predicate_family": "SK_HYNIX_MEMORY_PEER_FORWARD_VALUATION_PROFILE",
+        "primitive_tags": [
+          "PER",
+          "PBR",
+          "EV_EBITDA",
+          "SK_HYNIX"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PEER_BAND",
+        "question_family_tags": [
+          "VALUATION_RERATING",
+          "PEER_BAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 비교기업 SK하이닉스 forward valuation profile",
+        "subject_id": "005930:MEMORY_PEER:000660:VALUATION_PROFILE",
+        "unit": "times",
+        "value": "PER 6.7x/5.6x; PBR 1.9x/1.5x; EV/EBITDA 3.7x/2.7x for FY2025F/FY2026F"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "bf156ba7acdf6732fbdcbe330374a7a1af62f1abb61f1d40861ffc629657f3f9",
+  "production_score_authority": false,
+  "prompt_hash": "8432125e9567acde018d7f7b5ac42633150b0795e031583adc3ad3ae37de458d",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-57f7c9ecc585288f98115282779427961a7d61ffd112ff49b144294d52f9673e",
+  "response_id": "COLLABRESP-6cd3af6db59c36d84626112ffb05f7c5a8aecefddc100c9bc1909b80af547d9f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

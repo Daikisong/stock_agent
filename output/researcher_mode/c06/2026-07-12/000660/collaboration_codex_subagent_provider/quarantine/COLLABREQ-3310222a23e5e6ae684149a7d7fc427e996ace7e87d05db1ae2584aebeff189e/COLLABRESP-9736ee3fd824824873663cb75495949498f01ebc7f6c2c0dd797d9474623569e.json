@@ -1,0 +1,53 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "AMD 공식 newsroom·IR·실적자료의 MI400/Helios HBM4 공급 또는 양산 관계 원문만 검증한다.",
+      "Broadcom 공식 investor filing·earnings material의 SK하이닉스 귀속 HBM4 구매의무·공급조건 원문만 검증한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "site:amd.com \"SK hynix\" HBM4 MI400 Helios supply production 2026",
+        "objective_id": "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+        "rationale": "기존 NVIDIA·issuer 경로와 다른 독립 고객 AMD의 공식 문서에서 HBM4 성능 충족, 양산 ramp 또는 SK하이닉스 공급관계가 직접 확인되는지 검증한다. 고객 공식 원문에 target attribution이 없으면 증거로 승격하지 않는다.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL"
+        ]
+      },
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "site:investor.broadcom.com \"SK hynix\" HBM4 purchase commitment supply agreement 2026",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "기존 issuer LTA·NVIDIA Form 10-Q와 다른 Broadcom 공식 투자자 문서에서 target-attributable HBM commitment의 기간, 확정 물량/CAPA, 구매의무·취소·위약·선수금 조건이 함께 공개됐는지 검증한다. 단순 공급 논의나 제품 언급은 durable visibility로 승격하지 않는다.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "기존 37개 query가 이미 issuer guidance·DART·ADR·NVIDIA·broker LTA 경로를 다뤘으므로 그 동의어 반복은 제안하지 않았다. 두 customer-official 경로에도 target 귀속 원문이 없으면 현재 prompt에서 검증 가능한 새 issuer identity는 남지 않는다."
+    ]
+  },
+  "payload_hash": "4224d379a689299f4e113ed0a4653fd7f9e36e100f0205585bf0a6a9f776a1c1",
+  "production_score_authority": false,
+  "prompt_hash": "8832ef69b4a0d44044ab1c683407ea2f974927fc35309f26b5c594920c0ce9af",
+  "provenance": {
+    "agent_id": "root-phase101-c06-query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3310222a23e5e6ae684149a7d7fc427e996ace7e87d05db1ae2584aebeff189e",
+  "response_id": "COLLABRESP-9736ee3fd824824873663cb75495949498f01ebc7f6c2c0dd797d9474623569e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

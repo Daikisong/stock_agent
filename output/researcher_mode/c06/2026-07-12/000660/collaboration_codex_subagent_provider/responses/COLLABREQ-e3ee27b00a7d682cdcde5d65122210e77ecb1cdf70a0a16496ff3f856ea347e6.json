@@ -1,0 +1,130 @@
+{
+  "output_schema_hash": "145511269b191002ba99121de5750d5bdfb402af9873b0ef3de4b0646dee6965",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-389b209c77bdd200e1b21acb",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "직접 broker PDF provenance는 맞지만 공급된 제목·snippet은 화장품 전망만 보여 SK하이닉스/HBM valuation objective와의 직접 관련성을 확인할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-9d457fb6931f66bce778580d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "PUBLIC_BROKER_PDF discovery provenance은 일치하지만, 이 자료는 'GST(083450) 장비, 고객 다변화 지속'라는 다른 회사·펀드·과거 업황 중심 자료로 공급된 metadata에서 현재 SK하이닉스 HBM valuation objective를 직접 진전·반박·대체하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c15712b6e8f5cf1ea87a5e53",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Annual Report & Audited Financial Statements' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-4a6da897b7edd96426d00d63",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Annual report and audited financial statements - 블랙록' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-d399305f097377fe77678890",
+        "matched_requested_source_family": "VALUATION_MULTIPLES",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.64,
+        "rationale": "HBM 경쟁사 Micron의 실적·재무·valuation을 제공하는 full-page route여서 peer band 후보가 된다. 다만 동적 수치의 기준일 재현 가능성은 fetch 후 반드시 검증해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-d3b7c714f4d778b66d08765c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Invesco Markets III plc' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-dee203aa0e6e45f72afb64f9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'morgan stanley underwriting: Latest News & Videos, Photos about' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-73cbe313b3a8f905e3cfaacd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'417_Semiconductors_23-2.pptx' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-6caaaa913a494ddac9745ac2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Annual Report & Audited Financial Statements' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-87955e5aa9b11b2f177b4eaa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Annual Report & Audited Financial Statements' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-b31e88180acafc5f216d6c87",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Annual report and audited financial statements - 블랙록' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      },
+      {
+        "candidate_id": "SGCAND-d0fed2f9b8b90542decfa106",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "'Interim report and unaudited financial statements - 블랙록' 후보는 요청된 issuer/OPENDART 또는 valuation-report provenance와 현재 SK하이닉스/HBM objective의 직접 관련성을 함께 확인할 수 없어 NONMATERIAL이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "MATERIAL은 full-fetch 우선순위일 뿐 snippet을 evidence로 인정한 것이 아니다. 원문 fetch 뒤 publication/as_of_date, target attribution, source provenance와 exact quote를 별도 검증해야 한다."
+    ]
+  },
+  "payload_hash": "768dc3372684a8a974126bd798fe28fe2413504818a16598c237c12963c0adcf",
+  "production_score_authority": false,
+  "prompt_hash": "5da79f1ce35798822850aa50e57f78d4b2528b1a10bd39599e67857d453c02d5",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e3ee27b00a7d682cdcde5d65122210e77ecb1cdf70a0a16496ff3f856ea347e6",
+  "response_id": "COLLABRESP-87eff88179685f95137febdf104bf4d1652651120dfbe675299c78e0894f97c7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

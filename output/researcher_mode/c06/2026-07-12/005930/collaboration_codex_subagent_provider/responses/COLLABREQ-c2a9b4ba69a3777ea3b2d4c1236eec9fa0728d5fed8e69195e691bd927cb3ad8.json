@@ -1,0 +1,133 @@
+{
+  "output_schema_hash": "20b0db2f950a032cebe3a019711f6a5c53b55c2c0b1acd6027ab7889297ece2e",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4ffd065d64f1ecc9151e4265",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NuScale·ORNL의 원자력 연료 연구 기사로 삼성전자, 메모리 또는 HBM과 무관하다. Stocktwits article route도 요청된 target-specific source family를 충족하지 않아 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-4df88efb85f7344ed1b6b623",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.58,
+        "rationale": "Financial Express의 개별 business-media article route이며 Samsung을 포함한 메모리 업체의 AI 수요·HBM/DRAM shortage·위험을 함께 다룬다. fetch 후 날짜와 삼성전자 귀속을 검증하면 current positive·counter 정보 신뢰도를 보강할 가능성이 있어 material하다."
+      },
+      {
+        "candidate_id": "SGCAND-88650258d3e8eac51fbf629f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "Seres Therapeutics의 임상시험·인력감축 기사로 삼성전자 HBM objective와 무관하다. 요청 source family의 target 원문 route가 아니므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c82deefdbfa756bd9efef6a8",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.03,
+        "rationale": "Automated Test Equipment 산업보고서 route지만 HBM이나 삼성전자 고유 메모리 상태가 아니라 광범위한 검사장비 시장을 다룬다. objective에 직접 연결되지 않아 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-046231baa8d16a86f4b07e7a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "Arvinas 경영진 교체 기사로 삼성전자·메모리·HBM과 무관하며 요청된 target source provenance가 아니다. nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-2d12bd94f06d4ab03b358da8",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.83,
+        "rationale": "미래에셋증권의 전기전자 부품 섹터 원문 PDF이며 HBM을 2026~2028년 병목으로 분류하고 Samsung을 연결하는 industry-analysis route다. snippet은 증거가 아니지만 full report를 fetch하면 병목 가정·기간·target 귀속·counter를 검증할 수 있어 material하다."
+      },
+      {
+        "candidate_id": "SGCAND-c197a7a59341bc31aaf6df40",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "Coggili Thailand의 LinkedIn 회사 소개 페이지로 삼성전자 HBM 연구와 무관하고 자체 research document도 아니다. 요청 source family의 full-fetch 원문이 아니므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-2ec1dcc0172300b76ca99e22",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.06,
+        "rationale": "TechPowerUp의 semiconductor manufacturing 태그 색인으로 개별 기사 원문이 아니며 snippet에 섞인 생산능력 문장의 문서·날짜·삼성전자 귀속을 고정할 수 없다. 실제 material provenance route가 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-cf4c2297fca40e182ee61204",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "BusinessKorea 잡지 PDF라는 신뢰 매체 원문 route는 확인되지만 issue 제목이 방산 중심이고 snippet의 Samsung HBM4 개발 목표는 현재 양산 사실보다 오래된 전망이다. current information-confidence gap을 추가 해결하지 않아 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-1ab490886c411b4e2cb7004e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "SK텔레콤 2020 연차보고서로 오래되었고 삼성전자 HBM qualification·양산·고객 근거와 무관하다. CUSTOMER_OFFICIAL로 볼 target relationship도 discovery metadata에서 확인되지 않아 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "partition 1의 10개 후보를 입력 순서대로 exact-once 판정했으며 snippet은 fetch route와 범위 판단에만 사용했다.",
+      "material 후보도 full fetch·발행일·target attribution 검증 전에는 EvidenceFact 또는 점수 증거가 아니다."
+    ]
+  },
+  "payload_hash": "ffc2a7e3c350c3fc67e456b15f26d8f2305a199b3780fe6af3b2750b05d2c60b",
+  "production_score_authority": false,
+  "prompt_hash": "5ce21323c8aa51e45a199629d0dd3feab6253ac3e8fed156b71988c3af0a8475",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c2a9b4ba69a3777ea3b2d4c1236eec9fa0728d5fed8e69195e691bd927cb3ad8",
+  "response_id": "COLLABRESP-4cf5318f98a904ed98de63dded06988d1217286f9e846a191186dd02130e5102",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

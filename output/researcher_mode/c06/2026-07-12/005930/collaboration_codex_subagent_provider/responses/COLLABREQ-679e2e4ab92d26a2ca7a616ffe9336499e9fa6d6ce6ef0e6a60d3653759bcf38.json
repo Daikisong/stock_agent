@@ -1,0 +1,134 @@
+{
+  "output_schema_hash": "3885e06527a44286bfd9318a7e97f4727d7002753186fba579331bc5de08b8ba",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7719f8dd333f6772a4f09478",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.8,
+        "rationale": "The full broker document is directly target/peer scoped and its title or discovery metadata indicates a comparable valuation table or peer-band discussion. Full fetch is required to verify same-period multiples and publication date; the snippet is discovery-only and is not promoted to evidence."
+      },
+      {
+        "candidate_id": "SGCAND-8bb872427c761f5853f9beeb",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 1.0,
+        "rationale": "The full broker document is directly target/peer scoped and its title or discovery metadata indicates a comparable valuation table or peer-band discussion. Full fetch is required to verify same-period multiples and publication date; the snippet is discovery-only and is not promoted to evidence."
+      },
+      {
+        "candidate_id": "SGCAND-fe81fd7c741faca0338ad0c6",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "Requested public-broker provenance is plausible, but the supplied title and discovery metadata concern another issuer, a non-valuation topic, an issuer-only multiple, or a stale/general document rather than a current Samsung peer-band comparison. The snippet is not evidence and does not justify a material fetch."
+      },
+      {
+        "candidate_id": "SGCAND-d24117e587c3812342f27f4f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "Requested public-broker provenance is plausible, but the supplied title and discovery metadata concern another issuer, a non-valuation topic, an issuer-only multiple, or a stale/general document rather than a current Samsung peer-band comparison. The snippet is not evidence and does not justify a material fetch."
+      },
+      {
+        "candidate_id": "SGCAND-ad3d17b2595ebbb7332cdb31",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "Requested public-broker provenance is plausible, but the supplied title and discovery metadata concern another issuer, a non-valuation topic, an issuer-only multiple, or a stale/general document rather than a current Samsung peer-band comparison. The snippet is not evidence and does not justify a material fetch."
+      },
+      {
+        "candidate_id": "SGCAND-4497f1ca1786ce7c046bda13",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "Requested public-broker provenance is plausible, but the supplied title and discovery metadata concern another issuer, a non-valuation topic, an issuer-only multiple, or a stale/general document rather than a current Samsung peer-band comparison. The snippet is not evidence and does not justify a material fetch."
+      },
+      {
+        "candidate_id": "SGCAND-39029e50bd1fc18d02a4ffff",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 1.0,
+        "rationale": "The full broker document is directly target/peer scoped and its title or discovery metadata indicates a comparable valuation table or peer-band discussion. Full fetch is required to verify same-period multiples and publication date; the snippet is discovery-only and is not promoted to evidence."
+      },
+      {
+        "candidate_id": "SGCAND-1d751449fbc53fdba5de02b3",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "Requested public-broker provenance is plausible, but the supplied title and discovery metadata concern another issuer, a non-valuation topic, an issuer-only multiple, or a stale/general document rather than a current Samsung peer-band comparison. The snippet is not evidence and does not justify a material fetch."
+      },
+      {
+        "candidate_id": "SGCAND-0cf7aeda96db4ac47136dab8",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "Requested public-broker provenance is plausible, but the supplied title and discovery metadata concern another issuer, a non-valuation topic, an issuer-only multiple, or a stale/general document rather than a current Samsung peer-band comparison. The snippet is not evidence and does not justify a material fetch."
+      },
+      {
+        "candidate_id": "SGCAND-795dbe1bbb1d7616ec4d7459",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "Requested public-broker provenance is plausible, but the supplied title and discovery metadata concern another issuer, a non-valuation topic, an issuer-only multiple, or a stale/general document rather than a current Samsung peer-band comparison. The snippet is not evidence and does not justify a material fetch."
+      },
+      {
+        "candidate_id": "SGCAND-ee372b406151e185cb831b64",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "Requested public-broker provenance is plausible, but the supplied title and discovery metadata concern another issuer, a non-valuation topic, an issuer-only multiple, or a stale/general document rather than a current Samsung peer-band comparison. The snippet is not evidence and does not justify a material fetch."
+      },
+      {
+        "candidate_id": "SGCAND-47312b8ccb6afdd6ad1b02df",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "Requested public-broker provenance is plausible, but the supplied title and discovery metadata concern another issuer, a non-valuation topic, an issuer-only multiple, or a stale/general document rather than a current Samsung peer-band comparison. The snippet is not evidence and does not justify a material fetch."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Material candidates still require cutoff-compliant full-document fetch and exact PEER_BAND extraction; discovery snippets were not treated as evidence."
+    ]
+  },
+  "payload_hash": "cc9ecb13ef30780992ad8f2501c0631532b23f171ce217a1976fccb65aa15445",
+  "production_score_authority": false,
+  "prompt_hash": "ad3c41fe1e1a1eb2c9dfe199ffdd6d506b3c6561e4e9a8b78365e83c97e23f0b",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-679e2e4ab92d26a2ca7a616ffe9336499e9fa6d6ce6ef0e6a60d3653759bcf38",
+  "response_id": "COLLABRESP-7faedc85642cb6a0d7fc8234504c4d354522436d7ae8b8acbc01c76682f807dc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

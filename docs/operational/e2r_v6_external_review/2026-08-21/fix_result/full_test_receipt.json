@@ -1,0 +1,43 @@
+{
+  "schema_version": "e2r_v6_gate1_full_test_receipt_v1",
+  "audit_date": "2026-08-22",
+  "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_v5_full_test_evidence --workspace-root .",
+  "underlying_command": [
+    "/home/eorb915/.local/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "status": "PASS",
+  "exit_code": 0,
+  "full_discovery": true,
+  "tests_run": 7204,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "unittest_runtime_seconds": 546.35,
+  "wall_runtime_seconds": 549.694997,
+  "verification_tree_hash": "8feea4fb78f2c827de8c9fcc22161a65f5484d7c57d73f18f5f8856cfc777e9a",
+  "verification_tree_stable_during_run": true,
+  "log_path": "docs/operational/e2r_v5_full_test_result.log",
+  "log_sha256": "a6a66ea72b5953f8a6258ac05fa4cf3cf383e10404e9635a97a35271ec65880b",
+  "official_receipt_path": "docs/operational/e2r_v5_full_test_result.json",
+  "phase100_post_compile_verification": {
+    "command": "PYTHONPATH=src python -m unittest tests.test_e2r_v5_phase100_independent_acceptance -v",
+    "tests_run": 15,
+    "failures": 0,
+    "errors": 0,
+    "status": "PASS"
+  },
+  "independent_reviewer_gate": {
+    "path": "docs/operational/e2r_v5_reviewer_gate.json",
+    "reviewer_count": 10,
+    "failed_reviewers": [],
+    "critical_count_sum": 0,
+    "exact_verdict": "MEANINGFUL_E2R_RESEARCHER_PARITY_READY"
+  },
+  "verdict": "PASS"
+}

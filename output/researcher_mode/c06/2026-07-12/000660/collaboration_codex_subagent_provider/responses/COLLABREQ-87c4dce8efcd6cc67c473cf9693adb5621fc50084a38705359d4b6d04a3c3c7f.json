@@ -1,0 +1,424 @@
+{
+  "output_schema_hash": "87d3c66f564a2179cc4a1c335203172b75ba4ad6a971f0dc4b406e1ae6e503bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-a2de46b6c6bf08dc11a40d16",
+        "rationale": "Extracted nine distinct objective-direct facts covering asset-purchase commitments, two-sided HITECH back-end terms, working-capital cash conversion, supplier finance, shareholder-return policy and execution, legal contingency uncertainty, and the exchange-bond clean-up-call decision. Previously represented West Lafayette guarantee, exchange exercise, capex cash outflow, balances, generic debt tables, and NAND-only obligations were not repeated.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-a2de46b6c6bf08dc11a40d16",
+        "economic_mechanism": "기표되지 않은 유형자산 구매 약정은 향후 현금 투입과 생산설비 확장에 대한 확정성 높은 전사 자본배분 부담을 보여준다. 어떤 메모리 제품이나 HBM CAPA인지 공시하지 않는다.",
+        "exact_quote": "당분기말 현재 기표되지 않은 유형자산에 대한 구매 약정액은 30,435,407백만원입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster의 집행·현금유출 수치와 구별되는 향후 구매 약정으로 capital_allocation을 직접 보완한다. HBM 전용 약정으로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:TANGIBLE_ASSET_PURCHASE_COMMITMENTS",
+        "normalized_object": "기표되지 않은 유형자산 구매 약정액",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31",
+        "predicate": "2026년 1분기말 기표되지 않은 유형자산 구매 약정액은 30,435,407백만원이다",
+        "predicate_family": "TANGIBLE_ASSET_PURCHASE_COMMITMENTS",
+        "primitive_tags": [
+          "PURCHASE_COMMITMENT",
+          "TANGIBLE_ASSETS"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "TANGIBLE_ASSET_PURCHASE_COMMITMENTS",
+        "question_family_tags": [
+          "CAPEX_COMMITMENT",
+          "CAPITAL_ALLOCATION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 유형자산 구매 약정",
+        "subject_id": "000660:TANGIBLE_ASSET_PURCHASE_COMMITMENTS",
+        "unit": "KRW million",
+        "value": 30435407
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a2de46b6c6bf08dc11a40d16",
+        "economic_mechanism": "Package·Test·Module 후공정서비스 계약에 따른 장비 우선 사용권은 후공정 생산 접근성을 보완한다. HBM 전용 장비·물량·기간은 공시하지 않는다.",
+        "exact_quote": "HITECH Semiconductor (Wuxi) Co., Ltd. (\"HITECH\")와의 후공정서비스계약회사는 HITECH과 후공정서비스를 공급받는 계약을 체결하고 있으며 서비스 제공 범위는 Package, Package Test, Module 등 입니다. 회사는 동 계약에 따라 HITECH 장비 우선 사용권을 보유하고, 후공정서비스 대가로 HITECH에 일정액의 약정수익을 보장하는 금액을 지급하고 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 후공정 장비 접근권으로 capacity scarcity를 보완한다. HBM 전용 CAPA 또는 고객 배정으로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:HITECH_BACKEND_CAPACITY_RIGHT",
+        "normalized_object": "후공정 장비 우선 사용권",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current as of 2026-Q1",
+        "predicate": "SK하이닉스는 HITECH 후공정서비스 계약에 따라 HITECH 장비 우선 사용권을 보유한다",
+        "predicate_family": "BACKEND_EQUIPMENT_PRIORITY_USE_RIGHT",
+        "primitive_tags": [
+          "PACKAGE",
+          "PACKAGE_TEST",
+          "MODULE",
+          "PRIORITY_USE_RIGHT"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BACKEND_EQUIPMENT_PRIORITY_USE_RIGHT",
+        "question_family_tags": [
+          "BACKEND_CAPACITY",
+          "EQUIPMENT_PRIORITY_RIGHT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HITECH 후공정 장비 우선 사용권",
+        "subject_id": "000660:HITECH_BACKEND_CAPACITY_RIGHT",
+        "unit": "contract right",
+        "value": "priority use right for HITECH equipment"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-a2de46b6c6bf08dc11a40d16",
+        "economic_mechanism": "후공정 장비 우선권의 대가로 일정액의 약정수익 보장금액을 지급하므로, 생산 접근성에는 고정성 비용·지급의무가 수반된다는 수익성 counterfact다. 지급액과 HBM 귀속은 공시하지 않는다.",
+        "exact_quote": "HITECH Semiconductor (Wuxi) Co., Ltd. (\"HITECH\")와의 후공정서비스계약회사는 HITECH과 후공정서비스를 공급받는 계약을 체결하고 있으며 서비스 제공 범위는 Package, Package Test, Module 등 입니다. 회사는 동 계약에 따라 HITECH 장비 우선 사용권을 보유하고, 후공정서비스 대가로 HITECH에 일정액의 약정수익을 보장하는 금액을 지급하고 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "우선 사용권과 별개의 비용·약정 메커니즘으로 eps_fcf_explosion을 직접 제한한다. 금액이나 HBM 귀속은 발명하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:HITECH_BACKEND_GUARANTEED_PAYMENT",
+        "normalized_object": "후공정서비스 약정수익 보장 지급의무",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "current as of 2026-Q1",
+        "predicate": "SK하이닉스는 HITECH 후공정서비스 대가로 일정액의 약정수익 보장금액을 지급한다",
+        "predicate_family": "BACKEND_GUARANTEED_REVENUE_PAYMENT",
+        "primitive_tags": [
+          "GUARANTEED_REVENUE",
+          "SERVICE_PAYMENT",
+          "BACKEND_PROCESS"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BACKEND_GUARANTEED_REVENUE_PAYMENT",
+        "question_family_tags": [
+          "BACKEND_SERVICE_OBLIGATION",
+          "MARGIN_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HITECH 후공정 약정수익 보장 지급",
+        "subject_id": "000660:HITECH_BACKEND_GUARANTEED_PAYMENT",
+        "unit": "contract obligation",
+        "value": "guaranteed revenue payment amount not disclosed"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-a2de46b6c6bf08dc11a40d16",
+        "economic_mechanism": "매출채권과 재고 증가가 영업현금 창출을 각각 감소시켜 강한 이익이 현금으로 전환되는 과정의 운전자본 부담을 보여준다. 메모리 또는 HBM에만 귀속하지 않는다.",
+        "exact_quote": "매출채권의 감소(증가)\n(14,145,673)\n재고자산의 감소(증가)\n(1,041,534)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster의 기말 잔액 및 총 영업현금흐름과 구별되는 실제 운전자본 증감으로 capital_allocation의 현금 전환 여력을 직접 제한한다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:WORKING_CAPITAL_CASH_CONVERSION",
+        "normalized_object": "매출채권·재고 증가에 따른 운전자본 현금유출",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 매출채권 증가는 14,145,673백만원, 재고자산 증가는 1,041,534백만원의 영업현금흐름 감소요인이었다",
+        "predicate_family": "WORKING_CAPITAL_CASH_CONVERSION",
+        "primitive_tags": [
+          "RECEIVABLES_INCREASE",
+          "INVENTORY_INCREASE",
+          "OPERATING_CASH_FLOW"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "WORKING_CAPITAL_CASH_CONVERSION",
+        "question_family_tags": [
+          "WORKING_CAPITAL",
+          "CASH_CONVERSION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 운전자본 현금흐름",
+        "subject_id": "000660:WORKING_CAPITAL_CASH_CONVERSION",
+        "unit": "KRW million",
+        "value": "receivables increase 14145673; inventory increase 1041534"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-a2de46b6c6bf08dc11a40d16",
+        "economic_mechanism": "공급자가 금융기관으로부터 조기 지급받은 885,900백만원은 매입채무 결제시기의 금융중개를 보여주므로 운전자본·유동성 해석에 별도 확인이 필요하다. 회사는 비현금거래에 미치는 유의적 영향은 없다고 공시했다.",
+        "exact_quote": "당분기말 현재 공급자금융약정으로 공급자가 지급받은 금액은 885,900백만원입니다. 한편, 회사의 공급자금융약정 관련 매입채무 및 기타채무의 금액이 현금및현금성자산의 비현금거래에 미치는 유의적 영향은 없습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 공급자금융 잔액과 회사의 비현금 영향 설명으로 capital_allocation의 운전자본·유동성 해석을 보완한다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:SUPPLIER_FINANCE_BALANCE",
+        "normalized_object": "공급자금융약정으로 공급자가 지급받은 금액",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31",
+        "predicate": "2026년 1분기말 공급자금융약정으로 공급자가 지급받은 금액은 885,900백만원이고 현금및현금성자산 비현금거래에 유의적 영향은 없다",
+        "predicate_family": "SUPPLIER_FINANCE_BALANCE",
+        "primitive_tags": [
+          "TRADE_PAYABLES",
+          "EARLY_SUPPLIER_PAYMENT",
+          "LIQUIDITY"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "SUPPLIER_FINANCE_BALANCE",
+        "question_family_tags": [
+          "SUPPLIER_FINANCE",
+          "WORKING_CAPITAL"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 공급자금융약정",
+        "subject_id": "000660:SUPPLIER_FINANCE_BALANCE",
+        "unit": "KRW million",
+        "value": 885900
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-a2de46b6c6bf08dc11a40d16",
+        "economic_mechanism": "2025~2027 고정배당은 최소 환원 틀을 제시하지만, 종전 연간 FCF 5%는 재무건전성에 우선 쓰고 추가·조기 환원은 건전성 및 유의미한 FCF 창출에 조건부라는 양면 자본배분 정책이다.",
+        "exact_quote": "주당 1,500원의 고정배당금 지급 (4개 분기 균등하게 배분)기존 정책 하에서 지급하던 연간 Free Cash Flow의 5%는 재무 건전성 강화에 우선 활용하며, 재무 건전성을 유지하는 범위 내에서 추가 환원을 진행할 계획입니다. 또한, 경영실적 호조로 유의미한 수준의 Free Cash Flow 창출이 예상될 경우 일부 조기 환원 여부를 검토할 계획입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 고정배당·FCF 우선순위·조건부 추가환원의 전체 정책으로 capital_allocation을 직접 보완한다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:SHAREHOLDER_RETURN_POLICY",
+        "normalized_object": "2025~2027 고정배당과 조건부 추가환원 정책",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-2027",
+        "predicate": "2025~2027년 주당 1,500원 고정배당을 지급하고 종전 연간 FCF 5%는 재무건전성에 우선 활용하며 추가·조기 환원은 조건부로 검토한다",
+        "predicate_family": "SHAREHOLDER_RETURN_POLICY_2025_2027",
+        "primitive_tags": [
+          "FIXED_DIVIDEND",
+          "FINANCIAL_SOUNDNESS",
+          "CONDITIONAL_ADDITIONAL_RETURN"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "SHAREHOLDER_RETURN_POLICY_2025_2027",
+        "question_family_tags": [
+          "SHAREHOLDER_RETURN",
+          "FCF_ALLOCATION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2025~2027 주주환원정책",
+        "subject_id": "000660:SHAREHOLDER_RETURN_POLICY",
+        "unit": "KRW per share and percent FCF",
+        "value": "fixed dividend KRW 1500 per share annually; former annual FCF 5% prioritized for financial soundness"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a2de46b6c6bf08dc11a40d16",
+        "economic_mechanism": "2026년 1분기 이사회가 보통주 주당 375원의 분기배당을 결정해 고정배당 정책의 실제 집행을 확인한다.",
+        "exact_quote": "※ 보고서 작성기준일 이후 당사는 2026년 4월 22일 이사회 결의에 따라, 보통주 1주당 375원(배당총액 2,658억원)의 제79기 1분기 배당을 결정하였습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 실제 분기배당 결정으로 capital_allocation 정책의 실행을 직접 보완한다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:2026_Q1_DIVIDEND",
+        "normalized_object": "2026년 1분기 현금배당 결정",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1; decided 2026-04-22",
+        "predicate": "2026년 4월 22일 이사회가 2026년 1분기 보통주 주당 375원, 총 2,658억원의 배당을 결정했다",
+        "predicate_family": "QUARTERLY_DIVIDEND_DECLARATION",
+        "primitive_tags": [
+          "DIVIDEND_PER_SHARE",
+          "DIVIDEND_TOTAL"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QUARTERLY_DIVIDEND_DECLARATION",
+        "question_family_tags": [
+          "QUARTERLY_DIVIDEND",
+          "SHAREHOLDER_RETURN_EXECUTION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 1분기 배당",
+        "subject_id": "000660:2026_Q1_DIVIDEND",
+        "unit": "KRW per share and KRW billion",
+        "value": "KRW 375 per share; total KRW 265.8 billion"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-a2de46b6c6bf08dc11a40d16",
+        "economic_mechanism": "여러 지적재산권 분쟁이 진행 중이나 높은 유출가능성과 신뢰성 있는 추정 조건을 충족해 인식한 부채는 없다는 공시는 법적 불확실성과 현재 인식액 부재를 함께 보여준다.",
+        "exact_quote": "당분기말 현재 회사는 지적재산권 등과 관련하여 여러 분쟁에 대응하고 있으며, 과거 사건에 의한 현재의무이고 향후 자원의 유출가능성이 높으며 손실금액을 신뢰성 있게 추정할 수 있는 경우 동 금액을 부채로 인식하고 있습니다. 당분기말 현재 관련하여 부채로 인식하고 있는 금액은 없습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 진행 중 법적 불확실성과 인식 부채 0의 양면 공시로 information_confidence를 직접 제한한다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:IP_DISPUTE_UNCERTAINTY",
+        "normalized_object": "지적재산권 분쟁과 인식 부채",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "2026년 1분기말 지적재산권 등 여러 분쟁에 대응 중이나 관련해 인식한 부채는 없다",
+        "predicate_family": "INTELLECTUAL_PROPERTY_DISPUTE_UNCERTAINTY",
+        "primitive_tags": [
+          "IP_DISPUTES",
+          "NO_RECOGNIZED_LIABILITY",
+          "OPEN_RISK"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "INTELLECTUAL_PROPERTY_DISPUTE_UNCERTAINTY",
+        "question_family_tags": [
+          "LEGAL_CONTINGENCY",
+          "INFORMATION_UNCERTAINTY"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 지적재산권 분쟁",
+        "subject_id": "000660:IP_DISPUTE_UNCERTAINTY",
+        "unit": "legal contingency disclosure",
+        "value": "multiple disputes; recognized liability zero"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-a2de46b6c6bf08dc11a40d16",
+        "economic_mechanism": "미상환 외화교환사채 잔액에 Clean Up Call을 행사하기로 한 결정은 잠재 자기주식 교환과 부채를 정리하려는 전사 자본배분 조치다. 원문 기준 지급은 예정이므로 완료로 표현하지 않는다.",
+        "exact_quote": "외화 해외교환사채 조기상환권 행사\n취득 대상\n외화 해외교환사채 (발행일 : 2023년 4월 11일)\n사채 권면 총액 [USD, 일]\n1,700,000,000\n취득 대상 권면 금액 [USD, 일]\n100,800,000\n만기 전 취득 사유\n발행회사의 조기상환 청구권 행사 (Call Option)- 미상환사채잔액이 발행총액의 10% 미만인 경우에 해당함(Clean Up Call)\n교환 대상 주식수 (단위: 주)\n1,219,445\n지급 (예정일)\n2026-05-28",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 fact roster의 과거 교환권 행사와 구별되는 잔여 외화교환사채 조기상환 결정으로 capital_allocation을 직접 보완한다. 예정 지급의 완료는 주장하지 않는다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:EXCHANGE_BOND_CLEAN_UP_CALL",
+        "normalized_object": "외화교환사채 조기상환권 행사 결정",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "decision 2026-04-28; payment scheduled 2026-05-28",
+        "predicate": "2026년 4월 28일 외화교환사채 권면 USD 100.8백만에 대해 Clean Up Call을 통한 만기 전 취득을 결정했다",
+        "predicate_family": "EXCHANGE_BOND_CLEAN_UP_CALL_DECISION",
+        "primitive_tags": [
+          "EARLY_REDEMPTION_DECISION",
+          "REMAINING_EXCHANGE_SHARES"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "EXCHANGE_BOND_CLEAN_UP_CALL_DECISION",
+        "question_family_tags": [
+          "EXCHANGE_BOND",
+          "CLEAN_UP_CALL"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 외화교환사채 조기상환권",
+        "subject_id": "000660:EXCHANGE_BOND_CLEAN_UP_CALL",
+        "unit": "USD and shares",
+        "value": "USD 100800000; 1219445 exchange shares"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "9929756bb469518bbcb2d06a7f5ff7dd90dffa910cf1c3c843813a0b6295e763",
+  "production_score_authority": false,
+  "prompt_hash": "5cd4fe6dcaf997946a2ba5faed5e1fe3962894bc83e5166d2f4da9c2f14eb7e4",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-87c4dce8efcd6cc67c473cf9693adb5621fc50084a38705359d4b6d04a3c3c7f",
+  "response_id": "COLLABRESP-4b8eba334e751f51422e3eb135784cfc085164c57d8ec40ab8d16ccaf2d61695",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

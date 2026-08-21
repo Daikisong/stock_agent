@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f396a71501c37546531f26f3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 채널 또는 공유용 링크로 원문 내용·발행일·대상 귀속을 보존하는 독립 full-fetch 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f4177279de804e99beb57490",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "기존 뉴스룸 기사에 딸린 TTS 오디오 자산으로 별도 원문 문서나 새로운 경제적 사실을 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f48729c6dea2d23004521ba9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 채널 또는 공유용 링크로 원문 내용·발행일·대상 귀속을 보존하는 독립 full-fetch 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f4c2243e9b5b8fd03d7c2353",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f4de31b1def6bf8f2cf5fd9f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 HBM 제품 소개 페이지지만 시점 특정 고객 계약·allocation·CAPA·가격·매출 또는 이익을 확인하는 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f585dc114afef25412725c5d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 채널 또는 공유용 링크로 원문 내용·발행일·대상 귀속을 보존하는 독립 full-fetch 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f5b52afad90ad4a415b3a399",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f5ce85bd17debf8afc3c72fd",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f5f71f3bb9f1af436928d5da",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "개인정보·로그인·연락처·뉴스레터 페이지로 경제적 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f61e545ff5e5495642696417",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "개인정보·로그인·연락처·뉴스레터 페이지로 경제적 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f676602c1fac45d5dab9537c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "개인정보·로그인·연락처·뉴스레터 페이지로 경제적 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f6db50d62630b8ae06bce5fa",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "c519d8acd34cbdb7328e87f8e68d908c8b70ce521cf5fdf2c756ed989a7c67af",
+  "production_score_authority": false,
+  "prompt_hash": "9a336552b6658b251f364b6279f73fee23f07c5a3833e8734c693263120e3949",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fc5b4d4a633009542e3a22320dd17f422fefbfadd02c6e33aa44f0f302c6e0ba",
+  "response_id": "COLLABRESP-50964bf8718a501d29df15dc353705b8a985aea0c923905db9a9d3f4e0745b15",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

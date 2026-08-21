@@ -1,0 +1,33 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "이전 AMD CUSTOMER_OFFICIAL 검색과 full-fetched AMD newsroom 원문은 Samsung의 MI350X·MI355X HBM3E 및 MI455X HBM4 기술 관계를 이미 독립 source-backed fact로 materialize했다. 동일 AMD 문서·제품명·일반 newsroom 검색은 의미 중복이므로 재제안하지 않는다.",
+      "현재 prompt의 structured source gap은 COMPLETE이고 official pending reason은 없다. 남은 SUPERVISOR_SYNTHESIS_LINEAGE_PENDING은 Synthesis 계보 문제이므로 새 source query로 해결할 수 없다.",
+      "고객 계약의 가격·물량·배정·기간·취소 조건은 prompt에 새 verified 문서 정체성이 없으므로 추측 검색으로 확장하지 않는다. 따라서 이 snapshot에서는 suggested_queries를 비우며, 이는 source absence 또는 고정 round 완료 선언이 아니다."
+    ]
+  },
+  "payload_hash": "cd9cfef070ee2c55ca09011fc90b33650276c81664a80bc5e5b02d968c14c066",
+  "production_score_authority": false,
+  "prompt_hash": "ce41187e76c8ddef6338fb4c1f3844dcc6e14e7130ffa5022a90ceff6744a590",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-93e3ae7257cd8061ee287f681c6216381464e560eebe515cfd5b0da6c9fc56a1",
+  "response_id": "COLLABRESP-24297c416c1aaf8657555ff8b3b99719389f6c19b0c81bf9c3a44f1eb2b388b7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-bd0b214676a156c616fac0ce",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.02,
+        "rationale": "증권사 원문 PDF provenance는 맞지만 'Geopolitical Research Monthly'은 요청한 2026-07-08 삼성전자 리포트 또는 현재 expectation/valuation bridge가 아니다. 시점·대상·주제가 objective와 불일치하며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3529b94458797d2e6dc3299c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'국 회 본 회 의 회 의 록'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-02f032e8b6921d9ca3059f4e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'국민과 함께하는 나라살림 대토론회'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3f02cf6bd63f624db5e5b013",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'붙임1. 2025년 운영 과정 목록.xlsx - 국가공무원인재개발원'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cce99ad9b3751a92fa82898a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'국 회 본 회 의 회 의 록'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6eac448c3159660d18b9d1c7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'무역보험용어집.xls'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-212087380aff8bcb55cb74b0",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.02,
+        "rationale": "증권사 원문 PDF provenance는 맞지만 '위험한 시대 위대한 내러티브'은 요청한 2026-07-08 삼성전자 리포트 또는 현재 expectation/valuation bridge가 아니다. 시점·대상·주제가 objective와 불일치하며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8806aefd65456ed19f5a603b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'WHY NOT SELL REPORT ?'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8ee63720c7e83ddd8bc7ef75",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'제21대국회 제383회(임시회) 제1차 국회본회의(전체회의) (2020.12.10.).hwp'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-183bdefc291f04165f137c4f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'2022 한국언론연감'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-724ef045aa07b187dae3e4e2",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.02,
+        "rationale": "증권사 원문 PDF provenance는 맞지만 '반도체 & 소부장'은 요청한 2026-07-08 삼성전자 리포트 또는 현재 expectation/valuation bridge가 아니다. 시점·대상·주제가 objective와 불일치하며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-99540f97bb8ed525d2c1f9eb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'2023 한국인권보고서 - 민주사회를 위한 변호사모임'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "ranking_complete는 이 partition roster 분류 완료만 뜻한다. material 후보도 full-fetch·parse 전에는 evidence가 아니며, 요청한 삼성증권 2026-07-08 리포트 원문은 이 roster에서 확인되지 않았다."
+    ]
+  },
+  "payload_hash": "492557a6b094d421a9a31a5c6329987521979910011fc83e80b61d4bc988c4fd",
+  "production_score_authority": false,
+  "prompt_hash": "c5a5455cac43cdf48c58b3d7013312431548241ae02d511cbd8a96bd554aa093",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-422cac6ba43397f8496f47ae8c9c9251d543f59c90a6b1ee1c248f007cc09a36",
+  "response_id": "COLLABRESP-f2c9e42d11f0437d6184d6e311fe88e7e8932e88386d2876c30c7e521b346eaf",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

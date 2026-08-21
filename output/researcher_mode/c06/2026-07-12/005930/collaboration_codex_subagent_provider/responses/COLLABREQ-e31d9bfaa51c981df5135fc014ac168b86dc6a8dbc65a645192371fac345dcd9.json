@@ -1,0 +1,125 @@
+{
+  "output_schema_hash": "8392ff7273630732db1ccbd70c5a62a2a936adeb7927340fb423017d2ade23d8",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9c64876ce999077eb09d8be0",
+        "rationale": "전체 본문과 current 527 facts/529 claims를 대조해 canonical lineage rematerialization 대상인 HBM4 혼합 ASP 기여와 3분기 LTA 협상 완료·가격조건 관측 2건만 동일한 semantic identity로 재추출했다. 전사 실적 추정, 파운드리·MX, NAND, 목표주가와 이미 current인 D램 ASP·2027년 HBM 가격협상은 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9c64876ce999077eb09d8be0",
+        "economic_mechanism": "HBM4 선제 출하가 고부가 제품 믹스를 통해 삼성전자의 2026년 2분기 메모리 혼합 평균판매가격에 우호적으로 작용했다는 증권사 추정이다.",
+        "exact_quote": "유진투자증권은 삼성전자가 HBM4의 선제적 출하로 우호적인 혼합 ASP를 기록한 것으로 추정했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 HBM4 양산·출하 사실이나 고속 제품 가격 프리미엄과 달리, 실제 2분기 혼합 ASP에 대한 HBM4 출하의 기여를 직접 연결한다. 개별 HBM4 실현가격이나 매출액은 추론하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:Q2_BLENDED_ASP",
+        "normalized_object": "HBM4 선제 출하에 따른 혼합 평균판매가격 기여",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2E",
+        "predicate": "유진투자증권은 삼성전자가 HBM4 선제 출하로 우호적인 혼합 ASP를 기록한 것으로 추정했다",
+        "predicate_family": "HBM4_BLENDED_ASP_CONTRIBUTION",
+        "primitive_tags": [
+          "HBM4",
+          "BLENDED_ASP",
+          "PRODUCT_MIX"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_BLENDED_ASP_CONTRIBUTION",
+        "question_family_tags": [
+          "HBM4_BLENDED_ASP",
+          "HBM_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 출하와 혼합 ASP",
+        "subject_id": "005930:MEMORY:HBM4:BLENDED_ASP:2026-Q2",
+        "unit": "pricing assessment",
+        "value": "favorable blended ASP"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.73,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9c64876ce999077eb09d8be0",
+        "economic_mechanism": "주요 데이터센터 고객과의 LTA 협상 완료가 2026년 3분기에 집중될 것이라는 관측은 고객 물량·가격이 계약으로 결박될 예상 시점과 공급자 우위 가격조건의 가능성을 함께 제시한다.",
+        "exact_quote": "주요 데이터센터 고객사와의 장기공급계약(LTA) 협상 완료 시점이 3분기에 몰려 있어 유리한 가격 조건의 계약 체결이 가능할 것이라는 관측도 내놨다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 LTA 비중·기간 fact와 달리 이 문장은 아직 완료되지 않은 협상의 예상 완료 분기와 가격조건 방향을 제시한다. 실제 체결, 물량 확약 또는 최저가격 보장으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:LTA:Q3_COMPLETION_TIMING",
+        "normalized_object": "주요 데이터센터 고객 메모리 LTA 협상 완료 시점과 가격조건 가능성",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q3E",
+        "predicate": "삼성전자의 주요 데이터센터 고객 LTA 협상 완료 시점이 2026년 3분기에 몰려 유리한 가격조건의 계약 가능성이 있다는 관측이 나왔다",
+        "predicate_family": "MEMORY_LTA_Q3_NEGOTIATION_TIMING",
+        "primitive_tags": [
+          "LTA",
+          "DATA_CENTER_CUSTOMER",
+          "PRICING_TERMS"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_LTA_Q3_NEGOTIATION_TIMING",
+        "question_family_tags": [
+          "MEMORY_LTA",
+          "CONTRACT_PRICING",
+          "NEGOTIATION_TIMING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 주요 데이터센터 고객 LTA 협상",
+        "subject_id": "005930:MEMORY:LTA:NEGOTIATION:2026-Q3",
+        "unit": "negotiation outlook",
+        "value": "Q3 negotiation-completion concentration; favorable pricing possible"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "3eb904447a3bc8add10214b7ffa71ff37ebc9ba5f2dcd12c6e76bb3c03a5701c",
+  "production_score_authority": false,
+  "prompt_hash": "27b97ce16ae18c0175cb7d70846e193a125c96528a24d626ba099682c3fea7bc",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e31d9bfaa51c981df5135fc014ac168b86dc6a8dbc65a645192371fac345dcd9",
+  "response_id": "COLLABRESP-26a1e45c4b97fde46b8cdf1be27a377a3336ac36d9262a874dcd4b86cf0a3345",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

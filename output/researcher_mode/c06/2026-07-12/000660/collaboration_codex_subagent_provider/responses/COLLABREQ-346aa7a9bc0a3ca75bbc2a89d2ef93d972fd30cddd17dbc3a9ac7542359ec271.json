@@ -1,0 +1,46 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Prioritize exact issuer filings categorized as a single-sale or supply-contract execution, amendment, cancellation, or termination disclosure on KIND/KRX or OpenDART. Verify target identity, filing availability by the cutoff, contract scope, period, amount, and cancellation terms before promotion."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 2026 HBM 단일판매 공급계약 체결 공시",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "Search the target’s official KIND and DART contract-disclosure class, which is distinct from the 36 executed earnings, IR, fair-disclosure, and broker queries. A filing available by 2026-07-12 could identify an actual HBM or memory supply contract, period, amount, counterparty treatment, or termination terms relevant to DURABLE_VISIBILITY. Do not infer that a filing or binding contract exists, and do not substitute customer discussions or broker estimates.",
+        "source_families": [
+          "KIND_KRX",
+          "OPENDART"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "The existing 36 queries cover earnings calls, IR, fair disclosures, customer-official routes, sustainability material, registration statements, and broker PDFs, but they do not explicitly test the formal KIND/DART supply-contract disclosure class.",
+      "If the official contract-disclosure search returns no target filing, DURABLE_VISIBILITY remains unresolved: absence of a public filing does not prove either that no agreement exists or that customer demand discussions are binding, non-cancellable purchase obligations.",
+      "FORWARD_GUIDANCE and SEGMENT_CONTRIBUTION still require issuer-sourced machine-numeric evidence; a contract disclosure without eligible numeric forward guidance or segment value cannot close those separate roles."
+    ]
+  },
+  "payload_hash": "f5fa6b7cf9d47ad399c3b62cf273ed86560d0c9fbc317449a39a41bd1dbf5cf3",
+  "production_score_authority": false,
+  "prompt_hash": "929505394f28949a51b2f304c3653772ab64eee10aa9a7dcc6d8e31ac5dccad2",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-346aa7a9bc0a3ca75bbc2a89d2ef93d972fd30cddd17dbc3a9ac7542359ec271",
+  "response_id": "COLLABRESP-971bdc4f2b25013898e3613776c853ae0b058933fc80d36dc2655b55f36b02a3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

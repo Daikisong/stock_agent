@@ -1,0 +1,92 @@
+{
+  "output_schema_hash": "cd8d7ef354c337a38869fd65ffaa2bfd6c3a72389e68b11483e53fbc539461be",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4b4a42d9de435c554e6f1d17",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "WiseReport의 2025-01-24 다종목 증권 리포트 요약 landing page이며 요청된 SK하이닉스 issuer presentation·earnings release 원문 계열이 아니다. 타사·타업종 목표주가 snippet은 target memory earnings evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-78f499e02230d49dc41cf38d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 사이트의 Micron 분석이며 target issuer도 SK하이닉스가 아니다. HBM4·장기계약과 재무수치를 주장하는 snippet은 요청된 SK하이닉스 issuer-owned source가 아니므로 target의 이익·FCF 근거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-24499d10d0821618bf60768a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "SK materials의 2024 지속가능경영보고서로 발행 주체와 문서 목적이 다르다. SK하이닉스 issuer presentation·earnings release가 아니며 target memory earnings bridge를 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-3adfb8245b5009e12155151e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 투자 블로그의 Micron 주가 기사로 요청된 issuer-owned family가 아니며 target도 다르다. 가격 변동과 추정 원인 snippet은 SK하이닉스 memory 매출·이익·FCF 원문 근거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4e0144a4eb074dfeea1fc82f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "WiseReport의 2026-01-29 증권 리포트 요약 페이지로 SK하이닉스 공식 issuer presentation·earnings release가 아니다. HBM·서버 메모리 수요 snippet이 있어도 원문 공식 family와 정량 이익 attribution을 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c13083f72bdab584b4521b58",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 채널 분석 서비스 landing page로 요청된 issuer-owned source family가 아니며, 제공된 snippet에는 target 또는 objective-linked 경제 사실도 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "6개 discovery 후보를 각각 정확히 한 번 분류했다. 모두 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release provenance 밖에 있어 full-fetch material 후보는 없으며, discovery snippet은 evidence로 사용하지 않았다."
+    ]
+  },
+  "payload_hash": "e1ff28c3a9017805f206a56528ba7e4e52678f34f3ae670b206f32144aa7486c",
+  "production_score_authority": false,
+  "prompt_hash": "39851cf2e5229d6da4c051735bf48e17ca931fd35ecf835ba526bb5d68696313",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-eb379637e5011cdff63e7a362463cf3c62d05838347eb1853c6369fc497758fc",
+  "response_id": "COLLABRESP-fffa22ff4dab1cabf5eaeb62251ea808d9e199602286ccc7d5493dc179cfa741",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

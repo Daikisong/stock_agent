@@ -1,0 +1,570 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "rationale": "Transport chunk 1 was reviewed in full. This first semantic page contains twelve distinct objective-linked valuation facts from the Samsung Electronics and SK hynix valuation sections: the issuer expectations-pricing state; issuer and peer baseline, recovery and upper P/B scenarios; explicit HBM and macro counterconditions; one current peer P/B anchor; and the HBM4-linked bilateral performance divergence. Repeated charts, recommendation histories, adjacent industries, and semiconductor operating facts outside the current PEER_BAND focus were not promoted. Because this page reaches the exact twelve-fact transport limit, a final continuation page is required to certify that no further distinct objective-linked fact remains.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DS memory valuation context",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "economic_mechanism": "The report states that Samsung Electronics' share price had begun to reflect the CY2026 semiconductor cycle and company earnings outlook as 4Q25 began.",
+        "exact_quote": "– 4Q25에접어들었으므로동사주가에이미CY26업황과동사실적전망이영향을미치기시작한것으로보임",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This directly limits the unpriced rerating gap by stating that the next-cycle and earnings outlook had already begun to enter the issuer's share price.",
+        "mechanism_scope_id": "MEMORY_CYCLE_EXPECTATIONS_PRICED_IN",
+        "normalized_object": "Samsung CY2026 memory-cycle expectations already entering valuation",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q2025 as of 2025-12-16",
+        "predicate": "had begun to reflect the CY2026 semiconductor-cycle and company earnings outlook",
+        "predicate_family": "SAMSUNG_CY26_EXPECTATIONS_PRICED_IN",
+        "primitive_tags": [
+          "share price",
+          "CY2026 outlook",
+          "Samsung Electronics"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_MARKET_EXPECTATION_GAP",
+        "question_family_tags": [
+          "valuation rerating",
+          "expectation gap",
+          "cycle pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Samsung Electronics CY2026 semiconductor-cycle and earnings expectations",
+        "subject_id": "005930_CY26_EXPECTATIONS_PRICED_IN",
+        "unit": "",
+        "value": "CY2026 cycle and earnings expectations had begun to affect the share price"
+      },
+      {
+        "business_segment": "DS memory",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "economic_mechanism": "The report applies Samsung Electronics' recent midpoint P/B to FY2026 expected BPS and states that the market price already exceeds the resulting baseline fair value.",
+        "exact_quote": "– FY26예상BPS76,400원에동사최근중간P/B배수1.2배를적용할경우92,000원의적정주가도출되며현주가는이를이미상회",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This gives an explicit issuer baseline P/B band point and states that price is already above it, directly constraining rerating upside within the PEER_BAND objective.",
+        "mechanism_scope_id": "MEMORY_PEER_PB_VALUATION_SCENARIO",
+        "normalized_object": "Samsung baseline P/B fair-value scenario and current-price gap",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026E valuation as of 2025-12-16",
+        "predicate": "has a baseline fair value from 1.2x P/B on FY2026 expected BPS that the current price already exceeds",
+        "predicate_family": "SAMSUNG_BASELINE_PB_SCENARIO_AND_PRICE_GAP",
+        "primitive_tags": [
+          "valuation",
+          "FY2026 BPS",
+          "Samsung Electronics"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_PEER_PB_SCENARIO",
+        "question_family_tags": [
+          "peer band",
+          "P/B scenario",
+          "current price gap"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Samsung Electronics FY2026 baseline P/B valuation scenario",
+        "subject_id": "005930_FY26_BASE_PB_SCENARIO",
+        "unit": "multiple and KRW per share",
+        "value": "P/B 1.2x on FY2026E BPS KRW 76,400; fair value KRW 92,000; current price already above"
+      },
+      {
+        "business_segment": "DS memory",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "economic_mechanism": "The report explicitly attributes a prior downward adjustment of Samsung Electronics' P/B band to HBM weakness.",
+        "exact_quote": "– HBM에서의 부진에 따라 동사 P/B 밴드가 하향 조정된 바 있음. 단 HBM 경쟁력 회복에 따라 동사 중간 배수가 과거의 1.4배로 회복되었고 이에\nFY26예상BPS를적용하면10.6만원으로직전고점주가수준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This directly identifies the HBM competitiveness counterfactor that changed the issuer's valuation band.",
+        "mechanism_scope_id": "HBM_COMPETITIVENESS_VALUATION_BAND",
+        "normalized_object": "HBM weakness-driven P/B band reduction",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "Valuation history referenced as of 2025-12-16",
+        "predicate": "had its P/B band lowered because of HBM weakness",
+        "predicate_family": "SAMSUNG_HBM_WEAKNESS_PB_BAND_COUNTER",
+        "primitive_tags": [
+          "valuation",
+          "band reduction",
+          "counterfactor"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "MEMORY_PEER_PB_BAND_DRIVER",
+        "question_family_tags": [
+          "peer band",
+          "HBM competitiveness",
+          "P/B band"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Samsung Electronics P/B band effect from HBM weakness",
+        "subject_id": "005930_HBM_WEAKNESS_PB_BAND",
+        "unit": "",
+        "value": "P/B band lowered due to HBM weakness"
+      },
+      {
+        "business_segment": "DS memory",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "economic_mechanism": "The report links recovery in HBM competitiveness to restoration of Samsung Electronics' historical midpoint P/B and applies that multiple to FY2026 expected BPS.",
+        "exact_quote": "– HBM에서의 부진에 따라 동사 P/B 밴드가 하향 조정된 바 있음. 단 HBM 경쟁력 회복에 따라 동사 중간 배수가 과거의 1.4배로 회복되었고 이에\nFY26예상BPS를적용하면10.6만원으로직전고점주가수준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is a distinct conditional rerating scenario tied to HBM competitiveness and an explicit historical band multiple.",
+        "mechanism_scope_id": "HBM_COMPETITIVENESS_VALUATION_BAND",
+        "normalized_object": "HBM recovery-linked Samsung P/B scenario",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E conditional valuation as of 2025-12-16",
+        "predicate": "can recover to a 1.4x midpoint P/B and KRW 106,000 fair value with HBM competitiveness recovery",
+        "predicate_family": "SAMSUNG_HBM_RECOVERY_PB_SCENARIO",
+        "primitive_tags": [
+          "valuation",
+          "FY2026 BPS",
+          "fair value"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "MEMORY_PEER_PB_SCENARIO",
+        "question_family_tags": [
+          "peer band",
+          "HBM recovery",
+          "P/B scenario"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Samsung Electronics HBM recovery P/B valuation scenario",
+        "subject_id": "005930_HBM_RECOVERY_PB_SCENARIO",
+        "unit": "multiple and KRW per share",
+        "value": "P/B 1.4x on FY2026E BPS; fair value KRW 106,000"
+      },
+      {
+        "business_segment": "DS memory",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "economic_mechanism": "The report defines an upper Samsung Electronics P/B scenario conditional on early HBM4 qualification and a semiconductor boom lasting through CY2027.",
+        "exact_quote": "– HBM4가조기인증에통과하고CY27까지반도체호황이지속될경우동사과거고점P/B배수1.9배를적용한14.5만원의적정주가가능",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This explicit upper-band multiple, valuation and conditions directly define the issuer's scenario peer band.",
+        "mechanism_scope_id": "HBM4_QUALIFICATION_VALUATION_BAND",
+        "normalized_object": "HBM4 early-qualification and cycle-extension upper P/B scenario",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "Conditional through CY2027; report date 2025-12-16",
+        "predicate": "can support 1.9x historical peak P/B and KRW 145,000 fair value if HBM4 qualifies early and the boom lasts through CY2027",
+        "predicate_family": "SAMSUNG_HBM4_BULL_PB_SCENARIO",
+        "primitive_tags": [
+          "valuation",
+          "historical peak P/B",
+          "cycle extension"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "MEMORY_PEER_PB_SCENARIO",
+        "question_family_tags": [
+          "peer band",
+          "HBM4 qualification",
+          "bull P/B scenario"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Samsung Electronics HBM4 and cycle-extension P/B valuation scenario",
+        "subject_id": "005930_HBM4_BULL_PB_SCENARIO",
+        "unit": "multiple and KRW per share",
+        "value": "P/B 1.9x; fair value KRW 145,000"
+      },
+      {
+        "business_segment": "DS memory valuation context",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "economic_mechanism": "The report limits the Samsung Electronics rerating scenarios by retaining a trading stance due to possible economic slowdown and a projected decline in global liquidity growth.",
+        "exact_quote": "– 단향후경기둔화가능성및내년초이후글로벌유동성의YoY증감률하락등을감안시트레이딩관점은유지해야할듯",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is the report's explicit countercondition to treating the issuer's upper P/B scenarios as durable rerating.",
+        "mechanism_scope_id": "MEMORY_VALUATION_MACRO_COUNTER",
+        "normalized_object": "macro and liquidity counter to sustained P/B rerating",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "From early CY2026 onward",
+        "predicate": "requires a trading stance because of future slowdown risk and declining global-liquidity growth",
+        "predicate_family": "SAMSUNG_VALUATION_MACRO_LIQUIDITY_COUNTER",
+        "primitive_tags": [
+          "economic slowdown",
+          "global liquidity",
+          "trading stance"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_VALUATION_RISK",
+        "question_family_tags": [
+          "valuation risk",
+          "liquidity",
+          "scenario counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "Samsung Electronics valuation risk from slowdown and liquidity deceleration",
+        "subject_id": "005930_MACRO_LIQUIDITY_VALUATION_RISK",
+        "unit": "",
+        "value": "trading stance retained"
+      },
+      {
+        "business_segment": "memory peer",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "economic_mechanism": "The report applies SK hynix's recent midpoint P/B to FY2026 expected BPS and states that its market price already exceeds the resulting baseline fair value.",
+        "exact_quote": "– 동사예상FY26BPS261,000원에동사최근P/B밴드의중간값인2.0배를적용하면52.3만원의적정주가도출.동사현주가는이를이미상회",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This same-report peer baseline provides a directly comparable P/B band point and current-price gap for Samsung Electronics' PEER_BAND objective.",
+        "mechanism_scope_id": "MEMORY_PEER_PB_VALUATION_SCENARIO",
+        "normalized_object": "SK hynix baseline P/B fair-value scenario and current-price gap",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026E valuation as of 2025-12-16",
+        "predicate": "has a baseline fair value from 2.0x P/B on FY2026 expected BPS that the current price already exceeds",
+        "predicate_family": "SK_HYNIX_BASELINE_PB_SCENARIO_AND_PRICE_GAP",
+        "primitive_tags": [
+          "valuation",
+          "FY2026 BPS",
+          "current price gap"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_PEER_PB_SCENARIO",
+        "question_family_tags": [
+          "peer band",
+          "SK hynix",
+          "baseline P/B"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026 baseline P/B valuation scenario",
+        "subject_id": "000660_FY26_BASE_PB_SCENARIO",
+        "unit": "multiple and KRW per share",
+        "value": "P/B 2.0x on FY2026E BPS KRW 261,000; fair value KRW 523,000; current price already above"
+      },
+      {
+        "business_segment": "memory peer",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "economic_mechanism": "The report defines an SK hynix P/B rerating scenario conditional on a strong CY2026 industry or a sustained competitive lead.",
+        "exact_quote": "– CY26반도체업황이호황이거나동사의전반적인경쟁력우위가지속될경우,동사에적용될Val.배수는전고점인P/B2.5배로상향조정되고이에\nFY26예상BPS적용시65.4만원의적정주가가능.이는직전고점주가수준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This named memory peer's conditional upper multiple and valuation directly establish a same-report peer-band comparison point.",
+        "mechanism_scope_id": "MEMORY_PEER_COMPETITIVENESS_VALUATION_BAND",
+        "normalized_object": "SK hynix competitive-lead P/B scenario",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E conditional valuation as of 2025-12-16",
+        "predicate": "can support 2.5x P/B and KRW 654,000 fair value if the CY2026 boom or competitive lead persists",
+        "predicate_family": "SK_HYNIX_COMPETITIVE_LEAD_PB_SCENARIO",
+        "primitive_tags": [
+          "valuation",
+          "P/B scenario",
+          "FY2026 BPS"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_PEER_PB_SCENARIO",
+        "question_family_tags": [
+          "peer band",
+          "SK hynix",
+          "competitive lead"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix competitive-lead P/B valuation scenario",
+        "subject_id": "000660_COMPETITIVE_LEAD_PB_SCENARIO",
+        "unit": "multiple and KRW per share",
+        "value": "P/B 2.5x on FY2026E BPS; fair value KRW 654,000"
+      },
+      {
+        "business_segment": "memory peer",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "economic_mechanism": "The report defines an upper SK hynix P/B scenario conditional on competitor HBM4 entry failure and a semiconductor boom lasting through CY2027.",
+        "exact_quote": "– 경쟁사의HBM4시장진입이실패하고CY27까지반도체호황이장기화될경우동사고점P/B배수가3.0배이상으로상향되고FY26BPS적용시\n적정주가는78.4만원가능.올해BPS대비현주가는이미3.6배수준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This conditional named-peer upper band directly frames the relative valuation sensitivity to Samsung Electronics' HBM4 outcome.",
+        "mechanism_scope_id": "HBM4_PEER_COMPETITION_VALUATION_BAND",
+        "normalized_object": "SK hynix HBM4 competitor-failure upper P/B scenario",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "Conditional through CY2027; report date 2025-12-16",
+        "predicate": "can support at least 3.0x peak P/B and KRW 784,000 fair value if competitor HBM4 entry fails and the boom lasts through CY2027",
+        "predicate_family": "SK_HYNIX_HBM4_COMPETITOR_FAILURE_PB_SCENARIO",
+        "primitive_tags": [
+          "valuation",
+          "peak P/B",
+          "cycle extension"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "MEMORY_PEER_PB_SCENARIO",
+        "question_family_tags": [
+          "peer band",
+          "HBM4 competition",
+          "SK hynix"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix competitor-HBM4-failure P/B valuation scenario",
+        "subject_id": "000660_HBM4_COMPETITOR_FAILURE_PB_SCENARIO",
+        "unit": "multiple and KRW per share",
+        "value": "P/B at least 3.0x on FY2026E BPS; fair value KRW 784,000"
+      },
+      {
+        "business_segment": "memory peer",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "economic_mechanism": "The report gives the named peer's current market P/B on the current-year BPS basis, anchoring where the peer already trades relative to the scenarios.",
+        "exact_quote": "– 경쟁사의HBM4시장진입이실패하고CY27까지반도체호황이장기화될경우동사고점P/B배수가3.0배이상으로상향되고FY26BPS적용시\n적정주가는78.4만원가능.올해BPS대비현주가는이미3.6배수준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This explicit current peer multiple is distinct from the conditional 3.0x scenario and directly anchors the same-report peer band.",
+        "mechanism_scope_id": "MEMORY_PEER_CURRENT_PB",
+        "normalized_object": "SK hynix current P/B on FY2025 BPS",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025 BPS basis as of 2025-12-16",
+        "predicate": "currently trades near 3.6x FY2025 BPS",
+        "predicate_family": "SK_HYNIX_CURRENT_PB_ON_FY25_BPS",
+        "primitive_tags": [
+          "valuation",
+          "FY2025 BPS",
+          "current multiple"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_PEER_CURRENT_VALUATION",
+        "question_family_tags": [
+          "peer band",
+          "current P/B",
+          "SK hynix"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix current P/B on FY2025 BPS",
+        "subject_id": "000660_CURRENT_PB_ON_FY25_BPS",
+        "unit": "times",
+        "value": 3.6
+      },
+      {
+        "business_segment": "memory peer comparison",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "economic_mechanism": "The report expects the competitor's HBM4 success or failure to drive a divergence in Samsung Electronics and SK hynix share-price performance around year-end and early next year.",
+        "exact_quote": "– 경쟁사의HBM4성공여부에따라양사의주가는연말,연초경에퍼포먼스의차이를보일가능성이높은것으로전망됨.향후경기둔화가능성및내\n년초이후글로벌유동성의YoY증감률하락등을감안시트레이딩관점은유지해야할듯",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This explicitly connects the issuer-versus-peer valuation/performance outcome to HBM4 competitive resolution.",
+        "mechanism_scope_id": "HBM4_PEER_PERFORMANCE_DIVERGENCE",
+        "normalized_object": "HBM4 outcome-linked bilateral performance divergence",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "Year-end 2025 to early CY2026",
+        "predicate": "are expected to show different share-price performance depending on competitor HBM4 success",
+        "predicate_family": "SAMSUNG_SK_HYNIX_HBM4_PERFORMANCE_DIVERGENCE",
+        "primitive_tags": [
+          "valuation",
+          "peer divergence",
+          "competition"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "MEMORY_PEER_PERFORMANCE_DRIVER",
+        "question_family_tags": [
+          "peer band",
+          "HBM4 outcome",
+          "relative performance"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Samsung Electronics and SK hynix performance divergence from competitor HBM4 outcome",
+        "subject_id": "005930_000660_HBM4_OUTCOME_PERFORMANCE_DIVERGENCE",
+        "unit": "",
+        "value": "peer performance divergence depends on competitor HBM4 success"
+      },
+      {
+        "business_segment": "memory peer",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "economic_mechanism": "The report limits the SK hynix upper P/B scenarios by retaining a trading stance due to possible economic slowdown and declining global-liquidity growth.",
+        "exact_quote": "– 경쟁사의HBM4성공여부에따라양사의주가는연말,연초경에퍼포먼스의차이를보일가능성이높은것으로전망됨.향후경기둔화가능성및내\n년초이후글로벌유동성의YoY증감률하락등을감안시트레이딩관점은유지해야할듯",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is the peer-side explicit countercondition to treating high P/B scenarios as durable rerating.",
+        "mechanism_scope_id": "MEMORY_PEER_VALUATION_MACRO_COUNTER",
+        "normalized_object": "macro and liquidity counter to peer P/B rerating",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "From early CY2026 onward",
+        "predicate": "requires a trading stance because of future slowdown risk and declining global-liquidity growth",
+        "predicate_family": "SK_HYNIX_VALUATION_MACRO_LIQUIDITY_COUNTER",
+        "primitive_tags": [
+          "economic slowdown",
+          "global liquidity",
+          "trading stance"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_PEER_VALUATION_RISK",
+        "question_family_tags": [
+          "peer band",
+          "valuation risk",
+          "liquidity"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix valuation risk from slowdown and liquidity deceleration",
+        "subject_id": "000660_MACRO_LIQUIDITY_VALUATION_RISK",
+        "unit": "",
+        "value": "trading stance retained"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-356ad0d7dc6b74c4d0fad844"
+    ],
+    "unresolved_research_notes": [
+      "The first semantic page reached the exact twelve-fact limit; request one final continuation page for lossless completion accounting."
+    ]
+  },
+  "payload_hash": "0cdbd5978f7bd3822f3f518fc30354a05b08620f1b7c37f73112e4abe6ccac2c",
+  "production_score_authority": false,
+  "prompt_hash": "5974f462c091c6bfa082dafa34cd78bc2494ddf5307b8e652e6b1d9b6ec31da5",
+  "provenance": {
+    "agent_id": "codex_primary",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/codex_primary",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-73b5cd3f7f8e4d35e5148b7e2877db9b1d8411bafb5a903d1c6781053b1959f2",
+  "response_id": "COLLABRESP-0b4b61fa5df1b4d1a6fe2b8d3464d4438b53ee68c36d5c72704e055fd6258387",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

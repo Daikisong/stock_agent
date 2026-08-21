@@ -1,0 +1,11 @@
+{
+  "full_e2r_score": 19.120509,
+  "full_score_blocking_reasons": [],
+  "full_score_valid": true,
+  "full_score_validity_id": "FSVALID-ef1b627ef9229d188afed64c",
+  "full_score_validity_status": "FULL_SCORE_VALIDITY_V2_PASS",
+  "provisional_score_lower": 19.120509,
+  "provisional_score_upper": 19.120509,
+  "target_id": "000660",
+  "verified_supported_score": 19.120509
+}

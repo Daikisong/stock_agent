@@ -1,0 +1,83 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7c6825fee29785eaf666d271",
+        "rationale": "13만 자 전체 PDF를 검토했다. 삼성전자 표에서 현재 objective에 직접 필요한 FY2026F EV/EBITDA 4.45배 한 건만 추출했다. 같은 표의 FY2025F는 as_of_date 현재 종료된 전망 기간이고, DRAM 2Q25 수치와 일회성 비용은 canonical facts와 중복되며, foundry·NAND·타사·투자권고 내용은 scope 밖이라 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7c6825fee29785eaf666d271",
+        "economic_mechanism": "공개 증권사 보고서의 2026년 예상 EV/EBITDA는 삼성전자 기업가치가 예상 EBITDA 대비 몇 배인지 수치화하며 메모리 가치평가의 전사 배수 입력을 제공한다.",
+        "exact_quote": "Financial Data (십억원, %, 배, 원)\n투자지표 2023 2024 2025F 2026F\n매출액 258,935.5 300,870.9 310,014.0 318,911.2\n영업이익 6,567.0 32,726.0 28,063.3 38,305.1\n세전이익 11,006.3 37,529.7 34,014.6 43,368.8\n순이익 14,473.4 33,621.4 27,340.2 33,874.5\nEPS 2,131 4,950 4,054 5,029\n증감율 (73.55) 132.29 (18.10) 24.05\nPER 36.84 10.75 17.91 14.44\nPBR 1.51 0.92 1.19 1.13\nEV/EBITDA 9.96 3.60 5.43 4.45",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "PUBLIC_BROKER_PDF의 기간 헤더와 EV/EBITDA 행이 FY2026F 단일 점값 4.45와 배수 단위를 함께 제시해 현재 FORWARD_EV_EBITDA 구조화 공백을 직접 보완한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EV_EBITDA:FY2026F:HANA_20250801",
+        "normalized_object": "삼성전자 2026년 예상 EV/EBITDA 4.45배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "하나증권은 삼성전자의 2026년 예상 EV/EBITDA를 4.45배로 제시했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "FORWARD_EV_EBITDA",
+          "FY2026F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2026년 예상 EV/EBITDA",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 4.45
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "2137aed6076fcf2955b80a782cf159268cec85427bec3c20f4bbc9f0d450c3f9",
+  "production_score_authority": false,
+  "prompt_hash": "2a99b6077a9db3b31b287dbef06fa6e98e090d2fe03e709d60bed9e3ae141614",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c203b7ddfa7cba1effd5afc8e005ec4fa22aaded01dbc989334bd763873c9c0f",
+  "response_id": "COLLABRESP-45eb193f739505935ff2c4181a64f2ea18e914907c2e191ead658cc97a6ac8b5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

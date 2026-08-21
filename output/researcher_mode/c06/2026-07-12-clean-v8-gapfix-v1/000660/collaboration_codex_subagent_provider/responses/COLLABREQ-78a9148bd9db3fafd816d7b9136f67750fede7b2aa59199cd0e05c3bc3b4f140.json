@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "rationale": "Continuation page 9 independently re-audited the supplied literal transport chunk 0 of 2 against all ninety-five previously accepted facts. No additional distinct target-wide current-objective material fact remains in this supplied chunk. Lower-level repeated ratios, mechanically derivable cells, other issuers and general sector text do not add a new economic mechanism. The prior facts remain broker estimates at consolidated-memory or DRAM scope and are not issuer actuals or guidance, HBM-only economics, customer allocation, signed contract terms, or DURABLE_VISIBILITY. This empty final closes only the exact supplied chunk/page continuation; deterministic transport accounting handles the separately supplied chunk 1 of 2.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "5abcbbb0dbbaaab99344ede273cbce71d1eefc196f78bf83ff200311152cb84e",
+  "production_score_authority": false,
+  "prompt_hash": "020169a069e483561e8cd45c8788ea1fb947e244f630ab594506b4f43c6edf8d",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-78a9148bd9db3fafd816d7b9136f67750fede7b2aa59199cd0e05c3bc3b4f140",
+  "response_id": "COLLABRESP-7a2688afa93696118a4948a2820b00eef05207947eaf7863068adfee00037bfa",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

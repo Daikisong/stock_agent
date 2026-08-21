@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "744a48df81396a3c04f7dd2bdd190da9ed944a5b26a9ceb90e34c0c5325513a1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-aa1a43c55b28b66e931a1c4c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.03,
+        "rationale": "Bondweb 다종목 Daily 목록으로 삼성전자 peer valuation 원문을 식별하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-27dc2eb35b39887707d67a88",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.86,
+        "rationale": "2026-05-27 메리츠 원문은 적정 PBR 2.2배와 Top2 삼성전자·SK하이닉스를 함께 명시해 동일 보고서 안의 peer 비교표를 full fetch할 가치가 높다."
+      },
+      {
+        "candidate_id": "SGCAND-8bed558291fc35f4fce70cbf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "Bondweb 시장 Daily는 레버리지 ETF와 다종목 나열뿐이며 삼성전자 peer multiple 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d853b25b0fb7dbda791a4751",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.15,
+        "rationale": "2026-05-11 유안타 Daily는 삼성전자 파운드리 대안 서술로 memory peer P/B band가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-c1842eb9ceed2443a8add271",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.15,
+        "rationale": "2026-05-18 유안타 Daily의 반복 파운드리 추천 문구로 target memory peer valuation을 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e7965d915d9006ae1961ae68",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "파일 날짜가 2026-07-14로 cutoff 이후인 삼성전자 Daily다."
+      },
+      {
+        "candidate_id": "SGCAND-f59b73e8521f373d06805f70",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.15,
+        "rationale": "2026-05-12 유안타 Daily는 파운드리 narrative와 target price만 있어 peer band 수치가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-170d5d9d4038a1b200ab4a0f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.05,
+        "rationale": "하나 Daily 다종목 추천 목록으로 삼성전자 이름 외에 peer multiple 정보가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-5b06981889f06eb958fb8af9",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.15,
+        "rationale": "2026-05-08 유안타 Daily의 반복 파운드리 추천 행으로 memory peer P/B 비교가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-4a23f7b391a1caffa28bff15",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.15,
+        "rationale": "2026-05-28 유안타 Daily의 target price·파운드리 서술은 peer band 입력이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4cbe26c33bdf3b6d186e7a00",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "다올 조선 보고서의 글로벌 조선 peer group으로 삼성전자 반도체 valuation과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-06c697e93f6bdd2f3a817a6b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "파일 날짜가 2026-07-13으로 cutoff 이후인 삼성전자 Daily다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "ranking_complete는 이 partition의 후보 분류 완료만 뜻한다. material 후보는 full fetch 후 2026-07-12 cutoff, 삼성전자 subject, peer identity, 동일 forecast period 및 numeric P/B를 검증해야 한다."
+    ]
+  },
+  "payload_hash": "c207c2cb708e75d282e7bfd63d67681bf9e527653f6cae0de144002d291cad07",
+  "production_score_authority": false,
+  "prompt_hash": "cfd860f24a819f6838e6641631a17bfa82821e3e256d6788c3cb67b4e9a631c6",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-aa35b57d0fac1b6db552e70c6e4c3a383d742099a31d1a03f4b7433b54bae3d1",
+  "response_id": "COLLABRESP-07a682d4b241ea70e9c2f3a92491900a5984cdef4563ebc94a090170933bd157",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

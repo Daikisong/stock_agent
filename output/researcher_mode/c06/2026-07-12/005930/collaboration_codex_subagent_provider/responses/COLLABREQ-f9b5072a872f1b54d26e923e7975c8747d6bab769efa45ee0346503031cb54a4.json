@@ -1,0 +1,263 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-77c6659904d67a3d2211a845",
+        "rationale": "2025년 1분기 공식 분기연결재무제표 전수를 검토했다. 메모리 제품 매출 19,069,038백만원은 current canonical의 동일 기간·동일 객체 19.1조원 fact와 같은 경제적 사실이고, 2024년 1분기 17,494,267백만원도 current 17.49조원 fact와 중복이라 정밀도만 바꿔 재생성하지 않았다. DS 혼합 매출·영업이익과 전사 손익·현금흐름·재고·약정·검토의견은 메모리 eps_fcf에 직접 귀속되지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-77ff841032c267bac641fe5e",
+        "rationale": "current facts와 대조해 HBM 생산 확대가 범용 D램 공급·가격에 미치는 인과 메커니즘, AI 투자 둔화 시 메모리 가격 지속성 위험, 현재 AI 서버 투자 증가와 하이퍼스케일러 자금조달 안정이라는 양면 근거를 추출했다. 전사·DS 잠정 영업이익, 성과급 충당금, HBM4 양산, D램 업계 가격, 주가·밸류에이션·투자 의견은 메모리 단독 귀속이 아니거나 current facts와 중복·범위 밖이라 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-790d9ee5aae648c394f2a951",
+        "rationale": "메모리 공급이 최소 2027년 4분기까지 수요 증가를 따라잡기 어렵다는 전망과 2026년 4분기~2027년 2분기 실적 호조 강화 구간을 비중복 추출했다. 전사 잠정실적·성과급 제외 이익·3분기 전사 컨센서스, 업계 평균 마진·시장 규모, HBM4E 12단 샘플은 메모리 단독 귀속이 아니거나 current canonical에 이미 있어 반복하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-7a2a691fa58f00b269d290fd",
+        "rationale": "2025년 연결손익계산서에는 전사 매출·영업이익·순이익·주당이익만 있고 메모리 제품 또는 메모리 이익 귀속 수치가 없다. current objective가 명시적으로 배제한 total-company-only 수치를 메모리 eps_fcf 근거로 전용하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-77ff841032c267bac641fe5e",
+        "economic_mechanism": "HBM 생산 확대가 적층 D램 투입을 늘려 범용 D램 공급을 줄이고 범용 메모리 가격 상승을 강화하는 생산 믹스의 기회비용을 제시한다.",
+        "exact_quote": "HBM 생산 확대에 따라 적층 D램 투입이 늘면서 범용 D램 공급이 줄었고, 이에 따라 범용 메모리 가격도 큰 폭으로 올랐다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current 185 facts에는 HBM 판매 확대와 범용 D램 가격 상승이 각각 있으나 HBM 생산이 같은 D램 투입을 점유해 범용 공급을 줄이는 인과 연결은 없다. 삼성전자 DS 실적 설명 문맥의 비중복 공급·가격 메커니즘이다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:SUPPLY_RESPONSE:DRAM_SUBSTITUTION",
+        "normalized_object": "HBM 생산 확대→적층 D램 투입 증가→범용 D램 공급 감소·가격 상승",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2 현재",
+        "predicate": "HBM 생산 확대에 따른 적층 D램 투입 증가가 범용 D램 공급을 줄여 범용 메모리 가격 상승에 기여했다",
+        "predicate_family": "HBM_DRAM_SUPPLY_SUBSTITUTION",
+        "primitive_tags": [
+          "HBM_DRAM_SUBSTITUTION",
+          "CONVENTIONAL_DRAM_PRICE"
+        ],
+        "product_family": "HBM·D램",
+        "question_family_id": "HBM_DRAM_SUPPLY_SUBSTITUTION",
+        "question_family_tags": [
+          "HBM_CAPACITY_MIX",
+          "DRAM_SUPPLY_TIGHTENING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 생산 확대와 범용 D램 공급·가격",
+        "subject_id": "005930:MEMORY:HBM_DRAM_SUPPLY_SUBSTITUTION:2026Q2",
+        "unit": "supply-price mechanism",
+        "value": "HBM expansion increased stacked-DRAM use, reduced conventional DRAM supply, and raised conventional memory prices"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-77ff841032c267bac641fe5e",
+        "economic_mechanism": "메모리 가격 상승과 고수익의 지속성은 빅테크 AI 투자 사이클에 의존하므로 투자가 과열 국면을 벗어나면 현재 가격 상승세가 유지되지 않을 위험이 있다.",
+        "exact_quote": "김양팽 산업연구원 전문연구원은 “단기적으로는 (메모리) 공급 과잉 가능성이 낮다”면서도 “AI 투자가 과열 국면에서 벗어나면 지금과 같은 메모리 가격 상승세를 유지하기는 어렵다. 시점을 특정할 수는 없지만 AI 거품 붕괴는 예견 가능한 미래”라고 말했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 수요·가격 facts의 지속성을 제한하는 명시적 counter다. 발생 시점은 특정하지 않고, 실제 붕괴나 삼성전자 확정 실적으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:AI_MEMORY:RISK_COUNTER:AI_CAPEX_CYCLE",
+        "normalized_object": "AI 투자 둔화 시 메모리 가격 상승세 지속 불확실",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-07-08 현재 열린 위험",
+        "predicate": "AI 투자가 과열 국면에서 벗어나면 현재와 같은 메모리 가격 상승세를 유지하기 어렵다는 위험이 제기됐다",
+        "predicate_family": "AI_CAPEX_MEMORY_PRICE_RISK",
+        "primitive_tags": [
+          "AI_INVESTMENT_RISK",
+          "PRICE_SUSTAINABILITY"
+        ],
+        "product_family": "AI 메모리",
+        "question_family_id": "AI_INVESTMENT_CYCLE_RISK",
+        "question_family_tags": [
+          "AI_CAPEX_CYCLE",
+          "MEMORY_PRICE_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 가격의 AI 투자 사이클 위험",
+        "subject_id": "005930:MEMORY:AI_INVESTMENT_CYCLE_RISK:OPEN",
+        "unit": "cycle risk",
+        "value": "memory price uptrend may not persist after AI investment exits an overheated phase"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-77ff841032c267bac641fe5e",
+        "economic_mechanism": "AI 서버 투자가 계속 늘고 하이퍼스케일러 자금조달이 안정적이라는 관찰은 AI 투자 둔화 위험에 반대되는 현재 메모리 수요 지속 근거다.",
+        "exact_quote": "현재 AI 서버에 대한 투자는 지속적으로 늘어나고 있고 하이퍼스케일러들의 자금 조달도 여전히 안정적인 모습",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "AI 투자 사이클 counter와 양면을 이루며 current graph의 고객수요 facts에 없는 수요자의 자금조달 지속 조건을 추가한다. 주가·매수 의견은 포함하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:AI_MEMORY:REVENUE_CONVERSION:AI_SERVER_CAPEX",
+        "normalized_object": "AI 서버 투자 증가·하이퍼스케일러 자금조달 안정",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-07-08 현재",
+        "predicate": "AI 서버 투자가 계속 증가하고 하이퍼스케일러의 자금조달도 안정적인 것으로 분석됐다",
+        "predicate_family": "AI_SERVER_CAPEX_FUNDING_SUPPORT",
+        "primitive_tags": [
+          "AI_DEMAND_SUPPORT",
+          "FUNDING_STABILITY"
+        ],
+        "product_family": "AI 메모리",
+        "question_family_id": "AI_SERVER_INVESTMENT_SUPPORT",
+        "question_family_tags": [
+          "AI_SERVER_CAPEX",
+          "HYPERSCALER_FUNDING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 AI 메모리 수요를 지지하는 AI 서버 투자·자금조달",
+        "subject_id": "005930:MEMORY:AI_SERVER_INVESTMENT_SUPPORT:2026",
+        "unit": "demand-support condition",
+        "value": "AI server investment increasing and hyperscaler funding stable"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-790d9ee5aae648c394f2a951",
+        "economic_mechanism": "메모리 공급이 수요 증가를 따라잡지 못하는 기간이 최소 2027년 4분기까지라는 전망은 가격·가동률을 지지하는 공급부족의 구체적 시간축이다.",
+        "exact_quote": "김선우 메리츠증권 연구원은 “메모리 공급은 최소 내년 4분기까지 수요 증가 속도를 따라잡기 어렵다”며 “올해 4분기부터 내년 2분기 사이 실적 호조세는 더욱 폭발적으로 계속될 것”이라고 전망했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current facts에는 FY2026 고객수요가 공급을 초과하고 2027년 수요가 미리 접수됐다는 사실은 있으나 공급부족의 최소 2027년 4분기 시간축은 없다. 제3자 전망임을 confidence와 lifecycle에 유지한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:CAPACITY_SCARCITY:2027Q4",
+        "normalized_object": "메모리 공급부족 최소 2027년 4분기까지 지속 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "through at least 2027-Q4E",
+        "predicate": "메모리 공급이 최소 2027년 4분기까지 수요 증가 속도를 따라잡기 어려울 것으로 전망됐다",
+        "predicate_family": "MEMORY_SUPPLY_DEMAND_GAP_HORIZON",
+        "primitive_tags": [
+          "SUPPLY_LAG",
+          "2027_Q4_OUTLOOK"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_SUPPLY_DEMAND_HORIZON",
+        "question_family_tags": [
+          "MEMORY_SHORTAGE",
+          "SUPPLY_DEMAND_HORIZON"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 수요 대비 공급 부족 지속 전망",
+        "subject_id": "005930:MEMORY:SUPPLY_DEMAND_GAP:2027Q4",
+        "unit": "shortage horizon",
+        "value": "supply unable to catch demand growth through at least 2027-Q4"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.76,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-790d9ee5aae648c394f2a951",
+        "economic_mechanism": "공급 부족이 지속되는 가운데 2026년 4분기부터 2027년 2분기 사이 실적 호조가 더 강해질 것이라는 전망은 메모리 이익 전환의 예상 강화 구간을 제시한다.",
+        "exact_quote": "김선우 메리츠증권 연구원은 “메모리 공급은 최소 내년 4분기까지 수요 증가 속도를 따라잡기 어렵다”며 “올해 4분기부터 내년 2분기 사이 실적 호조세는 더욱 폭발적으로 계속될 것”이라고 전망했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current graph의 연간·분기 이익 추정과 다른 2026년 4분기~2027년 2분기 강화 구간 전망이다. 구체적 이익액이나 issuer guidance로 확대하지 않고 제3자 정성 전망으로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION:2026Q4_2027Q2",
+        "normalized_object": "2026년 4분기~2027년 2분기 메모리 실적 호조 강화 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q4E through 2027-Q2E",
+        "predicate": "2026년 4분기부터 2027년 2분기 사이 메모리 실적 호조세가 더 강해질 것으로 전망됐다",
+        "predicate_family": "MEMORY_EARNINGS_UPCYCLE_HORIZON",
+        "primitive_tags": [
+          "EARNINGS_STRENGTH",
+          "2026Q4_2027Q2"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_EARNINGS_UPCYCLE_HORIZON",
+        "question_family_tags": [
+          "MEMORY_EARNINGS_OUTLOOK",
+          "UPCYCLE_HORIZON"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.89,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 실적 호조 강화 구간 전망",
+        "subject_id": "005930:MEMORY:EARNINGS_UPCYCLE:2026Q4_2027Q2",
+        "unit": "earnings direction",
+        "value": "earnings strength expected to intensify"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "ff81dbc367e6a07a9db0e5cf9a4a81aaa3a95677dd7fcb8643cb7345027453b5",
+  "production_score_authority": false,
+  "prompt_hash": "1eef9483ab105182a0b6ac9cca77d032875b587c222af2da1eb7ffb726c63e2a",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f9b5072a872f1b54d26e923e7975c8747d6bab769efa45ee0346503031cb54a4",
+  "response_id": "COLLABRESP-654f054ca209af7ca996c4e815508c799b1c0209f85e25c78ecffc348f32564d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

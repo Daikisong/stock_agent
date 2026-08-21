@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "국내 KRX allowlist에서 SK하이닉스와 DRAM·HBM 제품, 가격 사이클, CAPA 제약을 직접 공유하는 가장 가까운 상장 peer다. 단, 비메모리·세트 사업 혼합을 조정한 peer band 보조자료로만 사용해야 한다.",
+        "confidence": 0.97,
+        "material_differences": [
+          "삼성전자는 파운드리·시스템LSI·세트 사업이 섞인 복합기업이고 SK하이닉스는 메모리 순도가 더 높다.",
+          "HBM 고객 구성, 제품 믹스, 수율과 CAPA 램프 시점이 달라 동일 P/B·EV/EBITDA를 기계적으로 적용할 수 없다."
+        ],
+        "peer_name": "삼성전자",
+        "peer_symbol": "005930",
+        "shared_economic_drivers": [
+          "DRAM·HBM 수요, ASP, bit growth와 메모리 공급 제약에 함께 노출된다.",
+          "대규모 웨이퍼·패키징 CAPA 투자와 고객 qualification이 실적·valuation을 좌우한다."
+        ]
+      },
+      {
+        "comparability_rationale": "KRX 국내 allowlist에서 두 번째 직접 메모리 peer가 없기 때문에 제조 가동률·CAPEX·감가상각의 인접 반도체 비교축으로만 선택한다. HBM rerating 배수의 직접 anchor가 아니라 cycle·capital intensity countercheck다.",
+        "confidence": 0.58,
+        "material_differences": [
+          "DB하이텍은 특화 파운드리이고 DRAM·HBM 제품, 적층 메모리 가격, HBM 고객 qualification에 직접 노출되지 않는다.",
+          "사업 규모, 기술 노드, 고객 계약 구조와 글로벌 경쟁군이 달라 HBM peer multiple로 직접 사용할 수 없다."
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "반도체 제조업의 가동률, 설비투자, 감가상각과 ASP가 수익성과 현금흐름을 좌우한다.",
+          "공급능력 램프와 고객 수요 변동이 영업 레버리지와 valuation 변동성을 만든다."
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "섹터 라벨만으로 고르지 않고 메모리 가격·CAPA·고객 qualification을 직접 공유하는 삼성전자를 1순위로, 국내 direct-memory 대안 부재를 보완하는 가동률·CAPEX 인접축으로 DB하이텍을 2순위로 선택했다. 두 회사의 차이를 명시해 peer band 과잉 적용을 방지한다.",
+    "unresolved_research_notes": [
+      "국내 KRX point-in-time roster에는 Micron 같은 글로벌 메모리 pure-play가 없고 point-in-time structured peer value identity도 0건이다. 따라서 삼성전자 외 직접 HBM peer는 확보되지 않았으며 DB하이텍은 인접 제조업 peer로만 제한한다. structured valuation 값은 이 응답이 만들지 않는다."
+    ]
+  },
+  "payload_hash": "30c24467a1a642d1189a1167cd44aff7f8e81acf4735668900ddbaa3206838d6",
+  "production_score_authority": false,
+  "prompt_hash": "2cc9418155df9b451c35b0d4cdc3b5e6ad3998f6dd6fafec31b1f47aa2662bb4",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-56576a8f8bba020b5f3540221dceda898aaa6e57f7e4c5e5d5165df6680121ed",
+  "response_id": "COLLABRESP-dd332e0269c59288eeab66f32e534d349decd397381dfc711657aa000da43189",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

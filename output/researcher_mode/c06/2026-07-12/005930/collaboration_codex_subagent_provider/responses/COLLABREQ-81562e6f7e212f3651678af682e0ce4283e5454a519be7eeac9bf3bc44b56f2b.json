@@ -1,0 +1,63 @@
+{
+  "output_schema_hash": "1244b0bacfa4c98d78e1f3262417d8274580ea5b5f4a28419b7e5b2e5bfa3531",
+  "payload": {
+    "allowed_range": [
+      7.5,
+      12.0
+    ],
+    "anchor_comparisons": [
+      "The counter anchor's 4.48-6.38 band is relevant as a warning against unsupported persistence, but current direct HBM4 sold-out capacity and stable-yield facts support a value above it.",
+      "The positive anchor's 18.05-19.0 band is not comparable in durability because current pricing strength partly reflects conventional DRAM and memory-wide scarcity, while planned capital spending and slowing price increases can loosen the cycle."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0b6b02299ea60f931cf17c4e",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-cc2cfc3b24f0987278efc0b7",
+      "EFACT-f05a97edeb8f85d49353381e"
+    ],
+    "disagreements": [
+      "The memo midpoint gives too much weight to memory-wide utilization, inventory and DRAM pricing as if they were HBM-specific bottleneck measurements.",
+      "Sold-out planned capacity does not reveal the size of that capacity or the duration and protection of customer allocation."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "proposed_points": 9.8,
+    "rationale": "All four counterfacts constrain duration: very high conventional-memory margin is described as temporary, large memory capital spending can add supply, second-half DRAM price increases are expected to slow and earnings are said to rely more on price than volume. The positive HBM4 facts establish a current bottleneck, but they do not disclose absolute ASP, stage-level capacity, customer backlog or cash margin. A cyclical scarcity discount is therefore necessary.",
+    "support_fact_ids": [
+      "EFACT-13d6da3b116a9a0ad8043f62",
+      "EFACT-1df441a716b0204f7b107e70",
+      "EFACT-3c095c9436a1460d04797e97",
+      "EFACT-477c6cb45b164685a2a345e8",
+      "EFACT-4e0d88dc056c9e8dcd45ea47",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-a2243488e8b8f0197fd8bd56",
+      "EFACT-b676fc3afacb1117c1ba65be",
+      "EFACT-fd86be3f3b91aa151f046cfb"
+    ],
+    "why_not_higher": "Capital spending, price-growth deceleration and temporary conventional-memory margins can normalize, while HBM stage capacity, backlog duration and realized unit economics remain undisclosed.",
+    "why_not_lower": "The current record still contains direct HBM4 sold-out capacity, stable yield and product-premium facts, so it is stronger than a weak or unsupported scarcity profile."
+  },
+  "payload_hash": "264417ece8ee84d6468e591b11997dcd8b553b17b2b15a54becdf89023c7bb19",
+  "production_score_authority": false,
+  "prompt_hash": "33c437ad735eaf7adabf403fdc725b633c4d35b8515e3ade7aaefc3d62289f9c",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-81562e6f7e212f3651678af682e0ce4283e5454a519be7eeac9bf3bc44b56f2b",
+  "response_id": "COLLABRESP-6f65b0926b3ca7bd4a3e18ad027db8c4a1cbbc09dc1191cf004c4fb2d34deca9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

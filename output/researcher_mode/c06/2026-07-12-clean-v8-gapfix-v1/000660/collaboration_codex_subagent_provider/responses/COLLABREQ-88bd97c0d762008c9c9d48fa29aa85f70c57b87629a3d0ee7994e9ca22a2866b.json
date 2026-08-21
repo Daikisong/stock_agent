@@ -1,0 +1,31 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "현재 checkpoint에 기록된 CUSTOMER_OFFICIAL 및 PUBLIC_BROKER_PDF 경로, 실행된 literal query, rejected candidate와 bounded structured candidate를 함께 검토했으나 같은 objective에 대해 아직 시도하지 않은 독립적이고 실행 가능한 새 source route를 확인하지 못했다. 이는 고객 계약이나 corroboration의 부재를 증명하지 않으며, 해당 공백을 unresolved corroboration gap으로 유지하고 현재 source-backed component 범위에 confidence cap을 적용해야 한다."
+    ]
+  },
+  "payload_hash": "ed958bdb9df5a312d84035728f9c80ad1417650bbdce3a7fba45063455aba182",
+  "production_score_authority": false,
+  "prompt_hash": "259a69ce7520544e13f38deab48f8754c758889d6a088adcdd7c9584b15f82a1",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-88bd97c0d762008c9c9d48fa29aa85f70c57b87629a3d0ee7994e9ca22a2866b",
+  "response_id": "COLLABRESP-e7cefcb195005461533b59990ce11f449c78c4a43af4d1515efe1584109c6c8a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

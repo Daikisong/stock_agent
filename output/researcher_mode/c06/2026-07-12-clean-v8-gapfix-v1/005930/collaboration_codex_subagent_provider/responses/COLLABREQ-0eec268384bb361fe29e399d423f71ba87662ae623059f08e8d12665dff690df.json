@@ -1,0 +1,193 @@
+{
+  "output_schema_hash": "4b40f8283f64ba24ea4ac6cc5f65514601764170ba04ce51fedd29fa28a65a8a",
+  "payload": {
+    "confidence": 0.9,
+    "counter_case": "행 52는 NVIDIA HBM4가 issuer 기준 협의 중임을 명시하고 행 32의 25년 기술관계는 current qualification·supply를 독립 확인하지 않는다. 행 119·172의 OpenAI support plan·수요 전망은 OpenAI-official corroboration도 삼성 allocation도 아니다. 행 96의 제한 공시는 다른 계약 부재로 확대할 수 없고, NVIDIA/OpenAI material 0 검색도 source absence나 관계 부재를 증명하지 않는다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25"
+    ],
+    "positive_case": "행 9·64·102·210은 AMD 공식 자료에서 HBM3E 공급 이력, HBM4 제품 정렬, MOU 및 기술협력을 독립 확인한다. 행 101은 HBM4 양산 actual이고, 행 214는 OpenAI와의 LOI 관계 자체를 확인한다. 이 증거들은 issuer-only 서술보다 정보 품질을 높이지만 AMD의 technical/MOU evidence는 signed procurement economics가 아니다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 9,
+        "reason": "RETAIN: AMD 공식 HBM3E supply history라는 독립 corroboration을 계약조건과 분리해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 52,
+        "reason": "RETAIN: NVIDIA HBM4 협의 중 issuer counter를 independent confirmation 부재와 구분해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 64,
+        "reason": "RETAIN: AMD 공식 HBM4 MOU alignment를 signed economics와 분리해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 96,
+        "reason": "RETAIN: 중요 장기공급계약 공시 counter의 제한된 범위를 다른 계약 부재로 확대하지 않고 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 101,
+        "reason": "RETAIN: HBM4 양산 actual을 customer-official independence와 구분해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 210,
+        "reason": "RETAIN: AMD CEO의 official technical corroboration을 구매의무·매출과 분리해 유지한다."
+      }
+    ],
+    "proposed_score_lower": 2.4,
+    "proposed_score_mid": 2.9,
+    "proposed_score_upper": 3.4,
+    "research_complete": true,
+    "researcher_summary": "AMD 공식 뉴스룸은 HBM3E 실제 공급 이력, HBM4 MOU alignment와 기술협력을 독립 확인해 AMD 관계의 정보 신뢰를 높인다. 반면 NVIDIA는 issuer가 25년 관계와 HBM4 협의 중 상태만 설명했고, OpenAI는 issuer LOI·지원 계획·잠재 수요 전망만 있다. NVIDIA/OpenAI CUSTOMER_OFFICIAL 검색 material 0은 source absence나 관계·계약 부재 증명이 아니다. HBM4 양산 actual과 제한된 장기공급계약 공시도 각각 execution과 공시 범위일 뿐 counterparty corroboration 전체를 대체하지 않으므로 중간 confidence를 유지한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "AMD 공식 뉴스룸의 primary HBM3E partner 이력은 독립 customer corroboration이나 계약 조건·HBM-only 매출은 아니다.",
+        "fact_row_index": 9,
+        "source_economic_mechanism": "AMD 공식 뉴스룸은 삼성전자가 AMD의 primary HBM3E partner로서 Instinct MI350X와 MI355X 가속기를 지원해 왔다고 독립적으로 확인한다. 이는 실현된 고객·제품 공급 이력의 corroboration이지만 가격, 물량, 기간, HBM-only 매출은 공개하지 않는다.",
+        "source_period_json": "\"nearly two decades of collaboration through 2026-03-18; HBM3E partner history current at publication\"",
+        "source_predicate": "AMD_OFFICIAL_CONFIRMED_SAMSUNG_AS_PRIMARY_HBM3E_PARTNER_FOR_MI350X_MI355X",
+        "source_value_json": "\"primary HBM3E partner to AMD powering Instinct MI350X and MI355X\""
+      },
+      {
+        "component_interpretation": "25년 NVIDIA 기술협력은 issuer-side named relationship이고 current HBM qualification·supply 독립 확인은 아니다.",
+        "fact_row_index": 32,
+        "source_economic_mechanism": "삼성전자는 엔비디아 그래픽카드용 D램 공급에서 시작해 25년 이상 기술 협력을 이어왔다고 밝혔다. 이는 named-counterparty 관계를 확인하지만 현재 HBM 계약·배정·수량·가격 증거는 아니다.",
+        "source_period_json": "\"2025-10-31 기준 25년 이상 누적\"",
+        "source_predicate": "삼성전자와 엔비디아의 기술협력은 그래픽카드용 D램 공급에서 시작해 25년 이상 지속됐다.",
+        "source_value_json": "\"25년 이상\""
+      },
+      {
+        "component_interpretation": "NVIDIA HBM4 협의 중 issuer counter는 status 불확실성을 보존하며 계약 부재 일반 증명은 아니다.",
+        "fact_row_index": 52,
+        "source_economic_mechanism": "삼성전자는 엔비디아에 HBM3E와 HBM4를 공급할 계획이라고 밝혔지만 HBM4 공급은 아직 긴밀히 협의 중이다. 이는 명명 고객과의 공급 논의를 확인하되 서명 계약·확정 배정·물량·가격을 확인하지 못하는 가시성 counter다.",
+        "source_period_json": "\"2025-10-31 현재 및 이후\"",
+        "source_predicate": "엔비디아 대상 HBM3E·HBM4 공급은 issuer plan이며 HBM4 공급은 2025-10-31 현재 협의 중이다.",
+        "source_value_json": "\"HBM3E·HBM4 공급 계획; HBM4 공급 협의 중\""
+      },
+      {
+        "component_interpretation": "AMD 공식 HBM4 supply alignment는 독립 customer evidence지만 MOU이고 signed 조건은 아니다.",
+        "fact_row_index": 64,
+        "source_economic_mechanism": "AMD 공식 뉴스룸은 MOU 아래 양사가 차세대 AMD Instinct MI455X용 primary HBM4 supply에 맞춰 협력한다고 확인한다. 명명 고객·제품의 미래 공급 가시성을 독립적으로 보강하지만 MOU 기반 정렬이므로 확정 구매계약, 물량, 가격, 기간 또는 취소조건으로 승격하지 않는다.",
+        "source_period_json": "\"2026-03-18 announcement; future AMD Instinct MI455X supply alignment\"",
+        "source_predicate": "AMD_OFFICIAL_CONFIRMED_PRIMARY_HBM4_SUPPLY_ALIGNMENT_FOR_MI455X",
+        "source_value_json": "\"primary HBM4 supply alignment under MOU for AMD Instinct MI455X\""
+      },
+      {
+        "component_interpretation": "중요 장기공급계약 공시는 제한된 company-wide counter이며 다른 계약 부재로 확대하지 않는다.",
+        "fact_row_index": 96,
+        "source_economic_mechanism": "2026년 1분기말 재무제표에 중요한 영향을 미치는 장기공급계약 수주거래가 없다는 제한된 공시는 계약 기반 가시성을 제약하지만 다른 계약의 부재로 확대할 수 없다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "NO_MATERIAL_LONG_TERM_SUPPLY_ORDER_TRANSACTION_REPORTED",
+        "source_value_json": "\"재무제표에 중요한 영향을 미치는 장기공급계약 수주거래 없음\""
+      },
+      {
+        "component_interpretation": "HBM4 양산 actual은 issuer execution evidence지만 counterparty independence를 제공하지 않는다.",
+        "fact_row_index": 101,
+        "source_economic_mechanism": "2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS",
+        "source_value_json": "\"HBM4 양산 출하\""
+      },
+      {
+        "component_interpretation": "AMD 공식 MOU 확인은 독립 relation corroboration이지만 구매계약·확정 조건은 아니다.",
+        "fact_row_index": 102,
+        "source_economic_mechanism": "AMD 공식 뉴스룸은 삼성전자와 AMD가 차세대 AI 메모리·컴퓨팅 기술의 전략적 협력을 확대하는 MOU를 체결했다고 독립적으로 확인한다. 이는 기술·전략 관계의 CUSTOMER_OFFICIAL corroboration이며 구매계약이나 확정 공급조건을 뜻하지 않는다.",
+        "source_period_json": "\"2026-03-18\"",
+        "source_predicate": "AMD_OFFICIAL_CONFIRMED_SAMSUNG_AMD_AI_MEMORY_MOU",
+        "source_value_json": "\"MOU signed to expand strategic collaboration on next-generation AI memory and computing technologies\""
+      },
+      {
+        "component_interpretation": "OpenAI 메모리 지원은 issuer plan이고 OpenAI-official corroboration이나 구매의무가 아니다.",
+        "fact_row_index": 119,
+        "source_economic_mechanism": "OpenAI 스타게이트 수요에 삼성전자 메모리 사업이 대응하려는 issuer 계획으로 고객 접점과 잠재 공급 기회를 보여준다. 그러나 계획 문구만으로 체결된 구매계약, 확정 배정량·가격, 취소 조건 또는 매출을 인정하지 않는다.",
+        "source_period_json": "\"2025-10-01 발표 이후\"",
+        "source_predicate": "삼성전자는 OpenAI가 스타게이트 프로젝트에 필요한 고성능·저전력 메모리를 원활히 공급받도록 지원할 계획이라고 밝혔다.",
+        "source_value_json": "\"고성능·저전력 메모리 공급 지원 계획\""
+      },
+      {
+        "component_interpretation": "OpenAI 월간 수요는 issuer-described total forecast로 삼성 allocation·HBM demand 확정치가 아니다.",
+        "fact_row_index": 172,
+        "source_economic_mechanism": "전략 파트너인 OpenAI의 고성능 DRAM 잠재 수요 규모를 제시해 삼성전자 메모리 기회의 상단을 보여준다. 이 숫자는 OpenAI 전체 필요 전망이지 삼성전자에 확정된 공급 물량, HBM 물량, 매출 또는 issuer guidance가 아니다.",
+        "source_period_json": "\"2025-10-01 발표 기준 미래 수요 전망\"",
+        "source_predicate": "OpenAI는 웨이퍼 기준 월 90만 매의 고성능 DRAM이 필요할 것으로 전망됐지만 삼성전자 공급 몫은 제시되지 않았다.",
+        "source_value_json": "\"월 900,000\""
+      },
+      {
+        "component_interpretation": "AMD CEO의 공식 기술협력 확인은 independent technical corroboration이며 procurement economics와 분리한다.",
+        "fact_row_index": 210,
+        "source_economic_mechanism": "AMD CEO는 AMD 공식 뉴스룸에서 삼성의 advanced memory와 AMD Instinct GPU, EPYC CPU, rack-scale platform을 결합하는 협력 확대를 직접 확인했다. 이는 기술 참여의 독립 counterparty corroboration이며 구매의무나 매출을 의미하지 않는다.",
+        "source_period_json": "\"2026-03-18\"",
+        "source_predicate": "AMD_CEO_CONFIRMED_SAMSUNG_MEMORY_PLATFORM_COLLABORATION_ON_AMD_OFFICIAL_SOURCE",
+        "source_value_json": "\"Samsung advanced memory collaboration with AMD Instinct GPUs, EPYC CPUs and rack-scale platforms\""
+      },
+      {
+        "component_interpretation": "OpenAI LOI는 공식 관계 증거지만 issuer-side이며 signed memory purchase·물량·가격·매출이 아니다.",
+        "fact_row_index": 214,
+        "source_economic_mechanism": "삼성전자가 OpenAI의 전략적 파트너 협력 체계에 공식 참여했다는 관계 증거다. 다만 LOI는 의향서이며 삼성전자 메모리 구매계약, 확정 물량·가격, 선수금 또는 매출 actual을 뜻하지 않는다.",
+        "source_period_json": "\"2025-10-01\"",
+        "source_predicate": "삼성전자를 포함한 삼성 관계사 4곳과 OpenAI는 2025년 10월 1일 글로벌 AI 핵심 인프라 협력을 위한 LOI를 체결했다.",
+        "source_value_json": "\"LOI 체결\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      9,
+      32,
+      52,
+      64,
+      96,
+      101,
+      102,
+      119,
+      172,
+      210,
+      214
+    ],
+    "source_coverage": [
+      "CUSTOMER_OFFICIAL",
+      "ISSUER_NEWSROOM",
+      "OPENDART"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "NVIDIA-official pre-cutoff qualification·platform alignment·supply status가 현재 fact plane에 없다.",
+      "OpenAI-official pre-cutoff partnership·infrastructure·memory-demand scope corroboration이 현재 fact plane에 없다.",
+      "AMD MOU·technical corroboration은 purchase price·volume·allocation·duration을 확인하지 않는다.",
+      "CUSTOMER_OFFICIAL material 0은 source absence, 관계 부재 또는 계약 부재 증명이 아니다."
+    ],
+    "why_not_higher": "AMD는 독립 corroboration이 있으나 NVIDIA·OpenAI는 issuer-side 관계·plan·forecast에서 멈추고, 두 counterparty의 official technical status가 확인되지 않았다. material 0을 absence로 사용할 수 없다.",
+    "why_not_lower": "AMD 공식 자료가 HBM3E actual supply와 HBM4 MOU alignment 및 technical collaboration을 복수로 확인하고 HBM4 양산 actual·OpenAI LOI 관계도 존재하므로 전부 issuer-only인 상태보다 높다."
+  },
+  "payload_hash": "b78f84ea78578136d98ff0ae0da56b97fa59b3890028eab6501353943705b782",
+  "production_score_authority": false,
+  "prompt_hash": "1fec7f84309d21a4da03f42909d82979587d6121ed8bd88e0cfb414ed1b10bcf",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0eec268384bb361fe29e399d423f71ba87662ae623059f08e8d12665dff690df",
+  "response_id": "COLLABRESP-2020480babf07ee470ecbe2b0ca1825bfb9d15a2be81edec9640af8b46257ac4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

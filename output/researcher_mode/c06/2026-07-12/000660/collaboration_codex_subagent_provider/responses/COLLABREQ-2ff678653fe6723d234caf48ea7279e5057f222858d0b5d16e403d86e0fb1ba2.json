@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "2d9854ad3e4dc0a54f039c283be4adf9036f2cb73b0b111afaa1ac77b2f36903",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a12a0f9e3ca2699dc495dfa9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party report of SK hynix results does not satisfy an issuer-owned earnings, presentation, or cash-flow request."
+      },
+      {
+        "candidate_id": "SGCAND-369ac4a38df613e05196de69",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This media summary of results and product plans is not an issuer-owned source in a requested family."
+      },
+      {
+        "candidate_id": "SGCAND-2fcfeffbb22d9ed70272d181",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A stock-analysis portal page is not an issuer earnings release, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-ab25a2d1674fb0e5e3e8ee58",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party video article about sector earnings has none of the requested issuer-source provenance."
+      },
+      {
+        "candidate_id": "SGCAND-d7978db947fa89a1e917f6d8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A portal-hosted conference-call note is a third-party retelling, not an issuer-owned earnings or presentation source."
+      },
+      {
+        "candidate_id": "SGCAND-39fe97e87827f61a47b1d08f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party transcript concerns Samsung Electronics, not the target, and is not issuer-owned."
+      },
+      {
+        "candidate_id": "SGCAND-64c4d0d22652612d1cece10d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A media quotation of SK hynix outlook is not an issuer earnings release, issuer presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-c29f150f2828cb668eb470e0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party result story lacks issuer-owned provenance and cannot satisfy the official-source request."
+      },
+      {
+        "candidate_id": "SGCAND-f91a8ce7d24c3d37ff7192a9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "Third-party Micron news is neither target-specific nor a requested SK hynix issuer source."
+      },
+      {
+        "candidate_id": "SGCAND-3dea628a34ac972442943945",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A media story combining reported profit and broker targets is not an issuer-owned requested-family source."
+      },
+      {
+        "candidate_id": "SGCAND-a1075dbfb3aaaa55500ba1a8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A newspaper PDF is a third-party retelling, not an issuer earnings release, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-c136c47b1af860c9af55fb2e",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.2,
+        "rationale": "The URL and title identify an issuer-owned earnings-release landing page, but the issuer is Samsung Electronics rather than SK hynix, so it is immaterial to the target objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "The only issuer earnings landing page in this partition belongs to Samsung Electronics; no eligible current SK hynix issuer source was found."
+    ]
+  },
+  "payload_hash": "49c420f36d5944cf65503422c2dc9290b2427aee3337ec1e50ee2a615d95a4b2",
+  "production_score_authority": false,
+  "prompt_hash": "f0d64f99b9ed96c3e46db8a2eb5f64c984f058cf658fd59a05e6383bf94d4ae8",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2ff678653fe6723d234caf48ea7279e5057f222858d0b5d16e403d86e0fb1ba2",
+  "response_id": "COLLABRESP-30723efc00bee8ea770cfbac83954d8adfcb97575844cd8d43070a9898f82aa9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

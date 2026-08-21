@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "INDEPENDENT_COMPLETENESS_REVIEWER로서 epoch 189의 현재 snapshot을 독립 감사했다. 7개 component memo는 모두 COMPLETE이며 actual 이익·현금흐름, HBM 매출·양산·가동률·가격 전이, forward revision과 valuation의 material-positive 경로를 각각 제품·전사·추정치 귀속으로 구분해 다룬다. 동시에 계약의 기간·물량·가격·취소 조건, HBM 단독 이익·FCF 귀속, 고객 일정, 경쟁 공급, 운전자본·CAPEX와 cycle-duration 반론이 memo 및 RTMEMO-b76caa733d25d4c811fc7364에 current/open counter로 보존되어 있다. Structured result는 COMPLETE이고 7개 component의 missing role이 없으며, 최신 Supervisor RSUP-93ea57897b0dcae18a6d33ef는 concrete fact gap·source direction·query brief를 모두 비운 채 counter proof와 memo sufficiency를 확인했다. Source Graph SGCHECK-0f48e00201617d872d3a8ee0은 7개 objective를 resolved한 STOPPED_ON_RESOLUTION 상태이고, 현재 prompt에는 이미 실행한 경로와 다른 구체적이고 검증 가능한 material source identity가 없다. 향후 계약 공개, 고객 일정, 제품별 현금성과 actual 갱신은 계속 모니터링할 한계지만 현재 실행 가능한 research gap은 아니다. 이 승인은 검색 0건, 고정 라운드, transport budget 또는 source absence에 근거하지 않으며 score·Stage·투자결론 권한을 갖지 않는다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "9260d76f613c9c46c5871013c659d3d76c647df5d1fec08290f570f8319303b9",
+  "production_score_authority": false,
+  "prompt_hash": "3d72b8037a6adc6edba83e83b87325c96102d2c75f31cdf422d67624d6916d40",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cc93bb068d16f66d0f7b445d280d6ae08eb6ddc50823dc4933ee811a65016e36",
+  "response_id": "COLLABRESP-9c298a3dbd3daa064fe2b7096e8b9d1baed7e837e3724cc09e1ae4b8f2827675",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

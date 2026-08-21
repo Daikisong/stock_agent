@@ -1,0 +1,29 @@
+{
+  "accepted_current_claim_count": 1,
+  "adjudicated_claim_count": 12,
+  "anchor_count": 1,
+  "claim_compilation_pending_count": 0,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "accepted_claim_without_content_hash": 0,
+    "accepted_claim_without_exact_quote": 0,
+    "accepted_claim_without_provenance": 0,
+    "old_unknown_risk_penalty": 0,
+    "rerouted_claim_closed_original_gap": 0,
+    "source_proxy_current_claim": 0,
+    "unstructured_rule_fallback_score": 0,
+    "wrong_subject_score": 0
+  },
+  "daily_claim_provenance_count": 1,
+  "extractor_contract_blind_count": 12,
+  "hard_acceptance_pass": true,
+  "production_runtime_ready": false,
+  "raw_assertion_count": 12,
+  "schema_version": "e2r_live_current_claim_audit_v1",
+  "source_task_satisfaction_count": 22,
+  "source_task_satisfaction_counts": {
+    "DIRECT_TASK_SATISFIED": 1,
+    "SOURCE_EXHAUSTED": 21
+  },
+  "status": "CURRENT_CLAIM_COMPILER_PASS"
+}

@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-fc383e7cb7a52461d7d94c4e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'2013_KOTRA국가정보인도.pdf'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8d7f8c00e2a148a10e2aef08",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'2015_KOTRA국가정보_인도.pdf'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6595c4154456d0e88d385d72",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.02,
+        "rationale": "증권사 원문 PDF provenance는 맞지만 '[주간 퀀틴전시 플랜] Santa Claus is Coming to KOSPI. 유종의 미를 거두기 위한 포인트'은 요청한 2026-07-08 삼성전자 리포트 또는 현재 expectation/valuation bridge가 아니다. 시점·대상·주제가 objective와 불일치하며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b44602857d34af30a9f66b1e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.02,
+        "rationale": "증권사 원문 PDF provenance는 맞지만 '매년 반복된 9월 약세. 추석 연휴 전 리스크 관리, 현금 비중확대로 극복한다'은 요청한 2026-07-08 삼성전자 리포트 또는 현재 expectation/valuation bridge가 아니다. 시점·대상·주제가 objective와 불일치하며 snippet은 evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "ranking_complete는 이 partition roster 분류 완료만 뜻한다. material 후보도 full-fetch·parse 전에는 evidence가 아니며, 요청한 삼성증권 2026-07-08 리포트 원문은 이 roster에서 확인되지 않았다."
+    ]
+  },
+  "payload_hash": "9953d75faf1d64ac47a3a828c676146d15696d430d80cff9f2cbf69363a8ecd7",
+  "production_score_authority": false,
+  "prompt_hash": "0240e0f0608f2c3c6890d6c4ed1407bfebe912f8b533c14c29eb768604e36513",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-98ac04b2b18289456ef8af98fb5d9ccd76d8872a96e2e9af53fffd6f1a2d755c",
+  "response_id": "COLLABRESP-c9636161d166f54f2eee5e07e08a730d572af1d8ea51315d98735b35f46c2187",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

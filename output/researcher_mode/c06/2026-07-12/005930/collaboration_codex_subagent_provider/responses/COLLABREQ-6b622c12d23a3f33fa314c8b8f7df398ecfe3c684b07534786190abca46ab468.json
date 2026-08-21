@@ -1,0 +1,215 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2e434d39a3c00cbb3e69fd2b",
+        "rationale": "current canonical에 없는 2026년 2분기 메모리 영업이익 추정치, 3분기 삼성전자 D램 ASP 상승 전망, 현재 삼성전자 D램 월 생산능력 범위, 삼성전자를 포함한 3~5년 빅테크 LTA 체결 서술만 추출했다. 전사 잠정실적·연간 영업이익 전망, SK하이닉스 수치, 업계 전체 D램·낸드 ASP 및 LTA 물량 비중, DS 혼합 비용·파운드리·DX 실적은 메모리 objective fact로 전용하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.76,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2e434d39a3c00cbb3e69fd2b",
+        "economic_mechanism": "증권가 추정은 완료된 2026년 2분기 삼성전자 영업이익 중 메모리 사업의 기여 규모를 약 90조원대로 제시한다.",
+        "exact_quote": "증권가에선 2분기 영업이익 중 메모리 사업 이익이 90조 원대에 달할 것으로 추정한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 2026년 1분기 메모리 영업이익 추정과 달리 2분기 메모리 이익 전환 규모를 직접 제시한다. 확정 실적이 아니라 증권가 추정이며 '90조원대'라는 근사치임을 유지한다.",
+        "mechanism_scope_id": "005930:MEMORY:OPERATING_PROFIT_ESTIMATE:2026-Q2",
+        "normalized_object": "2026년 2분기 메모리 영업이익 90조원대 추정",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2",
+        "predicate": "증권가는 삼성전자 메모리 사업의 2026년 2분기 영업이익을 90조원대로 추정했다",
+        "predicate_family": "MEMORY_OPERATING_PROFIT_ESTIMATE",
+        "primitive_tags": [
+          "MEMORY_OPERATING_PROFIT",
+          "CONSENSUS_ESTIMATE",
+          "EARNINGS_CONVERSION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_OPERATING_PROFIT_ESTIMATE",
+        "question_family_tags": [
+          "MEMORY_OPERATING_PROFIT_ESTIMATE",
+          "MEMORY_EARNINGS_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 사업 2026년 2분기 영업이익 추정",
+        "subject_id": "005930:MEMORY:OPERATING_PROFIT_ESTIMATE:2026-Q2",
+        "unit": "KRW million",
+        "value": 90000000
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.67,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2e434d39a3c00cbb3e69fd2b",
+        "economic_mechanism": "삼성전자의 다음 분기 D램 ASP가 추가 상승할 수 있다는 시장 서술은 높은 메모리 이익의 단기 지속 가능성을 뒷받침한다.",
+        "exact_quote": "3분기에는 삼성전자가 D램 ASP를 전 분기 대비 최대 20% 수준까지 높일 것으로 알려지면서 수익성은 더욱 오를 전망이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "current canonical의 2026년 1분기 메모리 ASP actual과 기간·제품·성격이 다른 삼성전자 D램의 3분기 전망이다. 회사의 수치형 공식 가이던스가 아니므로 FORWARD_GUIDANCE role을 부여하지 않고 상한 전망으로만 유지한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:ASP_OUTLOOK:2026-Q3",
+        "normalized_object": "2026년 3분기 삼성전자 D램 ASP 최대 20% QoQ 상승 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q3E vs 2026-Q2",
+        "predicate": "삼성전자의 2026년 3분기 D램 ASP가 전분기 대비 최대 20% 상승할 것으로 알려졌다",
+        "predicate_family": "SAMSUNG_DRAM_ASP_QOQ_OUTLOOK",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "QOQ_OUTLOOK",
+          "PRICING_POWER"
+        ],
+        "product_family": "D램",
+        "question_family_id": "SAMSUNG_DRAM_ASP_QOQ_OUTLOOK",
+        "question_family_tags": [
+          "DRAM_ASP_FORWARD_OUTLOOK",
+          "MEMORY_EARNINGS_DURABILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 3분기 D램 ASP 전망",
+        "subject_id": "005930:MEMORY:DRAM:ASP_OUTLOOK:2026-Q3",
+        "unit": "percent",
+        "value": "up to 20"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.76,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2e434d39a3c00cbb3e69fd2b",
+        "economic_mechanism": "삼성전자의 월 D램 웨이퍼 생산능력 범위는 메모리 가격 상승기에 출하·이익으로 전환할 수 있는 현재 공급 기반의 크기를 보여준다.",
+        "exact_quote": "현재 삼성전자의 D램 생산량은 웨이퍼 기준 월 65만∼70만 장 수준으로 2위인 SK하이닉스(월 55만 장)보다 20%가량 많다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical에는 메모리 전체 가동률과 1Gb 환산 생산실적은 있으나 D램 월 웨이퍼 생산량 범위는 없다. 비교사 수치는 fact 값에 포함하지 않고 삼성전자 범위만 정규화한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:MONTHLY_WAFER_CAPACITY",
+        "normalized_object": "삼성전자 D램 월 웨이퍼 생산량 65만~70만장",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-07",
+        "predicate": "삼성전자의 D램 생산량은 웨이퍼 기준 월 65만~70만장 수준이다",
+        "predicate_family": "SAMSUNG_DRAM_MONTHLY_WAFER_CAPACITY",
+        "primitive_tags": [
+          "DRAM_CAPACITY",
+          "MONTHLY_WAFER_OUTPUT",
+          "SUPPLY_SCALE"
+        ],
+        "product_family": "D램",
+        "question_family_id": "SAMSUNG_DRAM_MONTHLY_WAFER_CAPACITY",
+        "question_family_tags": [
+          "DRAM_CAPACITY_SCALE",
+          "MEMORY_SUPPLY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 D램 월 생산능력",
+        "subject_id": "005930:MEMORY:DRAM:MONTHLY_WAFER_CAPACITY:2026-Q3",
+        "unit": "wafers/month",
+        "value": "650000-700000"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.68,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2e434d39a3c00cbb3e69fd2b",
+        "economic_mechanism": "삼성전자를 포함한 메모리 업체의 빅테크 대상 3~5년 LTA 체결은 단기 현물 수요와 구별되는 기간 기반 공급 가시성을 제공한다.",
+        "exact_quote": "삼성전자를 비롯한 메모리 기업들이 빅테크와 체결하고 있는 3∼5년 기간의 LTA도 수익성을 뒷받침한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "target을 명시한 장기 메모리 공급관계의 기간 정보로 current canonical의 단순 다수 고객 공급 확대 계획과 구별된다. 다만 거래상대방·삼성전자 개별 물량·가격하한·구매의무는 이 문장에 없고 공식 공시 확인도 없으므로 해당 조건은 주장하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:BIG_TECH:LTA_DURATION",
+        "normalized_object": "빅테크 대상 3~5년 메모리 LTA 체결 서술",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-07",
+        "predicate": "삼성전자가 빅테크와 3~5년 기간의 메모리 LTA를 체결하고 있다고 보도됐다",
+        "predicate_family": "SAMSUNG_BIG_TECH_MEMORY_LTA",
+        "primitive_tags": [
+          "LTA",
+          "BIG_TECH_CUSTOMER",
+          "SUPPLY_DURATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_BIG_TECH_MEMORY_LTA",
+        "question_family_tags": [
+          "MEMORY_LONG_TERM_SUPPLY_AGREEMENT",
+          "EARNINGS_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 빅테크 메모리 장기공급계약",
+        "subject_id": "005930:MEMORY:BIG_TECH:LTA:2026-Q3",
+        "unit": "years",
+        "value": "3-5"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "기사의 2026년 2분기 연결 매출·영업이익과 성과급 충당금 전 수치는 전사 또는 DS 혼합 범위라 메모리/HBM actual로 귀속하지 않았다.",
+      "2분기 D램·낸드 ASP 상승률과 주요 메모리 업체 LTA 물량 절반은 업계 전체 수치이므로 삼성전자 수치로 만들지 않았다.",
+      "LTA의 구매 구속력·가격하한은 일반적인 계약 설명이며 삼성전자 개별 계약의 상대방·물량·조건으로 확대하지 않았다. 2026년 1분기 공식 공시의 재무제표 중요 장기공급계약 수주거래 부재와 함께 해석해야 한다.",
+      "올해·내년 삼성전자 영업이익 전망은 메모리 외 사업을 포함한 전사 추정치이므로 objective-local 메모리 fact에서 제외했다."
+    ]
+  },
+  "payload_hash": "5b0382cd4d0e0cf93b48c921f100424267c9d369f78a1548617a62fc54d4a133",
+  "production_score_authority": false,
+  "prompt_hash": "b9b9c175eda2c8f2d04fe5f09021f799d7ab680c9f8c659a755c9685d761b8aa",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6b622c12d23a3f33fa314c8b8f7df398ecfe3c684b07534786190abca46ab468",
+  "response_id": "COLLABRESP-6d9af61f457edc728ddc662d2139733883e5a0d7802e02a82fccaad7b79e97d2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

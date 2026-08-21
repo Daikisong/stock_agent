@@ -1,0 +1,166 @@
+{
+  "output_schema_hash": "d654d9e4d7087ab2fe7ab51e3fa89ba2ef1fb1741885154a3e3786d64f97fcec",
+  "payload": {
+    "confidence": 0.9,
+    "counter_case": "같은 evidence는 상단도 제한한다. 공급 논의 완료에는 signed 계약·확정 물량·가격·취소·위약 조건이 없고 실제 물량·가격은 월·분기 합의다. 단일 사업부문 공시 때문에 HBM 단독 매출액·마진·현금흐름을 분리할 수 없으며, broker FY2026 전망은 문서 내부에서도 수치가 달라 estimate를 actual·issuer guidance·durable commitment로 승격할 수 없다. 현재 선택 fact에는 explicit independent customer corroboration도 없다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-9e4c777f0c9f76d9f38a2702",
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-2dbb3edefb6849e18a361416",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797"
+    ],
+    "positive_case": "Issuer 원문은 HBM4 개발 완료와 양산 진입, 고객 성능요구 충족, 고객 요청 대응 대규모 생산과 FY2025 HBM 매출 2배 이상 성장을 직접 확인한다. 이는 단순 계획이나 broker 추정이 아니라 실행 단계와 actual 제품 매출 성장의 primary evidence이며, 핵심고객과 FY2026 공급 논의를 완료했다는 설명도 일정 조율의 visibility를 보탠다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 25,
+        "reason": "Issuer가 확인한 실제 대규모 생산 진행은 실행 단계의 정보 신뢰도를 직접 지지하므로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 182,
+        "reason": "양산 진입과 고객 성능요구 충족은 계획보다 강한 primary evidence지만 독립 고객 확인과 계약 의무는 아니라는 경계를 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 199,
+        "reason": "월·분기 물량·가격 합의는 durable fixed contract 해석을 제한하는 직접 counter이므로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 200,
+        "reason": "FY2025 HBM 매출 actual 성장의 issuer 확인은 제품 수요 전환 근거이므로 유지하되 정량 손익 귀속은 하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 238,
+        "reason": "동일 broker 전망의 내부 불일치는 estimate 정밀도의 counter이며 actual 또는 guidance와 분리하기 위해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 250,
+        "reason": "단일 사업부문 공시는 HBM 단독 손익·현금 귀속을 제한하는 공식 disclosure counter이므로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 271,
+        "reason": "핵심고객 공급 논의 완료는 visibility를 지지하지만 signed durable contract가 아니라는 양면적 경계를 유지한다."
+      }
+    ],
+    "proposed_score_lower": 2.9,
+    "proposed_score_mid": 3.3,
+    "proposed_score_upper": 3.7,
+    "research_complete": true,
+    "researcher_summary": "현재 7개 fact를 같은 기준으로 다시 해석했다. Issuer가 HBM4 양산 진입·대규모 생산, 고객 성능요구 충족과 FY2025 HBM actual 매출 성장을 직접 확인한 것은 실행·결과의 강한 primary evidence다. 반면 공급 논의 완료는 signed contract가 아니고 물량·가격은 월·분기 합의이며, 단일 사업부문 공시와 broker forecast 내부 불일치 때문에 고객 의무·HBM 단독 손익·forward 숫자의 독립 정밀 검증은 제한된다. 따라서 actual은 인정하되 plan·estimate·durable commitment로 확대하지 않는 중간 이상의 정보 신뢰도로 조정한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "Issuer가 샘플이나 계획이 아니라 실제 대규모 생산 진행 상태를 직접 확인한 자료라 실행 단계의 정보 신뢰도를 높인다. 다만 공급량·출하량·구매의무까지 확인한 것은 아니다.",
+        "fact_row_index": 25,
+        "source_economic_mechanism": "2025년 9월 HBM4 양산 준비를 끝낸 뒤 2026년 1월 28일 기준 고객 요청에 맞춘 차세대 HBM 대규모 생산이 진행 중이라는 회사 설명은 샘플·준비 단계에서 생산 단계로의 전환을 보여준다. 공급량·출하량·구매의무는 공개되지 않았다.",
+        "source_period_json": "\"preparation completed 2025-09; production status as of 2026-01-28\"",
+        "source_predicate": "SK하이닉스는 2025년 9월 HBM4 양산 준비를 끝냈고 2026년 1월 28일 기준 고객 요청에 대응하는 HBM4 대규모 생산을 진행 중이라고 밝혔다",
+        "source_value_json": "\"mass-production preparation completed in 2025-09; large-scale production underway to meet customer requests\""
+      },
+      {
+        "component_interpretation": "Issuer의 양산 진입과 고객 성능요구 충족 확인은 단순 개발계획보다 강한 primary evidence다. 그러나 고객명·독립 고객 확인·인증 일자·구매의무가 없어 durable 계약의 확정 근거로 확대하지 않는다.",
+        "fact_row_index": 182,
+        "source_economic_mechanism": "HBM4가 2025년 9월 개발을 완료하고 양산에 진입했으며 고객 성능요구를 충족했다는 회사 발표는 이전 샘플·인증 불확실성을 낮추고 제품 출하 전 실행 단계를 보여준다. 고객명·인증 주체·인증 일자·구매의무는 공개되지 않았다.",
+        "source_period_json": "\"development completed and mass production entered in 2025-09; stated 2025-10-29\"",
+        "source_predicate": "SK하이닉스 HBM4는 2025년 9월 개발을 완료하고 양산에 진입했으며 고객 성능요구를 충족했다",
+        "source_value_json": "\"development completed in 2025-09; entered mass production; fully meets customer performance requirements\""
+      },
+      {
+        "component_interpretation": "공시된 실제 거래 관행은 고객 협의가 장기 고정 의무와 같지 않음을 보여주는 직접 counter다. HBM 전용 취소·위약 조건을 추정할 수 없으므로 계약 품질의 정보 상단을 제한한다.",
+        "fact_row_index": 199,
+        "source_economic_mechanism": "주요 고객과 공급 물량·가격을 월별 또는 분기별 상호 합의로 정한다는 공시는 현재 매출 가시성이 장기 고정계약만으로 잠긴 것은 아니라는 계약기간 counterfact다. 취소권·위약금 또는 HBM 전용 조건은 공시하지 않는다.",
+        "source_period_json": "\"current as of 2026-Q1\"",
+        "source_predicate": "주요 고객사 공급 물량과 가격은 월별 또는 분기별 상호 합의로 결정된다",
+        "source_value_json": "\"monthly or quarterly mutual agreement\""
+      },
+      {
+        "component_interpretation": "계획이나 broker 추정이 아니라 issuer가 확인한 HBM actual 매출 성장이라 제품 수요의 실제 전환을 지지한다. 다만 정확한 금액·비중·영업이익·현금흐름은 공개되지 않아 정량 귀속은 제한된다.",
+        "fact_row_index": 200,
+        "source_economic_mechanism": "FY2025 HBM 매출이 전년보다 2배 이상으로 늘어 전사 사상 최대 실적에 크게 기여했다는 회사 설명은 HBM 수요가 실제 매출과 전사 손익으로 전환된 것을 보여준다. 정확한 HBM 매출액·비중·영업이익은 공개되지 않았다.",
+        "source_period_json": "\"FY2025 vs FY2024\"",
+        "source_predicate": "SK하이닉스 FY2025 HBM 매출은 전년 대비 2배 이상으로 늘어 회사 사상 최대 실적에 중요하게 기여했다",
+        "source_value_json": "\"more than 2x year-on-year\""
+      },
+      {
+        "component_interpretation": "동일 broker 문서 안의 forecast 불일치는 추정 숫자의 정밀도를 낮춘다. 이는 actual을 부정하지 않지만 estimate를 issuer guidance나 durable outcome처럼 사용하는 것을 막는다.",
+        "fact_row_index": 238,
+        "source_economic_mechanism": "같은 SK하이닉스 Top Pick 구간에서 2026년 매출 요약은 110.1조원이라고 쓰지만 바로 아래 표는 139,064.8십억원이라고 제시한다. 이 내부 불일치는 forward revenue 숫자의 확정적 사용을 제한하는 정보품질 counterfact다.",
+        "source_period_json": "\"FY2026F; published 2025-11-19\"",
+        "source_predicate": "같은 분석 구간의 2026년 매출 전망이 요약 110.1조원과 표 139,064.8십억원으로 서로 다르다",
+        "source_value_json": "\"summary KRW 110.1tn versus table KRW 139.0648tn\""
+      },
+      {
+        "component_interpretation": "공식 공시의 단일 부문 구조 때문에 전사·memory·HBM별 손익과 현금흐름을 독립적으로 검증할 수 없다. 이는 정보 부재를 뜻하지 않지만 제품 귀속의 정밀도에 직접적인 한계다.",
+        "fact_row_index": 250,
+        "source_economic_mechanism": "SEGMENT_DISCLOSURE_LIMITATION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "반도체 제조업 매출과 자산이 전체의 90%를 초과해 부문별 정보를 생략한다",
+        "source_value_json": "\"greater than 90 percent\""
+      },
+      {
+        "component_interpretation": "Issuer의 공급 논의 완료는 고객 일정 조율에 대한 primary visibility를 제공한다. 그러나 signed contract, 확정 물량·가격·취소 조건이 없으므로 논의 완료와 durable 구매의무를 명확히 구분한다.",
+        "fact_row_index": 271,
+        "source_economic_mechanism": "SK하이닉스가 2026년 HBM 공급에 대한 핵심고객과의 논의를 완료했다는 발표는 다음 해 물량 계획과 고객 일정이 조율된 공급 가시성을 보여준다. 원문은 체결 계약·확정 물량·가격·취소 조항을 공개하지 않았으므로 구매의무로 확대하지 않는다.",
+        "source_period_json": "\"FY2026 supply discussed as of 2025-10-29\"",
+        "source_predicate": "SK하이닉스는 핵심고객과 2026년 HBM 공급에 대한 논의를 완료했다",
+        "source_value_json": "\"FY2026 HBM supply discussions with key customers completed; no executed contract terms stated\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      25,
+      182,
+      199,
+      200,
+      238,
+      250,
+      271
+    ],
+    "source_coverage": [
+      "ISSUER_NEWSROOM",
+      "OPENDART",
+      "PUBLIC_BROKER_PDF"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "Issuer primary evidence의 양산·actual 확인과 독립 고객 corroboration 부재가 함께 존재하므로 고객 qualification 및 구매의무의 확정 수준은 제한된다.",
+      "HBM 매출 성장 방향은 actual이지만 정확한 매출액·비중·마진·영업현금흐름은 단일 사업부문 공시로 분리되지 않는다.",
+      "월·분기 합의 구조와 공급 논의 완료는 visibility를 제공하지만 계약 기간·확정 물량·가격·취소권·위약금을 보장하지 않는다.",
+      "Broker forward 수치는 estimate이고 내부 불일치가 있어 issuer actual 또는 숫자형 guidance와 같은 신뢰수준으로 사용할 수 없다."
+    ],
+    "why_not_higher": "Issuer의 실행·actual 확인만으로는 named customer의 독립 확인, signed 계약조건, HBM 단독 손익·현금흐름과 일관된 forward 수치를 확보하지 못하므로 strong/full-confidence 구간은 과도하다.",
+    "why_not_lower": "HBM4 양산 진입·고객 성능요구 충족·대규모 생산 진행과 FY2025 HBM actual 매출 성장은 issuer가 직접 확인했으므로 정보 부재나 단순 계획·추정 수준으로 낮출 수 없다."
+  },
+  "payload_hash": "145724d5305fe6f5e03e2ba954e5ae97971913bb2bea157d9cd7647c442c4883",
+  "production_score_authority": false,
+  "prompt_hash": "04e269c61658216f0d0f35ccdd60b1aafb97170129f9829ae0da9fb08cbefad0",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-471a7db390c7a717490d8e67a8c12ba2670fd7760b5a946a8e5d5c00c87b9b2c",
+  "response_id": "COLLABRESP-49b097510b9b58443233d2891518d0d3bd8d3cae43d5e3f085d69480c668b6a8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "output_schema_hash": "87d3c66f564a2179cc4a1c335203172b75ba4ad6a971f0dc4b406e1ae6e503bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-dd72c1e74089a8c8524a106a",
+        "rationale": "Extracted four distinct objective-direct facts: consolidated DRAM revenue, research-development allocation, the material net-financial-gain earnings-quality counter, and the declared-but-unpaid annual dividend. Overlapping treasury-share, exchange-bond, legal-contingency, HITECH, purchase-commitment, supplier-finance, cash-flow, and EPS facts were not repeated.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-dd72c1e74089a8c8524a106a",
+        "economic_mechanism": "연결 기준 DRAM 매출이 전년 동기보다 크게 증가해 기존 별도 기준 DRAM 매출을 더 넓은 연결 범위로 보완한다. DRAM 전체이며 HBM 매출로 좁히지 않는다.",
+        "exact_quote": "고객과의 계약에서 생기는 수익의 품목별 구분에 대한 공시\n당분기\n(단위 : 백만원)\nDRAM\nNAND Flash\n기타\n부문 합계\n수익(매출액)\n40,658,636\n11,574,235\n343,416\n52,576,287\n전분기\n(단위 : 백만원)\nDRAM\nNAND Flash\n기타\n부문 합계\n수익(매출액)\n14,036,870\n3,228,835\n373,436\n17,639,141",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 별도 기준 DRAM fact와 구별되는 연결 범위의 공식 품목 매출로 earnings_visibility와 eps_fcf_explosion을 직접 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_DRAM_REVENUE",
+        "normalized_object": "연결 DRAM 품목 매출",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2026-Q1 vs 2025-Q1",
+        "predicate": "2026년 1분기 연결 DRAM 매출은 40,658,636백만원으로 2025년 1분기 14,036,870백만원보다 증가했다",
+        "predicate_family": "CONSOLIDATED_DRAM_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "DRAM",
+          "CONSOLIDATED_REVENUE",
+          "YOY_COMPARISON"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "CONSOLIDATED_DRAM_REVENUE_ACTUAL",
+        "question_family_tags": [
+          "CONSOLIDATED_DRAM_REVENUE",
+          "MEMORY_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK하이닉스 연결 DRAM 매출",
+        "subject_id": "000660:CONSOLIDATED_DRAM_REVENUE",
+        "unit": "KRW million",
+        "value": "2026-Q1 40658636; 2025-Q1 14036870"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-dd72c1e74089a8c8524a106a",
+        "economic_mechanism": "2026년 1분기 연구개발비 총지출 중 대부분을 경상개발비로 비용 처리하고 일부를 개발비로 자산화한 구조는 기술투자와 당기 비용 부담의 배분을 보여준다. HBM 전용 금액은 아니다.",
+        "exact_quote": "연구개발비 총지출액\n2,550,475\n개발비 자산화\n(99,015)\n경상개발비\n2,451,460\n판매비와관리비\n4,069,131",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 기술개발 지출의 비용·자산화 구조로 capital_allocation을 보완한다. 특정 메모리 제품에 귀속하지 않는다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:R_AND_D_SPENDING",
+        "normalized_object": "연구개발비 총지출·자산화·비용처리",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 연구개발비 총지출은 2,550,475백만원이고 99,015백만원을 자산화해 경상개발비는 2,451,460백만원이다",
+        "predicate_family": "RESEARCH_DEVELOPMENT_SPENDING",
+        "primitive_tags": [
+          "R_AND_D_SPENDING",
+          "CAPITALIZED_DEVELOPMENT",
+          "EXPENSED_DEVELOPMENT"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "RESEARCH_DEVELOPMENT_SPENDING",
+        "question_family_tags": [
+          "R_AND_D_ALLOCATION",
+          "EXPENSE_CAPITALIZATION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 연구개발비",
+        "subject_id": "000660:RESEARCH_DEVELOPMENT_SPENDING",
+        "unit": "KRW million",
+        "value": "total 2550475; capitalized 99015; expensed 2451460"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-dd72c1e74089a8c8524a106a",
+        "economic_mechanism": "2026년 1분기 순금융이익에는 9,941,549백만원의 금융상품평가이익이 포함돼 순이익이 영업성과만으로 구성되지 않았음을 보여준다. 이는 반복가능 이익과 현금 전환을 볼 때 분리해야 할 earnings-quality counterfact다.",
+        "exact_quote": "금융상품평가이익\n9,941,549\n기타\n43,281\n금융수익 소계\n17,056,350\n이자비용\n166,943\n외환차이\n1,357,748\n파생상품관련손실\n1,498,792\n기타\n0\n금융비용 소계\n3,023,483\n순금융손익\n14,032,867",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 대규모 금융상품평가이익으로 information_confidence에서 순이익의 반복가능성을 직접 제한한다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:NET_FINANCIAL_GAIN",
+        "normalized_object": "금융상품평가이익을 포함한 순금융손익",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 금융상품평가이익 9,941,549백만원을 포함한 순금융손익은 14,032,867백만원 이익이다",
+        "predicate_family": "NET_FINANCIAL_GAIN_EARNINGS_QUALITY",
+        "primitive_tags": [
+          "FINANCIAL_INSTRUMENT_VALUATION_GAIN",
+          "NET_FINANCIAL_INCOME"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "NET_FINANCIAL_GAIN_EARNINGS_QUALITY",
+        "question_family_tags": [
+          "EARNINGS_QUALITY",
+          "NON_OPERATING_GAIN"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 순금융손익",
+        "subject_id": "000660:NET_FINANCIAL_GAIN",
+        "unit": "KRW million",
+        "value": "financial instrument valuation gain 9941549; net financial gain 14032867"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-dd72c1e74089a8c8524a106a",
+        "economic_mechanism": "2026년 3월 주주총회에서 1,327,712백만원의 연차배당을 결의했으나 분기말 미지급 상태였다는 공시는 배당 의사결정과 현금 지급시점을 구분해 보여준다.",
+        "exact_quote": "2026년 3월 25일자 주주총회에서 배당금 1,327,712백만원이 결의되었으며, 당분기말 현재 미지급배당금은 미지급금에 포함되어 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 분기배당 정책·결정과 구별되는 연차배당 결의 및 미지급 상태로 capital_allocation의 실제 현금시점을 보완한다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:ANNUAL_DIVIDEND_DECLARATION",
+        "normalized_object": "결의됐으나 분기말 미지급인 연차배당",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "declared 2026-03-25; unpaid at 2026-03-31",
+        "predicate": "2026년 3월 25일 1,327,712백만원 배당을 결의했으며 2026년 1분기말에는 미지급금으로 남아 있었다",
+        "predicate_family": "ANNUAL_DIVIDEND_DECLARED_UNPAID",
+        "primitive_tags": [
+          "DIVIDEND_DECLARATION",
+          "UNPAID_DIVIDEND"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ANNUAL_DIVIDEND_DECLARED_UNPAID",
+        "question_family_tags": [
+          "ANNUAL_DIVIDEND",
+          "PAYMENT_TIMING"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2025년 연차배당",
+        "subject_id": "000660:2025_ANNUAL_DIVIDEND",
+        "unit": "KRW million",
+        "value": 1327712
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "b58899c3d5e3499f0e3f2362bae40372663a141334a78f34244d54061fb18e10",
+  "production_score_authority": false,
+  "prompt_hash": "61d6555350b3299f75105f3604244dc901af27c256c3c5d69b8b02e79c720700",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6f9a407b3d60453c99d8fd493cef1504b122990128785a36640e71153f0d4aab",
+  "response_id": "COLLABRESP-e31680b6b49d124dfdaaa3260c5c12688f6d2f4be2f223e8f1b602f692e1b337",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

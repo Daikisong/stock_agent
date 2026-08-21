@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "d89eaeb104b77dd9bea1c972c6472438f0eeb7cffaadb46d77cc54328c1bb541",
+  "payload": {
+    "allowed_range": [
+      6.4,
+      8.3
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23의 6.84~8.74점 구간과 비교하면 높은 가동률과 HBM 가격 주도는 병목 가격력에 부합하지만 CAPA 잠김·백로그가 없어 중간에 둔다.",
+      "ORDTRANSFER-9205e8ab347aff38184b148a의 4.478571~6.378571점보다 제품·가격·고객 실행은 강하나 고객 집중과 재고 위험 때문에 상단 격차는 제한된다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c07ed486e6d67134d19d6951",
+      "EFACT-c418009dc8a6493dd0a098b4"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "proposed_points": 7.4,
+    "rationale": "메모리 설비 고가동률, HBM의 가격 주도 및 제품·고객 실행은 공급 병목과 가격력의 positive다. 그러나 sold-out 기간, 고정가격, CAPA 잠김, 취소 불가 백로그가 없고 고객 집중·재고 위험이 있어 구조적 쇼티지보다는 강한 운영 수급 신호로 평가한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "장기 공급계약, 선수금, RPO, 수주잔고, CAPA 잠김과 같은 지속적 병목의 직접 증거가 없고 고객 집중·재고 위험이 남는다.",
+    "why_not_lower": "실제 높은 설비 가동률과 HBM 가격 주도, 제품 및 고객 실행은 단순 산업 전망보다 강한 운영 근거다."
+  },
+  "payload_hash": "548e450b6486a56e2232780625b6caba73400261cec40e52c355d5240f47ed02",
+  "production_score_authority": false,
+  "prompt_hash": "e8cb1b692b950f8467888c6439fc627900ab03cdc9ae732d7ac5d86520427e2e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-401b6d31216c9b432ca26b07e557142c99ad274d52337808a3fd6f0644c40efe",
+  "response_id": "COLLABRESP-5d1198656dd2e14ea848b4f0dbf94b79fdaca95c685a23b2b5d7f033d3525160",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

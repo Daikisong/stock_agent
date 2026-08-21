@@ -1,0 +1,39 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-72f92beb6c2040fc934b6559",
+        "rationale": "3,160자 미분할 연결 손익계산서와 포괄손익계산서 전체를 전수 검토하고 현재 canonical facts 510건·claims 512건과 의미 중복을 확인했다. 문서가 제시하는 2025년 매출, 매출원가, 영업이익, 세전이익, 순이익, EPS 및 포괄손익은 모두 삼성전자 연결 전사 수치로서 DX, DS의 memory·foundry·system LSI, SDC, Harman과 기타 사업을 포함한다. 이 문서에는 memory 또는 HBM에 귀속된 매출·이익·현금흐름·고객 배정·CAPA·가격·qualification 정보가 없으므로 전사 숫자를 memory/HBM earnings_visibility로 오귀속하지 않았다. 따라서 신규 objective-local material fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "SGDOC-72f92beb6c2040fc934b6559의 연결 전사 손익과 EPS는 memory/HBM 귀속 근거 없이 earnings_visibility fact로 사용할 수 없다."
+    ]
+  },
+  "payload_hash": "a4382074a446703af4a0ee0057c918d329a73138d91dc6f8caffc4e59ec73c00",
+  "production_score_authority": false,
+  "prompt_hash": "0dc95705e83dc98ba377bc06427d8110cfa9bd7521b747ca0dfc506932f09aaa",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7f6b35a09f4dc2bb6ad95f4167d0dbee4c6b981527a18798c91cbe51956316a7",
+  "response_id": "COLLABRESP-df0f987ae851031cd15ac7ed4398d5949deb2b8b93bae55819457709d6eda972",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

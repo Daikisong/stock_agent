@@ -1,0 +1,36 @@
+{
+  "as_of_date": "2026-07-10",
+  "blockers": [],
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "duplicate_eligible_symbol": 0,
+    "eligible_universe_below_1000": 0,
+    "fixture_symbol": 0,
+    "future_universe_data": 0,
+    "generic_portal_counted_as_universe": 0,
+    "missing_company_name": 0,
+    "missing_symbol": 0,
+    "raw_universe_below_1000": 0
+  },
+  "duplicate_eligible_symbol_count": 0,
+  "eligible_universe_count": 2542,
+  "excluded_universe_count": 223,
+  "exclusion_reason_counts": {
+    "DR": 9,
+    "INVESTMENT_COMPANY": 3,
+    "PREFERRED_OR_CLASS_SHARE": 113,
+    "REIT": 25,
+    "SPAC": 73
+  },
+  "fixture_symbol_count": 0,
+  "future_universe_data_count": 0,
+  "generic_portal_counted_as_universe_count": 0,
+  "hard_acceptance_pass": true,
+  "missing_company_name_count": 0,
+  "missing_symbol_count": 0,
+  "provider_request_count": 4,
+  "raw_universe_count": 2765,
+  "schema_version": "e2r_live_universe_audit_v1",
+  "selected_market_count": 2,
+  "source_effective_date": "2026-07-09"
+}

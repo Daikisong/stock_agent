@@ -1,0 +1,63 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-9090dbe7d62ea6f7e55994e5",
+      "CRMEMO-e33d24eb53e54f8b0079b89d",
+      "CRMEMO-c989e641c46cb2589aaef403",
+      "CRMEMO-ef70ee03faa19d8789cfb3f2",
+      "CRMEMO-e03a50651b17d8403b681c5a",
+      "CRMEMO-49d146bc643b60c9fe57efe2",
+      "CRMEMO-75dec67708e3f996f90dbb23"
+    ],
+    "confidence": 0.82,
+    "cross_component_support": [
+      "EPS/FCF와 bottleneck/pricing은 메모리 설비 100% 가동, 메모리 매출·ASP 상승, 연결 이익·영업현금 actual이 공급 제약과 수익·현금 전환의 현재 방향을 함께 지지한다.",
+      "Earnings visibility와 information confidence는 HBM4 양산 출하 및 AMD CUSTOMER_OFFICIAL의 HBM3E 공급 이력·HBM4 정렬·기술협력 확인으로 제품 실행과 독립 기술 corroboration을 함께 지지한다.",
+      "Market mispricing과 valuation rerating은 HBM4 출하, 서버향 판매, 메모리 매출·ASP 개선을 시장 기대와 valuation이 추적해야 할 실제 operating delta로 공유한다.",
+      "Capital allocation은 강한 영업현금흐름, 자기주식 매입·소각과 배당, 투자등급 조달 접근성이 성장투자와 주주환원을 병행할 전사 재무 기반을 제공한다.",
+      "Red Team은 일곱 component 모두에서 actual 또는 실행 근거가 전혀 없다는 반론을 해소하면서도 전사·DS 메모리·HBM 귀속 경계를 유지했다."
+    ],
+    "cross_component_tensions": [
+      "연결·DS 메모리의 이익·현금·매출·ASP 개선은 강하지만 HBM 단독 매출·마진·CAPEX·운전자본·FCF bridge가 없어 EPS/FCF와 valuation 상단을 동시에 제한한다.",
+      "HBM4 양산 출하와 AMD 기술 corroboration은 실행을 확인하지만 AMD MOU, NVIDIA 협의, OpenAI LOI·수요 전망에는 signed 물량·가격·기간·취소조건·allocation·backlog가 없어 earnings visibility와 information confidence의 계약경제를 제한한다.",
+      "메모리 100% 가동과 ASP 146% 상승은 현재 병목·가격력을 지지하지만 HBM 전용 wafer·advanced-packaging CAPA 잠김, 고객별 allocation, 장기 sold-out 또는 계약가격을 입증하지 않는다.",
+      "운영 개선에도 forward PE의 낮은 신호와 EV/EBITDA·PB·FCF yield의 높은 신호, revision 방향이 혼재해 market mispricing 및 rerating을 일방적으로 확정할 수 없다.",
+      "자기주식·배당 실행과 동시에 큰 R&D·CAPEX·자본약정 및 매출채권 운전자본 유출이 존재하고 HBM 투자별 회수기간·ROIC가 분리되지 않는다.",
+      "Immutable prompt에는 A/S/C judge decision이나 allowed range가 내장되지 않았다. 따라서 일곱 component의 tri-role intersection은 모두 NOT_EMBEDDED/NOT_INFERRED이며, 교집합 또는 material judge disagreement를 발명하지 않았다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "일곱 component와 RTMEMO-2a88fb6a673d38850d4e79ff의 bounded review는 메모리 actual 개선, HBM4 출하, 공급 제약·ASP 상승, AMD의 독립 기술 corroboration, 주주환원 실행을 공통 지지로 확인한다. 동시에 전사·DS 메모리·HBM 귀속, actual·guidance·MOU/LOI·협상, 기술 관계·signed 계약경제의 경계를 보존한다. HBM 단독 cash bridge, 확정 고객조건, 전용 CAPA·가격, period-matched 기대 및 peer 조정 공백은 남는다. A/S/C decision이 prompt에 없으므로 각 교집합은 NOT_EMBEDDED/NOT_INFERRED이며 임의 계산하지 않았다. synthesis_complete는 제공된 memo7+RT 검토 범위가 끝났다는 뜻일 뿐 점수·Stage 또는 투자 결론을 뜻하지 않는다.",
+    "unresolved_material_questions": [
+      "HBM 단독 매출·영업이익·마진·CAPEX·감가상각·운전자본·FCF bridge와 HBM 투자별 realized ROIC는 무엇인가?",
+      "HBM4 고객별 qualification 완료, 실제 allocation, signed 구매의무·물량·가격·기간·취소·위약 조건·선수금·RPO는 무엇인가?",
+      "HBM 전용 wafer·advanced-packaging CAPA, 수율, 고객별 allocation, 계약가격과 shortage 지속기간은 무엇인가?",
+      "동일 as-of 시점의 HBM actual, consensus 가정, 시장가격과 revision을 연결하면 운영 개선이 얼마나 미반영됐는가?",
+      "HBM 정상 이익·FCF denominator와 사업 믹스·자본구조 차이를 조정한 target·peer valuation 비교는 무엇인가?",
+      "대규모 R&D·CAPEX·자본약정과 운전자본 흡수 이후 HBM 투자금액·capacity 증분·회수기간·ROIC 및 주주환원 우선순위는 무엇인가?",
+      "AMD 기술 corroboration을 넘어 고객별 HBM 계약 경제성, concentration, qualification·품질 이력, HBM 단독 마진·현금전환을 확인하는 독립 근거는 무엇인가?",
+      "A/S/C judge ranges가 이 immutable prompt에 내장되지 않아 일곱 tri-role intersection과 material judge disagreement 상태를 현재 synthesis에서 검증할 수 없다."
+    ]
+  },
+  "payload_hash": "4139d67ed7bde3d55e5a8599068ff4d9a90a592867da960ba6acf12ed5127639",
+  "production_score_authority": false,
+  "prompt_hash": "0743205b3670210212595c1555113904f662ceda327e79601cf7e84ae23c51de",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fb0650563a3234ddb490f223267672f99913d44f29887459148890ec44bdc458",
+  "response_id": "COLLABRESP-46e640ca472d0f1deb9d8ffb8c4fc7bbc3661f6926c9688b8f4e1683dae31ab0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-82545b9d0e838809698ff2e3",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.19,
+        "rationale": "The URL is a verified Samsung financial-report component and therefore matches the issuer earnings family, but the dated period is too old to resolve the current EPS/FCF mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-82ee040f1f532c09c4061872",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "The URL is a verified Samsung financial-report component and therefore matches the issuer earnings family, but the dated period is too old to resolve the current EPS/FCF mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-83314f14d415ed3564d51618",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer presentation route matches the requested family, but its reporting period is superseded for the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-835deb6396f242ea6378827f",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "The URL is a verified Samsung financial-report component and therefore matches the issuer earnings family, but the dated period is too old to resolve the current EPS/FCF mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-85e6fa38b8ee83300baa6e3f",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.07,
+        "rationale": "The URL is a verified Samsung financial-report component and therefore matches the issuer earnings family, but the dated period is too old to resolve the current EPS/FCF mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-864c2243994081b095304a50",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.07,
+        "rationale": "The verified issuer presentation route matches the requested family, but its reporting period is superseded for the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-8722e4c14eeeb6e4968abc47",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "The verified issuer presentation route matches the requested family, but its reporting period is superseded for the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-887ee137c5942bf84274967f",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.09,
+        "rationale": "The verified issuer presentation route matches the requested family, but its reporting period is superseded for the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-88b1b6316a21df3271e14d53",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer presentation route matches the requested family, but its reporting period is superseded for the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-896e2f8de709edeb2593b4af",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.91,
+        "rationale": "This verified recent consolidated reporting package includes cash-flow material that could materially test current earnings conversion after full fetch."
+      },
+      {
+        "candidate_id": "SGCAND-89b9adc5d574467852d25a53",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.09,
+        "rationale": "The URL is a verified Samsung financial-report component and therefore matches the issuer earnings family, but the dated period is too old to resolve the current EPS/FCF mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-8a32db6f2405e92051768bd0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The legacy audio-domain route is not verified as an issuer source in the supplied metadata and cannot satisfy a requested family."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "All candidates in this partition were classified. Any material discovery route still needs bounded full-source retrieval and evidence extraction; snippets and transport metadata remain non-evidence."
+    ]
+  },
+  "payload_hash": "d907f0327ddc69d4941a3f60547939fa74f85ceca64bd4f871c2a94282fca14a",
+  "production_score_authority": false,
+  "prompt_hash": "b621ba81af3a1f28db1c7b18eb5886b47e81a30fd40bf5089b2eab07f2a3741e",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f6b0e9681594d2bac1f54a1f0186e4789c2e5ed98a73bd4633ea4f70e742e9a2",
+  "response_id": "COLLABRESP-77c8999a5815508d57b8d8f2d1ec9dd77bdcdf726e55136dd92b473227c8fe4c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

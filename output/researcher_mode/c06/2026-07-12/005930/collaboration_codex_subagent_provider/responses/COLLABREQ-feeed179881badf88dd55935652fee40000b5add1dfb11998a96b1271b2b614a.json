@@ -1,0 +1,58 @@
+{
+  "output_schema_hash": "ee995bb2ef22c76b8fcbfea5d9ecbf0d24f373bcbc25185f5c75631a2e992c9f",
+  "payload": {
+    "allowed_range": [
+      6.2,
+      7.7
+    ],
+    "anchor_comparisons": [
+      "긍정 앵커 ORDTRANSFER-c54e0c02076da1642b64c8df의 4.32~5.52점과 현재 실제·전망 근거를 비교했다.",
+      "반대 앵커 ORDTRANSFER-c2ec77e0538ebb9af9ce204b의 2.828571~4.028571점과 현재 불확실성·counterfact를 비교했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-9cdcaad56af436ed1ac5bc6f",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "현재 actual 매출·가동·주문·상용화 근거가 있어 최하단만 적용하는 견해는 수용하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 7.1,
+    "rationale": "반대 역할로 모든 counterfact를 우선 검토했다. HBM4 초기 수익성이 낮을 수 있고 고객제품 출하지연이 기여시점을 줄이며 peer 배수는 사업구성 차이를 통제하지 못한다. 다만 최종 인증, 고객 플랫폼 양산, 북미 고객 지속납품과 10억달러 누적매출은 기술 기대가 actual 상용화로 전환된 근거다.",
+    "support_fact_ids": [
+      "EFACT-3c095c9436a1460d04797e97",
+      "EFACT-3e5de9f21e03d4bc9871d258",
+      "EFACT-43ac847658ecf13550362d92",
+      "EFACT-60c77b3224c68e190899ad88",
+      "EFACT-ba3851ffc2538f67427b0ec3",
+      "EFACT-c8d894a7d67c2050fd2961da",
+      "EFACT-cf374d280bd2cbced74132b9"
+    ],
+    "why_not_higher": "계약 조건·제품별 actual 이익·현금 전환 또는 구조적 지속성의 직접 검증이 완전하지 않다.",
+    "why_not_lower": "현재 citable 긍정 사실과 공식·독립 출처가 실제 매출·수요·생산·현금 경로를 뒷받침한다."
+  },
+  "payload_hash": "9c1e6c7c93212c6fd0827194460abb01dbadc5f76c0d9bfe36569eae95d6ce82",
+  "production_score_authority": false,
+  "prompt_hash": "0a6bbb524f07b2caf00bd1811f6312e8d2ba4ebcba3be66666659cf31d1c35b8",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-feeed179881badf88dd55935652fee40000b5add1dfb11998a96b1271b2b614a",
+  "response_id": "COLLABRESP-50941c4f6668005708a9daaf4c2176b36bd8ab0d00309474cef52424daf7521e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

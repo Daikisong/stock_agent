@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-205c79d99e6dc8f04a0fb57c",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.6,
+        "rationale": "공식 실적 발표·컨퍼런스 자료 또는 연결 경로로, 메모리 매출·마진·전망의 현재 메커니즘을 확인할 가능성이 높습니다."
+      },
+      {
+        "candidate_id": "SGCAND-35b9bb920b5dcddecb8c1ade",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.92,
+        "rationale": "공식 실적 발표·컨퍼런스 자료 또는 연결 경로로, 메모리 매출·마진·전망의 현재 메커니즘을 확인할 가능성이 높습니다."
+      },
+      {
+        "candidate_id": "SGCAND-474bd28dd2fbf71b2db9463e",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.72,
+        "rationale": "공식 실적 발표·컨퍼런스 자료 또는 연결 경로로, 메모리 매출·마진·전망의 현재 메커니즘을 확인할 가능성이 높습니다."
+      },
+      {
+        "candidate_id": "SGCAND-c4ca1164a4dd2e428647dcc6",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.76,
+        "rationale": "공식 실적 발표·컨퍼런스 자료 또는 연결 경로로, 메모리 매출·마진·전망의 현재 메커니즘을 확인할 가능성이 높습니다."
+      },
+      {
+        "candidate_id": "SGCAND-c9b2f3fba73378666f489d35",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.94,
+        "rationale": "공식 실적 발표·컨퍼런스 자료 또는 연결 경로로, 메모리 매출·마진·전망의 현재 메커니즘을 확인할 가능성이 높습니다."
+      },
+      {
+        "candidate_id": "SGCAND-eb61113ed28ebbfc8c89404b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "URL 소유자와 현재 discovery 메타데이터로는 후보에 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-eb7db653051ab6e843c23a58",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "URL 소유자와 현재 discovery 메타데이터로는 후보에 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-eba2c403ab2b5442305d18f5",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-ebb39978cf98d97de764985b",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-ebbd6a5bbf887029865ecc73",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-ebe12c1cd825e24446f2fa01",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-ec2921b8f0a6c0bddb2aa321",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "모든 후보는 discovery 메타데이터만으로 분류했으며 snippet은 증거로 사용하지 않았습니다.",
+      "material 후보도 원문 fetch와 as-of-date 검증 전에는 EvidenceFact 또는 점수 재료가 아닙니다."
+    ]
+  },
+  "payload_hash": "e9957265f5d22d9eab35ea5f8ff9e20baeb562a8cb7b1312948209a4ac32c487",
+  "production_score_authority": false,
+  "prompt_hash": "d457f8fd7670f9bfa718158387eae55348dc0f5b32d28a0d5568df144d4b809e",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9398de3b0f697ba7d8d72f182ff39e651bbc79319bd3ddc3d1a9cae145555c77",
+  "response_id": "COLLABRESP-29effa5bca99b30f754da28df11dd3c2731a5fe708e6aa0b94de108064b329a8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

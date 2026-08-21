@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "32544ec8e5abb73ab1140ce1199651da594d88d46dc88627a8628e35eb1ecfcc",
+  "payload": {
+    "allowed_range": [
+      10.5,
+      15.0
+    ],
+    "anchor_comparisons": [
+      "The positive cross-sector ordinal anchor represents sustained scarcity pricing; current utilization, constrained supply, and realized ASP gains make the direction comparable, not the industry mechanics.",
+      "The counter cross-sector ordinal anchor flags local-peak and normalization risk, but its unrelated business patterns make it ordinal rather than exact."
+    ],
+    "counter_fact_ids": [
+      "EFACT-4d04a6aef1a34828271462ff",
+      "EFACT-905f741caa330bed103a5660",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "disagreements": [
+      "The positive case is persuasive for current scarcity but underweights supply response, demand elasticity, and missing HBM price and allocation terms."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-054f760d026b470c39e27df1"
+    ],
+    "proposed_points": 12.5,
+    "rationale": "Utilization and ASP evidence confirm a current bottleneck, but not durable product-specific price capture. Samsung HBM4 entry, broader Samsung and Micron HBM3E shipments, packaging alternatives, and PC-demand sensitivity can normalize supply and pricing.",
+    "support_fact_ids": [
+      "EFACT-23e8c20b3c9b312b4b630ee1",
+      "EFACT-87302daba02f8d5d65943a4b",
+      "EFACT-99b387941ace00f119e35749",
+      "EFACT-c589801b18002cc79aa63e94"
+    ],
+    "why_not_higher": "Competitor capacity, alternative packaging, and end-demand adjustment can shorten both scarcity and pricing power.",
+    "why_not_lower": "Observed utilization, constrained supply, and realized ASP gains establish more than a forecast-only thesis."
+  },
+  "payload_hash": "a62a628408e25854b3f0a9884a80d8111f50ba94dd58474b4ff27379d379f1cd",
+  "production_score_authority": false,
+  "prompt_hash": "de4db11b8913b9fbb9546a8af03d349f78d848cc33dbf1b1fdf5fa3bc9563aa0",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b35a5091c6fc8438c32cfe405d215ca090f5175d2cec0468926c2949ca5955b4",
+  "response_id": "COLLABRESP-dfea98346923e576daab89f10de328907cfdc53e9529ab126608d3cceaf3e2cc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

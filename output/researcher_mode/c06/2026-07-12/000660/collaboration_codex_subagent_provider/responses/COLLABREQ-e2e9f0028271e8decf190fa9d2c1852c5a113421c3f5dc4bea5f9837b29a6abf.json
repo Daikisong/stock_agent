@@ -1,0 +1,89 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-139b673358da23890c9f512f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The stocktwits.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-82e5123044a3445394b4f781",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The normanmacrae.ning.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-e6343f7ceae98c2277d13c13",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The stacksdaily.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-815e83e2cbd2cba9f3b17ec6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The pradeepstechpoints.wordpress.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-3ddd17138b124759627f6c37",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.linkedin.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-2c0f21b78c06029673d4f678",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This is an AI-generated third-party NVIDIA Q1 FY2027 analysis, not an NVIDIA-owned financial-results release or official investor-relations landing page. Its discovery text cannot satisfy CUSTOMER_OFFICIAL provenance or become evidence."
+      },
+      {
+        "candidate_id": "SGCAND-01c767472bfa64c4da39062e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The simnabuleo.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate in this partition provides a verified NVIDIA-owned fiscal 2027 first-quarter financial-results release or official IR landing-page route available by 2026-07-12; CUSTOMER_OFFICIAL remains unresolved.",
+      "Every candidate was classified from discovery metadata for fetch routing only; no snippet was treated as evidence."
+    ]
+  },
+  "payload_hash": "7d24f1b851c3a682d0bb9915a946172170fbd5dd5321c39abbc44e6215c7148b",
+  "production_score_authority": false,
+  "prompt_hash": "29dfd33131f01de5abaef7d3f389d3dea40315271b18ebf9a1f44b20e8c117fa",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e2e9f0028271e8decf190fa9d2c1852c5a113421c3f5dc4bea5f9837b29a6abf",
+  "response_id": "COLLABRESP-441d5a3813dcef3fa85c0d9bdc2f63408555c3f663b3d716ed71b11e04a20291",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

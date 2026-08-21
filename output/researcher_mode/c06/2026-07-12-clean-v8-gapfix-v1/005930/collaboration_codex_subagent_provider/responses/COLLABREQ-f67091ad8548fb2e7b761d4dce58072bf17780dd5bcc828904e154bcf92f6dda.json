@@ -1,0 +1,225 @@
+{
+  "output_schema_hash": "4b40f8283f64ba24ea4ac6cc5f65514601764170ba04ce51fedd29fa28a65a8a",
+  "payload": {
+    "confidence": 0.9,
+    "counter_case": "행 18은 NVIDIA HBM4가 아직 협의 중이라 확정 allocation·물량·가격을 주지 않는다. total-memory 가동률·capacity·ASP를 HBM-only economics로 귀속할 수 없고, 행 49의 3배 매출 전망과 행 70의 설비투자는 실현치가 아니다. pre-cutoff broker PDF나 customer-official 검색의 material 0도 source absence나 계약 부재를 증명하지 않는다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23"
+    ],
+    "positive_case": "행 16의 메모리 100% 가동, 행 41·43의 actual output/capacity, 행 62의 제한된 공급 가용량, 행 73의 realized ASP 상승은 당기 수급·가격 전환을 함께 보인다. 행 36은 HBM4 양산 출하 actual이고, 행 12·33은 cleanroom·1c 생산성의 공급 대응 기반을 보강한다. 다만 행 27·49·70은 각각 전망·guidance·투자 계획으로 actual과 구분한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 16,
+        "reason": "RETAIN: actual 메모리 100% 가동을 HBM-only 가동률과 분리해 핵심 bottleneck 근거로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 25,
+        "reason": "RETAIN: 서버 메모리 수요 강세 issuer assessment를 booked demand와 분리해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 27,
+        "reason": "RETAIN: 공급 부족 지속 전망을 actual 및 HBM-specific duration과 구분해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 33,
+        "reason": "RETAIN: 1c DRAM 생산성 개선의 공급 대응 효과와 공급 잠김의 차이를 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 36,
+        "reason": "RETAIN: HBM4 양산 출하 actual을 제품 execution 근거로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 41,
+        "reason": "RETAIN: 메모리 실제 생산량을 HBM 분리치 없이 total output으로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 43,
+        "reason": "RETAIN: 공시 메모리 total capacity를 HBM 전용 capacity로 승격하지 않고 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 62,
+        "reason": "RETAIN: 제한된 메모리 공급 가용량 outlook을 HBM 계약 capacity와 분리해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 73,
+        "reason": "RETAIN: realized memory ASP 상승을 HBM-only 가격과 분리해 유지한다."
+      }
+    ],
+    "proposed_score_lower": 11.0,
+    "proposed_score_mid": 12.2,
+    "proposed_score_upper": 13.4,
+    "research_complete": true,
+    "researcher_summary": "메모리 100% 가동, 제한된 공급 가용량, 실제 생산량·생산능력, 146% ASP 상승과 HBM4 양산 출하는 강한 current bottleneck/pricing 근거다. 그러나 가동률·capacity·ASP 대부분은 메모리 전체 범위이고, HBM4 전용 capacity 잠김·고객 배정·계약 가격·기간은 확인되지 않았다. HBM 매출 3배 및 증설은 guidance·plan이며, NVIDIA HBM4도 협의 중이다. DB full-report 후보 또는 CUSTOMER_OFFICIAL 검색의 material 0은 source absence나 HBM 병목 부재 증명이 아니므로, realized generic-memory tightness와 아직 미확인인 durable HBM-only bottleneck을 분리한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "대규모 DRAM capacity와 cleanroom은 HBM 공급 대응 옵션이지만 실제 HBM 잠김·배정 물량은 아니다.",
+        "fact_row_index": 12,
+        "source_economic_mechanism": "대규모 DRAM 생산능력과 선제 확보한 클린룸을 기반으로 HBM 수요 확대 시 단기간에 공급을 늘릴 수 있다고 설명했으나 확정 고객 물량은 아니다.",
+        "source_period_json": "\"2026 onward conditional on HBM demand\"",
+        "source_predicate": "DISCLOSED_FLEXIBLE_HBM_SUPPLY_RESPONSE_CAPABILITY",
+        "source_value_json": "\"large DRAM capacity and presecured cleanroom support flexible HBM response\""
+      },
+      {
+        "component_interpretation": "메모리 100% 가동은 당기 유휴 공급 여력 부재를 직접 확인하지만 HBM-only utilization은 아니다.",
+        "fact_row_index": 16,
+        "source_economic_mechanism": "메모리 생산라인의 100% 가동은 해당 분기의 유휴 공급 여력이 없었음을 보여준다.",
+        "source_period_json": "\"2026Q1\"",
+        "source_predicate": "MEMORY_LINES_OPERATED_AT_FULL_UTILIZATION",
+        "source_value_json": "100"
+      },
+      {
+        "component_interpretation": "NVIDIA HBM4가 협의 중이라는 counter는 명명 고객의 확정 allocation·가격·물량 부재 경계를 보존한다.",
+        "fact_row_index": 18,
+        "source_economic_mechanism": "삼성전자는 엔비디아에 HBM3E와 HBM4를 공급할 계획이라고 밝혔지만 HBM4 공급은 아직 긴밀히 협의 중이다. 이는 명명 고객과의 공급 논의를 확인하되 서명 계약·확정 배정·물량·가격을 확인하지 못하는 가시성 counter다.",
+        "source_period_json": "\"2025-10-31 현재 및 이후\"",
+        "source_predicate": "엔비디아 대상 HBM3E·HBM4 공급은 issuer plan이며 HBM4 공급은 2025-10-31 현재 협의 중이다.",
+        "source_value_json": "\"HBM3E·HBM4 공급 계획; HBM4 공급 협의 중\""
+      },
+      {
+        "component_interpretation": "서버 메모리 수요 강세는 issuer assessment이며 booked HBM demand와 구분한다.",
+        "fact_row_index": 25,
+        "source_economic_mechanism": "2026년 1분기 데이터센터 AI 인프라 CAPEX 확대와 Agentic AI 초기 수요가 서버향 메모리 수요 강세를 만들었다는 회사의 시장 평가는 수급 우호성을 설명한다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "SERVER_MEMORY_DEMAND_STRENGTHENED_WITH_AI_INFRASTRUCTURE_CAPEX",
+        "source_value_json": "\"서버향 중심 수요 강세가 한층 더 확연\""
+      },
+      {
+        "component_interpretation": "전반적 메모리 공급 부족 지속 전망은 duration 상단을 지지하지만 actual·HBM-specific 증거는 아니다.",
+        "fact_row_index": 27,
+        "source_economic_mechanism": "PC·모바일 수요 부담에도 공급사들이 서버 중심으로 공급을 대응하면서 전반적 메모리 공급 부족이 지속될 것이라는 전망은 가격·수급의 지속성을 뒷받침하되 실현된 사실과 구분해야 한다.",
+        "source_period_json": "\"2026 onward from Q1 report\"",
+        "source_predicate": "EXPECTS_MEMORY_SUPPLY_SHORTAGE_TO_PERSIST_WITH_SERVER_FOCUSED_SUPPLY",
+        "source_value_json": "\"전반적인 공급 부족 현상 지속 전망\""
+      },
+      {
+        "component_interpretation": "1c DRAM 생산성 개선은 공급 대응·원가 효율을 지지하지만 공급 잠김을 뜻하지 않는다.",
+        "fact_row_index": 33,
+        "source_economic_mechanism": "1c DRAM이 5세대 DRAM보다 생산성을 30% 이상 높였다는 실제 제품 특성은 동일 설비의 공급 대응력과 원가 효율을 개선한다.",
+        "source_period_json": "\"2025-06 product generation\"",
+        "source_predicate": "IMPROVED_1C_DRAM_PRODUCTIVITY_VERSUS_FIFTH_GENERATION",
+        "source_value_json": "30"
+      },
+      {
+        "component_interpretation": "HBM4 양산 출하는 HBM 제품 execution actual이다.",
+        "fact_row_index": 36,
+        "source_economic_mechanism": "2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS",
+        "source_value_json": "\"HBM4 양산 출하\""
+      },
+      {
+        "component_interpretation": "실제 메모리 생산량은 current supply output의 정량 근거이나 HBM 분리치는 아니다.",
+        "fact_row_index": 41,
+        "source_economic_mechanism": "메모리 실제 생산량은 수요에 대응해 공급된 물량 기반을 확인한다.",
+        "source_period_json": "\"2026Q1\"",
+        "source_predicate": "REPORTED_MEMORY_PRODUCTION_OUTPUT",
+        "source_value_json": "658532"
+      },
+      {
+        "component_interpretation": "공시 메모리 생산능력은 total capacity 기반이며 HBM 전용 capacity로 귀속하지 않는다.",
+        "fact_row_index": 43,
+        "source_economic_mechanism": "공시된 메모리 생산능력은 공급 가능한 물량 기반과 후속 증설 필요성을 정량화한다.",
+        "source_period_json": "\"2026Q1\"",
+        "source_predicate": "REPORTED_MEMORY_PRODUCTION_CAPACITY",
+        "source_value_json": "658532038"
+      },
+      {
+        "component_interpretation": "HBM 매출 3배 이상 및 HBM4 capacity 확대는 issuer guidance·plan이지 realized pricing·capacity lock이 아니다.",
+        "fact_row_index": 49,
+        "source_economic_mechanism": "회사는 2026년 HBM 매출을 2025년의 3배 이상으로 전망하고 HBM4 생산능력을 선제 확대하고 있다.",
+        "source_period_json": "\"2026\"",
+        "source_predicate": "GUIDES_HBM_REVENUE_ABOVE_THREE_TIMES_AND_EXPANDS_HBM4_CAPACITY",
+        "source_value_json": "\"2026 HBM revenue more than 3x 2025\""
+      },
+      {
+        "component_interpretation": "2026년 2분기 메모리 공급 가용량 제한은 current shortage outlook이나 HBM-specific 계약 부족은 아니다.",
+        "fact_row_index": 62,
+        "source_economic_mechanism": "삼성전자는 2026년 2분기 공급 계획을 설명하면서 메모리 공급 가용량이 제한되어 있다고 명시했다.",
+        "source_period_json": "\"2026-Q2 outlook\"",
+        "source_predicate": "REPORTS_LIMITED_MEMORY_SUPPLY_AVAILABILITY",
+        "source_value_json": "\"제한된 공급 가용량\""
+      },
+      {
+        "component_interpretation": "HBM4 수요 대응 설비투자 계획은 공급 대응 의도이며 투자액·capacity 증가량·고객 배정·수익회수는 없다.",
+        "fact_row_index": 70,
+        "source_economic_mechanism": "삼성전자는 증가하는 고객 HBM4 수요에 대응하기 위해 선제 설비투자를 할 계획이다. 이는 issuer의 제품별 수요·공급 대응 계획이지만 투자액, 생산능력 증가량, 고객 배정 또는 수익회수는 제시하지 않는다.",
+        "source_period_json": "\"2025-10-31 이후\"",
+        "source_predicate": "삼성전자는 증가하는 고객사 HBM4 수요 대응을 위해 선제적 설비투자를 계획했다.",
+        "source_value_json": "\"선제 설비투자 예정\""
+      },
+      {
+        "component_interpretation": "메모리 ASP 146% 상승은 realized pricing evidence지만 HBM-only ASP·contract price는 아니다.",
+        "fact_row_index": 73,
+        "source_economic_mechanism": "메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.",
+        "source_period_json": "\"2026Q1 vs 2025 annual average\"",
+        "source_predicate": "MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE",
+        "source_value_json": "146"
+      }
+    ],
+    "selected_fact_row_indices": [
+      12,
+      16,
+      18,
+      25,
+      27,
+      33,
+      36,
+      41,
+      43,
+      49,
+      62,
+      70,
+      73
+    ],
+    "source_coverage": [
+      "ISSUER_NEWSROOM",
+      "OPENDART"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "메모리 total capacity와 ASP에서 HBM4-only capacity·price로 이어지는 분리 bridge가 없다.",
+      "HBM4의 고객별 배정·확정 물량·가격·기간·취소조건이 없다.",
+      "공급 부족 duration은 issuer outlook이며 bounded full-report exact quote로 독립 확인되지 않았다.",
+      "material 0 검색 결과는 source absence나 HBM 병목 부재의 증명이 아니다."
+    ],
+    "why_not_higher": "실현된 메모리 tightness와 ASP는 강하지만 HBM4 전용 capacity utilization, sold-out 기간, 고객별 allocation, signed pricing·volume·duration이 없다. plan·guidance 또는 material 0 검색 결과로 이 간극을 채울 수 없다.",
+    "why_not_lower": "100% 가동, 제한된 공급 가용량, actual 생산·capacity, 146% memory ASP와 HBM4 양산 출하가 동시에 존재하므로 단순 제품 계획이나 범용 shortage headline보다 높다."
+  },
+  "payload_hash": "97b0f5d36a4afb4b65e77ea1f42832871930422e8d74dc2811257002fa8df25f",
+  "production_score_authority": false,
+  "prompt_hash": "b368df731e3fb2567a62595c9818cf0a0d64dc2960736c6095ede61487accb3c",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f67091ad8548fb2e7b761d4dce58072bf17780dd5bcc828904e154bcf92f6dda",
+  "response_id": "COLLABRESP-5fc992f29617d2f807b9c48d06b5978fea8e711afbc82feb5235291532cbe8c4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

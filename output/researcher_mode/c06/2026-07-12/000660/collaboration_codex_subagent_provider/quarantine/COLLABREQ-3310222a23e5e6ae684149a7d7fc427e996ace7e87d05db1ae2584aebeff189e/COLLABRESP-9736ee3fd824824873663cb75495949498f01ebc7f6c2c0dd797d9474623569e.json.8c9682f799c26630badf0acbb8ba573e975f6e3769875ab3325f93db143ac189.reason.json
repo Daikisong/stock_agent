@@ -1,0 +1,9 @@
+{
+  "production_score_authority": false,
+  "quarantined_response_path": "output/researcher_mode/c06/2026-07-12/000660/collaboration_codex_subagent_provider/quarantine/COLLABREQ-3310222a23e5e6ae684149a7d7fc427e996ace7e87d05db1ae2584aebeff189e/COLLABRESP-9736ee3fd824824873663cb75495949498f01ebc7f6c2c0dd797d9474623569e.json",
+  "reason": "SEMANTIC_INVALID_UNGROUNDED_QUERY_IDENTITY: existing response invents AMD, Broadcom, MI400, and Helios counterparty/product/query identities that occur zero times in the exact authoritative prompt; those identities are not prompt-grounded verified routes, so the response cannot be consumed.",
+  "request_id": "COLLABREQ-3310222a23e5e6ae684149a7d7fc427e996ace7e87d05db1ae2584aebeff189e",
+  "response_id": "COLLABRESP-9736ee3fd824824873663cb75495949498f01ebc7f6c2c0dd797d9474623569e",
+  "reusable_provider_response": false,
+  "schema_version": "e2r_v5_collaboration_response_quarantine_v1"
+}

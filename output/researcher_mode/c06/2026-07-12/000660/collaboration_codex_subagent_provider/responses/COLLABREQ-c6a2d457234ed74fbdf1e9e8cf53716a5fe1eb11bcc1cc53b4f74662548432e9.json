@@ -1,0 +1,356 @@
+{
+  "output_schema_hash": "5a5b9b0266462c7cd0c0a378900448786d8f59371b2e4159b16dcc38f62d33bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "rationale": "이전 continuation에서 수용한 5개 사실을 보존했고 전체 문서를 다시 대조한 결과 추가 distinct objective-linked 잔여가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e9dbc7829f4c05543a8fd272",
+        "rationale": "이전 두 페이지에서 누적 수용한 17개 사실을 보존했고 전체 문서를 다시 대조한 결과 추가 distinct objective-linked 잔여가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-ec7d322937ea71859c174817",
+        "rationale": "이전 두 페이지 2건에 이어 인프라 제약, agentic AI 연산 배수, AI 인프라 시장, ASIC 대체 반론, 공급부족, compute-memory 시장, HBM 공급선 다변화의 마지막 7개 distinct 사실을 exact quote로 재검증했다. 누적 9건이며 잔여가 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ec7d322937ea71859c174817",
+        "economic_mechanism": "미국 CSP의 CapEx 증액은 AI 인프라와 HBM 수요의 장기 성장 논리를 지지하지만, 금리·전력·부지 제약이 실제 투자 속도를 늦출 수 있다는 분석이다. 따라서 발표된 CapEx 계획을 곧바로 같은 속도의 HBM 주문·매출로 환산할 수 없다는 execution counterfact다.",
+        "exact_quote": "또한 미국 주요 CSP들의 CapEx 증액\n기조는 장기 성장 스토리를 뒷받침하지만, 금리·전력·부지 등 거시 제약 요인에 따라 투자\n속도가 조정될 가능성을 배제할 수 없음.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM valuation premium이 기대하는 다년 수요는 CSP 투자의 실제 집행에 의존하므로, 자금·전력·부지 제약은 duration을 직접 낮출 수 있다.",
+        "mechanism_scope_id": "000660:MEMORY:CSP_CAPEX_MACRO_EXECUTION_CONSTRAINTS",
+        "normalized_object": "CSP AI CapEx를 HBM 수요로 전환하는 과정의 거시·물리 제약",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "current and forward assessment published 2025-09-04",
+        "predicate": "CSP CapEx 증액 기조에도 금리·전력·부지 제약에 따라 투자 속도가 조정될 수 있다고 분석됐다",
+        "predicate_family": "AI_INFRASTRUCTURE_CAPEX_EXECUTION_CONSTRAINT",
+        "primitive_tags": [
+          "AI_MEMORY",
+          "CAPEX",
+          "RISK_COUNTER"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "CSP_CAPEX_MACRO_EXECUTION_CONSTRAINTS",
+        "question_family_tags": [
+          "CSP_CAPEX",
+          "POWER_CONSTRAINT",
+          "DEMAND_EXECUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "미국 CSP CapEx의 금리·전력·부지 제약",
+        "subject_id": "INDUSTRY:AI_MEMORY:CSP_CAPEX_RATE_POWER_SITE_CONSTRAINTS",
+        "unit": "qualitative execution risk",
+        "value": "CapEx growth support offset by possible rate, power and site constraints"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.8,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-ec7d322937ea71859c174817",
+        "economic_mechanism": "보고서는 리서치·계획·도구 사용을 수행하는 장기 추론형 AI가 단순 1회 응답보다 100~1,000배 많은 연산을 필요로 한다고 설명한다. 이는 같은 사용자 수에서도 AI 가속기와 연계 메모리의 workload intensity가 커질 수 있다는 수요 duration 근거지만, HBM 탑재량이나 SK하이닉스 매출 증가율을 직접 수치화하지 않는다.",
+        "exact_quote": "-향후 성장은 추론형(agentic) AI 의 도입이 핵심. 기존 챗봇은 한 번의 질의에 답만\n생성했으나, 이제는 ‘리서치–계획–툴 사용’까지 수행하는 장기 추론(long thinking) 가능. 단순\n1회 응답 대비 100배~1,000배 이상의 연산 필요. 이러한 모델은 환각(hallucination) 발생이\n줄고, 실제 업무 수행 가능. 엔터프라이즈 적용도 본격화. 이는 로보틱스·자율주행 등 물리적\nAI로 확장.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "응답당 연산량의 구조적 증가는 HBM 수요의 기간과 시장 기대를 보완하지만, 문서는 메모리 탑재량을 직접 제시하지 않아 보조적 근거로 한정한다.",
+        "mechanism_scope_id": "000660:MEMORY:AGENTIC_AI_COMPUTE_INTENSITY_DEMAND",
+        "normalized_object": "Agentic AI가 높이는 AI 가속기·메모리 workload intensity",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward adoption thesis published 2025-09-04",
+        "predicate": "장기 추론형 Agentic AI는 단순 1회 응답보다 100~1,000배 이상의 연산이 필요하다고 설명됐다",
+        "predicate_family": "AGENTIC_AI_COMPUTE_INTENSITY",
+        "primitive_tags": [
+          "AI_MEMORY",
+          "INFERENCE",
+          "WORKLOAD_GROWTH"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "AGENTIC_AI_COMPUTE_INTENSITY_DEMAND",
+        "question_family_tags": [
+          "AGENTIC_AI",
+          "COMPUTE_INTENSITY",
+          "DEMAND_DURATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Agentic AI·장기 추론의 응답당 연산 집약도",
+        "subject_id": "INDUSTRY:AI_MEMORY:AGENTIC_LONG_THINKING_COMPUTE_INTENSITY",
+        "unit": "relative compute multiple",
+        "value": "more than 100-1000 times the compute of a one-shot response"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.85,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-ec7d322937ea71859c174817",
+        "economic_mechanism": "보고서는 Blackwell·Rubin 후속 제품을 통한 향후 5년 AI 인프라 기회를 3~4조달러로 제시하고, 4대 CSP CapEx가 2년 사이 두 배가 돼 연 6천억달러 수준이라고 설명한다. 이는 AI 가속기와 연계 HBM 수요의 장기 투자 기반을 제시하지만 Nvidia의 시장기회 추정이며 SK하이닉스 주문 또는 매출 가이던스가 아니다.",
+        "exact_quote": "-이를 위해 Blackwell NVLink 72 기반 랙 스케일 컴퓨팅 시스템 구축. 노드 단위에서 랙\n단위로 확장하며 성능·에너지 효율·토큰 생성 단가 모두 획기적 개선. 향후 5 년간 Blackwell,\nRubin 및 후속 제품을 통해 3~4 조달러 규모 AI 인프라 기회로 진입. 최근 4 대 CSP\nCapEx 만 2 년사이 2 배 증가해 연간 6 천억 달러 수준. 이는 본격적인 AI 팩토리 빌드아웃\n초기 단계.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "AI 인프라 투자 규모와 기간은 HBM earnings duration을 통해 SK하이닉스의 역사적 메모리 band 상향 논리를 직접 뒷받침한다.",
+        "mechanism_scope_id": "000660:MEMORY:AI_INFRASTRUCTURE_CSP_CAPEX_VISIBILITY",
+        "normalized_object": "AI 인프라와 CSP CapEx가 제공하는 HBM downstream 투자 가시성",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "recent two-year CapEx change and next-five-year opportunity as of 2025-09-04",
+        "predicate": "향후 5년 AI 인프라 기회가 3~4조달러로 제시되고 최근 4대 CSP CapEx는 2년 사이 두 배인 연 6천억달러 수준으로 늘었다",
+        "predicate_family": "AI_INFRASTRUCTURE_CSP_CAPEX_SCALE",
+        "primitive_tags": [
+          "AI_MEMORY",
+          "CAPEX",
+          "FIVE_YEAR_DEMAND"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "AI_INFRASTRUCTURE_CSP_CAPEX_VISIBILITY",
+        "question_family_tags": [
+          "AI_INFRASTRUCTURE",
+          "CSP_CAPEX",
+          "DURABLE_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "Blackwell·Rubin 5년 AI 인프라 기회와 4대 CSP CapEx",
+        "subject_id": "INDUSTRY:AI_MEMORY:AI_INFRASTRUCTURE_CSP_CAPEX_FIVE_YEAR",
+        "unit": "USD and relative growth",
+        "value": "five-year AI infrastructure opportunity USD 3-4tn; four-CSP annual CapEx about USD 600bn after doubling in two years"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.77,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-ec7d322937ea71859c174817",
+        "economic_mechanism": "Nvidia 경영진은 자체 ASIC 개발이 복잡해 실제 양산으로 이어지는 경우가 적고, 빠른 모델 변화에 대응하는 풀스택·전력효율·총소유비용 우위가 GPU 플랫폼 선택을 지지한다고 주장했다. 이는 맞춤형 ASIC 확산이 Nvidia GPU와 그에 탑재되는 HBM 수요를 빠르게 잠식할 것이라는 반증을 완화하지만, 이해관계자의 자기평가이므로 독립 검증이나 ASIC 실패율로 취급하지 않는다.",
+        "exact_quote": "- ASIC 개발은 복잡하고 실제 양산으로 이어지는 경우 적음. AI 컴퓨팅은 소프트웨어와\n하드웨어의 풀스택 공동 설계 문제. 모델 아키텍처 변화가 너무 빠름. 엔비디아는 모든\n클라우드, 모든 하드웨어에서 동일한 플랫폼 제공, 생태계 전반 지원. 데이터 전처리부터\n학습·추론까지 파이프라인 전체 가속화. 또한 엔비디아는 GPU 외에도 CPU, SuperNIC,\nNVLink, InfiniBand, Spectrum-X Ethernet 등 AI 팩토리 구축에 필요한 전 인프라 제공.\n성능·전력 효율·총소유비용 측면에서 경쟁우위 확실. 따라서 고객이 엔비디아를 선택할 수밖에\n없는 구조.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "GPU 대비 자체 ASIC 비중은 장치당 HBM content와 Nvidia 연계 수요 지속성을 바꾸지만, 발언 주체가 Nvidia 경영진이어서 제한적 완화 근거로 사용해야 한다.",
+        "mechanism_scope_id": "000660:MEMORY:NVIDIA_GPU_CUSTOM_ASIC_PLATFORM_DURABILITY",
+        "normalized_object": "자체 ASIC 확산에 맞서는 Nvidia GPU 플랫폼과 연계 HBM 수요의 지속성",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "management assessment in FY2Q26 earnings-call summary",
+        "predicate": "Nvidia 경영진은 ASIC 개발의 양산 난도가 높고 자사 풀스택·전력효율·총소유비용 우위가 고객 선택을 지지한다고 설명했다",
+        "predicate_family": "GPU_PLATFORM_DURABILITY_VERSUS_CUSTOM_ASIC",
+        "primitive_tags": [
+          "AI_MEMORY",
+          "PLATFORM_COMPETITION",
+          "MANAGEMENT_CLAIM"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "GPU_VERSUS_CUSTOM_ASIC_PLATFORM_DURABILITY",
+        "question_family_tags": [
+          "CUSTOM_ASIC",
+          "GPU_PLATFORM",
+          "CONTENT_DILUTION_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.8,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "Nvidia 경영진의 자체 ASIC 양산 난도와 GPU 풀스택 경쟁력 평가",
+        "subject_id": "INDUSTRY:AI_MEMORY:NVIDIA_GPU_CUSTOM_ASIC_COMPETITION",
+        "unit": "qualitative management assessment",
+        "value": "Nvidia management view: few ASIC developments reach production and full-stack advantages persist"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-ec7d322937ea71859c174817",
+        "economic_mechanism": "Nvidia가 주요 고객의 다음 해 상당 규모 수요 전망을 확보했고 H100·H200이 모두 매진됐으며 CSP 사이에서 용량 임대가 발생했다는 경영진 설명은 HBM 탑재 GPU의 downstream 수요가 공급을 압박하고 있음을 보여준다. 이는 Nvidia 고객 전망과 GPU 매진 상태이지 SK하이닉스 HBM의 사전판매·배정·구매의무는 아니다.",
+        "exact_quote": "-주요 고객들로부터 내년 상당 규모 수요 전망 확보. AI 스타트업 투자도 급증(작년 1,000 억\n달러 → 올해 1,800 억 달러). 오픈소스 모델 채택 확산, 엔터프라이즈 AI, 산업용 AI 모두\n성장 동력. 현재 모든 H100/H200 매진 상태, CSP 간 용량 임대 사례 발생. 단기적으로 수급\n타이트.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "주요 HBM 탑재 GPU의 매진과 고객 수요 가시성은 SK하이닉스 HBM의 수요 기간과 scarcity premium을 검증하는 직접적인 고객-platform 근거다.",
+        "mechanism_scope_id": "000660:MEMORY:NVIDIA_GPU_SOLD_OUT_HBM_DOWNSTREAM_DEMAND",
+        "normalized_object": "H100·H200 매진과 고객 전망이 확인한 HBM downstream 수요 병목",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current sold-out status and next-year demand outlook stated in FY2Q26 call summary",
+        "predicate": "Nvidia는 다음 해 상당한 고객 수요 전망을 확보했고 H100·H200이 매진돼 CSP 간 용량 임대가 발생하며 단기 수급이 타이트하다고 설명했다",
+        "predicate_family": "AI_GPU_SOLD_OUT_DOWNSTREAM_HBM_DEMAND",
+        "primitive_tags": [
+          "HBM",
+          "DOWNSTREAM_DEMAND",
+          "SOLD_OUT"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "NVIDIA_GPU_SOLD_OUT_CUSTOMER_DEMAND_VISIBILITY",
+        "question_family_tags": [
+          "GPU_SOLD_OUT",
+          "CUSTOMER_DEMAND",
+          "HBM_SCARCITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Nvidia H100·H200 매진과 고객 수요 가시성",
+        "subject_id": "INDUSTRY:HBM:NVIDIA_H100_H200_SOLD_OUT_DEMAND",
+        "unit": "qualitative customer-demand and sold-out status",
+        "value": "substantial next-year customer demand; all H100/H200 sold out; CSP capacity leasing; tight near-term supply"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.81,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-ec7d322937ea71859c174817",
+        "economic_mechanism": "보고서 표는 GPU·CPU·HBM·DDR5·CXL·AI ASIC을 합친 compute and memory 범주의 향후 5년 시장을 1.2~1.5조달러, 데이터센터 인프라의 35~40%로 추정하고 대표 기업에 SK hynix를 포함한다. 이는 SK하이닉스가 참여하는 시장의 장기 외형을 보여주지만 HBM 단독 TAM, SK하이닉스 점유율 또는 매출 몫으로 분해할 수 없다.",
+        "exact_quote": "표 03. 데이터센터 인프라 시장 세부 추정 (5년 내 전망)\n카테고리 주요 구성 대표 기업 시장 규모 추정 (5년 내) 비중\nGPU (H100, B100, GB200), CPU (Grace),\n반도체\nNVIDIA, AMD, Intel, SK hynix, Samsung, Micron 1.2~1.5조 달러 35~40%\n(Compute & Memory) HBM, DDR5, CXL 메모리, AI ASIC",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "SK하이닉스가 참여하는 AI compute·memory 시장의 장기 규모는 valuation duration을 보완하지만, HBM과 회사 몫이 분리되지 않아 보조 근거다.",
+        "mechanism_scope_id": "000660:MEMORY:COMPUTE_MEMORY_FIVE_YEAR_MARKET_SCOPE",
+        "normalized_object": "SK하이닉스가 참여하는 compute·memory 합산 시장의 장기 규모",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "five-year outlook published 2025-09-04",
+        "predicate": "GPU·CPU와 HBM·DDR5·CXL 등을 합친 compute and memory 시장은 향후 5년 1.2~1.5조달러와 인프라 비중 35~40%로 추정되고 대표 기업에 SK hynix가 포함됐다",
+        "predicate_family": "AI_COMPUTE_MEMORY_MARKET_OPPORTUNITY",
+        "primitive_tags": [
+          "AI_MEMORY",
+          "MARKET_SIZE",
+          "SCOPE_CAVEAT"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "COMPUTE_MEMORY_INFRASTRUCTURE_FIVE_YEAR_TAM",
+        "question_family_tags": [
+          "COMPUTE_MEMORY_TAM",
+          "FIVE_YEAR_MARKET",
+          "SK_HYNIX_PARTICIPATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.84,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "데이터센터 compute·memory 합산 5년 시장 전망과 SK하이닉스 참여",
+        "subject_id": "INDUSTRY:AI_MEMORY:COMPUTE_MEMORY_FIVE_YEAR_MARKET",
+        "unit": "USD and % of infrastructure market",
+        "value": "combined compute-and-memory category USD 1.2-1.5tn and 35-40% of projected data-center infrastructure"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.93,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ec7d322937ea71859c174817",
+        "economic_mechanism": "보고서는 2H25~2026년에 HBM과 패키징 공급망이 완화되고, HBM3E 공급이 SK하이닉스 중심에서 삼성전자·Micron의 본격 출하까지 넓어질 것으로 전망했다. Nvidia 공급 안정성과 전세대 매출에는 긍정적이지만, SK하이닉스에는 고객 내 독점성·scarcity premium과 배정 우위가 낮아질 수 있는 직접 경쟁 counterfact다. 실제 점유율 하락이나 가격 인하는 확정하지 않는다.",
+        "exact_quote": "단기 실적 가시성은 차세대 Rubin 출시 자체보다는 Hopper·Blackwell 등 전세대 제품의\n공급 확대 여부에 달려 있음. 2H25~2026년 기간 동안 HBM과 패키징 공급망이 점진적으로\n완화되면서 전세대 성장세가 유지될 전망. HBM3E는 기존 SK하이닉스 중심 공급에서 벗어나\n삼성전자와 Micron의 본격 출하가 더해지며 수급 안정성이 강화될 것으로 예상되고, 패키징\n부문에서도 지금까지 병목이었던 TSMC CoWoS 외에 ASE와 Amkor이 대응에 나서면서 생산\ncapa 확충 효과가 기대됨. 이 같은 공급망 확장은 Rubin 이전 세대 제품 매출을 지탱하며,\n분기별 실적 변동성을 완충하는 핵심 요인으로 작용할 전망.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "경쟁사의 HBM3E 본격 출하는 SK하이닉스의 고객 내 점유율·가격 희소성·valuation premium 지속성을 직접 시험하는 핵심 counterfact다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM3E_SUPPLY_DIVERSIFICATION_COMPETITION",
+        "normalized_object": "HBM3E 공급 다변화가 낮추는 SK하이닉스 독점성·scarcity premium",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2H2025-FY2026 outlook published 2025-09-04",
+        "predicate": "2H25~2026년 HBM3E 공급이 SK하이닉스 중심에서 삼성전자·Micron 출하까지 확대돼 수급 안정성이 강화될 것으로 전망됐다",
+        "predicate_family": "HBM3E_SUPPLIER_DIVERSIFICATION_COMPETITION",
+        "primitive_tags": [
+          "HBM",
+          "COMPETITION",
+          "SUPPLY_EASING"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM3E_SUPPLY_DIVERSIFICATION_COMPETITION",
+        "question_family_tags": [
+          "HBM3E",
+          "SUPPLIER_DIVERSIFICATION",
+          "SCARCITY_PREMIUM"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "HBM3E 공급의 SK하이닉스 중심 구조 완화와 경쟁사 출하",
+        "subject_id": "INDUSTRY:HBM:SKHYNIX_SAMSUNG_MICRON_SUPPLY_DIVERSIFICATION",
+        "unit": "qualitative supply-chain outlook",
+        "value": "HBM3E supply broadening from SK hynix-centered supply to Samsung and Micron shipments; packaging alternatives also expanding"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "eb3d4e5161b0b7d6824e0892cc2a988f91e15bf7add0c5927b2fc158c3cc3801",
+  "production_score_authority": false,
+  "prompt_hash": "4aefa76a65123af28d7ec290d2ea34234ddf4828adf8273b1ec27eac45d89e0b",
+  "provenance": {
+    "agent_id": "root-phase101-c06-facts",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_facts",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c6a2d457234ed74fbdf1e9e8cf53716a5fe1eb11bcc1cc53b4f74662548432e9",
+  "response_id": "COLLABRESP-57eead755ef6b33ad8ab3661379d08db6a311f1bb24e322cd9787703694a38c5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

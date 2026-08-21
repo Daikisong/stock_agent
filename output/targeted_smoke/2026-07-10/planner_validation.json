@@ -1,0 +1,31 @@
+{
+  "as_of_date": "2026-07-10",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "future_input_fact_used": 0,
+    "future_outcome_prompt_leak": 0,
+    "planner_call_empty": 0,
+    "planner_score_stage_key": 0,
+    "provider_failure_final_score": 0,
+    "real_success_or_exact_blocker_missing": 0,
+    "selected_l3_empty": 0,
+    "selected_planner_run_count_mismatch": 0,
+    "source_primary_copy_without_reason": 0
+  },
+  "exact_llm_blocker_count": 0,
+  "future_outcome_prompt_leak_count": 0,
+  "hard_acceptance_pass": true,
+  "planner_call_count": 3,
+  "planner_pending_count": 0,
+  "planner_run_count": 2,
+  "planner_score_stage_key_count": 0,
+  "planner_status_counts": {
+    "ABSTAINED": 2
+  },
+  "provider_failure_final_score_count": 0,
+  "real_planner_success_count": 2,
+  "schema_version": "e2r_live_brain_planner_audit_v1",
+  "selected_L3_count": 2,
+  "source_primary_copy_without_reason_count": 0,
+  "status": "CURRENT_BRAIN_PLANNER_PASS"
+}

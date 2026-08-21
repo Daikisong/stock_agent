@@ -1,0 +1,137 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-f263fb148bb095ea5ded0210",
+        "rationale": "2025년 4분기 공식 영문 컨퍼런스콜 원문을 전수 검토했다. 직전 한국어 전문 SGDOC-d203...에서 수용된 2025년 메모리 투자 증가와 2026년 대규모 CAPEX 증가 전망을 포함해 HBM PO 완판·연간 매출 3배·수요초과·HBM4 양산 및 메모리 수급·가격 사실이 모두 current canonical과 의미 중복이다. 동일 발행자의 번역본을 새 fact로 반복하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-f2e46aebbdad21c089328d8a",
+        "rationale": "2026년 2분기 잠정실적 기사와 current 252 facts를 전수 대조해 HBM4의 출하 후 4개월간 12억달러 매출 추정만 source-specific 비중복 fact로 추출했다. DS 영업이익 88.9조원·99%는 파운드리가 섞인 반도체 부문이므로 메모리 이익으로 전용하지 않았고, D램 이익 60~70조원·성과급 충당금·메모리 가격 및 LTA는 current facts와 중복했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f344aed4501502f2c9f473b5",
+        "rationale": "2025년 4분기 삼성전자 뉴스룸 실적발표를 전수 검토했다. 메모리 사상 최대 분기 매출·영업이익, 가격 상승, HBM·서버 DDR5·기업용 SSD 판매 확대 및 2026년 HBM4 양산·AI 수요 전망은 이미 current canonical에 있다. DS 매출·영업이익은 비메모리 사업이 섞여 있고 1분기 전망은 후속 2026년 1분기 actual로 대체돼 새 memory fact를 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-f6d5da741dc1b9250dbade77",
+        "rationale": "2024년 1분기 공식 영문 경영설명회 전체와 current facts를 대조해 표의 메모리 매출 YoY 96%만 비중복 추출했다. 같은 표의 매출 17.49조원·QoQ 11%, 흑자전환, D램 ASP·bit, HBM committed supply와 3배 확대는 이미 current canonical에 있고, 전사 손익·현금흐름과 다른 사업부 수치는 메모리 eps_fcf로 전용하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f2e46aebbdad21c089328d8a",
+        "economic_mechanism": "HBM4 출하 이후 4개월간 매출 12억달러 추정은 HBM4 양산·출하가 실제 매출로 전환된 초기 속도를 별도 매체 수치로 제시한다.",
+        "exact_quote": "업계에 따르면 삼성전자의 HBM4 매출은 지난 2월 출하 이후 4개월 동안 12억달러(약 1조8500억원)의 매출을 올린 것으로 분석된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current facts에는 다른 매체의 첫 출하 후 약 130일 누적 매출 10억달러 근거가 있다. 이 문서는 4개월·12억달러라는 별도 추정치를 제시하므로 확정 issuer 매출로 합치지 않고 source-specific estimate로 유지한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4_REVENUE:2026M02_M06",
+        "normalized_object": "HBM4 2026년 2월 출하 후 4개월간 매출 12억달러 분석",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02 through 2026-06 estimate",
+        "predicate": "삼성전자 HBM4가 2026년 2월 출하 이후 4개월 동안 12억달러의 매출을 올린 것으로 분석됐다",
+        "predicate_family": "HBM4_REVENUE_CONVERSION_ESTIMATE",
+        "primitive_tags": [
+          "HBM4_REVENUE",
+          "FOUR_MONTH_SALES"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_REVENUE_CONVERSION_ESTIMATE",
+        "question_family_tags": [
+          "HBM4_REVENUE_CONVERSION",
+          "HBM4_SALES_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 출하 후 매출 전환 추정",
+        "subject_id": "005930:MEMORY:HBM4_REVENUE:2026M02_M06",
+        "unit": "USD estimate",
+        "value": 1200000000
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f6d5da741dc1b9250dbade77",
+        "economic_mechanism": "2024년 1분기 메모리 매출의 전년동기 대비 96% 증가는 메모리 업황 회복이 실제 분기 매출로 전환된 기저와 속도를 정량화한다.",
+        "exact_quote": "Memory 17.49 15.71 8.92 11%↑ 96%↑",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current facts에는 같은 표의 2024년 1분기 메모리 매출 17.49조원과 QoQ 11%가 있으나 YoY 96%는 없다. 표의 마지막 성장률을 독립된 전년동기 성장 actual로만 추출한다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE_YOY:2024Q1",
+        "normalized_object": "2024년 1분기 메모리 매출 전년동기 대비 96% 증가",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q1 vs 2023-Q1",
+        "predicate": "삼성전자 메모리 매출이 2024년 1분기에 전년 동기 대비 96% 증가했다",
+        "predicate_family": "MEMORY_REVENUE_YOY_GROWTH_ACTUAL",
+        "primitive_tags": [
+          "MEMORY_REVENUE_YOY",
+          "Q1_2024_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_REVENUE_YOY_GROWTH_ACTUAL",
+        "question_family_tags": [
+          "MEMORY_REVENUE_GROWTH",
+          "YOY_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024년 1분기 메모리 매출 성장률",
+        "subject_id": "005930:MEMORY:REVENUE_YOY:2024Q1",
+        "unit": "percent YoY",
+        "value": 96
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d0706f950a1e45d46f598fcfcb506a7c16f598957ca3dd33c785534cfefc1847",
+  "production_score_authority": false,
+  "prompt_hash": "eb956a5015985a218b044367debf66b138e1a5f55ecb7a713ceb944295be97f7",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fa2f7d015d7f5f850a3c0be2bb6498f470002f495ed1877daad8e3c369bdbc30",
+  "response_id": "COLLABRESP-8346837b3492b0326f4395032b24b90fcbe2dd65827b2b9e29b4c1813fa6667b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

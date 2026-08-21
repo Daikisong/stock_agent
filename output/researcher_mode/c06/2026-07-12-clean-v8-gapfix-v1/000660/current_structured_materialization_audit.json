@@ -1,0 +1,427 @@
+{
+  "as_of_date": "2026-07-12",
+  "cache_hit_count": 18,
+  "companyguide_report_history": {
+    "bounded_pagination": true,
+    "deterministic_url_or_query_synthesis": false,
+    "duplicate_report_count": 0,
+    "eligible_report_count": 257,
+    "fetched_page_count": 3,
+    "full_document_fetch_performed": false,
+    "full_document_owner": "LLM_SOURCE_GRAPH",
+    "handoff_candidate_count": 257,
+    "max_candidates": 300,
+    "max_pages": 3,
+    "provider_archive_exhausted": false,
+    "provider_total_pages": 4,
+    "results_per_page": 100,
+    "schema_version": "e2r_v5_companyguide_report_pagination_audit_v1",
+    "selected_candidate_count": 300,
+    "status": "REPORT_CANDIDATE_HANDOFF_READY",
+    "stop_reason": "MAX_CANDIDATES_REACHED"
+  },
+  "consensus_revision_record_count": 1414,
+  "critical_count_sum": 1,
+  "critical_counts": {
+    "deep_canary_valuation_route_not_attempted_count": 0,
+    "fcf_zero_due_missing_parser_count": 0,
+    "future_structured_source_count": 0,
+    "missing_structured_role_count": 0,
+    "peer_selection_pending_count": 1,
+    "provider_or_auth_failure_count": 0,
+    "revision_zero_due_connector_gap_count": 0
+  },
+  "fetch_attempt_count": 21,
+  "financial_record_count": 113,
+  "fixed_transport_count_is_completion": false,
+  "future_data_is_rejected": true,
+  "issuer_fact_materialization": {
+    "accepted_structured_observation_count": 23,
+    "broker_revision_record_count": 0,
+    "broker_valuation_record_count": 6,
+    "exact_quote_required": true,
+    "guidance_observation_count": 7,
+    "input_claim_count": 2190,
+    "input_document_count": 35,
+    "input_fact_count": 2190,
+    "issuer_source_required_for_segment_guidance_and_visibility": true,
+    "llm_score_authority": false,
+    "numeric_value_required_for_numeric_roles": true,
+    "qoq_record_count": 5,
+    "qualitative_value_allowed_only_for_durable_visibility": true,
+    "rejection_counts": {
+      "DURABLE_VISIBILITY_PERIOD_NOT_FORWARD": 5,
+      "FACT_NOT_CURRENT_OR_OPEN": 74,
+      "REVISION_PERIOD_NOT_FORWARD:OPERATING_PROFIT_REVISION": 7,
+      "REVISION_QUOTE_ROLE_VALUE_MISMATCH:OPERATING_PROFIT_REVISION": 4,
+      "ROLE_REQUIRES_CURRENT_LIFECYCLE:QOQ_GROWTH": 21,
+      "ROLE_REQUIRES_CURRENT_LIFECYCLE:SEGMENT_CONTRIBUTION": 22,
+      "TAGGED_VALUE_NOT_MACHINE_NUMERIC": 2,
+      "VALUATION_PERIOD_NOT_FORWARD:FORWARD_BOOK_VALUE": 3,
+      "VALUATION_PERIOD_NOT_FORWARD:FORWARD_EV_EBITDA": 2,
+      "VALUATION_PERIOD_NOT_FORWARD:FORWARD_PB": 4,
+      "VALUATION_QUOTE_ROLE_VALUE_MISMATCH:FORWARD_BOOK_VALUE": 3,
+      "VALUATION_REQUIRES_MULTIPLE_UNIT:FORWARD_PB": 3
+    },
+    "schema_version": "e2r_v5_issuer_fact_materialization_audit_v2",
+    "segment_observation_count": 2,
+    "tagged_claim_count": 99
+  },
+  "latest_trading_snapshot_date": "2026-07-10",
+  "llm_structured_tag_direct_score_authority": false,
+  "nonblocking_fetch_failure_attempt_ids": [
+    "STRUCTFETCH-7ddc1c808b1f6a9a81c3f54f"
+  ],
+  "observed_nonblocking_fetch_failure_count": 1,
+  "only_substituted_requirement_failure_is_nonblocking": true,
+  "payload_manifest_count": 20,
+  "peer_selection": {
+    "as_of_date": "2026-07-12",
+    "common_metric_peer_counts": {},
+    "listing_identity_roster": {
+      "all_required_markets_complete": true,
+      "complete_market_snapshot_used_without_top_n": true,
+      "complete_markets": [
+        "KOSPI",
+        "KOSDAQ"
+      ],
+      "identity_count": 2689,
+      "identity_roster_hash": "e0b776e0f2de5fd5cc812212eb585078d75418eb4b8580e74f4ab5676c45904b",
+      "identity_scope_only_not_score_or_stage_input": true,
+      "incomplete_markets": [],
+      "market_details": {
+        "KOSDAQ": {
+          "all_rows_accounted": true,
+          "ambiguous_identity_row_count": 0,
+          "complete_identity_plane": true,
+          "duplicate_identity_row_count": 0,
+          "exact_snapshot_row_count": 1820,
+          "identity_count": 1770,
+          "malformed_row_count": 0,
+          "non_peer_eligible_security_row_count": 50,
+          "non_snapshot_row_count": 0,
+          "raw_row_count": 1820,
+          "source_id": "STRUCTSRC-8558d1ba5a3d0dfaf543e483",
+          "status": "COMPLETE",
+          "target_row_count": 0,
+          "unaccounted_exact_snapshot_row_count": 0
+        },
+        "KOSPI": {
+          "all_rows_accounted": true,
+          "ambiguous_identity_row_count": 0,
+          "complete_identity_plane": true,
+          "duplicate_identity_row_count": 0,
+          "exact_snapshot_row_count": 945,
+          "identity_count": 919,
+          "malformed_row_count": 0,
+          "non_peer_eligible_security_row_count": 25,
+          "non_snapshot_row_count": 0,
+          "raw_row_count": 945,
+          "source_id": "STRUCTSRC-81694090e1524eb389bfbb5d",
+          "status": "COMPLETE",
+          "target_row_count": 1,
+          "unaccounted_exact_snapshot_row_count": 0
+        }
+      },
+      "required_markets": [
+        "KOSPI",
+        "KOSDAQ"
+      ],
+      "schema_version": "e2r_v5_krx_listing_identity_roster_audit_v1",
+      "snapshot_date": "2026-07-10"
+    },
+    "llm_selects_direction_only": true,
+    "llm_supplies_valuation_values": false,
+    "official_trailing_pb_fallbacks": [
+      {
+        "evidence_fact_count_added": 0,
+        "failure_reason": "MULTIPLE_LISTED_EQUITY_LINES_REQUIRE_SCOPE_MATCHING",
+        "filing_metadata_fetch_count": 0,
+        "maximum_filing_metadata_fetches": 2,
+        "maximum_statement_fetches": 2,
+        "peer_name": "삼성전자",
+        "peer_symbol": "005930",
+        "report_pdf_fetch_count": 0,
+        "route": "KRX_MARKET_CAP_X_OPENDART_PARENT_EQUITY",
+        "snapshot_failure": "CONSENSUS_PAYLOAD_UNAVAILABLE",
+        "statement_fetch_count": 0,
+        "status": "PENDING"
+      },
+      {
+        "corp_code_resolution": {
+          "archive_candidate_count": 0,
+          "archive_content_hash": null,
+          "archive_directory_label": null,
+          "economic_value_authority": false,
+          "failure_reason": "USABLE_CORP_CODE_DIRECTORY_MAPPING_MISSING",
+          "folder_date_used_as_source_availability": false,
+          "identifier_bridge_only": true,
+          "mapping_modify_date": null,
+          "maximum_archive_candidates": 3,
+          "parsed_archive_count": 0,
+          "status": "PENDING",
+          "stop_condition": "ARCHIVE_CANDIDATE_BUDGET_EXHAUSTED"
+        },
+        "evidence_fact_count_added": 0,
+        "failure_reason": "USABLE_CORP_CODE_DIRECTORY_MAPPING_MISSING",
+        "filing_metadata_fetch_count": 0,
+        "maximum_filing_metadata_fetches": 2,
+        "maximum_statement_fetches": 2,
+        "peer_name": "한미반도체",
+        "peer_symbol": "042700",
+        "report_pdf_fetch_count": 0,
+        "route": "KRX_MARKET_CAP_X_OPENDART_PARENT_EQUITY",
+        "snapshot_failure": "CONSENSUS_PAYLOAD_UNAVAILABLE",
+        "statement_fetch_count": 0,
+        "status": "PENDING"
+      }
+    ],
+    "peer_observation_count": 0,
+    "pending_reason": "PEER_SELECTION_VERIFICATION_RETRY_ERROR:COLLABORATION_RESPONSE_PENDING:COLLABREQ-6de531a6bd1d8a940668f80c557906bee7cb9f187cf867cf2dad38d0451ee98b",
+    "point_in_time_structured_fetch_required": true,
+    "production_score_authority": false,
+    "proposal_count": 2,
+    "proposal_failures": [
+      "005930:MULTIPLE_LISTED_EQUITY_LINES_REQUIRE_SCOPE_MATCHING",
+      "042700:USABLE_CORP_CODE_DIRECTORY_MAPPING_MISSING"
+    ],
+    "provider_attempt_count": 1,
+    "provider_cache_hit": true,
+    "provider_name": "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE",
+    "provider_prompt_hash": "451757c1881644623bd8fcb9a2cbd7ced96e2d418d26007483f559f2e0eab907",
+    "provider_response_cache_invalidations": [],
+    "provider_response_hash": "cae3ec17e5db319e43d96c959b2f8e9715ca122d484452ca71fd4f93a86fc811",
+    "schema_version": "e2r_v5_structured_peer_selection_audit_v1",
+    "selected_peers": [],
+    "selection_route_cache_invalidations": [],
+    "status": "PEER_SELECTION_PENDING",
+    "structured_verification_retry_used": true,
+    "target_id": "000660",
+    "validation_retry_used": true,
+    "verified_peer_count": 0
+  },
+  "provider_failure_is_zero_score": false,
+  "report_candidate_count": 257,
+  "required_roles_by_component": {
+    "bottleneck_pricing": [],
+    "capital_allocation": [
+      "CAPEX_SUPPLY_RESPONSE",
+      "CASH_CONVERSION"
+    ],
+    "earnings_visibility": [
+      "FORWARD_REVISION"
+    ],
+    "eps_fcf_explosion": [
+      "ACTUAL_EARNINGS",
+      "FORWARD_REVISION",
+      "CASH_CONVERSION"
+    ],
+    "information_confidence": [],
+    "market_mispricing": [
+      "CURRENT_VALUATION",
+      "EARNINGS_REVISION"
+    ],
+    "valuation_rerating": [
+      "CURRENT_VALUATION",
+      "DURABLE_VISIBILITY",
+      "TARGET_TRAILING_VALUATION"
+    ]
+  },
+  "schema_version": "e2r_v5_current_structured_materialization_audit_v1",
+  "status": "CURRENT_STRUCTURED_MATERIALIZATION_PENDING",
+  "structured_fact_requires_verified_exact_quote": true,
+  "structured_fetch_failure_requirement_audit": [
+    {
+      "attempt_id": "STRUCTFETCH-7ddc1c808b1f6a9a81c3f54f",
+      "disposition": "NONBLOCKING_SUBSTITUTED_REQUIREMENT",
+      "impacted_unresolved_requirements": [],
+      "source_role": "CONSENSUS_VALUATION_SNAPSHOT",
+      "supported_requirements": [
+        "CONSENSUS_HISTORY",
+        "EARNINGS_SURPRISE",
+        "EPS_REVISION",
+        "FORWARD_BOOK_VALUE",
+        "FORWARD_EPS",
+        "FORWARD_EV_EBITDA",
+        "FORWARD_FCF",
+        "FORWARD_FCF_YIELD",
+        "FORWARD_PB",
+        "FORWARD_PE",
+        "OPERATING_PROFIT_REVISION",
+        "OWN_HISTORICAL_BAND",
+        "TARGET_TRAILING_VALUATION"
+      ]
+    }
+  ],
+  "structured_record_count": 1677,
+  "target_id": "000660",
+  "target_trailing_valuation": {
+    "derived_metrics": [
+      {
+        "metric_id": "target_trailing_parent_pb",
+        "value": 9.456941525894875
+      },
+      {
+        "metric_id": "target_trailing_parent_pe",
+        "value": 20.676629012106645
+      }
+    ],
+    "failure_reason": null,
+    "filing_metadata_fetch_count": 3,
+    "forward_multiple_is_substitute": false,
+    "krx_market_cap": {
+      "equity_line_count": 1,
+      "equity_line_symbols": [
+        "000660"
+      ],
+      "market_cap_krw": 1553691155700000.0,
+      "snapshot_date": "2026-07-10",
+      "source_ids": [
+        "STRUCTSRC-81694090e1524eb389bfbb5d"
+      ]
+    },
+    "maximum_balance_sheet_candidates": 2,
+    "maximum_filing_metadata_fetches": 3,
+    "maximum_ttm_statement_inputs": 3,
+    "parent_equity_attempts": [
+      {
+        "account_id": "ifrs-full_EquityAttributableToOwnersOfParent",
+        "account_name": "지배기업의 소유지분",
+        "candidate_count": 1,
+        "corp_code": "00164779",
+        "currency": "KRW",
+        "filing_period_confirmation": {
+          "filing_row_hash": "8559c6f58f064331e2dbd6ce8791b40c7c4e78c975778efad24cdbf9e44b11ec",
+          "period_end": "2026-03-31",
+          "period_end_authority": "OPENDART_DISCLOSURE_REPORT_NAME",
+          "rcept_no": "20260515002287",
+          "rejected_reasons": {},
+          "report_name": "분기보고서 (2026.03)",
+          "status": "RESOLVED"
+        },
+        "fiscal_year": 2026,
+        "parent_equity_row_hash": "ba526b18f6da94ec25b75f8d451302104a2d111db16ce3c5e039b2a21cb4faa8",
+        "period_end": "2026-03-31",
+        "rcept_date": "2026-05-15",
+        "rcept_no": "20260515002287",
+        "rejected_reasons": {},
+        "report_code": "11013",
+        "requested_fs_div": "CFS",
+        "status": "RESOLVED"
+      }
+    ],
+    "requirement": "TARGET_TRAILING_VALUATION",
+    "route": "KRX_MARKET_CAP_X_OPENDART_PARENT_FINANCIALS",
+    "schema_version": "e2r_target_trailing_valuation_audit_v1",
+    "source_ids": [
+      "STRUCTSRC-81694090e1524eb389bfbb5d",
+      "STRUCTSRC-3634ec37f8b04a606faea027",
+      "STRUCTSRC-bcd5860d7a0878e7758a0b38",
+      "STRUCTSRC-de87d6dc6fd3cda2942fe374",
+      "STRUCTSRC-742494cfcf458d1ca8cdd2e5",
+      "STRUCTSRC-ee8052d8037701b97d81f74f",
+      "STRUCTSRC-10c24ac3ad9031b4ce5d86bc"
+    ],
+    "status": "RESOLVED",
+    "stop_condition": "TARGET_TRAILING_VALUATION_RESOLVED",
+    "trailing_parent_net_income": {
+      "derivation": "PRIOR_ANNUAL_PLUS_CURRENT_YTD_MINUS_PRIOR_YTD",
+      "derived_value": 75142382000000.0,
+      "failure_reason": null,
+      "maximum_statement_inputs": 3,
+      "source_ids": [
+        "STRUCTSRC-3634ec37f8b04a606faea027",
+        "STRUCTSRC-bcd5860d7a0878e7758a0b38",
+        "STRUCTSRC-de87d6dc6fd3cda2942fe374",
+        "STRUCTSRC-742494cfcf458d1ca8cdd2e5",
+        "STRUCTSRC-ee8052d8037701b97d81f74f",
+        "STRUCTSRC-10c24ac3ad9031b4ce5d86bc"
+      ],
+      "statement_inputs": [
+        {
+          "account_id": "ifrs-full_ProfitLossAttributableToOwnersOfParent",
+          "account_name": "지배기업의 소유주지분",
+          "amount_field": "thstrm_add_amount",
+          "candidate_count": 1,
+          "corp_code": "00164779",
+          "currency": "KRW",
+          "filing_period_confirmation": {
+            "filing_row_hash": "8559c6f58f064331e2dbd6ce8791b40c7c4e78c975778efad24cdbf9e44b11ec",
+            "period_end": "2026-03-31",
+            "period_end_authority": "OPENDART_DISCLOSURE_REPORT_NAME",
+            "rcept_no": "20260515002287",
+            "rejected_reasons": {},
+            "report_name": "분기보고서 (2026.03)",
+            "status": "RESOLVED"
+          },
+          "fiscal_year": 2026,
+          "input_role": "current_interim_cumulative",
+          "parent_net_income_row_hash": "a53c9540e929f4058007796f19d1ac2a570f339ecd6ce9124885696a619545d7",
+          "period_end": "2026-03-31",
+          "rcept_date": "2026-05-15",
+          "rcept_no": "20260515002287",
+          "rejected_reasons": {},
+          "report_code": "11013",
+          "requested_fs_div": "CFS",
+          "status": "RESOLVED"
+        },
+        {
+          "account_id": "ifrs-full_ProfitLossAttributableToOwnersOfParent",
+          "account_name": "지배기업의 소유주지분",
+          "amount_field": "thstrm_amount",
+          "candidate_count": 1,
+          "corp_code": "00164779",
+          "currency": "KRW",
+          "filing_period_confirmation": {
+            "filing_row_hash": "94afa3a352b314c42efa9a53fc42005533f3c20dd28dbf40140134dcd3c4816f",
+            "period_end": "2025-12-31",
+            "period_end_authority": "OPENDART_DISCLOSURE_REPORT_NAME",
+            "rcept_no": "20260317000635",
+            "rejected_reasons": {},
+            "report_name": "사업보고서 (2025.12)",
+            "status": "RESOLVED"
+          },
+          "fiscal_year": 2025,
+          "input_role": "prior_annual",
+          "parent_net_income_row_hash": "7338f2f427609d1b6f5ee5c53783fd2cd030229da9df607210ea7814f7e06409",
+          "period_end": "2025-12-31",
+          "rcept_date": "2026-03-17",
+          "rcept_no": "20260317000635",
+          "rejected_reasons": {},
+          "report_code": "11011",
+          "requested_fs_div": "CFS",
+          "status": "RESOLVED"
+        },
+        {
+          "account_id": "ifrs-full_ProfitLossAttributableToOwnersOfParent",
+          "account_name": "지배기업의 소유주지분",
+          "amount_field": "thstrm_add_amount",
+          "candidate_count": 1,
+          "corp_code": "00164779",
+          "currency": "KRW",
+          "filing_period_confirmation": {
+            "filing_row_hash": "328eea70ce373d25ce1ea5a03fb2330da3a4365773a88ce40df1cecf38e4d5b2",
+            "period_end": "2025-03-31",
+            "period_end_authority": "OPENDART_DISCLOSURE_REPORT_NAME",
+            "rcept_no": "20250515002103",
+            "rejected_reasons": {},
+            "report_name": "분기보고서 (2025.03)",
+            "status": "RESOLVED"
+          },
+          "fiscal_year": 2025,
+          "input_role": "prior_interim_cumulative",
+          "parent_net_income_row_hash": "defc2da4eca905e3f68b5b2a1760162577e546ff90cec11ced21f43bd9ab9686",
+          "period_end": "2025-03-31",
+          "rcept_date": "2025-05-15",
+          "rcept_no": "20250515002103",
+          "rejected_reasons": {},
+          "report_code": "11013",
+          "requested_fs_div": "CFS",
+          "status": "RESOLVED"
+        }
+      ],
+      "status": "RESOLVED"
+    }
+  },
+  "valuation_record_count": 148
+}

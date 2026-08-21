@@ -1,0 +1,215 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2e3b739d867d19f698fc79bc",
+        "rationale": "current canonical의 2026년 1분기 메모리 매출액·HBM4 양산 출하·서버향 판매·수익성 개선을 반복하지 않고, 비중복인 메모리 매출 QoQ/YoY 성장률, 엔비디아 베라 루빈용 HBM4 양산 연결, 성과급 협상 실패 시 메모리 생산 차질 위험만 추출했다. DS 혼합 영업이익, 전사 실적·환율·R&D, 파운드리·모바일·디스플레이 실적은 objective-local 메모리 fact로 전용하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2e3b739d867d19f698fc79bc",
+        "economic_mechanism": "메모리 사업부 매출이 2026년 1분기에 전분기 대비 두 배 이상으로 늘어 실제 이익 폭발의 매출 기반이 확대됐다.",
+        "exact_quote": "메모리사업부 매출액은 74조8000억원이다. 전기대비 101% 전년동기대비 292% 성장했다. 영업이익은 비공개다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical에는 같은 분기의 메모리 매출액은 있지만 QoQ 성장률은 없다. 실제 분기 매출 증가 속도를 직접 수치화하지만, TRUSTED_BUSINESS_MEDIA는 현재 QOQ_GROWTH structured-role 허용 source family가 아니므로 해당 role은 주장하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE_GROWTH:2026-Q1",
+        "normalized_object": "2026년 1분기 메모리 매출 전분기 대비 101% 증가",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 vs 2025-Q4",
+        "predicate": "삼성전자 메모리 사업부 매출이 2026년 1분기에 전분기 대비 101% 증가했다",
+        "predicate_family": "MEMORY_REVENUE_QOQ_GROWTH",
+        "primitive_tags": [
+          "MEMORY_REVENUE",
+          "QOQ_GROWTH",
+          "ACTUAL_EARNINGS"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_REVENUE_QOQ_GROWTH",
+        "question_family_tags": [
+          "MEMORY_REVENUE_QOQ_GROWTH",
+          "MEMORY_EARNINGS_EXPANSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 사업부 2026년 1분기 매출 QoQ 성장",
+        "subject_id": "005930:MEMORY:REVENUE:QOQ_GROWTH:2026-Q1",
+        "unit": "percent",
+        "value": 101
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2e3b739d867d19f698fc79bc",
+        "economic_mechanism": "메모리 사업부 매출이 전년동기 대비 크게 증가해 현재 메모리 업사이클의 실적 전환 규모를 보여준다.",
+        "exact_quote": "메모리사업부 매출액은 74조8000억원이다. 전기대비 101% 전년동기대비 292% 성장했다. 영업이익은 비공개다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical에는 2026년 1분기 메모리 매출액은 있으나 같은 분기의 YoY 성장률은 없다. 완료된 분기의 매출 성장 폭을 직접 보여주되 영업이익이나 FCF로 확대 해석하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE_GROWTH:2026-Q1",
+        "normalized_object": "2026년 1분기 메모리 매출 전년동기 대비 292% 증가",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 vs 2025-Q1",
+        "predicate": "삼성전자 메모리 사업부 매출이 2026년 1분기에 전년동기 대비 292% 증가했다",
+        "predicate_family": "MEMORY_REVENUE_YOY_GROWTH",
+        "primitive_tags": [
+          "MEMORY_REVENUE",
+          "YOY_GROWTH",
+          "ACTUAL_EARNINGS"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_REVENUE_YOY_GROWTH",
+        "question_family_tags": [
+          "MEMORY_REVENUE_YOY_GROWTH",
+          "MEMORY_EARNINGS_EXPANSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 사업부 2026년 1분기 매출 YoY 성장",
+        "subject_id": "005930:MEMORY:REVENUE:YOY_GROWTH:2026-Q1",
+        "unit": "percent",
+        "value": 292
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2e3b739d867d19f698fc79bc",
+        "economic_mechanism": "HBM4 양산이 엔비디아 베라 루빈 플랫폼용 제품으로 연결돼 범용적인 제품 출시보다 구체적인 AI 가속기 수요 노출을 보여준다.",
+        "exact_quote": "업계 최초 엔비디아 '베라 루빈' 플랫폼용 6세대 HBM(HBM4)와 소캠(SOCAMM)2 양산을 개시했다. HBM4는 루빈 그래픽처리장치(GPU)에 들어간다. 소캠2는 AI 서버용 D램 모듈이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical에는 HBM4 양산 출하는 있으나 엔비디아 베라 루빈 플랫폼용이라는 구체적 제품-플랫폼 연결은 없다. 원문은 구매의무·계약기간·고객별 매출을 제시하지 않으므로 양산 연결 이상으로 확장하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:NVIDIA_RUBIN:COMMERCIALIZATION",
+        "normalized_object": "엔비디아 베라 루빈 플랫폼용 HBM4 양산 개시",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "삼성전자가 엔비디아 베라 루빈 플랫폼용 HBM4 양산을 개시했다",
+        "predicate_family": "HBM4_NVIDIA_RUBIN_MASS_PRODUCTION",
+        "primitive_tags": [
+          "HBM4",
+          "NVIDIA_VERA_RUBIN",
+          "MASS_PRODUCTION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_NVIDIA_RUBIN_MASS_PRODUCTION",
+        "question_family_tags": [
+          "HBM4_NAMED_PLATFORM_COMMERCIALIZATION",
+          "HBM_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 엔비디아 베라 루빈용 HBM4 양산",
+        "subject_id": "005930:MEMORY:HBM4:NVIDIA_RUBIN:MASS_PRODUCTION:2026-Q1",
+        "unit": "commercialization status",
+        "value": "mass production for NVIDIA Vera Rubin platform"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.72,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-2e3b739d867d19f698fc79bc",
+        "economic_mechanism": "성과급 관련 노사협상이 실패할 경우 메모리 생산 차질로 이어질 수 있어 현재 강한 매출·수익성의 지속성에 조건부 실행 위험을 둔다.",
+        "exact_quote": "성과급을 두고 노사 갈등이 발발했다. 협상에 실패하면 메모리 생산 차질 등이 빚어질 위험이 있다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 100% 가동 및 메모리 실적 확대의 지속성에 직접 반대 방향인 target-specific 운영 위험이다. 실제 생산 차질이 발생했다는 뜻은 아니므로 조건부 OPEN counter로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:PRODUCTION:LABOR_NEGOTIATION_RISK",
+        "normalized_object": "성과급 협상 실패 시 메모리 생산 차질 위험",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q2",
+        "predicate": "성과급 관련 노사협상에 실패하면 삼성전자 메모리 생산에 차질이 생길 위험이 있다",
+        "predicate_family": "MEMORY_PRODUCTION_LABOR_NEGOTIATION_RISK",
+        "primitive_tags": [
+          "LABOR_NEGOTIATION",
+          "PRODUCTION_DISRUPTION_RISK",
+          "COUNTEREVIDENCE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PRODUCTION_LABOR_NEGOTIATION_RISK",
+        "question_family_tags": [
+          "MEMORY_PRODUCTION_CONTINUITY_RISK",
+          "EARNINGS_DURABILITY_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 성과급 노사협상 관련 메모리 생산 차질 위험",
+        "subject_id": "005930:MEMORY:PRODUCTION:LABOR_NEGOTIATION_RISK:2026-Q2",
+        "unit": "conditional risk",
+        "value": "conditional production disruption risk if negotiations fail"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "기사의 메모리 매출액 74조8000억원은 current official canonical 74,779,980백만원과 같은 실적이므로 중복 fact로 만들지 않았다.",
+      "DS 부문 매출·영업이익은 메모리 외 시스템LSI·파운드리를 포함하므로 메모리/HBM 실적으로 귀속하지 않았다.",
+      "2분기 HBM4E 샘플 제공과 하반기 메모리 수요 강세는 수치·고객 승인·구매의무가 없는 정성 전망이므로 숫자형 FORWARD_GUIDANCE나 계약 가시성으로 만들지 않았다.",
+      "공급 부족이라는 업계 서술과 PCIe 6세대 SSD 개발 완료는 target 메모리 이익·현금흐름으로 직접 귀속하기 어려워 별도 fact로 만들지 않았다."
+    ]
+  },
+  "payload_hash": "2ecaa9c893dccb5378fad9f01c297ca4ee2bd63d22798759c06b4dc50e642f8a",
+  "production_score_authority": false,
+  "prompt_hash": "53b7e68dd42a8f26e6fd3c76b431f70e064ba4fa57b05e707c283205b5207bdb",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-68c80f8ab89e3494006fa14f213c6335784181a1f320cb91e81b29f907801fd6",
+  "response_id": "COLLABRESP-5a8ca24a667fbee849def2b9f440705d14a9ea61e897ae39c5713f99d2733d50",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

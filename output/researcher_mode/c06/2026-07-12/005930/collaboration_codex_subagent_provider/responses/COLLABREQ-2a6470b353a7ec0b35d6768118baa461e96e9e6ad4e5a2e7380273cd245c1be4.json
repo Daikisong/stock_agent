@@ -1,0 +1,143 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-06ae2ca92494f37eaf94bf64",
+        "rationale": "공개 증권사 PDF 전체를 기존 315 facts와 대조했다. 이미 존재하는 매출·영업이익·BPS·PBR·목표가 전망은 반복하지 않고, 현재 구조화 gate에 필요한 2026F 4.2배와 2027F 3.6배 EV/EBITDA 기간별 점값 2건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-447d279e0572cd669d760acc",
+        "rationale": "2025년 11월 SK증권의 삼성전자 2026E·2027E EV/EBITDA와 실적 전망은 검토했으나, 같은 배수 역할에 대해 더 뒤의 2026년 유안타 보고서와 2026년 4월 canonical 증권사 전망이 있어 현재 objective에 비중복인 최신 점값으로 추가하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-473c73dfb985141c7f5727fd",
+        "rationale": "2026년 1월 8일 유안타 보고서의 2026F EV/EBITDA 4.2배는 같은 증권사의 뒤 보고서와 동일하고, 2027F 3.8배는 뒤 보고서의 3.6배로 갱신됐다. 따라서 중복·구버전 값을 새 current fact로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-6b56c95e614f4de2cf0b76df",
+        "rationale": "삼성전자 forward BPS·PBR 표는 기존 canonical 역할과 중복된다. 문서의 EV/EBITDA 표는 중국 GPU 팹리스 등 타사 값이며 삼성전자 값이 아니므로 삼성전자 forward EV/EBITDA로 전용하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-06ae2ca92494f37eaf94bf64",
+        "economic_mechanism": "공개 증권사 보고서의 예상 EV/EBITDA는 HBM·메모리 이익 전망을 포함한 삼성전자 기업가치가 예상 EBITDA 대비 몇 배인지 수치화한다.",
+        "exact_quote": "Quarterly earning Forecasts (십억원, %) Forecasts and valuations (K-IFRS 연결) (십억원, 원, %, 배)\n4Q25P 전년동기대비 전분기대비 컨센서스 컨센서스대비 결산 (12월) 2023A 2024A 2025P 2026F\n매출액 258,935 300,871 333,569 514,108\n매출액 93,800 23.8 9.0 91,467 2.6\n영업이익 6,567 32,726 43,527 165,024\n영업이익 20,000 208.0 64.4 18,510 8.1\n지배순이익 14,473 33,621 41,323 129,438\n세전계속사업이익 21,911 177.1 61.8 20,292 8.0\nPER 30.3 13.2 15.2 7.4\n지배순이익 16,354 115.9 36.2 16,342 0.1\nPBR 1.3 1.2 1.6 1.9\n영업이익률 (%) 21.3 +12.7 %pt +7.2 %pt 20.2 +1.1 %pt EV/EBITDA 8.4 5.2 6.5 4.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 구조화 gate가 요구하는 공개 증권사 기반의 2026년 forward EV/EBITDA 기간·점값·배수 단위를 직접 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EV_EBITDA:FY2026F",
+        "normalized_object": "삼성전자 2026년 예상 EV/EBITDA 4.2배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "유안타증권은 삼성전자의 2026년 예상 EV/EBITDA를 4.2배로 제시했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "FORWARD_EV_EBITDA",
+          "FY2026F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2026년 예상 EV/EBITDA",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 4.2
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-06ae2ca92494f37eaf94bf64",
+        "economic_mechanism": "공개 증권사 보고서의 예상 EV/EBITDA는 HBM·메모리 이익 전망을 포함한 삼성전자 기업가치가 예상 EBITDA 대비 몇 배인지 수치화한다.",
+        "exact_quote": "Valuation 지표 (단위: 원, 배, %)\n당기순이익 15,487 34,451 42,218 131,803 141,687\n결산(12월) 2023A 2024A 2025P 2026F 2027F\n감가상각비 35,532 39,650 43,470 48,115 46,696\nEPS 2,225 5,433 6,773 21,667 23,307\n외환손익 0 0 70 216 216\nBPS 52,002 57,981 63,780 82,793 103,270\n종속,관계기업관련손익 -888 -751 -839 -1,122 -1,122 EBITDAPS 6,659 11,094 13,387 32,099 33,269\n자산부채의 증감 -5,459 -1,568 -19,235 -51,890 -4,015 SPS 38,120 44,293 49,465 76,327 81,670\n기타현금흐름 -536 1,200 7,285 10,146 9,778 DPS 1,444 1,446 1,465 1,465 1,465\nPER 30.3 13.2 15.2 7.4 6.9\n투자활동 현금흐름 -16,923 -85,382 -64,927 -104,164 -74,851\nPBR 1.3 1.2 1.6 1.9 1.6\n투자자산 6,092 1,075 -2,288 -8,326 -1,674\nEV/EBITDA 8.4 5.2 6.5 4.2 3.6",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2026년 값과 별개의 2027년 forward EV/EBITDA 점값을 제공해 예상 이익 증가에 따른 배수 변화의 기간 구조를 직접 확인하게 한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EV_EBITDA:FY2027F",
+        "normalized_object": "삼성전자 2027년 예상 EV/EBITDA 3.6배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "유안타증권은 삼성전자의 2027년 예상 EV/EBITDA를 3.6배로 제시했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "FORWARD_EV_EBITDA",
+          "FY2027F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2027년 예상 EV/EBITDA",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 3.6
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "0de4ea8c2e096e0320fc2fb2ece32bf228715e329d082be65a7ed8a258fbf7c0",
+  "production_score_authority": false,
+  "prompt_hash": "8d62a26b679a419a452e65c4efefba141f656c8afebe497eb36c0fe77991b72d",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2a6470b353a7ec0b35d6768118baa461e96e9e6ad4e5a2e7380273cd245c1be4",
+  "response_id": "COLLABRESP-abf2fe691b549d6a6c92bd1e8538f9725124b434b8d76a85ecd15d27afdac755",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

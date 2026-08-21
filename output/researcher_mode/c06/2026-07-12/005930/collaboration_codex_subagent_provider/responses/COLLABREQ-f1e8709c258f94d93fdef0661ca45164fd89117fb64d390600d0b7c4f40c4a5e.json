@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "d6f3a9cc732a3b7ad66657cae9ce7b2f7225d9f0860c61fc0b7a1e9b45a8a7b1",
+  "payload": {
+    "allowed_range": [
+      11.2,
+      13.78
+    ],
+    "anchor_comparisons": [
+      "긍정 앵커 CANCH-5eb80a11ed23fc1102335092의 11.95~14.05점과 현재 실제·전망 근거를 비교했다.",
+      "반대 앵커 CANCH-1aa76cb8e89d85cd78d325f4의 9.95~12.05점과 현재 불확실성·counterfact를 비교했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-80daa96c00cd5d7b5782c27a",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "현재 actual 매출·가동·주문·상용화 근거가 있어 최하단만 적용하는 견해는 수용하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-5eb80a11ed23fc1102335092",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 12.78,
+    "rationale": "반대 역할로 모든 counterfact를 우선 검토했다. NDA로 물량·가격·취소·위약조건을 확인할 수 없고 LTA 가격 반영 및 고객제품 출하 지연이 실적 전환을 늦출 수 있다. 다만 발행사 설명의 고객수요·구속력 있는 다년계약·확보된 구매주문과 고객 공식 기술 협력은 단순 수요 문의보다 강한 반복매출 경로다.",
+    "support_fact_ids": [
+      "EFACT-16ee255de13b7acf64e98eaa",
+      "EFACT-1ec0fca52ff40b01ed1890f6",
+      "EFACT-6430c66a53268479f230de39",
+      "EFACT-83b9afe8727ec3fd962620a4",
+      "EFACT-8b6707b4ab45897a5a448a93",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-d05fe1b53b1bb5081130ea1c"
+    ],
+    "why_not_higher": "계약 조건·제품별 actual 이익·현금 전환 또는 구조적 지속성의 직접 검증이 완전하지 않다.",
+    "why_not_lower": "현재 citable 긍정 사실과 공식·독립 출처가 실제 매출·수요·생산·현금 경로를 뒷받침한다."
+  },
+  "payload_hash": "876f4f78dcb7de028c6f7eec00105cba7c4d5686311fdb30e59d7cb797e09e11",
+  "production_score_authority": false,
+  "prompt_hash": "2f2f277628d9ca3ce2c6edae43432ccb2e6e85d7058a3e148a1a8651c0fc6d7a",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f1e8709c258f94d93fdef0661ca45164fd89117fb64d390600d0b7c4f40c4a5e",
+  "response_id": "COLLABRESP-972e3f04832032d996c9c31f8d6b9fb44098cc6b9ea8c786e02f6011942556c0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

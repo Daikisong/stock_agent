@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-98265cae4ccc7e4d0a34d30a",
+      "CRMEMO-8496044fbbc4ca15486333ef",
+      "CRMEMO-3ec47cfffb8cd6e555131c17",
+      "CRMEMO-c88a0fddbea7cc558300a9ca",
+      "CRMEMO-08ff90e8703fbec8d0798102",
+      "CRMEMO-53f38270f16c1a42043bb93c",
+      "CRMEMO-8bd9c69e476371a8a75946c8"
+    ],
+    "confidence": 0.84,
+    "cross_component_support": [
+      "eps_fcf_explosion, earnings_visibility, bottleneck_pricing은 하나의 일관된 경로를 만든다. AI 메모리·DRAM 수요가 평균가동률 100%의 생산기반과 HBM4의 더 큰 TSV·웨이퍼 부담을 만나고, 1Q26 전사 매출·영업이익·영업현금흐름 및 DRAM blended ASP 실제치가 희소성과 믹스가 현재 전사 이익·현금으로 전환될 수 있음을 보여준다.",
+      "earnings_visibility와 information_confidence는 issuer가 FY2025 HBM 매출 성장, HBM4 대규모 생산 준비, 고객 요구성능 충족, FY2026 공급 논의를 함께 설명했다는 점에서 운영 진행을 보강한다. 다만 이 사실들은 제품·수요 실행을 지지할 뿐 구속력 있는 물량·가격·기간을 확정하지 않는다.",
+      "capital_allocation은 공급 대응 경로를 보강한다. 현재 영업현금흐름과 순현금은 전환·후공정 증설의 재원 능력을 제공하고, 실제 유형자산 취득·구매약정·단계별 팹 계획은 제한된 수요를 미래 생산으로 바꾸는 데 먼저 들어갈 현금 비용을 보여준다.",
+      "market_mispricing과 valuation_rerating은 조건부로 운영 component와 연결된다. 현재 이익·현금 전환이 지속되고 HBM 경제성이 별도 귀속되면 duration과 정보 품질이 valuation 해석을 바꿀 수 있으나, 그 bridge가 아직 issuer 근거로 확인되지 않아 현재 research range의 불확실성이 남는다."
+    ],
+    "cross_component_tensions": [
+      "eps_fcf_explosion(16.5-19.5), earnings_visibility(14.0-17.0), bottleneck_pricing(13.5-16.5)의 비교적 강한 research range는 실제 전사·DRAM 결과에 기초하지만 FORWARD_GUIDANCE, SEGMENT_CONTRIBUTION, DURABLE_VISIBILITY는 비어 있다. 따라서 전사 실적을 issuer가 가이던스한 HBM 이익 duration으로 기계적으로 연장할 수 없다.",
+      "FY2025 HBM 매출은 두 배 이상 늘었지만 1Q26 가격 근거는 HBM 계약가격이 아니라 DRAM blended ASP이고, 브로커 자료상 HBM mix가 낮아진 동안 전사·DRAM 실적은 증가했을 수 있다. 현재 가격결정력과 이익 증가를 모두 HBM에 귀속할 수 없는 긴장이다.",
+      "고객 요청수요, FY2026 공급 논의와 검토 중인 다년 LTA는 계획 가시성을 지지하지만, 공개된 고객 물량·가격은 여전히 월별 또는 분기별 합의이며 취소권·위약금·선수금·확정물량 조건이 없다. 96.5억원 TC BONDER 계약은 target의 장비 조달이지 고객의 HBM 구매약정이 아니다.",
+      "현금 창출 논리는 자본집약성과 충돌한다. 운전자본 흡수, 30,435,407백만원의 유형자산 구매약정과 단계별 혼합제품 투자는 신규 CAPA 수익화 전에 FCF를 사용할 수 있다. 전사 현금흐름을 HBM 전용 현금흐름으로 표시할 수도 없다.",
+      "market_mispricing(8.5-11.5)과 valuation_rerating(8.0-10.0)의 research range에는 valuation 자료 불일치, 같은 기준의 미검증 peer band, 브로커 추정 분산과 FY2027-FY2028 이익 duration 위험이 남는다. 낮은 forward multiple은 미반영된 지속성과 cycle peak를 모두 뜻할 수 있어 현재 기록만으로 구분되지 않는다.",
+      "issuer가 보고한 제품상태와 현재 전사·DRAM 수치의 정보 신뢰는 높지만 HBM 단독 재무 귀속, 고객별 구매의무, 장기가격, 브로커 전망의 신뢰는 낮다. 같은 issuer release에서 반복됐다는 사실은 누락된 계약조건의 독립 corroboration이 되지 않는다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "일곱 component memo와 red-team memo가 함께 보여주는 메커니즘은 일관되지만 범위가 제한된다. AI memory·DRAM 공급 제약, HBM4의 높은 자원 소모와 현재 가격·믹스 강세가 강한 전사 이익·현금 창출로 전환됐고, 그 현금은 CAPA 대응의 재원이 된다. 이 synthesis는 이를 total score나 Stage로 바꾸지 않는다. 핵심 한계는 귀속과 duration이다. issuer 근거에는 숫자형 forward guidance, HBM 단독 실제 이익·현금흐름, 구속력 있는 다년 고객 구매조건, 같은 기준의 peer valuation band가 아직 없다. 따라서 기존 component research range와 countercase를 그대로 보존하며, 현재 운영 강도는 지지되지만 HBM 단독 지속성·FCF 내구성·rerating은 위 미해결 근거의 확인에 조건부다.",
+    "unresolved_material_questions": [
+      "target이 브로커 추정이 아닌 issuer FORWARD_GUIDANCE로서 기간이 명시된 매출·이익·출하·Capex 숫자 point 또는 range를 공시하는가?",
+      "issuer 정기·분기보고서나 실적표가 HBM 또는 memory의 실제 매출·영업이익·마진·현금흐름을 별도 공개해 SEGMENT_CONTRIBUTION을 전사 결과와 구분할 수 있는가?",
+      "issuer 또는 고객 공식 문서에 기간이 정해진 HBM 확정물량·CAPA와 가격·취소권·위약금·선수금 등 구속조건이 함께 나타나 DURABLE_VISIBILITY를 충족하는가?",
+      "최소 두 peer의 같은 기준일, 상장주식 범위, 지배기업지분 분모와 trailing parent P/B를 검증해 비교 가능한 peer valuation band를 만들 수 있는가?",
+      "후속 감사 현금흐름표·유형자산 주석에서 운전자본과 실제 HBM 관련 투자 후에도 현재 이익 증가가 지속적인 FCF로 전환되는가?",
+      "경쟁사 인증과 추가 공급이 희소성을 낮추기 전에 HBM4가 생산 준비에서 실제 출하, 고객 플랫폼 ramp와 실현 경제성으로 진행하는가?",
+      "후속 정식 공시가 잠정 실적과 브로커 내부 불일치를 해소하고 HBM 별도 기여와 FY2027-FY2028 이익 duration을 확인하는가?"
+    ]
+  },
+  "payload_hash": "363a447fa0e7493094d19bd2e61044f02a1340a78c029f0a2e97a01da32e4a5f",
+  "production_score_authority": false,
+  "prompt_hash": "1db773cf87ec63c15418dabcf9b0b865f1449e82e431146e8ca898848be2deda",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-de511b01291733a3a18deee59c5a2a900d1aabfb8b776d59871d311868f297c6",
+  "response_id": "COLLABRESP-73f9db314e3baf9c278239877568e05e7543609fb02f11f19c2bbb41aa455542",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

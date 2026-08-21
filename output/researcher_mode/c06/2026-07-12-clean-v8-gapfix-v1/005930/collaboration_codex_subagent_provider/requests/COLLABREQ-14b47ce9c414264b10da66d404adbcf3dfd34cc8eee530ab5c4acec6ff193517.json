@@ -1,0 +1,172 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "allowed_range": {
+        "items": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "anchor_comparisons": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "counter_fact_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "disagreements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "nearest_anchor_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "proposed_points": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "rationale": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "support_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-0ea4c7a5b342855d104d1848",
+            "EFACT-303c70f6fb2e11305c82f77b",
+            "EFACT-4d0e0f24a3a1645c5962f1b3",
+            "EFACT-6e7cdee571c7ae305a860ce6",
+            "EFACT-6e9f853e4ad5ac9c6849729a",
+            "EFACT-7f9fca669110a7e761e6264d",
+            "EFACT-b6ff1b966b93b843dd6bcd04",
+            "EFACT-f295131e6dc092d197e8eb93",
+            "EFACT-f8487df03aa235fb70883193"
+          ],
+          "type": "string"
+        },
+        "maxItems": 9,
+        "minItems": 9,
+        "prefixItems": [
+          {
+            "enum": [
+              "EFACT-0ea4c7a5b342855d104d1848"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-303c70f6fb2e11305c82f77b"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-4d0e0f24a3a1645c5962f1b3"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-6e7cdee571c7ae305a860ce6"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-6e9f853e4ad5ac9c6849729a"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-7f9fca669110a7e761e6264d"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-b6ff1b966b93b843dd6bcd04"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-f295131e6dc092d197e8eb93"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-f8487df03aa235fb70883193"
+            ],
+            "type": "string"
+          }
+        ],
+        "type": "array"
+      },
+      "why_not_higher": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "why_not_lower": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "anchor_comparisons",
+      "proposed_points",
+      "allowed_range",
+      "rationale",
+      "disagreements",
+      "support_fact_ids",
+      "counter_fact_ids",
+      "nearest_anchor_ids",
+      "why_not_higher",
+      "why_not_lower"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "9e23b16e6c69b0e3fffaa28e5faeefde1ee90da78940f84f527fe47ed7190077",
+  "pass_name": "COMPONENT_ANALYST_JUDGE",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nFirst decode every evidence_fact_projection.facts row positionally with evidence_fact_projection.fact_fields. Each row preserves one exact fact_id and its economic meaning. Resolve source_independence_group_index through source_independence_group_dictionary. The count/hash rosters account only for repeated lineage; they are not omitted research, a top-N selection, or permission to skip rows. Review all fact_count rows. Act as the independent positive analyst for exactly one broad component. Derive proposed component points and an allowed range from current support facts, economic strength, duration, and cash conversion. Account for every supplied positive component fact and compare the case with at least one nearest blind historical anchor. Explain both why the score is not higher and why it is not lower.\nReturn exactly one JSON object matching the supplied schema.\n{\"allowed_counter_fact_ids\": [\"EFACT-432ffed78641a7fa3eb2aaf1\", \"EFACT-6a317a6c41253b0fafc79d56\"], \"allowed_nearest_anchor_ids\": [\"ORDTRANSFER-09ab96433f8087166845bf25\", \"ORDTRANSFER-90c2b7d4695e62e277703a64\"], \"allowed_support_fact_ids\": [\"EFACT-0ea4c7a5b342855d104d1848\", \"EFACT-303c70f6fb2e11305c82f77b\", \"EFACT-4d0e0f24a3a1645c5962f1b3\", \"EFACT-6e7cdee571c7ae305a860ce6\", \"EFACT-6e9f853e4ad5ac9c6849729a\", \"EFACT-7f9fca669110a7e761e6264d\", \"EFACT-b6ff1b966b93b843dd6bcd04\", \"EFACT-f295131e6dc092d197e8eb93\", \"EFACT-f8487df03aa235fb70883193\"], \"component_id\": \"information_confidence\", \"component_max_points\": 5.0, \"component_research_memo\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"component_max_points\": 5.0, \"counter_case\": \"행 52는 NVIDIA HBM4가 issuer 기준 협의 중임을 명시하고 행 32의 25년 기술관계는 current qualification·supply를 독립 확인하지 않는다. 행 119·172의 OpenAI support plan·수요 전망은 OpenAI-official corroboration도 삼성 allocation도 아니다. 행 96의 제한 공시는 다른 계약 부재로 확대할 수 없고, NVIDIA/OpenAI material 0 검색도 source absence나 관계 부재를 증명하지 않는다.\", \"counter_fact_ids\": [\"EFACT-432ffed78641a7fa3eb2aaf1\", \"EFACT-6a317a6c41253b0fafc79d56\"], \"historical_anchor_ids\": [\"ORDTRANSFER-09ab96433f8087166845bf25\", \"ORDTRANSFER-90c2b7d4695e62e277703a64\"], \"memo_id\": \"CRMEMO-c5d39b315123f0b4f7b2b9a4\", \"nearest_counter_anchor_ids\": [\"ORDTRANSFER-90c2b7d4695e62e277703a64\"], \"nearest_positive_anchor_ids\": [\"ORDTRANSFER-09ab96433f8087166845bf25\"], \"positive_case\": \"행 9·64·102·210은 AMD 공식 자료에서 HBM3E 공급 이력, HBM4 제품 정렬, MOU 및 기술협력을 독립 확인한다. 행 101은 HBM4 양산 actual이고, 행 214는 OpenAI와의 LOI 관계 자체를 확인한다. 이 증거들은 issuer-only 서술보다 정보 품질을 높이지만 AMD의 technical/MOU evidence는 signed procurement economics가 아니다.\", \"positive_fact_ids\": [\"EFACT-0ea4c7a5b342855d104d1848\", \"EFACT-303c70f6fb2e11305c82f77b\", \"EFACT-4d0e0f24a3a1645c5962f1b3\", \"EFACT-6e7cdee571c7ae305a860ce6\", \"EFACT-6e9f853e4ad5ac9c6849729a\", \"EFACT-7f9fca669110a7e761e6264d\", \"EFACT-b6ff1b966b93b843dd6bcd04\", \"EFACT-f295131e6dc092d197e8eb93\", \"EFACT-f8487df03aa235fb70883193\"], \"research_complete\": true, \"researcher_role\": \"InformationConfidenceResearcher\", \"researcher_summary\": \"AMD 공식 뉴스룸은 HBM3E 실제 공급 이력, HBM4 MOU alignment와 기술협력을 독립 확인해 AMD 관계의 정보 신뢰를 높인다. 반면 NVIDIA는 issuer가 25년 관계와 HBM4 협의 중 상태만 설명했고, OpenAI는 issuer LOI·지원 계획·잠재 수요 전망만 있다. NVIDIA/OpenAI CUSTOMER_OFFICIAL 검색 material 0은 source absence나 관계·계약 부재 증명이 아니다. HBM4 양산 actual과 제한된 장기공급계약 공시도 각각 execution과 공시 범위일 뿐 counterparty corroboration 전체를 대체하지 않으므로 중간 confidence를 유지한다.\", \"resolution_fact_ids\": [], \"source_coverage\": [\"CUSTOMER_OFFICIAL\", \"ISSUER_NEWSROOM\", \"OPENDART\"], \"structured_metrics\": {}, \"target_id\": \"005930\", \"uncertainties\": [\"NVIDIA-official pre-cutoff qualification·platform alignment·supply status가 현재 fact plane에 없다.\", \"OpenAI-official pre-cutoff partnership·infrastructure·memory-demand scope corroboration이 현재 fact plane에 없다.\", \"AMD MOU·technical corroboration은 purchase price·volume·allocation·duration을 확인하지 않는다.\", \"CUSTOMER_OFFICIAL material 0은 source absence, 관계 부재 또는 계약 부재 증명이 아니다.\"]}, \"conditional_judge_rules\": {\"empty_support_plane\": {\"condition\": \"allowed_support_fact_ids is empty\", \"required_allowed_range\": [0, 0], \"required_proposed_points\": 0, \"required_support_fact_ids\": []}, \"positive_points_require_support\": \"proposed_points greater than zero requires at least one exact id from allowed_support_fact_ids in support_fact_ids\"}, \"evidence_fact_projection\": {\"advisory_tags_are_not_score_gates\": true, \"allowed_component_coverage\": {\"bottleneck_pricing\": 9, \"capital_allocation\": 11, \"earnings_visibility\": 9, \"eps_fcf_explosion\": 9, \"information_confidence\": 11, \"market_mispricing\": 9, \"valuation_rerating\": 9}, \"as_of_date_coverage\": {\"2026-07-12\": 11}, \"claim_id_roster\": {\"count\": 11, \"roster_hash\": \"bf19621a5d411e1204ba0cac4ca780d477abc9c8ce28d668551e752278974f18\"}, \"corroborating_independence_group_roster\": {\"count\": 3, \"roster_hash\": \"35130e5c00909d96e0338cc2a098567f6ea4438d0318b560fc283b2ec0803dd7\"}, \"every_fact_id_preserved\": true, \"every_fact_lineage_accounted_by_count_and_hash\": true, \"fact_count\": 11, \"fact_fields\": [\"fact_row_index\", \"fact_id\", \"subject\", \"business_segment\", \"product_family\", \"economic_mechanism\", \"predicate\", \"value\", \"unit\", \"period\", \"direction\", \"current_lifecycle\", \"confidence\", \"structured_evidence_roles\", \"source_independence_group_index\", \"corroborating_independence_group_count\"], \"fact_roster_hash\": \"dc445fe239be71b597ef5a458260f710414adad66a7ec051dbc0db8dd46ca9a3\", \"facts\": [[0, \"EFACT-0ea4c7a5b342855d104d1848\", \"삼성전자의 AMD Instinct MI350X·MI355X용 primary HBM3E partner 이력\", \"DS 메모리\", \"HBM3E\", \"AMD 공식 뉴스룸은 삼성전자가 AMD의 primary HBM3E partner로서 Instinct MI350X와 MI355X 가속기를 지원해 왔다고 독립적으로 확인한다. 이는 실현된 고객·제품 공급 이력의 corroboration이지만 가격, 물량, 기간, HBM-only 매출은 공개하지 않는다.\", \"AMD_OFFICIAL_CONFIRMED_SAMSUNG_AS_PRIMARY_HBM3E_PARTNER_FOR_MI350X_MI355X\", \"primary HBM3E partner to AMD powering Instinct MI350X and MI355X\", \"status\", \"nearly two decades of collaboration through 2026-03-18; HBM3E partner history current at publication\", \"POSITIVE\", \"CURRENT\", 0.99, [], 0, 1], [1, \"EFACT-303c70f6fb2e11305c82f77b\", \"삼성전자와 엔비디아의 장기 기술협력 관계\", \"DS 메모리\", \"DRAM·반도체 기술협력\", \"삼성전자는 엔비디아 그래픽카드용 D램 공급에서 시작해 25년 이상 기술 협력을 이어왔다고 밝혔다. 이는 named-counterparty 관계를 확인하지만 현재 HBM 계약·배정·수량·가격 증거는 아니다.\", \"삼성전자와 엔비디아의 기술협력은 그래픽카드용 D램 공급에서 시작해 25년 이상 지속됐다.\", \"25년 이상\", \"년\", \"2025-10-31 기준 25년 이상 누적\", \"POSITIVE\", \"CURRENT\", 0.98, [], 1, 1], [2, \"EFACT-432ffed78641a7fa3eb2aaf1\", \"삼성전자와 엔비디아의 HBM 공급 협의 상태\", \"DS 메모리\", \"HBM3E·HBM4\", \"삼성전자는 엔비디아에 HBM3E와 HBM4를 공급할 계획이라고 밝혔지만 HBM4 공급은 아직 긴밀히 협의 중이다. 이는 명명 고객과의 공급 논의를 확인하되 서명 계약·확정 배정·물량·가격을 확인하지 못하는 가시성 counter다.\", \"엔비디아 대상 HBM3E·HBM4 공급은 issuer plan이며 HBM4 공급은 2025-10-31 현재 협의 중이다.\", \"HBM3E·HBM4 공급 계획; HBM4 공급 협의 중\", null, \"2025-10-31 현재 및 이후\", \"COUNTER\", \"OPEN\", 0.99, [], 1, 1], [3, \"EFACT-4d0e0f24a3a1645c5962f1b3\", \"삼성전자 HBM4의 AMD Instinct MI455X용 primary supply alignment\", \"DS 메모리\", \"HBM4\", \"AMD 공식 뉴스룸은 MOU 아래 양사가 차세대 AMD Instinct MI455X용 primary HBM4 supply에 맞춰 협력한다고 확인한다. 명명 고객·제품의 미래 공급 가시성을 독립적으로 보강하지만 MOU 기반 정렬이므로 확정 구매계약, 물량, 가격, 기간 또는 취소조건으로 승격하지 않는다.\", \"AMD_OFFICIAL_CONFIRMED_PRIMARY_HBM4_SUPPLY_ALIGNMENT_FOR_MI455X\", \"primary HBM4 supply alignment under MOU for AMD Instinct MI455X\", \"status\", \"2026-03-18 announcement; future AMD Instinct MI455X supply alignment\", \"POSITIVE\", \"OPEN\", 0.98, [\"DURABLE_VISIBILITY\"], 0, 1], [4, \"EFACT-6a317a6c41253b0fafc79d56\", \"삼성전자 중요 장기공급계약 수주거래\", \"회사 전체\", \"장기공급계약\", \"2026년 1분기말 재무제표에 중요한 영향을 미치는 장기공급계약 수주거래가 없다는 제한된 공시는 계약 기반 가시성을 제약하지만 다른 계약의 부재로 확대할 수 없다.\", \"NO_MATERIAL_LONG_TERM_SUPPLY_ORDER_TRANSACTION_REPORTED\", \"재무제표에 중요한 영향을 미치는 장기공급계약 수주거래 없음\", \"status\", \"2026-03-31\", \"COUNTER\", \"CURRENT\", 0.99, [], 2, 1], [5, \"EFACT-6e7cdee571c7ae305a860ce6\", \"삼성전자 HBM4\", \"DS 메모리\", \"HBM4\", \"2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.\", \"COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS\", \"HBM4 양산 출하\", \"status\", \"2026-02\", \"POSITIVE\", \"CURRENT\", 0.99, [], 2, 1], [6, \"EFACT-6e9f853e4ad5ac9c6849729a\", \"삼성전자와 AMD의 차세대 AI 메모리 전략적 협력 MOU\", \"DS 메모리\", \"차세대 AI 메모리\", \"AMD 공식 뉴스룸은 삼성전자와 AMD가 차세대 AI 메모리·컴퓨팅 기술의 전략적 협력을 확대하는 MOU를 체결했다고 독립적으로 확인한다. 이는 기술·전략 관계의 CUSTOMER_OFFICIAL corroboration이며 구매계약이나 확정 공급조건을 뜻하지 않는다.\", \"AMD_OFFICIAL_CONFIRMED_SAMSUNG_AMD_AI_MEMORY_MOU\", \"MOU signed to expand strategic collaboration on next-generation AI memory and computing technologies\", \"status\", \"2026-03-18\", \"POSITIVE\", \"CURRENT\", 0.99, [], 0, 1], [7, \"EFACT-7f9fca669110a7e761e6264d\", \"삼성전자의 OpenAI 스타게이트 메모리 공급 지원 계획\", \"DS 메모리\", \"고성능·저전력 메모리 솔루션\", \"OpenAI 스타게이트 수요에 삼성전자 메모리 사업이 대응하려는 issuer 계획으로 고객 접점과 잠재 공급 기회를 보여준다. 그러나 계획 문구만으로 체결된 구매계약, 확정 배정량·가격, 취소 조건 또는 매출을 인정하지 않는다.\", \"삼성전자는 OpenAI가 스타게이트 프로젝트에 필요한 고성능·저전력 메모리를 원활히 공급받도록 지원할 계획이라고 밝혔다.\", \"고성능·저전력 메모리 공급 지원 계획\", \"계획\", \"2025-10-01 발표 이후\", \"POSITIVE\", \"OPEN\", 0.98, [], 1, 1], [8, \"EFACT-b6ff1b966b93b843dd6bcd04\", \"OpenAI 고성능 DRAM 월간 수요 전망과 삼성전자 협력 맥락\", \"DS 메모리\", \"고성능 DRAM\", \"전략 파트너인 OpenAI의 고성능 DRAM 잠재 수요 규모를 제시해 삼성전자 메모리 기회의 상단을 보여준다. 이 숫자는 OpenAI 전체 필요 전망이지 삼성전자에 확정된 공급 물량, HBM 물량, 매출 또는 issuer guidance가 아니다.\", \"OpenAI는 웨이퍼 기준 월 90만 매의 고성능 DRAM이 필요할 것으로 전망됐지만 삼성전자 공급 몫은 제시되지 않았다.\", \"월 900,000\", \"웨이퍼 매/월(전망 수요, 삼성전자 배정량 아님)\", \"2025-10-01 발표 기준 미래 수요 전망\", \"POSITIVE\", \"OPEN\", 0.98, [], 1, 1], [9, \"EFACT-f295131e6dc092d197e8eb93\", \"삼성 메모리와 AMD Instinct·EPYC·rack-scale 플랫폼 기술협력\", \"DS 메모리\", \"AI 메모리\", \"AMD CEO는 AMD 공식 뉴스룸에서 삼성의 advanced memory와 AMD Instinct GPU, EPYC CPU, rack-scale platform을 결합하는 협력 확대를 직접 확인했다. 이는 기술 참여의 독립 counterparty corroboration이며 구매의무나 매출을 의미하지 않는다.\", \"AMD_CEO_CONFIRMED_SAMSUNG_MEMORY_PLATFORM_COLLABORATION_ON_AMD_OFFICIAL_SOURCE\", \"Samsung advanced memory collaboration with AMD Instinct GPUs, EPYC CPUs and rack-scale platforms\", \"counterparty_statement\", \"2026-03-18\", \"POSITIVE\", \"CURRENT\", 0.99, [], 0, 1], [10, \"EFACT-f8487df03aa235fb70883193\", \"삼성전자와 OpenAI의 글로벌 AI 인프라 협력 의향서\", \"회사 전체\", \"AI 인프라 협력\", \"삼성전자가 OpenAI의 전략적 파트너 협력 체계에 공식 참여했다는 관계 증거다. 다만 LOI는 의향서이며 삼성전자 메모리 구매계약, 확정 물량·가격, 선수금 또는 매출 actual을 뜻하지 않는다.\", \"삼성전자를 포함한 삼성 관계사 4곳과 OpenAI는 2025년 10월 1일 글로벌 AI 핵심 인프라 협력을 위한 LOI를 체결했다.\", \"LOI 체결\", \"상태\", \"2025-10-01\", \"POSITIVE\", \"CURRENT\", 0.99, [], 1, 1]], \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"primitive_tag_roster_hash\": \"69b193c08da3582ba4031125cb3ba17b999860bcc7e5d028dc6aba1ca98bf303\", \"prompt_projection_is_research_cap\": false, \"question_family_tag_roster_hash\": \"103bd45ceeb6143c89d807d12ebfd7ff197a7444d2393caa2c5bbfecfac918f7\", \"quote_id_roster\": {\"count\": 11, \"roster_hash\": \"3f73527813b8d58e45e5af8d358e973fd8f11bc1a2e072d498b8db615ed7df6b\"}, \"repeated_lineage_arrays_omitted_from_semantic_rows\": true, \"schema_version\": \"e2r_v5_citable_fact_prompt_projection_v3\", \"score_authority\": false, \"source_id_roster\": {\"count\": 5, \"roster_hash\": \"1910172ad1c656709b57f7fddb6ea1fae5ba3c801a3e79193755b1fff670ca62\"}, \"source_independence_group_dictionary\": [\"CUSTOMER_OFFICIAL:amd.com\", \"ISSUER_NEWSROOM:news.samsung.com\", \"OPENDART:opendart\"], \"target_id_coverage\": {\"005930\": 11}}, \"historical_component_anchors\": [{\"anchor_id\": \"ORDTRANSFER-09ab96433f8087166845bf25\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 5.0, \"points_lower\": 1.75, \"points_mid\": 2.0, \"points_upper\": 2.25, \"role\": \"POSITIVE\", \"score_band\": \"MEDIUM\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-90c2b7d4695e62e277703a64\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"execution_or_budget_to_company_cash_bridge\"], \"max_points\": 5.0, \"points_lower\": 1.5, \"points_mid\": 1.75, \"points_upper\": 2.0, \"role\": \"COUNTER\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}], \"independent_role_mandate\": [\"CURRENT_ECONOMIC_STRENGTH\", \"POSITIVE_THESIS\", \"DURATION_AND_CASH_CONVERSION\"], \"judge_pass_name\": \"COMPONENT_ANALYST_JUDGE\", \"judge_role\": \"ANALYST\", \"required_judge_output_fields\": [\"allowed_range\", \"anchor_comparisons\", \"counter_fact_ids\", \"disagreements\", \"nearest_anchor_ids\", \"proposed_points\", \"rationale\", \"support_fact_ids\", \"why_not_higher\", \"why_not_lower\"]}",
+  "prompt_hash": "2d8f5836b48bfdbc091b34745a654ed42548dc4a900c3978d081afeae7100e75",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-14b47ce9c414264b10da66d404adbcf3dfd34cc8eee530ab5c4acec6ff193517",
+  "request_identity": {
+    "output_schema_hash": "9e23b16e6c69b0e3fffaa28e5faeefde1ee90da78940f84f527fe47ed7190077",
+    "pass_name": "COMPONENT_ANALYST_JUDGE",
+    "prompt_hash": "2d8f5836b48bfdbc091b34745a654ed42548dc4a900c3978d081afeae7100e75",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_component_analyst_judge",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

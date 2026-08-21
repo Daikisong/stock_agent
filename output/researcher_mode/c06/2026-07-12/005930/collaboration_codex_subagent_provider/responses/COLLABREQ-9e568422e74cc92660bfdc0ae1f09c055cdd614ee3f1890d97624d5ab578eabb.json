@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "50e9b24076957d0d9f2938f114392431d2a42f70ff2d2c73e20f5dd230627aa5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-10f193a9ee7125852bf7e484",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-b7488fb399bb7f4c8322fee0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-9f1d0007ef63ede205c36e31",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-05d05dbd28c0f1c5562d2a8a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.02,
+        "rationale": "삼성전자 공식 도메인 후보이지만 요청된 OPENDART 또는 KIND_KRX 계열이 아니며, 문서 제목도 HBM4 또는 메모리 신규시설투자 공시를 직접 가리키지 않아 비관련이다. 발견 snippet은 근거로 사용하지 않았다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "전체 roster 중 이 partition의 후보를 정확히 한 번씩 분류했으나, 삼성전자 HBM4 또는 메모리 신규시설투자를 직접 확인할 OPENDART·KIND_KRX 원문 후보가 없어 연구 목적은 미해결이다. 제3자 검색 snippet은 근거로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "15d91307e6c4ca154231fa02f096117f4bcecfb1a4c05b9cf5220d053e591178",
+  "production_score_authority": false,
+  "prompt_hash": "c03e86669864a6fc51cc0056d8505a4e9970de73a61eb3d558163a78a84deeaf",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9e568422e74cc92660bfdc0ae1f09c055cdd614ee3f1890d97624d5ab578eabb",
+  "response_id": "COLLABRESP-b64d95d4f4f4be90359a1d07ebe9647ed1a1b3b8a8ac0a7ab783b30228827a63",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

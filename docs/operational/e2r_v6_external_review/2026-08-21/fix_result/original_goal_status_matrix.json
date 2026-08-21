@@ -1,0 +1,37 @@
+{
+  "schema_version": "e2r_v6_gate1_original_goal_status_matrix_v1",
+  "audit_date": "2026-08-22",
+  "scope": "GATE_1_ONLY",
+  "percentage_reporting_used": false,
+  "allowed_statuses": [
+    "증명 완료",
+    "산출물은 있으나 검증 미완료",
+    "미착수",
+    "구조적 blocker"
+  ],
+  "items": [
+    {"requirement": "005930 C06", "status": "증명 완료", "note": "기존 canary dossier가 full test와 Phase100 reviewer gate에서 재검증됨"},
+    {"requirement": "000660 fact extraction", "status": "증명 완료", "note": "2,190 total / 996 current-open / 1,194 closed-superseded"},
+    {"requirement": "000660 gap fixpoint", "status": "증명 완료", "note": "두 독립 확인, 세 번째 query 0, source absence 생성 0"},
+    {"requirement": "000660 7 component", "status": "증명 완료", "note": "7/7"},
+    {"requirement": "000660 21 Judge", "status": "증명 완료", "note": "21/21"},
+    {"requirement": "000660 Red Team/synthesis/Supervisor/saturation", "status": "증명 완료", "note": "COMPLETE / COMPLETE / READY / CERTIFIED"},
+    {"requirement": "000660 deterministic score/Stage", "status": "증명 완료", "note": "70.2, score_valid=true, canonical Stage 2, FINAL"},
+    {"requirement": "Phase101 receipt", "status": "미착수", "note": "Gate 1 scope lock에 따라 실행하지 않음"},
+    {"requirement": "Phase102 receipt-only reproduction", "status": "미착수", "note": "Gate 1 scope lock에 따라 실행하지 않음"},
+    {"requirement": "Phase103 clean clone", "status": "미착수", "note": "Gate 1 scope lock에 따라 실행하지 않음"},
+    {"requirement": "Phase104 lifecycle", "status": "미착수", "note": "Gate 1 scope lock에 따라 실행하지 않음"},
+    {"requirement": "Phase105 selection", "status": "미착수", "note": "Gate 1 scope lock에 따라 실행하지 않음"},
+    {"requirement": "Phase106 C08", "status": "미착수", "note": "다른 archetype 실행 금지 준수"},
+    {"requirement": "Phase106 C15", "status": "미착수", "note": "다른 archetype 실행 금지 준수"},
+    {"requirement": "Phase106 C17", "status": "미착수", "note": "다른 archetype 실행 금지 준수"},
+    {"requirement": "Phase106 C24", "status": "미착수", "note": "다른 archetype 실행 금지 준수"},
+    {"requirement": "Phase106 C28", "status": "미착수", "note": "다른 archetype 실행 금지 준수"},
+    {"requirement": "Phase107 KRX Census", "status": "미착수", "note": "Gate 1 전 실행 금지 준수"},
+    {"requirement": "Phase108 one-command/publisher", "status": "미착수", "note": "original goal 후반 범위"},
+    {"requirement": "Phase109 reviewers/full tests", "status": "미착수", "note": "Gate 1 자체 full test와 구분되는 original goal Phase109"},
+    {"requirement": "final market cutover", "status": "미착수", "note": "Gate 2 verdict를 선언하지 않음"}
+  ],
+  "gate1_verdict": "C06_ANALYST_MODE_RECOVERY_PASS",
+  "gate2_verdict": "NOT_EVALUATED"
+}

@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "b84ead111945075ad6654621287531140a0432b172af3363373abd25408f28b5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f1058f31f9652436931b3f3f",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.25,
+        "rationale": "KIND에 제출된 SK하이닉스 2024 지속가능경영보고서 원문 경로지만 HBM 시장선도·ESG의 과거 설명이며 2026 정기주총의 미래 매출·실적 point 또는 range를 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7a75d035b0f1ce53cf768caf",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "KIND 경로이나 이사 선임 정정사항인 다른 회사 주총 공고로, SK하이닉스 2026 숫자형 경영계획과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-1a2ae320a7eacc6f4274fff5",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "KIND 경로이나 NVH Czech 자금대여 등 다른 회사 이사회 안건으로 대상 발행인과 연구 목적이 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-d900c97ad54439493218aa06",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "KIND 경로이나 제23기 재무제표·영업보고 승인인 다른 회사 공고로 SK하이닉스 2026 주총 전망 자료가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "SK하이닉스 2024 지속가능경영보고서는 공식 KIND 경로지만 현재 검색이 요구한 2026 주총 숫자형 미래 전망을 제공하는 후보로 식별되지 않았다."
+    ]
+  },
+  "payload_hash": "8177d75f4569975ed9b7f4576e64d65b30863b9330a1cefe2bf4c47ad997ced6",
+  "production_score_authority": false,
+  "prompt_hash": "729cc188817ea5bdc4f74d28d373d5b502a6d3faa0492ba1201d841dc1069fd5",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-19fc68238da677122fa0f6e00521e123bbd3a35ebcb53310fff494293bb8b7d2",
+  "response_id": "COLLABRESP-7163e64d6e0d7b3c655f74e61e25c786794cf261e938b5297123177f103b6f58",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e34b42d68decb7235f826ad1",
+        "rationale": "총파업 일정, 장기화 시 HBM 개발·고객 일정 차질 가능성은 기존 canonical의 파업 일정·생산차질·고객신뢰 counter와 중복되고 실제 HBM4E 일정 차질 발생을 확인하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "e4fe9c3e89cebdff3f2d529e0667a5255ca1abf95f36c14ab7c912b19c704275",
+  "production_score_authority": false,
+  "prompt_hash": "0b70ed67a4a39c0ee7b84986eb67eb95c169d7aeb899cb89e89a90c87c4cadbb",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-209ffa34443371b57874e315a04553d4f74f38a5477cd20f8d9b150f4025d485",
+  "response_id": "COLLABRESP-0dc25f6c66433c393f2144ffe25698f5319fb081277b2fd0f7e2e6131f019182",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

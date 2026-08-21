@@ -1,0 +1,308 @@
+{
+  "output_schema_hash": "5a5b9b0266462c7cd0c0a378900448786d8f59371b2e4159b16dcc38f62d33bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "rationale": "transport chunk 1/2의 9,320개 줄과 SK하이닉스 직접 구간을 다시 전수 검토했다. M15X의 HBM 우선 배분과 일반 DRAM 공급 제약, 2026년 Capex, M15X·1c 전환, forward 재무 프로필, 동일 구간 매출 전망 불일치, 일반메모리·HBM SOTP 등 앞 조각 및 현재 사실과 경제적 정체성이 다른 6건을 현재 의미 버전으로 재검증했다. 겹치는 HBM4 가격·수요 문구, 더 오래된 PER·P/B·ROE·DPS, NAND·장비업체·타사 자료는 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.89,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "M15X가 HBM 전용 라인으로 추정돼 2026년에도 HBM을 제외한 일반 DRAM 생산능력 증가가 제한된다는 분석은 HBM 우선 배분이 일반메모리 공급 제약과 가격 방어로 이어지는 경로를 보여준다.",
+        "exact_quote": "2026년은 서버 중심의 수요가 시장을 견인할 것\n•2025년에이어2026년에도HBM을제외한일반DRAM의CAPA 증가는제한적일것으로전망\n•2025년에는SK하이닉스와Micron은증설할공간이없었고, 2026년에도SK하이닉스의M15X는HBM 전용라인으로추정되기때문\n•또한삼성전자P4도HBM 라인과병행되는것으로파악됨. 이로인해HBM을제외한일반CAPA 증가규모는5천장에불과할전망",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 우선 배분이 일반 DRAM 공급을 제한하는 구조는 메모리 가격과 이익 지속성의 직접 근거다.",
+        "mechanism_scope_id": "000660:MEMORY:M15X_HBM_ALLOCATION_GENERAL_DRAM_SCARCITY",
+        "normalized_object": "SK하이닉스 M15X의 HBM 우선 배분과 2026년 일반 DRAM 공급 제약",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "2026년 M15X가 HBM 전용 라인으로 추정돼 HBM 제외 일반 DRAM 생산능력 증가가 제한될 것으로 전망됐다",
+        "predicate_family": "GENERAL_DRAM_CAPACITY_CONSTRAINT",
+        "primitive_tags": [
+          "M15X",
+          "HBM",
+          "DRAM",
+          "CAPACITY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "GENERAL_DRAM_CAPACITY_CONSTRAINT",
+        "question_family_tags": [
+          "M15X",
+          "GENERAL_DRAM_CAPACITY",
+          "HBM_ALLOCATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 M15X의 HBM 전용 추정과 일반 DRAM 증설 제한",
+        "subject_id": "000660:M15X_HBM_ALLOCATION:FY2026",
+        "unit": "qualitative capacity allocation",
+        "value": "M15X HBM-dedicated estimate; ex-HBM general DRAM capacity growth limited"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.92,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "2026년 Capex가 전년 대비 28% 늘어난 32조원으로 전망된다는 분석은 AI 메모리 공급 대응 능력을 뒷받침하는 동시에 현금투입 강도를 계량한다. 이를 회사 확정 가이던스로 보지 않는다.",
+        "exact_quote": "•구체적으로삼성전자는2026년전년대비9% 증가한44.5조원, SK하이닉스는전년대비28% 증가한32조원규모의Capex 전망",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "대규모 forward Capex는 공급 확대와 현금소요를 함께 결정해 valuation earnings·cash bridge에 직접 영향을 준다.",
+        "mechanism_scope_id": "000660:MEMORY:SEMICONDUCTOR_CAPEX_FY2026",
+        "normalized_object": "SK하이닉스 2026년 반도체 Capex 규모와 증가율",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "2026년 반도체 Capex는 전년 대비 28% 증가한 32조원으로 전망됐다",
+        "predicate_family": "FORWARD_CAPEX_PROFILE",
+        "primitive_tags": [
+          "CAPEX",
+          "MEMORY",
+          "FY2026"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_FY2026_CAPEX_FORECAST",
+        "question_family_tags": [
+          "CAPEX",
+          "FY2026",
+          "SUPPLY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 반도체 Capex 전망",
+        "subject_id": "000660:SEMICONDUCTOR_CAPEX:FY2026F",
+        "unit": "KRW trillion and %",
+        "value": "32; YoY +28"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.89,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "M15X 투자가 2025년 4분기에 시작되고 1c 나노 전환투자가 전망 연도 말 100k를 넘을 수 있다는 분석은 차세대 DRAM/HBM 공급 전환의 실행 규모를 보완한다.",
+        "exact_quote": "•SK하이닉스는25년4분기M15x 팹투자시작. 1c나노전환투자규모도연말기준100k초과할가능성상존",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "M15X와 1c 전환의 실행 시점·규모는 HBM/DRAM 공급능력과 향후 이익 전환의 핵심 선행지표다.",
+        "mechanism_scope_id": "000660:MEMORY:M15X_1C_CONVERSION_CAPACITY",
+        "normalized_object": "SK하이닉스 M15X 및 1c 나노 DRAM 전환투자 일정·규모",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2025 start; FY2026 year-end outlook",
+        "predicate": "M15X 팹 투자가 2025년 4분기에 시작됐고 1c 나노 전환투자 규모는 전망 연도 말 100k를 넘을 가능성이 있다고 평가됐다",
+        "predicate_family": "DRAM_CAPACITY_CONVERSION_PROFILE",
+        "primitive_tags": [
+          "M15X",
+          "1C_NANO",
+          "CAPACITY",
+          "INVESTMENT"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "M15X_1C_CAPACITY_CONVERSION",
+        "question_family_tags": [
+          "M15X",
+          "1C_DRAM",
+          "CAPACITY_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 M15X 투자와 1c 나노 전환 규모",
+        "subject_id": "000660:M15X_1C_CONVERSION:FY2025_FY2026",
+        "unit": "thousand wafers per month and timeline",
+        "value": "M15X investment start 4Q2025; 1c conversion scale potentially above 100k at year-end"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권 표의 2025~2027년 매출·영업이익·순이익 경로는 HBM과 일반메모리 전망이 전사 forward earnings로 전환되는 규모를 같은 기준으로 제시한다. 이는 제3자 추정치이며 회사 가이던스가 아니다.",
+        "exact_quote": "Financial Data (단위: 십억원, %, 배, 원) PBR 밴드\n투자지표 2024 2025F 2026F 2027F\n1,000\n매출액 66,193.0 92,692.7 139,064.8 152,971.3\n900\n영업이익 23,467.3 42,249.0 77,345.3 85,858.2 800\n700\n순이익 19,788.7 39,198.0 63,330.2 70,296.5\n600\n증감률 흑전 98.1 61.6 11.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Forward 매출·영업이익·순이익은 segment 가치와 배수를 연결하는 valuation의 직접 분자다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_FINANCIAL_PROFILE_2025_2027",
+        "normalized_object": "SK하이닉스 2025~2027년 매출·영업이익·순이익 추정 경로",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F-FY2027F",
+        "predicate": "예상 매출은 2025년 92,692.7십억원, 2026년 139,064.8십억원, 2027년 152,971.3십억원이고 영업이익은 42,249.0십억원, 77,345.3십억원, 85,858.2십억원, 순이익은 39,198.0십억원, 63,330.2십억원, 70,296.5십억원으로 제시됐다",
+        "predicate_family": "FORWARD_FINANCIAL_PROFILE",
+        "primitive_tags": [
+          "REVENUE",
+          "OPERATING_PROFIT",
+          "NET_INCOME",
+          "FORECAST"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_FORWARD_FINANCIAL_PROFILE",
+        "question_family_tags": [
+          "FORWARD_REVENUE",
+          "FORWARD_OPERATING_PROFIT",
+          "FORWARD_NET_INCOME"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2025~2027년 예상 매출·영업이익·순이익",
+        "subject_id": "000660:FORWARD_FINANCIAL_PROFILE:2025_2027",
+        "unit": "KRW billion",
+        "value": "revenue FY2025F 92692.7/FY2026F 139064.8/FY2027F 152971.3; operating profit 42249.0/77345.3/85858.2; net income 39198.0/63330.2/70296.5"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "같은 SK하이닉스 Top Pick 구간에서 2026년 매출 요약은 110.1조원이라고 쓰지만 바로 아래 표는 139,064.8십억원이라고 제시한다. 이 내부 불일치는 forward revenue 숫자의 확정적 사용을 제한하는 정보품질 counterfact다.",
+        "exact_quote": "SK하이닉스(000660)ⅠBUYⅠTP 850,000원ⅠCP(11월13일) 612,000원\n•2026년매출액은110.1조원(YoY +50%), 영업이익은77.3조원(YoY +83%)으로전망\n•HBM4 가격이우려대비양호하게체결되며, HBM 경쟁력을재차확인. HBM의가치별도평가필요\n•일반메모리가치는327조원, HBM 가치255조원으로산정. 각각EV/EBITDA 5.2배, 8.5배적용\nFinancial Data (단위: 십억원, %, 배, 원) PBR 밴드\n투자지표 2024 2025F 2026F 2027F\n1,000\n매출액 66,193.0 92,692.7 139,064.8 152,971.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 문서의 forward 매출 분자가 약 29조원 다르면 valuation bridge의 정밀도를 직접 훼손한다.",
+        "mechanism_scope_id": "000660:MEMORY:FY2026_REVENUE_INTERNAL_CONFLICT",
+        "normalized_object": "SK하이닉스 FY2026 매출 전망의 문서 내부 수치 불일치",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026F; published 2025-11-19",
+        "predicate": "같은 분석 구간의 2026년 매출 전망이 요약 110.1조원과 표 139,064.8십억원으로 서로 다르다",
+        "predicate_family": "FORECAST_INTERNAL_INCONSISTENCY",
+        "primitive_tags": [
+          "REVENUE",
+          "INCONSISTENCY",
+          "FORECAST"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_REVENUE_INTERNAL_CONFLICT",
+        "question_family_tags": [
+          "SOURCE_QUALITY",
+          "FORECAST_CONFLICT",
+          "FY2026_REVENUE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 매출 전망의 문서 내 불일치",
+        "subject_id": "000660:FY2026_REVENUE_CONFLICT:2025-11-19",
+        "unit": "KRW trillion",
+        "value": "summary KRW 110.1tn versus table KRW 139.0648tn"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "일반메모리와 HBM을 분리해 각각 다른 EV/EBITDA 배수를 적용한 SOTP는 HBM의 구조적 성장 프리미엄이 전사 가치로 전환되는 valuation bridge를 직접 제시한다. 배수의 forward 기간이 명시되지 않아 구조화된 FORWARD_EV_EBITDA 역할로 태그하지 않는다.",
+        "exact_quote": "•일반메모리가치는327조원, HBM 가치255조원으로산정. 각각EV/EBITDA 5.2배, 8.5배적용",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM과 일반메모리의 분리 가치·차등 배수는 rerating 가설의 핵심 valuation 산식이다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_HBM_SUM_OF_PARTS",
+        "normalized_object": "SK하이닉스 일반메모리·HBM SOTP 가치와 차등 EV/EBITDA",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "valuation published 2025-11-19",
+        "predicate": "일반메모리 가치는 327조원에 EV/EBITDA 5.2배, HBM 가치는 255조원에 EV/EBITDA 8.5배를 적용해 산정됐다",
+        "predicate_family": "SEGMENT_SUM_OF_PARTS_VALUATION",
+        "primitive_tags": [
+          "GENERAL_MEMORY",
+          "HBM",
+          "EV_EBITDA",
+          "VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_SEGMENT_SUM_OF_PARTS",
+        "question_family_tags": [
+          "SOTP",
+          "HBM_VALUE",
+          "EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 일반메모리·HBM 분리 가치와 적용 EV/EBITDA",
+        "subject_id": "000660:MEMORY_HBM_SOTP:2025-11-19",
+        "unit": "KRW trillion and x",
+        "value": "general memory KRW 327tn at 5.2x EV/EBITDA; HBM KRW 255tn at 8.5x EV/EBITDA"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "parent 2개 transport chunk 중 마지막 chunk를 완료한다. 두 chunk 결합과 parent 완료 판정은 deterministic engine이 수행한다."
+    ]
+  },
+  "payload_hash": "8cdd8317c0e993b4371df56e56b0d43b9f677bca6771a46bc087895f7baadefd",
+  "production_score_authority": false,
+  "prompt_hash": "98542d361a84c8d90db83d42106007f9db4df657a79c13cc269290e859cb4b91",
+  "provenance": {
+    "agent_id": "root-phase101-c06-facts",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_facts",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bf36b6a18de1b93eabda44d26132f806236a2373c25bd835e490067fb3872d19",
+  "response_id": "COLLABRESP-a96eab1a6efd0c43aeba817d93f5b549c19dafdfd2b502e8682401bf4c9cb62c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

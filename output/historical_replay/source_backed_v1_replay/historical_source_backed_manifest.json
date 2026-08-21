@@ -1,0 +1,32 @@
+{
+  "actual_full_source_fetch_count": 11,
+  "critical_count_sum": 0,
+  "curated_case_count": 13,
+  "curated_source_repair_count": 0,
+  "fetched_unique_document_count": 11,
+  "guard_replay_ready_count": 6,
+  "hard_acceptance_counts": {
+    "canary_missing_guard_count": 0,
+    "canary_missing_positive_count": 0,
+    "canary_source_backed_replay_zero_count": 0,
+    "curated_case_not_replay_ready_count": 0,
+    "duplicate_replay_case_count": 0,
+    "future_leakage_count": 0,
+    "registry_url_case_unresolved_count": 0,
+    "source_proxy_replay_score_count": 0,
+    "url_string_only_replay_ready_count": 0,
+    "wrong_subject_replay_accepted_count": 0
+  },
+  "positive_replay_ready_count": 6,
+  "production_runtime_ready": false,
+  "registry_id": "historical_source_backed_canaries_v1",
+  "registry_source_repair_count": 6621,
+  "repair_queue_hash": "972db56bd8db33dd45e586d1335dbb2d023b80fc12150e03c0489a885cfd1d2f",
+  "replay_leaf_hash": "ff2fb546d619d87a0a6a2f9fc80a63364ff61bd3493e6136bc23094da87c9977",
+  "replay_ready_count": 13,
+  "schema_version": "e2r_historical_source_backed_replay_v1",
+  "snapshot_acquired_date": "2026-07-11",
+  "source_corpus_hash": "a1094a67eeed155c37b7dd914317b285dbc27673db6de909586cee965a9b86f0",
+  "status": "HISTORICAL_SOURCE_BACKED_REPLAY_PASS",
+  "wrong_subject_probe_count": 1
+}

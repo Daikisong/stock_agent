@@ -1,0 +1,65 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-9090dbe7d62ea6f7e55994e5",
+      "CRMEMO-e33d24eb53e54f8b0079b89d",
+      "CRMEMO-c989e641c46cb2589aaef403",
+      "CRMEMO-ef70ee03faa19d8789cfb3f2",
+      "CRMEMO-1581bf84221a5ab3699f79d5",
+      "CRMEMO-49d146bc643b60c9fe57efe2",
+      "CRMEMO-75dec67708e3f996f90dbb23"
+    ],
+    "confidence": 0.79,
+    "cross_component_support": [
+      "HBM4 양산 출하, 메모리 매출·ASP와 높은 가동률은 earnings, bottleneck, market, valuation에 공통된 actual operating 개선을 제공한다. 각 memo는 이 actual을 연결·DS 메모리·HBM 귀속 범위에 맞게 제한한다.",
+      "AMD 공식 HBM3E 공급 이력은 earnings visibility, valuation과 information confidence에서 issuer-only 계획보다 강한 독립 고객 corroboration으로 일관되게 사용된다.",
+      "EPS/FCF와 capital allocation은 연결 영업현금흐름·환원 실행을 인정하면서 CAPEX·자본약정·매출채권 운전자본 유출을 함께 반영해 현금창출과 현금소요를 양면으로 연결한다.",
+      "Bottleneck과 earnings visibility는 메모리 수급·가격 actual과 HBM4 출하를 지지하면서도 HBM 전용 CAPA 잠김, 고객 allocation과 signed 계약조건 부재를 공통 한계로 둔다.",
+      "개정 valuation memo와 Red Team은 actual HBM4 출하·AMD HBM3E 이력·메모리 매출·ASP만 positive execution으로 유지하고, MOU·추정 점유율·전사 AI factory 계획을 HBM valuation actual에서 제외한다."
+    ],
+    "cross_component_tensions": [
+      "eps_fcf_explosion: 연결 영업이익·OCF와 DS 메모리 매출 actual은 강하지만 HBM 단독 매출·마진·CAPEX·FCF bridge와 지속성은 확인되지 않았다.",
+      "earnings_visibility: HBM4 actual 출하에 비해 AMD MOU, 엔비디아 협의와 OpenAI 계획에는 확정 물량·가격·기간·취소조건·backlog/RPO가 없다.",
+      "bottleneck_pricing: 메모리 100% 가동·제한 공급·ASP 상승은 실현됐으나 HBM 전용 CAPA 잠김 기간과 고객별 계약가격으로 귀속할 수 없다.",
+      "market_mispricing: operating delta는 존재하지만 동일 denominator의 컨센서스 revision·dispersion이 없어 시장 기대보다 과소반영됐다고 단정할 수 없다.",
+      "valuation_rerating: forward PE·PB의 전사 추정 equity 분모와 trailing PE·PB, forward EV/EBITDA·FCF yield의 기간·enterprise·cash 분모가 다르다. HBM standalone normal earnings·FCF bridge가 없어 하나의 cheapness 신호로 합칠 수 없다.",
+      "capital_allocation: 자기주식·소각·배당 actual과 투자등급 접근성에 맞서 낮은 분기 배당성향, 자본약정과 큰 운전자본 유출이 현금배분 여력을 제약한다.",
+      "information_confidence: AMD CUSTOMER_OFFICIAL은 실제 HBM3E 이력과 기술관계를 보강하지만 구매의무·계약경제와 HBM 단독 손익·현금은 공개하지 않는다.",
+      "Immutable prompt에 A/S/C judge artifacts가 포함되지 않았다. 따라서 일곱 component의 3-way intersection은 모두 NOT_EMBEDDED/NOT_INFERRED이며 외부 judge 파일로 보완하지 않았다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "일곱 current memo와 RTMEMO-39e4f63937dcae705d8553ca를 전수 검토했다. HBM4 실제 양산 출하, AMD 공식 HBM3E 공급 이력, 메모리 매출·ASP·가동률과 연결 현금창출은 실행 개선을 지지한다. 반면 계획·MOU·협의는 signed 계약이 아니며 연결·DS 메모리·HBM 귀속과 CAPEX·운전자본의 현금 부담이 남는다. 개정 valuation memo는 actual execution을 인정하면서 forward·trailing, equity·enterprise·cash, 연결·HBM denominator를 대칭적으로 분리했지만 HBM standalone earnings·FCF bridge는 여전히 없다. Judge artifacts는 prompt에 미내장이므로 모든 A/S/C intersection을 NOT_EMBEDDED/NOT_INFERRED로 남겼다. synthesis_complete는 제공된 memo7와 Red Team의 review coverage 완료만 뜻하고 score·Stage·투자 결론 권한은 없다.",
+    "unresolved_material_questions": [
+      "eps_fcf_explosion: 연결 actual과 DS 메모리 매출에서 HBM 단독 매출·마진·영업이익·CAPEX·FCF를 어떻게 검증할 수 있는가?",
+      "earnings_visibility: HBM4 양산 출하 이후 고객별 qualification, allocation, 가격·물량·기간·취소조건과 backlog/RPO는 무엇인가?",
+      "bottleneck_pricing: 메모리 전체 병목 중 HBM 전용 CAPA가 잠긴 기간, 고객별 예약량과 계약가격은 얼마인가?",
+      "market_mispricing: 동일 as-of·동일 earnings denominator의 컨센서스 revision·dispersion은 operating 개선을 얼마나 이미 반영했는가?",
+      "valuation_rerating: HBM standalone normal earnings·FCF와 전사 multiple을 연결하는 period-matched bridge가 없을 때 rerating 폭과 지속성을 어떻게 검증할 수 있는가?",
+      "capital_allocation: DS 메모리·HBM 귀속 CAPEX, 회수기간과 실현 ROIC는 환원과 성장투자의 장기 우선순위를 어떻게 바꾸는가?",
+      "information_confidence: AMD·NVIDIA·OpenAI 관련 확정 구매조건과 HBM 단독 매출·마진·현금전환은 공식 자료에서 확인되는가?",
+      "Judge 범위 감사: 이 prompt에 21개 role artifact가 없어 일곱 component의 range convergence와 material disagreement를 이 synthesis가 독립 계산할 수 없다."
+    ]
+  },
+  "payload_hash": "3acdeb3289af60f86da17febb1486d5f49e631756e94c364cb0e8a334a849c05",
+  "production_score_authority": false,
+  "prompt_hash": "b97b678110fe1769ec0a95a357729278724ac0b605ed29f773a019e2610e6d88",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4f4f8433a17ef4d9bcbbef1c3b1bd4d9a4b670461967806f50fb297086a0b6bb",
+  "response_id": "COLLABRESP-15ab31413fc6ff23ec5c9e1db37b49dded610b39fa31f4a2c66f28b8770ce5e4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

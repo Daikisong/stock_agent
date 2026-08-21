@@ -1,0 +1,52 @@
+{
+  "output_schema_hash": "ebaa078c7d4942f1cf5b68e48203f9c4e2222f1b997abf613ddbf8e6e945dd91",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-56e6265c7a1179142a3f0d30",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The URL is on the KIND domain and matches KIND_KRX provenance, but its docpath parameter is empty. It is a metadata-sparse generic viewer endpoint with no resolvable disclosure or file identity, so it cannot provide a full-fetch route for the target objective."
+      },
+      {
+        "candidate_id": "SGCAND-8c374979e0e11aaf77a1557f",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The URL is a generic KIND noToc shell and therefore matches KIND_KRX ownership, but it carries no target, filing, document, or file identity. The parent candidate reference does not make this non-resolvable framework page a material fetch route."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Both graph-expansion children are generic KIND framework URLs without a resolvable document path or filing identity; neither can be handed off for a target-scoped full fetch."
+    ]
+  },
+  "payload_hash": "ab45f9c04eb4e2aaf6515f05b858e7325b4b9a2bcef0b03d2bba5f2ed1f0755a",
+  "production_score_authority": false,
+  "prompt_hash": "cf68f7258af5dbc5778aaa13043b55fbed6f2b865aec536d2c7c99c83d122622",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7dc3c467f50e852c6f6f6308529aba8daefd0bf1eed1de3cc27e7f8520f83ac3",
+  "response_id": "COLLABRESP-10e79d83eddd99f9708773877db6dfdd087b029c2fe051b756abe4ca8ad6940d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

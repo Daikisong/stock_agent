@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-01b719b430a2302349b9ac7d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 시장시황 채널은 broker original/PDF가 아니고 005930 target report identity도 없다. nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-103972fb33534bf3de31cb07",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram의 타 종목 broker 요약으로 original report route와 005930 subject가 없다. family=NONE, nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-7f0538a4812d987bde21e9e4",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.1,
+        "rationale": "신한투자증권 landing provenance는 맞지만 generic Daily 페이지이며 005930 report·attachment를 특정하지 않고 discovery metadata도 as_of 이후 8월 19일이다. nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-127e7d7a6878c5c6c42876c9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram의 휴메딕스 report 요약으로 wrong target이며 original broker PDF가 아니다. nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-2d38834450adefd5413b968c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 개인 코멘트의 선익시스템 내용으로 wrong target·wrong source다. PUBLIC_BROKER_PDF를 충족하지 않아 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-be03b73c29b87d41e2d1349e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 타 종목 목표가 모음이며 original broker document와 005930 HBM valuation bridge가 없다. nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-f39091670c640bc374e46385",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Naver premium Morning Buzz는 third-party summary이며 requested broker original/PDF provenance를 제공하지 않는다. 005930 주가 언급만으로 material route가 되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b1806ea30e2426e98a326498",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 타 종목 report 요약으로 original broker landing/PDF와 005930 target scope가 없다. nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-bfff57a66caa5b2538189a6e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "2016년 헤럴드경제 archive navigation은 wrong date·wrong subject이며 broker report provenance가 아니다. nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-fbc1cce49f39580259d697bb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 글로벌 뉴스 요약으로 005930 target report나 PUBLIC_BROKER_PDF full-source route가 없다. nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-a71b1f8e7d399065977da4e1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.1,
+        "rationale": "신한투자증권 landing provenance는 맞지만 generic Daily 페이지이고 target-specific attachment가 없으며 discovery metadata도 as_of 이후 8월 19일이다. nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-ec5453b78d949399ce652c05",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "로보티즈 기업분석 third-party page로 wrong target이고 original broker PDF가 아니다. nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P7 roster 12개를 exact-once 분류했으나 005930 target-specific broker full-source route는 확인되지 않았다.",
+      "material 0은 source absence가 아니며 metadata·snippet을 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "7ce3473795ffac6ca8d1a8341885a4d8c314f31fa348fe3733b234981364925b",
+  "production_score_authority": false,
+  "prompt_hash": "2f371bd4bb979a8cd4c76f5ed2a40040c9520baa6f8cf84471f80106a5c30d22",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6a4336c3324ac070e065b562354c3e1d731f593a34a7c3620b85366e1f463e0d",
+  "response_id": "COLLABRESP-4306aaeafa2698fd63f39d814ddcab79b903a4c879ff6a68ddc611c185f9905e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

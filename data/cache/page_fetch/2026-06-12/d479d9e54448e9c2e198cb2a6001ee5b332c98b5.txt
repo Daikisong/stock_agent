@@ -1,0 +1,512 @@
+기업지평 넓히기 – Telegram
+기업지평 넓히기
+기업지평 넓히기
+기업지평 넓히기
+@broadeningones
+3.32K
+subscribers
+1.03K
+photos
+10
+videos
+84
+files
+2.26K
+links
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+기업지평 넓히기
+3.32K subscribers
+기업지평 넓히기
+SPIE Photomask Technology + Extreme Ultraviolet Lithography
+#Hegemony
+님
+1. 1000W 호환 EUV 펠리클을 향하여 (초청 논문)
+- 일시: 2024년 9월 30일 11:50 AM - 12:10 PM PDT
+- 장소: Monterey Conf. Ctr., Steinbeck Ballroom
+- 발표자: Mark A. van de Kerkhof (ASML Netherlands B.V.)
+- 주요 내용:
+• EUV 리소그래피의 세계적 채택과 발전
+• 800W 및 1000W 호환 펠리클 개발의 필요성
+• Si 기반 복합 펠리클 및 CNT 기반 펠리클 논의
+• 고출력 EUV에 대한 견고성 및 응용 분야 검토
+2. 삼성 파운드리의 EUV 마스크 결함 완화 전략 (초청 논문)
+- 일시: 2024년 10월 1일 10:15 AM - 10:35 AM PDT
+- 장소: Monterey Conf. Ctr., Steinbeck 3
+- 발표자: 최종길 (삼성전자 반도체)
+- 주요 내용:
+• EUV 리소그래피의 발전과 남은 과제
+• 마스크 결함 검출 및 계측 강화 방안
+• 고급 노드에서의 '매우 작은' 결함 검출 한계
+• EUV 펠리클 기술을 통한 결함 완화 전략
+3. 금속 코어 소재를 이용한 EUV 펠리클용 초박막 멤브레인 평가
+- 일시: 2024년 10월 1일 10:55 AM - 11:10 AM PDT
+- 장소: Monterey Conf. Ctr., Steinbeck 3
+- 발표자: 타니무라 타카시 (NGK Insulators, Ltd.)
+- 주요 내용:
+• 베릴륨 금속 기반 펠리클 멤브레인 개발
+• 90% 이상의 EUV 투과율 달성
+• 베릴륨의 독성 문제 해결 및 안전 기준 충족
+4. 펠리클 응용을 위한 저밀도 다이아몬드형 탄소
+- 일시: 2024년 10월 1일 11:10 AM - 11:25 AM PDT
+- 장소: Monterey Conf. Ctr., Steinbeck 3
+- 발표자: Mohammad Saghayezhian (Veeco Instruments Inc.)
+- 주요 내용:
+• 다이아몬드형 탄소(DLC)의 특성 및 장점
+• 물리적 증기 증착법을 통한 저밀도 DLC 성장
+• EUV 투과율과 밀도의 관계 연구
+5. 고출력 응용을 위한 고급 EUV 펠리클 개발
+- 일시: 2024년 10월 1일 11:40 AM - 11:55 AM PDT
+- 장소: Monterey Conf. Ctr., Steinbeck 3
+- 발표자: 홍주희 (S&S Tech Co., Ltd.)
+- 주요 내용:
+• EUVL 기술의 중요성 및 펠리클의 역할
+• 500W 이상의 고출력 대응 펠리클 개발
+• 90% 이상의 투과율과 10,000 웨이퍼 노출 수명 달성
+6. EUV 펠리클을 위한 대면적 다공성 패턴 멤브레인 개발
+- 일시: 2024년 9월 30일 6:00 PM - 7:30 PM PDT
+- 장소: Monterey Marriott, San Carlos III/IV
+- 발표자: 하태중 (TDNJ Inc.)
+- 주요 내용:
+• EUV 리소그래피의 중요성과 펠리클의 역할
+• 다공성 SiN 멤브레인 개발 과정
+• 50mm x 50mm 크기의 멤브레인 제작 성공
+• KOH 및 TMAH 에칭 기술 탐구
+• 100 nm 홀 패턴을 가진 40 nm SiN 멤브레인의 투과율 향상
+7. CNT 펠리클의 두께와 투명도에 중점을 둔 EUV 펠리클 건강 검사
+- 일시: 2024년 9월 30일 6:00 PM - 7:30 PM PDT
+- 장소: Monterey Marriott, San Carlos III/IV
+- 발표자: Emile van Veldhoven (Canatu Oy)
+- 주요 내용:
+• EUV 리소그래피에서의 펠리클 최적화 필요성
+• 펠리클 건강 상태 예측 및 실패 방지 방법
+• 두께와 투명도 측정을 통한 펠리클 건강 지표
+• 엘립소메트리와 반사계측법을 이용한 검사 방법
+• CNT 펠리클의 이방성 특성 및 광학 특성 연구
+8. 저출력 및 고출력 EUV 리소그래피를 위한 개선된 CNT 기반 펠리클
+- 일시: 2024년 10월 1일 2:50 PM - 3:05 PM PDT
+- 장소: Monterey Conf. Ctr., Steinbeck 2
+- 발표자: Márcio D. Lima (Lintec of America, Inc.)
+- 주요 내용:
+• 20 nm 이하 두께의 CNT 필름 특성 연구
+• 150 W에서 600 W 범위의 EUV 출력 조건 테스트
+• 코팅된 CNT 필름의 EUV 투과율 및 산란 특성
+• 보호층 사용으로 CNT 펠리클 수명 3배 이상 증가
+• 다공성 펠리클의 기계적 변형 측정 새 프로토콜 평가
+NAVER
+SPIE Photomask Technology + Extreme Ultraviolet Lithography
+개인적인 판단에 있어 강력한 변곡점이 될 학회가 될 것으로 보임(세션들을 보니 더더욱) 어짜피 못가지만,...
+😁
+1
+600
+views
+edited
+01:04
+기업지평 넓히기
+Forwarded from
+BK Tech Insight - 바바리안 리서치
+[ M4 맥북 탑재 램 대폭 증가 예상 ]
+- 하반기 새롭게 출시될 M4 맥북의 램 용량이 현재 모델 대비 크게 증가할 것으로 예상됨
+- 가장 기본 모델의 경우 현재 8GB에서 16GB 로 두 배 증가할 예정
+- 애플의 기본 모델 램 용량 확대는 2016년 이후 처음
+- 최대 램 용량도 24GB 에서 32GB 로 증가할 예정
+- AI 도입에 따른 램 요구 사항이 급격하게 증가함에 따라 램크루지라는 이야기를 많이 들은 맥북도 8년만에 램 탑재량 대폭 증가 예정
+- 아이폰 16 일반 모델의 경우에도 6GB > 8GB 로 증가할 예정이며 내년 17 프로 모델의 경우 8GB > 12GB 로 증가할 것으로 추정됨
+https://9to5mac.com/2024/08/24/m4-macs-16gb-ram/
+9to5Mac
+M4 Macs might start with 16GB of RAM for the first time - 9to5Mac
+According to a new report from Bloomberg’s Mark Gurman, Apple’s upcoming base model Macs could start with 16GB RAM by...
+417
+views
+01:43
+기업지평 넓히기
+Forwarded from
+야자반 - Y.Z. stock
+오공 대란
+8월 20일 PC용 스팀, 에픽 게임스 스토어 및 게임기 PS5에 출시된 후 공식 발표 자료에 따르면 8월 23일 21시 현재 전체 플랫폼 판매량이 1000만대를 넘어섰다.
+많은 게이머들이 최고의 게임 경험을 얻기 위해 업그레이드하거나 교체하고 있다.
+그래픽 카드는 최소한 엔비디아 RTX 4050 등급이 있어야 하며, RTX 4070 이상이 특히 좋다
+https://www.digitimes.com.tw/tech/dt/n/shwnws.asp?id=0000700844_5KW75VOW5DXPNU3AEDGG7
+DIGITIMES 科技網
+悟空爆紅　PC換機潮提前露曙光？ 板卡廠出貨上修
+自疫情紅利消退後，儘管全球PC產業庫存去化已告一段落，但需求並未快步跟上，市場普遍認為，PC換機潮來臨關鍵在於AI PC何時起飛，以及微軟（Microsoft）於2025年10月14日後不再為Windows 10提供支援。
+494
+views
+03:27
+기업지평 넓히기
+240826 디일렉 라이브 정리
+#Hegemony
+님
+1. CNT 펠리클 개발 현황
+* CNT 보호 코팅 연구 8년째 진행 중이나, 완벽한 차단 기술 확보 아직 어려움
+* 수소 원자 크기가 매우 작아 완벽 차단은 현실적으로 불가능하며, 최대한 차단율을 높이는 방향으로 연구 진행 중
+* CNT 기반 펠리클이 현 시점에서는 최선의 선택이지만, 예상보다 개발 속도가 더딜 수 있음
+*
+개인 의견:
+CNT 펠리클 개발 난항으로 실리콘 기반 1세대 펠리클의 중요성이 더욱 부각될 가능성 존재
+2. 국내 기업 멤브레인 개발 현황
+* 제이오(상장), 어썸레이(비상장) 멤브레인 개발 시작 단계
+* 한양대와 협력하여 멤브레인 샘플 제공 및 펠리클화 가능성 검토 중
+*
+개인 의견:
+카나투 대체 가능한 국산 멤브레인 개발은 긍정적이나,
+* CNT 기반 멤브레인 개발 경험 부족으로 개발 기간 장기화 가능성 존재
+* 카나투 멤브레인 개발에 10년 가까이 소요되었던 점을 고려하면, 상용화까지 상당한 시간 필요할 수 있음
+* 향후 멤브레인 제조 장비 판매 또는 멤브레인 자체 판매 등 사업 모델 결정 필요
+3. 카나투 코팅 관련 정보
+* 카나투 펠리클 코팅은 국내 비공개 기업에서 담당
+* 안진호 교수 블로그에서 해당 기업 언급 후 삭제된 것으로 보아, 해당 기업의 요청에 의해 정보 삭제 가능성 존재
+*
+개인 의견:
+FST의 IR 소극적 태도는 과거 EUV 펠리클 관련 발표 이후 양산 납품 지연 등으로 인한 학습 효과 때문으로 추측
+* 고객사와의 기밀 유지 및 신뢰 관계 유지를 위해 정보 공개에 더욱 신중한 것으로 판단됨
+4. EUV 펠리클 적용 현황
+* TSMC: EUV 펠리클 100% 적용
+* 삼성전자: EUV 펠리클 도입 어려움 (EUV 장비 수 부족, 순간적인 생산성 하락 우려, 미쓰이 물량 부족 등)
+* 1세대 EUV 펠리클 가격: 3천만원 (초기 샘플 가격 1억원에서 양산성 향상으로 가격 하락)
+5. 결론
+* 2세대 CNT 펠리클 개발 지연 시 0.33nm 공정용 실리콘 기반 1세대 펠리클 중요성 증가 예상
+* 삼성전자 EUV 펠리클 도입 확대 및 국산 펠리클 품질 향상 기대
+* 1년 이내에 유의미한 성과 가시화 가능성 존재
+NAVER
+240826 디일렉 라이브 정리
+​
+😁
+2
+817
+views
+04:10
+기업지평 넓히기
+Forwarded from
+용산의 현인
+(
+MH LEE
+)
+다급한 삼성, 연말 HBM4 출시
+https://www.apple-economy.com/news/articleView.html?idxno=74109
+Apple-Economy
+다급한 삼성, 연말께 HBM4 출시 - 애플경제
+[애플경제 김예지 기자] 삼성이 뒤처진 인공지능 반도체 분야에서 SK 등 선발주자를 따라잡기 위해 맹추격을 하고 있다. 일단 오는 연말께 최첨단 고대역폭 메모리칩인 ‘HBM4’를 출시할 것으로 보인다. 최근 업...
+647
+views
+22:56
+기업지평 넓히기
+Forwarded from
+루팡
+미국 CSP, 2025년에 자본 지출을 추가로 늘릴 것으로 예상
+미국의 주요 클라우드 서비스 제공업체(CSP)는
+2024년 자본 지출이 전년 대비 최소 35% 증가할 것으로 추정
+했으며, 리서치 회사는
+CSP가 계속해서 새로운 ASIC 프로젝트를 확장함에 따라 2025년에 금액이 더 증가할 것으로 예상
+하고 있습니다.
+https://www.digitimes.com/news/a20240827PD223/capex-2025-asic-2024-growth.html
+DIGITIMES
+US CSPs expected to further raise capex in 2025
+Major US-based cloud service providers (CSPs) have estimated their 2024 capex will increase by at least 35% year-over-year, with research firms expecting the amounts to rise further in 2025 as the CSPs continue expanding new ASIC projects in the wake of the…
+308
+views
+05:01
+기업지평 넓히기
+Forwarded from
+Mr. Market
+TrendForce 메모리 현장 가격 동향 보고서
+DRAM 현장 가격:
+*
+전망:
+단기 개선 가능성 낮음
+*
+주요 요인:
+* 채널 수요 약세
+* 리볼드 칩 공급 풍부
+* 한국 공급업체의 DDR5 공급 증가로 인한 가격 하락 압력
+*
+결과:
+* 현장 가격 지속 하락
+* 주류 DDR4 1Gx8 2666MT/s 칩 평균 가격: US$1.978 -> US$1.973 (0.25% 하락)
+NAND 플래시 현장 가격
+:
+*
+전망:
+지속적인 약세 가능성
+*
+주요 요인:
+* 수요 부진 지속
+* 일부 공급업체 공식 가격 인하
+*
+결과:
+* 소비자 제품 수요 부진 시 현장 가격 추가 하락 가능성
+* 512Gb TLC 웨이퍼 현장 가격: US$3.211 (0.71% 하락)
+DRAM 및 NAND 플래시 현장 가격 모두 약세를 보이고 있으며, 단기간 내에 개선될 가능성은 낮습니다. 특히
+DRAM은 공급 증가와 수요 부진이 겹쳐 가격 하락 압력이 더욱 커지고 있습니다. NAND 플래시 역시 수요 부진으로 인해 추가적인 가격 하락 가능성이 있습니다.
+https://www.trendforce.com/news/2024/08/28/insights-memory-spot-price-update-south-korean-supplier-increased-ddr5-supply-generating-downward-price-pressure-for-dram/
+TrendForce Insights
+[Insights] Memory Spot Price Update: South Korean Supplier Increased DDR5 Supply, Generating Downward Price Pressure for DRAM |…
+According to TrendForce's latest memory spot price trend report, regarding DRAM spot prices, improvements are unlikely in the near term as reballed ch...
+1.59K
+views
+06:54
+기업지평 넓히기
+SK하이닉스, 이천 M16 생산량 80% 늘린다…HBM에 범용 D램까지 겨냥
+1. D램 생산능력 확대
+- 올 4분기부터 내년 말까지 이천 사업장 중심으로 진행
+- M16 공장: 월 7만 장 이상의 10nm급 5세대 D램 생산 설비 추가
+- 내년 말 M16 생산량: 현재 대비 최대 80% 증가 예상
+2. 신기술 개발
+- 10nm급 6세대 D램: 내년 2분기 시험 생산, 연내 테스트 통과 목표
+- M14 공장: 10nm급 6세대 D램 라인으로 전환 검토 중
+3. 신규 공장 투자
+- M15X: 내년 11월 준공, 10nm급 5세대 D램 설비 도입 예정
+4. 투자 확대 배경
+- IT 시장의 D램 수요 급증
+- HBM, PC, 서버, 그래픽, 모바일 등 전 분야에서 수요 증가
+- 데이터센터의 D램 교체 수요로 서버용 제품 성장률 20% 중반 예상
+5. 낸드플래시 사업 호조
+- 상반기 SSD 수출액: 전년 동기 대비 84% 증가
+- AI용 데이터센터의 SSD 수요 증가
+- 기업용 고용량 SSD 생산 확대 중
+서울경제
+SK하이닉스, 이천 M16 생산량 80% 늘린다…HBM에 범용 D램까지 겨냥 [biz-플러스]
+산업 > 기업 뉴스: SK하이닉스(000660)가 올 4분기부터 내년 말까지 이천 사업장을 중심으로 최신 D램 생산능력을 대폭 끌어올린다. 독보적인 1위를...
+🦄
+3
+757
+views
+00:24
+기업지평 넓히기
+Forwarded from
+야자반 - Y.Z. stock
+https://m.dcinside.com/board/tsmcsamsungskhynix/8259
+Dcinside
+트렌드포스: 최근 10년 주요 업체별 디램 CAPA 트렌드 - 반도체산업 마이너 갤러리
+1. 디램 산업의 웨이퍼 CAPA는 그동안 지속 증가해 왔는데, 작년에 웨이퍼 CAPA가 역성장한 건 사실상 2008년 금융위기 이래 처음 있는 일임. 그만큼 작년 다운턴이 극심했음.2. 웨이퍼 CAPA 트렌드로 메이
+556
+views
+01:37
+기업지평 넓히기
+Forwarded from
+[삼성리서치] 테크는 역시 삼성증권
+엔비디아 임팩트
+[삼성증권 IT/이종욱]
+엔비디아 실적발 주가 조정이 큰 편입니다. HBM 관련주의 하락 폭이 제일 크지만 원익IPS등 전공정 장비 소재 업체들의 조정도 일어나고 있습니다. 저희 삼성 리서치의 여의도 행사로 인해 중요한 시기인 오늘 텍톡을 휴방하게 되어 코멘트로 갈음해보고자 합니다.
+엔비디아의 실적은 저희 문준호 연구원의 코멘트처럼 큰 서프라이즈까지는 아니더라도 흠잡을 데 없는 숫자들이었습니다. 블랙웰 지연, 약해진 매출 가이던스, 모호한 GP마진 가이던스 등을 걱정하지만, 저는 숫자가 문제였다고 생각하진 않습니다.
+투자자들의 걱정은 1) 고객들이 AI로 돈을 못 벌것 같고, 2) HBM 이후의 새로운 트리거가 없다는 것입니다. 이 두 가지 걱정을 해결하지 못하면 엔비디아가 더 좋은 숫자를 내놓아봤자 걱정만 늘어날 뿐입니다.
+사이클이 이렇게 끝날 것이라는 생각은 들지 않습니다. 수요 peakout을 만들기 위한 진도가 아직 덜 나갔습니다. 임금님이 행진을 하지 않았는데 벌거벗었다고 소리칠 수 없습니다. 음식이 나오지 않았는데 맛없다고 할 순 없습니다. 지금은 AI 완성도에 실망하는 순간이 아닌 기다림에 잠시 지친 상황입니다.
+플랫폼 고객사들은 AI 투자가 이렇게까지 필요하진 않았다고 후회하기보다는 아직 AI서비스에사 경쟁다운 경쟁을 시작하지도 못했다고 생각할 것입니다. 젠슨황이 아직은 LLM 모델을 키우는 사이클이라고 말한 것도 비슷한 맥락이라고 생각합니다. 아직은 파이를 키우고 싶을 때입니다. AI 서비스의 출시와 검증이 우선 과제입니다.
+구글 픽셀(8/13)과 아이폰(10월 중)을 통해 AI가 스마트폰에 들어오기 시작합니다. 내년엔 디램 컨텐츠가 올라가면 경쟁이 시작됩니다. 9월엔 OpenAI의 스트로베리 프로젝트가 공개된다는 루머도 있습니다. 좋은 서비스의 출시가 새로운 트리거를 줄 것이라 생각합니다.
+그 전까지는 최소한 이익이 잘 나오기 때문에 급락이 이어지긴 힘듭니다. 급락 뒤엔 반등도 예상됩니다. 사이클의 초반에는 내러티브가 좋은 곳이 우선이지만 후반기엔 이익이 잘 나오는 곳이 대장입니다.
+(2024/08/29 공표자료)
+🦄
+4
+368
+views
+05:16
+기업지평 넓히기
+Forwarded from
+Mr. Market
+TrendForce: 메모리 모듈 제조업체의 재고 증가와 수요 부진 심화
+- 메모리 모듈 제조업체들의 DRAM 재고 증가와 소비자 가전 수요 부진으로 메모리 시장 침체
+- 현물 가격 하락, NAND 플래시 출하량 감소 등 시장 어려움 반영
+- 인플레이션, 금리 인상 등으로 소비자 지출 감소, 모듈 제조업체 이익 마진 압박
+- AI 스마트폰/PC의 영향은 제한적, DRAM 가격 상승은 HBM3e 침투율 증가와 공급 제약에 의존
+- 소비자 수요 약세 지속 시 DRAM 가격 상승폭은 기대에 미치지 못할 수 있음
+https://www.trendforce.com/presscenter/news/20240829-12276.html
+TrendForce
+Press Center - Spot Market for Memory Struggles in First Half of 2024; Price Challenges Loom in Second Half, Says TrendForce |…
+TrendForce reports that memory module makers have been aggressively increasing their DRAM inventories since 3Q23, with inventory levels rising to 11–17 weeks by 2Q24. However, demand for consumer electronics has not rebounded as expected. For instance, smartphone…
+780
+views
+12:56
+기업지평 넓히기
+Forwarded from
+Mr. Market
+https://m.dcinside.com/board/tsmcsamsungskhynix/8320
+Dcinside
+트렌드포스: AI 서버용 LPDDR5 수요가 내년 368% 성장 - 반도체산업 마이너 갤러리
+Grace CPU 기반 수퍼칩 수요 덕분에 AI 서버용 저전력 LPDDR5X 수요가 올해 11.5억 Gb에서 내년 54.1Gb으로 YoY 368% 성장할 것으로 전망함. 이 정도면 내년 전체 디램 수요를 YoY로 2%
+747
+views
+12:56
+기업지평 넓히기
+Forwarded from
+엄브렐라리서치 Anakin의 투자노트
+https://siliconangle.com/2024/08/29/report-nvidia-apple-join-openais-multibillion-dollar-funding-round/
+Two more tech giants may join the new funding round that OpenAI is rumored to be raising.
+Citing sources familiar with the matter, Bloomberg reported today that Nvidia Corp. and Apple Inc. may participate in the investment. OpenAI is expected to raise several billion dollars at a valuation that could exceed $100 billion. That’s up from the $80 billion it was reportedly worth in February.
+On Wednesday, multiple publications reported that Thrive Capital will lead the round with a $1 billion contribution. Microsoft Corp., OpenAI’s largest investor, may up its stake as well. The software and cloud computing giant has so far backed the ChatGPT developer to the tune of $13 billion, much of which was provided in the form of cloud infrastructure.
+SiliconANGLE
+Report: Nvidia, Apple could join OpenAI’s multibillion-dollar funding round
+Two more tech giants may join the new funding round that OpenAI is rumored to be raising.Citing sources familiar with the matter, Bloomberg reported today that Nvidia Corp. and Apple Inc. may part
+479
+views
+02:16
+기업지평 넓히기
+엄브렐라리서치 Anakin의 투자노트
+https://siliconangle.com/2024/08/29/report-nvidia-apple-join-openais-multibillion-dollar-funding-round/ Two more tech giants may join the new funding round that OpenAI is rumored to be raising. Citing sources familiar with the matter, Bloomberg reported…
+두 개의 거대 기술 기업이 OpenAI의 새로운 자금 조달 라운드에 참여할 수 있다는 소문이 돌고 있습니다.
+블룸버그는 오늘 이 사안에 정통한 소식통을 인용해
+엔비디아(Nvidia Corp.)와 애플(Apple Inc.)이 투자에 참여할 가능성이 있다고 보도
+했습니다. OpenAI는 1,000억 달러를 초과할 수 있는 가치로 수십억 달러를 모금할 것으로 예상됩니다. 이는 지난 2월에 알려진 800억 달러보다 증가한 수치입니다.
+수요일, 여러 매체에 따르면 Thrive Capital이 10억 달러를 기부하여 이번 라운드를 주도할 것이라고 보도했습니다. OpenAI의 최대 투자자인 마이크로소프트도 지분을 늘릴 가능성이 있습니다. 이 소프트웨어 및 클라우드 컴퓨팅 대기업은 지금까지 ChatGPT 개발사에 130억 달러에 달하는 자금을 지원했으며, 이 중 대부분은 클라우드 인프라의 형태로 제공되었습니다.
+🦄
+1
+708
+views
+02:16
+기업지평 넓히기
+Forwarded from
+반붐온? 방붐온?
+○TSMC, 젠슨 황 요구 단칼에 거절
+- 젠슨 황이 엔비디아 전용 CoWoS 라인을 기존 공장 외부에 신설해달라고 요구한 걸 TSMC가 그 자리에서 딱 잘라 거절하면서 미팅 분위기가 경직됐다는 소식이 전해진 가운데, 23일 대만 경제전문가인 황스충(黃世聰)이 경제 프로그램에 출연해 이 에피소드의 배경을 언급했음.
+- 그에 따르면, 젠슨 황이 겉으론 점잖아 보여도 엔비디아의 생존을 위해서라면 못 할 말이 없는 보통 아닌 성격이라 6월 대만 방문 때 TSMC에 불쑥 엔비디아 전용 CoWoS 라인 설치를 요구한 것도 그런 맥락에서 이해할 수 있다고.
+- 다만 TSMC 경영진이 그 말을 듣자마자 “돈은 엔비디아가 대느냐?”고 반문, 양측이 서로 자기 회사 이익을 내세우면서 분위기가 다소 격해지는 바람에 결국 웨이저자 TSMC 회장이 직접 진화에 나섰다고 함.
+○TSMC가 관계 우위에 서 있다는 방증
+- TSMC가 엔비디아의 요구를 거절한 이유는, 지금까지 공장 외부에 특정 고객 전용 라인을 설치한 적이 없는데 그런 선례를 남기면 너도나도 요구할 게 뻔하기 때문. 애플도 전용 라인 설치를 요구한 적은 있었지만 TSMC 기존 공장 외부 라인 설립은 아니었음.
+- 또한 공장 바깥에 생산라인을 둘 경우 기술 유출 우려가 있으므로 TSMC로서는 거절하는 게 당연지사.
+- 황스충은 이번 에피소드의 결과는 TSMC가 엔비디아에 비해 우위를 점하고 있다는 방증이라고 설명했음.
+- 아닌 게 아니라 TSMC는 3~5나노 공정과 CoWos 기술을 거의 독점하다시피하며 누구도 흔들 수 없는 독보적 입지를 구축하고 있음.
+https://www.thelec.kr/news/articleView.html?idxno=29332
+디일렉(THE ELEC)
+[차이나 브리프] TSMC-엔비디아 갈등 배경 - 디일렉(THE ELEC)
+○TSMC, 젠슨 황 요구 단칼에 거절- 젠슨 황이 엔비디아 전용 CoWoS 라인을 기존 공장 외부에 신설해달라고 요구한 걸 TSMC가 그 자리에서 딱 잘라 거절
+495
+views
+03:54
+기업지평 넓히기
+Forwarded from
+Brain and Body Research
+'12단 HBM3E' 수급 다급해진 엔비디아…삼성·SK 대응 분주
+'블랙웰' 칩 재설계로 HBM3E 8단서 12단 채용…인증 일정 빠듯해져
+최근 GB200의 양산 일정에 차질이 생겼다. 업계에서 분석하는 원인은 크게 두 가지다. 하나는 B100 칩 설계의 문제, 또 하나는 GB200에 필요한 TSMC의 최첨단 패키징 'CoWoS-L'의 용량 부족이다.
+이에 엔비디아는 즉각 대응책을 수립했다.
+기존 B100을 개량한 'B102'를 대체품으로 재설계하고, 이를 기반으로 'GB200A'를 제작하기로 했다. A는 공랭(Air Cooling)의 의미다.
+패키징 구조 역시 변경된다.
+GB200은 GPU 2개를 묶어 한 칩처럼 동작하게 하고, 주변에 HBM3E 8단(24GB)을 8개 집적하는 형태다. 반면 GB200A는 GPU를 묶지 않고 B102 칩 하나에
+HBM3E 12단(36GB)를 4개 집적한다.
+HBM3E 12단 공급 빨라져야…삼성·SK 대응 분주
+엔비디아도 주요 메모리 제조사에 HBM3E 12단 승인을 앞당기기 위한 논의를 진행한 것으로 알려졌다.
+반도체 업계 관계자는 "엔비디아의 요청에 따라 메모리 제조사들도 HBM3E 12단 물량을 급하게 늘리려는 움직임을 보이고 있다"며 "
+HBM3E 12단의 수율이 상대적으로 낮고
+, 긴급한 주문이기 때문에 메모리 제조사 입장에서도 더 높은 가격을 책정받을 수 있다는 이점을 누릴 수 있다"고 설명했다.
+https://n.news.naver.com/article/092/0002343870?cds=news_media_pc
+Naver
+'12단 HBM3E' 수급 다급해진 엔비디아…삼성·SK 대응 분주
+엔비디아가 최근 생산 차질 논란이 불거진 최신형 AI 반도체 '블랙웰'을 당초 일정대로 양산하겠다고 밝혔다. 칩 재설계를 통한 대체품을 내놓는 것으로, HBM(고대역폭메모리) 역시 더 높은 용량의 제품을 탑재하기로
+🦄
+1
+527
+views
+04:04
+기업지평 넓히기
+■ 코리아인스트루먼트(KI) 매각 및 테스의 관여
+1. KI 매각 개요
+- 사모펀드가 KI 대주주 지분 63% 인수
+- 거래 규모: 1,500억원 (1,100억원 지분 인수 + 400억원 제3자 유상증자)
+- KI 기업가치: 약 1,746억원으로 평가
+2. KI 회사 개요
+- 반도체 후공정 테스트부품(프로브카드) 제조
+- 국내 시장점유율 2위
+3. 테스의 KI 인수 시도
+- 전공정 장비회사인 테스가 KI 인수 협상 진행
+- 인수 성공 시 예상 실적: 매출 5천억, 영업이익 약 1천억
+4. 테스의 인수 자금 조달 가능성
+- 유동자산 약 1천억원 보유
+- 자사주 활용한 교환사채 발행으로 600억원 추가 조달 가능
+- 낮은 부채비율로 추가 차입 여력 존재
+5. 인수 무산 추정 이유
+- 대규모 M&A에 대한 부담
+- 현 주가 대비 자사주 활용의 비효율성
+- 낮은 대주주 지분율
+6. KI 매각 배경
+- 삼성전자의 공급망 관리 정책
+- KI 대표의 미국 국적 문제
+7. 최신 정보 (8월 8일 추가)
+- 테스가 KI 인수 사모펀드의 주요 LP로 참여 예정
+- 예상 투자 금액: 8백억원 이상
+- 향후 계획:
+• 삼성전자향 D램용 프로브카드 시장 진입
+• 비용 관리를 통한 재무제표 개선
+• 2026년경 IPO 예상
+8. 투자 관점 시사점
+- 삼성전자의 강력한 공급망 관리 의지 확인
+- 테스의 적극적 M&A 가능성 시사
+- 테스의 자사주 소각 가능성 낮음
+#테스
+NAVER
+테스 (8월 8일 수정)
+​
+3.41K
+views
+06:30
+기업지평 넓히기
+Forwarded from
+Mr. Market
+인텔 CEO : 파운드리는 생각보다 어렵고 고객 주문도 생각보다 좋지 않습니다
+- Digitimes
+873
+views
+07:51
+기업지평 넓히기
+Forwarded from
+엄브렐라리서치 Anakin의 투자노트
+최근 테크 업종에 대한 여러 의견이 분분한 구간입니다. 조금 길 수 있지만 제 생각은 다음과 같습니다.
+1) 기술주 랠리는 끝난 것인가?
+- 그다지 동의하기 어렵습니다. 먼저 현재 AI랠리를 주장하는 쪽이나 기술주 랠리의 종료를 말하는 쪽이나 의견들이 사실 다 반복되고 있다는 생각입니다. 새로운 내용이 크게 없습니다.
+- 다만 매크로 이슈로 촉발되는 시세의 움직임이 어느 한쪽의 로직을 더 강화시켜줄 뿐이라고 생각됩니다. 즉, 주가가 빠지면 보수적인 얘기를 하는 쪽이 더 맞는 말 같고, 주가가 오르면 또 갑자기 긍정적 얘기를 하는 쪽이 맞는 것처럼 보입니다.
+- 결국 보수적으로 보는 쪽은 (1) 성장률의 피크, (2) 엔비디아 블랙웰 양산 시점의 미확정 등을 얘기하는 것으로 보입니다. 사실 2번 요소는 작년 내내 논란이었던 Cowos capa 부족 등으로 인한 공급 제약과 비슷한 부분으로 결국 해소될 이슈입니다. 1번 부분은 충분히 나올 수 있는 지적이긴 하지만, 이 부분만으로 기술주 랠리의 종료를 말하기엔 아직 시기상조라는 판단입니다.
+- 앞으로 AI관점에서 중요한 이슈는 3가지라고 판단됩니다.
+(1) 아이폰 16 출시입니다. 원래 아이폰이 반도체 투자 관점에서 큰 의미를 주진 않았지만 이번에는 다릅니다. ChatGPT를 탑재한 형태로 애플이 AI를 본격적으로 소비자들에게 확산시키는 사이클이 시작됩니다. ChatGPT가 B2C관점에서 본격적으로 침투율이 시작되는 시기일 수 있기 때문에 상당히 중요하다고 생각됩니다.
+- (2) 엔비디아 블랙웰 양산시점 확정입니다. 현재 블랙웰과 호퍼의 수요가 좋다는건 모두가 아는 사실입니다. 수요에 대해서 의구심을 가지는 쪽은 없습니다. 다만, 블랙웰 생산 마스크가 변경되는 등 일부 양산 시점이 지연 이슈가 있었습니다. 이 부분이 해소되고 생산이 재개되는 올해 4분기에는 블랙웰 생산 지연 등의 불확실성도 결국 제거될 것이라 생각됩니다.
+- (3) 오픈AI의 지분투자 이슈입니다. 최근 보도로 애플/엔비디아/MS 등의 오픈AI에 대한 투자 이슈가 붉어진바 있습니다. 기업가치는 1천억달러 이상, 엔비디아의 투자금액은 약 1억 달러 등으로 논의되고있다는 내용입니다. 올해 연초 오픈AI가 자체 칩 개발 및 양산 등으로 시장에 많은 이슈가 있었는데, 결국 LLM 언어모델에서 업계 1위를 점점 공고히하고 있는 오픈AI의 가치는 계속 높아질 것으로 생각됩니다.
+향후 오픈AI가 추가 자금조달을 하게 되거나, 자체 칩 사용 등으로 나아갈 경우, 한국 메모리 입장에서는 더욱 긍정적인 이슈로 이어질 것으로 생각됩니다. 엔비디아에 대한 의존도가 줄어드는 것도 긍정적이고 엔비디아 GPU말고 자체 칩 구조로 가게 될 경우 HBM 탑재 또한 더 공격적으로 진행될 가능성이 높기 때문입니다.
+- 종합적으로, 저는 총 3가지의 향후 모멘텀을 보고있습니다. 애플의 AI 기능을 탑재한 아이폰 출시의 반응, 엔비디아의 블랙웰 양산 시점의 확정, 오픈AI의 향후 자금조달 등의 행보입니다.
+- 사실 이 부분만 보더라도, 빅테크들의 생성형AI에 대한 투자와 확신은 의심할 여지가 없습니다. 이들은 이미 막대한 돈을 쏟아부었고, 앞으로도 그럴 예정입니다. 매크로 불확실성이 줄어들고, AI섹터의 새로운 모멘텀이 등장한다면 또 언제그랬냐는듯 기술주 랠리는 다시 시작될 것이라 생각됩니다.
+2) 레거시 수요의 부진?
+- 최근 고정가격의 일시적 하락도 그렇고, 레거시 수요가 안좋다는 의견이 있는듯 합니다. 그런데 생각해볼점은 과연 레거시 수요가 언제 유의미하게 좋았던 적이 있었느냐는 점입니다.
+- 사실 레거시 부분의 대부분을 구성하는 PC/스마트폰/일반 서버 부분은 평소에 그렇게 수요가 크게 변화하는 섹터가 아닙니다. 그럼에도 불구하고 레거시 부분 DRAM 마진율이 이미 30%를 넘어섰고 연말에는 40%를 넘어설 것이라 보는 근거는 수요-공급-재고 간의 관계 때문에 그렇습니다.
+- 즉, 수요가 좋아서 메모리 사이클이 생기는게 아닙니다. 수요보다는 오히려 공급과 재고가 훨씬 중요하다고 생각합니다. 그 중에서도 공급에 대한 DRAM 3사의 뷰와 재고 관리 등이 더 큰 영향을 준다고 생각됩니다.
+- 또한 레거시 수요는 언제든지 갑자기 바뀌는 경향이 많습니다. 경기 방향에 대한 기대감, 신제품 출시 등의 이슈로 언제든 변화될 수 있습니다. 공급측면에서 현재 DRAM 3사가 내년에 대해서도 큰 폭의 확대를 예상하고 있지 않다는 점에서 여전히 보수적인 공급 기조라는 큰 틀이 유지될 것이라 생각됩니다.
+3) 결론적으로, 이번 테크 사이클에 대한 제 생각은 아직 더 확장될 룸이 많다 입니다.
+물론 성장률의 피크 이슈나 아직까지는 새로운 모멘텀이 부재해보일 수는 있으나, 결국 빅테크들의 생성형AI에 대한 투자는 이제 시작되었다는 생각입니다. AI 수익화를 위한 노력과 결국 AI비서, 휴머노이드, 인간수준의 인공지능(AGI) 등으로의 방향성은 피할 수 없는 흐름이라 생각합니다. 새로운 변화와 혁신이 앞으로 생성형AI에서 점차 파생될 것이라는 점은 의심의 여지가 없습니다.
+🦄
+2
+😁
+1
+481
+views
+00:24
+기업지평 넓히기
+신상특허
+#Hegemony
+님
+1. 제조장치 구성
+- 붕소 용융체가 지지되는 반응 챔버
+- 질소 가스 공급부
+- 열원 공급장치 (플라즈마 포함)
+- BNNT 전구체 생성 영역 및 BNNT 집합체 생성 영역
+2. 열원 공급장치 특징
+- 챔버바디, 유도 코일, RF 유도 전력, 점화 전극 포함
+- 2중 열원 소스 (수소 토치 + ICP) 사용
+- 고온 제공으로 단일벽 및 다중벽 BNNT 합성 가능
+3. BNNT 멤브레인 특징
+- EUV 투과율 95% 이상
+- 두께 50-100nm
+- 전하 형성층 포함 가능 (수소 플라즈마 환경에서 안정성 향상)
+4. 주요 장점
+- 촉매 없이 BNNT 합성 가능
+- 대량 생산에 유리한 구조
+- 높은 EUV 투과율, 신뢰성, 수명 향상
+- 수소 플라즈마 환경에서 안정성 향상
+5. 응용
+EUV 리소그래피 공정에서 사용되는 펠리클 멤브레인 제조
+NAVER
+신상특허
+​
+🦄
+1
+775
+views
+02:37

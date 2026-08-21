@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-bdb2e413e710f05bc22bd60a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/kr/vision-ai)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-be6781341e8d88c43130df6e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/processor/wi-fi-bluetooth/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-bfd5eb1df2d36f5a6b28851c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/processor/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c00187b10339a6390fafae6f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 공급된 provenance가 요청된 source family를 입증하지 못하거나, 공유·로그인·외부 미디어 경로라 현재 연구목표의 원문으로 사용할 수 없다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c0febc07d0ce113f65a6219c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/technologies/image-sensor/hdr-technology/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c2540ebfff09b3bf5d9d796c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.9,
+        "rationale": "발행사 글로벌 IR 진입점으로, 기준일 이전 실적 발표와 프레젠테이션 원문을 찾을 수 있는 경로다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c33d1ea9d04182416904c923",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/global/sustainability/main/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c5049f593930bcd3dd68acb8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/support/tools-resources/dictionary/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c70f1d410ff177da74e6688f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/applications/server/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c799ea09238dc646160ae68c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 공급된 provenance가 요청된 source family를 입증하지 못하거나, 공유·로그인·외부 미디어 경로라 현재 연구목표의 원문으로 사용할 수 없다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c85b542e7c459282ea6c733e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/events/safe-forum/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ca94cb3ddf847ade62e3d57a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/dram/lpddr/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "선정 후보는 아직 증거가 아니며 full-fetch 뒤 발행일·본문·대상 연결을 검증해야 한다."
+    ]
+  },
+  "payload_hash": "49b58c27e7aef12c238bd2f415cd3292f4b27d5c1ac93e45bbf579594c88e975",
+  "production_score_authority": false,
+  "prompt_hash": "8d70a0437da202b6184407217e8043c62d1a5fa1fcdcdae7f0226b22cecf5326",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch9_rankings",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b1da3ab324724338eaaaf17a3ccda0a821c8323f1ea680ccb36f8e524b905139",
+  "response_id": "COLLABRESP-0218f072f02ad2953e76bd4429b8d1e70683f3f2580b9dd60074945d13bb11d3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

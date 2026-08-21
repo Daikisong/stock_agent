@@ -1,0 +1,19 @@
+{
+  "as_of_date": "2026-07-12",
+  "comparison_executed": false,
+  "gold_visibility_during_production": false,
+  "mandatory_target_ids": [
+    "005930",
+    "000660"
+  ],
+  "missing_target_ids": [
+    "005930"
+  ],
+  "reason": "Post-run Gold comparison requires the selected production target roster to exactly match the target registry mandatory_targets roster.",
+  "schema_version": "e2r_v5_phase94_post_run_gold_full_roster_pending_v1",
+  "selected_target_ids": [
+    "000660"
+  ],
+  "status": "PENDING_FULL_MANDATORY_TARGET_ROSTER",
+  "unexpected_target_ids": []
+}

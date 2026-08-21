@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7478273f76248bf075acfffd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-aac5a1ab9e97c232d148c7c2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7a027b6feb38130a6783dddc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 transport roster에는 current objective를 해소하는 target-specific original/full broker source가 없었다. 이는 broader source absence나 research completion의 증명이 아니다."
+    ]
+  },
+  "payload_hash": "163b6333b17b7bf15aad5c1d88840e0c4bd0f2e147a991176d90fd482a7508bc",
+  "production_score_authority": false,
+  "prompt_hash": "09795b4c9d7e8a59a59f738fc6ad7794a4c5ab6ea6ae0d8f4a67de8c98003b57",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e598c74a76975793812b6e8e1114f2b83edf0dd8a30c2cfe26255590efbe1f2d",
+  "response_id": "COLLABRESP-d1faf39e7cd6e7af0b50d81d13d5fd72559058c8bd0586303f57d7344d9117a2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

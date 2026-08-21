@@ -1,0 +1,55 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      3.0,
+      3.6
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797과 ORDTRANSFER-994f92d663d0b49c624b1803은 모두 LOW-confidence STRONG ordinal anchors이나 현재 case와 exact 비교 대상은 아니다. 상반된 강한 눈금 사이에서 issuer primary actual은 중간 이상을 지지하고, 독립성·계약·segment 정밀도 제한은 full-strong을 막는다고 보정했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-dcd0816b6ba04c76c69e7a4b",
+      "EFACT-e2b5d15b4400874c34e4f2a2"
+    ],
+    "disagreements": [
+      "analyst 상단은 primary issuer evidence의 구체성을 반영하지만 독립성을 과대평가할 수 있고, skeptic 하단은 계약·segment 한계를 반영하지만 actual 실행 확인의 정보가치를 과소평가할 수 있다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "proposed_points": 3.3,
+    "rationale": "LOW-confidence anchor를 exact 사례처럼 이전하지 않고 현재 4개 support와 3개 counter를 동일 척도에서 비교했다. 양산·성능·actual 매출의 issuer 직접 확인은 medium보다 높지만, 독립 고객 확인·binding terms·HBM 단독 손익 부재와 broker 불일치 때문에 strong 상단에는 못 미친다.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-a74dac2b9e727f8592e52c41",
+      "EFACT-b74e88a671a1247b0ce230d5",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "independent customer corroboration, binding 계약조건 및 HBM 단독 재무가 없고 forward 수치의 내부 불일치가 남아 있어 full-strong anchor 수준은 과도하다.",
+    "why_not_lower": "issuer 원문이 제품 양산·성능요구 충족과 actual HBM 매출 성장을 함께 확인하므로 medium 이하만 허용하는 것은 현재 evidence를 과소평가한다."
+  },
+  "payload_hash": "5bf2bef42a038e06546cd58a3c1ac96caafc25a00c55a679962f26992a0fbdc2",
+  "production_score_authority": false,
+  "prompt_hash": "bf3d97971e73db5241377befa3d1777f0c6a74f5ecaebf146a4b180e970ae893",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-604dc1fc7809387d0c000ff9b4a1a3685456fd2040f92a4fe07595f646fe5b58",
+  "response_id": "COLLABRESP-d3a09bdce8fe1fa0b02d80128b8543e4a5c8342f54366ec1fa052df02a93cf85",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

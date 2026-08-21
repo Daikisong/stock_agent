@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-15b36e02a24d9c0e278eb9cf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.01,
+        "rationale": "제3자 공유 래퍼로 이미 fetch된 AMD–Samsung 원문 URL을 다시 가리킬 뿐이며, 별도의 CUSTOMER_OFFICIAL full-fetch 원문 route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-18f6fc948ee0a6e5ac064d8d",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.05,
+        "rationale": "AMD 공식 도메인이라 CUSTOMER_OFFICIAL provenance는 맞지만 다른 프로젝트·협력사·소프트웨어 주제여서 Samsung HBM3E/HBM4 기술 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-2b3104aee0264fc12edb752b",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.05,
+        "rationale": "AMD 공식 도메인이라 CUSTOMER_OFFICIAL provenance는 맞지만 다른 프로젝트·협력사·소프트웨어 주제여서 Samsung HBM3E/HBM4 기술 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-2dfa28d56318a59203157461",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.05,
+        "rationale": "AMD 공식 도메인이라 CUSTOMER_OFFICIAL provenance는 맞지만 다른 프로젝트·협력사·소프트웨어 주제여서 Samsung HBM3E/HBM4 기술 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-314f15cd8bcb60636b7013d8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.01,
+        "rationale": "AMD 소유 도메인이 아닌 소셜·커뮤니티 경로로 CUSTOMER_OFFICIAL provenance를 충족하지 않으며, Samsung HBM 기술 관계의 별도 원문 route도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-32faf47bb54bd54483ee9364",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.01,
+        "rationale": "AMD 소유 도메인이 아닌 소셜·커뮤니티 경로로 CUSTOMER_OFFICIAL provenance를 충족하지 않으며, Samsung HBM 기술 관계의 별도 원문 route도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-34e11261b678cf501e6c7ebd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.01,
+        "rationale": "AMD 소유 도메인이 아닌 소셜·커뮤니티 경로로 CUSTOMER_OFFICIAL provenance를 충족하지 않으며, Samsung HBM 기술 관계의 별도 원문 route도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4887538cabdd44626afa2515",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.01,
+        "rationale": "AMD 소유 도메인이 아닌 소셜·커뮤니티 경로로 CUSTOMER_OFFICIAL provenance를 충족하지 않으며, Samsung HBM 기술 관계의 별도 원문 route도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-488f11e13ac19a3c6b64f239",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.05,
+        "rationale": "AMD 공식 도메인이라 CUSTOMER_OFFICIAL provenance는 맞지만 법무·세무·공급망 일반 문서로, Samsung HBM3E/HBM4 기술 관계를 검증하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-4ea2364cbc19b564a02c3523",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.05,
+        "rationale": "AMD 공식 도메인이라 CUSTOMER_OFFICIAL provenance는 맞지만 홈페이지·뉴스 목록·미디어센터·RSS 같은 일반 탐색 페이지로, 이미 fetch된 Samsung 협업 원문과 구별되는 target-direct full-fetch route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5b27893fea53963be0c6e80d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.01,
+        "rationale": "AMD 소유 도메인이 아닌 소셜·커뮤니티 경로로 CUSTOMER_OFFICIAL provenance를 충족하지 않으며, Samsung HBM 기술 관계의 별도 원문 route도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6af107fd38c99a83247e0cd2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.01,
+        "rationale": "제3자 공유 래퍼로 이미 fetch된 AMD–Samsung 원문 URL을 다시 가리킬 뿐이며, 별도의 CUSTOMER_OFFICIAL full-fetch 원문 route가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "32개 graph-expansion 후보는 이미 fetch된 AMD–Samsung 협업 원문의 공유·탐색 링크 또는 무관한 AMD 페이지다. 별도의 Samsung HBM3E/HBM4 기술 관계 full-fetch 원문 route가 없어 material 후보는 0건이며, 이 판정은 source absence를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "438c7a707bbd1ef72577d8c52235f91c82acc34510908669bfc354162e3c94c7",
+  "production_score_authority": false,
+  "prompt_hash": "e879c649206b1409ead643982221e82a2b1474d2ed12dfc6bcd5970ef48181dd",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-039333d9a860c9316355c4885326b500ad6dd792c23af2294ec3c2c329f19ec8",
+  "response_id": "COLLABRESP-186c705567bb020c0298364457fd8d348bdaae88699ed2bbae4b78ac3ef74d32",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

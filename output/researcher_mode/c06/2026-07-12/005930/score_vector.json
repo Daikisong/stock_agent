@@ -1,0 +1,22 @@
+{
+  "as_of_date": "2026-07-12",
+  "component_score_vector": {
+    "bottleneck_pricing": 11.38,
+    "capital_allocation": 1.72,
+    "earnings_visibility": 12.78,
+    "eps_fcf_explosion": 14.05,
+    "information_confidence": 2.95,
+    "market_mispricing": 8.85,
+    "valuation_rerating": 7.1
+  },
+  "max_points": 100.0,
+  "pending_reasons": [],
+  "production_stage_authority": false,
+  "schema_version": "e2r_v5_canary_score_vector_v1",
+  "score_valid": true,
+  "source_artifact": "deterministic_total_score.json",
+  "source_sha256": "9799ebb0fa90997f127b9d7477e7b17a98b53fd53217b494917b70af537f8c48",
+  "status": "COMPLETE",
+  "target_id": "005930",
+  "total_points": 58.83
+}

@@ -1,0 +1,582 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "rationale": "Coverage re-reading found twelve distinct historical broker market-response atoms omitted after the eight accepted target-price levels: five average divergences, five maximum/minimum divergences, and two older average divergences. Each is separately period-aligned, remains SUPERSEDED, and is not issuer guidance, signed customer evidence, durable visibility, or HBM-only economics. Two older maximum/minimum divergence atoms remain after this capped page.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Consolidated historical broker market response, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "Because the newest 2024-11-18 target-price entry has no completed observation interval, the first disclosed average-divergence value aligns with the 2024-06-19 target-price entry and records a historical market-response gap, not a current multiple or HBM earnings bridge.",
+        "exact_quote": "제시일자 24.11.18 24.06.19 24.04.26 24.04.02 23.12.26 23.06.26\n6개월경과\n투자의견 Buy Buy Buy Buy Buy\n이후\n목표주가 265,000 265,000 230,000 220,000 150,000 150,000\n괴리율(평균,%) (27.20) (14.94) (18.05) 0.86 (18.18)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical realization gap calibrates past broker target accuracy but cannot establish current valuation or HBM economics.",
+        "mechanism_scope_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2024-06-19",
+        "normalized_object": "Average target-price divergence of negative 27.20 percent for the 2024-06-19 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-06-19 target-price entry; table published 2024-11-15",
+        "predicate": "had a disclosed average target-price divergence of",
+        "predicate_family": "BROKER_TARGET_PRICE_AVERAGE_DIVERGENCE",
+        "primitive_tags": [
+          "AVERAGE_DIVERGENCE",
+          "FY2024_HISTORY",
+          "SUPERSEDED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation history",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "BROKER_TARGET_PRICE",
+          "MARKET_RESPONSE",
+          "VALUATION_CALIBRATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price average divergence",
+        "subject_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2024-06-19:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": -27.2
+      },
+      {
+        "business_segment": "Consolidated historical broker market response, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The second disclosed average-divergence value aligns with the 2024-04-26 target-price entry and records a historical market-response gap, not a current multiple or HBM earnings bridge.",
+        "exact_quote": "제시일자 24.11.18 24.06.19 24.04.26 24.04.02 23.12.26 23.06.26\n6개월경과\n투자의견 Buy Buy Buy Buy Buy\n이후\n목표주가 265,000 265,000 230,000 220,000 150,000 150,000\n괴리율(평균,%) (27.20) (14.94) (18.05) 0.86 (18.18)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical realization gap calibrates past broker target accuracy but cannot establish current valuation or HBM economics.",
+        "mechanism_scope_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2024-04-26",
+        "normalized_object": "Average target-price divergence of negative 14.94 percent for the 2024-04-26 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-04-26 target-price entry; table published 2024-11-15",
+        "predicate": "had a disclosed average target-price divergence of",
+        "predicate_family": "BROKER_TARGET_PRICE_AVERAGE_DIVERGENCE",
+        "primitive_tags": [
+          "AVERAGE_DIVERGENCE",
+          "FY2024_HISTORY",
+          "SUPERSEDED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation history",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "BROKER_TARGET_PRICE",
+          "MARKET_RESPONSE",
+          "VALUATION_CALIBRATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price average divergence",
+        "subject_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2024-04-26:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": -14.94
+      },
+      {
+        "business_segment": "Consolidated historical broker market response, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The third disclosed average-divergence value aligns with the 2024-04-02 target-price entry and records a historical market-response gap, not a current multiple or HBM earnings bridge.",
+        "exact_quote": "제시일자 24.11.18 24.06.19 24.04.26 24.04.02 23.12.26 23.06.26\n6개월경과\n투자의견 Buy Buy Buy Buy Buy\n이후\n목표주가 265,000 265,000 230,000 220,000 150,000 150,000\n괴리율(평균,%) (27.20) (14.94) (18.05) 0.86 (18.18)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical realization gap calibrates past broker target accuracy but cannot establish current valuation or HBM economics.",
+        "mechanism_scope_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2024-04-02",
+        "normalized_object": "Average target-price divergence of negative 18.05 percent for the 2024-04-02 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-04-02 target-price entry; table published 2024-11-15",
+        "predicate": "had a disclosed average target-price divergence of",
+        "predicate_family": "BROKER_TARGET_PRICE_AVERAGE_DIVERGENCE",
+        "primitive_tags": [
+          "AVERAGE_DIVERGENCE",
+          "FY2024_HISTORY",
+          "SUPERSEDED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation history",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "BROKER_TARGET_PRICE",
+          "MARKET_RESPONSE",
+          "VALUATION_CALIBRATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price average divergence",
+        "subject_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2024-04-02:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": -18.05
+      },
+      {
+        "business_segment": "Consolidated historical broker market response, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The fourth disclosed average-divergence value aligns with the 2023-12-26 target-price entry and records a small positive historical market-response difference, not a current multiple or HBM earnings bridge.",
+        "exact_quote": "제시일자 24.11.18 24.06.19 24.04.26 24.04.02 23.12.26 23.06.26\n6개월경과\n투자의견 Buy Buy Buy Buy Buy\n이후\n목표주가 265,000 265,000 230,000 220,000 150,000 150,000\n괴리율(평균,%) (27.20) (14.94) (18.05) 0.86 (18.18)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical realization difference calibrates past broker target accuracy but cannot establish current valuation or HBM economics.",
+        "mechanism_scope_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2023-12-26",
+        "normalized_object": "Average target-price divergence of positive 0.86 percent for the 2023-12-26 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2023-12-26 target-price entry; table published 2024-11-15",
+        "predicate": "had a disclosed average target-price divergence of",
+        "predicate_family": "BROKER_TARGET_PRICE_AVERAGE_DIVERGENCE",
+        "primitive_tags": [
+          "AVERAGE_DIVERGENCE",
+          "FY2023_HISTORY",
+          "SUPERSEDED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation history",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "BROKER_TARGET_PRICE",
+          "MARKET_RESPONSE",
+          "VALUATION_CALIBRATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price average divergence",
+        "subject_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2023-12-26:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": 0.86
+      },
+      {
+        "business_segment": "Consolidated historical broker market response, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The fifth disclosed average-divergence value aligns with the 2023-06-26 target-price entry and records a historical market-response gap, not a current multiple or HBM earnings bridge.",
+        "exact_quote": "제시일자 24.11.18 24.06.19 24.04.26 24.04.02 23.12.26 23.06.26\n6개월경과\n투자의견 Buy Buy Buy Buy Buy\n이후\n목표주가 265,000 265,000 230,000 220,000 150,000 150,000\n괴리율(평균,%) (27.20) (14.94) (18.05) 0.86 (18.18)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical realization gap calibrates past broker target accuracy but cannot establish current valuation or HBM economics.",
+        "mechanism_scope_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2023-06-26",
+        "normalized_object": "Average target-price divergence of negative 18.18 percent for the 2023-06-26 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2023-06-26 target-price entry; table published 2024-11-15",
+        "predicate": "had a disclosed average target-price divergence of",
+        "predicate_family": "BROKER_TARGET_PRICE_AVERAGE_DIVERGENCE",
+        "primitive_tags": [
+          "AVERAGE_DIVERGENCE",
+          "FY2023_HISTORY",
+          "SUPERSEDED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation history",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "BROKER_TARGET_PRICE",
+          "MARKET_RESPONSE",
+          "VALUATION_CALIBRATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price average divergence",
+        "subject_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2023-06-26:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": -18.18
+      },
+      {
+        "business_segment": "Consolidated historical broker market response, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The first disclosed maximum/minimum-divergence value aligns with the 2024-06-19 target-price entry and is a separate historical market-response extreme from its average divergence.",
+        "exact_quote": "제시일자 24.11.18 24.06.19 24.04.26 24.04.02 23.12.26 23.06.26\n6개월경과\n투자의견 Buy Buy Buy Buy Buy\n이후\n목표주가 265,000 265,000 230,000 220,000 150,000 150,000\n괴리율(평균,%) (27.20) (14.94) (18.05) 0.86 (18.18)\n괴리율(최대/최소,%) (9.06) 1.96 (14.36) 24.20 (6.07)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical extreme realization gap is distinct calibration evidence but cannot establish current valuation or HBM economics.",
+        "mechanism_scope_id": "000660:TARGET_PRICE_EXTREME_DIVERGENCE:2024-06-19",
+        "normalized_object": "Maximum/minimum target-price divergence of negative 9.06 percent for the 2024-06-19 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-06-19 target-price entry; table published 2024-11-15",
+        "predicate": "had a disclosed maximum/minimum target-price divergence of",
+        "predicate_family": "BROKER_TARGET_PRICE_EXTREME_DIVERGENCE",
+        "primitive_tags": [
+          "EXTREME_DIVERGENCE",
+          "FY2024_HISTORY",
+          "SUPERSEDED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation history",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "BROKER_TARGET_PRICE",
+          "MARKET_RESPONSE",
+          "VALUATION_CALIBRATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price maximum/minimum divergence",
+        "subject_id": "000660:TARGET_PRICE_EXTREME_DIVERGENCE:2024-06-19:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": -9.06
+      },
+      {
+        "business_segment": "Consolidated historical broker market response, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The second disclosed maximum/minimum-divergence value aligns with the 2024-04-26 target-price entry and is a separate historical market-response extreme from its average divergence.",
+        "exact_quote": "제시일자 24.11.18 24.06.19 24.04.26 24.04.02 23.12.26 23.06.26\n6개월경과\n투자의견 Buy Buy Buy Buy Buy\n이후\n목표주가 265,000 265,000 230,000 220,000 150,000 150,000\n괴리율(평균,%) (27.20) (14.94) (18.05) 0.86 (18.18)\n괴리율(최대/최소,%) (9.06) 1.96 (14.36) 24.20 (6.07)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical extreme realization difference is distinct calibration evidence but cannot establish current valuation or HBM economics.",
+        "mechanism_scope_id": "000660:TARGET_PRICE_EXTREME_DIVERGENCE:2024-04-26",
+        "normalized_object": "Maximum/minimum target-price divergence of positive 1.96 percent for the 2024-04-26 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-04-26 target-price entry; table published 2024-11-15",
+        "predicate": "had a disclosed maximum/minimum target-price divergence of",
+        "predicate_family": "BROKER_TARGET_PRICE_EXTREME_DIVERGENCE",
+        "primitive_tags": [
+          "EXTREME_DIVERGENCE",
+          "FY2024_HISTORY",
+          "SUPERSEDED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation history",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "BROKER_TARGET_PRICE",
+          "MARKET_RESPONSE",
+          "VALUATION_CALIBRATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price maximum/minimum divergence",
+        "subject_id": "000660:TARGET_PRICE_EXTREME_DIVERGENCE:2024-04-26:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": 1.96
+      },
+      {
+        "business_segment": "Consolidated historical broker market response, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The third disclosed maximum/minimum-divergence value aligns with the 2024-04-02 target-price entry and is a separate historical market-response extreme from its average divergence.",
+        "exact_quote": "제시일자 24.11.18 24.06.19 24.04.26 24.04.02 23.12.26 23.06.26\n6개월경과\n투자의견 Buy Buy Buy Buy Buy\n이후\n목표주가 265,000 265,000 230,000 220,000 150,000 150,000\n괴리율(평균,%) (27.20) (14.94) (18.05) 0.86 (18.18)\n괴리율(최대/최소,%) (9.06) 1.96 (14.36) 24.20 (6.07)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical extreme realization gap is distinct calibration evidence but cannot establish current valuation or HBM economics.",
+        "mechanism_scope_id": "000660:TARGET_PRICE_EXTREME_DIVERGENCE:2024-04-02",
+        "normalized_object": "Maximum/minimum target-price divergence of negative 14.36 percent for the 2024-04-02 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-04-02 target-price entry; table published 2024-11-15",
+        "predicate": "had a disclosed maximum/minimum target-price divergence of",
+        "predicate_family": "BROKER_TARGET_PRICE_EXTREME_DIVERGENCE",
+        "primitive_tags": [
+          "EXTREME_DIVERGENCE",
+          "FY2024_HISTORY",
+          "SUPERSEDED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation history",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "BROKER_TARGET_PRICE",
+          "MARKET_RESPONSE",
+          "VALUATION_CALIBRATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price maximum/minimum divergence",
+        "subject_id": "000660:TARGET_PRICE_EXTREME_DIVERGENCE:2024-04-02:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": -14.36
+      },
+      {
+        "business_segment": "Consolidated historical broker market response, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The fourth disclosed maximum/minimum-divergence value aligns with the 2023-12-26 target-price entry and is a separate historical market-response extreme from its average divergence.",
+        "exact_quote": "제시일자 24.11.18 24.06.19 24.04.26 24.04.02 23.12.26 23.06.26\n6개월경과\n투자의견 Buy Buy Buy Buy Buy\n이후\n목표주가 265,000 265,000 230,000 220,000 150,000 150,000\n괴리율(평균,%) (27.20) (14.94) (18.05) 0.86 (18.18)\n괴리율(최대/최소,%) (9.06) 1.96 (14.36) 24.20 (6.07)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical extreme realization difference is distinct calibration evidence but cannot establish current valuation or HBM economics.",
+        "mechanism_scope_id": "000660:TARGET_PRICE_EXTREME_DIVERGENCE:2023-12-26",
+        "normalized_object": "Maximum/minimum target-price divergence of positive 24.20 percent for the 2023-12-26 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2023-12-26 target-price entry; table published 2024-11-15",
+        "predicate": "had a disclosed maximum/minimum target-price divergence of",
+        "predicate_family": "BROKER_TARGET_PRICE_EXTREME_DIVERGENCE",
+        "primitive_tags": [
+          "EXTREME_DIVERGENCE",
+          "FY2023_HISTORY",
+          "SUPERSEDED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation history",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "BROKER_TARGET_PRICE",
+          "MARKET_RESPONSE",
+          "VALUATION_CALIBRATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price maximum/minimum divergence",
+        "subject_id": "000660:TARGET_PRICE_EXTREME_DIVERGENCE:2023-12-26:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": 24.2
+      },
+      {
+        "business_segment": "Consolidated historical broker market response, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The fifth disclosed maximum/minimum-divergence value aligns with the 2023-06-26 target-price entry and is a separate historical market-response extreme from its average divergence.",
+        "exact_quote": "제시일자 24.11.18 24.06.19 24.04.26 24.04.02 23.12.26 23.06.26\n6개월경과\n투자의견 Buy Buy Buy Buy Buy\n이후\n목표주가 265,000 265,000 230,000 220,000 150,000 150,000\n괴리율(평균,%) (27.20) (14.94) (18.05) 0.86 (18.18)\n괴리율(최대/최소,%) (9.06) 1.96 (14.36) 24.20 (6.07)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical extreme realization gap is distinct calibration evidence but cannot establish current valuation or HBM economics.",
+        "mechanism_scope_id": "000660:TARGET_PRICE_EXTREME_DIVERGENCE:2023-06-26",
+        "normalized_object": "Maximum/minimum target-price divergence of negative 6.07 percent for the 2023-06-26 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2023-06-26 target-price entry; table published 2024-11-15",
+        "predicate": "had a disclosed maximum/minimum target-price divergence of",
+        "predicate_family": "BROKER_TARGET_PRICE_EXTREME_DIVERGENCE",
+        "primitive_tags": [
+          "EXTREME_DIVERGENCE",
+          "FY2023_HISTORY",
+          "SUPERSEDED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation history",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "BROKER_TARGET_PRICE",
+          "MARKET_RESPONSE",
+          "VALUATION_CALIBRATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price maximum/minimum divergence",
+        "subject_id": "000660:TARGET_PRICE_EXTREME_DIVERGENCE:2023-06-26:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": -6.07
+      },
+      {
+        "business_segment": "Consolidated historical broker market response, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The first disclosed average-divergence value in the older target-price block aligns with the 2023-02-02 entry and records a historical market-response gap.",
+        "exact_quote": "제시일자 23.02.02 22.12.10\n투자의견 Buy Buy\n목표주가 120,000 100,000\n괴리율(평균,%) (21.76) (16.97)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical realization gap calibrates past broker target accuracy but cannot establish current valuation or HBM economics.",
+        "mechanism_scope_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2023-02-02",
+        "normalized_object": "Average target-price divergence of negative 21.76 percent for the 2023-02-02 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2023-02-02 target-price entry; table published 2024-11-15",
+        "predicate": "had a disclosed average target-price divergence of",
+        "predicate_family": "BROKER_TARGET_PRICE_AVERAGE_DIVERGENCE",
+        "primitive_tags": [
+          "AVERAGE_DIVERGENCE",
+          "FY2023_HISTORY",
+          "SUPERSEDED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation history",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "BROKER_TARGET_PRICE",
+          "MARKET_RESPONSE",
+          "VALUATION_CALIBRATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price average divergence",
+        "subject_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2023-02-02:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": -21.76
+      },
+      {
+        "business_segment": "Consolidated historical broker market response, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The second disclosed average-divergence value in the older target-price block aligns with the 2022-12-10 entry and records a historical market-response gap.",
+        "exact_quote": "제시일자 23.02.02 22.12.10\n투자의견 Buy Buy\n목표주가 120,000 100,000\n괴리율(평균,%) (21.76) (16.97)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical realization gap calibrates past broker target accuracy but cannot establish current valuation or HBM economics.",
+        "mechanism_scope_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2022-12-10",
+        "normalized_object": "Average target-price divergence of negative 16.97 percent for the 2022-12-10 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2022-12-10 target-price entry; table published 2024-11-15",
+        "predicate": "had a disclosed average target-price divergence of",
+        "predicate_family": "BROKER_TARGET_PRICE_AVERAGE_DIVERGENCE",
+        "primitive_tags": [
+          "AVERAGE_DIVERGENCE",
+          "FY2022_HISTORY",
+          "SUPERSEDED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation history",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "BROKER_TARGET_PRICE",
+          "MARKET_RESPONSE",
+          "VALUATION_CALIBRATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price average divergence",
+        "subject_id": "000660:TARGET_PRICE_AVG_DIVERGENCE:2022-12-10:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": -16.97
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-ca57bd95ff38204b5a08eb67"
+    ],
+    "unresolved_research_notes": [
+      "Two distinct older maximum/minimum target-price divergence atoms remain in source order after this capped coverage page."
+    ]
+  },
+  "payload_hash": "3290c3ec2eef776bc34fd7be38beff6c729e9b9c460e8470d5d944e208026423",
+  "production_score_authority": false,
+  "prompt_hash": "2e912d7f9d90888d27a239e5c59a8a03fc2bc4a35235c5a6459ef6bf6f1afdbc",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1221da87ccdb6c0e7f0b47b1837aa4ab6d697524327927ee53a6ee6eb8c30219",
+  "response_id": "COLLABRESP-736dee2e28f6b3114637dfa9299edd062b9216110020d52576cdae817f8d57de",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

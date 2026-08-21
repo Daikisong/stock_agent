@@ -1,0 +1,587 @@
+{
+  "output_schema_hash": "7dbfe60b384654cd791016e65d09fc824423c5bf4c909208543889fef9766b15",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "rationale": "prior page 8건과 이번 corrected page2 신규 8건을 합쳐 누적 accepted 16건이다. full remainder 재감사 결과 나머지는 이 메모리·HBM valuation facts의 semantic duplicate 또는 회사 전체 보조 수치여서 추가 distinct objective-local fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-8b02f84953986605b86fd5e1",
+        "rationale": "prior page에서 삼성전자 HBM3E 고객 검증 지연과 HBM4 양산 목표 2건이 accepted됐다. 나머지는 두 사실의 반복, SK하이닉스 단독 또는 일반 산업 내용이어서 추가 distinct objective-local fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-8ca1b72eb3df7faccadfe53c",
+        "rationale": "prior page 2건과 이번 corrected page2 신규 4건을 합쳐 누적 accepted 6건이다. full remainder 재감사 결과 나머지는 기존 valuation bridge의 semantic duplicate 또는 회사 전체·타사·산업 일반 내용이어서 추가 distinct objective-local fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "economic_mechanism": "교보증권은 메모리와 HBM 시장 회복으로 반도체가 실적을 주도한다는 전제에서 삼성전자 2026년 영업이익을 85.2조원으로 전망했다.",
+        "exact_quote": "유지 • 2026 매출액389.4조원(YoY+18.8%), 영업이익 85.2조원( YoY+117.9%)전망\n• 메모리와HBM시장회복에힘입어반도체부문이실적을주도할전망",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "회사 전체 이익 전망을 메모리·HBM 회복이라는 명시적 이익 동인과 연결해 valuation의 이익 분모를 보강한다.",
+        "mechanism_scope_id": "005930:MEMORY:OPERATING_PROFIT_BRIDGE:2026F:KYOBO",
+        "normalized_object": "2026년 메모리·HBM 회복 연계 영업이익 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "교보증권은 메모리·HBM 회복을 전제로 삼성전자 2026년 영업이익을 85.2조원으로 전망했다.",
+        "predicate_family": "MEMORY_DRIVEN_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT",
+          "MEMORY",
+          "HBM",
+          "BROKER_FORECAST"
+        ],
+        "product_family": "메모리·HBM",
+        "question_family_id": "MEMORY_EARNINGS_VALUATION_BRIDGE",
+        "question_family_tags": [
+          "MEMORY_EARNINGS",
+          "HBM",
+          "VALUATION_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 메모리·HBM 회복 연계 영업이익",
+        "subject_id": "005930:MEMORY_DRIVEN_OPERATING_PROFIT:2026:KYOBO",
+        "unit": "KRW trillion",
+        "value": 85.2
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.93,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "economic_mechanism": "교보증권 보고서는 삼성전자가 2026년 강한 AI 수요를 재확인하고 HBM4 양산 확대 체제를 갖춰 추가 증산을 검토한다고 정리했다.",
+        "exact_quote": "• 2026년AI 강한수요재확인, 2026년HBM4 양산확대체제갖춰증산에대한검토",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "valuation에 반영된 HBM 성장의 생산 실행 경로를 보여주지만, 검토·계획을 실제 출하로 승격하지 않는다.",
+        "mechanism_scope_id": "005930:HBM4:PRODUCTION_EXPANSION:2026F:KYOBO",
+        "normalized_object": "2026년 HBM4 양산 확대 및 증산 검토",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "삼성전자는 2026년 HBM4 양산 확대 체제를 갖춰 증산을 검토했다.",
+        "predicate_family": "HBM4_PRODUCTION_EXPANSION_PLAN",
+        "primitive_tags": [
+          "HBM4",
+          "AI_DEMAND",
+          "MASS_PRODUCTION",
+          "EXPANSION_REVIEW"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_PRODUCTION_EXPANSION_OUTLOOK",
+        "question_family_tags": [
+          "HBM4",
+          "PRODUCTION_EXPANSION",
+          "PLAN_NOT_ACTUAL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 HBM4 양산 확대 체제",
+        "subject_id": "005930:HBM4:PRODUCTION_EXPANSION:2026:KYOBO",
+        "unit": "plan status",
+        "value": "2026 HBM4 mass-production expansion system and production-increase review"
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "economic_mechanism": "교보증권은 메모리·HBM 회복 전망과 함께 삼성전자의 2026년 EPS를 10,387원으로 제시했다.",
+        "exact_quote": "EPS(원) 2,225 5,433 5,404 10,387 10,736",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리·HBM 이익 회복 전망을 주당 이익 분모로 연결해 forward multiple 해석을 가능하게 한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EPS:2026F:KYOBO_OUTLOOK",
+        "normalized_object": "2026년 예상 EPS",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "교보증권은 삼성전자의 2026년 예상 EPS를 10,387원으로 제시했다.",
+        "predicate_family": "FORWARD_EPS",
+        "primitive_tags": [
+          "EPS",
+          "2026F",
+          "VALUATION"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "FORWARD_EPS_VALUATION",
+        "question_family_tags": [
+          "FORWARD_EPS",
+          "VALUATION",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 예상 EPS",
+        "subject_id": "005930:FORWARD_EPS:2026:KYOBO_OUTLOOK",
+        "unit": "KRW per share",
+        "value": 10387
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "economic_mechanism": "교보증권은 메모리·HBM 이익 회복 전망 아래 삼성전자 예상 PER이 2026년 9.4배, 2027년 9.1배로 낮아지는 경로를 제시했다.",
+        "exact_quote": "-10 PER(배) 35.3 9.8 18.1 9.4 9.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM·메모리 이익 회복을 반영한 장기 earnings multiple 경로를 직접 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_PE_TERM_STRUCTURE:2026-2027:KYOBO_OUTLOOK",
+        "normalized_object": "2026·2027년 예상 PER 경로",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F-2027F",
+        "predicate": "교보증권은 삼성전자 예상 PER을 2026년 9.4배, 2027년 9.1배로 제시했다.",
+        "predicate_family": "FORWARD_PE_TERM_STRUCTURE",
+        "primitive_tags": [
+          "PER",
+          "2026F",
+          "2027F",
+          "BROKER_FORECAST"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "FORWARD_PE_TERM_STRUCTURE",
+        "question_family_tags": [
+          "FORWARD_PE",
+          "VALUATION_TERM_STRUCTURE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026·2027년 예상 PER",
+        "subject_id": "005930:FORWARD_PE:2026-2027:KYOBO_OUTLOOK",
+        "unit": "times",
+        "value": "9.4x in 2026F; 9.1x in 2027F"
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "economic_mechanism": "교보증권은 메모리·HBM 이익 회복 전망이 장부가치에 누적되는 결과로 삼성전자 2027년 BPS를 77,679원으로 제시했다.",
+        "exact_quote": "당기순이익 15,487 34,451 33,971 64,197 66,314 PER 35.3 9.8 18.1 9.4 9.1\n비현금항목의가감 36,520 42,947 48,623 60,218 63,485 BPS 52,002 57,663 61,616 69,494 77,679",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "직전 page의 2026 BPS와 구분되는 다음 연도 장부가치 전망으로 장기 PBR 분모를 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_BOOK_VALUE:2027F:KYOBO_OUTLOOK",
+        "normalized_object": "2027년 예상 BPS",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027F",
+        "predicate": "교보증권은 삼성전자의 2027년 예상 BPS를 77,679원으로 제시했다.",
+        "predicate_family": "FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "BPS",
+          "2027F",
+          "BROKER_FORECAST"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "FORWARD_BOOK_VALUE",
+          "VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "삼성전자 2027년 예상 BPS",
+        "subject_id": "005930:FORWARD_BPS:2027:KYOBO_OUTLOOK",
+        "unit": "KRW per share",
+        "value": 77679
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "economic_mechanism": "교보증권은 삼성전자의 2027년 예상 PBR을 1.3배로 제시해 메모리 이익 축적 이후 장부가치 배수 경로를 수치화했다.",
+        "exact_quote": "비현금항목의가감 36,520 42,947 48,623 60,218 63,485 BPS 52,002 57,663 61,616 69,494 77,679\n감가상각비 35,532 39,650 42,849 45,936 48,966 PBR 1.5 0.9 1.6 1.4 1.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "직전 page의 2026 PBR과 구분되는 다음 연도 장기 배수 전망이다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_PB:2027F:KYOBO_OUTLOOK",
+        "normalized_object": "2027년 예상 PBR",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027F",
+        "predicate": "교보증권은 삼성전자의 2027년 예상 PBR을 1.3배로 제시했다.",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "PBR",
+          "2027F",
+          "BROKER_FORECAST"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "FORWARD_PB_VALUATION",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 2027년 예상 PBR",
+        "subject_id": "005930:FORWARD_PB:2027:KYOBO_OUTLOOK",
+        "unit": "times",
+        "value": 1.3
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "economic_mechanism": "교보증권은 삼성전자의 2027년 예상 EV/EBITDA를 3.9배로 제시해 메모리 이익 전망의 장기 기업가치 배수를 수치화했다.",
+        "exact_quote": "외환손익 0 0 0 0 0 EBITDAPS 6,659 11,094 12,521 18,723 19,516\n지분법평가손익 -888 -751 -910 -849 -837 EV/EBITDA 10.0 3.6 6.6 4.2 3.9",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "직전 page의 2026 EV/EBITDA와 구분되는 다음 연도 장기 배수 전망이다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EV_EBITDA:2027F:KYOBO_OUTLOOK",
+        "normalized_object": "2027년 예상 EV/EBITDA",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027F",
+        "predicate": "교보증권은 삼성전자의 2027년 예상 EV/EBITDA를 3.9배로 제시했다.",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "2027F",
+          "BROKER_FORECAST"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "FORWARD_EV_EBITDA_VALUATION",
+        "question_family_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2027년 예상 EV/EBITDA",
+        "subject_id": "005930:FORWARD_EV_EBITDA:2027:KYOBO_OUTLOOK",
+        "unit": "times",
+        "value": 3.9
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "economic_mechanism": "교보증권은 메모리 이익 회복과 투자 이후 삼성전자 2027년 FCF를 44.522조원으로 전망했다.",
+        "exact_quote": "기말현금 69,081 53,706 48,280 55,513 66,369 부채비율 25.4 27.9 27.6 26.1 24.6\nNOPLAT 9,241 30,042 30,316 60,565 62,576 순차입금비율 2.8 3.8 4.3 4.7 5.1\nFCF -15,163 19,699 14,737 35,392 44,522 이자보상배율 7.1 36.2 35.8 59.0 52.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "직전 page의 2026 FCF와 구분되는 다음 연도 현금 전환 전망으로 valuation 지속성을 점검한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_FCF:2027F:KYOBO_OUTLOOK",
+        "normalized_object": "2027년 예상 FCF",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027F",
+        "predicate": "교보증권은 삼성전자의 2027년 예상 FCF를 44.522조원으로 제시했다.",
+        "predicate_family": "FORWARD_FCF",
+        "primitive_tags": [
+          "FCF",
+          "CASH_CONVERSION",
+          "BROKER_FORECAST"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "FORWARD_FCF_VALUATION_BRIDGE",
+        "question_family_tags": [
+          "FCF",
+          "2027F",
+          "VALUATION_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2027년 예상 FCF",
+        "subject_id": "005930:FORWARD_FCF:2027:KYOBO_OUTLOOK",
+        "unit": "KRW trillion",
+        "value": 44.522
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-8ca1b72eb3df7faccadfe53c",
+        "economic_mechanism": "메리츠증권은 삼성전자 DRAM의 2026년 매출을 83.1조원으로 전망해 직전 page의 31.6조원 영업이익 전망에 대응하는 매출 분모를 제시했다.",
+        "exact_quote": "DRAM 12.8 13.8 16.3 17.8 17.9 20.3 21.7 23.3 27.2 52.7 60.7 83.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 매출과 영업이익의 쌍을 완성해 메모리 valuation bridge의 매출·이익 전환을 검증한다.",
+        "mechanism_scope_id": "005930:DRAM:REVENUE:2026F:MERITZ",
+        "normalized_object": "2026년 DRAM 매출 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "메리츠증권은 삼성전자 DRAM의 2026년 매출을 83.1조원으로 전망했다.",
+        "predicate_family": "DRAM_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "REVENUE",
+          "2026F"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_REVENUE_FORECAST",
+        "question_family_tags": [
+          "DRAM_REVENUE",
+          "BROKER_FORECAST",
+          "VALUATION_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DRAM 2026년 매출",
+        "subject_id": "005930:DRAM_REVENUE:2026:MERITZ",
+        "unit": "KRW trillion",
+        "value": 83.1
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-8ca1b72eb3df7faccadfe53c",
+        "economic_mechanism": "메리츠증권은 HBM 공급망 합류와 DRAM 이익 전망을 전제로 삼성전자 2026년 BPS를 60,628원으로 제시했다.",
+        "exact_quote": "2023 258.9 6.6 14.5 2,424 -73.6 48,654 35.1 1.8 8.2 4.1 25.4\n2024 300.9 32.7 33.6 5,632 132.3 54,169 15.1 1.6 5.1 8.6 27.9\n2025E 325.8 31.8 29.8 4,430 -21.3 55,717 19.2 1.5 3.2 7.5 29.1\n2026E 374.1 52.8 41.1 6,105 37.8 60,628 13.9 1.4 2.4 9.9 30.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "교보증권 2026 BPS와 다른 독립 브로커의 forward book value를 제공해 추정 범위를 보여준다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_BOOK_VALUE:2026F:MERITZ_AI_EVOLUTION",
+        "normalized_object": "2026년 예상 BPS",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "메리츠증권은 삼성전자의 2026년 예상 BPS를 60,628원으로 제시했다.",
+        "predicate_family": "FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "BPS",
+          "2026F",
+          "MERITZ"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "FORWARD_BOOK_VALUE",
+          "VALUATION",
+          "INDEPENDENT_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "삼성전자 2026년 예상 BPS",
+        "subject_id": "005930:FORWARD_BPS:2026:MERITZ_AI_EVOLUTION",
+        "unit": "KRW per share",
+        "value": 60628
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-8ca1b72eb3df7faccadfe53c",
+        "economic_mechanism": "메리츠증권은 HBM 공급망 합류와 DRAM 이익 전망을 전제로 삼성전자 2026년 PBR을 1.4배로 제시했다.",
+        "exact_quote": "2023 258.9 6.6 14.5 2,424 -73.6 48,654 35.1 1.8 8.2 4.1 25.4\n2024 300.9 32.7 33.6 5,632 132.3 54,169 15.1 1.6 5.1 8.6 27.9\n2025E 325.8 31.8 29.8 4,430 -21.3 55,717 19.2 1.5 3.2 7.5 29.1\n2026E 374.1 52.8 41.1 6,105 37.8 60,628 13.9 1.4 2.4 9.9 30.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "교보증권과 같은 1.4배지만 더 낮은 BPS·다른 이익 가정에 기반한 독립 valuation 관측치다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_PB:2026F:MERITZ_AI_EVOLUTION",
+        "normalized_object": "2026년 예상 PBR",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "메리츠증권은 삼성전자의 2026년 예상 PBR을 1.4배로 제시했다.",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "PBR",
+          "2026F",
+          "MERITZ"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "FORWARD_PB_VALUATION",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION",
+          "INDEPENDENT_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 2026년 예상 PBR",
+        "subject_id": "005930:FORWARD_PB:2026:MERITZ_AI_EVOLUTION",
+        "unit": "times",
+        "value": 1.4
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-8ca1b72eb3df7faccadfe53c",
+        "economic_mechanism": "메리츠증권은 HBM 공급망 합류와 DRAM 이익 전망을 전제로 삼성전자 2026년 EV/EBITDA를 2.4배로 제시했다.",
+        "exact_quote": "2023 258.9 6.6 14.5 2,424 -73.6 48,654 35.1 1.8 8.2 4.1 25.4\n2024 300.9 32.7 33.6 5,632 132.3 54,169 15.1 1.6 5.1 8.6 27.9\n2025E 325.8 31.8 29.8 4,430 -21.3 55,717 19.2 1.5 3.2 7.5 29.1\n2026E 374.1 52.8 41.1 6,105 37.8 60,628 13.9 1.4 2.4 9.9 30.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "교보증권 4.2배와 다른 메리츠증권의 2.4배 추정으로 독립 브로커 간 valuation 가정 차이를 보여준다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EV_EBITDA:2026F:MERITZ_AI_EVOLUTION",
+        "normalized_object": "2026년 예상 EV/EBITDA",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "메리츠증권은 삼성전자의 2026년 예상 EV/EBITDA를 2.4배로 제시했다.",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "2026F",
+          "MERITZ"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "FORWARD_EV_EBITDA_VALUATION",
+        "question_family_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION",
+          "INDEPENDENT_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2026년 예상 EV/EBITDA",
+        "subject_id": "005930:FORWARD_EV_EBITDA:2026:MERITZ_AI_EVOLUTION",
+        "unit": "times",
+        "value": 2.4
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "004e3381f58678bd3cda58247acbc9ed2a4f00868e4358c377d293cea2fb133c",
+  "production_score_authority": false,
+  "prompt_hash": "9ad82f368f0a0dff166bc09e799b4690de57e1ef0915f8bd61ff0794b04a7aa5",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-48d6358efbe21c62fcdd93baef967dd845030340fc90c281c5059019bb104196",
+  "response_id": "COLLABRESP-83757dc2ec094e88262a027edfe8b91c36080fb948ce4b3fdeffd311927ce94d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

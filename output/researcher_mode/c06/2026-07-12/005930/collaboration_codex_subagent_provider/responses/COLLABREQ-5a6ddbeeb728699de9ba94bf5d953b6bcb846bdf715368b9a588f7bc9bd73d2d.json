@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0727f2e7547b5a7b4c3203b3",
+        "rationale": "전체 문서를 검토했으나 삼성전자를 포함한 Top2 제외 KOSPI 12개월 선행 PER 및 KOSPI 지수 목표 PBR·ROE만 제시할 뿐, 삼성전자 메모리·HBM 자체의 PBR, PER, 장부가치 또는 동종기업 배수를 직접 귀속해 제시하지 않는다. 따라서 문서에 연결된 valuation_rerating 목적에 추가할 target-direct material fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "26d8759d66bf46a07aa6f36c010be51aa60368b0e965188fdda48d40891179b9",
+  "production_score_authority": false,
+  "prompt_hash": "cf1b2abd18d4be5adda2268f354bd1c3da2dc912da6ee2095cbad36d53811fe3",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5a6ddbeeb728699de9ba94bf5d953b6bcb846bdf715368b9a588f7bc9bd73d2d",
+  "response_id": "COLLABRESP-55cfc539a190c708e5710fe8459b2b292adeb23507c9a64d8dddeaf390d77985",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

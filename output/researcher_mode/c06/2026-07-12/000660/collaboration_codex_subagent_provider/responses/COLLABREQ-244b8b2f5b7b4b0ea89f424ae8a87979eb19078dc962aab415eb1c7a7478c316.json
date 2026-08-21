@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "464c750f37ce654e17b37c7a8e5f288e2a598efb3d1285be1d6ecbdaafe90fdc",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-c30e676d2ba12540a09cbdcc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "4월 4주 주요 제조업 전망 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-fbb1c0a18d36c296800ae39f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "HBM 없인 미국 AI 멈춘다… 삼성·SK 골든타임 3년? 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-2317e57a25d58a9d6c098f8b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "3월 4주 주요 제조업 전망 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-aa5c6538010d99c3b715a179",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "4월 2주 주요 제조업 전망 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-2cd2e426c9218a18ab2d2f96",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.02,
+        "rationale": "KIND 공시 원문 family는 맞지만 대상이 솔브레인홀딩스다. SK하이닉스 2026년 1분기 DRAM 품목 매출 objective와 발행사가 달라 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-5ced1a5e69aab20e0e304259",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "[컨콜 종합] SK하이닉스, HBM4E 하반기 샘플 출하…내년 양산 목표 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-9454a7d840c02fb16ec462a2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "HBM(고대역폭메모리) 관련주, '봄꽃만개' 한화비전·고영·국전약품·테... 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-bf2e9cd0dc4f1fd166f05563",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "[GTC 2026] 젠슨 황 \"2027년까지 1조 달러 수주 전망\"… 엔비디아 루빈·... 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-52e9675d82acc5bc7d6b279e",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.02,
+        "rationale": "KIND 원문 family는 맞지만 2024년 투자설명서이며 SK하이닉스 2026년 1분기 분기보고서가 아니다. 기간·문서유형·target이 모두 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e87ff2158bf30618ac02ac24",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "12월 4주 주요 제조업 전망 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-e8b0d997ae0dcb6a291218cb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "[GAM] 마이크론 HBM4 왕따설? CFO 반박에 월가도 가세 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-078dc5ed10e61def9c6da172",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "1월 4주 주요 제조업 전망 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "54381b5284ceaf82640943d524ca8be26c4555ca4ced9a5c058f2abea600faf4",
+  "production_score_authority": false,
+  "prompt_hash": "f004e3b2fd69bbc054d679be996596deabd4ea83615f5d4095e25572314e558a",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-244b8b2f5b7b4b0ea89f424ae8a87979eb19078dc962aab415eb1c7a7478c316",
+  "response_id": "COLLABRESP-3d617a4e8b202e5c18a4a7ee921a923b16334bfd5d2cfc5a58f918e4d4fb4d4d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

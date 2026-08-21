@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-cae0bed70c35c399b6fb7996",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 채널 또는 공유용 링크로 원문 문서의 내용·발행일·대상 귀속을 보존하는 독립 full-fetch route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cafcbc366e821ad71d7d5f84",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 원문 소유 도메인이 아닌 외부 준법·웹접근성 안내 페이지이며 요청한 issuer newsroom provenance를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-cb1e95fa86c89e72b6c333f4",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 반도체 페이지이나 Foundry 공정·패키징·생태계·행사 내용으로 DS 메모리 HBM 경제 메커니즘과 사업 범위가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-ccebed93948148b92edecca8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 지속가능성·공급망·인권 일반 페이지로 issuer provenance는 맞지만 HBM·메모리 고객계약, CAPA, 가격, 수익성에 직접 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-cd534790218f163fa69c5022",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 지속가능성·공급망·인권 일반 페이지로 issuer provenance는 맞지만 HBM·메모리 고객계약, CAPA, 가격, 수익성에 직접 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-cdf94bc8b3a6f1a17db98959",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 지속가능성·공급망·인권 일반 페이지로 issuer provenance는 맞지만 HBM·메모리 고객계약, CAPA, 가격, 수익성에 직접 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-cdfc4276b7820721b92a2a97",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 개별 기사이지만 온디바이스 AI 경험 리더십이 주제이며 HBM·메모리 고객계약, CAPA, 가격, 매출·이익 가시성을 검증하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ce29fe7a650e74d684aaed45",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06 HBM·메모리 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ce37c75ef30bdc5c603166ed",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06 HBM·메모리 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cf8f769ac549316c73330681",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 도메인 경로이지만 현재 C06 목적의 시점 특정 HBM·메모리 고객·공급·수익성 원문으로 확인되지 않아 material route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d01294092c739f91a4f4ef62",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 채널 또는 공유용 링크로 원문 문서의 내용·발행일·대상 귀속을 보존하는 독립 full-fetch route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d07629da0ce6bd229138ab0f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 채널 또는 공유용 링크로 원문 문서의 내용·발행일·대상 귀속을 보존하는 독립 full-fetch route가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "5fcf8c8a64b711a42a116367a73519acea0cd8c54e84a2e9c401ceb95c916052",
+  "production_score_authority": false,
+  "prompt_hash": "73f6cf59ef513e960ae95bbb2a1e41a0d37280064a751b15f4e81b41f69bd87e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-189c1cf7db8bf9289967a11f6a792f09eb2cb42417b26ea5ddbec8deb22ca278",
+  "response_id": "COLLABRESP-2efe643e05f5e99ed75a5fee0d945085dd4bdcc5aed7876c4efa14a3a7a63d83",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

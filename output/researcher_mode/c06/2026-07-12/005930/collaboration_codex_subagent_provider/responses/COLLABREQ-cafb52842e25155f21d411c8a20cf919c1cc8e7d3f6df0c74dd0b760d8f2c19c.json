@@ -1,0 +1,125 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "삼성전자 IR 실적발표·프레젠테이션의 최신 완전분기 자료를 먼저 확인해 메모리 이익, 현금전환, CAPA를 같은 기간 기준으로 연결한다.",
+      "HBM4 인증·공급은 issuer 주장과 고객 공식 자료 또는 출처가 명확한 독립 보도를 분리해 교차검증한다.",
+      "공개 증권사 PDF에서는 작성일, 추정기간, 이익 분모, 평가배수를 함께 확인해 HBM 이익 브리지 없는 목표주가 자료를 제외한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 2026년 1분기 실적발표 DS 메모리 수익성",
+        "objective_id": "SGOBJ-eb3cecb1e00c95ccf544cac4",
+        "rationale": "2026-07-12 이전 최신 완전분기 issuer 자료에서 메모리·HBM의 이익 기여와 현금전환 단서를 함께 추적하고, 전사 이익만 강한 경우를 구분한다. 같은 자료의 약한 제품군, 비용 증가, 현금흐름 악화도 반증으로 확인한다.",
+        "source_families": [
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_PRESENTATION",
+          "CASH_FLOW",
+          "NAVER_DISCOVERY"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 HBM4 고객 인증 공급 일정 2026",
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "rationale": "현재 HBM4 관련 open 상태를 해소하려면 단순 샘플·양산 계획이 아니라 고객 인증 상태와 실제 공급 시점이 필요하다. 마감일까지 나온 최신 issuer 또는 고객 공식 자료를 우선 찾고, 인증 지연·일정 변경 보도도 함께 확인한다.",
+        "source_families": [
+          "ISSUER_PRESENTATION",
+          "ISSUER_NEWSROOM",
+          "CUSTOMER_OFFICIAL",
+          "TRUSTED_BUSINESS_MEDIA",
+          "NAVER_DISCOVERY"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 2026년 메모리 ASP 실적발표",
+        "objective_id": "SGOBJ-7ba6c752cb327ae2c989b6dd",
+        "rationale": "issuer의 최신 실적 설명에서 실제 DRAM·HBM 가격 또는 믹스 개선이 확인되는지 찾는다. 단순 현물가격 기사가 아니라 실현가격과 공급 제약을 구분하고, 범용 메모리 가격 약세나 증설에 따른 공급 완화도 반증으로 확인한다.",
+        "source_families": [
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_PRESENTATION",
+          "INDUSTRY_REPORT",
+          "NAVER_DISCOVERY"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 2026 실적 컨센서스 PER HBM 증권사 리포트",
+        "objective_id": "SGOBJ-e78cfba9e86bfa02e9a943ae",
+        "rationale": "마감일 이전 공개 리포트에서 추정치 작성 주체, 이익 전망 기간, 현재·선행 배수의 분모를 확인하고 HBM 이익 기여가 숫자로 연결되는지 본다. 목표주가나 방향성만 있는 자료는 충분한 근거로 보지 않으며 하향 수정도 함께 찾는다.",
+        "source_families": [
+          "CONSENSUS_REVISION",
+          "PUBLIC_BROKER_PDF",
+          "VALUATION_MULTIPLES",
+          "NAVER_DISCOVERY"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 HBM 공급 가시성 밸류에이션 2026 리포트",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "HBM 고객 인증·공급 가시성이 어떤 이익 추정 변화와 평가배수 변화로 이어지는지 수치 연결고리가 있는 자료를 찾는다. 공급 불확실성이 유지되거나 배수 상승이 이익 개선보다 앞선다는 반대 분석도 같은 기준으로 확인한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF",
+          "CONSENSUS_REVISION",
+          "VALUATION_MULTIPLES",
+          "TRUSTED_BUSINESS_MEDIA",
+          "NAVER_DISCOVERY"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 2026 HBM 생산능력 투자 계획 IR",
+        "objective_id": "SGOBJ-44161aa1a529ae8101bf12b1",
+        "rationale": "최신 issuer 자료에서 HBM·메모리 CAPA 투자 범위와 시기, 투자 후 현금흐름 부담을 확인한다. 파운드리·디스플레이가 섞인 전사 CAPEX는 분리하고, 공급 증가가 가격 제약을 완화할 가능성도 반증으로 본다.",
+        "source_families": [
+          "ISSUER_PRESENTATION",
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_NEWSROOM",
+          "CASH_FLOW",
+          "NAVER_DISCOVERY"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 HBM4 인증 지연 공급 차질 2026",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "OPENDART 단일 독립성 그룹을 보완하기 위해 마감일 이전 독립 자료에서 인증 지연, 고객 일정 변경, 공급 차질 가능성을 찾는다. 확인되지 않은 익명 주장보다 고객 공식 자료나 출처가 명확한 보도를 우선하며, 이후 해소된 내용이면 최신 상태로 대체한다.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL",
+          "REUTERS",
+          "TRUSTED_BUSINESS_MEDIA",
+          "INDUSTRY_REPORT",
+          "NAVER_DISCOVERY"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "현재 제공된 source coverage가 OPENDART뿐이므로 최신 issuer IR과 독립 corroboration의 실제 문서 적격성은 검색·fetch 후 판정해야 한다.",
+      "2026-07-12 이후 공개된 실적발표, 인증 결과, 가격 또는 컨센서스는 이 연구 시점에 사용할 수 없다."
+    ]
+  },
+  "payload_hash": "3faa639cc40fefe8f39185ef62d273a8c6184be93d707d29d082160d02e12298",
+  "production_score_authority": false,
+  "prompt_hash": "6d1c9963fe6cffd7bfc0de70771676a62c7d219f49e366ff64a5da2be75c6705",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cafb52842e25155f21d411c8a20cf919c1cc8e7d3f6df0c74dd0b760d8f2c19c",
+  "response_id": "COLLABRESP-953a0c0a7d23bd9a5937ddc61fdd90286cb92fa64ef9aac901195db18f637ae0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

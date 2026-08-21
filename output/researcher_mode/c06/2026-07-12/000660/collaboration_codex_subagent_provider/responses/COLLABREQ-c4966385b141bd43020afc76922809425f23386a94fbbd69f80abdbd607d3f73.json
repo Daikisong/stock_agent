@@ -1,0 +1,45 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Use NVIDIA's official investor-relations fiscal 2027 first-quarter financial-results release or its official results landing page available on or before 2026-07-12, distinct from the conference-call transcript and SEC annual or quarterly reports.",
+      "Follow only the NVIDIA-owned landing page to the full official release, and require explicit SK hynix plus HBM attribution and a machine-readable forward period or commitment term; snippets and third-party summaries remain discovery-only."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK hynix NVIDIA fiscal 2027 first quarter financial results HBM supplier commitments",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "The 32 executed queries covered NVIDIA's GTC material, FY2026 annual report, Form 10-Q, and May 2026 earnings-call transcript or prepared remarks, but not NVIDIA's separate fiscal 2027 first-quarter official financial-results release or its investor-relations landing page. Search that distinct customer-issued document class only for explicit joint attribution to SK hynix and HBM plus a numeric forward period, quantity, non-cancellable commitment, advance payment, or capacity agreement; generic NVIDIA demand, aggregate supply commitments, or supplier-unnamed HBM commentary does not resolve DURABLE_VISIBILITY.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "The official results release may discuss data-center demand or supply commitments only in aggregate and may not name SK hynix. If both SK hynix and HBM are not explicit with a forward numeric term, keep DURABLE_VISIBILITY unresolved.",
+      "No new issuer-official document class was identified for FORWARD_GUIDANCE or SEGMENT_CONTRIBUTION after reviewing all 32 prior queries, so no synonym-only query was proposed for those roles."
+    ]
+  },
+  "payload_hash": "7d5d5f332219fd463bc3415a19fa4f6f6b4e7f67749e13e0c2fe27677f355550",
+  "production_score_authority": false,
+  "prompt_hash": "f26bad8a34aba46b87fc1177200327be0d45dcd09b08c79820612b2ebb3f3f83",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c4966385b141bd43020afc76922809425f23386a94fbbd69f80abdbd607d3f73",
+  "response_id": "COLLABRESP-2e4fc0dc0593a44482312511f00ed9f181a54df0d51fe56f3c662ecaa685659e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

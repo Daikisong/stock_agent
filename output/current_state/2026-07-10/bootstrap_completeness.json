@@ -1,0 +1,29 @@
+{
+  "as_of_date": "2026-07-10",
+  "bootstrap_completeness_counts": {
+    "PARTIAL_HISTORY_PENDING": 2542
+  },
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "last_effective_thesis_count_mismatch": 0,
+    "old_active_contract_dropped": 0,
+    "old_resolved_risk_scored": 0,
+    "provider_failure_mapped_no_thesis": 0,
+    "recent_window_used_as_stage_cutoff": 0,
+    "source_timeline_count_mismatch": 0,
+    "symbol_without_any_source_attempt": 0
+  },
+  "current_state_record_count": 2542,
+  "eligible_universe_count": 2542,
+  "hard_acceptance_pass": true,
+  "last_effective_thesis_count": 2542,
+  "old_active_contract_dropped_count": 0,
+  "old_resolved_risk_scored_count": 0,
+  "provider_failure_mapped_no_thesis_count": 0,
+  "recent_window_used_as_stage_cutoff_count": 0,
+  "schema_version": "e2r_live_current_state_bootstrap_audit_v1",
+  "source_corpus_hash": "287f5c0778e17d49f1223487a4e85d2854d8d79546e08781255b481dd27dfc01",
+  "source_timeline_count": 2542,
+  "status": "CURRENT_STATE_BOOTSTRAP_PASS",
+  "symbol_without_any_source_attempt_count": 0
+}

@@ -1,0 +1,303 @@
+{
+  "output_schema_hash": "87d3c66f564a2179cc4a1c335203172b75ba4ad6a971f0dc4b406e1ae6e503bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "rationale": "Extracted six distinct objective-direct facts: the Rambus cross-license, current quarterly performance conversion, DRAM market share, CIS-to-AI-memory reallocation, PC-DRAM demand risk, and HBM customer ASIC collaboration. Repeated constrained-supply pricing, general industry history, NAND-only developments, non-HBM R&D projects, and generic product background were not emitted.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "economic_mechanism": "반도체 전 제품 관련 Rambus 특허 사용권을 2034년까지 확보한 크로스 라이선스는 해당 특허 분쟁 가능성을 줄이는 정보 리스크 해소 장치다. HBM 전용 계약이나 판매 약정은 아니다.",
+        "exact_quote": "계약 상대방\n항목\n내용\n비고\nRambus Inc.\n계약 유형\n특허 크로스 라이선스 계약\n-\n계약 기간\n2013년 7월 1일 ~ 2034년 6월 30일\n목적 및 내용\n라이선스 계약을 통해 반도체 전 제품 기술 관련 램버스 보유 특허에 대한 사용권한을 확보하여 향후 분쟁 가능성 해소",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 장기 특허사용권과 명시된 분쟁 완화로 information_confidence를 보완한다. 영업 계약으로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:RAMBUS_CROSS_LICENSE",
+        "normalized_object": "Rambus 반도체 특허 사용권과 분쟁 완화",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2013-07-01 to 2034-06-30",
+        "predicate": "SK하이닉스는 2034년 6월 30일까지 Rambus와 반도체 전 제품 특허 크로스 라이선스 계약을 유지한다",
+        "predicate_family": "PATENT_CROSS_LICENSE",
+        "primitive_tags": [
+          "RAMBUS",
+          "CROSS_LICENSE",
+          "DISPUTE_MITIGATION"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "RAMBUS_PATENT_CROSS_LICENSE",
+        "question_family_tags": [
+          "PATENT_LICENSE",
+          "LEGAL_RISK_RESOLUTION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 Rambus 특허 크로스 라이선스",
+        "subject_id": "000660:RAMBUS_CROSS_LICENSE",
+        "unit": "contract period",
+        "value": "2013-07-01 through 2034-06-30"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "economic_mechanism": "2026년 1분기 연결 매출과 영업이익이 전분기 대비 각각 60%, 96.2% 증가하고 영업이익률이 72%로 개선돼 가격·수요 강세의 전사 손익 전환을 보여준다. 반도체부문이 100%로 공시됐지만 HBM 단독 이익으로 귀속하지 않는다.",
+        "exact_quote": "당사의 1분기 매출은 52.6조원을 기록하며 사상 최초 분기 매출 50조원을 돌파하였습니다. 이는 전분기 대비 60% 증가한 수치이며, 전년 동기 대비는 198% 증가한 것입니다. 1분기 영업이익은 37.6조원으로 4개 분기 연속 사상 최대 분기 영업이익을 재경신, 영업이익률은 전분기 대비 13%p 개선된 72%를 기록하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster의 DRAM 매출·현금흐름과 구별되는 연결 매출·영업이익·마진 전환으로 eps_fcf_explosion과 earnings_visibility를 직접 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:QUARTERLY_PERFORMANCE_CONVERSION",
+        "normalized_object": "연결 매출·영업이익·영업이익률",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 vs 2025-Q4 and 2025-Q1",
+        "predicate": "2026년 1분기 연결 매출은 52.6조원으로 전분기 대비 60% 증가했고 영업이익은 37.6조원, 영업이익률은 72%였다",
+        "predicate_family": "QUARTERLY_REVENUE_OPERATING_PROFIT_GROWTH",
+        "primitive_tags": [
+          "REVENUE_GROWTH",
+          "OPERATING_PROFIT_GROWTH",
+          "OPERATING_MARGIN"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "QUARTERLY_REVENUE_OPERATING_PROFIT_GROWTH",
+        "question_family_tags": [
+          "QUARTERLY_EARNINGS",
+          "PROFIT_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 2026년 1분기 연결 실적",
+        "subject_id": "000660:CONSOLIDATED_QUARTERLY_PERFORMANCE",
+        "unit": "KRW trillion, percent, percentage points",
+        "value": "revenue KRW 52.6tn (+60% QoQ, +198% YoY); operating profit KRW 37.6tn; operating margin 72% (+13pp QoQ)"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "economic_mechanism": "IDC 매출액 기준 DRAM 점유율은 경쟁지위와 가격·수요 전환 규모를 판단하는 현재 시장 위치를 제공한다. HBM 점유율로 재분류하지 않는다.",
+        "exact_quote": "2. 시장점유율\n(최근 3사업연도 기준)\n구 분\n2025년4분기\n2025년3분기\n2025년2분기\n2025년1분기\n2025년\n2024년\n2023년\nDRAM\n32.4%\n34.0%\n39.1%\n36.3%\n34.8%\n33.4%\n29.9%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 독립 조사기관 기반 DRAM 경쟁지위로 market_mispricing을 보완한다. HBM 점유율로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM_MARKET_SHARE",
+        "normalized_object": "DRAM 매출액 기준 시장점유율",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q4 and 2025",
+        "predicate": "SK하이닉스 DRAM 매출액 기준 시장점유율은 2025년 4분기 32.4%, 2025년 연간 34.8%였다",
+        "predicate_family": "DRAM_MARKET_SHARE",
+        "primitive_tags": [
+          "IDC",
+          "DRAM",
+          "REVENUE_SHARE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_MARKET_SHARE",
+        "question_family_tags": [
+          "DRAM_COMPETITIVE_POSITION",
+          "MARKET_SHARE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM 시장점유율",
+        "subject_id": "000660:DRAM_MARKET_SHARE",
+        "unit": "percent",
+        "value": "2025-Q4 32.4%; 2025 annual 34.8%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "economic_mechanism": "기존 CIS 사업부문을 AI 메모리 분야로 전환하기로 한 결정은 전사 자원·생산기반을 AI 메모리로 재배치하는 공급 대응이다. 구체적 CAPA, HBM 세대, 완료시점은 공시하지 않는다.",
+        "exact_quote": "2025년 3월 CIS 사업부문은 AI 메모리 분야로 전환하기로 결정하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 AI 메모리 공급기반 전환 결정으로 earnings_visibility와 capacity scarcity의 공급 대응을 직접 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:CIS_TO_AI_MEMORY_CONVERSION",
+        "normalized_object": "CIS 사업부문의 AI 메모리 전환 결정",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "decision in 2025-03; current as of 2026-Q1",
+        "predicate": "SK하이닉스는 2025년 3월 CIS 사업부문을 AI 메모리 분야로 전환하기로 결정했다",
+        "predicate_family": "CIS_TO_AI_MEMORY_CAPACITY_REALLOCATION",
+        "primitive_tags": [
+          "CIS_CONVERSION",
+          "AI_MEMORY",
+          "CAPACITY_RESPONSE"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "CIS_TO_AI_MEMORY_CAPACITY_REALLOCATION",
+        "question_family_tags": [
+          "AI_MEMORY_CAPACITY",
+          "SUPPLY_REALLOCATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 CIS 사업부문 AI 메모리 전환",
+        "subject_id": "000660:CIS_TO_AI_MEMORY_CONVERSION",
+        "unit": "strategic capacity decision",
+        "value": "decision to convert CIS business to AI memory"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "economic_mechanism": "메모리 가격 상승에 따른 구매 부담이 2026년 PC 출하 조정과 일부 수요 둔화로 이어질 수 있다는 공시는 DRAM 가격 강세의 수요탄력성 counterfact다. AI PC의 성장동력도 함께 언급돼 전면적 수요붕괴로 확대하지 않는다.",
+        "exact_quote": "최근 메모리 가격 상승에 따른 구매 부담으로 2026년 PC 출하량 조정 및 일부 수요 둔화가 예상되지만, AI PC의 부상은 시장에 새로운 성장 동력이 되고 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 가격 강세의 수요 둔화 위험으로 bottleneck_pricing과 earnings_visibility를 직접 제한한다. AI PC의 상쇄요인도 보존한다.",
+        "mechanism_scope_id": "000660:MEMORY:PC_DRAM_DEMAND_SLOWDOWN_RISK",
+        "normalized_object": "가격 상승에 따른 PC DRAM 수요 둔화 위험",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026 outlook as of 2026-Q1",
+        "predicate": "메모리 가격 상승의 구매 부담으로 2026년 PC 출하량 조정과 일부 수요 둔화가 예상된다",
+        "predicate_family": "PC_DRAM_DEMAND_SLOWDOWN_RISK",
+        "primitive_tags": [
+          "PC_SHIPMENTS",
+          "MEMORY_PRICE_BURDEN",
+          "AI_PC_OFFSET"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "PC_DRAM_DEMAND_SLOWDOWN_RISK",
+        "question_family_tags": [
+          "DRAM_DEMAND_RISK",
+          "PRICE_ELASTICITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 PC DRAM 수요",
+        "subject_id": "000660:PC_DRAM_DEMAND_RISK",
+        "unit": "qualitative outlook",
+        "value": "2026 PC shipment adjustment and partial demand slowdown expected"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "economic_mechanism": "회사가 HBM 성능·품질을 기반으로 고객들과 ASIC 개발 협력을 강화하고 있다는 공시는 고객 설계단계 참여를 보여준다. 고객명, 구매의무, 공급량, 인증완료 또는 계약은 공시하지 않는다.",
+        "exact_quote": "당사는 HBM제품의 Time to Market을 실현하고 대역폭과 Density/Core Die 적층 단수 상향 등 업계 최고 수준의 성능과 품질에 기반하여 고객들과 ASIC 개발에 더욱 협력하고 있으며, 이를 토대로 HBM 시장을 선도하기 위해 최선의 노력을 다하고 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 HBM 고객 설계협력으로 commercialization 가시성을 보완한다. 계약·할당·인증완료로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_ASIC_CUSTOMER_COLLABORATION",
+        "normalized_object": "HBM 고객 ASIC 개발 협력",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current as of 2026-Q1",
+        "predicate": "SK하이닉스는 HBM 성능과 품질을 기반으로 고객들과 ASIC 개발 협력을 강화하고 있다",
+        "predicate_family": "HBM_CUSTOMER_ASIC_DEVELOPMENT_COLLABORATION",
+        "primitive_tags": [
+          "HBM",
+          "TIME_TO_MARKET",
+          "CUSTOMER_CO_DEVELOPMENT"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_CUSTOMER_ASIC_DEVELOPMENT_COLLABORATION",
+        "question_family_tags": [
+          "HBM_CUSTOMER_COLLABORATION",
+          "ASIC_DEVELOPMENT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 고객 ASIC 개발 협력",
+        "subject_id": "000660:HBM_ASIC_CUSTOMER_COLLABORATION",
+        "unit": "qualitative commercialization activity",
+        "value": "customer ASIC development collaboration"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "0a456e14b6634142b80089a20c64c9ea485a150d9205f2b74194e7a7aaf660f0",
+  "production_score_authority": false,
+  "prompt_hash": "8fe1acec7cd9aec8e66e9ac1bfb095c2de6302a45a764f4d516f2368479ca8cf",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d7cb30f163325736db6c45d49a1fdd9371ed0202e4d31b214df4f91cfe24684f",
+  "response_id": "COLLABRESP-c4e3c7cc1bec9d0fd87a4ed5a3fc497502b94d69e14b76699036a943b48f8a83",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

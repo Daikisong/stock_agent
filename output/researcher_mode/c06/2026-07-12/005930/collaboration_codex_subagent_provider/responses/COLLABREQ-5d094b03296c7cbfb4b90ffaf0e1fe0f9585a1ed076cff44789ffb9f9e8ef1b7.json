@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bcccaccf246401c303a290ca",
+        "rationale": "문서 전체를 검토했으나, objective-local MEMORY 사실은 2025년 3분기 및 9개월 누적 메모리 매출뿐이며 두 수치는 current fact ledger에 동일 수치로 이미 존재한다. DS 매출과 영업이익은 메모리 외 사업이 섞인 수치여서 MEMORY 사실로 귀속할 수 없고, 전사 현금흐름·설비투자·계약부채·감사검토 정보는 이 문서에 연결된 earnings_visibility objective의 허용 범위를 벗어난다. 별도의 HBM 특정 신규 사실은 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "78ac52db3e33533f0f92ff7683f087c1fd4976d0ae382841ba0d75b116a82890",
+  "production_score_authority": false,
+  "prompt_hash": "848a5a5a5b33edd765e999f884a6d8868bec645f7fbbf9adff5cf020b98df638",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5d094b03296c7cbfb4b90ffaf0e1fe0f9585a1ed076cff44789ffb9f9e8ef1b7",
+  "response_id": "COLLABRESP-7eaebc98b5b224af1568ef300ac70b7be735f14d22c443b8aebcddfbb07fe111",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

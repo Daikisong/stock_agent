@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5549b515ac77343dd754658a",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "원 증권사 PDF provenance는 요청 family와 맞지만, 현재 메타데이터상 다른 산업·다른 기업 자료이거나 삼성전자 forward valuation 및 peer band와 직접 연결되는 단서가 없어 이 objective의 material fetch 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-889cd995593b5de81c1ff7c9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "포털·언론·블로그·제3자 저장소 또는 일반 요약 경로로서 URL owner와 discovery provenance가 요청된 PUBLIC_BROKER_PDF를 함께 지지하지 않으므로, 표시된 숫자나 삼성전자 언급만으로 요청 family의 material 후보가 될 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-24c61db17391756e850db1ba",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "원 증권사 PDF provenance는 요청 family와 맞지만, 현재 메타데이터상 다른 산업·다른 기업 자료이거나 삼성전자 forward valuation 및 peer band와 직접 연결되는 단서가 없어 이 objective의 material fetch 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-842a49ee94aaaf0a11e06b31",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "원 증권사 PDF provenance는 요청 family와 맞지만, 현재 메타데이터상 다른 산업·다른 기업 자료이거나 삼성전자 forward valuation 및 peer band와 직접 연결되는 단서가 없어 이 objective의 material fetch 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-91df20ce0273be24f34c977f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "원 증권사 PDF provenance는 요청 family와 맞지만, 현재 메타데이터상 다른 산업·다른 기업 자료이거나 삼성전자 forward valuation 및 peer band와 직접 연결되는 단서가 없어 이 objective의 material fetch 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-8cd512b91970e5fc7feb02c6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "포털·언론·블로그·제3자 저장소 또는 일반 요약 경로로서 URL owner와 discovery provenance가 요청된 PUBLIC_BROKER_PDF를 함께 지지하지 않으므로, 표시된 숫자나 삼성전자 언급만으로 요청 family의 material 후보가 될 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-1ae9b3cef13197517b9b81ec",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "원 증권사 PDF provenance는 요청 family와 맞지만, 현재 메타데이터상 다른 산업·다른 기업 자료이거나 삼성전자 forward valuation 및 peer band와 직접 연결되는 단서가 없어 이 objective의 material fetch 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-171ed22d84ff5611907cd08c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.78,
+        "rationale": "URL owner와 discovery 메타데이터가 원 증권사 보고서 경로를 지지하고, 삼성전자 forward EV/EBITDA 또는 동종 메모리 기업 valuation 비교표를 확인할 수 있는 전체 PDF 후보입니다. 요약문은 fetch 우선순위에만 사용하며 원문에서 기간·배수 단위·분모·비교 기준을 확인하기 전에는 증거가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-4728ccc015bd8eb5811bca98",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.82,
+        "rationale": "URL owner와 discovery 메타데이터가 원 증권사 보고서 경로를 지지하고, 삼성전자 forward EV/EBITDA 또는 동종 메모리 기업 valuation 비교표를 확인할 수 있는 전체 PDF 후보입니다. 요약문은 fetch 우선순위에만 사용하며 원문에서 기간·배수 단위·분모·비교 기준을 확인하기 전에는 증거가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-132879c9074e399dbfc12144",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "포털·언론·블로그·제3자 저장소 또는 일반 요약 경로로서 URL owner와 discovery provenance가 요청된 PUBLIC_BROKER_PDF를 함께 지지하지 않으므로, 표시된 숫자나 삼성전자 언급만으로 요청 family의 material 후보가 될 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-7a8d677056889136b55d8677",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "원 증권사 PDF provenance는 요청 family와 맞지만, 현재 메타데이터상 다른 산업·다른 기업 자료이거나 삼성전자 forward valuation 및 peer band와 직접 연결되는 단서가 없어 이 objective의 material fetch 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-534e4c06c1f58a1fcaa3264c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "포털·언론·블로그·제3자 저장소 또는 일반 요약 경로로서 URL owner와 discovery provenance가 요청된 PUBLIC_BROKER_PDF를 함께 지지하지 않으므로, 표시된 숫자나 삼성전자 언급만으로 요청 family의 material 후보가 될 수 없습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "각 partition의 current 후보를 exact-once로 분류했으며 snippet과 metadata는 EvidenceFact로 사용하지 않았습니다.",
+      "material 후보도 전체 원문과 as-of-date, forward 기간, 배수 단위 및 비교 기준 검증 전에는 점수·Stage 권한이 없습니다."
+    ]
+  },
+  "payload_hash": "08f989b6665a3ead401944b000186ecdce25c6afd3c7da0488e15af2940abe33",
+  "production_score_authority": false,
+  "prompt_hash": "0a5951444c8b639959c165de37e69d639854c3a18b8db0c8f05ef99ff1c1ac44",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f16a697d63f9500613f5a3a8b0a076eb188a8bd9fa37b83a54669881af00a3e7",
+  "response_id": "COLLABRESP-d4396fee28e8708ad8161c1048c8a307d4d62b28b3e219aba35cc1d61e5e4c26",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

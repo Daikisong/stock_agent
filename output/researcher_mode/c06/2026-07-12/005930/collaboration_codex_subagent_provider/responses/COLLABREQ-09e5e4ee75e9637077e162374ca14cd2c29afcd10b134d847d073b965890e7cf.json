@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-00001237ec54c303cb80b817",
+        "rationale": "Tech Weekly 원문 전체를 valuation_rerating 목적에 한정해 재검토했다. 삼성전자 및 메모리 비교기업의 2025F/2026F PER·PBR 표는 현재 사실 계보에 이미 반영되어 있고, 나머지 HBM 산업 전망·모바일 및 전자부품 내용은 동일 가치평가 사실의 반복이거나 대상 목적에 직접 연결되지 않아 새롭고 구별되는 objective-local 사실이 남지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "69fec24028408b4da8e0094684aad0484c8626953b5bb1346b3bd176d1bfd861",
+  "production_score_authority": false,
+  "prompt_hash": "c4e5e69a128d79b4484e95647eed1dec6f13391be86636c38199804f300a376e",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-09e5e4ee75e9637077e162374ca14cd2c29afcd10b134d847d073b965890e7cf",
+  "response_id": "COLLABRESP-fdd82d038a30b33d9ac1c99f2f44bc126c5a4a70957ef01815d4e835c00cff1b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

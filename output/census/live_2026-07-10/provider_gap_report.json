@@ -1,0 +1,16 @@
+{
+  "as_of_date": "2026-07-10",
+  "provider_gap_target_count": 1,
+  "rows": [
+    {
+      "provider_errors": [],
+      "provider_gaps": [
+        "material provider gap remains after bounded official-first execution"
+      ],
+      "target_id": "038870",
+      "target_name": "에코심플렉스",
+      "terminal_status": "PROVIDER_PENDING"
+    }
+  ],
+  "schema_version": "e2r_live_census_operational_v1"
+}

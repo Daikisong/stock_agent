@@ -1,0 +1,590 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Continuation page 9 resumes after the prior 4Q24 conventional-DRAM shipment QoQ identity. It extracts four quarterly DRAM ASP levels, four corresponding QoQ changes, and the first four target-company rows from the estimate-revision table: consolidated revenue revisions with exact new, old, and percentage values. All are historical SK Securities forecasts marked SUPERSEDED. Conventional DRAM is not promoted to HBM, broker estimates are not issuer actuals, and no NAND row is emitted. Later DRAM revenue, operating-profit, margin, and net-income revision rows remain.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of conventional DRAM pricing",
+        "exact_quote": "ASP ($) 0.20 0.21 0.24 0.29 0.33 0.38 0.42 0.43 0.38 0.24 0.39",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A target-direct quantified DRAM price forecast advances historical pricing and earnings-bridge context but is not current issuer actual evidence and is superseded.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "SK hynix conventional DRAM 1Q2024 ASP USD 0.33 per 1Gb equivalent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "forecasted average selling price equals",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "BROKER_FORECAST",
+          "QUARTERLY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_LEVEL_FORECAST",
+        "question_family_tags": [
+          "DRAM_ASP_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix conventional DRAM average selling price",
+        "subject_id": "000660:DRAM_ASP:1Q2024E:SKSEC_20240314",
+        "unit": "USD per 1Gb equivalent",
+        "value": 0.33
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of conventional DRAM pricing",
+        "exact_quote": "ASP ($) 0.20 0.21 0.24 0.29 0.33 0.38 0.42 0.43 0.38 0.24 0.39",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A target-direct quantified DRAM price forecast advances historical pricing and earnings-bridge context but is not current issuer actual evidence and is superseded.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "SK hynix conventional DRAM 2Q2024 ASP USD 0.38 per 1Gb equivalent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "forecasted average selling price equals",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "BROKER_FORECAST",
+          "QUARTERLY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_LEVEL_FORECAST",
+        "question_family_tags": [
+          "DRAM_ASP_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix conventional DRAM average selling price",
+        "subject_id": "000660:DRAM_ASP:2Q2024E:SKSEC_20240314",
+        "unit": "USD per 1Gb equivalent",
+        "value": 0.38
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of conventional DRAM pricing",
+        "exact_quote": "ASP ($) 0.20 0.21 0.24 0.29 0.33 0.38 0.42 0.43 0.38 0.24 0.39",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A target-direct quantified DRAM price forecast advances historical pricing and earnings-bridge context but is not current issuer actual evidence and is superseded.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "SK hynix conventional DRAM 3Q2024 ASP USD 0.42 per 1Gb equivalent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "forecasted average selling price equals",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "BROKER_FORECAST",
+          "QUARTERLY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_LEVEL_FORECAST",
+        "question_family_tags": [
+          "DRAM_ASP_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix conventional DRAM average selling price",
+        "subject_id": "000660:DRAM_ASP:3Q2024E:SKSEC_20240314",
+        "unit": "USD per 1Gb equivalent",
+        "value": 0.42
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of conventional DRAM pricing",
+        "exact_quote": "ASP ($) 0.20 0.21 0.24 0.29 0.33 0.38 0.42 0.43 0.38 0.24 0.39",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A target-direct quantified DRAM price forecast advances historical pricing and earnings-bridge context but is not current issuer actual evidence and is superseded.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "SK hynix conventional DRAM 4Q2024 ASP USD 0.43 per 1Gb equivalent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "forecasted average selling price equals",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "BROKER_FORECAST",
+          "QUARTERLY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_LEVEL_FORECAST",
+        "question_family_tags": [
+          "DRAM_ASP_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix conventional DRAM average selling price",
+        "subject_id": "000660:DRAM_ASP:4Q2024E:SKSEC_20240314",
+        "unit": "USD per 1Gb equivalent",
+        "value": 0.43
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of sequential conventional DRAM pricing",
+        "exact_quote": "QoQ % -17% 9% 12% 19% 16% 15% 9% 4% -21% -37% 64%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A target-direct quantified DRAM ASP change forecast advances historical pricing context but is not current issuer actual evidence and is superseded.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "SK hynix conventional DRAM 1Q2024 ASP +16 percent QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "forecasted average selling price changes QoQ by",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "QOQ",
+          "BROKER_FORECAST"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_QOQ_FORECAST",
+        "question_family_tags": [
+          "DRAM_ASP_QOQ_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix conventional DRAM average selling price QoQ change",
+        "subject_id": "000660:DRAM_ASP_QOQ:1Q2024E:SKSEC_20240314",
+        "unit": "percent QoQ",
+        "value": 16
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of sequential conventional DRAM pricing",
+        "exact_quote": "QoQ % -17% 9% 12% 19% 16% 15% 9% 4% -21% -37% 64%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A target-direct quantified DRAM ASP change forecast advances historical pricing context but is not current issuer actual evidence and is superseded.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "SK hynix conventional DRAM 2Q2024 ASP +15 percent QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "forecasted average selling price changes QoQ by",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "QOQ",
+          "BROKER_FORECAST"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_QOQ_FORECAST",
+        "question_family_tags": [
+          "DRAM_ASP_QOQ_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix conventional DRAM average selling price QoQ change",
+        "subject_id": "000660:DRAM_ASP_QOQ:2Q2024E:SKSEC_20240314",
+        "unit": "percent QoQ",
+        "value": 15
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of sequential conventional DRAM pricing",
+        "exact_quote": "QoQ % -17% 9% 12% 19% 16% 15% 9% 4% -21% -37% 64%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A target-direct quantified DRAM ASP change forecast advances historical pricing context but is not current issuer actual evidence and is superseded.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "SK hynix conventional DRAM 3Q2024 ASP +9 percent QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "forecasted average selling price changes QoQ by",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "QOQ",
+          "BROKER_FORECAST"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_QOQ_FORECAST",
+        "question_family_tags": [
+          "DRAM_ASP_QOQ_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix conventional DRAM average selling price QoQ change",
+        "subject_id": "000660:DRAM_ASP_QOQ:3Q2024E:SKSEC_20240314",
+        "unit": "percent QoQ",
+        "value": 9
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of sequential conventional DRAM pricing",
+        "exact_quote": "QoQ % -17% 9% 12% 19% 16% 15% 9% 4% -21% -37% 64%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A target-direct quantified DRAM ASP change forecast advances historical pricing context but is not current issuer actual evidence and is superseded.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "SK hynix conventional DRAM 4Q2024 ASP +4 percent QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "forecasted average selling price changes QoQ by",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "QOQ",
+          "BROKER_FORECAST"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_QOQ_FORECAST",
+        "question_family_tags": [
+          "DRAM_ASP_QOQ_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix conventional DRAM average selling price QoQ change",
+        "subject_id": "000660:DRAM_ASP_QOQ:4Q2024E:SKSEC_20240314",
+        "unit": "percent QoQ",
+        "value": 4
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of consolidated revenue forecast",
+        "exact_quote": "매출액 12,214 14,976 16,612 17,205 11,528 13,561 15,101 16,904 6% 10% 10% 2%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row gives exact old and new target-company quarterly revenue estimates and the revision rate, advancing historical expectation-gap context while remaining a superseded broker forecast.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_REVENUE:ESTIMATE_REVISION",
+        "normalized_object": "SK hynix 1Q2024 consolidated revenue forecast revised to KRW 12,214 billion from KRW 11,528 billion, +6 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "revised consolidated revenue estimate from and to",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "CONSOLIDATED_REVENUE",
+          "OLD_ESTIMATE",
+          "NEW_ESTIMATE",
+          "REVISION_RATE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSOLIDATED_REVENUE_ESTIMATE_REVISION",
+        "question_family_tags": [
+          "REVENUE_ESTIMATE_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated revenue estimate",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_REVISION:1Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": "KRW 12,214 billion from KRW 11,528 billion; +6%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of consolidated revenue forecast",
+        "exact_quote": "매출액 12,214 14,976 16,612 17,205 11,528 13,561 15,101 16,904 6% 10% 10% 2%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row gives exact old and new target-company quarterly revenue estimates and the revision rate, advancing historical expectation-gap context while remaining a superseded broker forecast.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_REVENUE:ESTIMATE_REVISION",
+        "normalized_object": "SK hynix 2Q2024 consolidated revenue forecast revised to KRW 14,976 billion from KRW 13,561 billion, +10 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "revised consolidated revenue estimate from and to",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "CONSOLIDATED_REVENUE",
+          "OLD_ESTIMATE",
+          "NEW_ESTIMATE",
+          "REVISION_RATE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSOLIDATED_REVENUE_ESTIMATE_REVISION",
+        "question_family_tags": [
+          "REVENUE_ESTIMATE_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated revenue estimate",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_REVISION:2Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": "KRW 14,976 billion from KRW 13,561 billion; +10%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of consolidated revenue forecast",
+        "exact_quote": "매출액 12,214 14,976 16,612 17,205 11,528 13,561 15,101 16,904 6% 10% 10% 2%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row gives exact old and new target-company quarterly revenue estimates and the revision rate, advancing historical expectation-gap context while remaining a superseded broker forecast.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_REVENUE:ESTIMATE_REVISION",
+        "normalized_object": "SK hynix 3Q2024 consolidated revenue forecast revised to KRW 16,612 billion from KRW 15,101 billion, +10 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "revised consolidated revenue estimate from and to",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "CONSOLIDATED_REVENUE",
+          "OLD_ESTIMATE",
+          "NEW_ESTIMATE",
+          "REVISION_RATE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSOLIDATED_REVENUE_ESTIMATE_REVISION",
+        "question_family_tags": [
+          "REVENUE_ESTIMATE_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated revenue estimate",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_REVISION:3Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": "KRW 16,612 billion from KRW 15,101 billion; +10%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of consolidated revenue forecast",
+        "exact_quote": "매출액 12,214 14,976 16,612 17,205 11,528 13,561 15,101 16,904 6% 10% 10% 2%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row gives exact old and new target-company quarterly revenue estimates and the revision rate, advancing historical expectation-gap context while remaining a superseded broker forecast.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_REVENUE:ESTIMATE_REVISION",
+        "normalized_object": "SK hynix 4Q2024 consolidated revenue forecast revised to KRW 17,205 billion from KRW 16,904 billion, +2 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "revised consolidated revenue estimate from and to",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "CONSOLIDATED_REVENUE",
+          "OLD_ESTIMATE",
+          "NEW_ESTIMATE",
+          "REVISION_RATE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSOLIDATED_REVENUE_ESTIMATE_REVISION",
+        "question_family_tags": [
+          "REVENUE_ESTIMATE_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated revenue estimate",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_REVISION:4Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": "KRW 17,205 billion from KRW 16,904 billion; +2%"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "Distinct later DRAM revenue, consolidated and DRAM operating-profit, margin, and controlling-net-income estimate-revision rows remain in the supplied literal document; continuation is required."
+    ]
+  },
+  "payload_hash": "dc1788a2096d26f15f752f739f00d74ef428840f89e66c3b87b56649ce1cba51",
+  "production_score_authority": false,
+  "prompt_hash": "6c754bdd6e34a8d402184eb43611c87fcdd190e8db96307f82ce9b270b1e296c",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b40884defa988faa80cb7c592f0921f97d66ae18d79cbd47cfffa7605904681d",
+  "response_id": "COLLABRESP-462d19957a1c10b5317a376062f04d27d741cbf2806fa5839795cd6f36017782",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

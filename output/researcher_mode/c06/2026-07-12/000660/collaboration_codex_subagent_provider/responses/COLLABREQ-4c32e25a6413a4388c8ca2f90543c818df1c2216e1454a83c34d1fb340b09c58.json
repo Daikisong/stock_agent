@@ -1,0 +1,34 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "현재 prompt의 39개 executed query와 failure ledger를 의미 단위로 대조했다. issuer earnings·IR·OPENDART/KIND·ADR/registration·sustainability, NVIDIA official filing·earnings·GTC, broker file-repair, KIND 공급계약, AMD 및 Broadcom literal route까지 이미 실행돼 같은 source class나 동의어를 다시 제안하지 않는다.",
+      "현재 structured gap은 valuation_rerating의 DURABLE_VISIBILITY 하나다. 이를 닫으려면 issuer 또는 customer 공식 원문에 SK하이닉스 HBM의 미래 기간과 binding capacity/물량 또는 가격 체계, 취소·위약·선수금 등 구속 조건이 직접 명시돼야 한다. 공급 논의·요청수요·broker LTA는 대체 증거가 아니다.",
+      "Supervisor는 CUSTOMER_OFFICIAL 계열을 합리적 방향으로 남겼지만, exact prompt는 아직 실행하지 않은 검증된 고객 문서 identity나 새 document class를 제공하지 않는다. 특정 고객·플랫폼·파일·계약을 새로 만들어 검색하는 것은 prompt-only 계약을 위반하므로 suggested_queries를 비운다.",
+      "기존 customer-official 검색에 accepted claim/fact lineage가 없다는 사실과 검색 provider 오류·무결과는 해당 자료의 부재를 증명하지 않는다. 이번 응답은 fixed round나 source absence 결론이 아니라, 현재 exact context에서 의미상 신규이고 검증 가능한 query route가 없다는 PENDING 판단이다."
+    ]
+  },
+  "payload_hash": "0a611097a24d219782757451c8740adce76d30038d6fcd933a683bd31bf3600e",
+  "production_score_authority": false,
+  "prompt_hash": "45ff708263b994055675a8fc062837576eda0cc8907b408346e522ce4bca358f",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4c32e25a6413a4388c8ca2f90543c818df1c2216e1454a83c34d1fb340b09c58",
+  "response_id": "COLLABRESP-b267351faae44cb0a760262c02211bcc00a4af3f352c0938bfc6354048cda367",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

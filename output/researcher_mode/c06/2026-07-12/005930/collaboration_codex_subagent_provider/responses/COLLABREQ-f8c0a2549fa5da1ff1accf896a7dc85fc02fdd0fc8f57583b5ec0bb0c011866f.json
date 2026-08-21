@@ -1,0 +1,569 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-92608e4c647a3fd8c4bc6a8a",
+        "rationale": "2024년 4분기 공식 경영설명회 전수를 current 202 facts와 대조해 메모리 분기·연간 매출, 분기 QoQ point, HBM·고용량 DDR5→D램 ASP→매출 메커니즘, 모바일·PC 수요 및 램프업 비용 counter만 추출했다. 전사·DS 혼합 손익과 다른 사업부, 과거 전망, NAND 중심 문장은 제외했다. 같은 표의 YoY 수치는 max-12 안에서 금액·QoQ·양면 메커니즘보다 추가적인 현재 objective 의미가 작아 별도 fact로 만들지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-9356150b97ee74f85133f6da",
+        "rationale": "2023년 4분기 공식 경영설명회에서 메모리 분기 매출, 전분기 대비 49% 성장, D램 흑자 달성만 비중복 추출했다. 연간·YoY 메모리 수치와 2024년 당시 전망은 후속 actual이 충분하고 현재 eps 메커니즘에 대한 한계효용이 낮아 반복하지 않았으며, DS 혼합·파운드리·DX·디스플레이·NAND-only 내용은 범위 밖이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-9a52b13a42dc38d35ed1454c",
+        "rationale": "2026년 1분기 메모리 영업이익 53~54조원 범위만 기존 54.4조원 컨센서스와 구별되는 source-specific 추정으로 추출했다. 전사 잠정실적, DS 혼합 이익, D램 ASP 90%는 current actual/추정과 중복하고, NAND와 모바일은 허용 범위 밖이다. D램·NAND 제품별 이익 분해는 NAND를 포함하거나 익명 관측에 그쳐 추가하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-9ef579bfcbf9909f10a96098",
+        "rationale": "2026년 2분기 메모리 매출 120조원·영업이익 100조원 초과라는 독립 추정과 큰 물량 증가 없이 가격 급등에 의존한다는 counter만 추출했다. 전사 잠정실적·성과급 조정치·향후 전사 컨센서스는 메모리 단독 귀속이 아니며, D램 생산능력·HBM4 출하·HBM4E 샘플·3~5년 LTA는 current facts와 중복한다. LTA 50%는 익명 업계 관계자의 미래 목표여서 확정 계약이나 issuer guidance로 전용하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-92608e4c647a3fd8c4bc6a8a",
+        "economic_mechanism": "공식 사업부문 표가 2024년 4분기 메모리 제품 판매의 매출 전환 규모를 직접 분리한다.",
+        "exact_quote": "메모리 15.7 22.3 23.0 3%↑ 46%↑ 44.1 84.5 91%↑",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current 202 facts에는 2024년 1분기와 2025년 이후 메모리 매출은 있으나 2024년 4분기 23.0조원은 없다. DS 혼합 수치가 아닌 공식 메모리 행의 실제 금액이다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE:2024Q4",
+        "normalized_object": "2024년 4분기 메모리 매출 23.0조원",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q4",
+        "predicate": "삼성전자 메모리 매출이 2024년 4분기에 23.0조원이었다",
+        "predicate_family": "MEMORY_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "MEMORY_REVENUE",
+          "2024_Q4_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_REVENUE_ACTUAL",
+        "question_family_tags": [
+          "MEMORY_REVENUE",
+          "QUARTERLY_ACTUAL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "삼성전자 2024년 4분기 메모리 매출",
+        "subject_id": "005930:MEMORY:REVENUE:2024Q4",
+        "unit": "KRW trillion",
+        "value": 23.0
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-92608e4c647a3fd8c4bc6a8a",
+        "economic_mechanism": "메모리 매출이 전분기보다 증가해 HBM·고용량 DDR5 판매와 가격 상승이 분기 매출 성장으로 전환됐다.",
+        "exact_quote": "메모리 15.7 22.3 23.0 3%↑ 46%↑ 44.1 84.5 91%↑",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "issuer source의 메모리 단독 point-percent QoQ 실제치다. current graph의 누락 QOQ_GROWTH 역할을 정확한 기간·값·메모리 귀속으로 충족한다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE_QOQ:2024Q4",
+        "normalized_object": "2024년 4분기 메모리 매출 전분기 대비 3% 증가",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q4 vs 2024-Q3",
+        "predicate": "삼성전자 메모리 매출이 2024년 4분기에 전분기 대비 3% 증가했다",
+        "predicate_family": "MEMORY_REVENUE_QOQ_GROWTH",
+        "primitive_tags": [
+          "MEMORY_REVENUE_QOQ",
+          "2024_Q4_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_REVENUE_QOQ_GROWTH",
+        "question_family_tags": [
+          "MEMORY_REVENUE_GROWTH",
+          "QUARTERLY_ACTUAL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "삼성전자 2024년 4분기 메모리 매출 전분기 대비 성장",
+        "subject_id": "005930:MEMORY:REVENUE_QOQ:2024Q4",
+        "unit": "percent QoQ",
+        "value": 3
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-92608e4c647a3fd8c4bc6a8a",
+        "economic_mechanism": "공식 사업부문 표가 2024년 연간 메모리 판매의 누적 매출 전환 규모를 제시한다.",
+        "exact_quote": "메모리 15.7 22.3 23.0 3%↑ 46%↑ 44.1 84.5 91%↑",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current facts에는 2024년 연간 메모리 매출이 없고 분기 수치와 기간이 다르다. 공식 메모리 행의 연간 실제 금액만 사용한다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE:FY2024",
+        "normalized_object": "2024년 연간 메모리 매출 84.5조원",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024",
+        "predicate": "삼성전자 메모리 매출이 2024년 연간 84.5조원이었다",
+        "predicate_family": "MEMORY_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "MEMORY_REVENUE",
+          "FY2024_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_REVENUE_ACTUAL",
+        "question_family_tags": [
+          "MEMORY_REVENUE",
+          "ANNUAL_ACTUAL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "삼성전자 2024년 연간 메모리 매출",
+        "subject_id": "005930:MEMORY:REVENUE:FY2024",
+        "unit": "KRW trillion",
+        "value": 84.5
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-92608e4c647a3fd8c4bc6a8a",
+        "economic_mechanism": "HBM과 고용량 DDR5의 판매 확대가 D램 평균판매가격을 올려 역대 최대 4분기 메모리 매출로 전환됐다.",
+        "exact_quote": "• HBM 및 고용량 DDR5 확판 통한 DRAM ASP 상승으로 역대 최대 4분기 매출 달성",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "수치 표와 별개로 제품 믹스가 실현가격과 메모리 매출을 잇는 issuer 설명이다. current facts에는 이 2024년 4분기 인과 연결이 없다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:ASP_MIX_DRIVER:2024Q4",
+        "normalized_object": "HBM·고용량 DDR5 판매 확대→D램 ASP 상승→역대 최대 4분기 매출",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q4",
+        "predicate": "HBM과 고용량 DDR5 판매 확대가 D램 ASP를 높여 2024년 4분기 메모리 매출이 역대 최대를 기록했다",
+        "predicate_family": "MEMORY_PRICE_MIX_EARNINGS_DRIVER",
+        "primitive_tags": [
+          "HBM_SALES",
+          "DDR5_SALES",
+          "DRAM_ASP"
+        ],
+        "product_family": "HBM·고용량 DDR5",
+        "question_family_id": "MEMORY_PRICE_MIX_EARNINGS_DRIVER",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "HIGH_VALUE_PRODUCT_MIX"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024년 4분기 HBM·고용량 DDR5 판매와 D램 ASP",
+        "subject_id": "005930:MEMORY:HBM_DDR5_ASP_DRIVER:2024Q4",
+        "unit": "price-mix earnings mechanism",
+        "value": "HBM and high-density DDR5 sales expansion raised DRAM ASP and produced record fourth-quarter revenue"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-92608e4c647a3fd8c4bc6a8a",
+        "economic_mechanism": "모바일·PC 수요 약세와 연구개발비·선단공정 초기 램프업 비용이 가격·제품 믹스 개선의 이익 전환을 일부 상쇄했다.",
+        "exact_quote": "• 모바일 및 PC향 수요 약세 지속\n• 연구개발비 및 선단 공정 확대 위한 초기 램프업 비용 증가로 실적 하락",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 공식 메모리 섹션이 매출 기록과 함께 비용·수요 counter를 명시한다. current graph에는 이 기간의 매출 증가가 그대로 이익 증가를 뜻하지 않게 하는 직접 근거가 없다.",
+        "mechanism_scope_id": "005930:MEMORY:RISK_COUNTER:2024Q4_DEMAND_RAMP_COST",
+        "normalized_object": "모바일·PC 수요 약세와 연구개발·램프업 비용에 따른 메모리 실적 하락",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-Q4",
+        "predicate": "모바일·PC 메모리 수요 약세와 연구개발비·선단공정 초기 램프업 비용 증가로 2024년 4분기 메모리 실적이 하락했다",
+        "predicate_family": "MEMORY_PROFIT_CONVERSION_COST_COUNTER",
+        "primitive_tags": [
+          "PC_MOBILE_WEAKNESS",
+          "R_AND_D_COST",
+          "RAMP_UP_COST"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PROFIT_CONVERSION_COST_COUNTER",
+        "question_family_tags": [
+          "MEMORY_DEMAND_RISK",
+          "RAMP_UP_COST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024년 4분기 메모리 수요·램프업 비용 counter",
+        "subject_id": "005930:MEMORY:DEMAND_RAMP_COST_COUNTER:2024Q4",
+        "unit": "earnings counter mechanism",
+        "value": "weak mobile and PC demand plus higher R&D and advanced-process ramp-up costs reduced performance"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9356150b97ee74f85133f6da",
+        "economic_mechanism": "공식 사업부문 표가 2023년 4분기 메모리 제품 판매의 매출 전환 규모를 분리한다.",
+        "exact_quote": "메모리 15.71 10.53 12.14 49%↑ 29%↑ 44.13 68.53 36%↓",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current facts에는 2023년 4분기 메모리 매출이 없다. 공식 메모리 행의 분기 실제 금액으로 2024년 회복 전 기준점을 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE:2023Q4",
+        "normalized_object": "2023년 4분기 메모리 매출 15.71조원",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2023-Q4",
+        "predicate": "삼성전자 메모리 매출이 2023년 4분기에 15.71조원이었다",
+        "predicate_family": "MEMORY_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "MEMORY_REVENUE",
+          "2023_Q4_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_REVENUE_ACTUAL",
+        "question_family_tags": [
+          "MEMORY_REVENUE",
+          "QUARTERLY_ACTUAL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "삼성전자 2023년 4분기 메모리 매출",
+        "subject_id": "005930:MEMORY:REVENUE:2023Q4",
+        "unit": "KRW trillion",
+        "value": 15.71
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9356150b97ee74f85133f6da",
+        "economic_mechanism": "고객 재고 정상화와 PC·모바일 탑재량·AI 서버 수요가 2023년 4분기 메모리 매출의 큰 폭 회복으로 전환됐다.",
+        "exact_quote": "메모리 15.71 10.53 12.14 49%↑ 29%↑ 44.13 68.53 36%↓",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "별도 분기의 메모리 단독 point-percent QoQ actual이다. 2024년 4분기 +3%와 기간이 달라 중복이 아니며 같은 역할의 장기 비교점을 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE_QOQ:2023Q4",
+        "normalized_object": "2023년 4분기 메모리 매출 전분기 대비 49% 증가",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2023-Q4 vs 2023-Q3",
+        "predicate": "삼성전자 메모리 매출이 2023년 4분기에 전분기 대비 49% 증가했다",
+        "predicate_family": "MEMORY_REVENUE_QOQ_GROWTH",
+        "primitive_tags": [
+          "MEMORY_REVENUE_QOQ",
+          "2023_Q4_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_REVENUE_QOQ_GROWTH",
+        "question_family_tags": [
+          "MEMORY_REVENUE_GROWTH",
+          "QUARTERLY_ACTUAL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "삼성전자 2023년 4분기 메모리 매출 전분기 대비 성장",
+        "subject_id": "005930:MEMORY:REVENUE_QOQ:2023Q4",
+        "unit": "percent QoQ",
+        "value": 49
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9356150b97ee74f85133f6da",
+        "economic_mechanism": "재고 소진과 고부가 제품 판매가 2023년 4분기 D램 사업을 흑자로 되돌려 메모리 매출 회복의 이익 전환을 확인했다.",
+        "exact_quote": "4분기 D램 흑자 달성",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current graph에는 2024년 1분기 메모리 전체 흑자전환은 있으나 한 분기 앞선 D램 단독 흑자 달성은 없다. 제품 단위 이익 전환 사실이다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:PROFIT_RECOVERY:2023Q4",
+        "normalized_object": "2023년 4분기 D램 흑자 달성",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2023-Q4",
+        "predicate": "삼성전자 D램 사업이 2023년 4분기에 흑자를 달성했다",
+        "predicate_family": "DRAM_PROFIT_RECOVERY",
+        "primitive_tags": [
+          "DRAM_PROFIT",
+          "2023_Q4_ACTUAL"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_PROFIT_RECOVERY",
+        "question_family_tags": [
+          "DRAM_PROFITABILITY",
+          "EARNINGS_RECOVERY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2023년 4분기 D램 수익성",
+        "subject_id": "005930:MEMORY:DRAM_PROFIT_RECOVERY:2023Q4",
+        "unit": "profit status",
+        "value": "returned to profit"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a52b13a42dc38d35ed1454c",
+        "economic_mechanism": "D램·낸드 가격 급등을 전제로 한 제3자 메모리 영업이익 범위가 2026년 1분기 전사 실적 중 메모리의 이익 기여 규모를 추정한다.",
+        "exact_quote": "이에 따라 삼성전자의 D램·낸드를 합산한 삼성전자의 메모리 분야 영업이익은 53조~54조원에 달할 전망이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current facts의 54.4조원 단일 컨센서스와 다른 독립 매체의 53~54조원 범위여서 추정 분산을 보존한다. issuer actual이나 structured guidance로 오인하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:OPERATING_PROFIT_ESTIMATE:2026Q1:ZDNET",
+        "normalized_object": "2026년 1분기 메모리 영업이익 53조~54조원 추정",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1E",
+        "predicate": "삼성전자 메모리 분야의 2026년 1분기 영업이익이 53조~54조원으로 추정됐다",
+        "predicate_family": "MEMORY_OPERATING_PROFIT_ESTIMATE",
+        "primitive_tags": [
+          "MEMORY_PROFIT_ESTIMATE",
+          "2026_Q1_ESTIMATE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_OPERATING_PROFIT_ESTIMATE",
+        "question_family_tags": [
+          "MEMORY_OPERATING_PROFIT",
+          "ESTIMATE_DISPERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 1분기 메모리 영업이익 추정",
+        "subject_id": "005930:MEMORY:OPERATING_PROFIT_ESTIMATE:2026Q1:ZDNET",
+        "unit": "KRW trillion range",
+        "value": "53-54"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9ef579bfcbf9909f10a96098",
+        "economic_mechanism": "금융투자 업계의 메모리 단독 매출 추정이 2026년 2분기 가격 상승과 수요가 매출로 전환된 규모를 제시한다.",
+        "exact_quote": "금융투자 업계는 삼성 메모리 사업의 2분기 매출액을 약 120조 원으로 추정하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current facts에는 2026년 2분기 메모리 영업이익 추정은 다수 있으나 메모리 단독 매출 120조원 추정은 없다. 전사 171조원과 구분하고 추정으로 유지한다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE_ESTIMATE:2026Q2:SED",
+        "normalized_object": "2026년 2분기 메모리 매출 약 120조원 추정",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2E",
+        "predicate": "금융투자 업계는 삼성전자 메모리 사업의 2026년 2분기 매출을 약 120조원으로 추정했다",
+        "predicate_family": "MEMORY_REVENUE_ESTIMATE",
+        "primitive_tags": [
+          "MEMORY_REVENUE_ESTIMATE",
+          "2026_Q2_ESTIMATE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_REVENUE_ESTIMATE",
+        "question_family_tags": [
+          "MEMORY_REVENUE",
+          "ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 2분기 메모리 매출 추정",
+        "subject_id": "005930:MEMORY:REVENUE_ESTIMATE:2026Q2:SED",
+        "unit": "KRW trillion estimate",
+        "value": 120
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.74,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9ef579bfcbf9909f10a96098",
+        "economic_mechanism": "메모리 사업의 영업이익이 100조원을 넘었다는 제3자 추정은 current graph의 88~93.2조원 추정과 다른 상단 견해를 제시해 추정 분산을 넓힌다.",
+        "exact_quote": "메모리 사업부는 올해 2분기 100조 원이 넘는 영업이익을 기록한 것으로 알려졌다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 분기 current 추정 범위보다 높은 독립 매체 상단 견해로, 확정 actual이 아니라 출처별 분산을 보여주는 OPEN estimate로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:OPERATING_PROFIT_ESTIMATE:2026Q2:SED",
+        "normalized_object": "2026년 2분기 메모리 영업이익 100조원 초과 추정",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2E",
+        "predicate": "삼성전자 메모리 사업부가 2026년 2분기에 100조원을 넘는 영업이익을 기록한 것으로 보도됐다",
+        "predicate_family": "MEMORY_OPERATING_PROFIT_ESTIMATE",
+        "primitive_tags": [
+          "MEMORY_PROFIT_ESTIMATE",
+          "2026_Q2_ESTIMATE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_OPERATING_PROFIT_ESTIMATE",
+        "question_family_tags": [
+          "MEMORY_OPERATING_PROFIT",
+          "ESTIMATE_DISPERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 2분기 메모리 영업이익 추정",
+        "subject_id": "005930:MEMORY:OPERATING_PROFIT_ESTIMATE:2026Q2:SED",
+        "unit": "KRW trillion lower-bound estimate",
+        "value": "more than 100"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-9ef579bfcbf9909f10a96098",
+        "economic_mechanism": "메모리 물량이 크게 늘지 않은 상태에서 가격 급등에 의존한 이익은 가격 사이클이 둔화될 때 지속성이 약해질 수 있다.",
+        "exact_quote": "다만 삼성전자 등 메모리 칩 제조 기업의 물량이 크게 늘지는 않고 가격 급등에 의존해 실적이 고공 행진하는 데 대한 불안감도 적지는 않다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current graph의 AI 투자 사이클 위험과 달리 현재 실적의 가격 대 물량 구성 자체를 제한하는 counter다. 실제 가격 하락이나 미래 실적 악화를 단정하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:RISK_COUNTER:PRICE_DEPENDENCE:2026Q2",
+        "normalized_object": "큰 물량 증가 없이 가격 급등에 의존한 메모리 실적 지속성 위험",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q2 current risk",
+        "predicate": "삼성전자 메모리 실적이 큰 물량 증가 없이 가격 급등에 의존한다는 불안이 제기됐다",
+        "predicate_family": "MEMORY_PRICE_DEPENDENCE_COUNTER",
+        "primitive_tags": [
+          "PRICE_DEPENDENCE",
+          "VOLUME_GROWTH_LIMIT"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PRICE_DEPENDENCE_COUNTER",
+        "question_family_tags": [
+          "PRICE_VOLUME_MIX",
+          "EARNINGS_SUSTAINABILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 2분기 메모리 실적의 가격 의존 위험",
+        "subject_id": "005930:MEMORY:PRICE_DEPENDENCE_RISK:2026Q2",
+        "unit": "earnings sustainability risk",
+        "value": "earnings depend on price surge without large volume growth"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "4fce2ee41dabcb4685980eb0838dac5fdacfb8ddafee78911def244df2d4b408",
+  "production_score_authority": false,
+  "prompt_hash": "8b7fd989135a84576d11016eb365fd2b573505b327d1e6cef98a578e02e77023",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f8c0a2549fa5da1ff1accf896a7dc85fc02fdd0fc8f57583b5ec0bb0c011866f",
+  "response_id": "COLLABRESP-9c26d5ab8aa8f928adbe71f05c5ee817da8f3cf56cf83513a5bbe4b781427b0a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

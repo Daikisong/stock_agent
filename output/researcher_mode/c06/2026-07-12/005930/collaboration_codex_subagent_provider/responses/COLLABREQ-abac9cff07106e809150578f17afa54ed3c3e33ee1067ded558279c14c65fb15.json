@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-004a9ff4c72a78421b4a7896",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "검증된 발행사 2020년 1분기 컨퍼런스 자료이지만 이후 다수 분기와 2026년 1분기 자료로 대체된 역사적 경로라 현재 HBM 가시성을 직접 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-02007eb94a305468f4fd1b04",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2018년 반기보고서 경로지만 현재 HBM 수요·고객·공급·이익 전환보다 훨씬 이전 자료로 후속 공시에 의해 대체됐다."
+      },
+      {
+        "candidate_id": "SGCAND-02a885e10a91c2e8d0a633ca",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2018년 2분기 컨퍼런스 자료지만 2026년 현재 HBM 경제 메커니즘을 직접 진전하거나 반박할 시의성이 없다."
+      },
+      {
+        "candidate_id": "SGCAND-03a9acf819e7023efe310e0a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "검증된 발행사 2021년 4분기 컨퍼런스 경로지만 최신 메모리·HBM 상태는 후속 실적자료로 대체돼 current objective의 추가 해결력이 낮다."
+      },
+      {
+        "candidate_id": "SGCAND-048326b7b3016e9feb653152",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "검증된 발행사 2021년 1분기 컨퍼런스 경로지만 후속 고객 인증·양산·실적 자료보다 오래돼 현재 HBM 가시성의 원문 후보가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0514cb1c2fe72d84a0225b2b",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "검증된 발행사 2022년 1분기 사업보고서 경로지만 현재 HBM 수요·공급·고객 약정을 판단하기에는 기간이 오래되고 후속 공시가 존재한다."
+      },
+      {
+        "candidate_id": "SGCAND-069d770c9f0e67e372dd3642",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 발행사 2016년 2분기 사업보고서 경로지만 HBM 중심의 현재 earnings visibility와 시점상 직접 연결되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-06fb041b93e66f0b9b07e80f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "외부 오디오 호스트이며 supplied provenance가 요청된 issuer·customer·industry·trusted-media family를 입증하지 못하고 2011년 경로라 현재 목적에도 부적합하다."
+      },
+      {
+        "candidate_id": "SGCAND-06fe402af7bb68a02599f8d2",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2018년 2분기 컨퍼런스 페이지지만 현재 HBM 고객·capacity·earnings 상태보다 오래돼 후속 자료로 대체됐다."
+      },
+      {
+        "candidate_id": "SGCAND-07d41847f9814cf87f1105cd",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 발행사 2010년 3분기 컨퍼런스 PDF로, 현재 HBM 가시성의 제품·고객·공급 메커니즘을 직접 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-0a8f2cd3b71f32424c67a0e1",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 발행사 2010년 2분기 컨퍼런스 PDF지만 현행 HBM 세대와 고객 가시성보다 훨씬 이전인 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-0b4d83554db73ee87a1fdb8e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "검증된 발행사 2022년 1분기 컨퍼런스 경로지만 후속 2025~2026 원문이 현재 상태를 통제하므로 material current route가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "43fdb709bec6cba3bfd4aa81e5f230b3b91ca4bbc198a948ba1f0789e194de0f",
+  "production_score_authority": false,
+  "prompt_hash": "16cf61e5d055f6b996434ab2b2e1ad641cfe57139d3854ca52983ecb3da050ec",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-abac9cff07106e809150578f17afa54ed3c3e33ee1067ded558279c14c65fb15",
+  "response_id": "COLLABRESP-aea95d58689ee02387774ad920eb61a19be7d1cdb45ff26abd2514bdf2eb1b4e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

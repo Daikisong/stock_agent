@@ -1,0 +1,84 @@
+{
+  "output_schema_hash": "5a5b9b0266462c7cd0c0a378900448786d8f59371b2e4159b16dcc38f62d33bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-607842f50c412b9fca33aa66",
+        "rationale": "1,313줄 전체를 검토했다. 대상 회사 싸이맥스의 실적·장비·valuation은 제외하고, SK하이닉스에 직접 귀속되며 기존 current fact와 램프 수치가 다른 M15X 장비 반입·80K/월 전망 1건만 추출했다. HBM 후공정 일반론, 다른 메모리 기업, 싸이맥스 고객비중·수혜·리스크는 target valuation 사실로 승격하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.91,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-607842f50c412b9fca33aa66",
+        "economic_mechanism": "제3자 산업 보고서는 M15X 장비 입고가 2025년 4분기에 시작됐고 투자 규모가 당초 계획보다 확대돼 2026년 말 월 80K 수준을 전망했다. 이는 HBM·DRAM 수요 대응의 실제 투자 진행을 독립적으로 보강하지만, 늘어난 공급이 희소성 프리미엄을 완화할 수도 있고 80K는 회사 확정 guidance가 아닌 broker 전망이다. 기존 40K/월·100~120K/월 full-capacity 전망과 다른 램프 시점 수치이므로 차이를 보존한다.",
+        "exact_quote": "SK하이닉스 M15X 역시 4Q25부터 장비 입고가\n시작됐으며, 당초 계획 대비 투자 규모가 확대되어 연내 80K/월 수준까지 확대될 전망이다. 한편 2027년에는 장기 수\n요에 선제 대응하려는 클린룸 CAPA 확보 경쟁이 본격화되며 2026년보다 확대된 장비 수요가 기대된다. 삼성전자\nP5, SK하이닉스 Y1 Fab, 마이크론 ID1, Tongluo(PSMC P5) 등 신규 팹 투자가 차례로 집행될 것으로 전망된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "M15X 공급능력의 실제 장비 반입과 램프 규모는 HBM·DRAM 부족 지속기간과 valuation 프리미엄의 공급반응 위험을 직접 검증한다.",
+        "mechanism_scope_id": "000660:DRAM:M15X_CAPACITY_RAMP_80K_2026",
+        "normalized_object": "M15X 장비 반입과 2026년 말 월 80K 생산능력 램프 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q2025 actual start; FY2026 year-end broker outlook",
+        "predicate": "M15X 장비 입고가 4Q25 시작됐고 투자 확대에 따라 2026년 말 80K/월 수준이 전망됐다",
+        "predicate_family": "M15X_CAPACITY_RAMP_UPDATE",
+        "primitive_tags": [
+          "DRAM",
+          "CAPACITY",
+          "SUPPLY_RESPONSE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "M15X_CAPACITY_RAMP_UPDATE",
+        "question_family_tags": [
+          "M15X",
+          "CAPACITY_RAMP",
+          "SUPPLY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 M15X 장비 반입과 연말 생산능력 확대",
+        "subject_id": "000660:DRAM:M15X_CAPACITY_RAMP_2026",
+        "unit": "wafers per month and timing",
+        "value": "equipment move-in from 4Q2025; 80K wafers/month by end-2026 broker outlook"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "80K/월은 KIRS 산업 보고서의 broker 전망이며 issuer 확정 guidance가 아니다. 기존 40K/월 및 100~120K/월 전망과의 차이는 공급 램프 불확실성으로 보존한다."
+    ]
+  },
+  "payload_hash": "25b964911e9da3a5be34a16fcbc2be3020ccdb5312f6220ea89ce12e70e1bfe8",
+  "production_score_authority": false,
+  "prompt_hash": "4ca28a03f9476d83d106f654bfdbcfa0148fa086489168eca557e0bf6e9dd72f",
+  "provenance": {
+    "agent_id": "root-phase101-c06-facts",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_facts",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0c803e7168a53334e8d16d404526b122c8f9a0a01abfe186145fdd4fb8dbe43e",
+  "response_id": "COLLABRESP-e52a4a5d7773aa46cd972b1fe2f03755850bfd26a047fb3a0e17aa4e3216539f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

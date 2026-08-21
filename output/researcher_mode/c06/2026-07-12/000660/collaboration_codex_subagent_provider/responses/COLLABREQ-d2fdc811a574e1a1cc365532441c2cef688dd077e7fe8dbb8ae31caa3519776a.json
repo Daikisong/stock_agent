@@ -1,0 +1,94 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "직접 메모리 경쟁사는 아니지만 국내 상장 반도체 제조사 중 설비집약도, 고정비 레버리지, 가동률·수율과 현금경제성을 함께 비교할 수 있는 보조 비교기업이다.",
+        "confidence": 0.72,
+        "material_differences": [
+          "DB하이텍은 특화 공정 파운드리이고 SK하이닉스는 DRAM·NAND·HBM 메모리를 판매하므로 제품 가격 형성과 고객 계약 구조가 다르다.",
+          "사업 규모와 AI용 HBM 노출, 선단 메모리 기술 및 설비투자 절대규모가 크게 다르다."
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "웨이퍼 제조의 높은 고정비와 설비 가동률 변화가 영업 레버리지와 현금흐름에 크게 반영된다.",
+          "반도체 수요 주기, 공정 수율, 장비 투자와 감가상각 부담이 자본 효율과 실적 변동성을 좌우한다.",
+          "고객 주문과 생산능력 배분 변화가 가격과 가동률을 거쳐 수익성에 영향을 준다."
+        ]
+      },
+      {
+        "comparability_rationale": "메모리 반도체 가치사슬에서 패키징·테스트를 수행하므로 AI 메모리 수요, 고객 물량, 수율과 설비 가동률의 영향을 공유하며 자본집약적 후공정 현금경제성을 보조적으로 비교할 수 있다.",
+        "confidence": 0.68,
+        "material_differences": [
+          "하나마이크론은 후공정 위탁 서비스가 중심이어서 메모리 칩의 직접 판매가격과 재고 평가 변동에 대한 노출이 SK하이닉스보다 낮다.",
+          "고객 집중도, 사업 규모, 선단 DRAM·HBM 설계와 전공정 설비 부담이 크게 다르다."
+        ],
+        "peer_name": "하나마이크론",
+        "peer_symbol": "067310",
+        "shared_economic_drivers": [
+          "반도체 패키징·테스트의 가동률과 수율, 고객 물량 배정이 매출과 마진 및 현금흐름에 직접 영향을 준다.",
+          "AI 메모리와 고성능 반도체의 패키징 복잡도 상승 및 후공정 투자가 성장과 자본 소요의 공통 동인이다.",
+          "대형 반도체 고객의 투자와 재고 주기, 생산능력 선투자가 실적 변동성과 현금 회수기간을 좌우한다."
+        ]
+      },
+      {
+        "comparability_rationale": "HBM 증설과 첨단 패키징 투자라는 핵심 수요 동인을 공유하되 장비 공급사의 주문 주기와 현금흐름 차이를 명시한 가치사슬 보조 비교기업이다.",
+        "confidence": 0.64,
+        "material_differences": [
+          "한미반도체는 제조장비 공급사로 장비 수주와 납품 시점에 따라 매출이 움직이며 메모리 가격과 재고 주기에 대한 직접 노출은 낮다.",
+          "웨이퍼 생산설비의 자본집약도, 반복 판매 구조, 고객 기반과 현금전환 주기가 SK하이닉스와 다르다."
+        ],
+        "peer_name": "한미반도체",
+        "peer_symbol": "042700",
+        "shared_economic_drivers": [
+          "HBM 생산 확대와 첨단 패키징 투자가 관련 장비 수요 및 수주 변동을 통해 실적에 연결된다.",
+          "고객의 반도체 설비투자 주기, 기술 전환과 고객 인증이 매출 시점과 수익성에 큰 영향을 준다.",
+          "AI 서버용 고대역폭 메모리 채택 속도가 두 회사의 고부가 제품과 장비 수요에 공통으로 작용한다."
+        ]
+      },
+      {
+        "comparability_rationale": "메모리 후공정의 가동률·수율·고객 물량과 자본투자 경제성을 공유하므로 직접 메모리 비교가 아닌 운영 레버리지와 현금경제성의 보조 비교에 적합하다.",
+        "confidence": 0.62,
+        "material_differences": [
+          "SFA반도체는 후공정 서비스 기업이어서 DRAM·HBM의 직접 가격, 제품 믹스와 재고 위험을 부담하는 메모리 제조사와 수익 구조가 다르다.",
+          "기술 범위, 사업 규모, 고객 집중도와 전공정 설비투자 부담이 SK하이닉스와 크게 다르다."
+        ],
+        "peer_name": "SFA반도체",
+        "peer_symbol": "036540",
+        "shared_economic_drivers": [
+          "반도체 패키징·테스트 물량, 공정 수율과 설비 가동률이 고정비 흡수와 수익성에 영향을 준다.",
+          "메모리 고객의 생산 및 재고 주기와 후공정 외주 물량 변화가 매출 변동성으로 이어진다.",
+          "고객 요구에 맞춘 설비 투자와 품질 인증이 생산능력 활용도 및 현금흐름에 영향을 준다."
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "현재 증거는 AI 메모리·HBM·DRAM 수요, 대규모 설비투자, 수율·가동률, 고객 물량 및 현금흐름의 주기성을 핵심 경제 메커니즘으로 보여준다. 이에 웨이퍼 제조의 고정비 경제성을 공유하는 DB하이텍과, 메모리 후공정·HBM 설비투자 가치사슬에서 고객 물량·수율·가동률·자본소요를 공유하는 하나마이크론·한미반도체·SFA반도체를 선정했다. 각 회사의 파운드리·후공정·장비 사업모델 차이는 직접 동등 비교가 아닌 보조 비교 한계로 명시했다.",
+    "unresolved_research_notes": [
+      "국내 상장 비교군은 SK하이닉스와 동일한 메모리 제품 구성을 완전히 복제하지 못하므로, 네 회사 모두 명시된 사업모델 차이를 유지한 보조 비교군으로 해석해야 한다.",
+      "구조화 배수의 존재 여부와 기준일 적합성은 이 응답에서 가정하지 않으며 선택 이후 결정론적 수집·검증 단계에서 확인해야 한다."
+    ]
+  },
+  "payload_hash": "597bd85e044ac88120f2094c9b1abf39b5d6640c7879f2d19430deebb8ca145b",
+  "production_score_authority": false,
+  "prompt_hash": "38fdc7e665d0d8c60cef4e062166924084aa8ff3a4c6c8dc4a2c6196909bf912",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d2fdc811a574e1a1cc365532441c2cef688dd077e7fe8dbb8ae31caa3519776a",
+  "response_id": "COLLABRESP-2b948f6a14530dcd92cc1ecf1d8358266406070cbeb896cccff3c039d6c76343",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

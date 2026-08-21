@@ -1,0 +1,118 @@
+{
+  "output_schema_hash": "aead7e9786ae873b739a1cdc214228ffbd90c01b1c1cfdf2bcf638083de1249c",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e962ff5dc6e55f345c97bcac",
+        "rationale": "삼성전자 1분기 잠정실적·메모리 이익 전망, 메모리 가격 상승, 장기계약 및 HBM 수요 서술을 current 302 facts와 대조했으나 동일한 actual·가격·LTA 메커니즘이 이미 canonical에 있다. 기사에 함께 나온 SK하이닉스 수치와 산업 전망은 삼성전자 직접 비중복 fact로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-f066f5fcd967ccd7d2b0d1f4",
+        "rationale": "삼성전자 공식 2026년 1분기 컨퍼런스콜을 current 302 facts와 전수 대조했다. 서버 D램 비트 성장, 2분기 D램 비트 가이던스, HBM4 매출 믹스, 완판, 장기계약과 전망 불확실성은 이미 동일 semantic canonical facts가 있어 반복하지 않았고, 제3자 출처로만 존재하던 2026년 HBM 매출 3배 초과 전망의 공식 issuer 가이던스 1건만 구조화 역할과 함께 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f101b04dc14b5b2e64947e9b",
+        "rationale": "실적 발표 전 증권가 추정, D램·NAND ASP 전망, 빅테크 선수금과 HBM 실적 전망은 이후 확정 실적 또는 current 가격·장기계약·고객자금 facts와 중복된다. NAND 고유 수치와 투자 문구는 허용 objective 범위에 쓰지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-f18398231c97b323c14feeee",
+        "rationale": "마이크론의 실적, 16개 장기계약, RPO와 선수금은 타사 facts다. 삼성전자도 유사한 계약을 활용할 수 있다는 기사 추측을 실제 삼성전자 계약조건으로 전용하지 않았고, 삼성전자·SK하이닉스의 3~5년 LTA 서술은 current canonical과 중복된다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-f37959339de11c4b95c59c69",
+        "rationale": "2분기 전사 잠정실적, 성과급 충당 추정, D램 가격·HBM4 매출·완판·HBM4E 수율 및 고객 수요 위험을 current facts와 대조했으나 동일 수치나 메커니즘이 이미 반영돼 있다. 전사 성과급은 이 문서에 연결된 메모리 병목 objective의 새 직접 fact가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-f40780a0da79a23ba3de730e",
+        "rationale": "증권사별 목표주가·밸류에이션은 이 문서에 연결된 bottleneck_pricing objective 밖이며, 메모리 ASP·완판·LTA·고객 구매 보수화와 AI 투자 위험은 current canonical과 중복된다. 목표가격을 계약·수율·실현가격 근거로 전용하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-f98611db4e8695ff9bded353",
+        "rationale": "방송 인터뷰의 주가 변동, PER 10배 미만 평가와 2028년 이익 둔화 견해는 완전한 기간·분모·HBM 이익 브리지가 없거나 current market-expectation facts와 중복된다. 투자 판단·매매 언어와 일반 시장 코멘트는 fact로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-ff84bca6ef0d8dfbcea4f0ff",
+        "rationale": "2026년 2분기 전사 잠정 매출·영업이익, 메모리 이익 추정, D램 계약가격, HBM4 매출과 장기계약 서술은 더 구체적인 current actual·가격·HBM·LTA facts와 중복된다. 회사 전체 수치를 메모리 병목 수치로 귀속하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f066f5fcd967ccd7d2b0d1f4",
+        "economic_mechanism": "삼성전자가 공식 실적 컨퍼런스콜에서 2026년 HBM 매출이 전년 대비 3배를 초과할 것으로 안내한 것은 HBM 수요와 출하 확대가 연간 매출 성장으로 전환될 최소 규모를 제시한다.",
+        "exact_quote": "First of all, as we explained at the last quarterly earnings call, we expect HBM\nsales to increase substantially by more than threefold year on year in 2026.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 canonical의 동일 전망은 제3자 매체 인용에만 연결돼 구조화 가이던스의 issuer-source 계약을 충족하지 못한다. 이 공식 원문은 숫자 하한과 미래 기간을 함께 명시해 FORWARD_GUIDANCE를 직접 materialize하며, 정확한 매출액이나 상한은 추론하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:FY2026_REVENUE_GUIDANCE",
+        "normalized_object": "2026년 HBM 매출 전년 대비 증가 배수의 하한",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "삼성전자는 2026년 HBM 매출이 전년 대비 3배를 초과해 증가할 것으로 전망했다",
+        "predicate_family": "HBM_REVENUE_YOY_FORWARD_GUIDANCE",
+        "primitive_tags": [
+          "HBM",
+          "REVENUE_GUIDANCE",
+          "YOY_GROWTH"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SAMSUNG_HBM_FY2026_SALES_GUIDANCE",
+        "question_family_tags": [
+          "HBM_REVENUE_GUIDANCE",
+          "HBM_EARNINGS_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "삼성전자 2026년 HBM 매출 가이던스",
+        "subject_id": "005930:MEMORY:HBM:SALES_GUIDANCE:FY2026",
+        "unit": "multiple YoY lower bound",
+        "value": 3
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "6f1ce504e3af86f2e20a78c417dd60b63d406d6a94db16eebc3480e1a8b3cdca",
+  "production_score_authority": false,
+  "prompt_hash": "583840dc2e1cdc7d23e3fb7533b61bfde3c0bcf479812ab7a08d7246a0135224",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-58c6d3ee1a7c3f40ccfc9a96f2205c371f1b15451a633f9308f01b4a97e38096",
+  "response_id": "COLLABRESP-6dc2977463d415945b0605050595aa9b584c73a6405f8a8b6c9e51129d13a769",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "output_schema_hash": "67050aa48e3e0902eb18d17220b8ee3713e24cc193055d1195317248f16c5803",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-26852010af1d289e0790b475",
+        "rationale": "문서 전체를 current 333 facts와 대조했다. 2026년 2분기 전사 잠정 매출·영업이익은 메모리 단독 실적이 아니며, DS·D램·낸드의 이익 기여와 ASP 설명은 기사 분석이다. 메모리의 2분기 이익·전사 이익 기여·가격 회복은 더 구체적인 current facts에 이미 있고, 낸드는 C06 허용 제품 범위 밖이므로 신규 병목 사실로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-26af3dda0c44006e8a641599",
+        "rationale": "2025년 1분기 실적발표 전문을 전수 검토했다. D램 전체·서버·범용 비트 성장, D램 ASP 하락, HBM 판매 감소와 수출통제·수요이연 원인은 같은 실적발표의 기존 canonical facts에 이미 수용돼 있다. 당시 HBM3E 샘플, 분기별 회복, HBM4 하반기 양산 계획과 2분기 전망은 후속 실제 양산·판매·실적 facts로 대체됐고, NAND와 비메모리 사업은 허용 범위 밖이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-2cfbdc698f1110356f57351e",
+        "rationale": "전문을 검토했으나 이 기사의 핵심은 LPDDR 산업 공급 부족과 경쟁사·스마트폰·PC 시장 설명이다. LPDDR는 exact C06 mechanism contract의 허용 HBM·DRAM·MEMORY_GENERIC·AI_MEMORY 범위에 없고, 동일 문서의 극단적 출하 감소에도 메모리 부족이 지속된다는 일반 counter는 이미 durable current fact로 수용됐다. 나머지 경쟁사 가격·투자·산업 전망을 삼성전자 HBM·D램 사실로 귀속하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "e84913d3adef0c18683b60b47267e1dac0842a330263699a12b48fed77ee562d",
+  "production_score_authority": false,
+  "prompt_hash": "87843657765e1c7c9019fdbf6c1374f3beecd51e1e9ac69d836e6371041bfe99",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0615fcaad203f58adce75baf7398cc67ea992c983f6d9eb0939cb304c1a8cc1c",
+  "response_id": "COLLABRESP-db070b70b148e25a21c261e3e7adadc9e5b6696eda023ee1af2fa38201f4c453",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

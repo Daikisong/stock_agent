@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "34d3346e67ce0de4b206b6c88895f5de9f064a90367543cee42cc1296624845e",
+  "payload": {
+    "allowed_range": [
+      12.8,
+      16.2
+    ],
+    "anchor_comparisons": [
+      "CANCH-0f9dd0807dd915f5d67d49eb는 POSITIVE 역할의 STRONG ordinal anchor이며 허용 대역은 17.01~19.11점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 MEDIUM와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "CANCH-1aa76cb8e89d85cd78d325f4는 COUNTER 역할의 MEDIUM ordinal anchor이며 허용 대역은 9.95~12.05점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "counter anchor는 하방 검증용이며, 현재 확인된 실적·공급 성과까지 부정하는 영점 기준으로 사용하지 않았다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-80daa96c00cd5d7b5782c27a",
+      "EFACT-a79b8e5bedf94ee44504539e",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "긍정 사실이 있다는 이유만으로 제품별 수익성·계약 강도·지속기간까지 확인됐다고 보는 해석에 동의하지 않는다.",
+      "다만 실현된 매출·이익·생산·납품 사실까지 전부 추정으로 취급하는 극단적 하방에도 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-0f9dd0807dd915f5d67d49eb",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 14.6,
+    "rationale": "계약·주문 기반 실적 가시성의 모든 counter를 검토했다. 계약 세부가 NDA로 닫혀 구매의무·취소·가격조정 조건을 검증할 수 없다. LTA 가격이 현물 상승을 늦게 반영할 수 있고 고객 제품 출하 지연은 HBM4 매출 인식과 이익 기여를 뒤로 미룰 수 있으며, 성과평가에 따른 물량 배분도 고정되지 않는다. 추가로 공개 가능한 HBM 계약기간·물량·가격조정·선수금·취소·위약 조건과 qualification·allocation 기준이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다. 긍정 사실인 이미 확보한 고객 구매주문, 완료된 중장기 물량 계약, 구속력 있는 다년계약과 완판된 HBM4 생산여력은 2026년 출하량을 단순 수요 기대보다 강하게 고정한다. 구조화 리비전 이력에서도 영업이익 방향은 상승이고 장기간 EPS 추정 상향 폭이 컸다.도 확인되지만, 계약조건·제품별 마진·귀속 bridge가 닫히지 않아 하방을 넓게 유지했다.",
+    "support_fact_ids": [
+      "EFACT-16ee255de13b7acf64e98eaa",
+      "EFACT-1ec0fca52ff40b01ed1890f6",
+      "EFACT-83b9afe8727ec3fd962620a4",
+      "EFACT-8b6707b4ab45897a5a448a93",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-d05fe1b53b1bb5081130ea1c"
+    ],
+    "why_not_higher": "4개의 current/open counter와 미해결 공식 자료 gap이 남아 계약·주문 기반 실적 가시성의 상단 확정을 막는다.",
+    "why_not_lower": "발행사가 구매주문 확보, 중장기 계약 완료, 다년계약의 구속력과 HBM4 완판을 각각 확인해 단순 전망보다 높은 물량 가시성이 있다. 기존 current positive facts는 그대로 유효하다."
+  },
+  "payload_hash": "850e6b5fbb0df556df32a198d2a9c978f644d7e89595a12506e26ad762b46e92",
+  "production_score_authority": false,
+  "prompt_hash": "c72a47e0fd1e6bcad1007f8a4ddd3ef2d603f100b81e9aafb5a6e8bea63d8db7",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9ae25599361a8b28ccdba58448d64ab06cbafc0cd18cba80eb7d86d43c174cad",
+  "response_id": "COLLABRESP-8dd1bad39432f259127eff06ed6637a1fec8d5946b29f37579b0718b28950e94",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,1302 @@
+{
+  "output_schema_hash": "f72a0c40319474ea6227cccd44020017f3a295f9fef2fc695ac5a7dce80cd4d8",
+  "payload": {
+    "fact_dispositions": [
+      {
+        "fact_row_index": 0,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 1,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 2,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 3,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 4,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 5,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 6,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 7,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 8,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 9,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 10,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 11,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 12,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 13,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 14,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 15,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 16,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 17,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 18,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 19,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 20,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 21,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 22,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 23,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 24,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 25,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 26,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 27,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 28,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 29,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 30,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 31,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 32,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 33,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 34,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 35,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 36,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 37,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 38,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 39,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 40,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 41,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 42,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 43,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 44,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 45,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 46,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 47,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 48,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 49,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 50,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 51,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 52,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 53,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 54,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 55,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 56,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 57,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 58,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 59,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 60,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 61,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 62,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 63,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 64,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 65,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 66,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 67,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 68,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 69,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 70,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 71,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 72,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 73,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 74,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 75,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 76,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 77,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 78,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 79,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 80,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 81,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 82,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 83,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 84,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 85,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 86,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 87,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 88,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 89,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 90,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 91,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 92,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 93,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 94,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 95,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 96,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 97,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 98,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 99,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 100,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 101,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 102,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 103,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 104,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 105,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 106,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 107,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 108,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 109,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 110,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 111,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 112,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 113,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 114,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 115,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 116,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 117,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 118,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 119,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 120,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 121,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 122,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 123,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 124,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 125,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 126,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 127,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 128,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 129,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 130,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 131,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 132,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 133,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 134,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 135,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 136,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 137,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 138,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 139,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 140,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 141,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 142,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 143,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 144,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 145,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 146,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 147,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 148,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 149,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 150,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 151,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 152,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 153,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 154,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 155,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 156,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 157,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 158,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 159,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 160,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 161,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 162,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 163,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 164,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 165,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 166,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 167,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 168,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 169,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 170,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 171,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 172,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 173,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 174,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 175,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 176,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 177,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 178,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 179,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 180,
+        "rationale": "Reviewed in full: the DRAM fact lacks the direct primitive meaning required here and is not relabeled as HBM evidence.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 181,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 182,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 183,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 184,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 185,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 186,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 187,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 188,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 189,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 190,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 191,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 192,
+        "rationale": "Reviewed in full: HBM-related context does not directly satisfy an allowed primitive's required commitment, qualification, realized economics, or dated capacity meaning; profile/forecast is not upgraded.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 193,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 194,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 195,
+        "rationale": "Reviewed in full: the company-level fact lacks a direct semantic match to an allowed primitive, so it is not misattributed to DRAM or HBM.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 196,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 197,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 198,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 199,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 200,
+        "rationale": "Reviewed in full: this current/open fact is contextual, mixed-scope, forecast-only, or otherwise lacks a strict direct primitive match; NO_MATCH preserves its original attribution.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 201,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 202,
+        "rationale": "Directly cited by at least one configured primitive mapping; the mapping rationale preserves product, period, forecast/actual, and company-versus-HBM attribution boundaries.",
+        "status": "MAPPED"
+      }
+    ],
+    "mapping_complete": true,
+    "mappings": [
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          1,
+          114,
+          175,
+          178,
+          196
+        ],
+        "primitive_id": "contract_visibility",
+        "semantic_rationale": "Current target-specific LTA activity, long-term-contract assessments, and dated customer supply discussions provide contract visibility only. Undisclosed or unsigned terms are not upgraded to enforceable revenue or customer purchase obligations."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          140
+        ],
+        "primitive_id": "revenue_visibility_contract",
+        "semantic_rationale": "The target disclosure says customer volume and price are agreed monthly or quarterly, directly limiting durable contracted-revenue visibility; it does not establish HBM-specific cancellation or penalty terms."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          84,
+          117
+        ],
+        "primitive_id": "hbm_capacity_constraint",
+        "semantic_rationale": "Target-attributed HBM demand exceeds available capacity for a dated period, and current issuer reporting links HBM/server-memory price strength to constrained supply. Mixed server-memory wording is not narrowed to HBM-only prices."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          79
+        ],
+        "primitive_id": "hbm_capacity_pre_sold",
+        "semantic_rationale": "The target's FY2026 HBM annual demand is described as already secured for a defined year. This supports booked-demand visibility but is not treated as a non-cancellable customer contract."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          65,
+          104,
+          149
+        ],
+        "primitive_id": "memory_price_increase_mentioned",
+        "semantic_rationale": "These rows directly state target HBM4 contracted pricing or realized target DRAM ASP increases with periods. DRAM realized pricing remains DRAM evidence and is not relabeled as HBM ASP."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          100
+        ],
+        "primitive_id": "medium_term_revision_visibility",
+        "semantic_rationale": "A dated source-backed multi-year earnings path explicitly bridges HBM and conventional-memory assumptions to target forward revenue and operating profit; it remains a third-party estimate, not issuer guidance."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          127
+        ],
+        "primitive_id": "qualification_status",
+        "semantic_rationale": "The target states that HBM4 entered mass production and met customer performance requirements. Customer identity, certification date, and purchase obligation remain undisclosed."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          8,
+          15,
+          20,
+          36,
+          43,
+          108,
+          128
+        ],
+        "primitive_id": "hbm_product_profile",
+        "semantic_rationale": "Target-specific HBM generations, manufacturing maturity, mass-production status, architecture, and dated ramp or shipment plans establish product profile only; they do not prove qualification, booked capacity, or revenue by themselves."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          201
+        ],
+        "primitive_id": "qualification_state",
+        "semantic_rationale": "HBM4's doubled I/O count and first foundry logic die directly increase integration and customer-test complexity, an open qualification risk without asserting an actual failure."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          20,
+          105,
+          108,
+          141,
+          143,
+          188,
+          202
+        ],
+        "primitive_id": "shipment_or_revenue_mix",
+        "semantic_rationale": "Current target HBM production, product sales, dated shipment plans, disclosed HBM revenue growth, and shipment/revenue shares directly bridge product evidence toward commercialization. Plans are not converted into realized volume."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          171
+        ],
+        "primitive_id": "shipment_or_revenue_mix",
+        "semantic_rationale": "Reported customer-schedule delay reduced HBM4 volume and shifted production toward HBM3E, directly limiting the HBM shipment-mix conversion while leaving exact target volume unknown."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          51,
+          66,
+          70,
+          89,
+          93,
+          110,
+          139,
+          143
+        ],
+        "primitive_id": "actual_earnings_conversion",
+        "semantic_rationale": "Issuer actual revenue or operating profit is explicitly linked to AI memory, HBM, or high-value server-memory sales. Consolidated totals remain company-level and are not presented as standalone HBM earnings."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          76,
+          90,
+          155
+        ],
+        "primitive_id": "actual_earnings_conversion",
+        "semantic_rationale": "Actual target net income or margin deterioration and a material non-operating valuation gain limit clean operating-earnings conversion. None is attributed as an HBM-only loss."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          37
+        ],
+        "primitive_id": "margin_fcf_conversion",
+        "semantic_rationale": "The HBM-driven blended-ASP and capacity-cannibalization mechanism directly supports higher profit efficiency, while no standalone HBM FCF amount is inferred."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          0,
+          57,
+          131,
+          144,
+          168,
+          181
+        ],
+        "primitive_id": "margin_fcf_conversion",
+        "semantic_rationale": "Target working-capital absorption, contract assets, inventory, a memory wafer loss provision, and long-dated capacity spending directly constrain issuer margin/cash conversion. Corporate amounts are not attributed to HBM alone."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          22,
+          68,
+          113
+        ],
+        "primitive_id": "conventional_memory_drag",
+        "semantic_rationale": "Conventional-memory expansion, IT-set demand elasticity, and PC DRAM demand adjustment directly limit the durability of target memory earnings; these rows are not represented as HBM demand cancellations."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          72,
+          161,
+          184,
+          193
+        ],
+        "primitive_id": "capacity_supply_response",
+        "semantic_rationale": "Target resource conversion, demand-linked accelerated HBM investment, actual HBM bonder procurement, and dated M15X/1c ramp evidence directly establish supply response. Broker capacity estimates remain estimates."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          4,
+          12,
+          13,
+          56,
+          97,
+          157,
+          160,
+          181,
+          199
+        ],
+        "primitive_id": "capacity_supply_response",
+        "semantic_rationale": "Mixed-memory approval conditions, construction or delivery risk, target/industry expansion, and competitor HBM capacity growth directly create execution or oversupply risk. Mixed NAND/DRAM plans are not treated as HBM-only target capacity."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          184
+        ],
+        "primitive_id": "package_substrate_sympathy",
+        "semantic_rationale": "The target's actual HBM TC-bonder procurement documents direct advanced-packaging exposure only; it is not customer allocation, pre-sold capacity, or HBM revenue proof."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          94
+        ],
+        "primitive_id": "market_expectation_gap",
+        "semantic_rationale": "A dated comparison shows the target's forecast operating-profit contribution materially above its market-cap weight, a direct expectation gap without using price momentum as proof."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          16,
+          33,
+          60,
+          78,
+          99,
+          112,
+          145,
+          159,
+          191,
+          198
+        ],
+        "primitive_id": "current_valuation_vs_earnings",
+        "semantic_rationale": "Each row supplies a dated current or forward earnings/book-value denominator together with an explicit valuation multiple or same-period peer comparison. Target-price outcomes are not treated as realized value."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          27,
+          123
+        ],
+        "primitive_id": "current_valuation_vs_earnings",
+        "semantic_rationale": "Macro uncertainty and the short validation history of a new target-PER method directly limit the valuation bridge even when earnings estimates rise; neither row is used as a future price outcome."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          2,
+          42,
+          67,
+          82,
+          102,
+          148,
+          165
+        ],
+        "primitive_id": "cash_or_revision_conversion",
+        "semantic_rationale": "Actual consolidated operating cash/liquidity and dated source-backed OCF/FCF/net-cash estimates establish issuer cash or revision conversion. Corporate cash is explicitly not assigned to HBM alone."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          90,
+          126
+        ],
+        "primitive_id": "cash_or_revision_conversion",
+        "semantic_rationale": "A material non-cash financial valuation gain and the target's large receivable balance directly limit earnings-to-cash quality at company level without HBM attribution."
+      }
+    ],
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "a147b3bd39411403325532f01c285d2af7047d95b043cc26e5c0078fc524772d",
+  "production_score_authority": false,
+  "prompt_hash": "abecc8aeb19a86efb53095f4d1e874def1343afa8501037a79d170a45b707da8",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-19c5cf8d58303c634acd7c3344cfb049037e05e19744a30172422b121c3c644f",
+  "response_id": "COLLABRESP-51938dc0fd072a07e6ce11457c55a8abda058adfe7c5aaa62fa72ca9189303f3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

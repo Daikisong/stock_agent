@@ -1,0 +1,92 @@
+{
+  "output_schema_hash": "d0527c3d8a1434224ba4318e6b5e9559eada01e1a04d85eef612013c51460e2a",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-873a1c4cc82e5d546940cf16",
+        "rationale": "Continuation page 2 재검토에서 canonical 281 및 page 1 accepted facts 밖의 새로운 bottleneck-pricing direct fact가 남지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-8b2633299108ce81ca29d502",
+        "rationale": "Page 1에서 HBM4E 신뢰성 테스트 수율 fact가 이미 accepted됐다. 같은 문서의 나머지 실적·HBM4 매출·고객·가격 내용은 canonical 중복 또는 objective-local 범위 밖이며 추가 distinct fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-8cf9d8a0bfb0ab6a286ec74e",
+        "rationale": "Page 1에서 패키징 병목 완전 해소 이후 공급충격 counter가 accepted됐다. peer 계약 수치와 반복 산업 설명을 다시 대조했으며 추가 target-relevant distinct fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-8ed346960bf4942ba072d556",
+        "rationale": "2025년 1분기 공식 자료는 current canonical issuer facts와 중복되며 continuation에서 추가 distinct objective fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-901f7176da159909609063ae",
+        "rationale": "2026년 1분기 공식 자료의 memory earnings·shipment·cash-flow 문장을 재대조했으며 current canonical 밖의 추가 distinct fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-909d4d9d02c7a65cc6aa32fd",
+        "rationale": "HBM4·메모리 실적·LTA 문장은 canonical 중복이고 bottleneck objective에 직접 닿는 추가 distinct fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-92422a7b89ab4fd7884f1b9c",
+        "rationale": "Page 1에서 연간 컨센서스 상향과 하반기 지속 전제의 양면 facts가 accepted됐다. 나머지 전사 잠정실적과 사업부 부담 요인은 중복·혼합 범위로 추가 추출하지 않는다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-9529917baecfb8a6889872bc",
+        "rationale": "2025년 3분기 컨퍼런스콜 전수 재검토에서 canonical issuer facts 밖의 추가 current bottleneck fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-9722c9772bc9be4d112e14b0",
+        "rationale": "수출·peer·장비주와 전사 추정은 bottleneck objective 직접 fact가 아니며 추가 target-direct fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-98a3668eb03159e1f12b25ee",
+        "rationale": "Page 1에서 메모리 이익·forward multiples·ROE와 점유율/수요/공급 counter facts가 accepted됐다. 전사 FCF·목표주가·투자권고 및 비메모리 정보는 제외했으며 추가 distinct valuation fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-9a1ac6d87b7c2aefa4f9f502",
+        "rationale": "2024년 4분기 컨퍼런스콜은 이후 current issuer facts로 대체·중복되며 continuation에서 추가 distinct fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-9b6ebaa634afd3f67ee79a78",
+        "rationale": "2분기 잠정실적·DS 추정·D램 58~63% 상승은 canonical 중복이며 추가 bottleneck fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "825fd7dd9267ae5b210193d1f0409bf84a5185ceeadc3d2e3d278163c96d9bf0",
+  "production_score_authority": false,
+  "prompt_hash": "c4bb69c22cac2c1cf5ad92874dfd59adc128d529ece80f01ee3b24704cb6d7ca",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ba949514e1a5145d6df577951bbe1ae76c24bba0c9e1f04f61042fddbd11dc39",
+  "response_id": "COLLABRESP-7cc920f34b01ab8fdc6b4ad82b05735a59ba0e1a5368f25ae75e1eb992b2b491",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

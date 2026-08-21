@@ -1,0 +1,34 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "Exact prompt의 39개 executed query, 58개 query/source failure, current facts와 objectives를 의미 단위로 전수 검토했다. 발행사 실적·IR·공시, 고객사 공식 자료, broker 원문 복구, KIND 공급계약, AMD·Broadcom literal route와 동일하거나 동의어인 검색은 다시 제안하지 않는다.",
+      "Current supervisor projection은 transport 응답 소비를 다음 절차로 남기지만 missing material fact, query direction, new source-family direction, source-family gap은 없고 reasonable_positive_routes_remaining=false다. Transport 절차 대기를 새로운 검색 필요로 바꾸지 않는다.",
+      "Exact prompt에는 prior 39개 이후 새로 검증된 문서 identity, 파일명, 문서일자 또는 미실행 official document class가 추가되지 않았다. 특정 고객·플랫폼·계약을 추정하거나 deterministic fallback을 만들지 않고 suggested_queries를 비운다.",
+      "Provider 오류·무결과·미래 문서·snippet 거절과 반복 횟수는 source absence 또는 fixed-round completion의 증거가 아니다. 이번 응답은 현재 prompt에서 신규 검증 query가 없다는 PENDING 결과이며 score 또는 Stage 권한이 없다."
+    ]
+  },
+  "payload_hash": "545506ecbf57d287bdce2dcb6e4e95385346eea9553cd7d76f41a12fdfa8eb72",
+  "production_score_authority": false,
+  "prompt_hash": "e013981b209443f1fbedf4e2c06df65b9a1daa81d7a4e2e74380bcd18e89aaf2",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7950f70a1bbf317710ada6a74cc90e59ebd367e1f584e371eb7868403611c04e",
+  "response_id": "COLLABRESP-84e693a33c1550054f44c7349790779723664029cea6af96c0aee4e3fcc8aac7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,405 @@
+{
+  "output_schema_hash": "093d76a42ae53d330231b267136ef87a596b64c8ce96f58a15c550d3669b2160",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9c64876ce999077eb09d8be0",
+        "rationale": "2분기 실적 발표 전 전망치·성과급·D램/NAND ASP 수치는 이후 actual/current fact와 중복 제거했다. 다만 HBM4 선제 출하의 혼합 ASP 기여와 3분기 LTA 협상 완료 집중·가격조건 관측은 기존 293 facts에 없는 별도 병목 메커니즘 2건으로 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-9ddfaed9f665cac074f65327",
+        "rationale": "2025년 4분기 메모리 이익·D램/NAND ASP 추정은 이후 확정 실적과 current issuer facts로 대체됐다. 양사 격차 축소와 당시 전망을 현재 삼성전자 병목 fact로 반복하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-a006d5f5d2b68d56e9391ef1",
+        "rationale": "2분기 잠정 실적·성과급·범용 메모리 ASP와 3분기 최대 20% 전망은 current facts와 중복 제거했다. 일부 중국 고객과 가격 인상 협의를 마치고 구두 통지했다는 고객 협상 상태 1건만 비중복 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-a541449b136db5800f7a23c8",
+        "rationale": "반도체 고점 논란과 AI 과잉투자 우려는 산업 배경이고, 삼성전자 D램 ASP·실적 전망은 current facts와 중복된다. 실적·수요 악화가 아직 없다는 서술은 silence이므로 fact로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-a5f1529b7da6776155ffc3f2",
+        "rationale": "가격 의존 후기 사이클 counter, 2027년 4분기까지 공급부족, 2027년 HBM ASP 상승 및 AI 투자 자금조달 우려는 이미 current canonical에 동일 메커니즘 facts가 있다. 새로운 삼성전자 계약·실현가격·물량 fact는 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-a658507ad06daf187f668d25",
+        "rationale": "재가공 블로그의 1분기 흑자전환·수율·HBM4 협력·주주환원 서술은 원천 수치와 출처가 없거나 current issuer facts와 충돌·중복한다. 홍보성 전망과 투자 문구를 fact로 사용하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-a6a5297e9771bf08381bd697",
+        "rationale": "HBM 주문형 생산과 3~5년 계약은 current 구매주문·LTA facts와 중복 제거했다. 현재 범용 메모리 80% 마진의 일시성 견해와 하이퍼스케일러 합산 FCF 급감·차입 의존 경로는 가격 병목 지속성에 대한 비중복 counter 2건으로 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-aaa270a375f177b03ed58a31",
+        "rationale": "전사 실적·FCF·배당·목표주가·LPDDR 수요와 2027 HBM 가격협상은 objective 밖이거나 current facts와 중복 제거했다. 고객사 제품 출하 지연에 따른 2026 HBM4 기여 축소와 2027 HBM4 믹스 역전·혼합 ASP 경로 2건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-b4c0e7197c9a60fe60ba13be",
+        "rationale": "페이지에는 1분기 확정 실적 발표 전 일정·관심사항과 사이트 탐색 요소만 있고 검증 가능한 사업부 실적·가격·계약 본문이 없다. 제목·요약을 fact로 확장하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-bc2cab92da5892945de92491",
+        "rationale": "1분기 D램·NAND ASP 약 90%, 2분기 최소 30% 전망, 최대 생산능력과 LTA 진행 서술은 이후 actual/current ASP·CAPA·LTA facts로 대체되거나 중복된다. NAND는 허용 product scope 밖이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-c59f1c8e625877cf695485f4",
+        "rationale": "개인 분석 페이지의 PER·PBR·BPS·목표가격·사업가치 수치는 공식 broker 원문이 아니며 출처와 산식이 불완전하다. 투자 권고와 재가공 수치를 valuation 또는 market_mispricing fact로 사용하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-c649bd4621f52a42e1eb06bb",
+        "rationale": "EPS 급락을 뒷받침하는 지표가 아직 확인되지 않았다는 서술은 absence/silence라서 fact로 만들지 않았다. 산업 컨센서스·외국인 수급·타사 장기계약은 삼성전자 병목의 비중복 직접 fact가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9c64876ce999077eb09d8be0",
+        "economic_mechanism": "HBM4 선제 출하가 고부가 제품 믹스를 통해 삼성전자의 2026년 2분기 메모리 혼합 평균판매가격에 우호적으로 작용했다는 증권사 추정이다.",
+        "exact_quote": "유진투자증권은 삼성전자가 HBM4의 선제적 출하로 우호적인 혼합 ASP를 기록한 것으로 추정했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 HBM4 양산·출하 사실이나 고속 제품 가격 프리미엄과 달리, 실제 2분기 혼합 ASP에 대한 HBM4 출하의 기여를 직접 연결한다. 개별 HBM4 실현가격이나 매출액은 추론하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:Q2_BLENDED_ASP",
+        "normalized_object": "HBM4 선제 출하에 따른 혼합 평균판매가격 기여",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2E",
+        "predicate": "유진투자증권은 삼성전자가 HBM4 선제 출하로 우호적인 혼합 ASP를 기록한 것으로 추정했다",
+        "predicate_family": "HBM4_BLENDED_ASP_CONTRIBUTION",
+        "primitive_tags": [
+          "HBM4",
+          "BLENDED_ASP",
+          "PRODUCT_MIX"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_BLENDED_ASP_CONTRIBUTION",
+        "question_family_tags": [
+          "HBM4_BLENDED_ASP",
+          "HBM_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 출하와 혼합 ASP",
+        "subject_id": "005930:MEMORY:HBM4:BLENDED_ASP:2026-Q2",
+        "unit": "pricing assessment",
+        "value": "favorable blended ASP"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.73,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9c64876ce999077eb09d8be0",
+        "economic_mechanism": "주요 데이터센터 고객과의 LTA 협상 완료가 2026년 3분기에 집중될 것이라는 관측은 고객 물량·가격이 계약으로 결박될 예상 시점과 공급자 우위 가격조건의 가능성을 함께 제시한다.",
+        "exact_quote": "주요 데이터센터 고객사와의 장기공급계약(LTA) 협상 완료 시점이 3분기에 몰려 있어 유리한 가격 조건의 계약 체결이 가능할 것이라는 관측도 내놨다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 LTA 비중·기간 fact와 달리 이 문장은 아직 완료되지 않은 협상의 예상 완료 분기와 가격조건 방향을 제시한다. 실제 체결, 물량 확약 또는 최저가격 보장으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:LTA:Q3_COMPLETION_TIMING",
+        "normalized_object": "주요 데이터센터 고객 메모리 LTA 협상 완료 시점과 가격조건 가능성",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q3E",
+        "predicate": "삼성전자의 주요 데이터센터 고객 LTA 협상 완료 시점이 2026년 3분기에 몰려 유리한 가격조건의 계약 가능성이 있다는 관측이 나왔다",
+        "predicate_family": "MEMORY_LTA_Q3_NEGOTIATION_TIMING",
+        "primitive_tags": [
+          "LTA",
+          "DATA_CENTER_CUSTOMER",
+          "PRICING_TERMS"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_LTA_Q3_NEGOTIATION_TIMING",
+        "question_family_tags": [
+          "MEMORY_LTA",
+          "CONTRACT_PRICING",
+          "NEGOTIATION_TIMING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 주요 데이터센터 고객 LTA 협상",
+        "subject_id": "005930:MEMORY:LTA:NEGOTIATION:2026-Q3",
+        "unit": "negotiation outlook",
+        "value": "Q3 negotiation-completion concentration; favorable pricing possible"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-a006d5f5d2b68d56e9391ef1",
+        "economic_mechanism": "삼성전자가 일부 중국 고객과 2026년 3분기 D램 가격 인상안 협의를 마치고 구두 통지까지 완료했다는 보도는 단순 ASP 전망보다 구체적인 고객 협상 진행도를 보여준다.",
+        "exact_quote": "삼성전자는 현재 3분기 D램 가격을 최대 20% 인상하는 방안을 고려 중이며, 일부 중국 고객과는 인상안에 대한 협의를 마치고 구두 통지까지 완료한 것으로 알려졌다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 3분기 D램 ASP 최대 20% 전망과 구별되는 고객 협의 완료·통지 상태다. 구두 통지를 정식 계약, 실현가격 또는 구매의무로 해석하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:Q3_CUSTOMER_PRICE_NOTICE",
+        "normalized_object": "일부 중국 고객 대상 3분기 D램 가격 인상 협의·통지 상태",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q3 pricing negotiation as of 2026-07-07",
+        "predicate": "삼성전자가 일부 중국 고객과 2026년 3분기 D램 가격 인상안 협의를 마치고 구두 통지를 완료한 것으로 알려졌다",
+        "predicate_family": "DRAM_Q3_PRICE_NEGOTIATION_STATUS",
+        "primitive_tags": [
+          "DRAM",
+          "PRICE_NEGOTIATION",
+          "CUSTOMER_NOTICE"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_Q3_PRICE_NEGOTIATION_STATUS",
+        "question_family_tags": [
+          "DRAM_PRICING_POWER",
+          "CUSTOMER_PRICE_NEGOTIATION",
+          "PRICE_NOTICE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 일부 중국 고객 3분기 D램 가격 인상 협의",
+        "subject_id": "005930:MEMORY:DRAM:PRICE_NEGOTIATION:2026-Q3",
+        "unit": "negotiation status",
+        "value": "negotiation completed and verbal notice delivered"
+      },
+      {
+        "business_segment": "메모리 산업",
+        "confidence": 0.68,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a6a5297e9771bf08381bd697",
+        "economic_mechanism": "범용 메모리 마진 약 80%가 일시적이라는 전문가 평가는 현재 가격 병목이 높은 이익으로 전환되는 현상을 영구 구조로 외삽할 수 없다는 정상화 counter를 제공한다.",
+        "exact_quote": "“범용 메모리 반도체 마진율이 지금처럼 80%에 달하는 건 일시적 현상이라고 본다. 엔비디아 영업이익률이 60~70%대이기 때문이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격 상승과 공급부족의 긍정 근거 반대편에서 현재 메모리 마진 수준이 지속 불가능할 수 있다는 명시적 수익성 정상화 견해다. 삼성전자 단독 실제 마진이나 확정 정상화 시점으로 일반화하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:GENERIC:MARGIN_NORMALIZATION_RISK",
+        "normalized_object": "현재 범용 메모리 마진율과 정상화 위험",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "current as of 2026-05-29",
+        "predicate": "이형수 HSL파트너스 대표는 현재 약 80%인 범용 메모리 반도체 마진율을 일시적 현상으로 평가했다",
+        "predicate_family": "CONVENTIONAL_MEMORY_MARGIN_NORMALIZATION_RISK",
+        "primitive_tags": [
+          "CONVENTIONAL_MEMORY",
+          "MARGIN",
+          "NORMALIZATION_RISK"
+        ],
+        "product_family": "범용 메모리",
+        "question_family_id": "CONVENTIONAL_MEMORY_MARGIN_NORMALIZATION_RISK",
+        "question_family_tags": [
+          "MEMORY_MARGIN",
+          "MARGIN_NORMALIZATION",
+          "CYCLE_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자·SK하이닉스 범용 메모리 마진 지속성",
+        "subject_id": "005930:MEMORY:GENERIC:MARGIN_NORMALIZATION",
+        "unit": "percent margin assessment",
+        "value": "about 80%, assessed as temporary"
+      },
+      {
+        "business_segment": "메모리 산업",
+        "confidence": 0.72,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a6a5297e9771bf08381bd697",
+        "economic_mechanism": "하이퍼스케일러 합산 분기 FCF가 통상 450억달러에서 2026년 1분기 40억달러로 줄어 차입 의존이 커졌다는 관찰은 금리 상승 시 AI 인프라 투자와 후행 메모리 수요가 둔화할 수 있는 재원 경로를 수치화한다.",
+        "exact_quote": "통상 분기당 450억 달러(약 67조7000억 원)였던 하이퍼 스케일러들의 잉여현금흐름 합산액이 올해 1분기 40억 달러(약 6조 원)로 감소했다. 앞으로는 하이퍼 스케일러들이 대출을 받아 AI 인프라에 투자해야 하는데 금리가 오르면 대출받기가 쉽지 않다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 canonical의 정성적 AI 투자 자금조달 우려를 넘어 수요 고객군의 FCF 감소 규모와 금리 민감 경로를 제시한다. 삼성전자와의 직접 구매계약 축소 또는 실제 CAPEX 감소로 단정하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:AI_DEMAND:HYPERSCALER_FCF_FUNDING",
+        "normalized_object": "하이퍼스케일러 합산 FCF 감소와 AI 투자 차입 의존",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1 versus typical quarter",
+        "predicate": "하이퍼스케일러 합산 분기 FCF가 통상 450억달러에서 2026년 1분기 40억달러로 감소해 향후 AI 인프라 투자의 차입 의존 위험이 제기됐다",
+        "predicate_family": "HYPERSCALER_FCF_FUNDING_RISK",
+        "primitive_tags": [
+          "HYPERSCALER",
+          "FREE_CASH_FLOW",
+          "FUNDING_RISK",
+          "AI_CAPEX"
+        ],
+        "product_family": "AI 메모리",
+        "question_family_id": "HYPERSCALER_FCF_FUNDING_RISK",
+        "question_family_tags": [
+          "AI_INFRA_CAPEX",
+          "HYPERSCALER_FUNDING",
+          "MEMORY_DEMAND_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "하이퍼스케일러 AI 투자 재원과 삼성전자 메모리 수요",
+        "subject_id": "005930:MEMORY:AI_DEMAND:HYPERSCALER_FUNDING_RISK",
+        "unit": "USD quarterly aggregate FCF",
+        "value": "USD 45 billion typical quarter to USD 4 billion in 2026-Q1"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-aaa270a375f177b03ed58a31",
+        "economic_mechanism": "고객사 제품 출하 지연으로 삼성전자의 2026년 HBM4 실적 기여가 당초 예상보다 축소됐다는 분석은 HBM4 생산·출하가 고객 최종제품 일정에 따라 같은 해 이익으로 전환되지 못할 수 있는 실행 counter다.",
+        "exact_quote": "2026년 HBM4의 실적 기여도는 고객사 제품 출하 지연 등으로 당초 예상보다 축소됐지만, 2027년에는 HBM4 비중이 역전되면서 평균판매가격 상승이 가능하다는 판단이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 HBM4 양산·납품 증가 fact의 반대편에서 고객사 제품 일정 때문에 2026년 실적 기여가 예상보다 작아진다는 별도의 시간·실행 위험을 제시한다. 지연 고객명이나 축소율은 발명하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:2026_CUSTOMER_SHIPMENT_DELAY",
+        "normalized_object": "고객사 제품 출하 지연에 따른 2026년 HBM4 실적 기여 축소",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026E",
+        "predicate": "고객사 제품 출하 지연으로 삼성전자의 2026년 HBM4 실적 기여도가 당초 예상보다 축소됐다는 분석이 나왔다",
+        "predicate_family": "HBM4_CUSTOMER_SHIPMENT_DELAY_COUNTER",
+        "primitive_tags": [
+          "HBM4",
+          "CUSTOMER_PRODUCT_DELAY",
+          "EARNINGS_CONTRIBUTION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_CUSTOMER_SHIPMENT_DELAY_COUNTER",
+        "question_family_tags": [
+          "HBM4_EARNINGS_CONVERSION",
+          "CUSTOMER_SCHEDULE",
+          "EXECUTION_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 2026년 실적 기여와 고객사 출하 지연",
+        "subject_id": "005930:MEMORY:HBM4:CUSTOMER_SHIPMENT_DELAY:2026",
+        "unit": "forecast revision direction",
+        "value": "2026 contribution reduced versus prior expectation"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-aaa270a375f177b03ed58a31",
+        "economic_mechanism": "2027년 HBM4 비중 역전이 고가 제품 믹스 확대와 혼합 ASP 상승으로 이어질 수 있다는 하나증권 전망은 출하량과 별개의 제품 믹스 기반 가격 경로를 제시한다.",
+        "exact_quote": "2026년 HBM4의 실적 기여도는 고객사 제품 출하 지연 등으로 당초 예상보다 축소됐지만, 2027년에는 HBM4 비중이 역전되면서 평균판매가격 상승이 가능하다는 판단이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 HBM4 과반 매출 전망이나 2027 HBM 가격협상 진행 fact와 달리, 2027년 제품 세대 믹스 역전이 혼합 ASP에 미치는 경로를 직접 제시한다. 구체 비중·ASP 상승률은 추론하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:2027_MIX_BLENDED_ASP",
+        "normalized_object": "2027년 HBM4 믹스 역전과 혼합 평균판매가격 상승 가능성",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E",
+        "predicate": "하나증권은 2027년 삼성전자 HBM4 비중 역전으로 혼합 ASP 상승이 가능하다고 판단했다",
+        "predicate_family": "HBM4_2027_MIX_BLENDED_ASP_OUTLOOK",
+        "primitive_tags": [
+          "HBM4",
+          "PRODUCT_MIX",
+          "BLENDED_ASP"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_2027_MIX_BLENDED_ASP_OUTLOOK",
+        "question_family_tags": [
+          "HBM4_PRODUCT_MIX",
+          "HBM_BLENDED_ASP",
+          "PRICING_OUTLOOK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2027년 HBM4 믹스와 혼합 ASP",
+        "subject_id": "005930:MEMORY:HBM4:MIX_BLENDED_ASP:2027",
+        "unit": "pricing outlook",
+        "value": "HBM4 mix reversal enables blended ASP increase"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "일부 중국 고객 대상 구두 통지는 정식 계약이나 실현가격을 뜻하지 않으며, HBM4의 고객별 정식 계약·확정 물량·실현가격은 이 batch에서 확인되지 않았다.",
+      "2026년 HBM4 기여 축소의 고객사·기간·규모와 2027년 HBM4 믹스 역전 비중·혼합 ASP 상승률은 원문에 제시되지 않았다.",
+      "범용 메모리 마진 일시성 및 하이퍼스케일러 FCF 감소는 전문가 분석으로, 삼성전자 단독 실제 마진이나 확정 CAPEX 축소로 확대하지 않았다."
+    ]
+  },
+  "payload_hash": "0ffffa8e54bf23e945f4eab514f336b44748998b554af0111143736122e950cd",
+  "production_score_authority": false,
+  "prompt_hash": "494b189fff98b127a6eba4da00a188f6ffd7fa92eb9f3f803f24b9214d87b71f",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-23d4273e5c17f2ce9f80ae8e239a1dcced32cf6488cc3c8d8da04d9b6bc4925d",
+  "response_id": "COLLABRESP-4e4e64a76fade0b26a60f7dd4adef3720cbac5d8c179ccf9f2de1df9af81d51d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,601 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "The June KIND document has ten previously accepted issuer-financing facts and no additional distinct current-objective atom remains.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "Six new target-specific DRAM ASP and ASP-growth broker forecasts are proposed; further distinct current-objective forecast atoms remain after the page cap.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "The final KIND filing has twenty-two previously accepted issuer-wide financing and CAPEX facts and no additional distinct current-objective atom remains.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Six new target-direct historical DRAM revenue and consolidated operating-profit forecasts are proposed and explicitly marked SUPERSEDED; further target rows remain after the page cap.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 4Q26E DRAM ASP를 1Gb 환산 기준 1.78달러로 전망했다. 이는 브로커 DRAM 전망이며 issuer actual 또는 HBM-only 가격이 아니다.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25 1Q26 2Q26E 3Q26E 4Q26E 2024 2025 2026E 2027E\nDRAM\nShipment (1Gb equiv. mn) 19,118 23,796 25,231 25,593 25,537 27,593 30,489 33,297 76,919 93,738 116,917 145,490\nQoQ % -7% 24% 6% 1% 0% 8% 10% 9% 15% 22% 25% 24%\nASP ($) 0.50 0.51 0.54 0.67 1.11 1.56 1.71 1.78 0.43 0.56 1.56 1.80",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The target-specific DRAM price forecast is a direct pricing and earnings input while remaining non-HBM-only.",
+        "mechanism_scope_id": "000660:BROKER_DRAM_ASP_FORECAST:SKS_2026-05-07",
+        "normalized_object": "4Q26E DRAM ASP forecast of USD 1.78 per 1Gb equivalent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q26E; report published 2026-05-07",
+        "predicate": "4Q26E DRAM ASP forecast",
+        "predicate_family": "BROKER_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "PRICE_FORECAST"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q26E DRAM ASP 전망",
+        "subject_id": "000660:DRAM_ASP_FORECAST:4Q26E:SKS_2026-05-07",
+        "unit": "USD per 1Gb equivalent",
+        "value": 1.78
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 FY2026E DRAM ASP를 1Gb 환산 기준 1.56달러로 전망했다. 이는 브로커 DRAM 전망이며 issuer actual 또는 HBM-only 가격이 아니다.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25 1Q26 2Q26E 3Q26E 4Q26E 2024 2025 2026E 2027E\nDRAM\nShipment (1Gb equiv. mn) 19,118 23,796 25,231 25,593 25,537 27,593 30,489 33,297 76,919 93,738 116,917 145,490\nQoQ % -7% 24% 6% 1% 0% 8% 10% 9% 15% 22% 25% 24%\nASP ($) 0.50 0.51 0.54 0.67 1.11 1.56 1.71 1.78 0.43 0.56 1.56 1.80",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The target-specific annual DRAM price forecast is a direct pricing and earnings input while remaining non-HBM-only.",
+        "mechanism_scope_id": "000660:BROKER_DRAM_ASP_FORECAST:SKS_2026-05-07",
+        "normalized_object": "FY2026E DRAM ASP forecast of USD 1.56 per 1Gb equivalent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E; report published 2026-05-07",
+        "predicate": "FY2026E DRAM ASP forecast",
+        "predicate_family": "BROKER_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "PRICE_FORECAST"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026E DRAM ASP 전망",
+        "subject_id": "000660:DRAM_ASP_FORECAST:FY2026E:SKS_2026-05-07",
+        "unit": "USD per 1Gb equivalent",
+        "value": 1.56
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 FY2027E DRAM ASP를 1Gb 환산 기준 1.80달러로 전망했다. 이는 브로커 DRAM 전망이며 issuer actual 또는 HBM-only 가격이 아니다.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25 1Q26 2Q26E 3Q26E 4Q26E 2024 2025 2026E 2027E\nDRAM\nShipment (1Gb equiv. mn) 19,118 23,796 25,231 25,593 25,537 27,593 30,489 33,297 76,919 93,738 116,917 145,490\nQoQ % -7% 24% 6% 1% 0% 8% 10% 9% 15% 22% 25% 24%\nASP ($) 0.50 0.51 0.54 0.67 1.11 1.56 1.71 1.78 0.43 0.56 1.56 1.80",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The target-specific outer-year DRAM price forecast is a direct pricing input while remaining a broker estimate.",
+        "mechanism_scope_id": "000660:BROKER_DRAM_ASP_FORECAST:SKS_2026-05-07",
+        "normalized_object": "FY2027E DRAM ASP forecast of USD 1.80 per 1Gb equivalent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E; report published 2026-05-07",
+        "predicate": "FY2027E DRAM ASP forecast",
+        "predicate_family": "BROKER_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "PRICE_FORECAST"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2027E DRAM ASP 전망",
+        "subject_id": "000660:DRAM_ASP_FORECAST:FY2027E:SKS_2026-05-07",
+        "unit": "USD per 1Gb equivalent",
+        "value": 1.8
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 2Q26E DRAM ASP가 전분기 대비 40% 상승할 것으로 전망했다. 브로커 전망이며 실제 실현 가격이나 HBM-only ASP가 아니다.",
+        "exact_quote": "ASP ($) 0.50 0.51 0.54 0.67 1.11 1.56 1.71 1.78 0.43 0.56 1.56 1.80\nQoQ % 0% 2% 6% 24% 64% 40% 10% 5% 80% 30% 178% 15%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit forecasted price increase directly informs pricing power but remains non-actual and non-HBM-only.",
+        "mechanism_scope_id": "000660:BROKER_DRAM_ASP_GROWTH_FORECAST:SKS_2026-05-07",
+        "normalized_object": "2Q26E DRAM ASP QoQ growth forecast of 40 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E; report published 2026-05-07",
+        "predicate": "2Q26E DRAM ASP QoQ growth forecast",
+        "predicate_family": "BROKER_DRAM_ASP_GROWTH_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "QOQ_PRICE_GROWTH"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_GROWTH_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP_GROWTH",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2Q26E DRAM ASP QoQ 전망",
+        "subject_id": "000660:DRAM_ASP_QOQ_GROWTH:2Q26E:SKS_2026-05-07",
+        "unit": "percent QoQ",
+        "value": 40
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 3Q26E DRAM ASP가 전분기 대비 10% 상승할 것으로 전망했다. 브로커 전망이며 실제 실현 가격이나 HBM-only ASP가 아니다.",
+        "exact_quote": "ASP ($) 0.50 0.51 0.54 0.67 1.11 1.56 1.71 1.78 0.43 0.56 1.56 1.80\nQoQ % 0% 2% 6% 24% 64% 40% 10% 5% 80% 30% 178% 15%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit forecasted price increase directly informs pricing power but remains non-actual and non-HBM-only.",
+        "mechanism_scope_id": "000660:BROKER_DRAM_ASP_GROWTH_FORECAST:SKS_2026-05-07",
+        "normalized_object": "3Q26E DRAM ASP QoQ growth forecast of 10 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E; report published 2026-05-07",
+        "predicate": "3Q26E DRAM ASP QoQ growth forecast",
+        "predicate_family": "BROKER_DRAM_ASP_GROWTH_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "QOQ_PRICE_GROWTH"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_GROWTH_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP_GROWTH",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q26E DRAM ASP QoQ 전망",
+        "subject_id": "000660:DRAM_ASP_QOQ_GROWTH:3Q26E:SKS_2026-05-07",
+        "unit": "percent QoQ",
+        "value": 10
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 4Q26E DRAM ASP가 전분기 대비 5% 상승할 것으로 전망했다. 브로커 전망이며 실제 실현 가격이나 HBM-only ASP가 아니다.",
+        "exact_quote": "ASP ($) 0.50 0.51 0.54 0.67 1.11 1.56 1.71 1.78 0.43 0.56 1.56 1.80\nQoQ % 0% 2% 6% 24% 64% 40% 10% 5% 80% 30% 178% 15%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit forecasted price increase directly informs pricing power but remains non-actual and non-HBM-only.",
+        "mechanism_scope_id": "000660:BROKER_DRAM_ASP_GROWTH_FORECAST:SKS_2026-05-07",
+        "normalized_object": "4Q26E DRAM ASP QoQ growth forecast of 5 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q26E; report published 2026-05-07",
+        "predicate": "4Q26E DRAM ASP QoQ growth forecast",
+        "predicate_family": "BROKER_DRAM_ASP_GROWTH_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "QOQ_PRICE_GROWTH"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_GROWTH_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP_GROWTH",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q26E DRAM ASP QoQ 전망",
+        "subject_id": "000660:DRAM_ASP_QOQ_GROWTH:4Q26E:SKS_2026-05-07",
+        "unit": "percent QoQ",
+        "value": 5
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 4Q24F DRAM 매출을 13,201십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 매출이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The period-specific historical DRAM forecast is retained only as superseded calibration.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_DRAM_REVENUE:MIRAE_2024-05-16",
+        "normalized_object": "Historical 4Q24F DRAM revenue forecast of KRW 13,201 billion",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "4Q24F; report published 2024-05-16",
+        "predicate": "Historical 4Q24F DRAM revenue forecast",
+        "predicate_family": "HISTORICAL_DRAM_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM_REVENUE",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_REVENUE_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "REVENUE",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q24F DRAM 매출 전망",
+        "subject_id": "000660:DRAM_REVENUE:4Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 13201
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 FY2024F DRAM 매출을 42,785십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 매출이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical annual DRAM forecast is retained only as superseded calibration.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_DRAM_REVENUE:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F DRAM revenue forecast of KRW 42,785 billion",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "Historical FY2024F DRAM revenue forecast",
+        "predicate_family": "HISTORICAL_DRAM_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM_REVENUE",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_REVENUE_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "REVENUE",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2024F DRAM 매출 전망",
+        "subject_id": "000660:DRAM_REVENUE:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 42785
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 FY2025F DRAM 매출을 53,355십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 매출이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical annual DRAM forecast is retained only as superseded calibration.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_DRAM_REVENUE:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F DRAM revenue forecast of KRW 53,355 billion",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "Historical FY2025F DRAM revenue forecast",
+        "predicate_family": "HISTORICAL_DRAM_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM_REVENUE",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_REVENUE_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "REVENUE",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025F DRAM 매출 전망",
+        "subject_id": "000660:DRAM_REVENUE:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 53355
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 2Q24F 연결 영업이익을 4,297십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical company-wide profit forecast is retained only as superseded calibration and is not HBM-attributed.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_OPERATING_PROFIT:MIRAE_2024-05-16",
+        "normalized_object": "Historical 2Q24F consolidated operating profit forecast of KRW 4,297 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F; report published 2024-05-16",
+        "predicate": "Historical 2Q24F consolidated operating profit forecast",
+        "predicate_family": "HISTORICAL_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2Q24F 연결 영업이익 전망",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT:2Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 4297
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 3Q24F 연결 영업이익을 5,954십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical company-wide profit forecast is retained only as superseded calibration and is not HBM-attributed.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_OPERATING_PROFIT:MIRAE_2024-05-16",
+        "normalized_object": "Historical 3Q24F consolidated operating profit forecast of KRW 5,954 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "3Q24F; report published 2024-05-16",
+        "predicate": "Historical 3Q24F consolidated operating profit forecast",
+        "predicate_family": "HISTORICAL_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q24F 연결 영업이익 전망",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT:3Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 5954
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 4Q24F 연결 영업이익을 6,527십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical company-wide profit forecast is retained only as superseded calibration and is not HBM-attributed.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_OPERATING_PROFIT:MIRAE_2024-05-16",
+        "normalized_object": "Historical 4Q24F consolidated operating profit forecast of KRW 6,527 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "4Q24F; report published 2024-05-16",
+        "predicate": "Historical 4Q24F consolidated operating profit forecast",
+        "predicate_family": "HISTORICAL_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q24F 연결 영업이익 전망",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT:4Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 6527
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-cec48c4b300fe56a6ba42cb7",
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact transport-page upper bound was reached after strict source-order deduplication. Further distinct target-wide current-objective atoms remain only in the current and historical broker documents."
+    ]
+  },
+  "payload_hash": "063d7bf8efc670b945eddd4573a2d8bab1a0f962bc5fc14b2e270d523ae1d18a",
+  "production_score_authority": false,
+  "prompt_hash": "5433994de393f33e38a14381bfbb4e77cb15b93b927690873589d6af869362b5",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-95f6fdd40fffd607c536c1de1fd5e3a49921ca654c5326626df7fcb67a68d714",
+  "response_id": "COLLABRESP-d4e1270b2a16a3489d7a80202c0e67d21fa554c06098514910245f1db6289809",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

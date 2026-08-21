@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      1.5,
+      2.9
+    ],
+    "anchor_comparisons": [
+      "Current evidence exceeds the counter anchor midpoint of 0.8 because actual liquidity, operating cash generation, HBM4 infrastructure and executed share cancellation are present.",
+      "Current evidence remains below the positive anchor's 3.8-4.0 band because the supplied cash and investment figures are corporate or segment-wide and HBM-specific free cash flow and investment return are not measured."
+    ],
+    "counter_fact_ids": [
+      "EFACT-09bca4086b235701b1d84801",
+      "EFACT-38d8612a550c7b15e83db302",
+      "EFACT-5a65baeee25b1b83354b8cf0",
+      "EFACT-60fb6751333ef31d586334e5",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-9cdcaad56af436ed1ac5bc6f",
+      "EFACT-c8cce781c38410832d5bd2a8"
+    ],
+    "disagreements": [
+      "The analyst position gives too much weight to balance-sheet capacity without HBM-specific return evidence.",
+      "The skeptic position underweights the value of actual liquidity, operating cash generation and completed shareholder-return execution."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "proposed_points": 2.2,
+    "rationale": "On the 4-point scale, a central value between the two anchors is appropriate. Funding capacity and return execution are strong, but large commitments, working-capital outflows, uncertain memory capital spending and lower initial HBM4 profitability prevent near-maximal allocation quality. Company-level and HBM-level economics remain explicitly separated.",
+    "support_fact_ids": [
+      "EFACT-037c307f30be846aa6604c82",
+      "EFACT-4ca12a741765c57da0832791",
+      "EFACT-91896907330221fdcfdd97b2",
+      "EFACT-9c8e2f378d921c9782b5b6ac",
+      "EFACT-f8f6e5abba8d72973f8cbc55"
+    ],
+    "why_not_higher": "Calibration requires HBM-specific capital employed, ramp economics, free cash flow and return before moving toward the positive anchor band.",
+    "why_not_lower": "Calibration should remain above the counter band because the issuer has a substantial actual funding buffer, operating cash flow and executed return alongside purpose-linked infrastructure investment."
+  },
+  "payload_hash": "ee0c64c21b2bbd5b1e2a18cef38d087190f2bfb6f31e15f7e593937bac8924d7",
+  "production_score_authority": false,
+  "prompt_hash": "beeeab4055fa8538afebd4623a9d9aed134a5497b99649cef9e9ff1f0050ea73",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-25412e3a695185eff84db6ce28ad6c9baa7ab1034117eb276e94f5c854da5372",
+  "response_id": "COLLABRESP-1e95ebcba60f2dc2b8abd86c460c4726bc38d7f68a7024fbd85a76a8790bcfe3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

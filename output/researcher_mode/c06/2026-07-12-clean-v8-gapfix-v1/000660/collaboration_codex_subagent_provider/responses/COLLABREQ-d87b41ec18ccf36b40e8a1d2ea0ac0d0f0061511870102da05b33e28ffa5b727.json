@@ -1,0 +1,607 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "The June KIND document already has ten accepted issuer-financing facts and the supplied continuation audit found no additional distinct current-objective atom; FACTS_EXTRACTED is retained because prior accepted facts exist.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "Four new DRAM forecast atoms are proposed on this page; additional distinct current-objective broker-table atoms remain after the transport cap.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "Four new issuer-wide ADR and CAPEX qualification atoms are proposed without attributing them to HBM; additional distinct current-objective filing atoms remain after the transport cap.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Four new target-direct historical valuation and payout atoms are proposed and explicitly remain SUPERSEDED; additional distinct target rows remain after the transport cap.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "2026년 5월 7일 SK증권은 SK하이닉스의 2Q26E DRAM 영업이익을 48,741십억원에서 50,345십억원으로 3% 상향했다. 이는 브로커 추정치이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E\n매출액 80,300 96,099 107,613 77,715 92,439 103,372 3% 4% 4%\nDRAM 61,082 73,709 83,342 58,511 70,268 79,337 4% 5% 5%\nNAND 18,694 21,929 23,693 18,679 21,711 23,457 0% 1% 1%\n영업이익 63,224 76,484 85,104 60,453 72,440 80,492 5% 6% 6%\nDRAM 50,345 61,048 68,976 48,741 58,719 66,211 3% 4% 4%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM segment profit revision directly changes the current earnings bridge while remaining explicitly non-HBM-only.",
+        "mechanism_scope_id": "000660:DRAM_QUARTERLY_OPERATING_PROFIT_REVISION:SKS_2026-05-07",
+        "normalized_object": "2Q26E DRAM operating profit of KRW 50,345 billion, revised from KRW 48,741 billion by 3 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E; estimate published 2026-05-07",
+        "predicate": "DRAM 2Q26E operating profit estimate revised upward",
+        "predicate_family": "operating_profit_revision",
+        "primitive_tags": [
+          "DRAM_OPERATING_PROFIT",
+          "ESTIMATE_REVISION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "QF_DRAM_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "DRAM",
+          "OPERATING_PROFIT",
+          "BROKER_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 DRAM 2Q26E 영업이익 전망",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT_REVISION:2Q26E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 50345
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "2026년 5월 7일 SK증권은 SK하이닉스의 3Q26E DRAM 영업이익을 58,719십억원에서 61,048십억원으로 4% 상향했다. 이는 브로커 추정치이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E\n매출액 80,300 96,099 107,613 77,715 92,439 103,372 3% 4% 4%\nDRAM 61,082 73,709 83,342 58,511 70,268 79,337 4% 5% 5%\nNAND 18,694 21,929 23,693 18,679 21,711 23,457 0% 1% 1%\n영업이익 63,224 76,484 85,104 60,453 72,440 80,492 5% 6% 6%\nDRAM 50,345 61,048 68,976 48,741 58,719 66,211 3% 4% 4%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM segment profit revision directly changes the current earnings bridge while remaining explicitly non-HBM-only.",
+        "mechanism_scope_id": "000660:DRAM_QUARTERLY_OPERATING_PROFIT_REVISION:SKS_2026-05-07",
+        "normalized_object": "3Q26E DRAM operating profit of KRW 61,048 billion, revised from KRW 58,719 billion by 4 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E; estimate published 2026-05-07",
+        "predicate": "DRAM 3Q26E operating profit estimate revised upward",
+        "predicate_family": "operating_profit_revision",
+        "primitive_tags": [
+          "DRAM_OPERATING_PROFIT",
+          "ESTIMATE_REVISION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "QF_DRAM_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "DRAM",
+          "OPERATING_PROFIT",
+          "BROKER_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 DRAM 3Q26E 영업이익 전망",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT_REVISION:3Q26E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 61048
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "2026년 5월 7일 SK증권은 SK하이닉스의 4Q26E DRAM 영업이익을 66,211십억원에서 68,976십억원으로 4% 상향했다. 이는 브로커 추정치이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E\n매출액 80,300 96,099 107,613 77,715 92,439 103,372 3% 4% 4%\nDRAM 61,082 73,709 83,342 58,511 70,268 79,337 4% 5% 5%\nNAND 18,694 21,929 23,693 18,679 21,711 23,457 0% 1% 1%\n영업이익 63,224 76,484 85,104 60,453 72,440 80,492 5% 6% 6%\nDRAM 50,345 61,048 68,976 48,741 58,719 66,211 3% 4% 4%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM segment profit revision directly changes the current earnings bridge while remaining explicitly non-HBM-only.",
+        "mechanism_scope_id": "000660:DRAM_QUARTERLY_OPERATING_PROFIT_REVISION:SKS_2026-05-07",
+        "normalized_object": "4Q26E DRAM operating profit of KRW 68,976 billion, revised from KRW 66,211 billion by 4 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q26E; estimate published 2026-05-07",
+        "predicate": "DRAM 4Q26E operating profit estimate revised upward",
+        "predicate_family": "operating_profit_revision",
+        "primitive_tags": [
+          "DRAM_OPERATING_PROFIT",
+          "ESTIMATE_REVISION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "QF_DRAM_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "DRAM",
+          "OPERATING_PROFIT",
+          "BROKER_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 DRAM 4Q26E 영업이익 전망",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT_REVISION:4Q26E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 68976
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "2026년 5월 7일 SK증권은 2Q26E DRAM 영업이익률을 83%에서 82%로 1%p 하향했다. 상향된 DRAM 영업이익과 함께 보아야 하는 마진 counter이며 HBM-only 마진이 아니다.",
+        "exact_quote": "영업이익률 79% 80% 79% 78% 78% 78% 1%p 2%p 1%p\nDRAM 82% 83% 83% 83% 84% 83% -1%p -1%p 0%p",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit margin downgrade is a direct counter to the DRAM quarterly profit forecast revision.",
+        "mechanism_scope_id": "000660:DRAM_QUARTERLY_OPERATING_MARGIN_REVISION:SKS_2026-05-07",
+        "normalized_object": "2Q26E DRAM operating margin of 82 percent, revised from 83 percent by minus 1 percentage point",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2Q26E; estimate published 2026-05-07",
+        "predicate": "DRAM 2Q26E operating margin estimate revised downward",
+        "predicate_family": "operating_margin_revision",
+        "primitive_tags": [
+          "DRAM_MARGIN",
+          "ESTIMATE_REVISION",
+          "COUNTER"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "QF_DRAM_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "DRAM",
+          "OPERATING_MARGIN",
+          "BROKER_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM 2Q26E 영업이익률 전망",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN_REVISION:2Q26E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 82
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "최종 ADR 원주 발행가액 산정에는 2026년 7월 9일 서울외국환중개의 최초 고시 원달러 환율 1,509.90원과 원주 대 ADR 1:10 비율이 사용됐다. 이는 issuer-wide 자금조달 조건이지 HBM 배정·계약 정보가 아니다.",
+        "exact_quote": "'7. 기준주가'의 기준주가 및 할인율(할증률)은 각 2,190,229원 및 2.72%입니다. '6. 신주의 발행가액'에 기재된 금액은 본건 ADR의 상장 공모 절차에서의 수요예측(bookbuilding) 결과를 반영하여 결정된 본건 ADR의 공모가액에 (i) 미국시간 기준 가격결정일(Pricing Date)인 2026년 7월 9일 서울외국환중개㈜가 최초 고시한 매매기준율인 1509.90원/달러 및 (ii) 본건 신주 대 본건 ADR의 비율(1 : 10)을 곱하여 산정한 금액이며, 위 기준금액 2,190,229원 대비 할증율은 2.72%입니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The filing supplies a reproducible final financing-price input but does not establish HBM economics.",
+        "mechanism_scope_id": "000660:ISSUER_WIDE_ADR_PRICING:2026-07-10",
+        "normalized_object": "KRW 1,509.90 per USD exchange rate used with the 1:10 underlying-share-to-ADR ratio to calculate the final issue price",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "pricing date 2026-07-09; final filing 2026-07-10",
+        "predicate": "ADR issue-price exchange-rate input fixed",
+        "predicate_family": "issuer_equity_pricing_mechanics",
+        "primitive_tags": [
+          "ADR_PRICING",
+          "FX_RATE"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ISSUER_ADR_PRICING_MECHANICS",
+        "question_family_tags": [
+          "ISSUER_FINANCING",
+          "ADR",
+          "PRICING_INPUT"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 ADR 발행가액 산정 환율",
+        "subject_id": "000660:ADR_PRICING_FX_RATE:2026-07-09",
+        "unit": "KRW per USD",
+        "value": 1509.9
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "최종 KIND 공시는 해외예탁기관 Citibank N.A.가 회사 및 최대주주의 특수관계인이 아니며 예탁계약은 체결 예정이라고 명시한다. 따라서 이는 관계·계약 계획의 공시이지 이미 체결된 HBM 고객계약이 아니다.",
+        "exact_quote": "본건 유상증자의 배정대상자인 해외 예탁기관은 당사 및 당사 최대주주와 「자본시장과 금융투자업에 관한 법률」 시행령 제2조 제4호에 따른 특수관계인에 해당하지 아니하며, 당사는 해외 예탁기관과 본건 신주의 예탁 및 본건 ADR의 발행에 관한 예탁계약(Deposit Agreement, 이하 \"예탁계약\")을 체결할 예정입니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It clarifies the financing counterparty relationship and the planned, not executed, contract status.",
+        "mechanism_scope_id": "000660:ISSUER_WIDE_ADR_DEPOSITARY:2026-07-10",
+        "normalized_object": "Citibank N.A. is not a related party to SK hynix or its controlling shareholder, and the Deposit Agreement was planned rather than stated as executed",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "final filing 2026-07-10",
+        "predicate": "ADR depositary is non-related and Deposit Agreement remains planned",
+        "predicate_family": "issuer_depositary_relationship",
+        "primitive_tags": [
+          "COUNTERPARTY_RELATIONSHIP",
+          "PLANNED_AGREEMENT"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ISSUER_ADR_DEPOSITARY_RELATIONSHIP",
+        "question_family_tags": [
+          "ISSUER_FINANCING",
+          "ADR",
+          "DEPOSITARY",
+          "CONTRACT_STATUS"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 ADR 해외예탁기관 관계 및 예탁계약 계획",
+        "subject_id": "000660:ADR_DEPOSITARY_NON_RELATED_PARTY:2026-07-10",
+        "unit": "status",
+        "value": "non-related party; Deposit Agreement planned"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "KIND 공시는 용인·청주 팹 투자금액이 추정치이며 시장환경과 공정 사양 변경에 따라 변동될 수 있다고 제한한다. 이 issuer-wide CAPEX 불확실성은 앞서 공시된 투자 계획의 counter이고 HBM-only 배정 근거가 아니다.",
+        "exact_quote": "(주1) 상기 금액은 추정치이며, 향후 시장 환경 및 공정 사양 변경 등에 따라 변동될 수 있습니다. 상기 금액 중 용인 반도체클러스터 1기 팹의 기 투자금액은 4,383,200백만원, 청주 P&T7 어드밴스드 패키징 팹의 기 투자금액은 53,473백만원 입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer explicitly limits the certainty of the large multi-year capital plan.",
+        "mechanism_scope_id": "000660:ISSUER_WIDE_CAPEX_UNCERTAINTY:2026-07-10",
+        "normalized_object": "Yongin and Cheongju fab investment amounts are estimates that may change with market conditions and process specifications",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "investment plans through 2030; final filing 2026-07-10",
+        "predicate": "Fab investment estimates subject to market and process-specification changes",
+        "predicate_family": "issuer_capex_estimate_uncertainty",
+        "primitive_tags": [
+          "CAPEX_PLAN",
+          "UNCERTAINTY",
+          "COUNTER"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ISSUER_CAPEX_ESTIMATE_UNCERTAINTY",
+        "question_family_tags": [
+          "CAPITAL_ALLOCATION",
+          "CAPEX",
+          "ESTIMATE_UNCERTAINTY"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 용인·청주 팹 투자금액 추정 불확실성",
+        "subject_id": "000660:FAB_CAPEX_ESTIMATE_UNCERTAINTY:2026-07-10",
+        "unit": "status",
+        "value": "estimated amounts subject to market environment and process specification changes"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "EUV 장비 계약금액은 6,913.4백만 유로이고 장비별 인도 때 분할 지급되지만, 실제 취득가와 인도 시점은 변동될 수 있으며 구체 일정도 특정하기 어렵다. 이는 장비 공급계약 조건이지 HBM 고객 공급계약·가격·물량이 아니다.",
+        "exact_quote": "(주2) 취득 목적은 차세대 공정 양산 대응을 위한 EUV 장비 확보입니다. 취득금액은 계약금액 6,913.4백만 유로를 상기 기계장치 취득을 결의한 이사회 결의일 전일인 2026년 3월 23일 하나은행이 최초 고시한 매매기준율(1,728.48원/EUR)로 환산한 금액으로서, 실제 취득가액은 변동될 수 있습니다. 대금은 개별 장비의 인도 시 분할하여 지급할 예정이며, 장비 공급사와의 협의에 따라 인도 시점이 변경될 수 있습니다. 또한 장비 공급사와의 계약 관계상 구체적인 인도 및 대금 지급 시점을 특정하기 어려우며, 최종 기계장치의 예상 인도일은 2027년 12월 31일입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The official filing gives the equipment contract magnitude while explicitly preserving cost and schedule uncertainty.",
+        "mechanism_scope_id": "000660:ISSUER_WIDE_EUV_EQUIPMENT_CONTRACT:2026-07-10",
+        "normalized_object": "EUR 6,913.4 million EUV equipment contract with installment payment on delivery and variable final acquisition cost and delivery timing",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "contract plan 2026-03 through expected final delivery 2027-12-31; disclosed 2026-07-10",
+        "predicate": "EUV equipment contract amount disclosed with variable final cost and delivery timing",
+        "predicate_family": "issuer_equipment_contract_uncertainty",
+        "primitive_tags": [
+          "EQUIPMENT_CONTRACT",
+          "CAPEX",
+          "DELIVERY_RISK"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ISSUER_EUV_EQUIPMENT_CONTRACT_TERMS",
+        "question_family_tags": [
+          "CAPITAL_ALLOCATION",
+          "EUV_EQUIPMENT",
+          "CONTRACT_UNCERTAINTY"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 EUV 장비 계약금액·인도 불확실성",
+        "subject_id": "000660:EUV_EQUIPMENT_CONTRACT_TERMS:2026-03_TO_2027-12",
+        "unit": "EUR million",
+        "value": 6913.4
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋의 SK하이닉스 FY2026F 연결 추정표는 P/B 1.3배를 제시했다. 이는 당시 브로커 전망으로 현재는 SUPERSEDED이며 HBM-only valuation이 아니다.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282\nEPS (원) 3,063 -12,517 19,707 25,090 27,860\nROE (%) 3.6 -15.6 23.8 24.1 21.5\nP/E (배) 24.5 - 9.4 7.4 6.7\nP/B (배) 0.8 1.8 1.9 1.6 1.3",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The period-specific valuation denominator is economically relevant historical calibration, but not current evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_VALUATION:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2026F P/B estimate of 1.3 times",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F estimate published 2024-05-16",
+        "predicate": "Historical FY2026F price-to-book estimate",
+        "predicate_family": "forward_pb",
+        "primitive_tags": [
+          "P_B",
+          "BROKER_ESTIMATE",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "QF_HISTORICAL_FORWARD_PB",
+        "question_family_tags": [
+          "VALUATION",
+          "FORWARD_PB",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 FY2026F P/B",
+        "subject_id": "000660:FORWARD_PB:FY2026F:MIRAE_2024-05-16",
+        "unit": "times",
+        "value": 1.3
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋의 연결 추정표는 FY2024F 배당수익률 0.6%를 제시했다. 이는 당시 브로커 전망으로 현재 SUPERSEDED이며 issuer actual 또는 HBM-only 배당수익률이 아니다.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282\nEPS (원) 3,063 -12,517 19,707 25,090 27,860\nROE (%) 3.6 -15.6 23.8 24.1 21.5\nP/E (배) 24.5 - 9.4 7.4 6.7\nP/B (배) 0.8 1.8 1.9 1.6 1.3\n배당수익률 (%) 1.6 0.8 0.6 0.6 0.6",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is a period-specific historical payout/valuation estimate, retained only as superseded calibration.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_PAYOUT:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F dividend-yield estimate of 0.6 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F estimate published 2024-05-16",
+        "predicate": "Historical FY2024F dividend-yield estimate",
+        "predicate_family": "dividend_yield_forecast",
+        "primitive_tags": [
+          "DIVIDEND_YIELD",
+          "BROKER_ESTIMATE",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "QF_HISTORICAL_DIVIDEND_YIELD",
+        "question_family_tags": [
+          "VALUATION",
+          "DIVIDEND_YIELD",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2024F 배당수익률",
+        "subject_id": "000660:DIVIDEND_YIELD:FY2024F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 0.6
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋의 연결 추정표는 FY2025F 배당수익률 0.6%를 제시했다. 이는 당시 브로커 전망으로 현재 SUPERSEDED이며 issuer actual 또는 HBM-only 배당수익률이 아니다.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282\nEPS (원) 3,063 -12,517 19,707 25,090 27,860\nROE (%) 3.6 -15.6 23.8 24.1 21.5\nP/E (배) 24.5 - 9.4 7.4 6.7\nP/B (배) 0.8 1.8 1.9 1.6 1.3\n배당수익률 (%) 1.6 0.8 0.6 0.6 0.6",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is a period-specific historical payout/valuation estimate, retained only as superseded calibration.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_PAYOUT:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F dividend-yield estimate of 0.6 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F estimate published 2024-05-16",
+        "predicate": "Historical FY2025F dividend-yield estimate",
+        "predicate_family": "dividend_yield_forecast",
+        "primitive_tags": [
+          "DIVIDEND_YIELD",
+          "BROKER_ESTIMATE",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "QF_HISTORICAL_DIVIDEND_YIELD",
+        "question_family_tags": [
+          "VALUATION",
+          "DIVIDEND_YIELD",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025F 배당수익률",
+        "subject_id": "000660:DIVIDEND_YIELD:FY2025F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 0.6
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋의 연결 추정표는 FY2026F 배당수익률 0.6%를 제시했다. 이는 당시 브로커 전망으로 현재 SUPERSEDED이며 issuer actual 또는 HBM-only 배당수익률이 아니다.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282\nEPS (원) 3,063 -12,517 19,707 25,090 27,860\nROE (%) 3.6 -15.6 23.8 24.1 21.5\nP/E (배) 24.5 - 9.4 7.4 6.7\nP/B (배) 0.8 1.8 1.9 1.6 1.3\n배당수익률 (%) 1.6 0.8 0.6 0.6 0.6",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is a period-specific historical payout/valuation estimate, retained only as superseded calibration.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_PAYOUT:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2026F dividend-yield estimate of 0.6 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F estimate published 2024-05-16",
+        "predicate": "Historical FY2026F dividend-yield estimate",
+        "predicate_family": "dividend_yield_forecast",
+        "primitive_tags": [
+          "DIVIDEND_YIELD",
+          "BROKER_ESTIMATE",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "QF_HISTORICAL_DIVIDEND_YIELD",
+        "question_family_tags": [
+          "VALUATION",
+          "DIVIDEND_YIELD",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026F 배당수익률",
+        "subject_id": "000660:DIVIDEND_YIELD:FY2026F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 0.6
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-cec48c4b300fe56a6ba42cb7",
+      "SGDOC-e387fbf074539d32a618025a",
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact transport-page upper bound was reached after lossless review. Additional distinct target-wide current-objective atoms remain in the three listed documents; the June KIND document is exhausted."
+    ]
+  },
+  "payload_hash": "c20759889923d1ec849e7283a57a9a5a00f987a01249d9e79ddcb10683e20ae4",
+  "production_score_authority": false,
+  "prompt_hash": "1d94c342eb3c4c3ed720835900ef70800bc89c0e9088375a5934fbb5942cd156",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d87b41ec18ccf36b40e8a1d2ea0ac0d0f0061511870102da05b33e28ffa5b727",
+  "response_id": "COLLABRESP-47ee82cc98410bbf94bb437d88981b7bc9faac08bf003ff7e83b1984dad796e5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

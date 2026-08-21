@@ -1,0 +1,82 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-d8a2e1a7f4c5f5b4587eac49",
+        "rationale": "현재 graph에 더 강한 후속·공식 근거가 있는 HBM4 양산, 세계 최초 출하, NVIDIA qualification·Vera Rubin 선정, 1c·4nm 및 11.7Gbps는 중복으로 제외했다. NVIDIA 고객 관계 보도를 발행사가 직접 확인하지 않았음을 보여주는 고객 관련 답변 거부만 information_confidence counter로 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.92,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-d8a2e1a7f4c5f5b4587eac49",
+        "economic_mechanism": "삼성전자가 HBM4 고객 관련 사안에 답변을 거부해, NVIDIA qualification·선정·출하 일정에 관한 기사 보도를 회사의 직접 확인으로 사용할 수 없는 정보 한계를 남긴다. 답변 거부 이유를 NDA로 단정하거나 고객 관계의 부재로 해석하지 않는다.",
+        "exact_quote": "Samsung Electronics declined to comment on customer-related matters, but its HBM4 chips have been selected for Nvidia’s new platform after exceeding performance standards set by the Joint Electron Device Engineering Council (JEDEC).",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명명 고객 NVIDIA 관련 qualification·플랫폼 선정·출하 보도를 발행사가 직접 확인하지 않았다는 경계를 명시해 HBM4 고객 정보의 신뢰도에 직접 중요하다. 침묵을 관계 부재로 일반화하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:CUSTOMER_COMMENT_LIMITATION",
+        "normalized_object": "HBM4 고객 관계에 대한 공식 답변 거부",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-02-08 현재",
+        "predicate": "삼성전자는 HBM4 고객 관련 사안에 대한 답변을 거부했다",
+        "predicate_family": "HBM4_CUSTOMER_COMMENT_LIMITATION",
+        "primitive_tags": [
+          "HBM4",
+          "CUSTOMER_MATTERS",
+          "DECLINED_COMMENT",
+          "INFORMATION_LIMITATION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_CUSTOMER_COMMENT_LIMITATION",
+        "question_family_tags": [
+          "HBM4_CUSTOMER_COMMENT_LIMITATION",
+          "HBM4_CUSTOMER_CONFIRMATION_GAP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 고객 관계의 공식 답변 한계",
+        "subject_id": "005930:MEMORY:HBM4:CUSTOMER_COMMENT_LIMITATION:2026-02",
+        "unit": "customer-information disclosure limitation",
+        "value": "declined to comment on customer-related matters"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "805e494880a4e6544230ce093d7ffe65b62f9e6774f145c656566af3aa4e4fe0",
+  "production_score_authority": false,
+  "prompt_hash": "fd46f7ce278da42d7cf2592f8bb1109d7377fbd5c1236e5d07660c85365397ed",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-781c60ce6c41fdf60a68d59d4e9b102f9d130015a9f7c43d6ee96b9d91172090",
+  "response_id": "COLLABRESP-cb0a440b03e668e076d92f87fa8be297b4e94e228959bee63c9d30b7d4d15225",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

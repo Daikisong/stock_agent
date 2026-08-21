@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "The exact Mirae Asset file token and landing messageId have now been searched through the active news-and-web discovery routes with zero results. Reopen this broker-source repair only if supplied evidence identifies a different verified official landing URL, attachment identifier, report number, or canonical direct-fetch route; do not restate the same file or messageId with different punctuation, host tokens, or synonyms."
+    ],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "The 2026-05-11 Mirae Asset report remains transport-unresolved. The two known identities—direct file token 20260511111814160_en.pdf and landing messageId 2339731—are already present in the 35-query history and yielded zero discovery results; the current prompt supplies no independent official identity or alternate landing path.",
+      "The zero-result search does not verify that the URL exists, that the landing page maps to the PDF, or that the document concerns SK hynix or contains FY2026/FY2027 HBM revenue or operating-profit forecasts. No URL token, anticipated figure, or report-content inference is a fact.",
+      "FORWARD_GUIDANCE and SEGMENT_CONTRIBUTION remain unresolved under issuer-only numeric contracts, and DURABLE_VISIBILITY remains unresolved without eligible source-backed forward commitments. Even a later-recovered PUBLIC_BROKER_PDF could provide analyst forecast context only and would not substitute for those issuer-only roles."
+    ]
+  },
+  "payload_hash": "e6294edf828db97744c03cb99c335d03777d762efcf596b88a82f2a04fedb0ce",
+  "production_score_authority": false,
+  "prompt_hash": "7fc8e9922a313ec915154624a50656d5ca7d3efc7f8a1a63eb0606bb113a21cb",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6caedaa7cf83f5c690d57c27366114e79e5c34ef79b6721ddf81fc1726b0d96e",
+  "response_id": "COLLABRESP-aa3a2e43cd818d002e305f6c32c715f25a5306b748499359de1b3469ccd6060f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

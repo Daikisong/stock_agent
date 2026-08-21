@@ -1,0 +1,125 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-527c527954e845455d2cf972",
+        "rationale": "6,739자 공식 글로벌 뉴스룸 문서를 전수 검토하고 현재 canonical EvidenceFact 전체와 의미 중복을 제거했다. HBM4 양산 출하, 안정적 수율, 1c D램·4나노 베이스 다이, 11.7Gbps·최대 13Gbps, 24~48GB 제품 구성, 공급 인프라, 생산능력 확대 및 2026년 HBM 매출 3배 초과 전망은 이미 canonical로 존재해 반복하지 않았다. 전력·열·대역폭 사양만으로 earnings_visibility fact를 늘리지 않았고, 중복되지 않은 HBM4E 샘플 일정과 2027년 커스텀 HBM 고객 샘플 계획 2건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-527c527954e845455d2cf972",
+        "economic_mechanism": "발행사가 HBM4 상용화 다음 단계인 HBM4E 고객 샘플링을 2026년 하반기에 시작할 계획이라고 밝혀 차세대 제품의 고객 평가 진입 일정을 제시했다. 현재 canonical에는 2026년 5월 실제 HBM4E 샘플 공급이 있어 이 과거 일정 전망은 대체된 상태다.",
+        "exact_quote": "Following the successful introduction of HBM4 to market, sampling for HBM4E is expected to begin in the second half of 2026, while custom HBM samples will start reaching customers in 2027, according to their respective specifications.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4E가 고객 샘플 단계로 이동할 당시 예상 시점을 발행사가 명시해 qualification 이전 commercialization 경로를 진전시켰다. 다만 현재 확인된 실제 샘플 공급이 이 일정을 앞질렀으므로 현재 점수 근거로 오용하지 않도록 SUPERSEDED로 표시한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4E:CUSTOMER_SAMPLING_TIMELINE",
+        "normalized_object": "HBM4E 고객 샘플링 개시 예상 시점",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-H2E guidance published 2026-02-12",
+        "predicate": "2026년 2월 12일 삼성전자는 HBM4E 샘플링이 2026년 하반기에 시작될 것으로 예상했다",
+        "predicate_family": "HBM4E_CUSTOMER_SAMPLING_TIMELINE",
+        "primitive_tags": [
+          "HBM4E",
+          "CUSTOMER_SAMPLE",
+          "H2_2026_PLAN"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "HBM4E_CUSTOMER_SAMPLING_TIMELINE",
+        "question_family_tags": [
+          "HBM4E_CUSTOMER_SAMPLING",
+          "PRODUCT_COMMERCIALIZATION_TIMELINE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4E 고객 샘플링 일정",
+        "subject_id": "005930:MEMORY:HBM4E:CUSTOMER_SAMPLING:2026-H2E",
+        "unit": "sampling timeline",
+        "value": "sampling expected to begin in the second half of 2026"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-527c527954e845455d2cf972",
+        "economic_mechanism": "고객별 사양에 맞춘 커스텀 HBM 샘플을 2027년부터 고객에게 전달한다는 발행사 계획은 범용 HBM4 이후 맞춤형 제품이 고객 평가 단계로 이동하는 미래 상용화 경로를 제시한다. 계약·qualification 완료·매출을 뜻하지 않는 샘플 계획으로 한정한다.",
+        "exact_quote": "Following the successful introduction of HBM4 to market, sampling for HBM4E is expected to begin in the second half of 2026, while custom HBM samples will start reaching customers in 2027, according to their respective specifications.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 canonical에 없는 커스텀 HBM의 고객 샘플 전달 시점과 고객별 사양 연계를 공식 원문이 함께 명시해 2027년 제품 상용화 가시성을 보강한다. 샘플 계획을 고객 주문이나 매출로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:CUSTOM_HBM:CUSTOMER_SAMPLE_PLAN",
+        "normalized_object": "2027년 고객별 커스텀 HBM 샘플 전달 계획",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027E guidance published 2026-02-12",
+        "predicate": "삼성전자는 고객별 사양에 따른 커스텀 HBM 샘플이 2027년부터 고객에게 전달될 것이라고 밝혔다",
+        "predicate_family": "CUSTOM_HBM_CUSTOMER_SAMPLE_PLAN",
+        "primitive_tags": [
+          "CUSTOM_HBM",
+          "CUSTOMER_SAMPLE",
+          "2027_PLAN"
+        ],
+        "product_family": "커스텀 HBM",
+        "question_family_id": "CUSTOM_HBM_CUSTOMER_SAMPLE_PLAN",
+        "question_family_tags": [
+          "CUSTOM_HBM_CUSTOMER_SAMPLE_PLAN",
+          "CUSTOMER_SPECIFICATION",
+          "PRODUCT_COMMERCIALIZATION_TIMELINE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 커스텀 HBM 고객 샘플 계획",
+        "subject_id": "005930:MEMORY:CUSTOM_HBM:CUSTOMER_SAMPLES:2027E",
+        "unit": "customer sampling plan",
+        "value": "custom HBM samples planned to reach customers in 2027 according to their specifications"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "de8079846ff22dcf86a020c838fe0c83f7baf0e2b8cbf9df797ca52fed12c552",
+  "production_score_authority": false,
+  "prompt_hash": "8bf4f8262592811998c1043bf66b07b517af53dbf08682a53caeeaf37696fe3c",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f70749a2e6c62b3700f52a54443e09a2ef9ef6afc9a60fda0aba77ca9ad2d9ba",
+  "response_id": "COLLABRESP-55048a7ba1dc5775463a5b275d0c822172fccd51e224d0e1d7501be514bd6c53",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

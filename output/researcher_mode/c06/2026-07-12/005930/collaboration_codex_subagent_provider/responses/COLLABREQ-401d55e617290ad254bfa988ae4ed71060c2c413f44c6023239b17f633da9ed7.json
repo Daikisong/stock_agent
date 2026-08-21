@@ -1,0 +1,64 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "국내 상장사 중 DRAM과 HBM을 직접 제조·판매하며 AI 메모리 수요, 가격, 고객 인증, CAPA와 수율의 영향을 함께 받는 가장 직접적인 경제적 비교 대상이다.",
+        "confidence": 0.98,
+        "material_differences": [
+          "SK하이닉스는 메모리 중심 사업자지만 삼성전자는 DX, Foundry·System LSI 등 비메모리 사업이 연결 실적과 현금흐름에 함께 반영된다.",
+          "양사의 HBM 고객 구성, qualification 시점, 세대별 제품 믹스와 생산·패키징 전략이 달라 한 회사의 공급량·마진을 다른 회사에 그대로 적용할 수 없다."
+        ],
+        "peer_name": "SK하이닉스",
+        "peer_symbol": "000660",
+        "shared_economic_drivers": [
+          "DRAM과 HBM의 수요·ASP·제품 믹스가 매출과 영업 레버리지를 좌우한다.",
+          "고객 qualification, AI 플랫폼 출시와 물량 배정이 HBM 출하 및 매출 인식 시점을 결정한다.",
+          "웨이퍼 생산능력, 수율, 첨단 패키징 병목과 선행 CAPEX가 공급량과 현금 전환을 제약한다."
+        ]
+      },
+      {
+        "comparability_rationale": "직접 HBM peer는 아니지만 국내 상장 반도체 제조사로서 팹 가동률, 수율, CAPEX와 사이클에 따른 이익·현금흐름 민감도를 비교하는 제한적인 인접 peer다. HBM 제품·고객·가격 비교에는 사용하지 않는다.",
+        "confidence": 0.72,
+        "material_differences": [
+          "DB하이텍은 성숙공정 중심 파운드리이며 DRAM·HBM을 제조하거나 메모리 ASP와 bit shipment에 직접 노출되지 않는다.",
+          "고객 계약, 재고, 제품수명과 CAPA 운용 방식이 메모리 사업과 다르고 삼성전자의 복합 사업구조보다 사업 범위와 규모가 좁다."
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "반도체 팹 가동률, 수율, 웨이퍼 가격과 제품 믹스가 영업 레버리지를 좌우한다.",
+          "대규모 설비투자와 감가상각, 경기순환에 따른 주문 변동이 현금흐름과 자본효율에 영향을 준다."
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "완전한 KOSPI·KOSDAQ identity roster에서 target 005930을 제외하고 메모리·HBM 제품경제가 직접 겹치는 SK하이닉스를 주 peer로 선택했다. 최소 peer 수를 충족하기 위해 반도체 제조·CAPEX·가동률 사이클이 일부 겹치는 DB하이텍을 인접 peer로만 추가했으며 장비·부품·지주·fabless 기업은 수익 메커니즘 차이가 더 커 제외했다.",
+    "unresolved_research_notes": [
+      "KRX 상장 universe에서 SK하이닉스만 직접적인 DRAM·HBM 제조 peer이며 DB하이텍은 반도체 제조 사이클을 보는 인접 peer일 뿐 HBM 제품경제의 대체 비교 대상이 아니다.",
+      "point-in-time structured peer identity availability roster가 비어 있으므로 이 응답은 방향만 선택하며 valuation 수치를 생성하지 않는다.",
+      "삼성전자의 연결 실적에는 DX, Foundry·System LSI 등 비메모리 사업이 포함되므로 동일 기준 구조화 수치가 확보돼도 사업구조 차이를 조정하지 않은 단순 peer band는 제한적으로 해석해야 한다."
+    ]
+  },
+  "payload_hash": "b78fd76f96b13410e95629f6e9efcfe2cdf84bffcea99638b44ada10f4f497d1",
+  "production_score_authority": false,
+  "prompt_hash": "9c72dbe91d81ba961f6d1d8baf50e1d954ccd52c7b61320f9357775e9ec93799",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-401d55e617290ad254bfa988ae4ed71060c2c413f44c6023239b17f633da9ed7",
+  "response_id": "COLLABRESP-a92d6e8d878bdb329bbf8cc492c1fd9a94f1316dfb419cc68c776dba8baf004e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

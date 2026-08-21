@@ -1,0 +1,65 @@
+{
+  "output_schema_hash": "a7e037c139a33ac8cc9a150024495ef4dc2d733048ea2f9f6f7bbcd6f629607c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f3a46e3c1f9d8cebc16bda9f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.newsis.com의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-01b74f6868dc10b0438d0392",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 news.einfomax.co.kr의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-0b3644043efcc46cabb3909c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "이전 분기·연도의 삼성전자 실적 또는 전망을 다루어 최신 2Q26 actual을 확인하는 현재 목적을 supersede하지 못한다. 또한 제3자 경로로 요청된 KIND·OPENDART·issuer family와 일치하지 않아 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-c0b5aa20e1b88364699d44e2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.edaily.co.kr의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "The final four third-party candidates did not match the requested official source families and remain non-material.",
+      "Full-fetch verification remains required for every selected candidate in the global roster."
+    ]
+  },
+  "payload_hash": "4d48623b00d364fa2928d55f05681624f2b78f97654f83dd46979ccf655bcc36",
+  "production_score_authority": false,
+  "prompt_hash": "ae7c2efb67d496ba61ca6cb8cfc9698aeea838531136cb12c8a58126d369e286",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ff6f08a57a39f51e08ac10f7a8dde8ccc4d31efe8518e5f5850b70e0cc74a3cc",
+  "response_id": "COLLABRESP-b738de6860fc4fadfb4ae0baedb3b3dc184144d45141171d78508c08268c7abd",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

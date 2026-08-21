@@ -1,0 +1,188 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "actual 메모리 매출과 현금흐름, 상방 revision을 재고·가격의존·CAPEX·운전자본 counter와 함께 반영했고 judge 구간도 교차한다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "완판·구매주문·구속력 있는 다년계약을 NDA·LTA 가격지연·고객일정 counter와 함께 반영했고 현재 공개자료로 판단 가능한 범위를 채웠다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "가동률·재고·공급충족률·완판·가격 프리미엄과 마진 정상화·증설 counter를 함께 반영해 병목의 강도와 한계를 모두 포괄했다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재/forward 배수와 peer band를 actual HBM 상용화, 현재 가격의 기대반영, 사이클 정점 counter와 함께 평가했다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "인증·양산·납품·누적매출과 상대배수를 초기수익성·고객일정·peer 차이와 함께 연결해 재평가 근거를 충분히 구분했다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "actual OCF·현금·자사주 소각과 CAPEX·약정·운전자본·ROIC 불확실성을 함께 반영해 현재 자본배분 판단에 필요한 양면 근거가 있다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "공식 제품매출·가동률·K-IFRS 검토·고객 공식 기술자료와 NDA·미감사·제품별 이익 미공개 한계를 함께 반영했다."
+      }
+    ],
+    "component_memos_sufficient": true,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-ca83d1f62c369a796dd08335",
+        "rationale": "FULL_DOCUMENT_CONTENT_TOO_SMALL는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-fc0f23823e1ffc26b95434ff",
+        "rationale": "FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-47c4b6795be6845d81bf7187",
+        "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-ce9ce6a9661dca1d99511b54",
+        "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-ef2eccfb702d6de4b716113e",
+        "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-4719db379703acca37cc3116",
+        "rationale": "WRONG_SUBJECT_FULL_DOCUMENT는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-fddc9d7e0af641ab35086f35",
+        "rationale": "FULL_DOCUMENT_CONTENT_TOO_SMALL는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-85ebcad89f6a756735258189",
+        "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-433c3c6e8fbe85ad567cccbe",
+        "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-0b5855f2582cd708850e51f8",
+        "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-7dbfbf0cf8c6429efaeda10b",
+        "rationale": "WRONG_SUBJECT_FULL_DOCUMENT는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-828cb4bb9fe49e835dfadd21",
+        "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-f769c7ce9af45a2b07dc003c",
+        "rationale": "QUERY_PROVIDER_ERROR는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-985b2134a561517e578cc5f4",
+        "rationale": "SEARCH_NO_RESULT_NOT_SATURATION는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-e7e558fc96bd12913f58a215",
+        "rationale": "SEARCH_PROVIDER_ERROR는 별도 transport/document 실패로 분류하며, 해당 objective는 다른 source-backed evidence와 counter/supersession route로 resolved되어 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [],
+    "new_source_family_directions": [],
+    "next_actions": [],
+    "query_direction_briefs": [],
+    "rationale": "7개 component memo와 21개 독립 judge가 모두 complete이고 material range disagreement가 없다. Structured role은 전부 충족됐으며 Red Team은 7개 component와 current counter 22개를 검토했다. Source graph의 7개 objective는 모두 resolved되고 verified counter/supersession route proof와 materiality attestation이 있다. 남은 HBM 단독 마진·계약조건·CAPA·고객일정·ROIC 질문은 점수에 반영된 monitoring limitation이며 현재 nonduplicate executable public route가 아니므로 readiness를 막지 않는다.",
+    "ready_for_independent_saturation_review": true,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "e4a4c87cb19d74240fa359462207db4e489778d7fed3e543f3fc1b6dadff7eb8",
+  "production_score_authority": false,
+  "prompt_hash": "d9ef1c0f2a2f89bc478cdcbcfcd1fbf4d2a6f1fac4dbe4a979467723e654742d",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4eaf75bd6ed27d1a220da79cf1ab316b90ca11193443c4b1a8b895a9465498f2",
+  "response_id": "COLLABRESP-6ddbd280fab53936ed4d17ddae59f5ee257cb8de25b6e80cbf91b0d14107e8d3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

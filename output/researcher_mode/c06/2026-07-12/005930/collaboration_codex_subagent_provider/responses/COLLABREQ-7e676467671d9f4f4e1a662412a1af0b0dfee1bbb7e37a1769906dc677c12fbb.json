@@ -1,0 +1,179 @@
+{
+  "output_schema_hash": "bb7f3abddf769d446fd6ab79a5efd12e2b72349088a6f0fcd8be30a119a05a7d",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-c739e91a6d95f2403c34dd95",
+        "rationale": "삼성전자 메모리의 수요 대비 공급 충족률과 2027년 공급 격차 심화라는 기존 canonical과 구별되는 target-direct 병목 fact 2건을 추출했다. HBM4E 샘플·수율, LTA, ASP, 재고 및 2027년 수요 접수 자체는 기존 fact와 중복돼 추가하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cb8c15df52651ee151a19cec",
+        "rationale": "2026년 1월의 목표주가·투자의견과 오래된 EPS·PER·실적 전망은 후속 current canonical 추정치로 대체됐고 목표주가만으로는 HBM 이익-밸류에이션 bridge가 되지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-cf7e6815ea5be4fb35f76a42",
+        "rationale": "2026년 4월의 PBR/PER 산정 방식과 PER 5.9배·5.3배는 후속 current canonical의 더 직접적인 선행 PER·PBR·peer 비교와 의미가 겹치며, SOTP는 HBM 외 파운드리·LSI·디스플레이·DX를 혼합한다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-d18ddbac8e68a9eda42a3506",
+        "rationale": "2분기 잠정 실적 직전의 영업이익·DRAM/NAND ASP 추정은 이후 current canonical의 더 구체적인 메모리 이익과 가격 자료로 갱신돼 신규 objective-linked fact가 남지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-d55956fd988ed0b7a3423deb",
+        "rationale": "스마트폰 원가 부담과 수요 둔화는 current canonical의 PC·모바일 수요 counter와 의미가 겹치며, 삼성전자 메모리의 직접 가격·공급 계약 fact는 문서에 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-d99798d292fca6c00f23d48c",
+        "rationale": "2분기 실적 추정과 메모리 가격·공급 부족 전망은 후속 잠정실적 및 current canonical fact에 반영됐고, 기사에 HBM LTA 축소나 주문 감소가 실제 발생했다는 신규 direct counter는 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-e3a511d4388331050760b2ee",
+        "rationale": "삼성전자 선행 PER 8~9배와 peer 대비 할인 평가는 current canonical의 더 직접적이고 구체적인 선행 PER·PBR peer 비교와 의미가 겹치며 상단 영업이익 시나리오는 컨센서스 확정치가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-e3ebdfe1cd66361f54700ef0",
+        "rationale": "문서는 2025년 1분기 컨퍼런스콜로 current 2026 objective를 직접 갱신하지 않으며, 당시 HBM 판매 감소·메모리 투자·수요 내용은 기존 historical canonical fact와 중복된다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-e41e459430185c8ebe1c76be",
+        "rationale": "2026년 2분기 잠정실적 발표 직전의 컨센서스와 ASP 전망은 같은 날 발표된 실제 잠정실적 및 current canonical 메모리 이익·가격 자료에 의해 갱신됐다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-e6e7292ce2a07299c0d98c54",
+        "rationale": "2026년 1분기 공식 재무제표의 영업현금흐름·운전자본·CAPEX·재고 값은 기존 OPENDART canonical fact와 동일한 보고기간 및 재무표 내용이어서 중복 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-e6f87fedecbf6aafb0b65e0f",
+        "rationale": "본문은 SK하이닉스의 HBM4 생산 조정에 관한 짧은 검색 결과성 텍스트이며 삼성전자의 직접 공급·가격 메커니즘을 입증하지 않는다.",
+        "status": "WRONG_TARGET_OR_SEGMENT"
+      },
+      {
+        "document_id": "SGDOC-e9401e12a38207626760d6a4",
+        "rationale": "핵심 계약·마진·공급 전망은 마이크론 및 산업 전반에 관한 것이며, 삼성전자에 관한 언급은 일반적인 동시 증설 가능성뿐이라 target-direct mechanism_scope fact로 승격할 수 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c739e91a6d95f2403c34dd95",
+        "economic_mechanism": "삼성전자의 메모리 공급 역량이 고객 수요에 크게 못 미치고 공급 충족률이 역대 최저라는 설명은 현재 생산·재고 여유보다 수요가 큰 직접적인 공급 병목을 나타낸다.",
+        "exact_quote": "삼성전자도 상당히 타이트한 재고 수준 아래 공급 역량이 고객 수요에 한참 미치지 못하고 있으며, 수요 대비 공급 충족률은 역대 최저 수준을 기록하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 재고 최저 fact와 달리 고객수요 대비 실제 공급 충족률의 최저 상태를 삼성전자에 직접 결박하며, 병목의 강도를 별도로 확인한다.",
+        "mechanism_scope_id": "005930:MEMORY:SUPPLY_FULFILLMENT:RECORD_LOW:2026-Q1",
+        "normalized_object": "memory supply fulfillment rate at record low",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 as of 2026-04-30",
+        "predicate": "삼성전자의 메모리 공급 역량이 고객 수요에 크게 못 미치며 수요 대비 공급 충족률이 역대 최저 수준을 기록했다",
+        "predicate_family": "MEMORY_SUPPLY_FULFILLMENT_RATE",
+        "primitive_tags": [
+          "MEMORY_SUPPLY_SHORTFALL",
+          "RECORD_LOW_FULFILLMENT"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_SUPPLY_FULFILLMENT_RATE",
+        "question_family_tags": [
+          "MEMORY_SUPPLY_FULFILLMENT_RATE",
+          "CAPACITY_CONSTRAINT",
+          "DEMAND_SUPPLY_GAP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 고객수요 대비 공급 충족률",
+        "subject_id": "005930:MEMORY:SUPPLY_FULFILLMENT:2026-Q1",
+        "unit": "supply-demand condition",
+        "value": "record-low supply fulfillment rate"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.83,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c739e91a6d95f2403c34dd95",
+        "economic_mechanism": "이미 접수된 고객 수요만으로 2027년 메모리 공급 격차가 2026년보다 더 커질 것이라는 삼성전자 설명은 단순한 차기 연도 수요 접수를 넘어 공급 부족의 기간 연장과 심화를 나타낸다.",
+        "exact_quote": "현재 접수된 수요만으로도 2027년 수요 대비 공급 격차는 2026년보다 더 심화될 것으로 보인다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 2027년 수요 사전 접수 fact와 달리 그 수요가 2026년보다 더 큰 공급 격차로 이어진다는 비교 방향을 직접 제공하며, 구속력 있는 주문이나 물량으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:SUPPLY_DEMAND_GAP:FY2027E_VS_FY2026E",
+        "normalized_object": "2027 memory supply-demand gap worsening versus 2026",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E versus FY2026E",
+        "predicate": "삼성전자는 현재 접수된 수요만으로도 2027년 수요 대비 공급 격차가 2026년보다 더 심화될 것으로 봤다",
+        "predicate_family": "MEMORY_SUPPLY_DEMAND_GAP_WORSENING",
+        "primitive_tags": [
+          "MEMORY_DEMAND",
+          "SUPPLY_GAP_WORSENING"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_2027_SUPPLY_DEMAND_GAP",
+        "question_family_tags": [
+          "MEMORY_2027_SUPPLY_DEMAND_GAP",
+          "CAPACITY_CONSTRAINT",
+          "DEMAND_SUPPLY_GAP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2027년 메모리 수요 대비 공급 격차",
+        "subject_id": "005930:MEMORY:SUPPLY_DEMAND_GAP:FY2027E",
+        "unit": "comparative supply-demand outlook",
+        "value": "FY2027E gap worse than FY2026E"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "ccbeded99c7a675e8ab024edf85df1ac341e5ec5cf23467730c9456f861fe0f6",
+  "production_score_authority": false,
+  "prompt_hash": "57c7e8064caff0e24d009da666b166073dc9606deb0be6c44d7d14fc59492ac7",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7e676467671d9f4f4e1a662412a1af0b0dfee1bbb7e37a1769906dc677c12fbb",
+  "response_id": "COLLABRESP-1096d63dbd0903a7348ff955da94b20b58eb8f1067ca430dc4f4a23976954138",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

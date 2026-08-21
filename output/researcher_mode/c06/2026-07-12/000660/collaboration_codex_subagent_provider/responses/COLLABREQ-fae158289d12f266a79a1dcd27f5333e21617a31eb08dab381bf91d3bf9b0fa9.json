@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "550cc947221531a16708a534b9781441125fb118811e24b86e890d9319836e4b",
+  "payload": {
+    "allowed_range": [
+      14.0,
+      17.0
+    ],
+    "anchor_comparisons": [
+      "The positive ordinal anchor is directionally close because production readiness, capacity-exceeding requested demand, and FY2026 demand coverage coexist.",
+      "The counter ordinal anchor captures missing customer-lock and margin-bridge terms, but current production and demand evidence is stronger than that pattern alone."
+    ],
+    "counter_fact_ids": [
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-c890adf15151ce383d70cf81",
+      "EFACT-dde9f3ef4ad310f18beb72e8"
+    ],
+    "disagreements": [
+      "I treat completed discussions and capacity-exceeding demand as strong operational visibility, not as a binding multi-year purchase obligation."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-fe4be151b6e34320ddc5f6a7",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 15.5,
+    "rationale": "HBM4 production and performance qualification, requested demand above capacity for three years, FY2026 DRAM demand coverage, and completed key-customer HBM discussions form coherent operational visibility. Strong-commitment multi-year discussions help, but do not prove executed volume, price, cancellation, or penalty terms.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-62c3b9f322f3a062b5e74751",
+      "EFACT-a74dac2b9e727f8592e52c41",
+      "EFACT-d7a582ebff38082719fe2983",
+      "EFACT-e0438e911cc6bbc80ba6e3f4",
+      "EFACT-e269e2b69e9152111e463563",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "Monthly or quarterly agreement, unsettled multi-year terms, platform delay, and additional competitor supply prevent a near-ceiling placement.",
+    "why_not_lower": "Current product execution, demand, capacity pressure, and FY2026 coverage exceed a narrative-only visibility case."
+  },
+  "payload_hash": "2513cea546fcc1c892c64b75b7982074477d27bf62bfdba9f676a04c3d4b417e",
+  "production_score_authority": false,
+  "prompt_hash": "01f77e9772855d3b33dd80b551639913ca84f04b4d78c385201b997158651f8e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fae158289d12f266a79a1dcd27f5333e21617a31eb08dab381bf91d3bf9b0fa9",
+  "response_id": "COLLABRESP-db8ac8f4c8c87cd10d304a9a92aa07f5fb0faaa58bb61942ced5767767c5b4f1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "2d9854ad3e4dc0a54f039c283be4adf9036f2cb73b0b111afaa1ac77b2f36903",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f7befbfdd80fbb9892d4a460",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A stock-outlook blog is not an issuer-owned earnings, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-bc747758b30ab254212759d5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party Micron earnings explainer is not target-specific and lacks requested issuer provenance."
+      },
+      {
+        "candidate_id": "SGCAND-071a7b73ef789884f15d3cea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "Media coverage of Micron and peer expectations is not an SK hynix issuer-owned requested-family source."
+      },
+      {
+        "candidate_id": "SGCAND-4be2a495a7af3c3320f86e2b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A local-news report of 2025 results is a third-party retelling, not an issuer earnings release or presentation."
+      },
+      {
+        "candidate_id": "SGCAND-fe2fe26c46567c1a6b5fb3ba",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party article concerns Samsung Electronics and is not an eligible SK hynix issuer source."
+      },
+      {
+        "candidate_id": "SGCAND-f488a9bbbfbc62768ec0c26e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A legal-opinion market article has none of the requested issuer earnings, presentation, or cash-flow provenance."
+      },
+      {
+        "candidate_id": "SGCAND-1761277e2c934b78098069a9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A price-target analysis page is not an issuer-owned earnings, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-0e9e74a081e784d50696c419",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party result report does not satisfy the requested issuer-owned source families."
+      },
+      {
+        "candidate_id": "SGCAND-82b4c040776db008046397e0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A portal post about treasury-share cancellation is outside the requested source families and economic objective."
+      },
+      {
+        "candidate_id": "SGCAND-908d55389e9a1fcfe9f77a8b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A blog announcing a post-cutoff earnings date is neither current evidence nor an issuer-owned source."
+      },
+      {
+        "candidate_id": "SGCAND-e0ae2ba24ec079b51691b00f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party calendar summary for Micron is not target-specific and is outside the requested source provenance."
+      },
+      {
+        "candidate_id": "SGCAND-50bbfee563b95261a912e795",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "The KIND representative-confirmation page does not identify the target in supplied metadata and does not establish any requested source-family match."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate is a verified current SK hynix issuer earnings release, presentation, or cash-flow source; post-cutoff and third-party results were rejected."
+    ]
+  },
+  "payload_hash": "e0e9c41de874c8cd392bdba0777ea7dc146c748b8f5da4c832e0c115996e94fb",
+  "production_score_authority": false,
+  "prompt_hash": "c4a2a1459edc65b9019808aba2d57d42d212cb59163e2bd305f67874596601bc",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e17c87e0c0468a5fb46a767447e8067e09e8a36d987070d6d5e2925e2ae1d67b",
+  "response_id": "COLLABRESP-054a2eeb86d74b2e03649460bcdf750d3ba3c2f8028afa364422caf35b3a59d1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

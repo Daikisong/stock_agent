@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-ae5720a67e5b54ef8853a385",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer financial or annual-report component matches the earnings-release family, but its reporting period is superseded and immaterial to the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-ae59802e48238fb31ae57b64",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified issuer event or presentation matches the requested presentation family, but its period or subject is superseded and immaterial to the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-aec40c34759adb76e6921eda",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0,
+        "rationale": "The candidate is unverified, a sustainability or governance document, or an unrelated issuer page that matches none of the requested earnings, cash-flow, or presentation families."
+      },
+      {
+        "candidate_id": "SGCAND-af8250676519db72b5f5f804",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified issuer event or presentation matches the requested presentation family, but its period or subject is superseded and immaterial to the current objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "All 100 candidates are accounted for. The material issuer presentation routes require bounded full retrieval; snippets, titles, and reference metadata remain discovery-only and are not evidence."
+    ]
+  },
+  "payload_hash": "231d3886f90b16c1229aabd3341876896ddc29d7b7cd2f6dca6e238c0fe14fd6",
+  "production_score_authority": false,
+  "prompt_hash": "3a18c6b4280a825836553479dbdedac33696cc2763cf937ddb7350f4deb29e8c",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4a569d3f790741aa6b8336ebb989a901d94bb8b03b437a9562de583c4af2c0da",
+  "response_id": "COLLABRESP-68fa9c80f4a9fa1cf3c8c97ca531d26faa00a0c5200c665d8b72dcbd32cdcc05",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

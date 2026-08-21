@@ -1,0 +1,65 @@
+{
+  "output_schema_hash": "32c1fe00bdf4461b91f393ef76060c3bc358c7f349187b7d12512332300c9ac1",
+  "payload": {
+    "allowed_range": [
+      1.5,
+      3.0
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797는 POSITIVE 역할의 STRONG ordinal anchor이며 허용 대역은 4.75~5.00점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "ORDTRANSFER-994f92d663d0b49c624b1803는 COUNTER 역할의 STRONG ordinal anchor이며 허용 대역은 4.75~5.00점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "counter anchor는 하방 검증용이며, 현재 확인된 실적·공급 성과까지 부정하는 영점 기준으로 사용하지 않았다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1b7ea0a31b99641332cac15f",
+      "EFACT-2d9adec8b0d4434e530afdc5",
+      "EFACT-38845077848fa69caeb992ce",
+      "EFACT-4f576cd7cba9f5720973f2a5",
+      "EFACT-61735c2a94db0377111a4e18",
+      "EFACT-66a852e3b8f9484e6dad3710",
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-7ed0bdc27aff6817247539ec",
+      "EFACT-ce89050359be3b6f19cb2cec"
+    ],
+    "disagreements": [
+      "긍정 사실이 있다는 이유만으로 제품별 수익성·계약 강도·지속기간까지 확인됐다고 보는 해석에 동의하지 않는다.",
+      "다만 실현된 매출·이익·생산·납품 사실까지 전부 추정으로 취급하는 극단적 하방에도 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "proposed_points": 2.2,
+    "rationale": "핵심 정보의 검증 가능성의 모든 counter를 검토했다. HBM 고객명·qualification·구매물량·가격·취소조건과 제품별 영업이익은 공개되지 않는다. 상당수 HBM 이익·점유율·마진은 증권사 또는 언론 추정이며, 잠정·외부검토 전 실적과 비교 기준이 다른 peer 표는 공식 사실로 승격할 수 없다. 추가로 HBM 고객·qualification·계약·allocation·제품별 영업이익에 대한 독립 공식 확인 또는 공식 비공개 범위 확인이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다. 긍정 사실인 외부감사인 검토를 거친 최신 재무제표, 회사 공시 메모리 제품매출과 생산라인 가동시간이 핵심 외형·운영 기준점을 제공한다. 서로 다른 공식 기간의 제품매출과 최신 검토보고서가 있어 전사 및 메모리 제품군 수준의 재현성은 높다.도 확인되지만, 계약조건·제품별 마진·귀속 bridge가 닫히지 않아 하방을 넓게 유지했다.",
+    "support_fact_ids": [
+      "EFACT-09794909b5e3c9f009eb5007",
+      "EFACT-0beff561f9964f06b80cbe4b",
+      "EFACT-477c6cb45b164685a2a345e8",
+      "EFACT-71eb35cf12f591c101571b4e",
+      "EFACT-c56aa2a9eb9eb1bb77d693bc"
+    ],
+    "why_not_higher": "9개의 current/open counter와 미해결 공식 자료 gap이 남아 핵심 정보의 검증 가능성의 상단 확정을 막는다.",
+    "why_not_lower": "외부감사인 중간검토, 회사 공시 메모리 제품매출과 가동시간이 최신 전사·제품군 외형 및 운영 상태를 직접 확인하며 추정치와 구분할 기준을 제공한다. 기존 current positive facts는 그대로 유효하다."
+  },
+  "payload_hash": "36d02a7444f4714b1ecc8f0f15fb45b17d45b8a370ef6e5c89320adf6ebbbe95",
+  "production_score_authority": false,
+  "prompt_hash": "77ccbb4ac31a9717315a628bec099061b322ead801c38bea796a85fa54cdf021",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a29a29af9572e815b018d76040f5a801a796f850be382ed3462016aa37abf0b9",
+  "response_id": "COLLABRESP-aad1432d8120f0dd38154b0c8381df5b4350fc12505e0d7cd1e8b4af59a87fb9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

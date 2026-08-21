@@ -1,0 +1,85 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-1bf899b624c82368be94c9a4",
+        "rationale": "현재 canonical의 메모리 ASP·매출·서버향 판매와 의미가 겹치지 않는 2026년 1분기 메모리 수익성 개선 1건만 추출했다. 전사·DS 혼합 실적, 기존 HBM4·SOCAMM2 양산, 회사 전체 환율 효과와 다른 사업부 수치는 반복하거나 메모리/HBM에 귀속하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-1bf899b624c82368be94c9a4",
+        "economic_mechanism": "D램·낸드 가격 상승과 AI용 고부가 제품 수요가 결합해 메모리 사업의 수익성 개선으로 전환됐다.",
+        "exact_quote": "메모리 사업은 D램과 낸드 가격 상승, AI용 고부가 제품 수요가 맞물리며 수익성이 개선됐다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 canonical에는 메모리 ASP 상승·판매 확대·매출은 있으나 메모리 사업 수익성 개선을 직접 서술한 비중복 fact가 없다. 다만 이 출처는 수익성 금액이나 마진을 제시하지 않아 정성적 earnings-conversion 근거로만 사용한다.",
+        "mechanism_scope_id": "005930:MEMORY:PROFITABILITY_IMPROVEMENT:2026-Q1",
+        "normalized_object": "메모리 가격과 AI 고부가 수요에 따른 수익성 개선",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 메모리 사업은 D램·낸드 가격 상승과 AI용 고부가 제품 수요가 맞물리며 수익성이 개선됐다",
+        "predicate_family": "MEMORY_PROFITABILITY_IMPROVEMENT",
+        "primitive_tags": [
+          "MEMORY_PROFITABILITY",
+          "MEMORY_PRICE_UPLIFT",
+          "AI_HIGH_VALUE_PRODUCT_DEMAND"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PROFITABILITY_IMPROVEMENT",
+        "question_family_tags": [
+          "MEMORY_PROFITABILITY_IMPROVEMENT",
+          "MEMORY_EARNINGS_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 사업 2026년 1분기 수익성",
+        "subject_id": "005930:MEMORY:PROFITABILITY_IMPROVEMENT:2026-Q1",
+        "unit": "profitability direction",
+        "value": "profitability improved with DRAM/NAND price increases and AI high-value product demand"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "DS 영업이익 53조7000억원과 영업이익률 66%에는 메모리 외 시스템LSI·파운드리가 포함되므로 메모리 영업이익 또는 마진으로 만들지 않았다.",
+      "HBM4·SOCAMM2 양산 출하와 서버향 판매 확대는 current official canonical facts와 중복되어 이 기사에서 재추출하지 않았다.",
+      "기사의 2분기 메모리 가격 상승 전망과 HBM4E 샘플 계획은 정량 forward guidance나 확정 고객 qualification을 입증하지 않는다."
+    ]
+  },
+  "payload_hash": "7928fb8f1b6800ef18e9fbd7b9c44551229a269fc26aa64d0a218e8018c30c57",
+  "production_score_authority": false,
+  "prompt_hash": "08d231077b5eed3d5b70f77dac595391c999aa2921d532e198110f2972dc7577",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2970906a6a82d872071088e8a22303af61b90892c1e4408794cff5c1b6503485",
+  "response_id": "COLLABRESP-1c4e0329fb0cb2e50bcc0c329bfad20b29e9c07d429c8a8a4cb73ba7d3d7a268",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

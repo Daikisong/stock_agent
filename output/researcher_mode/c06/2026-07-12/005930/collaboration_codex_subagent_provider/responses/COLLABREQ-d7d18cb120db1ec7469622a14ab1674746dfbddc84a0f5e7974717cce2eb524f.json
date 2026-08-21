@@ -1,0 +1,155 @@
+{
+  "output_schema_hash": "50e9b24076957d0d9f2938f114392431d2a42f70ff2d2c73e20f5dd230627aa5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5f68309c7421edde3c5d1fd8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`삼성전자, 2025년 R&D 37조7000억 투입..올 상반기 자사주 8700만주 소각` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-c25351ec3c5f5e2721f5c046",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`[Who Is ?] 주숭일 테스 대표이사 회장` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-300b81f37f225fd8dd307a6a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 호남투자에 TV조선 앵커 “장밋빛 기대해도 되나” JTBC “감당 가능” &lt; ....` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-70acce20a7fd2cf7c0c17522",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '봄꽃만개' HPSP·원익홀딩스·SFA반도체·서진시스...` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-06381ea6aaf93d36faabb1e8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '싱글벙글' 다원넥스뷰·로체시스템즈·알에스오토...` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-ea727678add22e29ea6c21ad",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`삼성전자 지속가능경영보고서 2017` 후보는 ISSUER_NEWSROOM 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-f202a148fae12f49d226a697",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '덩실덩실' 러셀·알에스오토메이션·라온테크·브...` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-1855558041c12aec2e15864b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`hbm4e 방열 솔루션 기업 관련주 수혜주 대장주 ETF 관련 주식 종목 전망 순위 정리....` 후보는 GENERAL_WEB_DISCOVERY 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-a464d004f499fb9f18d3853b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '봄꽃만개' 그린광학·러셀·HPSP·라온테크... '시...` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-26851e3f37db8be9107489e7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`[현장] “삼성 이즈 백” 환호와 기대 가득했던 삼성전자 주주총회` 후보는 GENERAL_WEB_DISCOVERY 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-ad8fe0b6399187e5dfe0b6a7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '함박웃음' 에이치엠넥스·러셀·그린광학·에이팩...` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-56987a084b8b191c31676292",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '웃음꽃' 다원넥스뷰·주성엔지니어링·디아이·그...` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "epoch86 partition 6의 후보 12건을 각각 한 번씩 분류했습니다.",
+      "요청된 OPENDART·KIND_KRX 삼성전자 원 공시이면서 HBM4·메모리 신규시설투자를 직접 가리키는 full-fetch 후보는 이 partition에 없습니다.",
+      "ranking_complete=true는 이 partition transport roster의 분류 완료만 뜻하며, 신규시설투자 근거 확보나 전체 research 완료를 뜻하지 않습니다.",
+      "모든 snippet은 discovery metadata로만 취급했고 evidence로 승격하지 않았습니다."
+    ]
+  },
+  "payload_hash": "4393d5e2c8ceb0710a25027dfa511a78f5b6a9179e11ae43efdde18fa86df947",
+  "production_score_authority": false,
+  "prompt_hash": "b89ab361f054657b1cb6b839399c945374d793e0e4260af0ffc002e92c4adbea",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d7d18cb120db1ec7469622a14ab1674746dfbddc84a0f5e7974717cce2eb524f",
+  "response_id": "COLLABRESP-6f7db63a284362d6adad04dd20093976d100890245b6351f51dfe895e588b748",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

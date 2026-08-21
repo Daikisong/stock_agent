@@ -1,0 +1,491 @@
+미래에셋증권 반도체 김영건 – Telegram
+미래에셋증권 반도체 김영건
+미래에셋증권 반도체 소통 채널입니다.
+미래에셋증권 반도체 김영건
+미래에셋증권 반도체 소통 채널입니다.
+미래에셋증권 반도체 김영건
+@semirae
+11.9K
+subscribers
+2.14K
+photos
+1
+video
+22
+files
+1.61K
+links
+미래에셋증권 반도체 소통 채널입니다.
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+미래에셋증권 반도체 김영건
+11.9K subscribers
+미래에셋증권 반도체 김영건
+UMC 4Q24 실적과 의미
+[미래에셋증권 반도체 김영건]
+UMC 실적 및 전망의 의미
+1) IT 전방 산업의 재고는 양호:
+UMC는 자사의 재고 일수도 예상대로 감소하고 있으며, 컨슈머 세트 제조사의 재고는 이미 양호한 수준으로 조정 되었음을 언급했다.
+세트 수요 전반적으로 불확실성이 상존하는 것은 사실이나, 부품 재고가 건전하다는 것은 수요의 회복 시에 안정적 가격 환경을 조성할 수 있다는 점에서 긍정적
+이다.
+2) 자동차 및 산업용 수요는 회복 필요:
+UMC는 4분기에 자동차향 매출이 증가했으나, 이는 고객사의 재고 관리 차원에서 나온 일시적 주문일 뿐 자동차/산업 분야 재고가 여전히 높아, 이를 소화하려면 시간이 더 필요할 것으로 전망했다.
+당분간은 AI 및 컨슈머 세트 향 반도체 업종 위주로 관심을 가질 필요가 있다는 판단
+이다.
+3) 실리콘 인터포저 숏티지:
+UMC는 현재 수요가 강한 실리콘 인터포저의 캐파 확장 계획은 없고, 2.5D 인터포저를 넘어서는 패키징 기술 포트폴리오를 확장하고 있음을 언급했다.
+첨단 패키징 업종 전반에 걸쳐 Local Interposer 사용이 확대되고 있으며, 중장기로 Glass Substrate, 3D 패키징 등으로의 전환이 예상되는 부분이다.
+UMC 4Q24 실적 주요 내용
+UMC의 4Q24 실적은 매출액 $1.8B(QoQ -3.6%), OP $365M(QoQ -18.1%)를 기록했다. 가동률(70.0%)과 웨이퍼 출하량(QoQ +1.5%)이 기존 가이던스(가동률 60% 후반, 출하량 Flat)를 상회했다. ASP의 경우 대만달러 기준 유지되었으나, 달러 기준으로 환산하면 QoQ -5% 가량 하락한 것으로 보인다.
+공정별 매출액은 선단(28nm 이하)과 성숙(40nm 이상)이 각 QoQ -6.4%, -2.1%로 전반적으로 감소했으나, 선단의 매출액 비중이 34%로 가장 높게 유지되었다. 응용별로는 통신용 및 컨슈머 향이 각각 QoQ -10.5%, -9.8%로 크게 하락했다. 지역별로는 유럽향(QoQ +112%)을 제외한 전 지역에서 감소했다.
+UMC 향후 사업 및 실적 전망
+UMC는 1Q25 웨이퍼 출하량은 보합, ASP는 한자릿수 중반 % 가량 하락할 것으로 전망했다.
+계절적 비수기 영향이 예상되긴 하나, 과거에 비해서는 강도가 낮을 것
+임을 언급했다. 미국의 관세 조치와 관련한 불확실성도 상존함을 밝혔다. 다만 멀티 소싱, 공정 개선, 전력 절감 등을 통해 GPM은 25% 선을 지지할 것으로 전망했다.
+UMC는 25년도 반도체 산업이 약 10% 정도 성장
+할 것으로 전망했다. 주로 AI 서버에 대한 강한 수요와 더불어, 컨슈머 IT 제품의 완만한 성장, AI 스마트폰, AI PC, 노트북 교체 수요로 인한 반도체 탑재량 증가가 주된 요인이다.
+파운드리 업종은 한자릿수 후반대, UMC의 주력 시장은 한자릿수 초반 성장
+을 예상했다.
+UMC는 20 ~ 28nm 공정 매출 비중이 지속 확대되어 30% 후반까지 올라갈 것으로 예상
+했다(현재 24%). 28nm에서 예상되는 경쟁은 22nm로의 전환 수요가 일부 완화해 줄 것으로 기대했다. 또한, 미국 파트너(인텔)와의 12nm 공정 협업은 동사 고객으로 하여금 22nm 이상 공정 미세화의 기회를 제공할 것으로 기대하고 있다.
+링크:
+https://securities.miraeasset.com/bbs/download/2133944.pdf?attachmentId=2133944
+감사합니다.
+4.81K
+views
+23:41
+미래에셋증권 반도체 김영건
+SK하이닉스
+[미래에셋증권 반도체 김영건]
+내년도 드루와 ~
+투자의견 및 밸류에이션
+동사에 대한 목표주가를 277,000원으로 2.6% 상향한다. 25년 OP 추정치를 34.8조원(기존 32.8조원)으로 5.9% 상향했으며, 목표 밸류에이션 P/B 2.0배는 유지했다. HBM/eSSD 매출 비중이 DRAM/NAND의 40%/70%를 초과하기에 이르렀다. AI 생태계 핵심 부품사임이 증명되었다. 성장성(OP 성장률)과 수익성(ROE) 관점에서 동종업계 대비 낮은 밸류에이션을 받을 이유가 없다는 판단이다.
+실적 리뷰 및 향후 전망
+4Q24 전사 실적은 매출액 19.8조원(QoQ +12.5%), OP 8.1조원(QoQ +15.0%)를 기록하며 시장 기대치에 부합했다. IT 디바이스의 수요 약세에도 불구하고 HBM에서의 ‘3E’ 비중이 확대되고, 12단 제품의 출하가 개시되며 B/G와 ASP 측면에서 컨벤셔널 메모리의 다운 사이클을 보완할 수 있었다.
+1Q25 실적은 매출액 17.6조원(QoQ -10.9%), OP 6.4조원(QoQ -20.5%)로 단기적 실적 정체기를 겪을 것으로 추정한다. NAND의 B/G와 ASP는 각각 -17%, -10%로 약세가 불가피할 것으로 예상한다. 반면 DRAM은 컨벤셔널의 ASP 하락 (-12.0%)에도 불구, HBM 효과로 Blended ASP는 상승(+1.6%)할 것으로 추정한다.
+3Q25 부터는 다시 최대 실적을 경신할 것으로 전망하며 25년 전사 OP는 34.8조원(YoY +48.2%)를 달성할 것으로 추정한다. 25년 연간 HBM 매출액과 OP는 각각 31.2조원(YoY +140%)와 18.5조원(YoY +150%)으로 AI향 부품사의 밸류에이션을 감안하면 HBM사업 가치만으로도 동사의 현 기업가치는 설명 가능하다.
+약점체크, 사업 안정성과 재무 건전성 확보
+동사의 25년 HBM 공급 물량은 대부분 계약이 완료된 것으로 보인다. 또한, 전일 콜에서 26년 HBM 물량 계약 또한 상반기 중 확정될 가능성이 높음을 언급했다. DRAM 매출액의 40%에 상당하는 사업이 올해 100% 이상 성장할 예정이며 내년 물량마저 확정된다는 것은 전사 생산 설비 운영의 효율성이 크게 개선될 수 있는 부분이다.
+더불어 순부채의 규모도 2Q23 Peak 대비 15조원 감소하는 등 재무구조가 빠르게 개선되고 있으며 3Q25 내로 순현금 상태 진입이 가능하리라 전망한다.
+링크:
+https://securities.miraeasset.com/bbs/download/2133979.pdf?attachmentId=2133979
+감사합니다.
+9.28K
+views
+23:55
+미래에셋증권 반도체 김영건
+2024. 2. 10(월) 반도체 주요 뉴스
+[미래에셋증권 반도체 김영건/김제호]
+글로벌 반도체
+시장
+,
+매출 사상 최대치 기록… 미국 상원, 상무부 반도체 규제 권한 확대 검토 (Fierce Electronics)
+2024년 글로벌 반도체 시장 매출이 사상 최대치를 기록. 미국 상원은 반도체 수출 통제 및 공급망 관리를 강화하기 위해 상무부의 권한을 확대하는 법안을 검토 중
+https://www.fierceelectronics.com/electronics/chip-sales-hit-record-us-senate-considers-commerce-czar
+OpenAI, 유럽에서 Stargate와 유사한 AI 프로젝트 추진 계획 (Reuters)
+OpenAI의 샘 올트먼 CEO가 유럽에서 ‘Stargate’와 유사한 대규모 AI 연구 및 데이터센터 프로젝트를 추진할 계획이라는 보도
+https://www.reuters.com/technology/artificial-intelligence/openais-altman-envisions-stargate-like-programme-europe-2025-02-07/
+트럼프, TSMC에 100% 관세 부과 계획 (FNC)
+트럼프 미국 대통령이 TSMC를 포함한 대만 반도체 기업에 100% 관세를 부과할 계획이라는 보도가 나왔음. 일각에서는 이러한 조치가 글로벌 반도체 공급망에 심각한 타격을 줄 것이라 전망
+https://fnc.ebc.net.tw/fncnews/content/184265
+TSMC, 중국으로의 16nm 이하 공정 반도체 주문 제한 강화 (Wccftech)
+TSMC가 16nm 이하 공정에서 중국 기업들의 반도체 주문을 제한하는 조치를 강화하고 있으며, 이는 미국의 수출 규제와 연관된 것으로 추정
+https://wccftech.com/tsmc-to-restrict-orders-below-16nm-from-china/
+SoftBank, 서버용 칩 제조업체 Ampere 인수 협상 중 (eeNews)
+소프트뱅크가 Arm 기반 서버 프로세서 제조업체인 Ampere를 인수하기 위한 협상을 진행 중이라는 보도. Arm의 IP를 활용한 AI 및 데이터센터 칩 시장에서의 영향력을 확대하려는 전략으로 해석
+https://www.eenewseurope.com/en/softbank-in-talks-to-buy-server-chip-firm-ampere/
+Intel, CEO 교체 및 GlobalFoundries의 인텔 파운드리 인수설 부인 (Fierce Electronics)
+인텔이 CEO 교체와 관련된 루머를 일축하며, GlobalFoundries가 인텔 파운드리를 인수할 가능성이 없다고 밝혔다는 보도
+https://www.fierceelectronics.com/electronics/rumor-whack-caulfield-intel-ceo-gf-buy-intel-foundry
+감사합니다.
+Fierce Sensors
+As chip sales hit record, US Senate considers Commerce czar
+The global chip market reached its highest-ever sales for a year in 2024, topping $600 billion for the first time. Meanwhile, the US chip industry is eagerly following President Trump’s | Mature nodes including analog and sensors saw a 7% decline in 2024
+3.64K
+views
+22:00
+미래에셋증권 반도체 김영건
+2024. 10. 10(월)
+장중 DRAM 현물가격
+3.35K
+views
+03:14
+미래에셋증권 반도체 김영건
+TSMC
+[미래에셋 반도체 김영건/김제호]
+1월 매출액: NT$293.3B
+YoY: +35.9%
+MoM: +5.4%
+*당월 매출 규모 유지 시 1Q25 가이던스 달성은 여유로운 수준
+5.31K
+views
+05:52
+미래에셋증권 반도체 김영건
+2024. 2. 11(화) 반도체 주요 뉴스
+[미래에셋증권 반도체 김영건/김제호]
+프랑스 정부, AI 데이터센터 인프라 확대 위해 200억 달러 투자 (eeNews)
+프랑스 정부가 AI 데이터센터 인프라 구축을 위해 200억 달러 규모의 투자를 단행한다는 보도. 이번 프로젝트는 글로벌 AI 인프라 확장 경쟁에서 프랑스의 입지를 강화하기 위한 전략으로, 주요 AI 반도체 기업들과의 협력이 예상됨
+https://www.eenewseurope.com/en/france-joins-the-ai-datacentre-express-with-20bn-deal/
+OpenAI, 올해 첫 맞춤형 AI 칩 설계 마무리 계획 (Reuters)
+OpenAI가 자체 AI 칩을 설계하는 프로젝트를 진행 중이며, 2025년 내로 첫 맞춤형 칩 디자인을 마무리할 계획이라는 보도
+https://www.reuters.com/technology/openai-set-finalize-first-custom-chip-design-this-year-2025-02-10/
+NEOM, DataVolt와 50억 달러 규모 AI 프로젝트 협약 체결 (Reuters)
+사우디아라비아의 NEOM이 데이터센터 기업 DataVolt와 협력하여 50억 달러 규모의 AI 인프라 프로젝트를 추진한다는 보도. 이번 협력은 AI 데이터센터 및 반도체 클러스터 구축을 목표로 하며, 중동 지역의 AI 시장 성장을 가속화할 전망
+https://www.reuters.com/technology/artificial-intelligence/saudi-neom-datavolt-sign-agreement-launch-5-billion-ai-project-2025-02-10/
+Groq, 사우디아라비아로부터 15억 달러 투자 유치 (Reuters)
+AI 반도체 스타트업 Groq가 사우디아라비아로부터 15억 달러의 투자 유치. Groq의 LPU 기술이 대규모 AI 모델 추론 속도를 획기적으로 개선할 것으로 기대
+https://www.reuters.com/technology/artificial-intelligence/ai-chip-startup-groq-secures-15-billion-commitment-saudi-arabia-2025-02-10/
+Elon Musk, OpenAI 인수 추진… 974억 달러 규모 입찰 (Bloomberg)
+일론 머스크가 주도하는 컨소시엄이 OpenAI의 지배권을 확보하기 위해 974억 달러 규모의 인수 제안을 했다는 보도
+https://www.bloomberg.com/news/articles/2025-02-10/musk-led-group-bids-97-4-billion-for-openai-control-wsj-says?srnd=phx-technology
+NXP Semiconductors, 미국 AI 엣지 컴퓨팅 스타트업 Kinara 인수… 3억 700만 달러 규모 (eeNews)
+NXP가 AI 엣지 컴퓨팅 분야 강화를 위해 미국의 스타트업 Kinara를 3억 700만 달러에 인수하기로 했다는 보도. Kinara의 고효율 AI 프로세싱 기술을 활용해 자동차, IoT, 산업용 AI 시장에서 NXP의 입지를 확대할 계획
+https://www.eenewseurope.com/en/nxp-to-buy-us-edge-ai-chip-startup-kinara-for-307m/
+TSMC, Apple의 3nm 칩 생산 확대… 차세대 Mac 및 iPhone 제조 지원 (Digitimes)
+TSMC가 애플의 3nm 칩 주문을 확대하면서, 차세대 Mac과 iPhone에 사용될 고성능 칩의 생산량을 늘리고 있다는 보도. 애플은 신형 A 시리즈 및 M 시리즈 칩을 올해 출시할 계획
+https://www.digitimes.com/news/a20250207PD224/tsmc-production-apple-manufacturing-3nm.html
+감사합니다.
+eeNews Europe
+France joins the AI datacentre express with $20bn deal
+Brookfield Asset Management has announced a €20 billion infrastructure investment programme for AI datacentre infrastructure in France.
+16.6K
+views
+21:40
+미래에셋증권 반도체 김영건
+US 반도체 업종 일간 수익률 리뷰
+[미래에셋증권 반도체 김영건/김제호]
+기준: US 2025.2.10(월)
+◆ 시장 수익률
+S&P500: +0.7%
+나스닥: +1.0%
+필라델피아 반도체 지수: +1.5%
+◆ 업종별 평균 수익률
+Chipmaker: +0.7%
+Logic: +3.0%
+Connectivity: +1.4%
+Memory: +5.5%
+Foundry: -0.5%
+Industry: -1.9%
+Power IC: -1.4%
+Equipment: +1.4%
+Materials: +0.2%
+OSAT: +0.1%
+AI Processor 관련: +3.0%
+◆ 특징주 등락 사유
+*프랑스 정부 AI 데이터센터 인프라 확대 차원 200억 달러 투자 단행, OpenAI 올해 자체 칩 설계 완료 예정 보도 등에 업종 전반 강세
+Western Digital(+7.1%), Micron(+3.9%) 큰 폭 상승, Memory(+5.5%) 업종 강세
+Broadcom(+4.5%), Nvidia(+2.9%), AMD(+2.7%) 등 AI Processor(+3.0%) 관련 종목 큰 폭 상승
+On Semiconducto
+(-8.2%, 시간외 -0.1%)
+4Q24
+매출액: $1.72B
+(vs. 컨센서스 $1.76B)
+EPS: $0.95
+(vs. 컨센서스 $0.97)
+1Q25 Guidance
+매출액: $1.40B
+(vs. 컨센서스 $1.69B)
+EPS: $0.50
+(vs. 컨센서스 $0.89)
+Amkor
+(+0.1%, 시간외 -7.5%)
+4Q24
+매출액: $1.63B
+(vs. 컨센서스 $1.66B)
+EPS: $0.43
+(vs. 컨센서스 $0.38)
+FY1Q25 Guidance
+매출액: $1.28B
+(vs. 컨센서스 $1.46B)
+EPS: $0.09
+(vs. 컨센서스 $0.31)
+감사합니다.
+5.7K
+views
+22:35
+미래에셋증권 반도체 김영건
+2024. 10. 11(화)
+장중 DRAM 현물가격
+2.68K
+views
+03:49
+미래에셋증권 반도체 김영건
+2024. 2. 12(수) 반도체 주요 뉴스
+[미래에셋증권 반도체 김영건/김제호]
+美 부통령, 유럽에 AI 규제 완화 촉구…"과도한 규제는 AI 산업을 위협할 것" (Reuters)
+J.D. 밴스가 파리 AI 서밋에서 유럽 지도자들에게 AI 산업에 대한 과도한 규제가 혁신을 저해할 수 있다고 경고. 밴스는 AI 산업이 지나치게 규제될 경우, 유럽의 경쟁력이 약화될 수 있다고 주장, 이에 유연한 정책 필요성 강조
+https://www.reuters.com/technology/artificial-intelligence/europe-looks-embrace-ai-paris-summits-2nd-day-while-global-consensus-unclear-2025-02-11/
+OpenAI, Broadcom과 맞춤형 AI 프로세서 공동 개발… 수개월 내 완료 예정 (tom’s Hardware)
+OpenAI가 Broadcom과 협력하여 맞춤형 AI 프로세서를 공동 개발 중이며, 수개월 내로 최종 설계를 마무리할 계획이라는 내용
+https://www.tomshardware.com/tech-industry/artificial-intelligence/openai-and-broadcom-to-finalize-custom-ai-processor-in-the-coming-months-say-industry-sources
+Google·SoftBank, 양자 컴퓨팅 스타트업 QuEra에 2억 3,000만 달러 투자 (Fierce Electronics)
+구글과 소프트뱅크가 양자 컴퓨팅 스타트업 QuEra에 2억 3,000만 달러를 투자했다는 보도. QuEra는 중성 원자 기반 양자 컴퓨팅 기술을 개발 중이며, 이번 투자를 통해 차세대 양자 프로세서 개발을 가속화할 계획
+https://www.fierceelectronics.com/electronics/google-softbank-lead-230m-financing-quantum-start-quera
+SMIC, 4분기 순이익 YoY 40% 감소 (Nikkei Asia)
+SMIC의 2023년 4분기 순이익이 전년 대비 40% 감소했다는 보도. 글로벌 반도체 경기 침체와 미국의 수출 규제 영향으로, 향후 회복 여부가 불투명한 상황
+https://asia.nikkei.com/Business/Tech/Semiconductors/Chinese-contract-chipmaker-SMIC-s-Q4-profit-down-nearly-40
+SMIC, 2025년 매출 성장 지속 전망… 그러나 도전 과제 많아 (WSJ)
+SMIC가 4분기 실적 부진에도 불구하고, 2025년 매출 성장을 지속할 것으로 예상했다는 보도. 미국 수출 규제, 글로벌 경기 둔화 등의 변수 요인은 상존
+https://www.wsj.com/business/earnings/smic-quarterly-profit-falls-expects-continued-revenue-growth-dad3b19b?mod=business_feat2_earnings_pos1
+Apple, 중국 내 AI 기능 개발 위해 Alibaba와 협력 (Reuters)
+애플이 중국 시장을 겨냥한 AI 기능을 개발하기 위해 알리바바와 협력하고 있다는 보도. 이는 중국 내 AI 관련 규제 준수를 위한 전략적 협력으로 해석
+https://www.reuters.com/technology/apple-partners-with-alibaba-develop-ai-features-iphone-china-information-reports-2025-02-11/
+Juniper Networks, 미 법무부의 140억 달러 규모 인수 합병 차단 소송에서 혐의 반박 (Reuters)
+주니퍼 네트웍스가 미국 법무부가 자사의 인수 합병을 차단하기 위해 제기한 소송에 대해 강력히 반박했다는 보도. HPE와의 140억 달러 규모 합병이 경쟁을 저해하지 않는다고 주장하며, 법적 대응 준비 중
+https://www.reuters.com/markets/deals/juniper-networks-denies-allegations-us-doj-lawsuit-block-14-billion-merger-with-2025-02-11/
+감사합니다.
+Reuters
+Vance tells Europeans that heavy regulation could kill AI
+U.S. Vice President JD Vance told Europeans on Tuesday their "massive" regulations on artificial intelligence could strangle the technology, and rejected content moderation as "authoritarian censorship".
+2.24K
+views
+22:49
+미래에셋증권 반도체 김영건
+US 반도체 업종 일간 수익률 리뷰
+[미래에셋증권 반도체 김영건/김제호]
+기준: US 2025.2.11(화)
+◆ 시장 수익률
+S&P500: +0.0%
+나스닥: -0.4%
+필라델피아 반도체 지수: -0.1%
+◆ 업종별 평균 수익률
+Chipmaker: +0.4%
+Logic: +2.0%
+Connectivity: -0.6%
+Memory: -1.1%
+Foundry: +3.3%
+Industry: +0.4%
+Power IC: -0.9%
+Equipment: +0.1%
+Materials: -0.9%
+OSAT: -11.4%
+AI Processor 관련: -0.8%
+◆ 특징주 등락 사유
+*일부 기업 실적 발표, 종목별 이벤트성 등락 외 업종 전반 약보합
+JD벤스 부통령 파리 AI 서밋에서 ”미국에서 설계 및 제조한 칩으로 AI 시스템을 미국에서 구축하도록 할 것“ 발언에 Intel(+6.1%), GloablFoundries(+6.3%) 큰 폭 상승
+GlobalFoundries
+(+6.3%, 시간외 0.0%)
+4Q24
+매출액: $1.83B
+(vs. 컨센서스 $1.83B)
+EPS: $0.46
+(vs. 컨센서스 $0.45)
+1Q25 Guidance
+매출액: $1.58B
+(vs. 컨센서스 $1.66B)
+EPS: $0.27
+(vs. 컨센서스 $0.33)
+Super Micro Computer_잠정
+(-9.5%, 시간외 +8.9%)
+FY2Q25
+매출액: $5.65B
+(vs. 컨센서스 $5.77B)
+EPS: $0.59
+(vs. 컨센서스 $0.61)
+FY3Q25 Guidance
+매출액: $5.50B
+(vs. 컨센서스 $5.98B)
+EPS: $0.54
+(vs. 컨센서스 $0.66)
+FY2025 Guidance
+매출액: $23.5~25.0B(기존: $26~30B)
+감사합니다.
+2.28K
+views
+22:50
+미래에셋증권 반도체 김영건
+반도체 2월 수출액
+[미래에셋증권 반도체 김영건/김제호]
+2/1 ~ 10일 잠정치 기준
+반도체: $2,833M
+YoY +2%, QoQ -14%, MoM -11%
+메모리: $1,477M
+YoY -8%, QoQ -19%, MoM 보합
+DRAM: $890M
+YoY +42%, QoQ +5%, MoM +6%
+(*Chip+Module)
+MCP: $415M
+YoY -31%, QoQ -41%, MoM -8%
+NAND: $71M
+YoY -78%, QoQ -54%, MoM -26%
+*QoQ: vs. 11월 비교
+*YoY, QoQ, MoM 전반 상승폭 축소, 하락폭 확대
+감사합니다.
+3.07K
+views
+22:50
+미래에셋증권 반도체 김영건
+반도체 2월 수출액
+[미래에셋증권 반도체 김영건/김제호]
+2/1 ~ 10일 잠정치 기준
+대만향 MCP: $131M
+(HBM)
+미국향 SSD: $66M
+3.28K
+views
+22:51
+미래에셋증권 반도체 김영건
+2024. 10. 12(수)
+장중 DRAM 현물가격
+2.92K
+views
+03:39
+미래에셋증권 반도체 김영건
+2024. 2. 13(목) 반도체 주요 뉴스
+[미래에셋증권 반도체 김영건/김제호]
+TSMC, 170억 달러 투자 승인… 미국 공장 확장 계획은 미확정 (TrendForce)
+TSMC 이사회가 170억 달러(약 22조 5,000억 원) 규모의 신규 투자를 승인했으며, 이는 기존 반도체 생산 능력 확대에 집중될 예정이라는 보도
+https://www.trendforce.com/news/2025/02/12/news-tsmc-board-greenlights-usd-17-billion-investment-to-boost-capacity-no-update-on-u-s-expansion-plans/
+트럼프 행정부, "최강의 AI 반도체는 미국에서 제조될 것" (tom’s Hardware)
+트럼프 행정부가 AI 반도체의 전략적 중요성을 강조하며, 차세대 최고 성능의 AI 칩이 미국 내에서 생산될 것이라고 선언했다는 보도
+https://www.tomshardware.com/tech-industry/artificial-intelligence/trump-administration-declares-most-powerful-ai-chips-will-be-built-in-america
+TSMC, Intel 3nm·2nm 공장에 엔지니어 파견 검토… Intel 시장 점유율 2002년 이후 최저 (Wccftech)
+TSMC가 인텔의 3nm 및 2nm 팹에 엔지니어를 파견할 가능성이 있다는 공급망 소식. 한편 인텔의 마이크로프로세서 시장 점유율은 2002년 이후 최저 수준
+https://wccftech.com/baird-cites-supply-chain-chatter-that-tsmc-would-send-engineers-to-intels-3nm-2nm-fab-citi-notes-that-intels-microprocessor-share-is-now-lowest-since-2002/
+중국, 반도체 제조 장비 구매 줄일 듯… 자국산 장비 개발 가속화 (tom’s Hardware)
+중국이 올해 해외 반도체 제조 장비 구매를 줄이고, 자국산 반도체 장비 개발을 더욱 가속화할 것이라는 보도. 이는 미국의 반도체 수출 규제에 대응하기 위한 전략
+https://www.tomshardware.com/tech-industry/china-will-likely-reduce-purchase-of-chipmaking-tools-this-year-as-homegrown-toolmakers-ramp-up
+Meta, 한국 AI 반도체 스타트업 FuriosaAI 인수 협상 중 (KEDGlobal)
+FuriosaAI는 AI 모델 추론에 특화된 반도체를 개발하는 기업으로, Meta의 AI 하드웨어 역량 강화를 위한 전략적 인수로 해석됨
+https://www.kedglobal.com/mergers-acquisitions/newsView/ked202502120005
+SMIC, 관세 전쟁으로 '긴급 주문' 증가 (NikkeiAsia)
+미·중 관세 전쟁으로 인해 고객사들이 선제적으로 주문을 확대 중이며, 이에 생산 가동률이 높아지고 있다는 보도. 특히, 성숙 공정(28nm 등)에서 주문량 급증
+https://asia.nikkei.com/Business/Tech/Semiconductors/Top-China-chipmaker-SMIC-says-tariff-war-sparking-rush-orders
+Meta 수석 AI 과학자, 현재 AI·LLM 지속 가능성에 의문 제기 (HPCWire)
+Meta의 수석 AI 과학자인 Yann LeCun은 현재의 생성형 AI 및 LLM의 지속 가능성에 대해 회의적인 입장. 그는 현재 모델들이 지나치게 자원 집약적이며, 향후 AI 기술 발전을 위해서는 보다 효율적인 접근 방식이 필요하다고 주장
+https://www.hpcwire.com/2025/02/11/metas-chief-ai-scientist-yann-lecun-questions-the-longevity-of-current-genai-and-llms/
+감사합니다.
+TrendForce
+[News] TSMC Board Approves USD 17 billion Investment to Boost Capacity, No Update on U.S. Expansion Plans
+With the world watching, TSMC has unveiled its board meeting decisions. According to its press release, the chip giant has greenlit a massive US$17 bi...
+2.59K
+views
+21:39
+미래에셋증권 반도체 김영건
+US 반도체 업종 일간 수익률 리뷰
+[미래에셋증권 반도체 김영건/김제호]
+기준: US 2025.2.12(수)
+◆ 시장 수익률
+S&P500: -0.3%
+나스닥: +0.0%
+필라델피아 반도체 지수: +0.2%
+◆ 업종별 평균 수익률
+Chipmaker: +1.0%
+Logic: +2.2%
+Connectivity: -0.4%
+Memory: -2.5%
+Foundry: +3.7%
+Industry: +2.5%
+Power IC: +0.5%
+Equipment: -1.0%
+Materials: +1.9%
+OSAT: +1.2%
+AI Processor 관련: -0.9%
+◆ 특징주 등락 사유
+*미국 1월 CPI 시장 예상치 상회. 업종 전반 강보합
+On Semiconductor(+4.4%), NXP Semiconductor(+4.2%), Microchip(+2.4%) 등 Industrial(+2.5%) 업종 강세
+감사합니다.
+3.2K
+views
+22:21
+미래에셋증권 반도체 김영건
+2024. 10. 13(목)
+장중 DRAM 현물가격
+3.27K
+views
+02:59
+미래에셋증권 반도체 김영건
+2024. 2. 14(금) 반도체 주요 뉴스
+[미래에셋증권 반도체 김영건/김제호]
+Arm, Meta와 협력하여 자체 칩 개발 착수 (Reuters)
+전통적인 기술 라이선스 모델에서 벗어나 자체 칩 개발에 나서며, 첫 번째 고객으로 Meta를 확보했다는 보도. 새로운 칩은 대규모 데이터 센터용 CPU로 설계
+https://www.reuters.com/technology/arm-secures-meta-first-customer-ambitious-new-chip-project-ft-reports-2025-02-13/
+트럼프 행정부, CHIPS Act 지원 조건 변경 검토 중 (Reuters)
+트럼프 대통령이 CHIPS Act의 일부 조건을 재검토하고 있으며, 이에 따라 일부 지원금 지급이 지연될 수 있다는 보도
+https://www.reuters.com/technology/trump-prepares-change-us-chips-act-conditions-sources-say-2025-02-13/
+Elon Musk, "Grok-3, 최종 단계… 모든 챗봇보다 우수" (Reuters)
+AI 챗봇 ‘Grok-3’가 개발의 최종 단계에 있으며, 현재까지 출시된 어떤 챗봇보다 우수한 성능을 보이고 있다고 주장. Grok-3는 Tesla 및 xAI의 슈퍼컴퓨터에서 훈련되고 있음
+https://www.reuters.com/technology/artificial-intelligence/elon-musk-says-grok-3-final-stages-outperforming-all-chatbots-2025-02-13/
+美 정부, TSMC와 Intel의 미국 내 합작 투자 추진 (tom’s Hardware)
+미국 정부가 인텔과 TSMC에 두 회사가 소유하고 TSMC가 운영하는 합작 칩 생산 벤처를 설립하도록 추진하고 있다는 보도. 현재로서는 루머에 가까운 내용
+https://www.tomshardware.com/tech-industry/us-govt-pushing-tsmc-and-intel-to-create-joint-venture-in-the-us-report
+트럼프 행정부, 중국 반도체 산업에 대한 관세 조사 착수 (Digitimes)
+미국은 중국의 mature node 반도체 제조 및 3세대 SiC 기술을 겨냥한 301조 조사를 개시. 301조 조사는 Wolfspeed와 같이 미국에 기반을 둔 SiC 소재 제조업체에 도움이 될 것으로 예상
+https://www.digitimes.com/news/a20250211PD217/sic-tariff-wolfspeed-donald-trump-investigation.html
+Siemens, Alphawave Semi와 협력 및 첨단 반도체 IP 개발 (eeNews)
+해당 협력 통해 고속 데이터 전송 및 고성능 컴퓨팅에 최적화된 반도체 설계 솔루션을 제공할 계획. Alphawave는 이더넷, PCIe, CXL, HBM, UCIe(다이 투 다이) 구현과 같은 연결 및 메모리 프로토콜을 위한 IP 플랫폼 보유
+https://www.eenewseurope.com/en/siemens-eda-taps-alphawave-semi-for-leading-edge-ip/
+CXMT, 16nm DRAM 생산 기술 개발 중… 반도체 자급률 확대 (Digitimes)
+16nm 공정 기반의 DRAM 생산 기술을 개발 중이며, 이는 중국의 반도체 자급률 확대 전략의 일환이라는 보도. CXMT는 15nm DRAM의 연구 개발을 2025년까지 완료하고, 2026년 말부터 양산을 시작할 계획
+https://www.digitimes.com/news/a20250213VL204/dram-cxmt-16nm-production-development.html
+감사합니다.
+Reuters
+Arm secures Meta as first customer for ambitious new chip project, FT reports
+Arm Holdings plans to launch its own chip this year after securing Meta Platforms as one of its first customers, in a major shift to the chip tech provider's model of licensing its blueprints to other companies, the Financial Times reported on Thursday, sending…
+3.76K
+views
+21:57
+미래에셋증권 반도체 김영건
+2025. 2. 14(금)
+장중 DRAM 현물가격
+3.36K
+views
+03:09
+미래에셋증권 반도체 김영건
+2024. 2. 17(월) 반도체 주요 뉴스
+[미래에셋증권 반도체 김영건/김제호]
+美 정부, TSMC의 Intel 공장 운영 가능성 낮게 평가… 트럼프도 반대 입장 (tom’s Hardware)
+미국 정부가 TSMC가 인텔의 미국 내 반도체 공장을 운영할 가능성을 낮게 보고 있으며, 트럼프 대통령도 이에 대한 지지를 보이지 않고 있다는 보도. 미국 반도체 산업의 자립을 강조하는 정책 기조가 유지될 것으로 예상됨
+https://www.tomshardware.com/tech-industry/trump-is-unlikely-to-support-tsmc-running-intels-fabs-us-govt-downplays-chances-of-tsmc-takeover
+TSMC, 트럼프 행정부 요청으로 Intel 미국 공장 운영 검토 중 (Reuters)
+TSMC가 트럼프 행정부의 요청을 받아 인텔의 미국 내 반도체 공장을 운영하는 방안을 검토하고 있다는 보도. 이는 미국 내 반도체 생산 역량 강화를 위한 방안으로 논의되고 있으나, 정치적 및 산업적 변수로 인해 실행 가능성은 불확실함
+https://www.reuters.com/technology/tsmc-considering-running-intels-us-factories-after-trump-team-request-bloomberg-2025-02-14/
+Intel, TSMC·Broadcom의 인수 타겟으로 부상 (CRN)
+Intel이 최근 업계 내에서 TSMC 및 Broadcom과 같은 기업들의 인수 타겟으로 거론되고 있다는 보도. Broadcom은 PC 및 서버용 코어 및 제온 CPU를 포함한 Intel의 칩 설계 사업에 대해 고문들과 비공식적으로 입찰을 논의
+https://www.crn.com/news/components-peripherals/2025/intel-becomes-takeover-target-of-tsmc-broadcom-reports
+대만 정부 관계자, "반도체 산업은 특정 국가가 지배할 필요 없다" (Reuters)
+대만 정부 관계자가 글로벌 반도체 공급망의 중요성을 강조하며, 특정 국가가 반도체 산업을 완전히 지배할 필요는 없다고 발언했다는 보도. 이는 미국과 중국 간 반도체 패권 경쟁 속에서 대만의 중립적 입장을 시사하는 것으로 해석됨
+https://www.reuters.com/technology/no-need-one-country-control-chip-industry-taiwan-official-says-2025-02-15/
+Meta, AI 기반 휴머노이드 로봇 개발에 투자 계획 (Reuters)
+Meta가 AI를 활용한 휴머노이드 로봇 개발에 대한 투자를 검토하고 있다는 내부 메모가 공개되었다는 보도. AI 모델과 로봇 기술의 융합을 통해 차세대 인공지능 응용 분야를 확장하려는 전략으로 분석됨
+https://www.reuters.com/technology/artificial-intelligence/meta-plans-investments-into-ai-driven-humanoid-robots-memo-shows-2025-02-14/
+日 정부, 국가 비상시 핵심 공장 인수 가능성 검토 (Nikkei Asia)
+일본 정부가 국가 비상 상황에서 주요 제조 공장을 직접 인수할 수 있도록 하는 법적 프레임워크를 검토하고 있다는 보도. 이는 반도체 및 첨단 기술 산업의 전략적 중요성이 커지면서 공급망 보호를 위한 조치로 해석됨
+https://asia.nikkei.com/Politics/Japan-eyes-takeover-of-critical-factories-during-emergencies
+Infineon, 200mm 웨이퍼 기반 첫 SiC 반도체 출하 (eeNews)
+200mm 웨이퍼를 기반으로 한 첫 번째 SiC 반도체를 출하했다는 내용. 해당 디바이스는 오스트리아 빌라흐에 위치한 인피니언의 팹에서 제작
+https://www.eenewseurope.com/en/infineon-ships-first-sic-devices-from-200mm-wafers/
+Lam Research, 인도에 12억 달러 투자 합의 (eeNews)
+램리서치가 향후 몇 년 동안 인도 벵갈라루에 12억 달러를 투자해 시설을 설립할 계획이라고 밝혔다는 내용. 카르나타카 산업지역개발위원회와 투자 MoU 체결
+https://www.eenewseurope.com/en/lam-research-agrees-to-invest-us1-2-billion-in-india/
+감사합니다.
+Tom's Hardware
+Trump is 'unlikely' to support TSMC running Intel's fabs — US gov't downplays chances of TSMC takeover
+The Trump administration may oppose Intel's U.S. chip factories run by a foreign company.
+3.22K
+views
+21:50
+미래에셋증권 반도체 김영건
+반도체 2월 데이터 업데이트
+[미래에셋증권 반도체 김영건]
+약간 변화된 분위기
+결론 및 투자의견
+삼성전자에 대한 관심도를 높일 시기라 판단
+한다. PC DRAM 가격 하락이 하반기 중 종료될 것으로 전망되는 등 사이클에 대한 선행적 반등 가능성은 삼성전자와 SK하이닉스에 공히 적용되는 요인이다. 다만, 2월 DRAM의 수요 전망치가 컨벤셔널 위주로 상향된 점과 삼성전자의 자사주 매입 및 소각 가능성을 고려했을 때, 동사의 밸류에이션을 감안한 저점 비중 확대가 유효하다는 판단이다.
+2월 메모리 수급 및 계약가격 전망의 변화
+시장조사기관 Trendforce의 2월 메모리 수급 전망 데이터메 따르면, 25년 DRAM의 수요 전망치가 +0.2% 상향 되었다. 응용별로는 모바일 및 PC DRAM의 수요가 각각 +0.4%, +1.2% 상향 되었다. PC의 출하량 전망과 모바일의 탑재량 전망이 각각 +0.4%, +0.3% 상향 되었다. 1Q25의 출하량 전망치 상향 폭이 더 큰것으로 보아 중국에서의 IT 제품 보조금 지원 등의 효과가 반영된 것으로 추정한다.
+한편, 그래픽 DRAM(HBM 포함)의 수요는 -0.9% 하향 조정되었다. 연간 출하량 전망치는 +1.5% 상향된 반면, 탑재량이 -2.3% 하향 조정된 것으로 추청컨데, NVDA의 GB200 NVL72의 출하 지연이 반영된 것으로 보인다. 당초 작년 9월로 계획되었던 출하가 2Q25로 일부 이연되는 분위기다. 다만, 이는 공급의 일부 이연일 뿐이다. SMCI 등 Rack 제조사는 금년도 매출액 두 배 성장을 제시한 바 있다.
+DRAM, NAND 공히 컨벤셔널의 수요 약세를 반영해 선단으로의 공정 전환 및 가동률 조정 등 적극적 공급 조절을 감행할 것으로 추정된다. DRAM 및 NAND의 25년 평균 Wafer Capa 전망치는 각각 -17.0%, -5.5% 하향 되었다. 특히, 삼성전자의 경우 DRAM 17라인, NAND 시안 팹의 Capa가 각 30K씩 축소될 것으로 전망한다. WDC와 Kioxia도 컨벤셔널향 Capa를 적극 조절할 것을 언급한 바 있다.
+2월 기준 메모리 계약가격 전망은 전반적으로 추가 하향되었다. 그럼에도 불구하고, 1) DDR5의 가격 하락률이 2Q25부터 축소될 전망이며, 2) DDR5, DDR4 공히 3Q25 이후 가격 하락이 멈출 것으로 전망되고 있고, 3) NAND 전반의 가격이 이르면 2Q25 부터 상승할 것이라는 점은 긍정적이다. 비록 연중 가격 전망치가 추가 하향 되었더라도 YoY 하락률 환산 기준 저점이 금년 6월 전후라는 점은 변화가 없다.
+CXMT에 대한 규제 강화에 따른 전망치 하향
+금년 1월, 美 상무부는 中 CXMT에 대한 규제안을 강화했다. DRAM 셀의 최소 규제 면적을 0.0026 um2(기존 0.00194 um2)로, 규제 집적도를 0.20 Gb/mm2(기존 0.288Gb/mm2)로 확대했고, 다이당 TSV 갯수를 3,000개로 제한했다. 당 조치로 2월부터 美 장비사들이 CXMT 팹에서 철수했다. Trendforce는 CXMT의 26년말 Capa를 최대 350K(기존 400K), 25F B/G를 90%(기존 100%)로 하향 조정했다.
+보고서 링크:
+https://img.securities.miraeasset.com/ezresearch/linkfiles/c512fa44-79e5-44bb-bf69-35cb8675be29.pdf
+감사합니다.
+21.8K
+views
+23:09

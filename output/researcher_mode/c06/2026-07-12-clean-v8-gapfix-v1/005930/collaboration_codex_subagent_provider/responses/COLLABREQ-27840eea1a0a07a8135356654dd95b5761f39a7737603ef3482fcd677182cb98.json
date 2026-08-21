@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5645f56d17ebc1a2bab16a92",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0,
+        "rationale": "AMD 도메인의 제품·기술·지원·행사 페이지이거나 일반 HBM 자료이지만, candidate title·URL에 Samsung target과 HBM3E/HBM4 accelerator 관계가 함께 명시되지 않는다. Snippet은 discovery-only이므로 named counterparty technical corroboration용 full-fetch route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f61d4f08629a5b57eb9e9db1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0,
+        "rationale": "AMD 도메인의 제품·기술·지원·행사 페이지이거나 일반 HBM 자료이지만, candidate title·URL에 Samsung target과 HBM3E/HBM4 accelerator 관계가 함께 명시되지 않는다. Snippet은 discovery-only이므로 named counterparty technical corroboration용 full-fetch route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a6c57b021a690a84232abf09",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0,
+        "rationale": "AMD 도메인의 제품·기술·지원·행사 페이지이거나 일반 HBM 자료이지만, candidate title·URL에 Samsung target과 HBM3E/HBM4 accelerator 관계가 함께 명시되지 않는다. Snippet은 discovery-only이므로 named counterparty technical corroboration용 full-fetch route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8257e78650652f84de927cf5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0,
+        "rationale": "AMD 도메인의 제품·기술·지원·행사 페이지이거나 일반 HBM 자료이지만, candidate title·URL에 Samsung target과 HBM3E/HBM4 accelerator 관계가 함께 명시되지 않는다. Snippet은 discovery-only이므로 named counterparty technical corroboration용 full-fetch route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e3c743c23f1f900301f82b1f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0,
+        "rationale": "AMD 도메인의 제품·기술·지원·행사 페이지이거나 일반 HBM 자료이지만, candidate title·URL에 Samsung target과 HBM3E/HBM4 accelerator 관계가 함께 명시되지 않는다. Snippet은 discovery-only이므로 named counterparty technical corroboration용 full-fetch route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-27645b93c70dfbd9c99f0414",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0,
+        "rationale": "AMD 도메인의 제품·기술·지원·행사 페이지이거나 일반 HBM 자료이지만, candidate title·URL에 Samsung target과 HBM3E/HBM4 accelerator 관계가 함께 명시되지 않는다. Snippet은 discovery-only이므로 named counterparty technical corroboration용 full-fetch route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f05b367b23ba7f1d6dc050eb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0,
+        "rationale": "AMD 도메인의 제품·기술·지원·행사 페이지이거나 일반 HBM 자료이지만, candidate title·URL에 Samsung target과 HBM3E/HBM4 accelerator 관계가 함께 명시되지 않는다. Snippet은 discovery-only이므로 named counterparty technical corroboration용 full-fetch route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7f1812e8694f1c12c5aed334",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0,
+        "rationale": "AMD 도메인의 제품·기술·지원·행사 페이지이거나 일반 HBM 자료이지만, candidate title·URL에 Samsung target과 HBM3E/HBM4 accelerator 관계가 함께 명시되지 않는다. Snippet은 discovery-only이므로 named counterparty technical corroboration용 full-fetch route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-86ed82e0593b9cc5d255b2b5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0,
+        "rationale": "AMD 도메인의 제품·기술·지원·행사 페이지이거나 일반 HBM 자료이지만, candidate title·URL에 Samsung target과 HBM3E/HBM4 accelerator 관계가 함께 명시되지 않는다. Snippet은 discovery-only이므로 named counterparty technical corroboration용 full-fetch route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-96edad3a7615eefd1286ebd5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0,
+        "rationale": "AMD 도메인의 제품·기술·지원·행사 페이지이거나 일반 HBM 자료이지만, candidate title·URL에 Samsung target과 HBM3E/HBM4 accelerator 관계가 함께 명시되지 않는다. Snippet은 discovery-only이므로 named counterparty technical corroboration용 full-fetch route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-5e7466f3bd0f44651e2c6dc6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0,
+        "rationale": "AMD 도메인의 제품·기술·지원·행사 페이지이거나 일반 HBM 자료이지만, candidate title·URL에 Samsung target과 HBM3E/HBM4 accelerator 관계가 함께 명시되지 않는다. Snippet은 discovery-only이므로 named counterparty technical corroboration용 full-fetch route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-828e94ba6e86ee5d37626772",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0,
+        "rationale": "AMD 도메인의 제품·기술·지원·행사 페이지이거나 일반 HBM 자료이지만, candidate title·URL에 Samsung target과 HBM3E/HBM4 accelerator 관계가 함께 명시되지 않는다. Snippet은 discovery-only이므로 named counterparty technical corroboration용 full-fetch route로 승격하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 후보는 Samsung을 명명한 AMD HBM3E/HBM4 기술 관계 원문 route를 제공하지 않는다. Generic AMD HBM·accelerator 페이지는 target 관계를 증명하지 않는다.",
+      "검색 후보의 nonmaterial 판정은 source absence 선언이 아니며, snippet·metadata를 evidence로 사용하지 않는다."
+    ]
+  },
+  "payload_hash": "53aea322be532b7327a2c5d9dae516cb9c251670e6911f9ccfb4598d85258b53",
+  "production_score_authority": false,
+  "prompt_hash": "d523195691e2893cffca95ed5035f8bbe9551b4539f87177c47dbfac0690c197",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-27840eea1a0a07a8135356654dd95b5761f39a7737603ef3482fcd677182cb98",
+  "response_id": "COLLABRESP-9f9f3358cd118350a738fa06d4a95307d5e2b0b2bd1c9967d24a46657746ae5e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

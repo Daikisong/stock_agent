@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "Reviewer B independently reviewed all seven complete component memos, including 57 selected positive facts, 10 selected counter facts, their structured roles and their retained attribution, contract, denominator, duration and cash-conversion limitations. Red Team independently reviewed all seven components and 85 challenged/counter facts; its unresolved wording is preserved as scored or monitoring limitation rather than silently converted into source absence. The current Supervisor has seven sufficient findings, complete structured and counter gates, no material gap, no unexecuted source/query direction, no unresolved question and no next action. The Source Graph is STOPPED_ON_RESOLUTION with all seven objectives resolved, 39 evidence documents, no pending query and no transport-budget completion claim, so it is not supported only by zero results. The resolved failure history, rather than fixed rounds, material-zero candidates, provider errors or a no-result search, establishes that no reasonable executable positive, counter, supersession, structured or new-source-family route remains. Approval is only semantic research coverage and has no score or Stage authority.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "523dfe8555a89354da41d5234515e4d67c9850b973de988f96895a3c86c3dd65",
+  "production_score_authority": false,
+  "prompt_hash": "e82e048f8626634af56c72a2157366d6740585d28692237200d085aa8b3bbbe1",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e6ad386e2449e78a1a3d30c2b3c6dd50ed2148bf91590fc6263c9b3306fcdf44",
+  "response_id": "COLLABRESP-54816d938f7076892d83128a3700de8f79e17a52d9d892187410e62248457d4d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

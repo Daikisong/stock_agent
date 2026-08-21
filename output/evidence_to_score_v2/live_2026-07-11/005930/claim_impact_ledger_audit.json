@@ -1,0 +1,19 @@
+{
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "component_score_without_eligibility_decision_count": 0,
+    "cross_mechanism_impact_count": 0,
+    "duplicate_economic_credit_count": 0,
+    "mapping_lineage_loss_count": 0,
+    "mechanism_scope_missing_count": 0,
+    "one_claim_multiple_impact_rejected_count": 0,
+    "original_gap_closed_by_rerouted_count": 0,
+    "valid_rerouted_claim_lost_score_impact_count": 0
+  },
+  "mechanism_scope_rejected_count": 0,
+  "multi_impact_claim_count": 10,
+  "proposal_count": 37,
+  "rejected_impact_count": 0,
+  "schema_version": "e2r_claim_impact_ledger_audit_v1",
+  "validated_impact_count": 37
+}

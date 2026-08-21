@@ -1,0 +1,64 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      15.8,
+      18.2
+    ],
+    "anchor_comparisons": [
+      "CANCH-3d3e727f09221d0fc00e86a6는 POSITIVE ordinal anchor로 [16.08, 18.48] 범위를 제시한다. 현재 사실과 정확한 기업·기간 대응은 아니므로 점수 scale 경계로만 사용한다.",
+      "CANCH-17745cd4887afd21639e9dd6는 COUNTER ordinal anchor로 [10.32, 12.72] 범위를 제시한다. 현재 사실과 정확한 기업·기간 대응은 아니므로 점수 scale 경계로만 사용한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-22b3c14ea08f7a3f6c58b170",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-9deebb8473a44150b981c991",
+      "EFACT-c07ed486e6d67134d19d6951"
+    ],
+    "disagreements": [
+      "연결·DRAM actual을 HBM 단독 EPS/FCF로 해석하거나 CompanyGuide revision을 actual로 취급하는 상단 해석에는 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-3d3e727f09221d0fc00e86a6",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 17.0,
+    "rationale": "연결 actual 영업이익·순이익·영업현금흐름, DRAM 성장과 HBM 가격·실행 positive를 모두 반영하되 연결·DRAM을 HBM 단독 이익·FCF로 재귀속하지 않는다. CAPEX, 재고평가, 재공품 손실을 함께 반영한 결과 strong이지만 최고점 미만의 17.0점이 적정하다.",
+    "support_fact_ids": [
+      "EFACT-0295af0d92028218f77266f2",
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-74d33983a80ca98f18936f31",
+      "EFACT-802a829867fee39ece0b193c",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-d2e799df4d980691c6707a9e",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "HBM 단독 이익·FCF·CAPEX·감가상각과 확정 장기 고객 물량이 없고 재고·재공품·CAPEX counter가 남는다.",
+    "why_not_lower": "current actual 이익·현금흐름, DRAM 성장, 메모리 100% 가동과 HBM 가격·제품·고객 실행이 동시에 확인된다."
+  },
+  "payload_hash": "533bc786380a1797ccda8e211481b2ec78880aa361faaf7ad1c5f31cdb493efe",
+  "production_score_authority": false,
+  "prompt_hash": "157abff6d9bf4e433a76165a6416b1063818f1a5f3310821d6a33feda731dfbc",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9e4f0ccbf4ba6f5dfed985044460bd0e5eb0ccba51e4c49a8d60ec6f73908f1d",
+  "response_id": "COLLABRESP-052011ac386ffb659fabefd45d7651bca4b53cc7bb7e68f15027c811a75a184b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "744a48df81396a3c04f7dd2bdd190da9ed944a5b26a9ceb90e34c0c5325513a1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1b81245590903a6f681343d6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.25,
+        "rationale": "Bondweb 집계에서 삼성전자 메모리 보고서 제목은 보이지만 원 broker identity와 requested peer valuation table provenance를 확인할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-1659f8008f87625eb1cd585c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.03,
+        "rationale": "Bondweb 다종목 Daily 목록이며 PBR 문구가 삼성전자에 귀속되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-cf1be8e1e3a6819209a9ed12",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "하나증권 배터리 산업보고서로 삼성전자 memory peer valuation과 다른 subject다."
+      },
+      {
+        "candidate_id": "SGCAND-41b4581d579063f5466dd107",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.15,
+        "rationale": "2026-05-13 유안타 Daily의 삼성전자 파운드리 추천 문구로 peer identity·period·P/B band가 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "ranking_complete는 이 partition의 후보 분류 완료만 뜻한다. material 후보는 full fetch 후 2026-07-12 cutoff, 삼성전자 subject, peer identity, 동일 forecast period 및 numeric P/B를 검증해야 한다."
+    ]
+  },
+  "payload_hash": "40c66633afa221e1ee7c9cb52084712a99c45300412a630b9eadcb68d5240aa7",
+  "production_score_authority": false,
+  "prompt_hash": "116faa4e6f5e043774cbf01e5ec1f7a3723fbca1c74af56db4384dd2c321589f",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3d0496b9d07c7c757adfa874699f7896878ec16ed1c2d082458a63ada6a35be1",
+  "response_id": "COLLABRESP-feb0141a695c3beb3b20e54329373af30cabb39a33c322605802f6239a2b122e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

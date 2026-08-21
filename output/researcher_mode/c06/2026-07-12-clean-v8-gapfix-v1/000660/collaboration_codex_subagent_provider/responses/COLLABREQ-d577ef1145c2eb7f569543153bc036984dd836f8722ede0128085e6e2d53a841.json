@@ -1,0 +1,143 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-a7ba1123e55006eaa89d2da6는 연결·DRAM actual과 HBM 가격·매출 실행을 CAPEX·재고·HBM-only 귀속 한계와 함께 반영했다. Deterministic score aggregation은 complete이고 material disagreement summary에 이 component가 없으므로, raw judge range가 prompt에 없다는 transport 사유만으로 memo를 불충분하게 만들지 않는다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-94a0b0951207cd91b0a3504c는 memory 100% utilization, HBM4 고객요청 수량 양산과 수요 전망을 월·분기 가격/물량 합의, 고객집중·재고 및 signed-contract 공백과 분리했다. Current objective는 resolved이고 deterministic material disagreement도 없다. Raw judge 미내장은 이 결론을 무효화하지 않는다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-2249911cddf154b56adcb60c는 memory 100% 가동과 demand exceeding supply를 current bottleneck으로 사용하되 HBM-only CAPA, sold-out 기간, allocation 또는 realized ASP로 확대하지 않았다. Counter가 memo에 반영됐고 objective는 resolved이며 deterministic disagreement가 없다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-d3b966cef94684f224f000f9는 actual operating delta와 current/forward valuation을 사용하면서 HBM-attributable surprise와 consensus bridge 부재를 counterweight로 보존했다. Supplied deterministic summary는 complete이고 material disagreement가 없으므로 raw judge가 내장되지 않았다는 이유로 rewrite를 요구하지 않는다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-bd1ae968a0ff283334124565는 HBM 실행·demand/capacity와 상충하는 PE·EV/EBITDA·PB·FCF yield를 함께 반영하고 HBM-only denominator 부재를 명시했다. PUBLIC_BROKER_PDF는 accepted claim/fact lineage 없이 exhausted됐고 alternate ISSUER_PRESENTATION query도 current prompt에서 NO_RESULT다. 무결과를 source absence로 바꾸지는 않지만, prompt에 full-fetch 가능한 새 candidate identity가 없어 현재 실행 가능한 candidate-bound route도 없다. Deterministic material disagreement는 없다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-d59a4c0b36f44562d19c1762는 순현금·부채감축·환원 actual과 CAPEX·R&D·운전자본·희석 부담을 함께 반영하고 전사 수치를 HBM-only ROIC로 승격하지 않았다. Cutoff 이후 문서 제외는 source absence가 아니며 deterministic disagreement도 없다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-80cb0de6b0599152dc281125는 OPENDART·감사 actual의 신뢰성과 issuer-only HBM/ASIC 관계 증거의 비독립성을 구분했다. Independent corroborating group 0은 source absence가 아니고 supplied 관계는 generic customers라 named counterparty-official route를 발명할 수 없다. Deterministic disagreement가 없으며 raw judge 미내장도 memo insufficiency가 아니다."
+      }
+    ],
+    "component_memos_sufficient": true,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-1a14a205b1ca37e2a0a08185",
+        "rationale": "Snippet-only candidate가 full-fetch evidence 요건을 충족하지 못했지만 source graph objective resolution으로 resolved됐다. Source absence를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-396db09e42ba9a891cc04cd1",
+        "rationale": "17개 QUERY_PROVIDER_ERROR는 query transport/provider failure다. Content absence가 아니며 provider 회복 시에만 새 immutable state에서 재평가할 수 있다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-76c6261978c1e313b9c615cf",
+        "rationale": "PUBLIC_BROKER_PDF에서 accepted claim/fact lineage가 없고 full fetch도 확인되지 않았다. Exact family는 alternate_route_required 상태여서 반복할 수 없으며 이는 broker evidence의 부재 증명이 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-976e77a75db8ea1311b1326c",
+        "rationale": "Snippet-only full-fetch-required query failure는 source graph objective resolution으로 resolved됐다. Snippet을 evidence나 absence proof로 쓰지 않았다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-9f189ef4313bb76da9d0c2eb",
+        "rationale": "6개 document는 full fetch 후 cutoff 이후 자료로 확인돼 적법하게 제외됐다. Current source availability를 부정하는 근거가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-b5e3b8331dcb08b996ec83cf",
+        "rationale": "6개 query failure는 full-document fetch 단계에서 cutoff 이후 문서로 판정된 계보다. As-of 판단에 재사용하거나 source absence로 바꿀 수 없다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY는 한 generation attempt에서 novel route가 나오지 않았다는 뜻이다. Fixed round 종료나 saturation 및 source absence를 증명하지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-d5ae73aeae8a077698c8758a",
+        "rationale": "Valuation objective의 6개 SEARCH_NO_RESULT_NOT_SATURATION에는 current ISSUER_PRESENTATION 시도도 포함되지만, zero result는 부재 증명이 아니다. 다만 prompt에는 이를 다시 실행할 새 candidate identity가 없다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [],
+    "new_source_family_directions": [],
+    "next_actions": [
+      "현재 prompt에 full-fetch 가능한 새 candidate identity가 없으므로 PUBLIC_BROKER_PDF 또는 ISSUER_PRESENTATION literal/family를 반복하지 않는다. Query/provider transport가 회복되어 genuinely new candidate-bound route가 exact state에 공급될 때 새 Supervisor가 판단한다.",
+      "후발 b511 query response/result를 이 immutable review에 선반영하지 않는다. Active response가 생기면 다음 exact Supervisor prompt에서 actual fetch, materiality, accepted claim/fact lineage를 별도로 감사한다.",
+      "Deterministic score aggregation complete 및 material disagreement 0개를 유지한다. Raw judge artifact가 향후 prompt에 공급되더라도 현재 summary를 임의 무효화하지 않고 lineage가 명시적으로 바뀔 때만 memo rewrite 또는 new judges를 요구한다."
+    ],
+    "query_direction_briefs": [],
+    "rationale": "Immutable prompt의 memos 7개, RTMEMO-8ed934301d7aeb07d694beae, SYNMEMO-7e62fcb75ef8db2fa237e384, structured records, 7/7 counter proof, 363 materiality attestations, deterministic score summary와 8 failure groups를 전수 감사했다. Deterministic aggregation은 COMPLETE이고 material disagreement component는 0개이므로 raw judge range 미내장을 memo insufficiency로 확대하지 않았다. Counter와 structured gates 및 memo sufficiency는 true다. PUBLIC_BROKER_PDF는 accepted lineage 없이 exhausted됐고 current ISSUER_PRESENTATION query도 NO_RESULT지만 어떤 실패도 source absence를 증명하지 않는다. 동시에 prompt에는 새로 실행할 candidate identity가 없으므로 current reasonable route는 false다. Retryable provider/no-result/accepted-lineage failures와 source graph pending state가 남아 independent saturation readiness는 false이며 status는 NEXT_RESEARCH_REQUIRED다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "81955057adaad36eaff973d9ef5c372b36a2fa7559a51e18b404abc3f8e1128a",
+  "production_score_authority": false,
+  "prompt_hash": "c772e2b13baf8df713011aeaf49cd7d507771b18881b82ba3de2b861d5cbbf7d",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d577ef1145c2eb7f569543153bc036984dd836f8722ede0128085e6e2d53a841",
+  "response_id": "COLLABRESP-f40dfa853b4de54b4c5b915bd23130c4e985c23bd81f2f1908811a0fe9ee150f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

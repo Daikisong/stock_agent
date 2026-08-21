@@ -1,0 +1,55 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      2.8,
+      3.6
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797의 LOW-confidence ordinal positive band와 ORDTRANSFER-994f92d663d0b49c624b1803의 LOW-confidence ordinal counter band를 모두 비교했다. 두 anchor는 경제 사실의 exact match가 아니므로 점수 눈금 참고에만 사용하고, 현재 exact support와 counter의 균형으로 범위를 정했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-dcd0816b6ba04c76c69e7a4b",
+      "EFACT-e2b5d15b4400874c34e4f2a2"
+    ],
+    "disagreements": [
+      "issuer 직접 확인은 실행 진척을 지지하지만 동일 issuer 계열 반복을 독립 corroboration으로 세면 안 되고 forecast를 actual로 승격해서도 안 된다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "proposed_points": 3.2,
+    "rationale": "LOW-confidence anchor의 exact 유사성을 과장하지 않고 ordinal scale만 적용했다. issuer 자료가 HBM4 양산 진입·고객 성능요구 충족과 FY2025 HBM 매출 actual 성장을 직접 확인한다. 다만 named 고객·qualification 일자·binding terms와 HBM 단독 손익이 없고 월·분기 합의 구조 및 브로커 전망 내부 불일치가 정밀도를 제한한다.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-a74dac2b9e727f8592e52c41",
+      "EFACT-b74e88a671a1247b0ce230d5",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "독립된 고객 공식 확인, 계약 원문과 HBM 단독 재무가 없고 브로커 전망 내부 불일치가 있어 full-strong 정보 신뢰도는 과도하다.",
+    "why_not_lower": "issuer가 양산 진입, 고객 성능요구 충족, actual HBM 매출 증가와 공급 논의를 구체적으로 확인했으므로 정보 부재 수준으로 낮출 수 없다."
+  },
+  "payload_hash": "a34da515cd463b9928c352eafad450a8a4fcc40d1c583c763466317fe3c48414",
+  "production_score_authority": false,
+  "prompt_hash": "5b83bdc7ef9d04cbf02f6582c97f1599944a936fbec3237df5530c353b233ea5",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9373990c20df428aa077aa15f6aca7c2d8e68a9949ece074fc59e66670ddd9cc",
+  "response_id": "COLLABRESP-c7973f14b79f2d4eb1836f99afd4bc21d1b0702a926d97738d5bd7300a83a9d2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

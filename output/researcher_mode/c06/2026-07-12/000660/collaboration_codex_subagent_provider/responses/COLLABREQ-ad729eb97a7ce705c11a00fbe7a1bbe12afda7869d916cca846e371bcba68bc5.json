@@ -1,0 +1,154 @@
+{
+  "output_schema_hash": "bae53379d452ea93c99277440efed4e3cb3d1bbccb540a10fbcbd91183a91de3",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-23466bb3729cc943ccbe3622",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Dear Western Digital Corporation Stockholder”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-fec5ecf7680d17f6485ce17b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “STRENGTHENING AI FOUNDATIONS”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-c8a59a708613f548e28595a3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “INTERNATIONAL ROADMAP FOR DEVICES AND SYSTEMS”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-3c3f2dfbb435b1bd550efe01",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “2025 Annual Report - Compal”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-1b0ac2883174478e4772367b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Samsung's Major Clients Q1 2010 | PDF | Samsung Electronics | Samsung”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-e99c21d19bc6ac6f086542f1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Samsung Electronics”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-0ffd10ce0a06ffe97b812860",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Samsung Electronics”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-2493ec9a7959120953997f89",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 TRUSTED_BUSINESS_MEDIA 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Newsflash | MemoryMarket - memory prices, market analysis, industry news, research report”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-0de7f7c8bb8cc810636affaa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “S-1 - SEC”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-515aa80e8e9e8c91a2573e43",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “All content Archive | January 2026”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-f3191e86f2d8aefa49bcaddc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “카본-Z마라톤화(울트라)를 신고 달리다.”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-e9dfbbc31115ede8fcf263e6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Baillie Gifford Worldwide Emerging Markets Leading Companies Fund”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 12개 후보를 입력 순서대로 정확히 한 번씩 분류했다. verified issuer-domain 후보가 없고 모든 candidate source-family hint가 요청된 SK하이닉스 issuer earnings release·presentation·newsroom 범위 밖이므로 material fetch 후보가 없다.",
+      "모든 published_at이 비어 있고 snippet은 discovery metadata일 뿐이므로 발행일·원문·수치 귀속을 증명하지 않는다. FORWARD_GUIDANCE, SEGMENT_CONTRIBUTION, DURABLE_VISIBILITY 공백은 계속 미해결이다."
+    ]
+  },
+  "payload_hash": "e4f59e93b356cd1cbe0dfe8630668b484784adff965541865d6e0ae495eb764f",
+  "production_score_authority": false,
+  "prompt_hash": "a9a22c7208052ed69bcd2aab044c6755398b13811123802320e666058a06ed68",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ad729eb97a7ce705c11a00fbe7a1bbe12afda7869d916cca846e371bcba68bc5",
+  "response_id": "COLLABRESP-9e0b5388ed491c490c0bfab0fd272a188a6bfc646f80df2be842fa35748da072",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

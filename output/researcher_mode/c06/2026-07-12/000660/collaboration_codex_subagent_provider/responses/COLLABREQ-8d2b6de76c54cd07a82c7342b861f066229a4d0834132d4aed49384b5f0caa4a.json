@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "550cc947221531a16708a534b9781441125fb118811e24b86e890d9319836e4b",
+  "payload": {
+    "allowed_range": [
+      14.2,
+      16.2
+    ],
+    "anchor_comparisons": [
+      "Positive anchor CANCH-fe4be151b6e34320ddc5f6a7의 14.28~16.38점 strong band와 비교하면, 현재 사례는 HBM4 양산 진입·고객 성능요구 충족·3년 요청수요의 공급능력 초과·FY2026 DRAM 생산량 수요 확보가 함께 있어 band 내부의 중상단에 가깝다. 다만 anchor는 ordinal이고 exact company mapping은 아니다.",
+      "Counter anchor CANCH-1aa76cb8e89d85cd78d325f4의 9.95~12.05점 band는 고객 lock 부재·지연과 margin bridge 약화 패턴이다. 현재도 장기 고정계약은 없지만 실제 HBM4 양산과 연간 DRAM 수요 커버가 있어 이 band보다 높다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-c890adf15151ce383d70cf81",
+      "EFACT-dde9f3ef4ad310f18beb72e8"
+    ],
+    "disagreements": [
+      "다년 LTA와 핵심고객 공급 논의를 체결된 구매의무로 보지 않으며, 이를 이유로 positive anchor 상단을 넘기는 해석에 동의하지 않는다.",
+      "제3자 FY2026 revision은 수요 가시성을 보조하지만 계약 duration의 직접 증거가 아니므로 점수의 핵심 근거로 사용하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-fe4be151b6e34320ddc5f6a7",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 15.2,
+    "rationale": "HBM4 대규모 생산(EFACT-13eb...), 3년 고객 요청수요의 CAPA 초과(EFACT-62c3...), 고객 성능요구 충족과 양산(EFACT-a74d...), FY2026 DRAM 전 생산량 수요 확보(EFACT-d7a5...), 조건부 LTA 경제성(EFACT-e043...), 강한 커밋 기반 다년 LTA 논의(EFACT-e269...), 2026 핵심고객 HBM 공급 논의 완료(EFACT-f44f...)를 모두 반영했다. 반면 월·분기 물량·가격 합의(EFACT-b649...), CXMT 증설(EFACT-c890...), 베라 루빈 지연(EFACT-dde9...)은 duration과 실제 출하 전환을 제한한다. 제품·수요·공급 실행은 strong이지만 공개된 구속 계약은 아니므로 21점 만점의 15.2점이 적정하다.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-62c3b9f322f3a062b5e74751",
+      "EFACT-a74dac2b9e727f8592e52c41",
+      "EFACT-d7a582ebff38082719fe2983",
+      "EFACT-e0438e911cc6bbc80ba6e3f4",
+      "EFACT-e269e2b69e9152111e463563",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "주요 고객 물량·가격은 월별 또는 분기별 합의이고, 다년 LTA는 조건 검토 단계다. 베라 루빈 지연으로 HBM4 믹스가 흔들렸고 CXMT 증설도 중기 경쟁을 높여 공개된 수요가 취소·가격·물량이 잠긴 현금흐름으로 확정되지는 않았다.",
+    "why_not_lower": "HBM4가 고객 성능요구를 충족해 실제 양산·대규모 생산 단계에 들어갔고, 향후 3년 요청수요가 공급능력을 넘으며 FY2026 DRAM 전체 생산량에 대한 수요가 확보돼 단순 기대나 브로커 전망보다 강하다."
+  },
+  "payload_hash": "c5de99af6a1ddaeb924ab053f6e60fde726106b1df453c5ac6d135b30a0bcb7c",
+  "production_score_authority": false,
+  "prompt_hash": "39cd652dd15e4bf04392b1718939a1136676b87e3a65ed55be8158c0ae36e9fb",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8d2b6de76c54cd07a82c7342b861f066229a4d0834132d4aed49384b5f0caa4a",
+  "response_id": "COLLABRESP-a6cfd8a0f1b86c8c76a1e75dc35691a444da32dbc39fc394e2d2461b46655b7a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-f7fb6614c53976f47708a952",
+        "rationale": "90,789자·17개 PDF 페이지를 전수 검토했다. 삼성전자 기업분석 구간의 직접 연결재무제표 표에서 FY2026F·FY2027F·FY2028F EV/EBITDA 점값 3건만 추출했다. 산업 일반론과 SK하이닉스·장비·부품사 표는 삼성전자 valuation fact로 전용하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f7fb6614c53976f47708a952",
+        "economic_mechanism": "BNK투자증권의 예상 EV/EBITDA는 메모리 이익 전망을 포함한 삼성전자 기업가치가 예상 EBITDA 대비 몇 배인지 기간별로 수치화한다.",
+        "exact_quote": "Fig. 1: 삼성전자 연결재무제표 요약\n2024 2025 2026F 2027F 2028F\n매출액(십억원) 300,871 333,606 650,236 696,757 717,660\n영업이익 32,726 43,601 337,533 356,835 337,229\n세전이익 37,530 49,481 346,144 376,609 367,541\n순이익[지배] 33,621 44,261 288,066 313,420 305,874\nEPS(원) 4,950 6,564 43,186 47,140 46,005\n증감률(%) 132.3 32.6 557.9 9.2 -2.4\nPER(배) 10.7 18.3 5.1 4.7 4.8 BNK투자증권 리서치센터\nPBR 0.9 1.9 2.0 1.4 1.1 07325 서울시 영등포구 여의대로 56\nEV/EBITDA 3.6 7.7 2.7 1.9 1.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 직접 표의 기간 헤더와 EV/EBITDA 행이 FY2026F 점값 2.7와 배수 단위를 함께 제시해 공개 증권사 forward valuation 관측치를 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EV_EBITDA:FY2026F:BNK_20260427",
+        "normalized_object": "삼성전자 2026년 예상 EV/EBITDA 2.7배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "BNK투자증권은 삼성전자의 2026년 예상 EV/EBITDA를 2.7배로 제시했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "FORWARD_EV_EBITDA",
+          "FY2026F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2026년 예상 EV/EBITDA",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 2.7
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f7fb6614c53976f47708a952",
+        "economic_mechanism": "BNK투자증권의 예상 EV/EBITDA는 메모리 이익 전망을 포함한 삼성전자 기업가치가 예상 EBITDA 대비 몇 배인지 기간별로 수치화한다.",
+        "exact_quote": "Fig. 1: 삼성전자 연결재무제표 요약\n2024 2025 2026F 2027F 2028F\n매출액(십억원) 300,871 333,606 650,236 696,757 717,660\n영업이익 32,726 43,601 337,533 356,835 337,229\n세전이익 37,530 49,481 346,144 376,609 367,541\n순이익[지배] 33,621 44,261 288,066 313,420 305,874\nEPS(원) 4,950 6,564 43,186 47,140 46,005\n증감률(%) 132.3 32.6 557.9 9.2 -2.4\nPER(배) 10.7 18.3 5.1 4.7 4.8 BNK투자증권 리서치센터\nPBR 0.9 1.9 2.0 1.4 1.1 07325 서울시 영등포구 여의대로 56\nEV/EBITDA 3.6 7.7 2.7 1.9 1.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 삼성전자 직접 표에서 FY2027F 점값 1.9와 배수 단위를 명시해 2026년과 별개의 forward 기간 구조를 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EV_EBITDA:FY2027F:BNK_20260427",
+        "normalized_object": "삼성전자 2027년 예상 EV/EBITDA 1.9배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "BNK투자증권은 삼성전자의 2027년 예상 EV/EBITDA를 1.9배로 제시했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "FORWARD_EV_EBITDA",
+          "FY2027F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2027년 예상 EV/EBITDA",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 1.9
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f7fb6614c53976f47708a952",
+        "economic_mechanism": "BNK투자증권의 예상 EV/EBITDA는 메모리 이익 전망을 포함한 삼성전자 기업가치가 예상 EBITDA 대비 몇 배인지 기간별로 수치화한다.",
+        "exact_quote": "Fig. 1: 삼성전자 연결재무제표 요약\n2024 2025 2026F 2027F 2028F\n매출액(십억원) 300,871 333,606 650,236 696,757 717,660\n영업이익 32,726 43,601 337,533 356,835 337,229\n세전이익 37,530 49,481 346,144 376,609 367,541\n순이익[지배] 33,621 44,261 288,066 313,420 305,874\nEPS(원) 4,950 6,564 43,186 47,140 46,005\n증감률(%) 132.3 32.6 557.9 9.2 -2.4\nPER(배) 10.7 18.3 5.1 4.7 4.8 BNK투자증권 리서치센터\nPBR 0.9 1.9 2.0 1.4 1.1 07325 서울시 영등포구 여의대로 56\nEV/EBITDA 3.6 7.7 2.7 1.9 1.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 삼성전자 직접 표에서 FY2028F 점값 1.3과 배수 단위를 명시해 장기 forward 배수 경로를 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EV_EBITDA:FY2028F:BNK_20260427",
+        "normalized_object": "삼성전자 2028년 예상 EV/EBITDA 1.3배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2028F",
+        "predicate": "BNK투자증권은 삼성전자의 2028년 예상 EV/EBITDA를 1.3배로 제시했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "FORWARD_EV_EBITDA",
+          "FY2028F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2028년 예상 EV/EBITDA",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 1.3
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "2626ae00dcaa0d2467ab77e8d75781bc696a6cb326107e750fc9767b8deb7eaf",
+  "production_score_authority": false,
+  "prompt_hash": "6cea7c92063b31927ab7a63e2f1508f6aba77a810458a1f262257383da524cd9",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-403e30f4114e328b8c457f092eb6db29b1eab129f7d404d20bc53d559d5ff0a5",
+  "response_id": "COLLABRESP-fb271159f69e410d0f675b27e83b3c6d9fd0737ca14b60e0bb3e81272aa24b68",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

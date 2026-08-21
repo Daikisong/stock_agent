@@ -1,0 +1,490 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "rationale": "단일 full document 1,420줄을 Gold-blind로 전수 검토해 장기 SCA/LTA 가시성, HBM4 수요연동 Capex, 고객자금 연계 증설 시나리오, 2027 HBM 가격 프리미엄, SK하이닉스 범용 DRAM 이익 레버리지, 구조적 ROE·Target PBR 논리와 최신 FY2026/FY2027 BPS·P/B 등 current 86건과 경제적 정체성 또는 관측시점이 다른 objective-linked 10건을 추출했다. 목표주가·주가수익률, 다른 기업 실적·가이던스, 일반 행사 설명, NAND·비메모리 내용, 반복 요약과 이미 표현된 과거 BPS·P/B는 제외했다. 산업 수준 계약·자금 모델은 SK하이닉스 개별 확정 계약으로 확대하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.85,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "보고서는 글로벌 선단 메모리 시장에서 SCA와 다년 LTA가 확산돼 출하량과 판가를 묶고 단기 수요 변동에 대한 하방 경직성을 높인다고 분석한다. 이는 SK하이닉스 개별 계약의 존재나 구매의무를 증명하는 사실로 확대하지 않는다.",
+        "exact_quote": "글로벌 메모리 업계 전반에 안착하고 있는 SCA(Strategic Customer Agreement) 및 다년\nLTA(장기공급계약) 체결 가속화는 하반기 전방 세트 수요의 단기 노이즈와 관계없이 선단\n제품군의 출하량과 판가를 견고하게 바인딩하며 하방 경직성을 강하게 만드는 요인이다. 이는\n단순히 NCNR(취소·반품 불가)과 같은 단기적 계약 형태를 넘어, 고객사와 리스크 및 수익을\n공유하는 '솔루션 파트너십' 모델로의 근본적인 전환을 의미한다는 판단이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "다년 계약이 출하와 가격을 결박하는 산업 구조는 SK하이닉스 valuation의 durable visibility 가설에 직접 영향을 준다.",
+        "mechanism_scope_id": "000660:MEMORY:INDUSTRY_SCA_LTA_DURABLE_VISIBILITY",
+        "normalized_object": "글로벌 선단 메모리 장기계약 기반 출하·판가 가시성",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current industry structure as of 2026-05-27",
+        "predicate": "글로벌 메모리 업계의 SCA와 다년 LTA 체결 가속화가 선단 제품의 출하량과 판가를 바인딩해 하방 경직성을 높인다고 분석됐다",
+        "predicate_family": "MULTIYEAR_CONTRACT_VISIBILITY",
+        "primitive_tags": [
+          "ADVANCED_MEMORY",
+          "CONTRACT",
+          "SHIPMENT",
+          "PRICING"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_MULTIYEAR_CONTRACT_VISIBILITY",
+        "question_family_tags": [
+          "SCA",
+          "MULTIYEAR_LTA",
+          "DURABLE_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "글로벌 선단 메모리 SCA·다년 LTA의 출하·가격 가시성",
+        "subject_id": "INDUSTRY:ADVANCED_MEMORY:SCA_LTA_VISIBILITY",
+        "unit": "qualitative industry contract visibility",
+        "value": "SCA and multi-year LTA bind advanced-memory shipments and pricing against short-term demand noise"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "HBM4부터 선단 Capex가 CSP 사전주문 데이터와 파운드리 일정에 맞춰질 가능성이 높아진다는 분석은 독자적 증설과 사후 과잉 위험을 줄이고 다년 실적 가시성과 멀티플 상단을 높이는 공급 규율 경로를 제시한다. 이는 아직 산업 전망이므로 특정 SK하이닉스 주문으로 해석하지 않는다.",
+        "exact_quote": "특히 맞춤형(Custom) 인터페이스가 본격 도입되는 HBM4 세대부터는 메모리 제조사의 최선단\nCapEx 자체가 CSP들의 사전 주문 데이터 및 파운드리 스케줄과 동기화 될 가능성이 높다.\n이는 과거 공급사들의 독자적 판단에 의존하던 증설 경쟁과 그에 따른 사후적 공급 과잉\n리스크를 크게 낮추는 배경이 될 것이다. 결과적으로 메모리 산업 전반의 다년 단위 실적\n가시성을 확보함으로써, 과거의 피크아웃 우려를 종식하고 멀티플 상한선을 들어 올리는 결정적\n근거가 될 것으로 전망한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "수요 연동 증설은 HBM 병목의 지속성과 피크아웃 위험을 함께 결정해 rerating의 핵심 조건이다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_PREORDER_SYNCHRONIZED_CAPEX",
+        "normalized_object": "HBM4 사전수요 연동 Capex와 공급과잉 위험 완화",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "HBM4 generation outlook as of 2026-05-27",
+        "predicate": "HBM4 세대부터 선단 Capex가 CSP 사전주문 데이터 및 파운드리 일정과 동기화돼 사후 공급과잉 위험을 낮출 가능성이 있다고 전망됐다",
+        "predicate_family": "PREORDER_SYNCHRONIZED_CAPEX",
+        "primitive_tags": [
+          "HBM4",
+          "CAPEX",
+          "PREORDER",
+          "FOUNDRY_SCHEDULE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_PREORDER_SYNCHRONIZED_CAPEX",
+        "question_family_tags": [
+          "HBM4_CAPEX",
+          "CSP_PREORDER",
+          "SUPPLY_DISCIPLINE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.84,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "HBM4 선단 Capex와 CSP 사전주문·파운드리 일정의 동기화",
+        "subject_id": "INDUSTRY:HBM4:PREORDER_SYNCHRONIZED_CAPEX",
+        "unit": "qualitative industry supply-discipline outlook",
+        "value": "HBM4 capex potentially synchronized with CSP preorder data and foundry schedules, reducing ex-post oversupply risk"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.72,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "보고서는 고객 선수금, 공동투자, Capex sharing을 활용하는 증설 모델이 개화하고 있다고 보며 초기 재무부담과 주문 취소 위험을 낮출 수 있다고 분석한다. 이는 산업 차원의 분석적 전망이며 SK하이닉스가 실제 선수금을 받았거나 계약을 체결했다는 증거가 아니다.",
+        "exact_quote": "메모리반도체 산업은 천문학적인 선단 공정 CapEx 투입 강도 대비 투자 시점과 수익 회수 시점\n간의 미스매치가 심화되는 한계에 직면해왔다. 이를 타개하기 위해 시장은 과거의 단순 부품 공급\n형태를 탈피하여, '고객사 선수금 기반의 선제적 투자 체계'와 '공동투자(Co-investment) 모델',\n그리고 'MaaS(Memory as a Service) 구독형 모델'의 결합을 적극적으로 모색하고 있을 것으로\n추정한다.\n가장 주목해야 할 변화는 글로벌 하이퍼스케일러 및 대형 수요처들로부터 실질적인\n선수금(Advance Payment)을 확보하여 라인 증설을 진행하는 선조건부 자본 유치 구조의 개화다.\n이는 공급사의 초기 재무 부담을 획기적으로 낮출 뿐만 아니라, 전방 고객사의 단순 변심이나 시황\n변동에 따른 주문 취소 리스크를 원천적으로 차단하는 강력한 안전장치 역할을 한다. 특정 생산\n라인을 전용하여 설비 투자비를 분담하는 CapEx sharing과 전략적 자본 결속은 메모리 기업의 자산\n경량화(Asset-light) 기조를 지지하는 핵심 자산일 것이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객자금 연계 증설이 현실화되면 Capex 현금부담과 수요 취소 위험을 동시에 바꿔 valuation 구조에 직접 영향을 준다.",
+        "mechanism_scope_id": "000660:MEMORY:INDUSTRY_ADVANCE_PAYMENT_CAPEX_MODEL",
+        "normalized_object": "메모리 산업 고객자금 연계 증설과 재무부담 완화 시나리오",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward industry model discussed 2026-05-27",
+        "predicate": "메모리 업계가 고객 선수금과 공동투자·Capex sharing을 활용하는 증설 모델을 모색하며 초기 재무부담과 주문 취소 위험을 낮출 수 있다고 전망됐다",
+        "predicate_family": "ADVANCE_PAYMENT_CAPEX_MODEL",
+        "primitive_tags": [
+          "MEMORY_CAPEX",
+          "CUSTOMER_FINANCING",
+          "ASSET_LIGHT"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_ADVANCE_PAYMENT_CAPEX_MODEL",
+        "question_family_tags": [
+          "ADVANCE_PAYMENT",
+          "CO_INVESTMENT",
+          "CAPEX_SHARING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.74,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "메모리 산업의 고객 선수금·공동투자 기반 증설 모델",
+        "subject_id": "INDUSTRY:MEMORY:ADVANCE_PAYMENT_CAPEX_SHARING",
+        "unit": "qualitative industry financing-model outlook",
+        "value": "industry scenario of customer advance payments, co-investment and capex sharing for line expansion"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "HBM4의 파운드리 베이스다이 전환이 제조원가를 높이고 이를 판가로 이전해 2027년 HBM 가격 상승률이 범용 DRAM보다 높을 수 있다는 전망은 차세대 HBM의 가격 프리미엄 경로를 제시한다.",
+        "exact_quote": "두번째 관전포인트는 'HBM4/4E 공정 전환에 따른 ASP 상승 모멘텀과 기술 로드맵'이다. 하반기를\n지나면서 시장의 관심은 맞춤형(Custom) 인터페이스가 도입되는 HBM4(12단/16단) 및 차세대\nHBM4E의 진입 시점으로 이동할 전망이다. 특히 HBM4부터는 파운드리 파트너사와의 협력을 통한\n베이스 다이(Base Die) 공정 전환으로 제조 원가의 구조적 상승이 수반된다. 이는 공급 구조 변화에\n따른 판가 전이를 촉발하고, 2027년 HBM 가격 상승률이 범용 DRAM의 가격 상승률을 상회하는 핵심\n동인으로 작용할 가능성을 높일 것이기 때문이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2027년 상대 가격 프리미엄은 HBM 이익 성장과 forward valuation을 직접 연결한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_2027_PRICE_PREMIUM",
+        "normalized_object": "HBM4 원가 전이 기반 2027년 HBM 가격 프리미엄",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "HBM4 베이스다이 공정 전환의 원가 상승이 판가 전이를 촉발해 2027년 HBM 가격 상승률이 범용 DRAM보다 높아질 가능성이 있다고 전망됐다",
+        "predicate_family": "HBM_PRICE_PREMIUM_OUTLOOK",
+        "primitive_tags": [
+          "HBM4",
+          "BASE_DIE",
+          "COST_PASS_THROUGH",
+          "ASP"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_2027_PRICE_PREMIUM",
+        "question_family_tags": [
+          "HBM4",
+          "PRICE_PREMIUM",
+          "FY2027"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.83,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "HBM4 베이스다이 전환과 2027년 HBM 가격 상승률",
+        "subject_id": "INDUSTRY:HBM4:2027_PRICE_PREMIUM",
+        "unit": "qualitative relative price-growth outlook",
+        "value": "2027 HBM price growth potentially above conventional DRAM due to HBM4 base-die cost pass-through"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "타이트한 수급 속 범용 DRAM 판가 상승 모멘텀이 SK하이닉스 같은 순수 메모리 기업의 이익 성장 탄력을 높였다는 분석은 일반메모리 가격이 전사 이익으로 전환되는 직접 경로다. 함께 적힌 주가 수익률은 사실 값에 포함하지 않는다.",
+        "exact_quote": "이 과정에서 메모리 반도체 섹터 내에서는 비즈니스 구조와 범용 제품군의 이익 레버리지\n강도에 따라 상승 폭의 차이가 존재했다. 마이크론(MU, +68.4%)과 SK하이닉스(SKH,\n+63.4%)는 타이트한 수급 환경 속에서 범용(Conventional) DRAM의 판가 상승 모멘텀이\n극대화됨에 따라, 이익 성장 탄력이 가장 가파른 순수 메모리 중심(Memory-oriented)\n기업으로의 극단적인 글로벌 자금 쏠림 현상이 발생하며 섹터 전반의 지수 랠리를 주도했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "범용 DRAM 가격과 SK하이닉스 이익 성장의 직접 연결은 HBM 외 forward earnings bridge를 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_EARNINGS_LEVERAGE",
+        "normalized_object": "SK하이닉스 범용 DRAM 가격 기반 이익 레버리지",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "May 2026 review",
+        "predicate": "타이트한 수급 환경에서 범용 DRAM 판가 상승 모멘텀이 극대화되며 SK하이닉스의 이익 성장 탄력이 가팔라졌다고 분석됐다",
+        "predicate_family": "DRAM_PRICE_TO_EARNINGS_LEVERAGE",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "EARNINGS_GROWTH"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SKHYNIX_CONVENTIONAL_DRAM_EARNINGS_LEVERAGE",
+        "question_family_tags": [
+          "CONVENTIONAL_DRAM",
+          "PRICING",
+          "EARNINGS_LEVERAGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 범용 DRAM 판가와 이익 성장 레버리지",
+        "subject_id": "000660:CONVENTIONAL_DRAM_EARNINGS_LEVERAGE:2026-05",
+        "unit": "qualitative earnings leverage",
+        "value": "conventional DRAM price momentum translated into steep earnings-growth leverage"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "유안타는 타이트한 범용 공급과 차세대 아키텍처를 근거로 메모리 ROE의 구조적 상승·변동성 완화를 반영해 SK하이닉스의 2027년 예상 BPS에 Target PBR 3.50배를 적용했다. 목표주가 자체는 사실 값에서 제외한다.",
+        "exact_quote": "당사 리서치센터는 삼성전자(005930 KS)와 SK하이닉스(000660 KS)를 포함한 국내\n메모리반도체 업종에 대한 비중 확대 의견을 유지한다. 1)범용 제품군의 타이트한 공급 우위 환경,\n2)차세대 아키텍처 도입에 따른 구조적 체질 개선을 기반으로, ‘메모리 시장 ROE의 구조적 상향\n및 변동성 완화’를 반영하고, Target PBR을 상향 조정한다. 목표주가는 각각 53만원(2027년 예상\nBPS * Target PBR 3.50배), 330만원(2027년 예상 BPS * Target PBR 3.50배)으로 상향 조정하는\n바이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "ROE의 수준·변동성 변화와 적용 P/B의 연결은 valuation rerating 목적의 핵심 산식이다.",
+        "mechanism_scope_id": "000660:MEMORY:STRUCTURAL_ROE_TARGET_PBR_2027F",
+        "normalized_object": "SK하이닉스 구조적 ROE 재평가와 2027년 Target PBR 산식",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F valuation basis",
+        "predicate": "타이트한 공급 우위와 차세대 아키텍처가 메모리 ROE의 구조적 상승·변동성 완화를 만든다는 판단 아래 SK하이닉스 2027년 예상 BPS에 Target PBR 3.50배를 적용했다",
+        "predicate_family": "STRUCTURAL_ROE_TARGET_PBR",
+        "primitive_tags": [
+          "ROE",
+          "PBR",
+          "VALUATION",
+          "VOLATILITY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "SKHYNIX_STRUCTURAL_ROE_PBR_RERATING",
+        "question_family_tags": [
+          "STRUCTURAL_ROE",
+          "TARGET_PBR",
+          "FY2027_BPS"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 구조적 ROE 개선과 2027년 BPS 기반 Target PBR",
+        "subject_id": "000660:STRUCTURAL_ROE_TARGET_PBR:FY2027F",
+        "unit": "x and qualitative rerating thesis",
+        "value": "FY2027 expected BPS multiplied by 3.50x Target PBR on structural ROE uplift and lower volatility"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "2026년 비지배주주지분 제외 조정 BPS는 forward P/B의 명시적 분모이며, 2026년 1월 표의 같은 기간 BPS보다 최신인 2026년 5월 추정치를 제공한다.",
+        "exact_quote": "표5. SK하이닉스 목표주가 산정 테이블 (단위: 원, 배)\n2017A 2018A 2019A 2020A 2021A 2022A 2023A 2024A 2025A 2026F 2027F\nAdj BPS_P (비지배주주지분 제외) 47,510 67,794 69,271 74,721 88,543 90,064 76,616 104,567 167,604 471,724 956,094\nPBR_P (End) 1.61 0.89 1.36 1.59 1.48 0.83 1.85 1.66 3.88 1.98 0.98\nPBR_P (High) 1.90 1.44 1.40 1.62 1.70 1.49 1.88 2.38 3.93 2.33 1.15\nPBR_P (Low) 0.94 0.86 0.82 0.88 1.02 0.83 0.95 1.23 0.97 1.37 0.68\nPBR_P (Avg) 1.35 1.16 1.09 1.19 1.37 1.13 1.41 1.71 1.84 1.83 0.90",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "더 최신의 target·기간·단위가 명시된 BPS가 current forward book-value 분모를 갱신한다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_BOOK_VALUE_2026F_20260527",
+        "normalized_object": "SK하이닉스 2026년 예상 조정 BPS",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F",
+        "predicate": "유안타 목표주가 산정표의 SK하이닉스 2026년 예상 조정 BPS는 471,724원이다",
+        "predicate_family": "FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "ADJUSTED_BPS",
+          "FY2026F",
+          "VALUATION_TABLE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SKHYNIX_FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "FORWARD_BOOK_VALUE",
+          "BPS",
+          "FY2026F"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK하이닉스 2026년 예상 조정 주당순자산",
+        "subject_id": "000660:FORWARD_BOOK_VALUE:2026F:2026-05-27",
+        "unit": "KRW/share",
+        "value": 471724
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "2027년 비지배주주지분 제외 조정 BPS는 2027년 Target PBR 산식의 forward book-value 분모이며, 2026년 1월 표의 같은 기간 BPS보다 최신인 2026년 5월 추정치를 제공한다.",
+        "exact_quote": "표5. SK하이닉스 목표주가 산정 테이블 (단위: 원, 배)\n2017A 2018A 2019A 2020A 2021A 2022A 2023A 2024A 2025A 2026F 2027F\nAdj BPS_P (비지배주주지분 제외) 47,510 67,794 69,271 74,721 88,543 90,064 76,616 104,567 167,604 471,724 956,094\nPBR_P (End) 1.61 0.89 1.36 1.59 1.48 0.83 1.85 1.66 3.88 1.98 0.98\nPBR_P (High) 1.90 1.44 1.40 1.62 1.70 1.49 1.88 2.38 3.93 2.33 1.15\nPBR_P (Low) 0.94 0.86 0.82 0.88 1.02 0.83 0.95 1.23 0.97 1.37 0.68\nPBR_P (Avg) 1.35 1.16 1.09 1.19 1.37 1.13 1.41 1.71 1.84 1.83 0.90",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "더 최신의 2027년 조정 BPS가 Target PBR 산식과 forward book-value 분모를 갱신한다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_BOOK_VALUE_2027F_20260527",
+        "normalized_object": "SK하이닉스 2027년 예상 조정 BPS",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2027F",
+        "predicate": "유안타 목표주가 산정표의 SK하이닉스 2027년 예상 조정 BPS는 956,094원이다",
+        "predicate_family": "FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "ADJUSTED_BPS",
+          "FY2027F",
+          "VALUATION_TABLE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SKHYNIX_FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "FORWARD_BOOK_VALUE",
+          "BPS",
+          "FY2027F"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK하이닉스 2027년 예상 조정 주당순자산",
+        "subject_id": "000660:FORWARD_BOOK_VALUE:2027F:2026-05-27",
+        "unit": "KRW/share",
+        "value": 956094
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "2026년 예상 기말 P/B는 같은 표의 2026년 조정 BPS와 연결된 forward book-value multiple이며, 2026년 1월 표의 같은 기간 P/B보다 최신인 2026년 5월 추정치다.",
+        "exact_quote": "표5. SK하이닉스 목표주가 산정 테이블 (단위: 원, 배)\n2017A 2018A 2019A 2020A 2021A 2022A 2023A 2024A 2025A 2026F 2027F\nAdj BPS_P (비지배주주지분 제외) 47,510 67,794 69,271 74,721 88,543 90,064 76,616 104,567 167,604 471,724 956,094\nPBR_P (End) 1.61 0.89 1.36 1.59 1.48 0.83 1.85 1.66 3.88 1.98 0.98\nPBR_P (High) 1.90 1.44 1.40 1.62 1.70 1.49 1.88 2.38 3.93 2.33 1.15\nPBR_P (Low) 0.94 0.86 0.82 0.88 1.02 0.83 0.95 1.23 0.97 1.37 0.68\nPBR_P (Avg) 1.35 1.16 1.09 1.19 1.37 1.13 1.41 1.71 1.84 1.83 0.90",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "더 최신의 target·기간·단위가 명시된 P/B가 current forward multiple을 갱신한다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_PB_2026F_20260527",
+        "normalized_object": "SK하이닉스 2026년 예상 기말 P/B",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F",
+        "predicate": "유안타 목표주가 산정표의 SK하이닉스 2026년 예상 기말 P/B는 1.98배다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "PBR_END",
+          "FY2026F",
+          "VALUATION_TABLE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SKHYNIX_FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "PBR",
+          "FY2026F"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 2026년 예상 기말 P/B",
+        "subject_id": "000660:FORWARD_PB:2026F:2026-05-27",
+        "unit": "x",
+        "value": 1.98
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "2027년 예상 기말 P/B는 같은 표의 2027년 조정 BPS와 연결된 forward book-value multiple이며, 2026년 1월 표의 같은 기간 P/B보다 최신인 2026년 5월 추정치다.",
+        "exact_quote": "표5. SK하이닉스 목표주가 산정 테이블 (단위: 원, 배)\n2017A 2018A 2019A 2020A 2021A 2022A 2023A 2024A 2025A 2026F 2027F\nAdj BPS_P (비지배주주지분 제외) 47,510 67,794 69,271 74,721 88,543 90,064 76,616 104,567 167,604 471,724 956,094\nPBR_P (End) 1.61 0.89 1.36 1.59 1.48 0.83 1.85 1.66 3.88 1.98 0.98\nPBR_P (High) 1.90 1.44 1.40 1.62 1.70 1.49 1.88 2.38 3.93 2.33 1.15\nPBR_P (Low) 0.94 0.86 0.82 0.88 1.02 0.83 0.95 1.23 0.97 1.37 0.68\nPBR_P (Avg) 1.35 1.16 1.09 1.19 1.37 1.13 1.41 1.71 1.84 1.83 0.90",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "더 최신의 2027년 예상 P/B가 forward multiple과 rerating 비교 기준을 갱신한다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_PB_2027F_20260527",
+        "normalized_object": "SK하이닉스 2027년 예상 기말 P/B",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2027F",
+        "predicate": "유안타 목표주가 산정표의 SK하이닉스 2027년 예상 기말 P/B는 0.98배다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "PBR_END",
+          "FY2027F",
+          "VALUATION_TABLE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SKHYNIX_FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "PBR",
+          "FY2027F"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 2027년 예상 기말 P/B",
+        "subject_id": "000660:FORWARD_PB:2027F:2026-05-27",
+        "unit": "x",
+        "value": 0.98
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "78f2af283cc3aed714632448c7e2c3c93c727ceb9d65e05b4319f60edf736fc4",
+  "production_score_authority": false,
+  "prompt_hash": "268acaec3455a7047129e5d80a3ced9ff67c8fe5351bf342877563505c5ffa14",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0d37caa64d4d12493ff7db6169c79b92bf268541a3505da348f2b9668a50d387",
+  "response_id": "COLLABRESP-5ec1c6442a27bddc084c5b6f36e68b25770491ab667359661a23ea7cd4f6c563",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

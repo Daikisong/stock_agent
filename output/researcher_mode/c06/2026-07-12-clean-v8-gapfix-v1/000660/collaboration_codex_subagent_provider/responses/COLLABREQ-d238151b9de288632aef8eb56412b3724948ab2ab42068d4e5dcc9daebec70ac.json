@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "ac59062b5e36a2816c62ae50a12b696421c65d3251977171a8f220354f488748",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-299e8997e72bef41900f4584",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "broker full-source provenance는 맞지만 generic market strategy이거나 2014 historical outlook으로 current target objective를 직접 해소하지 못해 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-54554dca9fc718b135e796bb",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "broker full-source provenance는 맞지만 generic market strategy이거나 2014 historical outlook으로 current target objective를 직접 해소하지 못해 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-dce3153f4e0afa8715f2a07f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "aggregator·third-party summary·future premium post·wrong-target article로 requested original KIND/broker source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b4a4bbd7291a113d9a25d58b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "aggregator·third-party summary·future premium post·wrong-target article로 requested original KIND/broker source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b979ee12561ffb7f72e0cbae",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.94,
+        "rationale": "2026-04-09 full broker industry PDF로 000660 목표가·valuation 상향 근거를 원문 검증할 수 있는 target-direct route다. 유사 route와의 duplicate는 fetch hash 전 추정하지 않으며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-419f28b72070edddeb708458",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "broker full-source provenance는 맞지만 generic market strategy이거나 2014 historical outlook으로 current target objective를 직접 해소하지 못해 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-a9450b77c278bb8b25b8053e",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.98,
+        "rationale": "KIND 공식 2026-06-24 target 유상증자 원문 route로 신주 수와 자금조달 구조를 full-fetch 검증할 수 있어 material이다. snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-05d5e6252d2ab31ce66d75b4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "aggregator·third-party summary·future premium post·wrong-target article로 requested original KIND/broker source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6cdd7b7a20717b20cbaed3f8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "aggregator·third-party summary·future premium post·wrong-target article로 requested original KIND/broker source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-09748572897ae041476bc38e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "aggregator·third-party summary·future premium post·wrong-target article로 requested original KIND/broker source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8c3dfe1b5bed0908b09d28d0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "aggregator·third-party summary·future premium post·wrong-target article로 requested original KIND/broker source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-db94fb65803db9d611b9bf7f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "aggregator·third-party summary·future premium post·wrong-target article로 requested original KIND/broker source provenance가 아니다. nonmaterial이며 metadata는 evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P1 roster 12개 exact-once; target-direct KIND disclosure와 current broker full PDF 2개를 material fetch route로 선정했다.",
+      "유사 URL의 content duplicate는 fetch hash 전 단정하지 않았고 metadata/snippet은 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "07eff5784ff81e48a969e64fde852ccfb319ca6b864a288ed6dd78f7ca882f69",
+  "production_score_authority": false,
+  "prompt_hash": "4c8de92defa2239f47cf229901a5eedc780c373f07ec100d1cc17681fafd4d44",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d238151b9de288632aef8eb56412b3724948ab2ab42068d4e5dcc9daebec70ac",
+  "response_id": "COLLABRESP-31141380d91c0cef93ee4a443496cf8645395751edda90a6123d2febe185c419",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

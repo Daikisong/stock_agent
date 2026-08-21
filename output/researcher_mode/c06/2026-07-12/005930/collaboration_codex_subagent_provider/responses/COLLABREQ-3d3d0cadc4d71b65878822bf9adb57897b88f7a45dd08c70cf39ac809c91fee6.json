@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      14.8,
+      17.8
+    ],
+    "anchor_comparisons": [
+      "positive ordinal anchor 17.01~19.11점은 구매주문·계약·완판의 현재 증거와 경제적 강도가 가깝다. 다만 exact anchor가 아니고 계약 조건이 비공개여서 하단 쪽을 사용한다.",
+      "counter ordinal anchor 9.95~12.05점은 현재보다 가시성이 약한 기준이다. 실제 주문과 완료 계약이 있으므로 이 band 위이되, NDA와 일정 위험 때문에 positive midpoint 아래가 적절하다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-80daa96c00cd5d7b5782c27a",
+      "EFACT-a79b8e5bedf94ee44504539e",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "research memo 15.4~18.1은 합리적이나, 비공개 계약 질을 반영해 상단을 17.8로 줄이고 midpoint를 16.2로 보정한다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-0f9dd0807dd915f5d67d49eb",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 16.2,
+    "rationale": "두 ordinal anchor 사이에서 현재 증거는 positive anchor 하단에 더 가깝다. 발행사 구매주문·계약 완료와 HBM4 완판은 강하지만 가격·취소조건 비공개와 고객 일정·배분 위험은 점수 폭을 넓힌다. exact anchor가 없으므로 단일 정밀값보다 14.8~17.8 범위가 재현성에 맞다.",
+    "support_fact_ids": [
+      "EFACT-16ee255de13b7acf64e98eaa",
+      "EFACT-1ec0fca52ff40b01ed1890f6",
+      "EFACT-83b9afe8727ec3fd962620a4",
+      "EFACT-8b6707b4ab45897a5a448a93",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-d05fe1b53b1bb5081130ea1c"
+    ],
+    "why_not_higher": "exact 비교 anchor가 없고 계약의 물량·가격·취소조건, 고객 일정과 배분 규칙이 공개되지 않아 positive anchor 상단을 적용할 수 없다.",
+    "why_not_lower": "이미 확보한 구매주문, 완료된 중장기 계약과 완판 CAPA가 counter anchor보다 뚜렷이 높은 물량 가시성을 제공한다."
+  },
+  "payload_hash": "eeb0bb3e5065a8603a81175c7e47f6ab1f8881af39dc079c81af76115034360b",
+  "production_score_authority": false,
+  "prompt_hash": "96f200013f82b163475b6e0800186203db063fc2c5616d2d81130e19566956e6",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3d3d0cadc4d71b65878822bf9adb57897b88f7a45dd08c70cf39ac809c91fee6",
+  "response_id": "COLLABRESP-09da3b1b29af47050212989980d1a89ddaf9881c910f3cedfc462048e97d82a5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

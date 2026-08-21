@@ -1,0 +1,122 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-8e2bc4372f62dcde9fb23639",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Mordor Intelligence의 third-party 시장조사 페이지로 named customer가 소유한 CUSTOMER_OFFICIAL 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-bf6cd3900ac40fcf63b95a0f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Mordor Intelligence의 generic HBM 시장자료로 customer-owned official product·filing·newsroom route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0188b8dd2f7ee1e60c604d3e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "개인 기술 blog의 HBM market commentary로 requested CUSTOMER_OFFICIAL provenance가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-2abe260fac95df78720da78d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "RAND full PDF이지만 independent policy analysis일 뿐 named customer가 발행한 official corroboration이 아니므로 requested family와 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-dc49d7d3dc61f8392e6e47bf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "문화체육관광부의 저작물 보상금 목록으로 target·HBM customer objective와 무관하며 CUSTOMER_OFFICIAL route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-153571dfdee276a589bc7ff4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "generic trend site로 named customer owner/provenance와 full official source identity가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-d7713b66274525e27660715b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "BusinessKorea magazine full PDF는 media source이며 named customer가 소유한 official technical·platform·filing 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7c376f620bc136a4727730ce",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "generic AI news aggregation/navigation page로 CUSTOMER_OFFICIAL 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-867e65a4395c85361eae75ea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Hacker News의 Mac Mini discussion으로 target·HBM objective와 무관하고 CUSTOMER_OFFICIAL provenance도 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Checkpoint roster 9개를 supplied order로 exact-once 분류했다. CUSTOMER_OFFICIAL material route는 0이며, 이는 named customer 자료의 부재나 research completion을 뜻하지 않는다. Snippet과 metadata는 evidence로 사용하지 않았다."
+    ]
+  },
+  "payload_hash": "47fdc016aae43b0dceaa98d3783560e4a170d6c0f218ea50aa0821e265698078",
+  "production_score_authority": false,
+  "prompt_hash": "82d43842605f64e3ade76d8c85170da8ad36e22ea5e3907ce3bfb64c1f56bcfd",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6449081ddb2e1c512aa79c69779374a901390f0a3d5c9990509c8eae1420ff22",
+  "response_id": "COLLABRESP-fbdd274c680d1f7963d993461bf545f44de46488ef8d5c9f7142bb27ca7eddce",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

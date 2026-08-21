@@ -1,0 +1,308 @@
+DS Tech 이수림 – Telegram
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림입니다.
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림입니다.
+DS Tech 이수림
+@dssemicon
+4.11K
+subscribers
+489
+photos
+141
+files
+1.03K
+links
+DS투자증권 반도체 Analyst 이수림입니다.
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+DS Tech 이수림
+4.11K subscribers
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+NVIDIA FY 3Q25 실적발표 주요 Comment
+◆ 데이터센터 사업부
+- 현재까지도 Hopper 수요 강함
+H200 매출 Double-Digit Billion까지 증가했으며 이는 당사 역사상 가장 빠른 제품 매출 증가
+- 당분기 Blackwell 13000개 GPU 샘플 제공
+Blackwell의 굉장히 강한 수요에 대응하기 위해 램프업 지속
+FY2026 Blackwell 수요는 공급을 상회할 것
+- 다양한 AI 관련 기업들이 제공하는 AI 서비스들은 좋은 성과 보이는 중
+산업용 AI와 로봇 산업의 발전도 가속화되는 중
+- 데이터센터 사업부 매출의 절반이 CSP
+북미, 유럽, 아시아 지역에서 GPU 매출 2배 이상 증가
+당분기 중국향 매출액 증가, 단 비중은 수출 규제 이전보단 낮은 수준
+향후에도 중국 시장 경쟁적인 상황 유지 전망
+- 1,000개 가까운 기업들이 Nvidia NIM 사용 중
+곧 출시될 NIM은 Hopper의 추론 성능을 2.4배 향상시킬 것
+- CSP와 슈퍼컴퓨팅 센터들은 당사 인피니밴드 적용하고 있음
+기존의 이더넷은 AI에 최적화된 설계가 아님
+네트워킹 사업부 차분기에도 QoQ 성장 전망
+◆ 게이밍 사업부
+- MS의 코파일럿 탑재된 Geforce REX AI PC를 Asus와 MSI향으로 출고 시작
+*위 내용은 공개 실적발표 내용으로 별도의 승인절차 없이 제공됩니다.
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+Telegram
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림입니다.
+❤
+1
+👍
+1
+1.02K
+views
+edited
+22:31
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+NVIDIA FY 3Q25 실적발표 주요 QnA
+Q. LLM의 스케일링 문제에 대해서 고객사들을 어떻게 돕고 있는지?
+AI가 추론하는 과정에서 추론 시간 스케일링을 하는데 3가지 방법이 있음
+모든 방법에서 결론적으로는 인프라에 대한 수요가 굉장히 큼
+추론 시장이 확장되기 시작하고 있음을 확인 중
+또한 AI 기반 기업의 수가 계속 증가하고 있음
+Q. 발열 이슈에 따른 기존 로드맵 변경나 공급 제약이 있을지, 있다면 원인이나 개선되고 있는지?
+당분기 Blackwell 공급량과 출하 계획은 이전 예상보다 많음
+글로벌리 많은 회사와 공급망을 구축하고 있음
+내년에도 램프업 지속 노력
+현재 연간 로드맵을 진행 중이며 향후에도 순조롭게 진행될 것으로 예상
+Q. Hopper와 Blackwell의 크로스오버 기존에 전망했던 데로 진행될 지?
+Hopper의 수요는 내년 첫 몇 분기까지 계속될 것
+Blackwell의 출하는 당분기보다 차분기가, 차분기보다 그 다음이 더 많을 것
+Q. Blackwell 램프업 단계에서 GPM 전망?
+램프업 단계 초반 GPM이 70% 초반대가 될 것이라 예상
+이후에 높이기 시작할 것이고 빠르게 70% 중반대에 도달하기를 바람
+Q. 추론이 향후 1년 내에 훈련을 넘어설 것으로 예상하는지?
+언젠가는 전 세계에서 추론을 엄청나게 많이 하는 날이 오기를 희망
+그 시점이 바로 AI가 성공하는 시점일 것
+Q. 지난 실적 발표 당시 소버린 AI의 수요가 두 자릿수 초반이라 했었는데 업데이트 가능한 지?
+전 세계 각국에서 Gen AI가 시작되고 모델을 구축하면서 실제로 표면화되고 있음
+국가 내에서 자국 언어, 문화, 기업 측면에서 이러한 기본 모델을 구축하기 위해 노력하고 있기 때문에 여전히 온전
+성장 기회 계속해서 볼 수 있을 것이라 판단하며 이는 유럽 뿐만 아니라 아시아 지역에서도 성장 중
+Q. 미국 정권 교체와 중국 상황과 관련하여 커뮤니케이션 나눈 적이 있는지?
+새 행정부가 어떤 결정을 내리든 그 행정부를 지원할 것이며 그 안에서 최선을 다할 것
+규제를 준수하면서 최선을 다해 고객을 지원하고 시장에서 경쟁할 것
+*위 내용은 공개 실적발표 내용으로 별도의 승인절차 없이 제공됩니다.
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+Telegram
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림입니다.
+❤
+1
+👍
+1
+987
+views
+23:24
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+11월 1~20일 반도체 수출액 잠정치
+DRAM 12.0억달러
+(-2% MoM, +8% QoQ, +45% YoY)
+DRAM 모듈 5.9억달러
+(+32% MoM, +24% QoQ, +56% YoY)
+NAND 3.0억달러
+(+10% MoM, +64% QoQ, -13% YoY)
+MCP 21.2억달러
+(+25% MoM, +17% QoQ, +123% YoY)
+SSD 5.2억달러
+(+82% MoM, +18% QoQ, +127% YoY)
+(각 증감률은 모두 1~20일 기준)
+(수출단가의 경우 당월분만 1~20일 기준)
+189
+views
+01:22
+DS Tech 이수림
+https://n.news.naver.com/article/374/0000411739?type=breakingnews
+Naver
+SK하이닉스, '세계 최고층' 321단 낸드 양산…내년 상반기 공급
+171
+views
+04:23
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림
+11/22 테크 주요 뉴스
+◆ 바이든 정부, 임기내 반도체보조금 완료 목표 …삼성·SK 협상 속도전
+https://bit.ly/4eLy0tg
+◆ Trendforce, 1) 25년 AI 노트북 보급률 21.7%, 2) AI 서버의 글로벌 출하량 24년 42%, 25년 28% 증가 예상
+https://bit.ly/4eGcbvo
+◆ SK하이닉스, NAND 시장 점유율 20% 돌파 예상
+https://bit.ly/40ZAgds
+◆ SSD, 2024년 DRAM 모듈 판매량 상회 예상
+https://bit.ly/3CFI9KV
+◆ Kioxia, 48억 4천만 달러의 IPO 평가로 상장 승인 예상
+https://bit.ly/4fPW6Es
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+중앙일보
+바이든 정부, 임기내 반도체보조금 완료 목표 …삼성·SK 협상 속도전
+러몬도 장관은 차기 행정부로 교체되는 시점(내년 1월 20일)을 "명확한 데드라인"이라고 하면서도 트럼프 집권 2기 행정부가 반도체 기업에 지급하기로 한 보조금을 철회할 가능성에 대해 "크게 걱정하지 않는다"고 말했다. 미 상무부는 2022년 8월 제정한 반도체법에 따라 미국에 반도체 제조 시설을 신설ㆍ확장할 경우 총 390억 달러(약 54조5000억 원)의 보조금을 지급하기로 했고, 대부분은 자국과 해외 반도체 기업의 투자 규모만큼 보조금 배정을 했다.…
+197
+views
+23:03
+DS Tech 이수림
+180
+views
+23:04
+DS Tech 이수림
+주요 글로벌
+AI 밸류체인 기업 3분기 실적발표 일정
+11/27
+HP(서버)
+,
+Dell(서버)
+,
+Workday(AI 서비스)
+,
+Crowdstrike(보안)
+12/06
+UiPath(AI 서비스)
+12/10
+Oracle(CSP)
+12/12
+Adobe(AI 서비스)
+12/19
+Micron(메모리)
+위 일정은 컨퍼런스 콜의 한국 시간 기준 일정입니다.
+확정 일자의 경우
+볼드체
+로 구분지어놨습니다.
+변동사항 있을 시 업데이트해드리겠습니다.
+184
+views
+edited
+01:47
+DS Tech 이수림
+DS Tech 이수림
+pinned «
+주요 글로벌 AI 밸류체인 기업 3분기 실적발표 일정 11/27 HP(서버), Dell(서버), Workday(AI 서비스), Crowdstrike(보안) 12/06 UiPath(AI 서비스) 12/10 Oracle(CSP) 12/12 Adobe(AI 서비스) 12/19 Micron(메모리) 위 일정은 컨퍼런스 콜의 한국 시간 기준 일정입니다. 확정 일자의 경우 볼드체로 구분지어놨습니다. 변동사항 있을 시 업데이트해드리겠습니다.
+»
+01:47
+DS Tech 이수림
+https://www.trendforce.com/news/2024/11/25/news-biden-reportedly-to-unveil-new-china-export-rules-this-week-affecting-200-chinese-chip-firms/
+TrendForce
+[News] Biden Reportedly to Unveil New China Export Rules This Week, Affecting 200 Chinese Chip Firms
+According to a report from World Journal, citing Reuters, the U.S. Chamber of Commerce stated in an email to its members on November 21 that the Biden...
+173
+views
+04:39
+DS Tech 이수림
+케이씨텍_기업리포트_241126.pdf
+788.8 KB
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+[반도체] 케이씨텍 - 아쉬운 업황에도 4분기 기대감 유효
+투자의견 : 매수(유지)
+목표주가 : 45,000원(유지)
+현재주가 : 32,050원(11/25)
+Upside : 40.4%
+1. 3Q24 Re: 바닥은 확실히 다졌다는 판단
+- 반도체 사업부와 디스플레이 사업부 매출이 각각 전분기 대비 +7%, +6%로 고르게 증가
+- 반도체는 CMP 장비의 경우 원활하게 수주 및 매출이 이뤄지고 있고, 슬러리 역시 점진적인 회복세
+- 디스플레이는 상반기 기대했던 중국 고객사 향 추가 수주가 예정보다 다소 지연된 바 있지만 하반기 중 이뤄질 것으로 전망
+2. 4Q24 Pre: 반도체 장비 매출 인식 증가
+- 동사의 수주 리드타임은 통상 6개월 정도로 파악되는데 3Q24 늘어난 신규수주 금액과 수주잔고 427억원을 감안할 때 내년 상반기까지의 실적 가시성은 높다는 판단
+- 동사는 산화막을 연마하는 Ceria 슬러리에 강점이 있으며 국내에서는 유일하게 메모리 업체 향으로 CMP 장비를 공급 중
+3. 투자의견 매수, 목표주가 45,000원 유지
+- HBM향 수요는 여전히 강력하고 이에 따른 선단공정 Capex는 지속된다는 판단이며 CMP 공정은 고성능 반도체에서 미세화가 진행될수록 그 중요성이 부각되는 공정
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+1.28K
+views
+edited
+22:48
+DS Tech 이수림
+해성디에스_기업리포트_241126.pdf
+806.7 KB
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+[반도체] 해성디에스 - 패키지 기판의 회복이 절실
+투자의견 : 매수(유지)
+목표주가 : 36,000원(하향)
+현재주가 : 22,250원(11/25)
+Upside : 61.7%
+1. 3Q24 Re: DDR5 매출 감소 영향
+- 리드프레임은 전장용 리드프레임의 회복세에 힘입어 1,073억원(+14% YoY, +5% QoQ)으로 2분기 바닥을 다진 이후 반등하는 모습
+- 패키지 기판은 364억원(-36% YoY, -21% QoQ)으로 전분기 대비 매출액 크게 감소하였는데 이는 최대 고객사향 DDR5 매출이 기대했던 수준보다 감소하였기 때문
+2. 4Q24 Pre: 리드프레임은 회복 지속
+- 4Q24 매출액 1,506억원(-4% YoY, -3% QoQ)과 영업이익 155억원(+1% YoY, -% QoQ, OPM 8%)으로 전망
+- 리드프레임은 1) 중국 및 대만 OSAT 고객사향 매출 증가, 2) Texas Instrument 가동률 상승에 따른 주문 증가 등 요인으로 4분기에도 전장용 중심의 개선세가 이어질 것으로 전망
+3. 투자의견 매수, 목표주가 36,000원 하향
+- 주요 고객사 DDR5 신제품 향으로 1Q25 중 퀄 테스트를 완료 후 2Q25부터 양산을 계획하고 있다는 점은 고무적
+- 이번 퀄 테스트는 향후 차세대 DRAM 신제품 납품 여부까지 고려한다면 동사에게 매우 중요한 이벤트일 것
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+1.12K
+views
+edited
+22:48
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+11/26 테크 주요 뉴스
+◆ 美, 이번 주에 200개의 중국 반도체 회사에 영향을 미치는 새로운 중국 수출 규칙을 발표할 예정
+https://bit.ly/3ZkwoCq
+◆ “中 반도체 설비 투자, 내년 꺾인다…韓 소부장도 영향권”
+https://bit.ly/4g3GVHx
+◆ 중국에 대한 7nm 칩 제재: 대규모 칩, CoWoS 공정에 미치는 영향
+https://bit.ly/3Ouknnu
+◆ AI 칩에서 Nvidia와 경쟁하려는 Amazon의 Moonshot 계획
+https://bit.ly/4i9fVsf
+◆ 애플 이어 삼성도?…갤럭시 AI에 '챗GPT' 이식되나
+https://bit.ly/3V8OMeR
+◆ 인텔, 투자 지연에 따라 보조금 80억 달러 미만으로 감소할 것이라는 루머
+https://bit.ly/4g1tlEI
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+TrendForce News
+[News] Biden Reportedly to Unveil New China Export Rules This Week, Affecting 200 Chinese Chip Firms | TrendForce News
+According to a report from World Journal, citing Reuters, the U.S. Chamber of Commerce stated in an email to its members on November 21 that the Biden...
+160
+views
+23:11
+DS Tech 이수림
+https://n.news.naver.com/mnews/article/015/0005061397?sid=104
+Naver
+[속보] 트럼프 "취임 첫날 멕시코·캐나다 제품에 25% 관세"
+160
+views
+23:57
+DS Tech 이수림
+https://www.hankyung.com/article/202411264224i
+한국경제
+[속보]트럼프 "중국 모든 제품에 10% 추가관세"
+[속보]트럼프 "중국 모든 제품에 10% 추가관세", 이상은 기자, 국제
+161
+views
+23:57
+DS Tech 이수림
+https://www.ekn.kr/web/view.php?key=20241126021597027
+에너지경제신문
+삼성전자, DS 중심 퇴임자 선정·통보 예정…27일 연말 인사 예상
+삼성전자가 오는 27일 연말 임원 인사를 단행할 것이라는 소식이 전해졌다. 이번 임원 인사는 회사가 위기에 처해있다는 평가가 나오고 있는 만큼 초격차 경쟁력 회복에 초점이 맞춰질..
+144
+views
+08:03
+DS Tech 이수림
+https://www.businesspost.co.kr/BP?command=mobile_view&num=374243
+비즈니스포스트
+TSMC 2나노 반도체 파운드리 장비 반입식 6개월 당겨, "고객사 수요 반영"
+TSMC 2나노 반도체 파운드리 장비 반입식 6개월 당겨, "고객사 수요 반영"
+178
+views
+11:01

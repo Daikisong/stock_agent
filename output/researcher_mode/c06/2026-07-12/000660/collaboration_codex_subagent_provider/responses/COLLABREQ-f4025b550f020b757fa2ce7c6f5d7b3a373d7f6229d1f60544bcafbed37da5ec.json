@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "HBM 귀속 이익 기여와 미래 수치형 point/range는 발행사 실적자료·IR·공시를 우선하고, 브로커 전망은 공식 FORWARD_GUIDANCE나 SEGMENT_CONTRIBUTION을 대신하지 않습니다.",
+      "공급 가시성은 LTA의 계약기간·최소구매·가격·취소·위약 조건을 발행사 또는 고객 공식자료에서 확인하고, sold-out이나 수요 확보 문구와 구분합니다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK hynix HBM operating profit margin gross profit contribution 2025 2026 official earnings presentation",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "기존 검색은 HBM 매출 성장·mix와 전사 영업이익·현금흐름을 확인했지만 HBM 자체의 이익 기여나 마진 수치를 분리하지 못했습니다. 2026-07-12 이전 발행사 실적 원문에서 HBM 귀속 이익률 또는 이익 기여의 숫자형 point를 찾고, 전사 DRAM 수익성을 HBM 단독 수익성으로 오귀속하지 않기 위한 검색입니다.",
+        "source_families": [
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_PRESENTATION",
+          "SEGMENT_DATA"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 2027 HBM 매출액 출하량 point range 가이던스 2026 공식 IR",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "기존 query는 2026년 성장 목표와 bit shipment 전망을 다뤘지만, 현재 구조화 공백이 요구하는 발행사 원천의 미래 기간 숫자형 HBM point/range는 확보하지 못했습니다. cutoff 이전 공개자료에서 2027년 HBM 매출액 또는 출하량 수치 범위와 기준 기간을 확인하고 브로커 추정치를 issuer guidance로 대체하지 않기 위한 검색입니다.",
+        "source_families": [
+          "ISSUER_PRESENTATION",
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_NEWSROOM",
+          "KIND_KRX"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 HBM LTA 2027 계약기간 최소구매물량 가격 취소권 위약금 공식자료",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "현재 자료에는 FY2026 생산 수요 확보와 다년 LTA 논의가 있으나 계약 기간·최소구매물량·가격·취소권·위약금 원문이 없습니다. 2026-07-12 이전 발행사·공시·고객 공식자료에서 2027년까지 이어지는 구속력 있는 수치 또는 반대 조건을 확인해 단순 allocation 논의를 durable visibility로 확대하지 않기 위한 검색입니다.",
+        "source_families": [
+          "ISSUER_PRESENTATION",
+          "ISSUER_EARNINGS_RELEASE",
+          "OPENDART",
+          "KIND_KRX",
+          "CUSTOMER_OFFICIAL"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "공식 HBM 이익·마진 수치가 공개되지 않으면 전사 영업이익·현금흐름을 HBM 세그먼트 수치로 귀속하지 않습니다.",
+      "LTA 조건이 공개되지 않으면 FY2026 수요 확보나 고객 allocation을 취소 불가능한 구매의무·RPO로 해석하지 않습니다."
+    ]
+  },
+  "payload_hash": "5ef924fe82769789d8757b4431ffeca900bd4ed35436440dd3f78092944b2717",
+  "production_score_authority": false,
+  "prompt_hash": "0a194fdfe419f93d43e403be67adda3fd2a55c1f3d7806d39863221bae954c08",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f4025b550f020b757fa2ce7c6f5d7b3a373d7f6229d1f60544bcafbed37da5ec",
+  "response_id": "COLLABRESP-06a71d7f57bf7db7e459337e69acbdccbfff52e3ce8f1323e0fcd72fd6f8a729",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

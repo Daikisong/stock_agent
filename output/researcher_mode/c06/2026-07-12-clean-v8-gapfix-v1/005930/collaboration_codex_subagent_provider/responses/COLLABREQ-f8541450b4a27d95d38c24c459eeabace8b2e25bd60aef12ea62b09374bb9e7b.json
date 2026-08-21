@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-06c6e813c9330fa7f91c1710",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.tradingkey.com의 '연산 능력이 아닌 효율성으로 승부: OpenAI와 클로드 코드의 최종 대결'은 제3자 분석·뉴스·channel index로 OpenAI/NVIDIA CUSTOMER_OFFICIAL original 또는 official landing/full-source route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-31c08a2787530bf4558eb05d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.panewslab.com의 '세레니티는 누구인가? \"AI 공급망의 대부\"로 불리는 세레니티의 투자 논리를 이....'은 제3자 분석·뉴스·channel index로 OpenAI/NVIDIA CUSTOMER_OFFICIAL original 또는 official landing/full-source route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6bd3feeef8825b7787f157ba",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "wowtale.net의 '오픈AI-한국 'AI 동맹' 본격화…삼성·SK, 700조 스타게이트 참여'은 제3자 분석·뉴스·channel index로 OpenAI/NVIDIA CUSTOMER_OFFICIAL original 또는 official landing/full-source route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8729cdefe75f83cfa7565a63",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "telemetr.io의 '트리플 아이 - Insight Information Indepth - Statistics & analytics of Telegram channel @triple_stock'은 제3자 분석·뉴스·channel index로 OpenAI/NVIDIA CUSTOMER_OFFICIAL original 또는 official landing/full-source route가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "제공된 마지막 4개 후보에도 named counterparty official route가 없다. 전체 roster의 local material 0은 source absence나 관계·계약 부재를 증명하지 않는다."
+    ]
+  },
+  "payload_hash": "181e5583d4ee3acf6814bd3168d18bdb5c2888d517b91516889ac942e63b261f",
+  "production_score_authority": false,
+  "prompt_hash": "9fe2892c439f639ce48dd70020934a29496a38284bf650e5fc8e504bf5538786",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f8541450b4a27d95d38c24c459eeabace8b2e25bd60aef12ea62b09374bb9e7b",
+  "response_id": "COLLABRESP-9b5a576beeb1780180513c385321b89df3c6684274dca264f99f6a335ffc4ebe",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

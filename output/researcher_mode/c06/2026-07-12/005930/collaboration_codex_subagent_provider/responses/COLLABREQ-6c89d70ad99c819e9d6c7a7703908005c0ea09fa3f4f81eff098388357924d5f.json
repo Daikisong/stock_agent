@@ -1,0 +1,84 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5da3ec3abecd68fc59d726d8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "국가정책정보 URL owner와 공급망 전략 보고서 metadata는 증권사 리서치 PDF provenance가 아니며, 삼성전자 equity peer valuation을 다루는 문서도 아니므로 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-d6a472820733ef80da8f7261",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "SK증권 연구 PDF와 2026-05-28 날짜는 요청 provenance와 cutoff에 맞지만, 제목과 discovery metadata가 거시 전망을 가리키며 삼성전자 peer 명단과 동일 기간 valuation 비교표로 이어지는 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-746d3850194ba895e3c70976",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "유안타증권 file-server owner는 요청된 PUBLIC_BROKER_PDF provenance와 맞지만, URL 날짜 2026-08-04가 2026-07-12 cutoff 이후이므로 현재 PEER_BAND 판단의 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-77f73f3ba0ca1ebcc79a868c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "유안타증권 file-server owner는 요청된 PUBLIC_BROKER_PDF provenance와 맞지만, URL 날짜 2026-08-04가 2026-07-12 cutoff 이후이므로 현재 PEER_BAND 판단의 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-8cc8ee0fc13d02ae668cf0e3",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "유안타증권 file-server owner는 요청된 PUBLIC_BROKER_PDF provenance와 맞지만, URL 날짜 2026-08-06가 2026-07-12 cutoff 이후이므로 현재 PEER_BAND 판단의 material 후보가 아닙니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "current epoch74 roster의 5개 후보를 exact-once로 분류했으며 검색 snippet은 EvidenceFact로 사용하지 않았습니다.",
+      "cutoff 이전의 삼성전자 peer 명단·동일 forward 기간·valuation 단위를 갖춘 material 원문은 이 roster에서 확인되지 않았습니다.",
+      "이 분류에는 점수·Stage 권한이 없습니다."
+    ]
+  },
+  "payload_hash": "8b8904a4948e4cb597a6552f95e483ffefd2ef0d7802da51a73a1808ecaa0a16",
+  "production_score_authority": false,
+  "prompt_hash": "2805d020e9b0d406c9536531fa7fd260010bdf15fce6f9f14253272fe12c9564",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6c89d70ad99c819e9d6c7a7703908005c0ea09fa3f4f81eff098388357924d5f",
+  "response_id": "COLLABRESP-e20f3e56fb55f0283959e0381ebeb11623fe178c3dd6ed46ad46af2cf6f052e3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

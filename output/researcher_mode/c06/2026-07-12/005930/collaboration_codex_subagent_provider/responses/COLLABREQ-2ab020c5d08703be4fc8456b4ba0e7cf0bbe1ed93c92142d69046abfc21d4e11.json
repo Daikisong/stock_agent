@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      17.4,
+      20.1
+    ],
+    "anchor_comparisons": [
+      "positive anchor 18.96~21.36점은 현재의 강한 실적·현금전환과 가장 가까운 ordinal 기준이다. 다만 anchor의 경제 패턴이 구체적이지 않아 exact midpoint 복사는 피한다.",
+      "counter anchor 20.8~23.2점은 더 높은 강도권이지만 exact fact signature가 없고, 현재 가격 의존·EPS 리비전 하락·전사 FCF 귀속 한계 때문에 이 상단까지 올릴 근거가 부족하다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-2bf2934ad088b585cc89843a",
+      "EFACT-992faa8a46788f671cefe250",
+      "EFACT-e449f48cdf920d528532a37f",
+      "EFACT-f05a97edeb8f85d49353381e",
+      "EFACT-f6519571c11130bacb0af98d"
+    ],
+    "disagreements": [
+      "research memo의 17.8~20.5 범위는 대체로 타당하나, anchor가 exact가 아니므로 상단을 20.1로 조금 줄이고 midpoint를 18.8로 조정한다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-2fb324f77e56e0e487863c17",
+      "CANCH-d3ec23639ebd5c1f8d20fd03"
+    ],
+    "proposed_points": 18.8,
+    "rationale": "현재 증거는 strong band에 진입하지만 만점 근처는 아니다. 공식 메모리 매출·기록적 이익·양(+) FCF는 positive anchor 하단 이상을 지지하고, 가격 의존과 비용·수요 counter 및 HBM 단독 현금흐름 부재는 midpoint 주변에서 감액을 요구한다. ordinal anchor의 낮은 구체성을 반영해 좁지 않은 허용 범위를 둔다.",
+    "support_fact_ids": [
+      "EFACT-71eb35cf12f591c101571b4e",
+      "EFACT-cb2550bcc2cd6b3a1bd34e00",
+      "EFACT-d91f57ec5514398fe1ab72a9",
+      "EFACT-e854b59aa43bb7f73c1e0835",
+      "EFACT-f8f6e5abba8d72973f8cbc55",
+      "EFACT-f979df4935e2c87e7d55a6ed"
+    ],
+    "why_not_higher": "exact anchor가 없고 HBM 단독 이익·현금흐름 부재, 가격·비용 민감도와 혼재된 리비전이 20점 이상 지속성 판단을 제한한다.",
+    "why_not_lower": "실현된 메모리 제품매출, 기록적 이익, 컨센서스 상회와 양(+) FCF가 strong ordinal anchor 하단에 근접한 현재 경제 강도를 지지한다."
+  },
+  "payload_hash": "9b76ae610e52a0185d3f1b55efeed7eb91c0147545b921c43621ad96f8bb3858",
+  "production_score_authority": false,
+  "prompt_hash": "54fd848c0d7b55c8aae32073d04301251245ca47cc16d7ccfd62372774a4edc1",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2ab020c5d08703be4fc8456b4ba0e7cf0bbe1ed93c92142d69046abfc21d4e11",
+  "response_id": "COLLABRESP-0d39d2d969444be043740b0fd2b3f9004d7ea9b8682afcd2f07b91c16b6b9856",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

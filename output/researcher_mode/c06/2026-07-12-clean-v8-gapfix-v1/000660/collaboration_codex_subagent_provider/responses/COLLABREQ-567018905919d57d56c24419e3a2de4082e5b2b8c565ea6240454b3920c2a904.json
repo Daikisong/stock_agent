@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "703e2f06337de4af61b475b7dc59dff87c297535ed91eef1e9716dada5a480c1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-9ebbf9cc64e406dfb19cee21",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Busan news report is not OPENDART original material."
+      },
+      {
+        "candidate_id": "SGCAND-4f307a187b3425943501e049",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "Third-party news report does not match OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-6f269a5d88fffcb67256ca9d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Orangeboard report is not an OPENDART filing route."
+      },
+      {
+        "candidate_id": "SGCAND-16d0bc17545e25b23ccae408",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Orangeboard user post is not original disclosure material."
+      },
+      {
+        "candidate_id": "SGCAND-a0e47d260d9cd3400c16ad40",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.03,
+        "rationale": "Unofficial article does not match requested OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-900e8188c2e8188b20e898ed",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "TradingView media repost is not the original OPENDART route."
+      },
+      {
+        "candidate_id": "SGCAND-d5a9d4518d76ae9b6e2b0009",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial blog is not OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-0bedd6fec12e8ceacf01a921",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Content-aggregation page is not original OPENDART material."
+      },
+      {
+        "candidate_id": "SGCAND-a8324b511269e79be523d45a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.05,
+        "rationale": "Third-party price article does not match OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-b2143be1a29ef807572daa35",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "Medical Today article is third-party analysis, not OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-4215f66f984387052bf8f55a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.05,
+        "rationale": "MTN issue-check article is not an OPENDART original filing route."
+      },
+      {
+        "candidate_id": "SGCAND-7a957475ac8495d36c2e0fe7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "Edaily market article is third-party media, not OPENDART."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No matching original OPENDART/full filing route is present; snippets and reposts are not evidence or absence proof."
+    ]
+  },
+  "payload_hash": "f5eb9dbdd384150b338efd82f0a6ba1b6e4e81174728eefa0b3d2c48ae18ba74",
+  "production_score_authority": false,
+  "prompt_hash": "9cf565202b4aa7b857cbc44b6bcbad59ed6792239963d756f7581331e3218da7",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-567018905919d57d56c24419e3a2de4082e5b2b8c565ea6240454b3920c2a904",
+  "response_id": "COLLABRESP-96ef162ab44c621f6f161c67ab9caac975735e386fe522c1f8c9a9807dcc3ed5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

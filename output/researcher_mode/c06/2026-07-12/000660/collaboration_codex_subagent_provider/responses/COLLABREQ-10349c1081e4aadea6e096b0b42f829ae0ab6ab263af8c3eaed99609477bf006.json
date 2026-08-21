@@ -1,0 +1,127 @@
+{
+  "output_schema_hash": "e7a733a147d6964e75528742897823ca5094ca593a9f54b8723c700910cfd090",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0c14f38a268cdf699b3f9e49",
+        "rationale": "주총 정정공고와 첨부 재무·사업 서술 전체를 검토했다. HBM 연간 매출의 2배 이상 성장 및 DRAM 실적 기여, AI 메모리 판매 확대와 기록적 연결 실적의 명시적 연결만 목적 직접 자료로 추출했다. 일반 주총·지배구조 사항, NAND 전용 정보, HBM 귀속이 없는 전사 현금흐름·투자액, 숫자 없는 전망은 목적 범위 밖이거나 구조화 역할 요건 미충족으로 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0c14f38a268cdf699b3f9e49",
+        "economic_mechanism": "HBM_REVENUE_CONTRIBUTION",
+        "exact_quote": "특히, HBM3E 12단 판매가 크게 늘어나 연간 HBM 매출은 전년 대비 2배 이상 확대되며 DRAM 실적에 크게 기여하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공식 공시가 HBM의 연간 매출 성장과 DRAM 실적 기여를 직접 연결하므로 HBM 매출의 이익 전환 여부를 조사하는 목적을 진전시킨다. 다만 절대 세그먼트 금액이 아니므로 SEGMENT_CONTRIBUTION 역할은 부여하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:REVENUE_CONVERSION:2025",
+        "normalized_object": "2025년 연간 HBM 매출이 전년 대비 2배 이상 확대되어 DRAM 실적에 크게 기여",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025",
+        "predicate": "annual_revenue_grew_and_contributed_to_dram_results",
+        "predicate_family": "SEGMENT_REVENUE_CONTRIBUTION",
+        "primitive_tags": [
+          "hbm_revenue_growth",
+          "dram_results_contribution"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "eps_fcf_explosion",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "hbm_revenue_conversion"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연간 HBM 매출",
+        "subject_id": "000660:HBM_REVENUE",
+        "unit": "배",
+        "value": "2배 이상"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0c14f38a268cdf699b3f9e49",
+        "economic_mechanism": "AI_MEMORY_EARNINGS_CONVERSION",
+        "exact_quote": "2025년 메모리 시장은 AI 기술의 전방위적 확산이 AI 메모리 수요 증가를 촉진하며 급격한 성장세를 보였습니다. 당사는 업계 선두의 경쟁력을 갖춘 AI 메모리 제품의 판매를 대폭 확대하고 수익성 중심의 제품 운영 전략으로 시황 변화에 맞춰 적시에 투자를 진행한 결과, 2025년 연결 기준 매출은 97.1조원, 영업이익은 47.2조원을 기록하면서 매출과 영업이익 모두 2024년에 기록하였던 창사 이래 최대 실적을 경신하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공식 공시는 AI 메모리 판매 확대를 수익성 중심 운영 및 투자와 함께 기록적 연결 실적의 원인으로 명시한다. 이는 AI 메모리 수요가 실제 매출·영업이익으로 전환되었는지를 직접 진전시키지만, AI 메모리만의 절대 금액은 아니므로 구조화 세그먼트 역할은 비워 둔다.",
+        "mechanism_scope_id": "000660:MEMORY:AI_MEMORY:REVENUE_CONVERSION:2025",
+        "normalized_object": "AI 메모리 판매 확대, 수익성 중심 제품 운영 및 적시 투자를 복합 요인으로 2025년 연결 매출 97.1조원과 영업이익 47.2조원의 사상 최대 실적 달성",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025",
+        "predicate": "sales_expansion_with_profitability_focused_operations_and_timely_investment_supported_record_results",
+        "predicate_family": "AI_MEMORY_EARNINGS_CONVERSION",
+        "primitive_tags": [
+          "ai_memory_sales",
+          "record_revenue",
+          "record_operating_profit"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "eps_fcf_explosion",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "ai_memory_earnings_conversion"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 AI 메모리 판매와 연결 실적",
+        "subject_id": "000660:AI_MEMORY_EARNINGS_CONVERSION",
+        "unit": "조원",
+        "value": "매출 97.1조원; 영업이익 47.2조원"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "이 문서는 HBM 매출이 전년 대비 2배 이상 늘었다고 밝히지만 절대 HBM 매출액을 제시하지 않아 SEGMENT_CONTRIBUTION의 점값 요건을 충족하지 않는다.",
+      "이 문서에는 공시일 이후 기간에 대한 기계 판독 가능한 수치형 HBM·AI 메모리 실적 가이던스가 없어 FORWARD_GUIDANCE 공백은 남는다.",
+      "연결 현금흐름과 유형자산 취득액은 DRAM·HBM과 금지된 NAND가 혼합된 전사 수치이므로 HBM 또는 AI 메모리 FCF로 귀속하지 않았다."
+    ]
+  },
+  "payload_hash": "50516f4271cc01b883ebf32849d5f0868bae7afc4336e18396fb66ec90d30039",
+  "production_score_authority": false,
+  "prompt_hash": "4aa20958b2cd4389570c6abcbd45186c5b2d0a5202126cf2e77461655d6bdaab",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-10349c1081e4aadea6e096b0b42f829ae0ab6ab263af8c3eaed99609477bf006",
+  "response_id": "COLLABRESP-b686905f30ff362c2da4c079fc80d37fbe54de9f413e2dc783fdc43b97cd6520",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

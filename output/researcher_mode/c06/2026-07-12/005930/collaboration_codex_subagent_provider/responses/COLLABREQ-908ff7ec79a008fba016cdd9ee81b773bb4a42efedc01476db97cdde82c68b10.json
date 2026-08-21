@@ -1,0 +1,70 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-b80e192f42e9c3b506755a0a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2020년 재무·실적 자료 경로지만 현재 HBM4 상용화, 고객 일정, 메모리 capacity와 2025~2026년 실적 상태보다 이전이며 후속 원문으로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-bac85d02a37d965bd97ef21c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "TTS·오디오 재생용 파생 파일 또는 외부 호스트 경로로서 요청된 provenance의 검증 가능한 full-text 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-bb2793c7398cf08c865ff82e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "검증된 삼성 도메인의 일반 랜딩·지원·미디어 페이지지만 특정 메모리/HBM 공급·고객·실적 문서로 이어지는 material 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-bbdd190c0390f49fd0c125c8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "검증된 발행사 2014년 재무·실적 자료 경로지만 현재 HBM4 상용화, 고객 일정, 메모리 capacity와 2025~2026년 실적 상태보다 이전이며 후속 원문으로 대체된 역사자료다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "b1c8ffe6a7437bafaeb6c0d0cd4300f3553be8ee74e763e40bcceecca09ab73a",
+  "production_score_authority": false,
+  "prompt_hash": "adff07ca32a4281c3a04d8350805ad42a138503fe178a14f9f5ce9021fdf363f",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-908ff7ec79a008fba016cdd9ee81b773bb4a42efedc01476db97cdde82c68b10",
+  "response_id": "COLLABRESP-87a4151b40834d5da62c1101d106fcd3292445cfb10c35a7465a9f8e8306ed9d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

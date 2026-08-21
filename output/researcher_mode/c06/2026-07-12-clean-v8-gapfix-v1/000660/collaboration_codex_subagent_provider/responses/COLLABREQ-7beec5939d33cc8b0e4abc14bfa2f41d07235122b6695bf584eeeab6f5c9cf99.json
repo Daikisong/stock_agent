@@ -1,0 +1,79 @@
+{
+  "output_schema_hash": "0e7d7edca2618979fc43f3f45874e7a9bd225dc894e332a435461d42a06d984e",
+  "payload": {
+    "confidence": 0.76,
+    "counter_case": "M15X 추가 증산 여력과 고객별 allocation·가격·기간 미공개는 고정된 장기 병목 주장에 반대되는 근거다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200"
+    ],
+    "positive_case": "고객 요청 물량이 실제 HBM4 양산으로 연결돼 수요가 생산 실행으로 전환되고 있다.",
+    "prior_fact_dispositions": [],
+    "proposed_score_lower": 11.0,
+    "proposed_score_mid": 14.0,
+    "proposed_score_upper": 16.0,
+    "research_complete": true,
+    "researcher_summary": "고객 요청 HBM4 양산은 병목의 경제성을 지지하지만 HBM 전용 CAPA 잠김과 realized ASP가 분리되지 않아 구조적 scarcity의 최상단은 아니다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "고객 요청 물량의 HBM4 양산은 수요와 생산 실행의 연결을 지지하지만 sold-out 기간이나 가격 조건을 증명하지 않는다.",
+        "fact_row_index": 164,
+        "source_economic_mechanism": "The issuer reports that HBM4 is currently in mass production for quantities requested by customers, directly linking customer demand to production execution while disclosing no named customer, signed purchase contract, numeric volume, price, duration, or allocation protection.",
+        "source_period_json": "\"current as of 2026-01-28\"",
+        "source_predicate": "is mass-producing customer-requested quantities",
+        "source_value_json": "\"customer-requested quantities currently in mass production\""
+      },
+      {
+        "component_interpretation": "추가 증산 여력은 공급 병목이 영구 고정됐다는 주장에 대한 counter다.",
+        "fact_row_index": 67,
+        "source_economic_mechanism": "The broker sees additional M15X investment and capacity headroom, a conditional supply-upside counter to a fixed-capacity scarcity thesis rather than an announced issuer plan.",
+        "source_period_json": "\"FY2026 outlook\"",
+        "source_predicate": "broker identifies conditional M15X investment and capacity upside",
+        "source_value_json": "\"추가 투자 및 증산 여력\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      164,
+      67
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "HBM 전용 CAPA와 sold-out 기간이 정량 공개되지 않았다",
+      "실현 HBM ASP와 계약별 가격 보호가 확인되지 않았다"
+    ],
+    "why_not_higher": "HBM 전용 CAPA 잠김, realized ASP, 고객별 allocation 보호가 확인되지 않았다.",
+    "why_not_lower": "발행사가 고객 요청 HBM4 물량의 실제 양산을 확인했다."
+  },
+  "payload_hash": "71c96a0d6d2d0896b27d55a38b0e3db627a7bd038a7f197ad5bf9bb2b530f536",
+  "production_score_authority": false,
+  "prompt_hash": "655785da68c4f36b38a92f1d9f95f4d753fc782c8f192daae7c19faae8b8680c",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7beec5939d33cc8b0e4abc14bfa2f41d07235122b6695bf584eeeab6f5c9cf99",
+  "response_id": "COLLABRESP-6d39d522ee742935de6d4d322c45250f62c9629f5e2222f9234edce5d8993314",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

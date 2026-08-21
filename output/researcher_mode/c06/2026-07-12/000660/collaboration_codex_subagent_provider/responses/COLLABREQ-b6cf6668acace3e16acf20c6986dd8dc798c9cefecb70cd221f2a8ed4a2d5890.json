@@ -1,0 +1,42 @@
+{
+  "output_schema_hash": "868c7c7cdd3258048a388d9f56dec3dd50f46dc8a5a17396fa2499b7882743e1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4215e49b6f22bca5942721fa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 매체의 특징주 기사이며 snippet의 핵심 실적 대상도 삼성전자다. SK하이닉스 issuer earnings release 또는 issuer presentation 원문 provenance와 구체적인 valuation denominator를 제공하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "1개 후보를 정확히 한 번 분류했고 material 후보는 없다."
+    ]
+  },
+  "payload_hash": "50dd493b6cc1df6d451c579029a7371e1341d40ba5294b8e56d3016095f29299",
+  "production_score_authority": false,
+  "prompt_hash": "33644c3687e67ce20c85a7079ce92da185eb472adce05cbf233558785c9d5090",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b6cf6668acace3e16acf20c6986dd8dc798c9cefecb70cd221f2a8ed4a2d5890",
+  "response_id": "COLLABRESP-136b15476690e8dbc14000365a67a5e4e41f0ee30f94d47e08d6dd16ccb60908",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

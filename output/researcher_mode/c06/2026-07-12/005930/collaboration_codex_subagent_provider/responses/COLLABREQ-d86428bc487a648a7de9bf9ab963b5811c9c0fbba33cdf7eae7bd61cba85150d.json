@@ -1,0 +1,497 @@
+{
+  "output_schema_hash": "12647df9cfc943fbb7dc25f550ef1cddd207e76d8eb01c99af411004e3af580d",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-473c73dfb985141c7f5727fd",
+        "rationale": "직전 5건에 더해 1Q26 DRAM 가격·물량, 메모리 peer 비교, 2026~2027 EV/EBITDA를 distinct하게 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-4d1a8341b0777325cdcaf813",
+        "rationale": "직전 page에서 잠정실적의 HBM segment attribution 한계를 이미 추출했고 추가 distinct 사실은 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-4e8c3e72a64142ee8a0bc2f2",
+        "rationale": "직전 P4 증설 사실에 더해 삼성전자 예상이익 대비 시가총액 격차와 target valuation snapshot을 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "rationale": "직전 3건에 더해 forward 이익-PER bridge, 가격 둔화 위험, HBM4 매출·마진 전환 미확인을 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-5123f79f1af2c57d898245e9",
+        "rationale": "직전 page에서 P5 HBM 투자·생산 계획을 추출했고 나머지는 마이크론 또는 산업 일반이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-5be1161711c033a8ceef2597",
+        "rationale": "정성적 가격 협상력 재인용 외에 제품·기간·수치 귀속이 분명한 신규 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-5d3a002c301ea447a2df0b3c",
+        "rationale": "마이크론·SK하이닉스와 NAND 산업 중심으로 삼성전자 C06에 직접 귀속되는 사실이 없다.",
+        "status": "WRONG_TARGET_OR_SEGMENT"
+      },
+      {
+        "document_id": "SGDOC-5d7d9f693743beb0409d1928",
+        "rationale": "직전 HBM 세대 전환 상태에 더해 1분기 HBM·DS 기여의 segment 공시 한계를 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-473c73dfb985141c7f5727fd",
+        "economic_mechanism": "유안타증권은 1Q26 DRAM 출하 증가가 미미한 반면 가격 상승이 이익 개선을 견인할 것으로 전망했다.",
+        "exact_quote": "당사는 1Q26 DRAM 가격/출하량 QoQ 증감율을 각각 +15.0%/+1.0%로",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격 상승과 물량 증가를 분리해 forward DRAM 이익 bridge가 가격 효과에 더 의존함을 보여준다.",
+        "mechanism_scope_id": "MEMORY/DRAM/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "1Q26 DRAM 가격·출하량 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26F",
+        "predicate": "1Q26 DRAM 가격은 15%, 출하량은 1% 전분기 대비 증가할 것으로 추정됐다",
+        "predicate_family": "BROKER_DRAM_PRICE_VOLUME_FORECAST_1Q26",
+        "primitive_tags": [
+          "PRICING_POWER",
+          "FORWARD_EARNINGS"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "DRAM price forecast",
+          "volume versus price"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DRAM 가격·출하량 전망",
+        "subject_id": "005930",
+        "unit": "% QoQ",
+        "value": "가격 +15.0%; 출하량 +1.0% QoQ"
+      },
+      {
+        "business_segment": "메모리 가치평가",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-473c73dfb985141c7f5727fd",
+        "economic_mechanism": "유안타증권의 2026년 메모리 peer 표에서 삼성전자는 SK하이닉스·Micron보다 낮은 PBR과 비슷하거나 낮은 EV/EBITDA로 전망됐다.",
+        "exact_quote": "2026F Sales 415,429 156,260 89,993 13,352 13,093 4,174\nOP 108,208 91,297 50,868 4,608 4,351 1,761\nOPM% 26% 58% 57% 35% 33% 42%\nNP 91,169 73,481 45,449 3,521 3,473 1,480\nPER 10.0 7.4 8.7 21.2 15.9 15.1\nPBR 1.9 3.0 3.0 7.3 3.7 3.4\nROE 19.6 48.7 39.6 121.8 25.1 22.8\nEV/EBITDA 4.8 5.1 6.3 14.4 11.9 9.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 표·기간의 메모리 peer 배수를 비교해 rerating 여지와 ROE 차이라는 반대조건을 동시에 보여준다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "2026년 메모리 peer PBR·EV/EBITDA 비교",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "2026F 삼성전자 PBR 1.9배와 EV/EBITDA 4.8배는 SK하이닉스 3.0배·5.1배 및 Micron 3.0배·6.3배보다 낮게 제시됐다",
+        "predicate_family": "BROKER_MEMORY_PEER_VALUATION_COMPARISON_2026",
+        "primitive_tags": [
+          "PEER_BAND",
+          "VALUATION_COMPARISON"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "peer valuation",
+          "memory comparability"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 peer valuation",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": "삼성 PBR 1.9x, EV/EBITDA 4.8x; SK하이닉스 3.0x, 5.1x; Micron 3.0x, 6.3x"
+      },
+      {
+        "business_segment": "메모리 중심 전사 가치평가",
+        "confidence": 0.93,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-473c73dfb985141c7f5727fd",
+        "economic_mechanism": "유안타증권은 메모리 이익 급증 전망을 반영한 삼성전자 2026F EV/EBITDA를 4.2배로 제시했다.",
+        "exact_quote": "EV/EBITDA 8.4 5.2 6.5 4.2 3.8",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 denominator가 명시된 forward multiple이며 같은 보고서의 DRAM·반도체 이익 전망과 연결된다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "2026년 EV/EBITDA",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "2026F EV/EBITDA가 4.2배로 전망됐다",
+        "predicate_family": "BROKER_FORWARD_EV_EBITDA_2026",
+        "primitive_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "forward EV/EBITDA",
+          "memory earnings bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2026년 EV/EBITDA",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 4.2
+      },
+      {
+        "business_segment": "메모리 중심 전사 가치평가",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-473c73dfb985141c7f5727fd",
+        "economic_mechanism": "유안타증권은 메모리 이익 전망을 반영한 삼성전자 2027F EV/EBITDA를 3.8배로 제시했다.",
+        "exact_quote": "EV/EBITDA 8.4 5.2 6.5 4.2 3.8",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "장기 forward multiple이 메모리 이익 지속성 가정의 평가 결과를 보여준다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "2027년 EV/EBITDA",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027F",
+        "predicate": "2027F EV/EBITDA가 3.8배로 전망됐다",
+        "predicate_family": "BROKER_FORWARD_EV_EBITDA_2027",
+        "primitive_tags": [
+          "FORWARD_EV_EBITDA",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "forward EV/EBITDA",
+          "valuation period"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2027년 EV/EBITDA",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 3.8
+      },
+      {
+        "business_segment": "메모리 가치평가",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4e8c3e72a64142ee8a0bc2f2",
+        "economic_mechanism": "삼성증권은 삼성전자의 12개월 예상 순이익이 주요 글로벌 반도체 peer를 상회하지만 시가총액 격차가 남아 있다고 제시했다.",
+        "exact_quote": "삼성전자에이어SK하이닉스의12개월예상순이익추정치도TSMC를상회하기시작했고, 마이크론과의격차도확대지속\n• 그럼에도시가총액은TSMC,삼성전자, SK하이닉스, 마이크론이각각15.8억, 7.8억, 4.8억, 4.8억달러(2월23일기준)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "예상 이익과 시가총액의 상대 격차를 같은 peer 문맥에서 제시해 rerating 논리를 직접 뒷받침한다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/MARKET_EXPECTATION_GAP",
+        "normalized_object": "예상순이익 대비 글로벌 반도체 시가총액 격차",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02-23~26 평가",
+        "predicate": "삼성전자 12개월 예상 순이익이 TSMC를 상회하지만 시가총액은 TSMC보다 낮게 제시됐다",
+        "predicate_family": "BROKER_SEMICONDUCTOR_NET_INCOME_MARKET_CAP_GAP",
+        "primitive_tags": [
+          "MARKET_EXPECTATION_GAP",
+          "PEER_COMPARISON"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "market-cap gap",
+          "peer earnings"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 반도체 이익 대비 시가총액",
+        "subject_id": "005930",
+        "unit": "십억달러 및 보고서 표기 억달러",
+        "value": "예상순이익 삼성 91, TSMC 77; 시가총액 삼성 7.8억달러, TSMC 15.8억달러(보고서 표기)"
+      },
+      {
+        "business_segment": "메모리 가치평가",
+        "confidence": 0.88,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4e8c3e72a64142ee8a0bc2f2",
+        "economic_mechanism": "삼성증권의 2월 26일 snapshot은 삼성전자의 예상 EPS 증가율 265.4%, P/E 9.6배, P/B 2.4배, ROE 25.3%를 한 표에서 연결했다.",
+        "exact_quote": "삼성전자 005930KS 218,000 230,000 1290.5 9.6 2.4 265.4 25.3 0.8",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 earnings growth가 포함된 target-direct valuation snapshot이어서 단순 목표주가만 제시한 행이 아니다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "삼성전자 P/E·P/B·EPS 증가율·ROE snapshot",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02-26 현재",
+        "predicate": "P/E 9.6배, P/B 2.4배, EPS 증가율 265.4%, ROE 25.3%로 제시됐다",
+        "predicate_family": "BROKER_TARGET_VALUATION_EPS_ROE_SNAPSHOT",
+        "primitive_tags": [
+          "CURRENT_VALUATION",
+          "EARNINGS_BRIDGE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "valuation snapshot",
+          "EPS growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 valuation snapshot",
+        "subject_id": "005930",
+        "unit": "배, %",
+        "value": "P/E 9.6x; P/B 2.4x; EPS 성장 265.4%; ROE 25.3%"
+      },
+      {
+        "business_segment": "메모리 중심 전사 가치평가",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "economic_mechanism": "교보증권은 메모리 가격·HBM4 논리에 기초해 2026년 영업이익 급증과 2026~2027년 낮은 PER을 함께 제시했다.",
+        "exact_quote": "밸류에이션 자료도 이익 체력의 변화를 반영한다. 교보증권은 삼성전자의 2026년 매출액을 732조7000억원, 영업이익을 366조4000억원으로 전망했다. 2025년 영업이익 43조6000억원과 비교하면 영업이익 규모가 크게 확대되는 구조다. 2026년 예상 PER은 6.0배, 2027년 예상 PER은 4.4배로 제시됐다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "forward earnings와 같은 기간의 valuation multiple을 직접 연결해 완전한 market-mispricing bridge를 제공한다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "2026~2027년 영업이익·PER bridge",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F~2027F",
+        "predicate": "2026년 매출 732.7조원, 영업이익 366.4조원, PER 6.0배와 2027년 PER 4.4배로 전망됐다",
+        "predicate_family": "BROKER_FORWARD_EARNINGS_PER_BRIDGE_2026_2027",
+        "primitive_tags": [
+          "VALUATION_EARNINGS_BRIDGE",
+          "FORWARD_EARNINGS"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "market_mispricing",
+        "question_family_tags": [
+          "forward earnings",
+          "forward PER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026~2027년 이익·PER 전망",
+        "subject_id": "005930",
+        "unit": "조원, 배",
+        "value": "2026 매출 732.7조원; OP 366.4조원; PER 6.0x; 2027 PER 4.4x"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "economic_mechanism": "가격 상승이 둔화되면 높은 영업레버리지의 반대편에서 이익 추정치가 빠르게 낮아질 수 있다.",
+        "exact_quote": "이 대목은 투자자에게 중요한 의미가 있다. 가격 상승 국면에서는 영업레버리지가 크게 나타나지만, 반대로 가격 상승률이 둔화되면 이익 추정치도 빠르게 흔들릴 수 있다. 삼성전자의 단기 실적 변수는 출하량 확대보다 메모리 가격의 지속성에 더 가깝다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격결정력의 지속성이 깨질 때 이익이 훼손되는 break condition을 직접 명시한다.",
+        "mechanism_scope_id": "MEMORY/DRAM/RISK/RISK_COUNTER",
+        "normalized_object": "메모리 가격 지속성에 대한 이익 민감도",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026년 전망",
+        "predicate": "메모리 가격 상승률 둔화 시 이익 추정치가 빠르게 흔들릴 수 있다고 분석됐다",
+        "predicate_family": "MEMORY_PRICE_DECELERATION_EARNINGS_SENSITIVITY",
+        "primitive_tags": [
+          "RISK_COUNTER",
+          "PRICING_POWER"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "pricing durability",
+          "earnings sensitivity"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 가격 지속성",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "가격 상승률 둔화 시 이익 추정 민감도 확대"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "economic_mechanism": "HBM4 납품 분석만으로는 충분하지 않고 실제 매출과 수익성 개선으로 전환되는지를 확인해야 한다.",
+        "exact_quote": "HBM4 납품이 실제 매출과 수익성 개선으로 연결돼야 하며",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "첫 납품 분석과 실제 경제성과 사이의 미해결 전환 단계를 명시한다.",
+        "mechanism_scope_id": "MEMORY/HBM/RISK/RISK_COUNTER",
+        "normalized_object": "HBM4 납품의 매출·마진 전환 한계",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026년 하반기 전망",
+        "predicate": "HBM4 납품의 실제 매출·수익성 개선 연결이 긍정 전망의 전제로 남아 있다",
+        "predicate_family": "HBM4_REVENUE_MARGIN_CONVERSION_UNVERIFIED",
+        "primitive_tags": [
+          "REVENUE_CONVERSION",
+          "RISK_COUNTER"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "HBM revenue conversion",
+          "margin verification"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 수익 전환",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "실제 매출·수익성 전환 확인 필요"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-5d7d9f693743beb0409d1928",
+        "economic_mechanism": "1분기 사업부 세부 실적이 공개되지 않아 HBM 수요 확대가 전사 실적에 기여했다는 분석을 segment actual로 확인할 수 없다.",
+        "exact_quote": "사업부별 세부 실적은 공개되지 않았지만, 증권가에선 반도체 사업을 담당하는 디바이스솔루션(DS) 부문이 전사 실적 대부분을 이끌었을 것으로 분석된다. AI 서버용 고대역폭메모리(HBM) 수요 확대와 범용 메모리 가격 상승이 동시에 반영된 영향이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 수요와 전사 실적의 연결이 공시된 segment actual이 아니라 분석임을 기간별로 구분한다.",
+        "mechanism_scope_id": "MEMORY/HBM/GENERIC_INFORMATION/RISK_COUNTER",
+        "normalized_object": "1분기 HBM·DS 이익 기여도 공시 한계",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026년 1분기 잠정실적",
+        "predicate": "1분기 사업부별 세부 실적은 공개되지 않았고 DS 기여는 증권가 분석이다",
+        "predicate_family": "Q1_PRELIMINARY_HBM_SEGMENT_ATTRIBUTION_UNDISCLOSED",
+        "primitive_tags": [
+          "INFORMATION_LIMITATION",
+          "HBM_ATTRIBUTION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "segment attribution",
+          "preliminary disclosure"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 1분기 HBM 이익 기여도",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "사업부별 세부 실적 미공개"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "0e6283b92a00ca42df0ba33f06bc215e522347c8790233d615fae997418f93c1",
+  "production_score_authority": false,
+  "prompt_hash": "b665907342203e59e3349453eb42ede2685742218adf6029d95ee10934d15b49",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d86428bc487a648a7de9bf9ab963b5811c9c0fbba33cdf7eae7bd61cba85150d",
+  "response_id": "COLLABRESP-5df90e1ef3325dee1332acbf19a2575c3871e66537d0f32457e2459d65928cdb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

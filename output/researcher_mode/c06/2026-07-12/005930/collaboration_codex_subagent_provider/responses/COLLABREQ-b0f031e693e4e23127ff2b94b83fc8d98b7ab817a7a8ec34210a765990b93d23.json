@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-bfe82771505c5a41ae2431ee",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 소유 공식 도메인이라 요청된 CUSTOMER_OFFICIAL source family에는 일치한다. 그러나 이 링크는 fetched parent의 메뉴·법무·지원·일반 제품·소셜·인접 기사 경로로, 삼성전자 HBM의 qualification, 구매조건, 실제 탑재나 제품별 경제 귀속을 추가 확인하지 못하므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c0a77fa50341a2c8b915ae47",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 소유 공식 도메인이라 요청된 CUSTOMER_OFFICIAL source family에는 일치한다. 그러나 이 링크는 fetched parent의 메뉴·법무·지원·일반 제품·소셜·인접 기사 경로로, 삼성전자 HBM의 qualification, 구매조건, 실제 탑재나 제품별 경제 귀속을 추가 확인하지 못하므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c418ef0c5b436386d4a0232f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 NVIDIA parent에서 발견된 외부 링크이지만 URL 소유자가 NVIDIA 고객사 공식 도메인으로 확인되지 않는다. 소셜 공유·제3자 브랜드·외부 커뮤니티 경로이며 삼성전자 HBM의 고객 공식 원문도 아니므로 matched family NONE, nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c52584a589a6e372fb91fd1d",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 공식 GTC 세션 원문이지만 SK하이닉스 제조 세션으로 target 삼성전자와 주체가 다르다. CUSTOMER_OFFICIAL family는 일치하나 삼성전자 HBM 고객·제품 경로를 확인하지 못해 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c5c256713d1787d7b754a336",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 소유 공식 도메인이라 요청된 CUSTOMER_OFFICIAL source family에는 일치한다. 그러나 이 링크는 fetched parent의 메뉴·법무·지원·일반 제품·소셜·인접 기사 경로로, 삼성전자 HBM의 qualification, 구매조건, 실제 탑재나 제품별 경제 귀속을 추가 확인하지 못하므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c66fa261671764abb2d585bf",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 소유 공식 도메인이라 요청된 CUSTOMER_OFFICIAL source family에는 일치한다. 그러나 이 링크는 fetched parent의 메뉴·법무·지원·일반 제품·소셜·인접 기사 경로로, 삼성전자 HBM의 qualification, 구매조건, 실제 탑재나 제품별 경제 귀속을 추가 확인하지 못하므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-cf0107f5c3f82e54befd75ef",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 소유 공식 도메인이라 요청된 CUSTOMER_OFFICIAL source family에는 일치한다. 그러나 이 링크는 fetched parent의 메뉴·법무·지원·일반 제품·소셜·인접 기사 경로로, 삼성전자 HBM의 qualification, 구매조건, 실제 탑재나 제품별 경제 귀속을 추가 확인하지 못하므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-d034aebe155d583dc950bc38",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 소유 공식 도메인이라 요청된 CUSTOMER_OFFICIAL source family에는 일치한다. 그러나 이 링크는 fetched parent의 메뉴·법무·지원·일반 제품·소셜·인접 기사 경로로, 삼성전자 HBM의 qualification, 구매조건, 실제 탑재나 제품별 경제 귀속을 추가 확인하지 못하므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-d08af442229cde231f04659a",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 소유 공식 도메인이라 요청된 CUSTOMER_OFFICIAL source family에는 일치한다. 그러나 이 링크는 fetched parent의 메뉴·법무·지원·일반 제품·소셜·인접 기사 경로로, 삼성전자 HBM의 qualification, 구매조건, 실제 탑재나 제품별 경제 귀속을 추가 확인하지 못하므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-d5e87e2b93663dc1ca4e1aeb",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 소유 공식 도메인이라 요청된 CUSTOMER_OFFICIAL source family에는 일치한다. 그러나 이 링크는 fetched parent의 메뉴·법무·지원·일반 제품·소셜·인접 기사 경로로, 삼성전자 HBM의 qualification, 구매조건, 실제 탑재나 제품별 경제 귀속을 추가 확인하지 못하므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-dae925fef00497b242264e3e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 NVIDIA parent에서 발견된 외부 링크이지만 URL 소유자가 NVIDIA 고객사 공식 도메인으로 확인되지 않는다. 소셜 공유·제3자 브랜드·외부 커뮤니티 경로이며 삼성전자 HBM의 고객 공식 원문도 아니므로 matched family NONE, nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-daef7681c878e064194bad7d",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 소유 공식 도메인이라 요청된 CUSTOMER_OFFICIAL source family에는 일치한다. 그러나 이 링크는 fetched parent의 메뉴·법무·지원·일반 제품·소셜·인접 기사 경로로, 삼성전자 HBM의 qualification, 구매조건, 실제 탑재나 제품별 경제 귀속을 추가 확인하지 못하므로 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "87개 후보는 이미 full-fetch된 NVIDIA 한국 파트너십 문서의 referenced URL expansion이며, 메뉴·법무·소셜·일반 제품 링크를 스니펫이나 EvidenceFact로 승격하지 않았다.",
+      "NVIDIA 공식 도메인은 CUSTOMER_OFFICIAL provenance만 인정했다. 후보 roster에는 삼성전자 HBM qualification, 구매계약, 배정 물량 또는 실제 NVIDIA 플랫폼 탑재를 더 확인할 target-specific 원문 경로가 없어 material 후보는 없다."
+    ]
+  },
+  "payload_hash": "488a870ade38fb52d3438349f4313499ce3d10010927e2601fc74e294e1eb2b7",
+  "production_score_authority": false,
+  "prompt_hash": "baf75d8a9691e02db230e88dadb09049ed405fc97e21a408b2097990ca009cc7",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b0f031e693e4e23127ff2b94b83fc8d98b7ab817a7a8ec34210a765990b93d23",
+  "response_id": "COLLABRESP-ca59247b0a3266214829d5e8754f74957662bed5901bdce26d5eec0881a14a6d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

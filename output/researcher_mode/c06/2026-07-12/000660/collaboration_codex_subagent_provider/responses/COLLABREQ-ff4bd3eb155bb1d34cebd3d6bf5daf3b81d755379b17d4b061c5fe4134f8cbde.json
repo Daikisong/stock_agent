@@ -1,0 +1,1524 @@
+{
+  "output_schema_hash": "e668a4403cc2427ed372ea8ee6fc20a0b1113cb61814d3ad5dcf5e7f43837dda",
+  "payload": {
+    "fact_dispositions": [
+      {
+        "fact_row_index": 0,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 1,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 2,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 3,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 4,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 5,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 6,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 7,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 8,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 9,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 10,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 11,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 12,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 13,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 14,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 15,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 16,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 17,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 18,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 19,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 20,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 21,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 22,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 23,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 24,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 25,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 26,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 27,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 28,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 29,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 30,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 31,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 32,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 33,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 34,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 35,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 36,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 37,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 38,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 39,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 40,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 41,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 42,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 43,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 44,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 45,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 46,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 47,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 48,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 49,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 50,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 51,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 52,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 53,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 54,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 55,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 56,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 57,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 58,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 59,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 60,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 61,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 62,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 63,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 64,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 65,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 66,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 67,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 68,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 69,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 70,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 71,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 72,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 73,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 74,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 75,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 76,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 77,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 78,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 79,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 80,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 81,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 82,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 83,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 84,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 85,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 86,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 87,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 88,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 89,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 90,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 91,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 92,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 93,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 94,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 95,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 96,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 97,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 98,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 99,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 100,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 101,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 102,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 103,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 104,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 105,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 106,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 107,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 108,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 109,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 110,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 111,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 112,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 113,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 114,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 115,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 116,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 117,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 118,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 119,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 120,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 121,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 122,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 123,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 124,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 125,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 126,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 127,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 128,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 129,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 130,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 131,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 132,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 133,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 134,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 135,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 136,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 137,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 138,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 139,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 140,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 141,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 142,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 143,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 144,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 145,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 146,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 147,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 148,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 149,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 150,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 151,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 152,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 153,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 154,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 155,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 156,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 157,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 158,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 159,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 160,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 161,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 162,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 163,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 164,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 165,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 166,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 167,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 168,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 169,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 170,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 171,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 172,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 173,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 174,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 175,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 176,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 177,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 178,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 179,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 180,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 181,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 182,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 183,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 184,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 185,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 186,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 187,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 188,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 189,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 190,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 191,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 192,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 193,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 194,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 195,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 196,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 197,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 198,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 199,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 200,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 201,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 202,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 203,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 204,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 205,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 206,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 207,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 208,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 209,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 210,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 211,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 212,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 213,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 214,
+        "rationale": "행을 검토했으나 허용 primitive에 직접 대응하지 않거나 대상·세그먼트·기간 귀속이 좁아 추론 없이 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 215,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 216,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 217,
+        "rationale": "허용 primitive의 직접 의미와 방향·대상·기간이 일치해 source-backed mapping에 포함했다.",
+        "status": "MAPPED"
+      }
+    ],
+    "mapping_complete": true,
+    "mappings": [
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          86,
+          179
+        ],
+        "primitive_id": "customer_preorder_or_allocation",
+        "semantic_rationale": "연간 HBM 수요 확보와 FY2026 DRAM 생산량 전부에 대한 고객 수요 확보를 직접 진술한다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          1,
+          122
+        ],
+        "primitive_id": "revenue_visibility_contract",
+        "semantic_rationale": "현재 LTA 체결 활동과 주요 고객 장기계약 가격을 직접 기술해 계약 기반 매출 가시성에 연결된다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          151
+        ],
+        "primitive_id": "revenue_visibility_contract",
+        "semantic_rationale": "주요 고객 물량과 가격이 월별 또는 분기별 합의로 정해진다는 공시는 장기 고정 가시성의 직접 반증이다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          92,
+          125
+        ],
+        "primitive_id": "hbm_capacity_constraint",
+        "semantic_rationale": "HBM 고객 요청 수요가 공급능력을 크게 상회하고 제한된 공급이 가격을 주도한다는 직접 수급 근거다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          86
+        ],
+        "primitive_id": "hbm_capacity_pre_sold",
+        "semantic_rationale": "FY2026 HBM 연간 수요가 이미 확보됐다는 현재 진술은 HBM 생산분의 사전 수요 커버리지를 직접 뒷받침한다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          71,
+          112,
+          119,
+          125,
+          133
+        ],
+        "primitive_id": "memory_price_increase_mentioned",
+        "semantic_rationale": "HBM 계약가격 방어, DRAM ASP 상승, 메모리 판가 상승과 실적 전환을 직접 관찰한다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          33,
+          73,
+          75,
+          91,
+          121
+        ],
+        "primitive_id": "memory_price_increase_mentioned",
+        "semantic_rationale": "가격 상승폭 둔화, 과도한 가격의 수요 훼손 및 HBM 가격 조정 가능성을 직접 제시한다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          17,
+          24,
+          199
+        ],
+        "primitive_id": "medium_term_revision_visibility",
+        "semantic_rationale": "선행 이익 추정치 상향과 EPS 상향이 현재 기대 변화로 관찰된다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          165,
+          182,
+          211
+        ],
+        "primitive_id": "medium_term_revision_visibility",
+        "semantic_rationale": "중기 감익 경로와 상충하는 전망 수치는 revision 지속성과 신뢰도의 직접 반증이다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          136
+        ],
+        "primitive_id": "qualification_status",
+        "semantic_rationale": "HBM4가 고객 성능요구를 충족하고 양산에 진입했다는 현재 제품 검증 상태다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          1,
+          122,
+          210
+        ],
+        "primitive_id": "contract_visibility",
+        "semantic_rationale": "LTA 활동, 고객 장기계약 가격 및 HBM 공급 논의 완료가 현재 계약·협상 가시성을 직접 보여준다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          151
+        ],
+        "primitive_id": "contract_visibility",
+        "semantic_rationale": "물량과 가격의 월·분기 합의 구조는 장기 고정 계약 가시성의 한계를 직접 보여준다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          2,
+          17,
+          74,
+          142,
+          159,
+          199
+        ],
+        "primitive_id": "cash_or_revision_conversion",
+        "semantic_rationale": "실제 영업현금흐름·현금 증가·순현금과 선행 이익 상향이 손익 및 revision의 현금 전환을 직접 뒷받침한다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          0,
+          98,
+          141
+        ],
+        "primitive_id": "cash_or_revision_conversion",
+        "semantic_rationale": "매출채권·재고의 현금 유출과 대규모 평가이익은 이익의 현금 전환 및 질에 대한 직접 반증이다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          8,
+          20,
+          38,
+          45,
+          65,
+          113,
+          116,
+          132,
+          136,
+          137,
+          167,
+          201,
+          202,
+          216
+        ],
+        "primitive_id": "hbm_product_profile",
+        "semantic_rationale": "HBM3E·HBM4·HBM4E의 생산, 판매, 기술구성, 믹스와 점유율을 제품 세대별로 직접 기술한다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          66,
+          70,
+          168,
+          183,
+          213,
+          215
+        ],
+        "primitive_id": "hbm_product_profile",
+        "semantic_rationale": "대체기술, 경쟁사 진입·증산, 출하 조정과 테스트 복잡도가 HBM 제품 경로의 직접 위험이다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          136
+        ],
+        "primitive_id": "qualification_state",
+        "semantic_rationale": "고객 성능요구 충족과 양산 진입은 현재 qualification 상태를 직접 나타낸다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          215
+        ],
+        "primitive_id": "qualification_state",
+        "semantic_rationale": "HBM4의 IO 증가와 파운드리 로직다이 도입에 따른 테스트 복잡도는 qualification 위험을 직접 높인다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          8,
+          20,
+          65,
+          113,
+          116,
+          136,
+          137,
+          150,
+          152,
+          154,
+          160,
+          167,
+          184,
+          201,
+          216
+        ],
+        "primitive_id": "shipment_or_revenue_mix",
+        "semantic_rationale": "HBM 생산·출하·판매, 실제 매출 기여 및 HBM·DRAM 믹스를 직접 보여준다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          70,
+          168,
+          183
+        ],
+        "primitive_id": "shipment_or_revenue_mix",
+        "semantic_rationale": "경쟁사 양산 진입과 고객 일정에 따른 HBM4 출하 축소는 출하·믹스의 직접 반증이다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          26,
+          51,
+          54,
+          56,
+          72,
+          77,
+          97,
+          101,
+          103,
+          118,
+          133,
+          147,
+          150,
+          152,
+          154,
+          157,
+          160,
+          175,
+          184,
+          201,
+          208
+        ],
+        "primitive_id": "actual_earnings_conversion",
+        "semantic_rationale": "현재 actual 매출·영업이익·마진과 제품 판매 기여를 직접 계상해 실적 전환을 보여준다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          83,
+          166
+        ],
+        "primitive_id": "actual_earnings_conversion",
+        "semantic_rationale": "실제 순이익 감소와 영업이익률 하락은 실적 전환의 직접 counter다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          2,
+          26,
+          44,
+          72,
+          74,
+          84,
+          103,
+          110,
+          142,
+          159,
+          176,
+          184
+        ],
+        "primitive_id": "margin_fcf_conversion",
+        "semantic_rationale": "실제 마진·영업현금·순현금과 명시된 FCF 전망을 통해 수익성의 현금 전환 경로를 직접 나타낸다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          0,
+          18,
+          68,
+          83,
+          98,
+          141,
+          155,
+          165,
+          166,
+          207,
+          211
+        ],
+        "primitive_id": "margin_fcf_conversion",
+        "semantic_rationale": "운전자본 흡수, 생산자원 부담, 비현금 평가이익, 감익·마진 하락 및 고객 투자재원 위험을 직접 반영한다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          33,
+          75,
+          121
+        ],
+        "primitive_id": "conventional_memory_drag",
+        "semantic_rationale": "DRAM 가격 모멘텀 둔화와 PC·모바일 수요 조정은 범용 메모리 drag의 직접 근거다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          10,
+          53,
+          127,
+          140,
+          163,
+          172,
+          178,
+          193,
+          198,
+          206
+        ],
+        "primitive_id": "capacity_supply_response",
+        "semantic_rationale": "수요 연계 투자, M15X 실행, 공정전환, 가동률과 선행 Capex가 공급 대응을 직접 보여준다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          4,
+          12,
+          13,
+          22,
+          67,
+          68,
+          70,
+          105,
+          168,
+          171,
+          194,
+          207,
+          217
+        ],
+        "primitive_id": "capacity_supply_response",
+        "semantic_rationale": "승인·인력·장비 제약, 공급자 증설, 경쟁사 캐파, 자원집약도와 투자재원 위험이 공급 대응의 counter다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          51,
+          64,
+          85,
+          102,
+          120,
+          149,
+          199
+        ],
+        "primitive_id": "market_expectation_gap",
+        "semantic_rationale": "실적 상회, 이익기여 대비 시가총액, peer 할인과 EPS 상향 대비 valuation의 현재 격차를 직접 제시한다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          27,
+          131,
+          165,
+          173,
+          182,
+          211
+        ],
+        "primitive_id": "market_expectation_gap",
+        "semantic_rationale": "할인 적용, 적정 배수 불확실성, 감익 전망과 컨센서스·전망 수치 불일치는 기대 격차 판단의 직접 반증이다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          16,
+          35,
+          52,
+          59,
+          64,
+          85,
+          102,
+          107,
+          120,
+          149,
+          156,
+          170,
+          199,
+          204,
+          212
+        ],
+        "primitive_id": "current_valuation_vs_earnings",
+        "semantic_rationale": "현재 및 선행 이익 배수, peer 비교, SOTP와 수익성 지표가 valuation 대 earnings 관계를 직접 계량한다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          27,
+          33,
+          131,
+          165,
+          173,
+          182,
+          211
+        ],
+        "primitive_id": "current_valuation_vs_earnings",
+        "semantic_rationale": "valuation 할인, cycle peak 신호, 적정 배수 불확실성, 감익 및 수치 불일치가 현재 배수 해석을 제한한다."
+      }
+    ],
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "140eb0cbddc0736eeeabbccf29a4c71ef6a7c509a1e3000d2cdc32328f6c3670",
+  "production_score_authority": false,
+  "prompt_hash": "814764593f06fe7b447e8dea062754281f4648a028f23762532d99ebc763b33a",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ff4bd3eb155bb1d34cebd3d6bf5daf3b81d755379b17d4b061c5fe4134f8cbde",
+  "response_id": "COLLABRESP-2efa16510d3f173482f0b8305178a1aeaf88e68920da7fb48fb4df16f8844c5b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

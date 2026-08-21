@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "20b0db2f950a032cebe3a019711f6a5c53b55c2c0b1acd6027ab7889297ece2e",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-99cd35a0f217dc6b41bbb8cd",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.92,
+        "rationale": "Korea Herald의 as-of 이전 개별 기사 원문 경로이며 삼성전자의 HBM4 고객 반응과 양산 출하를 직접 다룬다. 독립 매체 원문을 fetch하면 발행사 주장과 고객 반응의 귀속·불확실성을 확인할 수 있으므로 information_confidence 목적에 material하다."
+      },
+      {
+        "candidate_id": "SGCAND-b8b4573dfe6b56643e3f400a",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.78,
+        "rationale": "Korea Herald의 삼성전자 HBM4 양산 전환을 다룬 개별 기사 원문 경로다. published_at은 discovery metadata에서 비어 있으므로 fetch 후 날짜 검증이 필요하지만, HBM4 양산 상태와 불확실성의 독립 확인 가능성이 있어 material route로 남긴다."
+      },
+      {
+        "candidate_id": "SGCAND-334ba26a9a386b5165d1e5ed",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.9,
+        "rationale": "Korea Times의 as-of 이전 개별 기사로 삼성전자 HBM4의 엔비디아향 출하 시점과 회사의 고객 관련 비공개 태도를 함께 검증할 수 있는 원문 fetch route다. named-customer 귀속과 보도 불확실성을 확인할 가치가 있어 material하다."
+      },
+      {
+        "candidate_id": "SGCAND-5662aadaf039b2a0b59bfbe1",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.62,
+        "rationale": "South Korea HBM 시장을 대상으로 한 산업보고서 원문 landing route로, fetch 가능한 본문이 삼성전자 vendor position·시장 범위·조사 방법을 실제로 제공하는지 확인할 수 있다. snippet 자체는 증거가 아니며 target 귀속은 원문 검증 전 미확정이다."
+      },
+      {
+        "candidate_id": "SGCAND-1c690f933acc8914f40bfafc",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "산업보고서 경로는 맞지만 Taiwan HBM 시장이 대상이고 discovery metadata에서 삼성전자 HBM 상태나 정보 신뢰도에 대한 직접 귀속을 확인할 수 없다. 한국 target objective보다 범위가 벗어나므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-65fdbe7561738bc8b3028f8e",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.55,
+        "rationale": "Samsung과 SK hynix의 HBM4 경쟁을 직접 다루는 개별 business-media article route다. 발행일 metadata가 없어 fetch 후 as-of 검증이 필요하지만 삼성전자 HBM4의 상대적 진행 상태와 반증을 확인할 수 있어 material 후보로 유지한다."
+      },
+      {
+        "candidate_id": "SGCAND-dccc11f470a9b8e202423d2c",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.12,
+        "rationale": "HBM4 산업보고서 landing route이나 discovery metadata는 전 세계 제품시장 segmentation만 보여 주고 삼성전자 고유의 qualification·양산·고객 신뢰도와 연결되지 않는다. target-attributed 정보 격차를 직접 해결하지 않아 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-230a1599f6289e214718a037",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "HPC·supercomputing HBM 산업보고서 경로지만 generic application segmentation이며 삼성전자 고유 사실이나 불확실성에 대한 직접성이 없다. information_confidence objective의 target 원문 fetch 우선순위가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6adf1d094545b7f97656d4b4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.04,
+        "rationale": "Seoulz의 서술형 시장 글은 요청된 공식·산업보고서·검증된 신뢰 매체 provenance로 확인되지 않고 snippet도 SK hynix 마진 중심이다. 삼성전자 source-backed HBM 정보 신뢰도를 보강할 원문 경로가 아니므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c6e4904abfbe9741b2d147a9",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "3D-stacked DRAM 산업보고서 route이나 generic architecture·application segmentation으로 삼성전자 HBM4의 현재 상태나 정보 한계를 직접 확인할 수 없다. target objective와 거리가 있어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-806a5c68d4296ad3109422ee",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "AI inference용 HBM 산업보고서 경로지만 generic 시장 segmentation일 뿐 삼성전자 고유 qualification·고객·양산 근거가 discovery metadata에 없다. 직접 target 귀속을 해결하지 않아 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-656aefbcc1b35d759937602e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "한국지질자원연구원의 연구장비 목록 파일로 반도체 HBM, 삼성전자 또는 요청된 연구 source family와 무관하다. 원문을 fetch해도 objective를 해결하지 못하므로 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "partition 0의 12개 후보를 입력 순서대로 exact-once 판정했으며 snippet은 fetch route와 범위 판단에만 사용했다.",
+      "material 후보도 full fetch·발행일·target attribution 검증 전에는 EvidenceFact 또는 점수 증거가 아니다."
+    ]
+  },
+  "payload_hash": "60c38df7c6d68cbcc604ded66b8c01d5b4f2add852ddf64c38f4e8637182d58d",
+  "production_score_authority": false,
+  "prompt_hash": "baef34513ab564c86d67c91025a251b90a87dc09eb85dd0851ac7cab63e3d1fe",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e578db925eebdc5bb98dfe3cb7547732a04046f37d3aa6d178df77c1d47e78a0",
+  "response_id": "COLLABRESP-736ece7245af3721a64536194d302a5238536da40e8ff677032dc8c0fad8b37b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

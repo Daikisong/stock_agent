@@ -1,0 +1,260 @@
+{
+  "output_schema_hash": "e7a733a147d6964e75528742897823ca5094ca593a9f54b8723c700910cfd090",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4c89441d1d9d659501548616",
+        "rationale": "2026-01-28 SK하이닉스 FY25 실적 원문을 Gold-blind로 전수 검토하고 current canonical 206건과 의미 중복을 대조했다. 기존 브로커 FY25·4Q25 실적 숫자와 구별되는 회사 원문의 AI 메모리·HBM 실적 귀속, HBM 매출 2배 이상 증가, HBM·서버 메모리의 4Q 손익 전환, HBM4 대규모 생산 진행, 잠정 실적 한계를 5건으로 추출했다. 1cnm, M15X·용인, 일반 메모리 수요, HBM4 고객별 램프 준비, 배당·자사주는 더 최신이거나 더 구체적인 current facts·공시와 중복되어 제외했고, NAND·SOCAMM2·GDDR7·navigation은 현재 eps_fcf_explosion 목적 범위 밖이다. 수치가 없는 HBM 매출 2배 이상 하한은 point-value가 아니므로 SEGMENT_CONTRIBUTION으로 태그하지 않았다. 더 남은 독립 objective-linked 사실은 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4c89441d1d9d659501548616",
+        "economic_mechanism": "SK하이닉스는 AI 메모리 경쟁력과 HBM을 포함한 고부가 제품이 FY2025 사상 최대 실적을 견인했다고 귀속했고, 전사 매출 97.1467조원·영업이익 47.2063조원·순이익 42.9479조원을 보고했다. 전사 숫자이므로 HBM 단독 이익으로 확대하지 않는다.",
+        "exact_quote": "Achieves all-time high annual and quarterly results, driven by AI memory competitiveness and high value-added products including HBM\n– Reports FY2025 revenue of 97.1467 trillion won, operating profit of 47.2063 trillion won, net profit of 42.9479 trillion won",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM을 포함한 AI 메모리의 실적 기여와 실현된 영업이익 규모를 회사 원문이 직접 연결해 eps_fcf_explosion 객체를 보완한다.",
+        "mechanism_scope_id": "000660:AI_MEMORY:FY2025_ACTUAL_EARNINGS",
+        "normalized_object": "AI 메모리·HBM 귀속 FY2025 전사 실제 실적",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025",
+        "predicate": "SK하이닉스는 AI 메모리와 HBM 포함 고부가 제품이 견인한 FY2025 사상 최대 실적으로 매출 97.1467조원과 영업이익 47.2063조원, 순이익 42.9479조원을 기록했다",
+        "predicate_family": "FY2025_AI_MEMORY_DRIVEN_ACTUAL_EARNINGS",
+        "primitive_tags": [
+          "AI_MEMORY",
+          "HBM",
+          "OPERATING_PROFIT",
+          "REVENUE_ACTUAL"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "FY2025_AI_MEMORY_DRIVEN_ACTUAL_EARNINGS",
+        "question_family_tags": [
+          "ACTUAL_EARNINGS",
+          "AI_MEMORY_ATTRIBUTION",
+          "HBM_EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 AI 메모리 기반 FY2025 실제 실적",
+        "subject_id": "000660:AI_MEMORY:FY2025_ACTUAL_EARNINGS",
+        "unit": "KRW trillion",
+        "value": "revenue KRW 97.1467tn; operating profit KRW 47.2063tn; net profit KRW 42.9479tn"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4c89441d1d9d659501548616",
+        "economic_mechanism": "FY2025 HBM 매출이 전년보다 2배 이상으로 늘어 전사 사상 최대 실적에 크게 기여했다는 회사 설명은 HBM 수요가 실제 매출과 전사 손익으로 전환된 것을 보여준다. 정확한 HBM 매출액·비중·영업이익은 공개되지 않았다.",
+        "exact_quote": "In the DRAM segment, HBM revenue more than doubled year-on-year, making a significant contribution to the company’s record performance.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 매출의 실현 증가율과 전사 실적 기여를 회사가 직접 확인해 HBM 수요-매출-이익 전환 경로를 보완한다.",
+        "mechanism_scope_id": "000660:HBM:FY2025_REVENUE_YOY_GROWTH",
+        "normalized_object": "FY2025 HBM 매출 전년 대비 증가와 전사 실적 기여",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025 vs FY2024",
+        "predicate": "SK하이닉스 FY2025 HBM 매출은 전년 대비 2배 이상으로 늘어 회사 사상 최대 실적에 중요하게 기여했다",
+        "predicate_family": "HBM_REVENUE_YOY_GROWTH_ACTUAL",
+        "primitive_tags": [
+          "HBM",
+          "REVENUE_ACTUAL",
+          "YOY_GROWTH"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_REVENUE_YOY_GROWTH_FY2025",
+        "question_family_tags": [
+          "HBM_REVENUE_ACTUAL",
+          "HBM_YOY_GROWTH",
+          "EARNINGS_CONTRIBUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025 HBM 매출 증가와 실적 기여",
+        "subject_id": "000660:HBM:FY2025_REVENUE_YOY_GROWTH",
+        "unit": "relative YoY revenue growth threshold",
+        "value": "more than 2x year-on-year"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4c89441d1d9d659501548616",
+        "economic_mechanism": "HBM에 더해 서버용 일반 메모리 수요가 급증했고, 회사의 공급 대응이 4Q25 매출 32.8267조원·영업이익 19.1696조원·영업이익률 58%로 전환됐다. HBM과 일반 메모리가 묶여 있어 HBM 단독 이익으로 분리하지 않는다.",
+        "exact_quote": "Growth momentum accelerated further in the fourth quarter. In addition to HBM, demand on conventional memory solutions for servers increased sharply, to which SK hynix responded proactively. As a result, the company achieved record-high quarterly performance across all three indicators, with revenue rising 34% to 32.8267 trillion won, operating profit surging 68% to 19.1696 trillion won, and operating margin reaching 58% quarter-on-quarter.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM·서버 메모리 수요와 실현된 매출·영업이익·마진을 직접 연결해 이익 레버리지를 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:4Q25_HBM_SERVER_ACTUAL_EARNINGS",
+        "normalized_object": "HBM·서버 메모리 기반 4Q25 전사 실적",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2025 vs 3Q2025",
+        "predicate": "SK하이닉스는 HBM과 서버용 일반 메모리 수요 증가에 대응해 4Q25 매출 32.8267조원, 영업이익 19.1696조원, 영업이익률 58%를 기록했다",
+        "predicate_family": "HBM_SERVER_MEMORY_QUARTERLY_ACTUAL_EARNINGS",
+        "primitive_tags": [
+          "HBM",
+          "SERVER_MEMORY",
+          "OPERATING_PROFIT",
+          "OPERATING_MARGIN"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HBM_SERVER_MEMORY_4Q25_ACTUAL_EARNINGS",
+        "question_family_tags": [
+          "QUARTERLY_ACTUAL_EARNINGS",
+          "HBM_SERVER_MEMORY_ATTRIBUTION",
+          "REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q25 HBM·서버 메모리 기반 실제 실적",
+        "subject_id": "000660:MEMORY:4Q25_HBM_SERVER_ACTUAL_EARNINGS",
+        "unit": "KRW trillion and percent",
+        "value": "revenue KRW 32.8267tn (+34% QoQ); operating profit KRW 19.1696tn (+68% QoQ); operating margin 58%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4c89441d1d9d659501548616",
+        "economic_mechanism": "2025년 9월 HBM4 양산 준비를 끝낸 뒤 2026년 1월 28일 기준 고객 요청에 맞춘 차세대 HBM 대규모 생산이 진행 중이라는 회사 설명은 샘플·준비 단계에서 생산 단계로의 전환을 보여준다. 공급량·출하량·구매의무는 공개되지 않았다.",
+        "exact_quote": "In particular, having successfully completed the preparation stages to mass produce HBM4 – for the first time in the industry – in September last year, the large-scale production of the next-generation HBM has been underway to meet customer requests, the company said.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4가 준비·샘플 단계를 넘어 고객 요청 대응용 대규모 생산 단계에 들어갔다는 회사 원문은 차세대 HBM 매출 전환 가능성을 직접 보완한다.",
+        "mechanism_scope_id": "000660:HBM:HBM4_LARGE_SCALE_PRODUCTION_20260128",
+        "normalized_object": "HBM4 양산 준비 완료와 대규모 생산 진행",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "preparation completed 2025-09; production status as of 2026-01-28",
+        "predicate": "SK하이닉스는 2025년 9월 HBM4 양산 준비를 끝냈고 2026년 1월 28일 기준 고객 요청에 대응하는 HBM4 대규모 생산을 진행 중이라고 밝혔다",
+        "predicate_family": "HBM4_LARGE_SCALE_PRODUCTION_STATUS",
+        "primitive_tags": [
+          "HBM4",
+          "MASS_PRODUCTION",
+          "CUSTOMER_REQUEST"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_LARGE_SCALE_PRODUCTION_STATUS",
+        "question_family_tags": [
+          "HBM4_PRODUCTION",
+          "PRODUCT_COMMERCIALIZATION",
+          "CUSTOMER_REQUEST_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4 대규모 생산 진행 상태",
+        "subject_id": "000660:HBM:HBM4_LARGE_SCALE_PRODUCTION_20260128",
+        "unit": "qualitative production status",
+        "value": "mass-production preparation completed in 2025-09; large-scale production underway to meet customer requests"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4c89441d1d9d659501548616",
+        "economic_mechanism": "회사는 이 자료의 FY2025·4Q25 실적이 2026년 1월 28일 기준 잠정치이며 나중에도 유효하다고 가정하지 말라고 명시했다. 이는 같은 문서의 HBM 기여·연간·분기 실적을 최종 확정 공시로 대체할 수 없게 하는 증거 확실성 한계다.",
+        "exact_quote": "※ Please note that the financial results discussed herein are preliminary and speak only as of January 28, 2026. Readers should not assume that this information remains operative at a later time.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "잠정 실적과 시점 제약은 같은 문서의 HBM 기여·이익 숫자의 확정성을 직접 제한한다.",
+        "mechanism_scope_id": "000660:MEMORY:FY2025_PRELIMINARY_RESULT_LIMIT",
+        "normalized_object": "FY2025·4Q25 실적의 잠정성·시점 한계",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025 and 4Q2025 results released 2026-01-28",
+        "predicate": "SK하이닉스는 FY2025·4Q25 실적이 2026년 1월 28일 기준 잠정 정보이며 후일에도 유효하다고 가정하지 말라고 명시했다",
+        "predicate_family": "PRELIMINARY_RESULTS_POINT_IN_TIME_LIMIT",
+        "primitive_tags": [
+          "EARNINGS",
+          "PRELIMINARY",
+          "INFORMATION_QUALITY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FY2025_PRELIMINARY_RESULT_LIMIT",
+        "question_family_tags": [
+          "PRELIMINARY_RESULTS",
+          "POINT_IN_TIME_LIMIT",
+          "SOURCE_QUALITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025·4Q25 실적의 잠정성 한계",
+        "subject_id": "000660:MEMORY:FY2025_PRELIMINARY_RESULT_LIMIT",
+        "unit": "source-quality limitation",
+        "value": "preliminary and operative only as of 2026-01-28; later operability must not be assumed"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d770d91f5ec906b2532b503a9ffcfc2be06f93aa85ad0d4d7161d7af75b745a4",
+  "production_score_authority": false,
+  "prompt_hash": "1606e6f7fd309ad3328a43293b7a622ad88b13374dcedcb3f08cc554cb8989f8",
+  "provenance": {
+    "agent_id": "hynix_current_leaves",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_current_leaves",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c18f4d11cf61fd60d013d6a068c289e7237c146354590811adcacaef1248041d",
+  "response_id": "COLLABRESP-cabdb6dad8f97b763054dd320bffb9b9e260a7ae4da3938b828aac9af206eae7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

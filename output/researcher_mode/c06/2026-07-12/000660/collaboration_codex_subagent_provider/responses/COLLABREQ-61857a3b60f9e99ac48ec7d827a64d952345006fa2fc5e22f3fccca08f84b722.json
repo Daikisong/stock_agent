@@ -1,0 +1,129 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-cc27c387ab28b9fa2ef4dfdd",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This www.samsungpop.com route is consistent with PUBLIC_BROKER_PDF provenance, but it is not the exact Mirae Asset 2026-05-11 SK hynix original landing page or direct report PDF. Its discovery metadata does not satisfy publisher, date, target, and document identity together."
+      },
+      {
+        "candidate_id": "SGCAND-41d8b8a122938df912ef2430",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The contents.premium.naver.com candidate is not supported as the exact original Mirae Asset 2026-05-11 SK hynix research landing page or direct PDF. It is a different issuer, publisher, document class, or third-party summary and cannot hand off the requested full-fetch route."
+      },
+      {
+        "candidate_id": "SGCAND-a75f86afe692a93391eb1088",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The in.naver.com candidate is not supported as the exact original Mirae Asset 2026-05-11 SK hynix research landing page or direct PDF. It is a different issuer, publisher, document class, or third-party summary and cannot hand off the requested full-fetch route."
+      },
+      {
+        "candidate_id": "SGCAND-f2947a3989a486d631b24c1a",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This money2.daishin.com route is consistent with PUBLIC_BROKER_PDF provenance, but it is not the exact Mirae Asset 2026-05-11 SK hynix original landing page or direct report PDF. Its discovery metadata does not satisfy publisher, date, target, and document identity together."
+      },
+      {
+        "candidate_id": "SGCAND-2cff83d1780347ff16d0bad2",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This www.hanaw.com route is consistent with PUBLIC_BROKER_PDF provenance, but it is not the exact Mirae Asset 2026-05-11 SK hynix original landing page or direct report PDF. Its discovery metadata does not satisfy publisher, date, target, and document identity together."
+      },
+      {
+        "candidate_id": "SGCAND-f7045dd19ccdb032828701c4",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This www.hanaw.com route is consistent with PUBLIC_BROKER_PDF provenance, but it is not the exact Mirae Asset 2026-05-11 SK hynix original landing page or direct report PDF. Its discovery metadata does not satisfy publisher, date, target, and document identity together."
+      },
+      {
+        "candidate_id": "SGCAND-cf0cd8dd7483439bde1ec563",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This stock.pstatic.net route is consistent with PUBLIC_BROKER_PDF provenance, but it is not the exact Mirae Asset 2026-05-11 SK hynix original landing page or direct report PDF. Its discovery metadata does not satisfy publisher, date, target, and document identity together."
+      },
+      {
+        "candidate_id": "SGCAND-1513942f5e7bb22419af7116",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The contents.premium.naver.com candidate is not supported as the exact original Mirae Asset 2026-05-11 SK hynix research landing page or direct PDF. It is a different issuer, publisher, document class, or third-party summary and cannot hand off the requested full-fetch route."
+      },
+      {
+        "candidate_id": "SGCAND-6965212f53983aba6025545c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The contents.premium.naver.com candidate is not supported as the exact original Mirae Asset 2026-05-11 SK hynix research landing page or direct PDF. It is a different issuer, publisher, document class, or third-party summary and cannot hand off the requested full-fetch route."
+      },
+      {
+        "candidate_id": "SGCAND-859bb2f3999ea08d72f3599f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The w4.kirs.or.kr candidate is not supported as the exact original Mirae Asset 2026-05-11 SK hynix research landing page or direct PDF. It is a different issuer, publisher, document class, or third-party summary and cannot hand off the requested full-fetch route."
+      },
+      {
+        "candidate_id": "SGCAND-151d69f2550ff1021a28d424",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This money2.daishin.com route is consistent with PUBLIC_BROKER_PDF provenance, but it is not the exact Mirae Asset 2026-05-11 SK hynix original landing page or direct report PDF. Its discovery metadata does not satisfy publisher, date, target, and document identity together."
+      },
+      {
+        "candidate_id": "SGCAND-4540c5326100b2f4b5d82207",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The pdf.etoday.co.kr candidate is not supported as the exact original Mirae Asset 2026-05-11 SK hynix research landing page or direct PDF. It is a different issuer, publisher, document class, or third-party summary and cannot hand off the requested full-fetch route."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate in this partition supplies the exact Mirae Asset Securities 2026-05-11 SK hynix original research landing page or direct report PDF with publisher, date, target, and document identity aligned.",
+      "All snippets were used only to judge the full-fetch route. No forecast, figure, or summary text was promoted to evidence."
+    ]
+  },
+  "payload_hash": "76039e0f3c78ab423999dee067e7c14020a6e18f60b5d074e304fff524bf5b6d",
+  "production_score_authority": false,
+  "prompt_hash": "8f8e3e6491f4f9c7de211798ea990e372496fae5ed9d34c68a3c49a489a8eef9",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-61857a3b60f9e99ac48ec7d827a64d952345006fa2fc5e22f3fccca08f84b722",
+  "response_id": "COLLABRESP-625ba31f25438af23bd1a1a126f2f5de3116c29799a4f5b4352909d820dd7ad5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

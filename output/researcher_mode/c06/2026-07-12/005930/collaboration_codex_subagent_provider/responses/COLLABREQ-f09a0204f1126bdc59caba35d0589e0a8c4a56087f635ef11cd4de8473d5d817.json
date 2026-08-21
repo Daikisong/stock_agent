@@ -1,0 +1,129 @@
+{
+  "output_schema_hash": "a7e037c139a33ac8cc9a150024495ef4dc2d733048ea2f9f6f7bbcd6f629607c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-6a0dd457912e5a944c2c79e1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "2Q26 발표 전 예상·일정·관전 포인트를 다룬 제3자 경로로 최신 actual 원문이 아니다. 요청된 KIND·OPENDART·issuer family와 일치하지 않으며 snippet 전망을 근거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-d835b49c50a705b541597fed",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.newstopkorea.com의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-ea610ab694a4d8d566ab6e89",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.ngonews.kr의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-d3fd08833e4ee85f07c662e5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.econovill.com의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-ec76852bfe39c4259fe6ce01",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.dhdaily.co.kr의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-33d8b45a27e387ed6a13b9cb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 koreatimesphila.com의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-69ad6d3c1ad955566ae415bb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.munhwa.com의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-ac0e499b1f32736196255cad",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 weekly.donga.com의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-241466d8881a8c37a3eeb0e1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.khan.co.kr의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-19a260fa858a62ad5f353d06",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.yna.co.kr의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-fa1bc5b80e2ca8fb01fc4183",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.newspim.com의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-7f8e4d4dcf1d6bbc5af9125c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.thepublic.kr의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Pre-announcement commentary and current-quarter retellings were excluded from the official-source query despite semantic overlap.",
+      "Already fetched third-party documents were not re-promoted merely because their snippets repeated the preliminary result."
+    ]
+  },
+  "payload_hash": "38decf62ef2ce869d5064c65879a4db73263840c1daff78e1d0530a0966790a6",
+  "production_score_authority": false,
+  "prompt_hash": "96bfadc694f1ba9f5ff0c8945f874f4fe347eeb6809a99aed3c50e21e2e532b9",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f09a0204f1126bdc59caba35d0589e0a8c4a56087f635ef11cd4de8473d5d817",
+  "response_id": "COLLABRESP-3f65f01e79120b6f21bd181cee882829565f0191d6dde122eca981500b519028",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

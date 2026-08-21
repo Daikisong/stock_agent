@@ -1,0 +1,165 @@
+{
+  "output_schema_hash": "75254b20893e67f2bbab33c06af3c40194209469dc6ab805efb1d603dce8d04c",
+  "payload": {
+    "confidence": 0.72,
+    "counter_case": "현재 가격 반영도와 고객 집중, 확정 계약경제 미분리 때문에 큰 시장 오판으로 단정할 수 없다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89",
+      "ORDTRANSFER-378ecb883f851d76fb088bf5",
+      "ORDTRANSFER-5333cde3bf8c780641e20cff",
+      "ORDTRANSFER-53866989f08163227ebd1304",
+      "ORDTRANSFER-8de2af9e1c901382abb65c7f",
+      "ORDTRANSFER-e743368708b3aee88a83287c"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c"
+    ],
+    "positive_case": "가동률과 제품 실행, 고객 협업이 실적 추정의 추가 상향 가능성을 만든다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 34,
+        "reason": "수요 강도와 고객 집중 counter를 함께 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 95,
+        "reason": "실제 가동률을 실적 기대의 source-backed 근거로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 211,
+        "reason": "더 직접적인 제품 실행 evidence와 중복된다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 390,
+        "reason": "중복 시장 counter를 최소 roster에서 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 399,
+        "reason": "일반 메모리 counter는 HBM 경로보다 간접적이다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 486,
+        "reason": "추가 positive는 현재 가동률과 중복된다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 531,
+        "reason": "생산 positive 중복을 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 573,
+        "reason": "브로커 counter는 공식 actual보다 우선순위가 낮다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 588,
+        "reason": "중복 counter를 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 597,
+        "reason": "중복 기대 counter를 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 670,
+        "reason": "발행사 제품 실행 신호를 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 763,
+        "reason": "고객 제품채택 경로를 유지한다."
+      }
+    ],
+    "proposed_score_lower": 7.0,
+    "proposed_score_mid": 9.0,
+    "proposed_score_upper": 11.0,
+    "research_complete": true,
+    "researcher_summary": "실제 가동률과 HBM 제품·고객 실행은 상향 경로를 지지하지만 이미 높은 기대와 고객 집중, 계약경제 미확인이 mispricing 폭을 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "매출 집중은 강한 수요와 동시에 시장이 놓치기 어려운 집중위험을 보여준다.",
+        "fact_row_index": 34,
+        "source_economic_mechanism": "고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.",
+        "source_value_json": "\"7,780,590 and 6,536,458 vs 4,786,233\""
+      },
+      {
+        "component_interpretation": "실제 높은 가동률은 이익 추정 상향 가능성을 지지하지만 HBM-only surprise는 아니다.",
+        "fact_row_index": 95,
+        "source_economic_mechanism": "2026년 1분기 반도체 생산실적은 11,465,147백만원이며 생산설비 평균가동률은 100%였다. 이는 메모리 전반의 현재 설비 활용도를 보여주지만 HBM 전용 가동률이나 장기 예약 물량을 뜻하지 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "OPERATED_MEMORY_PRODUCTION_FACILITIES_AT_FULL_UTILIZATION",
+        "source_value_json": "\"production output KRW 11,465,147 million; average utilization 100%\""
+      },
+      {
+        "component_interpretation": "제품 실행력이 시장 기대보다 빠른 실적 전환 경로를 지지한다.",
+        "fact_row_index": 670,
+        "source_economic_mechanism": "회사는 HBM의 Time to Market 실현과 대역폭·밀도·Core Die 적층 단수 향상, 성능·품질을 제품 실행 기반으로 설명했다. 같은 문장의 기존 고객 ASIC 협업 사실과 구별되는 제품 상용화 실행력이다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "REPORTS_HBM_TIME_TO_MARKET_AND_PERFORMANCE_EXECUTION",
+        "source_value_json": "\"HBM Time to Market realized with higher bandwidth, density and Core Die stacking\""
+      },
+      {
+        "component_interpretation": "고객 공동개발은 제품 채택의 상향 경로지만 계약경제나 가격 오판을 단독 증명하지 않는다.",
+        "fact_row_index": 763,
+        "source_economic_mechanism": "HBM 성능·품질을 기반으로 고객과 ASIC 개발 협업을 진행해 고객 요구가 제품 개발에 연결되는 상용화 경로를 형성한다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "COLLABORATING_WITH_CUSTOMERS_ON_ASIC_DEVELOPMENT_FOR_HBM",
+        "source_value_json": "\"고객들과 ASIC 개발 협력\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      34,
+      95,
+      670,
+      763
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "PUBLIC_BROKER_PDF",
+      "KRX_PRICE_MARKET_CAP"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "현재 가격에 반영된 HBM 성장 기대를 완전히 분리할 수 없다",
+      "고객 공동개발의 매출 전환 규모가 공개되지 않았다"
+    ],
+    "why_not_higher": "시장 기대 반영도와 확정 계약경제가 충분히 분리되지 않는다.",
+    "why_not_lower": "공식 actual과 제품·고객 실행이라는 상향 경로가 존재한다."
+  },
+  "payload_hash": "3947e32fb2ddd65d7276f36673040391e9651b80aa0f7d53f8b9bd0600c01030",
+  "production_score_authority": false,
+  "prompt_hash": "487cbffb017b0a47537e4d70bcd16250c284c7a6bc3dbcde1984b5729c679282",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a25ac24332f417c3d2a42c9109fd741ea0df7b4f517af52dc35e2f0616512040",
+  "response_id": "COLLABRESP-026c2fa90757e7f8b3765776171c8af009f2dcf39913049d4498da6522f2c284",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

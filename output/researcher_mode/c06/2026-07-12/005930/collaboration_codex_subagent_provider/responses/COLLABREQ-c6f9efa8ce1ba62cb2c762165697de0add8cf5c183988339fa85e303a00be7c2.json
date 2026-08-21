@@ -1,0 +1,39 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4ac5426ceb6a8ea48cde8c8d",
+        "rationale": "141,753자 미분할 영문 반기 연결재무제표 전체를 전수 검토하고 현재 505개 EvidenceFact와 의미 중복을 확인했다. 이 문서의 2025년 2분기 Memory 제품 매출 21,178,497백만원과 2025년 상반기 누적 Memory 제품 매출 40,247,535백만원은 더 이른 같은 발행사 공식 한국어 반기보고서 SGDOC-3527d1cd5971a8b62bf46d69에서 이미 current canonical fact로 채택되어 있다. DS 매출·영업이익·감가상각은 memory, foundry, system LSI가 섞인 수치이고, 전사 현금흐름·유형자산 취득·계약부채·자산 취득 약정은 memory/HBM 전용 수치가 아니므로 오귀속하지 않았다. 그 밖에 신규 memory/HBM 고객 배정, CAPA 잠김, 가격, qualification 또는 수주 근거가 없어 objective-local 신규 material fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "SGDOC-4ac5426ceb6a8ea48cde8c8d의 DS 수치는 memory, foundry, system LSI 혼합이고 전사 cash flow·capex·contract liability는 memory/HBM에 직접 귀속할 수 없다."
+    ]
+  },
+  "payload_hash": "35b60afa551ca0ccd98d4daec8b68adfa63f130a1c2935ee47d2845189c93aa2",
+  "production_score_authority": false,
+  "prompt_hash": "a65c4d44b92a13ea61def51bfd590d224d40a06b6c498b1f7c6ab5d449d2008a",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c6f9efa8ce1ba62cb2c762165697de0add8cf5c183988339fa85e303a00be7c2",
+  "response_id": "COLLABRESP-1dec26f12bec2dcfffa8097ff65b28fd128a67c0e0c501eeff47d2dd94375161",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

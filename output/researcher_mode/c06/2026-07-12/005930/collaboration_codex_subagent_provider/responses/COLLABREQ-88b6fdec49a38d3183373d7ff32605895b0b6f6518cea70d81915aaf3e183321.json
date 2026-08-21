@@ -1,0 +1,477 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6c2c460228ecc9795acc3943",
+        "rationale": "2025년 3분기 공식 분기연결재무제표 전수를 검토해 제품별 메모리 매출 26,690,323백만원과 9개월 누적 66,937,858백만원만 비중복 추출했다. DS 혼합 매출·영업이익·감가상각, 전사 손익·현금흐름·재고·약정·금융위험·후속사건은 메모리 단독 eps_fcf 귀속이 아니며, 2024 비교 메모리 매출과 전사 검토의견은 현재 objective에 직접 닿지 않아 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-7143bbc10d52e889efadf2b8",
+        "rationale": "기사의 핵심은 DX 적자 전망·완제품 원가 부담·DX 성과급 갈등과 직원 주식보상으로 허용된 MEMORY 범위 밖이다. 2분기 전사 잠정실적과 메모리/DS 기여 정성 서술은 current canonical의 메모리 영업이익 88조~93.2조 추정·98% 기여·성과급 충당금 facts보다 약하거나 중복되어 새 fact로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-71f5dcb691c18bce0a4356fe",
+        "rationale": "current 172 facts와 대조해 HBM·범용 D램 가격 협상 주기와 상대수익성, 2027년 격차 축소 전망, 단기수익성보다 균형 공급을 택한 전략, FY2026 HBM4 연간 매출 과반 전망, 2026년 2분기 D램 비트 성장 전망을 추출했다. 1분기 메모리 매출·성장·영업이익 54조원 내외, HBM4 3분기 비중·양산, SOCAMM2, 2027 수요·LTA 구속력은 current facts와 중복이다. SK하이닉스·NAND·산업 일반 수치는 제외했고, 파업 대응 발언은 메모리 생산을 명시하지 않아 current의 메모리 생산차질 risk를 해소하는 fact로 전용하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-73c162eae211aa44daab5bde",
+        "rationale": "삼성전자 메모리 공급계약의 2026년 2분기 LTA 비중 30%, 3분기 추가 확대 전망, 2026년 5월 HBM4E 12단 샘플 글로벌 고객 공급을 비중복 추출했다. 전사 잠정실적·성과급 충당금, 업계 D램 월별 가격·공급부족, HBM4 양산·하반기 효과·베라 루빈 매출 기대는 메모리 직접 귀속이 아니거나 current pricing·HBM4 매출 facts보다 약하고 중복되어 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6c2c460228ecc9795acc3943",
+        "economic_mechanism": "분기연결재무제표의 제품별 표가 2025년 3분기 메모리 제품 매출을 직접 분리해 메모리 판매의 매출 전환 규모를 제시한다.",
+        "exact_quote": "당분기(3개월)의 주요 제품별 매출은 다음과 같습니다.\n(단위 : 백만원)\n구 분 TV, 모니터 등 스마트폰 등 메모리 디스플레이 패널 계(*)\n매출액 7,315,001 33,541,024 26,690,323 8,101,525 86,061,747",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current 172 facts에는 2025년 3분기 메모리 매출의 사상 최대 기록은 있으나 정확한 분기 금액 26,690,323백만원은 없다. DS 혼합 매출이 아니라 제품별 메모리 열만 사용한다.",
+        "mechanism_scope_id": "005930:MEMORY:PRODUCT_REVENUE:2025Q3",
+        "normalized_object": "2025년 3분기 메모리 제품 매출 26,690,323백만원",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q3",
+        "predicate": "삼성전자의 2025년 3분기 메모리 제품 매출액이 26,690,323백만원이었다",
+        "predicate_family": "MEMORY_PRODUCT_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "MEMORY_REVENUE",
+          "2025_Q3_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PRODUCT_REVENUE_ACTUAL",
+        "question_family_tags": [
+          "MEMORY_REVENUE_ACTUAL",
+          "QUARTERLY_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "삼성전자 2025년 3분기 메모리 제품 매출",
+        "subject_id": "005930:MEMORY:PRODUCT_REVENUE:2025Q3",
+        "unit": "KRW million",
+        "value": 26690323
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6c2c460228ecc9795acc3943",
+        "economic_mechanism": "분기연결재무제표의 누적 제품별 표가 2025년 1~3분기 메모리 판매의 누적 매출 전환 규모를 직접 제시한다.",
+        "exact_quote": "당분기(누적)의 주요 제품별 매출은 다음과 같습니다.\n(단위 : 백만원)\n구 분 TV, 모니터 등 스마트폰 등 메모리 디스플레이 패널 계(*)\n매출액 22,082,407 98,179,494 66,937,858 20,348,428 239,768,567",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current facts에는 2025년 상반기와 연간 메모리 제품 매출은 있으나 9개월 누적 66,937,858백만원은 없다. 별도 기간의 실제 누적 매출이므로 기존 분기·반기·연간 fact와 중복되지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:PRODUCT_REVENUE:2025_9M",
+        "normalized_object": "2025년 9개월 누적 메모리 제품 매출 66,937,858백만원",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-9M",
+        "predicate": "삼성전자의 2025년 9개월 누적 메모리 제품 매출액이 66,937,858백만원이었다",
+        "predicate_family": "MEMORY_PRODUCT_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "MEMORY_REVENUE",
+          "2025_9M_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PRODUCT_REVENUE_ACTUAL",
+        "question_family_tags": [
+          "MEMORY_REVENUE_ACTUAL",
+          "CUMULATIVE_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "삼성전자 2025년 9개월 누적 메모리 제품 매출",
+        "subject_id": "005930:MEMORY:PRODUCT_REVENUE:2025_9M",
+        "unit": "KRW million",
+        "value": 66937858
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-71f5dcb691c18bce0a4356fe",
+        "economic_mechanism": "HBM 가격은 연 단위로, 범용 D램 가격은 분기 단위로 협상돼 급등 시황에서 범용 D램이 더 빨리 가격을 반영하며 HBM과 수익성 역전이 발생했다.",
+        "exact_quote": "김재준 삼성전자 DS부문 메모리사업부 부사장은 \"HBM은 연 단위 가격 협상을 하고 범용 D램은 분기 단위 가격을 결정해 수익성 역전 현상이 발생했다\"라며 \"현재 공급 부족 수급 상황을 고려하면 2027년에야 격차가 좁혀질 것\"이라고 평가했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current fact는 범용 D램 수익성이 HBM보다 높았다는 결과만 보유한다. 이 issuer 발언은 계약 가격의 갱신 주기가 그 역전을 만든 원인임을 추가해 HBM 이익 전환의 단기 제한을 비중복 설명한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:PRICING_CADENCE:2026Q1",
+        "normalized_object": "가격 협상 주기 차이에 따른 HBM·범용 D램 수익성 역전",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1 현재",
+        "predicate": "삼성전자는 HBM은 연 단위, 범용 D램은 분기 단위로 가격을 결정하는 차이 때문에 수익성 역전이 발생했다고 설명했다",
+        "predicate_family": "HBM_DRAM_PRICING_CADENCE_PROFITABILITY",
+        "primitive_tags": [
+          "HBM_ANNUAL_PRICING",
+          "DRAM_QUARTERLY_PRICING"
+        ],
+        "product_family": "HBM·D램",
+        "question_family_id": "HBM_RELATIVE_PROFITABILITY",
+        "question_family_tags": [
+          "HBM_PROFITABILITY",
+          "PRICING_CADENCE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM과 범용 D램 가격 협상 주기",
+        "subject_id": "005930:MEMORY:HBM_PRICING_CADENCE:2026Q1",
+        "unit": "pricing cadence",
+        "value": "HBM annual negotiation; conventional DRAM quarterly pricing"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.93,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-71f5dcb691c18bce0a4356fe",
+        "economic_mechanism": "공급 부족에서 범용 D램이 가격을 더 빨리 반영하는 구조 때문에 HBM과 범용 D램의 수익성 격차가 2027년에야 축소될 것이라는 회사 전망이다.",
+        "exact_quote": "김재준 삼성전자 DS부문 메모리사업부 부사장은 \"HBM은 연 단위 가격 협상을 하고 범용 D램은 분기 단위 가격을 결정해 수익성 역전 현상이 발생했다\"라며 \"현재 공급 부족 수급 상황을 고려하면 2027년에야 격차가 좁혀질 것\"이라고 평가했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 수익성이 즉시 범용 D램을 따라잡는다는 가정을 제한하는 issuer 전망이며, current graph에는 이 상대 수익성 격차의 2027년 시간축이 없다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:RISK_COUNTER:PROFITABILITY_GAP_2027",
+        "normalized_object": "HBM·범용 D램 수익성 격차 2027년 축소 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2027E",
+        "predicate": "삼성전자는 현재 공급 부족을 고려하면 HBM과 범용 D램의 수익성 격차가 2027년에야 좁혀질 것으로 평가했다",
+        "predicate_family": "HBM_DRAM_PROFITABILITY_GAP_OUTLOOK",
+        "primitive_tags": [
+          "PROFITABILITY_GAP",
+          "2027_OUTLOOK"
+        ],
+        "product_family": "HBM·D램",
+        "question_family_id": "HBM_RELATIVE_PROFITABILITY",
+        "question_family_tags": [
+          "HBM_PROFITABILITY",
+          "RELATIVE_MARGIN_OUTLOOK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM과 범용 D램 수익성 격차 전망",
+        "subject_id": "005930:MEMORY:HBM_PROFITABILITY_GAP:2027",
+        "unit": "outlook timing",
+        "value": "profitability gap expected to narrow only in 2027"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-71f5dcb691c18bce0a4356fe",
+        "economic_mechanism": "삼성전자가 HBM에서 단기 수익성만 극대화하기보다 고객 관계와 공급 균형을 택한다는 방침은 단기 이익 전환을 제약할 수 있는 공급 전략이다.",
+        "exact_quote": "김재준 부사장은 \"HBM 고객사와 관계 등 단기 수익성에 치중하지 않고 균형 있는 공급 전략을 취할 것\"",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 매출 확대가 곧 단기 이익 극대화로 이어진다고 보지 않게 하는 issuer 전략 발언이다. current facts의 HBM 공급 확대·수익성 facts와 다른 공급 의사결정 counter다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:SUPPLY_RESPONSE:BALANCED_STRATEGY",
+        "normalized_object": "고객 관계와 단기 수익성을 함께 고려한 HBM 균형 공급 전략",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026E",
+        "predicate": "삼성전자가 HBM 고객 관계를 고려해 단기 수익성에 치중하지 않고 균형 있는 공급 전략을 취할 방침이다",
+        "predicate_family": "HBM_BALANCED_SUPPLY_STRATEGY",
+        "primitive_tags": [
+          "BALANCED_SUPPLY",
+          "CUSTOMER_RELATIONSHIP"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_SUPPLY_STRATEGY",
+        "question_family_tags": [
+          "HBM_SUPPLY_STRATEGY",
+          "PROFIT_CONVERSION_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 균형 공급 전략",
+        "subject_id": "005930:MEMORY:HBM_BALANCED_SUPPLY_STRATEGY:2026",
+        "unit": "supply strategy",
+        "value": "balanced supply strategy rather than short-term profitability maximization"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-71f5dcb691c18bce0a4356fe",
+        "economic_mechanism": "HBM4가 2026년 연간 HBM 매출에서도 과반을 차지할 것이라는 회사 전망은 HBM4 공급 확대의 연간 매출 믹스 전환 규모를 제시한다.",
+        "exact_quote": "HBM4 매출은 3분기 전체 HBM 매출 중 절반으로 높아져 연간 HBM 매출에서도 과반을 차지할 것",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current graph에는 2026년 3분기 HBM4 매출 비중 50% 이상 전망만 있다. 이 문장의 연간 과반 전망은 별도 기간의 비중복 매출 믹스 가이던스다. 제3자 매체 경로이므로 structured FORWARD_GUIDANCE 역할은 부여하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:ANNUAL_REVENUE_MIX:2026",
+        "normalized_object": "2026년 연간 HBM 매출 중 HBM4 비중 과반 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "삼성전자는 HBM4가 2026년 연간 HBM 매출의 과반을 차지할 것으로 안내했다",
+        "predicate_family": "HBM4_ANNUAL_REVENUE_MIX_OUTLOOK",
+        "primitive_tags": [
+          "HBM4_MIX",
+          "FY2026_OUTLOOK"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_REVENUE_MIX_OUTLOOK",
+        "question_family_tags": [
+          "HBM4_REVENUE_MIX",
+          "ANNUAL_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 연간 HBM 매출 비중 전망",
+        "subject_id": "005930:MEMORY:HBM4:ANNUAL_REVENUE_MIX:2026",
+        "unit": "percent minimum",
+        "value": 50
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.87,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-71f5dcb691c18bce0a4356fe",
+        "economic_mechanism": "2026년 2분기 D램 비트 출하 증가 전망은 가격 상승과 별개로 제품 수량이 매출로 전환될 방향을 제시한다.",
+        "exact_quote": "삼성전자 2분기 비트그로스는 전기대비 D램 한자릿수대 중반 낸드 한자릿수대 초반 초과할 전망이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current graph에는 2026년 1분기 서버 D램 비트 증가와 과거 2025년 비트 성장은 있지만 2026년 2분기 D램 전체 비트 성장 전망은 없다. 기사 경로의 전망이므로 issuer-source numeric FORWARD_GUIDANCE 역할은 부여하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:BIT_GROWTH:2026Q2",
+        "normalized_object": "2026년 2분기 D램 비트 성장 전분기 대비 한 자릿수대 중반 초과 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2E vs 2026-Q1",
+        "predicate": "삼성전자의 2026년 2분기 D램 비트 성장이 전분기 대비 한 자릿수대 중반을 초과할 것으로 전망됐다",
+        "predicate_family": "DRAM_BIT_GROWTH_OUTLOOK",
+        "primitive_tags": [
+          "DRAM_BITS",
+          "2026_Q2_OUTLOOK"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_BIT_GROWTH_OUTLOOK",
+        "question_family_tags": [
+          "DRAM_BIT_GROWTH",
+          "SHIPMENT_OUTLOOK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 2분기 D램 비트 성장 전망",
+        "subject_id": "005930:MEMORY:DRAM_BIT_GROWTH:2026Q2",
+        "unit": "percent QoQ range",
+        "value": "above mid-single-digit"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-73c162eae211aa44daab5bde",
+        "economic_mechanism": "메모리 공급계약 가운데 장기공급계약이 30%를 차지해 단기 주문보다 긴 고객 물량 결박이 현재 공급 계약의 의미 있는 비중을 차지한다.",
+        "exact_quote": "삼성전자의 2분기 공급 계약 중 LTA 비중은 30%로 업계 최고 수준인데, 3분기에는 더 늘어날 것으로 알려졌다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current facts에는 다년계약의 구속력·기간·일부 완료 사실은 있으나 현재 공급계약에서 LTA가 차지하는 30% 비중은 없다. 계약질과 매출 가시성을 정량화하는 비중복 근거다.",
+        "mechanism_scope_id": "005930:MEMORY:LTA:CUSTOMER_COMMITMENT:2026Q2",
+        "normalized_object": "2026년 2분기 메모리 공급계약 중 LTA 비중 30%",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2",
+        "predicate": "삼성전자의 2026년 2분기 메모리 공급계약 중 장기공급계약 비중이 30%로 알려졌다",
+        "predicate_family": "MEMORY_LTA_SHARE_ACTUAL",
+        "primitive_tags": [
+          "LTA_SHARE",
+          "2026_Q2"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_LTA_SHARE",
+        "question_family_tags": [
+          "MEMORY_LTA",
+          "CONTRACT_SHARE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 2분기 메모리 장기공급계약 비중",
+        "subject_id": "005930:MEMORY:LTA_SHARE:2026Q2",
+        "unit": "percent of supply contracts",
+        "value": 30
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-73c162eae211aa44daab5bde",
+        "economic_mechanism": "3분기에 장기공급계약 비중이 2분기 30%보다 더 높아질 것이라는 전망은 중장기 고객 물량 결박이 확대되는 방향을 제시한다.",
+        "exact_quote": "삼성전자의 2분기 공급 계약 중 LTA 비중은 30%로 업계 최고 수준인데, 3분기에는 더 늘어날 것으로 알려졌다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2분기 실제 비중과 별도로 3분기 계약 믹스의 추가 확대를 제시하는 forward state다. 정확 비중이나 계약 조항은 발명하지 않고 30% 초과 방향만 유지한다.",
+        "mechanism_scope_id": "005930:MEMORY:LTA:CUSTOMER_COMMITMENT:2026Q3",
+        "normalized_object": "2026년 3분기 메모리 LTA 비중 30% 초과 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q3E",
+        "predicate": "삼성전자의 메모리 장기공급계약 비중이 2026년 3분기에 2분기 30%보다 더 늘어날 것으로 알려졌다",
+        "predicate_family": "MEMORY_LTA_SHARE_OUTLOOK",
+        "primitive_tags": [
+          "LTA_SHARE",
+          "2026_Q3_OUTLOOK"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_LTA_SHARE",
+        "question_family_tags": [
+          "MEMORY_LTA",
+          "CONTRACT_SHARE_OUTLOOK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 3분기 메모리 장기공급계약 비중 전망",
+        "subject_id": "005930:MEMORY:LTA_SHARE:2026Q3",
+        "unit": "percent of supply contracts",
+        "value": "above 30"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.88,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-73c162eae211aa44daab5bde",
+        "economic_mechanism": "HBM4E 12단 샘플을 글로벌 고객에게 실제 공급한 것은 차세대 HBM 제품이 공개 단계를 넘어 고객 검증 단계로 이동했음을 보여준다.",
+        "exact_quote": "5월 HBM4E 12단 샘플을 업계 최초로 글로벌 고객사에 공급했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "current facts에는 HCB 적용 샘플 고객 전달과 HBM4e 일부 사업화 계획이 있으나 HBM4E 12단 샘플의 2026년 5월 글로벌 고객 공급은 없다. 계약·승인·매출로 확대하지 않고 고객 검증 실행만 반영한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4E:QUALIFICATION:12H_SAMPLE",
+        "normalized_object": "HBM4E 12단 샘플 글로벌 고객 공급",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-05",
+        "predicate": "삼성전자가 2026년 5월 HBM4E 12단 샘플을 글로벌 고객사에 공급했다",
+        "predicate_family": "HBM4E_12H_CUSTOMER_SAMPLE",
+        "primitive_tags": [
+          "HBM4E_12H",
+          "CUSTOMER_DELIVERY"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "HBM4E_CUSTOMER_SAMPLE",
+        "question_family_tags": [
+          "HBM4E_QUALIFICATION",
+          "CUSTOMER_SAMPLE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4E 12단 샘플 글로벌 고객 공급",
+        "subject_id": "005930:MEMORY:HBM4E_12H_SAMPLE:2026M05",
+        "unit": "qualification status",
+        "value": "12-high sample supplied to global customers"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "6069809375222a06d18d802e96cb8936a2f647038c017f8eb28539eebc4938ff",
+  "production_score_authority": false,
+  "prompt_hash": "7b150939a6191e9cdd938e73427b05e111bf988ed28dc8bd3830d60c1b7293cb",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-88b6fdec49a38d3183373d7ff32605895b0b6f6518cea70d81915aaf3e183321",
+  "response_id": "COLLABRESP-830111dba2c63a0567dafa0c1d52eb4d60aca106a2282181d5cdd6ae51e6c8a9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,591 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "Previously accepted target-direct facts remain dispositioned; this continuation adds no duplicates from this document.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "Previously accepted target-direct facts remain dispositioned; this continuation adds no duplicates from this document.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "Previously accepted target-direct facts remain dispositioned; this continuation adds no duplicates from this document.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "This page adds twelve genuine historical valuation, non-cash reconciliation, depreciation, and amortization model atoms in source order after strict deduplication; more facts remain.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2025F forward P/CF 3.6배의 역사적 브로커 valuation으로, 분모는 연결 현금흐름이며 HBM-only 현금흐름이 아니다.",
+        "exact_quote": "P/CF (x) 17.5 4.1 3.6 3.3",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The stale P/CF multiple preserves its cash-flow denominator and period but cannot establish current or HBM-only valuation.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2025F forward P/CF multiple of 3.6 times",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "forecast_historical_forward_price_to_cash_flow",
+        "predicate_family": "HISTORICAL_FORWARD_PCF",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "valuation_multiple",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_FORWARD_PCF",
+        "question_family_tags": [
+          "HISTORICAL_FORWARD_PCF"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 forward P/CF 브로커 전망",
+        "subject_id": "000660:FORWARD_PCF:FY2025F:MIRAE_2024-05-16",
+        "unit": "x",
+        "value": 3.6
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2026F forward P/CF 3.3배의 역사적 브로커 valuation으로, 분모는 연결 현금흐름이며 HBM-only 현금흐름이 아니다.",
+        "exact_quote": "P/CF (x) 17.5 4.1 3.6 3.3",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The stale P/CF multiple preserves its cash-flow denominator and period but cannot establish current or HBM-only valuation.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2026F forward P/CF multiple of 3.3 times",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "forecast_historical_forward_price_to_cash_flow",
+        "predicate_family": "HISTORICAL_FORWARD_PCF",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "valuation_multiple",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_FORWARD_PCF",
+        "question_family_tags": [
+          "HISTORICAL_FORWARD_PCF"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 forward P/CF 브로커 전망",
+        "subject_id": "000660:FORWARD_PCF:FY2026F:MIRAE_2024-05-16",
+        "unit": "x",
+        "value": 3.3
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2024F 연결 비현금 수익비용가감 18,231십억원의 역사적 브로커 cash-flow reconciliation 항목으로, 현금 유입·유출이나 기말 stock이 아니다.",
+        "exact_quote": "비현금수익비용가감 15,033 18,231 19,284 20,122",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This stale non-cash reconciliation item must not be treated as operating cash flow, an asset balance, or HBM-only cash conversion.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2024F consolidated non-cash income/expense adjustment forecast of KRW 18,231 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "forecast_historical_noncash_income_expense_adjustment",
+        "predicate_family": "HISTORICAL_NONCASH_INCOME_EXPENSE_ADJUSTMENT_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "noncash_reconciliation",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_NONCASH_INCOME_EXPENSE_ADJUSTMENT_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_NONCASH_INCOME_EXPENSE_ADJUSTMENT_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 비현금 수익비용가감 브로커 전망",
+        "subject_id": "000660:NONCASH_INCOME_EXPENSE_ADJUSTMENT:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 18231
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2025F 연결 비현금 수익비용가감 19,284십억원의 역사적 브로커 cash-flow reconciliation 항목으로, 현금 유입·유출이나 기말 stock이 아니다.",
+        "exact_quote": "비현금수익비용가감 15,033 18,231 19,284 20,122",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This stale non-cash reconciliation item must not be treated as operating cash flow, an asset balance, or HBM-only cash conversion.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2025F consolidated non-cash income/expense adjustment forecast of KRW 19,284 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "forecast_historical_noncash_income_expense_adjustment",
+        "predicate_family": "HISTORICAL_NONCASH_INCOME_EXPENSE_ADJUSTMENT_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "noncash_reconciliation",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_NONCASH_INCOME_EXPENSE_ADJUSTMENT_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_NONCASH_INCOME_EXPENSE_ADJUSTMENT_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 비현금 수익비용가감 브로커 전망",
+        "subject_id": "000660:NONCASH_INCOME_EXPENSE_ADJUSTMENT:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 19284
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2026F 연결 비현금 수익비용가감 20,122십억원의 역사적 브로커 cash-flow reconciliation 항목으로, 현금 유입·유출이나 기말 stock이 아니다.",
+        "exact_quote": "비현금수익비용가감 15,033 18,231 19,284 20,122",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This stale non-cash reconciliation item must not be treated as operating cash flow, an asset balance, or HBM-only cash conversion.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2026F consolidated non-cash income/expense adjustment forecast of KRW 20,122 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "forecast_historical_noncash_income_expense_adjustment",
+        "predicate_family": "HISTORICAL_NONCASH_INCOME_EXPENSE_ADJUSTMENT_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "noncash_reconciliation",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_NONCASH_INCOME_EXPENSE_ADJUSTMENT_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_NONCASH_INCOME_EXPENSE_ADJUSTMENT_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 비현금 수익비용가감 브로커 전망",
+        "subject_id": "000660:NONCASH_INCOME_EXPENSE_ADJUSTMENT:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 20122
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2024F 연결 유형자산 감가상각비 12,675십억원의 역사적 브로커 비현금 비용 전망으로, 이미 종료된 기간의 issuer actual이나 HBM-only 감가상각이 아니다.",
+        "exact_quote": "유형자산감가상각비 13,121 12,675 13,023 13,711",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row is a stale forecast, so it cannot receive the latest-actual depreciation role or be attributed to HBM alone.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2024F consolidated property, plant and equipment depreciation forecast of KRW 12,675 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "forecast_historical_ppe_depreciation_expense",
+        "predicate_family": "HISTORICAL_PPE_DEPRECIATION_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "forecast_depreciation",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_PPE_DEPRECIATION_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_PPE_DEPRECIATION_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 유형자산 감가상각비 브로커 전망",
+        "subject_id": "000660:PPE_DEPRECIATION:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 12675
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2025F 연결 유형자산 감가상각비 13,023십억원의 역사적 브로커 비현금 비용 전망으로, 이미 종료된 기간의 issuer actual이나 HBM-only 감가상각이 아니다.",
+        "exact_quote": "유형자산감가상각비 13,121 12,675 13,023 13,711",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row is a stale forecast, so it cannot receive the latest-actual depreciation role or be attributed to HBM alone.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2025F consolidated property, plant and equipment depreciation forecast of KRW 13,023 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "forecast_historical_ppe_depreciation_expense",
+        "predicate_family": "HISTORICAL_PPE_DEPRECIATION_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "forecast_depreciation",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_PPE_DEPRECIATION_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_PPE_DEPRECIATION_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 유형자산 감가상각비 브로커 전망",
+        "subject_id": "000660:PPE_DEPRECIATION:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 13023
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2026F 연결 유형자산 감가상각비 13,711십억원의 역사적 브로커 비현금 비용 전망으로, 이미 종료된 기간의 issuer actual이나 HBM-only 감가상각이 아니다.",
+        "exact_quote": "유형자산감가상각비 13,121 12,675 13,023 13,711",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row is a stale forecast, so it cannot receive the latest-actual depreciation role or be attributed to HBM alone.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2026F consolidated property, plant and equipment depreciation forecast of KRW 13,711 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "forecast_historical_ppe_depreciation_expense",
+        "predicate_family": "HISTORICAL_PPE_DEPRECIATION_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "forecast_depreciation",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_PPE_DEPRECIATION_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_PPE_DEPRECIATION_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 유형자산 감가상각비 브로커 전망",
+        "subject_id": "000660:PPE_DEPRECIATION:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 13711
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2024F forward EV/EBITDA 4.7배의 역사적 브로커 valuation으로, 분모는 연결 EBITDA이며 HBM-only EBITDA가 아니다.",
+        "exact_quote": "EV/EBITDA (x) 21.7 4.7 3.8 3.1",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker row explicitly gives a forward EV/EBITDA point and period, but it is stale and lacks an HBM earnings bridge.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2024F forward EV/EBITDA multiple of 4.7 times",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "forecast_historical_forward_ev_to_ebitda",
+        "predicate_family": "HISTORICAL_FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "valuation_multiple",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "HISTORICAL_FORWARD_EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스 연결 forward EV/EBITDA 브로커 전망",
+        "subject_id": "000660:FORWARD_EV_EBITDA:FY2024F:MIRAE_2024-05-16",
+        "unit": "x",
+        "value": 4.7
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2025F forward EV/EBITDA 3.8배의 역사적 브로커 valuation으로, 분모는 연결 EBITDA이며 HBM-only EBITDA가 아니다.",
+        "exact_quote": "EV/EBITDA (x) 21.7 4.7 3.8 3.1",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker row explicitly gives a forward EV/EBITDA point and period, but it is stale and lacks an HBM earnings bridge.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2025F forward EV/EBITDA multiple of 3.8 times",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "forecast_historical_forward_ev_to_ebitda",
+        "predicate_family": "HISTORICAL_FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "valuation_multiple",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "HISTORICAL_FORWARD_EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스 연결 forward EV/EBITDA 브로커 전망",
+        "subject_id": "000660:FORWARD_EV_EBITDA:FY2025F:MIRAE_2024-05-16",
+        "unit": "x",
+        "value": 3.8
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2026F forward EV/EBITDA 3.1배의 역사적 브로커 valuation으로, 분모는 연결 EBITDA이며 HBM-only EBITDA가 아니다.",
+        "exact_quote": "EV/EBITDA (x) 21.7 4.7 3.8 3.1",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker row explicitly gives a forward EV/EBITDA point and period, but it is stale and lacks an HBM earnings bridge.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2026F forward EV/EBITDA multiple of 3.1 times",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "forecast_historical_forward_ev_to_ebitda",
+        "predicate_family": "HISTORICAL_FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "valuation_multiple",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "HISTORICAL_FORWARD_EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스 연결 forward EV/EBITDA 브로커 전망",
+        "subject_id": "000660:FORWARD_EV_EBITDA:FY2026F:MIRAE_2024-05-16",
+        "unit": "x",
+        "value": 3.1
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2024F 연결 무형자산상각비 476십억원의 역사적 브로커 비현금 비용 전망으로, actual이나 HBM-only 상각이 아니다.",
+        "exact_quote": "무형자산상각비 553 476 460 452",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This stale amortization forecast is non-cash model context and cannot receive an actual-depreciation role or HBM attribution.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2024F consolidated intangible-asset amortization forecast of KRW 476 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "forecast_historical_intangible_amortization_expense",
+        "predicate_family": "HISTORICAL_INTANGIBLE_AMORTIZATION_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "forecast_amortization",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_INTANGIBLE_AMORTIZATION_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_INTANGIBLE_AMORTIZATION_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 무형자산상각비 브로커 전망",
+        "subject_id": "000660:INTANGIBLE_AMORTIZATION:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 476
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "The twelve-fact upper bound was reached after FY2024F intangible amortization. FY2025F and FY2026F amortization plus later cash-flow and per-share rows remain."
+    ]
+  },
+  "payload_hash": "94a88ed6a1a09ac831f6a139ba75660595fcd125c07c1f3916197e5af37aa556",
+  "production_score_authority": false,
+  "prompt_hash": "bd0ed03301c5c1becf9a3d8c573fb513a9234e2e16fe0e55f96a46652a1b0043",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6a8957f1f54745dde7c151d11862ea6d40c1b661ef36849ca8e6f052d6e66f2a",
+  "response_id": "COLLABRESP-f995dc6850d4106f3942daec3f7ce103be0ac5bd8310c2b892d042db2427db6a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

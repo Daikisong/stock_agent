@@ -1,0 +1,42 @@
+{
+  "output_schema_hash": "7dbfe60b384654cd791016e65d09fc824423c5bf4c909208543889fef9766b15",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-eba7ea9551552bae4ec5a9bb",
+        "rationale": "84,473자 전체를 재검토했다. 동일 문서는 앞선 exact pages에서 글로벌 메모리 peer PBR, 삼성전자 역사적 PBR 밴드, 메모리 peer EV/EBITDA, HBM 경쟁력의 밴드 상단 선행조건과 source-quality 한계까지 12+3개 facts로 완결됐다. 남은 내용은 이 15개 durable facts와 의미 중복이거나 산업 수급·타사·target-price-only·투자전략 정보이므로 신규 objective-local fact로 반복하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-eed6ab771e86737e8965eaa3",
+        "rationale": "48,529자 전체를 재검토했다. 삼성전자 HBM4용 1c D램 개발 지연과 대량양산 확대 제약은 동일 문서 출처의 durable fact로 이미 추출돼 후속 증거에 의해 RESOLVED 상태다. 그 밖의 내용은 산업·장비·패키징 일반론, 타사, NAND·모바일·유리기판 등 C06 범위 밖이거나 기존 사실과 의미 중복이어서 신규 fact로 제안하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "10e6c830bf5495462e18fd04c98ebda4d8806e1f435e04236580785523218e29",
+  "production_score_authority": false,
+  "prompt_hash": "2a3964063e691b3d82e290785ae895e04043883422bfc69799d4a81d9e09fdc5",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-16fa56375cdd7e3fc7e7c219bf9b41d717f9bcbfcf69e0952ff41f582d41998a",
+  "response_id": "COLLABRESP-89059b1385af749b773d954eca224914f1d3ea6c73940a7b4aca66592126f25d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

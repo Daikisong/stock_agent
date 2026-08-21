@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "cd8d7ef354c337a38869fd65ffaa2bfd6c3a72389e68b11483e53fbc539461be",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-dc91ece36a46adfad4c79d70",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 AI 반도체 전망 블로그이며 URL 소유자와 discovery provenance가 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 공급 병목·HBM4를 언급한 snippet은 발견 메타데이터일 뿐 근거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-135a4ac7babc869348f709bb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "WiseReport의 2024-10-25 다종목 리포트 요약 landing page로, SK하이닉스 issuer presentation·earnings release 원문이 아니며 snippet에도 target의 memory 이익·현금흐름 근거가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-e5bbd9b020d145ae69473bbf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "WiseReport의 2025-01-23 다종목 증권 리포트 요약 페이지이며 요청된 SK하이닉스 issuer-owned source family가 아니다. 표시된 타사 목표주가 snippet은 현재 objective의 원문 근거가 될 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-f4e07b7bbac2012e94d50f41",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 투자분석 사이트의 일반 분석 허브로 SK하이닉스 issuer presentation 또는 earnings release가 아니며, target의 memory 수익 전환을 확인할 특정 원문 route도 제시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-0979b40f3d8d8aa7abc5ae7d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 반도체 사이클 위험 블로그로 요청된 issuer-owned family를 충족하지 않는다. HBM·공급 병목 일반론은 target의 공식 실적·FCF attribution 원문이 아니며 snippet 자체도 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d7c76f2e671d31ecf88aa527",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "2026-06-30 제3자 프리미엄 글이고 주체도 솔브레인이다. SK하이닉스 HBM 증설을 언급하더라도 요청된 SK하이닉스 issuer presentation·earnings release가 아니며 소재업체 물량을 target 이익으로 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-8692547a54ae7c0a7ff83755",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 채널의 제3자 공급망 요약으로 공식 issuer 문서가 아니며, Apple·Foxconn 관련 snippet을 SK하이닉스의 memory 매출·이익·현금흐름으로 연결할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-b87b69a102c9b6420ac491af",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "공개 증권 PDF이지만 대상 기업은 펨트론이고 candidate가 요청한 family는 issuer presentation·issuer earnings release뿐이다. 고객 수주 변동성은 SK하이닉스의 공식 memory earnings bridge가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7c3b5806e77a807a27f7164e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "WiseReport의 2025-01-23 다종목 리포트 요약 landing page로 요청된 issuer-owned 원문 family가 아니고, snippet은 SK하이닉스 memory 수익성 또는 FCF를 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-d7d0a118845fe8aece62e448",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "WiseReport의 2025-04-25 다종목 증권 리포트 요약이며 snippet은 조선주 중심이다. SK하이닉스 issuer presentation·earnings release 원문 또는 memory 이익 전환 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c233259145e607fbcf94bc67",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 프리미엄 시황 글이며 제목·URL의 2026-07-30은 cutoff 2026-07-12 이후다. 요청된 issuer-owned family도 아니므로 HBM4·서버 DRAM snippet을 current evidence로 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-744ba3cd8bde0372ed4b1764",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "WiseReport의 2025-01-23 다종목 증권 리포트 요약 페이지로 SK하이닉스 issuer presentation·earnings release가 아니다. 타 업종 목표주가 snippet은 target objective와 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "12개 discovery 후보를 각각 정확히 한 번 분류했다. 모든 후보가 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release provenance를 충족하지 않아 full-fetch material 후보는 없으며, discovery snippet은 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "69be9c774c1361c7668da3af9dae4c068051c5f4af390cd33ea0ba40429220d0",
+  "production_score_authority": false,
+  "prompt_hash": "ae919a1250a592584c2c625bf8e504d29fdd0c027522a4b66f3cbef880b41f66",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fbababc4eecf825d6d106ffdb9322a805f736f0c5d4c29f8e3277496f76620e6",
+  "response_id": "COLLABRESP-b7285422f7739c537780ae9096d0c401c8242fb0b1236306401c8e6e8df6bd0c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

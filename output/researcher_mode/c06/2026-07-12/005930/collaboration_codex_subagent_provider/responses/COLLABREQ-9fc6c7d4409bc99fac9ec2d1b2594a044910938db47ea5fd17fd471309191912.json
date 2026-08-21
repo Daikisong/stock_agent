@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-9165ebe101c1d699318eaf4c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "Third-party page is unrelated to the objective and cannot satisfy the requested issuer-source families."
+      },
+      {
+        "candidate_id": "SGCAND-91f1baf8062ad731c66d35fd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "Social sharing route is discovery metadata, not an eligible requested issuer source."
+      },
+      {
+        "candidate_id": "SGCAND-9234bd0fd563f50c53e55858",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "Verified issuer presentation route, but the historical period is superseded and does not materially resolve the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-92ddb8cf676636735da05e30",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.05,
+        "rationale": "Verified issuer cash-flow document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Classification covers this transport roster only. Material routes still require bounded full-document fetch and source-backed extraction; snippets and discovery metadata are not evidence."
+    ]
+  },
+  "payload_hash": "73d5bc3bc0cee134d75ebdf3769c5655717292463c6fa3ab5aba262f1dfe972c",
+  "production_score_authority": false,
+  "prompt_hash": "c12cdbf6af99fb958fb920956ed962a8215aaa0e4cdbfa3c229e4155bd76b36c",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9fc6c7d4409bc99fac9ec2d1b2594a044910938db47ea5fd17fd471309191912",
+  "response_id": "COLLABRESP-2245bd3dd338bc5446399d991ab3812daedbf2160e441e4126beaf57b63b50e9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

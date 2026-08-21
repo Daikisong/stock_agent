@@ -1,0 +1,118 @@
+{
+  "output_schema_hash": "f0f7ea97d154d5dbe05bd4f97e994888e7d9c0c51cd57d8b759bb0aefe49f6d1",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-5f26f48e668c6305b4b1de3c",
+        "rationale": "종속회사 목록은 제외하고 2027년 적용 예정 회계기준이 영업이익 표시와 이자·배당 현금흐름 분류의 비교가능성에 미치는 비중복 사실 2건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-63db1e7e8734e63136032598",
+        "rationale": "감사인 목록·내부통제·주주총회·지분 및 임원 이력 중심 자료이며 현재 메모리/HBM 수익·계약·가격·캐파·고객 인증을 입증하는 새 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-5f26f48e668c6305b4b1de3c",
+        "economic_mechanism": "ACCOUNTING_PRESENTATION_COMPARABILITY",
+        "exact_quote": "기업회계기준서 제1118호의 적용으로 연결회사의 당기순이익이나 순자산은 변경되지 않을 것입니다. 그러나 연결회사는 새롭게 정의된 두 개의 중간합계인 '영업이익'과 '재무손익및법인세비용차감전손익'을 표시해야 하며, 영업이익 중간합계는 현재 연결회사가 표시하는 영업이익과는 다릅니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "2027년 이후 영업이익 시계열의 표시 기준이 달라질 수 있어 과거 수치와의 단순 비교에 주의가 필요하다. 경제적 순이익 변화로 해석하지 않는다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:INFORMATION_CONFIDENCE",
+        "normalized_object": "IFRS 18 영업이익 표시 비교가능성 변화",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027E",
+        "predicate": "IFRS 18 적용은 연결 당기순이익·순자산을 바꾸지 않지만 새 영업이익 중간합계는 현재 표시 영업이익과 달라진다",
+        "predicate_family": "FUTURE_ACCOUNTING_PRESENTATION_CHANGE",
+        "primitive_tags": [],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "FUTURE_ACCOUNTING_PRESENTATION_CHANGE",
+        "question_family_tags": [],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.5,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 IFRS 18 영업이익 표시 변경",
+        "subject_id": "005930:IFRS18:OPERATING_PROFIT_PRESENTATION",
+        "unit": "accounting presentation",
+        "value": "net income and net assets unchanged; operating profit presentation changes"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-5f26f48e668c6305b4b1de3c",
+        "economic_mechanism": "CASH_FLOW_PRESENTATION_COMPARABILITY",
+        "exact_quote": "또한 기업회계기준서 제1007호 개정사항은 이자 및 배당 현금흐름의 분류에 관한 구체적인 지침을 제공합니다. 연결회사는 이 지침에 따라 이자의 수취 및 배당금 수입에 따른 현금흐름을 영업활동이 아닌 투자활동으로, 이자의 지급에 따른 현금흐름을 영업활동이 아닌 재무활동으로 분류할 예정입니다. 배당금의 지급은 기존과 동일하게 재무활동으로 분류됩니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "2027년 이후 영업현금흐름과 FCF의 표시 비교가능성에 영향을 줄 수 있는 분류 변경이며 실제 현금 총액 변화로 해석하지 않는다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:INFORMATION_CONFIDENCE",
+        "normalized_object": "IFRS 18 관련 이자·배당 현금흐름 분류 변경",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027E",
+        "predicate": "새 회계기준에서는 이자수취·배당금수입을 투자활동, 이자지급을 재무활동 현금흐름으로 분류할 예정이다",
+        "predicate_family": "FUTURE_CASH_FLOW_CLASSIFICATION_CHANGE",
+        "primitive_tags": [],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "FUTURE_CASH_FLOW_CLASSIFICATION_CHANGE",
+        "question_family_tags": [],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.5,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 IFRS 18 관련 현금흐름 분류 변경",
+        "subject_id": "005930:IFRS18:CASH_FLOW_CLASSIFICATION",
+        "unit": "accounting classification",
+        "value": "interest received and dividends received to investing; interest paid to financing"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "회계기준 변경은 표시·분류 변화이며 실제 이익이나 현금 총액의 증가·감소로 해석하지 않았다.",
+      "종속회사와 임원·주주 명단은 조직·소유 관계만 보여주므로 C06 경제 메커니즘의 직접 근거로 쓰지 않았다."
+    ]
+  },
+  "payload_hash": "d42ff0c5acdc51bccff4fde039435fd29bc9334fd3d991020b50968b6fd2f400",
+  "production_score_authority": false,
+  "prompt_hash": "698823c7bd13f5508ef08c45ea769027c3d508eb1415826b5d3da7c2f42183c1",
+  "provenance": {
+    "agent_id": "codex_primary",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/codex_primary",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3343872bedc69e9fe00a226208e16124858687343b9353a362cc17ce12e817d8",
+  "response_id": "COLLABRESP-54ff21801edff2a72d0bcd20a236dde2ed95c8c064f0b7b6f3dea88394c3be9d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

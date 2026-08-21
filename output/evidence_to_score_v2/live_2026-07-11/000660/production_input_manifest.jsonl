@@ -1,0 +1,181 @@
+{"input_id": "PINPUT-5480ea0907b8f3641be795b4", "input_type": "CONFIG", "origin": "CANONICAL_CONFIG", "value": "C06 canonical production question and scoring contracts"}
+{"input_id": "PINPUT-68de24f7c7897e32df9843b3", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 컨퍼런스콜 HBM3E HBM4 생산능력 sold out pre-sold booked 고객 할당 공식 IR"}
+{"input_id": "PINPUT-7079ecb11d922a5d532b142f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 생산능력 가동률 HBM 세대별 공급 물량 고객 배정 DART"}
+{"input_id": "PINPUT-41c45f96704ac050a7743d0a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 공식 발표 HBM 공급 여유 미판매 생산능력 주문 취소 고객 인증 지연 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-230c6c39413b88c383610298", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 영업이익률 영업활동현금흐름 유형자산 취득 CAPEX 잉여현금흐름"}
+{"input_id": "PINPUT-af758d3de8aea8487e800857", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 자료 재고자산 매출채권 운전자본 영업현금흐름 CAPEX"}
+{"input_id": "PINPUT-210e18f9fbbaf4bdea6e5806", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 연간 CompanyGuide 영업이익률 잉여현금흐름 CAPEX 추정치 하향 변경 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-a1669696c1db6994a06e069a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 자료 영업이익률 영업현금흐름 CAPEX 잉여현금흐름 공식 IR"}
+{"input_id": "PINPUT-f2bc6d7a2c97dc20a2c7af6a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기보고서 현금흐름표 매출채권 재고자산 운전자본 유형자산 취득 DART"}
+{"input_id": "PINPUT-2d9f54b0000805edd943e9be", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 컨퍼런스콜 마진 하락 현금흐름 감소 CAPEX 운전자본 부담 공식 IR"}
+{"input_id": "PINPUT-11dc7976861572b02fba0976", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 매출 영업이익 HBM 매출 비중 DRAM ASP 공식 IR"}
+{"input_id": "PINPUT-be8e18e965765a181e647b1e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 매출액 영업이익 HBM 제품 믹스 메모리 가격 DART"}
+{"input_id": "PINPUT-3d7be56dbc2de5a15eb0bb6f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적 컨퍼런스콜 HBM 수요 범용 메모리 ASP 영업이익 감소 요인"}
+{"input_id": "PINPUT-1bd9551b24d7f131741f05bc", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 주요 고객 매출 비중 고객 집중도 의존도 DART"}
+{"input_id": "PINPUT-5eac6e655dde474bf6a2cc36", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2025년 사업보고서 단일 고객 매출 비중 주요 매출처 고객 의존성"}
+{"input_id": "PINPUT-aa492ce7f8e27ab952ae5c32", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 자료 HBM 고객 구성 신규 고객 다변화 특정 고객 의존도"}
+{"input_id": "PINPUT-ce5b20efab29239c902974c7", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 공식 IR 제품 세대별 샘플 양산 출하 상용 공급 product profile 2026-07-11 이전"}
+{"input_id": "PINPUT-3a9824b6971b86faabe23347", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기·2분기 실적 리서치 제품 세대 샘플 인증 양산 출하 매출 반영 2026-07-11 이전"}
+{"input_id": "PINPUT-9a5ed3438d6c0e63b8e01504", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 제품 세대 양산 지연 출하 연기 고객 인증 미완료 계획 철회 정정 2026-07-11 이전"}
+{"input_id": "PINPUT-bd08f68ffe15ab9511b18338", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 IR 주요 고객 매출 비중 고객 집중도 의존도"}
+{"input_id": "PINPUT-b9eb3bee2777bea331cdaa66", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2025년 사업보고서 주요 고객 매출 비중 특정 고객 의존 위험"}
+{"input_id": "PINPUT-359dd62f1ae245b9be673141", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 공식 IR 고객 다변화 신규 고객 특정 고객 의존도 변화"}
+{"input_id": "PINPUT-516a799daab2058f262fb61c", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 HBM 매출 비중 출하량 AI 메모리 공식 IR 2026-07-11 이전"}
+{"input_id": "PINPUT-dda8267be98a3d5022793457", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 보고서 HBM 매출액 제품 믹스 출하량 공식 공시 2026-07-11 이전"}
+{"input_id": "PINPUT-79cef0153e3fb69b4d4b7b48", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 HBM 매출 출하 믹스 정정 변경 하향 공식 IR 2026-07-11 이전"}
+{"input_id": "PINPUT-2d592113cf77034d5a1f5fac", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 자료 영업이익률 잉여현금흐름 CAPEX site:skhynix.com"}
+{"input_id": "PINPUT-6f9bafafb606f360c924be10", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 영업활동현금흐름 유형자산 취득 재고자산 매출채권 매입채무 site:dart.fss.or.kr"}
+{"input_id": "PINPUT-9b4321458204836bed9874be", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 경영실적 컨퍼런스콜 영업이익률 설비투자 운전자본 현금흐름 site:skhynix.com"}
+{"input_id": "PINPUT-9a6e36a4ccc0ae95a3929ceb", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2025 회계연도 사업보고서 매출액 10% 이상 주요 고객 고객별 매출 비중"}
+{"input_id": "PINPUT-743da3be6667922d22aff777", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 주요 고객 매출 집중도 고객 의존도"}
+{"input_id": "PINPUT-50219e02a27c3a6b40e65a01", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 고객사 공식 실적자료 HBM 공급 의존도 공급업체 다변화 장기 공급 가시성"}
+{"input_id": "PINPUT-da7f47672740cf2005c02869", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 IR 실적발표 고객 장기공급계약 선주문 물량 배정 취소 조건"}
+{"input_id": "PINPUT-b4dd5a7551b24c35f07c3037", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 DART 공시 고객 구매약정 공급계약 계약 물량 계약 기간"}
+{"input_id": "PINPUT-4477e9766c071fdf6de0a6d1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 고객사 공식 발표 HBM 공급 약정 생산능력 배정 예약 물량"}
+{"input_id": "PINPUT-dc9d57d03a00c425d9de5e46", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 자료 일반 DRAM NAND 수요 가격 재고 제품 믹스 HBM 2026년 7월 11일 이전 공식 IR"}
+{"input_id": "PINPUT-0898e7a6f59c57bc0c6ae0a5", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 DRAM NAND 재고자산 매출 제품 믹스 HBM 2026년 7월 11일 이전 DART"}
+{"input_id": "PINPUT-4f3078068bd4542b56170636", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적 컨퍼런스콜 일반 DRAM NAND 업황 재고 정상화 제품 믹스 HBM 2026년 7월 11일 이전 공식 자료"}
+{"input_id": "PINPUT-d7fec61c12e9c0b27678d13f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 고객사 인증 qualification 통과 승인 공식 IR 공시"}
+{"input_id": "PINPUT-8234e592718929989544775b", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 2분기 고객 품질 인증 지연 재설계 재검증 미해결 실행 위험 공식 문서"}
+{"input_id": "PINPUT-94c806439be75929163feabb", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 고객사 공식 발표 공급업체 인증 재개 보류 탈락 설계 변경"}
+{"input_id": "PINPUT-13ab9b7d38e62ba69ec564f0", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 공식 IR HBM 일반 DRAM NAND 수요 가격 재고 제품 믹스"}
+{"input_id": "PINPUT-0da50926406baea26d53f37d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 컨퍼런스콜 공식 자료 일반 DRAM NAND 약세 재고조정 제품 믹스 HBM 성장 상쇄"}
+{"input_id": "PINPUT-d174b0dadb26070b3b672bdf", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 이후 2026년 7월 11일까지 공식 IR 업데이트 일반 DRAM NAND 재고 믹스 전망 변경 정정"}
+{"input_id": "PINPUT-7e9ac36b6bb5e479ce957578", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 공식 IR PDF 2026년 연간 실적 현금흐름 CAPEX 가이던스 근거"}
+{"input_id": "PINPUT-024ac26a7db8e3b3c5ba2207", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 공식 컨퍼런스콜 2026년 연간 실적 현금흐름 전망 하방 위험 가격 고객 재고 비용"}
+{"input_id": "PINPUT-1a10519ad64b40c84e3bce23", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 공식 IR 정정 공시 2026년 연간 가이던스 변경 유지 상향 하향 철회"}
+{"input_id": "PINPUT-5de62933089bc164278907fb", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 IR HBM AI 메모리 매출 비중 출하량"}
+{"input_id": "PINPUT-526fcc3d1137c33148204992", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 DART HBM AI 메모리 매출 제품 비중"}
+{"input_id": "PINPUT-546e78f47342b45c6e0c274a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적 콘퍼런스콜 HBM 매출 출하 증가 감소 믹스 제한"}
+{"input_id": "PINPUT-3ed7c095cf93d3ffee37df84", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 2분기 실적 프리뷰 HBM3E HBM4 영업이익 추정 12개월 선행 PER 밸류에이션 보고서 PDF"}
+{"input_id": "PINPUT-a18ea76e5a5de568016aa529", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 HBM 매출 비중 ASP DRAM 이익 기여 컨센서스 기대 반영 리서치 PDF"}
+{"input_id": "PINPUT-22c358f22f11a7efdb030e22", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 HBM 경쟁 심화 메모리 가격 하락 이익 추정치 하향 밸류에이션 부담 리서치 PDF"}
+{"input_id": "PINPUT-4e115c13d415f9cdef133736", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적 반영 영업이익 추정치 변경 근거 CompanyGuide 리서치 2026년 7월 11일까지 공개"}
+{"input_id": "PINPUT-33c666e51c81a29b988788b3", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2025년 연간 실적 대비 2026년 잉여현금흐름 전망 변경 CAPEX 운전자본 증권사 보고서 2026년 7월 11일까지 공개"}
+{"input_id": "PINPUT-cb6f7a0a1ab915b168c08931", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적 이후 영업이익 또는 현금흐름 전망을 약화시킨 수요 가격 비용 근거 공식 IR 리서치 2026년 7월 11일까지 공개"}
+{"input_id": "PINPUT-f06899a896b4fc7eb2da0392", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 영업이익률 EBITDA 마진 공식 IR"}
+{"input_id": "PINPUT-4d21251f612d8c1e5d163ee1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 영업활동현금흐름 CAPEX 유형자산 취득 잉여현금흐름 DART"}
+{"input_id": "PINPUT-bfa9c1b0851deaf6bdfc09a8", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 운전자본 재고자산 매출채권 매입채무 현금흐름 DART"}
+{"input_id": "PINPUT-28800c29fa36cf6a42c4ec5f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 컨퍼런스콜 DRAM NAND HBM 출하량 ASP CAPEX 영업현금흐름 전망 공식 IR 게시일 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-f22186a9cc4ecbb20f75ac5d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2025년 연간 실적 대비 2026년 연간 영업이익 잉여현금흐름 추정치 변경 전후 수치와 근거 증권사 리서치 발행일 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-b38481dfb899ef943445507c", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 영업활동현금흐름 유형자산 취득 재고자산 차입금 현금흐름 개선 또는 악화 근거 DART 공시일 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-80795e98fa915d07bc19ac61", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 CAPEX 투자 집행액 재원 생산능력 증설 가동 일정 공식 IR 2026-07-11 이전 공개"}
+{"input_id": "PINPUT-94336420eab02324275f7adc", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 생산능력 확대 공급 증가 재고 과잉공급 위험 공식 IR 2026-07-11 이전 공개"}
+{"input_id": "PINPUT-dd5cc9e6e77688cb9cf5587e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 CAPEX 증설 계획 변경 연기 취소 대체 공식 공시 2026-07-11 이전 공개"}
+{"input_id": "PINPUT-7257119ca2efcbfa9cab6018", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 공식 실적발표 일반 DRAM 수요 가격 약세 HBM 상쇄"}
+{"input_id": "PINPUT-75e9f06a33da965d8fc8bae3", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 NAND 재고자산 판매가격 제품 믹스"}
+{"input_id": "PINPUT-33569ad423b0e59ca88e236a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 공식 컨퍼런스콜 DRAM NAND 재고 믹스 HBM 수익성"}
+{"input_id": "PINPUT-f1fcc680181cd389db09a9e5", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 DART 분기보고서 설비투자 CAPEX 자금 집행 생산능력 증설 일정"}
+{"input_id": "PINPUT-993f4d75e801b95c2f726403", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 IR 컨퍼런스콜 CAPEX HBM DRAM NAND 생산능력 공급 증가 과잉 가능성"}
+{"input_id": "PINPUT-f7b98043756cd88c164c8b68", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 공식 IR 청주 M15X 용인 반도체 클러스터 투자 재원 공사 일정 양산 시점 생산능력"}
+{"input_id": "PINPUT-ae09d892561336fe0e2a7407", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 영업활동현금흐름 재고자산 설비투자 계약부채 2026-07-11 이전"}
+{"input_id": "PINPUT-bc81cbdd6719e71ac7c367c7", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 IR 발표자료 HBM 출하량 ASP 생산능력 CAPEX 현금창출 전망 근거 2026-07-11 이전"}
+{"input_id": "PINPUT-7f8a69156b2124ce20f91f54", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 신용평가 보고서 EBITDA 잉여현금흐름 투자부담 재고 위험 전망 변경 근거 2026-07-11 이전"}
+{"input_id": "PINPUT-e96eb8e1852c89c0b766404c", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 공식 IR 일반 DRAM NAND 수요 가격 재고 제품 믹스 HBM 발표일 2026-07-11 이전"}
+{"input_id": "PINPUT-d2cd76a235585f17d858dc54", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 DART 분기보고서 DRAM NAND 재고자산 제품별 매출 믹스 발표일 2026-07-11 이전"}
+{"input_id": "PINPUT-783fdb6be7be1ea77c51dd76", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 컨퍼런스콜 공식 자료 일반 DRAM NAND 약세 재고조정 HBM 상쇄 영향 발표일 2026-07-11 이전"}
+{"input_id": "PINPUT-6ed129ca78c5912731e8e809", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 DART 2025년 사업보고서 2026년 1분기 분기보고서 영업활동현금흐름 설비투자 순차입금 증감 원인 공시일 2026-07-11 이전"}
+{"input_id": "PINPUT-64fd11edd043266567247dde", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 2분기 실적 프리뷰 2026년 영업이익 잉여현금흐름 추정치 이전 전망 대비 변경 근거 발간일 2026-07-11 이전"}
+{"input_id": "PINPUT-ce195308853c4e212778990a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 신용평가 보고서 2025년 실적 기준 영업현금흐름 CAPEX 차입부담 전망과 약화 요인 발간일 2026-07-11 이전"}
+{"input_id": "PINPUT-d4c12952821bdb297ba9c7aa", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 DART HBM 매출 출하량 제품 구성 비중"}
+{"input_id": "PINPUT-5cc875047e3df701f32855e3", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 공식 컨퍼런스콜 HBM 매출 비중 출하량 증감 제한"}
+{"input_id": "PINPUT-da70a193a4b9178feae5da5a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 고객 공급 확약 물량 배정 선주문 계약 물량 기간 조건 공식 IR 발표일 2026년 7월 11일까지"}
+{"input_id": "PINPUT-d210406db5905eb4104d7a7f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 고객 주문 축소 취소 배정 해제 공급계약 해지 공식 공시 발표일 2026년 7월 11일까지"}
+{"input_id": "PINPUT-da6d4cae387af2fb4967463d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 기존 고객 공급 확약 갱신 변경 대체 종료 현재 유효 조건 공식 실적자료 발표일 2026년 7월 11일까지"}
+{"input_id": "PINPUT-17f2ba84aa063146a1940c4f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 자료 영업이익률 영업활동현금흐름 CAPEX free cash flow site:skhynix.com"}
+{"input_id": "PINPUT-86c8c2d0b65c121e30eb422f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 연결 현금흐름표 재고자산 매출채권 매입채무 유형자산 취득 site:dart.fss.or.kr"}
+{"input_id": "PINPUT-66114763647abe7d46d6051f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2025년 연간 사업보고서 영업이익률 영업활동현금흐름 설비투자 자유현금흐름 site:skhynix.com"}
+{"input_id": "PINPUT-fb1ebac87e59da0d9617c80f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 연간 CompanyGuide 컨센서스 매출액 영업이익 지배주주순이익 예상 PER PBR 2026-07-11 이전"}
+{"input_id": "PINPUT-b3aee7b9a55a303e0d7ecb00", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 공식 실적발표 IR HBM 매출 비중 ASP 수익성 메모리 전망 2026-07-11 이전"}
+{"input_id": "PINPUT-bb14101540cdc88f6709ad90", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 연간 증권사 리서치 선행 PER 이익 추정 HBM 호황 기대 주가 반영 위험 요인 2026-07-11 이전"}
+{"input_id": "PINPUT-4cc5dd369e75d8cccbb60981", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 IR HBM3E HBM4 생산능력 sold out 사전판매 고객배정 공식자료"}
+{"input_id": "PINPUT-ee5f191fdf69d593a7a3f1b7", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 공식 IR HBM 생산능력 공급여유 미판매 물량 주문취소 고객배정 축소"}
+{"input_id": "PINPUT-d47622b3b695a3a71f5d69f8", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 2026-01-01~2026-07-11 공식 공시 IR HBM3E HBM4 생산능력 사전판매 고객배정 변경 증설"}
+{"input_id": "PINPUT-f1565cd62f6a8c9da5763298", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 공식 IR 범용 DRAM 수요 가격 재고 HBM 제품 믹스 2026-07-11 이전 발표"}
+{"input_id": "PINPUT-0995b748b37aa4d38966a549", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 DART NAND 재고자산 가격 제품별 매출 믹스 HBM 2026-07-11 이전 발표"}
+{"input_id": "PINPUT-d5e512fb405efc2d4de68bb1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 2분기 메모리 시장 전망 공식 산업자료 범용 DRAM NAND 약세 재고 믹스 HBM 영향 2026-07-11 이전 발표"}
+{"input_id": "PINPUT-9c20efaf10149d36e581b164", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 반도체 제품 고객사 인증 통과 승인 현재 상태 공식 IR 실적발표"}
+{"input_id": "PINPUT-b9e98b94e31a6474e2aec576", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 고객사 품질 인증 지연 재설계 재검증 재개 미해결 실행 위험 고객사 공식 문서"}
+{"input_id": "PINPUT-47d1282ee0c91efa0600809d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 고객 인증 일정 지연 또는 통과 주장 반박 설계 변경 양산 차질 리서치 문서"}
+{"input_id": "PINPUT-26ad90bcfaf36451304bf8ee", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 DRAM NAND 제품별 ASP 평균판매가격 전분기 대비 2026-07-11 이전 site:skhynix.com"}
+{"input_id": "PINPUT-46fd28757f9606a500c1d55c", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 DRAM NAND 제품 판매가격 변동 2026-07-11 이전 site:dart.fss.or.kr"}
+{"input_id": "PINPUT-d93c4e96c65ee72ba50d2c2b", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 HBM 공급계약 계약가격 가격변경 적용기간 2026-07-11 이전 공식 IR site:skhynix.com"}
+{"input_id": "PINPUT-a0bde2d6767484bd91ac0aa2", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 IR 영업이익률 잉여현금흐름 설비투자 운전자본"}
+{"input_id": "PINPUT-f956bb0aefa60dee80fb4b22", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 현금흐름표 CAPEX 재고자산 매출채권 매입채무"}
+{"input_id": "PINPUT-bfe2d23fbbca3aab83ce52a1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적 정정 공시 또는 후속 IR 잉여현금흐름 설비투자 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-6a830463715b107236ec0fbe", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1월 1일~7월 11일 고객사 공식 발표 고객 인증 qualification 승인 통과 validation"}
+{"input_id": "PINPUT-3a82329c62897248b942f46e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1월 1일~7월 11일 공식 실적발표 IR 고객 인증 진행 상황 미해결 실행 위험"}
+{"input_id": "PINPUT-6eeb7a5b7c3e03e75e348329", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1월 1일~7월 11일 고객사 공식 문서 qualification 지연 재설계 재검증 재개 보류"}
+{"input_id": "PINPUT-6a37b3083ce12946eb73b717", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 공식 IR HBM3E HBM4 2026년 생산능력 선판매 sold out 고객 배정"}
+{"input_id": "PINPUT-20d00ad5dc4ac82c602845e6", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 DART HBM 생산능력 가동률 장기공급계약 수주잔고"}
+{"input_id": "PINPUT-2546e117ed9784be18dec016", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 컨퍼런스콜 HBM3E HBM4 2026년 잔여 물량 미판매 주문 취소 고객 배정 변경"}
+{"input_id": "PINPUT-4f09ad3011efc5dfc888a91a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 HBM3E HBM4 생산능력 선판매 완판 고객 배정 고객사 공식 발표"}
+{"input_id": "PINPUT-808e029c2eac5285f60e98b9", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 HBM 생산능력 예약 수주 장기계약 고객 할당 공식 IR 공시"}
+{"input_id": "PINPUT-8f32452bc2dd0bc69af43435", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 HBM 공급 여유 주문 취소 고객 배정 축소 공식 문서"}
+{"input_id": "PINPUT-7b904c36cfe30a3aa7c0733a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 공식 실적발표 매출액 영업이익 HBM 매출 비중 메모리 제품 믹스 ASP IR"}
+{"input_id": "PINPUT-8f696fac8a59144d06242c4b", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 매출액 영업이익 HBM DRAM 평균판매가격 DART"}
+{"input_id": "PINPUT-1ec1fae39ee3ab07286cf780", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적 컨퍼런스콜 HBM 매출 성장 영업이익 기여 ASP 하락 비용 증가 공식 자료"}
+{"input_id": "PINPUT-1279909a3d176617c234d1c7", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 매출 영업이익 HBM 매출 비중 메모리 믹스 ASP 공식 IR"}
+{"input_id": "PINPUT-21a1ef18102009e333555355", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 매출액 영업이익 HBM DRAM NAND 제품별 매출 DART"}
+{"input_id": "PINPUT-b03cf3ed6cfdfb1be9ecf2d7", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적 컨퍼런스콜 HBM ASP 메모리 믹스 영업이익 영향 가격 하락 공식"}
+{"input_id": "PINPUT-81b690eb7ebe4b8e2bdffab0", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 연간 전망 기존 예상 대비 DRAM NAND 비트 출하량 ASP 원가 수익성 변경 근거 공식 IR 컨퍼런스콜 원문 2026-07-11 이전 공개"}
+{"input_id": "PINPUT-67163df85a04e6f203fc7521", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 연간 영업이익 추정 변경표 종전 추정치 신규 추정치 변경폭 HBM DRAM NAND 근거 PDF 2026-07-11 이전 발간"}
+{"input_id": "PINPUT-855c7179857e7864f71c8e87", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 연간 영업활동현금흐름 잉여현금흐름 추정 변경표 종전 대비 EBITDA CAPEX 운전자본 근거 PDF 2026-07-11 이전 발간"}
+{"input_id": "PINPUT-88e019e87cab9e7838b365a4", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1월 1일~7월 11일 공식 IR 실적발표 제품 세대 샘플 고객 인증 양산 출하 상용 공급 제품 소개"}
+{"input_id": "PINPUT-75610a03ca22bb7c8bd3ee89", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1월 1일~7월 11일 DART 공시 연구개발 제품 세대 샘플 양산 출하 판매 현황"}
+{"input_id": "PINPUT-924ed13da49406ea91bbfda1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1월 1일~7월 11일 고객사 공식 발표 제품 세대 샘플 평가 상용 공급 지연 취소"}
+{"input_id": "PINPUT-6dda6f206a3242e543b94f4d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 실적발표 IR 고객 공급 약정 물량 배정 선주문 장기계약 2026-07-11 이전"}
+{"input_id": "PINPUT-d9a74eb1255a5f7d88707e41", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 DART 공시 공급계약 고객 약정 물량 선수금 수주잔고 2026-07-11 이전"}
+{"input_id": "PINPUT-5ee138c602f03a92c937aaff", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 고객사 공식 발표 공급 약정 물량 배정 선주문 취소 축소 비구속 2026-07-11 이전"}
+{"input_id": "PINPUT-99773f912a4a4b2254ef706c", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 고객사 품질 인증 통과 승인 공식 IR 2026-07-11 이전"}
+{"input_id": "PINPUT-19d5b24a385e4f5bf8b2d5d2", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 고객사 인증 지연 재설계 재시험 미해결 실행 리스크 2026-07-11 이전"}
+{"input_id": "PINPUT-3a2c2ca6bdc0bc861f6015bb", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 고객 인증 재개 정정 변경 이전 발표 대체 공식 문서 2026-07-11 이전"}
+{"input_id": "PINPUT-b3e2c5959f3c19dfa7cb1611", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 HBM 매출 비중 공식 IR"}
+{"input_id": "PINPUT-152aeab0a4c57d11506887d7", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 HBM 출하량 제품별 매출 DART"}
+{"input_id": "PINPUT-7b46157d55967862910292c5", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2025년 연간 사업보고서 AI 메모리 HBM 매출 비중 출하량 공식 공시"}
+{"input_id": "PINPUT-a4799738d46c67c690da024d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 2분기 실적 프리뷰 HBM 매출 영업이익 컨센서스 선행 PER 시장 기대 반영 보고서 2026-07-11 이전"}
+{"input_id": "PINPUT-5eeef975789ad6f551fff27c", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 HBM 출하량 가격 이익 가정 증권사 컨센서스 목표주가 밸류에이션 비교 보고서 2026-07-11 이전"}
+{"input_id": "PINPUT-a2c2e2027ba5e0cc9c38a1fb", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 하반기 메모리 이익 추정치 하향 위험 밸류에이션 프리미엄 낙관적 기대 선반영 보고서 2026-07-11 이전"}
+{"input_id": "PINPUT-61f6812a13f1cb8ad8bdaabe", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 2분기 예상 실적 CompanyGuide 영업이익 EPS 컨센서스 PER PBR 2026-07-11 이전"}
+{"input_id": "PINPUT-4c67eb1b936341c36194005f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 2분기 실적 프리뷰 리서치 HBM 출하량 ASP 이익 추정 현재 밸류에이션 기대 반영 2026-07-11 이전"}
+{"input_id": "PINPUT-0f8675317c611d38235fa393", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 2분기 실적 프리뷰 리서치 HBM 수요 둔화 재고조정 가격 하락 이익 추정 하향 근거 2026-07-11 이전"}
+{"input_id": "PINPUT-e292ee299b167e8af8ee20e9", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 주요 고객 매출 비중 단일 고객 10% 이상 DART"}
+{"input_id": "PINPUT-c6a49828a5ed8309ecf881e8", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 공식 실적발표 HBM 고객 다변화 신규 고객 매출 의존도"}
+{"input_id": "PINPUT-42a7db7f34adcf8a919d46d1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2025년 연간 고객사 공식 보고서 HBM 공급업체 다변화 조달 의존도"}
+{"input_id": "PINPUT-c93b8ac6a3d0acad2aab8a0b", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2025년 사업보고서 주요 고객 매출 비중 고객 집중도 매출처 의존도 DART"}
+{"input_id": "PINPUT-bb7aa4e32410fbc48bf07116", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 단일 고객 매출 비중 주요 매출처 의존도 DART"}
+{"input_id": "PINPUT-7f244c5fefcaa37db13d95bb", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 자료 컨퍼런스콜 HBM 고객 다변화 고객 의존 장기 공급계약 공식"}
+{"input_id": "PINPUT-491d2d94a680d3a496898c50", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 고객사 인증 통과 지연 재설계 미해결"}
+{"input_id": "PINPUT-27910eaab6c457ca7cc369af", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 IR 자료 고객 qualification 승인 재검증 재개 양산 전환"}
+{"input_id": "PINPUT-e2c50221395116792f074a8e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1월 1일~7월 11일 고객사 공식 발표 제품 인증 지연 재설계 재승인"}
+{"input_id": "PINPUT-567118eb8ff212d2a604fa11", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 확정 실적 2026년 연간 EPS 영업이익 컨센서스 PER PBR HBM 기여 CompanyGuide 2026-07-11 이전"}
+{"input_id": "PINPUT-8f43601b1d035b36aaa7fbdc", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 연간 전망 HBM 메모리 이익 추정치 밸류에이션 시장 기대 주가 선반영 리서치 2026-07-11 이전"}
+{"input_id": "PINPUT-8ed052085f6382a07d83ab74", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적 및 2026년 연간 전망 HBM 가격 하락 이익 추정치 하향 밸류에이션 부담 반대 근거 2026-07-11 이전"}
+{"input_id": "PINPUT-a9fddb222e6164878c123ff9", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 IR HBM3E HBM4 생산능력 선판매 예약 고객 배정 site:skhynix.com"}
+{"input_id": "PINPUT-055bb9a2ae2a0a519b579383", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 생산능력 가동률 공급계약 수주잔고 site:dart.fss.or.kr"}
+{"input_id": "PINPUT-2e9f968f707bb02ae230d9f0", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 컨퍼런스콜 HBM 미판매 여유 생산능력 주문 취소 배정 축소 수요 둔화"}
+{"input_id": "PINPUT-9dfd7460dda47753c37ccf8a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 공식 IR 제품 세대별 샘플 제공 인증 양산 개시 출하 상용 공급 제품 소개 2026-07-11 이전"}
+{"input_id": "PINPUT-068a84267c80fc11703a1abc", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 DART 공시 제품 세대별 생산 판매 출하 매출 발생 개발 단계 2026-07-11 이전"}
+{"input_id": "PINPUT-4ac80c30e6b64d324e0f5ad5", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 고객사 공식 발표 제품 세대 샘플 평가 인증 지연 양산 공급 또는 로드맵만 공개 2026-07-11 이전"}
+{"input_id": "PINPUT-426ef02d292e144dcf18c241", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 IR HBM 매출 비중 수익성 2026년 연간 전망 발행일 2026-07-11 이전"}
+{"input_id": "PINPUT-199a64cb7041d574a0e94d18", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 기준 2026년 연간 영업이익 컨센서스 선행 PER PBR HBM 기대 주가 반영 리서치 발행일 2026-07-11 이전"}
+{"input_id": "PINPUT-56056ba65ced0adac4999059", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적 이후 2026년 영업이익 추정치 하향 또는 기존 HBM 낙관 전망 수정 리서치 발행일 2026-07-11 이전"}
+{"input_id": "PINPUT-0dd6f06f555c32e1ef3bb9d8", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 공식 IR 설비투자 CAPEX 재원 집행 일정 HBM DRAM NAND 생산능력 증설"}
+{"input_id": "PINPUT-c82358df52a22fcbc9855fd8", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 DART 시설투자 건설중인자산 생산능력 증설 완료 예정 투자약정"}
+{"input_id": "PINPUT-7f81b1ab13713267f97f1743", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 컨퍼런스콜 공식 질의응답 공급 증가 수요 대비 생산능력 과잉 재고 감산 증설 속도"}
+{"input_id": "PINPUT-459aae85a04c86c3b3181603", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 공식 IR 제품 세대 샘플 공급 양산 출하 상용 공급"}
+{"input_id": "PINPUT-0a89fdc8b66ea5117c1c81bb", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 DART 분기보고서 제품 세대 개발 현황 양산 출하 연구개발"}
+{"input_id": "PINPUT-5ba2e08c9a243a13a87e5e01", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1월 1일~7월 11일 공식 보도자료 제품 세대 샘플 출하 양산 계획 예정 제품 소개"}
+{"input_id": "PINPUT-6b2515c78e4388fd97a345f2", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 공식 IR 고객 장기 공급계약 구매 약정 사전주문 물량 배정"}
+{"input_id": "PINPUT-81095d072c6e14af6df9d2bc", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 DART 공식 공시 고객 공급계약 선수금 구매 약정 확정 물량 계약 기간"}
+{"input_id": "PINPUT-4719132bd2ee767386499c03", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 공식 문서 고객 공급 약정 취소 축소 만료 물량 배정 변경"}
+{"input_id": "PINPUT-7a4f8b150acb000db27fa7e9", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 DRAM NAND 실현 ASP 전분기 대비 가격 변화 공식 IR 2026-07-11 이전"}
+{"input_id": "PINPUT-c1a50dbca8223c19a903b877", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 제품별 평균판매가격 가격변동 DART 2026-07-11 이전"}
+{"input_id": "PINPUT-5f731e645c798ee756f37de9", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 2분기 HBM DRAM NAND 계약가격 ASP 상승 하락 동결 재협상 공식 발표 리서치 2026-07-11 이전"}
+{"input_id": "PINPUT-494769d529c37e8aecca1f81", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 IR CAPEX 투자 규모 재원 확정 집행 일정 2026년 7월 11일 이전 발표"}
+{"input_id": "PINPUT-76c2b7dd3bcd36f5acb7c64e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 생산능력 증설 건설 가동 일정 DART 2026년 7월 11일 이전 공시"}
+{"input_id": "PINPUT-35e5845f818beaa518e11368", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 상반기 공식 자료 DRAM HBM NAND 공급 증가 수요 전망 과잉공급 위험 2026년 7월 11일 이전 발표"}
+{"input_id": "PINPUT-1258246fbb2e1044a47c6942", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적발표 자료 DRAM NAND HBM ASP 가격 변동"}
+{"input_id": "PINPUT-bad488229856f8d49d28aeda", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 분기보고서 제품별 가격 평균판매가격 DART"}
+{"input_id": "PINPUT-2996818f51bd2e053d54d9f4", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "SK하이닉스 2026년 1분기 실적 컨퍼런스콜 HBM DRAM 장기계약 계약가격 ASP"}
+{"input_id": "PINPUT-aa92de75c17e8cde73eb63c7", "input_type": "PROMPT_CONTEXT", "origin": "CANONICAL_PIPELINE", "value": "question contracts, current production evidence, and score-gap context only"}

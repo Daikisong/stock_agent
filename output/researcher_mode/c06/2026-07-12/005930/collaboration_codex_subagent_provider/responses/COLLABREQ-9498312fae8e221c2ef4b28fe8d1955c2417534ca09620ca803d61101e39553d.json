@@ -1,0 +1,66 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "KRX 상장사 중 삼성전자의 DS 메모리/HBM 경제성을 가장 직접적으로 비교할 수 있는 별도 발행인이다. HBM·DRAM 수요, ASP, 수율, 고객 승인, CAPA와 투자회수라는 핵심 동인이 겹치므로 주된 peer로 선택하되 삼성전자의 복합 사업구조 차이는 별도로 통제해야 한다.",
+        "confidence": 0.99,
+        "material_differences": [
+          "SK하이닉스는 메모리 중심 사업구조인 반면 삼성전자는 메모리 외 파운드리·시스템LSI와 세트 사업을 함께 보유한다",
+          "HBM 고객 구성, qualification 시점, 제품 믹스와 생산능력 배분이 서로 달라 같은 메모리 업황에서도 실적 민감도가 다를 수 있다"
+        ],
+        "peer_name": "SK하이닉스",
+        "peer_symbol": "000660",
+        "shared_economic_drivers": [
+          "HBM과 DRAM의 AI 서버 수요, 고객 qualification 및 제품 세대 전환",
+          "메모리 ASP와 수급, 선단 공정 수율 및 생산능력 배분",
+          "대규모 반도체 설비투자와 감가상각을 통한 이익·현금흐름 전환"
+        ]
+      },
+      {
+        "comparability_rationale": "국내 상장명부에서 두 번째 별도 HBM·DRAM 제조 peer가 제한적이므로, 최소 2개 peer 요건을 충족하기 위한 인접 반도체 제조 비교기업으로 선택했다. 가동률·수율·ASP·CAPA·감가상각이라는 팹 경제성은 공유하지만 HBM 직접 비교가 아니라는 한계를 명시적으로 적용한다.",
+        "confidence": 0.72,
+        "material_differences": [
+          "DB하이텍은 HBM·DRAM 메모리 제조사가 아니라 비메모리 파운드리이므로 HBM 가격·고객 allocation·제품 세대 전환에 직접 노출되지 않는다",
+          "삼성전자는 대규모 메모리와 HBM, 파운드리 및 세트 사업을 함께 보유하지만 DB하이텍은 사업 규모와 제품·고객 믹스가 훨씬 좁다",
+          "따라서 DB하이텍은 자본집약적 팹 경제성의 인접 비교에만 사용하고 직접 메모리 peer와 같은 가중치로 해석하면 안 된다"
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "반도체 웨이퍼 제조의 가동률, 수율, ASP와 고객 수요",
+          "생산설비 CAPA 확장과 감가상각, 업황에 따른 고정비 레버리지",
+          "공정 경쟁력과 고객 인증이 매출 전환 및 수익성에 미치는 영향"
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "직접 메모리/HBM 경쟁기업을 최우선으로 두고, 두 번째부터는 자본집약적 반도체 제조 경제성이 겹치는 기업만 제한적으로 보완했다. 이에 따라 SK하이닉스를 주 비교기업, DB하이텍을 차이를 명시한 인접 비교기업으로 선택했으며 동일 발행인의 우선주와 장비·소재 공급자는 제외했다. 이 선택은 향후 구조화된 peer 관측값을 수집할 대상만 정하며 점수나 Stage를 결정하지 않는다.",
+    "unresolved_research_notes": [
+      "KRX 상장명부 안에서 삼성전자와 별도 발행인인 직접 HBM·DRAM 제조 비교기업은 SK하이닉스가 핵심이며, DB하이텍은 최소 peer 수를 충족하기 위한 제한적 인접 제조 비교기업이다.",
+      "삼성전자우(005935)는 별도 경제기업이 아니라 동일 발행인의 우선주이므로 peer에서 제외했다.",
+      "한미반도체 등 HBM 장비기업은 HBM 투자 사이클을 공유하지만 장비 공급자와 메모리 제조자의 수익모델이 달라 이번 제조 peer 집합에서는 제외했다."
+    ]
+  },
+  "payload_hash": "081415be04478eea8843e30088b79baf5233abf9367deb0e7dcbcd554c09ce8a",
+  "production_score_authority": false,
+  "prompt_hash": "d9df77af0ce62d1b4e6edc941a1cfece316ad3e62766b64c3e8848cca2ad15e8",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9498312fae8e221c2ef4b28fe8d1955c2417534ca09620ca803d61101e39553d",
+  "response_id": "COLLABRESP-4bbb327f3cd04a7f858f6a6f84cd239a878884253a917affc91e2815ead78d2f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

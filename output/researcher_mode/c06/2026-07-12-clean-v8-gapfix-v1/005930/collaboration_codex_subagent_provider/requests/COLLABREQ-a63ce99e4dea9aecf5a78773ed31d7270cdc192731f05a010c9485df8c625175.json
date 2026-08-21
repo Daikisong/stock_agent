@@ -1,0 +1,144 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "allowed_range": {
+        "items": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "anchor_comparisons": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "counter_fact_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "disagreements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "nearest_anchor_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "proposed_points": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "rationale": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "support_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-3dcbb46fd5653fb3dc5dcd2e",
+            "EFACT-aeabc17304171f4fe6cfceb3",
+            "EFACT-ccffdfd9c63b55091b78702d",
+            "EFACT-e20814567df3016b0efadb77",
+            "EFACT-eea88d392c237374ec65f4b0"
+          ],
+          "type": "string"
+        },
+        "maxItems": 5,
+        "minItems": 5,
+        "prefixItems": [
+          {
+            "enum": [
+              "EFACT-3dcbb46fd5653fb3dc5dcd2e"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-aeabc17304171f4fe6cfceb3"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-ccffdfd9c63b55091b78702d"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-e20814567df3016b0efadb77"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-eea88d392c237374ec65f4b0"
+            ],
+            "type": "string"
+          }
+        ],
+        "type": "array"
+      },
+      "why_not_higher": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "why_not_lower": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "anchor_comparisons",
+      "proposed_points",
+      "allowed_range",
+      "rationale",
+      "disagreements",
+      "support_fact_ids",
+      "counter_fact_ids",
+      "nearest_anchor_ids",
+      "why_not_higher",
+      "why_not_lower"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "e478cb8af05e418fdb8dc1b2be25607f65060241b4f9833ffa2a0403b44923a2",
+  "pass_name": "COMPONENT_ANALYST_JUDGE",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nFirst decode every evidence_fact_projection.facts row positionally with evidence_fact_projection.fact_fields. Each row preserves one exact fact_id and its economic meaning. Resolve source_independence_group_index through source_independence_group_dictionary. The count/hash rosters account only for repeated lineage; they are not omitted research, a top-N selection, or permission to skip rows. Review all fact_count rows. Act as the independent positive analyst for exactly one broad component. Derive proposed component points and an allowed range from current support facts, economic strength, duration, and cash conversion. Account for every supplied positive component fact and compare the case with at least one nearest blind historical anchor. Explain both why the score is not higher and why it is not lower.\nReturn exactly one JSON object matching the supplied schema.\n{\"allowed_counter_fact_ids\": [\"EFACT-4d411fd1aa7f548298fcb09f\"], \"allowed_nearest_anchor_ids\": [\"CANCH-3d3e727f09221d0fc00e86a6\", \"CANCH-17745cd4887afd21639e9dd6\"], \"allowed_support_fact_ids\": [\"EFACT-3dcbb46fd5653fb3dc5dcd2e\", \"EFACT-aeabc17304171f4fe6cfceb3\", \"EFACT-ccffdfd9c63b55091b78702d\", \"EFACT-e20814567df3016b0efadb77\", \"EFACT-eea88d392c237374ec65f4b0\"], \"component_id\": \"eps_fcf_explosion\", \"component_max_points\": 24.0, \"component_research_memo\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"eps_fcf_explosion\", \"component_max_points\": 24.0, \"counter_case\": \"2026년 1분기 유형자산 취득 현금유출 17,127,003백만원은 현금 전환의 부담이다. 연결 영업이익·영업현금흐름에는 MX, 파운드리 등 다른 사업도 포함되고, HBM별 매출·마진·FCF는 공시되지 않았다. 구조화 전망에는 최근 EPS 하향 방향도 있어 실현 이익과 전망 사이의 변동성을 남긴다.\", \"counter_fact_ids\": [\"EFACT-4d411fd1aa7f548298fcb09f\"], \"historical_anchor_ids\": [\"CANCH-3d3e727f09221d0fc00e86a6\", \"CANCH-17745cd4887afd21639e9dd6\"], \"memo_id\": \"CRMEMO-2abf05ae0a0953e7f40b79c4\", \"nearest_counter_anchor_ids\": [\"CANCH-17745cd4887afd21639e9dd6\"], \"nearest_positive_anchor_ids\": [\"CANCH-3d3e727f09221d0fc00e86a6\"], \"positive_case\": \"메모리 라인 100% 가동, 메모리 제품 매출 74,779,980백만원, 메모리 ASP 146% 상승이 동시에 확인되고 연결 영업이익과 영업현금흐름도 강하다. 이는 메모리 업황이 전사 이익과 현금창출에 기여할 개연성을 높이지만, 연결 실적을 HBM 단독 이익으로 바꾸어 읽지는 않는다.\", \"positive_fact_ids\": [\"EFACT-3dcbb46fd5653fb3dc5dcd2e\", \"EFACT-aeabc17304171f4fe6cfceb3\", \"EFACT-ccffdfd9c63b55091b78702d\", \"EFACT-e20814567df3016b0efadb77\", \"EFACT-eea88d392c237374ec65f4b0\"], \"research_complete\": true, \"researcher_role\": \"EPSFCFResearcher\", \"researcher_summary\": \"2026년 1분기 DS 메모리 매출 74,779,980백만원, 연결 영업이익 57,232,797백만원, 연결 영업현금흐름 40,274,106백만원과 메모리 ASP 146% 상승은 강한 이익·현금 전환 환경을 보여준다. 다만 영업이익과 현금흐름은 연결 전체 수치이고, 유형자산 취득 현금유출 17,127,003백만원도 전사 수치이므로 HBM 단독 FCF로 귀속하지 않는다.\", \"resolution_fact_ids\": [], \"source_coverage\": [\"OPENDART\", \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"COMPANYGUIDE\"], \"structured_metrics\": {\"ACTUAL_EARNINGS\": {\"every_record_accounted_by_hash_and_series_count\": true, \"evidence_role\": \"ACTUAL_EARNINGS\", \"fixed_top_n_used\": false, \"metadata_projection\": {\"full_metadata_persisted_outside_prompt\": true, \"metadata_boolean_field_count\": 21, \"metadata_boolean_state_hash\": \"fd95d9683569a2cb78049f80babfbf648ac251fba76e9a285546ec1b1e7a3e1c\", \"metadata_distinct_field_count\": 7, \"metadata_field_observation_count\": 147, \"metadata_field_roster_hash\": \"2ef5d7be1b4ede2028fa9b8663ca2340a8bfeb3861c9af58b03962250d4b6aed\", \"metadata_record_count\": 21, \"metadata_roster_hash\": \"abc6482ebc0c42a1e2660130e7bdf9345e093e643c2e855106fdb497b06775ff\", \"metadata_value_type_counts\": {\"NoneType\": 9, \"bool\": 21, \"int\": 33, \"str\": 84}}, \"prompt_projection_is_research_cap\": false, \"record_count\": 21, \"record_roster_hash\": \"bc8d14c636a7b746fcf13f8b9fcece2e795172339e1ca82e51946fbff3359168\", \"schema_version\": \"e2r_v5_structured_prompt_projection_v2\", \"score_authority\": false, \"semantic_series\": [{\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": 15487100000000.0}, \"evidence_roles\": [\"LATEST_ACTUAL_NET_INCOME\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 47225272000000.0}, \"metric_id\": \"net_income\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 47225272000000.0, \"median\": 19641745000000.0, \"minimum\": 8222878000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"b693b47ab60cbcfaa5e005668fe3b7fa9de052b6d437118247c04d49633063c3\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"bbac85ff5c1cadbe2a0026c1d08721651648d7f04f175bc2e563a2ad3000856d\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}, {\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": 6566976000000.0}, \"evidence_roles\": [\"LATEST_ACTUAL_OPERATING_PROFIT\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 57232797000000.0}, \"metric_id\": \"operating_profit\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 57232797000000.0, \"median\": 20073660000000.0, \"minimum\": 6566976000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"2fb97c55141d9ac28e56a46669096fec2b53566f93a2f4a298c17f3f313d50ba\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"bbac85ff5c1cadbe2a0026c1d08721651648d7f04f175bc2e563a2ad3000856d\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}, {\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": 258935494000000.0}, \"evidence_roles\": [\"LATEST_ACTUAL_REVENUE\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 133873444000000.0}, \"metric_id\": \"revenue\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 333605938000000.0, \"median\": 133873444000000.0, \"minimum\": 79140503000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"84a9cef3910c662db10c42d1fab4bea50c15ac0c594e5dcf23043f657e98eab7\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"bbac85ff5c1cadbe2a0026c1d08721651648d7f04f175bc2e563a2ad3000856d\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}], \"semantic_series_count\": 3, \"source_pending\": false}, \"CASH_CONVERSION\": {\"every_record_accounted_by_hash_and_series_count\": true, \"evidence_role\": \"CASH_CONVERSION\", \"fixed_top_n_used\": false, \"metadata_projection\": {\"full_metadata_persisted_outside_prompt\": true, \"metadata_boolean_field_count\": 21, \"metadata_boolean_state_hash\": \"fd95d9683569a2cb78049f80babfbf648ac251fba76e9a285546ec1b1e7a3e1c\", \"metadata_distinct_field_count\": 7, \"metadata_field_observation_count\": 147, \"metadata_field_roster_hash\": \"2ef5d7be1b4ede2028fa9b8663ca2340a8bfeb3861c9af58b03962250d4b6aed\", \"metadata_record_count\": 21, \"metadata_roster_hash\": \"0a2fe6f94f1b78399d27df826c0eb04034a428aff7de61da6daecbbb96b3a7f4\", \"metadata_value_type_counts\": {\"NoneType\": 9, \"bool\": 21, \"int\": 33, \"str\": 84}}, \"prompt_projection_is_research_cap\": false, \"record_count\": 21, \"record_roster_hash\": \"34be02208dcd4186818113ebb649cea470198943a30093d02f45cdd25e8b79de\", \"schema_version\": \"e2r_v5_structured_prompt_projection_v2\", \"score_authority\": false, \"semantic_series\": [{\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": 60534167000000.0}, \"evidence_roles\": [\"CAPEX\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 18176955000000.0}, \"metric_id\": \"capex\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 60534167000000.0, \"median\": 39393659000000.0, \"minimum\": 12759490000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"ffc1370e68739fd80a4776031ca2c5aadf9db243c54e0f86a5cc95a593db322d\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"bbac85ff5c1cadbe2a0026c1d08721651648d7f04f175bc2e563a2ad3000856d\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}, {\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": -16396740000000.0}, \"evidence_roles\": [\"FREE_CASH_FLOW\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 22097151000000.0}, \"metric_id\": \"free_cash_flow\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 33161999000000.0, \"median\": 17121837000000.0, \"minimum\": -16396740000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"58908e230af9426c0529cee1678c65462bf6328821fce5e2ea2d21b144ecfaa9\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"bbac85ff5c1cadbe2a0026c1d08721651648d7f04f175bc2e563a2ad3000856d\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}, {\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": 44137427000000.0}, \"evidence_roles\": [\"OPERATING_CASH_FLOW\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 40274106000000.0}, \"metric_id\": \"operating_cash_flow\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 85315148000000.0, \"median\": 44137427000000.0, \"minimum\": 16580866000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"59a64989d8573e4b461a113de9ab1c1365bdd199b6fc47902f2c5dbccacbd305\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"bbac85ff5c1cadbe2a0026c1d08721651648d7f04f175bc2e563a2ad3000856d\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}], \"semantic_series_count\": 3, \"source_pending\": false}, \"FORWARD_REVISION\": {\"every_record_accounted_by_hash_and_series_count\": true, \"evidence_role\": \"FORWARD_REVISION\", \"fixed_top_n_used\": false, \"metadata_projection\": {\"full_metadata_persisted_outside_prompt\": true, \"metadata_boolean_field_count\": 557, \"metadata_boolean_state_hash\": \"fed68362596abd9edc360fa7bd43db2c6c6e210ea184e11879c6328e90a13785\", \"metadata_distinct_field_count\": 14, \"metadata_field_observation_count\": 1543, \"metadata_field_roster_hash\": \"3b38f4679d4d4185e8b4081568701324d7ad6b19eecd571efe224ccbe360c89b\", \"metadata_record_count\": 312, \"metadata_roster_hash\": \"cd54aadf87ddb5d8645e4897d39617cdd2f99cfb0b69d9ba0d8a948a68b5d626\", \"metadata_value_type_counts\": {\"bool\": 557, \"float\": 50, \"int\": 21, \"str\": 915}}, \"prompt_projection_is_research_cap\": false, \"record_count\": 312, \"record_roster_hash\": \"a9a58ed04a06a022993c78b790790dfbb7f77c5523baf529b262acdd27dc3147\", \"schema_version\": \"e2r_v5_structured_prompt_projection_v2\", \"score_authority\": false, \"semantic_series\": [{\"dataset\": \"CONSENSUS_REVISION\", \"earliest_record\": {\"available_at\": \"2026-02-24\", \"confidence\": 0.9, \"input_record_id_roster\": {\"count\": 262, \"roster_hash\": \"e84e87e7d1842172ca1c88954b271f0f655772c14fc88ef5ac5adeeec36e9ddd\"}, \"observed_at\": \"2026-02-24\", \"period\": \"FY2026E\", \"provenance\": \"DERIVED\", \"value\": 27}, \"evidence_roles\": [\"CONSENSUS_HISTORY\"], \"latest_record\": {\"available_at\": \"2026-07-08\", \"confidence\": 0.9, \"input_record_id_roster\": {\"count\": 262, \"roster_hash\": \"e84e87e7d1842172ca1c88954b271f0f655772c14fc88ef5ac5adeeec36e9ddd\"}, \"observed_at\": \"2026-07-08\", \"period\": \"FY2026E\", \"provenance\": \"DERIVED\", \"value\": 180}, \"metric_id\": \"consensus_history_span_days\", \"numeric_distribution\": {\"count\": 21, \"maximum\": 180.0, \"median\": 159.0, \"minimum\": 27.0}, \"record_count\": 21, \"record_kind\": \"CONSENSUS_HISTORY\", \"record_roster_hash\": \"d7f5c00ce255c8c6a0d873818b0f14ce1398cc2cb95311ff14ce345c4b23ea74\", \"source_id_roster\": {\"count\": 3, \"roster_hash\": \"c055e5066c65048f62f3159c704522ed155a434c8f1c429bf1073112834ffd11\"}, \"source_route\": \"COMPANYGUIDE\", \"unit\": \"DAYS\"}, {\"categorical_value_projection\": {\"distinct_value_roster\": {\"count\": 3, \"roster_hash\": \"836125f231cefe7965770a1aae4919bdb0d69e0d6950f6ae4eb896ff7ae099d7\"}, \"full_categorical_values_persisted_outside_prompt\": true, \"observation_count\": 260, \"observation_roster_hash\": \"16c1a34c936e6708a597f99b2c6f1fb386589c97699fe372f7c1e6f7dbf43ed6\"}, \"dataset\": \"CONSENSUS_REVISION\", \"earliest_record\": {\"available_at\": \"2026-01-08\", \"confidence\": 0.82, \"observed_at\": \"2026-01-08\", \"period\": \"2026-01-08\", \"provenance\": \"STRUCTURED_EXTRACTED\", \"value\": \"UNCHANGED\"}, \"evidence_roles\": [\"EPS_REVISION\"], \"latest_record\": {\"available_at\": \"2026-07-08\", \"confidence\": 0.82, \"observed_at\": \"2026-07-08\", \"period\": \"2026-07-08\", \"provenance\": \"STRUCTURED_EXTRACTED\", \"value\": \"DOWN\"}, \"metric_id\": \"eps_revision_direction\", \"record_count\": 260, \"record_kind\": \"STRUCTURED_BROKER_REPORT_DIRECTION\", \"record_roster_hash\": \"5bc458dc8894686d7d669497183ada4835c29fdad289115e104801382456adce\", \"source_id_roster\": {\"count\": 3, \"roster_hash\": \"c055e5066c65048f62f3159c704522ed155a434c8f1c429bf1073112834ffd11\"}, \"source_route\": \"COMPANYGUIDE\", \"unit\": \"DIRECTION\"}, {\"dataset\": \"CONSENSUS_REVISION\", \"earliest_record\": {\"available_at\": \"2026-02-24\", \"confidence\": 0.9, \"input_record_id_roster\": {\"count\": 262, \"roster_hash\": \"e84e87e7d1842172ca1c88954b271f0f655772c14fc88ef5ac5adeeec36e9ddd\"}, \"observed_at\": \"2026-02-24\", \"period\": \"FY2026E\", \"provenance\": \"DERIVED\", \"value\": 11.467067}, \"evidence_roles\": [\"CONSENSUS_HISTORY\", \"EPS_REVISION\"], \"latest_record\": {\"available_at\": \"2026-07-08\", \"confidence\": 0.9, \"input_record_id_roster\": {\"count\": 262, \"roster_hash\": \"e84e87e7d1842172ca1c88954b271f0f655772c14fc88ef5ac5adeeec36e9ddd\"}, \"observed_at\": \"2026-07-08\", \"period\": \"FY2026E\", \"provenance\": \"DERIVED\", \"value\": 177.077545}, \"metric_id\": \"eps_revision_history_pct\", \"numeric_distribution\": {\"count\": 25, \"maximum\": 246.203589, \"median\": 157.465344, \"minimum\": 11.467067}, \"record_count\": 25, \"record_kind\": \"EARNINGS_REVISION\", \"record_roster_hash\": \"af9343696acac9543ce9e07759be0360f0249a861d8c9c56ab6915af010a62c0\", \"source_id_roster\": {\"count\": 3, \"roster_hash\": \"c055e5066c65048f62f3159c704522ed155a434c8f1c429bf1073112834ffd11\"}, \"source_route\": \"COMPANYGUIDE\", \"unit\": \"PERCENT\"}, {\"categorical_value_projection\": {\"distinct_value_roster\": {\"count\": 1, \"roster_hash\": \"49deafa8adeb731f8c2542e890ff41694f7a06456df1a6cfaf389078aba494eb\"}, \"full_categorical_values_persisted_outside_prompt\": true, \"observation_count\": 6, \"observation_roster_hash\": \"e8fc34516fd51477d2f99a0e46ec78fa3eebd4e49ff05119dcf8de6f3f348b62\"}, \"dataset\": \"CONSENSUS_REVISION\", \"earliest_record\": {\"available_at\": \"2026-02-23\", \"confidence\": 0.82, \"observed_at\": \"2026-02-23\", \"period\": \"2026-02-23\", \"provenance\": \"STRUCTURED_EXTRACTED\", \"value\": \"UP\"}, \"evidence_roles\": [\"OPERATING_PROFIT_REVISION\"], \"latest_record\": {\"available_at\": \"2026-07-03\", \"confidence\": 0.82, \"observed_at\": \"2026-07-03\", \"period\": \"2026-07-03\", \"provenance\": \"STRUCTURED_EXTRACTED\", \"value\": \"UP\"}, \"metric_id\": \"operating_profit_revision_direction\", \"record_count\": 6, \"record_kind\": \"STRUCTURED_BROKER_REPORT_DIRECTION\", \"record_roster_hash\": \"fe73bf3e34caed06188dc42a68a06faec4e46643c1863ab816ecc330759ae6c4\", \"source_id_roster\": {\"count\": 2, \"roster_hash\": \"618f19ca1dce8e0ac4d7572c5bb678358912a5db17378edd7af5c35435877ff8\"}, \"source_route\": \"COMPANYGUIDE\", \"unit\": \"DIRECTION\"}], \"semantic_series_count\": 4, \"source_pending\": false}}, \"target_id\": \"005930\", \"uncertainties\": [\"연결 영업이익·영업현금흐름에서 DS 메모리 및 HBM의 기여액이 분리되지 않는다.\", \"메모리 ASP 상승이 출하량·원가·제품 믹스와 결합해 만든 HBM별 FCF는 공시되지 않는다.\", \"구조화 전망치는 추정치이며 2026년 실제 실적이 아니다.\"]}, \"conditional_judge_rules\": {\"empty_support_plane\": {\"condition\": \"allowed_support_fact_ids is empty\", \"required_allowed_range\": [0, 0], \"required_proposed_points\": 0, \"required_support_fact_ids\": []}, \"positive_points_require_support\": \"proposed_points greater than zero requires at least one exact id from allowed_support_fact_ids in support_fact_ids\"}, \"evidence_fact_projection\": {\"advisory_tags_are_not_score_gates\": true, \"allowed_component_coverage\": {\"bottleneck_pricing\": 3, \"capital_allocation\": 3, \"earnings_visibility\": 3, \"eps_fcf_explosion\": 6, \"information_confidence\": 3, \"market_mispricing\": 3, \"valuation_rerating\": 3}, \"as_of_date_coverage\": {\"2026-07-12\": 6}, \"claim_id_roster\": {\"count\": 6, \"roster_hash\": \"dacbb8fbd1285428938531e06ef7b97a05eb8ef53b00fb69624c7d3df9ff5823\"}, \"corroborating_independence_group_roster\": {\"count\": 1, \"roster_hash\": \"f92624313baa0aaca744d69e2eb15bdf7e807a1a80c07fe08f13d2d9613c97c9\"}, \"every_fact_id_preserved\": true, \"every_fact_lineage_accounted_by_count_and_hash\": true, \"fact_count\": 6, \"fact_fields\": [\"fact_row_index\", \"fact_id\", \"subject\", \"business_segment\", \"product_family\", \"economic_mechanism\", \"predicate\", \"value\", \"unit\", \"period\", \"direction\", \"current_lifecycle\", \"confidence\", \"structured_evidence_roles\", \"source_independence_group_index\", \"corroborating_independence_group_count\"], \"fact_roster_hash\": \"3e90dbdd51c35583f70103af7e98656faa8327d457bcd9298503c763082eed9d\", \"facts\": [[0, \"EFACT-3dcbb46fd5653fb3dc5dcd2e\", \"삼성전자 메모리 가동률\", \"DS 메모리\", \"메모리\", \"메모리 생산라인의 100% 가동은 해당 분기의 유휴 공급 여력이 없었음을 보여준다.\", \"MEMORY_LINES_OPERATED_AT_FULL_UTILIZATION\", 100, \"%\", \"2026Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [], 0, 1], [1, \"EFACT-4d411fd1aa7f548298fcb09f\", \"삼성전자 연결회사\", \"연결 전체\", \"연결 전체\", \"연결 유형자산 취득 현금지출\", \"2026년 1분기 유형자산 취득 현금지출을 보고했다\", -17127003, \"KRW million\", \"2026-Q1\", \"COUNTER\", \"CURRENT\", 1.0, [], 0, 1], [2, \"EFACT-aeabc17304171f4fe6cfceb3\", \"삼성전자 연결회사\", \"연결 전체\", \"연결 전체\", \"연결 영업이익 실제치\", \"2026년 1분기 연결 영업이익을 보고했다\", 57232797, \"KRW million\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [], 0, 1], [3, \"EFACT-ccffdfd9c63b55091b78702d\", \"삼성전자 메모리 제품\", \"DS 메모리\", \"메모리\", \"메모리 제품 매출의 실제 수익 전환\", \"2026년 1분기 메모리 제품 매출액을 보고했다\", 74779980, \"KRW million\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 0.99, [], 0, 1], [4, \"EFACT-e20814567df3016b0efadb77\", \"삼성전자 연결회사\", \"연결 전체\", \"연결 전체\", \"연결 영업현금흐름 실제치\", \"2026년 1분기 연결 영업활동현금흐름을 보고했다\", 40274106, \"KRW million\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [], 0, 1], [5, \"EFACT-eea88d392c237374ec65f4b0\", \"삼성전자 메모리 평균판매가격\", \"DS 메모리\", \"메모리\", \"메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.\", \"MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE\", 146, \"%\", \"2026Q1 vs 2025 annual average\", \"POSITIVE\", \"CURRENT\", 1.0, [], 0, 1]], \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"primitive_tag_roster_hash\": \"81c9d951b562c51c133b6ef55e8f74fda2587afccf4018498df30a44e2b46ec7\", \"prompt_projection_is_research_cap\": false, \"question_family_tag_roster_hash\": \"3fafd123e5056e9d580085777290427b9d520f01a77b12bc4f2cfcd14b247827\", \"quote_id_roster\": {\"count\": 6, \"roster_hash\": \"66281db3007aa170a8a3a2449a19e38842052c2892024fbbed2c26fa1acf98ba\"}, \"repeated_lineage_arrays_omitted_from_semantic_rows\": true, \"schema_version\": \"e2r_v5_citable_fact_prompt_projection_v3\", \"score_authority\": false, \"source_id_roster\": {\"count\": 3, \"roster_hash\": \"180e17d08c0591ca89cad5dbac3923eecd27ed8e9c581836e36689639e22303b\"}, \"source_independence_group_dictionary\": [\"OPENDART:opendart\"], \"target_id_coverage\": {\"005930\": 6}}, \"historical_component_anchors\": [{\"anchor_id\": \"CANCH-3d3e727f09221d0fc00e86a6\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"eps_fcf_explosion\", \"confidence\": \"MEDIUM\", \"economic_fact_patterns\": [\"songdaiki_stock_web\"], \"max_points\": 24.0, \"points_lower\": 16.08, \"points_mid\": 17.28, \"points_upper\": 18.48, \"role\": \"POSITIVE\", \"score_band\": \"STRONG\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"CANCH-17745cd4887afd21639e9dd6\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"eps_fcf_explosion\", \"confidence\": \"MEDIUM\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 24.0, \"points_lower\": 10.32, \"points_mid\": 11.52, \"points_upper\": 12.72, \"role\": \"COUNTER\", \"score_band\": \"MEDIUM\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}], \"independent_role_mandate\": [\"CURRENT_ECONOMIC_STRENGTH\", \"POSITIVE_THESIS\", \"DURATION_AND_CASH_CONVERSION\"], \"judge_pass_name\": \"COMPONENT_ANALYST_JUDGE\", \"judge_role\": \"ANALYST\", \"required_judge_output_fields\": [\"allowed_range\", \"anchor_comparisons\", \"counter_fact_ids\", \"disagreements\", \"nearest_anchor_ids\", \"proposed_points\", \"rationale\", \"support_fact_ids\", \"why_not_higher\", \"why_not_lower\"]}",
+  "prompt_hash": "16b472cf2855abb2e4a57d427134b9a7167e80ac1aaa72b18e2650eeb4960ce1",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a63ce99e4dea9aecf5a78773ed31d7270cdc192731f05a010c9485df8c625175",
+  "request_identity": {
+    "output_schema_hash": "e478cb8af05e418fdb8dc1b2be25607f65060241b4f9833ffa2a0403b44923a2",
+    "pass_name": "COMPONENT_ANALYST_JUDGE",
+    "prompt_hash": "16b472cf2855abb2e4a57d427134b9a7167e80ac1aaa72b18e2650eeb4960ce1",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_component_analyst_judge",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

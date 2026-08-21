@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-abd488f4ac64c85393da8005",
+        "rationale": "The full release reports only consolidated companywide second-quarter revenue and operating profit, with quarter-over-quarter and year-over-year changes. It provides no Memory, DRAM, HBM, segment-profit, cash-flow, or product-level attribution, so those totals cannot be recast as evidence for the document-linked memory earnings objective. No distinct objective-linked fact remains in this document.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "b0930beb266f2714ca769f6bf0a2be42709c8b72c87d5c4dc2c380d6785f6b4f",
+  "production_score_authority": false,
+  "prompt_hash": "bc9f98e3a61bbada47e517e667ae678dd8b0a3592c51f572b679b7658be38d0b",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-53ff6c2b64f086f84edb953a2cb45853df20fa041372ff28e59b3408c80ad8ff",
+  "response_id": "COLLABRESP-c0c3e533a3639d1bb0e69b9dc7ffea07bd38a55725ef5a026de1f0a130c774c0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

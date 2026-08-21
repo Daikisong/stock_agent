@@ -1,0 +1,39 @@
+{
+  "output_schema_hash": "e7a733a147d6964e75528742897823ca5094ca593a9f54b8723c700910cfd090",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7580c9d82eaf2c5aadc3b0a0",
+        "rationale": "2026-06-30 SK하이닉스 공식 뉴스룸 원문 전체를 blind로 검토하고 current canonical 228건과 의미 중복을 대조했다. 서남권 400조원 메모리 클러스터와 용인만으로 미래 수요 충족이 어렵다는 설명은 이미 반영된 1,100조원 생산벨트 로드맵, 서남권 400조원 수요·이사회 승인 조건 및 기존 메모리/HBM 공급제약 사실과 같은 경제적 메커니즘이므로 다시 추출하지 않았다. 전국 15GW 및 서남권 1GW AI 데이터센터는 원문이 SK하이닉스가 아니라 SK그룹의 계획으로 명시하며, 000660의 투자액·지분·매출·현금흐름·구매의무를 제시하지 않는다. 따라서 이를 SK하이닉스 직접 CapEx나 HBM 매출·FCF로 귀속하지 않았다. 일반 AI 수요 설명과 산업·지역 기대효과는 현재 eps_fcf_explosion 목적에 인접한 배경이고, 2026-07-12 이후 연관기사 제목도 사용하지 않았다. 이 문서에는 current objective에 직접 연결되는 비중복 material fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "SK그룹의 15GW·서남권 1GW AI 데이터센터 계획에 대해 이 문서는 SK하이닉스의 투자 분담액, 소유지분, 확정 고객계약, 매출 또는 현금흐름 효과를 제공하지 않는다. 이는 해당 경제효과가 없다는 증거가 아니라 000660 직접 귀속 자료가 없는 문서 범위 한계다."
+    ]
+  },
+  "payload_hash": "dab099b028f9630013ea0c8e7f45c07157264c6dc865772ddea31a7fcb26b09b",
+  "production_score_authority": false,
+  "prompt_hash": "3c474476088ba303ebdb96f326a87a5308b1721a392dde236ba0833420e72db6",
+  "provenance": {
+    "agent_id": "hynix_current_leaves",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_current_leaves",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2d9ba28cd98ca20c18827928928a42f9daea75bf5350a5420baf43c262b998b7",
+  "response_id": "COLLABRESP-3eec0a0650ccd5a8383529719444ac55bb233e99c40185ea4df5c891f32ad4f1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0baebb4331a46abc110fce44",
+        "rationale": "현재 fact graph와 중복되는 다음 달 양산 계획·HBM4 공정·공식 최대속도·경쟁사 내용은 제외하고, information_confidence objective에 직접 연결되는 익명 소식통 기반 명명 고객 최종 qualification, 엔비디아 시험 수치, qualification 기준의 열 trade-off, 배치 규모 비교 한계를 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.76,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0baebb4331a46abc110fce44",
+        "economic_mechanism": "복수의 익명 업계 소식통이 삼성전자 HBM4가 엔비디아와 AMD의 최종 qualification을 통과했다고 전해 명명 고객의 평가 진척을 보강한다. 다만 발행사나 고객의 공식 확인이 아니며, 같은 문장의 다음 달 양산 계획은 이후 실제 양산 근거와 중복돼 사실 범위에 포함하지 않는다.",
+        "exact_quote": "According to the sources, Samsung recently passed final qualification tests conducted by Nvidia and AMD and is now preparing to start mass production next month.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명명된 두 AI 가속기 고객의 최종 평가 통과 여부는 HBM4 고객 승인 상태의 정보 신뢰도에 직접 중요하다. 익명 소식통 보도이며 이후 실제 양산·공급 사실이 있어 과거 이정표로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:NVIDIA_AMD:FINAL_QUALIFICATION",
+        "normalized_object": "엔비디아·AMD HBM4 최종 qualification 통과 보도",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-01-26 보도 현재",
+        "predicate": "익명 업계 소식통에 따르면 삼성전자 HBM4가 엔비디아와 AMD의 최종 qualification 테스트를 통과했다",
+        "predicate_family": "HBM4_NVIDIA_AMD_FINAL_QUALIFICATION_REPORT",
+        "primitive_tags": [
+          "HBM4",
+          "NVIDIA",
+          "AMD",
+          "ANONYMOUS_INDUSTRY_SOURCES"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_NVIDIA_AMD_FINAL_QUALIFICATION_REPORT",
+        "question_family_tags": [
+          "HBM4_NVIDIA_AMD_FINAL_QUALIFICATION_REPORT",
+          "HBM4_NAMED_CUSTOMER_QUALIFICATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4의 엔비디아·AMD 최종 qualification",
+        "subject_id": "005930:MEMORY:HBM4:NVIDIA_AMD:FINAL_QUALIFICATION:2026-01",
+        "unit": "qualification status",
+        "value": "final qualification tests passed for Nvidia and AMD"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.73,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0baebb4331a46abc110fce44",
+        "economic_mechanism": "보도된 고객 qualification 기준이 속도 요건은 높이고 열 한계는 완화한 것으로 바뀌었으므로, 통과 결과를 속도와 열 특성이 모두 동시에 개선됐다는 뜻으로 해석할 수 없다. 이는 qualification 증거의 해석 범위를 제한한다.",
+        "exact_quote": "The development comes as leading AI chip customers have reportedly revised their qualification benchmarks, raising speed requirements while easing thermal limits — effectively prioritizing raw performance over operating temperature margins.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "qualification 통과 보도의 의미를 해석할 때 열 한계 완화라는 조건을 함께 봐야 한다. 다만 고객별 기준의 원문·정량 열 한계가 없고 보도 표현이므로 보조 counter로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:QUALIFICATION_BENCHMARK_TRADEOFF",
+        "normalized_object": "HBM4 qualification 속도·열 기준 간 trade-off",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-01-26 보도 현재",
+        "predicate": "주요 AI 칩 고객이 qualification 속도 요구치는 높이고 열 한계는 완화했다고 보도됐다",
+        "predicate_family": "HBM4_QUALIFICATION_BENCHMARK_TRADEOFF",
+        "primitive_tags": [
+          "HBM4",
+          "SPEED_REQUIREMENT",
+          "THERMAL_LIMIT",
+          "REPORTED_BENCHMARK_CHANGE"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_QUALIFICATION_BENCHMARK_TRADEOFF",
+        "question_family_tags": [
+          "HBM4_QUALIFICATION_BENCHMARK_TRADEOFF",
+          "QUALIFICATION_INTERPRETATION_LIMIT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 qualification 판정 기준",
+        "subject_id": "005930:MEMORY:HBM4:QUALIFICATION_BENCHMARK_TRADEOFF:2026-01",
+        "unit": "qualification benchmark change",
+        "value": "higher speed requirements; eased thermal limits"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.74,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0baebb4331a46abc110fce44",
+        "economic_mechanism": "익명을 요구한 업계 전문가에 따르면 삼성전자 HBM4가 엔비디아 qualification 시험에서 10.7Gbps를 기록해 10Gbps 요구치를 충족했다. 이는 공식 최대 동작속도 11.7Gbps와 다른 고객 시험 맥락의 보도 수치이며, 공식 고객 확인이나 계약으로 확대하지 않는다.",
+        "exact_quote": "In the latest qualification tests, Samsung’s HBM4 chips achieved data transfer speeds of 10.7 gigabits per second, meeting Nvidia’s requirement of 10 Gbps, according to an industry expert who requested anonymity.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명명 고객의 요구치와 실제 시험 결과를 함께 제시해 HBM4 qualification 상태의 구체성을 높인다. 다만 익명 전문가 진술이므로 발행사·엔비디아의 공식 인증이나 공급 의무로 보지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:NVIDIA:QUALIFICATION_SPEED",
+        "normalized_object": "엔비디아 HBM4 qualification 시험 10.7Gbps 결과와 10Gbps 요구 충족",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-01-26 보도의 최신 qualification 시험",
+        "predicate": "익명 업계 전문가에 따르면 삼성전자 HBM4가 엔비디아 qualification 시험에서 10.7Gbps로 10Gbps 요구치를 충족했다",
+        "predicate_family": "HBM4_NVIDIA_QUALIFICATION_SPEED_RESULT",
+        "primitive_tags": [
+          "HBM4",
+          "NVIDIA",
+          "10.7_GBPS",
+          "ANONYMOUS_EXPERT"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_NVIDIA_QUALIFICATION_SPEED_RESULT",
+        "question_family_tags": [
+          "HBM4_NVIDIA_QUALIFICATION_SPEED_RESULT",
+          "HBM4_NAMED_CUSTOMER_TEST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4의 엔비디아 qualification 시험 속도",
+        "subject_id": "005930:MEMORY:HBM4:NVIDIA:QUALIFICATION_SPEED:2026-01",
+        "unit": "Gbps",
+        "value": 10.7
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.72,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0baebb4331a46abc110fce44",
+        "economic_mechanism": "보도된 10.7Gbps 결과는 full-scale 시험에서 얻었지만 익명 전문가는 작은 시험 배치가 더 높은 benchmark를 낼 수 있다고 지적했다. 따라서 서로 다른 시험 결과를 비교할 때 배치 규모를 통제하지 않으면 성능 차이를 그대로 제품 차이로 볼 수 없다.",
+        "exact_quote": "The results were obtained under full-scale testing, the expert added, noting that smaller test batches can sometimes produce higher benchmark scores.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "시험 배치 규모가 benchmark에 영향을 줄 수 있다는 설명은 10.7Gbps qualification 수치와 경쟁사 수치의 비교 신뢰도를 직접 제한한다. 익명 전문가의 일반적 방법론 설명이므로 보조 counter로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:QUALIFICATION_BATCH_SIZE_LIMITATION",
+        "normalized_object": "HBM4 qualification benchmark의 배치 규모 비교 한계",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-01-26 보도의 qualification 시험 맥락",
+        "predicate": "보도된 HBM4 시험 결과는 full-scale에서 얻었고 작은 배치는 더 높은 benchmark를 낼 수 있다고 익명 전문가가 설명했다",
+        "predicate_family": "HBM4_QUALIFICATION_BATCH_SIZE_LIMITATION",
+        "primitive_tags": [
+          "HBM4",
+          "FULL_SCALE_TEST",
+          "BATCH_SIZE",
+          "ANONYMOUS_EXPERT"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_QUALIFICATION_BATCH_SIZE_LIMITATION",
+        "question_family_tags": [
+          "HBM4_QUALIFICATION_BATCH_SIZE_LIMITATION",
+          "TEST_METHODOLOGY_LIMITATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 qualification 시험의 배치 규모 조건",
+        "subject_id": "005930:MEMORY:HBM4:QUALIFICATION_BATCH_SIZE_LIMITATION:2026-01",
+        "unit": "test methodology limitation",
+        "value": "full-scale test; smaller batches can produce higher benchmark scores"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d3de8794889e15d6475235900397b1cbf4a362e49e41dc66be700166319c928b",
+  "production_score_authority": false,
+  "prompt_hash": "77ab87c239480035bbbbbd120e07a6a9783b14d0b4166906341a3b9f0e44d5f7",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-431f23807d16a06add65e6523496801656d42eb506b3f1f9b2f69c7ea216d78e",
+  "response_id": "COLLABRESP-351c45975bf746007883f722c493f9bb4283599c53a2a361c9af18bd317c543a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

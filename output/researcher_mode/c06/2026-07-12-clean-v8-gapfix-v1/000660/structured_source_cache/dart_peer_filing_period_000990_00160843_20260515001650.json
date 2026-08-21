@@ -1,0 +1,31 @@
+{
+  "cache_value_hash": "ea784763f2acc2bf4c0118bb03b5225829dd04900c5c9c7d824665ff99a17410",
+  "canonical_url": "https://opendart.fss.or.kr/api/list.json",
+  "content_hash": "59b4797259401f759f23137aaaf265158ea044ce64f99cdd2c85c8cdc80d151b",
+  "payload": {
+    "list": [
+      {
+        "corp_cls": "Y",
+        "corp_code": "00160843",
+        "corp_name": "DB하이텍",
+        "flr_nm": "DB하이텍",
+        "rcept_dt": "20260515",
+        "rcept_no": "20260515001650",
+        "report_nm": "분기보고서 (2026.03)",
+        "rm": "",
+        "stock_code": "000990"
+      }
+    ],
+    "message": "정상",
+    "page_count": 100,
+    "page_no": 1,
+    "status": "000",
+    "total_count": 1,
+    "total_page": 1
+  },
+  "provider_request_id": "HTTP-59b4797259401f759f23",
+  "request_fingerprint": "8d0bf92e02decb5c1166b4ffea8c32d4c208e59a3ca8053288ca37ce32e09d2d",
+  "schema_version": "e2r_v5_current_structured_cache_v2",
+  "status_code": 200,
+  "text": null
+}

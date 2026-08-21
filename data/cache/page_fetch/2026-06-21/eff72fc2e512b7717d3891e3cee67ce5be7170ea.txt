@@ -1,0 +1,436 @@
+양파농장 – Telegram
+양파농장
+언젠간 올 대풍년을 기다리며 씨뿌리는 중입니다
+투자자 유의 사항
+1. 채널에 게재된 내용들은 운영자들의 분석 및 기록용도로 작성하며 외부의 부당한 압력이나 간섭 없이 작성되었음을 확인합니다.
+2. 해당 채널의 콘텐츠는 참고자료로만 활용하시기 바라며 어떠한 경우에도 투자 결과에 대한 법적 책임소재의 증빙자료로 사용될 수 없습니다.
+3. 해당 글은 필자가 습득한 사실에 기초하여 작성됐으나 제시 또는 인용한 수치는 사실과 일치하지 않을 수 있습니다
+양파농장
+언젠간 올 대풍년을 기다리며 씨뿌리는 중입니다
+투자자 유의 사항
+1. 채널에 게재된 내용들은 운영자들의 분석 및 기록용도로 작성하며 외부의 부당한 압력이나 간섭 없이 작성되었음을 확인합니다.
+2. 해당 채널의 콘텐츠는 참고자료로만 활용하시기 바라며 어떠한 경우에도 투자 결과에 대한 법적 책임소재의 증빙자료로 사용될 수 없습니다.
+3. 해당 글은 필자가 습득한 사실에 기초하여 작성됐으나 제시 또는 인용한 수치는 사실과 일치하지 않을 수 있습니다
+양파농장
+@Onionfarmer
+15.4K
+subscribers
+1.6K
+photos
+9
+videos
+12
+files
+1.17K
+links
+언젠간 올 대풍년을 기다리며 씨뿌리는 중입니다
+투자자 유의 사항
+1. 채널에 게재된 내용들은 운영자들의 분석 및 기록용도로 작성하며 외부의 부당한 압력이나 간섭 없이 작성되었음을 확인합니다.
+2. 해당 채널의 콘텐츠는 참고자료로만 활용하시기 바라며 어떠한 경우에도 투자 결과에 대한 법적 책임소재의 증빙자료로 사용될 수 없습니다.
+3. 해당 글은 필자가 습득한 사실에 기초하여 작성됐으나 제시 또는 인용한 수치는 사실과 일치하지 않을 수 있습니다
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+양파농장
+15.4K subscribers
+양파농장
+Forwarded from
+벨루가의 주식 헤엄치기
+251103_SK AI SUMMIT 2025: AI Now & Next - SK그룹 최태원
+https://www.youtube.com/watch?v=_RJzqiJuy6s
+[Key Takeaways]
+(1) AI 인프라 투자가 기하급수적으로 성장하고 있으며, 특히 Inference 수요가 Training 수요를 초과
+(2) GPU뿐 아니라 에너지원 쇼티지/정치적 리스크 등 다양한 공급 병목이 발생하며, 정확한 수요 예측조차 어려운 상황
+(3) SK는 “규모 경쟁 → 효율 경쟁” 전환에 맞춰, 1) 메모리 CAPA 확대, 2) 기술 개선[HBM+NAND]을 도모하며, 동시에
+3) 효율적인 AI 인프라 솔루션을 찾아가는 기업이 될 것
+(4) AI로 "AI"의 병목을 풍러 반도체 생산/운영 효율을 높이고, AWS/OpenAI 등과 협력해 차세대 AI 인프라 혁신을 주도해 나갈 것
+(5) 축사: OpenAI, Amazon
+■ Sam Altman: "OpenAI와 SK가 함께 만들어갈 성과는 우리의 미션 실현을 앞당기며, 이는 우리의 협력이 단순한 비즈니스를 넘어서는 의미"
+■ Andy Jassy[Amazon]: "SK는 AI를 구체적이고 실용적인 방식으로 적용하며 업계를 선도. 울산에서 함께 구축 중인 AWS AI Zone은 고객을 최우선으로 두고, 두 조직이 크게 생각하면 무엇이 가능한 지 잘 보여줌"
+(6) 2024 vs 2025
+■ 2024: SK Hynix ~ NVIDIA ~ TSMC
+■
+2025: SK Group ~ OpenAI ~ Amazon[CSP]
+-
+[Industry]
+(1) 일주일 내내 AI 이야기를 경주에서 하다 옴. 세상의 모든 리소스가 AI에 투입되고 있음
+(2) 기업, 정치, 경제, 군사 및 안보 모든 것에 AI가 점철되어 있음
+(3) 작년에는 AI Tomorrow, AI Together였고, 올해는 바로 "AI Now & Next"
+(4) 첫 번째로 AI 수요에 대한 이야기
+(5) '20년 $230bn에서 올해는 $600bn 정도는 CAPEX가 집행될 것
+(6) OpenAI의 Stargate만해도 $500bn이 넘고, Meta는 '28년까지 $600bn 이상을 투자
+(7) AI Infrastructure 투자는 Linear하지 않고 Exponential
+(8) 첫 번째 근거는 Inference 수요. 이미 Training 수요를 넘어섬
+(9) 답을 스스로 평가하고 다시 생각해 나은 답변을 생성하기 위해, 토큰의 숫자가 기하급수적으로 늘어나고 있음
+(10) 두 번째는 기업들의 AI 도입 확산. 높은 Cost에도 불구하고, 기업들은 AI 도입에 적극적임
+(11) Anthropic한테 물어보니까 그들 매출의 80%가 B2B 수요에서 창출되고 있으며, 300K 고객을 확보했다고 함
+(12) 세 번째는 AI Agent, 네 번째는 Sovereign AI
+(13) 모든 것들이 실시간 연결되는 AI Agent가 확산되고, 기존 기업들뿐만 아니라 국가들이 자신들만의 Sovereign AI를 구축하려는 수요가 강해지고 있음
+-
+[수요-공급]
+(14) 현재 수요 초과 상황을 공급이 메우기 어려운 상황
+(15) 왜 어렵냐? 공급에는 리드타임만 있는 것이 아님
+(16) 지금 병목이 다양하게 생기고 있음
+(17) 얼마 전까지만 해도 병목의 원인은 GPU였음. 물론 지금도 그럼
+(18) 근데, 미래에는 GPU 뿐 아니라 다양한 병목이 생길 것
+(19) 이미 전력 계통과 에너지원이 그럼
+(20) 그리고 우리의 입장에서 '정확한 수요' 자체를 파악할 수가 없는 것이 문제
+(21) 공급 업체들은 리드타임 이외에 정치 문제도 상당히 중요함
+(22) 과연 공장을 어디에 지을 것인가, 얼마를 투자할 것인가 등도 현재 병목을 만들어 내고 있음
+(23) 그래서 우리는 뭘 어떻게 할 것인가?
+(24) 우리는 가장 효율적인 AI 솔루션을 찾아보자는 것이고 이게 미션
+-
+[SK의 솔루션]
+(25) AI는 이제 스케일/규모 경쟁이 아니라 효율 경쟁의 국면으로 가고 있는 상황
+(26) 3가지의 솔루션이 있음
+(27) 첫 번째는 메모리 사용량[=CAPA] 증가 및 활용 영역 확대
+(28) AI에서 현재 메모리 대역폭이 현재의 병목. 이걸 해결하려고 현재는 더 많은 HBM을 넣고 있음
+*요즘 너무 많은 업체들한테 공급 문의가 와서 골머리를 앓고 있음!ㅠㅠ
+(29) 월 900K 공급 요청을 준 OpenAI
+(30) 이게 무슨 의미냐? 하나의 기업이 전세계 공급량의 2배를 달라고 하는 것
+(31) Sam Altman: AI 데이터센터의 설계/구축/운영 과정에서 긴밀한 협력을 통해 거대한 인프라가 하나처럼 만드는 것이 현재 가장 중요
+(32) Sam Altman: 정부-기술리더-산업 3박자가 맞는 것이 대한민국이고, SK그룹과 함께 향후 미래 비즈니스에서 긴밀한 협력을 도모할 것
+(33) 결국 병목을 극복하기 위해는 첫 번째가 CAPA 증설. M15X는 원래 계획에도 없었던 것인데, 더 계획을 앞당김
+(34) 용인 클러스터는 팹 1개에 청주 팹 6개 규모임. 전체 규모는 청주 24개 팹 규모라고 보면 됨
+(35) 두 번째는 기술 개선. 초고용량 메모리 칩을 개발하거나 상대적으로 저렴한 NAND 컨셉을 가져갈 것
+(36) 그리고 마지막으로 AI DC 솔루션 전개할 것. 우리는 칩 레벨 디자인부터 AI DC '운영'까지 나아가 보고자 함
+(37) 바로 AI를 AI로 푸는 것. 우리의 생산으로는 커버가 안되고 있는 상황. 반도체를 생산 할 때나 데이터센터 운영에도 AI를 적용시킬 것. NVIDIA의 Omniverse 등을 활용할 계획
+(38) Andy Jassy: AI는 인터넷 이후 가장 큰 기술 변화. AI 스택 전반에서의 혁신을 주도하기 위해, 누구나 실용적으로 쓸 수 있게 AI를 만드는 것이 중요
+(39) Andy Jassy: SK는 생성형 AI를 구체적이고, 실질적인 방식으로 적용함에 있어 업계를 선도하고 있음
+(40) Andy Jassy: AWS의 AI Agent와 SK의 산업 전문성이 결합되면, 네트워크 운영부터 고객 참여까지 모든 것을 혁신할 수 있을 것
+(41) 우리는 미래의 AI Infrastructure 구조를 찾아가는 기업
+(42) 우리는 고객/파트너와 '경쟁'하지 않음. '협력'하는 것이 우리의 원칙
+❤
+9
+🔥
+1
+1.22K
+views
+02:50
+양파농장
+Forwarded from
+벨루가의 주식 헤엄치기
+251103_SK AI SUMMIT 2025: AI Now & Next - SK하이닉스 곽노정
+https://www.youtube.com/watch?v=_RJzqiJuy6s
+[Key Takeaways]
+(1) SK하이닉스는 단순 메모리 제품 공급 업체가 아니라,
+고객의 AI 병목/문제를 해결하는 "Full Stack AI Memory Creator"로 진화 중
+(2) 우리는
+Memory-Centric Computing 구조를 이미 실현
+하고 있으며, 메모리-연산을 융합하는 선도적인 포지셔닝을 지속
+(3) 향후 1) Custom HBM, 2) AI-D, 3) AI-N를 통해 계속해서 메모리 시장 혁신을 주도해 나갈 것
+-
+[Contents]
+(1) SK하이닉스는 글로벌 메모리 시장 점유율 1위에 등극
+(2) AI 시대의 본격화로 데이터 생성량이 폭증하면서 메모리 반도체의 역할이 핵심 인프라로 부상하고 있음
+(3) 그러나 연산 성능 대비 메모리 접근 속도의 격차가 커지는 "Memory Wall" 문제가 더 심화되고 있음
+(4) 우리는 이를 해결하기 위해 단순 공급자를 넘어 "Full Stack AI Memory Creator"가 될 것
+(5) 목표는 고객과 AI 생태계 전체가 직면한 문제를 "공동으로 해결하는 혁신 파트너"가 되는 것임
+(6) 이를 위해, 1) 고객 맞춤형[Customized] 제품, 2) Full Stack 협력, 3) AI 친화적 메모리 구조 혁신을 추진해 나갈 것
+(7) 주요 전략 중 하나는 Custom HBM을 제공해 GPU/ASIC에 최적화된 맞춤형 고대역폭 메모리 제공할 것
+(8) Custom HBM은 1) GPU 기능 일부 통합, 2) 전력 효율 개선, 3) TCO 절감 효과를 목표로 함
+(9) 두 번째 축은 AI-D[AI DRAM]: 초고속/초대용량 DRAM 기술로 AI 학습 데이터 폭증에 대응하는 것
+(10) AI-D는 1) 공정 미세화, 2) 패키징 적층 기술을 결합해 성능과 용량을 동시에 확장함
+(11) 세 번째는 AI-N[AI AND]: 고성능/대용량 스토리지 솔루션으로 AI 서비스 효율 극대화
+(12) AI-N은 대규모 파라미터 모델의 데이터 저장+전송 효율을 향상시키는 차세대 SSD 아키텍처 기반
+(13) 우리는 "메모리 중심 AI 컴퓨팅[Memory-Centric Computing]" 구조를 실현 중
+(14) 여기에는 메모리와 연산을 융합하는 PIM[Processing-in-Memory], CXL 인터페이스 등도 포함
+(15) 글로벌 협력 측면에서는 NVIDIA/OpenAI/TSMC/Schneider Electric/NAVER 등과 파트너십 강화
+(16) NVIDIA와는 HBM3E/HBM4 최적화 및 차세대 AI GPU 통합 기술 협력을 진행 중
+(17) OpenAI와는 AI 워크로드 맞춤형 메모리 구조 공동 설계 논의가 진행되고 있음
+(19) 최종적으로, 우리는 AI 생태계 전반의 성능/효율/지속가능성 혁신의 중심 기업으로 자리매김할 것
+❤
+2
+🔥
+1
+1.24K
+views
+02:50
+양파농장
+Forwarded from
+[신한 리서치본부] 유틸리티/신에너지
+#유틸리티
+#슈퍼사이클
+#자본지출
+#데이터센터
+#미국
+<AEP 자본 지출 계획 33% 증가, 720억 달러로 '유틸리티 슈퍼 사이클' 진입>
+**American Electric Power(AEP)**가 데이터 센터와 산업 부문의 급증하는 수요에 대응하기 위해 향후 5년간 자본 지출 계획을 이전 대비 33% 증가한 720억 달러로 상향했음
+이는 전력 산업의 '투자 슈퍼 사이클' 진입을 보여주며, AEP의 피크 부하가 2030년까지 76% 증가한 65GW에 이를 것으로 예상한 데 따른 것임
+AEP는 데이터 센터 및 대규모 부하와 전기 서비스 계약 또는 의향서를 맺은 고객이 28GW에 달하며, 이 중 **80%**가 Google, AWS, Meta 같은 하이퍼스케일러 기업임
+회사는 765kV급 송전망을 2,100마일(약 3,380km) 보유하고 있어, 데이터 센터 입지 선정에 경쟁 우위를 제공하고 있음
+AEP는 이러한 대규모 투자에도 불구하고 요금 인상률을 향후 5년간 **연평균 3.5%**로 제한할 수 있을 것으로 예상하며, 대규모 부하에 대한 비용을 상업 및 산업 고객에게 공정하게 배분하는 요금제를 통해 기존 고객을 보호하려 함
+https://www.utilitydive.com/news/aep-data-centers-rates-earnings/804228/?utm_source=Sailthru&utm_medium=email&utm_campaign=Issue:%202025-10-30%20Utility%20Dive%20Newsletter%20%5Bissue:78354%5D&utm_term=Utility%20Dive
+Utility Dive
+AEP capital spending plan surges 33%, to $72B, in utility ‘super-cycle’
+Even with the increasing spending, American Electric Power expects it can limit residential rate hikes to 3.5% a year over the next five years, company officials said during an earnings call.
+❤
+1
+1.5K
+views
+07:25
+양파농장
+Forwarded from
+루팡
+알파벳, AI 확장을 위한 최소 30억 유로 규모의 채권 발행 추진
+알파벳(Alphabet Inc.)이 올해 들어 두 번째로 유럽 채권 시장에 복귀한다.
+이번 다중 트랜치(multi-tranche) 채권 발행을 통해
+인공지능(AI)과 클라우드 인프라에 대한 사상 최대 규모의 자본 지출(capital spending)을 지원하기 위한 자금을 조달할 예정이다.
+익명을 요구한 소식통에 따르면,
+이 기술 대기업은
+만기 3년에서 39년에 이르는 6종의 유로화 표시 벤치마크 채권을 마케팅 중이며,
+총 발행 규모는 최소 30억 유로(약 35억 달러)에 이를 것으로 예상된다.
+https://www.bloomberg.com/news/articles/2025-11-03/alphabet-to-sell-at-least-3-billion-bonds-to-fund-ai-expansion
+Bloomberg.com
+Alphabet to Sell at Least €3 Billion Bonds to Fund AI Expansion
+Alphabet Inc. sold $17.5 billion of bonds in the US, after issuing €6.5 billion ($7.48 billion) of notes in Europe, adding to a wave of borrowing from technology companies as they invest aggressively in artificial intelligence.
+❤
+1
+1.02K
+views
+08:51
+양파농장
+Forwarded from
+연수르 해외주식
+☁️
+Dodge Momentum Index(DMI) 9월 데이터
+: AI 데이터센터 효과 본격화
+채널 운영 초반에 트래킹하던 DMI를 오랜만에 체크했더니 기울기가 말도 안되는 수준으로 가팔라져 있네요. 최근 Caterpillar 신고가 랠리가 단순히 엔진 모멘텀만으로 나왔던 것은 아니었던 것 같습니다.
+[Dodge Momentum Index]
+미국 비주택건설지출 선행지표인 Dodge Momentum Index는
+9월 MoM으로 3% 상승하여 8월 +5%, 7월 +21%에 이어 강력한 상승세를 이어감
+.
+-> 22년 말 ~ 23년 초반부와 24년 하순에 Dodge Momentum Index가 역사적 고점을 경신하면서 미국 건설기계 섹터가 실적/수주 측면에서 강력한 모멘텀을 받은 바가 있음.
+[Dodge Construction Network Comments
+]
+- "9월 내내 데이터 센터, 의료 및 공공 건물에 대한 계획 추진력은 확고했으며
+2027년 초에 더 강력한 건설 지출과 관련이 있을 것
+입니다."
+- "오랜 불확실성의 기간 후에 소유자와 개발자는 프로젝트를 계획으로 진행하고 있지만, 활동은 앞으로 몇 달 안에 정상화될 것으로 예상됩니다."
+- 가장 큰 상업 프로젝트로는 일리노이 주 요크빌에 있는
+4억 4천만 달러짜리 CyrusOne 데이터 센터 캠퍼스
+, 앨라배마 주 몽고메리에 있는
+3억 8400만 달러짜리 메타 데이터 센터(2단계)
+, 사우스다코타주 브랜든에 있는
+3억 달러짜리 Gemini 데이터 센터(500MW)
+가 포함되었습니다.
+Please open Telegram to view this post
+VIEW IN TELEGRAM
+966
+views
+09:37
+양파농장
+Forwarded from
+[삼성 이영진] 글로벌 AI/SW
+오픈AI-AWS 전략적 파트너십 발표
+: 7년에 걸쳐 총 380억 달러 규모. 오픈AI의 차세대 프론티어 모델 학습 및 추론 인프라 확대 목적
+: AWS는 엔비디아 GPU 수십만 개로 구성된 컴퓨트 자원 제공. 수천만 개 규모의 CPU 확장 인프라 옵션도 제공
+: Amazon EC2 UltraServer 아키텍처 기반으로 초저지연, 대규모 병렬 처리 지원
+: 26년 말까지 모든 용량 배치 완료. 27년 이후로도 지속적 확장 가능
+https://openai.com/index/aws-and-openai-partnership/
+OpenAI
+AWS and OpenAI announce multi-year strategic partnership
+OpenAI and AWS have entered a multi-year, $38 billion partnership to scale advanced AI workloads. AWS will provide world-class infrastructure and compute capacity to power OpenAI’s next generation of models.
+1.09K
+views
+14:24
+양파농장
+Forwarded from
+루팡
+IREN, Microsoft와 97억 달러 규모의 AI 클라우드 계약 체결 (장전 +20%)
+IREN은 Microsoft와 다년(5년) GPU 클라우드 서비스 계약을 체결했다고 발표했다.
+이번 계약에 따라
+IREN은 NVIDIA GB300 GPU를 Microsoft에 제공하게 되며, 계약 총액은 약 97억 달러에 달한다. 이 중 20%는 선지급(prepayment) 형태로 이뤄진다.
+또한,
+IREN은 Dell Technologies와 약 58억 달러 규모의 GPU 및 관련 장비 구매 계약을 체결
+했다.
+GPU는 2026년까지 단계적으로 텍사스 차일드리스(Childress) 750MW 캠퍼스에 배치될 예정이며,
+총 200MW 규모의 핵심 IT 부하(critical IT load)를 지원하는 신규 liquid-cooled 데이터센터(Horizon 1~4)에 투입된다.
+IREN은 이번 계약과 관련된 자본 지출을 보유 현금, 고객 선지급금, 영업현금흐름, 추가 자금조달 수단을 통해 충당할 계획이다.
+Daniel Roberts, IREN 공동창업자 겸 공동 CEO 발언
+“
+Microsoft와의 이번 역사적인 파트너십은 IREN의 수직 통합형 AI 클라우드 플랫폼의 강점과 확장성을 입증하는 것입니다.
+이번 계약은 IREN이 신뢰받는 AI 클라우드 서비스 제공자로서의 위상을 공고히 할 뿐 아니라,
+글로벌 하이퍼스케일
+러(hyperscaler) 고객군으로의 진입을 의미합니다.
+IREN은 북미 전역에 확보한 3GW 규모의 전력 포트폴리오를 기반으로 대규모 GPU 배치를 지속적으로 확장해 나갈 것
+이며,
+이를 통해
+선도적인 AI 클라우드 서비스 기업으로서의 입지를 더욱 강화할 것
+입니다.”
+Jonathan Tinter, Microsoft 비즈니스 개발 및 벤처 부문 사장 발언
+“
+Microsoft는 IREN과 함께 고객을 위한 최첨단 AI 인프라를 구축하고 있습니다.
+데이터센터부터 GPU 스택까지 완전히 통합된 AI 클라우드를 구축·운영하는 IREN의 전문성과
+확보된 전력 용량은 Microsoft에 매우 전략적인 가치가 있습니다.
+이번 협업은 양사 모두와 고객에게 새로운 성장 기회를 열어줄 것입니다.”
+https://www.globenewswire.com/news-release/2025/11/03/3178993/0/en/IREN-Secures-9-7bn-AI-Cloud-Contract-with-Microsoft.html
+GlobeNewswire News Room
+IREN Secures $9.7bn AI Cloud Contract with Microsoft
+NEW YORK, Nov. 03, 2025 (GLOBE NEWSWIRE) -- IREN Limited (NASDAQ: IREN) (“IREN”) today announced it has signed a multi-year GPU cloud services contract...
+❤
+1
+600
+views
+14:25
+양파농장
+Forwarded from
+딘스티커 Dean's Ticker
+사이퍼마이닝, AWS와 빅딜 체결...+20% 급등
+$CIFR
+고성능컴퓨팅 인프라 호스팅 기업 (네오클라우드)
+3Q FY25 Results
+= 매출 $73m (est. $77m)
+= 순이익 $41m (est. $39m)
+= AI호스팅 수주잔고 $8.5b
+= AWS와 15년 $5.5b 신규계약(300MW)
+= 총 데이터센터 용량 3.2GW (Prev. 2.6GW)
+= 텍사스서부 1GW 데이터센터 개발 착수
+= 전환사채 $1.3b 발행
+CEO 曰 지난 9월 10년 $3b 짜리 Google·Fluidstack 거래(168MW)에 이어 Tier 1 하이퍼스케일러인 AWS와의 첫 직접 리스 계약을 성사시키며 HPC 분야에서의 신뢰도를 확고히 했음.
+❤
+2
+1.17K
+views
+14:27
+양파농장
+Forwarded from
+에테르의 일본&미국 리서치
+(
+Aether
+)
+골드만삭스 코멘트
+메모리: Nanya Tech +3.4%, Phison +4.2%, Winbond +4.4% 상승. 이는 삼성이 DDR5 제품에 대한 견적 제공(quotes)을 다시 중단한 데 따른 것임. 현재의 메모리 부족(crunch) 현상은 AI 추론(inference) 수요의 폭발적인 성장으로 인해 발생하고 있으며, HBM(고대역폭 메모리), 낸드 플래시, HDD(하드 드라이브) 모두에 동시에 영향을 미치고 있음.
+❤
+1
+👍
+1
+🔥
+1
+1.3K
+views
+14:27
+양파농장
+Forwarded from
+오타니 만다라트 투자
+Coreweave, Nebius에 이어 IREN까지 계약
+Nebius까지는 그러려니 했던게 AI 클라우드 운영 능력이 있었기 때문
+근데 IREN은 거의 없고 이제 S/W 스택을 쌓는 수준인데 벌써 9.7B의 계약이 나와버렸다.
+진짜 네오클라우드도 숏티지 콜로케이션도 숏티지인것을 보여주는 상징적 뉴스라고 생각
+얼마나 빨리 RPO를 실제 수익화 하고 그것을 재투자하냐 이 사이클을 빨리 돌리는 기업이 승자가 될 것
+❤
+6
+1.37K
+views
+14:28
+양파농장
+Forwarded from
+에테르의 일본&미국 리서치
+(
+Aether
+)
+골드만삭스) 미디어텍 (2454) 등급 하향 (D/G): Bruce 애널리스트는 미디어텍(MediaTek)에 대한 투자의견을 '매수(Buy)'에서 '중립(N)'으로 하향 조정합니다. 이는 미디어텍이 2027년 개편(revamp)에 앞서 2026년에 수익성 하락을 겪을 것으로 보이기 때문입니다.
+당사는 이제 매출 총이익률(GM)/영업이익률(OpM)이 2026년까지 더욱 하락세를 보일 것으로 예상하며, 그 근거는 다음과 같습니다:
+1) 선단(leading-edge) 파운드리 비용 상승
+2) 미래 주요 성장 동력들의 마진 희석(margin-dilutive) 효과
+3) 제품 로드맵이 2nm 및 그 이상으로 이전함에 따른 R&D 비용 증가
+4) 제한된 영업 레버리지(operating leverage) 하에서의 AI ASIC 사업 초기 증설(ramp up)
+경영진이 ASIC 기여도에 대해 긍정적으로 언급(26 회계연도 10억 달러, 27 회계연도 수십억 달러, 28 회계연도부터 두 번째 고객 기여 시작)한 것은 단기적으로 주가를 지지할 수 있습니다.
+그러나 당사는 26/27 회계연도 (실적이) 더 부진하고 ASIC이 본격적으로 증설되기 전에 매출 총이익률/영업이익률이 더 큰 타격을 입을 가능성이 높기 때문에, (주가가) 강세를 보일 때 비중을 축소(trim into strength)할 것을 제안합니다.
+1.27K
+views
+14:41
+양파농장
+Forwarded from
+딘스티커 Dean's Ticker
+AI서버랙 전력모듈 2027년까지 2배 증가 - Bernstein
+GB300 NVL72이 배터리백업유닛(BBU)을 더 많이 채택하면서 랙 내부 전자부품 중 전력모듈 비중이 GB200 대비 약 15% 증가. 차세대 베라루빈(VR)과 NVL144의 경우 전력모듈의 비중이 3배 늘어날 것으로 예상. 특히 NVL576 랙부터 800V HVDC(고압직류)로 전환 시 캐퍼시터, e-퓨즈 등 전력모듈 종류가 더 늘어나 7.6배까지 확장될 수 있음. 번스타인은 AI서버랙 내부 전력부품의 총유효시장(TAM) 규모가 2025년 $4.0b → 2027년 $8.0b로 2배 증가 전망
+> 랙당 전력모듈 가격
+= GB200 NVL72, $40,000
+= GB300 NVL72, $46,000 (x1.2)
+= VR200 NVL144, $78,000 (x3.0)
+= VR200 NVL576, $302,000 (x7.6)
+941
+views
+14:42
+양파농장
+Forwarded from
+딘스티커 Dean's Ticker
+베일리기포드 3Q25 신규매수 종목 - SEC 13 filing
+성장주 펀드로 유명한 자산운용사 ($135b 규모)
+= 어도비 $ADBE
+= 알리바바 $BABA
+= 암 홀딩스 $ARM
+= 바이두 $BIDU
+= 비원 메디슨
+$ONC
+｜제약(혈액암)
+= 벤틀리 시스템즈
+$BSY
+｜디지털트윈SW
+= 코인글로벌 $COIN
+= EQT $EQT
+= 피그마 $FIG
+= 하트플로우
+$HRFL
+｜의료SW(심혈관)
+= 아이렌 $IREN
+= 나이프리버
+$KNF
+｜건설자재
+= 크라토스 $KTOS
+= 모토롤라 $MSI
+= 넥스트래커 $NXT
+= 큐엑스오
+$QXO
+｜건설자재
+= 유니버설 테크니컬 인스티튜트
+$UTI
+｜직업기술교육(용접 등)
+= WSN홀딩스
+$WNS
+｜기업업무아웃소싱
+밑줄친 건 처음 들어보는 종목들
+❤
+2
+1.4K
+views
+14:42
+양파농장
+Forwarded from
+서화백의 그림놀이
+🚀
+$FN | Fabrinet 2026회계연도 1분기 실적 하이라이트
+🔹
+매출: 9억7,810만 달러 (추정 9억3,360만 달러)
+🟢
+; 전년 대비 +22%
+🔹
+조정 EPS: 2.92달러 (추정 2.82달러)
+🟢
+; 전년 대비 +22%
+가이던스:
+🔹
+2분기 매출: 10.5억–11.0억 달러 (추정 9억7,960만 달러)
+🟢
+🔹
+2분기 EPS: 3.15–3.30달러 (추정 2.98달러)
+🟢
+🔸
+“가이던스를 상회한 사상 최대 분기 매출로 뛰어난 1분기를 기록했습니다. 강한 텔레콤 실적, 초기 고성능컴퓨팅(HPC) 기여, 그리고 예상보다 작았던 데이터컴 감소가 성과를 이끌었습니다.” – CEO
+1.4K
+views
+23:26
+양파농장
+https://m.blog.naver.com/onion_asset/224064023915
+NAVER
+AI : 전력이 급하다 못해 최우선 과제로
+간밤에 AI의 업황과 관련하여 상징적인 뉴스 3개가 거의 동시에 발표됐다 하나는 IREN과 마이크로소...
+❤
+9
+1.88K
+views
+01:26

@@ -1,0 +1,32 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "직전 supervisor는 reasonable_positive_routes_remaining=false로 판정했고, current prompt에는 기존 NH·미래에셋 exact archive 경로와 다른 새 verified document identity가 없다. 따라서 이미 실행한 literal query, 동의어 변형, 동일 locator를 반복하지 않는다.",
+      "빈 suggested_queries는 공개정보의 부재나 semantic saturation을 증명하지 않으며 score·Stage 권한도 없다. 현재 next action은 새 검색이 아니라 earnings_visibility, bottleneck_pricing, capital_allocation memo를 기존 current facts와 counter로 semantic rewrite한 뒤 independent judges를 다시 실행하는 것이다."
+    ]
+  },
+  "payload_hash": "90438a8063d27620269fc5e18c1d1d178feb2ca8fe2bc2cc0dd3567c906a220e",
+  "production_score_authority": false,
+  "prompt_hash": "bafcf2073de6bbbc1fe4a33e8c1103b32e6171f5f40a95fabc0ec6b2082601b2",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-167c1a0f226ef7aebfa8a415b47746c511380877382b82801c0a9cfcc61acf69",
+  "response_id": "COLLABRESP-068d2203300d7778c179ed6f6abe5cf40fd3ba5ebe92b2869cf21b03369867b0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

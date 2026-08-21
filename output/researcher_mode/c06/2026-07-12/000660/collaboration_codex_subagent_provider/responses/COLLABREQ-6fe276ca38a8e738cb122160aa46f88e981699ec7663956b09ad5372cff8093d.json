@@ -1,0 +1,34 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "Semantic retry attempt 1의 직전 honest-empty 응답, 39개 executed query, 59개 failure ledger를 함께 검토했다. 발행사 실적·IR·공시, NVIDIA 공식 자료, broker 원문 복구, KIND 공급계약, AMD 및 Broadcom literal route와 의미가 겹치는 query는 다시 제안하지 않는다.",
+      "남은 structured gap은 valuation_rerating의 DURABLE_VISIBILITY다. 해소에는 발행사 또는 고객사 공식 원문에서 SK하이닉스 HBM의 미래 기간과 binding capacity·물량 또는 가격 체계, 취소·위약·선수금 같은 구속 조건이 직접 확인돼야 하며, 공급 논의나 broker LTA 전망은 이를 대신하지 못한다.",
+      "이번 exact retry prompt에는 직전 응답 이후 새로 검증된 고객사 문서 identity, 파일명, 문서일자 또는 아직 실행하지 않은 official document class가 추가되지 않았다. 따라서 특정 고객·플랫폼·계약을 추정해 만들거나 기존 query의 표현만 바꾸지 않고 suggested_queries를 비운다.",
+      "검색 provider 오류, 무결과, CUSTOMER_OFFICIAL accepted lineage 부재는 source absence의 증거가 아니다. 이번 결과는 fixed round 종료나 점수 판단이 아니라 현재 prompt에서 의미상 신규이고 실행 가능한 검증 경로를 만들 수 없다는 PENDING 상태다."
+    ]
+  },
+  "payload_hash": "282a68fc4350ac4be2fd1fd5a2e47a137b89d61d253f80b6ba10524523a727e9",
+  "production_score_authority": false,
+  "prompt_hash": "269e56d59e5310a4af43aa02f10bd21a6c1d8f7b906161a4bea356b4a4c32894",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6fe276ca38a8e738cb122160aa46f88e981699ec7663956b09ad5372cff8093d",
+  "response_id": "COLLABRESP-8e3a697481efeb6c055a4e1963f9bf353a7ac510d19dd7c07f9023e6ac0a6b8e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

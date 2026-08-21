@@ -1,0 +1,83 @@
+SK hynix Begins Volume Production of the World’s First 12-Layer HBM3E
+FACT
+PRESS
+TECH&AI
+STORY
+IR
+Select Page
+English
+Chinese(中文)
+Korean(한국어)
+FACT
+PRESS
+TECH&AI
+STORY
+IR
+ENG
+中文
+KOR
+#AI Memory#CXL#DRAM#eSSD#HBM3E#HBM4#NAND
+PRESS사용안함
+SK hynix Begins Volume Production of the World’s First 12-Layer HBM3E
+September 26, 2024
+Share
+News Highlights
+The company plans to supply the highest-performing, highest-capacity 12-layer HBM3E to customers by the end of the year
+DRAM chips made 40% thinner to increase capacity by 50% at the same thickness as the previous 8-layer product
+The company to continue HBM’s success with outstanding product performance and competitiveness
+Seoul, September 26, 2024
+SK hynix Inc. (or “the company”, www.skhynix.com) announced today that it has begun mass production of the world’s first 12-layer HBM3E product with 36GB1, the largest capacity of existing HBM2 to date.
+1Previously, the maximum capacity of HBM3E was 24GB from eight vertically stacked 3GB DRAM chips.
+2HBM (High Bandwidth Memory): This high-value, high-performance memory vertically interconnects multiple DRAM chips and dramatically increases data processing speed in comparison to traditional DRAM products. HBM3E is the extended version of HBM3, the fourth generation product that succeeds the previous generations of HBM, HBM2 and HBM2E.
+The company plans to supply mass-produced products to customers within the year, proving its overwhelming technology once again six months after delivering the HBM3E 8-layer product to customers for the first time in the industry in March this year.
+SK hynix is the only company in the world that has developed and supplied the entire HBM lineup from the first generation (HBM1) to the fifth generation (HBM3E), since releasing the world’s first HBM in 2013. The company plans to continue its leadership in the AI memory market, addressing the growing needs of AI companies by being the first in the industry to mass-produce the 12-layer HBM3E.
+According to the company, the 12-layer HBM3E product meets the world’s highest standards in all areas that are essential for AI memory including speed, capacity and stability. SK hynix has increased the speed of memory operations to 9.6 Gbps, the highest memory speed available today. If ‘Llama 3 70B’3, a Large Language Model (LLM), is driven by a single GPU equipped with four HBM3E products, it can read 70 billion total parameters 35 times within a second.
+3Llama 3: Open-source LLM released by Meta in April 2024, with 3 sizes in total: 8B (Billion), 70B, and 400B.
+SK hynix has increased the capacity by 50% by stacking 12 layers of 3GB DRAM chips at the same thickness as the previous eight-layer product. To achieve this, the company made each DRAM chip 40% thinner than before and stacked vertically using TSV4 technology.
+The company also solved structural issues that arise from stacking thinner chips higher by applying its core technology, the Advanced MR-MUF5 process. This allows to provide 10% higher heat dissipation performance compared to the previous generation, and secure the stability and reliability of the product through enhanced warpage controlling.
+4TSV (Through Silicon Via): This advanced packaging technology links upper and lower chips with an electrode that vertically passes through thousands of fine holes on DRAM chips.
+5MR-MUF (Mass Reflow Molded Underfill): The process of stacking semiconductor chips, injecting liquid protective materials between them to protect the circuit between chips, and hardening them. The process has proved to be more efficient and effective for heat dissipation, compared with the method of laying film-type materials for each chip stack. SK hynix’s advanced MR-MUF technology is critical to securing a stable HBM mass production as it provides good warpage control and reduces the pressure on the chips being stacked.
+“SK hynix has once again broken through technological limits demonstrating our industry leadership in AI memory,” said Justin Kim, President (Head of AI Infra) at SK hynix. “We will continue our position as the No.1 global AI memory provider as we steadily prepare next-generation memory products to overcome the challenges of the AI era.”
+About SK hynix Inc.
+SK hynix Inc., headquartered in Korea, is the world’s top-tier semiconductor supplier offering Dynamic Random Access Memory chips (“DRAM”), flash memory chips (“NAND flash”), and CMOS Image Sensors (“CIS”) for a wide range of distinguished customers globally. The company’s shares are traded on the Korea Exchange, and the Global Depository shares are listed on the Luxembourg Stock Exchange. Further information about SK hynix is available at www.skhynix.com, news.skhynix.com.
+Media Contact
+SK hynix Inc.
+Global Public Relations
+Technical Leader
+Sooyeon Lee
+E-Mail: global_newsroom@skhynix.com
+Technical Leader
+Kanga Kong
+E-Mail: global_newsroom@skhynix.com
+Tag
+#TSV#Advanced MR-MUF#HBM3E#AI Memory#12-layer HBM3E
+Share
+Related Posts
+FACT
+SK hynix CEO Kwak Noh-Jung’s Commemorative Remarks at the Nasdaq Opening Bell Ceremony in the U.S.
+July 10, 2026
+PRESS
+SK hynix Lists ADRs on NASDAQ, Elevating Global Status at the Heart of Capital Markets
+July 10, 2026
+TECH&AI
+From HBM to eSSD: How SK hynix is charting the future of full-stack memory
+July 8, 2026
+TECH&AI
+Why advanced memory matters in the AI infrastructure era
+July 3, 2026
+FACT
+SK hynix Announces Investment Plan for the Chungcheong Region
+July 2, 2026
+FACT
+SK hynix Announces Investment Plan for Southwestern Region
+June 30, 2026
+Share article
+Search for:
+Search for:
+Get the latest updates from SK hynix
+Subscribe
+Contact Us
+SK hynix.com
+Careers
+Terms of Use
+COPYRIGHT © SK HYNIX INC. ALL RIGHTS RESERVED.

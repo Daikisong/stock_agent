@@ -1,0 +1,63 @@
+{
+  "output_schema_hash": "46789d39fa9ccf9c76e85fe03fc8cb03f702e6b8e597c0eec7a595adf7da4d16",
+  "payload": {
+    "allowed_range": [
+      13.2,
+      16.5
+    ],
+    "anchor_comparisons": [
+      "The positive ordinal anchor's 18.05-19.0 band represents a near-maximal durable pricing bottleneck. Current sold-out HBM4 capacity, stable yield and premium high-speed product support the same direction, but missing stage-specific capacity and contract economics justify a lower band.",
+      "The counter anchor's 4.48-6.38 band is too low for current facts because issuer-stated sold-out HBM4 capacity and demand above planned supply provide direct bottleneck evidence rather than an unsupported component value."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0b6b02299ea60f931cf17c4e",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-cc2cfc3b24f0987278efc0b7",
+      "EFACT-f05a97edeb8f85d49353381e"
+    ],
+    "disagreements": [
+      "I place more weight than the memo midpoint on the combination of sold-out HBM4 capacity, stable yield and a direct product price premium.",
+      "I do not treat conventional DRAM price inflation or memory-wide time utilization as HBM-only capacity evidence."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "proposed_points": 15.0,
+    "rationale": "HBM4 planned capacity is sold out, stable 1c yield is reported and a faster HBM4 specification carries a price premium. Tight inventory, full memory-line time utilization and record-low supply fulfillment reinforce scarce supply, while custom front-end design and advanced packaging explain why capital spending does not immediately remove the constraint. The strength is material, but several supporting figures are memory-wide rather than HBM-stage-specific.",
+    "support_fact_ids": [
+      "EFACT-13d6da3b116a9a0ad8043f62",
+      "EFACT-1df441a716b0204f7b107e70",
+      "EFACT-3c095c9436a1460d04797e97",
+      "EFACT-477c6cb45b164685a2a345e8",
+      "EFACT-4e0d88dc056c9e8dcd45ea47",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-a2243488e8b8f0197fd8bd56",
+      "EFACT-b676fc3afacb1117c1ba65be",
+      "EFACT-fd86be3f3b91aa151f046cfb"
+    ],
+    "why_not_higher": "A higher value requires HBM-specific wafer, stacking and packaging capacity, stage yields, backlog duration, customer allocation and realized ASP or cash-margin disclosure.",
+    "why_not_lower": "A lower value would underweight the direct sold-out HBM4 capacity statement, stable yield, high-speed price premium and issuer expectation that demand remains above planned supply."
+  },
+  "payload_hash": "92813e960425d49899e08ec4f1201659ad8400b0d294d353a285dc091128e467",
+  "production_score_authority": false,
+  "prompt_hash": "a984bcf54a2b33ab95737e57cb3088c1ec54e65620039ed3f92d00b69da856d4",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-35176fdd17569df9333a6a63ed28e142d886038af7747431ec287f1e22f7efa8",
+  "response_id": "COLLABRESP-ac461e8a330bfc3d7b49f190838576f67ee6cd546983c6ad23683052cd81db18",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "output_schema_hash": "7dbfe60b384654cd791016e65d09fc824423c5bf4c909208543889fef9766b15",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0727f2e7547b5a7b4c3203b3",
+        "rationale": "This Meritz KOSPI strategy summary was already fully reviewed. It mentions Samsung Electronics only as one member of the Top2 and contains no issuer-specific valuation denominator, multiple, or bridge; its index-level metrics cannot be attributed to Samsung Electronics.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-0de2740a0c3d0f9f8210e198",
+        "rationale": "Full review found two distinct target-direct pricing counters not present in the current ledger: the reported maximum 30% HBM3E 12-high price reduction and the HBM4 initial quote reported 6-8% below SK hynix and Micron. Other qualification, process, timing, and product passages are already covered by later or more authoritative current facts.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-189637ee0dfa90eec16de448",
+        "rationale": "The 2024 article describes an in-progress Nvidia HBM qualification, possible delay and related execution risks. Those observations are superseded by later current official and customer-allocation evidence through 2026, including HBM4 mass-production shipment and current customer supply execution, so no distinct current information-confidence fact remains.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0de2740a0c3d0f9f8210e198",
+        "economic_mechanism": "보도된 최대 30% 가격 인하는 뒤늦은 HBM3E 고객 채택을 가격 경쟁으로 보완하는 경로인 동시에, 판매량이 늘어도 단위가격과 마진 회복을 제한할 수 있는 counter다.",
+        "exact_quote": "2026년 HBM3E의 평균 가격 하락이 예상되는 가운데 삼성은 이미 HBM3E 12단 스택 제품의 최대 30% 가격 인하를 주도하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 ledger에 없는 HBM 제품별 명시적 가격 인하 폭이며, 가격 경쟁이 HBM 수익성 및 정보 신뢰에 미치는 제한을 직접 보여준다. 실제 계약가격이나 실현 ASP로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM3E:PRICE_COMPETITION",
+        "normalized_object": "HBM3E 12단 최대 가격 인하율",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026 pricing reported 2025-10-28",
+        "predicate": "삼성전자가 2026년 HBM3E 12단 스택 제품 가격을 최대 30% 인하하고 있다고 보도됐다.",
+        "predicate_family": "HBM3E_REPORTED_PRICE_CUT",
+        "primitive_tags": [
+          "HBM3E",
+          "PRICE_CUT",
+          "MARGIN_RISK"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "SAMSUNG_HBM3E_PRICE_CUT",
+        "question_family_tags": [
+          "SAMSUNG_HBM3E_PRICE_CUT",
+          "HBM_PRICING_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM3E 12단 가격 인하",
+        "subject_id": "005930:MEMORY:HBM3E:PRICE_CUT:2026",
+        "unit": "percent price reduction",
+        "value": 30
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0de2740a0c3d0f9f8210e198",
+        "economic_mechanism": "경쟁사보다 6~8% 낮은 초기 견적은 HBM4 물량 확보에 도움이 될 수 있지만 프리미엄 가격과 초기 마진을 제한하는 가격경쟁 counter다.",
+        "exact_quote": "그러나 삼성은 HBM4 초기 견적부터 SK하이닉스·마이크론보다 6~8%가량 저렴하게 제시하며 추격의 고삐를 바짝 죄고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 ledger에 없는 삼성전자 HBM4의 명시적 경쟁사 대비 가격차이며, 물량 확대와 마진·premium의 trade-off를 직접 제한한다. 견적을 체결가격이나 실현가격으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:INITIAL_QUOTE_COMPETITION",
+        "normalized_object": "HBM4 초기 견적의 경쟁사 대비 할인율",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "initial HBM4 quotes reported 2025-10-28",
+        "predicate": "삼성전자가 HBM4 초기 견적을 SK하이닉스와 마이크론보다 6~8% 낮게 제시했다고 보도됐다.",
+        "predicate_family": "HBM4_REPORTED_INITIAL_QUOTE_DISCOUNT",
+        "primitive_tags": [
+          "HBM4",
+          "INITIAL_QUOTE",
+          "PEER_DISCOUNT"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "SAMSUNG_HBM4_INITIAL_QUOTE_DISCOUNT",
+        "question_family_tags": [
+          "SAMSUNG_HBM4_INITIAL_QUOTE_DISCOUNT",
+          "HBM_PRICING_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 초기 견적의 경쟁사 대비 할인",
+        "subject_id": "005930:MEMORY:HBM4:INITIAL_QUOTE_DISCOUNT:2025-10",
+        "unit": "percent below competitor quotes",
+        "value": "6-8"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "c60ca52772060eba3ec2d619689dbf9a8cd50cb196f51a52ab85fc373a7b4336",
+  "production_score_authority": false,
+  "prompt_hash": "23df9a95c8f0ae23bcb1e384fae295f171581f4f8ce9d71dbecec8833a700e0d",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-665e92408cd7fbcfe797fece54a3f2bc7475cee1ddf0f337ee73c0100857a80e",
+  "response_id": "COLLABRESP-a2403c3b0d0c2d9fdd22416ee4b8cfbe2c54cba3cabc7a194b28b0274424cb85",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

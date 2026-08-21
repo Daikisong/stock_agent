@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      15.5,
+      18.1
+    ],
+    "anchor_comparisons": [
+      "positive와 counter ordinal anchor가 모두 18.05~19.0점으로 동일해 anchor role만으로 score scale을 구분할 수 없다. 현재 positive facts는 strong band 접근을 지지하지만 exact 복사는 부적절하다.",
+      "동일 구간의 counter anchor는 감액 폭을 제공하지 않으므로 가격 둔화·CAPEX·측정 범위 counter를 직접 반영해 anchor 하단보다 낮은 허용 범위를 포함한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0b6b02299ea60f931cf17c4e",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-cc2cfc3b24f0987278efc0b7",
+      "EFACT-f05a97edeb8f85d49353381e"
+    ],
+    "disagreements": [
+      "research memo 16.2~18.3은 합리적이나 non-discriminating anchors를 감안해 하단을 15.5로 넓히고 midpoint를 16.8로 보정한다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-054f760d026b470c39e27df1"
+    ],
+    "proposed_points": 16.8,
+    "rationale": "anchor 두 개가 역할만 다르고 점수 구간이 같아 비교 정보량이 제한된다. 따라서 현재 fact balance를 우선한다. 완판·가동률·실현가격은 강하지만 HBM 전용 CAPA가 없고 가격 둔화 및 증설 대응 위험이 명시돼 있다. ordinal anchor 하단 근처를 상단으로 두고 하방 불확실성을 넓게 반영한다.",
+    "support_fact_ids": [
+      "EFACT-13d6da3b116a9a0ad8043f62",
+      "EFACT-1df441a716b0204f7b107e70",
+      "EFACT-477c6cb45b164685a2a345e8",
+      "EFACT-4e0d88dc056c9e8dcd45ea47",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-a2243488e8b8f0197fd8bd56",
+      "EFACT-b676fc3afacb1117c1ba65be",
+      "EFACT-fd86be3f3b91aa151f046cfb"
+    ],
+    "why_not_higher": "동일 점수의 positive/counter anchors가 구분력을 제공하지 못하고 HBM 전용 CAPA·수율·패키징 수치 부재와 가격 정상화 위험이 있다.",
+    "why_not_lower": "완판, 100% 시간 가동률, 타이트한 재고와 실현가격·프리미엄이 strong 병목에 가까운 현재 fact balance를 지지한다."
+  },
+  "payload_hash": "1810d30e0aa4282ec4464d92788da8a9e2ce69cd5db419bd05dc2550525865da",
+  "production_score_authority": false,
+  "prompt_hash": "fc6fbef47b277432d50b1cd6f3354e70bc179b4579fc378b2f1a890bd6a22bec",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-054ac0c457bd4f9e75999a7e7562108fec7ea74d962330fead653767a6844678",
+  "response_id": "COLLABRESP-24fb64794465ccb3b769f38c9dddd8e7f2b3bb09e16a49cb24aa3a7b0e9be92e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

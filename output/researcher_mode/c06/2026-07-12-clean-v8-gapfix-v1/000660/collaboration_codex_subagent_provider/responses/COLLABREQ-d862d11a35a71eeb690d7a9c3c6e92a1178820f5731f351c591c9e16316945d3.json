@@ -1,0 +1,90 @@
+{
+  "output_schema_hash": "852ca36c20ba559f4dca4349309e955ef003169944e9c79fa9d950b55972a479",
+  "payload": {
+    "confidence": 0.72,
+    "counter_case": "현재 가격에 반영된 기대 수준과 고객별 확정 계약경제가 분리되지 않아 큰 mispricing으로 단정할 수 없다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c"
+    ],
+    "positive_case": "제품 상용화와 고객 협업이 실적 추정의 추가 상향 여지를 만든다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 65,
+        "reason": "시장 기대와 비교할 수 있는 발행사 제품 실행 신호를 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 158,
+        "reason": "고객 채택 경로를 보여주는 공동개발 evidence를 유지한다."
+      }
+    ],
+    "proposed_score_lower": 7.0,
+    "proposed_score_mid": 9.0,
+    "proposed_score_upper": 11.0,
+    "research_complete": true,
+    "researcher_summary": "HBM 제품 실행과 고객 공동개발은 이익 기대의 상향 가능성을 지지하지만 이미 높은 시장 기대와 계약경제 미확인이 오판 폭을 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "제품 실행력이 시장 기대보다 빠른 실적 전환 가능성을 지지하지만 가격 자체의 오판을 단독 증명하지 않는다.",
+        "fact_row_index": 65,
+        "source_economic_mechanism": "회사는 HBM의 Time to Market 실현과 대역폭·밀도·Core Die 적층 단수 향상, 성능·품질을 제품 실행 기반으로 설명했다. 같은 문장의 기존 고객 ASIC 협업 사실과 구별되는 제품 상용화 실행력이다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "REPORTS_HBM_TIME_TO_MARKET_AND_PERFORMANCE_EXECUTION",
+        "source_value_json": "\"HBM Time to Market realized with higher bandwidth, density and Core Die stacking\""
+      },
+      {
+        "component_interpretation": "고객 공동개발은 시장이 과소평가할 수 있는 제품 채택 경로지만 확정 계약경제는 아니다.",
+        "fact_row_index": 158,
+        "source_economic_mechanism": "HBM 성능·품질을 기반으로 고객과 ASIC 개발 협업을 진행해 고객 요구가 제품 개발에 연결되는 상용화 경로를 형성한다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "COLLABORATING_WITH_CUSTOMERS_ON_ASIC_DEVELOPMENT_FOR_HBM",
+        "source_value_json": "\"고객들과 ASIC 개발 협력\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      65,
+      158
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "PUBLIC_BROKER_PDF",
+      "KRX_PRICE_MARKET_CAP"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "현재 가격에 반영된 HBM 성장 기대의 정확한 크기가 분리되지 않는다",
+      "고객 공동개발의 매출 전환 시점과 규모가 공개되지 않았다"
+    ],
+    "why_not_higher": "시장 기대 반영도와 확정 계약경제가 충분히 분리되지 않는다.",
+    "why_not_lower": "발행사 제품 실행과 고객 협업이라는 source-backed 상향 경로가 존재한다."
+  },
+  "payload_hash": "69bf9f4ff0f978e714fc9a249f9df869b23c5b296de9284d2c389ccf5dbeffb8",
+  "production_score_authority": false,
+  "prompt_hash": "c5f970cbbb28a1646ca66e8fb38cbfbb3a3a680aa010a56fdfc87a0831ff5b7d",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d862d11a35a71eeb690d7a9c3c6e92a1178820f5731f351c591c9e16316945d3",
+  "response_id": "COLLABRESP-443adbdb65c5f19c5ebdff2bbf85ed899f68a572ffaf129e5c79c5b0c8e54c0f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

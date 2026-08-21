@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-d0b28052ff8e3376b8e626ff",
+        "rationale": "미국 장비 반입 규제는 삼성전자 중국 시안의 NAND와 범용 메모리 중심 이슈이며 문서도 HBM 직접 타격이 제한적이라고 구분한다. C06 HBM current objective에 연결되는 target-direct 신규 fact는 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "9436975a24e4fc30b8ef5755616c41a62fcfb79c0214fc5f9d3b5932d75100f3",
+  "production_score_authority": false,
+  "prompt_hash": "7506bafbfb024e309e7de4199f2a7770cc7c2859f02cd40dc00c4eb7f5e247bf",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ba4adb267e9fe8f3e58bdeac11e40a2fa0cd4f4c66f1acb0f86259cb9562c6c8",
+  "response_id": "COLLABRESP-b2aa7af156de72e0ab6ef0c8d63d22a8d020a7ba646fa3602fc89f825fcbb17c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

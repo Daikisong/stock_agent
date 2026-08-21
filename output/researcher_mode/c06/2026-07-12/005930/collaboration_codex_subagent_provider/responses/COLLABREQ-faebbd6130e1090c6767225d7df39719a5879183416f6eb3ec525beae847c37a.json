@@ -1,0 +1,83 @@
+{
+  "output_schema_hash": "8392ff7273630732db1ccbd70c5a62a2a936adeb7927340fb423017d2ade23d8",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-873a1c4cc82e5d546940cf16",
+        "rationale": "Extracted the independent 45% DRAM-ASP estimate that directly bears on the sole bottleneck-pricing objective. Company-wide results, HBM4 shipment plans, 2027 sold-out/LTA commentary, and old earnings or target-price forecasts were outside the local objective, already represented, subsequently realized, or superseded; NAND and non-memory segment details were outside the target mechanism.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-873a1c4cc82e5d546940cf16",
+        "economic_mechanism": "흥국증권은 범용 DRAM ASP가 전분기 대비 45% 상승한 것으로 추정했다. 현재 canonical의 약 40% 추정과 함께 보면 가격 급등 방향은 같지만 정확한 상승폭에는 추정 편차가 있음을 보여준다.",
+        "exact_quote": "손인준 흥국증권 연구원은 \"메모리 가격 급등의 영향으로 DS 사업부가 전사 실적 강세를 이끌었는데, 범용 DRAM과 NAND 의 판매단가(ASP)가 각각 전 분기 대비 45%, 24% 상승한 것으로 추정된다\"라고 말했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 분기의 기존 약 40% 추정과 독립된 45% 추정으로 realized-pricing 방향을 corroborate하면서 추정 폭의 불확실성도 드러낸다. NAND 수치는 범위 밖이라 별도 fact로 만들지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:2025_Q4_DRAM_ASP_ESTIMATE",
+        "normalized_object": "범용 DRAM 평균판매단가 전분기 대비 추정 상승률",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q4 vs 2025-Q3",
+        "predicate": "흥국증권은 삼성전자 범용 DRAM ASP가 2025년 4분기에 전분기 대비 45% 상승한 것으로 추정했다",
+        "predicate_family": "DRAM_ASP_QOQ_ESTIMATE",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "ASP_QOQ",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_QOQ_ESTIMATE",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "REALIZED_PRICING_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "삼성전자 2025년 4분기 범용 DRAM ASP",
+        "subject_id": "005930:2025_Q4_DRAM_ASP",
+        "unit": "percent QoQ",
+        "value": 45
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "60f30517762639ba4d48e6bc67349082e318142012e290a110b675bc9026b792",
+  "production_score_authority": false,
+  "prompt_hash": "5fdbec48e35987e9b0b23e5470da6a4b74899a39ef062e7d4e7f66aa7a8f9187",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-faebbd6130e1090c6767225d7df39719a5879183416f6eb3ec525beae847c37a",
+  "response_id": "COLLABRESP-a899fb19311f1abb589fa845897b31f1024278e536e891e0255cb2c5d291accf",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

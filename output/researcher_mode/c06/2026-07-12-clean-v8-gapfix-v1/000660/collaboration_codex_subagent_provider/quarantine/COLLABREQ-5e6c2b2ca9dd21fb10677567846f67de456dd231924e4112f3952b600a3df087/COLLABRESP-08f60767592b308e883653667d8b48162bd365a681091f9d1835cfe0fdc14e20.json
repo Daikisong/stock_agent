@@ -1,0 +1,41 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-f96e0ad729ad998272b6393d",
+        "rationale": "Transport chunk 0 of 2 was reviewed target-wide. Its SK hynix section is a mirror of the already accepted Yuanta 2026-04-09 report lineage (including quarterly DRAM, consolidated forecast, valuation, cash-flow and historical calibration atoms), so no distinct new economic identity is emitted. Other issuers and sectors are non-target. Broker estimates are not promoted to issuer guidance, HBM-only economics, customer allocation, or signed-contract terms.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [],
+    "unresolved_document_ids": [
+      "SGDOC-f96e0ad729ad998272b6393d"
+    ],
+    "unresolved_research_notes": [
+      "Canonical parent completion still requires transport chunk 1 of 2; chunk 0 adds no fact beyond the already accepted same-report lineage."
+    ]
+  },
+  "payload_hash": "b23870fd4f0e3629c2b328e245e3c31ebeb044f72aaef1d2ff7e1cb07cfa3eba",
+  "production_score_authority": false,
+  "prompt_hash": "7884d4ac88d562619db64a418f7e07ebf7d296236badaf32c01ab620864218b8",
+  "provenance": {
+    "agent_id": "/root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/direct_fact_review",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5e6c2b2ca9dd21fb10677567846f67de456dd231924e4112f3952b600a3df087",
+  "response_id": "COLLABRESP-08f60767592b308e883653667d8b48162bd365a681091f9d1835cfe0fdc14e20",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

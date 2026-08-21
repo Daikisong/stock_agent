@@ -1,0 +1,579 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "rationale": "Continuation page 5 adds 12 distinct source-order atoms after the exact prior 48: the remaining 4Q26 DRAM ASP point, five quarterly consolidated-revenue forecasts, five quarterly DRAM-revenue forecasts, and FY2025 DRAM revenue. The chunk still contains FY2026 DRAM revenue plus operating-profit, margin, pretax, and net-income forecast atoms.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "Daishin forecasts a small sequential decline in SK hynix DRAM ASP per Gb in 4Q26; this is broker pricing counterevidence, not issuer guidance or a signed customer price.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n환율(KRW/USD) 1,453 1,404 1,385 1,420 1,400 1,350 1,350 1,350 1,365 1,415 1,363\nDRAM출하량(십억Gb) 18.7 23.4 25.3 26.4 27.5 28.9 29.3 28.8 75.0 93.8 114.4\nQoQ -7 25 8 4 4 5 1 -2\nYoY 16 19 32 31 47 23 16 9 16 25 22\nDRAMASP/Gb(USD) 0.51 0.52 0.54 0.60 0.70 0.75 0.74 0.73 0.43 0.55 0.73",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The final quarterly DRAM ASP point completes the forward pricing path and supplies explicit counterevidence to uninterrupted ASP expansion.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-ASP-FORECAST",
+        "normalized_object": "SK hynix 4Q26 DRAM ASP per Gb Daishin broker forecast and sequential counter",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q26E",
+        "predicate": "Daishin forecasts SK hynix DRAM ASP per Gb at USD 0.73 in 4Q26, down from USD 0.74 in 3Q26.",
+        "predicate_family": "BROKER_DRAM_ASP_PER_GB_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "pricing_counter"
+        ],
+        "product_family": "DRAM ASP",
+        "question_family_id": "daishin_skh_dram_asp_4q26e",
+        "question_family_tags": [
+          "dram_pricing",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix DRAM ASP per Gb broker forecast",
+        "subject_id": "000660:DRAM:ASP_PER_GB:4Q26E:DAISHIN_20251128",
+        "unit": "USD per Gb",
+        "value": 0.73
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The consolidated quarterly revenue estimate is a broker earnings-bridge input and does not attribute the value to HBM or constitute issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 4Q25 forecast is a distinct quarterly consolidated revenue point in the broker model, explicitly kept separate from HBM-only economics.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CONSOLIDATED-BROKER-REVENUE",
+        "normalized_object": "SK hynix 4Q25 consolidated revenue Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25E",
+        "predicate": "Daishin forecasts SK hynix consolidated revenue of KRW 29,046 billion in 4Q25.",
+        "predicate_family": "BROKER_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "revenue",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings",
+        "question_family_id": "daishin_skh_consolidated_revenue_4q25e",
+        "question_family_tags": [
+          "earnings",
+          "quarterly_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated quarterly revenue broker forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:4Q25E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 29046
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The consolidated quarterly revenue estimate is a broker earnings-bridge input and does not attribute the value to HBM or constitute issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 1Q26 consolidated revenue forecast advances the quarterly earnings path but remains issuer-wide broker modeling.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CONSOLIDATED-BROKER-REVENUE",
+        "normalized_object": "SK hynix 1Q26 consolidated revenue Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26E",
+        "predicate": "Daishin forecasts SK hynix consolidated revenue of KRW 33,854 billion in 1Q26.",
+        "predicate_family": "BROKER_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "revenue",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings",
+        "question_family_id": "daishin_skh_consolidated_revenue_1q26e",
+        "question_family_tags": [
+          "earnings",
+          "quarterly_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated quarterly revenue broker forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:1Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 33854
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The consolidated quarterly revenue estimate is a broker earnings-bridge input and does not attribute the value to HBM or constitute issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 2Q26 consolidated revenue forecast is a distinct quarterly broker earnings input and is not HBM-attributed.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CONSOLIDATED-BROKER-REVENUE",
+        "normalized_object": "SK hynix 2Q26 consolidated revenue Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E",
+        "predicate": "Daishin forecasts SK hynix consolidated revenue of KRW 36,398 billion in 2Q26.",
+        "predicate_family": "BROKER_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "revenue",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings",
+        "question_family_id": "daishin_skh_consolidated_revenue_2q26e",
+        "question_family_tags": [
+          "earnings",
+          "quarterly_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated quarterly revenue broker forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:2Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 36398
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The consolidated quarterly revenue estimate is a broker earnings-bridge input and does not attribute the value to HBM or constitute issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 3Q26 consolidated revenue forecast is the quarterly peak in the stated broker sequence and remains a consolidated estimate.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CONSOLIDATED-BROKER-REVENUE",
+        "normalized_object": "SK hynix 3Q26 consolidated revenue Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E",
+        "predicate": "Daishin forecasts SK hynix consolidated revenue of KRW 36,866 billion in 3Q26.",
+        "predicate_family": "BROKER_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "revenue",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings",
+        "question_family_id": "daishin_skh_consolidated_revenue_3q26e",
+        "question_family_tags": [
+          "earnings",
+          "quarterly_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated quarterly revenue broker forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:3Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 36866
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "Daishin's 4Q26 consolidated revenue forecast declines from 3Q26, providing an issuer-wide broker counter without HBM attribution.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 4Q26 decline is explicit counterevidence within the quarterly consolidated broker revenue path and cannot be attributed to HBM alone.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CONSOLIDATED-BROKER-REVENUE",
+        "normalized_object": "SK hynix 4Q26 consolidated revenue Daishin broker forecast and sequential counter",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q26E",
+        "predicate": "Daishin forecasts SK hynix consolidated revenue of KRW 35,541 billion in 4Q26, below KRW 36,866 billion in 3Q26.",
+        "predicate_family": "BROKER_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "revenue",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings",
+        "question_family_id": "daishin_skh_consolidated_revenue_4q26e",
+        "question_family_tags": [
+          "earnings",
+          "quarterly_revenue",
+          "counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated quarterly revenue broker forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:4Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 35541
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker's DRAM segment revenue forecast links DRAM shipments and pricing to segment revenue, without identifying HBM-only revenue or issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659\nDRAM 14,037 17,124 19,084 22,576 26,937 29,143 29,423 28,555 44,732 72,821 114,058",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 4Q25 DRAM row directly establishes the segment's contribution to the consolidated broker revenue model.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-REVENUE-CONVERSION",
+        "normalized_object": "SK hynix 4Q25 DRAM segment revenue Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25E",
+        "predicate": "Daishin forecasts SK hynix DRAM segment revenue of KRW 22,576 billion in 4Q25.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM_revenue",
+          "broker_forecast"
+        ],
+        "product_family": "DRAM segment revenue",
+        "question_family_id": "daishin_skh_dram_revenue_4q25e",
+        "question_family_tags": [
+          "earnings",
+          "segment_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix DRAM segment quarterly revenue broker forecast",
+        "subject_id": "000660:DRAM_REVENUE:4Q25E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 22576
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker's DRAM segment revenue forecast links DRAM shipments and pricing to segment revenue, without identifying HBM-only revenue or issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659\nDRAM 14,037 17,124 19,084 22,576 26,937 29,143 29,423 28,555 44,732 72,821 114,058",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 1Q26 DRAM revenue forecast is a direct segment-contribution point in the broker model.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-REVENUE-CONVERSION",
+        "normalized_object": "SK hynix 1Q26 DRAM segment revenue Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26E",
+        "predicate": "Daishin forecasts SK hynix DRAM segment revenue of KRW 26,937 billion in 1Q26.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM_revenue",
+          "broker_forecast"
+        ],
+        "product_family": "DRAM segment revenue",
+        "question_family_id": "daishin_skh_dram_revenue_1q26e",
+        "question_family_tags": [
+          "earnings",
+          "segment_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix DRAM segment quarterly revenue broker forecast",
+        "subject_id": "000660:DRAM_REVENUE:1Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 26937
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker's DRAM segment revenue forecast links DRAM shipments and pricing to segment revenue, without identifying HBM-only revenue or issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659\nDRAM 14,037 17,124 19,084 22,576 26,937 29,143 29,423 28,555 44,732 72,821 114,058",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 2Q26 DRAM revenue forecast directly advances the segment contribution path.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-REVENUE-CONVERSION",
+        "normalized_object": "SK hynix 2Q26 DRAM segment revenue Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E",
+        "predicate": "Daishin forecasts SK hynix DRAM segment revenue of KRW 29,143 billion in 2Q26.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM_revenue",
+          "broker_forecast"
+        ],
+        "product_family": "DRAM segment revenue",
+        "question_family_id": "daishin_skh_dram_revenue_2q26e",
+        "question_family_tags": [
+          "earnings",
+          "segment_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix DRAM segment quarterly revenue broker forecast",
+        "subject_id": "000660:DRAM_REVENUE:2Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 29143
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker's DRAM segment revenue forecast links DRAM shipments and pricing to segment revenue, without identifying HBM-only revenue or issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659\nDRAM 14,037 17,124 19,084 22,576 26,937 29,143 29,423 28,555 44,732 72,821 114,058",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 3Q26 DRAM revenue forecast is the segment's quarterly peak in the stated broker sequence.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-REVENUE-CONVERSION",
+        "normalized_object": "SK hynix 3Q26 DRAM segment revenue Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E",
+        "predicate": "Daishin forecasts SK hynix DRAM segment revenue of KRW 29,423 billion in 3Q26.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM_revenue",
+          "broker_forecast"
+        ],
+        "product_family": "DRAM segment revenue",
+        "question_family_id": "daishin_skh_dram_revenue_3q26e",
+        "question_family_tags": [
+          "earnings",
+          "segment_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix DRAM segment quarterly revenue broker forecast",
+        "subject_id": "000660:DRAM_REVENUE:3Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 29423
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The 4Q26 DRAM revenue estimate declines from 3Q26, providing a segment-level broker counter without implying an HBM-only outcome.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659\nDRAM 14,037 17,124 19,084 22,576 26,937 29,143 29,423 28,555 44,732 72,821 114,058",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 4Q26 decline explicitly counters uninterrupted DRAM revenue expansion in the broker's segment model.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-REVENUE-CONVERSION",
+        "normalized_object": "SK hynix 4Q26 DRAM segment revenue Daishin broker forecast and sequential counter",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q26E",
+        "predicate": "Daishin forecasts SK hynix DRAM segment revenue of KRW 28,555 billion in 4Q26, below KRW 29,423 billion in 3Q26.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM_revenue",
+          "broker_forecast"
+        ],
+        "product_family": "DRAM segment revenue",
+        "question_family_id": "daishin_skh_dram_revenue_4q26e",
+        "question_family_tags": [
+          "earnings",
+          "segment_revenue",
+          "counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix DRAM segment quarterly revenue broker forecast",
+        "subject_id": "000660:DRAM_REVENUE:4Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 28555
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The annual DRAM revenue forecast supplies the segment's contribution to the FY2025 consolidated broker model and is not HBM-only revenue.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n매출액 17,639 22,232 24,449 29,046 33,854 36,398 36,866 35,541 66,193 93,366 142,659\nDRAM 14,037 17,124 19,084 22,576 26,937 29,143 29,423 28,555 44,732 72,821 114,058",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2025 annual DRAM row is a distinct period-level segment contribution in the broker earnings model.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-BROKER-REVENUE-CONVERSION",
+        "normalized_object": "SK hynix FY2025 DRAM segment revenue Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "Daishin forecasts SK hynix DRAM segment revenue of KRW 72,821 billion for FY2025.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM_revenue",
+          "broker_forecast"
+        ],
+        "product_family": "DRAM segment revenue",
+        "question_family_id": "daishin_skh_dram_revenue_fy2025e",
+        "question_family_tags": [
+          "earnings",
+          "segment_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix DRAM segment annual revenue broker forecast",
+        "subject_id": "000660:DRAM_REVENUE:FY2025E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 72821
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-b06350879c518ec49fa8cd5c"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact cap is reached before the remaining source-order DRAM annual revenue, quarterly/annual operating-profit, segment-profit, margin, pretax-income, and net-income broker-model atoms are exhausted. Preserve annual versus quarterly, consolidated versus DRAM versus HBM-only, absolute versus growth/formula, and broker-estimate versus issuer-guidance boundaries on continuation; canonical parent chunk 1/2 remains separate."
+    ]
+  },
+  "payload_hash": "59cd5bad279a1077b5f731e389ef01b0d2436deb2218811b18c5c8f4d062a4aa",
+  "production_score_authority": false,
+  "prompt_hash": "92a49843e38d906b16487b13b7bb042c81a24c5f02f48a865fd573cf3673bef3",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ef116c384004c80a0d13663a094284368016949e4ec8b727d4255e36b548d256",
+  "response_id": "COLLABRESP-190c97f7f54fe6df1b3fd27df75a62e2d5a61c046457643365f0b8fa77a21b8f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

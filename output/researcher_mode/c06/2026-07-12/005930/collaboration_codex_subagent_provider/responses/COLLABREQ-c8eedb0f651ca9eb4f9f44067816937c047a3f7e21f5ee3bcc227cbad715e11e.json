@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0727f2e7547b5a7b4c3203b3",
+        "rationale": "The complete 15,573-character Meritz strategy summary was reviewed. It values the KOSPI as a whole and mentions Samsung Electronics only as one member of the Top2 with SK hynix; it provides no Samsung-specific earnings denominator, multiple, peer band, target-price bridge, or other distinct issuer valuation fact. The KOSPI-level PBR/PER framework, index target, AI-cycle discussion, and portfolio selections cannot be attributed to Samsung Electronics' valuation_rerating objective, so no target-direct fact is emitted.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "1c9998d265cfb3100a0814bbdd3f9b7de1702454040d53a1f3fb57012ab0dc0a",
+  "production_score_authority": false,
+  "prompt_hash": "bfb71e54bd30abdc25cb0c068ec47f45e209323c91cb99ad914cac82252e1893",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c8eedb0f651ca9eb4f9f44067816937c047a3f7e21f5ee3bcc227cbad715e11e",
+  "response_id": "COLLABRESP-d76eab1e5ef4a81f0997cde9d537f1faf28627b8d257e837a17843f122fc4b4b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

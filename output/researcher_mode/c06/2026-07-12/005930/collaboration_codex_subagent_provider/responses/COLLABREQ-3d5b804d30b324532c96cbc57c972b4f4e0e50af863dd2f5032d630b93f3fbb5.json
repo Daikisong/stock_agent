@@ -1,0 +1,293 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0de2740a0c3d0f9f8210e198",
+        "rationale": "2025년 HBM3E 인증 지연·가격 인하와 HBM4 초기 견적·인증 전망은 2026년 실제 인증·출하·제품별 프리미엄 가격 facts로 대체됐다. 과거 미승인·발열 우려를 current 상태로 남기거나 타사 수치를 삼성전자 fact로 전용하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-189637ee0dfa90eec16de448",
+        "rationale": "2024년 엔비디아 HBM3E 품질검증 진행·지연·불량과 2025년 공급부족 전망은 이후 인증·양산·고객 공급 facts로 해소 또는 대체됐다. 과거 테스트 진행을 현재 HBM4 고객 승인 상태로 재사용하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-1cb48beb9f8c5922734d50bc",
+        "rationale": "GTC 부스 방문·서명은 계약 근거가 아니어서 제외하고, 현재 canonical의 HBM4 양산·북미 고객 납품과 구별되는 엔비디아 공급망 내 초기 물량 및 경쟁사 배정 일부 흡수 보도 1건만 추출했다. 11.7Gbps 단독공급 가능성은 확인되지 않은 이야기여서 반복하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-32a0cf049fc23e335af60048",
+        "rationale": "기존 포괄적 파업 예고·고객 이탈 위험과 중복되는 서술은 제외하고, 정확한 18일 파업 예정, 클린룸 복구 최소기간, 비정상 중단의 장비·웨이퍼 손실, 엔비디아·AMD의 공급안정성 평가·물량배분 통제 4건을 조건부 counter로 추출했다. 파업·생산중단·웨이퍼 폐기가 실제 발생했다고 만들지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-6d18b96e5a9a8fa2ec6a4e64",
+        "rationale": "문서 본문과 회사 연혁·사업 내용·재무제표의 발행사는 삼성전자 005930이 아니라 산업용 X-ray 장비사 주식회사 쎄크다. HBM 검사장비 언급은 고객 산업 설명일 뿐 삼성전자 공시나 삼성전자 fact가 아니다.",
+        "status": "WRONG_TARGET_OR_SEGMENT"
+      },
+      {
+        "document_id": "SGDOC-8b02f84953986605b86fd5e1",
+        "rationale": "2025년 HBM3E 품질검증 지연과 HBM4 하반기 양산 목표는 2026년 실제 HBM4 인증·양산·출하 facts로 대체됐다. 엔비디아 제품 로드맵과 SK하이닉스 수치를 삼성전자 current fact로 사용하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-a761736a8079574c2c5c3906",
+        "rationale": "2026년 2월 HBM4 납품 전망은 이후 실제 양산·출하·고객 납품 facts로 대체됐다. 멀티벤더, 적층·본딩 수율과 열관리의 일반 메커니즘은 current canonical의 고객 다변화·수율·공급 위험과 중복돼 새 target-specific fact로 반복하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-ca050b3a35a2b673a9d3490e",
+        "rationale": "2025년 7월 보고서의 HBM3E 인증 지연, 2026년 HBM 가격·수급·출하·이익·CAPEX 전망은 2026년 실제 실적과 더 최신 current 전망으로 대체됐다. 당시 목표주가·투자 의견과 SK하이닉스 전망은 information_confidence의 새 삼성전자 fact가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.7,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-1cb48beb9f8c5922734d50bc",
+        "economic_mechanism": "HBM4 인증 시점 단축과 초기 양산 물량 확대가 엔비디아 공급망에서 삼성전자 배정 물량 증가로 연결됐다는 보도는 단순 전시·사인과 구별되는 고객 공급 실행 근거다.",
+        "exact_quote": "그런데 이 구간을 예상보다 빠르게 통과했다. 삼성전자는 HBM4 최대 수요처인 엔비디아 공급망에서 단순 참여를 넘어 존재감을 키우고 있다. 품질 인증 시점을 지난달로 앞당겼고, 초기 양산 물량도 적지 않다. SK하이닉스 몫까지 일부 흡수해 대신 납품하고 있는 상황이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 canonical에는 엔비디아용 HBM4 양산과 북미 고객 납품이 있으나 경쟁사 배정 일부를 흡수했다는 고객 물량 이동은 없다. 기사 보도 수준이므로 정확한 고객 물량·점유율·계약 의무나 독점 공급으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:NVIDIA_ALLOCATION_EXPANSION",
+        "normalized_object": "엔비디아 HBM4 공급망에서 삼성전자 초기 양산·배정 물량 확대",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current as of 2026-03-26; certification advanced in 2026-02",
+        "predicate": "삼성전자가 엔비디아 HBM4 공급망에서 인증을 앞당기고 초기 양산 물량을 확대해 경쟁사 몫 일부를 대신 납품하고 있다고 보도됐다",
+        "predicate_family": "HBM4_NVIDIA_ALLOCATION_EXPANSION",
+        "primitive_tags": [
+          "HBM4",
+          "CUSTOMER_ALLOCATION",
+          "NVIDIA"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "SAMSUNG_HBM4_NVIDIA_ALLOCATION_EXPANSION",
+        "question_family_tags": [
+          "HBM4_CUSTOMER_ALLOCATION",
+          "NVIDIA_SUPPLY_CHAIN",
+          "MASS_PRODUCTION_EXECUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4의 엔비디아 공급망 물량 확대",
+        "subject_id": "005930:MEMORY:HBM4:NVIDIA_ALLOCATION:2026-02",
+        "unit": "reported customer-allocation status",
+        "value": "certification advanced; nontrivial initial volume; partial competitor allocation absorbed"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-32a0cf049fc23e335af60048",
+        "economic_mechanism": "노사 임금협상 교착 뒤 2026년 5월 21일부터 6월 7일까지 총파업이 예고된 것은 기존의 포괄적인 5월 파업 예고보다 생산 연속성 위험의 정확한 예정 기간과 지속일수를 제시한다.",
+        "exact_quote": "그럼에도 사측과 임금협상이 교착상태에 빠지면서 노동조합은 다음달 21일부터 6월 7일까지 총 18일의 총파업을 예고했다. 노조는 \"파업 기간 집행부는 평택 사무실을 점거하고, 집회를 진행할 것\"이라고 경고했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "기존 fact의 '5월 파업 예고'를 반복하지 않고 구체적인 18일 일정과 평택 사무실 행동 계획만 추가한다. 예고를 실제 파업·생산 중단으로 간주하지 않으며 결과는 supplied source에 없어 OPEN으로 둔다.",
+        "mechanism_scope_id": "005930:MEMORY:LABOR_STRIKE:SCHEDULE_18_DAYS",
+        "normalized_object": "삼성전자 노조 총파업 예고의 시작일·종료일·기간",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "announced as of 2026-04-15 for 2026-05-21 through 2026-06-07",
+        "predicate": "삼성전자 노동조합이 2026년 5월 21일부터 6월 7일까지 18일간 총파업을 예고했다",
+        "predicate_family": "MEMORY_LABOR_STRIKE_SCHEDULE",
+        "primitive_tags": [
+          "LABOR_STRIKE_ANNOUNCEMENT",
+          "18_DAY_SCHEDULE",
+          "PYEONGTAEK"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_MEMORY_STRIKE_EXACT_SCHEDULE",
+        "question_family_tags": [
+          "MEMORY_PRODUCTION_CONTINUITY_RISK",
+          "LABOR_STRIKE_SCHEDULE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 노조의 2026년 5~6월 총파업 예고 일정",
+        "subject_id": "005930:MEMORY:LABOR_STRIKE:SCHEDULE:2026-05-21",
+        "unit": "announced strike schedule",
+        "value": "2026-05-21 to 2026-06-07; 18 days announced"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.68,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-32a0cf049fc23e335af60048",
+        "economic_mechanism": "연속공정인 메모리 생산에서 중단 중 항온·항습 조건이 훼손되면 클린룸 환경 복구에만 최소 2~3일이 걸릴 수 있어 짧은 인력 중단도 공급 차질로 증폭될 수 있다.",
+        "exact_quote": "반도체 생산 공정이 중단되면 재가동까지 적지 않은 시간이 필요하기 때문에 공급 차질이 장기화할 가능성도 크다. 여기에 파업으로 설비 관리마저 제대로 이뤄지지 않으면 클린룸 환경이 훼손될 수 있다. 항온·항습 조건이 무너질 경우 이를 복구하는데만 최소 2~3일이 필요하다는 설명이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "파업 여부 자체와 별개로 생산 중단이 메모리 공급에 미치는 재가동 지연 메커니즘과 최소 기간을 수치화한다. 실제 클린룸 훼손이나 중단이 발생했다는 fact가 아니라 조건부 분석이다.",
+        "mechanism_scope_id": "005930:MEMORY:CLEANROOM:RESTART_2_TO_3_DAYS",
+        "normalized_object": "생산 중단 뒤 클린룸 항온·항습 환경의 최소 복구 기간",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "conditional disruption scenario as of 2026-04-15",
+        "predicate": "삼성전자 반도체 생산 중단으로 클린룸 항온·항습 조건이 무너지면 환경 복구에 최소 2~3일이 필요할 수 있다는 분석이 제시됐다",
+        "predicate_family": "MEMORY_CLEANROOM_RESTART_LATENCY_RISK",
+        "primitive_tags": [
+          "CLEANROOM",
+          "RESTART_LATENCY",
+          "PRODUCTION_DISRUPTION_RISK"
+        ],
+        "product_family": "메모리 웨이퍼 생산",
+        "question_family_id": "SAMSUNG_MEMORY_CLEANROOM_RESTART_LATENCY_RISK",
+        "question_family_tags": [
+          "MEMORY_PRODUCTION_CONTINUITY_RISK",
+          "CLEANROOM_RECOVERY",
+          "SUPPLY_DISRUPTION_DURATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 생산 중단 시 클린룸 복구 지연 위험",
+        "subject_id": "005930:MEMORY:CLEANROOM:RESTART_LATENCY",
+        "unit": "days minimum conditional estimate",
+        "value": "minimum 2-3 days"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.64,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-32a0cf049fc23e335af60048",
+        "economic_mechanism": "비정상 공정 정지로 세정 설비의 약액·가스 토출구가 굳거나 공정 중 웨이퍼가 시간 한계를 넘기면 정상화에 수주가 걸리고 수만장 규모 폐기 위험이 생길 수 있다.",
+        "exact_quote": "세정 설비 손상이나 공정 정지로 약액·가스 토출구가 굳으면 정상적으로 돌아올 때까지 수주가 소요될 수 있다. 또 공정 중단 상태에서 웨이퍼를 제때 반출하지 못하면 '타임아웃(Time-out)'을 넘겨 변질되거나 폐기될 수도 있다. 삼성전자의 생산 규모를 감안하면 수만장 단위의 폐기가 불가피하다는 분석이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "클린룸 환경 복구 기간과 구별되는 설비·공정재공품 손실 경로다. 수주와 수만장은 실제 손실이 아니라 생산 중단이 발생할 경우의 추정치이며 실제 폐기를 주장하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:UNPLANNED_SHUTDOWN:WEEKS_AND_WAFER_LOSS",
+        "normalized_object": "비정상 공정 중단의 장기 정상화·웨이퍼 폐기 위험",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "conditional disruption scenario as of 2026-04-15",
+        "predicate": "삼성전자 반도체 공정의 비정상 중단은 설비 정상화에 수주가 걸리거나 수만장 단위 웨이퍼 폐기를 유발할 수 있다는 분석이 제시됐다",
+        "predicate_family": "MEMORY_UNPLANNED_SHUTDOWN_WAFER_LOSS_RISK",
+        "primitive_tags": [
+          "WAFER_TIMEOUT",
+          "EQUIPMENT_DAMAGE_RISK",
+          "UNPLANNED_SHUTDOWN"
+        ],
+        "product_family": "메모리 웨이퍼 생산",
+        "question_family_id": "SAMSUNG_MEMORY_UNPLANNED_SHUTDOWN_WAFER_LOSS_RISK",
+        "question_family_tags": [
+          "MEMORY_PRODUCTION_CONTINUITY_RISK",
+          "WAFER_LOSS_RISK",
+          "EQUIPMENT_RESTART_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 비정상 공정 중단의 장비·웨이퍼 손실 위험",
+        "subject_id": "005930:MEMORY:UNPLANNED_SHUTDOWN:WAFER_LOSS",
+        "unit": "conditional duration and wafer-loss magnitude",
+        "value": "weeks to normalize; tens of thousands of wafers potentially discarded"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.68,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-32a0cf049fc23e335af60048",
+        "economic_mechanism": "엔비디아가 협력사 성과를 정기 점검해 물량 배분에 반영하고 AMD가 HBM4 우선공급 관계에서 공급 중단 방지 통제를 요구한다는 보도는 공급 신뢰가 고객 배정의 실제 조건으로 작동하는 경로를 제시한다.",
+        "exact_quote": "실제로 주요 고객사들은 공급망 안정성을 엄격하게 평가하고 있다. 엔비디아는 분기와 반기 단위로 협력사의 성과를 점검하고, 그 결과를 물량 배분에 반영한다. 6세대 고대역폭메모리(HBM4) 우선공급계약을 체결한 AMD도 공급 중단이 발생하지 않도록 철저한 관리와 통제를 요구하고 있다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "기존 generic 발주 축소·공급선 다변화 위험보다 구체적으로 현재 HBM 고객의 정기 성과평가와 배정 반영 메커니즘을 제시한다. 실제 감액·물량 축소나 계약 위반이 있었다고 주장하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:CUSTOMER_RELIABILITY_ALLOCATION_CONTROL",
+        "normalized_object": "HBM 고객의 공급 안정성 평가·통제가 물량 배분에 미치는 영향",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "current as of 2026-04-15",
+        "predicate": "엔비디아는 협력사 성과 평가를 물량 배분에 반영하고 AMD는 삼성전자 HBM4 우선공급 관계에서 공급 중단 방지 관리를 요구하는 것으로 보도됐다",
+        "predicate_family": "HBM_CUSTOMER_SUPPLY_RELIABILITY_ALLOCATION_CONTROL",
+        "primitive_tags": [
+          "NVIDIA",
+          "AMD",
+          "SUPPLY_RELIABILITY",
+          "ALLOCATION_CONTROL"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "SAMSUNG_HBM_CUSTOMER_SUPPLY_RELIABILITY_ALLOCATION_CONTROL",
+        "question_family_tags": [
+          "HBM_CUSTOMER_ALLOCATION",
+          "SUPPLY_RELIABILITY",
+          "CUSTOMER_PERFORMANCE_REVIEW"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 고객사의 공급 안정성 평가와 물량 배분",
+        "subject_id": "005930:MEMORY:HBM:CUSTOMER_SUPPLY_RELIABILITY:ALLOCATION",
+        "unit": "reported customer allocation-control mechanism",
+        "value": "NVIDIA periodic supplier review affects allocation; AMD requires interruption-prevention controls"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "21ea18e96498fc4bb040702cbdb86ba9eb6f5ba72b8f20ae50b8bf83de6bdb9d",
+  "production_score_authority": false,
+  "prompt_hash": "ab327c66b7fc6a7752f5c6a8f808dc6f8d44daea8d4a9752dc24c43f34fb090a",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3d5b804d30b324532c96cbc57c972b4f4e0e50af863dd2f5032d630b93f3fbb5",
+  "response_id": "COLLABRESP-a7cab3c3eb434e1065d2ef81c2a8ea0685b659f0a80c5698790d518098589cfe",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

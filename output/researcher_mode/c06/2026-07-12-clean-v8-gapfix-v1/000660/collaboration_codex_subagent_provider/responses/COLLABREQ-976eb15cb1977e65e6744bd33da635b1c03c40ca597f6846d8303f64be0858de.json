@@ -1,0 +1,564 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Continuation page 2 adds 12 distinct source-order historical broker atoms after the exact prior 12: one target-price revision, two operating-profit revision rates, four valuation-formula legs, two consolidated revenue forecasts, two operating-profit forecasts, and FY2024 controlling-shareholder net income. All are dated 2024 broker lineage and are marked SUPERSEDED.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Issuer-wide memory valuation",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK Securities' historical target-price increase records its March 2024 valuation view; it is superseded broker opinion, not a current valuation or investment instruction.",
+        "exact_quote": "SK증권은 SK하이닉스의 목표주가를 기존 190,000원에서 220,000원으로 16%\n상향한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The historical target-price change is a distinct dated market-expectation input, explicitly preserved as superseded rather than current.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-HISTORICAL-BROKER-VALUATION",
+        "normalized_object": "SK hynix March 2024 broker target-price revision to KRW 220,000 from KRW 190,000",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "published 2024-03-14",
+        "predicate": "SK Securities raised its historical SK hynix target price from KRW 190,000 to KRW 220,000, a 16% increase.",
+        "predicate_family": "BROKER_TARGET_PRICE_REVISION",
+        "primitive_tags": [
+          "target_price",
+          "broker"
+        ],
+        "product_family": "SK hynix equity valuation",
+        "question_family_id": "sksec_skh_target_price_revision_20240314",
+        "question_family_tags": [
+          "valuation",
+          "historical_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price revision",
+        "subject_id": "000660:BROKER_TARGET_PRICE:20240314:SKSEC",
+        "unit": "KRW per share",
+        "value": 220000
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The dated broker raised its FY2024 consolidated operating-profit estimate by 3%; the percentage-only revision is superseded and does not identify HBM-only profit or satisfy the structured revision role's old-and-new value requirement.",
+        "exact_quote": "SK증권은 2024년, 2025년 예상 영업이익을 각각3%, 18% 상향 조정하고, 목표주\n시가총액 119,101 십억원\n가는 2024, 2025년 평균 BPS 95,775원에 Target P/B 2.3X (2013년 흑자전환 사\n주요주주\n에스케이스퀘어(외9) 20.07% 이클 2.0X에 HBM 프리미엄 10%를 할증)를 적용했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 3% dated revision is a distinct historical broker expectation change, but the quote lacks both old and revised numeric estimates and therefore receives no structured revision role.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-HISTORICAL-OP-REVISION",
+        "normalized_object": "SK hynix FY2024 operating-profit estimate 3% upward revision by SK Securities",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "SK Securities raised its FY2024 SK hynix operating-profit estimate by 3% in March 2024.",
+        "predicate_family": "BROKER_OPERATING_PROFIT_ESTIMATE_REVISION_RATE",
+        "primitive_tags": [
+          "operating_profit",
+          "broker_revision"
+        ],
+        "product_family": "Issuer-wide memory earnings",
+        "question_family_id": "sksec_skh_operating_profit_revision_fy2024e",
+        "question_family_tags": [
+          "earnings_revision",
+          "historical_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical consolidated operating-profit estimate revision",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_REVISION:FY2024E:SKSEC_20240314",
+        "unit": "percent revision",
+        "value": 3
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The dated broker raised its FY2025 consolidated operating-profit estimate by 18%; this percentage-only historical revision is superseded and not HBM-only profit.",
+        "exact_quote": "SK증권은 2024년, 2025년 예상 영업이익을 각각3%, 18% 상향 조정하고, 목표주\n시가총액 119,101 십억원\n가는 2024, 2025년 평균 BPS 95,775원에 Target P/B 2.3X (2013년 흑자전환 사\n주요주주\n에스케이스퀘어(외9) 20.07% 이클 2.0X에 HBM 프리미엄 10%를 할증)를 적용했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 18% dated revision is a distinct historical broker expectation change, with no structured revision role because old and new estimate points are not both stated.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-HISTORICAL-OP-REVISION",
+        "normalized_object": "SK hynix FY2025 operating-profit estimate 18% upward revision by SK Securities",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "SK Securities raised its FY2025 SK hynix operating-profit estimate by 18% in March 2024.",
+        "predicate_family": "BROKER_OPERATING_PROFIT_ESTIMATE_REVISION_RATE",
+        "primitive_tags": [
+          "operating_profit",
+          "broker_revision"
+        ],
+        "product_family": "Issuer-wide memory earnings",
+        "question_family_id": "sksec_skh_operating_profit_revision_fy2025e",
+        "question_family_tags": [
+          "earnings_revision",
+          "historical_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical consolidated operating-profit estimate revision",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_REVISION:FY2025E:SKSEC_20240314",
+        "unit": "percent revision",
+        "value": 18
+      },
+      {
+        "business_segment": "Issuer-wide memory valuation",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The historical broker used average FY2024-FY2025 BPS as its target-P/B denominator; it is superseded issuer-wide book value, not HBM-only book value.",
+        "exact_quote": "SK증권은 2024년, 2025년 예상 영업이익을 각각3%, 18% 상향 조정하고, 목표주\n시가총액 119,101 십억원\n가는 2024, 2025년 평균 BPS 95,775원에 Target P/B 2.3X (2013년 흑자전환 사\n주요주주\n에스케이스퀘어(외9) 20.07% 이클 2.0X에 HBM 프리미엄 10%를 할증)를 적용했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The BPS point is the explicit denominator in the historical valuation formula and is retained only as superseded lineage.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-HISTORICAL-PB-VALUATION",
+        "normalized_object": "SK hynix FY2024-FY2025 average BPS KRW 95,775 historical SK Securities estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E-FY2025E average; published 2024-03-14",
+        "predicate": "SK Securities used average FY2024-FY2025 BPS of KRW 95,775 in its March 2024 valuation.",
+        "predicate_family": "BROKER_AVERAGE_FORWARD_BOOK_VALUE_ESTIMATE",
+        "primitive_tags": [
+          "BPS",
+          "broker_forecast"
+        ],
+        "product_family": "SK hynix forward book value",
+        "question_family_id": "sksec_skh_average_bps_fy2024e_fy2025e",
+        "question_family_tags": [
+          "valuation",
+          "book_value"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK hynix historical FY2024-FY2025 average BPS broker estimate",
+        "subject_id": "000660:AVERAGE_BPS:FY2024E_FY2025E:SKSEC_20240314",
+        "unit": "KRW per share",
+        "value": 95775
+      },
+      {
+        "business_segment": "Issuer-wide memory valuation",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The historical target P/B is the multiplier applied to the broker's forward BPS denominator and is superseded by later market information.",
+        "exact_quote": "SK증권은 2024년, 2025년 예상 영업이익을 각각3%, 18% 상향 조정하고, 목표주\n시가총액 119,101 십억원\n가는 2024, 2025년 평균 BPS 95,775원에 Target P/B 2.3X (2013년 흑자전환 사\n주요주주\n에스케이스퀘어(외9) 20.07% 이클 2.0X에 HBM 프리미엄 10%를 할증)를 적용했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 2.3x target multiple is an explicit historical valuation-formula leg and is not a current multiple.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-HISTORICAL-PB-VALUATION",
+        "normalized_object": "SK hynix historical target P/B 2.3 times applied by SK Securities",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "published 2024-03-14",
+        "predicate": "SK Securities applied a target P/B of 2.3 times in its March 2024 SK hynix valuation.",
+        "predicate_family": "BROKER_TARGET_FORWARD_PB",
+        "primitive_tags": [
+          "PBR",
+          "broker_forecast"
+        ],
+        "product_family": "SK hynix forward P/B valuation",
+        "question_family_id": "sksec_skh_target_pb_20240314",
+        "question_family_tags": [
+          "valuation",
+          "forward_pb"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK hynix historical broker target P/B multiple",
+        "subject_id": "000660:TARGET_PB:20240314:SKSEC",
+        "unit": "times",
+        "value": 2.3
+      },
+      {
+        "business_segment": "Issuer-wide memory valuation",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker used the 2013 turnaround-cycle P/B as a historical base multiple before adding an HBM premium; it is not a current market multiple.",
+        "exact_quote": "SK증권은 2024년, 2025년 예상 영업이익을 각각3%, 18% 상향 조정하고, 목표주\n시가총액 119,101 십억원\n가는 2024, 2025년 평균 BPS 95,775원에 Target P/B 2.3X (2013년 흑자전환 사\n주요주주\n에스케이스퀘어(외9) 20.07% 이클 2.0X에 HBM 프리미엄 10%를 할증)를 적용했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is the explicit base-multiple leg of the historical P/B formula, retained as superseded lineage.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-HISTORICAL-PB-VALUATION",
+        "normalized_object": "SK hynix 2013 turnaround-cycle P/B 2.0 times historical valuation base",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2013-cycle reference cited 2024-03-14",
+        "predicate": "SK Securities referenced a 2.0-times P/B from the 2013 turnaround cycle as its base multiple.",
+        "predicate_family": "BROKER_HISTORICAL_PB_BASE_REFERENCE",
+        "primitive_tags": [
+          "PBR",
+          "cycle_reference"
+        ],
+        "product_family": "SK hynix forward P/B valuation",
+        "question_family_id": "sksec_skh_base_cycle_pb_reference_2013",
+        "question_family_tags": [
+          "valuation",
+          "historical_multiple"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK hynix historical turnaround-cycle P/B reference",
+        "subject_id": "000660:PB_BASE_CYCLE_REFERENCE:2013:SKSEC_20240314",
+        "unit": "times",
+        "value": 2.0
+      },
+      {
+        "business_segment": "HBM broker valuation",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker added a 10% HBM premium to its historical base P/B; this is a superseded valuation judgment, not HBM revenue, price, or contract evidence.",
+        "exact_quote": "SK증권은 2024년, 2025년 예상 영업이익을 각각3%, 18% 상향 조정하고, 목표주\n시가총액 119,101 십억원\n가는 2024, 2025년 평균 BPS 95,775원에 Target P/B 2.3X (2013년 흑자전환 사\n주요주주\n에스케이스퀘어(외9) 20.07% 이클 2.0X에 HBM 프리미엄 10%를 할증)를 적용했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The premium is a distinct formula leg in the dated broker valuation, explicitly not operational or contractual HBM evidence.",
+        "mechanism_scope_id": "MSCOPE-000660-HBM-HISTORICAL-VALUATION-PREMIUM",
+        "normalized_object": "SK hynix historical HBM P/B premium 10% applied by SK Securities",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "published 2024-03-14",
+        "predicate": "SK Securities applied a 10% HBM premium to its 2.0-times base P/B in March 2024.",
+        "predicate_family": "BROKER_HBM_VALUATION_PREMIUM",
+        "primitive_tags": [
+          "PBR",
+          "HBM_premium"
+        ],
+        "product_family": "HBM valuation premium",
+        "question_family_id": "sksec_skh_hbm_pb_premium_20240314",
+        "question_family_tags": [
+          "valuation",
+          "hbm_premium"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical HBM-related P/B premium",
+        "subject_id": "000660:HBM_PB_PREMIUM:20240314:SKSEC",
+        "unit": "percent premium",
+        "value": 10
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The FY2024 consolidated revenue point is a historical broker forecast and is neither current actual revenue nor HBM-only revenue.",
+        "exact_quote": "구분 단위 2020 2021 2022 2023E 2024E 2025E\n주가 및 상대수익률 매출액 십억원 31,900 42,998 44,622 32,766 61,006 80,250",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2024 table point is a distinct historical consolidated broker forecast, preserved as superseded rather than current actual.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-HISTORICAL-BROKER-EARNINGS",
+        "normalized_object": "SK hynix FY2024 consolidated revenue KRW 61,006 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "SK Securities forecast SK hynix FY2024 consolidated revenue at KRW 61,006 billion in March 2024.",
+        "predicate_family": "BROKER_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "revenue",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings",
+        "question_family_id": "sksec_skh_consolidated_revenue_fy2024e",
+        "question_family_tags": [
+          "earnings",
+          "historical_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical consolidated revenue broker forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 61006
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The FY2025 consolidated revenue point is a historical broker forecast and is neither current actual revenue nor HBM-only revenue.",
+        "exact_quote": "매출액 십억원 31,900 42,998 44,622 32,766 61,006 80,250",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2025 table point is a distinct superseded consolidated broker forecast, without HBM attribution.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-HISTORICAL-BROKER-EARNINGS",
+        "normalized_object": "SK hynix FY2025 consolidated revenue KRW 80,250 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "SK Securities forecast SK hynix FY2025 consolidated revenue at KRW 80,250 billion in March 2024.",
+        "predicate_family": "BROKER_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "revenue",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings",
+        "question_family_id": "sksec_skh_consolidated_revenue_fy2025e",
+        "question_family_tags": [
+          "earnings",
+          "historical_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical consolidated revenue broker forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 80250
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The FY2024 operating-profit point is a historical consolidated broker forecast, not current actual profit or HBM-only earnings.",
+        "exact_quote": "영업이익 십억원 5,013 12,410 6,809 -7,730 11,720 22,367",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2024 point is a distinct superseded consolidated operating-profit forecast and is not assigned a revision role.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-HISTORICAL-BROKER-EARNINGS",
+        "normalized_object": "SK hynix FY2024 consolidated operating profit KRW 11,720 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "SK Securities forecast SK hynix FY2024 consolidated operating profit at KRW 11,720 billion in March 2024.",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "operating_profit",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings",
+        "question_family_id": "sksec_skh_consolidated_operating_profit_fy2024e",
+        "question_family_tags": [
+          "earnings",
+          "historical_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical consolidated operating-profit broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 11720
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The FY2025 operating-profit point is a historical consolidated broker forecast, not current actual profit or HBM-only earnings.",
+        "exact_quote": "영업이익 십억원 5,013 12,410 6,809 -7,730 11,720 22,367",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2025 point is a distinct superseded consolidated operating-profit forecast and is not HBM-only.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-HISTORICAL-BROKER-EARNINGS",
+        "normalized_object": "SK hynix FY2025 consolidated operating profit KRW 22,367 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "SK Securities forecast SK hynix FY2025 consolidated operating profit at KRW 22,367 billion in March 2024.",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "operating_profit",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings",
+        "question_family_id": "sksec_skh_consolidated_operating_profit_fy2025e",
+        "question_family_tags": [
+          "earnings",
+          "historical_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical consolidated operating-profit broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 22367
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The FY2024 controlling-shareholder net-income point is a historical broker forecast; it is not current actual net income or HBM-only profit.",
+        "exact_quote": "순이익(지배주주) 십억원 4,755 9,602 2,230 -9,112 7,417 15,541",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2024 point is a distinct superseded controlling-shareholder net-income forecast and retains its consolidated denominator.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-HISTORICAL-BROKER-EARNINGS",
+        "normalized_object": "SK hynix FY2024 controlling-shareholder net income KRW 7,417 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "SK Securities forecast SK hynix FY2024 controlling-shareholder net income at KRW 7,417 billion in March 2024.",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "net_income",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings",
+        "question_family_id": "sksec_skh_controlling_net_income_fy2024e",
+        "question_family_tags": [
+          "earnings",
+          "historical_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical controlling-shareholder net-income broker forecast",
+        "subject_id": "000660:CONTROLLING_NET_INCOME:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 7417
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "Continue source order for remaining FY2025 controlling net income, EPS/PER/PBR/EV-EBITDA/ROE, quarterly consolidated and DRAM forecasts, explicit old-versus-new forecast tables, and later financial-statement estimates. Preserve SUPERSEDED historical-broker lifecycle, period/formula/denominator, consolidated versus DRAM versus HBM-only attribution, and no issuer-guidance, durable-visibility, or contract inference."
+    ]
+  },
+  "payload_hash": "1ea856318f275666b6378f2316028a0ca886d541e24a79dd7fa0b5dde29a1c44",
+  "production_score_authority": false,
+  "prompt_hash": "8eaed5fa2d952b444fa888500fb97810435c81ec078331644dd1d42b7388572d",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-976eb15cb1977e65e6744bd33da635b1c03c40ca597f6846d8303f64be0858de",
+  "response_id": "COLLABRESP-acc4bbcabe91a6548583f565ea7ced730005ce625bcdf9f625bf43a9d2ac9d1c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

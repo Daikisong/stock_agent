@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "rationale": "The supplied continuation was independently reviewed to the end in source order after strict exact and semantic deduplication against all 204 prior accepted facts. The repeated SK hynix company page, forecast tables, valuation rows, and segment rows are already represented by the prior roster. The only later mention is written from SK Square's perspective as an expected dividend inflow from SK hynix; it is not a new target-direct issuer declaration, signed obligation, or HBM-only fact and cannot be promoted across issuer scope. No distinct target-direct material atom remains in this supplied transport page, while this same document already has accepted prior facts.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "5c4d33815782b19f477b82b8d5d6734f3fa2b072981d19e59282be2815a48f31",
+  "production_score_authority": false,
+  "prompt_hash": "38dcb270bd33b90c50ec5f160c3e1aae98e4ed5baa3176041e02a54536c2608b",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f9a7b36b59c51da539f709e1c48b28deff9cfbab715477e67f5eebb6c94c8ce1",
+  "response_id": "COLLABRESP-18d7323f83363d16052093b12c6d5339b71fb35e3f3a1b82ddb641ec012d17d5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

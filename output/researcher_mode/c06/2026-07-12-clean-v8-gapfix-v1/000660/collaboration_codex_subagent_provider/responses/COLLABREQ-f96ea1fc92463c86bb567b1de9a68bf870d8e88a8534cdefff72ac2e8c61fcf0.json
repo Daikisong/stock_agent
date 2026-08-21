@@ -1,0 +1,89 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "rationale": "Continuation page 3 reviewed the complete supplied literal transport chunk 0 of 2 in source order and emitted one market-positioning fact distinct from the seven previously accepted facts. ETF holdings tables, generic macro/sector commentary, historical 2018 timing, and the internally inconsistent OCR mapping of the 2027 operating-margin peak were excluded. The emitted row is a broker market-flow observation and is not issuer guidance, operating performance, a signed HBM contract, or DURABLE_VISIBILITY. The canonical parent remains unresolved because chunk 1 of 2 is outside this immutable request.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory market",
+        "confidence": 0.84,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권은 SK하이닉스·삼성전자·Micron 비중을 75% 편입한 DRAM ETF가 상장된 뒤 한국 증시 추종 ETF인 EWY의 자금 유입 강도가 약화됐다고 관찰했다. 이는 투자수단 간 상대 자금 이동이며 SK하이닉스의 영업실적, 고객계약 또는 issuer guidance가 아니다.",
+        "exact_quote": "•SK하이닉스, 삼성전자, Micron 비중을75% 편입한DRAM이상장된이후한국증시추종ETF인EWY의자금유입강도약화",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Target을 포함한 메모리 집중 투자수단과 광범위 한국 익스포저 사이의 현재 자금 이동을 직접 보여줘 market-mispricing 및 information-confidence objective를 진전시키되 운영경제로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "Relative fund-flow shift from broad Korea exposure after concentrated memory ETF launch",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current as of 2026-05-22",
+        "predicate": "메모리 3사 집중 DRAM ETF 상장 이후 EWY 자금 유입 강도가 약화됐다고 관찰했다",
+        "predicate_family": "BROKER_MEMORY_ETF_RELATIVE_FUND_FLOW_OBSERVATION",
+        "primitive_tags": [
+          "SK하이닉스",
+          "DRAM ETF",
+          "EWY",
+          "75%",
+          "fund_flow"
+        ],
+        "product_family": "Memory issuers",
+        "question_family_id": "memory_etf_relative_fund_flow",
+        "question_family_tags": [
+          "memory_etf",
+          "fund_flow",
+          "market_positioning"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.84,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 집중 DRAM ETF 상장 이후 EWY 자금 유입 변화",
+        "subject_id": "000660:DRAM_ETF_EWY_RELATIVE_FLOW_20260522",
+        "unit": "",
+        "value": "EWY inflow intensity weakened after launch of DRAM ETF with 75% combined exposure"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-3fa5f1bda504b0cb332bde68"
+    ],
+    "unresolved_research_notes": [
+      "The immutable request supplies transport chunk 0 of 2; canonical parent chunk 1 of 2 remains for a deterministic follow-up."
+    ]
+  },
+  "payload_hash": "5ccd4d7f032d8fb9b541b26e2f2f7eeb4d8cae345cd886e7851a9c2b4ec5fcae",
+  "production_score_authority": false,
+  "prompt_hash": "6619e7c35c634d2004937af065bb330c6ec44ecd51e99d8d8c12115a61cfd378",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f96ea1fc92463c86bb567b1de9a68bf870d8e88a8534cdefff72ac2e8c61fcf0",
+  "response_id": "COLLABRESP-7d320d28a40ad36f6c5e8e44ccef5bf9dcde046eb6db4a33d94a0fa537c28a10",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

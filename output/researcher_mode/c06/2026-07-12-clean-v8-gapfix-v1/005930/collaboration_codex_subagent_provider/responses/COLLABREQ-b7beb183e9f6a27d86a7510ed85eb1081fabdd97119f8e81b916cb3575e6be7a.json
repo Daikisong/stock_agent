@@ -1,0 +1,73 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5d3442adb1b0d85265de9109",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-ee6cb6e5bd278ea9cb060128",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-e2a8037a6479cd53c9efeaa2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "PUBLIC_BROKER_PDF hint와 달리 실제 URL owner·제목 metadata는 비증권사 공공기관·issuer filing·투자설명서 또는 unrelated document를 가리켜 요청 family와 005930 objective를 모두 충족하지 않는다. family=NONE, nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d13848dcf2b2137ae357ae0b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 모든 후보를 exact-once 분류했지만 005930 target-specific same-broker estimate/revision/valuation 원문 route는 확인되지 않았다.",
+      "material 0은 적격 source가 존재하지 않는다는 증명이 아니며, snippet·metadata를 evidence 또는 current expectation fact로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "899f8154b81e02b0c86bd70df0ada4b4e803a63b039a58ce97371255fa1564be",
+  "production_score_authority": false,
+  "prompt_hash": "dd7cd504e0daadd97de417b58de5641ea7259762ea52070b2b674c805b24048b",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b7beb183e9f6a27d86a7510ed85eb1081fabdd97119f8e81b916cb3575e6be7a",
+  "response_id": "COLLABRESP-776d487b79bcc688f2f7573d7392f9bd460fd8fb08a009148285292da0a232e5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

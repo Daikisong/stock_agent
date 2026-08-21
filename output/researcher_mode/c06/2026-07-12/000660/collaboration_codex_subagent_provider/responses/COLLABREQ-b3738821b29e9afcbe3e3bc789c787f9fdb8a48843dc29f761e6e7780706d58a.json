@@ -1,0 +1,278 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "issuer가 직접 제시한 기간 명시 숫자형 forward guidance",
+          "HBM 또는 최소 memory 제품군의 실제 매출·영업이익·마진·현금흐름 기여"
+        ],
+        "rationale": "현재 memo는 FY2025·1Q26 전사 actual, DRAM 가격·매출, cash conversion과 revision을 균형 있게 다루지만 structured_result가 FORWARD_GUIDANCE와 SEGMENT_CONTRIBUTION을 계속 missing으로 둔다. 전사·DRAM 결과를 HBM 단독 EPS·FCF duration으로 연장하지 않으려면 두 역할의 issuer 근거가 필요하다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "HBM4 양산, 고객 요청수요, FY2026 DRAM 수요 확보와 공급 논의, 월·분기 합의 및 LTA 미확정 counter를 함께 보존해 현재 가시성과 계약 한계를 판단할 수 있다. DURABLE_VISIBILITY의 별도 구조화 gap은 valuation component에서 명시적으로 다룬다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "100% 전사 반도체 가동률, DRAM blended ASP 상승, HBM의 물리적 CAPA 소모와 HBM ASP 하락·경쟁 공급·수요 탄력 counter를 분리해 현재 병목과 가격전이를 과잉 귀속 없이 설명한다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "revision·forward multiple·peer와 historical band를 활용하면서 이미 발생한 rerating, FY2027 이후 감익, 문서 내부 기준 충돌을 counter로 유지하므로 현 정보에서 조건부 기대 격차를 평가할 수 있다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "기간·확정 물량 또는 CAPA와 취소권·위약금·선수금 조건이 있는 target-attributable 고객 commitment"
+        ],
+        "rationale": "HBM 매출 성장과 SOTP·peer valuation bridge는 있으나 structured_result가 DURABLE_VISIBILITY를 missing으로 둔다. 공급 논의·요청수요와 broker LTA 서술은 구속력 있는 고객 commitment가 아니므로 장기 scarcity premium의 duration 판단은 아직 충분하지 않다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "가시수요 연동 투자, 실제 전사 현금흐름·순현금, 운전자본 흡수·유형자산 지출·혼합제품 투자 및 승인조건을 함께 보존해 HBM 전용 자본효율로 오귀속하지 않는 현재 판단이 가능하다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "HBM4 고객 요구성능 충족·양산 진행 또는 공급관계에 대한 issuer와 독립된 customer 또는 official filing corroboration",
+          "현재 semantic memo rewrite를 기준으로 한 analyst·skeptic·calibration의 독립 재심사"
+        ],
+        "rationale": "현재 judge proposal은 analyst 3.8, skeptic 2.6, calibration 3.2로 material disagreement가 남고, 11개 current information facts 중 explicit independent corroborating group이 0이다. 같은 issuer 반복을 독립 확인으로 세지 않는 semantic memo rewrite와 새 3-role judge가 필요하며, 새 source는 구체적 customer 또는 official filing corroboration일 때만 유효하다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": false,
+    "failure_assessments": [
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-03b02675ca1d7e2f39423ac6",
+        "rationale": "snippet-only 후보가 full document로 전환되지 못한 fetch 경계이며 source absence 증거가 아니다. 이 group은 alternate route가 확인되지 않아 동일 경로의 기계적 반복은 유효하지 않다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-dad7f36e4d6f1c9e2f006160",
+        "rationale": "query provider transport 오류 31건은 문서 부재가 아니라 provider 실패다. transport가 정상인 semantic retry에서만 다시 평가할 수 있다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-2d9439d7c171deebfd934d4c",
+        "rationale": "full fetch가 필요한 snippet-only 결과이며 alternate route_required가 명시됐다. 새 verified alternate full-document identity가 있을 때만 재시도할 수 있다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-33bd389bcd242693264dd5e6",
+        "rationale": "두 문서는 snippet만 남아 evidence로 사용할 수 없지만 retryable full-fetch route가 남아 있다. snippet 수치를 fact로 승격하지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-448391aca21afa79ffdb87ee",
+        "rationale": "full fetch 뒤 as_of_date 이후 문서로 확인된 10건은 미래누수이므로 현재 연구에 사용할 수 없고 재시도 대상도 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-a66c0e9e74284de2c6c42094",
+        "rationale": "full fetch 후에도 publication date가 검증되지 않은 7건은 as-of 안전성을 입증하지 못한 fetch 검증 실패이며 source absence가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-a6ad6d2f9e39208cb8d9a2e3",
+        "rationale": "query 결과의 full document가 as_of_date 이후로 판정된 10건은 현재 판단에서 제외해야 하며 동일 문서 재사용은 허용되지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-aa4d29bb0f8b4311849acfe7",
+        "rationale": "여러 objective에 걸친 search provider 오류 35건은 transport 실패다. 이는 검색범위가 충분했다거나 자료가 없다는 증명이 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-aa53327c4d887284a29a8367",
+        "rationale": "단일 zero-result는 명시적으로 SEARCH_NO_RESULT_NOT_SATURATION이며 source absence를 입증하지 않는다. 의미상 새로운 공식 identity가 있을 때만 후속 검색이 가능하다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-b06f5078025aaa679a5f2fae",
+        "rationale": "두 snippet-only 문서는 full fetch가 되지 않아 evidence가 아니며, 현재 group에는 retryable alternate route가 확인되지 않았다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-b9a707d45ecab434f593a8ca",
+        "rationale": "full fetch 후 publication date를 검증하지 못한 7건은 as-of 판정에 쓸 수 없는 문서 검증 실패다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "LLM이 37개 prior query 뒤 새 valid query를 만들지 못했다는 사실은 semantic novelty 부재를 뜻하지만 원천자료 부재 증거는 아니다. 새 verified document identity가 제시될 때만 다시 묻는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-fb02a0ef4e9f7dac18df4044",
+        "rationale": "candidate source locator date가 미래인 10건은 as_of_date 안전성 위반으로 제외하며 현재 research fact나 absence 판단에 쓰지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "direction": "POSITIVE",
+        "fact_need": "target이 직접 공시한 기간 명시 숫자형 매출·이익·출하·Capex point 또는 range",
+        "why_material": "broker revision과 현재 actual을 issuer가 제시한 미래 earnings·FCF duration으로 오인하지 않기 위해 필요하다."
+      },
+      {
+        "component_id": "eps_fcf_explosion",
+        "direction": "RESOLUTION",
+        "fact_need": "issuer 정기·분기 공시의 HBM 또는 memory 실제 매출·영업이익·마진·현금흐름 기여",
+        "why_material": "전사·DRAM 수치를 HBM 단독 이익과 cash conversion으로 오귀속하지 않기 위해 필요하다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "direction": "POSITIVE",
+        "fact_need": "issuer 또는 고객 공식 문서의 기간·확정 물량 또는 CAPA와 취소권·위약금·선수금이 있는 HBM commitment",
+        "why_material": "공급 논의와 요청수요를 구속력 있는 DURABLE_VISIBILITY와 장기 rerating 근거로 승격하지 않기 위해 필요하다."
+      },
+      {
+        "component_id": "information_confidence",
+        "direction": "RESOLUTION",
+        "fact_need": "HBM4 성능·양산·공급관계 중 하나를 확인하는 issuer와 독립된 customer 또는 official filing corroboration",
+        "why_material": "동일 issuer 반복의 독립성 한계와 세 judge의 material proposal 차이를 source-backed 관계 확인으로 좁히기 위해 필요하다."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": false,
+        "direction": "기간·숫자가 명시된 issuer forward guidance 원문 identity가 새로 확인될 때만 검증한다.",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "현재 actual과 broker revision을 issuer guidance로 대체하지 않으면서 FORWARD_GUIDANCE를 해소할 수 있는 공식 계열이다.",
+        "source_family": "ISSUER_EARNINGS_RELEASE"
+      },
+      {
+        "counter_or_supersession": false,
+        "direction": "HBM 또는 memory 제품군의 실제 손익·마진·현금흐름을 분리한 정기·분기 공시 표나 주석의 새 identity를 확인한다.",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "전사·DRAM actual을 HBM 단독 SEGMENT_CONTRIBUTION으로 오귀속하지 않는 가장 직접적인 issuer filing route다.",
+        "source_family": "OPENDART"
+      },
+      {
+        "counter_or_supersession": false,
+        "direction": "target-attributable HBM commitment의 기간·확정 물량 또는 CAPA와 취소·위약·선수금 조건을 함께 밝힌 새 고객 공식 문서 identity만 검증한다.",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "요청수요·공급 논의·broker LTA 서술과 구속력 있는 DURABLE_VISIBILITY를 구분할 수 있는 독립 공식 route다.",
+        "source_family": "CUSTOMER_OFFICIAL"
+      },
+      {
+        "counter_or_supersession": false,
+        "direction": "HBM4 성능 충족·양산 ramp 또는 target 공급관계를 독립 확인하는 새 customer filing·release identity만 검증한다.",
+        "objective_id": "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+        "rationale": "동일 issuer 반복을 추가하는 대신 information-confidence judge disagreement를 독립 provenance로 좁힐 수 있는 공식 계열이다.",
+        "source_family": "CUSTOMER_OFFICIAL"
+      }
+    ],
+    "next_actions": [
+      "SOURCE_QUERY_GENERATION LLM은 prior 37개 literal과 failure ledger를 대조하고 새 verified official document identity가 있을 때만 bounded query를 제안한다.",
+      "새 공식 원문이 full-fetch되고 validator를 통과할 때만 FORWARD_GUIDANCE, SEGMENT_CONTRIBUTION, DURABLE_VISIBILITY 또는 independent corroboration fact를 추가한다.",
+      "information-confidence semantic memo rewrite가 current memo로 소비된 뒤 analyst·skeptic·calibration 세 역할의 새 독립 judge를 생성해 material disagreement를 재평가한다.",
+      "검색 불발과 LLM empty response를 source absence로 승격하지 않고, 새 identity가 없으면 source·score pending 상태를 유지한다."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "기존 issuer guidance·IR·DART 검색의 동의어 변형",
+          "broker forecast를 issuer guidance로 취급하는 검색",
+          "전사·DRAM 수치를 HBM 단독 손익으로 귀속하는 검색"
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "research_need": "기존 37개 literal과 의미상 다른 새 issuer earnings·filing identity에서 숫자형 forward guidance 또는 HBM/memory actual segment contribution을 확인한다."
+      },
+      {
+        "avoid_repeating": [
+          "공급 논의 완료를 체결 계약으로 바꾸는 검색",
+          "고객 요청수요를 취소불능 물량으로 바꾸는 검색",
+          "이미 실패한 Form 10-Q·broker LTA route의 동의어 반복"
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "research_need": "새 customer 또는 issuer official identity에서 기간·확정 물량/CAPA와 취소·위약·선수금 조건이 함께 있는 target-attributable HBM commitment를 확인한다."
+      },
+      {
+        "avoid_repeating": [
+          "SK하이닉스 newsroom 문구의 재검색",
+          "독립 고객 귀속이 없는 산업·broker 요약",
+          "고객명·qualification·supply attribution이 없는 snippet"
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+        "research_need": "HBM4 성능·양산·공급관계 중 하나를 issuer와 독립된 customer official 문서로 확인해 동일 issuer source-group 한계를 좁힌다."
+      }
+    ],
+    "rationale": "facts243와 current 7 memos, red-team·synthesis는 현재 운영 강도와 counter를 충분히 설명하지만 structured_result는 eps_fcf_explosion의 FORWARD_GUIDANCE·SEGMENT_CONTRIBUTION과 valuation_rerating의 DURABLE_VISIBILITY를 미확보로 둔다. information_confidence는 explicit independent corroborating group이 0이고 세 judge가 3.8/2.6/3.2로 갈려 새 semantic memo 기준의 3-role 재심사가 필요하다. 37개 prior query 뒤 LLM이 empty를 반환한 사실과 zero-result·provider/fetch 실패는 source absence 증거가 아니다. 새 verified official document identity가 있을 때만 LLM query가 이어져야 하므로 현재는 NEXT_RESEARCH_REQUIRED이며 score·Stage 권한은 부여하지 않는다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": false,
+    "unresolved_material_questions": [
+      "issuer가 기간 명시 숫자형 forward guidance를 실제 공시했는가?",
+      "HBM 또는 memory 제품군의 실제 매출·영업이익·마진·현금흐름을 전사·DRAM과 구분할 수 있는가?",
+      "고객 또는 issuer 공식 문서에 기간·확정 물량/CAPA 및 취소·위약·선수금 조건이 함께 있는 HBM commitment가 존재하는가?",
+      "HBM4 성능·양산·공급관계에 대한 issuer 독립 corroboration이 있는가?",
+      "information-confidence semantic rewrite를 기준으로 새 analyst·skeptic·calibration 판단이 material 3.8/2.6/3.2 disagreement를 좁히는가?"
+    ]
+  },
+  "payload_hash": "f8740ca1a2caffcf09a1c5de9f04252a0a2771bef57c380f9f86e3c92f750ccf",
+  "production_score_authority": false,
+  "prompt_hash": "9db9f22cd5dbe6bfdd0c571f875737beffd9a73ae2a8edf77ba2d62199906954",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b3738821b29e9afcbe3e3bc789c787f9fdb8a48843dc29f761e6e7780706d58a",
+  "response_id": "COLLABRESP-5e7fa2d5085ca4bfd54c106fa267695e1afa2ae0e4158adb49130bf688bb6cb3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

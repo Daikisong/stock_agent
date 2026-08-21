@@ -1,0 +1,64 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-d47aa1039a59f645e0d90722",
+      "CRMEMO-68d183a7f105e8c8f32f3b7f",
+      "CRMEMO-de7ce2210903df136e91ed78",
+      "CRMEMO-8c63fe83d12f62f16d045241",
+      "CRMEMO-ff71c66bea89c9c58ce1025a",
+      "CRMEMO-f187b913ffaa871e99a0aa01",
+      "CRMEMO-6067edc7878f29fd73883bcb"
+    ],
+    "confidence": 0.81,
+    "cross_component_support": [
+      "Stable HBM4 yield, final-system performance, production, continuing delivery and commercial revenue conversion align with the capacity and order evidence, supporting a real transition from technical participation to current commercialization.",
+      "Sold-out planned HBM4 capacity, customer purchase orders, some completed mid-to-long-term arrangements and demand above planned supply mutually reinforce earnings visibility and bottleneck strength beyond generic demand commentary.",
+      "Observed memory revenue growth and operating-profit contribution, together with HBM and high-density DDR5 mix-to-ASP conversion, support an earnings bridge; current corporate liquidity and operating cash flow provide funding capacity for supply investment.",
+      "Issuer and reviewed financial records provide strong company and broad-memory baselines, while customer-official material independently confirms technology participation; these sources improve confidence when their scope is kept separate from contract or HBM-profit claims.",
+      "Commercial HBM4 execution and relative forward valuation discounts jointly support a possible rerating mechanism, provided customer allocation, product margin and matched-basis peer valuation remain favorable."
+    ],
+    "cross_component_tensions": [
+      "Earnings strength is observed mainly at company, DS or broad-memory scope, while HBM operating profit, gross margin and company free cash flow are forecasts; the EPS/FCF case therefore cannot attribute those totals to HBM alone.",
+      "Demand, purchase orders, sold-out capacity and longer-duration arrangements support visibility, but NDA leaves customer identity, qualification, committed quantity, minimum purchase, cancellation, pricing, prepayment and allocation undisclosed; customer delay and performance review can still change shipment conversion.",
+      "Direct HBM4 capacity and product-premium evidence supports the bottleneck case, yet memory-wide time utilization, inventory, supply fulfillment and conventional DRAM pricing are not HBM wafer, stacking or packaging capacity. The material analyst-skeptic spread reflects this scope and duration dispute.",
+      "Current earnings and price-mix leverage conflict with a latest DOWN EPS revision, price-growth deceleration, one-time and ramp costs, lower initial HBM4 profitability and past HBM price-and-volume weakness.",
+      "Large company cash and operating cash flow support investment and shareholder return, but asset commitments, memory capital spending, receivable and working-capital outflows compete for cash. The capital-allocation judge spread remains material because HBM-specific free cash flow and investment return are absent.",
+      "Forward PER and PBR discounts and past relative underperformance support a mispricing thesis, while the prior PBR rise, possible cycle-peak earnings denominator, later profit decline, listing-market differences and mixed peer-estimate methods constrain a durable rerating conclusion.",
+      "Official company and memory baselines are stronger than the HBM-specific evidence layer. Unrecovered broker report bodies, issuer-limited customer disclosure and methodologically mixed estimates keep margin, contract, capacity and cash-conversion claims below official-fact confidence."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "Current evidence supports genuine HBM4 commercialization, constrained planned capacity, customer demand and orders, strong broad-memory earnings and a possible relative-valuation rerating path. It does not yet establish the same durability or economic attribution across all components. Company and memory results cannot be reassigned to HBM, technology participation cannot be treated as a purchase contract, sold-out planned capacity cannot substitute for stage-level physical capacity, and corporate cash cannot substitute for HBM free cash flow or investment return. The largest disagreements remain in earnings visibility, bottleneck duration and capital allocation, where positive current mechanisms coexist with missing contract terms, customer allocation, capacity detail, product margin and cash conversion. Completion here means all seven memos and the red-team findings have been synthesized; it does not mean the listed material questions are resolved.",
+    "unresolved_material_questions": [
+      "What are issuer-supported HBM revenue, operating profit, gross margin, operating cash flow and free cash flow, separated from company, DS and broad-memory totals?",
+      "What are the customer-specific qualification status, allocation, committed quantities, contract duration, minimum-purchase, cancellation, price-reset and prepayment terms, and how much has converted to shipment and cash?",
+      "What are HBM wafer-input, stacking and advanced-packaging capacities, stage yields, physical backlog and customer allocation over time, rather than broad-memory time utilization or conventional DRAM scarcity proxies?",
+      "How much HBM-specific capital spending, depreciation and working capital are required, and what free-cash-flow and return-on-invested-capital bridge remains after the ramp?",
+      "Will HBM4 realized pricing and margin offset lower initial profitability, price normalization, customer product delays, supplier performance reviews and the divergence between EPS and operating-profit revisions?",
+      "Does a same-date, same-period and same-accounting peer comparison still show a valuation discount after normalizing listing market, business mix, net cash, return profile and cycle-peak earnings effects?",
+      "Can the full broker report bodies currently represented only by metadata, snippet or raw-path references be recovered and validated without promoting summaries into contract, margin, capacity or free-cash-flow facts?",
+      "Which HBM customer, qualification, contract, allocation and product-profit fields are officially confirmed, and which are explicitly unavailable rather than merely not found through the current provider route?"
+    ]
+  },
+  "payload_hash": "2f0171000ea085df96a254852e369cffafb1280390dc734dfeba8c833531028e",
+  "production_score_authority": false,
+  "prompt_hash": "94229611d0988445a990db9f587ae7bac6876be740312c54ccbe51f1d073214e",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-401867f95f91f4fefad8ab5df649885b0a3e2b5e1ed4337a805d4b6784604c0d",
+  "response_id": "COLLABRESP-5bfc866c75a2fe4a3a51a151d06ac1ca6527e6b2ea1d487474ae9f1c3c03473f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

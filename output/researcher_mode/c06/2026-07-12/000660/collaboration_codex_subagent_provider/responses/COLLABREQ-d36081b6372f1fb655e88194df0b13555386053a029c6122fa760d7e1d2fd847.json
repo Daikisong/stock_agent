@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "2026-07-12 기준 prior 30 queries가 발행사 실적·IR·공시·사업보고서·ADR 등록자료·지속가능경영보고서와 고객 공식 연차보고서 경로까지 이미 다뤄, 단어만 바꾸지 않고 제안할 새로운 공식 문서군을 찾지 못했다.",
+      "FORWARD_GUIDANCE는 SK하이닉스 HBM의 수치형 forward 기간·범위가 공식 원문에 명시적으로 귀속된 추가 자료를 찾지 못해 unresolved다.",
+      "SEGMENT_CONTRIBUTION은 HBM 또는 AI memory의 매출·이익 기여가 회사 전체나 DRAM·NAND 합계와 분리된 공식 KPI를 찾지 못해 unresolved다.",
+      "DURABLE_VISIBILITY는 고객 공식 원문에서 SK하이닉스 HBM의 구매약정·선급금·취소조건·기간이 명시적으로 귀속된 자료를 찾지 못해 unresolved다.",
+      "검색 provider 실패나 snippet의 유사 단어는 새 source direction의 근거가 아니며, 추가 제안은 기존 30개 query의 의미적 반복이 될 가능성이 높아 semantic saturation으로 보고한다."
+    ]
+  },
+  "payload_hash": "d90f1d3a72c34b35e6e17e574865dd0ad65e701f10a606a4d5b2b4502500b018",
+  "production_score_authority": false,
+  "prompt_hash": "b366200009ce7b314bf6a4693f443fcdf774405c25107bb36f2f35252e72f4cb",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d36081b6372f1fb655e88194df0b13555386053a029c6122fa760d7e1d2fd847",
+  "response_id": "COLLABRESP-23e04427ebc556e82f3cfe2a319eda8a5dee025450384fc2262e480bfe837339",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

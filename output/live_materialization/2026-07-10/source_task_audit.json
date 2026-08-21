@@ -1,0 +1,33 @@
+{
+  "abstained_query_task_count": 0,
+  "as_of_date": "2026-07-10",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "completed_source_task_empty": 0,
+    "empty_question_task": 0,
+    "empty_success_condition": 0,
+    "generic_verify_primitive_task": 0,
+    "hardcoded_query_template_used_in_canonical_path": 0,
+    "official_first_violation": 0,
+    "source_task_draft_empty": 0,
+    "unbounded_source_task": 0
+  },
+  "draft_count": 9,
+  "general_web_open_count": 0,
+  "hard_acceptance_pass": true,
+  "official_first_pending_execution_count": 9,
+  "pending_query_task_count": 0,
+  "planning_result_count": 9,
+  "planning_status_counts": {
+    "COMPLETE": 9
+  },
+  "production_runtime_ready": false,
+  "prompt_response_count_mismatch": 0,
+  "query_generation_call_count": 9,
+  "real_query_provider_task_count": 9,
+  "result_hash": "731032e6069eb26903a447fc943810f9dc2d56aaa6f9415f03f6c59fb4df5e1e",
+  "schema_version": "e2r_live_source_task_audit_v1",
+  "source_task_count": 9,
+  "status": "CURRENT_SOURCE_TASK_PASS",
+  "test_mode": false
+}

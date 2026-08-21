@@ -1,0 +1,155 @@
+{
+  "output_schema_hash": "bae53379d452ea93c99277440efed4e3cb3d1bbccb540a10fbcbd91183a91de3",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-74e9511f226c0e3be88473a8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “UNITED STATES SECURITIES AND EXCHANGE COMMISSION”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-5cd2cb7280c9806eaef7cc4e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “by moonypto”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-bfa5c2722bdad8484d23f5dd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “What You Need to Know About Storage Giant Kioxia’s Over $5 Billion Buyback Plan”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-4a29d0844458526ef321a5d6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Micron Semiconductor Manufacturing Project, Clay, NY Final Environmental Impact Statement”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-9f467ab461529dd8c6709fcf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Wistron Corporation 2022 Annual Report”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-2e4728f33e46257b45a081d4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Middle East Shock Brings Triple Crisis to Korean Economy”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-2a891f51422593faa27fda32",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Micron Semiconductor Manufacturing Project - FEIS - Appendix A-D”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-843a63067397c0eaae9fdbd8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Markets”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-9f30fa4c23a7fbfacfaa026c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Compal Electronics, Inc. 2019 Annual Report”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-f1c286a2c35d96943708dd50",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Memory Market Update: HBM & DRAM Insights | PDF | Exchange Traded Fund | Jp Morgan Chase”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-d7713b66274525e27660715b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “The Era of ‘Manufacturing Renaissance’”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-6077779bdfaaaa0722b0d5c7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “2021 Annual Report - Compal”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 12개 후보를 입력 순서대로 정확히 한 번씩 분류했다. verified issuer-domain 후보가 없고 모든 candidate source-family hint가 요청된 SK하이닉스 issuer earnings release·presentation·newsroom 범위 밖이므로 material fetch 후보가 없다.",
+      "모든 published_at이 비어 있고 snippet은 discovery metadata일 뿐이므로 발행일·원문·수치 귀속을 증명하지 않는다. FORWARD_GUIDANCE, SEGMENT_CONTRIBUTION, DURABLE_VISIBILITY 공백은 계속 미해결이다."
+    ]
+  },
+  "payload_hash": "cd321a71451d168e4cbd7a785e7a83b5b21b87890df11f92d386de03b168dffa",
+  "production_score_authority": false,
+  "prompt_hash": "9ccd51dc75ed4982e56106617cad624e073995096137765126546d4e324d7c19",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-965957082d206a9cbaa7d3a9587e0e49316c8a29402536a8d284feef36f55cce",
+  "response_id": "COLLABRESP-a4adeba4ea842a3b5d83ff5b51cf47ee194e18907787a382402495a1ae39016c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

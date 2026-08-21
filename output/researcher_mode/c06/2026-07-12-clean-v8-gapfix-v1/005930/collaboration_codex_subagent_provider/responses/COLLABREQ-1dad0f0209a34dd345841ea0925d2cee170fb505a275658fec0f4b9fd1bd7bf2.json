@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a11dcd48dab85a4206d34f65",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2026-08-18 cutoff 이후 Naver 글로 미래누수다."
+      },
+      {
+        "candidate_id": "SGCAND-0585f9700830266fdd375b02",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "제3자 IT 뉴스 모음으로 OpenAI official original이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e1392d1a92b8522203f11a24",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "PwC AI 생태계 보고서로 고객 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5e7980dfa6b740536f8daeb7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "KISTEP R&D 예산 연구로 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-447ec1c7f7b61b9e44d709c6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "KOTRA 시장분석으로 OpenAI partnership original이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9aa3ffc039a5b43b1f6c3634",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "2020 과학기술연감으로 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-a23c88ef3c22e5cce8b36e0f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "중기부 안내서로 고객 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-614b42b930eb4daf2398c177",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "2015 과학기술연감으로 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-e2f5329162d875efa34943f1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "미래에셋 리포트로 CUSTOMER_OFFICIAL source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2021c87faeca9495d6a242fd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "해외건설 보고서로 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-9e50fca7862d2876659b3149",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "KOTRA 미국 진출전략으로 OpenAI 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c7126bf06668abcd8572dbcf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "IBK 산업 리포트로 고객 공식 full-source가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P4 material0은 source absence나 completion이 아니다."
+    ]
+  },
+  "payload_hash": "5bdc583adcce3aa58d081bb267ed4f022c55924b1a0d23302c67f97eb32ab8e8",
+  "production_score_authority": false,
+  "prompt_hash": "b700d2ebf2493a3ab62cf17b0045102b6940d9513b60f9cda65620d3020d638e",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1dad0f0209a34dd345841ea0925d2cee170fb505a275658fec0f4b9fd1bd7bf2",
+  "response_id": "COLLABRESP-24f66aee124a3894eecd5eb2b164bb0bdecf71de8f30d511ff1716b51d70563a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

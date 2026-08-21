@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-8b2633299108ce81ca29d502",
+        "rationale": "The sole linked objective is eps_fcf_explosion. The article's objective-direct memory earnings mechanisms are already represented in the current canonical facts: 2026-Q2 memory operating-profit estimates, memory operating-margin estimates, DRAM/NAND price gains, HBM4 revenue conversion, performance-bonus accrual effects, and the price-led earnings-conversion mechanism. Company-wide provisional revenue/profit, other segments, investment plans, and share-price commentary do not directly add a non-duplicate memory earnings or FCF fact for this objective.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "22825586382f95f7b3effdca9eaccc2d7bcf069af09b091e51013d689b432707",
+  "production_score_authority": false,
+  "prompt_hash": "b95beda8d645148d265f31e139b44cef4fbf70be0ce960dc5a295382101111f1",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-df8be369c262c80c83a9b4d6714db526776f736575ecad82a4b8542ce9067009",
+  "response_id": "COLLABRESP-48041771bf1697e407942d519283af4b73830bd3182e9f51d6f00219656c4a86",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

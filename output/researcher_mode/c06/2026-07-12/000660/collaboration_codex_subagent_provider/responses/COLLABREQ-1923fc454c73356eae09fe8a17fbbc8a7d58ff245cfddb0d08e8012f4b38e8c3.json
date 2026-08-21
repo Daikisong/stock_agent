@@ -1,0 +1,591 @@
+{
+  "output_schema_hash": "5a5b9b0266462c7cd0c0a378900448786d8f59371b2e4159b16dcc38f62d33bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "rationale": "다년 SCA/LTA, 고객 선수금·공동투자, 사전주문 연동 CAPEX 3건을 먼저 수록했다. HBM 가격·DRAM 이익레버리지·valuation 표 7건은 continuation 대상이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-91f9b0b2fc3c7fb0b960fc27",
+        "rationale": "HBM 매출비중·수익성 bridge, HBM4 TSV·웨이퍼 집약도, TSMC 선단 로직다이 기반 맞춤화 3건을 모두 수록해 objective-local 잔여를 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-a2896129b64338f2472d6d28",
+        "rationale": "CSP CAPEX 신뢰성, 현 사이클 거시 반전 위험, 2026~2028 이익 peak-duration 반증 3건을 먼저 수록했다. forward valuation 표 9건은 continuation 대상이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "rationale": "4Q25 actual surprise, 1Q26 전망, 서버 고객 재고 경색 3건을 먼저 수록했다. LTA·CAPEX·가격탄력성·forward earnings/FCF/valuation 잔여 13건은 continuation 대상이다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.85,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "보고서는 글로벌 선단 메모리 시장에서 SCA와 다년 LTA가 확산돼 출하량과 판가를 묶고 단기 수요 변동에 대한 하방 경직성을 높인다고 분석한다. 이는 SK하이닉스 개별 계약의 존재나 구매의무를 증명하는 사실로 확대하지 않는다.",
+        "exact_quote": "글로벌 메모리 업계 전반에 안착하고 있는 SCA(Strategic Customer Agreement) 및 다년\nLTA(장기공급계약) 체결 가속화는 하반기 전방 세트 수요의 단기 노이즈와 관계없이 선단\n제품군의 출하량과 판가를 견고하게 바인딩하며 하방 경직성을 강하게 만드는 요인이다. 이는\n단순히 NCNR(취소·반품 불가)과 같은 단기적 계약 형태를 넘어, 고객사와 리스크 및 수익을\n공유하는 '솔루션 파트너십' 모델로의 근본적인 전환을 의미한다는 판단이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "다년 계약이 출하와 가격을 결박하는 산업 구조는 SK하이닉스 valuation의 durable visibility 가설에 직접 영향을 준다.",
+        "mechanism_scope_id": "000660:MEMORY:INDUSTRY_SCA_LTA_DURABLE_VISIBILITY",
+        "normalized_object": "글로벌 선단 메모리 장기계약 기반 출하·판가 가시성",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current industry structure as of 2026-05-27",
+        "predicate": "글로벌 메모리 업계의 SCA와 다년 LTA 체결 가속화가 선단 제품의 출하량과 판가를 바인딩해 하방 경직성을 높인다고 분석됐다",
+        "predicate_family": "MULTIYEAR_CONTRACT_VISIBILITY",
+        "primitive_tags": [
+          "ADVANCED_MEMORY",
+          "CONTRACT",
+          "SHIPMENT",
+          "PRICING"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_MULTIYEAR_CONTRACT_VISIBILITY",
+        "question_family_tags": [
+          "SCA",
+          "MULTIYEAR_LTA",
+          "DURABLE_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "글로벌 선단 메모리 SCA·다년 LTA의 출하·가격 가시성",
+        "subject_id": "INDUSTRY:ADVANCED_MEMORY:SCA_LTA_VISIBILITY",
+        "unit": "qualitative industry contract visibility",
+        "value": "SCA and multi-year LTA bind advanced-memory shipments and pricing against short-term demand noise"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.72,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "보고서는 고객 선수금, 공동투자, Capex sharing을 활용하는 증설 모델이 개화하고 있다고 보며 초기 재무부담과 주문 취소 위험을 낮출 수 있다고 분석한다. 이는 산업 차원의 분석적 전망이며 SK하이닉스가 실제 선수금을 받았거나 계약을 체결했다는 증거가 아니다.",
+        "exact_quote": "메모리반도체 산업은 천문학적인 선단 공정 CapEx 투입 강도 대비 투자 시점과 수익 회수 시점\n간의 미스매치가 심화되는 한계에 직면해왔다. 이를 타개하기 위해 시장은 과거의 단순 부품 공급\n형태를 탈피하여, '고객사 선수금 기반의 선제적 투자 체계'와 '공동투자(Co-investment) 모델',\n그리고 'MaaS(Memory as a Service) 구독형 모델'의 결합을 적극적으로 모색하고 있을 것으로\n추정한다.\n가장 주목해야 할 변화는 글로벌 하이퍼스케일러 및 대형 수요처들로부터 실질적인\n선수금(Advance Payment)을 확보하여 라인 증설을 진행하는 선조건부 자본 유치 구조의 개화다.\n이는 공급사의 초기 재무 부담을 획기적으로 낮출 뿐만 아니라, 전방 고객사의 단순 변심이나 시황\n변동에 따른 주문 취소 리스크를 원천적으로 차단하는 강력한 안전장치 역할을 한다. 특정 생산\n라인을 전용하여 설비 투자비를 분담하는 CapEx sharing과 전략적 자본 결속은 메모리 기업의 자산\n경량화(Asset-light) 기조를 지지하는 핵심 자산일 것이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객자금 연계 증설이 현실화되면 Capex 현금부담과 수요 취소 위험을 동시에 바꿔 valuation 구조에 직접 영향을 준다.",
+        "mechanism_scope_id": "000660:MEMORY:INDUSTRY_ADVANCE_PAYMENT_CAPEX_MODEL",
+        "normalized_object": "메모리 산업 고객자금 연계 증설과 재무부담 완화 시나리오",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward industry model discussed 2026-05-27",
+        "predicate": "메모리 업계가 고객 선수금과 공동투자·Capex sharing을 활용하는 증설 모델을 모색하며 초기 재무부담과 주문 취소 위험을 낮출 수 있다고 전망됐다",
+        "predicate_family": "ADVANCE_PAYMENT_CAPEX_MODEL",
+        "primitive_tags": [
+          "MEMORY_CAPEX",
+          "CUSTOMER_FINANCING",
+          "ASSET_LIGHT"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_ADVANCE_PAYMENT_CAPEX_MODEL",
+        "question_family_tags": [
+          "ADVANCE_PAYMENT",
+          "CO_INVESTMENT",
+          "CAPEX_SHARING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.74,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "메모리 산업의 고객 선수금·공동투자 기반 증설 모델",
+        "subject_id": "INDUSTRY:MEMORY:ADVANCE_PAYMENT_CAPEX_SHARING",
+        "unit": "qualitative industry financing-model outlook",
+        "value": "industry scenario of customer advance payments, co-investment and capex sharing for line expansion"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "HBM4부터 선단 Capex가 CSP 사전주문 데이터와 파운드리 일정에 맞춰질 가능성이 높아진다는 분석은 독자적 증설과 사후 과잉 위험을 줄이고 다년 실적 가시성과 멀티플 상단을 높이는 공급 규율 경로를 제시한다. 이는 아직 산업 전망이므로 특정 SK하이닉스 주문으로 해석하지 않는다.",
+        "exact_quote": "특히 맞춤형(Custom) 인터페이스가 본격 도입되는 HBM4 세대부터는 메모리 제조사의 최선단\nCapEx 자체가 CSP들의 사전 주문 데이터 및 파운드리 스케줄과 동기화 될 가능성이 높다.\n이는 과거 공급사들의 독자적 판단에 의존하던 증설 경쟁과 그에 따른 사후적 공급 과잉\n리스크를 크게 낮추는 배경이 될 것이다. 결과적으로 메모리 산업 전반의 다년 단위 실적\n가시성을 확보함으로써, 과거의 피크아웃 우려를 종식하고 멀티플 상한선을 들어 올리는 결정적\n근거가 될 것으로 전망한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "수요 연동 증설은 HBM 병목의 지속성과 피크아웃 위험을 함께 결정해 rerating의 핵심 조건이다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_PREORDER_SYNCHRONIZED_CAPEX",
+        "normalized_object": "HBM4 사전수요 연동 Capex와 공급과잉 위험 완화",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "HBM4 generation outlook as of 2026-05-27",
+        "predicate": "HBM4 세대부터 선단 Capex가 CSP 사전주문 데이터 및 파운드리 일정과 동기화돼 사후 공급과잉 위험을 낮출 가능성이 있다고 전망됐다",
+        "predicate_family": "PREORDER_SYNCHRONIZED_CAPEX",
+        "primitive_tags": [
+          "HBM4",
+          "CAPEX",
+          "PREORDER",
+          "FOUNDRY_SCHEDULE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_PREORDER_SYNCHRONIZED_CAPEX",
+        "question_family_tags": [
+          "HBM4_CAPEX",
+          "CSP_PREORDER",
+          "SUPPLY_DISCIPLINE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.84,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "HBM4 선단 Capex와 CSP 사전주문·파운드리 일정의 동기화",
+        "subject_id": "INDUSTRY:HBM4:PREORDER_SYNCHRONIZED_CAPEX",
+        "unit": "qualitative industry supply-discipline outlook",
+        "value": "HBM4 capex potentially synchronized with CSP preorder data and foundry schedules, reducing ex-post oversupply risk"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-91f9b0b2fc3c7fb0b960fc27",
+        "economic_mechanism": "하나증권은 SK하이닉스 매출에서 HBM 비중이 2025년 말 50%에 근접하고 높은 영업이익률로 전사 수익성 개선을 견인할 것으로 추정했다. 이는 제3자 전망이며 issuer 공시 기반 segment contribution이나 확정 실적으로 확대하지 않는다.",
+        "exact_quote": "M15x는 HBM 중심으로 투자가 진행될 것으로 추정한다. 현재 여유 CAPA가 없는 상황에서\nHBM 수요 증가에 대응하기 위해서 추가적인 라인 증설이 필요하기 때문이다. SK하이닉스의\n매출액 내에서 HBM 비중은 2025년 연말에 50%에 육박할 것으로 추정된다. 아울러 높은\n영업이익률로 인해 전사 수익성 개선을 견인하고 있는 것으로 판단된다. 주요 고객사의\nHBM 요구 및 추론 AI용 ASIC 수요 대응을 위해서라도 추가 증설이 불가피해 보인다. 15X의\n디자인 CAPA는 월 9만장 정도로 예상되는데, 첫번째 투자는 월 3만장으로 예상한다. 해당\n투자에 따른 장비 셋업이 2025년에 완료되는냐 마느냐로 2025년 및 2026년 Capex에 변동\n이 생길 것으로 추정한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 매출 비중과 마진의 전사 이익 전환은 HBM 분리 가치와 forward valuation을 잇는 직접 earnings bridge다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_REVENUE_MIX_MARGIN_FY2025F",
+        "normalized_object": "SK하이닉스 FY2025 HBM 매출비중과 전사 이익 기여 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025 year-end forecast published 2025-05-21",
+        "predicate": "2025년 말 HBM 매출비중이 50%에 근접하고 높은 영업이익률이 전사 수익성 개선을 견인할 것으로 전망됐다",
+        "predicate_family": "HBM_REVENUE_MIX_MARGIN_BRIDGE",
+        "primitive_tags": [
+          "HBM",
+          "REVENUE_SHARE",
+          "OPERATING_MARGIN"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SKHYNIX_HBM_REVENUE_MIX_MARGIN_BRIDGE",
+        "question_family_tags": [
+          "HBM_REVENUE_MIX",
+          "MARGIN_CONTRIBUTION",
+          "FY2025F"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2025년 HBM 매출비중과 전사 수익성 기여 전망",
+        "subject_id": "000660:HBM_REVENUE_MIX_MARGIN:FY2025F",
+        "unit": "% and qualitative margin contribution",
+        "value": "year-end HBM revenue share approaching 50; high operating margin expected to drive company profitability"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-91f9b0b2fc3c7fb0b960fc27",
+        "economic_mechanism": "HBM4는 HBM3보다 I/O와 TSV가 두 배이고 다이 폭도 커져 동일 HBM 수요를 생산하는 데 더 많은 TSV CAPA와 웨이퍼가 필요하다는 분석이다. 이는 단순 기술 사양을 넘어 HBM4 믹스 확대가 일반 DRAM CAPA를 잠그는 물리적 병목을 설명한다.",
+        "exact_quote": "TSV는 제조하는 칩의 I/O 단자 개수만큼 필요한데, HBM3의 경우 1,024개(16채널*64bit)의\nI/O가 있기 때문에 1,024개의 TSV가 필요하다. 마찬가지로 HBM4의 경우 2,048개(32채널\n*64bit)의 I/O가 존재하기 때문에, 2,048개의 TSV가 필요하다. 이는 HBM 수요가 동일하다\n는 가정하에서 TSV 수요와 필요 CAPA가 2배 증가한다는 의미이다.\nTSV의 증가는 필연적으로 다이 면적의 확대를 의미한다. 기존 HBM3의 면적에서 TSV를 2\n배 구현한다는 것이 어렵기 때문이다. 이를 증명하듯 HBM4 규격을 살펴보면 24Gb/die 기\n준 가로 길이가 HBM3 규격 대비 1.8mm 늘어난다. 이에 따라 1장의 웨이퍼로 생산할 수\n있는 다이의 수가 HBM3 대비 줄어들 수밖에 없다. 이는 HBM4의 생산 확대가 Wafer 소비\n량을 증가시키는 것을 의미하고, DRAM CAPA를 제한하는 요인으로 작용할 것이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "제품 세대 전환 자체가 웨이퍼 공급을 잠그는 강도는 HBM 병목과 일반 DRAM 가격의 지속성을 직접 결정한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_TSV_WAFER_CAPACITY_INTENSITY",
+        "normalized_object": "HBM4의 TSV·웨이퍼 집약도와 DRAM CAPA 제약",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "HBM4 generation specification current as of 2025-05-21",
+        "predicate": "HBM4는 2,048개 TSV와 더 큰 다이 면적으로 동일 수요 기준 TSV 필요 CAPA를 두 배로 늘리고 웨이퍼당 다이 수를 줄여 DRAM CAPA를 제한한다",
+        "predicate_family": "HBM4_CAPACITY_INTENSITY",
+        "primitive_tags": [
+          "HBM4",
+          "TSV",
+          "DIE_SIZE",
+          "WAFER_CAPACITY"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_WAFER_CAPACITY_INTENSITY",
+        "question_family_tags": [
+          "HBM4_TSV",
+          "WAFER_INTENSITY",
+          "DRAM_CAPACITY_CONSTRAINT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "HBM4 TSV·다이 면적 증가와 DRAM 생산능력 제약",
+        "subject_id": "INDUSTRY:HBM4:TSV_WAFER_CAPACITY_INTENSITY",
+        "unit": "TSV count, multiple, millimeters and qualitative capacity effect",
+        "value": "2048 TSV; 2x TSV capacity at equal demand; die width +1.8mm versus HBM3; fewer dies per wafer"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-91f9b0b2fc3c7fb0b960fc27",
+        "economic_mechanism": "SK하이닉스가 HBM4부터 TSMC의 선단 로직다이를 사용할 계획이라는 분석은 늘어난 채널·TSV 제어 기능을 구현하고 고객 맞춤형 HBM을 제공하는 제품 차별화 경로를 구체화한다. 이를 TSMC와의 구매의무나 공급량 계약으로 확대하지 않는다.",
+        "exact_quote": "또 다른 대표 변화는 로직 다이에 있다. HBM 선두주자인 SK하이닉스는 HBM3E까지는 자체\n적으로 로직 다이를 생산했지만, HBM4부터는 로직 선단 공정을 이용할 계획이며, 이를 위\n해 TSMC가 로직 다이를 생산할 예정이다. HBM4에 선단 공정을 적용하는 이유는 채널 수\n증가와 TSV 증가 등 HBM의 스펙 상향때문이다. 채널과 TSV가 증가하면서 채널 스케줄링과\n신호 제어 등 더 많은 로직 기능을 필요로 한다. 이를 해결하기 위해 로직 다이 내 선단 공\n정을 도입해 다양한 로직 회로를 도입할 계획이다. 또한 선단 공정을 통해 다양한 기능을\n추가할 수 있기 때문에 맞춤형 HBM 생산에도 유리하다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "선단 로직다이와 고객 맞춤화 능력은 HBM4의 제품 프리미엄과 고객 결속을 만드는 직접 상용화 근거다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_TSMC_LOGIC_DIE_CUSTOMIZATION",
+        "normalized_object": "SK하이닉스 HBM4 TSMC 로직다이 기반 맞춤형 제품 경로",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "HBM4 generation plan as of 2025-05-21",
+        "predicate": "SK하이닉스는 HBM4부터 TSMC가 생산하는 선단 로직다이를 사용해 추가 로직 기능과 맞춤형 HBM 구현을 계획한 것으로 분석됐다",
+        "predicate_family": "HBM4_LOGIC_DIE_CUSTOMIZATION",
+        "primitive_tags": [
+          "HBM4",
+          "LOGIC_DIE",
+          "TSMC",
+          "CUSTOMIZATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SKHYNIX_HBM4_TSMC_LOGIC_DIE",
+        "question_family_tags": [
+          "HBM4_LOGIC_DIE",
+          "TSMC",
+          "CUSTOM_HBM"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4용 TSMC 선단 로직다이와 맞춤형 기능",
+        "subject_id": "000660:HBM4_TSMC_LOGIC_DIE:CUSTOMIZATION",
+        "unit": "qualitative product architecture plan",
+        "value": "TSMC-produced advanced logic die planned for HBM4 to support added logic functions and customization"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a2896129b64338f2472d6d28",
+        "economic_mechanism": "1Q26 미국 CSP 실제 CapEx는 컨센서스의 98%, Meta는 71%에 그쳤다. 이후 연간 증가 전망이 64%에서 69% YoY로 높아졌지만 Meta와 Microsoft의 FCF 악화·하반기 음수 전환 가능성, 차입·금리 민감도와 장단기금리차 하락을 근거로 BNK는 AI CapEx 모멘텀 둔화를 예상했다. 이는 장기 CapEx 성장 전망과 구별되는 최신 실행·재원 counterfact다.",
+        "exact_quote": "AI 설비투자 러쉬는 지속될까? 하반기 둔화 의구심\n1Q26 미국 CSP들의 실제 설비투자는 컨센서스 대비 98%에 그쳤다. 메타\n투자금액이 71%에 그친게 주요인이다. 실적 발표 후 연간 투자액은 64%에\n서 69%YoY로 상향되었는데, 최근 FCF가 빠르게 악화되고 있는 메타와 MS\n가 주도한 것이서 신뢰감이 낮다. 하반기 FCF가 (-) 전환 가능성이 높은데,\n차입 의존도가 높아지고 금리에 민감해져 있다. 선행지표인 장단기금리차는\n2월부터 하락 추세, AI 설비투자 모멘텀도 둔화 예상된다. 최근 에이젠틱AI\n도입과 CPU 메모리 확장 기대로 반도체주가 뜨겁지만, 리스크도 커진다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "CSP CapEx의 실제 컨센서스 미달과 FCF·차입 제약은 AI 메모리 수요가 계획에서 실제 투자로 전환되는 지속성을 직접 검증한다.",
+        "mechanism_scope_id": "000660:AI_MEMORY:CSP_CAPEX_MISS_FCF_FINANCING_DURABILITY_RISK",
+        "normalized_object": "1Q26 CSP CapEx 미달과 Meta·Microsoft FCF·차입 기반 투자 지속성 위험",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "1Q2026 actual and 2H2026 outlook stated 2026-05-12",
+        "predicate": "1Q26 미국 CSP CapEx는 컨센서스의 98%, Meta는 71%에 그쳤고 FCF 악화와 차입·금리 민감도로 하반기 AI CapEx 모멘텀 둔화가 예상됐다",
+        "predicate_family": "CSP_CAPEX_MISS_FCF_FINANCING_DURABILITY_RISK",
+        "primitive_tags": [
+          "AI_MEMORY",
+          "CSP_CAPEX",
+          "FCF_FINANCING"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "CSP_CAPEX_MISS_FCF_FINANCING_DURABILITY_RISK",
+        "question_family_tags": [
+          "CAPEX_EXECUTION",
+          "FUNDING_DURABILITY",
+          "DEMAND_COUNTERFACT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "미국 CSP AI CapEx 실행 미달과 FCF·차입 지속성",
+        "subject_id": "000660:AI_MEMORY:CSP_CAPEX_MISS_FCF_FINANCING_DURABILITY_RISK",
+        "unit": "% of consensus, % YoY revision and qualitative financing risk",
+        "value": "1Q26 CSP CapEx 98% of consensus; Meta 71%; annual growth outlook raised from 64% to 69% YoY despite FCF and debt risk"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.93,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a2896129b64338f2472d6d28",
+        "economic_mechanism": "BNK는 현재 메모리 cycle이 4Q22 저점과 반대로 가격 급등 뒤 하반기 IT set 수요 감소가 예상되는 동시에 공급자 증설과 인건비가 늘고, 고유가·인플레이션·국채금리 상승이 겹친다고 평가했다. 이는 높은 현재 이익과 multiple이 수요 둔화·공급 반응·거시 할인에 동시에 노출된다는 counterfact이며 실제 하반기 결과로 확정하지 않는다.",
+        "exact_quote": "이번 Cycle 저점 이었던 4Q22 시기와 지금은 시황, 거시 환경, 기업 정책 모\n든 면에서 정반대 상황에 있다. ‘22년 인플레와 금리 인상으로 수요가 급감하\n며 메모리 가격이 폭락했고, 메모리업체들은 엄청난 과잉재고 속에, 장기 수\n요 전망을 어둡게 보며 비용 절감, 설비투자 축소, NAND 대규모 감산을 단\n행 했다. 그러나 메모리 가격 급락과 재고조정으로 IT 세트업체들의 수요는\n회복되기 시작했고, CPI가 안정되면서 ‘23년부터 금리인하 기대를 가지게 되\n었고, 실제로 경기선행지수가 반등하고 AI 특수가 시작되었다. 반면 지금은\n반도체 가격 급등 후 IT 세트업체들의 수요는 하반기 감소 예상되고, 메모리\n업체들은 장기 수요 낙관속에 증설을 서두르고, 인건비 등 비용은 급증하고\n있다. 거시적으로는 고유가 장기화, 인플레 우려, 국채 금리가 상승하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "수요 둔화, 공급 증설, 비용과 할인율 상승이 동시에 발생할 가능성은 현재 메모리 earnings duration과 valuation multiple 유지 여부를 직접 제한한다.",
+        "mechanism_scope_id": "000660:MEMORY:CURRENT_CYCLE_DEMAND_SUPPLY_MACRO_REVERSAL_RISK",
+        "normalized_object": "메모리 가격 급등 이후 IT 수요 둔화·증설·비용·금리의 동시 cycle 위험",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2H2026 outlook stated 2026-05-12",
+        "predicate": "현재 메모리 cycle은 가격 급등 뒤 하반기 IT set 수요 감소와 공급자 증설·비용 증가 및 고유가·금리 상승이 겹치는 4Q22 저점의 반대 상황으로 평가됐다",
+        "predicate_family": "CURRENT_MEMORY_CYCLE_DEMAND_SUPPLY_MACRO_REVERSAL_RISK",
+        "primitive_tags": [
+          "MEMORY",
+          "SUPPLY_RESPONSE",
+          "MACRO_RISK"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CURRENT_MEMORY_CYCLE_DEMAND_SUPPLY_MACRO_REVERSAL_RISK",
+        "question_family_tags": [
+          "CYCLE_RISK",
+          "DEMAND_DURATION",
+          "VALUATION_COUNTERFACT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "현재 메모리 cycle의 수요·공급·비용·거시 반전 위험",
+        "subject_id": "000660:MEMORY:CURRENT_CYCLE_DEMAND_SUPPLY_MACRO_REVERSAL_RISK",
+        "unit": "qualitative cycle-risk assessment",
+        "value": "2H IT-set demand decline expected while memory expansion, labor costs, oil, inflation concern and bond yields rise"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a2896129b64338f2472d6d28",
+        "economic_mechanism": "BNK는 SK하이닉스 영업이익이 FY2026F 240,536십억원에서 FY2027F 230,332십억원, FY2028F 214,828십억원으로 감소하고, EPS 증가율도 FY2027F -6.9%, FY2028F -5.3%가 될 것으로 추정했다. 이는 FY2026의 급증 뒤 이익이 계속 확대된다는 가정에 대한 독립적인 duration counterfact이며 확정 실적이 아니다.",
+        "exact_quote": "F ig. 1: SK하이닉스 연결재무제표 요약\n2024 2025 2026F 2027F 2028F\n매출액(십억원) 66,193 97,147 305,788 307,717 323,103\n영업이익 23,467 47,206 240,536 230,332 214,828\n세전이익 23,885 50,466 253,785 235,816 223,351\n순이익[지배] 19,789 42,919 207,965 193,241 183,026\nEPS(원) 27,182 58,955 291,130 271,138 256,806\n증감률(%) 흑자전환 116.9 393.8 -6.9 -5.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2026 이후 영업이익과 EPS 감소 전망은 높은 valuation multiple을 지지하는 earnings duration이 연장되는지 직접 반증한다.",
+        "mechanism_scope_id": "000660:MEMORY:FY2026_FY2028_EARNINGS_PEAK_DURATION_COUNTERFACT",
+        "normalized_object": "FY2026 급증 뒤 FY2027~FY2028 영업이익·EPS 감소 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026F-FY2028F",
+        "predicate": "BNK는 SK하이닉스 영업이익과 EPS가 FY2026F에 급증한 뒤 FY2027F와 FY2028F에 감소할 것으로 추정했다",
+        "predicate_family": "FORWARD_EARNINGS_PEAK_DURATION_COUNTERFACT",
+        "primitive_tags": [
+          "MEMORY",
+          "OPERATING_PROFIT",
+          "EPS_DURATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_EARNINGS_PEAK_DURATION_COUNTERFACT",
+        "question_family_tags": [
+          "EARNINGS_DURATION",
+          "FORWARD_ESTIMATE",
+          "VALUATION_COUNTERFACT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026~FY2028 이익 duration 전망",
+        "subject_id": "000660:MEMORY:FY2026_FY2028_EARNINGS_PEAK_DURATION_COUNTERFACT",
+        "unit": "KRW billion and % EPS growth",
+        "value": "operating profit FY2026F 240536, FY2027F 230332, FY2028F 214828; EPS growth FY2026F 393.8%, FY2027F -6.9%, FY2028F -5.3%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타는 SK하이닉스 4Q25 매출과 영업이익이 컨센서스를 웃돌았고, 고용량 DRAM 가격 상승이 DRAM 이익 성장을 이끌었다고 평가했다. 이는 이미 실현된 분기 실적과 가격·믹스 레버리지이며 이후 분기의 지속성을 확정하지 않는다.",
+        "exact_quote": "4Q25 전사 영업이익 19.2조원 기록 (M)\n동사 4Q25 매출액과 영업이익은 각각 32.8조원(YoY +66.1%, QoQ +34.3%),\n19.2조원(OPM 58.4%, YoY +137.2%, QoQ +68.4%)으로 1M기준 시장 컨센서스를 각각\n목표주가 1,169,000원 (U)\n2.1%, 11.0% 상회했다. DRAM 매출액과 영업이익은 각각 24.9조원(YoY +70.6%, QoQ 직전 목표주가 1,066,000원\n+30.8%), 16.9조원(OPM 67.7%, YoY +133.1%, QoQ +52.6%)으로 전분기대비 가격 현재주가 (01/29) 861,000원\n인상폭이 예상치를 소폭 상회했다. RDIMM 등 고용량 DRAM 가격 상승세가 두드러지며 상승여력 36%\nDRAM 이익 성장을 견인했기 때문이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "실현된 컨센서스 상회와 DRAM 가격·믹스 레버리지는 forward earnings 기준점과 valuation denominator를 직접 바꾼다.",
+        "mechanism_scope_id": "000660:DRAM:YUANTA_4Q25_ACTUAL_EARNINGS_SURPRISE",
+        "normalized_object": "4Q25 전사 실적 상회와 고용량 DRAM 가격 기반 이익 레버리지",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2025 actual reported 2026-01-29",
+        "predicate": "유안타는 4Q25 매출 32.8조원과 영업이익 19.2조원이 컨센서스를 각각 2.1%, 11.0% 상회했고 고용량 DRAM 가격 상승이 DRAM 이익 성장을 견인했다고 평가했다",
+        "predicate_family": "BROKER_ACTUAL_EARNINGS_SURPRISE_DRAM_LEVERAGE",
+        "primitive_tags": [
+          "DRAM",
+          "ACTUAL_EARNINGS",
+          "PRICING_POWER"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "BROKER_ACTUAL_EARNINGS_SURPRISE_DRAM_LEVERAGE",
+        "question_family_tags": [
+          "ACTUAL_EARNINGS",
+          "CONSENSUS_BEAT",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q25 실적 상회와 DRAM 이익 레버리지",
+        "subject_id": "000660:DRAM:YUANTA_4Q25_ACTUAL_EARNINGS_SURPRISE",
+        "unit": "KRW trillion, %, and consensus-beat percentage",
+        "value": "revenue KRW 32.8tn; operating profit KRW 19.2tn; revenue beat 2.1%; operating-profit beat 11.0%; DRAM revenue KRW 24.9tn; DRAM operating profit KRW 16.9tn"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타는 1Q26 전사 매출과 영업이익이 당시 컨센서스를 웃돌고 제한된 출하량 증가 속 가격 상승이 이어질 것으로 추정했다. 이는 브로커 전망이지 실제 1Q26 결과나 issuer guidance가 아니다.",
+        "exact_quote": "1Q26 예상 매출액과 영업이익은 각각 40.4조원(YoY +129.2%, QoQ +23.2%), 주요주주 에스케이스퀘어 외 7 인\n25.6조원(OPM 63.3%, YoY +244.1%, QoQ +33.5%)으로 추정치를 상향 조정하며,\n주가수익률 (%) 1개월 3개월 12개월\n1M기준 시장 컨센서스(매출액 38.0조원, 영업이익 22.6조원)를 상회할 것으로 전망한다.\n절대 34.5 54.3 289.6\n메모리반도체 출하량 증가가 제한적인 가운데, 가격 상승폭이 예상치를 크게 상회하는\n상대 8.7 20.6 89.3\n흐름이 이어질 것으로 예상하기 때문이다. DRAM/NAND QoQ ASP 증감율을 각각\n절대 (달러환산) 35.2 55.3 292.0\n+20.0%, +25.0%로 추정한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "당시 다음 분기의 매출·영업이익과 가격 레버리지 추정은 valuation earnings bridge와 estimate risk를 직접 보여준다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_1Q26_EARNINGS_PRICE_FORECAST",
+        "normalized_object": "제한된 출하 증가와 가격 상승에 기반한 1Q26 컨센서스 상회 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2026 forecast published 2026-01-29",
+        "predicate": "유안타는 1Q26 매출 40.4조원과 영업이익 25.6조원을 전망해 당시 컨센서스 38.0조원과 22.6조원을 상회할 것으로 추정했다",
+        "predicate_family": "BROKER_QUARTERLY_EARNINGS_PRICE_FORECAST",
+        "primitive_tags": [
+          "MEMORY",
+          "FORWARD_EARNINGS",
+          "ASP"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_QUARTERLY_EARNINGS_PRICE_FORECAST",
+        "question_family_tags": [
+          "FORWARD_EARNINGS",
+          "CONSENSUS_GAP",
+          "PRICING_LEVERAGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "유안타의 SK하이닉스 1Q26 실적·가격 전망",
+        "subject_id": "000660:MEMORY:YUANTA_1Q26_EARNINGS_PRICE_FORECAST",
+        "unit": "KRW trillion and % forecast",
+        "value": "revenue KRW 40.4tn versus consensus KRW 38.0tn; operating profit KRW 25.6tn versus consensus KRW 22.6tn; DRAM ASP +20.0% QoQ estimate"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "4Q25 Q&A 요약은 서버 고객 재고가 바로 세트 빌드로 소진되고 충분한 물량 확보가 어려우며, SK하이닉스 DRAM 재고도 감소해 서버 DRAM의 타이트함이 연중 이어질 것으로 전망했다고 전한다. 연중·하반기 문장은 전망이지 실현 결과가 아니다.",
+        "exact_quote": "3. 주요 고객사별 재고 상황과 SK하이닉스 재고 현황\n- 대부분의 고객들이 공급 확대를 요구하고 있음. 고객 재고 수준도 전반적으로 감소. 특히 서버\n고객은 바로 세트 빌드로 이어지면서 재고 지속 감소 중. 재고를 축적할 만큼 충분한 물량\n확보도 어렵고, 메모리 사용 속도가 매우 빠르기 때문. 서버 고객들의 물량 확보를 위한 구매\n확대 움직임은 지속될 것.\n- PC/모바일 고객도 공급제약과 서버강세 영향을 직간접적으로 받고 있고 재고수준도 낮아지고\n있음. 당사는 생산 늘리기 위해 지속적으로 노력 중. 4분기에도 디램 재고는 지난분기대비 감소,\n서버 디램 중심으로 타이트한 재고 연중 지속될 것. 생산과 동시에 판매되어 올해 하반기로\n갈수록 점점 더 낮은 수준으로 하락할 것.\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "서버 고객과 공급자의 낮은 재고 및 생산 즉시 판매는 가격·출하 duration과 scarcity premium을 직접 지지한다.",
+        "mechanism_scope_id": "000660:DRAM:SERVER_CUSTOMER_INVENTORY_TIGHTNESS",
+        "normalized_object": "서버 고객 재고 감소와 생산 즉시 판매에 따른 연중 DRAM 타이트 수급 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2025 observed inventory and FY2026 outlook",
+        "predicate": "SK하이닉스는 고객 재고가 감소하고 서버 고객의 충분한 물량 확보가 어려운 가운데 자사 DRAM 재고도 줄어 서버 DRAM의 타이트한 재고가 연중 지속될 것으로 전망했다",
+        "predicate_family": "SERVER_CUSTOMER_INVENTORY_TIGHTNESS",
+        "primitive_tags": [
+          "DRAM",
+          "SERVER_MEMORY",
+          "INVENTORY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SERVER_CUSTOMER_INVENTORY_TIGHTNESS",
+        "question_family_tags": [
+          "CAPACITY_SCARCITY",
+          "CUSTOMER_DEMAND",
+          "INVENTORY_DURATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "서버 고객과 SK하이닉스의 DRAM 재고·수급",
+        "subject_id": "000660:DRAM:SERVER_CUSTOMER_INVENTORY_TIGHTNESS",
+        "unit": "qualitative customer and supplier inventory assessment",
+        "value": "customer inventories declining; adequate volume difficult to secure; DRAM inventory declined QoQ; server DRAM tightness expected through FY2026"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-7804cb1a3c1890792320e177",
+      "SGDOC-a2896129b64338f2472d6d28",
+      "SGDOC-b77065c834c9ddcc5517847f"
+    ],
+    "unresolved_research_notes": [
+      "12개 page 상한을 사용했다. 나머지 29개 distinct objective-local 사실은 continuation에서 이전 exact quote와 중복 없이 처리한다."
+    ]
+  },
+  "payload_hash": "0f64c7477220bb5d9e7ec28af12240d19ca84c929276ea29dd8016f5d724240d",
+  "production_score_authority": false,
+  "prompt_hash": "99b213d87de05e21c12e15a103d4da9bd9e3f3a961b592ca06864066cf116330",
+  "provenance": {
+    "agent_id": "root-phase101-c06-facts",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_facts",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1923fc454c73356eae09fe8a17fbbc8a7d58ff245cfddb0d08e8012f4b38e8c3",
+  "response_id": "COLLABRESP-fd406c2a46aa672958cc782da214f2e6cf3cdb38d8c4739325b2a011ca4f8989",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

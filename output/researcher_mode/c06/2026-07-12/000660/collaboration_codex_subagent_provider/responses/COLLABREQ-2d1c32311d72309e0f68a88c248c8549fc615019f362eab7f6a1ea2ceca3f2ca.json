@@ -1,0 +1,182 @@
+{
+  "output_schema_hash": "f89a3163718d53cf6d25b72478ff03ae6969405b39829e6f88e1c59f6e485acc",
+  "payload": {
+    "confidence": 0.87,
+    "counter_case": "운전자본 증가와 actual Capex 현금유출이 강한 이익의 FCF 전환을 낮춘다. 투자 discipline은 plan이고 HBM 단독 회수율·고객 구매의무는 확인되지 않았다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-a07945c19eb9b2b62790d62e",
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-55039467f24da62ebee5fae7",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e"
+    ],
+    "positive_case": "actual 현금창출과 유동성 완충력이 높은 가동률에 대응한 투자와 주주환원을 감당할 기반을 제공하고, 수요연계 원칙은 무차별 증설 위험을 낮춘다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 1,
+        "reason": "actual 운전자본 현금 감소를 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 3,
+        "reason": "actual 연결 영업현금흐름을 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 14,
+        "reason": "수요연계 투자 정책을 plan으로 한정해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 52,
+        "reason": "HBM 믹스의 자본효율 mechanism을 분석 근거로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 161,
+        "reason": "FY2026 Capex discipline을 issuer plan으로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 210,
+        "reason": "actual 유동성 완충력을 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 215,
+        "reason": "전사 반도체 가동률 actual을 HBM 전용으로 확대하지 않고 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 247,
+        "reason": "actual 유형자산 취득 현금유출을 유지한다."
+      }
+    ],
+    "proposed_score_lower": 2.5,
+    "proposed_score_mid": 2.9,
+    "proposed_score_upper": 3.3,
+    "research_complete": true,
+    "researcher_summary": "actual 영업현금흐름과 순현금성 유동성은 자본배분 여력을 지지하며, 높은 가동률과 수요연계 투자 원칙은 증설의 경제적 필요성을 보완한다. 그러나 운전자본과 대규모 유형자산 취득이 현금을 흡수하며, HBM 믹스 효율과 FY2026 discipline은 분석·계획이지 HBM 단독 ROIC actual이 아니다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "actual 운전자본 증가는 강한 이익의 현금 전환을 낮추는 전사 counter이며 HBM 단독으로 귀속하지 않는다.",
+        "fact_row_index": 1,
+        "source_economic_mechanism": "매출채권과 재고 증가가 영업현금 창출을 각각 감소시켜 강한 이익이 현금으로 전환되는 과정의 운전자본 부담을 보여준다. 메모리 또는 HBM에만 귀속하지 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 매출채권 증가는 14,145,673백만원, 재고자산 증가는 1,041,534백만원의 영업현금흐름 감소요인이었다",
+        "source_value_json": "\"receivables increase 14145673; inventory increase 1041534\""
+      },
+      {
+        "component_interpretation": "actual 연결 영업현금 창출은 투자 재원과 재무 유연성의 직접 근거다.",
+        "fact_row_index": 3,
+        "source_economic_mechanism": "OPERATING_CASH_GENERATION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 연결 영업활동현금흐름이 26,330,119백만원이다",
+        "source_value_json": "26330119"
+      },
+      {
+        "component_interpretation": "수요연계 투자와 재무건전성 병행은 규율을 지지하지만 issuer plan이며 actual 회수 성과가 아니다.",
+        "fact_row_index": 14,
+        "source_economic_mechanism": "SK하이닉스는 가시성이 확보된 제품과 필수 투자·미래 인프라를 우선하고 전년 대비 다소 늘어난 투자 방향을 유지하되, 기존 팹 믹스 최적화와 저수익 자원 재배분, 차입금 축소와 현금 확대를 병행한다고 설명했다. 이는 무차별 증설보다 수요 가시성과 재무여력을 연동한 공급 대응 정책이며 실제 집행액을 확정하는 가이던스는 아니다.",
+        "source_period_json": "\"FY2025 investment policy and forward infrastructure strategy stated 2025-04-24\"",
+        "source_predicate": "SK하이닉스는 수요 가시성이 확보된 제품과 필수·미래 인프라 투자를 우선하면서 팹 믹스 최적화와 재무건전성 강화를 병행할 계획이라고 밝혔다",
+        "source_value_json": "\"visibility-linked product investment; essential and future-infrastructure priority; existing direction of modest YoY investment increase; debt reduction and cash increase\""
+      },
+      {
+        "component_interpretation": "HBM 믹스의 자본효율 개선 가능성을 지지하지만 broker analysis이며 ROIC actual을 직접 측정하지 않는다.",
+        "fact_row_index": 52,
+        "source_economic_mechanism": "HBM은 DRAM Blended ASP를 높이는 동시에 일반 DRAM CAPA를 잠식해, HBM 수혜가 집중된 SK하이닉스가 더 적은 생산능력으로 더 많은 이익을 창출할 수 있게 했다는 분석이다. 이는 기존 DRAM 가격 사이클과 생산능력 규모만으로 역사적 valuation band를 적용하기 어렵게 만드는 구조적 이익 효율 근거다.",
+        "source_period_json": "\"structural cycle assessment current as of 2024-09-24\"",
+        "source_predicate": "HBM의 Blended ASP 상승과 CAPA 잠식 효과로 SK하이닉스가 더 적은 CAPA에도 더 많은 이익을 창출해 과거 DRAM 사이클과 다른 패턴을 보였다고 분석됐다",
+        "source_value_json": "\"HBM-driven blended-ASP uplift and capacity cannibalization enabled higher profit with less capacity\""
+      },
+      {
+        "component_interpretation": "Capex discipline은 issuer plan으로만 취급하고 actual 투자·FCF와 구분한다.",
+        "fact_row_index": 161,
+        "source_economic_mechanism": "SK하이닉스는 캐파·공정전환·인프라 투자로 연간 투자액이 상당히 늘지만, 수요 가시성과 효율성을 기준으로 규율을 유지해 매출의 30% 중반 수준 집행이 가능하다고 설명했다. 이는 계획이며 실제 집행액이나 FCF 결과가 아니다.",
+        "source_period_json": "\"FY2026 investment plan stated in 4Q2025 results Q&A\"",
+        "source_predicate": "SK하이닉스는 FY2026 투자가 전년 대비 상당히 증가하더라도 수요 가시성과 효율성에 기반한 Capex discipline을 유지해 매출의 30% 중반 수준 집행이 가능할 것으로 설명했다",
+        "source_value_json": "\"investment up materially YoY; mid-30% of revenue; demand-visibility and efficiency discipline maintained\""
+      },
+      {
+        "component_interpretation": "actual 연결 유동성이 차입금을 웃돌아 증설과 환원을 병행할 완충력을 제공한다.",
+        "fact_row_index": 210,
+        "source_economic_mechanism": "CORPORATE_LIQUIDITY",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "2026년 1분기말 연결 현금성자산 등이 54,329,761백만원으로 차입금 19,317,665백만원을 상회한다",
+        "source_value_json": "\"cash and equivalents etc. 54329761; debt 19317665; net debt ratio 0\""
+      },
+      {
+        "component_interpretation": "전사 반도체 100% 가동은 증설 필요성을 지지하나 HBM 전용 CAPA로 확대하지 않는다.",
+        "fact_row_index": 215,
+        "source_economic_mechanism": "반도체 생산설비 평균가동률 100%는 2026년 1분기 공급 여유가 제한적이었음을 보완한다. 공시는 HBM 전용 라인의 가동률이나 장래 CAPA 잠금을 따로 제시하지 않으므로 전사 반도체 범위로 제한한다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 반도체 생산실적은 11,465,147백만원이고 생산설비 평균가동률은 100%였다",
+        "source_value_json": "100"
+      },
+      {
+        "component_interpretation": "actual 유형자산 취득 현금유출은 투자 확대가 현금 전환을 직접 소모한다는 현재 비용이다.",
+        "fact_row_index": 247,
+        "source_economic_mechanism": "CAPITAL_EXPENDITURE_CASH_OUTFLOW",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 연결 유형자산 취득 현금유출이 7,657,403백만원이다",
+        "source_value_json": "7657403"
+      }
+    ],
+    "selected_fact_row_indices": [
+      1,
+      3,
+      14,
+      52,
+      161,
+      210,
+      215,
+      247
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "FY2026 Capex 비율과 수요연계 집행은 plan이며 actual FCF 결과가 아니다.",
+      "연결 현금·Capex 수치를 HBM 단독 ROIC에 귀속할 수 없다.",
+      "장기 증설의 회수기간과 binding 고객조건이 공개되지 않았다."
+    ],
+    "why_not_higher": "actual 현금·유동성은 강하지만 Capex와 운전자본 흡수, HBM 단독 ROIC 부재, 계획 미실현이 상단을 제한한다.",
+    "why_not_lower": "actual 영업현금흐름·유동성, 높은 가동률과 수요연계 투자 정책이 자본배분의 실질 기반을 제공한다."
+  },
+  "payload_hash": "f85ca5797539205c457be23e36724738601086e0792f76580abb532600714c99",
+  "production_score_authority": false,
+  "prompt_hash": "a822f983d7f27b7207dd4e01aba369f6d40abacb4834f1f8c90cdb73546e2e66",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2d1c32311d72309e0f68a88c248c8549fc615019f362eab7f6a1ea2ceca3f2ca",
+  "response_id": "COLLABRESP-e691b51a5fd42cd141c5bf7ef79cd0b61e4b1392bacedda2e594f6b380735bee",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

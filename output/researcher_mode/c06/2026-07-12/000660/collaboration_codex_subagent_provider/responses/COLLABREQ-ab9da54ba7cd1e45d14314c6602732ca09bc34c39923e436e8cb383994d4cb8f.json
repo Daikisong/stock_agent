@@ -1,0 +1,172 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-91f9b0b2fc3c7fb0b960fc27",
+        "rationale": "단일 full document 5,715줄과 SK하이닉스 직접 언급 107곳을 Gold-blind로 전수 검토해 HBM 매출비중·수익성 기여, HBM4의 TSV·웨이퍼 집약도, TSMC 선단 로직다이 기반 맞춤형 HBM 등 current 96건과 경제적 정체성이 다른 valuation-linked 3건을 추출했다. 2025년 M15X 투자시점·30k/90k CAPA·27조원 Capex, HBM4/HBM4E 양산 로드맵, 고객 일정 위험, 일반 DRAM 수급 전망은 더 최신 current 사실이 대체하거나 기간이 지난 전망이라 재추출하지 않았고, 장비업체 실적·고객비중·밸류에이션 및 공정 일반론은 타사 또는 objective 비직접 배경으로 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-91f9b0b2fc3c7fb0b960fc27",
+        "economic_mechanism": "하나증권은 SK하이닉스 매출에서 HBM 비중이 2025년 말 50%에 근접하고 높은 영업이익률로 전사 수익성 개선을 견인할 것으로 추정했다. 이는 제3자 전망이며 issuer 공시 기반 segment contribution이나 확정 실적으로 확대하지 않는다.",
+        "exact_quote": "M15x는 HBM 중심으로 투자가 진행될 것으로 추정한다. 현재 여유 CAPA가 없는 상황에서\nHBM 수요 증가에 대응하기 위해서 추가적인 라인 증설이 필요하기 때문이다. SK하이닉스의\n매출액 내에서 HBM 비중은 2025년 연말에 50%에 육박할 것으로 추정된다. 아울러 높은\n영업이익률로 인해 전사 수익성 개선을 견인하고 있는 것으로 판단된다. 주요 고객사의\nHBM 요구 및 추론 AI용 ASIC 수요 대응을 위해서라도 추가 증설이 불가피해 보인다. 15X의\n디자인 CAPA는 월 9만장 정도로 예상되는데, 첫번째 투자는 월 3만장으로 예상한다. 해당\n투자에 따른 장비 셋업이 2025년에 완료되는냐 마느냐로 2025년 및 2026년 Capex에 변동\n이 생길 것으로 추정한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 매출 비중과 마진의 전사 이익 전환은 HBM 분리 가치와 forward valuation을 잇는 직접 earnings bridge다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_REVENUE_MIX_MARGIN_FY2025F",
+        "normalized_object": "SK하이닉스 FY2025 HBM 매출비중과 전사 이익 기여 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025 year-end forecast published 2025-05-21",
+        "predicate": "2025년 말 HBM 매출비중이 50%에 근접하고 높은 영업이익률이 전사 수익성 개선을 견인할 것으로 전망됐다",
+        "predicate_family": "HBM_REVENUE_MIX_MARGIN_BRIDGE",
+        "primitive_tags": [
+          "HBM",
+          "REVENUE_SHARE",
+          "OPERATING_MARGIN"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SKHYNIX_HBM_REVENUE_MIX_MARGIN_BRIDGE",
+        "question_family_tags": [
+          "HBM_REVENUE_MIX",
+          "MARGIN_CONTRIBUTION",
+          "FY2025F"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2025년 HBM 매출비중과 전사 수익성 기여 전망",
+        "subject_id": "000660:HBM_REVENUE_MIX_MARGIN:FY2025F",
+        "unit": "% and qualitative margin contribution",
+        "value": "year-end HBM revenue share approaching 50; high operating margin expected to drive company profitability"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-91f9b0b2fc3c7fb0b960fc27",
+        "economic_mechanism": "HBM4는 HBM3보다 I/O와 TSV가 두 배이고 다이 폭도 커져 동일 HBM 수요를 생산하는 데 더 많은 TSV CAPA와 웨이퍼가 필요하다는 분석이다. 이는 단순 기술 사양을 넘어 HBM4 믹스 확대가 일반 DRAM CAPA를 잠그는 물리적 병목을 설명한다.",
+        "exact_quote": "TSV는 제조하는 칩의 I/O 단자 개수만큼 필요한데, HBM3의 경우 1,024개(16채널*64bit)의\nI/O가 있기 때문에 1,024개의 TSV가 필요하다. 마찬가지로 HBM4의 경우 2,048개(32채널\n*64bit)의 I/O가 존재하기 때문에, 2,048개의 TSV가 필요하다. 이는 HBM 수요가 동일하다\n는 가정하에서 TSV 수요와 필요 CAPA가 2배 증가한다는 의미이다.\nTSV의 증가는 필연적으로 다이 면적의 확대를 의미한다. 기존 HBM3의 면적에서 TSV를 2\n배 구현한다는 것이 어렵기 때문이다. 이를 증명하듯 HBM4 규격을 살펴보면 24Gb/die 기\n준 가로 길이가 HBM3 규격 대비 1.8mm 늘어난다. 이에 따라 1장의 웨이퍼로 생산할 수\n있는 다이의 수가 HBM3 대비 줄어들 수밖에 없다. 이는 HBM4의 생산 확대가 Wafer 소비\n량을 증가시키는 것을 의미하고, DRAM CAPA를 제한하는 요인으로 작용할 것이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "제품 세대 전환 자체가 웨이퍼 공급을 잠그는 강도는 HBM 병목과 일반 DRAM 가격의 지속성을 직접 결정한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_TSV_WAFER_CAPACITY_INTENSITY",
+        "normalized_object": "HBM4의 TSV·웨이퍼 집약도와 DRAM CAPA 제약",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "HBM4 generation specification current as of 2025-05-21",
+        "predicate": "HBM4는 2,048개 TSV와 더 큰 다이 면적으로 동일 수요 기준 TSV 필요 CAPA를 두 배로 늘리고 웨이퍼당 다이 수를 줄여 DRAM CAPA를 제한한다",
+        "predicate_family": "HBM4_CAPACITY_INTENSITY",
+        "primitive_tags": [
+          "HBM4",
+          "TSV",
+          "DIE_SIZE",
+          "WAFER_CAPACITY"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_WAFER_CAPACITY_INTENSITY",
+        "question_family_tags": [
+          "HBM4_TSV",
+          "WAFER_INTENSITY",
+          "DRAM_CAPACITY_CONSTRAINT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "HBM4 TSV·다이 면적 증가와 DRAM 생산능력 제약",
+        "subject_id": "INDUSTRY:HBM4:TSV_WAFER_CAPACITY_INTENSITY",
+        "unit": "TSV count, multiple, millimeters and qualitative capacity effect",
+        "value": "2048 TSV; 2x TSV capacity at equal demand; die width +1.8mm versus HBM3; fewer dies per wafer"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-91f9b0b2fc3c7fb0b960fc27",
+        "economic_mechanism": "SK하이닉스가 HBM4부터 TSMC의 선단 로직다이를 사용할 계획이라는 분석은 늘어난 채널·TSV 제어 기능을 구현하고 고객 맞춤형 HBM을 제공하는 제품 차별화 경로를 구체화한다. 이를 TSMC와의 구매의무나 공급량 계약으로 확대하지 않는다.",
+        "exact_quote": "또 다른 대표 변화는 로직 다이에 있다. HBM 선두주자인 SK하이닉스는 HBM3E까지는 자체\n적으로 로직 다이를 생산했지만, HBM4부터는 로직 선단 공정을 이용할 계획이며, 이를 위\n해 TSMC가 로직 다이를 생산할 예정이다. HBM4에 선단 공정을 적용하는 이유는 채널 수\n증가와 TSV 증가 등 HBM의 스펙 상향때문이다. 채널과 TSV가 증가하면서 채널 스케줄링과\n신호 제어 등 더 많은 로직 기능을 필요로 한다. 이를 해결하기 위해 로직 다이 내 선단 공\n정을 도입해 다양한 로직 회로를 도입할 계획이다. 또한 선단 공정을 통해 다양한 기능을\n추가할 수 있기 때문에 맞춤형 HBM 생산에도 유리하다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "선단 로직다이와 고객 맞춤화 능력은 HBM4의 제품 프리미엄과 고객 결속을 만드는 직접 상용화 근거다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_TSMC_LOGIC_DIE_CUSTOMIZATION",
+        "normalized_object": "SK하이닉스 HBM4 TSMC 로직다이 기반 맞춤형 제품 경로",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "HBM4 generation plan as of 2025-05-21",
+        "predicate": "SK하이닉스는 HBM4부터 TSMC가 생산하는 선단 로직다이를 사용해 추가 로직 기능과 맞춤형 HBM 구현을 계획한 것으로 분석됐다",
+        "predicate_family": "HBM4_LOGIC_DIE_CUSTOMIZATION",
+        "primitive_tags": [
+          "HBM4",
+          "LOGIC_DIE",
+          "TSMC",
+          "CUSTOMIZATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SKHYNIX_HBM4_TSMC_LOGIC_DIE",
+        "question_family_tags": [
+          "HBM4_LOGIC_DIE",
+          "TSMC",
+          "CUSTOM_HBM"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4용 TSMC 선단 로직다이와 맞춤형 기능",
+        "subject_id": "000660:HBM4_TSMC_LOGIC_DIE:CUSTOMIZATION",
+        "unit": "qualitative product architecture plan",
+        "value": "TSMC-produced advanced logic die planned for HBM4 to support added logic functions and customization"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "9cc5f4cf4a5ebb05e3fe34265b61c0525b9485dbd6fe5510cf9d2b1c384ed8ee",
+  "production_score_authority": false,
+  "prompt_hash": "6d2510af4cf092a067ab29073048ce60583c6303801a34d2a6b9638bef47b5ed",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ab9da54ba7cd1e45d14314c6602732ca09bc34c39923e436e8cb383994d4cb8f",
+  "response_id": "COLLABRESP-88215c6b33420aba5722d5adb8fea6a8a7ddf6ec5d75b8af4f4d81d26d0beec7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

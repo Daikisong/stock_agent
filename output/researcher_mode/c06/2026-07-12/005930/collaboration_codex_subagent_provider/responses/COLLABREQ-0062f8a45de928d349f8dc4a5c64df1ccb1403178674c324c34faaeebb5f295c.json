@@ -1,0 +1,359 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4406415812f569ee9aeb9180",
+        "rationale": "2025년 연결재무제표 주석 전수를 검토해 current canonical에 없는 FY2025 메모리 제품 매출 104,081,179백만원 한 건만 추출했다. FY2024 메모리 매출, DS 혼합 매출·영업이익, 전사 현금흐름·재고·약정·계약부채·재무위험·감사 정보는 이미 존재하거나 메모리 eps_fcf objective에 직접 귀속되지 않아 반복하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-48f3677ff59eacd6277cc647",
+        "rationale": "IDC의 메모리 가격 부담에 따른 2026년 스마트폰·PC 출하 감소 전망만 objective-direct counterfact로 추출했다. 삼성전자 1분기 영업이익 추정은 이후 actual에 의해 대체됐고, D램·낸드 가격·클린룸·5년 계약·공급 부족은 업계 수치이거나 current canonical의 target-specific 수요·LTA·가격 facts와 중복돼 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-4cdc8593b8940a138de0b552",
+        "rationale": "1분기 발표 전 전사·DS 영업이익 전망은 이후 as-of 내 actual과 current canonical에 의해 대체됐다. HBM4 출하와 FY2026 HBM 매출 3배 전망도 current canonical에 이미 있고, AMD 협력·비메모리 변수는 이 문서의 짧은 정성 서술만으로 별도 비중복 objective fact가 되지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-4d540827d2bcd2d8f0619580",
+        "rationale": "current canonical에 없는 AMD MI455X용 HBM4 우선·한시 단독 공급, SOCAMM2·GDDR7 고부가 판매 믹스, 엔비디아 베라 CPU용 SOCAMM2 검증 완료·양산 출하, 구글·마이크로소프트 메모리 LTA 추진과 LTA 가격 반영 지연 counter를 추출했다. 전사·DS 1분기 잠정실적, D램 ASP·마진 추정, HBM4 엔비디아 양산, 2분기·연간 전사 전망, 파운드리·System LSI는 actual·prior fact 중복 또는 범위 밖이라 제외했다. 총파업 생산차질은 current canonical의 조건부 메모리 생산차질 위험과 의미가 중복된다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4406415812f569ee9aeb9180",
+        "economic_mechanism": "2025년 메모리 제품 매출 104조811억원은 메모리 수요와 제품 판매가 연간 매출로 전환된 실제 규모를 제시한다.",
+        "exact_quote": "당기 주요 제품별 매출은 다음과 같습니다.\n(단위 : 백만원)\n구 분 TV, 모니터 등 스마트폰 등 메모리 디스플레이 패널 계(*)\n매출액 30,860,880 126,474,386 104,081,179 29,841,661 333,605,938",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical에는 FY2023·FY2024 및 2025년 상반기 메모리 매출이 있지만 FY2025 연간 메모리 제품 매출은 없다. DS 혼합 매출이나 전사 매출을 메모리 수치로 전용하지 않고 제품별 표의 메모리 열만 사용한다.",
+        "mechanism_scope_id": "005930:MEMORY:PRODUCT_REVENUE:FY2025",
+        "normalized_object": "2025년 메모리 제품 매출 104,081,179백만원",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025",
+        "predicate": "삼성전자의 2025년 메모리 제품 매출액이 104,081,179백만원이었다",
+        "predicate_family": "MEMORY_PRODUCT_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "MEMORY_REVENUE",
+          "FY2025_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PRODUCT_REVENUE_ACTUAL",
+        "question_family_tags": [
+          "MEMORY_REVENUE_ACTUAL",
+          "ANNUAL_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "삼성전자 2025년 메모리 제품 매출",
+        "subject_id": "005930:MEMORY:PRODUCT_REVENUE:FY2025",
+        "unit": "KRW million",
+        "value": 104081179
+      },
+      {
+        "business_segment": "메모리 전방 수요",
+        "confidence": 0.78,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-48f3677ff59eacd6277cc647",
+        "economic_mechanism": "IDC의 스마트폰·PC 출하 감소 전망은 메모리 가격 상승이 고객 원가 부담과 완제품 출하 축소로 되돌아와 범용 메모리 수요를 훼손할 수 있는 반대 메커니즘을 제시한다.",
+        "exact_quote": "시장조사업체 IDC는 메모리 가격 급등에 따른 부품 원가 부담으로 올해 세계 스마트폰 출하량이 12.9%, PC 출하량이 11.3% 줄어들 것으로 전망했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "단순 업계 헤드라인이 아니라 메모리 가격을 원인으로 한 두 전방시장 출하량의 수치형 하락 전망이다. 삼성전자 자체 출하나 확정 결과로 바꾸지 않고 외부 수요 리스크로만 사용한다.",
+        "mechanism_scope_id": "005930:MEMORY:END_DEMAND_CONTRACTION:FY2026",
+        "normalized_object": "메모리 가격 부담에 따른 2026년 스마트폰 12.9%·PC 11.3% 출하 감소 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026E",
+        "predicate": "IDC는 메모리 가격 급등에 따른 원가 부담으로 2026년 세계 스마트폰 출하량이 12.9%, PC 출하량이 11.3% 감소할 것으로 전망했다",
+        "predicate_family": "MEMORY_PRICE_END_DEMAND_CONTRACTION",
+        "primitive_tags": [
+          "SMARTPHONE_DEMAND",
+          "PC_DEMAND",
+          "PRICE_ELASTICITY_RISK"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PRICE_DEMAND_DESTRUCTION_RISK",
+        "question_family_tags": [
+          "MEMORY_DEMAND_DESTRUCTION",
+          "CONVENTIONAL_MEMORY_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "메모리 가격 급등에 따른 스마트폰·PC 출하 감소 전망",
+        "subject_id": "005930:MEMORY:END_DEMAND:FY2026",
+        "unit": "percent decline forecast",
+        "value": "smartphone -12.9; PC -11.3"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4d540827d2bcd2d8f0619580",
+        "economic_mechanism": "AMD MI455X용 HBM4의 우선 공급자이자 당분간 단독 공급 지위를 확보했다는 보도는 특정 AI 가속기 고객 수요에 대한 삼성전자 HBM4의 배정 가시성을 높인다.",
+        "exact_quote": "이날 삼성전자는 AMD 인스팅트 MI455X 그래픽처리장치(GPU)용 HBM4를 당분간 단독으로 공급하는 우선 공급자 지위를 확보했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 엔비디아 베라 루빈용 HBM4 양산·다수 고객 공급 계획과 다른 AMD의 특정 플랫폼 배정이다. 계약 물량·기간·가격·구매의무는 문서에 없어 추가하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:AMD_MI455X:PREFERRED_SUPPLIER",
+        "normalized_object": "AMD MI455X용 HBM4 우선·한시 단독 공급자 지위",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03 현재",
+        "predicate": "삼성전자가 AMD 인스팅트 MI455X용 HBM4의 우선 공급자 지위를 확보해 당분간 단독 공급한다고 보도됐다",
+        "predicate_family": "HBM4_AMD_MI455X_PREFERRED_SUPPLIER",
+        "primitive_tags": [
+          "AMD",
+          "HBM4",
+          "PREFERRED_SUPPLIER"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_AMD_PREFERRED_SUPPLIER",
+        "question_family_tags": [
+          "HBM4_NAMED_CUSTOMER_ALLOCATION",
+          "AMD_MI455X_SUPPLY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 AMD MI455X용 HBM4 우선 공급자 지위",
+        "subject_id": "005930:MEMORY:HBM4:AMD_MI455X:PREFERRED_SUPPLIER",
+        "unit": "customer allocation status",
+        "value": "preferred supplier; sole supplier for the time being"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.78,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4d540827d2bcd2d8f0619580",
+        "economic_mechanism": "SOCAMM2와 GDDR7 같은 고부가 메모리의 판매 비중 확대는 HBM 외 AI·그래픽 메모리 제품 믹스가 실제 판매 구성으로 전환되고 있음을 보여준다.",
+        "exact_quote": "삼성전자는 SOCAMM2(Small Outline Compression Attached Memory Module)와 그래픽 D램(GDDR7) 등 고부가 제품 판매 비중도 지속 늘리고 있다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "current canonical의 HBM4·서버 DDR5 판매와 다른 SOCAMM2·GDDR7 제품 믹스다. 비중 수치가 없어 정성적 증가 방향만 유지한다.",
+        "mechanism_scope_id": "005930:MEMORY:AI_MEMORY:HIGH_VALUE_SALES_MIX",
+        "normalized_object": "SOCAMM2·GDDR7 고부가 메모리 판매 비중 확대",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-04-07 현재",
+        "predicate": "삼성전자가 SOCAMM2와 GDDR7 등 고부가 메모리 제품의 판매 비중을 계속 늘리고 있다고 보도됐다",
+        "predicate_family": "AI_MEMORY_HIGH_VALUE_SALES_MIX_EXPANSION",
+        "primitive_tags": [
+          "SOCAMM2",
+          "GDDR7",
+          "HIGH_VALUE_MIX"
+        ],
+        "product_family": "AI 메모리",
+        "question_family_id": "AI_MEMORY_HIGH_VALUE_SALES_MIX",
+        "question_family_tags": [
+          "AI_MEMORY_PRODUCT_MIX",
+          "HIGH_VALUE_MEMORY_SALES"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 SOCAMM2·GDDR7 고부가 메모리 판매 비중",
+        "subject_id": "005930:MEMORY:AI_MEMORY:HIGH_VALUE_SALES_MIX:2026-Q1",
+        "unit": "sales mix direction",
+        "value": "sales mix continuing to increase"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4d540827d2bcd2d8f0619580",
+        "economic_mechanism": "엔비디아 베라 CPU용 SOCAMM2가 샘플 단계에서 품질 검증 완료와 양산 출하로 전환돼 LPDDR5X 기반 서버 메모리의 상용화 상태를 보여준다.",
+        "exact_quote": "삼성전자는 최근 SOCAMM2를 엔비디아 베라 중앙처리장치(CPU)용으로 양산 공급했다. SOCAMM2는 저전력 고성능 D램(LPDDR5X) 기반 서버용 메모리 모듈이다. 지난해 말 엔비디아에 샘플 공급을 시작했다. 최근 품질 검증을 완료하고 양산 출하를 시작했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical에 없는 SOCAMM2의 명명 고객·플랫폼과 샘플에서 검증 완료·양산 출하로의 전환이다. 구매 물량이나 매출액은 문서에 없어 발명하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:SOCAMM2:NVIDIA_VERA:MASS_SHIPMENT",
+        "normalized_object": "엔비디아 베라 CPU용 SOCAMM2 품질 검증 완료·양산 출하",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "삼성전자가 엔비디아 베라 CPU용 SOCAMM2의 품질 검증을 완료하고 양산 출하를 시작했다",
+        "predicate_family": "SOCAMM2_NVIDIA_VERA_MASS_SHIPMENT",
+        "primitive_tags": [
+          "SOCAMM2",
+          "QUALITY_VALIDATION",
+          "MASS_SHIPMENT"
+        ],
+        "product_family": "SOCAMM2",
+        "question_family_id": "SOCAMM2_NVIDIA_VERA_COMMERCIALIZATION",
+        "question_family_tags": [
+          "SOCAMM2_COMMERCIALIZATION",
+          "NVIDIA_VERA_MEMORY_SUPPLY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 엔비디아 베라 CPU용 SOCAMM2 양산 출하",
+        "subject_id": "005930:MEMORY:SOCAMM2:NVIDIA_VERA:MASS_SHIPMENT",
+        "unit": "commercialization status",
+        "value": "quality validation completed and mass-production shipment started"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.72,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4d540827d2bcd2d8f0619580",
+        "economic_mechanism": "구글·마이크로소프트와 메모리 LTA를 추진 중이라는 보도는 current canonical의 익명 빅테크 계약보다 구체적인 고객 후보를 제시하지만 계약 완료나 물량 확약은 아니다.",
+        "exact_quote": "최근 삼성전자는 구글, 마이크로소프트와 메모리 장기 공급 계약(LTA)을 추진 중인 것으로 알려졌다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 익명 빅테크 LTA와 구별되는 두 고객명과 추진 상태다. '알려졌다'는 보도 수준을 유지하고 체결·구매의무·가격·물량을 주장하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:LTA:GOOGLE_MICROSOFT:PURSUIT",
+        "normalized_object": "구글·마이크로소프트 대상 메모리 LTA 추진",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-04-07 현재",
+        "predicate": "삼성전자가 구글과 마이크로소프트를 상대로 메모리 장기공급계약을 추진 중인 것으로 보도됐다",
+        "predicate_family": "MEMORY_LTA_NAMED_CUSTOMER_PURSUIT",
+        "primitive_tags": [
+          "GOOGLE",
+          "MICROSOFT",
+          "LTA_PURSUIT"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_LTA_NAMED_CUSTOMER_PURSUIT",
+        "question_family_tags": [
+          "MEMORY_LTA_NAMED_CUSTOMERS",
+          "CUSTOMER_ALLOCATION_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 구글·마이크로소프트 메모리 LTA 추진",
+        "subject_id": "005930:MEMORY:LTA:GOOGLE_MICROSOFT:PURSUIT",
+        "unit": "contract pursuit status",
+        "value": "LTA pursuit with Google and Microsoft"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.68,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4d540827d2bcd2d8f0619580",
+        "economic_mechanism": "기사의 LTA 구조 설명은 장기 수익 안정성의 반대편에서 상승하는 시장가격을 즉시 반영하지 못해 단기 수익성이 제한될 수 있음을 지적한다.",
+        "exact_quote": "단 시장의 메모리 가격 상승 영향을 즉각 반영할 수 없다. 단기 수익성에는 부정적이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 LTA 가시성·구속력에 대한 직접 반대 메커니즘이다. 다만 이는 기사의 일반적 LTA 구조 분석이지 삼성전자 개별 계약의 실제 가격조항 확인이 아니므로 그대로 제한한다.",
+        "mechanism_scope_id": "005930:MEMORY:LTA:PRICE_PASS_THROUGH_RISK",
+        "normalized_object": "LTA의 시장가격 상승 반영 지연과 단기 수익성 부담",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-04-07 분석",
+        "predicate": "메모리 LTA가 시장가격 상승을 즉시 반영하지 못해 단기 수익성에 부정적일 수 있다고 분석됐다",
+        "predicate_family": "MEMORY_LTA_PRICE_PASS_THROUGH_RISK",
+        "primitive_tags": [
+          "PRICE_PASS_THROUGH",
+          "SHORT_TERM_MARGIN_RISK"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_LTA_PRICE_PASS_THROUGH_RISK",
+        "question_family_tags": [
+          "MEMORY_LTA_PRICING_RISK",
+          "CONTRACT_QUALITY_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.87,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "메모리 LTA의 단기 가격 반영 한계",
+        "subject_id": "005930:MEMORY:LTA:PRICE_PASS_THROUGH_RISK",
+        "unit": "contract structure risk",
+        "value": "market price increases not immediately reflected; negative for short-term profitability"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "AMD MI455X HBM4와 구글·마이크로소프트 LTA의 계약 물량·가격·확정 기간·취소·해지·위약 조건은 문서에 없어 발명하지 않았다.",
+      "LTA 가격 반영 지연은 기사의 일반적 구조 분석이며 삼성전자 개별 LTA의 확인된 가격조항으로 취급하지 않는다.",
+      "2026년 1분기 발표 전 전망치와 2분기·연간 전사 전망은 as-of 내 actual 또는 메모리 귀속 current facts보다 약해 새 current fact로 만들지 않았다.",
+      "2025년 연차 주석의 전사 현금흐름·재고·유형자산·계약부채는 메모리 귀속이 없어 eps_fcf objective fact로 전용하지 않았다."
+    ]
+  },
+  "payload_hash": "5a11d557d05d9bb1774365e469c80d70e68cc9138eaca0e48891481edcae988f",
+  "production_score_authority": false,
+  "prompt_hash": "708c0ce8734af4b13b8d56874f50e6aeb4e9a592a432dd28df9e92282cb8d08f",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0062f8a45de928d349f8dc4a5c64df1ccb1403178674c324c34faaeebb5f295c",
+  "response_id": "COLLABRESP-fa1071b8f1207010cf5ec9983e8597f81f3256a45deff184ea57d3c7b2c05d5e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

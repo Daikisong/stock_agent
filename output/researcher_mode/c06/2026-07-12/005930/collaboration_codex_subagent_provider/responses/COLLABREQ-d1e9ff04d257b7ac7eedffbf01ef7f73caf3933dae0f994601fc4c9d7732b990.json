@@ -1,0 +1,44 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Search full broker or industry valuation appendices for a 2026F EV/EBITDA table covering Samsung Electronics, SK hynix, and Micron rather than repeating issuer-only valuation or broad PER/PBR routes."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 SK하이닉스 Micron 2026F EV EBITDA 비교표 리포트",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "The unresolved contract requires an exact PEER_BAND for valuation_rerating. Earlier searches emphasized broad PER/PBR comparisons or exact report titles; this route instead names the memory peer set and a period-specific EV/EBITDA comparison table. Accept only a full, dated broker or industry document published on or before 2026-07-12 that actually presents comparable peer multiples; a search snippet, target price, or Samsung-only multiple does not resolve the role.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF",
+          "INDUSTRY_REPORT"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "PEER_BAND remains unresolved until a cutoff-compliant full document supplies an attributable same-period peer comparison; discovery snippets are not evidence."
+    ]
+  },
+  "payload_hash": "d92066183c8eab444116ac348d297a8e99f1a408ae8d9bef768554cb683f84b6",
+  "production_score_authority": false,
+  "prompt_hash": "00ef199b21c4ab495fe402ed4a7b68a2c3bf2bda436b5434e39c614161b9bf92",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d1e9ff04d257b7ac7eedffbf01ef7f73caf3933dae0f994601fc4c9d7732b990",
+  "response_id": "COLLABRESP-e3e7d0708be7eccfa71355967aa8b149fe3a470c84c48655b03d25969efec488",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

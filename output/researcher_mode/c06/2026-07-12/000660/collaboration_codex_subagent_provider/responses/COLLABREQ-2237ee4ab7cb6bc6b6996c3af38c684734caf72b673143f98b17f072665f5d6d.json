@@ -1,0 +1,40 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "rationale": "공식 1Q26 실적자료를 전수 검토했으나, 수요가 공급역량을 상회한다는 설명·D램 가격환경 전망·투자 확대·잠정실적 및 예측정보 주의문은 현재 canonical fact의 동일하거나 더 구체적인 경제 의미와 중복된다. 전사 실적 수치는 HBM 이익 기여를 정량 귀속하지 않고, 이 문서는 valuation_rerating에 필요한 숫자형 forward guidance 또는 peer band도 제시하지 않아 새 objective-local fact를 추가하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "valuation_rerating의 DURABLE_VISIBILITY 공백은 발행사 원천의 미래 기간 숫자형 point/range가 없어서 해소되지 않는다.",
+      "valuation_rerating의 PEER_BAND는 이 발행사 실적자료에 비교기업 밴드가 없어 계속 미해결이다."
+    ]
+  },
+  "payload_hash": "e3d7a6c5361bfafd1a9df2e0f404914d095bd1abd6925131abfe92e4a13c97f3",
+  "production_score_authority": false,
+  "prompt_hash": "702fb9d583c59bf8f731393e7f1b0155032460d6b19a911e35572d4cf602e8db",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2237ee4ab7cb6bc6b6996c3af38c684734caf72b673143f98b17f072665f5d6d",
+  "response_id": "COLLABRESP-0a859e7bcf702dee8e0684f27e8faff0de5ae31836ac80d24152180627266b0c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

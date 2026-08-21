@@ -1,0 +1,173 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-d34ebc1824c1b4940d7029b0",
+        "rationale": "transport chunk 1 전체에서 target-linked 목표주가 상향 경로와 valuation 조사자료의 이해상충 공시·정확성 한계를 추출했다. 나머지는 다른 발행사·사업의 분석이며 현재 삼성전자 valuation objective에 직접 연결되지 않는다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리 중심 valuation",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-d34ebc1824c1b4940d7029b0",
+        "economic_mechanism": "동일 증권사의 1년 목표주가가 2025년 7월 77,000원에서 2026년 4월 330,000원까지 단계적으로 상향된 경로는 메모리 earnings 기대가 valuation 기준에 누적 반영된 재평가 변화를 보여준다.",
+        "exact_quote": "삼성전자(005930) 투자등급및목표주가추이 SK하이닉스(000660) 투자등급및목표주가추이\n괴리율 괴리율\n투자 목표가 목표가격 투자 목표가 목표가격\n일자 의견 (원) 대상시점 평균주가 최고(최저) 일자 의견 (원) 대상시점 평균주가 최고(최저)\n대비 주가대비 대비 주가대비\n2026-04-09 BUY 330,000 1년 2026-04-09 BUY 1,800,000 1년\n2026-03-31 BUY 280,000 1년 -31.29 -24.82 2026-02-26 BUY 1,600,000 1년 -41.55 -33.69\n2026-02-26 BUY 270,000 1년 -29.83 -19.81 2026-01-29 BUY 1,169,000 1년 -22.82 -12.92\n2026-01-30 BUY 204,000 1년 -13.68 -0.25 2026-01-15 BUY 1,066,000 1년 -28.06 -21.11\n2026-01-15 BUY 187,000 1년 -18.07 -13.16 2026-01-12 BUY 910,000 1년 -18.68 -18.46\n2026-01-08 BUY 172,000 1년 -19.23 -18.43 2025-12-31 BUY 810,000 1년 -10.68 -6.67\n2025-12-31 BUY 150,000 1년 -8.92 -6.00 2025-10-29 BUY 680,000 1년 -16.07 -4.26\n2025-10-30 BUY 128,000 1년 -18.07 -6.33 2025-10-22 BUY 570,000 1년 -10.33 -6.14\n2025-10-14 BUY 118,000 1년 -16.63 -13.56 2025-10-14 BUY 510,000 1년 -9.61 -4.80\n2025-07-18 BUY 77,000 1년 -12.88 -8.57 2024-10-25 BUY 260,000 1년 -21.49 15.38",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 산정 주체의 목표가격 기준이 시간에 따라 크게 상향된 사실은 valuation-rerating objective의 재평가 경로를 직접 보여준다.",
+        "mechanism_scope_id": "005930:MEMORY:TARGET_PRICE_REVISION_PATH:2025_07_TO_2026_04",
+        "normalized_object": "삼성전자 1년 목표주가의 단계적 상향 경로",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-07-18 through 2026-04-09; one-year target horizon",
+        "predicate": "유안타증권의 삼성전자 1년 목표주가는 2025년 7월 18일 77,000원에서 2025년 말 150,000원, 2026년 3월 31일 280,000원, 2026년 4월 9일 330,000원으로 상향됐다",
+        "predicate_family": "TARGET_PRICE_REVISION_PATH",
+        "primitive_tags": [
+          "TARGET_PRICE",
+          "ONE_YEAR_HORIZON",
+          "REVISION_PATH"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_TARGET_PRICE_REVISION_PATH",
+        "question_family_tags": [
+          "SAMSUNG_TARGET_PRICE_REVISION_PATH",
+          "TARGET_PRICE",
+          "REVISION",
+          "VALUATION_RERATING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 1년 목표주가 상향 경로",
+        "subject_id": "005930:TARGET_PRICE_REVISION_PATH",
+        "unit": "KRW per share",
+        "value": "KRW 77,000 (2025-07-18); KRW 150,000 (2025-12-31); KRW 280,000 (2026-03-31); KRW 330,000 (2026-04-09)"
+      },
+      {
+        "business_segment": "DS 메모리 valuation 정보",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-d34ebc1824c1b4940d7029b0",
+        "economic_mechanism": "보고서 작성 기관이 대상 종목 1% 이상 보유·특별 이해관계·전문투자자나 제3자 사전제공이 없다고 공시해 valuation 자료의 잠재 이해상충 범위를 명시한다.",
+        "exact_quote": "•당사는자료공표일 현재동종목발행주식을1%이상보유하고있지않습니다.\n•당사는자료공표일 현재해당기업과관련하여 특별한이해관계가없습니다.\n•당사는동자료를전문투자자및제3자에게사전제공한사실이없습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "valuation 근거를 제공한 보고서의 잠재 이해상충과 사전 정보제공 여부를 직접 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:VALUATION_RESEARCH_CONFLICT_DISCLOSURE",
+        "normalized_object": "유안타증권 valuation 자료의 이해상충 및 사전제공 부재 공시",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "as of report publication in April 2026",
+        "predicate": "유안타증권은 자료 공표일 현재 대상 종목 발행주식을 1% 이상 보유하지 않고 해당 기업과 특별한 이해관계가 없으며 자료를 전문투자자나 제3자에게 사전 제공하지 않았다고 공시했다",
+        "predicate_family": "BROKER_RESEARCH_CONFLICT_AND_PREPROVISION_DISCLOSURE",
+        "primitive_tags": [
+          "SHAREHOLDING_DISCLOSURE",
+          "SPECIAL_RELATIONSHIP",
+          "PRIOR_PROVISION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "YUANTA_RESEARCH_INDEPENDENCE_DISCLOSURE",
+        "question_family_tags": [
+          "YUANTA_RESEARCH_INDEPENDENCE_DISCLOSURE",
+          "CONFLICT_DISCLOSURE",
+          "SOURCE_QUALITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "유안타증권 삼성전자 valuation 조사자료의 이해관계·사전제공 공시",
+        "subject_id": "005930:YUANTA_RESEARCH_INDEPENDENCE",
+        "unit": "research-independence disclosure",
+        "value": "no 1%+ shareholding, no special relationship, and no prior provision to professional investors or third parties"
+      },
+      {
+        "business_segment": "DS 메모리 valuation 정보",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-d34ebc1824c1b4940d7029b0",
+        "economic_mechanism": "보고서가 valuation 전망에 사용한 자료와 정보의 정확성·완전성을 보장하지 않는다고 명시해 peer·목표배수 근거의 정보 확실성에 직접 제한을 둔다.",
+        "exact_quote": "본 자료는 투자자의 투자를 권유할 목적으로 작성된 것이 아니라, 투자자의 투자판단에 참고가 되는 정보제공을 목적으로 작성된 참고 자료입니다. 본 자료는 금융투자분석사가 신뢰할만\n하다고 판단되는 자료와 정보에 의거하여 만들어진 것이지만, 당사와 금융투자분석사가 그 정확성이나 완전성을 보장할 수는 없습니다. 따라서, 본 자료를 참고한 투자자의 투자의사결정은\n전적으로 투자자 자신의 판단과 책임하에 이루어져야 하며, 당사는 본 자료의 내용에 의거하여 행해진 일체의 투자행위 결과에 대하여 어떠한 책임도 지지 않습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "이 문서의 peer 및 목표 valuation 근거에 대한 명시적 정보 품질 한계다.",
+        "mechanism_scope_id": "005930:MEMORY:VALUATION_RESEARCH_ACCURACY_LIMITATION",
+        "normalized_object": "유안타증권 삼성전자 valuation 자료의 정확성·완전성 제한",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "report published 2026-04-08",
+        "predicate": "유안타증권과 금융투자분석사는 보고서 작성에 사용한 자료와 정보의 정확성이나 완전성을 보장할 수 없다고 명시했다",
+        "predicate_family": "BROKER_RESEARCH_ACCURACY_COMPLETENESS_LIMITATION",
+        "primitive_tags": [
+          "DISCLAIMER",
+          "ACCURACY",
+          "COMPLETENESS",
+          "RESPONSIBILITY"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "YUANTA_VALUATION_RESEARCH_LIMITATION",
+        "question_family_tags": [
+          "YUANTA_VALUATION_RESEARCH_LIMITATION",
+          "ACCURACY_LIMITATION",
+          "COMPLETENESS_LIMITATION",
+          "SOURCE_QUALITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "유안타증권 삼성전자 valuation 자료의 정확성·완전성 한계",
+        "subject_id": "005930:YUANTA_VALUATION_RESEARCH_LIMITATION",
+        "unit": "information-quality limitation",
+        "value": "accuracy and completeness not guaranteed"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "f389cb9367418787ad974e1ccb438459fae745192b520891fa0cf7864c31073e",
+  "production_score_authority": false,
+  "prompt_hash": "38b0be088f83ff0ee4fe4db7e167ae94d04e0843d24a6e802367d1e19c36bce0",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0fd5c59568f56bd685c32769ef86d39e18735c4b43dc095f59037a2e89ffd6e9",
+  "response_id": "COLLABRESP-f745f2fae640cb6c515373d60ef0d616608a717b04f9f0e436bf246f03437e32",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

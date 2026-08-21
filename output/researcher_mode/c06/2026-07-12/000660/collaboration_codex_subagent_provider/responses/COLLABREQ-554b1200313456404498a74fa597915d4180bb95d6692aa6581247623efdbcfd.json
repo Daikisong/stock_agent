@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "KRX 국내 상장사 중 반도체 제조 가동률·CAPEX·감가상각·ASP가 손익과 현금흐름을 좌우하는 인접 비교축이다. HBM 배수의 직접 anchor가 아니라 메모리 제조 cycle과 capital-intensity를 점검하는 보조 peer로만 사용한다.",
+        "confidence": 0.58,
+        "material_differences": [
+          "DB하이텍은 특화 파운드리이고 DRAM·HBM 제품, 적층 메모리 가격, HBM 고객 qualification에 직접 노출되지 않는다.",
+          "사업 규모, 기술 노드, 고객 계약 구조와 글로벌 경쟁군이 달라 SK하이닉스의 HBM multiple을 직접 적용할 수 없다."
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "반도체 제조업의 가동률, 설비투자, 감가상각과 ASP가 수익성과 현금흐름을 좌우한다.",
+          "공급능력 램프와 고객 수요 변동이 영업 레버리지와 valuation 변동성을 만든다."
+        ]
+      },
+      {
+        "comparability_rationale": "한미반도체는 HBM 적층 공정용 TC bonder를 포함한 후공정 장비와 고객 CAPA 투자에 노출돼 HBM 수요·qualification·CAPEX cycle의 국내 상장 인접축을 제공한다. 메모리 제조사 자체가 아니므로 HBM 제품 배수의 직접 peer가 아니라 supply-chain valuation countercheck로 제한한다.",
+        "confidence": 0.67,
+        "material_differences": [
+          "한미반도체는 장비 공급사이고 SK하이닉스는 DRAM·HBM 메모리 제조사여서 매출 인식, 원가 구조, 고객 집중과 재고 위험이 다르다.",
+          "장비 발주 시점은 고객의 메모리 출하·ASP·제품 수율과 시차가 있으며 HBM 제품의 직접 이익률이나 현금흐름을 대표하지 않는다."
+        ],
+        "peer_name": "한미반도체",
+        "peer_symbol": "042700",
+        "shared_economic_drivers": [
+          "HBM 생산능력 확대와 적층·본딩 공정 투자가 양사의 수요와 실적 민감도에 영향을 준다.",
+          "고객 qualification, 장비·공정 ramp와 AI 메모리 CAPEX cycle이 성장 기대와 valuation 변동성을 좌우한다."
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "삼성전자는 복수 상장주식 범위 일치 검증에 실패했으므로 재제안하지 않았다. 이미 구조화 검증된 DB하이텍을 제조 cycle·capital-intensity 보조축으로 유지하고, HBM 후공정 CAPEX·qualification을 공유하는 한미반도체를 새 인접축으로 선택했다. 두 회사 모두 SK하이닉스의 직접 HBM pure-play peer가 아니므로 차이를 명시하고 동일 배수의 기계적 적용을 금지한다.",
+    "unresolved_research_notes": [
+      "국내 KRX roster에는 글로벌 메모리 pure-play가 없어 direct peer가 제한된다. DB하이텍과 한미반도체는 각각 제조 cycle과 HBM 후공정 CAPEX의 인접 비교축이며, structured source가 같은 시점·분모의 공통 multiple을 실제 검증할 때만 peer band에 포함한다. 이 응답은 valuation 수치를 만들지 않는다."
+    ]
+  },
+  "payload_hash": "69deb4a8e1441e787abab12037d7c14392cd1c6054e418ab4c99d330f7884b26",
+  "production_score_authority": false,
+  "prompt_hash": "3cc0fa2c9bab9c864886802c3823b112cdf7520a87473d625dcaafb0564a9d25",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-554b1200313456404498a74fa597915d4180bb95d6692aa6581247623efdbcfd",
+  "response_id": "COLLABRESP-48cf6ecd3bb2d3655288a5ce7eb2c3974da9da7a1352a22214a6a60744533579",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

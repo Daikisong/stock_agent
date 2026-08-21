@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "fe163f82b6d106e3fc02b1849a90f5609442ff5513318fe04e9fdcdfa60aa9b4",
+  "payload": {
+    "allowed_range": [
+      1.9,
+      2.9
+    ],
+    "anchor_comparisons": [
+      "COUNTER WEAK anchor의 0.6~1.0점보다 현재 재원·가동 사실은 분명히 강하지만, counter가 HBM 귀속과 집행 확실성을 직접 제한한다.",
+      "COUNTER STRONG anchor의 3.8~4.0점은 높은 점수에서도 강한 훼손 가능성을 뜻하는 ordinal 기준이며, 현재 혼합 투자·운전자본 위험 때문에 그 상단을 지지하지 않는다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0110c93a9c546290e8d34635",
+      "EFACT-e97dce0c4e7031b25df2c916"
+    ],
+    "disagreements": [
+      "100% 전사 반도체 가동률과 순현금을 HBM 자본 배분의 직접 성과로 간주하는 데 동의하지 않는다. 둘 다 전사 범위다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "proposed_points": 2.4,
+    "rationale": "모든 counterfact를 반영하면 전사 OCF와 순현금의 상당 부분이 HBM 전용 자본수익으로 연결됐다고 볼 수 없다. 매출채권·재고 증가는 영업현금흐름을 크게 흡수했고, 청주 100조원은 NAND와 HBM 후공정이 섞이며 세부 일정·투자는 이사회 승인 전이다. 수요 가시성 정책과 100% 전사 가동률은 긍정적이지만 실제 HBM별 집행·램프·수율·FCF 전환은 아직 공백이다.",
+    "support_fact_ids": [
+      "EFACT-02d58ad600093d0014e8428a",
+      "EFACT-08f8b87524ceb3f3ee376bc2",
+      "EFACT-2b6d88631c21daa364467682",
+      "EFACT-bb3c20c5fdc5425689b78c4d",
+      "EFACT-c589801b18002cc79aa63e94"
+    ],
+    "why_not_higher": "운전자본 흡수와 혼합 투자 승인 조건에 더해 HBM 단독 투자수익·현금전환이 없어 strong band를 검증할 수 없다.",
+    "why_not_lower": "공식 OCF·순현금과 전사 가동률, 수요 가시성 기반 정책은 실제 자본 대응 능력을 보여주므로 계획만 있는 zero·weak 사례는 아니다."
+  },
+  "payload_hash": "96e8cc042814e7720942857dc746f8aaf7c214b727b6bcb806b550be4d06fd98",
+  "production_score_authority": false,
+  "prompt_hash": "b54e01cb81f2b79d0eed805fe8dd11408b98387a0bca517a3679148503e0f9b9",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7805d64fc8471117d8d814593a9318e60ca31a8307d732782f087e6bc63ba43c",
+  "response_id": "COLLABRESP-a66bc7bbbe069710623dde39ef3f86cd480fe9b15272587df3451310762148d8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

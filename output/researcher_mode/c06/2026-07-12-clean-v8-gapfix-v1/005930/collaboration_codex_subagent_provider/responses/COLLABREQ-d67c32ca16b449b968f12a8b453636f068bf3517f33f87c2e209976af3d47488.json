@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f48430d9449f013d0634394f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "일반 IT 뉴스 모음으로 고객 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b648d45c1a9e3ca70b838bcd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "Naver 제3자 리포트 요약으로 CUSTOMER_OFFICIAL 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-553fe019c1b5c8b6e57cd6db",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "다른 회사의 KIND 주총 공고이며 대상 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-d6a472820733ef80da8f7261",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "SK증권 거시 기업 코멘트 PDF로 고객사 공식 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c7b79a5b0a200c996cac99af",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "개인 블로그의 주가·노조 분석으로 공식 고객 관계 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6b359839bd067814d4e14658",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "하나증권 CES 산업 리포트로 요청된 CUSTOMER_OFFICIAL source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-19e14e6747bfedf1039ac181",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "미래에셋 전기전자 리포트로 대상 고객 관계를 직접 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7e5c4daffe4dcdb5b7ee66bf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver 제3자 일정·투자 글로 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8b929562897beb91d0f01eab",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "2018년 미래에셋 삼성전자 보고서로 현재 고객 공식 관계 조사와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-24562235784dc6d5fbb00587",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Telegram 통계·링크 페이지로 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-29dec8e97d928f5215364811",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver 해외 뉴스 요약으로 CUSTOMER_OFFICIAL 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-58480b8d5d05d9167a44a805",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver 투자 전략 글로 고객사 공식 source가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "material0은 이 partition에 적합한 고객 공식 full-fetch route가 없다는 분류이며 source absence나 completion 근거가 아니다."
+    ]
+  },
+  "payload_hash": "39d3249f80f691d8e0b4e028f4f4536060fefe041e94d5cf68c0b35b074f7ba8",
+  "production_score_authority": false,
+  "prompt_hash": "01332d8d10945358b1e8f531afc3cc7c96d478144b3caf0ffe6e5b38c6014eff",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d67c32ca16b449b968f12a8b453636f068bf3517f33f87c2e209976af3d47488",
+  "response_id": "COLLABRESP-60b0c77e5ce5e072ff00ec5fc7ba755d5d9b601e848ac5fd2d4bae961cd71e7f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

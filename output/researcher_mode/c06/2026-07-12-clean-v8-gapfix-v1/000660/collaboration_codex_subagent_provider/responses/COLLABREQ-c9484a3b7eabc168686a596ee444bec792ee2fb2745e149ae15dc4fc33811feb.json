@@ -1,0 +1,603 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "Issuer KIND filing was fully read; three distinct issuer-wide ADR financing/use-of-proceeds atoms were emitted, with additional distinct terms deferred only because the 12-fact upper bound was reached.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "The full 2026 broker report was audited; current forward P/E and two independently period-mapped operating-profit revisions were emitted as broker estimates, with no issuer-guidance or HBM-only upgrade.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "The corrected KIND filing was fully read; finalized facility funding and two project-level investment plans were emitted, while product allocation and contract economics were not inferred.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "The full historical broker PDF was audited; only three target-direct calibration atoms were emitted and all were marked SUPERSEDED, with no historical estimate promoted to current issuer or HBM-only evidence.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "economic_mechanism": "ADR 원주 신주 발행에 따른 전사 자본조달 및 희석",
+        "exact_quote": "1. 상장예정주식 종류ㆍ수(주)\n보통주식\n17,790,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Issuer official decision quantifies prospective equity issuance and dilution relevant to the open capital-allocation objective.",
+        "mechanism_scope_id": "000660|CORPORATE_GENERIC|ADR_EQUITY_ISSUANCE",
+        "normalized_object": "ADR 원주용 보통주 신주 최대 모집 한도 17,790,000주",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-06-24 decision",
+        "predicate": "maximum_new_common_shares_for_adr",
+        "predicate_family": "issuer_equity_financing",
+        "primitive_tags": [
+          "issuer_official",
+          "maximum_amount",
+          "dilution"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "QF_ISSUER_EQUITY_FINANCING",
+        "question_family_tags": [
+          "capital_allocation",
+          "equity_issuance",
+          "adr"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "shares",
+        "value": 17790000
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "economic_mechanism": "미국 나스닥 ADR 상장을 통한 투자자 기반 확대",
+        "exact_quote": "4. 상장증권\n원주상장 (주)\n-\nDR상장 (주)\n177,900,000\n5. 상장거래소(소재국가)\n미국 나스닥 증권거래소\n(Nasdaq Global Select Market)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Issuer official filing defines the scale and venue of the planned ADR capital-market transaction without implying operating economics.",
+        "mechanism_scope_id": "000660|CORPORATE_GENERIC|ADR_LISTING",
+        "normalized_object": "나스닥 글로벌 셀렉트 마켓 DR 최대 177,900,000주 상장 예정",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "planned 2026-07-10 listing",
+        "predicate": "planned_adr_listing_amount_and_exchange",
+        "predicate_family": "issuer_equity_financing",
+        "primitive_tags": [
+          "issuer_official",
+          "planned_listing"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "QF_ISSUER_EQUITY_FINANCING",
+        "question_family_tags": [
+          "capital_allocation",
+          "adr",
+          "listing"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "DR shares",
+        "value": 177900000
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "economic_mechanism": "ADR 조달자금의 반도체 시설투자 배정",
+        "exact_quote": "3) 상기 '3. 자금조달(신주발행)의 목적’에 기재된 시설자금은 (1) 용인 반도체 클러스터 1기 팹(건설투자), (2) 청주 P&T7 어드밴스드 패키징(Advanced Packaging) 팹(건설, 장비 및 부대비용 포함) 및 (3) 기계장치 취득- EUV(Extreme Ultraviolet) Scanner 건설 및 시설투자 자금을 의미하는 바, 세부사항은 당사가 본 보고서와 같은 일자로 금융위원회에 제출하는 증권신고서를 참조하기 바랍니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Issuer official filing identifies the facility projects funded by the proposed equity raise, directly informing capital-allocation quality while not assigning the projects to HBM-only capacity.",
+        "mechanism_scope_id": "000660|CORPORATE_GENERIC|FACILITY_USE_OF_PROCEEDS",
+        "normalized_object": "ADR 시설자금 사용처는 용인 1기 팹, 청주 P&T7 패키징 팹, EUV Scanner",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-06-24 decision",
+        "predicate": "adr_proceeds_facility_targets",
+        "predicate_family": "issuer_capital_deployment",
+        "primitive_tags": [
+          "issuer_official",
+          "use_of_proceeds",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "QF_ISSUER_CAPITAL_DEPLOYMENT",
+        "question_family_tags": [
+          "capital_allocation",
+          "facility_funding"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "project roster",
+        "value": "Yongin fab 1, Cheongju P&T7 advanced-packaging fab, and EUV scanner"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.93,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "메모리 전사의 forward earnings multiple 저평가 신호",
+        "exact_quote": "주가 랠리에도 불구하고 삼성전자, SK하이닉스의 12M Fwd. P/E는 각각 6.0X, 5.2X 수준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Dated broker valuation provides a target-attributable current forward multiple and denominator period, while remaining a broker estimate rather than issuer guidance or an HBM-only multiple.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|FORWARD_PE",
+        "normalized_object": "SK하이닉스 12M forward P/E 5.2배",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "12M forward as of 2026-05-07",
+        "predicate": "twelve_month_forward_pe",
+        "predicate_family": "forward_valuation_multiple",
+        "primitive_tags": [
+          "broker_estimate",
+          "memory_issuer",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "QF_CURRENT_FORWARD_VALUATION",
+        "question_family_tags": [
+          "market_mispricing",
+          "valuation_rerating",
+          "forward_pe"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "x",
+        "value": 5.2
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "브로커 연결 영업이익 상향이 forward valuation 분모를 높임",
+        "exact_quote": "영업이익 262,422 376,462 253,265 328,199 4% 15%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The broker table gives both revised and prior issuer-wide operating-profit estimates and the revision rate; it is not issuer guidance and is not attributed to HBM-only earnings.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|OP_REVISION",
+        "normalized_object": "FY2026E 연결 영업이익 262,422십억원, 종전 253,265십억원 대비 4% 상향",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "broker_operating_profit_estimate_revised",
+        "predicate_family": "operating_profit_revision",
+        "primitive_tags": [
+          "broker_estimate",
+          "consolidated",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "QF_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "earnings_revision",
+          "valuation_bridge",
+          "operating_profit"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "KRW bn",
+        "value": 262422
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "브로커 연결 영업이익 상향이 forward valuation 분모를 높임",
+        "exact_quote": "영업이익 262,422 376,462 253,265 328,199 4% 15%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The outer-year broker revision is independently period-mapped and remains a forward estimate rather than issuer guidance or HBM-only economics.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|OP_REVISION",
+        "normalized_object": "FY2027E 연결 영업이익 376,462십억원, 종전 328,199십억원 대비 15% 상향",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E",
+        "predicate": "broker_operating_profit_estimate_revised",
+        "predicate_family": "operating_profit_revision",
+        "primitive_tags": [
+          "broker_estimate",
+          "outer_year",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "QF_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "earnings_revision",
+          "valuation_bridge",
+          "operating_profit"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "KRW bn",
+        "value": 376462
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "확정 ADR 유상증자 시설자금 조달",
+        "exact_quote": "4. 자금조달의 목적\n시설자금 (원)\n40,023,070,290,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The corrected issuer filing fixes the amount of equity proceeds allocated to facilities and supersedes the earlier provisional amount.",
+        "mechanism_scope_id": "000660|CORPORATE_GENERIC|ADR_FACILITY_FINANCING",
+        "normalized_object": "ADR 제3자배정 유상증자 시설자금 40,023,070,290,000원",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "final terms 2026-07-10",
+        "predicate": "finalized_facility_funding_amount",
+        "predicate_family": "issuer_equity_financing",
+        "primitive_tags": [
+          "issuer_official",
+          "facility_funding",
+          "resolution"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "QF_ISSUER_EQUITY_FINANCING",
+        "question_family_tags": [
+          "capital_allocation",
+          "equity_financing",
+          "final_terms"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "KRW",
+        "value": 40023070290000
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "용인 반도체 팹 장기 건설투자 계획",
+        "exact_quote": "용인 반도체클러스터 1기 팹\n(건설투자) (주1)\n2024년 8월~\n2030년 12월\n31,019,600",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Issuer filing quantifies a long-dated semiconductor-fab investment, while the fact is kept issuer-wide and is not promoted to HBM-only capacity.",
+        "mechanism_scope_id": "000660|CORPORATE_GENERIC|YONGIN_FAB_INVESTMENT",
+        "normalized_object": "용인 반도체클러스터 1기 팹 31,019,600백만원 투자 예정",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-08 to 2030-12",
+        "predicate": "planned_yongin_fab_investment",
+        "predicate_family": "issuer_capital_deployment",
+        "primitive_tags": [
+          "issuer_official",
+          "planned_investment",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "QF_ISSUER_CAPITAL_DEPLOYMENT",
+        "question_family_tags": [
+          "capital_allocation",
+          "capacity_investment",
+          "yongin"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "KRW mn",
+        "value": 31019600
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "첨단 패키징 팹 건설·장비 투자 계획",
+        "exact_quote": "청주 P&T7 어드밴스드 패키징 팹\n(건설, 장비 및 부대비용 포함) (주1)\n2026년 4월~\n2030년 12월\n19,000,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Issuer filing quantifies the advanced-packaging fab plan but does not establish HBM-only allocation, customer booking, or signed supply economics.",
+        "mechanism_scope_id": "000660|CORPORATE_GENERIC|P_AND_T7_INVESTMENT",
+        "normalized_object": "청주 P&T7 첨단 패키징 팹 19,000,000백만원 투자 예정",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-04 to 2030-12",
+        "predicate": "planned_advanced_packaging_fab_investment",
+        "predicate_family": "issuer_capital_deployment",
+        "primitive_tags": [
+          "issuer_official",
+          "planned_investment",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "QF_ISSUER_CAPITAL_DEPLOYMENT",
+        "question_family_tags": [
+          "capital_allocation",
+          "advanced_packaging",
+          "capacity_investment"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "KRW mn",
+        "value": 19000000
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "과거 브로커 목표가 및 valuation 기준 상향",
+        "exact_quote": "동사에 대한 투자의견 ‘매수’ 유지 및 목표주가를 기존 220,000원에서 240,000원\n으로 9% 상향한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The report gives target-attributable valuation history useful only for superseded calibration; it is not current valuation, issuer guidance, or HBM-only economics.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|HISTORICAL_TP_REVISION",
+        "normalized_object": "2024-05-16 목표주가 220,000원에서 240,000원으로 9% 상향",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2024-05-16 historical broker view",
+        "predicate": "broker_target_price_revised",
+        "predicate_family": "target_price_revision_history",
+        "primitive_tags": [
+          "broker_estimate",
+          "historical",
+          "superseded"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "QF_HISTORICAL_TARGET_PRICE_REVISION",
+        "question_family_tags": [
+          "valuation_rerating",
+          "market_mispricing",
+          "historical_target_price"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "KRW/share",
+        "value": 240000
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "과거 브로커 연결 영업이익 전망 상향",
+        "exact_quote": "영업이익 3,859 16,459 24,122 4,297 19,665 24,369 11.4 19.5 1.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The table preserves the historical old/new estimate lineage, but the 2024 broker forecast is superseded and cannot serve as current actual, issuer guidance, or HBM-only earnings.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|HISTORICAL_OP_REVISION",
+        "normalized_object": "FY2024F 연결 영업이익 19,665십억원, 종전 16,459십억원 대비 19.5% 상향",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F estimate published 2024-05-16",
+        "predicate": "broker_operating_profit_estimate_revised",
+        "predicate_family": "operating_profit_revision",
+        "primitive_tags": [
+          "broker_estimate",
+          "superseded",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "QF_HISTORICAL_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "earnings_revision",
+          "historical",
+          "operating_profit"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "KRW bn",
+        "value": 19665
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.86,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "브로커 관찰상 HBM LTA 비중과 가격 binding 시도",
+        "exact_quote": "HBM의 경우 계약조건상 LTA가 대부분일 뿐만 아니라 최근 추세는 가격 Binding\n계약의 시도도 보이는 만큼 단기적 공급 초과가 가격에 미치는 영향은 제한적인 것\n으로 판단한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a dated broker observation about contract form and attempted price binding, not proof of a signed issuer contract, fixed volume, allocation, duration, cancellation protection, or current durable visibility.",
+        "mechanism_scope_id": "000660|MEMORY|HBM|HISTORICAL_LTA_OBSERVATION",
+        "normalized_object": "2024 브로커는 HBM 계약조건상 LTA가 대부분이며 가격 binding 계약 시도도 보인다고 관찰",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2024-05-16 historical broker view",
+        "predicate": "broker_observed_hbm_lta_and_price_binding_attempts",
+        "predicate_family": "hbm_customer_commitment_observation",
+        "primitive_tags": [
+          "broker_observation",
+          "historical",
+          "no_signed_terms",
+          "superseded"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "QF_HISTORICAL_HBM_CONTRACT_OBSERVATION",
+        "question_family_tags": [
+          "earnings_visibility",
+          "bottleneck_pricing",
+          "hbm_lta"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "qualitative broker observation",
+        "value": "LTA described as most contracts; price-binding attempts observed"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-ce7946c58ed2153ec7e72447",
+      "SGDOC-cec48c4b300fe56a6ba42cb7",
+      "SGDOC-e387fbf074539d32a618025a",
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact upper bound was reached after full-document audit; distinct remaining ADR final terms, current broker valuation/earnings table atoms, official facility/EUV terms, and historical broker model atoms require a strict-deduplicated continuation."
+    ]
+  },
+  "payload_hash": "488c4aa0428c87cb91bb8b8d80cee0e802f32ec4d71a655fb487c3db2194a5a9",
+  "production_score_authority": false,
+  "prompt_hash": "3ae72c9331bc36f2a99c781157dd12d7da29296cd5c6dbb220d14b019be574fd",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c9484a3b7eabc168686a596ee444bec792ee2fb2745e149ae15dc4fc33811feb",
+  "response_id": "COLLABRESP-553d5b753b4340aab3701e6e71c4b8594633534930a4fb536dcb1c5902e918e0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

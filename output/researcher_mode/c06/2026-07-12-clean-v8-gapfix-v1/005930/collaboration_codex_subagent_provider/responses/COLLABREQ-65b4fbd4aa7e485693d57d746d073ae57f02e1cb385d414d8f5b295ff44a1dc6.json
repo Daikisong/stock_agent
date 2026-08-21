@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0ecf06cbfcdccf0c9e0db744",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「HBM4 출하 경쟁 '과열'...엔비디아 수급 전략이 공급망 핵심 변수」는 zdnet.co.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-d454ea50c6928d61d559360f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「SK하이닉스, 엔비디아 HBM 반값 공급설에 \"전혀 사실무근\"」는 www.inews24.com의 TRUSTED_BUSINESS_MEDIA 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-08f0f021d26a92fe9f0d4a59",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「[2025/11/03] NVIDIA, 한국에 GPU 26만 장 공급 예정 : 글로벌소프트웨어캠퍼스 | 최신 I....」는 gscampus.net의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-5363114c6cba60a50d638e7c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「메리츠증권 투자전략팀 – Telegram」는 t.me의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-da8166693a25ff9860dedd5f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「[이슈분석] 'Rubin CPX 보류'가 메모리 악재? — 오히려 HBM·LPDDR은 폭증한다」는 contents.premium.naver.com의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-56ab8b9b9bdc02db0e6173fd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「Daily Silicon: 삼성전자 89.4조와 엔비디아 HBM: TSMC PIC 25K」는 www.vlsi.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-92cc822da264ef174ca0b8a4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「SECTOR UPDATE」는 www.samsungpop.com의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-26b826c689d591648a8e7d00",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「마이크론, 내년 HBM 물량 제일 먼저 다 팔았다… SK하이닉스 독주에 제동」는 biz.newdaily.co.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-5ae6006b935da438f88f99e9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「HBM4 시장 규모, 점유율 및 2031년 성장 추세 보고서」는 www.mordorintelligence.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-8e720121c05ae6f25b4e1419",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「사 업 보 고 서」는 images.samsung.com의 ISSUER_NEWSROOM 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-9fb14c73a1599c4e5c9f45cf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「소버린 AI 관련주 5종목 — KT 네이버 SKT 삼성전자 2026」는 eigenrich.com의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-6586f533d5d35f49ce683b7e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「미국 HBM 시장 규모, 점유율 및 2031년 성장 추세 보고서」는 www.mordorintelligence.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P0의 supplied candidate 12개를 모두 exact-once 검토했으며 NVIDIA/OpenAI 소유 CUSTOMER_OFFICIAL full route는 없었다.",
+      "Snippet과 metadata는 discovery-only이며, 제3자·broker·issuer·navigation 경로는 이 counterparty-official objective의 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "4c60424175cd7470cb33f8e31b1bb0fa17fe3347a9d01d0c6297f5d02c45c58b",
+  "production_score_authority": false,
+  "prompt_hash": "228f0a68683f2364cd89b5f98de7f9e6c04ec82adc2d13e954cca7944feda518",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-65b4fbd4aa7e485693d57d746d073ae57f02e1cb385d414d8f5b295ff44a1dc6",
+  "response_id": "COLLABRESP-902f9bb44e884a77bd2f9e76155406c839bdf8681346e5c53f7804fc0a824cf2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

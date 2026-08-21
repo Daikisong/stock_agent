@@ -1,0 +1,39 @@
+{
+  "output_schema_hash": "e7a733a147d6964e75528742897823ca5094ca593a9f54b8723c700910cfd090",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-135fa96e82e927dcc053229c",
+        "rationale": "본문은 2025년 3분기 실적 발표일·보도자료 공개 시각·컨퍼런스콜 언어만 안내한다. HBM·DRAM 매출 attribution, 가격, 이익, 마진, 현금흐름 또는 이를 반증·갱신하는 수치가 없고, related-content 제목은 별도 문서의 탐색 링크일 뿐 이 문서의 fact가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "실적 안내문 자체에서는 eps_fcf_explosion objective를 진전시킬 material fact를 추출할 수 없다. 실제 3Q25/FY25/1Q26 재무실적 원문은 각각의 full document에서 별도로 검증해야 한다."
+    ]
+  },
+  "payload_hash": "af0d9ce903d3b185932f15788b59ac3031f2a53a49a77387ce381117a6532782",
+  "production_score_authority": false,
+  "prompt_hash": "198f3f50d56e970fe98bd6d488393ce79378e5293c2d936fdc55c76b5553792f",
+  "provenance": {
+    "agent_id": "hynix_current_leaves",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_current_leaves",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c320f1c56ff7c598cda2e33e08f13c77896bd1fa7a4090f8a89aa1026402c08c",
+  "response_id": "COLLABRESP-ca764aaa50dc48f03422f84e41d564dbb749b3c01810de91f54c65fbd6aec6e0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

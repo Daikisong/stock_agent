@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-01f86f5e744fdaaac5e2ffe8",
+        "rationale": "The complete 49,860-character IBK report was reviewed against the durable current ledger. Its six objective-local valuation observations are already represented as accepted facts from this exact document: Samsung Electronics' relative discount to the market and Micron, the shared 10x operating-profit valuation frame, Samsung Electronics and SK hynix forward-multiple profiles, and the two applied-PBR anchors. Remaining target-price, forecast, price-performance, and non-Samsung passages are either semantically duplicative of those durable facts or do not add a distinct fact to the sole valuation_rerating objective.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "f79e84178d27941450507c8a94911d7bfa3c7cc7766624ee725c55ed8774a7b6",
+  "production_score_authority": false,
+  "prompt_hash": "7f00071db238939b0aa33f2797814cc711921e352a6618c5bd07cb2b95649ff2",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-184d11fa5e554300160e34072d9e3d9105fa0b2b1e59be3235e3b9de494a3cba",
+  "response_id": "COLLABRESP-c672589cdb6ae0b9e1f31644ebaf1c2f8474626430ba4a59e19cc262fdac5cd5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

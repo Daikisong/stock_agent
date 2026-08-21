@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "3212e9e4c52ffbe1b252699fd3e5314b47fc15184f9616531df494fe71689ffe",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-bbc92c70e3f6e6fc63c86cda",
+        "matched_requested_source_family": "OPENDART",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.99,
+        "rationale": "KIND disclosure-viewer URL is an original exchange disclosure landing route for the target's corrected equity-registration statement. It matches the requested OPENDART/disclosure family and merits bounded full fetch; its snippet is not evidence."
+      },
+      {
+        "candidate_id": "SGCAND-7f1ce5b2f94c3237df455aae",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.35,
+        "rationale": "The URL is a downloadable Stifel-hosted prospectus PDF, but this candidate requested CUSTOMER_OFFICIAL and the URL owner/discovery metadata do not establish a customer-official source. It is not material on this query edge."
+      },
+      {
+        "candidate_id": "SGCAND-87ca6994f6e7d4e7dfb50d00",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.05,
+        "rationale": "Third-party explanatory blog, not an OPENDART original or full official document route; snippet-only metadata is not evidence."
+      },
+      {
+        "candidate_id": "SGCAND-8b6a2cae3094a1d57a0af2e9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.1,
+        "rationale": "Third-party news article does not match the requested PUBLIC_BROKER_PDF family and is only snippet discovery metadata."
+      },
+      {
+        "candidate_id": "SGCAND-05a1ed43206fd2463c516557",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.03,
+        "rationale": "Generic blog summary is neither OPENDART nor an original filing route and cannot be elevated from its snippet."
+      },
+      {
+        "candidate_id": "SGCAND-27dcbcf9c7da0b01fd8b5c64",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.05,
+        "rationale": "Naver Premium repost/summary is not a full public broker PDF route and does not match the requested family."
+      },
+      {
+        "candidate_id": "SGCAND-8780cc10c76f2e402d8a356d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.05,
+        "rationale": "News briefing is a third-party retelling, not a public broker PDF or original source route."
+      },
+      {
+        "candidate_id": "SGCAND-7c4be6d8efd6658987f24690",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.15,
+        "rationale": "Khan news article may discuss the filing but is not OPENDART/KIND original material and cannot satisfy the requested disclosure family."
+      },
+      {
+        "candidate_id": "SGCAND-31094c064b6846486f84f202",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.12,
+        "rationale": "Third-party business-media report does not match OPENDART and is not an original filing/full-source route on this edge."
+      },
+      {
+        "candidate_id": "SGCAND-c756ac7c88688d63ff5bc811",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.03,
+        "rationale": "Unofficial SEO-style web guide is neither OPENDART nor a full original document route."
+      },
+      {
+        "candidate_id": "SGCAND-d7751cc47926de74252d514b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "Third-party news explainer does not match the requested OPENDART provenance; snippet is not evidence."
+      },
+      {
+        "candidate_id": "SGCAND-34d036cd62b0573184a87612",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "Third-party PR/media report is not OPENDART original disclosure material despite discussing filing figures."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Full fetch the KIND disclosure-viewer route before treating any filing text as evidence; all snippets remain discovery metadata only."
+    ]
+  },
+  "payload_hash": "035ad80acedbf3e5edd72906558eb49fc0382988246bd042a7f7abefd617a492",
+  "production_score_authority": false,
+  "prompt_hash": "0103d06722730dbb38a465f407292f39830a1e42100aba5b61ce21c625f2f911",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-db8f429d66af30827b30ad419d40efa19e7203f75c7b14e06206e5eeaf875c71",
+  "response_id": "COLLABRESP-3c47a218496ea098ff267db1368fe84849d9d455efb0a0434798436591a591e2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

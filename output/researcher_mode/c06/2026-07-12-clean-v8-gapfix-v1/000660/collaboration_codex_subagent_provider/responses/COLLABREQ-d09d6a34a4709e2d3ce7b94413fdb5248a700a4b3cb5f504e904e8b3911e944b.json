@@ -1,0 +1,488 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "rationale": "Transport chunk 0/2를 전수 검토해 target-direct HBM 가격·2026 수요 관측, 일반 메모리 실적 전망, 전사 브로커 추정·revision 10건을 추출했다. 모든 브로커 전망은 실제/issuer guidance/HBM-only 또는 signed contract economics와 분리했으며 이 literal chunk의 objective-local remainder는 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.84,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권이 HBM4 가격 체결 결과를 우려 대비 양호하다고 평가한 독립 브로커 관측이며, 가격·물량·거래상대방 등 계약 조건은 제시하지 않는다.",
+        "exact_quote": "•HBM4 가격이우려대비양호하게체결되며, HBM 경쟁력을재차확인했음",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4 가격 협상 결과에 관한 target-direct 브로커 관측은 bottleneck pricing 판단을 직접 진전시키지만, 구체 계약경제를 입증하지는 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:PRICING_POWER",
+        "normalized_object": "HBM4 가격 체결 품질에 대한 브로커 평가",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-11-19 현재",
+        "predicate": "하나증권은 HBM4 가격이 우려 대비 양호하게 체결됐다고 평가했다",
+        "predicate_family": "BROKER_HBM_PRICING_ASSESSMENT",
+        "primitive_tags": [
+          "HBM4",
+          "pricing",
+          "broker"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "hbm_pricing_realization",
+        "question_family_tags": [
+          "hbm_pricing_realization",
+          "broker_assessment",
+          "contract_terms_undisclosed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4",
+        "subject_id": "000660:HYNIX_HBM4",
+        "unit": "",
+        "value": "우려 대비 양호하게 체결"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.76,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권은 문맥상 SK하이닉스 HBM의 2026년 연간 수요가 확보됐다고 관측하지만, 고객·물량·가격·취소·선수금·backlog 또는 RPO 조건은 밝히지 않는다.",
+        "exact_quote": "•2026년연간수요가이미확보된만큼, 향후수요강도에따라추가적인가격상승여력상존",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "연간 수요 확보 관측은 earnings visibility를 진전시키지만 PUBLIC_BROKER_PDF이므로 DURABLE_VISIBILITY나 확정 계약조건으로 승격할 수 없다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:CUSTOMER_ALLOCATION",
+        "normalized_object": "2026년 HBM 수요 확보에 대한 브로커 관측",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026",
+        "predicate": "하나증권은 2026년 연간 수요가 이미 확보됐다고 평가했다",
+        "predicate_family": "BROKER_HBM_DEMAND_COVERAGE",
+        "primitive_tags": [
+          "HBM",
+          "FY2026",
+          "demand_coverage"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_forward_demand_coverage",
+        "question_family_tags": [
+          "hbm_forward_demand_coverage",
+          "broker_assessment",
+          "nonbinding_contract_economics"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.79,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 수요",
+        "subject_id": "000660:HYNIX_HBM_DEMAND",
+        "unit": "",
+        "value": "2026년 연간 수요 이미 확보"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.75,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "향후 수요 강도에 따라 추가 가격 상승 여력이 있다는 하나증권의 조건부 전망으로, realized ASP나 확정 가격 조항이 아니다.",
+        "exact_quote": "•2026년연간수요가이미확보된만큼, 향후수요강도에따라추가적인가격상승여력상존",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "수요 조건부 가격 상승 전망은 bottleneck pricing의 지속 가능성을 다루지만 실제 ASP나 계약가격의 증거는 아니다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:PRICING_POWER",
+        "normalized_object": "조건부 HBM 가격 상승 여력",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 이후 전망",
+        "predicate": "하나증권은 향후 수요 강도에 따라 추가 가격 상승 여력이 있다고 전망했다",
+        "predicate_family": "BROKER_CONDITIONAL_HBM_PRICING_OUTLOOK",
+        "primitive_tags": [
+          "HBM",
+          "pricing_upside",
+          "conditional"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_conditional_pricing_upside",
+        "question_family_tags": [
+          "hbm_conditional_pricing_upside",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.77,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 가격 전망",
+        "subject_id": "000660:HYNIX_HBM_PRICING_OUTLOOK",
+        "unit": "",
+        "value": "수요 강도에 따른 추가 가격 상승 여력"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "서버 중심 일반 메모리 수요 증가가 SK하이닉스 실적 추정치의 추가 상향 요인이라는 하나증권 전망이며 HBM-only 이익으로 귀속하지 않는다.",
+        "exact_quote": "•서버향중심의일반메모리수요증가에따른실적상향여력도상존",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "일반 메모리 귀속을 명시한 실적 전망은 HBM-only cash conversion과 분리해 earnings visibility 및 EPS 전망을 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "일반 메모리 수요 기반 실적 추정 상향 여력",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026년 전망",
+        "predicate": "하나증권은 서버 중심 일반 메모리 수요 증가에 따른 실적 상향 여력이 있다고 전망했다",
+        "predicate_family": "BROKER_GENERAL_MEMORY_EARNINGS_UPSIDE",
+        "primitive_tags": [
+          "general_memory",
+          "server_demand",
+          "earnings_estimate"
+        ],
+        "product_family": "General memory",
+        "question_family_id": "general_memory_earnings_upside",
+        "question_family_tags": [
+          "general_memory_earnings_upside",
+          "broker_forecast",
+          "non_hbm_attribution"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.87,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 일반 메모리",
+        "subject_id": "000660:HYNIX_GENERAL_MEMORY",
+        "unit": "",
+        "value": "실적 상향 여력"
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권이 제시한 2025년 SK하이닉스 전사 순이익 전망치이며 HBM 단독 순이익이나 actual이 아니다.",
+        "exact_quote": "•2025년삼성전자순이익전망치34.4조원, SK하이닉스33.9조원",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 target가 명시된 전사 순이익 전망치는 market expectation을 수치화하지만 HBM 이익 귀속이나 actual을 증명하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "2025년 전사 순이익 전망치",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "2025년 SK하이닉스 순이익을 33.9조원으로 전망했다",
+        "predicate_family": "BROKER_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "net_income",
+          "FY2025E",
+          "broker"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_net_income_forecast",
+        "question_family_tags": [
+          "target_net_income_forecast",
+          "broker_forecast",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 실적 추정",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "KRW trillion",
+        "value": 33.9
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권 표의 SK하이닉스 전사 영업이익률 전망치이며 HBM 단독 마진이나 회사 가이던스가 아니다.",
+        "exact_quote": "매출원가율상승시 영업이익률(%) 순이익비중(%)\n코스피 2025년 영업이익률상승시\n영업이익률상승폭\n기업명 주가수익률(%) 순이익변화율(%)\n(%p, 1개분기후행) 2024년 25년.E 26년.E 27년.E 2024년 25년.E 26년.E 27년.E\nSK하이닉스 226.6 2.1 47.7 35.5 44.7 48.9 46.3 11.8 16.0 16.6 15.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 수익성 전망은 EPS/FCF 기대와 mispricing 판단을 수치화하지만 HBM-only margin bridge를 제공하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "2026년 전사 영업이익률 전망치",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "2026년 SK하이닉스 영업이익률을 48.9%로 전망했다",
+        "predicate_family": "BROKER_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "operating_margin",
+          "FY2026E",
+          "broker"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_operating_margin_forecast",
+        "question_family_tags": [
+          "target_operating_margin_forecast",
+          "broker_forecast",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.78,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 실적 추정",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "%",
+        "value": 48.9
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권 퀀트 표의 2026년 전사 영업이익 성장률 전망이며 HBM 단독 영업이익이나 issuer guidance가 아니다.",
+        "exact_quote": "‘26년퀀트탑픽스(실적과내러티브를감안한전략)\n2026년OP 12M Fwd. OP 12M Fwd. OP 12M Fwd. NP 거래대금증가 기관순매수강도\n종목\n성장률(%) (1M 변화, %) (3M 변화, %) (1M 변화, %) (3M대비1M, %) (1M, %)\nLS ELECTRIC 37.1 3.2 7.4 4.3 92.6 1.7\n두산 105.9 0.2 6.3 0.2 36.6 1.0\n이수페타시스 36.2 8.4 17.9 8.7 35.7 -0.2\nSK하이닉스 64.6 37.9 65.7 44.0 58.0 0.6",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 영업이익 성장 전망은 earnings bridge와 revision 기대를 수치화하지만 HBM-only 이익은 아니다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "2026년 전사 영업이익 성장률 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "2026년 영업이익 성장률을 64.6%로 전망했다",
+        "predicate_family": "BROKER_OPERATING_PROFIT_GROWTH_FORECAST",
+        "primitive_tags": [
+          "operating_profit",
+          "FY2026E",
+          "growth"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_operating_profit_growth_forecast",
+        "question_family_tags": [
+          "target_operating_profit_growth_forecast",
+          "broker_forecast",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 실적 추정",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "%",
+        "value": 64.6
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.91,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "12개월 선행 전사 영업이익 추정치의 1개월 변화이며 HBM-only revision은 아니다.",
+        "exact_quote": "‘26년퀀트탑픽스(실적과내러티브를감안한전략)\n2026년OP 12M Fwd. OP 12M Fwd. OP 12M Fwd. NP 거래대금증가 기관순매수강도\n종목\n성장률(%) (1M 변화, %) (3M 변화, %) (1M 변화, %) (3M대비1M, %) (1M, %)\nLS ELECTRIC 37.1 3.2 7.4 4.3 92.6 1.7\n두산 105.9 0.2 6.3 0.2 36.6 1.0\n이수페타시스 36.2 8.4 17.9 8.7 35.7 -0.2\nSK하이닉스 64.6 37.9 65.7 44.0 58.0 0.6",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 OP revision은 기대 변화의 방향과 크기를 제공하지만 제품별 HBM 귀속을 포함하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "12개월 선행 전사 영업이익 1개월 revision",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1M change through 2025-11-19; 12M forward",
+        "predicate": "12개월 선행 영업이익 추정치가 1개월 동안 37.9% 상향됐다",
+        "predicate_family": "BROKER_OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "operating_profit_revision",
+          "12M_forward",
+          "1M_change"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_operating_profit_revision",
+        "question_family_tags": [
+          "target_operating_profit_revision",
+          "broker_revision",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.84,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 전사 영업이익 추정",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "%",
+        "value": 37.9
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.91,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "12개월 선행 전사 영업이익 추정치의 3개월 변화이며 HBM-only revision은 아니다.",
+        "exact_quote": "‘26년퀀트탑픽스(실적과내러티브를감안한전략)\n2026년OP 12M Fwd. OP 12M Fwd. OP 12M Fwd. NP 거래대금증가 기관순매수강도\n종목\n성장률(%) (1M 변화, %) (3M 변화, %) (1M 변화, %) (3M대비1M, %) (1M, %)\nLS ELECTRIC 37.1 3.2 7.4 4.3 92.6 1.7\n두산 105.9 0.2 6.3 0.2 36.6 1.0\n이수페타시스 36.2 8.4 17.9 8.7 35.7 -0.2\nSK하이닉스 64.6 37.9 65.7 44.0 58.0 0.6",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 OP revision은 기대 변화의 방향과 크기를 제공하지만 제품별 HBM 귀속을 포함하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "12개월 선행 전사 영업이익 3개월 revision",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3M change through 2025-11-19; 12M forward",
+        "predicate": "12개월 선행 영업이익 추정치가 3개월 동안 65.7% 상향됐다",
+        "predicate_family": "BROKER_OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "operating_profit_revision",
+          "12M_forward",
+          "3M_change"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_operating_profit_revision",
+        "question_family_tags": [
+          "target_operating_profit_revision",
+          "broker_revision",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.84,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 전사 영업이익 추정",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "%",
+        "value": 65.7
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "12개월 선행 전사 순이익 추정치의 1개월 변화이며 EPS나 HBM-only 이익 revision으로 재분류하지 않는다.",
+        "exact_quote": "‘26년퀀트탑픽스(실적과내러티브를감안한전략)\n2026년OP 12M Fwd. OP 12M Fwd. OP 12M Fwd. NP 거래대금증가 기관순매수강도\n종목\n성장률(%) (1M 변화, %) (3M 변화, %) (1M 변화, %) (3M대비1M, %) (1M, %)\nLS ELECTRIC 37.1 3.2 7.4 4.3 92.6 1.7\n두산 105.9 0.2 6.3 0.2 36.6 1.0\n이수페타시스 36.2 8.4 17.9 8.7 35.7 -0.2\nSK하이닉스 64.6 37.9 65.7 44.0 58.0 0.6",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 순이익 revision은 기대 변화의 방향과 크기를 제공하지만 EPS revision 또는 HBM-only earnings로 과장할 수 없다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "12개월 선행 전사 순이익 1개월 revision",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1M change through 2025-11-19; 12M forward",
+        "predicate": "12개월 선행 순이익 추정치가 1개월 동안 44.0% 상향됐다",
+        "predicate_family": "BROKER_NET_INCOME_REVISION",
+        "primitive_tags": [
+          "net_income_revision",
+          "12M_forward",
+          "1M_change"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_net_income_revision",
+        "question_family_tags": [
+          "target_net_income_revision",
+          "broker_revision",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.83,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 순이익 추정",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "%",
+        "value": 44.0
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d057021793a529d5a02ec961b4f7439216cbf24e4f5db57bde1ffaad685a7d9b",
+  "production_score_authority": false,
+  "prompt_hash": "c470fd7ce3309878f57fe29a406f748874f316747d8263a536c6a24ebcbe9a01",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d09d6a34a4709e2d3ce7b94413fdb5248a700a4b3cb5f504e904e8b3911e944b",
+  "response_id": "COLLABRESP-8a5264f97cb4fafc783244a31329cd56cea9fd22f9796230837d74d74b47933a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

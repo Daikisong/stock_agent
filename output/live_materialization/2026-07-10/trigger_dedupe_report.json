@@ -1,0 +1,69 @@
+{
+  "as_of_date": "2026-07-10",
+  "deduped_trigger_count": 446,
+  "duplicate_trigger_count": 6,
+  "duplicates": [
+    {
+      "dedupe_key": [
+        "031860",
+        "DART-RCEPT-20260710900965",
+        "2026-07-10"
+      ],
+      "dropped_trigger_signal_id": "TRIG-63e4a6c64da1a817821d8912",
+      "kept_trigger_signal_id": "TRIG-411964112fa3dd18d8161056",
+      "reason": "same_symbol_source_event_effective_date"
+    },
+    {
+      "dedupe_key": [
+        "032960",
+        "DART-RCEPT-20260710900870",
+        "2026-07-10"
+      ],
+      "dropped_trigger_signal_id": "TRIG-93a0e9052f0d81f7d89c2b53",
+      "kept_trigger_signal_id": "TRIG-4f4e545845630476c97a2cfa",
+      "reason": "same_symbol_source_event_effective_date"
+    },
+    {
+      "dedupe_key": [
+        "060240",
+        "DART-RCEPT-20260710900978",
+        "2026-07-10"
+      ],
+      "dropped_trigger_signal_id": "TRIG-0ca00a639f1cb6b3782f061a",
+      "kept_trigger_signal_id": "TRIG-ea33840003e8d3946142cc9c",
+      "reason": "same_symbol_source_event_effective_date"
+    },
+    {
+      "dedupe_key": [
+        "067770",
+        "DART-RCEPT-20260710901017",
+        "2026-07-10"
+      ],
+      "dropped_trigger_signal_id": "TRIG-751494f7626fb6ad068a41f7",
+      "kept_trigger_signal_id": "TRIG-58908d3a9707aa9cf5151706",
+      "reason": "same_symbol_source_event_effective_date"
+    },
+    {
+      "dedupe_key": [
+        "191410",
+        "DART-RCEPT-20260710900991",
+        "2026-07-10"
+      ],
+      "dropped_trigger_signal_id": "TRIG-93073e502957403203a52ea5",
+      "kept_trigger_signal_id": "TRIG-2dc19e192d19bbbf013999a5",
+      "reason": "same_symbol_source_event_effective_date"
+    },
+    {
+      "dedupe_key": [
+        "277410",
+        "DART-RCEPT-20260710900704",
+        "2026-07-10"
+      ],
+      "dropped_trigger_signal_id": "TRIG-5c18ec5e76896350020e5a23",
+      "kept_trigger_signal_id": "TRIG-a3a87c71f794c5de00157d07",
+      "reason": "same_symbol_source_event_effective_date"
+    }
+  ],
+  "raw_trigger_count": 452,
+  "schema_version": "e2r_live_trigger_dedupe_report_v1"
+}

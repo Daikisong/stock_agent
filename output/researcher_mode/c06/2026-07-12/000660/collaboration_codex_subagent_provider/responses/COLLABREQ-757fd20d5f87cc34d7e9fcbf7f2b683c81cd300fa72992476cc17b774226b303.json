@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "35e6f43fc9c9abcd9bfdadeeff0240487686427229d3027affc0b5fdab5dc1ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f36ef101316f8a2c861ced79",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'July Monthly Roundup: Keeping Our Lead After a Wild Ride | TheStreet Pro' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a008dd9f50b17edc105dbd47",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'Seoul Inside' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-edebc7beaa964ecfe4fb3a42",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'FinanceHarness: Autonomous Financial Deep Research Framework' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-9bbe2e7dba4b5b23b6243803",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'Key Questions on Energy and AI' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에는 NVIDIA 2026 Form 10-Q full-filing direct route와 SK하이닉스·HBM의 inventory purchase obligations 또는 capacity agreements 명시적 귀속을 함께 충족하는 후보가 없다. Snippet은 증거로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "f6f0a33fa7ab9dad39ae10f553d408e77d47d7ecc30e676c6e4041b89e1ddd58",
+  "production_score_authority": false,
+  "prompt_hash": "52d619eb77ae0f38956e02ceec22a289779092ea6fd040cd899a5c7f44965586",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-757fd20d5f87cc34d7e9fcbf7f2b683c81cd300fa72992476cc17b774226b303",
+  "response_id": "COLLABRESP-9666c6d43bef2c460fb82d7e361ef4614f5ae67342007d13b10233ead1d7fcb5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

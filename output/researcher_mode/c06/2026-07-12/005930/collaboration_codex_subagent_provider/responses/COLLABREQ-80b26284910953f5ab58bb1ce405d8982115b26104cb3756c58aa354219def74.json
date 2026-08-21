@@ -1,0 +1,47 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-8ddd1ee3063fc1b630079137",
+        "rationale": "Prior 14 accepted facts 이후 objective-local distinct remainder가 없음을 final audit에서 확인했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-919d8cce7e8a7b86532fa246",
+        "rationale": "Prior 14 accepted facts 이후 objective-local distinct remainder가 없음을 final audit에서 확인했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-9593229e014a4bdce96ccba4",
+        "rationale": "Prior 17 accepted facts 이후 objective-local distinct remainder가 없음을 final audit에서 확인했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "4dfc5de3db14e36187022591ebf22b311bd07895a3b36c50bd87b37a00ad1710",
+  "production_score_authority": false,
+  "prompt_hash": "c1c641b1bfc49f63fe4127033d27c973c24978e8e85eb8e77e420e9474bd26ca",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-80b26284910953f5ab58bb1ce405d8982115b26104cb3756c58aa354219def74",
+  "response_id": "COLLABRESP-0f881167fa6926c5f918b04defc09ed295bba589a47525153a139b5c24090b0b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

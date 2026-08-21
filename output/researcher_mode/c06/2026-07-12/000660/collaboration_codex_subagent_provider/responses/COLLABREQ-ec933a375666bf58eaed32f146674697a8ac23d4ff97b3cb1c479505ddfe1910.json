@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      12.5,
+      16.0
+    ],
+    "anchor_comparisons": [
+      "The positive ordinal anchor is directionally close because production readiness, capacity-exceeding requested demand, and FY2026 demand coverage coexist.",
+      "The counter ordinal anchor captures missing customer-lock and margin-bridge terms, but current production and demand evidence is stronger than that pattern alone."
+    ],
+    "counter_fact_ids": [
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-c890adf15151ce383d70cf81",
+      "EFACT-dde9f3ef4ad310f18beb72e8"
+    ],
+    "disagreements": [
+      "The analyst reflects current execution; the skeptic correctly separates demand indications from binding obligations; the calibrated band lies between them."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-fe4be151b6e34320ddc5f6a7",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 14.0,
+    "rationale": "Calibration recognizes HBM4 production, customer demand above capacity, FY2026 coverage, and completed discussions. It withholds a higher placement because duration and economics remain unsettled and platform timing plus competitive supply can alter mix and allocation.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-62c3b9f322f3a062b5e74751",
+      "EFACT-a74dac2b9e727f8592e52c41",
+      "EFACT-d7a582ebff38082719fe2983",
+      "EFACT-e0438e911cc6bbc80ba6e3f4",
+      "EFACT-e269e2b69e9152111e463563",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "No executed multi-year volume-price-cancellation framework is disclosed, and platform delay or new supply can reduce visibility.",
+    "why_not_lower": "Actual HBM4 execution, capacity constraints, customer requests, and FY2026 coverage exceed a provisional narrative."
+  },
+  "payload_hash": "077549655ca52f10a3cd97be6286e757940935c133b7500f53eb5ccb4a7751a3",
+  "production_score_authority": false,
+  "prompt_hash": "8e8cf79ed9ae50ec90dbffc451fd107fb066ff796597fc7a987ff3f0276a5575",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ec933a375666bf58eaed32f146674697a8ac23d4ff97b3cb1c479505ddfe1910",
+  "response_id": "COLLABRESP-99d73668a925486bc1bed9fc482266adcdea8ec0f816842c1b6e33d5a872fe35",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

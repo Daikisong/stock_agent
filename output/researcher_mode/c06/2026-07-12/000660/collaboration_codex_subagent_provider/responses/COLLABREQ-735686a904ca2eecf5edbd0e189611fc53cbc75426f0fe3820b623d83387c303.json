@@ -1,0 +1,572 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "rationale": "원문 1,529줄을 Gold-blind로 전수 검토하고 current canonical 163건과 의미 중복을 대조했다. 첫 page에는 4Q25 실적 상회, 1Q26 브로커 전망, 미체결 다년 LTA 논의, 서버 DRAM 재고·수급, 가격 탄력성 반증, Capex 규율, FY2026~FY2027 이익·현금 경로, peer valuation, PBR 프리미엄 방법론과 BPS 2개 등 서로 다른 valuation_rerating 사실 12건을 담았다. 이후 공개된 canonical의 HBM4 고객 일정·공급부족·경쟁 사실과 같은 의미, NAND·AI Co·관세 일반론, 목표주가·매매 지시, 반복 차트 OCR·면책은 제외했다. page limit에 도달했으므로 남은 PBR·EV/EBITDA 구조화 point는 같은 문서 continuation에서 처리한다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타는 SK하이닉스 4Q25 매출과 영업이익이 컨센서스를 웃돌았고, 고용량 DRAM 가격 상승이 DRAM 이익 성장을 이끌었다고 평가했다. 이는 이미 실현된 분기 실적과 가격·믹스 레버리지이며 이후 분기의 지속성을 확정하지 않는다.",
+        "exact_quote": "4Q25 전사 영업이익 19.2조원 기록 (M)\n동사 4Q25 매출액과 영업이익은 각각 32.8조원(YoY +66.1%, QoQ +34.3%),\n19.2조원(OPM 58.4%, YoY +137.2%, QoQ +68.4%)으로 1M기준 시장 컨센서스를 각각\n목표주가 1,169,000원 (U)\n2.1%, 11.0% 상회했다. DRAM 매출액과 영업이익은 각각 24.9조원(YoY +70.6%, QoQ 직전 목표주가 1,066,000원\n+30.8%), 16.9조원(OPM 67.7%, YoY +133.1%, QoQ +52.6%)으로 전분기대비 가격 현재주가 (01/29) 861,000원\n인상폭이 예상치를 소폭 상회했다. RDIMM 등 고용량 DRAM 가격 상승세가 두드러지며 상승여력 36%\nDRAM 이익 성장을 견인했기 때문이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "실현된 컨센서스 상회와 DRAM 가격·믹스 레버리지는 forward earnings 기준점과 valuation denominator를 직접 바꾼다.",
+        "mechanism_scope_id": "000660:DRAM:YUANTA_4Q25_ACTUAL_EARNINGS_SURPRISE",
+        "normalized_object": "4Q25 전사 실적 상회와 고용량 DRAM 가격 기반 이익 레버리지",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2025 actual reported 2026-01-29",
+        "predicate": "유안타는 4Q25 매출 32.8조원과 영업이익 19.2조원이 컨센서스를 각각 2.1%, 11.0% 상회했고 고용량 DRAM 가격 상승이 DRAM 이익 성장을 견인했다고 평가했다",
+        "predicate_family": "BROKER_ACTUAL_EARNINGS_SURPRISE_DRAM_LEVERAGE",
+        "primitive_tags": [
+          "DRAM",
+          "ACTUAL_EARNINGS",
+          "PRICING_POWER"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "BROKER_ACTUAL_EARNINGS_SURPRISE_DRAM_LEVERAGE",
+        "question_family_tags": [
+          "ACTUAL_EARNINGS",
+          "CONSENSUS_BEAT",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q25 실적 상회와 DRAM 이익 레버리지",
+        "subject_id": "000660:DRAM:YUANTA_4Q25_ACTUAL_EARNINGS_SURPRISE",
+        "unit": "KRW trillion, %, and consensus-beat percentage",
+        "value": "revenue KRW 32.8tn; operating profit KRW 19.2tn; revenue beat 2.1%; operating-profit beat 11.0%; DRAM revenue KRW 24.9tn; DRAM operating profit KRW 16.9tn"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타는 1Q26 전사 매출과 영업이익이 당시 컨센서스를 웃돌고 제한된 출하량 증가 속 가격 상승이 이어질 것으로 추정했다. 이는 브로커 전망이지 실제 1Q26 결과나 issuer guidance가 아니다.",
+        "exact_quote": "1Q26 예상 매출액과 영업이익은 각각 40.4조원(YoY +129.2%, QoQ +23.2%), 주요주주 에스케이스퀘어 외 7 인\n25.6조원(OPM 63.3%, YoY +244.1%, QoQ +33.5%)으로 추정치를 상향 조정하며,\n주가수익률 (%) 1개월 3개월 12개월\n1M기준 시장 컨센서스(매출액 38.0조원, 영업이익 22.6조원)를 상회할 것으로 전망한다.\n절대 34.5 54.3 289.6\n메모리반도체 출하량 증가가 제한적인 가운데, 가격 상승폭이 예상치를 크게 상회하는\n상대 8.7 20.6 89.3\n흐름이 이어질 것으로 예상하기 때문이다. DRAM/NAND QoQ ASP 증감율을 각각\n절대 (달러환산) 35.2 55.3 292.0\n+20.0%, +25.0%로 추정한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "당시 다음 분기의 매출·영업이익과 가격 레버리지 추정은 valuation earnings bridge와 estimate risk를 직접 보여준다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_1Q26_EARNINGS_PRICE_FORECAST",
+        "normalized_object": "제한된 출하 증가와 가격 상승에 기반한 1Q26 컨센서스 상회 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2026 forecast published 2026-01-29",
+        "predicate": "유안타는 1Q26 매출 40.4조원과 영업이익 25.6조원을 전망해 당시 컨센서스 38.0조원과 22.6조원을 상회할 것으로 추정했다",
+        "predicate_family": "BROKER_QUARTERLY_EARNINGS_PRICE_FORECAST",
+        "primitive_tags": [
+          "MEMORY",
+          "FORWARD_EARNINGS",
+          "ASP"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_QUARTERLY_EARNINGS_PRICE_FORECAST",
+        "question_family_tags": [
+          "FORWARD_EARNINGS",
+          "CONSENSUS_GAP",
+          "PRICING_LEVERAGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "유안타의 SK하이닉스 1Q26 실적·가격 전망",
+        "subject_id": "000660:MEMORY:YUANTA_1Q26_EARNINGS_PRICE_FORECAST",
+        "unit": "KRW trillion and % forecast",
+        "value": "revenue KRW 40.4tn versus consensus KRW 38.0tn; operating profit KRW 25.6tn versus consensus KRW 22.6tn; DRAM ASP +20.0% QoQ estimate"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "4Q25 Q&A 요약은 최근 LTA 논의가 과거의 조정 가능한 느슨한 물량계약과 달리 강한 커밋을 전제로 하고 고객이 다년계약을 원한다고 설명한다. 다만 이는 논의 단계이며 체결 계약, 확정 물량 또는 가격으로 해석하지 않는다.",
+        "exact_quote": "2. 올해 논의중인 LTA 계약 관련 현황 및 전망\n- 장기공급계약 관련해서 과거와 다른 점. 대부분 물량에 대한 다소 느슨한 계약이었고 시장\n상황에 따라 유동적으로 조정할 수 있었음. 반면 최근 논의중인 건은 단순한 구매 의향이\n아니라 고객과 공급자 간의 강한 Commitment 기반. 투자 규모도 커지고 있는 만큼\n공급업체도 수요에 대한 강한 가시성을 원함.\n- 고객은 다년계약으로 원함. 캐파 제약으로 고객 요청 모두 대응하기에는 어려움. 이러한\n상황에서 당사는 고객과 장기적인 운영 안정성을 높일 수 있는 방향을 계속 모색해 나갈 것.\n9\nSK하이닉스 (000660)\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "다년 커밋 논의와 캐파 제약은 수요·가격 duration을 뒷받침하지만 미체결 상태 자체가 valuation 확신의 경계다.",
+        "mechanism_scope_id": "000660:MEMORY:ISSUER_LTA_STRONG_COMMITMENT_DISCUSSION",
+        "normalized_object": "SK하이닉스 고객의 다년 LTA·강한 커밋 논의와 캐파 대응 한계",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 LTA discussions stated in 4Q2025 results Q&A",
+        "predicate": "SK하이닉스는 최근 LTA 논의가 단순 구매의향이 아닌 강한 커밋 기반이고 고객은 다년계약을 원하지만 캐파 제약으로 모든 요청을 대응하기 어렵다고 설명했다",
+        "predicate_family": "ISSUER_LTA_STRONG_COMMITMENT_DISCUSSION",
+        "primitive_tags": [
+          "MEMORY",
+          "LTA",
+          "CAPACITY_CONSTRAINT"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "ISSUER_LTA_STRONG_COMMITMENT_DISCUSSION",
+        "question_family_tags": [
+          "CUSTOMER_COMMITMENT",
+          "DURABLE_VISIBILITY",
+          "UNSIGNED_DISCUSSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스의 고객 다년 LTA·강한 커밋 논의",
+        "subject_id": "000660:MEMORY:ISSUER_LTA_STRONG_COMMITMENT_DISCUSSION",
+        "unit": "qualitative unsigned multi-year commitment discussion",
+        "value": "customers seek multi-year agreements based on stronger commitment; capacity cannot satisfy all requests; no executed contract stated"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "4Q25 Q&A 요약은 서버 고객 재고가 바로 세트 빌드로 소진되고 충분한 물량 확보가 어려우며, SK하이닉스 DRAM 재고도 감소해 서버 DRAM의 타이트함이 연중 이어질 것으로 전망했다고 전한다. 연중·하반기 문장은 전망이지 실현 결과가 아니다.",
+        "exact_quote": "3. 주요 고객사별 재고 상황과 SK하이닉스 재고 현황\n- 대부분의 고객들이 공급 확대를 요구하고 있음. 고객 재고 수준도 전반적으로 감소. 특히 서버\n고객은 바로 세트 빌드로 이어지면서 재고 지속 감소 중. 재고를 축적할 만큼 충분한 물량\n확보도 어렵고, 메모리 사용 속도가 매우 빠르기 때문. 서버 고객들의 물량 확보를 위한 구매\n확대 움직임은 지속될 것.\n- PC/모바일 고객도 공급제약과 서버강세 영향을 직간접적으로 받고 있고 재고수준도 낮아지고\n있음. 당사는 생산 늘리기 위해 지속적으로 노력 중. 4분기에도 디램 재고는 지난분기대비 감소,\n서버 디램 중심으로 타이트한 재고 연중 지속될 것. 생산과 동시에 판매되어 올해 하반기로\n갈수록 점점 더 낮은 수준으로 하락할 것.\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "서버 고객과 공급자의 낮은 재고 및 생산 즉시 판매는 가격·출하 duration과 scarcity premium을 직접 지지한다.",
+        "mechanism_scope_id": "000660:DRAM:SERVER_CUSTOMER_INVENTORY_TIGHTNESS",
+        "normalized_object": "서버 고객 재고 감소와 생산 즉시 판매에 따른 연중 DRAM 타이트 수급 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2025 observed inventory and FY2026 outlook",
+        "predicate": "SK하이닉스는 고객 재고가 감소하고 서버 고객의 충분한 물량 확보가 어려운 가운데 자사 DRAM 재고도 줄어 서버 DRAM의 타이트한 재고가 연중 지속될 것으로 전망했다",
+        "predicate_family": "SERVER_CUSTOMER_INVENTORY_TIGHTNESS",
+        "primitive_tags": [
+          "DRAM",
+          "SERVER_MEMORY",
+          "INVENTORY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SERVER_CUSTOMER_INVENTORY_TIGHTNESS",
+        "question_family_tags": [
+          "CAPACITY_SCARCITY",
+          "CUSTOMER_DEMAND",
+          "INVENTORY_DURATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "서버 고객과 SK하이닉스의 DRAM 재고·수급",
+        "subject_id": "000660:DRAM:SERVER_CUSTOMER_INVENTORY_TIGHTNESS",
+        "unit": "qualitative customer and supplier inventory assessment",
+        "value": "customer inventories declining; adequate volume difficult to secure; DRAM inventory declined QoQ; server DRAM tightness expected through FY2026"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "메모리 가격 급등으로 PC·모바일 고객이 구매량, 출하계획, 사양을 조정하고 최종 구매력이 위축되는 징후가 나타났다. 온디바이스 AI 교체수요가 전체 수요 위축을 막을 것이라는 전망은 상쇄요인이지만 확정 결과가 아니다.",
+        "exact_quote": "7. 최근 급한 가격 상승이 고객한테 부담이 되는 상황, 이로 인해 세트 수요 하향 조정이나\n탑재 컨텐츠 감소세가 감지되는지?\n- 메모리 가격 급등에 따라 PC/모바일 고객이 구매 물량 조정 움직임이 나타나고 있음. 수익성\n지키기 위해 완제품 가격을 인상시키고 최종 구매자 구매력이 일부 위축. 보수적으로 출하 계획\n바꾸거나, 스펙 조정을 검토하고 있음.\n- 반면 온디바이스 AI 기대감이 하이엔드 중심으로 신규 교체 수요 만들어내고 있음. 이에\n전체적인 시장 수요 위축으로 이어지지는 않을 것. 중장기적으로 AI 기능 개선되면서 선택 사항\n아닌 기본 사양이 되면서 구조적 메모리 사용량이 늘어날 것. 고객 제품 전략과 시장 상황 보고\n안정적으로 지원하기 위해 노력할 것.\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격 상승이 고객 구매량·제품 사양을 훼손하는 탄력성은 높은 ASP와 multiple 지속성의 핵심 counterfact다.",
+        "mechanism_scope_id": "000660:MEMORY:PRICE_ELASTICITY_SET_DEMAND_COUNTER",
+        "normalized_object": "메모리 가격 급등에 따른 PC·모바일 구매량·사양 조정과 온디바이스 AI 상쇄 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "current customer behavior and medium-term outlook stated in 4Q2025 results Q&A",
+        "predicate": "메모리 가격 급등으로 PC·모바일 고객의 구매량·출하계획·사양 조정과 구매력 위축이 나타났지만 온디바이스 AI 교체수요가 전체 시장 위축을 막을 것으로 전망됐다",
+        "predicate_family": "MEMORY_PRICE_ELASTICITY_SET_DEMAND_COUNTER",
+        "primitive_tags": [
+          "MEMORY",
+          "PRICE_ELASTICITY",
+          "SET_DEMAND"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_PRICE_ELASTICITY_SET_DEMAND_COUNTER",
+        "question_family_tags": [
+          "DEMAND_COUNTERFACT",
+          "ASP_RISK",
+          "ON_DEVICE_AI_OFFSET"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "메모리 가격 상승의 PC·모바일 수요 탄력성",
+        "subject_id": "000660:MEMORY:PRICE_ELASTICITY_SET_DEMAND_COUNTER",
+        "unit": "qualitative demand-elasticity assessment",
+        "value": "purchase-volume, shipment-plan and specification adjustments observed; on-device AI replacement demand expected as offset"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "SK하이닉스는 캐파·공정전환·인프라 투자로 연간 투자액이 상당히 늘지만, 수요 가시성과 효율성을 기준으로 규율을 유지해 매출의 30% 중반 수준 집행이 가능하다고 설명했다. 이는 계획이며 실제 집행액이나 FCF 결과가 아니다.",
+        "exact_quote": "9. 올해 투자 규모는? 매출액대비 30% 중반 수준 유지 가능할지?\n- 캐파 확대, 공정 전환 가속화, 인프라 투자 확대로 전년비 상당수준 올해 투자는 증가할 것.\n다만 시장 상황 지속 모니터링하는 동시에 수요 가시성 효율성 고려하여 Capex discipline\n기조는 유지할 것. Capex 절대 규모 증가에도 불구하고 매출도 큰 폭으로 증가할 것으로\n기대할 예정이라 30% 중반 투자 집행에는 문제가 없을 것. 참고로 AI Co 투자는 Capex 에\n포함되지 않으며 FCF 계산에도 영향이 없다는 점.\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "수요 가시성 연동 투자 규율과 매출 대비 투자 강도는 공급반응, FCF 전환 및 valuation duration을 함께 제한한다.",
+        "mechanism_scope_id": "000660:MEMORY:FY2026_CAPEX_DISCIPLINE_RATIO",
+        "normalized_object": "수요 가시성 기반 FY2026 메모리 Capex 규율과 매출 대비 30% 중반 투자",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 investment plan stated in 4Q2025 results Q&A",
+        "predicate": "SK하이닉스는 FY2026 투자가 전년 대비 상당히 증가하더라도 수요 가시성과 효율성에 기반한 Capex discipline을 유지해 매출의 30% 중반 수준 집행이 가능할 것으로 설명했다",
+        "predicate_family": "MEMORY_CAPEX_DISCIPLINE_REVENUE_RATIO",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPEX",
+          "SUPPLY_DISCIPLINE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_CAPEX_DISCIPLINE_REVENUE_RATIO",
+        "question_family_tags": [
+          "CAPEX_SUPPLY_RESPONSE",
+          "FCF_CONVERSION",
+          "DEMAND_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 메모리 투자 규율",
+        "subject_id": "000660:MEMORY:FY2026_CAPEX_DISCIPLINE_RATIO",
+        "unit": "% of revenue and qualitative investment direction",
+        "value": "investment up materially YoY; mid-30% of revenue; demand-visibility and efficiency discipline maintained"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타 추정재무제표는 매출과 영업이익이 FY2026에 크게 늘지만 FY2027 영업이익 증가는 제한되는 경로를 제시한다. 이는 한 브로커의 point-estimate path이며 실제 실적을 확정하지 않는다.",
+        "exact_quote": "SK하이닉스 (000660) 추정재무제표 (K-IFRS 연결)\n손익계산서 (단위: 십억원) 재무상태표 (단위: 십억원)\n결산(12월) 2023A 2024A 2025P 2026F 2027F 결산(12월) 2023A 2024A 2025P 2026F 2027F\n매출액 32,766 66,193 97,147 208,455 227,216 유동자산 30,468 42,279 63,528 161,049 242,890\n매출원가 33,299 34,365 38,457 45,067 56,804 현금및현금성자산 7,587 11,205 29,309 97,778 174,403\n매출총이익 -533 31,828 58,690 163,388 170,412 매출채권 및 기타채권 6,942 13,299 13,299 25,964 28,156\n판관비 7,197 8,361 11,484 24,134 29,538 재고자산 13,481 13,314 13,314 25,994 28,334\n영업이익 -7,730 23,467 47,207 139,254 140,874 비유동자산 69,862 77,576 100,155 123,872 147,953",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2026 급증 뒤 FY2027 영업이익 정체는 높은 이익의 duration과 multiple 유지 여부를 직접 시험한다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_FY2026_FY2027_EARNINGS_PLATEAU",
+        "normalized_object": "FY2026 이익 급증 뒤 FY2027 영업이익 증가 둔화 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025P-FY2027F",
+        "predicate": "유안타는 매출을 FY2025P 97,147십억원, FY2026F 208,455십억원, FY2027F 227,216십억원으로, 영업이익을 47,207십억원, 139,254십억원, 140,874십억원으로 추정했다",
+        "predicate_family": "BROKER_FORWARD_EARNINGS_PLATEAU_PATH",
+        "primitive_tags": [
+          "MEMORY",
+          "FORWARD_EARNINGS",
+          "DURATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_FORWARD_EARNINGS_PLATEAU_PATH",
+        "question_family_tags": [
+          "FORWARD_EARNINGS",
+          "EARNINGS_DURATION",
+          "VALUATION_COUNTERFACT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "유안타의 SK하이닉스 FY2025~FY2027 이익 경로",
+        "subject_id": "000660:MEMORY:YUANTA_FY2026_FY2027_EARNINGS_PLATEAU",
+        "unit": "KRW billion broker estimate",
+        "value": "revenue FY2025P 97147/FY2026F 208455/FY2027F 227216; operating profit FY2025P 47207/FY2026F 139254/FY2027F 140874"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타는 높은 Capex에도 영업현금흐름과 FCF가 증가하고 순차입금이 큰 순현금으로 전환되는 FY2026~FY2027 경로를 추정했다. 이는 브로커 전망이며 실제 현금흐름이나 부채 결과가 아니다.",
+        "exact_quote": "현금흐름표 (단위: 십억원) 순차입금 24,960 12,984 -7,468 -76,264 -152,950\n총차입금 33,981 27,200 27,996 29,993 30,362\n결산(12월) 2023A 2024A 2025P 2026F 2027F\n영업활동 현금흐름 4,278 29,796 54,970 92,022 112,242\nValuation 지표 (단위: 원, 배, %)\n당기순이익 -9,138 19,797 42,951 99,729 101,733\n결산(12월) 2023A 2024A 2025P 2026F 2027F\n감가상각비 13,121 11,985 13,587 15,973 15,803\nEPS -12,517 27,182 58,991 136,965 139,716\n외환손익 332 352 -1,002 -3,170 -3,170\nBPS 77,752 107,256 167,214 312,012 459,711\n종속,관계기업관련손익 0 0 2,174 0 0 EBITDAPS 8,164 49,517 84,629 214,147 215,973\n자산부채의 증감 794 -5,600 2,413 -15,128 3,379 SPS 45,008 90,924 133,443 286,339 312,109\n기타현금흐름 -831 3,261 -5,153 -5,382 -5,502 DPS 1,200 2,204 2,429 2,429 2,429\nPER -8.6 6.6 9.0 6.3 6.2\n투자활동 현금흐름 -7,335 -18,005 -34,306 -40,883 -39,061\nPBR 1.4 1.7 3.2 2.8 1.9\n투자자산 -19 -113 -135 -2,363 -436\nEV/EBITDA 17.5 4.0 6.1 3.5 3.0\n유형자산 증가 (CAPEX) -8,325 -15,946 -28,148 -38,000 -40,000 PSR 2.4 2.0 4.0 3.0 2.8\n유형자산 감소 1,540 47 106 0 0\n기타현금흐름 -531 -1,993 -6,129 -521 1,375 재무비율 (단위: 배, %)\n재무활동 현금흐름 5,697 -8,704 -400 320 -1,309 결산(12월) 2023A 2024A 2025P 2026F 2027F\n단기차입금 2,141 -2,643 614 1,997 368 매출액 증가율 (%) -26.6 102.0 46.8 114.6 9.0\n사채 및 장기차입금 7,043 -4,138 183 0 0 영업이익 증가율 (%) 적전 흑전 101.2 195.0 1.2\n지배순이익 증가율 (%) 적전 흑전 117.0 132.2 2.0\n자본 36 115 270 0 0\n매출총이익률 (%) -1.6 48.1 60.4 78.4 75.0\n현금배당 -826 -826 -1,677 -1,677 -1,677\n영업이익률 (%) -23.6 35.5 48.6 66.8 62.0\n기타현금흐름 -2,698 -1,211 211 0 0 지배순이익률 (%) -27.8 29.9 44.2 47.8 44.8\n연결범위변동 등 기타 -30 530 -2,160 17,010 4,753 EBITDA 마진 (%) 18.1 54.5 63.4 74.8 69.2\n현금의 증감 2,610 3,618 18,104 68,469 76,625 ROIC -8.5 27.1 47.5 92.9 74.1\nROA -8.9 18.0 30.3 44.5 30.1\n기초 현금 4,977 7,587 11,205 29,309 97,778\nROE -15.6 31.1 45.4 60.3 38.2\n기말 현금 7,587 11,205 29,309 97,778 174,403\n부채비율 (%) 87.5 62.2 41.7 32.2 23.1\nNOPLAT -7,730 23,467 47,207 139,254 140,874 순차입금/자기자본 (%) 46.7 17.6 -6.5 -35.4 -48.2\nFCF -4,047 13,850 26,822 54,022 72,242 영업이익/금융비용 (배) -5.3 17.4 47.8 114.5 111.3\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Capex를 감당한 뒤 FCF와 순현금이 늘어나는 추정 경로는 earnings quality와 valuation rerating의 지속성을 직접 지지한다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_FY2026_FY2027_FCF_NET_CASH_PATH",
+        "normalized_object": "FY2026~FY2027 영업현금·FCF 증가와 순현금 확대 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025P-FY2027F",
+        "predicate": "유안타는 FY2026F와 FY2027F 영업현금흐름을 92,022십억원과 112,242십억원, FCF를 54,022십억원과 72,242십억원, 순현금을 76,264십억원과 152,950십억원으로 추정했다",
+        "predicate_family": "BROKER_FORWARD_FCF_NET_CASH_PATH",
+        "primitive_tags": [
+          "MEMORY",
+          "FCF",
+          "NET_CASH"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_FORWARD_FCF_NET_CASH_PATH",
+        "question_family_tags": [
+          "FORWARD_FCF",
+          "CASH_CONVERSION",
+          "BALANCE_SHEET"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "유안타의 SK하이닉스 FY2026~FY2027 현금전환 전망",
+        "subject_id": "000660:MEMORY:YUANTA_FY2026_FY2027_FCF_NET_CASH_PATH",
+        "unit": "KRW billion broker estimate",
+        "value": "operating cash flow FY2026F 92022/FY2027F 112242; FCF 54022/72242; net cash 76264/152950; CAPEX 38000/40000"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타 peer 표에서 SK하이닉스는 FY2026~FY2027 P/E와 EV/EBITDA가 삼성전자·Micron보다 낮고 ROE는 높게 추정됐다. P/B는 삼성전자보다 높아 수익성 프리미엄도 함께 내포하며, 이는 2026-01-27 시점의 브로커·Bloomberg 추정 비교다.",
+        "exact_quote": "표2. SK하이닉스 Peer실적 및 Valuation\n업체명 SK하이닉스 삼성전자 Micron Western Digital Sandisk Nanya\nTicker 000660 KS 005930 KS MU US WDC US SNDK US 2408 TT\n시가총액 573,666 924,055 437,924 82,346 68,997 27,578\n2023A Sales 32,766 258,935 15,540 12,318 6,086 959\nOP -7,730 6,567 -5,745 -1,285 -2,035 -464\nOPM% -24% 3% -37% -10% -33% -48%\nNP -9,112 14,473 -5,833 -1,684 -2,143 -239\nPER - 36.8 - - - -\nPBR 1.8 1.3 1.7 1.1 - 1.4\nROE -15.6 3.6 -12.4 -14.8 - -4.3\nEV/EBITDA 20.4 8.8 32.6 - - 229.4\n2024A Sales 66,193 300,871 25,111 6,317 6,663 1,063\nOP 23,467 32,726 1,304 -403 -468 -329\nOPM% 35% 11% 5% -6% -7% -31%\nNP 19,789 33,621 778 -798 -672 -158\nPER 6.1 10.7 134.3 - - -\nPBR 1.6 0.8 2.3 2.4 - 0.5\nROE 31.1 7.9 1.7 -7.9 0.0 -3.1\nEV/EBITDA 3.6 3.1 12.3 43.9 - 10.5\n2025F Sales 95,433 331,280 74,926 11,916 11,099 5,721\nOP 44,668 42,288 43,528 3,787 2,831 3,467\nOPM% 47% 13% 58% 32% 26% 61%\nNP 40,938 41,003 37,825 2,979 2,192 2,744\nPER 13.8 24.7 11.9 30.7 33.8 9.6\nPBR 5.0 2.5 4.8 10.2 6.1 3.3\nROE 43.6 10.1 48.3 43.3 22.3 37.4\nEV/EBITDA 9.6 9.6 8.6 20.6 21.5 7.3\n2026F Sales 169,458 436,094 94,394 14,094 14,405 6,306\nOP 103,283 127,309 56,635 5,088 5,402 3,520\nOPM% 61% 29% 60% 36% 37% 56%\nNP 83,514 105,603 49,512 3,948 4,486 2,835\nPER 6.9 9.6 9.1 23.0 16.4 9.4\nPBR 2.9 2.0 3.2 8.1 4.7 2.5\nROE 53.7 22.4 41.6 40.7 29.8 30.0\nEV/EBITDA 4.7 4.8 6.9 15.9 12.7 6.7\n2027F Sales 202,820 476,828 94,588 15,502 15,015 12,786\nOP 121,855 143,172 53,179 5,694 5,397 5,503\nOPM% 60% 30% 56% 37% 36% 43%\nNP 97,777 120,090 47,472 4,716 4,511 6,477\nPER 5.9 8.4 8.9 19.4 16.7 4.2\nPBR 1.9 1.7 2.4 6.2 3.7 1.3\nROE 38.3 21.0 31.0 36.5 20.4 38.0\nEV/EBITDA 4.1 4.3 7.0 13.5 14.2 3.1\n자료: Bloomberg, 유안타증권 리서치센터, 주: FY기준, 단위는 bilKRW, mn USD, 배, %, 2026.01.27 기준\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 시점 peer 대비 이익배수·ROE 격차는 상대가치 할인과 수익성 프리미엄을 동시에 측정한다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_PEER_VALUATION_FY2026_FY2027",
+        "normalized_object": "SK하이닉스 FY2026~FY2027 P/E·P/B·EV/EBITDA·ROE의 삼성전자·Micron 비교",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F-FY2027F peer estimates as of 2026-01-27",
+        "predicate": "유안타 peer 표는 SK하이닉스의 FY2026F P/E 6.9배·EV/EBITDA 4.7배와 FY2027F 5.9배·4.1배가 삼성전자와 Micron보다 낮고 ROE는 각각 53.7%와 38.3%로 높게 추정됐음을 보여준다",
+        "predicate_family": "BROKER_PEER_RELATIVE_VALUATION_PATH",
+        "primitive_tags": [
+          "MEMORY",
+          "PEER_VALUATION",
+          "ROE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_PEER_RELATIVE_VALUATION_PATH",
+        "question_family_tags": [
+          "PEER_BAND",
+          "RELATIVE_VALUATION",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스의 삼성전자·Micron 대비 forward peer valuation",
+        "subject_id": "000660:MEMORY:YUANTA_PEER_VALUATION_FY2026_FY2027",
+        "unit": "x and % broker peer estimates",
+        "value": "SK hynix FY2026F PER/PBR/ROE/EV-EBITDA 6.9x/2.9x/53.7%/4.7x and FY2027F 5.9x/1.9x/38.3%/4.1x; Samsung and Micron peer rows quoted"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타는 Customized 메모리 공급 경쟁력을 근거로 2017년 PBR 밴드 상단에 40% 프리미엄을 적용한 Target PBR 2.66배를 사용했다. 이는 해당 브로커의 목표가 산정 가정일 뿐 실제 시장 multiple이나 투자성과가 아니다.",
+        "exact_quote": "표3. SK하이닉스 목표주가 산정 테이블 (단위: 원, 배)\n2017A 2018A 2019A 2020A 2021A 2022A 2023A 2024A 2025P 2026F 2027F\nAdj BPS_P (비지배주주지분 제외) 47,510 67,794 69,271 74,721 88,543 90,064 76,616 104,567 161,537 298,872 438,960\nPBR_P (End) 1.61 0.89 1.36 1.59 1.48 0.83 1.85 1.66 3.28 1.77 1.21\nPBR_P (High) 1.9 1.44 1.4 1.62 1.7 1.49 1.88 2.38 4.00 2.16 1.47\nPBR_P (Low) 0.94 0.86 0.82 0.88 1.02 0.83 0.95 1.23 1.01 0.54 0.37\nPBR_P (Avg) 1.35 1.16 1.09 1.19 1.37 1.13 1.41 1.71 1.85 1.00 0.68\nTarget PBR 2.66\nTarget Price 1,169,000 1,168,040\nClose Price (1월 29일) 861,000\nUpside potential 36%\n자료: 유안타증권 리서치센터, 주: Target PBR = 2017년 PBR 밴드 상단값 * Customized 메모리반도체 공급 경쟁력 기반 40% 프리미엄 반영\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "과거 밴드 상단을 넘는 프리미엄의 근거와 크기는 rerating thesis가 요구하는 경쟁력 지속 가정을 명시한다.",
+        "mechanism_scope_id": "000660:AI_MEMORY:YUANTA_TARGET_PBR_CUSTOMIZED_MEMORY_PREMIUM",
+        "normalized_object": "Customized 메모리 경쟁력에 근거한 Target PBR 2.66배와 40% 프리미엄",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F valuation basis published 2026-01-29",
+        "predicate": "유안타는 FY2027F 조정 BPS 438,960원에 Customized 메모리 공급 경쟁력을 근거로 2017년 PBR 밴드 상단 대비 40% 프리미엄을 반영한 Target PBR 2.66배를 사용했다",
+        "predicate_family": "TARGET_PBR_CUSTOMIZED_MEMORY_PREMIUM",
+        "primitive_tags": [
+          "AI_MEMORY",
+          "TARGET_PBR",
+          "COMPETITIVE_PREMIUM"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "TARGET_PBR_CUSTOMIZED_MEMORY_PREMIUM",
+        "question_family_tags": [
+          "OWN_HISTORICAL_BAND",
+          "RERATING_PREMIUM",
+          "VALUATION_ASSUMPTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "유안타의 SK하이닉스 Customized 메모리 PBR 프리미엄",
+        "subject_id": "000660:AI_MEMORY:YUANTA_TARGET_PBR_CUSTOMIZED_MEMORY_PREMIUM",
+        "unit": "x and % valuation premium",
+        "value": "FY2027F adjusted BPS KRW 438960; target PBR 2.66x; 40% premium to 2017 PBR-band high"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타 추정재무제표의 valuation 표는 FY2026F BPS를 312,012원으로 제시했다. 이는 해당 브로커의 forward point estimate이며 다른 표의 조정 BPS나 다른 기관 추정치를 대체하지 않는다.",
+        "exact_quote": "Valuation 지표 (단위: 원, 배, %)\n당기순이익 -9,138 19,797 42,951 99,729 101,733\n결산(12월) 2023A 2024A 2025P 2026F 2027F\n감가상각비 13,121 11,985 13,587 15,973 15,803\nEPS -12,517 27,182 58,991 136,965 139,716\n외환손익 332 352 -1,002 -3,170 -3,170\nBPS 77,752 107,256 167,214 312,012 459,711\n종속,관계기업관련손익 0 0 2,174 0 0 EBITDAPS 8,164 49,517 84,629 214,147 215,973\n자산부채의 증감 794 -5,600 2,413 -15,128 3,379 SPS 45,008 90,924 133,443 286,339 312,109\n기타현금흐름 -831 3,261 -5,153 -5,382 -5,502 DPS 1,200 2,204 2,429 2,429 2,429\nPER -8.6 6.6 9.0 6.3 6.2\n투자활동 현금흐름 -7,335 -18,005 -34,306 -40,883 -39,061\nPBR 1.4 1.7 3.2 2.8 1.9\n투자자산 -19 -113 -135 -2,363 -436\nEV/EBITDA 17.5 4.0 6.1 3.5 3.0\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2026 forward BPS는 P/B valuation denominator를 직접 구성한다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_BOOK_VALUE_FY2026F",
+        "normalized_object": "유안타 2026-01 보고서의 SK하이닉스 FY2026F BPS",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "유안타는 SK하이닉스 FY2026F BPS를 312,012원으로 추정했다",
+        "predicate_family": "FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "MEMORY",
+          "BPS",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "FORWARD_BOOK_VALUE",
+          "VALUATION_DENOMINATOR",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK하이닉스 FY2026F BPS",
+        "subject_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_BOOK_VALUE_FY2026F",
+        "unit": "KRW/share",
+        "value": 312012
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타 추정재무제표의 valuation 표는 FY2027F BPS를 459,711원으로 제시했다. 이는 해당 브로커의 forward point estimate이며 다른 표의 조정 BPS나 다른 기관 추정치를 대체하지 않는다.",
+        "exact_quote": "Valuation 지표 (단위: 원, 배, %)\n당기순이익 -9,138 19,797 42,951 99,729 101,733\n결산(12월) 2023A 2024A 2025P 2026F 2027F\n감가상각비 13,121 11,985 13,587 15,973 15,803\nEPS -12,517 27,182 58,991 136,965 139,716\n외환손익 332 352 -1,002 -3,170 -3,170\nBPS 77,752 107,256 167,214 312,012 459,711\n종속,관계기업관련손익 0 0 2,174 0 0 EBITDAPS 8,164 49,517 84,629 214,147 215,973\n자산부채의 증감 794 -5,600 2,413 -15,128 3,379 SPS 45,008 90,924 133,443 286,339 312,109\n기타현금흐름 -831 3,261 -5,153 -5,382 -5,502 DPS 1,200 2,204 2,429 2,429 2,429\nPER -8.6 6.6 9.0 6.3 6.2\n투자활동 현금흐름 -7,335 -18,005 -34,306 -40,883 -39,061\nPBR 1.4 1.7 3.2 2.8 1.9\n투자자산 -19 -113 -135 -2,363 -436\nEV/EBITDA 17.5 4.0 6.1 3.5 3.0\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2027 forward BPS는 장기 P/B valuation denominator를 직접 구성한다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_BOOK_VALUE_FY2027F",
+        "normalized_object": "유안타 2026-01 보고서의 SK하이닉스 FY2027F BPS",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "유안타는 SK하이닉스 FY2027F BPS를 459,711원으로 추정했다",
+        "predicate_family": "FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "MEMORY",
+          "BPS",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "FORWARD_BOOK_VALUE",
+          "VALUATION_DENOMINATOR",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK하이닉스 FY2027F BPS",
+        "subject_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_BOOK_VALUE_FY2027F",
+        "unit": "KRW/share",
+        "value": 459711
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-b77065c834c9ddcc5517847f"
+    ],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "f6e27e51c6b22ecc0b3b7e3980998e6534ac881282c70b76f782d54fed8727f1",
+  "production_score_authority": false,
+  "prompt_hash": "ff9ad61771970457f42c5a0b1457e843aff07ef11f3c001f05c1389f4a44de41",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-735686a904ca2eecf5edbd0e189611fc53cbc75426f0fe3820b623d83387c303",
+  "response_id": "COLLABRESP-925c4d9aab9f0aabdd80b283a69b760ee903a3c7bfc833e496f164559fbcc70b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

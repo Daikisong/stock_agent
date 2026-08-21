@@ -1,0 +1,144 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "allowed_range": {
+        "items": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "anchor_comparisons": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "counter_fact_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "disagreements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "nearest_anchor_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "proposed_points": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "rationale": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "support_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-09794909b5e3c9f009eb5007",
+            "EFACT-0beff561f9964f06b80cbe4b",
+            "EFACT-477c6cb45b164685a2a345e8",
+            "EFACT-71eb35cf12f591c101571b4e",
+            "EFACT-c56aa2a9eb9eb1bb77d693bc"
+          ],
+          "type": "string"
+        },
+        "maxItems": 5,
+        "minItems": 5,
+        "prefixItems": [
+          {
+            "enum": [
+              "EFACT-09794909b5e3c9f009eb5007"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-0beff561f9964f06b80cbe4b"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-477c6cb45b164685a2a345e8"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-71eb35cf12f591c101571b4e"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-c56aa2a9eb9eb1bb77d693bc"
+            ],
+            "type": "string"
+          }
+        ],
+        "type": "array"
+      },
+      "why_not_higher": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "why_not_lower": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "anchor_comparisons",
+      "proposed_points",
+      "allowed_range",
+      "rationale",
+      "disagreements",
+      "support_fact_ids",
+      "counter_fact_ids",
+      "nearest_anchor_ids",
+      "why_not_higher",
+      "why_not_lower"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "496b8f90bced9f40620c5b448f182023418562f573ecdb67e6559d28a3b30ee9",
+  "pass_name": "COMPONENT_ANALYST_JUDGE",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nFirst decode every evidence_fact_projection.facts row positionally with evidence_fact_projection.fact_fields. Each row preserves one exact fact_id and its economic meaning. Resolve source_independence_group_index through source_independence_group_dictionary. The count/hash rosters account only for repeated lineage; they are not omitted research, a top-N selection, or permission to skip rows. Review all fact_count rows. Act as the independent positive analyst for exactly one broad component. Derive proposed component points and an allowed range from current support facts, economic strength, duration, and cash conversion. Account for every supplied positive component fact and compare the case with at least one nearest blind historical anchor. Explain both why the score is not higher and why it is not lower.\nReturn exactly one JSON object matching the supplied schema.\n{\"allowed_counter_fact_ids\": [\"EFACT-1b7ea0a31b99641332cac15f\", \"EFACT-2d9adec8b0d4434e530afdc5\", \"EFACT-38845077848fa69caeb992ce\", \"EFACT-4f576cd7cba9f5720973f2a5\", \"EFACT-66a852e3b8f9484e6dad3710\", \"EFACT-7a7c894af3d9e5b7ce1bd90d\"], \"allowed_nearest_anchor_ids\": [\"ORDTRANSFER-9e4c777f0c9f76d9f38a2702\", \"ORDTRANSFER-09ab96433f8087166845bf25\", \"ORDTRANSFER-9ad693f3cd59964e0c67f797\", \"ORDTRANSFER-2dbb3edefb6849e18a361416\", \"ORDTRANSFER-90c2b7d4695e62e277703a64\", \"ORDTRANSFER-994f92d663d0b49c624b1803\"], \"allowed_support_fact_ids\": [\"EFACT-09794909b5e3c9f009eb5007\", \"EFACT-0beff561f9964f06b80cbe4b\", \"EFACT-477c6cb45b164685a2a345e8\", \"EFACT-71eb35cf12f591c101571b4e\", \"EFACT-c56aa2a9eb9eb1bb77d693bc\"], \"component_id\": \"information_confidence\", \"component_max_points\": 5.0, \"component_research_memo\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"component_max_points\": 5.0, \"counter_case\": \"회계추정, 미감사 설명회, 고객 답변거부와 NDA, 제품별 영업이익 미공개는 HBM 단독 경제성 재현을 어렵게 한다.\", \"counter_fact_ids\": [\"EFACT-1b7ea0a31b99641332cac15f\", \"EFACT-2d9adec8b0d4434e530afdc5\", \"EFACT-38845077848fa69caeb992ce\", \"EFACT-4f576cd7cba9f5720973f2a5\", \"EFACT-66a852e3b8f9484e6dad3710\", \"EFACT-7a7c894af3d9e5b7ce1bd90d\"], \"historical_anchor_ids\": [\"ORDTRANSFER-9e4c777f0c9f76d9f38a2702\", \"ORDTRANSFER-09ab96433f8087166845bf25\", \"ORDTRANSFER-9ad693f3cd59964e0c67f797\", \"ORDTRANSFER-2dbb3edefb6849e18a361416\", \"ORDTRANSFER-90c2b7d4695e62e277703a64\", \"ORDTRANSFER-994f92d663d0b49c624b1803\"], \"memo_id\": \"CRMEMO-e6671755c226a5751345dce2\", \"nearest_counter_anchor_ids\": [\"ORDTRANSFER-90c2b7d4695e62e277703a64\"], \"nearest_positive_anchor_ids\": [\"ORDTRANSFER-09ab96433f8087166845bf25\"], \"positive_case\": \"공식 제품별 매출, 가동률과 K-IFRS 분기검토가 actual 수치 신뢰도를 높이고 고객 공식 자료가 기술협력을 독립 확인한다.\", \"positive_fact_ids\": [\"EFACT-09794909b5e3c9f009eb5007\", \"EFACT-0beff561f9964f06b80cbe4b\", \"EFACT-477c6cb45b164685a2a345e8\", \"EFACT-71eb35cf12f591c101571b4e\", \"EFACT-c56aa2a9eb9eb1bb77d693bc\"], \"research_complete\": true, \"researcher_role\": \"InformationConfidenceResearcher\", \"researcher_summary\": \"공시 메모리 매출·가동률과 외부감사인 분기검토는 기본 신뢰도를 높이지만 HBM 고객·계약·제품별 이익은 NDA와 미공개 한계가 있다.\", \"resolution_fact_ids\": [], \"source_coverage\": [\"COMPANYGUIDE\", \"COMPANYGUIDE+KRX_PRICE_MARKET_CAP\", \"CUSTOMER_OFFICIAL\", \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"DART_ACTUALS_DETERMINISTIC_SCENARIO+KRX_PRICE_MARKET_CAP\", \"DETERMINISTIC_FORWARD_SCENARIO\", \"DETERMINISTIC_FORWARD_SCENARIO+KRX_PRICE_MARKET_CAP\", \"GENERAL_WEB_DISCOVERY\", \"ISSUER_GUIDANCE\", \"ISSUER_NEWSROOM\", \"KIND_KRX\", \"KRX_PRICE_MARKET_CAP\", \"KRX_PRICE_MARKET_CAP+COMPANYGUIDE\", \"KRX_PRICE_MARKET_CAP+PUBLIC_BROKER_REPORT\", \"OPENDART\", \"PEER_STRUCTURED\", \"PUBLIC_BROKER_PDF\", \"PUBLIC_BROKER_REPORT\", \"STRUCTURED_HISTORICAL_BAND\", \"STRUCTURED_PEER_BAND\", \"TRUSTED_BUSINESS_MEDIA\"], \"structured_metrics\": {}, \"target_id\": \"005930\", \"uncertainties\": [\"고객별 qualification·물량·계약조건이 공개되지 않았다.\", \"메모리 제품별 영업이익과 HBM 단독 FCF bridge가 없다.\", \"일부 broker 전망과 보도는 발행사 actual이 아니다.\"]}, \"conditional_judge_rules\": {\"empty_support_plane\": {\"condition\": \"allowed_support_fact_ids is empty\", \"required_allowed_range\": [0, 0], \"required_proposed_points\": 0, \"required_support_fact_ids\": []}, \"positive_points_require_support\": \"proposed_points greater than zero requires at least one exact id from allowed_support_fact_ids in support_fact_ids\"}, \"evidence_fact_projection\": {\"advisory_tags_are_not_score_gates\": true, \"allowed_component_coverage\": {\"bottleneck_pricing\": 9, \"capital_allocation\": 11, \"earnings_visibility\": 9, \"eps_fcf_explosion\": 9, \"information_confidence\": 11, \"market_mispricing\": 9, \"valuation_rerating\": 9}, \"as_of_date_coverage\": {\"2026-07-12\": 11}, \"claim_id_roster\": {\"count\": 12, \"roster_hash\": \"6d2587b96d5516910ee2a70f6220736a3a484c329d5afd77fb5ae02031c90723\"}, \"corroborating_independence_group_roster\": {\"count\": 6, \"roster_hash\": \"197fcc27bd2b5a71874299c8771cc1e93d24e9ef59b26bc81b77a563d723c613\"}, \"every_fact_id_preserved\": true, \"every_fact_lineage_accounted_by_count_and_hash\": true, \"fact_count\": 11, \"fact_fields\": [\"fact_row_index\", \"fact_id\", \"subject\", \"business_segment\", \"product_family\", \"economic_mechanism\", \"predicate\", \"value\", \"unit\", \"period\", \"direction\", \"current_lifecycle\", \"confidence\", \"structured_evidence_roles\", \"source_independence_group_index\", \"corroborating_independence_group_count\"], \"fact_roster_hash\": \"63d2bebe6b174a9d5b86ee6480ebd03eed51461a94fcf61a9289c0530e0859b6\", \"facts\": [[0, \"EFACT-09794909b5e3c9f009eb5007\", \"삼성전자 2024년 3분기 메모리 제품 매출\", \"DS 메모리\", \"메모리\", \"공식 연결 주석의 주요 제품별 매출표가 2024년 3분기 메모리 매출을 직접 분리해 메모리의 실제 매출 전환 규모를 확정한다.\", \"삼성전자 2024년 3분기 메모리 제품 매출은 22,273,248백만원이다\", 22273248, \"KRW million\", \"2024-Q3\", \"POSITIVE\", \"CURRENT\", 0.99, [\"SEGMENT_CONTRIBUTION\"], 0, 1], [1, \"EFACT-0beff561f9964f06b80cbe4b\", \"삼성전자 DS 메모리 2025년 9개월 누적 생산라인 가동률\", \"DS 메모리\", \"메모리\", \"2025년 9개월 누적 DS 메모리 생산라인의 가동 가능 시간과 실제 가동 시간이 각각 65,520시간으로 같아 공시 가동률이 100%였다. 시간 기준 완전 가동의 지속을 보여 주지만 웨이퍼 투입·수율·HBM 전용 CAPA를 뜻하지는 않는다.\", \"삼성전자 DS 메모리 생산라인의 2025년 9개월 누적 시간 기준 가동률이 100%였다\", 100, \"percent\", \"2025-9M\", \"POSITIVE\", \"CURRENT\", 1.0, [], 0, 1], [2, \"EFACT-1b7ea0a31b99641332cac15f\", \"삼성전자 분기재무제표 회계추정\", \"CORPORATE_GENERIC\", \"CORPORATE_GENERIC\", \"DISCLOSED_ESTIMATE_UNCERTAINTY\", \"분기재무제표의 회계추정은 실제 결과와 다를 수 있다\", \"회계추정과 실제 결과의 차이 가능\", null, \"2026-Q1\", \"COUNTER\", \"CURRENT\", 1.0, [], 2, 1], [3, \"EFACT-2d9adec8b0d4434e530afdc5\", \"삼성전자 2025년 2분기 메모리 실적 검토 상태\", \"DS 메모리\", \"메모리 실적\", \"외부감사인의 회계검토가 완료되지 않아 같은 자료의 2025년 2분기 메모리 성장 수치가 검토 과정에서 달라질 수 있다.\", \"2025년 2분기 경영설명회 실적은 외부감사인 검토 전이며 일부 내용이 검토 과정에서 달라질 수 있다\", \"external auditor review incomplete; some figures may change during review\", \"review status\", \"2025-Q2\", \"COUNTER\", \"CURRENT\", 1.0, [], 0, 1], [4, \"EFACT-38845077848fa69caeb992ce\", \"삼성전자 HBM4 고객 관계의 공식 답변 한계\", \"DS 메모리\", \"HBM4\", \"삼성전자가 HBM4 고객 관련 사안에 답변을 거부해, NVIDIA qualification·선정·출하 일정에 관한 기사 보도를 회사의 직접 확인으로 사용할 수 없는 정보 한계를 남긴다. 답변 거부 이유를 NDA로 단정하거나 고객 관계의 부재로 해석하지 않는다.\", \"삼성전자는 HBM4 고객 관련 사안에 대한 답변을 거부했다\", \"declined to comment on customer-related matters\", \"customer-information disclosure limitation\", \"2026-02-08 현재\", \"COUNTER\", \"CURRENT\", 0.92, [], 3, 1], [5, \"EFACT-477c6cb45b164685a2a345e8\", \"삼성전자 메모리 생산라인 가동률\", \"DS 메모리\", \"메모리\", \"MEMORY_CAPACITY_UTILIZATION\", \"2026년 1분기 DS 메모리 생산라인의 가동 가능 시간과 실제 가동 시간이 모두 21,600시간으로 공시 가동률이 100%였다\", 1.0, \"ratio\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [], 2, 1], [6, \"EFACT-4f576cd7cba9f5720973f2a5\", \"삼성전자 2026년 1분기 제품별 실적 공시 범위\", \"DS 메모리\", \"메모리\", \"발행사가 제품별 세부 실적을 공개하지 않아 메모리 영업이익과 마진이 증권가 추정에 의존한다.\", \"2026년 1분기 실적 발표는 제품별 세부 실적을 별도로 공개하지 않아 메모리 제품별 영업이익이 증권가 추정치로 남았다\", \"product-level detail not separately disclosed; memory profit remains a securities-industry estimate\", \"disclosure limitation\", \"2026-Q1\", \"COUNTER\", \"CURRENT\", 0.93, [], 5, 1], [7, \"EFACT-66a852e3b8f9484e6dad3710\", \"삼성전자 HBM qualification 공개 제한\", \"DS 메모리\", \"HBM\", \"고객 NDA 때문에 HBM qualification 상태를 추가 공개할 수 없어 고객 승인 여부를 외부에서 직접 확인하는 데 제한이 남았다.\", \"삼성전자는 고객 NDA로 인해 HBM qualification 상태를 추가로 설명할 수 없다고 밝혔다\", \"qualification details not commentable due to client NDA\", \"disclosure limitation\", \"2025-Q3\", \"COUNTER\", \"OPEN\", 0.98, [], 1, 1], [8, \"EFACT-71eb35cf12f591c101571b4e\", \"삼성전자 메모리 제품 매출\", \"DS 메모리\", \"메모리\", \"MEMORY_REVENUE_CONVERSION\", \"2026년 1분기 메모리 제품 매출액이 74,779,980백만원이다\", 74779980, \"KRW million\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [\"SEGMENT_CONTRIBUTION\"], 0, 2], [9, \"EFACT-7a7c894af3d9e5b7ce1bd90d\", \"삼성전자 메모리 다년계약 세부정보 공개 한계\", \"DS 메모리\", \"메모리\", \"고객 NDA로 계약 세부내용을 공개할 수 없다는 명시적 한계는 계약 상대방·물량·가격·해지조건을 외부에서 검증할 수 없게 한다.\", \"삼성전자가 고객사 NDA 때문에 메모리 다년계약의 구체적 내용을 공개할 수 없다고 밝혔다\", \"specific contract terms undisclosed due to customer NDA\", \"disclosure limitation\", \"2026-04-30 현재\", \"COUNTER\", \"CURRENT\", 0.83, [], 4, 1], [10, \"EFACT-c56aa2a9eb9eb1bb77d693bc\", \"삼성전자 2026년 1분기 재무제표 검토\", \"CORPORATE_GENERIC\", \"CORPORATE_GENERIC\", \"INTERIM_FINANCIAL_REPORTING_ASSURANCE\", \"삼정회계법인의 2026년 1분기 검토에서 K-IFRS 1034에 따라 중요하게 공정 표시되지 않은 사항이 발견되지 않았다\", \"no material departure from fair presentation under K-IFRS 1034 found in the interim review\", \"review conclusion\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [], 2, 1]], \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"primitive_tag_roster_hash\": \"e4bee41a70c8bdcf5ecd6a188d746d26f7882211f03712fb0a3059cff917ba4f\", \"prompt_projection_is_research_cap\": false, \"question_family_tag_roster_hash\": \"345946f2c983744ddadad31daeca241173a2ea744af4ce9c28cd697f6bbd596b\", \"quote_id_roster\": {\"count\": 12, \"roster_hash\": \"baa35d5a5239eeae43992e47d9eee1c3bf94eaaa0c4ba14c5d4d9348758794f3\"}, \"repeated_lineage_arrays_omitted_from_semantic_rows\": true, \"schema_version\": \"e2r_v5_citable_fact_prompt_projection_v3\", \"score_authority\": false, \"source_id_roster\": {\"count\": 11, \"roster_hash\": \"b5fa4db7dbba238f2aab3a58a792cb97fbc5d06916583c0901df480ecc9540ff\"}, \"source_independence_group_dictionary\": [\"ISSUER_NEWSROOM:images.samsung.com\", \"ISSUER_NEWSROOM:irsvc.teletogether.com\", \"OPENDART:opendart\", \"TRUSTED_BUSINESS_MEDIA:koreatimes.co.kr\", \"TRUSTED_BUSINESS_MEDIA:ohmynews.com\", \"TRUSTED_BUSINESS_MEDIA:yna.co.kr\"], \"target_id_coverage\": {\"005930\": 11}}, \"historical_component_anchors\": [{\"anchor_id\": \"ORDTRANSFER-9e4c777f0c9f76d9f38a2702\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"memory_recovery_capex_restart_process_equipment_order_bridge\"], \"max_points\": 5.0, \"points_lower\": 0.0, \"points_mid\": 0.1, \"points_upper\": 0.35, \"role\": \"POSITIVE\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-09ab96433f8087166845bf25\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 5.0, \"points_lower\": 1.75, \"points_mid\": 2.0, \"points_upper\": 2.25, \"role\": \"POSITIVE\", \"score_band\": \"MEDIUM\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-9ad693f3cd59964e0c67f797\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"structural_success\"], \"max_points\": 5.0, \"points_lower\": 4.75, \"points_mid\": 5.0, \"points_upper\": 5.0, \"role\": \"POSITIVE\", \"score_band\": \"STRONG\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-2dbb3edefb6849e18a361416\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 5.0, \"points_lower\": 0.0, \"points_mid\": 0.1, \"points_upper\": 0.35, \"role\": \"COUNTER\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-90c2b7d4695e62e277703a64\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"execution_or_budget_to_company_cash_bridge\"], \"max_points\": 5.0, \"points_lower\": 1.5, \"points_mid\": 1.75, \"points_upper\": 2.0, \"role\": \"COUNTER\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-994f92d663d0b49c624b1803\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"information_confidence\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 5.0, \"points_lower\": 4.75, \"points_mid\": 5.0, \"points_upper\": 5.0, \"role\": \"COUNTER\", \"score_band\": \"STRONG\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}], \"independent_role_mandate\": [\"CURRENT_ECONOMIC_STRENGTH\", \"POSITIVE_THESIS\", \"DURATION_AND_CASH_CONVERSION\"], \"judge_pass_name\": \"COMPONENT_ANALYST_JUDGE\", \"judge_role\": \"ANALYST\", \"required_judge_output_fields\": [\"allowed_range\", \"anchor_comparisons\", \"counter_fact_ids\", \"disagreements\", \"nearest_anchor_ids\", \"proposed_points\", \"rationale\", \"support_fact_ids\", \"why_not_higher\", \"why_not_lower\"]}",
+  "prompt_hash": "a066836735d0171a1753b510f0808cc6c58c1f1196981ac2bc21376b0d3d947b",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-aad35a61998aa1ba5bee9a6748efe0b2b9c2b3d0b7a954d188709086cf734f82",
+  "request_identity": {
+    "output_schema_hash": "496b8f90bced9f40620c5b448f182023418562f573ecdb67e6559d28a3b30ee9",
+    "pass_name": "COMPONENT_ANALYST_JUDGE",
+    "prompt_hash": "a066836735d0171a1753b510f0808cc6c58c1f1196981ac2bc21376b0d3d947b",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_component_analyst_judge",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

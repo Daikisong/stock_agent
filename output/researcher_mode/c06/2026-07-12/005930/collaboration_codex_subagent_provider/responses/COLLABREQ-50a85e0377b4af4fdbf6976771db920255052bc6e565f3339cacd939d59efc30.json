@@ -1,0 +1,596 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-8ddd1ee3063fc1b630079137",
+        "rationale": "삼성전자 직접 HBM4 bit supply, legacy-line capacity constraint, HBM3E 고객 qualification counter를 추출했다. 12개 page limit 때문에 삼성전자 HBM/DRAM 매출·마진·valuation 잔여가 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-919d8cce7e8a7b86532fa246",
+        "rationale": "삼성전자 1c wafer·bit growth와 2026년 메모리 매출·영업이익·마진 전망을 추출했다. 12개 page limit 때문에 삼성전자 forward valuation·cash 및 2027 segment 잔여가 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-9593229e014a4bdce96ccba4",
+        "rationale": "issuer Q&A에서 메모리 다년 계약, DRAM 실제 volume·ASP, 공급부족·2027 allocation, HBM 매출 성장과 HBM4 sold-out/mix ramp를 추출했다. 12개 page limit 때문에 계약 구조·forward valuation 잔여가 있다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-8ddd1ee3063fc1b630079137",
+        "economic_mechanism": "DS투자증권은 삼성전자가 HBM4에 1c 32Gb 다이를 적용하면 같은 12단에서도 HBM3E 대비 비트 공급량이 약 33% 늘어날 것으로 추정했다.",
+        "exact_quote": "삼성전자는 HBM4에 1c 적용 예상되며, 1c 32Gb 다이로 전환 시 같은 12hi라도 HBM3e 12hi 대비 총 비트 공급량이 약 +33% 증가",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4 공정 전환이 실제 공급량으로 이어지는 정도를 수치화해 HBM 이익 및 valuation의 물량 가정을 보강한다.",
+        "mechanism_scope_id": "005930:HBM4:BIT_SUPPLY_EXPANSION:2026F:DS",
+        "normalized_object": "1c 32Gb 기반 HBM4 비트 공급 증가 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "삼성전자 1c 32Gb HBM4는 HBM3E 12단 대비 비트 공급량이 약 33% 증가할 것으로 추정됐다.",
+        "predicate_family": "HBM4_BIT_SUPPLY_FORECAST",
+        "primitive_tags": [
+          "HBM4",
+          "1C",
+          "32GB",
+          "CAPACITY"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_BIT_CAPACITY_FORECAST",
+        "question_family_tags": [
+          "HBM4",
+          "BIT_SUPPLY",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 1c 32Gb 기반 HBM4 비트 공급",
+        "subject_id": "005930:HBM4:1C_32GB_BIT_SUPPLY:2026:DS",
+        "unit": "percent",
+        "value": 33
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-8ddd1ee3063fc1b630079137",
+        "economic_mechanism": "삼성전자의 DDR4 1z 라인 연장이 1a·1c 전환을 늦춰 HBM을 포함한 최선단 공급 증가와 가격 하락 위험을 완화하는 제약으로 작용한다는 분석이다.",
+        "exact_quote": "－삼성전자의 DDR4 EoL 시점 연기로 인해 1z 라인 2026년 말까지 연장\n－이는 1a/1c로의 전환 속도를 원래 계획 대비 낮추는 효과 → HBM을 포함한 최선단 제품의 공급 증가 및 가격 하락 리스크가 완화될 것",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "레거시 생산 유지가 HBM 공급 확대 속도와 가격에 미치는 target-direct trade-off를 보여준다.",
+        "mechanism_scope_id": "005930:HBM:LEGACY_LINE_CAPACITY_CONSTRAINT:2026:DS",
+        "normalized_object": "DDR4 생산 연장에 따른 HBM 공급 증가 제약",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "through 2026 year-end",
+        "predicate": "삼성전자 DDR4 1z 라인 연장은 HBM 최선단 공급 증가와 가격 하락 위험을 완화할 것으로 분석됐다.",
+        "predicate_family": "HBM_CAPACITY_CONSTRAINT_FROM_LEGACY_EXTENSION",
+        "primitive_tags": [
+          "DDR4_EOL",
+          "1Z",
+          "HBM",
+          "SUPPLY_RESPONSE"
+        ],
+        "product_family": "DRAM·HBM",
+        "question_family_id": "HBM_SUPPLY_RESPONSE_CONSTRAINT",
+        "question_family_tags": [
+          "HBM_SUPPLY",
+          "CAPACITY_CONSTRAINT",
+          "PRICING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DDR4 생산 연장과 HBM 공급 증가 제약",
+        "subject_id": "005930:HBM:DDR4_EOL_EXTENSION:2026:DS",
+        "unit": "period",
+        "value": "1z line extended through 2026 year-end"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.94,
+        "current_lifecycle": "RESOLVED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-8ddd1ee3063fc1b630079137",
+        "economic_mechanism": "2025년 8월 DS투자증권은 삼성전자 HBM3E 12단의 주요 고객 양산 qualification 통과 여부가 9월 말 이후 확인될 것으로 전망했다.",
+        "exact_quote": "-HBM3e 12hi의 주요 고객사 양산 퀄리피케이션 통과 여부는 9월 말 이후에 나올 것으로 전망",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "당시 valuation이 고객 승인이라는 미확정 실행 단계에 의존했음을 보여주는 historical counterfact다.",
+        "mechanism_scope_id": "005930:HBM3E:CUSTOMER_QUALIFICATION_TIMING:2025-09:DS",
+        "normalized_object": "HBM3E 12단 주요 고객 양산 qualification 시점 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-09F",
+        "predicate": "삼성전자 HBM3E 12단의 주요 고객 양산 qualification 결과는 2025년 9월 말 이후 나올 것으로 전망됐다.",
+        "predicate_family": "CUSTOMER_QUALIFICATION_TIMING_FORECAST",
+        "primitive_tags": [
+          "HBM3E",
+          "12HI",
+          "QUALIFICATION"
+        ],
+        "product_family": "HBM3E 12단",
+        "question_family_id": "HBM_CUSTOMER_QUALIFICATION_TIMING",
+        "question_family_tags": [
+          "HBM_QUALIFICATION",
+          "CUSTOMER_VALIDATION",
+          "TIMING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM3E 12단 고객 양산 qualification",
+        "subject_id": "005930:HBM3E12H:CUSTOMER_QUALIFICATION:2025-09:DS",
+        "unit": "date",
+        "value": "after 2025-09 month-end"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-919d8cce7e8a7b86532fa246",
+        "economic_mechanism": "IBK투자증권은 삼성전자의 1c wafer 확대 계획과 P4 증설·기존 라인 전환을 반영해 2026년 생산 bit growth를 21%로 전망했다.",
+        "exact_quote": "생산라인의 Wafer 감소는 공정 전환에 따른 영향이다. 삼성전자는 1c nm Wafer를\n200K/월까지 확대할 계획인데 P4를 제외하면 이전 생산 라인의 공전 전환을 통해서\n진행할 것으로 예상한다. 그리고 1b nm 비중은 41%를 유지할 것으로 예상한다. 1c nm\n비중은 25년 4분기 5%에서 26년 4분기에는 32%까지 상승할 것으로 예상한다. 이로\n인해 웨이퍼 증가는 많지 않지만 2026년 생산 Bit Growth는 21.0%로 높아질\n전망이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공정 전환과 wafer capacity가 메모리 물량 성장으로 변환되는 수치를 제공한다.",
+        "mechanism_scope_id": "005930:DRAM:1C_WAFER_BIT_GROWTH:2026F:IBK",
+        "normalized_object": "2026년 1c wafer 확대와 DRAM 생산 bit growth 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "삼성전자는 1c wafer를 월 200K까지 확대할 계획이며 2026년 생산 bit growth는 21%로 전망됐다.",
+        "predicate_family": "DRAM_CAPACITY_BIT_GROWTH_FORECAST",
+        "primitive_tags": [
+          "1C",
+          "WAFER",
+          "P4",
+          "BIT_GROWTH"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_CAPACITY_AND_BIT_GROWTH_PLAN",
+        "question_family_tags": [
+          "DRAM_CAPACITY",
+          "BIT_GROWTH",
+          "FORWARD_PLAN"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "삼성전자 2026년 DRAM 1c wafer 및 bit growth",
+        "subject_id": "005930:DRAM:1C_WAFER_BIT_GROWTH:2026:IBK",
+        "unit": "K wafers per month and percent",
+        "value": "1c wafer 200K/month; 2026 production bit growth 21.0%"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-919d8cce7e8a7b86532fa246",
+        "economic_mechanism": "IBK투자증권은 삼성전자 메모리 부문 2026년 매출을 180.210조원으로 전망했다.",
+        "exact_quote": "메모리 19,126 21,249 26,714 34,869 39,660 44,652 47,543 48,355 101,958 180,210 217,629",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 가격·물량 전망을 삼성전자 segment 매출로 직접 연결한다.",
+        "mechanism_scope_id": "005930:MEMORY:SEGMENT_REVENUE:2026F:IBK",
+        "normalized_object": "2026년 메모리 부문 매출 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "IBK투자증권은 삼성전자 메모리 부문 2026년 매출을 180.210조원으로 전망했다.",
+        "predicate_family": "MEMORY_REVENUE_FORECAST",
+        "primitive_tags": [
+          "MEMORY",
+          "REVENUE",
+          "2026F"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "MEMORY_SEGMENT_REVENUE_FORECAST",
+        "question_family_tags": [
+          "MEMORY_REVENUE",
+          "BROKER_FORECAST",
+          "VALUATION_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 부문 2026년 매출",
+        "subject_id": "005930:MEMORY_REVENUE:2026:IBK",
+        "unit": "KRW trillion",
+        "value": 180.21
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-919d8cce7e8a7b86532fa246",
+        "economic_mechanism": "IBK투자증권은 삼성전자 메모리 부문 2026년 영업이익을 116.510조원으로 전망했다.",
+        "exact_quote": "메모리 3,576 3,029 7,714 17,269 24,760 28,752 31,743 31,255 31,588 116,510 141,829",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 매출이 valuation의 이익 분모로 전환되는 규모를 target segment에서 직접 수치화한다.",
+        "mechanism_scope_id": "005930:MEMORY:SEGMENT_OPERATING_PROFIT:2026F:IBK",
+        "normalized_object": "2026년 메모리 부문 영업이익 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "IBK투자증권은 삼성전자 메모리 부문 2026년 영업이익을 116.510조원으로 전망했다.",
+        "predicate_family": "MEMORY_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "MEMORY",
+          "OPERATING_PROFIT",
+          "2026F"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "MEMORY_SEGMENT_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "MEMORY_OPERATING_PROFIT",
+          "BROKER_FORECAST",
+          "VALUATION_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 부문 2026년 영업이익",
+        "subject_id": "005930:MEMORY_OPERATING_PROFIT:2026:IBK",
+        "unit": "KRW trillion",
+        "value": 116.51
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-919d8cce7e8a7b86532fa246",
+        "economic_mechanism": "IBK투자증권은 삼성전자 메모리 부문 2026년 영업이익률을 64.7%로 전망했다.",
+        "exact_quote": "메모리 18.7% 14.3% 28.9% 49.5% 62.4% 64.4% 66.8% 64.6% 31.0% 64.7% 65.2%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "높은 이익 전망이 어떤 segment margin 가정에 의존하는지 명시한다.",
+        "mechanism_scope_id": "005930:MEMORY:SEGMENT_OPM:2026F:IBK",
+        "normalized_object": "2026년 메모리 부문 영업이익률 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "IBK투자증권은 삼성전자 메모리 부문 2026년 영업이익률을 64.7%로 전망했다.",
+        "predicate_family": "MEMORY_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "MEMORY",
+          "OPM",
+          "2026F"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "MEMORY_SEGMENT_MARGIN_FORECAST",
+        "question_family_tags": [
+          "MEMORY_MARGIN",
+          "BROKER_FORECAST",
+          "VALUATION_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 부문 2026년 영업이익률",
+        "subject_id": "005930:MEMORY_OPM:2026:IBK",
+        "unit": "percent",
+        "value": 64.7
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9593229e014a4bdce96ccba4",
+        "economic_mechanism": "삼성전자는 AI 중장기 수요에 따른 고객 물량 확보 요청 속에서 다년 공급계약을 추진했고 일부 고객과 이미 계약을 체결했다고 밝혔다.",
+        "exact_quote": "- 메모리 다년 계약과 관련된 구체적인 내용은 NDA 에 따라 공개가 제한되나 주요 고객사들이\nAI 기반 중장기 수요에 대한 확신을 바탕으로 물량 확보를 요청하고 있는 상황. 당사는 공급\n가능 범위 내에서 다년 공급 계약을 추진 중이며 일부 고객사와는 이미 계약을 체결한 상태",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "일반 수요 전망과 달리 일부 고객의 다년 commitment가 실제 체결됐음을 issuer Q&A가 확인한다.",
+        "mechanism_scope_id": "005930:MEMORY:MULTIYEAR_CUSTOMER_CONTRACTS:2026Q1",
+        "normalized_object": "일부 고객과 체결된 메모리 다년 공급계약",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "삼성전자는 일부 고객사와 메모리 다년 공급계약을 이미 체결했다.",
+        "predicate_family": "MULTIYEAR_SUPPLY_CONTRACT_SIGNED",
+        "primitive_tags": [
+          "MEMORY",
+          "CONTRACT",
+          "CUSTOMER",
+          "NDA"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "MEMORY_MULTIYEAR_CONTRACT_STATUS",
+        "question_family_tags": [
+          "MULTIYEAR_CONTRACT",
+          "CUSTOMER_COMMITMENT",
+          "VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 다년 공급계약",
+        "subject_id": "005930:MEMORY:MULTIYEAR_CONTRACTS:2026Q1",
+        "unit": "contract status",
+        "value": "some customers contracted"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9593229e014a4bdce96ccba4",
+        "economic_mechanism": "삼성전자는 1Q26 서버 중심 판매로 DRAM bit growth가 전분기 대비 10% 초반, ASP가 90% 초반 상승했고 메모리 사업이 분기 최대 실적을 경신했다고 밝혔다.",
+        "exact_quote": "- 서버 중심 판매 확대 전략을 통해 DRAM 비트그로스는 전분기 대비 10% 초반, NAND는 20%\n초반 증가하며 서버향 분기 최대 판매를 기록. DRAM 은 가이던스를 달성하였고 NAND 는\n판매량 가이던스를 상회, ASP 또한 시장 가격 상승과 서버 중심 포트폴리오 개선 영향으로\nDRAM 은 90% 초반, NAND 는 80% 후반 상승. 수요 강세와 제품 경쟁력을 기반으로 메모리\n사업은 역대 최대 분기 실적을 재차 경신한 상황",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "broker forecast가 아니라 issuer Q&A의 ended-quarter DRAM volume·pricing actual로 valuation 이익 가정을 검증한다.",
+        "mechanism_scope_id": "005930:DRAM:VOLUME_PRICE_ACTUAL:2026Q1",
+        "normalized_object": "1Q26 DRAM 물량·가격 실제 성장",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "삼성전자 1Q26 DRAM bit growth는 전분기 대비 10% 초반, ASP는 90% 초반 상승했다.",
+        "predicate_family": "DRAM_BIT_GROWTH_ASP_ACTUAL",
+        "primitive_tags": [
+          "DRAM",
+          "BIT_GROWTH",
+          "ASP",
+          "2026Q1"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_QUARTERLY_VOLUME_PRICE_ACTUAL",
+        "question_family_tags": [
+          "DRAM_VOLUME",
+          "DRAM_ASP",
+          "ACTUAL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "삼성전자 1Q26 DRAM bit growth 및 ASP",
+        "subject_id": "005930:DRAM:BIT_GROWTH_ASP:2026Q1",
+        "unit": "percent QoQ",
+        "value": "bit growth low teens QoQ; ASP low 90s QoQ"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9593229e014a4bdce96ccba4",
+        "economic_mechanism": "삼성전자는 신규 fab lead time으로 공급 확대가 제한된 가운데 고객이 2027년 수요를 선제 확보해 수급 격차가 더 확대될 것으로 설명했다.",
+        "exact_quote": "- 신규 팹 투자 리드타임으로 인해 공급 확대에는 제약이 존재하며 현재 수요 대비 공급 부족은\n역대 최저 수준으로 심화된 상태. 고객사들이 2027년 수요를 선제적으로 확보하고 있어 수급\n격차는 더욱 확대될 전망",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "capacity lead time과 고객의 forward allocation을 함께 확인해 구조적 shortage의 지속성을 보강한다.",
+        "mechanism_scope_id": "005930:MEMORY:SUPPLY_SHORTAGE_FORWARD_ALLOCATION:2026Q1",
+        "normalized_object": "메모리 공급 제약과 2027년 고객 물량 선점",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 to 2027",
+        "predicate": "고객사들이 삼성전자 메모리 2027년 수요를 선제 확보하는 가운데 공급 제약이 지속됐다.",
+        "predicate_family": "MEMORY_SUPPLY_SHORTAGE_FORWARD_ALLOCATION",
+        "primitive_tags": [
+          "MEMORY",
+          "FAB_LEAD_TIME",
+          "SHORTAGE",
+          "ALLOCATION"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "MEMORY_SUPPLY_SHORTAGE_AND_FORWARD_ALLOCATION",
+        "question_family_tags": [
+          "SUPPLY_SHORTAGE",
+          "CUSTOMER_ALLOCATION",
+          "2027_DEMAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 공급부족과 고객의 2027년 물량 선점",
+        "subject_id": "005930:MEMORY:SUPPLY_SHORTAGE_2027_ALLOCATION:2026Q1",
+        "unit": "allocation status",
+        "value": "customers pre-securing 2027 demand"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9593229e014a4bdce96ccba4",
+        "economic_mechanism": "삼성전자는 HBM 매출이 2026년에 전년 대비 3배 이상 성장할 것으로 전망했다.",
+        "exact_quote": "- HBM 매출은 전년 대비 3배 이상 성장할 것으로 전망되며 HBM4는 업계 최초 양산 이후 고\n객 수요 집중으로 캐파가 전량 판매 완료된 상태. 현재 램프업이 진행 중이며 하반기 공급이 본\n격 확대될 예정으로 3분기부터 HBM4 매출 비중이 전체 HBM 매출의 절반 이상으로 확대될 전\n망. 연간 기준으로도 과반 비중을 차지할 것으로 예상.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM capacity와 mix 변화가 매출 성장으로 전환되는 issuer numeric outlook이다.",
+        "mechanism_scope_id": "005930:HBM:REVENUE_GROWTH_GUIDANCE:2026",
+        "normalized_object": "2026년 HBM 매출 성장 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "삼성전자 HBM 매출은 전년 대비 3배 이상 성장할 것으로 전망됐다.",
+        "predicate_family": "HBM_REVENUE_GROWTH_GUIDANCE",
+        "primitive_tags": [
+          "HBM",
+          "REVENUE_GROWTH",
+          "2026F"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_REVENUE_GROWTH_GUIDANCE",
+        "question_family_tags": [
+          "HBM_REVENUE",
+          "FORWARD_GUIDANCE",
+          "GROWTH"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "삼성전자 2026년 HBM 매출 성장 전망",
+        "subject_id": "005930:HBM:REVENUE_GROWTH:2026",
+        "unit": "multiple YoY",
+        "value": "over 3x YoY"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9593229e014a4bdce96ccba4",
+        "economic_mechanism": "삼성전자는 HBM4 capacity가 고객 수요로 전량 판매됐고 ramp-up 뒤 3Q26부터 HBM4가 HBM 매출의 절반 이상이 될 것으로 전망했다.",
+        "exact_quote": "- HBM 매출은 전년 대비 3배 이상 성장할 것으로 전망되며 HBM4는 업계 최초 양산 이후 고\n객 수요 집중으로 캐파가 전량 판매 완료된 상태. 현재 램프업이 진행 중이며 하반기 공급이 본\n격 확대될 예정으로 3분기부터 HBM4 매출 비중이 전체 HBM 매출의 절반 이상으로 확대될 전\n망. 연간 기준으로도 과반 비중을 차지할 것으로 예상.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객 commitment가 capacity sold-out으로 확인되고 revenue mix ramp 일정까지 제시돼 HBM valuation의 가시성을 직접 보강한다.",
+        "mechanism_scope_id": "005930:HBM4:CAPACITY_SOLD_OUT_MIX_RAMP:2026",
+        "normalized_object": "HBM4 capacity sold-out 및 과반 매출 mix 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q3F and 2026F",
+        "predicate": "삼성전자 HBM4 capacity는 전량 판매 완료됐고 3Q26부터 HBM 매출 비중이 절반 이상으로 확대될 전망이다.",
+        "predicate_family": "HBM4_CAPACITY_SOLD_OUT_MIX_GUIDANCE",
+        "primitive_tags": [
+          "HBM4",
+          "CAPACITY",
+          "SOLD_OUT",
+          "MIX_RAMP"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_CAPACITY_SOLD_OUT_AND_MIX_RAMP",
+        "question_family_tags": [
+          "HBM4",
+          "SOLD_OUT",
+          "REVENUE_MIX",
+          "CUSTOMER_ALLOCATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 capacity sold-out 및 매출 mix 확대",
+        "subject_id": "005930:HBM4:CAPACITY_SOLD_OUT_MIX:2026",
+        "unit": "capacity and percent mix",
+        "value": "capacity sold out; over 50% HBM revenue mix from 2026Q3"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-8ddd1ee3063fc1b630079137",
+      "SGDOC-919d8cce7e8a7b86532fa246",
+      "SGDOC-9593229e014a4bdce96ccba4"
+    ],
+    "unresolved_research_notes": [
+      "12개 page limit 도달: 세 문서 모두에 prior page와 구분되는 삼성전자 직접 HBM·DRAM valuation 및 계약·cash facts가 남아 있어 continuation이 필요하다."
+    ]
+  },
+  "payload_hash": "0cce2bbfcdaca181ac35360dfd4e7b621f4ee387419863ce222842d009291021",
+  "production_score_authority": false,
+  "prompt_hash": "d281d4c858518c17d60b0a072d4c2432952ba90ece4f75cdfd039544e6eb7d40",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-50a85e0377b4af4fdbf6976771db920255052bc6e565f3339cacd939d59efc30",
+  "response_id": "COLLABRESP-e8ce5c5c440663d24b6df76b6d2ecdd5422c807749224228203772df82c4a409",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

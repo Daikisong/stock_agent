@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "6304cca64ffb455b95d610e7bade177b8edf3b14fd66844ba2a68b6531d92bb7",
+  "payload": {
+    "allowed_range": [
+      7.5,
+      9.5
+    ],
+    "anchor_comparisons": [
+      "Both cross-sector anchors sit near their component ceiling, but they are low-confidence ordinal comparisons and cannot transfer their numeric bands to this memory commercialization case.",
+      "The positive anchor resembles execution-led rerating, while the counter anchor warns that proxy valuation narratives can overstate rerating without durable economics."
+    ],
+    "counter_fact_ids": [
+      "EFACT-07ca574cbad488f436ca70d6",
+      "EFACT-9cdcaad56af436ed1ac5bc6f",
+      "EFACT-a79b8e5bedf94ee44504539e",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "I give more weight to verified commercialization than to the view that all recovery expectations are already reflected, but I do not treat peer gaps as automatically closable."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a",
+      "ORDTRANSFER-75306723611a10615f950fec"
+    ],
+    "proposed_points": 8.5,
+    "rationale": "Stable HBM4 yields, final SiP performance, mass production for a named platform, continued customer deliveries, and one-billion-dollar cumulative revenue show a progression from qualification to commercialization. Lower forward peer multiples and relative underperformance add rerating capacity, but already-higher PBR and uncertain product margin and allocation limit the upper range.",
+    "support_fact_ids": [
+      "EFACT-3c095c9436a1460d04797e97",
+      "EFACT-3e5de9f21e03d4bc9871d258",
+      "EFACT-43ac847658ecf13550362d92",
+      "EFACT-60c77b3224c68e190899ad88",
+      "EFACT-7d49113d90b5216890ebb0bc",
+      "EFACT-ba3851ffc2538f67427b0ec3",
+      "EFACT-c8d894a7d67c2050fd2961da",
+      "EFACT-cf374d280bd2cbced74132b9"
+    ],
+    "why_not_higher": "Customer-level volume, price, margin, and durable share are undisclosed; initial profitability, shipment delay, supplier review, and prior PBR expansion limit further rerating.",
+    "why_not_lower": "A lower placement would underweight the complete yield-to-production-to-delivery-to-revenue sequence and remaining forward-multiple discount."
+  },
+  "payload_hash": "f2057530013aad3014a355380e12222b548d3ab208550fe7fa7b19203129c244",
+  "production_score_authority": false,
+  "prompt_hash": "79b00d0f6afd34888a9fe09305863b0e5391ed0d5161070b239f64383c825550",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6c8d73ca67c519e639df76ec464ef94e766a340c47870b6fcb41292af1984ce6",
+  "response_id": "COLLABRESP-f8427dd19bc5ed25545727563333f89d38cc61a97235eba99d7e8909f6805e13",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

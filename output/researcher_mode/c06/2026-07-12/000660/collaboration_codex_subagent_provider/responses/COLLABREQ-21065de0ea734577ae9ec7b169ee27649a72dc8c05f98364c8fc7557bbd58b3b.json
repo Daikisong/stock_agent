@@ -1,0 +1,351 @@
+{
+  "output_schema_hash": "5a5b9b0266462c7cd0c0a378900448786d8f59371b2e4159b16dcc38f62d33bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "rationale": "transport chunk 0/2의 9,646개 줄과 SK하이닉스 직접 구간을 다시 전수 검토했다. HBM4 가격 체결, 2026년 수요 확보, 일반메모리 실적 상향, 컨센서스 변화, 수익성 민감도, forward 영업이익률과 순이익 비중 등 현재 objective에 직접 연결되고 이 청크 안에 exact quote가 있는 7건을 현재 의미 버전으로 재검증했다. 반복 요약, 목표주가·주가 모멘텀, 2025년 과거 순이익, 타사·중국 경쟁사·일반 산업 표는 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.91,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "HBM4 가격이 시장 우려보다 양호한 수준에 체결됐다는 브로커 평가는 차세대 HBM의 가격 방어력과 이익 기대 상향 가능성을 직접 뒷받침한다. 고객 구매의무나 계약 규모까지 추론하지 않는다.",
+        "exact_quote": "•HBM4 가격이우려대비양호하게체결되며, HBM 경쟁력을재차확인했음",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4의 실현 계약가격 방향은 HBM 이익 bridge와 valuation rerating의 핵심 분자다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_CONTRACTED_PRICING",
+        "normalized_object": "SK하이닉스 HBM4 가격 체결 수준",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "as reported 2025-11-19",
+        "predicate": "HBM4 가격이 우려보다 양호하게 체결됐다고 평가됐다",
+        "predicate_family": "HBM4_CONTRACT_PRICING",
+        "primitive_tags": [
+          "HBM4",
+          "PRICE",
+          "CONTRACTED"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_CONTRACT_PRICE_EXPECTATION",
+        "question_family_tags": [
+          "HBM4_PRICING",
+          "CONTRACTED_PRICE",
+          "PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4 계약가격",
+        "subject_id": "000660:HBM4_CONTRACTED_PRICE:2025-11-19",
+        "unit": "qualitative pricing outcome",
+        "value": "우려 대비 양호한 가격 체결"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.89,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "2026년 연간 수요가 이미 확보됐다는 브로커 평가는 HBM 물량 가시성을 고정된 연간 기간으로 보완하며, 추가 가격 상승은 향후 수요 강도에 달린 조건부 여력으로 한정한다. 이를 취소불능 구매계약으로 확대하지 않는다.",
+        "exact_quote": "•2026년연간수요가이미확보된만큼, 향후수요강도에따라추가적인가격상승여력상존",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "연간 수요 가시성과 조건부 가격 여력은 HBM 이익 지속성과 rerating을 직접 연결한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_FY2026_DEMAND_COVERAGE",
+        "normalized_object": "SK하이닉스 2026년 HBM 수요 가시성과 조건부 가격 여력",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026",
+        "predicate": "2026년 연간 수요가 이미 확보됐고 수요 강도에 따라 추가 가격 상승 여력이 있다고 평가됐다",
+        "predicate_family": "HBM_DEMAND_COVERAGE",
+        "primitive_tags": [
+          "HBM",
+          "DEMAND",
+          "FY2026",
+          "PRICE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_FY2026_DEMAND_COVERAGE",
+        "question_family_tags": [
+          "HBM_DEMAND_COVERAGE",
+          "FY2026",
+          "CONDITIONAL_PRICE_UPSIDE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.89,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 HBM 수요 확보",
+        "subject_id": "000660:HBM_DEMAND_COVERAGE:FY2026",
+        "unit": "qualitative annual demand coverage",
+        "value": "연간 수요 확보; 추가 가격 상승은 수요 강도에 조건부"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "서버 중심 일반메모리 수요 증가가 실적 상향 여력으로 이어진다는 평가는 HBM 외 DRAM 이익의 추가 상향 경로를 제시해 valuation earnings bridge를 넓힌다.",
+        "exact_quote": "•서버향중심의일반메모리수요증가에따른실적상향여력도상존",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "일반메모리의 추가 실적 상향은 HBM 단일 동력보다 넓은 forward earnings 분자를 만든다.",
+        "mechanism_scope_id": "000660:MEMORY:SERVER_MEMORY_EARNINGS_REVISION",
+        "normalized_object": "SK하이닉스 서버용 일반메모리 기반 실적 상향 가능성",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 outlook as reported 2025-11-19",
+        "predicate": "서버 중심 일반메모리 수요 증가에 따른 실적 상향 여력이 있다고 평가됐다",
+        "predicate_family": "MEMORY_EARNINGS_REVISION_POTENTIAL",
+        "primitive_tags": [
+          "SERVER_MEMORY",
+          "DEMAND",
+          "EARNINGS_UPSIDE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "SERVER_MEMORY_EARNINGS_REVISION",
+        "question_family_tags": [
+          "SERVER_MEMORY",
+          "EARNINGS_REVISION",
+          "GENERAL_MEMORY_DEMAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 서버용 일반메모리 실적 상향 여력",
+        "subject_id": "000660:SERVER_MEMORY_EARNINGS_REVISION:2025-11-19",
+        "unit": "qualitative earnings-revision potential",
+        "value": "서버용 일반메모리 수요에 따른 실적 상향 여력"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "Quantiwise 컨센서스 표는 2026년 영업이익 성장률과 12개월 선행 영업이익·순이익 추정치의 최근 상향 폭을 한 기준으로 제시해 forward earnings와 기대 변화의 크기를 직접 계량한다.",
+        "exact_quote": "‘26년퀀트탑픽스(실적과내러티브를감안한전략)\n2026년OP 12M Fwd. OP 12M Fwd. OP 12M Fwd. NP 거래대금증가 기관순매수강도\n종목\n성장률(%) (1M 변화, %) (3M 변화, %) (1M 변화, %) (3M대비1M, %) (1M, %)\nLS ELECTRIC 37.1 3.2 7.4 4.3 92.6 1.7\n두산 105.9 0.2 6.3 0.2 36.6 1.0\n이수페타시스 36.2 8.4 17.9 8.7 35.7 -0.2\nSK하이닉스 64.6 37.9 65.7 44.0 58.0 0.6",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "성장률과 컨센서스 상향 폭은 현재 valuation denominator가 빠르게 변하는지 직접 보여준다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_EARNINGS_REVISION_2026",
+        "normalized_object": "SK하이닉스 2026년 영업이익 성장률 및 12개월 선행 영업이익·순이익 컨센서스 변화",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F and 12-month-forward consensus snapshot as of 2025-11-19",
+        "predicate": "2026년 영업이익 성장률은 64.6%이고 12개월 선행 영업이익 추정치는 1개월간 37.9%, 3개월간 65.7%, 12개월 선행 순이익 추정치는 1개월간 44.0% 변했다",
+        "predicate_family": "FORWARD_EARNINGS_REVISION_PROFILE",
+        "primitive_tags": [
+          "OPERATING_PROFIT",
+          "NET_PROFIT",
+          "CONSENSUS",
+          "REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_CONSENSUS_REVISION_PROFILE",
+        "question_family_tags": [
+          "FY2026_OPERATING_PROFIT",
+          "CONSENSUS_REVISION",
+          "FORWARD_EARNINGS"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 영업이익 성장과 12개월 선행 이익 추정치 변화",
+        "subject_id": "000660:FORWARD_EARNINGS_REVISION:2025-11-19",
+        "unit": "%",
+        "value": "2026 OP growth 64.6; 12M forward OP 1M change 37.9; 3M change 65.7; 12M forward NP 1M change 44.0"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.86,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "비용률 상승 구간에서도 영업이익률이 후행 상승하고, 2025년 영업이익률 상승이 큰 순이익 변화율과 연결된다는 표는 가격 전가와 수익성 개선이 순이익으로 전환되는 민감도를 보완한다.",
+        "exact_quote": "코스피 기업 선별(2) 높은 가격전가력, 영업이익률 사상 최고치, 수익성 향상은 이익 증가로\n매출원가율상승시 영업이익률(%) 순이익비중(%)\n코스피 2025년 영업이익률상승시\n영업이익률상승폭\n기업명 주가수익률(%) 순이익변화율(%)\n(%p, 1개분기후행) 2024년 25년.E 26년.E 27년.E 2024년 25년.E 26년.E 27년.E\nSK하이닉스 226.6 2.1 47.7 35.5 44.7 48.9 46.3 11.8 16.0 16.6 15.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격 전가와 마진 개선이 순이익으로 바뀌는 민감도는 rerating의 earnings conversion을 직접 설명한다.",
+        "mechanism_scope_id": "000660:MEMORY:PROFITABILITY_SENSITIVITY_2025",
+        "normalized_object": "SK하이닉스 원가율·영업이익률·순이익 변환 민감도",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025 estimate; operating-margin change measured with one-quarter lag",
+        "predicate": "매출원가율 상승 시 1개 분기 후행 영업이익률 상승폭은 2.1%포인트이고 2025년 영업이익률 상승 시 순이익 변화율은 47.7%로 제시됐다",
+        "predicate_family": "PROFITABILITY_SENSITIVITY",
+        "primitive_tags": [
+          "COST_RATIO",
+          "OPERATING_MARGIN",
+          "NET_INCOME"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_PROFITABILITY_SENSITIVITY",
+        "question_family_tags": [
+          "PRICING_POWER",
+          "OPERATING_MARGIN",
+          "NET_INCOME_SENSITIVITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 비용·영업이익률 변화와 순이익 민감도",
+        "subject_id": "000660:PROFITABILITY_SENSITIVITY:2025",
+        "unit": "percentage points and %",
+        "value": "operating-margin increase 2.1; net-income change 47.7"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "2025~2027년 예상 영업이익률 경로는 메모리 업사이클의 수익성 분자가 2026년 정점을 거쳐 2027년에도 높은 수준으로 유지된다는 forward earnings bridge를 제공한다.",
+        "exact_quote": "코스피 기업 선별(2) 높은 가격전가력, 영업이익률 사상 최고치, 수익성 향상은 이익 증가로\n매출원가율상승시 영업이익률(%) 순이익비중(%)\n코스피 2025년 영업이익률상승시\n영업이익률상승폭\n기업명 주가수익률(%) 순이익변화율(%)\n(%p, 1개분기후행) 2024년 25년.E 26년.E 27년.E 2024년 25년.E 26년.E 27년.E\nSK하이닉스 226.6 2.1 47.7 35.5 44.7 48.9 46.3 11.8 16.0 16.6 15.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Forward margin 경로는 HBM·일반메모리 수요가 순이익과 valuation으로 전환되는 정도를 직접 계량한다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_OPERATING_MARGIN_2025_2027",
+        "normalized_object": "SK하이닉스 2025~2027년 예상 영업이익률 경로",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E-FY2027E",
+        "predicate": "예상 영업이익률은 2025년 44.7%, 2026년 48.9%, 2027년 46.3%로 제시됐다",
+        "predicate_family": "FORWARD_OPERATING_MARGIN_PROFILE",
+        "primitive_tags": [
+          "OPERATING_MARGIN",
+          "FORECAST",
+          "MEMORY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_FORWARD_MARGIN_PROFILE",
+        "question_family_tags": [
+          "FORWARD_MARGIN",
+          "FY2025E",
+          "FY2026E",
+          "FY2027E"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2025~2027년 예상 영업이익률",
+        "subject_id": "000660:FORWARD_OPERATING_MARGIN:2025_2027",
+        "unit": "%",
+        "value": "FY2025E 44.7; FY2026E 48.9; FY2027E 46.3"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.89,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "코스피 전체 순이익에서 SK하이닉스가 차지할 것으로 예상된 비중은 메모리 이익의 시장 내 상대적 규모를 보여주며, 시가총액과 valuation 재평가를 검토하는 이익 분모를 보완한다.",
+        "exact_quote": "코스피 기업 선별(2) 높은 가격전가력, 영업이익률 사상 최고치, 수익성 향상은 이익 증가로\n매출원가율상승시 영업이익률(%) 순이익비중(%)\n코스피 2025년 영업이익률상승시\n영업이익률상승폭\n기업명 주가수익률(%) 순이익변화율(%)\n(%p, 1개분기후행) 2024년 25년.E 26년.E 27년.E 2024년 25년.E 26년.E 27년.E\nSK하이닉스 226.6 2.1 47.7 35.5 44.7 48.9 46.3 11.8 16.0 16.6 15.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Forward 순이익 비중은 이익 규모가 시장 valuation에서 차지하는 상대적 무게를 직접 보여준다.",
+        "mechanism_scope_id": "000660:MEMORY:KOSPI_NET_INCOME_SHARE_2025_2027",
+        "normalized_object": "SK하이닉스 2025~2027년 코스피 순이익 비중 경로",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E-FY2027E",
+        "predicate": "코스피 순이익 비중은 2025년 16.0%, 2026년 16.6%, 2027년 15.7%로 제시됐다",
+        "predicate_family": "FORWARD_NET_INCOME_SHARE_PROFILE",
+        "primitive_tags": [
+          "NET_INCOME",
+          "MARKET_SHARE",
+          "FORECAST"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_FORWARD_NET_INCOME_SHARE",
+        "question_family_tags": [
+          "NET_INCOME_SHARE",
+          "KOSPI",
+          "FORWARD_EARNINGS"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2025~2027년 코스피 순이익 비중",
+        "subject_id": "000660:KOSPI_NET_INCOME_SHARE:2025_2027",
+        "unit": "%",
+        "value": "FY2025E 16.0; FY2026E 16.6; FY2027E 15.7"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "이 응답은 parent 문서 2개 transport chunk 중 0번만 완료한다. parent 완료는 deterministic engine이 두 chunk를 모두 결합한 뒤 판단한다."
+    ]
+  },
+  "payload_hash": "5e04485d920ff572ffc40081ae084a3175ea6e5af14adf0c2ebbcd9ee8d7db36",
+  "production_score_authority": false,
+  "prompt_hash": "12441dfd9e9072c2914c90269ef81fc48b5f7f90bbabc1f4aa2205f9d3326c0a",
+  "provenance": {
+    "agent_id": "root-phase101-c06-facts",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_facts",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-21065de0ea734577ae9ec7b169ee27649a72dc8c05f98364c8fc7557bbd58b3b",
+  "response_id": "COLLABRESP-137a17c38dceb1b7f80310fda7f0fc3e0edd708d868502001214516845d05acd",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

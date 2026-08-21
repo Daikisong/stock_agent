@@ -1,0 +1,129 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-21b69ac172148302d4a0aeaf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Third-party Telegram commentary is not an NH official research PDF route, and its HBM-shortage snippet is discovery metadata only."
+      },
+      {
+        "candidate_id": "SGCAND-9ceeb76781b301e506ddc46f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The Mirae Asset archive route matches the requested broker-PDF family, but this 2023 general AI report is not the target Samsung Electronics report and does not address the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-14671aa7511882d653202944",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This is another third-party Telegram page with unrelated geopolitical content, not an NH or Mirae original broker document."
+      },
+      {
+        "candidate_id": "SGCAND-e0c5b8ffbada2dd668c6cb35",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The official Mirae PDF is a 2024 global green-energy report, not the specified Samsung Electronics capacity report."
+      },
+      {
+        "candidate_id": "SGCAND-7055a42bdf2c32f3438ae132",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The official Mirae PDF concerns global LNG midstream and is unrelated to Samsung memory, HBM capacity, or the requested report identity."
+      },
+      {
+        "candidate_id": "SGCAND-e353e7e2a7a95b6dc1e6b23e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The Mirae-hosted PDF is an offering prospectus rather than target-company equity research, so it cannot repair the requested source route."
+      },
+      {
+        "candidate_id": "SGCAND-fbd141619357cafca6d51892",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The Mirae-hosted corrected offering document is unrelated to Samsung Electronics HBM economics or the exact broker report."
+      },
+      {
+        "candidate_id": "SGCAND-094b3dfb764a727d58c0831c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This Mirae-hosted table-of-contents/prospectus document does not identify the requested Samsung Electronics research report or a relevant HBM mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-9709b72b9cc79e596f9ff084",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The original Mirae broker PDF covers shipbuilding, not the target company or memory-capacity objective."
+      },
+      {
+        "candidate_id": "SGCAND-a1ec215fdb8e9315f52a0543",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The Mirae AI overview is not the exact Samsung Electronics report and its generic AI-design snippet does not establish target HBM capacity or earnings visibility."
+      },
+      {
+        "candidate_id": "SGCAND-b62eebe16455a2e92de6ef84",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The official Mirae PDF concerns Chinese semiconductor investment and is not target-scoped Samsung Electronics research."
+      },
+      {
+        "candidate_id": "SGCAND-0541769dfe3859b1502a1f41",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This Mirae-hosted correction/prospectus PDF is the wrong document class and subject for the requested Samsung Electronics source repair."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "The exact NH archive query returned only two third-party Telegram pages in this partition; no NH official full PDF route was found.",
+      "Mirae archive candidates in this partition match the broker-PDF family but not the requested 2026-06-25 Samsung Electronics report, so the exact source route remains unresolved."
+    ]
+  },
+  "payload_hash": "e72046585a76763beed3b510a27038274ecf7fad73a879323cbbdb888a197d29",
+  "production_score_authority": false,
+  "prompt_hash": "aa85bad978786c7d615df0efec004d1b021f71074184a26486a05fad753e0c54",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-207640f57f97649211361a089eb8071dea17fc26c0c20603c37fb77825386c99",
+  "response_id": "COLLABRESP-422acbcf9a6aea1b775be89b1a93254b8c272f96d9054a2cc4cb29ead7d889f1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

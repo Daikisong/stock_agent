@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0fa747e3aeb8e5bf2436eb7b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 공급된 provenance가 요청된 source family를 입증하지 못하거나, 공유·로그인·외부 미디어 경로라 현재 연구목표의 원문으로 사용할 수 없다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-17e3df876bb1ecb7d8d135ab",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.85,
+        "rationale": "발행사 FMS 2026 차세대 3D 메모리 발표 원문으로, 메모리 기술과 공급 방향을 확인할 직접 full-fetch 경로다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1e10844fac5dc311165585d6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 공급된 provenance가 요청된 source family를 입증하지 못하거나, 공유·로그인·외부 미디어 경로라 현재 연구목표의 원문으로 사용할 수 없다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2131634726dc93e21b02a6e7",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/solutions/applications/server/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2f1b4fc8275834593062a6c0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 공급된 provenance가 요청된 source family를 입증하지 못하거나, 공유·로그인·외부 미디어 경로라 현재 연구목표의 원문으로 사용할 수 없다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-4408baec854ac2c517ac5a6e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.96,
+        "rationale": "발행사 HBM4 양산·출하 발표 원문으로, 제품 상태와 공급 가시성을 직접 확인할 full-fetch 경로다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-5180495101da7b6bc3f7fee1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 공급된 provenance가 요청된 source family를 입증하지 못하거나, 공유·로그인·외부 미디어 경로라 현재 연구목표의 원문으로 사용할 수 없다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-6169a146b5fc68f40b1cbaec",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 소유자와 공급된 provenance가 요청된 source family를 입증하지 못하거나, 공유·로그인·외부 미디어 경로라 현재 연구목표의 원문으로 사용할 수 없다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-61e47dd5980a82633d76bf5d",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/content/samsung/p6/semiconductor/products/dram/hbm3e/01-speed-pc.mp4)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7aede981b0d19a4a73f57563",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/kr/%ec%82%bc%ec%84%b1%ec%a0%84%ec%9e%90-%ec%97%85%ea%b3%84-%ec%b5%9c%ec%b4%88-%ec%98%a8%eb%94%94%eb%b0%94%ec%9d%b4%ec%8a%a4-ai-%ec%b5%9c%ec%a0%81%ed%99%94-ufs-5-0-%ea%b0%9c%eb%b0%9c)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7ded16620a348c4279128ae7",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/ssd/enterprise-ssd/pm1763/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-81d3131d3c7a55def22ee739",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(/google-tts/kr/202607/1785369355.mp3)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "선정 후보는 아직 증거가 아니며 full-fetch 뒤 발행일·본문·대상 연결을 검증해야 한다."
+    ]
+  },
+  "payload_hash": "797351b1c2ff79fddfa491512e8cead4e4ebf864a04c1b523b9aee2968dbc87d",
+  "production_score_authority": false,
+  "prompt_hash": "659508f6de91b274eb1999da33345789d0d80adc66cd3084fce83a15f6c5f2ed",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch9_rankings",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-89350440f57793e3cb7a774ad646348588821415055d61dc4b5b979efc98c35c",
+  "response_id": "COLLABRESP-bd1e91c4cf87db17cd9c6284f849699d32eab4cd3f0adee72ac707fa5627c755",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

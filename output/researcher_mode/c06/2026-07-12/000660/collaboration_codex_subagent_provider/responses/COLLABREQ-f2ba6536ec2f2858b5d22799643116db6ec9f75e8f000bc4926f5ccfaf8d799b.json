@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "af6a09607a327476ccec9812ec08734f108bccfa93c2358405b7e196421354fb",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-05aac461f4855ab8c0ca060b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA RTX Spark 제품 페이지로, SK하이닉스가 요청한 issuer newsroom·earnings release·presentation 원문 provenance가 아니며 목표 회사의 메모리 매출·이익·FCF 귀속도 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-0746b7124bc0a77e4c5b96c2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "SK 계열 보도참고자료로 보이는 S3 DOCX 경로지만 이 transport에서는 issuer 공식 도메인 후보로 검증되지 않았고 source-family hint도 GENERAL_WEB_DISCOVERY다. AI 인프라 설명만으로 SK하이닉스의 구체적 매출·이익·FCF 증거가 되지 않으므로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-0be311876ea096b35ca0dbc9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Vera CPU 제품 페이지이며 요청된 SK하이닉스 issuer source가 아니다. CPU 제품 정보는 목표 회사의 HBM·DRAM 매출 및 현금흐름으로 직접 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-0ecb044ef3c5cef06291f877",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 개발자용 OpenUSD 페이지로 요청된 issuer source family와 대상 회사가 모두 다르며, 메모리 실적·마진·FCF 역할을 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2df6e83baee197990fc23438",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.05,
+        "rationale": "검증된 SK하이닉스 뉴스룸 도메인의 post 이미지 일괄 다운로드 경로라 provenance family는 ISSUER_NEWSROOM이지만, URL 자체가 본문 원문이 아닌 이미지 ZIP이다. 이미 fetch된 부모 문서보다 구체적인 매출·이익·FCF 텍스트를 제공할 경로로 볼 수 없어 material fetch 대상으로 두지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-3fe0eee491063908b352f503",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA PhysicsNeMo 개발자 페이지로 SK하이닉스 issuer 원문이 아니며, 제품 일반론을 목표 회사의 메모리 실적 또는 FCF로 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-5900f5da9b06b94cce0f493f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.05,
+        "rationale": "검증된 SK하이닉스 뉴스룸 페이지이므로 요청 family는 맞지만 Hypidia 앰버서더 콘텐츠는 기업 홍보·교육 성격이다. 목표한 메모리 매출, segment contribution, forward guidance 또는 FCF를 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-6772dc624a002fe1d4d3f12c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA cuOpt 제품 페이지로 요청된 SK하이닉스 issuer source가 아니며, 최적화 소프트웨어 설명은 목표 회사의 메모리 이익·현금흐름 증거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6a3e0f826ddac1b8ce7d24be",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA CUDA-X 기술 페이지로 요청된 issuer provenance가 아니고 SK하이닉스의 HBM·DRAM 매출 또는 이익으로 분해되는 자료도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7b17db8ed61ac285de662167",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.1,
+        "rationale": "SK하이닉스의 검증된 공식 뉴스룸 원문이지만 내용 식별자가 Nasdaq ADR 상장이다. 자본시장 상장 이벤트는 이번 objective의 메모리 매출·마진·FCF 또는 구체적 forward guidance를 직접 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7f2a8627544dbad4ee28fdd8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "S3의 Hypidia 홍보 동영상 파일로 issuer source family가 검증되지 않았고 텍스트 실적 원문도 아니다. discovery media asset을 실적 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-82d75968e9e7903583eedea7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Jetson Thor 제품 페이지로 요청된 SK하이닉스 issuer source가 아니다. 고객측 제품 일반 정보만으로 목표 회사의 메모리 매출·이익·FCF를 귀속할 수 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "공급된 12개 discovery candidate를 각각 정확히 한 번 분류했다. snippet과 reference metadata는 발견 정보로만 사용했고, 문서 fetch나 EvidenceFact 생성으로 간주하지 않았다.",
+      "이 파티션에는 objective의 issuer numeric forward guidance 또는 segment contribution을 직접 해소하는 material 원문 후보가 없다."
+    ]
+  },
+  "payload_hash": "58d1092bd049220f6414549731c3c980af0d6f1bb7525031c8a4bd509e6bfcfe",
+  "production_score_authority": false,
+  "prompt_hash": "bf124a4b6938be3e28c1be00fa48ed550f3631f21259d199b01ed4fab5010358",
+  "provenance": {
+    "agent_id": "hynix_epoch32_rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch32_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f2ba6536ec2f2858b5d22799643116db6ec9f75e8f000bc4926f5ccfaf8d799b",
+  "response_id": "COLLABRESP-78706f34fc54e22ce491044b741b096e7832d3c82cbd2cc90eee03301df7ee57",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

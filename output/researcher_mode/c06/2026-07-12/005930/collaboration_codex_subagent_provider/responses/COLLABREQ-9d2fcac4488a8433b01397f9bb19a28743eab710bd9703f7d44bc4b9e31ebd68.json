@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-340117cbf8b76e037ed51867",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/%ec%82%bc%ec%84%b1%ec%a0%84%ec%9e%90-%e8%8b%b1-%ec%b6%95%ea%b5%ac-%ec%a0%84%ec%84%a4-%ec%a1%b0-%ec%bd%9c%ea%b3%bc-%eb%a0%88%ec%9d%b4%ec%a6%88-%eb%8d%94-%eb%b0%94-%ec%ba%a0%ed%8e%98%ec%9d%b8)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-360d3fe3f413b25c258c0439",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/%ec%82%bc%ec%84%b1%ec%a0%84%ec%9e%90-%ea%b0%80%ec%a0%95%ec%9a%a9-ehs-%ed%9e%88%ed%8a%b8%ed%8e%8c%ed%94%84-%eb%b3%b4%ec%9d%bc%eb%9f%ac-%eb%b3%b8%ea%b2%a9-%ea%b3%b5%ea%b8%89)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-36a742d8f1d08028c61cf1d2",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/medialibrary/kr/album/171)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-381ae8c9cd6437a831a87fce",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/%ec%82%bc%ec%84%b1%ec%a0%84%ec%9e%90-%e7%be%8e-%ec%97%90%eb%84%88%ec%a7%80%eb%b6%80-%ec%82%b0%ed%95%98-%ea%b5%ad%eb%a6%bd%ec%97%b0%ea%b5%ac%ec%86%8c%ec%99%80-%ec%b0%a8%ec%84%b8%eb%8c%80-%eb%82%9c)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-3836ab699e20098de8fff3e7",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/%ec%9d%b4%eb%9f%b0-%ed%8f%b4%eb%8d%94%eb%b8%94%ec%9d%84-%ea%b8%b0%eb%8b%a4%eb%a0%a4-%ec%99%94%ec%96%b4%ec%9a%94%eb%82%a0%ec%94%a8%eb%a7%8c%ed%81%bc-%eb%9c%a8%ea%b1%b0)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-38d2e5b79d05a76f1ee0de32",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/갤럭시-z-시리즈)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-38f93c18356be4bae84c3579",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/%ec%98%81%ed%99%94-%ec%86%8d-%ec%9d%b4%ec%95%bc%ea%b8%b0%ea%b0%80-%ed%98%84%ec%8b%a4%eb%a1%9c-%ec%82%bc%ec%84%b1%ec%a0%84%ec%9e%90-%ec%8a%a4%ed%8c%8c%ec%9d%b4%eb%8d%94%eb%a7%a8)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-39b2b9241558f48df4149426",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/%ec%82%bc%ec%84%b1%ec%a0%84%ec%9e%90-%eb%91%90%eb%b0%94%ec%9d%b4-%ec%83%81%ea%b3%b5%ec%97%90%ec%84%9c-%ea%b0%a4%eb%9f%ad%ec%8b%9c-z-%ed%8f%b4%eb%93%9c8-%ec%b6%9c%ec%8b%9c-%ea%b8%b0%eb%85%90-%ec%8a%a4)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-3c7572e1d8f2dc4930af816e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/%ec%82%bc%ec%84%b1%ec%a0%84%ec%9e%90-%eb%b2%a0%ed%8a%b8%eb%82%a8-%ec%b5%9c%ec%b4%88-%ed%83%9c%ec%96%91%ea%b4%91-dppa-%ed%86%b5%ed%95%b4-%ec%9e%ac%ec%83%9d%ec%97%90%eb%84%88%ec%a7%80-%ea%b3%b5)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-3c82612fbf833279fb51d4c5",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/영상-끝없이-펼쳐지는-폴더블의-매력-새로운-갤럭시-z)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-3f93626553fa2b9d194e212e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/카드뉴스-갤럭시-언팩-2026-새로운-갤럭시-먼저-써봤어)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-44294e7e43fee120520481f5",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/events/foundry-events/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "2053150d6ee44342a583527c2b02cf6df2d8341fe0dd4298729c1f74a5681ea1",
+  "production_score_authority": false,
+  "prompt_hash": "9c794a2b1583fadce2a69d44c1e19f41b84523dd2d15ec7a3bcfd3c0ffbaab63",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch9_rankings",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9d2fcac4488a8433b01397f9bb19a28743eab710bd9703f7d44bc4b9e31ebd68",
+  "response_id": "COLLABRESP-fa2b3e5da6a7a2b29c819698edbd83e243cc6269ccdd41047c381e24c2da0682",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

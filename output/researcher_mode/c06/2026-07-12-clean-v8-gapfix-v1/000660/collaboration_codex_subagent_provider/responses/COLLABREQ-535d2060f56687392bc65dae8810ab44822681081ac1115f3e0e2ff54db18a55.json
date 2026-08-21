@@ -1,0 +1,124 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "A/S/C 범위 [14.5,16.8], [12.4,15.3], [15.8,18.2]의 3-way 교집합이 없다. 연결·DRAM actual의 HBM 귀속과 CAPEX·재고 counterweight를 current evidence로 semantic rewrite해야 한다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "A/S/C 교집합 [11.7,12.0]이 존재하며 actual 성장과 월·분기 가격 합의, durable contract 공백을 함께 보존해 memo는 현재 snapshot에 충분하다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "A/S/C 범위 [6.4,8.3], [4.8,6.8], [11.6,14.4]의 교집합이 없다. 메모리 100% 가동을 HBM 전용 구조적 병목으로 전이하는 강도를 same-evidence rewrite해야 한다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "A/S/C 교집합 [5.7,5.8]이 존재하고 operating delta와 기대 미반영 bridge 공백을 함께 보존해 memo는 현재 snapshot에 충분하다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "현재 ranking-pending 후보의 full source가 as-of-date 이전 HBM/메모리 sold-out 기간·제품 범위와 근거를 실제로 확인하는가"
+        ],
+        "rationale": "A/S/C 교집합 [3.9,4.4]은 존재하지만 structured DURABLE_VISIBILITY가 SOURCE_PENDING이다. 11개 pending 후보는 아직 ranking/fetch evidence가 아니므로 exact full-source 검증 전 memo sufficiency를 닫지 않는다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "A/S/C 범위 [1.0,1.4], [0.6,1.2], [2.1,3.2]의 교집합이 없다. 순현금·환원과 CAPEX·R&D·운전자본·희석의 가중을 same-evidence rewrite해야 한다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "A/S/C 범위 [1.65,2.15], [1.4,2.0], [2.3,3.4]의 교집합이 없다. Official actual 신뢰도와 단일 independence group·HBM-specific 공백을 same-evidence rewrite해야 한다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-9f189ef4313bb76da9d0c2eb",
+        "rationale": "6개 문서는 full fetch 후 as_of_date 이후임이 확인돼 적법하게 배제됐다. 현재 source absence가 아니며 동일 문서 재시도 대상도 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-b5e3b8331dcb08b996ec83cf",
+        "rationale": "6개 query/fetch lineage가 FUTURE_DOCUMENT_AFTER_FULL_FETCH로 종료되고 alternate_route_required=false다. 미래문서 배제는 부재 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-ecc6a4d62cabe7a6b313e01e",
+        "rationale": "3개 query가 QUERY_PROVIDER_ERROR로 실패했다. Transport 장애는 evidence 부재가 아니며 provider 정상화 시 재시도 가능한 operational failure다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "valuation_rerating",
+        "direction": "POSITIVE",
+        "fact_need": "As-of-date 이전 full source에서 확인되는 HBM 또는 메모리 생산의 durable sold-out/booked 기간과 제품 범위",
+        "why_material": "Structured gate의 유일한 미충족 role이 DURABLE_VISIBILITY이며, 11개 pending 후보의 metadata나 rank는 evidence가 아니므로 full fetch·date·quote 검증이 필요하다."
+      }
+    ],
+    "new_source_family_directions": [],
+    "next_actions": [
+      "EPS/FCF, bottleneck pricing, capital allocation, information confidence를 current evidence만으로 semantic rewrite한다.",
+      "재작성된 네 memo에 독립 A/S/C judges를 새로 실행해 3-way 교집합을 재검증한다.",
+      "이미 source graph에 존재하는 11개 pending 후보의 deterministic ranking을 소비한 뒤 material 후보만 full fetch·date·quote 검증한다. 새 동의어 query를 생성하지 않는다.",
+      "Structured DURABLE_VISIBILITY와 네 judge disagreement가 재평가된 뒤 Red Team과 Synthesis를 current lineage로 갱신한다."
+    ],
+    "query_direction_briefs": [],
+    "rationale": "Immutable prompt의 facts, memos7, judges21, RT/SYN, source/structured/failure proof를 감사했다. 네 component의 material disagreement는 같은 evidence의 semantic rewrite와 새 judges가 필요하다. Counter proof는 7 objectives와 official current counters를 덮지만 structured valuation DURABLE_VISIBILITY는 SOURCE_PENDING이다. Source graph의 11개 pending 후보는 아직 evidence도 completion도 아니며, 이미 열린 ranking lane이므로 새 query를 중복 생성하지 않는다. Future-document 배제와 provider 오류는 source absence가 아니다. 따라서 routes=true, ready=false를 유지한다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": false,
+    "unresolved_material_questions": [
+      "EPS/FCF에서 연결·DRAM actual과 HBM 단독 FCF 귀속 및 CAPEX·재고 counterweight를 어떤 공통 범위로 보정해야 하는가?",
+      "Bottleneck에서 메모리 100% 가동과 HBM 전용 CAPA·yield·allocation 공백을 어떤 공통 범위로 보정해야 하는가?",
+      "Capital allocation에서 순현금·환원과 CAPEX·R&D·운전자본·희석을 어떤 공통 범위로 보정해야 하는가?",
+      "Information confidence에서 official actual 신뢰도와 independence·HBM-specific 공백을 어떤 공통 범위로 보정해야 하는가?",
+      "현재 ranking-pending 후보 중 as-of-date 이전 exact full source가 durable HBM/메모리 sold-out 기간과 제품 범위를 확인하는가?"
+    ]
+  },
+  "payload_hash": "fd2a8d3fe3dc8cf3b64e12f4acaa6cc683468bbada7db1d9de2e555c41199635",
+  "production_score_authority": false,
+  "prompt_hash": "1cd4cb55940dbce57dccbf2c2e3be7c47b4bbb22435a822c29830d440a93e138",
+  "provenance": {
+    "agent_id": "phase105-profile-response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-535d2060f56687392bc65dae8810ab44822681081ac1115f3e0e2ff54db18a55",
+  "response_id": "COLLABRESP-0bc7388c595ef04fe851e0065f736c882fb17a8ce25dab266dde50a3e058b92d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

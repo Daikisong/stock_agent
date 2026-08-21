@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9977003a0d4618446f663f74",
+        "rationale": "동일한 2026-02-12 삼성전자 뉴스룸 HBM4 양산 출하 URL이 기존 canonical SGDOC-31c2bd67085c22e02bf20ca8로 이미 처리되었다. 현재 fact graph는 HBM4 양산 출하, 1c D램·4나노 구성, 11.7Gbps·최대 13Gbps 성능, 24~48GB 용량과 전력·발열, 공급 안정성, 2026년 HBM 매출 3배 이상 및 HBM4 CAPA 확대, 2028년 생산 거점, Custom HBM 샘플 계획을 이미 포함한다. 이번 transport의 3.3TB/s 등은 같은 제품 성능 사건의 표면 세분화이고, HBM4E 샘플 계획은 이후 실제 샘플 출하 사실보다 앞선 계획이므로 별도 current fact로 승격하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "114aade75a403f7412cbdfeecccacbdff11e4be4e3605a25432d57f389549e37",
+  "production_score_authority": false,
+  "prompt_hash": "0ef0a98d1e18edb2fe6757fdcf0c1b4e981f2516a8e784bd903512c25137b5e1",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e03bad394cc8f77772b58fd93c385a1afa60ea38ae6d71bef0f323f20b4e115d",
+  "response_id": "COLLABRESP-cb86bc670f30100de1d416b98d9b945d210e1a9692f0aae9ee20292a107b1cdc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

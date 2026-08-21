@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "490110d92341a79daf7e8a281153aa7d96072ebe37f4354e685b7d607c29eb92",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-33e59674f3c502afffcab89b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-8853f70e7d1ecc9f2c767838",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-0ef3ad9d82827d2a6653cfb3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-068a5f10cac5df10aeff8d22",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-f1955f8d421c55f6c98fadae",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-9fb65e0e0eea06badcc1f3ac",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "일반 웹 또는 제3자 경로로 요청된 source family의 검증 가능한 대상 full-fetch 원문이 아니며, 현재 삼성전자 HBM·메모리 objective를 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-52f86b75c6e2a2078f7ecf41",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-0101e9bf4721399da5326590",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-2063c4317735d1da0e605eb9",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.03,
+        "rationale": "증권사 소유의 직접 리서치 경로여서 provenance는 맞지만, supplied title과 route는 타 종목·일반 데일리·시장 브리프 중심이라 삼성전자 HBM 귀속 valuation·revision·capital allocation을 해소하는 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f3e866cc06c16e9fd07cbac8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "포털·집계·유료 콘텐츠·메신저 재전송 경로로 요청된 원 증권사 또는 trusted-media provenance를 충족하지 않으며 snippet을 증거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-7aef762796283fee7abf36c9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-c0795c46d4279812317c44a5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "24044b3ea83d1ba0734cfeb06ebbc3098a9caec126f3af3ae8eefeff648a8bba",
+  "production_score_authority": false,
+  "prompt_hash": "12cd7262d5447c1ea160aa89b9eb6de3242639a9e2af09a383e2a27b152b4635",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cf4bd72bba54029afd9f9118f9f1ef011de771ff5d8f33a770db8e195c9d78d8",
+  "response_id": "COLLABRESP-61875941c0cdc32bf39934d0b9809737286235a89653048f0afee707825eec19",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

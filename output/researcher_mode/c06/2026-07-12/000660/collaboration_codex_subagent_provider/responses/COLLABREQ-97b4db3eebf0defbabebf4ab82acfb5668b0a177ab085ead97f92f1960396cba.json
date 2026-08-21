@@ -1,0 +1,40 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "rationale": "공식 FY2025 한국어 실적자료를 전수 검토했으나, AI 메모리 기반 연간 실적·HBM 매출 2배 이상 성장·4Q25 HBM 및 서버 메모리 실적·고객 요청 HBM4 양산·잠정실적 제한은 현재 canonical fact에 동일 공식 영문자료의 경제 의미로 이미 존재한다. M15X·용인 공급 확대도 현재의 더 구체적인 공급투자 facts와 중복하며, 이 문서에는 미래 기간 숫자형 guidance 또는 peer band가 없어 새 valuation_rerating fact를 추가하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "고객 요청 물량의 HBM4 양산은 수량·기간 point/range가 없어 valuation_rerating의 DURABLE_VISIBILITY 구조화 공백을 해소하지 않는다.",
+      "이 발행사 실적자료에는 비교기업 valuation band가 없어 PEER_BAND 공백이 계속 남는다."
+    ]
+  },
+  "payload_hash": "3f440525b264e205550c51f7c2fdbcee982eab46a0617809311b03d16adf9478",
+  "production_score_authority": false,
+  "prompt_hash": "17030c9b95de1a370eb6ab9a7bad3948770dead6a53972c91f5c67f2e44eb57c",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-97b4db3eebf0defbabebf4ab82acfb5668b0a177ab085ead97f92f1960396cba",
+  "response_id": "COLLABRESP-9af9962fe4b3a930e2dbe9a10410ff2b66a3169c37beae759945cf3747b40cb6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

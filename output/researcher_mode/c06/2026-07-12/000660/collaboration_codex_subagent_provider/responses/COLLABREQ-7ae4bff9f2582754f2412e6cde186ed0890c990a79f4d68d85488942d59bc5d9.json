@@ -1,0 +1,47 @@
+{
+  "output_schema_hash": "b7feb1738d22092e2bc91cfadba754a81a33d5bd0b8ff5009591d0820e73a1e2",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+        "rationale": "직전 12개 accepted fact 이후 전체 supplied document remainder를 다시 확인했으며, 추가로 구별되는 objective-linked fact는 없다. 기존 fact와 역할 경계를 그대로 보존한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "rationale": "직전 12개 accepted fact 이후 전체 supplied document remainder를 다시 확인했으며, 추가로 구별되는 objective-linked fact는 없다. 기존 fact와 역할 경계를 그대로 보존한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-2585d63d70d2e243b822c981",
+        "rationale": "직전 12개 accepted fact 이후 전체 supplied document remainder를 다시 확인했으며, 추가로 구별되는 objective-linked fact는 없다. 기존 fact와 역할 경계를 그대로 보존한다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "4619b7d4b17c2b098e2248c545b04b4ca467be581d4845873bf9846a9b2bcf39",
+  "production_score_authority": false,
+  "prompt_hash": "8ad3d263dfac21c68a1fe358830206c6fcd7848c69d70321a04b728ac27b7979",
+  "provenance": {
+    "agent_id": "root-phase101-hynix-v7-coverage-audit",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_hynix_v7_coverage_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7ae4bff9f2582754f2412e6cde186ed0890c990a79f4d68d85488942d59bc5d9",
+  "response_id": "COLLABRESP-816cf6888217545c052ec1afd678cd629318b2739abcb896dc83b85372aff278",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

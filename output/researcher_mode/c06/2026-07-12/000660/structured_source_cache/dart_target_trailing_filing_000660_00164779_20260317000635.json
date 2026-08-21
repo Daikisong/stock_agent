@@ -1,0 +1,42 @@
+{
+  "cache_value_hash": "56a8a93953085cb4e96eb381db0bc9141a007d8ed6d031ca609ad8da7c4e2bc8",
+  "canonical_url": "https://opendart.fss.or.kr/api/list.json",
+  "content_hash": "8010efff3d254024c880e9d5bf3f0413327b704ead7274740b16d14f1e9f2ba4",
+  "payload": {
+    "list": [
+      {
+        "corp_cls": "Y",
+        "corp_code": "00164779",
+        "corp_name": "SK하이닉스",
+        "flr_nm": "SK하이닉스",
+        "rcept_dt": "20260317",
+        "rcept_no": "20260317000635",
+        "report_nm": "사업보고서 (2025.12)",
+        "rm": "연",
+        "stock_code": "000660"
+      },
+      {
+        "corp_cls": "Y",
+        "corp_code": "00164779",
+        "corp_name": "SK하이닉스",
+        "flr_nm": "SK하이닉스",
+        "rcept_dt": "20260317",
+        "rcept_no": "20260317000537",
+        "report_nm": "특수관계인으로부터부동산매수",
+        "rm": "공",
+        "stock_code": "000660"
+      }
+    ],
+    "message": "정상",
+    "page_count": 100,
+    "page_no": 1,
+    "status": "000",
+    "total_count": 2,
+    "total_page": 1
+  },
+  "provider_request_id": "HTTP-8010efff3d254024c880",
+  "request_fingerprint": "e33be9267f5220e6130b504297b09a643e090fc45f712d419dac8f7af18a1a5d",
+  "schema_version": "e2r_v5_current_structured_cache_v2",
+  "status_code": 200,
+  "text": null
+}

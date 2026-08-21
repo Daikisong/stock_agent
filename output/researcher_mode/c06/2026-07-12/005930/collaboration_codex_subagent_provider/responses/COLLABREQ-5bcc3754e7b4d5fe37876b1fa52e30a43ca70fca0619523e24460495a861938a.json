@@ -1,0 +1,155 @@
+{
+  "output_schema_hash": "f0f7ea97d154d5dbe05bd4f97e994888e7d9c0c51cd57d8b759bb0aefe49f6d1",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-51d5e952c5a77567fc8a4164",
+        "rationale": "임원 성명·직위·담당 조직·학력의 연속 명단이며 메모리/HBM의 수치·계약·가격·캐파·고객 인증을 입증하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "rationale": "기존 fact와 겹치지 않는 보고기간 후 10조원 차입금 상환, 2024~2026 FCF 연계 배당정책, SAS 반도체 보조금 반환 지급보증 3건을 추출했다. 반복된 자기주식·차입 잔액은 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "CORPORATE_DELEVERAGING",
+        "exact_quote": "회사는 2026년 4월 23일 삼성디스플레이㈜로부터 차입한 무담보차입금 중 10조원을 상환하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "보고기간 후 실제 부채 상환과 현금 사용 규모를 직접 보여주는 자본배분 사실이다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "삼성디스플레이 무담보차입금 상환",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-04-23",
+        "predicate": "삼성전자가 2026년 4월 23일 삼성디스플레이로부터 차입한 무담보차입금 중 10조원을 상환했다",
+        "predicate_family": "POST_PERIOD_RELATED_PARTY_DEBT_REPAYMENT",
+        "primitive_tags": [],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "POST_PERIOD_RELATED_PARTY_DEBT_REPAYMENT",
+        "question_family_tags": [],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.5,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 삼성디스플레이 차입금 상환",
+        "subject_id": "005930:POST_PERIOD_RELATED_PARTY_DEBT_REPAYMENT",
+        "unit": "KRW million",
+        "value": 10000000
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "CORPORATE_SHAREHOLDER_RETURN",
+        "exact_quote": "당사는 2024년 1월에 2024~2026년의 주주환원 정책을 발표하였습니다. 이에 따라 당사는 2024년부터 2026년까지 3년간 발생하는 잉여현금흐름의 50%를 재원으로 활용하여 연간 9.8조원 수준의 정규배당을 유지하되, 정규배당 이후에도 잔여 재원이 발생하는 경우에 추가로 환원할 계획입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FCF와 현금 환원의 배분 규칙을 수치로 명시한 현재 자본배분 정책이다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "2024~2026 FCF 연계 정규배당 정책",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-2026",
+        "predicate": "삼성전자는 2024~2026년 발생 FCF의 50%를 재원으로 연 9.8조원 정규배당을 유지하고 잔여 재원은 추가 환원할 계획이다",
+        "predicate_family": "SHAREHOLDER_RETURN_POLICY",
+        "primitive_tags": [],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "SHAREHOLDER_RETURN_POLICY",
+        "question_family_tags": [],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.5,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024~2026 주주환원 정책",
+        "subject_id": "005930:SHAREHOLDER_RETURN_POLICY:2024-2026",
+        "unit": "policy",
+        "value": "FCF 50%; annual regular dividend KRW 9.8 trillion"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "CORPORATE_GUARANTEE_CLAWBACK_RISK",
+        "exact_quote": "※ SEA의 US Government 채무는 SAS가 반도체 보조금 계약 불이행시 미 상무부에 반환해야하는 금액에 대한 모법인의 지급보증 계약입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "반도체 보조금 계약 불이행 시 발생할 수 있는 반환 의무의 모회사 보증 구조를 직접 밝힌다. HBM 보조금이나 HBM 계약으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "SAS 반도체 보조금 반환 모회사 지급보증",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31",
+        "predicate": "SAS가 반도체 보조금 계약을 불이행해 미국 상무부에 반환할 금액에 대해 SEA가 모회사 지급보증을 제공한다",
+        "predicate_family": "SEMICONDUCTOR_SUBSIDY_CLAWBACK_GUARANTEE",
+        "primitive_tags": [],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "SEMICONDUCTOR_SUBSIDY_CLAWBACK_GUARANTEE",
+        "question_family_tags": [],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.5,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 SAS 반도체 보조금 반환 지급보증",
+        "subject_id": "005930:SAS:SEMICONDUCTOR_SUBSIDY_CLAWBACK_GUARANTEE",
+        "unit": "contract condition",
+        "value": "parent guarantee for US semiconductor subsidy repayment upon SAS contract breach"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "SAS 지급보증은 반도체 일반 보조금 계약 위험이며 HBM 계약·수주 또는 HBM 보조금으로 재분류하지 않았다.",
+      "2026년 1분기 배당 총액에 관한 설명 문구가 연결 주석의 당분기 수치와 충돌하여 새 fact를 만들지 않았다.",
+      "임원 조직 명단은 조직 존재만 보여주므로 C06 경제 메커니즘의 직접 근거로 사용하지 않았다."
+    ]
+  },
+  "payload_hash": "11dcb6bd4df8a981f67502e998a0105abb5d7f02e3d4909d6a687561adda8fc4",
+  "production_score_authority": false,
+  "prompt_hash": "71e3c7aa35c69f9758f895faecc4bcbca18c5a2ffbb65312c164b1c4f246eff0",
+  "provenance": {
+    "agent_id": "codex_primary",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/codex_primary",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5bcc3754e7b4d5fe37876b1fa52e30a43ca70fca0619523e24460495a861938a",
+  "response_id": "COLLABRESP-181fd7996a10700623da33a50d2d0dec24f984c2726955e10f6d3e69f309a2a8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

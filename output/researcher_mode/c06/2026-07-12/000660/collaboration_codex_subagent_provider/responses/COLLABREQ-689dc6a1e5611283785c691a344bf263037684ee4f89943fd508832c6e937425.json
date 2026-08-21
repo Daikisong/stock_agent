@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-8f2073180c19b2cacb8b1a40",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Broadcom 계열 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. Broadcom 제품·지원·IR 일반 자료만으로 target의 HBM4 구매의무나 공급계약 조건을 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-89944ad9d00cf6f0397aaf1e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Broadcom 계열 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. Broadcom 제품·지원·IR 일반 자료만으로 target의 HBM4 구매의무나 공급계약 조건을 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4793e17c20dcedbff4e6fcb3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스를 언급하지만 Broadcom customer-official 원문이 아니라 techtimes.com 제3자 기사이고 URL 날짜 2026-08-08은 as_of_date 2026-07-12 이후다. HBM4 구매의무·공급조건 증거로 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-732a3fdb3d06cf13e3c59d22",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Broadcom 계열 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. Broadcom 제품·지원·IR 일반 자료만으로 target의 HBM4 구매의무나 공급계약 조건을 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ade2f4286bff193b47a90150",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Broadcom 계열 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. Broadcom 제품·지원·IR 일반 자료만으로 target의 HBM4 구매의무나 공급계약 조건을 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-44d14a42dda2b4929c334293",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Broadcom 계열 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. Broadcom 제품·지원·IR 일반 자료만으로 target의 HBM4 구매의무나 공급계약 조건을 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-406ceb392fff682a0c24f3a2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Broadcom 계열 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. Broadcom 제품·지원·IR 일반 자료만으로 target의 HBM4 구매의무나 공급계약 조건을 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f4dd04689205334d09dc5fde",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Broadcom 계열 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. Broadcom 제품·지원·IR 일반 자료만으로 target의 HBM4 구매의무나 공급계약 조건을 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6cb777e74b436f550f5d392d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Broadcom 계열 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. Broadcom 제품·지원·IR 일반 자료만으로 target의 HBM4 구매의무나 공급계약 조건을 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f91e160ed9bb9e2827448fea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Broadcom 계열 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. Broadcom 제품·지원·IR 일반 자료만으로 target의 HBM4 구매의무나 공급계약 조건을 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f29459d150d4f7ac7b4704f1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Broadcom 계열 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. Broadcom 제품·지원·IR 일반 자료만으로 target의 HBM4 구매의무나 공급계약 조건을 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c049dd547efe7e9e26a5819b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Broadcom 계열 검색 결과지만 title, snippet, URL에 SK하이닉스 직접 귀속이 없다. Broadcom 제품·지원·IR 일반 자료만으로 target의 HBM4 구매의무나 공급계약 조건을 만들 수 없으므로 CUSTOMER_OFFICIAL material evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "8a86ed823c6735734acc51cf778a95203083f6617a94dbad8bbce6b590ab71f9",
+  "production_score_authority": false,
+  "prompt_hash": "2a89293d6f30b56799d671a86ed385cd2fa45ee8ad409a3081305c6f0ca2b40e",
+  "provenance": {
+    "agent_id": "root-phase101-c06-ranking",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_ranking",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-689dc6a1e5611283785c691a344bf263037684ee4f89943fd508832c6e937425",
+  "response_id": "COLLABRESP-089e8b8f220f5b928b7703abcf262e9bfc6754b6f2802ff6ce32d7a1ee073482",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

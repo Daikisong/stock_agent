@@ -1,0 +1,96 @@
+{
+  "output_schema_hash": "2aa2068441c0afd368451f442d212ab1426e39e77461819a63f5b6c851c22ca7",
+  "payload": {
+    "challenged_fact_row_indices": [
+      1,
+      36,
+      44,
+      85,
+      147,
+      188,
+      206,
+      209,
+      216,
+      226,
+      227,
+      238,
+      255,
+      262
+    ],
+    "confidence": 0.9,
+    "recommended_research_directions": [
+      "향후 issuer 또는 고객의 공식 자료가 새로 공개될 때 HBM 공급계약의 기간·물량·가격·취소·위약·선수금 조건을 확인하되 현재 비공개 공백을 source absence로 해석하지 않는다.",
+      "향후 실적 공시에서 HBM 또는 memory의 매출·마진·영업현금흐름 bridge와 전사 Capex·운전자본·FCF를 같은 기간으로 대조해 전사 actual의 제품 귀속과 현금 전환을 재검증한다.",
+      "향후 고객 플랫폼 양산 일정과 삼성전자·Micron·CXMT의 실제 인증·출하·점유율 자료가 공식적으로 확인될 때 scarcity premium과 고객 배분 우위의 지속성을 재평가한다.",
+      "향후 동일 기준 컨센서스와 actual surprise, forward P/E·P/B·EV/EBITDA·FCF yield를 같은 관측일로 갱신해 이익 상향과 배수 확장·수축을 분리 추적한다."
+    ],
+    "resolved_challenges": [
+      "FY2025 및 1Q26 연결 actual과 현금흐름 자료가 추가돼 전사 이익·현금 확대가 전적으로 전망에만 의존한다는 반론은 해소됐다. 다만 HBM 단독 손익·FCF 귀속까지 해소된 것은 아니다.",
+      "HBM4의 양산 진입·대규모 생산과 FY2025 HBM 매출 2배 이상 성장이 확인돼 제품 실행이 샘플·계획 단계에만 머문다는 반론은 해소됐다. 공급량·고객 구매의무·제품별 마진은 여전히 확인되지 않았다.",
+      "현재 trailing P/E·P/B, forward P/E·P/B·EV/EBITDA·FCF yield와 peer 비교가 구조화돼 valuation 기준점 자체가 없다는 반론은 해소됐다. 높은 trailing 배수와 추정치 기간·기관 차이는 별도 counter로 남는다.",
+      "1Q26 평균가동률 100%, 제한된 공급 속 HBM·서버 DRAM 가격 상승과 DRAM ASP 상승이 확인돼 병목과 가격 전이가 순수한 기술 사양 추론뿐이라는 반론은 해소됐다. HBM 단독 판가와 장기 잠금은 확인되지 않았다."
+    ],
+    "review_complete": true,
+    "reviewed_component_ids": [
+      "eps_fcf_explosion",
+      "earnings_visibility",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation",
+      "information_confidence"
+    ],
+    "source_coverage": [
+      "COMPANYGUIDE",
+      "COMPANYGUIDE+KRX_PRICE_MARKET_CAP",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "DETERMINISTIC_FORWARD_SCENARIO",
+      "DETERMINISTIC_FORWARD_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "ISSUER_GUIDANCE",
+      "ISSUER_NEWSROOM",
+      "KIND_KRX",
+      "KRX_PRICE_MARKET_CAP",
+      "KRX_PRICE_MARKET_CAP+COMPANYGUIDE",
+      "KRX_PRICE_MARKET_CAP+PUBLIC_BROKER_REPORT",
+      "OPENDART",
+      "PEER_STRUCTURED",
+      "PUBLIC_BROKER_PDF",
+      "PUBLIC_BROKER_REPORT",
+      "STRUCTURED_HISTORICAL_BAND",
+      "STRUCTURED_PEER_BAND",
+      "TARGET_OFFICIAL_TRAILING_VALUATION",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "unresolved_challenges": [
+      "earnings_visibility와 information_confidence에는 핵심고객 공급 논의·수요 확보가 signed 계약, 취소불능 물량, 가격·위약 조항으로 이어졌다는 issuer 또는 고객 원문이 없다. 월·분기 물량·가격 합의 사실은 durable commitment의 상단을 제한한다.",
+      "eps_fcf_explosion과 capital_allocation의 강한 전사 actual은 HBM 또는 memory 단독 이익·마진·영업현금흐름·FCF로 분리되지 않는다. 매출채권·재고 증가와 대규모 설비투자는 이익에서 현금으로의 전환을 계속 제약한다.",
+      "FY2026 급증 뒤 FY2027~FY2028 영업이익·EPS 감소 전망과 CSP CapEx 실행 미달·FCF·차입 부담은 earnings duration과 valuation_rerating 지속성의 직접 counter다. 장기 투자계획을 확정 수요나 확정 회수율로 바꿀 수 없다.",
+      "HBM4 고객 플랫폼 지연, 삼성전자·Micron의 HBM3E·HBM4 공급 확대 및 CXMT 증설 전망은 bottleneck_pricing의 scarcity premium과 고객 배분 우위가 장기간 유지된다는 가정을 약화한다. 실제 점유율·판가 하락으로 단정할 수는 없다.",
+      "market_mispricing과 valuation_rerating에는 이익 상향에도 목표 P/B가 낮아진 사례, DRAM 가격 상승률 둔화의 역사적 peak 관계, 문서 내 컨센서스·매출 전망 불일치가 남는다. 낮은 forward 배수만으로 현재 기대가 낮다고 확정할 수 없다.",
+      "단일 반도체 사업부문 공시 때문에 HBM·일반 DRAM·NAND의 수익성과 현금 기여를 독립 분해할 수 없고, broker estimate·issuer plan·actual·durable 계약의 증거 등급 차이를 계속 보존해야 한다."
+    ]
+  },
+  "payload_hash": "430f1f9c4cee8cac1f33c4b05cefa96c3d24f727d50101644f05a9ad3f7b154f",
+  "production_score_authority": false,
+  "prompt_hash": "3c5e2ce87f262b7a0b0d2469bd5531704a49829cb6eeb2ccdcbe791a46b0d137",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-25b920dfc4e3bb3a5b20fe107875dc3af3f4755b110bcbca597c3d979d6eac18",
+  "response_id": "COLLABRESP-3cd33aef1a2e32cf250839820230da2785d1150ec5488fd79d254c636a327de5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

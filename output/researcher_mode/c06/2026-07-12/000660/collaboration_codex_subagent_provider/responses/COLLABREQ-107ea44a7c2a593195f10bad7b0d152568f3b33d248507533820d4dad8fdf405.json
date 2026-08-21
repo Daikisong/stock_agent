@@ -1,0 +1,603 @@
+{
+  "output_schema_hash": "5a5b9b0266462c7cd0c0a378900448786d8f59371b2e4159b16dcc38f62d33bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "rationale": "FY2027 BPS와 FY2026·FY2027 P/B 3건을 추가해 이 문서의 10개 distinct 사실을 모두 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-91f9b0b2fc3c7fb0b960fc27",
+        "rationale": "앞 페이지에서 objective-local 3건을 모두 수용해 추가 잔여가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-a2896129b64338f2472d6d28",
+        "rationale": "FY2027·FY2028 EV/EBITDA와 FY2026~FY2028 P/B 5건을 추가해 이 문서의 12개 distinct 사실을 모두 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "rationale": "메모리 가격탄력성, peer relative valuation, customized-memory Target PBR, FY2026 BPS 4건을 추가했다. FY2027 BPS와 EV/EBITDA·P/B 4건 등 잔여 5건은 마지막 continuation 대상이다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "2027년 비지배주주지분 제외 조정 BPS는 2027년 Target PBR 산식의 forward book-value 분모이며, 2026년 1월 표의 같은 기간 BPS보다 최신인 2026년 5월 추정치를 제공한다.",
+        "exact_quote": "표5. SK하이닉스 목표주가 산정 테이블 (단위: 원, 배)\n2017A 2018A 2019A 2020A 2021A 2022A 2023A 2024A 2025A 2026F 2027F\nAdj BPS_P (비지배주주지분 제외) 47,510 67,794 69,271 74,721 88,543 90,064 76,616 104,567 167,604 471,724 956,094\nPBR_P (End) 1.61 0.89 1.36 1.59 1.48 0.83 1.85 1.66 3.88 1.98 0.98\nPBR_P (High) 1.90 1.44 1.40 1.62 1.70 1.49 1.88 2.38 3.93 2.33 1.15\nPBR_P (Low) 0.94 0.86 0.82 0.88 1.02 0.83 0.95 1.23 0.97 1.37 0.68\nPBR_P (Avg) 1.35 1.16 1.09 1.19 1.37 1.13 1.41 1.71 1.84 1.83 0.90",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "더 최신의 2027년 조정 BPS가 Target PBR 산식과 forward book-value 분모를 갱신한다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_BOOK_VALUE_2027F_20260527",
+        "normalized_object": "SK하이닉스 2027년 예상 조정 BPS",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2027F",
+        "predicate": "유안타 목표주가 산정표의 SK하이닉스 2027년 예상 조정 BPS는 956,094원이다",
+        "predicate_family": "FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "ADJUSTED_BPS",
+          "FY2027F",
+          "VALUATION_TABLE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SKHYNIX_FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "FORWARD_BOOK_VALUE",
+          "BPS",
+          "FY2027F"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK하이닉스 2027년 예상 조정 주당순자산",
+        "subject_id": "000660:FORWARD_BOOK_VALUE:2027F:2026-05-27",
+        "unit": "KRW/share",
+        "value": 956094
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "2026년 예상 기말 P/B는 같은 표의 2026년 조정 BPS와 연결된 forward book-value multiple이며, 2026년 1월 표의 같은 기간 P/B보다 최신인 2026년 5월 추정치다.",
+        "exact_quote": "표5. SK하이닉스 목표주가 산정 테이블 (단위: 원, 배)\n2017A 2018A 2019A 2020A 2021A 2022A 2023A 2024A 2025A 2026F 2027F\nAdj BPS_P (비지배주주지분 제외) 47,510 67,794 69,271 74,721 88,543 90,064 76,616 104,567 167,604 471,724 956,094\nPBR_P (End) 1.61 0.89 1.36 1.59 1.48 0.83 1.85 1.66 3.88 1.98 0.98\nPBR_P (High) 1.90 1.44 1.40 1.62 1.70 1.49 1.88 2.38 3.93 2.33 1.15\nPBR_P (Low) 0.94 0.86 0.82 0.88 1.02 0.83 0.95 1.23 0.97 1.37 0.68\nPBR_P (Avg) 1.35 1.16 1.09 1.19 1.37 1.13 1.41 1.71 1.84 1.83 0.90",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "더 최신의 target·기간·단위가 명시된 P/B가 current forward multiple을 갱신한다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_PB_2026F_20260527",
+        "normalized_object": "SK하이닉스 2026년 예상 기말 P/B",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F",
+        "predicate": "유안타 목표주가 산정표의 SK하이닉스 2026년 예상 기말 P/B는 1.98배다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "PBR_END",
+          "FY2026F",
+          "VALUATION_TABLE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SKHYNIX_FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "PBR",
+          "FY2026F"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 2026년 예상 기말 P/B",
+        "subject_id": "000660:FORWARD_PB:2026F:2026-05-27",
+        "unit": "x",
+        "value": 1.98
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7804cb1a3c1890792320e177",
+        "economic_mechanism": "2027년 예상 기말 P/B는 같은 표의 2027년 조정 BPS와 연결된 forward book-value multiple이며, 2026년 1월 표의 같은 기간 P/B보다 최신인 2026년 5월 추정치다.",
+        "exact_quote": "표5. SK하이닉스 목표주가 산정 테이블 (단위: 원, 배)\n2017A 2018A 2019A 2020A 2021A 2022A 2023A 2024A 2025A 2026F 2027F\nAdj BPS_P (비지배주주지분 제외) 47,510 67,794 69,271 74,721 88,543 90,064 76,616 104,567 167,604 471,724 956,094\nPBR_P (End) 1.61 0.89 1.36 1.59 1.48 0.83 1.85 1.66 3.88 1.98 0.98\nPBR_P (High) 1.90 1.44 1.40 1.62 1.70 1.49 1.88 2.38 3.93 2.33 1.15\nPBR_P (Low) 0.94 0.86 0.82 0.88 1.02 0.83 0.95 1.23 0.97 1.37 0.68\nPBR_P (Avg) 1.35 1.16 1.09 1.19 1.37 1.13 1.41 1.71 1.84 1.83 0.90",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "더 최신의 2027년 예상 P/B가 forward multiple과 rerating 비교 기준을 갱신한다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_PB_2027F_20260527",
+        "normalized_object": "SK하이닉스 2027년 예상 기말 P/B",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2027F",
+        "predicate": "유안타 목표주가 산정표의 SK하이닉스 2027년 예상 기말 P/B는 0.98배다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "PBR_END",
+          "FY2027F",
+          "VALUATION_TABLE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SKHYNIX_FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "PBR",
+          "FY2027F"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 2027년 예상 기말 P/B",
+        "subject_id": "000660:FORWARD_PB:2027F:2026-05-27",
+        "unit": "x",
+        "value": 0.98
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a2896129b64338f2472d6d28",
+        "economic_mechanism": "BNK의 주요투자지표 표는 SK하이닉스 FY2027F EV/EBITDA를 3.9배로 추정했다. 이는 해당 브로커의 forward point estimate이며 다른 기관·시점 추정치를 대체하지 않는다.",
+        "exact_quote": "주요투자지표\n2024 2025 2026F 2027F 2028F\nEPS (원) 27,182 58,955 291,130 271,138 256,806\nBPS 104,567 167,604 463,000 734,138 990,637\nCFPS 50,619 84,870 373,156 349,237 330,477\nDPS 2,204 3,000 8,000 8,000 6,500\nPER (배) 6.4 11.0 6.3 6.8 7.1\nPSR 1.9 4.9 4.3 4.3 4.0\nPBR 1.7 3.9 4.0 2.5 1.9\nPCR 3.4 7.7 4.9 5.3 5.6\nEV/EBITDA 3.9 7.7 4.4 3.9 3.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2027 forward EV/EBITDA는 이익 감소 전망 이후의 enterprise-value 배수 경로를 직접 검증한다.",
+        "mechanism_scope_id": "000660:MEMORY:BNK_FORWARD_EV_EBITDA_FY2027F",
+        "normalized_object": "BNK SK하이닉스 FY2027F EV/EBITDA 추정치",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "BNK는 SK하이닉스 FY2027F EV/EBITDA를 3.9배로 추정했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "MEMORY",
+          "EV_EBITDA",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스 FY2027F EV/EBITDA",
+        "subject_id": "000660:MEMORY:BNK_FORWARD_EV_EBITDA_FY2027F",
+        "unit": "x",
+        "value": 3.9
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a2896129b64338f2472d6d28",
+        "economic_mechanism": "BNK의 주요투자지표 표는 SK하이닉스 FY2028F EV/EBITDA를 3.5배로 추정했다. 이는 해당 브로커의 forward point estimate이며 다른 기관·시점 추정치를 대체하지 않는다.",
+        "exact_quote": "주요투자지표\n2024 2025 2026F 2027F 2028F\nEPS (원) 27,182 58,955 291,130 271,138 256,806\nBPS 104,567 167,604 463,000 734,138 990,637\nCFPS 50,619 84,870 373,156 349,237 330,477\nDPS 2,204 3,000 8,000 8,000 6,500\nPER (배) 6.4 11.0 6.3 6.8 7.1\nPSR 1.9 4.9 4.3 4.3 4.0\nPBR 1.7 3.9 4.0 2.5 1.9\nPCR 3.4 7.7 4.9 5.3 5.6\nEV/EBITDA 3.9 7.7 4.4 3.9 3.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2028 forward EV/EBITDA는 장기 enterprise-value multiple의 압축 여부를 직접 검증한다.",
+        "mechanism_scope_id": "000660:MEMORY:BNK_FORWARD_EV_EBITDA_FY2028F",
+        "normalized_object": "BNK SK하이닉스 FY2028F EV/EBITDA 추정치",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2028F",
+        "predicate": "BNK는 SK하이닉스 FY2028F EV/EBITDA를 3.5배로 추정했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "MEMORY",
+          "EV_EBITDA",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스 FY2028F EV/EBITDA",
+        "subject_id": "000660:MEMORY:BNK_FORWARD_EV_EBITDA_FY2028F",
+        "unit": "x",
+        "value": 3.5
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a2896129b64338f2472d6d28",
+        "economic_mechanism": "BNK의 주요투자지표 표는 SK하이닉스 FY2026F PBR을 4.0배로 추정했다. 이는 해당 브로커의 forward point estimate이며 다른 기관·시점 추정치를 대체하지 않는다.",
+        "exact_quote": "주요투자지표\n2024 2025 2026F 2027F 2028F\nEPS (원) 27,182 58,955 291,130 271,138 256,806\nBPS 104,567 167,604 463,000 734,138 990,637\nCFPS 50,619 84,870 373,156 349,237 330,477\nDPS 2,204 3,000 8,000 8,000 6,500\nPER (배) 6.4 11.0 6.3 6.8 7.1\nPSR 1.9 4.9 4.3 4.3 4.0\nPBR 1.7 3.9 4.0 2.5 1.9\nPCR 3.4 7.7 4.9 5.3 5.6\nEV/EBITDA 3.9 7.7 4.4 3.9 3.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 분모가 명시된 forward PBR은 valuation_rerating의 배수 수준을 직접 검증한다.",
+        "mechanism_scope_id": "000660:MEMORY:BNK_FORWARD_PB_FY2026F",
+        "normalized_object": "BNK SK하이닉스 FY2026F PBR 추정치",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "BNK는 SK하이닉스 FY2026F PBR을 4.0배로 추정했다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "MEMORY",
+          "PBR",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 FY2026F PBR",
+        "subject_id": "000660:MEMORY:BNK_FORWARD_PB_FY2026F",
+        "unit": "x",
+        "value": 4.0
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a2896129b64338f2472d6d28",
+        "economic_mechanism": "BNK의 주요투자지표 표는 SK하이닉스 FY2027F PBR을 2.5배로 추정했다. 이는 해당 브로커의 forward point estimate이며 다른 기관·시점 추정치를 대체하지 않는다.",
+        "exact_quote": "주요투자지표\n2024 2025 2026F 2027F 2028F\nEPS (원) 27,182 58,955 291,130 271,138 256,806\nBPS 104,567 167,604 463,000 734,138 990,637\nCFPS 50,619 84,870 373,156 349,237 330,477\nDPS 2,204 3,000 8,000 8,000 6,500\nPER (배) 6.4 11.0 6.3 6.8 7.1\nPSR 1.9 4.9 4.3 4.3 4.0\nPBR 1.7 3.9 4.0 2.5 1.9\nPCR 3.4 7.7 4.9 5.3 5.6\nEV/EBITDA 3.9 7.7 4.4 3.9 3.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2027 forward PBR은 earnings peak 이후 multiple 경로를 직접 검증한다.",
+        "mechanism_scope_id": "000660:MEMORY:BNK_FORWARD_PB_FY2027F",
+        "normalized_object": "BNK SK하이닉스 FY2027F PBR 추정치",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "BNK는 SK하이닉스 FY2027F PBR을 2.5배로 추정했다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "MEMORY",
+          "PBR",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 FY2027F PBR",
+        "subject_id": "000660:MEMORY:BNK_FORWARD_PB_FY2027F",
+        "unit": "x",
+        "value": 2.5
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a2896129b64338f2472d6d28",
+        "economic_mechanism": "BNK의 주요투자지표 표는 SK하이닉스 FY2028F PBR을 1.9배로 추정했다. 이는 해당 브로커의 forward point estimate이며 다른 기관·시점 추정치를 대체하지 않는다.",
+        "exact_quote": "주요투자지표\n2024 2025 2026F 2027F 2028F\nEPS (원) 27,182 58,955 291,130 271,138 256,806\nBPS 104,567 167,604 463,000 734,138 990,637\nCFPS 50,619 84,870 373,156 349,237 330,477\nDPS 2,204 3,000 8,000 8,000 6,500\nPER (배) 6.4 11.0 6.3 6.8 7.1\nPSR 1.9 4.9 4.3 4.3 4.0\nPBR 1.7 3.9 4.0 2.5 1.9\nPCR 3.4 7.7 4.9 5.3 5.6\nEV/EBITDA 3.9 7.7 4.4 3.9 3.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2028 forward PBR은 장기 book-value 성장과 배수 압축을 함께 관찰하게 한다.",
+        "mechanism_scope_id": "000660:MEMORY:BNK_FORWARD_PB_FY2028F",
+        "normalized_object": "BNK SK하이닉스 FY2028F PBR 추정치",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2028F",
+        "predicate": "BNK는 SK하이닉스 FY2028F PBR을 1.9배로 추정했다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "MEMORY",
+          "PBR",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 FY2028F PBR",
+        "subject_id": "000660:MEMORY:BNK_FORWARD_PB_FY2028F",
+        "unit": "x",
+        "value": 1.9
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "메모리 가격 급등으로 PC·모바일 고객이 구매량, 출하계획, 사양을 조정하고 최종 구매력이 위축되는 징후가 나타났다. 온디바이스 AI 교체수요가 전체 수요 위축을 막을 것이라는 전망은 상쇄요인이지만 확정 결과가 아니다.",
+        "exact_quote": "7. 최근 급한 가격 상승이 고객한테 부담이 되는 상황, 이로 인해 세트 수요 하향 조정이나\n탑재 컨텐츠 감소세가 감지되는지?\n- 메모리 가격 급등에 따라 PC/모바일 고객이 구매 물량 조정 움직임이 나타나고 있음. 수익성\n지키기 위해 완제품 가격을 인상시키고 최종 구매자 구매력이 일부 위축. 보수적으로 출하 계획\n바꾸거나, 스펙 조정을 검토하고 있음.\n- 반면 온디바이스 AI 기대감이 하이엔드 중심으로 신규 교체 수요 만들어내고 있음. 이에\n전체적인 시장 수요 위축으로 이어지지는 않을 것. 중장기적으로 AI 기능 개선되면서 선택 사항\n아닌 기본 사양이 되면서 구조적 메모리 사용량이 늘어날 것. 고객 제품 전략과 시장 상황 보고\n안정적으로 지원하기 위해 노력할 것.\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격 상승이 고객 구매량·제품 사양을 훼손하는 탄력성은 높은 ASP와 multiple 지속성의 핵심 counterfact다.",
+        "mechanism_scope_id": "000660:MEMORY:PRICE_ELASTICITY_SET_DEMAND_COUNTER",
+        "normalized_object": "메모리 가격 급등에 따른 PC·모바일 구매량·사양 조정과 온디바이스 AI 상쇄 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "current customer behavior and medium-term outlook stated in 4Q2025 results Q&A",
+        "predicate": "메모리 가격 급등으로 PC·모바일 고객의 구매량·출하계획·사양 조정과 구매력 위축이 나타났지만 온디바이스 AI 교체수요가 전체 시장 위축을 막을 것으로 전망됐다",
+        "predicate_family": "MEMORY_PRICE_ELASTICITY_SET_DEMAND_COUNTER",
+        "primitive_tags": [
+          "MEMORY",
+          "PRICE_ELASTICITY",
+          "SET_DEMAND"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_PRICE_ELASTICITY_SET_DEMAND_COUNTER",
+        "question_family_tags": [
+          "DEMAND_COUNTERFACT",
+          "ASP_RISK",
+          "ON_DEVICE_AI_OFFSET"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "메모리 가격 상승의 PC·모바일 수요 탄력성",
+        "subject_id": "000660:MEMORY:PRICE_ELASTICITY_SET_DEMAND_COUNTER",
+        "unit": "qualitative demand-elasticity assessment",
+        "value": "purchase-volume, shipment-plan and specification adjustments observed; on-device AI replacement demand expected as offset"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타 peer 표에서 SK하이닉스는 FY2026~FY2027 P/E와 EV/EBITDA가 삼성전자·Micron보다 낮고 ROE는 높게 추정됐다. P/B는 삼성전자보다 높아 수익성 프리미엄도 함께 내포하며, 이는 2026-01-27 시점의 브로커·Bloomberg 추정 비교다.",
+        "exact_quote": "표2. SK하이닉스 Peer실적 및 Valuation\n업체명 SK하이닉스 삼성전자 Micron Western Digital Sandisk Nanya\nTicker 000660 KS 005930 KS MU US WDC US SNDK US 2408 TT\n시가총액 573,666 924,055 437,924 82,346 68,997 27,578\n2023A Sales 32,766 258,935 15,540 12,318 6,086 959\nOP -7,730 6,567 -5,745 -1,285 -2,035 -464\nOPM% -24% 3% -37% -10% -33% -48%\nNP -9,112 14,473 -5,833 -1,684 -2,143 -239\nPER - 36.8 - - - -\nPBR 1.8 1.3 1.7 1.1 - 1.4\nROE -15.6 3.6 -12.4 -14.8 - -4.3\nEV/EBITDA 20.4 8.8 32.6 - - 229.4\n2024A Sales 66,193 300,871 25,111 6,317 6,663 1,063\nOP 23,467 32,726 1,304 -403 -468 -329\nOPM% 35% 11% 5% -6% -7% -31%\nNP 19,789 33,621 778 -798 -672 -158\nPER 6.1 10.7 134.3 - - -\nPBR 1.6 0.8 2.3 2.4 - 0.5\nROE 31.1 7.9 1.7 -7.9 0.0 -3.1\nEV/EBITDA 3.6 3.1 12.3 43.9 - 10.5\n2025F Sales 95,433 331,280 74,926 11,916 11,099 5,721\nOP 44,668 42,288 43,528 3,787 2,831 3,467\nOPM% 47% 13% 58% 32% 26% 61%\nNP 40,938 41,003 37,825 2,979 2,192 2,744\nPER 13.8 24.7 11.9 30.7 33.8 9.6\nPBR 5.0 2.5 4.8 10.2 6.1 3.3\nROE 43.6 10.1 48.3 43.3 22.3 37.4\nEV/EBITDA 9.6 9.6 8.6 20.6 21.5 7.3\n2026F Sales 169,458 436,094 94,394 14,094 14,405 6,306\nOP 103,283 127,309 56,635 5,088 5,402 3,520\nOPM% 61% 29% 60% 36% 37% 56%\nNP 83,514 105,603 49,512 3,948 4,486 2,835\nPER 6.9 9.6 9.1 23.0 16.4 9.4\nPBR 2.9 2.0 3.2 8.1 4.7 2.5\nROE 53.7 22.4 41.6 40.7 29.8 30.0\nEV/EBITDA 4.7 4.8 6.9 15.9 12.7 6.7\n2027F Sales 202,820 476,828 94,588 15,502 15,015 12,786\nOP 121,855 143,172 53,179 5,694 5,397 5,503\nOPM% 60% 30% 56% 37% 36% 43%\nNP 97,777 120,090 47,472 4,716 4,511 6,477\nPER 5.9 8.4 8.9 19.4 16.7 4.2\nPBR 1.9 1.7 2.4 6.2 3.7 1.3\nROE 38.3 21.0 31.0 36.5 20.4 38.0\nEV/EBITDA 4.1 4.3 7.0 13.5 14.2 3.1\n자료: Bloomberg, 유안타증권 리서치센터, 주: FY기준, 단위는 bilKRW, mn USD, 배, %, 2026.01.27 기준\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 시점 peer 대비 이익배수·ROE 격차는 상대가치 할인과 수익성 프리미엄을 동시에 측정한다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_PEER_VALUATION_FY2026_FY2027",
+        "normalized_object": "SK하이닉스 FY2026~FY2027 P/E·P/B·EV/EBITDA·ROE의 삼성전자·Micron 비교",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F-FY2027F peer estimates as of 2026-01-27",
+        "predicate": "유안타 peer 표는 SK하이닉스의 FY2026F P/E 6.9배·EV/EBITDA 4.7배와 FY2027F 5.9배·4.1배가 삼성전자와 Micron보다 낮고 ROE는 각각 53.7%와 38.3%로 높게 추정됐음을 보여준다",
+        "predicate_family": "BROKER_PEER_RELATIVE_VALUATION_PATH",
+        "primitive_tags": [
+          "MEMORY",
+          "PEER_VALUATION",
+          "ROE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_PEER_RELATIVE_VALUATION_PATH",
+        "question_family_tags": [
+          "PEER_BAND",
+          "RELATIVE_VALUATION",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스의 삼성전자·Micron 대비 forward peer valuation",
+        "subject_id": "000660:MEMORY:YUANTA_PEER_VALUATION_FY2026_FY2027",
+        "unit": "x and % broker peer estimates",
+        "value": "SK hynix FY2026F PER/PBR/ROE/EV-EBITDA 6.9x/2.9x/53.7%/4.7x and FY2027F 5.9x/1.9x/38.3%/4.1x; Samsung and Micron peer rows quoted"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타는 Customized 메모리 공급 경쟁력을 근거로 2017년 PBR 밴드 상단에 40% 프리미엄을 적용한 Target PBR 2.66배를 사용했다. 이는 해당 브로커의 목표가 산정 가정일 뿐 실제 시장 multiple이나 투자성과가 아니다.",
+        "exact_quote": "표3. SK하이닉스 목표주가 산정 테이블 (단위: 원, 배)\n2017A 2018A 2019A 2020A 2021A 2022A 2023A 2024A 2025P 2026F 2027F\nAdj BPS_P (비지배주주지분 제외) 47,510 67,794 69,271 74,721 88,543 90,064 76,616 104,567 161,537 298,872 438,960\nPBR_P (End) 1.61 0.89 1.36 1.59 1.48 0.83 1.85 1.66 3.28 1.77 1.21\nPBR_P (High) 1.9 1.44 1.4 1.62 1.7 1.49 1.88 2.38 4.00 2.16 1.47\nPBR_P (Low) 0.94 0.86 0.82 0.88 1.02 0.83 0.95 1.23 1.01 0.54 0.37\nPBR_P (Avg) 1.35 1.16 1.09 1.19 1.37 1.13 1.41 1.71 1.85 1.00 0.68\nTarget PBR 2.66\nTarget Price 1,169,000 1,168,040\nClose Price (1월 29일) 861,000\nUpside potential 36%\n자료: 유안타증권 리서치센터, 주: Target PBR = 2017년 PBR 밴드 상단값 * Customized 메모리반도체 공급 경쟁력 기반 40% 프리미엄 반영\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "과거 밴드 상단을 넘는 프리미엄의 근거와 크기는 rerating thesis가 요구하는 경쟁력 지속 가정을 명시한다.",
+        "mechanism_scope_id": "000660:AI_MEMORY:YUANTA_TARGET_PBR_CUSTOMIZED_MEMORY_PREMIUM",
+        "normalized_object": "Customized 메모리 경쟁력에 근거한 Target PBR 2.66배와 40% 프리미엄",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F valuation basis published 2026-01-29",
+        "predicate": "유안타는 FY2027F 조정 BPS 438,960원에 Customized 메모리 공급 경쟁력을 근거로 2017년 PBR 밴드 상단 대비 40% 프리미엄을 반영한 Target PBR 2.66배를 사용했다",
+        "predicate_family": "TARGET_PBR_CUSTOMIZED_MEMORY_PREMIUM",
+        "primitive_tags": [
+          "AI_MEMORY",
+          "TARGET_PBR",
+          "COMPETITIVE_PREMIUM"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "TARGET_PBR_CUSTOMIZED_MEMORY_PREMIUM",
+        "question_family_tags": [
+          "OWN_HISTORICAL_BAND",
+          "RERATING_PREMIUM",
+          "VALUATION_ASSUMPTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "유안타의 SK하이닉스 Customized 메모리 PBR 프리미엄",
+        "subject_id": "000660:AI_MEMORY:YUANTA_TARGET_PBR_CUSTOMIZED_MEMORY_PREMIUM",
+        "unit": "x and % valuation premium",
+        "value": "FY2027F adjusted BPS KRW 438960; target PBR 2.66x; 40% premium to 2017 PBR-band high"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타 추정재무제표의 valuation 표는 FY2026F BPS를 312,012원으로 제시했다. 이는 해당 브로커의 forward point estimate이며 다른 표의 조정 BPS나 다른 기관 추정치를 대체하지 않는다.",
+        "exact_quote": "Valuation 지표 (단위: 원, 배, %)\n당기순이익 -9,138 19,797 42,951 99,729 101,733\n결산(12월) 2023A 2024A 2025P 2026F 2027F\n감가상각비 13,121 11,985 13,587 15,973 15,803\nEPS -12,517 27,182 58,991 136,965 139,716\n외환손익 332 352 -1,002 -3,170 -3,170\nBPS 77,752 107,256 167,214 312,012 459,711\n종속,관계기업관련손익 0 0 2,174 0 0 EBITDAPS 8,164 49,517 84,629 214,147 215,973\n자산부채의 증감 794 -5,600 2,413 -15,128 3,379 SPS 45,008 90,924 133,443 286,339 312,109\n기타현금흐름 -831 3,261 -5,153 -5,382 -5,502 DPS 1,200 2,204 2,429 2,429 2,429\nPER -8.6 6.6 9.0 6.3 6.2\n투자활동 현금흐름 -7,335 -18,005 -34,306 -40,883 -39,061\nPBR 1.4 1.7 3.2 2.8 1.9\n투자자산 -19 -113 -135 -2,363 -436\nEV/EBITDA 17.5 4.0 6.1 3.5 3.0\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2026 forward BPS는 P/B valuation denominator를 직접 구성한다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_BOOK_VALUE_FY2026F",
+        "normalized_object": "유안타 2026-01 보고서의 SK하이닉스 FY2026F BPS",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "유안타는 SK하이닉스 FY2026F BPS를 312,012원으로 추정했다",
+        "predicate_family": "FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "MEMORY",
+          "BPS",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "FORWARD_BOOK_VALUE",
+          "VALUATION_DENOMINATOR",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK하이닉스 FY2026F BPS",
+        "subject_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_BOOK_VALUE_FY2026F",
+        "unit": "KRW/share",
+        "value": 312012
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-b77065c834c9ddcc5517847f"
+    ],
+    "unresolved_research_notes": [
+      "마지막 문서의 forward BPS 1건, EV/EBITDA 2건, P/B 2건만 남았다."
+    ]
+  },
+  "payload_hash": "54b3b7840756650648923a9fecec7c1d65e9aabddc780230cb4ca616ad76e318",
+  "production_score_authority": false,
+  "prompt_hash": "a326a0a1e2e675843fdbeb8263d75950193f0d58ec0bce7e3645f0fff425f1b4",
+  "provenance": {
+    "agent_id": "root-phase101-c06-facts",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_facts",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-107ea44a7c2a593195f10bad7b0d152568f3b33d248507533820d4dad8fdf405",
+  "response_id": "COLLABRESP-67985553029bd0552d09dd56476acf73690c8ea338f7132c028fb7cc47a273a9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

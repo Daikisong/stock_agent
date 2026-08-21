@@ -1,0 +1,50 @@
+{
+  "output_schema_hash": "1858d7c32b99d40e7c914ec3cde1a9ce64aaa3d8c3844367c9447c403238e569",
+  "payload": {
+    "allowed_range": [
+      4.5,
+      6.5
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-e743368708b3aee88a83287c는 POSITIVE MEDIUM ordinal anchor(5.7-7.2/15.0, confidence LOW)다. 현재 근거의 실제성과 귀속 한계를 함께 반영해 exact 복제가 아닌 상대 위치만 사용했다.",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89는 COUNTER WEAK ordinal anchor(4.25-5.75/15.0, confidence LOW)다. 현재 근거의 실제성과 귀속 한계를 함께 반영해 exact 복제가 아닌 상대 위치만 사용했다."
+    ],
+    "counter_fact_ids": [],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "proposed_points": 5.5,
+    "rationale": "HBM4 양산과 서버 메모리 판매, 메모리 매출·ASP 상승은 운영 개선을 확인하지만 시장이 이를 과소평가했다는 직접 증거는 아니다. forward PE는 낮아 보이나 EV/EBITDA·PB와 FCF yield가 혼재하고 컨센서스 반영 정도가 불명확해 낮은 중간 범위로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-cbd2e7a3a3670eba7a113d19",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "시장 기대 반영 정도와 일관된 저평가 지표가 없고 HBM별 이익 bridge가 분리되지 않는다.",
+    "why_not_lower": "실현 운영 개선과 일부 낮은 forward PE 신호가 있어 mispricing 가능성을 완전히 0에 가깝게 볼 필요도 없다."
+  },
+  "payload_hash": "dac1916517c11edbe6db2c3d35f5e8ceb11d614a29a2b0c4545413d2dba5362e",
+  "production_score_authority": false,
+  "prompt_hash": "acf00f8aa0def2cf146217af604d771b3d5f3164109954371cd5772c0f4541fe",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1737d437ff2641bdf6a93797a5b70a8b041caef365607e36e37014f81de2f4ec",
+  "response_id": "COLLABRESP-9d3fea37bc7cbf0de473ee2d302c842d8c8d167347961bd17fd950a801326359",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

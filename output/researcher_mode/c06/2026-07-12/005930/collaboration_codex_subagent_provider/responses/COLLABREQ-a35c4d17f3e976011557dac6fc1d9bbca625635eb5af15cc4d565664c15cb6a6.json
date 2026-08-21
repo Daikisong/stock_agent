@@ -1,0 +1,215 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-04ce74182a41489845f7ad28",
+        "rationale": "SK하이닉스 장비사 특허분쟁과 가정적 삼성 장비선정 시나리오는 제외하고, 삼성전자가 HBM 수요 대응을 위해 세메스 중심 내재화와 ASMPT 신규 공급사 검토로 장비 공급망을 다변화한다는 current 보도 1건만 추출했다. 실제 발주·설치·CAPA 증가로 확대하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-5de2024bb8dcca71eb999a4d",
+        "rationale": "파업 시 가격·납기·고객이탈이라는 조건부 효과는 기존 facts와 중복돼 제외했다. 비중복인 2025년 4분기 HBM 점유율 22%와 2026년 메모리사업부 성과급 교섭의 실제 양측 조건 2건만 추출했고, 더 최신 D램 점유율과 충돌하는 과거 36%, 범위 밖 NAND, 일반 고정거래가격·국가 수출 수치는 사용하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-762c42cf1ae04be9759c6a9f",
+        "rationale": "생산 차질·고객 신뢰·공급선 다변화·비용 위험에 관한 분석은 기존 파업 일정, 필수인력, 재가동 지연, 고객 물량배분 및 이탈 조건 facts와 중복된다. 실제 생산 차질·납품 지연·발주 변경이 확인되지 않은 시나리오를 새 사건으로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-810996d6e6e79c213f300458",
+        "rationale": "유료 콘텐츠 본문이 제공되지 않고 제목·채널 소개·구독 안내만 있어 삼성전자에 귀속할 source-backed 경제 fact가 없다. 제목의 종목 나열만으로 내용을 추정하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-9b387bca11d0f24a2e4e3c84",
+        "rationale": "2025년 HBM3E 승인 지연, HBM4 하반기 양산 목표, 공급량 2배 및 2027년 패키징 라인 계획은 이후 2026년 실제 인증·양산·출하·CAPEX facts로 대체됐다. 당시 전망을 current 실행 상태로 반복하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-af705b42eb85605f9901f4e0",
+        "rationale": "2025년의 종합 산업 설명과 다수 2차 전망은 2026년 공식 실적·출하·수율·점유율·공급 facts보다 오래됐고, 기술·국가산업 배경 및 타사 수치가 대부분이다. 상충하거나 출처가 불명확한 시장점유율·캐파·수율 전망을 삼성전자 current fact로 채택하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-bdabd1486366900842b4ab37",
+        "rationale": "3만7000명 참석 예상 파업 결의대회와 HBM 개발·양산 차질 우려는 실제 참석·생산 차질이 아니며, 현재 canonical의 정확한 파업 일정, 7000명 이상 필수인력, 조건부 생산·고객 위험과 중복된다. SK하이닉스 실적 전망은 삼성전자 target fact가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-bfb5901be60d8395006095cc",
+        "rationale": "유료 콘텐츠 본문 없이 제목과 채널·구독 안내만 제공돼 삼성전자에 대한 검증 가능한 문장이나 수치가 없다. 제목의 종목명만으로 fact를 발명하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-cffb2a73bc52b7152adc7c52",
+        "rationale": "2025년 HBM3E 인증 지연과 HBM4 하반기 양산 계획은 2026년 실제 인증·양산·출하 및 고객공급 facts로 해소·대체됐다. 당시 계획과 경쟁사 샘플·사양을 current 삼성전자 fact로 반복하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-ed283bafd3086925384e2f22",
+        "rationale": "유료 콘텐츠 본문 없이 제목·채널 소개·구독 안내만 존재해 exact quote로 뒷받침되는 삼성전자 경제 fact가 없다. 후속 추천 제목도 요청 문서의 본문 증거로 취급하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.74,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-04ce74182a41489845f7ad28",
+        "economic_mechanism": "HBM 수요 증가에 대응해 기존 자회사 장비 내재화에 더해 신규 장비 공급사를 검토하는 것은 후공정 장비 조달 집중도를 낮추고 생산능력 확대의 실행 위험을 분산하는 공급 대응이다.",
+        "exact_quote": "삼성전자는 자회사 세메스를 중심으로 반도체 장비 내재화를 이뤄냈다. 다만 HBM 수요가 늘어나는 만큼 시설 투자와 함께 장비 공급망 다변화도 모색하는 것으로 알려졌다. 현재 삼성전자는 세메스와 함께 홍콩 기업인 ASMPT를 신규 공급사로 검토 중인 것으로 알려졌다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "기존 312 facts에는 HBM 생산·CAPEX와 공급부족은 있으나 장비 내재화와 신규 공급처 검토라는 실행 경로는 없다. 검토 단계 보도이므로 실제 선정·구매·설치 또는 CAPA 증가로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:EQUIPMENT_SUPPLIER_DIVERSIFICATION",
+        "normalized_object": "HBM 수요 대응 장비 공급처 다변화 검토",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current as of 2026-04-17",
+        "predicate": "삼성전자가 HBM 수요 증가에 대응해 자회사 세메스 중심 장비 내재화에 더해 ASMPT를 신규 공급사로 검토 중이라고 보도됐다",
+        "predicate_family": "HBM_EQUIPMENT_SUPPLIER_DIVERSIFICATION",
+        "primitive_tags": [
+          "HBM",
+          "EQUIPMENT_SUPPLIER",
+          "SUPPLY_RESPONSE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SAMSUNG_HBM_EQUIPMENT_SUPPLIER_DIVERSIFICATION",
+        "question_family_tags": [
+          "HBM_CAPACITY_EXECUTION",
+          "EQUIPMENT_SUPPLY_CHAIN",
+          "SUPPLIER_DIVERSIFICATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 장비 공급망 다변화 검토",
+        "subject_id": "005930:MEMORY:HBM:EQUIPMENT_SUPPLIER_DIVERSIFICATION:2026-04",
+        "unit": "reported supplier-review status",
+        "value": "Semes-centered internalization plus ASMPT under review as a new supplier"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-5de2024bb8dcca71eb999a4d",
+        "economic_mechanism": "2025년 4분기 매출 기준 HBM 점유율은 삼성전자의 당시 고객 공급 성과와 경쟁 지위를 정량적으로 보여 주는 관측치이며, 이후의 출하·매출 성장 facts와 구별되는 시장 점유율 기준선이다.",
+        "exact_quote": "12일 가트너·옴디아 등 조사 업체에 따르면 삼성전자는 현재 메모리 반도체 분야(작년 4분기, 매출 기준)에서 D램 36%, 낸드플래시 28%, 고대역폭메모리(HBM) 22%를 장악하고 있다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 canonical에는 2026년 1분기 D램 점유율과 HBM 출하·매출 facts는 있으나 2025년 4분기 HBM 시장점유율은 없다. 같은 문장의 D램 36%는 더 최신 공식 38.4% fact가 있어 제외하고 NAND 수치도 archetype 범위 밖이라 전용하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:MARKET_SHARE_2025Q4",
+        "normalized_object": "2025년 4분기 삼성전자 HBM 매출 기준 세계시장 점유율",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q4",
+        "predicate": "조사업체 집계에서 삼성전자의 2025년 4분기 매출 기준 HBM 세계시장 점유율이 22%로 제시됐다",
+        "predicate_family": "HBM_MARKET_SHARE_ACTUAL",
+        "primitive_tags": [
+          "HBM",
+          "MARKET_SHARE",
+          "2025_Q4"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SAMSUNG_HBM_MARKET_SHARE_2025Q4",
+        "question_family_tags": [
+          "HBM_MARKET_SHARE",
+          "COMPETITIVE_POSITION",
+          "CUSTOMER_SUPPLY_EXECUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 세계시장 점유율",
+        "subject_id": "005930:MEMORY:HBM:MARKET_SHARE:2025Q4",
+        "unit": "percent",
+        "value": 22
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-5de2024bb8dcca71eb999a4d",
+        "economic_mechanism": "사측의 경쟁사 수준 이상 성과급 보장과 노조의 메모리 영업이익 15% 성과급 제도화 요구 사이의 간극은 파업 예고의 구체적인 교섭 원인이며, 타결 방식에 따라 비용 구조와 생산 연속성 위험이 달라질 수 있다.",
+        "exact_quote": "삼성전자는 지난달 사내 공지를 통해 2026년 임금협상 교섭 과정을 공개했다. 노조 요구에 맞춰 메모리사업부의 경우 경쟁사 수준 이상의 성과급 지급을 보장했다. 하지만 노조는 영업이익의 15% 전액을 직원들에게 성과급으로 지급할 것을 제도화하라고 요구하고 있다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "기존 facts에는 파업 일정·필수인력·조건부 생산 위험과 상반기 TAI 지급률은 있으나 파업 교섭의 실제 양측 성과급 조건은 없다. 요구액이 확정 비용으로 발생했거나 합의됐다고 주장하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:LABOR_NEGOTIATION:BONUS_TERMS_2026",
+        "normalized_object": "2026년 메모리사업부 성과급 교섭의 사측 보장과 노조 요구 간극",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026 wage negotiation status as of 2026-04-12",
+        "predicate": "삼성전자는 메모리사업부에 경쟁사 수준 이상의 성과급을 보장했지만 노조는 영업이익 15% 전액을 성과급으로 제도화하라고 요구하고 있었다",
+        "predicate_family": "MEMORY_LABOR_BONUS_NEGOTIATION_TERMS",
+        "primitive_tags": [
+          "LABOR_NEGOTIATION",
+          "PERFORMANCE_BONUS",
+          "MEMORY_OPERATING_PROFIT"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_MEMORY_LABOR_BONUS_NEGOTIATION_TERMS",
+        "question_family_tags": [
+          "MEMORY_LABOR_NEGOTIATION",
+          "PRODUCTION_CONTINUITY_RISK",
+          "COMPENSATION_COST_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리사업부 2026년 성과급 교섭 조건",
+        "subject_id": "005930:MEMORY:LABOR_NEGOTIATION:BONUS_TERMS:2026",
+        "unit": "reported negotiation terms",
+        "value": "company guarantee at or above competitor level; union demand for 15% of operating profit"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "c20dc5ef2d5a4523e7be764a40593fbec3eca0587f832e638a1a1443e8ba2b90",
+  "production_score_authority": false,
+  "prompt_hash": "0e33dcc28b110c3bc45cc58028e39a506227f9f2cfb2c5e716b6350c4f730d65",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a35c4d17f3e976011557dac6fc1d9bbca625635eb5af15cc4d565664c15cb6a6",
+  "response_id": "COLLABRESP-5ab4741e11e18fcf2c8ffeccd31cc59d0d7ef92e350c1e7a25200eca5286297c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

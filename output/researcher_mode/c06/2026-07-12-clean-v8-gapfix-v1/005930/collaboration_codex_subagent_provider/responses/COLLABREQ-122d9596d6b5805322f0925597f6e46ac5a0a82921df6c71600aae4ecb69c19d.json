@@ -1,0 +1,68 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-2abf05ae0a0953e7f40b79c4",
+      "CRMEMO-64b8dc1dd865540a0730367c",
+      "CRMEMO-c989e641c46cb2589aaef403",
+      "CRMEMO-ef70ee03faa19d8789cfb3f2",
+      "CRMEMO-a8ea1b713155d07973355ec3",
+      "CRMEMO-49d146bc643b60c9fe57efe2",
+      "CRMEMO-a38fe4fa20f97616cac96ba4"
+    ],
+    "confidence": 0.92,
+    "cross_component_support": [
+      "eps_fcf_explosion: 2026년 1분기 DS 메모리 매출, 메모리 ASP 상승, 100% 가동과 양(+)의 연결 영업이익·영업현금흐름은 메모리 업황의 실현 개선과 전사 현금창출 여력을 함께 뒷받침한다.",
+      "earnings_visibility: 서버향 판매 확대와 HBM4 양산 출하는 실제 실행 증거이며, 메모리 매출·ASP 개선은 단순 계획보다 높은 단기 가시성의 기반이다.",
+      "bottleneck_pricing: 실제 100% 메모리 가동, 제한된 공급 가용량, 메모리 ASP 상승이 같은 방향으로 나타나 수요 압력과 가격 전환이 실현됐다는 해석을 지지한다.",
+      "market_mispricing: HBM4 출하, 서버 판매, 메모리 매출·ASP와 DRAM 점유율 회복은 시장이 추적해야 할 실제 운영 delta를 제공한다.",
+      "valuation_rerating: HBM4 양산 출하와 메모리 매출·ASP 개선은 향후 이익 추정이 실제로 전환될 경우 재평가를 지지할 실물 기반이다.",
+      "capital_allocation: 자기주식 매입·소각, 배당, 지분증권 미발행과 투자등급 조달 접근성은 성장투자와 주주환원을 병행할 전사 실행력의 긍정 근거다.",
+      "information_confidence: 규제공시 재무자료, 재작성 및 감사 강조사항 부재, 공식 HBM4 양산 출하는 기본 보고 신뢰도와 제품 실행을 뒷받침한다."
+    ],
+    "cross_component_tensions": [
+      "eps_fcf_explosion의 memo-bound ANALYST [14.2,17.2], SKEPTIC [11.8,14.6], CALIBRATION [15.6,18.0]은 3-way 공통 교집합이 비어 있다(하한 15.6이 상한 14.6보다 큼). 강한 연결·메모리 actual과 HBM 단독 이익·FCF 귀속 부재의 가중치가 아직 합의되지 않았다.",
+      "earnings_visibility의 memo-bound ANALYST [12.8,15.5], SKEPTIC [10.0,12.8], CALIBRATION [13.2,15.5]도 공통 교집합이 비어 있다(13.2>12.8). 실제 HBM4 출하와 OpenAI LOI·엔비디아 협의·AMD MOU 같은 계약 전 단계의 구분이 핵심 긴장이다.",
+      "bottleneck_pricing의 3-way 교집합 [13.8,15.8]은 존재하지만 메모리 전체 100% 가동·ASP 상승을 HBM 전용 wafer·advanced packaging CAPA, yield, 고객 allocation 또는 구조적 shortage 기간으로 확대할 수 없다.",
+      "market_mispricing의 3-way 교집합 [5.1,6.5]은 존재하지만 운영 개선은 실제 시장 기대 미반영의 직접 증거가 아니며 valuation 지표와 EPS revision 방향도 혼재한다.",
+      "valuation_rerating의 3-way 교집합 [4.2,4.7]은 존재하지만 낮은 forward PE와 높은 forward EV/EBITDA·PB, 낮은 FCF yield가 공존하고 peer 사업 믹스도 달라 일방적 rerating을 확정하지 못한다.",
+      "capital_allocation의 3-way 교집합 [2.1,2.3]은 존재하지만 실제 주주환원·조달 접근성과 큰 자본약정·매출채권 유출·낮은 분기 배당성향·주식보상 희석이 동시에 존재한다.",
+      "information_confidence의 memo-bound ANALYST [2.4,3.4], SKEPTIC [1.6,2.5], CALIBRATION [2.9,3.7]은 공통 교집합이 비어 있다(2.9>2.5). 규제공시의 형식적 신뢰도와 HBM 고객·계약·품질·마진의 독립 검증 부족을 별도로 가중해야 한다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "현재 7개 component memo와 RTMEMO-5f3d5da5129b57fb5aaf6fb5를 모두 검토했다. 실제 HBM4 출하, 서버향 판매, 메모리 매출·ASP와 가동률, 연결 이익·현금흐름 및 주주환원은 강한 운영·재무 기반을 보여준다. 그러나 OpenAI LOI와 수요 전망, 엔비디아 공급 협의, AMD MOU는 signed purchase terms와 다르며, 연결·DS 메모리 수치를 HBM 단독 경제성으로 귀속할 수 없다. 21개 current memo-bound judge의 범위를 재계산하면 bottleneck_pricing [13.8,15.8], market_mispricing [5.1,6.5], valuation_rerating [4.2,4.7], capital_allocation [2.1,2.3]은 3-way 교집합이 존재하지만 eps_fcf_explosion, earnings_visibility, information_confidence는 여전히 공통 교집합이 비어 있어 material disagreement가 해소되지 않았다. synthesis_complete=true는 이 support·tension·미해결 질문을 빠짐없이 검토했다는 뜻일 뿐, 계약·고객·CAPA·품질·FCF의 불확실성이나 투자 결론이 확정됐다는 뜻이 아니다.",
+    "unresolved_material_questions": [
+      "연결 영업이익·영업현금흐름과 DS 메모리 actual을 HBM 단독 매출·마진·CAPEX·FCF로 연결하는 공식 bridge가 있는가?",
+      "엔비디아 공급 협의, OpenAI LOI·메모리 지원 계획·월 90만 wafer 수요 전망, AMD MOU·탑재 계획 중 signed 물량·가격·기간·취소조건·backlog로 확인되는 범위는 무엇인가?",
+      "HBM4 고객별 qualification outcome과 품질 결과, 실제 allocation 및 매출 전환이 독립 자료로 확인되는가?",
+      "메모리 전체 100% 가동과 ASP 상승 중 HBM 전용 wafer·advanced packaging CAPA, yield 및 구조적 shortage 지속 기간에 직접 귀속되는 범위는 무엇인가?",
+      "HBM4 실행과 메모리 실적 개선이 현재 가격과 consensus에 이미 반영된 정도를 직접 확인할 수 있는가?",
+      "HBM 정상 이익·cash yield와 비교 가능한 peer economics를 사업 믹스 차이를 통제해 확인할 수 있는가?",
+      "AI·HBM 관련 CAPEX와 R&D의 금액·사업별 배분·회수기간·ROIC 및 대규모 운전자본 유출의 지속성이 확인되는가?",
+      "OpenAI의 전체 잠재 wafer 수요 중 삼성전자 공급 몫과 HBM 물량은 어느 정도이며, LOI가 binding purchase 또는 capacity reservation으로 전환됐는가?",
+      "회사 전체 상위 5대 고객 23%와 제한된 중요 장기공급계약 미보고 범위를 넘어 HBM 고객집중도와 계약조건을 확인할 수 있는가?",
+      "eps_fcf_explosion, earnings_visibility, information_confidence의 current-evidence 귀속·계약 단계·독립성 가중치를 semantic rewrite한 뒤 새 독립 A/S/C judges에서 공통 범위가 형성되는가?"
+    ]
+  },
+  "payload_hash": "34a403e9f183852a95f5867ca613bf45ba617fb0d3b4ec962530a8b971238c49",
+  "production_score_authority": false,
+  "prompt_hash": "07e91697974cb557f7cf84c1cfb0f68bc64f31b4c4df6e4240e302f40f1f47f8",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-122d9596d6b5805322f0925597f6e46ac5a0a82921df6c71600aae4ecb69c19d",
+  "response_id": "COLLABRESP-b5732d92b77b052792e530796a118a4da3e12af987918370f11817c230adb0bf",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

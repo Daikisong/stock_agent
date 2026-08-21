@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "2d9854ad3e4dc0a54f039c283be4adf9036f2cb73b0b111afaa1ac77b2f36903",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5f2fc5429b9fd93d21c19f1d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A stock-outlook blog is not an issuer-owned earnings, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-69c6e0e87db2e57d265d2894",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A Micron market-price page is wrong-target and not in any requested issuer source family."
+      },
+      {
+        "candidate_id": "SGCAND-4cd9b5c9b1eb33dd04c95d8b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "The 2023 sustainability report is stale and its supplied metadata does not establish earnings-release, presentation, or cash-flow provenance."
+      },
+      {
+        "candidate_id": "SGCAND-720f65bdec1f0c5356df1bf3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party HBM business article is not an issuer-owned source in a requested family."
+      },
+      {
+        "candidate_id": "SGCAND-b720e4dbeb4a5fcf2e326307",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A community news page discussing memory peers is not an issuer earnings, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-b87b69a102c9b6420ac491af",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This broker PDF covers Pemtron, not SK hynix, and its family is not requested."
+      },
+      {
+        "candidate_id": "SGCAND-9491e700bbde035521a3a27e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A portal morning-report digest is a third-party derivative rather than an issuer-owned source."
+      },
+      {
+        "candidate_id": "SGCAND-f1058f31f9652436931b3f3f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "The 2024 sustainability report is stale and does not establish any requested earnings, presentation, or cash-flow provenance from supplied metadata."
+      },
+      {
+        "candidate_id": "SGCAND-df0f20ad7dfbbc68bc731c40",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "The KIND quarterly filing metadata identifies TSE and affiliates, not SK hynix, and supports no requested family match."
+      },
+      {
+        "candidate_id": "SGCAND-af0219e5b36441e7cbfe657b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party Korean summary of Micron earnings is wrong-target and not an issuer-owned source."
+      },
+      {
+        "candidate_id": "SGCAND-20ff1be439b0891a6f346ea1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "Third-party Micron earnings news lacks target and requested issuer-source provenance."
+      },
+      {
+        "candidate_id": "SGCAND-a14175f8c7ecefdadb547ae5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A generic report-summary portal page does not identify a target original source or requested family."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No eligible current SK hynix issuer earnings release, presentation, or cash-flow source appears in this partition."
+    ]
+  },
+  "payload_hash": "85da498ee63b98fc4c3d97a4a298795a9820090dc265b39ff8278efc6f1e70af",
+  "production_score_authority": false,
+  "prompt_hash": "f366f378a662a9535ee105995462f8164b178d28b0199c2cf71bb0af6d25b4c4",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-78694ddfaff7ec1a7d9cf92aa3a2c460e4897500f21a3f427abf4d7945e7f2f0",
+  "response_id": "COLLABRESP-4f08304ace8ef27a2b93c4054fd30924b264125dabcd51058bc8f552f843832b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

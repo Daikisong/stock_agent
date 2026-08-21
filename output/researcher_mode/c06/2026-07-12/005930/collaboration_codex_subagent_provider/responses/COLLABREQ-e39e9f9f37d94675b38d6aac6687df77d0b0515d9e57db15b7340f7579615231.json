@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-23024585fdc35664b456f5db",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "Verified issuer financial-statement document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-2525722f848b0e2e9189f92e",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "Verified issuer financial-statement document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-2611ec3609e5af19e1d416ed",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "Verified issuer cash-flow document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-2629bb0b5e3678488468a414",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.05,
+        "rationale": "Verified issuer cash-flow document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-2781fea5cb9d9e39eb8b94f0",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.05,
+        "rationale": "Verified issuer financial-statement document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-27fa59d06de74ab36f8fdc66",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.2,
+        "rationale": "Verified issuer cash-flow document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-294af64e6415186c2acb0ea8",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.1,
+        "rationale": "Verified issuer financial-statement document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-2b2d954fdc3e9cb62e9848e2",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.05,
+        "rationale": "Verified issuer cash-flow document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-2c6433d294f5d5fb13bfd02c",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.05,
+        "rationale": "Verified issuer cash-flow document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-2df2b58834b653c817b0b4f2",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.08,
+        "rationale": "Verified issuer financial-statement document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-2e6be17aeb704cad2cd0eb50",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "Verified issuer cash-flow document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-316384aaa543691a34db7e79",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "Verified issuer financial-statement document, but its historical period is superseded and does not materially resolve the current EPS/FCF objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Classification covers this transport roster only. Material routes still require bounded full-document fetch and source-backed extraction; snippets and discovery metadata are not evidence."
+    ]
+  },
+  "payload_hash": "444499e95a04c55bb6b86e461006954e58898dea9282092da83b2da68b595293",
+  "production_score_authority": false,
+  "prompt_hash": "42dcac752532243306befd2d24959c4f7c9e66ffd96f789b3b06c5d5f96772da",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e39e9f9f37d94675b38d6aac6687df77d0b0515d9e57db15b7340f7579615231",
+  "response_id": "COLLABRESP-6862ed3b2d015f96d5d1826da618ef9f8a9cd8972dea5c523cd749246229fab5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,574 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Accepted 12 distinct source-order payout, per-share, and valuation atoms after strict deduplication against 252 embedded prior facts: FY2024E/FY2025E payout ratio, BPS, CFPS, DPS, PCR, and dividend yield. Repeated EPS, PER, PBR, and EV/EBITDA rows were omitted as semantic duplicates.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of issuer-wide dividend payout ratio; it is not HBM-only capital return or an issuer commitment.",
+        "exact_quote": "배당성향 11.0 37.0 -9.1 11.1 5.3",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It records a historical capital-return assumption but is superseded and cannot establish current payout policy.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:DIVIDEND_PAYOUT_RATIO:FY2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 dividend payout ratio 11.1 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forecast dividend payout ratio",
+        "predicate_family": "BROKER_DIVIDEND_PAYOUT_RATIO_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "payout_ratio",
+          "corporate"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_dividend_payout_ratio_fy2024e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:DIVIDEND_PAYOUT_RATIO:FY2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 11.1
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of issuer-wide dividend payout ratio; it is not HBM-only capital return or an issuer commitment.",
+        "exact_quote": "배당성향 11.0 37.0 -9.1 11.1 5.3",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It records a historical outer-year capital-return assumption but is superseded and cannot establish current payout policy.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:DIVIDEND_PAYOUT_RATIO:FY2025E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 dividend payout ratio 5.3 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forecast dividend payout ratio",
+        "predicate_family": "BROKER_DIVIDEND_PAYOUT_RATIO_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "payout_ratio",
+          "corporate"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_dividend_payout_ratio_fy2025e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:DIVIDEND_PAYOUT_RATIO:FY2025E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 5.3
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of book value per share used as a forward valuation denominator; it is not HBM-only book value.",
+        "exact_quote": "BPS 88,543 90,064 76,616 85,669 105,882",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The exact row supplies a dated forward book-value denominator, but its historical lifecycle prevents current valuation use.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2024 book value per share KRW 85,669 historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forecast book value per share",
+        "predicate_family": "BROKER_FORWARD_BOOK_VALUE_PER_SHARE_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "bps",
+          "per_share_denominator"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_bps_fy2024e",
+        "question_family_tags": [
+          "valuation_rerating",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:BOOK_VALUE_PER_SHARE:FY2024E:SKSEC_20240314",
+        "unit": "KRW per share",
+        "value": 85669
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of book value per share used as a forward valuation denominator; it is not HBM-only book value.",
+        "exact_quote": "BPS 88,543 90,064 76,616 85,669 105,882",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The exact row supplies a dated outer-year forward book-value denominator, but its historical lifecycle prevents current valuation use.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2025 book value per share KRW 105,882 historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forecast book value per share",
+        "predicate_family": "BROKER_FORWARD_BOOK_VALUE_PER_SHARE_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "bps",
+          "per_share_denominator"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_bps_fy2025e",
+        "question_family_tags": [
+          "valuation_rerating",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:BOOK_VALUE_PER_SHARE:FY2025E:SKSEC_20240314",
+        "unit": "KRW per share",
+        "value": 105882
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of cash flow per share, kept distinct from EPS, FCF, and HBM-only cash flow.",
+        "exact_quote": "CFPS 27,828 22,501 6,265 28,129 39,322",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It records a historical per-share cash-flow expectation but does not establish current or HBM-only FCF.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2024 cash flow per share KRW 28,129 historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forecast cash flow per share",
+        "predicate_family": "BROKER_CASH_FLOW_PER_SHARE_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "cfps",
+          "per_share_cash_flow"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_cfps_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CASH_FLOW_PER_SHARE:FY2024E:SKSEC_20240314",
+        "unit": "KRW per share",
+        "value": 28129
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of cash flow per share, kept distinct from EPS, FCF, and HBM-only cash flow.",
+        "exact_quote": "CFPS 27,828 22,501 6,265 28,129 39,322",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It records a historical outer-year per-share cash-flow expectation but does not establish current or HBM-only FCF.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2025 cash flow per share KRW 39,322 historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forecast cash flow per share",
+        "predicate_family": "BROKER_CASH_FLOW_PER_SHARE_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "cfps",
+          "per_share_cash_flow"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_cfps_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CASH_FLOW_PER_SHARE:FY2025E:SKSEC_20240314",
+        "unit": "KRW per share",
+        "value": 39322
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of issuer-wide cash dividend per share; it is not an issuer commitment or HBM-only distribution.",
+        "exact_quote": "주당 현금배당금 1,540 1,200 1,200 1,200 1,200",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It records a historical per-share payout assumption but is not a current declared dividend.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CASH_DIVIDEND_PER_SHARE:FY2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 cash dividend per share KRW 1,200 historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forecast cash dividend per share",
+        "predicate_family": "BROKER_CASH_DIVIDEND_PER_SHARE_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "dps",
+          "cash_dividend"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_dps_fy2024e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CASH_DIVIDEND_PER_SHARE:FY2024E:SKSEC_20240314",
+        "unit": "KRW per share",
+        "value": 1200
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of issuer-wide cash dividend per share; it is not an issuer commitment or HBM-only distribution.",
+        "exact_quote": "주당 현금배당금 1,540 1,200 1,200 1,200 1,200",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It records a historical outer-year per-share payout assumption but is not a current declared dividend.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CASH_DIVIDEND_PER_SHARE:FY2025E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 cash dividend per share KRW 1,200 historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forecast cash dividend per share",
+        "predicate_family": "BROKER_CASH_DIVIDEND_PER_SHARE_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "dps",
+          "cash_dividend"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_dps_fy2025e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CASH_DIVIDEND_PER_SHARE:FY2025E:SKSEC_20240314",
+        "unit": "KRW per share",
+        "value": 1200
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker price-to-cash-flow multiple using its forecast cash-flow-per-share denominator; it is not a P/E, P/B, or HBM-only multiple.",
+        "exact_quote": "PCR 4.7 3.3 22.6 5.8 4.2",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It supplies a historical cash-flow valuation multiple with its own denominator but cannot be used as a current multiple.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2024 price-to-cash-flow ratio 5.8 times historical SK Securities estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forward price cash flow multiple",
+        "predicate_family": "BROKER_FORWARD_PCR",
+        "primitive_tags": [
+          "broker_valuation",
+          "pcr",
+          "cash_flow_denominator"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_pcr_fy2024e",
+        "question_family_tags": [
+          "valuation_rerating",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:PRICE_CASH_FLOW_RATIO:FY2024E:SKSEC_20240314",
+        "unit": "times",
+        "value": 5.8
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker price-to-cash-flow multiple using its forecast cash-flow-per-share denominator; it is not a P/E, P/B, or HBM-only multiple.",
+        "exact_quote": "PCR 4.7 3.3 22.6 5.8 4.2",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It supplies a historical outer-year cash-flow valuation multiple with its own denominator but cannot be used as a current multiple.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2025 price-to-cash-flow ratio 4.2 times historical SK Securities estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forward price cash flow multiple",
+        "predicate_family": "BROKER_FORWARD_PCR",
+        "primitive_tags": [
+          "broker_valuation",
+          "pcr",
+          "cash_flow_denominator"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_pcr_fy2025e",
+        "question_family_tags": [
+          "valuation_rerating",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:PRICE_CASH_FLOW_RATIO:FY2025E:SKSEC_20240314",
+        "unit": "times",
+        "value": 4.2
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker dividend-yield forecast based on its per-share payout and price assumptions; it is not an issuer commitment or HBM-only return.",
+        "exact_quote": "배당수익률 1.2 1.6 0.8 0.7 0.7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It records a historical yield assumption but cannot establish current yield or current capital-return policy.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:DIVIDEND_YIELD:FY2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 dividend yield 0.7 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forecast dividend yield",
+        "predicate_family": "BROKER_DIVIDEND_YIELD_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "dividend_yield",
+          "corporate"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_dividend_yield_fy2024e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:DIVIDEND_YIELD:FY2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 0.7
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker dividend-yield forecast based on its per-share payout and price assumptions; it is not an issuer commitment or HBM-only return.",
+        "exact_quote": "배당수익률 1.2 1.6 0.8 0.7 0.7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It records a historical outer-year yield assumption but cannot establish current yield or current capital-return policy.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:DIVIDEND_YIELD:FY2025E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 dividend yield 0.7 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forecast dividend yield",
+        "predicate_family": "BROKER_DIVIDEND_YIELD_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "dividend_yield",
+          "corporate"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_dividend_yield_fy2025e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:DIVIDEND_YIELD:FY2025E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 0.7
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact upper bound was reached. Continue with an exhaustive coverage audit of the remaining target-price-history and any other target-direct atoms, while preserving historical broker lifecycle and exact denominator; repeated EPS, PER, PBR, and EV/EBITDA values must remain deduplicated."
+    ]
+  },
+  "payload_hash": "eca1e938843972c276a2a0a670113cdc4ea44966aee9cec78f2eb106739a9bf5",
+  "production_score_authority": false,
+  "prompt_hash": "780fb61dc498f70ce698cee02a9160bca9e10d252b6e5063b3cf9bcb279f4c50",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ec80e0613e6b7447636f740c3c3e0ab648a4a23b61b3729ee6f8f9f11aa3c607",
+  "response_id": "COLLABRESP-025512d4c3df9f264e4d276f847cc94cb489d28b50db148fb4d5cd5950b40663",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

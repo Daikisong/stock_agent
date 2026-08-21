@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "2d9854ad3e4dc0a54f039c283be4adf9036f2cb73b0b111afaa1ac77b2f36903",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-d96146b4d36582d22de13a7b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A law-firm media repost about share prices is outside the requested issuer-source families."
+      },
+      {
+        "candidate_id": "SGCAND-fd01d2aa615f56d0c7caa386",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This blog describes a post-cutoff 2026 second-quarter result and is not issuer-owned."
+      },
+      {
+        "candidate_id": "SGCAND-f5c62c5bd10af5624fd8a819",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A blog about Kioxia is wrong-target and lacks requested issuer-source provenance."
+      },
+      {
+        "candidate_id": "SGCAND-96816fe41cf0c8b8e2e0bbda",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This post-cutoff third-party forecast story is not an issuer earnings release, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-9658c861252301ae2586de22",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party result story lacks issuer-owned provenance despite discussing the target."
+      },
+      {
+        "candidate_id": "SGCAND-d18be2ae5c082a320551a8b1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party HBM result article is not an issuer earnings release, issuer presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-6484bf6d626860479ea9f768",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A market-data earnings calendar page is not an issuer-owned original source."
+      },
+      {
+        "candidate_id": "SGCAND-92acbd944ad386c5fd3d4557",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party 2024 article is stale and does not satisfy the requested issuer-source provenance."
+      },
+      {
+        "candidate_id": "SGCAND-f092ec67cc24395d81a69fa7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party article concerns Samsung Electronics rather than the target and lacks requested provenance."
+      },
+      {
+        "candidate_id": "SGCAND-e10f6bb2e922b13a86b5297f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A media retelling of target results is not an issuer-owned earnings release, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-e8b0b381c71265759cc34950",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party market commentary is not an original issuer source in a requested family."
+      },
+      {
+        "candidate_id": "SGCAND-5d15f937c55af96411b7ff95",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party profit forecast is neither actual issuer reporting nor an issuer-owned requested-family source."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "All candidates are third-party, wrong-target, stale, or post-cutoff; the eligible issuer-source gap remains unresolved."
+    ]
+  },
+  "payload_hash": "d6d6525a162fa44f5d77b78fd28cbee7957ee9ecf6e9b968e7d9f275929d2fcd",
+  "production_score_authority": false,
+  "prompt_hash": "f862028f29bf8764f34f74e73a8e9d0b7d04cf7280ab18f7187f7201ca85fc7c",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cec513d83cfb6cf40cc25a0bce252a2f20a826c274489e0ea5037908e07ea40e",
+  "response_id": "COLLABRESP-5524084465a79b131bac7529be08f1e9038cc0717c1fbbd158c37a185f944a6e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

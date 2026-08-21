@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2466c6a8727cd5542c49b574",
+        "rationale": "Current exact prompt와 14,482자 문서를 독립 재검토했으나 신규 valuation_rerating fact가 없다. Current 597-fact context에서 missing role, pending reason, supervisor missing fact와 executable route가 모두 닫혀 있다. 이 문서의 HBM·메모리 매출, 메모리 이익·마진, 영업이익 revision, forward BPS/PBR/EV-EBITDA와 목표 PBR 방법론은 durable evidence로 이미 보존된다. 1Q26 broker 예상은 이후 actual/최신 forecast와 의미상 중복되고, 3~5년 계약·최저가격·선지급금 문구는 issuer-confirmed 계약조건이 아닌 broker 추정이므로 새 계약 사실로 승격하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "0444b056173f97f65d19d5c5e015e273c25c6ae9ba6cb912813b4d74ca995c20",
+  "production_score_authority": false,
+  "prompt_hash": "ad6bab74ebca83677ba88c822fe7d961c91d6492404bee1dbb14620d208903e5",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0cf34f0a37970650d4688176ae3d902906783b2b9557ce015d9b653eeff00a2f",
+  "response_id": "COLLABRESP-8286ea6be29ff1edb20f152adc3b72f1f52af8e990ed959ac4155ef99b677b0a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

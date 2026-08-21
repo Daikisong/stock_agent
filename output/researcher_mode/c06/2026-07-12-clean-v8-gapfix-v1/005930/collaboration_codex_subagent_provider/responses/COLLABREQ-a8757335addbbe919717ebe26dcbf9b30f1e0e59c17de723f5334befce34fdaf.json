@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-149096a03f4b9ffc75b1dc43",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.04,
+        "rationale": "KOTRA 시장 분석으로 OpenAI CUSTOMER_OFFICIAL original이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5f9c3d172cdad45bd5956198",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.04,
+        "rationale": "제3자 HBM 수요 기사로 OpenAI 공식 관계 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-38027f6959a1b2cf24809b2f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "출처·발행일 불명 제3자 페이지로 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8b6f6181371e8a5a5e09bd0a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "삼성증권 리포트로 CUSTOMER_OFFICIAL family와 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c19904d51350cf5d2728c26d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "제3자 AI 사이클 분석으로 OpenAI 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0b12eb4f0e7d9d4375700771",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "SK증권 리포트로 요청된 고객 공식 source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9753672589d4fdfaf25e4e17",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "NIA 백서로 삼성-OpenAI 관계 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e74faebeea977c0c2ddf6845",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "제3자 진행현황 기사로 OpenAI official original/full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4a2444d5c7af67ca9f6c941c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "하나증권 포럼 PDF로 CUSTOMER_OFFICIAL 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0befca39b22d56a2a5b5923f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "제3자 주식 분석 페이지로 공식 고객 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a095de23079bc09eb3aa5260",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.04,
+        "rationale": "지역 매체 기사로 OpenAI 공식 original이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-29189a8b76dd2bfcee92492b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Telegram 뉴스 모음으로 objective-bound 공식 원문이 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P0 material0은 source absence나 completion을 의미하지 않는다."
+    ]
+  },
+  "payload_hash": "5fab88a0da68ce30f8402921e7ba46181e862fb8235c2df5fe5a2aeb60e80137",
+  "production_score_authority": false,
+  "prompt_hash": "c9f188cc14d5ef95c7b026694c45f63887c4b1c26841bfb9f501a3ac15cae1c7",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a8757335addbbe919717ebe26dcbf9b30f1e0e59c17de723f5334befce34fdaf",
+  "response_id": "COLLABRESP-8b0bf82668ba083f19bc79ac8b138f28615c6b5f383a44f1308f3c0e9c216e72",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

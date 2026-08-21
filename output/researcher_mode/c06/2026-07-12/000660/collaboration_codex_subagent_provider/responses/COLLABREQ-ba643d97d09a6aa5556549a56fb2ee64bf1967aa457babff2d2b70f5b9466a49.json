@@ -1,0 +1,302 @@
+{
+  "output_schema_hash": "e7a733a147d6964e75528742897823ca5094ca593a9f54b8723c700910cfd090",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "rationale": "2026-01-05 뉴스룸 원문 203줄을 Gold-blind로 전수 검토하고 current canonical 196건과 의미 중복을 대조했다. 본문과 반복 FAQ에서 목표 기업의 HBM 수익 전환을 새로 설명하는 시장규모, ASIC 수요, HBM3E 출하믹스, 실제 HBM 점유율, 2026년 점유율 전망, Google TPU 공급사 전망 6건만 exact quote로 추출했다. 제3자 전망은 issuer guidance·확정 계약·실제 매출로 확대하지 않아 structured role을 비웠다. 기존 canonical과 같은 Rubin HBM4 60~70% 공급점유율, HBM 가격 조정·경쟁 확대, HBM 투자에 따른 범용 DRAM 수급 효과와 HBM4 양산 제품 사실은 반복하지 않았다. 반복 머리말·FAQ, 일반 반도체 배경, NAND, 관련기사 navigation과 기준일 뒤 2026-08 링크도 제외했으며 더 남은 독립 objective-linked 사실이 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "BofA의 2026년 HBM 시장규모와 성장률 추정은 SK하이닉스 HBM 사업이 참여하는 주소가능시장의 확대 경로를 정량화한다. 이는 BofA 전망이며 SK하이닉스 매출 또는 회사 가이던스가 아니다.",
+        "exact_quote": "BofA는 2026년 HBM 시장 규모를 전년 대비 58% 증가한 546억 달러로 추산했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "HBM 시장의 정량 성장 경로는 목표 기업의 매출 전환 가능성에 영향을 주지만 제3자 시장 추정이어서 issuer guidance를 대신하지 않는다.",
+        "mechanism_scope_id": "000660:HBM:2026_ADDRESSABLE_MARKET_GROWTH",
+        "normalized_object": "2026년 HBM 주소가능시장 규모와 전년 대비 성장률",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "BofA는 2026년 HBM 시장이 전년 대비 58% 성장해 546억달러에 이를 것으로 추산했다",
+        "predicate_family": "HBM_ADDRESSABLE_MARKET_GROWTH_2026",
+        "primitive_tags": [
+          "HBM",
+          "MARKET_GROWTH",
+          "REVENUE_CONVERSION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_ADDRESSABLE_MARKET_GROWTH_2026",
+        "question_family_tags": [
+          "HBM_MARKET_GROWTH",
+          "ADDRESSABLE_MARKET",
+          "THIRD_PARTY_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스가 참여하는 2026년 HBM 주소가능시장 성장 전망",
+        "subject_id": "000660:HBM:2026_ADDRESSABLE_MARKET_GROWTH",
+        "unit": "USD and YoY % third-party forecast",
+        "value": "USD 54.6bn; +58% YoY"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "골드만삭스의 ASIC향 HBM 수요 증가와 시장비중 전망은 HBM 수요가 범용 GPU 외 고객별 AI칩으로 넓어지는 경로를 보여준다. 이는 산업 수요 추정이며 SK하이닉스의 확정 주문이나 매출이 아니다.",
+        "exact_quote": "골드만삭스는 특히 ASIC(주문형 반도체) 기반 AI 칩향 HBM 수요가 82% 급증하며 시장의 3분의 1을 차지할 것으로 전망했는데, 이는 AI 인프라 투자가 범용 GPU를 넘어 세분화된 영역으로 확장되고 있음을 시사한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "GPU 외 ASIC 수요의 정량 확대는 HBM 매출 수요처 다변화를 지지하지만 제3자 시장 전망이다.",
+        "mechanism_scope_id": "000660:HBM:2026_ASIC_DEMAND_DIVERSIFICATION",
+        "normalized_object": "2026년 ASIC 기반 AI칩향 HBM 수요 성장과 시장비중",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "골드만삭스는 2026년 ASIC 기반 AI칩향 HBM 수요가 82% 증가해 시장의 3분의 1을 차지할 것으로 전망했다",
+        "predicate_family": "ASIC_HBM_DEMAND_MIX_2026",
+        "primitive_tags": [
+          "HBM",
+          "ASIC",
+          "CUSTOMER_DIVERSIFICATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "ASIC_HBM_DEMAND_MIX_2026",
+        "question_family_tags": [
+          "ASIC_HBM_DEMAND",
+          "DEMAND_DIVERSIFICATION",
+          "THIRD_PARTY_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM의 ASIC AI칩 수요처 확대",
+        "subject_id": "000660:HBM:2026_ASIC_DEMAND_DIVERSIFICATION",
+        "unit": "YoY % and market share third-party forecast",
+        "value": "ASIC HBM demand +82%; one-third of HBM market"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "2026년 HBM 출하의 약 3분의 2가 HBM3E라는 전망은 HBM3E 리더십이 있는 SK하이닉스의 현재 수익화 구간과 HBM4로의 점진적 전환 속도를 함께 보여준다. 이는 시장 분석이며 회사 제품별 출하 가이던스가 아니다.",
+        "exact_quote": "주요 리서치와 증권사 분석에 따르면, 2026년 기준 HBM 전체 출하량에서 HBM3E가 차지하는 비중이 약 2/3 수준으로 예상되며, HBM4는 점진적으로 비중을 확대하는 형태가 될 것으로 전망된다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "HBM3E 중심 출하 믹스는 목표 기업의 현세대 제품 수익화 기간에 영향을 주지만 제3자 제품믹스 전망이다.",
+        "mechanism_scope_id": "000660:HBM:2026_HBM3E_PRODUCT_MIX",
+        "normalized_object": "2026년 HBM3E 출하비중과 HBM4 전환 속도",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "주요 리서치와 증권사는 2026년 HBM 출하량 중 HBM3E 비중을 약 3분의 2로 예상하고 HBM4는 점진적으로 확대될 것으로 전망했다",
+        "predicate_family": "HBM3E_SHIPMENT_MIX_2026",
+        "primitive_tags": [
+          "HBM3E",
+          "HBM4",
+          "SHIPMENT_MIX"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM3E_SHIPMENT_MIX_2026",
+        "question_family_tags": [
+          "HBM3E_SHIPMENT_MIX",
+          "HBM4_TRANSITION",
+          "PRODUCT_MIX"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "2026년 HBM3E 중심 출하 믹스와 HBM4 전환",
+        "subject_id": "000660:HBM:2026_HBM3E_PRODUCT_MIX",
+        "unit": "shipment share third-party forecast",
+        "value": "HBM3E about two-thirds of 2026 HBM shipments; HBM4 gradual share expansion"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "카운터포인트리서치의 2025년 출하·매출 기준 점유율은 SK하이닉스가 HBM 시장 성장에서 실제로 차지한 수익화 위치를 정량화한다. 두 수치는 각각 다른 분기와 기준이므로 하나의 동일 지표로 합치지 않는다.",
+        "exact_quote": "카운터포인트리서치에 따르면 SK하이닉스는 2025년 2분기 기준 HBM 출하량 점유율 62%로 1위, 3분기 매출 기준으로도 57%로 과점적 지위를 유지하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "목표 기업의 실제 HBM 출하·매출 점유율은 산업 성장의 회사 매출 전환 정도를 직접 제약한다.",
+        "mechanism_scope_id": "000660:HBM:2025_SHARE_POSITION",
+        "normalized_object": "SK하이닉스 2025년 HBM 출하량·매출 기준 점유율",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q2 shipment share and 2025-Q3 revenue share",
+        "predicate": "SK하이닉스의 HBM 점유율은 2025년 2분기 출하량 기준 62%, 3분기 매출 기준 57%로 제시됐다",
+        "predicate_family": "SKHYNIX_HBM_SHARE_ACTUAL_2025",
+        "primitive_tags": [
+          "HBM",
+          "MARKET_SHARE",
+          "REVENUE_CONVERSION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SKHYNIX_HBM_SHARE_ACTUAL_2025",
+        "question_family_tags": [
+          "HBM_MARKET_SHARE",
+          "SHIPMENT_SHARE",
+          "REVENUE_SHARE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2025년 HBM 출하·매출 점유율",
+        "subject_id": "000660:HBM:2025_SHARE_POSITION",
+        "unit": "% market share by shipments and revenue",
+        "value": "2025-Q2 shipment share 62%; 2025-Q3 revenue share 57%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "골드만삭스의 2026년 전체 HBM 점유율 전망은 SK하이닉스의 HBM3·HBM3E 지위가 주소가능시장 성장에서 회사 수익으로 전환될 수 있는 범위를 제시한다. 이는 제3자 전망이며 회사 가이던스나 확정 고객배정이 아니다.",
+        "exact_quote": "골드만삭스는 “최소 2026년까지 SK하이닉스가 HBM3 · HBM3E 분야에서 지배적인 위치를 유지하며 전체 HBM 시장 점유율 50% 이상을 이어갈 것”이라고 분석했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "목표 기업의 forward HBM 점유율은 시장 성장의 매출 전환과 이익 지속기간을 직접 제약하지만 제3자 전망이다.",
+        "mechanism_scope_id": "000660:HBM:2026_SHARE_OUTLOOK",
+        "normalized_object": "SK하이닉스 전체 HBM 점유율의 2026년까지 유지 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "through FY2026F",
+        "predicate": "골드만삭스는 SK하이닉스가 최소 2026년까지 HBM3·HBM3E 지배력을 유지하며 전체 HBM 점유율 50% 이상을 이어갈 것으로 분석했다",
+        "predicate_family": "SKHYNIX_HBM_SHARE_OUTLOOK_2026",
+        "primitive_tags": [
+          "HBM",
+          "HBM3E",
+          "MARKET_SHARE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SKHYNIX_HBM_SHARE_OUTLOOK_2026",
+        "question_family_tags": [
+          "HBM_MARKET_SHARE_OUTLOOK",
+          "HBM3E_LEADERSHIP",
+          "REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 전체 HBM 시장 점유율 전망",
+        "subject_id": "000660:HBM:2026_SHARE_OUTLOOK",
+        "unit": "% third-party market-share forecast",
+        "value": "overall HBM market share at least 50% through 2026"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "UBS의 Google TPU v7p·v7e 첫 HBM3E 공급사 전망은 SK하이닉스의 ASIC 고객 수요 참여 가능성을 구체화한다. 이는 분석기관 전망일 뿐 확정 계약, 구매의무, 실제 출하 또는 고객 확인이 아니다.",
+        "exact_quote": "UBS는 “SK하이닉스가 구글의 최신 TPU(Tensor Processing Unit)인 v7p 및 v7e의 HBM3E 첫 번째 공급사가 될 것”이라고 분석하며 빅테크 고객사 내 입지를 강조했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "구체적인 ASIC 고객 플랫폼의 공급사 전망은 HBM 수요처 다변화와 잠재 매출 전환에 직접 영향을 주지만 확정 배정은 아니다.",
+        "mechanism_scope_id": "000660:HBM:GOOGLE_TPU_SUPPLIER_OUTLOOK",
+        "normalized_object": "Google TPU v7p·v7e의 SK하이닉스 HBM3E 공급사 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward supplier outlook published 2026-01-05",
+        "predicate": "UBS는 SK하이닉스가 Google TPU v7p·v7e의 HBM3E 첫 공급사가 될 것으로 분석했다",
+        "predicate_family": "GOOGLE_TPU_HBM3E_FIRST_SUPPLIER_OUTLOOK",
+        "primitive_tags": [
+          "HBM3E",
+          "GOOGLE_TPU",
+          "CUSTOMER_DIVERSIFICATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "GOOGLE_TPU_HBM3E_FIRST_SUPPLIER_OUTLOOK",
+        "question_family_tags": [
+          "GOOGLE_TPU",
+          "HBM3E_SUPPLIER",
+          "CUSTOMER_ALLOCATION_OUTLOOK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스의 Google TPU v7p·v7e HBM3E 첫 공급사 전망",
+        "subject_id": "000660:HBM:GOOGLE_TPU_SUPPLIER_OUTLOOK",
+        "unit": "qualitative third-party supplier forecast",
+        "value": "expected first HBM3E supplier for Google TPU v7p and v7e"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "449cabca8991b3720b5427398fdfa28beb17d9bbf21080d62543248c87bfc711",
+  "production_score_authority": false,
+  "prompt_hash": "8b745261f1b7120807de3f864605fba14b5b3d441cf44356f33a452b1fa0d766",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ba643d97d09a6aa5556549a56fb2ee64bf1967aa457babff2d2b70f5b9466a49",
+  "response_id": "COLLABRESP-fa686ccd49d44cee0485bf9f7119d030dc00367a13f7d8f42bda9d32a101f869",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

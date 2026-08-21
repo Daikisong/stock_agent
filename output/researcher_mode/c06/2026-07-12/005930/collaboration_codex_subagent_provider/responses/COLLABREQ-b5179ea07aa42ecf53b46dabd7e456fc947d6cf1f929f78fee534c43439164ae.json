@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "bb361105cce7ca9f9a620324f52af7c610d18a8bec081d2c53914a1de4c755c5",
+  "payload": {
+    "allowed_range": [
+      12.8,
+      15.5
+    ],
+    "anchor_comparisons": [
+      "The positive ordinal anchor's 13.68-16.08 band is directionally comparable because current actual memory revenue and operating-profit conversion are strong, but the current record has more explicit HBM-versus-company attribution limits.",
+      "The counter ordinal anchor's 10.32-12.72 band is too low for the full current support plane because actual memory revenue growth and profit contribution are already observed, although its warning against unsupported component attribution remains relevant."
+    ],
+    "counter_fact_ids": [
+      "EFACT-2bf2934ad088b585cc89843a",
+      "EFACT-992faa8a46788f671cefe250",
+      "EFACT-e449f48cdf920d528532a37f",
+      "EFACT-f05a97edeb8f85d49353381e",
+      "EFACT-f6519571c11130bacb0af98d"
+    ],
+    "disagreements": [
+      "I place slightly more weight than the memo midpoint on the observed 2026-Q1 memory revenue and operating-profit bridge.",
+      "I do not treat the HBM profit estimates or company-level FCF forecast as direct HBM actual cash flow."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-0714e46eb37d4c4b066de92c",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 14.2,
+    "rationale": "Actual memory revenue of KRW 74.78tn, 101% sequential growth, a large memory operating-profit contribution and the HBM/high-density DDR5 ASP path support substantial earnings leverage. HBM operating-profit and gross-margin estimates, plus company-level FCF, extend the path toward cash conversion but remain OPEN forecasts and are not HBM-only actuals. The positive thesis is therefore meaningful but conditional rather than fully proven.",
+    "support_fact_ids": [
+      "EFACT-536119c3b7272c9ebee07624",
+      "EFACT-71eb35cf12f591c101571b4e",
+      "EFACT-bc95c1a79d29243f3b4e9b06",
+      "EFACT-cb2550bcc2cd6b3a1bd34e00",
+      "EFACT-e854b59aa43bb7f73c1e0835",
+      "EFACT-f8f6e5abba8d72973f8cbc55",
+      "EFACT-f979df4935e2c87e7d55a6ed"
+    ],
+    "why_not_higher": "A higher component value would require issuer-reported HBM revenue, operating profit and cash flow, along with evidence that the latest DOWN EPS revision and price-duration risk have reversed.",
+    "why_not_lower": "A lower value would underweight the observed memory revenue doubling, consensus beat, memory profit contribution and product-mix-to-ASP conversion already present in current facts."
+  },
+  "payload_hash": "4fe512c9b686d82166cdcd5baf656f4aeedea7d99ee44758e9e348dab5fb155f",
+  "production_score_authority": false,
+  "prompt_hash": "102d2c07b8e17f339b6044ffdfff9d32b58f58105b4734e2583ee76f1a9f7d12",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b5179ea07aa42ecf53b46dabd7e456fc947d6cf1f929f78fee534c43439164ae",
+  "response_id": "COLLABRESP-654116361d6a147762965070dafca9ffb6fe57a9fa8197caa50e250b50e68d39",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "output_schema_hash": "05073615b9cf34dd93c64f979abc4b3a3fb7dd3289e8b46cbda336e782ab78c5",
+  "payload": {
+    "confidence": 0.8,
+    "counter_case": "계약 세부가 NDA로 닫혀 구매의무·취소·가격조정 조건을 검증할 수 없다. LTA 가격이 현물 상승을 늦게 반영할 수 있고 고객 제품 출하 지연은 HBM4 매출 인식과 이익 기여를 뒤로 미룰 수 있으며, 성과평가에 따른 물량 배분도 고정되지 않는다. 추가로 공개 가능한 HBM 계약기간·물량·가격조정·선수금·취소·위약 조건과 qualification·allocation 기준이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다.",
+    "historical_anchor_ids": [
+      "CANCH-0f9dd0807dd915f5d67d49eb",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "nearest_counter_anchor_ids": [
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "nearest_positive_anchor_ids": [
+      "CANCH-0f9dd0807dd915f5d67d49eb"
+    ],
+    "positive_case": "이미 확보한 고객 구매주문, 완료된 중장기 물량 계약, 구속력 있는 다년계약과 완판된 HBM4 생산여력은 2026년 출하량을 단순 수요 기대보다 강하게 고정한다. 구조화 리비전 이력에서도 영업이익 방향은 상승이고 장기간 EPS 추정 상향 폭이 컸다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 39,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 54,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 216,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 229,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 233,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 246,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 255,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 293,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 368,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 446,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      }
+    ],
+    "proposed_score_lower": 14.8,
+    "proposed_score_mid": 16.2,
+    "proposed_score_upper": 17.8,
+    "research_complete": true,
+    "researcher_summary": "2026년 HBM 계획물량과 준비된 생산능력에 고객수요·구매주문이 확보됐고, 일부 고객과 중장기 물량 계약이 완료됐으며 HBM4 생산여력이 완판됐다는 근거가 있어 물량 가시성은 강하다. 다년계약은 상당한 구속력이 있고 2026년 2분기 메모리 공급계약 중 장기계약 비중이 30%로 관측됐다. 다만 NDA 때문에 물량·가격조정·취소조건을 확인할 수 없고, LTA 가격 반영 지연과 고객 제품 일정 지연은 물량 가시성이 마진·인식시점 가시성으로 완전히 이어지는 것을 막는다. 이번 semantic rewrite에서는 계약 존재와 고객별 구매의무·가격·취소·allocation 조건의 확실성을 분리한다. source provider가 pending이고 새 accepted fact가 없으므로 supervisor gap을 미해결로 유지한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 계약 존재와 고객별 구매의무·가격·취소·allocation 조건의 확실성을 분리한다.",
+        "fact_row_index": 39,
+        "source_economic_mechanism": "2026년 HBM bit 생산 계획물량에 대해 이미 상당한 고객수요를 확보해 공급 확대 계획의 판매 가시성을 뒷받침한다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자가 2026년 HBM 생산 계획물량에 대해 상당한 고객수요를 이미 확보했다고 밝혔다",
+        "source_value_json": "\"significant customer demand secured for planned volumes\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 계약 존재와 고객별 구매의무·가격·취소·allocation 조건의 확실성을 분리한다.",
+        "fact_row_index": 54,
+        "source_economic_mechanism": "회사가 다년계약을 상당한 구속력이 있는 계약으로 설명한 점은 단순 수요 문의보다 높은 사업 안정성과 가시성을 시사하지만 구체적 구매의무·위약조건은 공개되지 않았다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 다년계약이 상당한 구속력을 갖춰 사업 안정성과 가시성을 높인다고 설명했다",
+        "source_value_json": "\"significant binding force supporting business stability and visibility\""
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 계약 존재와 고객별 구매의무·가격·취소·allocation 조건의 확실성을 분리한다.",
+        "fact_row_index": 216,
+        "source_economic_mechanism": "고객 NDA로 계약 세부내용을 공개할 수 없다는 명시적 한계는 계약 상대방·물량·가격·해지조건을 외부에서 검증할 수 없게 한다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 고객사 NDA 때문에 메모리 다년계약의 구체적 내용을 공개할 수 없다고 밝혔다",
+        "source_value_json": "\"specific contract terms undisclosed due to customer NDA\""
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 계약 존재와 고객별 구매의무·가격·취소·allocation 조건의 확실성을 분리한다.",
+        "fact_row_index": 229,
+        "source_economic_mechanism": "기사의 LTA 구조 설명은 장기 수익 안정성의 반대편에서 상승하는 시장가격을 즉시 반영하지 못해 단기 수익성이 제한될 수 있음을 지적한다.",
+        "source_period_json": "\"2026-04-07 분석\"",
+        "source_predicate": "메모리 LTA가 시장가격 상승을 즉시 반영하지 못해 단기 수익성에 부정적일 수 있다고 분석됐다",
+        "source_value_json": "\"market price increases not immediately reflected; negative for short-term profitability\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 계약 존재와 고객별 구매의무·가격·취소·allocation 조건의 확실성을 분리한다.",
+        "fact_row_index": 233,
+        "source_economic_mechanism": "메모리 공급계약 가운데 장기공급계약이 30%를 차지해 단기 주문보다 긴 고객 물량 결박이 현재 공급 계약의 의미 있는 비중을 차지한다.",
+        "source_period_json": "\"2026-Q2\"",
+        "source_predicate": "삼성전자의 2026년 2분기 메모리 공급계약 중 장기공급계약 비중이 30%로 알려졌다",
+        "source_value_json": "30"
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 계약 존재와 고객별 구매의무·가격·취소·allocation 조건의 확실성을 분리한다.",
+        "fact_row_index": 246,
+        "source_economic_mechanism": "AI 미래 수요를 바탕으로 일부 고객과 중장기 물량 계약을 완료했다는 회사 측 설명은 협의 단계보다 진전된 고객 공급 가시성을 제공한다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 중장기 메모리 물량 확보를 요청한 일부 고객사와 계약을 완료했다고 밝혔다",
+        "source_value_json": "\"contracts completed with some customers\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 계약 존재와 고객별 구매의무·가격·취소·allocation 조건의 확실성을 분리한다.",
+        "fact_row_index": 255,
+        "source_economic_mechanism": "HBM4 생산여력이 완판됐다는 회사 측 설명은 양산·출하를 넘어 현재 계획 생산능력이 고객 수요로 소진된 상태를 나타낸다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 HBM4 생산 여력이 완판된 상태라고 밝혔다",
+        "source_value_json": "\"production capacity sold out\""
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 계약 존재와 고객별 구매의무·가격·취소·allocation 조건의 확실성을 분리한다.",
+        "fact_row_index": 293,
+        "source_economic_mechanism": "엔비디아가 협력사 성과를 정기 점검해 물량 배분에 반영하고 AMD가 HBM4 우선공급 관계에서 공급 중단 방지 통제를 요구한다는 보도는 공급 신뢰가 고객 배정의 실제 조건으로 작동하는 경로를 제시한다.",
+        "source_period_json": "\"current as of 2026-04-15\"",
+        "source_predicate": "엔비디아는 협력사 성과 평가를 물량 배분에 반영하고 AMD는 삼성전자 HBM4 우선공급 관계에서 공급 중단 방지 관리를 요구하는 것으로 보도됐다",
+        "source_value_json": "\"NVIDIA periodic supplier review affects allocation; AMD requires interruption-prevention controls\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 계약 존재와 고객별 구매의무·가격·취소·allocation 조건의 확실성을 분리한다.",
+        "fact_row_index": 368,
+        "source_economic_mechanism": "준비한 HBM 생산능력에 고객 구매주문이 이미 확보돼 2026년 HBM 매출 전망이 단순 수요 문의보다 강한 주문 기반을 가진다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자가 준비한 2026년 HBM 생산능력에 대해 고객사 구매주문을 이미 확보했다고 설명했다",
+        "source_value_json": "\"customer purchase orders already secured for prepared capacity\""
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 계약 존재와 고객별 구매의무·가격·취소·allocation 조건의 확실성을 분리한다.",
+        "fact_row_index": 446,
+        "source_economic_mechanism": "고객사 제품 출하 지연으로 삼성전자의 2026년 HBM4 실적 기여가 당초 예상보다 축소됐다는 분석은 HBM4 생산·출하가 고객 최종제품 일정에 따라 같은 해 이익으로 전환되지 못할 수 있는 실행 counter다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "고객사 제품 출하 지연으로 삼성전자의 2026년 HBM4 실적 기여도가 당초 예상보다 축소됐다는 분석이 나왔다",
+        "source_value_json": "\"2026 contribution reduced versus prior expectation\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      39,
+      54,
+      216,
+      229,
+      233,
+      246,
+      255,
+      293,
+      368,
+      446
+    ],
+    "source_coverage": [
+      "ISSUER_GUIDANCE",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF",
+      "PUBLIC_BROKER_REPORT",
+      "TRUSTED_BUSINESS_MEDIA",
+      "COMPANYGUIDE"
+    ],
+    "structured_metric_row_indices": [
+      0
+    ],
+    "uncertainties": [
+      "고객별 물량, 계약가격, 선수금, 취소·위약 조건이 공개되지 않았다.",
+      "장기계약의 물량 고정성이 실제 마진 고정성으로 이어지는지는 확인되지 않았다.",
+      "고객 제품 일정과 정기 공급사 평가가 2026년 배분 및 매출 인식 시점을 바꿀 수 있다.",
+      "최신 EPS 리비전 방향은 하락이어서 영업이익 상향 신호와 혼재한다.",
+      "미해결 supervisor gap: 공개 가능한 HBM 계약기간·물량·가격조정·선수금·취소·위약 조건과 qualification·allocation 기준"
+    ],
+    "why_not_higher": "구매주문과 계약 존재는 강하지만 NDA로 구매의무·가격·취소조건을 확인할 수 없고 고객 일정 및 LTA 가격 지연 위험이 남는다. 계약 존재와 실제 구매의무·마진·인식시점 가시성을 구분한다.",
+    "why_not_lower": "발행사가 구매주문 확보, 중장기 계약 완료, 다년계약의 구속력과 HBM4 완판을 각각 확인해 단순 전망보다 높은 물량 가시성이 있다. 기존 current positive facts는 그대로 유효하다."
+  },
+  "payload_hash": "de4ddab399cd832f09c2b1b0e0c04908fe3e3513872b6684bff893ded7d07f2c",
+  "production_score_authority": false,
+  "prompt_hash": "36bee4dc03310a20ddbe2d8418333bc439a89c9ab9718ee4cfb3cb9b882d1a9c",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8c9b9956e53143724d1c4de8e2ab907d7dfad018bde355798ab8eb5c907920eb",
+  "response_id": "COLLABRESP-3da99274166af7ddbf407bd838704b1a56ae5aa6599d07a855ef144dd96a398d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

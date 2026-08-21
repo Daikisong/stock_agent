@@ -1,0 +1,266 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-65c3cf3e4f806edbe49283b9",
+        "rationale": "2025년 1분기 연결 주석 전체를 검토했다. 메모리 매출 19,069,038백만원은 prior 167의 동일 기간 메모리 매출 19.1조원과 같은 경제적 객체이고, DS 영업이익·전사 현금흐름·연구개발비는 메모리 단독 귀속이 없어 현재 objective의 신규 비중복 fact로 추가하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-67ccf2fe842715b3a40c8515",
+        "rationale": "기사 본문에서 prior 167과 구별되는 성과급 충당금 제외 메모리 영업이익, 트렌드포스의 범용 D램 가격 범위, 11.7Gbps HBM4의 북미 팹리스 납품 및 표준 제품 대비 가격 프리미엄 4건을 추출했다. 전사 잠정실적·DX 손익과 기존 fact로 포착된 일반 HBM4 납품 및 하반기 공급 전망은 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-688738d223f0b89f14eb53bb",
+        "rationale": "삼성전자 감사·검토 보고서 목록 페이지 전체를 검토했으나 보고서 링크명과 연도·분기 목록만 있고 현재 objective에 직접 연결되는 재무 수치나 메모리 사실 원문은 없었다. 문서 silence를 계약·실적 부재로 해석하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-6a7eec8aa906a696c97d50a4",
+        "rationale": "기사 본문에서 prior 167의 총 메모리 이익 추정과 구별되는 D램 영업이익 60조~70조원 범위를 추출했다. 이후 current fact로 대체된 일반 D램 판매·가격 전망, 기존 HBM 납품 증가, 타사·낸드·파운드리 수치는 중복 또는 범위 밖이라 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-67ccf2fe842715b3a40c8515",
+        "economic_mechanism": "성과급 충당금을 제거한 메모리 영업이익 추정은 반복적인 메모리 이익 전환력과 일회성 비용 효과를 분리한다.",
+        "exact_quote": "류형근 대신증권 연구원은 이날 보고서를 통해 “이익 극대화를 위한 공격적 가격 인상 정책을 펼쳐오면서 업계 최고의 D램 가격 상승률을 견인했다”라며 “성과급 충당금 제외 시 메모리반도체 영업이익은 109조원에 달했을 것”이라고 추정했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 총 메모리 이익 추정과 달리 성과급 충당금을 제외한 조정 이익 규모를 출처와 함께 직접 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION:EX_BONUS",
+        "normalized_object": "성과급 충당금 제외 메모리 영업이익 추정",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2 provisional result, excluding performance bonus provision",
+        "predicate": "대신증권은 성과급 충당금을 제외한 삼성전자 2026년 2분기 메모리반도체 영업이익을 109조원으로 추정했다",
+        "predicate_family": "MEMORY_OPERATING_PROFIT_EX_BONUS_PROVISION_ESTIMATE",
+        "primitive_tags": [
+          "memory_operating_profit",
+          "bonus_provision",
+          "adjusted_earnings"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "memory_operating_profit_adjusted_estimate",
+        "question_family_tags": [
+          "memory_operating_profit_adjusted_estimate",
+          "one_time_cost_normalization"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 2분기 성과급 충당금 제외 메모리 영업이익 추정",
+        "subject_id": "005930:MEMORY:Q2_OPERATING_PROFIT:EX_BONUS_PROVISION:2026",
+        "unit": "KRW million",
+        "value": 109000000
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-67ccf2fe842715b3a40c8515",
+        "economic_mechanism": "범용 D램 가격의 큰 폭 상승은 같은 판매량의 메모리 매출과 이익 전환을 확대한다.",
+        "exact_quote": "시장조사업체 트렌드포스에 따르면 올해 2분기 범용 D램 가격은 전 분기 대비 58~63%, 낸드 가격은 전 분기 대비 55~60% 올랐다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 약 60% 단일 추정과 구별되는 조사기관 귀속의 58~63% 범위를 제시해 가격 기반 이익 전환을 구체화한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:PRICING_POWER:2026-Q2",
+        "normalized_object": "범용 D램 가격 전분기 대비 상승률 범위",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2",
+        "predicate": "트렌드포스에 따르면 2026년 2분기 범용 D램 가격은 전분기 대비 58~63% 상승했다",
+        "predicate_family": "DRAM_PRICE_QOQ_GROWTH_RANGE",
+        "primitive_tags": [
+          "dram_price",
+          "qoq_growth_range",
+          "pricing_power"
+        ],
+        "product_family": "범용 D램",
+        "question_family_id": "dram_price_qoq_range_actual",
+        "question_family_tags": [
+          "dram_price_qoq_range_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "2026년 2분기 범용 D램 가격 전분기 대비 상승률",
+        "subject_id": "005930:DRAM:PRICE_QOQ_RANGE:2026-Q2",
+        "unit": "percent QoQ range",
+        "value": "58-63"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-67ccf2fe842715b3a40c8515",
+        "economic_mechanism": "고속 HBM4의 북미 팹리스 고객 지속 납품은 제품 양산이 고객 판매와 매출로 전환된 사실을 구체화한다.",
+        "exact_quote": "한화투자증권에 따르면 삼성전자는 올해 상반기부터 현존 최고 속도인 11.7Gbps 초고속 HBM4 제품을 북미 팹리스 고객사향으로 지속 납품해 왔으며, 하반기에는 고부가 제품의 공급 물량이 대폭 확대될 전망이다. 11.7Gbps HBM4는 표준 제품인 10.3Gbps 제품보다 가격대가 높게 형성돼 있어 하반기 실적의 질적 성장을 이끌 핵심 동력으로 꼽힌다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 HBM4 양산·일반 납품 사실보다 좁은 고속 SKU와 고객 유형의 실제 납품 전환을 확인한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:REVENUE_CONVERSION:11.7GBPS",
+        "normalized_object": "11.7Gbps HBM4 북미 팹리스 고객 지속 납품",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-H1 through 2026-07-07",
+        "predicate": "한화투자증권에 따르면 삼성전자는 2026년 상반기부터 11.7Gbps HBM4를 북미 팹리스 고객사에 지속 납품했다",
+        "predicate_family": "HBM4_11_7GBPS_CUSTOMER_DELIVERY",
+        "primitive_tags": [
+          "hbm4",
+          "11.7gbps",
+          "customer_delivery",
+          "fabless_customer"
+        ],
+        "product_family": "11.7Gbps HBM4",
+        "question_family_id": "hbm4_high_speed_customer_delivery",
+        "question_family_tags": [
+          "hbm4_high_speed_customer_delivery"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 11.7Gbps HBM4 북미 팹리스 고객 납품",
+        "subject_id": "005930:HBM4:11.7GBPS:NORTH_AMERICAN_FABLESS_DELIVERY:2026-H1",
+        "unit": "delivery status",
+        "value": "continuous delivery to North American fabless customer"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.88,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-67ccf2fe842715b3a40c8515",
+        "economic_mechanism": "11.7Gbps HBM4의 표준 10.3Gbps 제품 대비 높은 가격대는 고속 제품 믹스가 매출과 수익성에 기여하는 경로다.",
+        "exact_quote": "한화투자증권에 따르면 삼성전자는 올해 상반기부터 현존 최고 속도인 11.7Gbps 초고속 HBM4 제품을 북미 팹리스 고객사향으로 지속 납품해 왔으며, 하반기에는 고부가 제품의 공급 물량이 대폭 확대될 전망이다. 11.7Gbps HBM4는 표준 제품인 10.3Gbps 제품보다 가격대가 높게 형성돼 있어 하반기 실적의 질적 성장을 이끌 핵심 동력으로 꼽힌다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고속 HBM4 판매가 일반 HBM4보다 높은 가격대로 전환된다는 제품 믹스 경제성을 직접 확인한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:PRICING_POWER:11.7GBPS",
+        "normalized_object": "11.7Gbps HBM4의 표준 제품 대비 가격 프리미엄",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 through 2026-07-07",
+        "predicate": "11.7Gbps HBM4의 가격대는 표준 10.3Gbps HBM4보다 높게 형성됐다",
+        "predicate_family": "HBM4_HIGH_SPEED_SKU_PRICE_PREMIUM",
+        "primitive_tags": [
+          "hbm4",
+          "11.7gbps",
+          "price_premium",
+          "product_mix"
+        ],
+        "product_family": "11.7Gbps HBM4",
+        "question_family_id": "hbm4_high_speed_price_premium",
+        "question_family_tags": [
+          "hbm4_high_speed_price_premium"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 11.7Gbps HBM4의 표준 HBM4 대비 가격 프리미엄",
+        "subject_id": "005930:HBM4:11.7GBPS:PRICE_PREMIUM:2026",
+        "unit": "qualitative price premium",
+        "value": "higher price band than standard 10.3Gbps HBM4"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6a7eec8aa906a696c97d50a4",
+        "economic_mechanism": "D램 영업이익 범위는 메모리 총이익 중 D램 가격·판매 확대가 기여할 것으로 예상된 규모를 제품 단위로 분리한다.",
+        "exact_quote": "증권가에서는 메모리 사업부에서 D램 약 60조∼70조원, 낸드 약 20조원에 달하는 영업이익을 낸 것으로 전망한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 총 메모리 영업이익 추정과 구별되는 D램 제품 단위의 이익 기여 범위를 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:VALUATION_EARNINGS_BRIDGE:2026-Q2",
+        "normalized_object": "D램 영업이익 추정 범위",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2E",
+        "predicate": "증권가는 삼성전자 메모리 사업부의 2026년 2분기 D램 영업이익을 약 60조~70조원으로 전망했다",
+        "predicate_family": "DRAM_OPERATING_PROFIT_ESTIMATE_RANGE",
+        "primitive_tags": [
+          "dram_operating_profit",
+          "earnings_estimate",
+          "product_profit_attribution"
+        ],
+        "product_family": "D램",
+        "question_family_id": "dram_operating_profit_estimate",
+        "question_family_tags": [
+          "dram_operating_profit_estimate"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 D램 2026년 2분기 영업이익 추정",
+        "subject_id": "005930:DRAM:OPERATING_PROFIT_ESTIMATE:2026-Q2",
+        "unit": "KRW million range",
+        "value": "60000000-70000000"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "5a428d232f7eb180fa56618b29e4024984e4127a7b52f67848a3d22733de77a8",
+  "production_score_authority": false,
+  "prompt_hash": "16b3a87a0e107366c25e38cdaf3b90dbfcb7dbf30a97b1f5d23def2d2b3d8cf6",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-dedc1bcb23358c6a3b104e6f66c36f0a5b9dcd9858b8f0b8d51a3389ee914e56",
+  "response_id": "COLLABRESP-3bb6176bc0d5fb35fed4f3468f40d58b603d68a72a0a45ce24993a4b9007add1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

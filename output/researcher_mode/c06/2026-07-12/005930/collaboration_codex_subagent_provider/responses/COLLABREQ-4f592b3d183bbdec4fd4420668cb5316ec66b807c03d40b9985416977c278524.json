@@ -1,0 +1,63 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      10.0,
+      14.5
+    ],
+    "anchor_comparisons": [
+      "Current facts materially exceed the counter anchor midpoint of 5.43 because sold-out HBM4 capacity, stable yield and a high-speed price premium are directly represented.",
+      "Current facts remain well below the positive anchor's near-maximum 19-point band because much of the scarcity plane is memory-wide and neither HBM stage capacity nor contract-backed duration and cash margin are quantified."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0b6b02299ea60f931cf17c4e",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-cc2cfc3b24f0987278efc0b7",
+      "EFACT-f05a97edeb8f85d49353381e"
+    ],
+    "disagreements": [
+      "The analyst position is optimistic on persistence because it leans on mixed-memory scarcity indicators.",
+      "The skeptic position discounts direct sold-out HBM4 capacity and product-premium evidence more than the current record warrants."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "proposed_points": 12.2,
+    "rationale": "On the 19-point scale, the record supports a middle-to-upper band between the ordinal anchors. Direct HBM4 evidence warrants a substantial value, while memory-wide DRAM pricing, utilization and inventory must be discounted and the expected capital response and slowing price growth keep duration uncertain. The calibrated center remains close to the research memo midpoint.",
+    "support_fact_ids": [
+      "EFACT-13d6da3b116a9a0ad8043f62",
+      "EFACT-1df441a716b0204f7b107e70",
+      "EFACT-3c095c9436a1460d04797e97",
+      "EFACT-477c6cb45b164685a2a345e8",
+      "EFACT-4e0d88dc056c9e8dcd45ea47",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-a2243488e8b8f0197fd8bd56",
+      "EFACT-b676fc3afacb1117c1ba65be",
+      "EFACT-fd86be3f3b91aa151f046cfb"
+    ],
+    "why_not_higher": "Calibration cannot approach the near-maximal positive anchor without stage-level HBM capacity, backlog, allocation, realized ASP and durable cash margin.",
+    "why_not_lower": "Calibration should remain clearly above the counter band because current HBM4 capacity is reported sold out and stable yield and product-price premium are present."
+  },
+  "payload_hash": "e841ac9ae6218e9d2646d55147863a7180fad1fce8daa192d24c94fbdf8636d6",
+  "production_score_authority": false,
+  "prompt_hash": "e063b81f29387dfd480064e885668527a50d0e954bb0c8fc961cb8d7766ccacf",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4f592b3d183bbdec4fd4420668cb5316ec66b807c03d40b9985416977c278524",
+  "response_id": "COLLABRESP-f9963d7fb2577a9efc023e222476b493d55259e90d27ae520af9739879712c8c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1177,6 +1177,33 @@ test_case_library_ignores_non_finite_numeric_fields (test_e2r_case_library.E2RCa
 test_case_library_record_validates_required_fields (test_e2r_case_library.E2RCaseLibraryTests) ... ok
 test_case_mining_dry_run_writes_planned_searches (test_e2r_case_library.E2RCaseLibraryTests) ... ok
 test_scoring_modules_do_not_import_case_library (test_e2r_case_library.E2RCaseLibraryTests) ... ok
+test_disposition_reopens_only_on_real_state_change (test_e2r_evidence_gap_fixpoint.EvidenceGapDispositionTest) ... ok
+test_fixpoint_creates_unresolved_gap_disposition (test_e2r_evidence_gap_fixpoint.EvidenceGapDispositionTest) ... ok
+test_quarantined_request_not_counted_as_current_pending (test_e2r_evidence_gap_fixpoint.EvidenceGapDispositionTest) ... ok
+test_supervisor_paraphrase_does_not_reopen_disposition (test_e2r_evidence_gap_fixpoint.EvidenceGapDispositionTest) ... ok
+test_different_core_fact_need_does_not_collide (test_e2r_evidence_gap_fixpoint.EvidenceGapIdentityTest) ... ok
+test_evidence_gap_key_is_paraphrase_invariant (test_e2r_evidence_gap_fixpoint.EvidenceGapIdentityTest) ... ok
+test_fact_and_source_roster_hashes_ignore_row_order (test_e2r_evidence_gap_fixpoint.EvidenceGapIdentityTest) ... ok
+test_fallback_objective_identity_uses_only_stable_structure (test_e2r_evidence_gap_fixpoint.EvidenceGapIdentityTest) ... ok
+test_prompt_hash_does_not_define_gap_identity (test_e2r_evidence_gap_fixpoint.EvidenceGapIdentityTest) ... ok
+test_core_score_blocker_keeps_score_invalid (test_e2r_evidence_gap_fixpoint.EvidenceGapMaterialityTest) ... ok
+test_corroboration_gap_does_not_zero_fcf_revision_valuation (test_e2r_evidence_gap_fixpoint.EvidenceGapMaterialityTest) ... ok
+test_corroboration_gap_only_caps_affected_components (test_e2r_evidence_gap_fixpoint.EvidenceGapMaterialityTest) ... ok
+test_crossing_stage_reopens_only_when_new_route_exists (test_e2r_evidence_gap_fixpoint.EvidenceGapMaterialityTest) ... ok
+test_llm_has_no_total_score_or_stage_authority (test_e2r_evidence_gap_fixpoint.EvidenceGapMaterialityTest) ... ok
+test_monitoring_gap_does_not_block_component_completion (test_e2r_evidence_gap_fixpoint.EvidenceGapMaterialityTest) ... ok
+test_score_valid_can_be_true_with_corroboration_cap (test_e2r_evidence_gap_fixpoint.EvidenceGapMaterialityTest) ... ok
+test_unconfirmed_corroboration_can_cap_upper_stage (test_e2r_evidence_gap_fixpoint.EvidenceGapMaterialityTest) ... ok
+test_000660_snapshot_completes_7_components_and_21_judges (test_e2r_evidence_gap_fixpoint.Frozen000660Gate1AcceptanceTest) ... ok
+test_000660_snapshot_reaches_component_memos_after_fixpoint (test_e2r_evidence_gap_fixpoint.Frozen000660Gate1AcceptanceTest) ... ok
+test_identical_000660_rerun_creates_no_new_query (test_e2r_evidence_gap_fixpoint.Frozen000660Gate1AcceptanceTest) ... ok
+test_identical_000660_rerun_has_zero_score_stage_variance (test_e2r_evidence_gap_fixpoint.Frozen000660Gate1AcceptanceTest) ... ok
+test_fixpoint_does_not_create_source_absence_fact (test_e2r_evidence_gap_fixpoint.SemanticNoNewRouteFixpointTest) ... ok
+test_new_source_direction_prevents_fixpoint (test_e2r_evidence_gap_fixpoint.SemanticNoNewRouteFixpointTest) ... ok
+test_parser_failure_does_not_count_as_no_route (test_e2r_evidence_gap_fixpoint.SemanticNoNewRouteFixpointTest) ... ok
+test_provider_error_does_not_count_as_no_route (test_e2r_evidence_gap_fixpoint.SemanticNoNewRouteFixpointTest) ... ok
+test_third_same_gap_query_is_hard_failure (test_e2r_evidence_gap_fixpoint.SemanticNoNewRouteFixpointTest) ... ok
+test_two_independent_empty_confirmations_close_same_gap (test_e2r_evidence_gap_fixpoint.SemanticNoNewRouteFixpointTest) ... ok
 test_all_mandatory_operational_artifacts_exist (test_e2r_evidence_to_score_final_acceptance.E2REvidenceToScoreFinalAcceptanceTests) ... ok
 test_cutover_and_self_repair_exact_labels_are_present (test_e2r_evidence_to_score_final_acceptance.E2REvidenceToScoreFinalAcceptanceTests) ... ok
 test_final_readiness_requires_every_goal_audit (test_e2r_evidence_to_score_final_acceptance.E2REvidenceToScoreFinalAcceptanceTests) ... ok
@@ -1319,8 +1346,8 @@ test_candidate_materiality_scope_attestation_binds_official_request (test_e2r_v5
 test_candidate_scope_attestation_fails_closed_on_request_tamper (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
 test_clean_resume_recovers_exact_peer_retry_after_primary_quarantine (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
 test_clean_resume_recovers_fact_pagination_origin_before_page_two (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
-test_concurrent_import_is_atomic_first_writer_wins (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... backfill_plan=/tmp/tmpm0rlsj3l/backfill_plan.json
-{"as_of_date": "2026-07-01", "blockers": ["CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE"], "canonical_stage": "0", "command": "run_e2r_census_mode", "command_hashes": {"commit_hash": "13bf706cc7567a0355dc42bfb729aa044c3ed07d", "config_hash": "457b61686be8ada34510692aa0397f98b22be4ba2ec1eedffbb89c018ecf1ab3", "corpus_hash": "f101882840c61f1d0250a3f50b2ad7307a834e15672ebc0a38776481e560d0b8", "dirty_status_hash": "856ae4337809c24ab391885df06241f206b44e3580b39e6f8536cbcca4a8afab", "memory_hash": "98341bf8a27880cd5bee065340a3a16063986f74970b5899db4bca9f17336e12", "prompt_hash": "607819cc776d804ee9188351b88f09cd27e99ba9c42fda6df3c3e195424c7d45", "recipe_hash": "0ba8645a35367b4b56d316fa5c08ed3a40bd53d93a5c3bc8683e3a869e134ba0", "repo_dirty": true, "source_hash": "ec499d62a33b3face216285f6771a93131e6977789c867fec3fba4f65e967ea9"}, "command_run_id": "COMMAND-ca5a2022367a38ff1cfc3d82", "mode": "census_selective_deep", "output_paths": {"command_audit": "output/test_legacy_cli_lockout/command_run_reproducibility_audit.json", "command_manifest": "output/test_legacy_cli_lockout/command_run_manifest.json", "pending": "output/test_legacy_cli_lockout/current_operation_source_pending.json"}, "production_runtime_ready": false, "raw_reference_score": null, "schema_version": "e2r_current_operation_source_pending_v1", "score_valid": false, "status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY", "universe": "krx"}
+test_concurrent_import_is_atomic_first_writer_wins (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... backfill_plan=/tmp/tmpkfh4j7oz/backfill_plan.json
+{"as_of_date": "2026-07-01", "blockers": ["CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE"], "canonical_stage": "0", "command": "run_e2r_census_mode", "command_hashes": {"commit_hash": "9457f0d00148034fdbad9eecd6d7d4279ab784ef", "config_hash": "457b61686be8ada34510692aa0397f98b22be4ba2ec1eedffbb89c018ecf1ab3", "corpus_hash": "f101882840c61f1d0250a3f50b2ad7307a834e15672ebc0a38776481e560d0b8", "dirty_status_hash": "f9948f5fdb49a479a34ddad56e7e1d53753185d7766ac6841913cf407d04e5f7", "memory_hash": "98341bf8a27880cd5bee065340a3a16063986f74970b5899db4bca9f17336e12", "prompt_hash": "29ecad910f98ae9e02576b9b190cfadecf17c1c87ea2640c6fbe6bc6ecdd5ce8", "recipe_hash": "5dcb85453c473204a5f9ffcdff6aa917daa7c9f1902cd8392cc0e5be237def9d", "repo_dirty": true, "source_hash": "e5e522cc5dddc5c901bde010302232aeaee5ddf3004555f732c71365e2107555"}, "command_run_id": "COMMAND-23581769282e64fbf1e9f5ea", "mode": "census_selective_deep", "output_paths": {"command_audit": "output/test_legacy_cli_lockout/command_run_reproducibility_audit.json", "command_manifest": "output/test_legacy_cli_lockout/command_run_manifest.json", "pending": "output/test_legacy_cli_lockout/current_operation_source_pending.json"}, "production_runtime_ready": false, "raw_reference_score": null, "schema_version": "e2r_current_operation_source_pending_v1", "score_valid": false, "status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY", "universe": "krx"}
 {"canonical_readiness_eligible": false, "canonical_ready_label_allowed": false, "command": "run_e2r_census_v3_until_pass", "reason": "legacy command requires explicit diagnostic opt-in", "replacement": "python -m e2r.cli.run_e2r_current_operation", "status": "LEGACY_DIAGNOSTIC_ONLY"}
 INVALID_PARTIAL_OUTPUT
 NOT_READY
@@ -1331,10 +1358,10 @@ ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 dry_run=True
-planned_searches=/tmp/tmpkz0y7id1/out/planned_searches.json
-summary=/tmp/tmpkz0y7id1/out/case_coverage_summary.md
-matrix=/tmp/tmpkz0y7id1/out/archetype_case_matrix.csv
-weights=/tmp/tmpkz0y7id1/out/recommended_score_weights.md
+planned_searches=/tmp/tmpmp2ugjlx/out/planned_searches.json
+summary=/tmp/tmpmp2ugjlx/out/case_coverage_summary.md
+matrix=/tmp/tmpmp2ugjlx/out/archetype_case_matrix.csv
+weights=/tmp/tmpmp2ugjlx/out/recommended_score_weights.md
 ok
 test_dedicated_importer_cli_writes_only_validated_response_namespace (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
 test_default_composite_primary_keeps_normal_codex_cache_identity (test_e2r_v5_collaboration_provider_bridge.E2RV5CollaborationProviderBridgeTests) ... ok
@@ -1932,6 +1959,7 @@ test_legacy_v2_epoch_two_reuse_recovers_prior_projection_from_provider_receipt (
 test_material_score_disagreement_reaches_supervisor_and_reopens_only_its_memo (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_multi_objective_label_without_raw_generation_lineage_still_blocks (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_no_new_query_marker_rejects_route_true_without_actionable_direction (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
+test_nonretryable_duplicate_zero_result_does_not_reopen_complete_memos (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_parser_failure_and_source_absence_are_distinct (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_phase87_audit_is_reproducible_and_complete (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_prior_checkpoint_files_round_trip_and_keep_pending_reviewer_errors (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
@@ -2141,12 +2169,14 @@ test_large_stage_fact_plane_materializes_exhaustive_bounded_chunks (test_e2r_v5_
 test_mapping_schema_forbids_score_and_stage_output_fields (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
 test_one_claim_to_many_facts_maps_only_selected_fact (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
 test_provider_failure_is_pending_without_score_or_stage_fabrication (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
+test_research_in_progress_is_not_final_stage0 (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
 test_research_incomplete_is_not_disguised_as_stage0_and_skips_provider (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
 test_samsung_scale_fact_counts_remain_loss_accounted (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
 test_stage_chunk_collaboration_wait_fans_out_but_other_errors_fail_fast (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
 test_stage_chunk_rejects_omission_duplicate_scope_and_direction_tamper (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
 test_stage_chunk_union_is_order_invariant_and_semantic_hash_sensitive (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
 test_stage_projection_accounts_every_eligibility_partition (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
+test_stagecourt_uses_deterministic_component_vector (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
 test_stagecourt_writes_required_atomic_leaf_and_trace (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
 test_unknown_fact_row_mapping_is_pending_instead_of_silent_drop (test_e2r_v5_stagecourt.E2RV5StageCourtTests) ... ok
 test_actual_equity_and_scenario_income_derive_forward_book_and_pb (test_e2r_v5_structured_financial_engine.E2RV5StructuredFinancialEngineTests) ... ok
@@ -3444,7 +3474,7 @@ test_every_blocked_candidate_has_memory_followup_task (test_research_memory_foll
 test_runtime_planner_payload_excludes_price_path_outcome_metrics (test_research_memory_no_future_outcome_in_prompt.ResearchMemoryNoFutureOutcomeInPromptTests) ... ok
 test_every_record_has_source_quality_and_never_changes_production_score (test_research_reverse_case_extractor.ResearchReverseCaseExtractorTests) ... ok
 test_every_registered_archetype_has_pattern_summary_or_explicit_gap (test_research_reverse_case_extractor.ResearchReverseCaseExtractorTests) ... ok
-test_generated_goal4_status_artifacts_are_not_reingested_as_research (test_research_reverse_case_extractor.ResearchReverseCaseExtractorTests) ... /home/eorb915/projects/stock_agent/tests/test_research_reverse_case_extractor.py:42: DeprecationWarning: e2r.research_reverse is deprecated; use e2r.research_brain.corpus
+test_generated_goal4_status_artifacts_are_not_reingested_as_research (test_research_reverse_case_extractor.ResearchReverseCaseExtractorTests) ... /home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/tests/test_research_reverse_case_extractor.py:42: DeprecationWarning: e2r.research_reverse is deprecated; use e2r.research_brain.corpus
   files = {path.as_posix() for path in scan_research_files(Path("."))}
 ok
 test_mandatory_archetypes_have_research_patterns (test_research_reverse_case_extractor.ResearchReverseCaseExtractorTests) ... ok
@@ -3463,7 +3493,7 @@ test_source_route_patterns_exist_for_mandatory_required_primitives (test_researc
 test_balanced_candidate_selection_audit_prioritizes_missing_canaries (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... ok
 test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... {
   "all_failure_classes_resolved": true,
-  "audit_hash": "19a046313e672209554243a19e301e00517e277922c62cdf481feccbb9dd6de9",
+  "audit_hash": "d1adebed5d2795ef5c9a58ecf46f079e7fd55cdb43cfb85b85b7db84fe936e77",
   "caller_attestation_trusted": false,
   "critical_count_sum": 0,
   "critical_counts": {
@@ -3508,10 +3538,10 @@ test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to
       "clean_rerun_verified": true,
       "failure_class": "RECEIPT_LINEAGE_BROKEN",
       "file_path": "src/e2r/example.py",
-      "first_parent": "13c754e7795e4cbb54abd08b20409594fea77e8d",
+      "first_parent": "bc45972f0744295490b73917522fc5d1e909481d",
       "focused_tests_verified": true,
       "iteration_id": "E2RREPAIR-0123456789abcdef01234567",
-      "patch_commit": "a8c0bc54be3b0c1571c9a421ddda915bcb8f4cc4",
+      "patch_commit": "2d17bc6eb529237b8e6adc996ec323bd83987344",
       "patch_commit_verified": true,
       "remaining_blocker_count": 0,
       "resolved": true,
@@ -3521,7 +3551,7 @@ test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to
   "iteration_count": 1,
   "iteration_roster_hash": "fd51155a695662b86207e47b411efb4cff4890316e2e4ba93ca43b01ffede8e2",
   "journal_path": "self_repair_iterations.jsonl",
-  "journal_sha256": "7a71fcfa44406ea63df2a41350f3705feca126145e9f63e4c34593980f984433",
+  "journal_sha256": "d0cd41e75f0a0d21c9ed8dd8016f02bc4afc26acb0c81a3af61f0fe585fb78cd",
   "production_readiness_authority": false,
   "schema_version": "e2r_v6_operational_self_repair_audit_v1",
   "score_or_stage_authority": false,
@@ -3545,11 +3575,11 @@ test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to
     "TRIGGER_LANE_DISCONNECTED": 0
   }
 }
-{"audit": {"all_failure_classes_resolved": true, "audit_hash": "19a046313e672209554243a19e301e00517e277922c62cdf481feccbb9dd6de9", "caller_attestation_trusted": false, "critical_count_sum": 0, "critical_counts": {"after_hash_mismatch_count": 0, "before_hash_mismatch_count": 0, "clean_rerun_failure_count": 0, "duplicate_iteration_id_count": 0, "focused_test_failure_count": 0, "invalid_iteration_count": 0, "journal_empty_count": 0, "journal_missing_count": 0, "journal_parse_error_count": 0, "remaining_blocker_count": 0, "unknown_failure_class_count": 0, "unresolved_failure_class_count": 0, "unverifiable_patch_commit_count": 0}, "failure_class_counts": {"ABSOLUTE_PATH_IDENTITY": 0, "ARTIFACT_LIFECYCLE_CONTRADICTION": 0, "CLEAN_CLONE_DEPENDENCY": 0, "CROSS_ARCHETYPE_RESEARCH_INCOMPLETE": 0, "CURRENT_UNIVERSE_MATERIALIZATION_FAILED": 0, "FULL_TEST_STALE": 0, "L5_RESEARCH_INCOMPLETE": 0, "NATURAL_CANDIDATE_ZERO": 0, "PROVIDER_ROUTE_MISMATCH": 0, "RECEIPT_LINEAGE_BROKEN": 1, "RECEIPT_VALUE_MISSING": 0, "SCORE_STAGE_ATOMICITY_FAILURE": 0, "SECRET_LEAK": 0, "TARGET_SPECIFIC_OVERFIT": 0, "TRIGGER_LANE_DISCONNECTED": 0}, "fixed_iteration_count_is_completion_authority": false, "iteration_audits": [{"after_hash_recomputed": "9ef99f7ec60e17fecea712bc2edd911ab8c7eb5da960a24b36b3251755567a1d", "after_hash_verified": true, "before_hash_recomputed": "a94be6152ca489c4b76613643550f13f4cab89adcbe1aaa09c2a23a91273622d", "before_hash_verified": true, "clean_rerun_verified": true, "failure_class": "RECEIPT_LINEAGE_BROKEN", "file_path": "src/e2r/example.py", "first_parent": "13c754e7795e4cbb54abd08b20409594fea77e8d", "focused_tests_verified": true, "iteration_id": "E2RREPAIR-0123456789abcdef01234567", "patch_commit": "a8c0bc54be3b0c1571c9a421ddda915bcb8f4cc4", "patch_commit_verified": true, "remaining_blocker_count": 0, "resolved": true, "shape_valid": true}], "iteration_count": 1, "iteration_roster_hash": "fd51155a695662b86207e47b411efb4cff4890316e2e4ba93ca43b01ffede8e2", "journal_path": "self_repair_iterations.jsonl", "journal_sha256": "7a71fcfa44406ea63df2a41350f3705feca126145e9f63e4c34593980f984433", "production_readiness_authority": false, "schema_version": "e2r_v6_operational_self_repair_audit_v1", "score_or_stage_authority": false, "status": "E2R_V6_OPERATIONAL_SELF_REPAIR_PASS", "test_mode": false, "unresolved_failure_class_counts": {"ABSOLUTE_PATH_IDENTITY": 0, "ARTIFACT_LIFECYCLE_CONTRADICTION": 0, "CLEAN_CLONE_DEPENDENCY": 0, "CROSS_ARCHETYPE_RESEARCH_INCOMPLETE": 0, "CURRENT_UNIVERSE_MATERIALIZATION_FAILED": 0, "FULL_TEST_STALE": 0, "L5_RESEARCH_INCOMPLETE": 0, "NATURAL_CANDIDATE_ZERO": 0, "PROVIDER_ROUTE_MISMATCH": 0, "RECEIPT_LINEAGE_BROKEN": 0, "RECEIPT_VALUE_MISSING": 0, "SCORE_STAGE_ATOMICITY_FAILURE": 0, "SECRET_LEAK": 0, "TARGET_SPECIFIC_OVERFIT": 0, "TRIGGER_LANE_DISCONNECTED": 0}}, "status": "PASS"}
+{"audit": {"all_failure_classes_resolved": true, "audit_hash": "d1adebed5d2795ef5c9a58ecf46f079e7fd55cdb43cfb85b85b7db84fe936e77", "caller_attestation_trusted": false, "critical_count_sum": 0, "critical_counts": {"after_hash_mismatch_count": 0, "before_hash_mismatch_count": 0, "clean_rerun_failure_count": 0, "duplicate_iteration_id_count": 0, "focused_test_failure_count": 0, "invalid_iteration_count": 0, "journal_empty_count": 0, "journal_missing_count": 0, "journal_parse_error_count": 0, "remaining_blocker_count": 0, "unknown_failure_class_count": 0, "unresolved_failure_class_count": 0, "unverifiable_patch_commit_count": 0}, "failure_class_counts": {"ABSOLUTE_PATH_IDENTITY": 0, "ARTIFACT_LIFECYCLE_CONTRADICTION": 0, "CLEAN_CLONE_DEPENDENCY": 0, "CROSS_ARCHETYPE_RESEARCH_INCOMPLETE": 0, "CURRENT_UNIVERSE_MATERIALIZATION_FAILED": 0, "FULL_TEST_STALE": 0, "L5_RESEARCH_INCOMPLETE": 0, "NATURAL_CANDIDATE_ZERO": 0, "PROVIDER_ROUTE_MISMATCH": 0, "RECEIPT_LINEAGE_BROKEN": 1, "RECEIPT_VALUE_MISSING": 0, "SCORE_STAGE_ATOMICITY_FAILURE": 0, "SECRET_LEAK": 0, "TARGET_SPECIFIC_OVERFIT": 0, "TRIGGER_LANE_DISCONNECTED": 0}, "fixed_iteration_count_is_completion_authority": false, "iteration_audits": [{"after_hash_recomputed": "9ef99f7ec60e17fecea712bc2edd911ab8c7eb5da960a24b36b3251755567a1d", "after_hash_verified": true, "before_hash_recomputed": "a94be6152ca489c4b76613643550f13f4cab89adcbe1aaa09c2a23a91273622d", "before_hash_verified": true, "clean_rerun_verified": true, "failure_class": "RECEIPT_LINEAGE_BROKEN", "file_path": "src/e2r/example.py", "first_parent": "bc45972f0744295490b73917522fc5d1e909481d", "focused_tests_verified": true, "iteration_id": "E2RREPAIR-0123456789abcdef01234567", "patch_commit": "2d17bc6eb529237b8e6adc996ec323bd83987344", "patch_commit_verified": true, "remaining_blocker_count": 0, "resolved": true, "shape_valid": true}], "iteration_count": 1, "iteration_roster_hash": "fd51155a695662b86207e47b411efb4cff4890316e2e4ba93ca43b01ffede8e2", "journal_path": "self_repair_iterations.jsonl", "journal_sha256": "d0cd41e75f0a0d21c9ed8dd8016f02bc4afc26acb0c81a3af61f0fe585fb78cd", "production_readiness_authority": false, "schema_version": "e2r_v6_operational_self_repair_audit_v1", "score_or_stage_authority": false, "status": "E2R_V6_OPERATIONAL_SELF_REPAIR_PASS", "test_mode": false, "unresolved_failure_class_counts": {"ABSOLUTE_PATH_IDENTITY": 0, "ARTIFACT_LIFECYCLE_CONTRADICTION": 0, "CLEAN_CLONE_DEPENDENCY": 0, "CROSS_ARCHETYPE_RESEARCH_INCOMPLETE": 0, "CURRENT_UNIVERSE_MATERIALIZATION_FAILED": 0, "FULL_TEST_STALE": 0, "L5_RESEARCH_INCOMPLETE": 0, "NATURAL_CANDIDATE_ZERO": 0, "PROVIDER_ROUTE_MISMATCH": 0, "RECEIPT_LINEAGE_BROKEN": 0, "RECEIPT_VALUE_MISSING": 0, "SCORE_STAGE_ATOMICITY_FAILURE": 0, "SECRET_LEAK": 0, "TARGET_SPECIFIC_OVERFIT": 0, "TRIGGER_LANE_DISCONNECTED": 0}}, "status": "PASS"}
 {
   "status": "NOT_READY",
   "paths": {
-    "summary": "/tmp/tmpvtpy93qt/out/summary.json"
+    "summary": "/tmp/tmpxdan7dga/out/summary.json"
   }
 }
 ok
@@ -7310,17 +7340,17 @@ test_worldex_audit_opinion_with_samsung_customer_mention_does_not_create_samsung
 test_zoom_like_one_off_demand_news_is_marked_one_off (test_web_research_runner.WebResearchRunnerTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 7174 tests in 797.943s
+Ran 7204 tests in 546.350s
 
 OK
 {
-  "acceptance_report_path": "/home/eorb915/projects/stock_agent/output/tmp74ih3k28/research_to_runtime_acceptance_report.md",
-  "all_archetype_next_attempt_plan_path": "/home/eorb915/projects/stock_agent/output/tmp74ih3k28/all_archetype_next_runtime_attempt_plan_2026-07-05.json",
+  "acceptance_report_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/tmp3jh1_awp/research_to_runtime_acceptance_report.md",
+  "all_archetype_next_attempt_plan_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/tmp3jh1_awp/all_archetype_next_runtime_attempt_plan_2026-07-05.json",
   "all_archetype_next_attempt_plan_row_count": 36,
   "all_archetype_next_source_task_count": 126,
-  "all_archetype_runtime_execution_manifest_path": "/home/eorb915/projects/stock_agent/output/tmp74ih3k28/all_archetype_runtime_execution_manifest_2026-07-05.json",
+  "all_archetype_runtime_execution_manifest_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/tmp3jh1_awp/all_archetype_runtime_execution_manifest_2026-07-05.json",
   "all_archetype_runtime_execution_seed_event_count": 126,
-  "all_archetype_runtime_status_matrix_path": "/home/eorb915/projects/stock_agent/output/tmp74ih3k28/all_archetype_runtime_status_matrix_2026-07-05.json",
+  "all_archetype_runtime_status_matrix_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/tmp3jh1_awp/all_archetype_runtime_status_matrix_2026-07-05.json",
   "all_archetype_runtime_status_row_count": 36,
   "blockers": [
     "FULL_THESIS_ARCHETYPE_DIVERSITY_BELOW_MINIMUM",
@@ -7333,15 +7363,15 @@ OK
   "legacy_internal_meaningful_pass": false,
   "mandatory_replay_accepted_claim_count": 6,
   "mandatory_replay_source_proxy_repair_task_count": 18,
-  "matrix_path": "/home/eorb915/projects/stock_agent/output/tmp74ih3k28/research_to_runtime_parity_matrix_2026-07-05.json",
+  "matrix_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/tmp3jh1_awp/research_to_runtime_parity_matrix_2026-07-05.json",
   "max_iterations_requested": 1,
   "mode": "full_thesis_balanced",
   "planner_bias_status": "PLANNER_ARCHETYPE_ROUTING_BIAS_PASS",
-  "readiness_verdict_path": "/home/eorb915/projects/stock_agent/output/tmp74ih3k28/research_to_runtime_readiness_verdict.md",
+  "readiness_verdict_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/tmp3jh1_awp/research_to_runtime_readiness_verdict.md",
   "research_case_count": 11501,
   "research_memory_card_count": 36,
   "research_memory_followup_task_count": 0,
-  "root_cause_path": "/home/eorb915/projects/stock_agent/output/tmp74ih3k28/research_to_runtime_root_cause_2026-07-05.md",
+  "root_cause_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/tmp3jh1_awp/research_to_runtime_root_cause_2026-07-05.md",
   "self_repair_enabled": false,
   "self_repair_history": [
     {
@@ -7362,7 +7392,7 @@ OK
         "C24_BIO_TRIAL_DATA_EVENT_RISK",
         "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
       ],
-      "output_root": "/tmp/tmp6a2v7i1l/runtime",
+      "output_root": "/tmp/tmpe52hlq1u/runtime",
       "required_positive_missing_rate": 0.0
     }
   ],
@@ -7370,8 +7400,8 @@ OK
   "self_repair_stop_reason": null,
   "source_route_pattern_count": 2049,
   "status": "LEGACY_DIAGNOSTIC_ONLY",
-  "summary_path": "/home/eorb915/projects/stock_agent/output/tmp74ih3k28/research_to_runtime_parity_matrix_2026-07-05.md",
-  "v2_audit_path": "/home/eorb915/projects/stock_agent/output/tmp74ih3k28/census_mode_v4_full_thesis_evidence_completion_audit_v2.json"
+  "summary_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/tmp3jh1_awp/research_to_runtime_parity_matrix_2026-07-05.md",
+  "v2_audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/tmp3jh1_awp/census_mode_v4_full_thesis_evidence_completion_audit_v2.json"
 }
 {
   "acceptance_report_path": "docs/operational/fake_acceptance.md",

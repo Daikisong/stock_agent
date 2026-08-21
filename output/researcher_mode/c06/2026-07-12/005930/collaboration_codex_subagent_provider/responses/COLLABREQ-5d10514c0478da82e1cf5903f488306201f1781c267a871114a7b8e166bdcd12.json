@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "ee731c734ea53b60560e0969f98822fbc1787f1fcdb5c91c028efea577cbbb6f",
+  "payload": {
+    "allowed_range": [
+      2.6,
+      3.6
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0는 POSITIVE 역할의 STRONG ordinal anchor이며 허용 대역은 3.80~4.00점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88는 COUNTER 역할의 STRONG ordinal anchor이며 허용 대역은 3.80~4.00점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "긍정 사실의 실현 정도는 강하지만, ordinal anchor의 상단은 미해결 귀속·지속성 자료가 닫힐 때만 정당화된다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-09bca4086b235701b1d84801",
+      "EFACT-38d8612a550c7b15e83db302",
+      "EFACT-60fb6751333ef31d586334e5",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-c8cce781c38410832d5bd2a8"
+    ],
+    "disagreements": [
+      "현재의 실적·판매·공급 사실을 단순한 기대만으로 낮춰 보는 해석에는 동의하지 않는다.",
+      "반대로 전사·메모리 수치를 HBM 단독 경제성으로 간주하거나 미해결 supervisor gap을 닫힌 것으로 보는 해석에도 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "proposed_points": 3.1,
+    "rationale": "성장투자·현금·환원의 균형의 모든 긍정 사실을 검토했다. 실제 OCF가 CAPEX를 웃돌아 양(+) FCF가 발생했고 충분한 현금성자산, DS 투자 실행, 자기주식 소각과 FCF 기반 환원 규칙이 함께 확인된다. 이는 성장 투자와 주주환원이 모두 실행될 수 있는 자금 흐름을 보여준다. 다만 대규모 자산취득 약정과 운전자본 유출이 이미 존재하며 향후 메모리 CAPEX 세부계획은 미확정이다. 전사·DS 수치만으로 HBM 투자수익률을 계산할 수 없고, 자기주식 취득·배당도 선단공정 투자와 동일한 현금 재원을 경쟁한다. 추가로 약정·매출채권·운전자본·상세 메모리 투자계획을 함께 반영한 잔여 현금과 HBM 투자수익 경로이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다. 따라서 강한 현재 성과는 인정하되 제품별 귀속과 지속성이 확인된 최상단으로 보지는 않았다.",
+    "support_fact_ids": [
+      "EFACT-4ca12a741765c57da0832791",
+      "EFACT-91896907330221fdcfdd97b2",
+      "EFACT-9c8e2f378d921c9782b5b6ac",
+      "EFACT-f8f6e5abba8d72973f8cbc55"
+    ],
+    "why_not_higher": "HBM 단독 투자수익률과 세부 CAPEX 계획이 없고 자산취득 약정·운전자본 유출이 커서 전사 양(+) FCF만으로 최상단 자본배분 효율을 확정할 수 없다. 전사 현금창출이 투자·운전자본 경쟁 뒤 HBM 투자수익과 환원 여력으로 남는지 가른다.",
+    "why_not_lower": "4개의 current positive 사실이 성장투자·현금·환원의 균형의 실제 전환을 보여 주고 있어 counter만으로 확인된 성과를 무효화할 수 없다."
+  },
+  "payload_hash": "3ddfb268917014712dd4f69bcb629c8eb1793a134d98b3ed779b5f6079a37c15",
+  "production_score_authority": false,
+  "prompt_hash": "f842cad0c9442218cb03451cbe9ac12563ba3faea20cf435cc5a13953227187d",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5d10514c0478da82e1cf5903f488306201f1781c267a871114a7b8e166bdcd12",
+  "response_id": "COLLABRESP-4d2c2bcef09a6bb31d112d9b23c8196448d97ea47d2a46fb3439ecdc1f9db016",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      2.8,
+      3.6
+    ],
+    "anchor_comparisons": [
+      "현재 support shape는 제품·매출·고객의 구체적 현재 사실이 있어 1.75~2.25점 POSITIVE MEDIUM anchor보다 강하다.",
+      "4.75~5.0점 STRONG anchors와 비교하면 독립 source 다양성, HBM segment 재무, 계약·인증 원문이 부족해 한 band 아래가 적절하다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-a943dca289563cc8583d4b78",
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-dcd0816b6ba04c76c69e7a4b",
+      "EFACT-e2b5d15b4400874c34e4f2a2",
+      "EFACT-fc43dd3418fa06939957246d"
+    ],
+    "disagreements": [
+      "analyst 상단은 issuer 반복 확인의 독립성을 과대평가할 수 있고, skeptic 하단은 구체적인 양산·매출 facts의 정보가치를 과소평가할 수 있다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "proposed_points": 3.2,
+    "rationale": "네 support facts는 HBM 사업의 실제 진행을 구체화하지만 동일 issuer source group 중심이다. 다섯 counterfacts는 독립 검증 부재, 단기 합의형 계약, segment 공시 부재, broker 내부 불일치, forward 실현 위험을 서로 다른 경로로 확인한다. LOW confidence historical anchors는 ordinal scale 참고로만 쓰며 현재 case를 medium보다 높고 full strong보다 낮게 둔다.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-a74dac2b9e727f8592e52c41",
+      "EFACT-b74e88a671a1247b0ce230d5",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "독립 검증·계약 원문·HBM 단독 재무가 없고 비검증 자료 및 문서 내부 불일치가 있어 strong anchor 수준의 확신은 과도하다.",
+    "why_not_lower": "양산 진입, 고객 성능요구 충족, 실제 HBM 매출 성장, 공급 논의가 현재 공식 facts로 존재해 medium 이하로만 제한할 이유는 없다."
+  },
+  "payload_hash": "72f6a1c07206e6fa9c93e7cd8bfdbe3f47ce5dba973879501e681d13d5e5bc50",
+  "production_score_authority": false,
+  "prompt_hash": "f6825c8bae900a68b70b235231327a59023833398897f64ee428771728e63f10",
+  "provenance": {
+    "agent_id": "root-phase101-c06-judge-info-C",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_judge_info-C",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a17e1554c4628b600cfbbc0f4008415656ddd731d1b0b3df86e2d81ae7ba2ee8",
+  "response_id": "COLLABRESP-1b72bbd9c105d8e62b5aba56a04a65e54279592b5202e01a7fe0e727b77171d8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

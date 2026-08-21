@@ -1,0 +1,222 @@
+{
+  "output_schema_hash": "bb7f3abddf769d446fd6ab79a5efd12e2b72349088a6f0fcd8be30a119a05a7d",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-5f17ae617e8689a081c53e02",
+        "rationale": "문서 전체를 prior278과 대조했다. 산업 D램 58~63%, 타사 가격·완판, NAND, 빅테크 선수금 논의는 기존 fact·타사·금지 제품과 중복 또는 범위 밖이라 제외하고, 삼성전자 자체의 일반 메모리 계약가격 30% 조치와 서버 D램 최대 70% 제안 2건만 각각의 협상 상태를 보존해 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-607ad58eebd1b7c4e3821f59",
+        "rationale": "2025년 2분기 컨퍼런스콜 전체를 prior278과 대조했다. HBM 판매량 30% 증가, HBM3E 비중 80% 후반, D램 비트성장 10% 초반, 재고 정상 이하, 컨벤셔널 D램 ASP 한 자릿수 초반 상승은 동일 실적콜의 기존 canonical facts와 중복된다. 당시 HBM4 샘플·하반기 계획은 이후 양산·판매 사실로 대체됐다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-62dc2cccbb2cae8f5c82a5d2",
+        "rationale": "2025년 4분기 삼성전자 메모리 이익·ASP 추정은 이후 확정실적에서 사상 최대 매출·이익 및 D램 ASP 약 40%로 확인된 canonical facts와 중복·대체됐다. 2026년 1월의 D램 재고 6주 추정도 더 늦은 2026년 3월 1~2주 추정으로 대체됐으며 타사 수치는 제외했다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-6b560f6e2fecb5094ac32089",
+        "rationale": "목표가격, 12개월 선행 PER 6배와 2026~2027년 영업이익 상향은 더 늦은 선행배수·이익 전망과 중복 또는 대체돼 제외했다. 하이퍼스케일러 투자 둔화가 삼성전자 2028년 영업이익 역성장으로 연결된다는 비중복 정량 counter 1건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-6d1e80ea8fe6d219bc13f2fb",
+        "rationale": "2026년 2분기 전사 잠정실적과 주가 하락은 각각 기존 canonical과 다른 objective의 사실이다. 3분기 D램 ASP 상승·HBM4·LTA 전망은 정성적이고 기존 가격·계약 facts와 중복돼 bottleneck_pricing에 새 직접 사실이 남지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-71c653a84dcbf5e85913b7bf",
+        "rationale": "발표 전 전사 영업이익 컨센서스는 직후 잠정실적으로 대체됐고, 2027년까지 공급능력 제한·HBM 점유율·높은 ASP 서술은 정성적이며 기존 current facts와 중복된다. 메타 관련 설명도 실제 계약 감소를 확인한 원문 counter가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-71e5e2c73350754aa91df9dc",
+        "rationale": "2026년 2분기 전사 잠정 매출·영업이익과 증감률은 기존 canonical에 있고, 본문은 사업부별 수익성과 HBM 매출 기여도가 아직 공개되지 않았다고 명시한다. 메모리 가격·판매 확대는 정성적 귀인이라 비중복 target-direct fact가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-751248b3a0ac8a488d609b02",
+        "rationale": "2024년 2분기 잠정실적 발표 전 컨센서스와 DS 이익 추정은 후속 실제 실적으로 대체됐다. 2025년 공급부족·HBM3E 양산·D램 생산능력 80% 전망도 이후 실현 경로와 2026년 current facts가 있어 현재 병목 objective에 새 의미를 더하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-7d06bfdf0a73e3f3e281a3a6",
+        "rationale": "삼성전자 2025년 1분기 공식 영문 컨퍼런스콜 전체를 대조했다. HBM 판매 감소, 메모리 매출, 서버 D램 출하·ASP와 HBM3E 회복 계획은 기존 fact 또는 이후 실제치로 대체됐다. Custom HBM의 2026년 매출 기여 시작 언급은 금액·비율 가이던스가 아니며 현재 시점에는 이후 HBM4 양산·출하 facts가 있어 숫자형 FORWARD_GUIDANCE로 가장하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-7d799c06d629fdcae65aea26",
+        "rationale": "2026년 2분기 전사 잠정실적과 증감률은 기존 canonical과 중복되고, HBM·서버 메모리 판매 확대의 기여는 사업부 금액·비중 없이 정성적으로만 서술됐다. eps_fcf_explosion의 비중복 메모리 이익 또는 현금흐름 fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-8248c21b445b032000b4dda5",
+        "rationale": "2026년 2분기 메모리 영업이익 약 88조원과 전사 이익의 98% 이상 기여, 범용 D램 58~63% 상승은 이미 다른 current documents의 canonical facts와 동일하다. 성과급 전 전사 이익과 비메모리 부문은 bottleneck_pricing의 직접 사실이 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-825754644c31f9a3dfc3de84",
+        "rationale": "2024년 3분기 컨퍼런스콜 전체를 대조했다. 당시 HBM3E 사업화 지연·매출비중·2025년 양산계획과 공급전환 전망은 이후 HBM3E 확대 및 HBM4 양산·출하 facts로 해결·대체됐다. 다른 사업부와 NAND 내용은 scope 밖이어서 현재 objective에 비중복 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-5f17ae617e8689a081c53e02",
+        "economic_mechanism": "삼성전자가 2026년 2분기 메모리 계약가격을 약 30% 높이는 방안을 실행 중이라는 보도는 산업 평균가격 전망과 별도로 회사가 고객 협상에서 행사한 가격 인상 폭을 수치화한다.",
+        "exact_quote": "이에 따라 삼성전자는 2분기 계약 가격을 약 30% 인상하는 방안을 단행 중이며 서버용 D램의 경우 고객사에 따라 최대 70%의 공격적인 인상안을 제시한 것으로 파악된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 canonical의 산업 D램 가격이나 증권사 ASP 전망과 달리 삼성전자 자체 계약가격 조치의 기본 인상 폭을 직접 제시한다. 완료된 실현가격으로 과장하지 않고 진행 중인 가격조치로 한정했다.",
+        "mechanism_scope_id": "005930:MEMORY:CONTRACT_PRICE_ACTION:2026Q2",
+        "normalized_object": "삼성전자 메모리 계약가격 인상 방안",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2",
+        "predicate": "삼성전자가 2026년 2분기 메모리 계약가격을 약 30% 인상하는 방안을 단행 중인 것으로 보도됐다",
+        "predicate_family": "MEMORY_CONTRACT_PRICE_INCREASE_ACTION",
+        "primitive_tags": [
+          "MEMORY",
+          "CONTRACT_PRICE",
+          "PRICE_INCREASE_ACTION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_MEMORY_CONTRACT_PRICE_ACTION",
+        "question_family_tags": [
+          "SAMSUNG_MEMORY_CONTRACT_PRICE_ACTION",
+          "MEMORY_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 2분기 메모리 계약가격 인상 방안",
+        "subject_id": "005930:MEMORY_CONTRACT_PRICING",
+        "unit": "percent",
+        "value": 30
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.78,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-5f17ae617e8689a081c53e02",
+        "economic_mechanism": "삼성전자가 서버용 D램 고객별로 최대 70% 인상안을 제시했다는 보도는 공급부족이 고수익 서버 제품의 협상가격 상단으로 전환되는 폭을 보여준다.",
+        "exact_quote": "이에 따라 삼성전자는 2분기 계약 가격을 약 30% 인상하는 방안을 단행 중이며 서버용 D램의 경우 고객사에 따라 최대 70%의 공격적인 인상안을 제시한 것으로 파악된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "일반 메모리 계약가격 30%와 구별되는 서버용 D램 고객별 제안 상단이다. 제안치를 체결가격이나 실현 ASP로 전용하지 않고 협상 범위 증거로만 사용한다.",
+        "mechanism_scope_id": "005930:MEMORY:SERVER_DRAM:PRICE_PROPOSAL:2026Q2",
+        "normalized_object": "삼성전자 서버용 D램 고객별 가격 인상안 상단",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2",
+        "predicate": "삼성전자가 2026년 2분기 서버용 D램에 대해 고객사별 최대 70% 가격 인상안을 제시한 것으로 보도됐다",
+        "predicate_family": "SERVER_DRAM_PRICE_INCREASE_PROPOSAL",
+        "primitive_tags": [
+          "SERVER_DRAM",
+          "PRICE_PROPOSAL",
+          "CUSTOMER_NEGOTIATION"
+        ],
+        "product_family": "서버용 D램",
+        "question_family_id": "SAMSUNG_SERVER_DRAM_PRICE_PROPOSAL",
+        "question_family_tags": [
+          "SAMSUNG_SERVER_DRAM_PRICE_PROPOSAL",
+          "SERVER_DRAM_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 서버용 D램 고객별 가격 인상안",
+        "subject_id": "005930:SERVER_DRAM_CONTRACT_PRICING",
+        "unit": "percent maximum",
+        "value": 70
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.79,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6b560f6e2fecb5094ac32089",
+        "economic_mechanism": "하이퍼스케일러 설비투자 증가세 둔화가 반영되면 삼성전자 영업이익이 2028년부터 감소할 수 있다는 컨센서스는 현재 메모리 이익 급증을 영구 성장으로 외삽하는 가치평가의 반대 근거다.",
+        "exact_quote": "4사의 설비투자 축소가 반영되는 시점부터 삼성전자·하이닉스 영업이익도 내리막으로 전환한다. 2028년 영업익 컨센서스는 삼성전자 406조원(전년 대비 -4.99%), 하이닉스 331조원(-1.21%)이다. 시장은 2026~2027년을 메모리 슈퍼사이클의 정점이라고 가정하고 있는 셈이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "낙관적 목표가격이 아니라 삼성전자 수익의 첫 역성장 시점과 감소율을 제시해 현재 선행배수·이익 전망에 내재된 사이클 정점 위험을 직접 수치화한다.",
+        "mechanism_scope_id": "005930:MEMORY:EARNINGS_CYCLE_PEAK_COUNTER:2028E",
+        "normalized_object": "삼성전자 2028년 영업이익 전년 대비 증감률 컨센서스",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2028E vs FY2027E",
+        "predicate": "2028년 삼성전자 영업이익 컨센서스가 전년 대비 4.99% 감소한 406조원으로 제시돼 시장이 2026~2027년을 메모리 슈퍼사이클 정점으로 가정하고 있다고 분석됐다",
+        "predicate_family": "MEMORY_EARNINGS_CYCLE_PEAK_CONSENSUS",
+        "primitive_tags": [
+          "MEMORY_CYCLE",
+          "EARNINGS_CONSENSUS",
+          "HYPERSCALER_CAPEX_SLOWDOWN"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_MEMORY_EARNINGS_CYCLE_PEAK_COUNTER",
+        "question_family_tags": [
+          "SAMSUNG_MEMORY_EARNINGS_CYCLE_PEAK_COUNTER",
+          "VALUATION_DURABILITY_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2028년 영업이익 역성장 컨센서스",
+        "subject_id": "005930:MEMORY_EARNINGS_CYCLE_RISK",
+        "unit": "percent YoY",
+        "value": -4.99
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "0ded16863d3d3efc98ae154c4f04ce16da9d14fb0b695d7c3cb8dac16a688ee7",
+  "production_score_authority": false,
+  "prompt_hash": "3962365e50577c2fc8ebdcdab891695c83cee94649c42eabea60ce43eb729e96",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-21b191d15fd7839664b5a3dbc64f9a7f5ef5cd2020843aa692430ba38674af4e",
+  "response_id": "COLLABRESP-0c6b7784a1a1a7bc2a198bbb62129ca8b45b661c34668a5ea94dc9a748aa3f82",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

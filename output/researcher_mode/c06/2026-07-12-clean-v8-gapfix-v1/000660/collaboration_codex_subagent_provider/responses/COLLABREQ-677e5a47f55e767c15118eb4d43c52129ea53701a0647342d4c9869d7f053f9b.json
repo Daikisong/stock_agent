@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-33bbf37036ec190d7f2e40e5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.05,
+        "rationale": "한국경제 기사이며 PUBLIC_BROKER_PDF 원문이 아니다. SK하이닉스 자체의 기간·분모가 명시된 전망치/밸류에이션 원문을 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-374407c55fcf7d2b64a4ddd3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.0,
+        "rationale": "SK Inc. 분기보고서 PDF로, SK하이닉스 병목·가격 경제성을 분석한 공개 증권사 리포트가 아니며 주체와 source family가 모두 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-4bb94f60e61dbf28f87c26e4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.05,
+        "rationale": "제3자 산업 뉴스 기사로 PUBLIC_BROKER_PDF 원문이 아니다. 검색 snippet의 공급난 전망만으로 회사별 full-source 분석을 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8a18f2d76e6f8a721f240a91",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.98,
+        "rationale": "삼성증권 도메인의 원문 PDF 다운로드 경로이며 SK하이닉스·메모리 LTA와 장기 공급 부족을 직접 다루는 sector report다. 병목의 구조성 및 계약화 여부를 확인할 bounded full-source route다."
+      },
+      {
+        "candidate_id": "SGCAND-4cd4764e595bc1990244ca8a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.0,
+        "rationale": "SK Inc. 분기보고서 PDF로 대상·목적·PUBLIC_BROKER_PDF provenance가 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a8686b7ca9e677ddf356198e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.08,
+        "rationale": "하나증권 의견을 재전하는 이데일리 기사일 뿐 원 증권사 PDF가 아니다. 기사 snippet을 HBM 가격·공급의 full-report 근거로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-f45c12765e55ecc4cb1bc77f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.05,
+        "rationale": "UBS 내용을 재전하는 제3자 기사이며 PUBLIC_BROKER_PDF 원문이 아니다. DDR5/낸드 중심의 snippet도 대상 HBM 병목의 원문 검토를 대체하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-71deab90def35770907f7301",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.05,
+        "rationale": "증권사 의견을 재전한 제3자 기사로 원본 PUBLIC_BROKER_PDF가 아니다. 목표주가/공급 부족 요약만으로 full-source 검증이 되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b682c5afaa678f71aef1da1c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.0,
+        "rationale": "SK Inc. 반기보고서 PDF로 SK하이닉스 병목 분석이나 증권사 원문이 아니어서 wrong subject·wrong family다."
+      },
+      {
+        "candidate_id": "SGCAND-6972bbfe45716ae51ec6d5e0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.0,
+        "rationale": "SK Inc. 사업보고서 PDF이고 snippet도 관계사 R&D 목차다. 대상 회사의 병목·가격 분석 PUBLIC_BROKER_PDF가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e1869ce8b451f82c6e32c7bf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.08,
+        "rationale": "NH투자증권 보고서를 재전하는 뉴스 기사로 원문 PUBLIC_BROKER_PDF가 아니다. 공급과잉·ASP 하락의 counter snippet은 발견 단서지만 아직 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-97389e99e962e822377a3540",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.04,
+        "rationale": "뉴스 기사이며 AI 요약 및 증권사 전망 재전이다. 원 증권사 PDF나 회사별 병목·가격 메커니즘의 full source가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "삼성증권 원문 PDF 후보는 material route이지만 fetch/parse된 본문과 content hash를 검증해야 evidence가 된다.",
+      "나머지 material0 판정은 supplied roster의 source-family/subject 부적합 판정일 뿐, 증권사 분석이나 병목·계약 증거의 부재를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "74c18ec84e163580f558e45a9cb43b94fd8d93868162aaf61a1ae07dc450da16",
+  "production_score_authority": false,
+  "prompt_hash": "5b8b44bd5f8aa497d42ec6fe834d1775605e5bdbcd05d5e8d346afea7d2586fa",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-677e5a47f55e767c15118eb4d43c52129ea53701a0647342d4c9869d7f053f9b",
+  "response_id": "COLLABRESP-ec76b10e9ee4139927dbc982d5993abc2fd9f713e1f219f685cc68bcbbea9554",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

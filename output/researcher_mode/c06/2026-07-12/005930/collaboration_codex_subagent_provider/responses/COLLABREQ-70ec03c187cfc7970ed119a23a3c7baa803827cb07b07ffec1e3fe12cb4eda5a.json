@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1d9d2b4feba90b11e52afb3b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'해외곡물시장 동향'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-349f672deafad0b754f1c989",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'인도네시아 - KOTRA 무역자료실'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-275a9d9370141e4fe62329e8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'주간 투자전략(12월 둘째주) 및 투자 아이디어 : 로봇으로 확장되는 AI'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6cd5884fb683f2372faae8fd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'경찰 미래비전 - 과학치안진흥센터'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2e8339bf9b82fe53025e26a0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'Morning Report(2026.01.05.월)'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1b314759e503bcfc12274778",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 날짜가 as_of_date 이후인 2026-07-21이고 증권사 원문 PDF도 아니어서 미래누수 및 provenance 불일치다. snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9a5a755d9016520272749a2f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'KOTRA COUNTRY REPORT'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6d850cccf194658c5289bcc8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'국 회 본 회 의 회 의 록'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0d52e3b23ed309e4427998b9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'2023 외국의 통상환경(6권).pdf'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-002eac5472fa171c0e7bbc17",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'2022 외국의 통상환경(6권)_230530.pdf - 산업통상부'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-749754574e0eb1da0955a6e0",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.02,
+        "rationale": "증권사 원문 PDF provenance는 맞지만 '[주간 퀀틴전시 플랜] 25년 11월과 데자뷰(Déjà vu). 이보전진을 위한 일보후퇴'은 요청한 2026-07-08 삼성전자 리포트 또는 현재 expectation/valuation bridge가 아니다. 시점·대상·주제가 objective와 불일치하며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-fafdd8fdd53b227e64ed6ab6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "'2023 나라경제 10월호 내지 후반부 배열 02.indd'의 URL 소유자와 discovery metadata가 요청한 PUBLIC_BROKER_PDF 원문 provenance를 뒷받침하지 않거나 objective와 무관한 문서다. 포털·재전·다른 주제 자료의 snippet은 evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "ranking_complete는 이 partition roster 분류 완료만 뜻한다. material 후보도 full-fetch·parse 전에는 evidence가 아니며, 요청한 삼성증권 2026-07-08 리포트 원문은 이 roster에서 확인되지 않았다."
+    ]
+  },
+  "payload_hash": "3a6cc1b64eaea6eb088bdcecbf2f19ca9c6b8719d610d6fe5e1e4c33a4a22f17",
+  "production_score_authority": false,
+  "prompt_hash": "d792f97b96895a095234e9ee66f590c3d0a5102ad28273410e386fe2ec7a5a8d",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-70ec03c187cfc7970ed119a23a3c7baa803827cb07b07ffec1e3fe12cb4eda5a",
+  "response_id": "COLLABRESP-7b1c837637dd2a03671c2bf945d7f7abadb1e4b140ca0993397ff3ef04368ee9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

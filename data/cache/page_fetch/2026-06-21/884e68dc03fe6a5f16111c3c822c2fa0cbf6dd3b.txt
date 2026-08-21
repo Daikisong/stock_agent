@@ -1,0 +1,324 @@
+SK hynix Inc Earnings - Analysis & Highlights for Q1 2026
+Get a complete overview of SK hynix Inc (000660.KR) earnings data, including key insights, sentiment scores, smart summaries, and highlights from earnings calls.
+SK hynix Inc Earnings - Analysis & Highlights for Q1 2026
+Get a complete overview of SK hynix Inc (000660.KR) earnings data, including key insights, sentiment scores, smart summaries, and highlights from earnings calls.
+SK hynix Inc Earnings - Analysis & Highlights for Q1 2026
+Get a complete overview of SK hynix Inc (000660.KR) earnings data, including key insights, sentiment scores, smart summaries, and highlights from earnings calls.
+Skip to content
+Platform
+The AlphaSense Platform
+Explore features, tools, and workflows
+Financial Data
+Simplify complex financial decisions
+Content & Partners
+Trusted sources that power crucial insights
+Enterprise Intelligence
+Unlock value from your internal content
+Tegus Expert Insights
+High quality, premium expert interviews
+Tegus Expert Call Services
+Connect live with the most relevant experts
+Why AlphaSense
+See everything that sets our platform apart
+Solutions
+Financial Services
+Investment Banking
+Build comps, find deal risks, prep faster
+Hedge Funds
+Validate theses using expert and market signals
+Private Equity
+Summarize diligence calls, filings, and financials
+Asset Management
+Track macro themes and portfolio company signals
+Venture Capital
+Source deals and benchmark company traction signals
+Corporations
+Life Sciences & Healthcare
+Track therapeutic pipelines, benchmark deals, analyze markets
+Tech, Media & Telecom
+Monitor launches, product strategy, and disruptions
+Energy
+Follow policy, M&A, and supply chain risks
+Industrials
+Scan for M&A, capex, and global demand
+Consumer Goods & Retail
+Track pricing moves, retailer strategy, and demand
+Consulting & Professional Services
+Consulting
+Deliver higher-impact proposals with less effort
+Law Firms
+Streamline case preparation and strategy with legal research
+Insurance
+Drive smarter underwriting decisions and risk analysis
+Resources
+Research & Insights
+Analysis and expert perspectives on companies and industries
+Case Studies
+See the difference that AlphaSense makes
+Events & Webinars
+Get a look at the future of industries and tech
+Sentiment Indices
+Our adaptive AI reveals the true story behind earnings calls
+See all Resources
+Top Market Trends 2026
+In this report, we examine the trends and themes shaping 2026 — all based on insights surfaced from across the AlphaSense platform.
+About
+About AlphaSense
+Learn more about our company
+Newsroom
+Read news about AlphaSense
+Careers
+Check out our career openings
+Contact Us
+Need support? Reach out to us today
+Pricing
+Submit
+Log In
+Customer Support
+Get Started for Free
+SK hynix Inc
+skhynix.com
+SK Hynix is a semiconductor memory manufacturer with around 60%-70% of its revenue from DRAM and 30%-35% of its revenue from NAND. The company is both the second-largest DRAM and NAND supplier globally with a 33% and 21% market share, respectively, as of 2024. SK Hynix increased its market position in NAND from fourth to second, after acquiring Intel’s NAND business in 2021. SK Square, an investment management company spun off from SK Telecom, is SK Hynix’s largest shareholder and currently holds 20% of the company’s shares.
+Read more
+Sentiment Score:
++32
+Sentiment Change:
++22
+Recent News
+Want to dig deeper?
+Search earnings transcripts, company filings, equity research, and more.
+Request a Free Trial
+SK hynix Inc
+Earnings -
+Q1 2026
+Analysis & Highlights
+Key Takeaways
+Q&A Summary
+Guidance & Outlook
+SK Hynix reported record Q1 2026 financial results driven by robust AI infrastructure demand, with significant revenue and profitability growth across DRAM and NAND segments, while planning substantial capital investments to meet structural long-term memory demand and pursuing shareholder returns alongside financial soundness targets.
+Key Financial Results
+Q1 2026 revenue reached KRW 52.6 trillion, increasing 60% quarter-over-quarter and 198% year-over-year
+, surpassing the KRW 50 trillion mark for the first time on a quarterly basis and setting a new record high.
+Operating profit reached KRW 37.6 trillion
+, nearly doubling from the previous quarter.
+Operating margin improved by 13 percentage points quarter-over-quarter to 72%
+, marking an all-time high on a quarterly basis.
+Net profit was KRW 40.3 trillion with a net profit margin of 77%
+.
+EBITDA came in at KRW 41.3 trillion with an EBITDA margin of 79%
+.
+Cash and cash equivalents, including short-term investments, stood at KRW 54.3 trillion
+, an increase of KRW 19.4 trillion from the end of the previous quarter.
+Net cash reached KRW 35 trillion and the debt-to-equity ratio improved by 6 percentage points to 12%
+.
+Business Segment Results
+DRAM shipments in Q1 were similar to Q4 levels
+, with the company focusing sales on products with robust demand, including HBM and high-density server modules of 128 gigabytes and above.
+DRAM average selling price (ASP) rose by mid-60%
+as the strength in conventional DRAM pricing accelerated.
+NAND shipments declined by approximately 10% quarter-over-quarter
+, reflecting a high base from the previous quarter sales and reduced discrete product sales, as well as longer production lead times associated with the shift toward high value-added products.
+NAND ASP rose sharply by mid-70%
+, supported by strong pricing in old product lines.
+Rising prices across both DRAM and NAND coincided with greater contribution from high value-added products
+, driving the significant operating profit increase.
+Capital Allocation
+CapEx in 2026 is expected to increase significantly compared with 2025
+, with the majority allocated to infrastructure preparation centered on the Yongin Cluster and ramp up of M15X, and through the procurement of key equipment such as EUV tools.
+The company plans to achieve financial soundness with net cash of more than KRW 100 trillion
+while expanding shareholder returns.
+In addition to dividends, the company will actively review additional shareholder return measures such as share buybacks and cancellations
+, with an implementation plan to be established within the year.
+The company demonstrated commitment to shareholder returns through a total annual dividend payout of KRW 2.1 trillion and cancellation of KRW 12.2 trillion in shares in 2025
+.
+Interest-bearing debt declined by KRW 2.9 trillion to KRW 19.3 trillion
+as of the end of the first quarter.
+Industry Trends and Dynamics
+AI technology is evolving rapidly beyond the training phase of large-scale models into the inference and agentic AI stage
+where user requests are processed in real-time across a wide range of service environments.
+AI workloads are shifting from simple question-and-answer tests to more complex processes
+that involve planning, execution, and verification, repeated until the optimal result is achieved.
+Demand is rising for a broad range of memory products
+to process and store data efficiently as the volume of data generated by AI agents continues to increase.
+Beyond demand for high-performance memory like HBM, the total volume of memory required across overall systems is also increasing
+, including server DRAM modules and enterprise SSDs.
+Ongoing software and hardware optimization efforts across the AI industry are serving as another driver of memory demand growth
+.
+Memory efficiency technology is evolving in a way that maximizes the amount of context handled per unit of memory and the number of users
+, expected to improve the economics of AI services and expand the overall market.
+In the PC and mobile markets, some signs of demand softening have emerged
+, including adjustments in shipments and changes in product portfolios due to cost pressures stemming from higher memory prices.
+Robust server memory demand continues to offset weakness in PC and mobile markets
+and is driving overall market growth.
+Memory has become increasingly critical in AI computing, with demand for high-performance memory surging while supply remains constrained
+.
+Customers are prioritizing securing volume over pricing
+, which is sustaining the current pricing strength.
+Competitive Landscape
+SK Hynix is leading the HBM market
+, with competitiveness determined not only by DRAM process technology but also by a combination of diverse technological capabilities, including TSV and packaging.
+Comprehensive execution capabilities encompassing performance, build, quality and supply stability are critical
+for HBM competitiveness.
+Since the launch of HBM2E, SK Hynix has maintained the highest level of overall product competitiveness and time to market, cost, yield and performance, as well as customers' trust
+.
+Customer demand for HBM for the next three years far exceeds SK Hynix's current supply capacity
+, evidencing strong market leadership.
+SK Hynix is leveraging synergies with Solidigm
+, which has strength in high capacity QLC enterprise SSDs, to further strengthen competitiveness in addressing a wide range of customer needs in the AI data center and AI PC storage markets.
+Macroeconomic Environment
+Although the first quarter is typically a seasonally slow period, robust demand driven by expanding AI infrastructure investment more than offset seasonality
+and the supply environment remained tight.
+The company is fully aware of risks associated with commodities and energy supply resulting from geopolitical changes
+and has already secured responses.
+For key industrial gases like helium and bromine, the company has diversified suppliers and built up sufficient inventory
+, so any short-term or long-term impact on production capacity will be quite limited.
+For tungsten, prices have risen due to geopolitical issues, but the company has secured sufficient inventory with no disruptions in supply
+.
+Energy prices have risen due to delays in oil and LNG export, but the company sources LNG through long-term agreements
+, which keep price fluctuations to the minimum.
+Growth Opportunities and Strategies
+For the second quarter, DRAM shipments are expected to increase by high-single digit percent quarter-over-quarter
+, with the company planning to actively respond to demand for high density server modules and mobile products.
+For NAND, shipments are expected to increase by mid-18% quarter-over-quarter
+through expanded sales of 321-layer-based products and enterprise SSDs.
+SK Hynix is concentrating efforts on further strengthening HBM capabilities
+including DRAM process technology, TSV, packaging, and comprehensive execution capabilities.
+For HBM4, the company has been working closely with customers from early stages of development
+and plans to ramp up volume in line with the agreed schedule of products that meet customers' required performance levels.
+The company completed development of the industry's first 1c nanometer based LPDDR6
+, which delivers a 33% improvement in data processing speed and more than 20% better power efficiency compared with existing LPDDR5X.
+Full scale market supply of LPDDR6 is planned for the second half
+, starting with adoption in a major smartphone customer's next-generation flagship model.
+The company began mass production of its 192 gigabyte SOCAMM2 product
+based on its most advanced 1c nanometer process optimized for NVIDIA's Vera Rubin platform, delivering more than twice the bandwidth of conventional RDIMMs and over 75% improved energy efficiency.
+The company has begun supply of PQC21 client SSD
+, the first product to adopt CTF-based 321-layer QLC technology.
+The company plans to build a well-balanced product lineup across the entire enterprise market
+, spanning high performance TLC and high capacity QLC to respond flexibly to broad-based AI demand.
+The company developed the world's first 321-layer QLC and completed customer qualification
+, securing an overwhelming technological lead.
+The company plans to migrate more than 50% of its domestic production to 321-layer technology by the end of this year
+, with this two-generation jump from 176-layer to 321-layer expected to yield significant productivity gain.
+For HBM4E, the company plans to start supplying samples in the second half of the year
+, targeting mass production in 2027.
+The core die for HBM4E will adopt 1c-nanometer technology
+to meet growing customer performance requirements.
+The company's 1c-nanometer technology is proven to deliver industry-leading performance
+, with mass production begun in late 2025 and both yield and mass production capabilities already reaching a mature stage.
+The company is preparing next generation storage solutions
+to build high-performance, high-bandwidth and high-capacity storage infrastructure tailored for AI workloads.
+HBS is a technology that can deliver ultra-high bandwidth through 3D stacking
+, and the company launched a consortium in February to standardize its specifications.
+The company signed an MOU with a cloud provider
+to validate and optimize next generation AI solutions such as CXL and PIM in real AI service environments.
+The company is building on its first generation CXL memory modules based on CXL 2.0
+, which completed customer qualification last year, aiming to maintain leadership in this emerging market by delivering enhanced capacity and performance in second generation products that support CXL 3.0.
+Financial Guidance and Outlook
+A favorable pricing environment is expected to continue for the time being
+amid supply/demand imbalance and customers prioritizing securing volume over pricing.
+The current price strength is driven by structural changes in the market, not by temporary supply/demand imbalance
+, and this trend is expected to be different from past cycles.
+The importance of memory has grown more than ever due to AI
+, with IT companies competitively increasing their purchases to secure more memory supply.
+Industry supply has been constrained by investment slowdown following the last downturn and by the shortage of available space
+, which limits the potential for production expansion in the short term.
+Suppliers are expanding their investment by resuming fab construction and infrastructure investment
+, but it will take some time to complete meaningful new clean rooms and production capacity.
+As supply/demand imbalance persists, the rising memory price cycle is likely to last longer than in the past
+.
+The company will execute investments based on demand visibility
+, thereby ensuring both supply stability and financial soundness.
+Securing sufficient supply capacity to respond to structural demand growth in the AI era is emerging as a core competitive advantage
+.
+The company will speed up the opening of the phase one cleanroom in fab 1 by three months from May 2027 to February 2027
+.
+The Yongin Cluster will become the largest state-of-the-art production complex in history
+and will serve as the bedrock of the company's mid to long-term operations.
+Phase one of Yongin is to produce DRAM
+, and the company intends to continuously review the products and technologies to be deployed in phases two through six to ensure efficient operations aligned with market demand.
+The company has no plans to build or acquire additional fabs outside Yongin
+at this point, but recognizes that the ability to reliably supply products when customers want them is emerging as a key competitive advantage.
+US ADR Listing Plans
+On March 24, the company confidentially submitted a registration statement to the US Securities and Exchange Commission
+related to the proposed ADR offering.
+The company is proceeding with the goal of listing on the US securities market within the year
+.
+Specific details of the proposed offering, including its size, structure and timing, have not yet been determined
+, and a final decision on whether to proceed with the listing will be made after comprehensively considering the SEC's review, market conditions, investor demand and other relevant factors.
+Long-Term Supply Agreements
+Customer requests to secure medium to long-term supply volumes have significantly increased
+as the memory shortage persists.
+Memory has become so critical that customers now see memory price and supply uncertainties as key business risks
+.
+For the company, reducing investment burden by securing demand visibility is one of its key priorities
+.
+A multi-year LTA must provide business stability for both parties
+by ensuring supply stability to the customer and demand visibility and stable revenue structure to the seller.
+Unlike past LTAs, the company is comprehensively reviewing various approaches and structural options
+, but due to current supply constraints, it is limited from accommodating all customer requests.
+If multi-year LTAs are successfully established, investment efficiency is expected to naturally improve
+thanks to demand visibility and stable profitability.
+Multi-year LTAs can reduce the volatility that has repeatedly plagued the memory industry
+, which can improve the market's overall view on the memory business.
+Related Companies
+Advanced Micro Devices Inc
+AMD
+Applied Materials Inc
+AMAT
+ARM Holdings PLC
+ARM
+ASML Holding NV
+ASML
+Broadcom Inc
+AVGO
+Intel Corp
+INTC
+Navitas Semiconductor Corp
+NVTS
+NVIDIA Corp
+NVDA
+NXP Semiconductors N.V.
+NXPI
+Qualcomm Inc
+QCOM
+STMicroelectronics NV
+STM
+Taiwan Semiconductor Manufacturing Co Ltd
+TSM
+PLATFORM
+The AlphaSense Platform
+Financial Data
+Content & Partners
+Enterprise Intelligence
+Tegus Expert Insights
+Why AlphaSense
+How AlphaSense Compares
+Security
+SOLUTIONS
+Consulting
+Life Sciences & Healthcare
+Tech, Media, & Telecom
+Energy
+Industrials
+Consumer Goods & Retail
+All Solutions
+CUSTOMERS
+Getting Started
+Customer Support
+Developer Portal
+Trust Center
+Training Sessions
+AlphaSummit 2026
+ABOUT
+About AlphaSense
+Careers
+Newsroom
+Contact
+Log In
+Download the Mobile App
+AlphaSense Inc. 2026. All Rights Reserved
+Legal & Compliance
+Cookie Preferences
+Privacy Policy
+Terms & Conditions
+Do Not Sell My Personal Information

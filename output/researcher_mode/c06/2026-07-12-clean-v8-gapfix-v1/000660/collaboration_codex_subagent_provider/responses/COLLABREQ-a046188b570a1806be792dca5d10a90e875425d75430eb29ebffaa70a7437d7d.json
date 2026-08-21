@@ -1,0 +1,53 @@
+{
+  "output_schema_hash": "e3b1c4b76182b80eea635818216153d90ee731c94cb8c6cc46eafaa60146f074",
+  "payload": {
+    "allowed_range": [
+      2.0,
+      3.0
+    ],
+    "anchor_comparisons": [
+      "positive anchor ORDTRANSFER-c1052e06818f90d4a44560f0와 비교해 확인된 positive는 유지하되 미확인 항목만 상단에서 제한한다",
+      "counter anchor ORDTRANSFER-0508f71bf609ed09f47c3acc와 비교하면 현재 source-backed evidence가 0점 상태보다 강하다"
+    ],
+    "counter_fact_ids": [
+      "EFACT-6459972ca51023d1d4491408",
+      "EFACT-b15e02831a18564591fe308c"
+    ],
+    "disagreements": [
+      "분석가보다 귀속·계약·지속성의 미확인 항목을 더 크게 본다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "proposed_points": 2.5,
+    "rationale": "매출채권 증가와 교환사채 주식 교환이 현금회수 및 희석 counter로 남는다. 그럼에도 금융부채 감소와 15,300,000주 자기주식 소각이 실제로 실행됐다.",
+    "support_fact_ids": [
+      "EFACT-21677a91e8afb32e4876aa8c",
+      "EFACT-d9f801f19a001e7214e5af8c"
+    ],
+    "why_not_higher": "매출채권 증가와 교환사채 주식 교환이 현금회수 및 희석 counter로 남는다.",
+    "why_not_lower": "금융부채 감소와 15,300,000주 자기주식 소각이 실제로 실행됐다."
+  },
+  "payload_hash": "889e923f704caa5ca946677089488c33ab8a06e77e5a6a8b4fb37fcd7195c118",
+  "production_score_authority": false,
+  "prompt_hash": "395f762d40766d78f9776038eb310c3b2aba88169c1e2c9bbb370c38b383dbd8",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a046188b570a1806be792dca5d10a90e875425d75430eb29ebffaa70a7437d7d",
+  "response_id": "COLLABRESP-8e6d2430634d1976338584264754a9921a4c68d1a45df0ab9acaec9c9c0ade19",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

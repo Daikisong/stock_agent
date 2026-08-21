@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "4131df84e08d1a5f1254e29bdea5bda3950a0b88ccd9d850decbc70f8ea21f60",
+  "payload": {
+    "allowed_range": [
+      9.8,
+      13.2
+    ],
+    "anchor_comparisons": [
+      "The counter anchor's 10.32-12.72 band is the closer discipline because current earnings remain price-sensitive and exposed to one-time and ramp costs, but actual 2026-Q1 memory profit strength supports a value above its midpoint.",
+      "The positive anchor's 13.68-16.08 band assumes stronger persistence than can be established while HBM-specific profit and company-level FCF are forecasts and latest EPS revision direction is DOWN."
+    ],
+    "counter_fact_ids": [
+      "EFACT-2bf2934ad088b585cc89843a",
+      "EFACT-992faa8a46788f671cefe250",
+      "EFACT-e449f48cdf920d528532a37f",
+      "EFACT-f05a97edeb8f85d49353381e",
+      "EFACT-f6519571c11130bacb0af98d"
+    ],
+    "disagreements": [
+      "The memo midpoint gives too much weight to forecast HBM unit economics before issuer-reported HBM cash conversion exists.",
+      "Memory-wide actuals cannot by themselves establish that HBM is the durable source of company FCF expansion."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-0714e46eb37d4c4b066de92c",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 11.4,
+    "rationale": "All five counterfacts show that the apparent explosion is cyclical and attribution-sensitive: one-time charges and ramp costs have reduced memory profit, the current bridge relies heavily on pricing, and HBM sales and pricing have previously fallen together. Most positive actuals are memory-wide, while HBM profit, gross margin and company FCF are estimates. This supports positive but materially discounted component points.",
+    "support_fact_ids": [
+      "EFACT-536119c3b7272c9ebee07624",
+      "EFACT-71eb35cf12f591c101571b4e",
+      "EFACT-bc95c1a79d29243f3b4e9b06",
+      "EFACT-cb2550bcc2cd6b3a1bd34e00",
+      "EFACT-e854b59aa43bb7f73c1e0835",
+      "EFACT-f8f6e5abba8d72973f8cbc55",
+      "EFACT-f979df4935e2c87e7d55a6ed"
+    ],
+    "why_not_higher": "The evidence lacks HBM-only actual revenue, operating cash flow and FCF, while price normalization, DOWN revision direction and execution costs can reverse operating leverage.",
+    "why_not_lower": "The countercase does not erase the current memory revenue surge, large operating-profit contribution and observed HBM/high-density DDR5 mix-to-ASP mechanism."
+  },
+  "payload_hash": "3cb645f5c8945f86252d83881f6729dd4bf0809319ad77af73566583b579c8d7",
+  "production_score_authority": false,
+  "prompt_hash": "0d01034b63f37e8c9c38653de09c0ca9782861b7c9e9ee584d6e0a0788c03a72",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3eac955bc38bf173cc11623f6fdda4d4f343e45c1e659ff537841ee8a5c25f6d",
+  "response_id": "COLLABRESP-562b4929792b081fcf027c76c8c61e056b71f0c3af9f9e43074be05fb8f772e3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

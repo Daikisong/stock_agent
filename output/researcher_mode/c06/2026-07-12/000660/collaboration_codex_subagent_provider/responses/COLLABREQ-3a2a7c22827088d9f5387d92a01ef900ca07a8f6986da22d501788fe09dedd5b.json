@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "현재 prompt에서 7개 component memo가 모두 complete이고, current 21개 judge의 역할별 범위는 각 component에서 공통 교집합을 유지한다. 새 valuation memo CRMEMO-6d61도 actual HBM 성장·전사 이익과 peer/SOTP 근거를 브로커 LTA·FY2027 이후 감익·경쟁 공급 counter와 분리하며 A/S/C 교집합 [6.5, 6.6]을 가진다. Information memo도 issuer actual 확인과 독립 고객 확인·binding terms·HBM 단독 손익 부재를 분리한다. RTMEMO-a4c561은 7개 component를 모두 검토했고 current synthesis와 supervisor는 structured roles, counter 및 supersession을 완결했다. 고객별 계약조건, HBM 단독 손익·ROIC, 경쟁 공급과 증설 회수는 향후 monitoring 한계이지만 현재 prompt에는 판정을 바꿀 구체적이고 실행 가능한 신규 full-fetch route가 없다. 과거 zero/no-result, provider 오류, 정해진 회차 또는 source absence를 포화 증거로 사용하지 않았으며, current evidence의 의미상 충족과 supervisor의 빈 fact gap·source direction·query brief·next action을 독립 검토한 결과 승인한다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "1498bfff058d3eba5c3d349db691faf244d09c796e2eadca9f9783a996169c99",
+  "production_score_authority": false,
+  "prompt_hash": "c2c862803bd83eec308123b23b1c787523c8804927e332a18cd5ca88d631521a",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3a2a7c22827088d9f5387d92a01ef900ca07a8f6986da22d501788fe09dedd5b",
+  "response_id": "COLLABRESP-4bda5bc076c5365d0d1052a6b0c52eeded02af1e3843c87ba39e8047e60e885c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

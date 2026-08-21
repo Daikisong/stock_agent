@@ -1,0 +1,66 @@
+{
+  "output_schema_hash": "d26091f17179ee4072d7a1c473d0df7e384a451c92d52af10ad50012f121a4a1",
+  "payload": {
+    "allowed_range": [
+      1.9,
+      2.5
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-09ab96433f8087166845bf25의 2.0 중심 MEDIUM band와 비교하면, actual HBM4 양산 출하와 재작성·감사 이슈 없음은 최소한 동등하거나 소폭 강하다. 다만 named AMD 관계의 독립 corroboration이 없어 이 anchor를 크게 상회시키지 않는다.",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64의 1.75 중심 WEAK counter band와 비교하면, formal filing consistency와 current HBM4 shipment가 더 직접적인 positive information을 제공한다. 반면 MOU·LOI·협의·forecast 경계는 그 격차를 제한한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1",
+      "EFACT-6868a3fa0d1462e2b1dfd4f2",
+      "EFACT-6a317a6c41253b0fafc79d56",
+      "EFACT-7f35f23f1f02e6327c9a1268"
+    ],
+    "disagreements": [
+      "Named AMD·NVIDIA·OpenAI 관계를 단순 고객계약 증거로 높이지 않는다. 이 prompt에서 확인되는 것은 공급 이력, 기술협력, MOU, 우선공급 지위, 계획 또는 LOI이며 구매조건이 아니다.",
+      "회사 전체 상위 5대 고객 23%와 중요 장기공급계약 공시는 HBM 고객 집중도나 모든 HBM 계약의 존재·부재로 전이할 수 없다.",
+      "AMD CUSTOMER_OFFICIAL corroboration은 이 request snapshot에 아직 수용되지 않았으므로 이후 query·ranking 결과를 선반영하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 2.2,
+    "rationale": "Prompt snapshot에는 재무제표 재작성 없음, 감사 강조·핵심감사사항 없음, 2026년 2월 HBM4 양산 출하라는 current 확인점이 있고 AMD·NVIDIA·OpenAI의 named 관계도 literal status로 보존된다. 그러나 AMD 관련 HBM3E 공급 이력·MOU·CEO 기술협력·HBM4 우선공급 지위는 이 snapshot에서 issuer-family lineage에 머물며, NVIDIA는 협의 중이고 OpenAI는 지원계획·수요전망·LOI다. 따라서 정보의 존재와 내부 일관성은 중간 수준 이상이지만 독립성, binding 조건, HBM별 품질·마진·현금전환 확인이 부족해 5점 만점의 2.2로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-1003ee870ca8d68689958b0a",
+      "EFACT-303c70f6fb2e11305c82f77b",
+      "EFACT-3dd3bb8fbe1496797f1cd00c",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-7f9fca669110a7e761e6264d",
+      "EFACT-7fe708d0c29a809416e4b893",
+      "EFACT-9eea79412c9f3395a852d248",
+      "EFACT-b6ff1b966b93b843dd6bcd04",
+      "EFACT-d0b79e6c2a1c2bef63f9cb34",
+      "EFACT-e7acbf35eec720d3412bca19",
+      "EFACT-f8487df03aa235fb70883193"
+    ],
+    "why_not_higher": "Accepted source plane이 issuer newsroom과 OPENDART에 집중되어 named AMD HBM3E/HBM4 관계의 독립 customer-official corroboration이 없다. MOU·LOI·협의·계획은 signed volume·price·duration·allocation을 제공하지 않고, HBM별 qualification·quality·margin·cash conversion도 확인되지 않는다.",
+    "why_not_lower": "HBM4가 2026년 2월 실제 양산 출하로 전환됐고, 분기 재무제표 재작성 없음과 감사 강조·핵심감사사항 없음이 formal reporting consistency를 뒷받침한다. AMD 공급 이력과 named technical relationships도 계약으로 과장하지 않는 한 현재 정보로서 유효하다."
+  },
+  "payload_hash": "51129329153143a462be89edb32f6a588a6cac4d06f20781384094ee2408c239",
+  "production_score_authority": false,
+  "prompt_hash": "891e75bf02e7af14fccc57d15ee2d63985536689c3c2544a74a1be0d9c863a03",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-83f65ea8390001867f1c2e9779e80edfa385bc09b96b679472d61808c18b2c7a",
+  "response_id": "COLLABRESP-8523b76e5f17cf7a5901da69ed112232fcbe10b7785cc70e1e74a3c209167bfc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

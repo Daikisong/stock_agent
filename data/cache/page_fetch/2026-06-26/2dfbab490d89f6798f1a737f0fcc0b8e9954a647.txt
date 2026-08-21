@@ -1,0 +1,225 @@
+[News] SK hynix Reports 5x 1Q26 Profit Surge; Operating Margin Hits 72%, Outpacing TSMC and Micron
+[News] SK hynix Reports 5x 1Q26 Profit Surge; Operating Margin Hits 72%, Outpacing TSMC and Micron
+SK hynix delivered yet another record-setting quarter, as tightening supply sent DRAM and NAND prices sharply higher. The company reported a striking ...
+[News] SK hynix Reports 5x 1Q26 Profit Surge; Operating Margin Hits 72%, Outpacing TSMC and Micron
+SK hynix delivered yet another record-setting quarter, as tightening supply sent DRAM and NAND prices sharply higher. The company reported a striking ...
+[News] SK hynix Reports 5x 1Q26 Profit Surge; Operating Margin Hits 72%, Outpacing TSMC and Micron
+SK hynix delivered yet another record-setting quarter, as tightening supply sent DRAM and NAND prices sharply higher. The company reported a striking ...
+Popular Keywords
+#DRAM
+#Foundry
+#AI Server
+#HBM
+#FOPLP
+#CoWoS
+#NAND Flash
+#Automotive
+#MLCC
+#Server
+#Micro LED
+#IC Design
+Sign In
+Member Center
+SIGN OUT
+Sign In
+Member Center
+SIGN OUT
+About Us
+Research Report
+Research Directory
+Semiconductor Research
+Display Research
+Optoelectronics Research
+Green Energy Research
+ICT Applications Research
+Semiconductors
+DRAM
+NAND Flash
+MLCC
+Wafer Foundries
+Compound Semiconductor
+AI Server/HBM/Server
+Display
+LCD
+OLED
+Upstream Components
+Panel Industry
+Display Supply Chain
+Display Technologies
+LED
+LED Demand / Supply Database
+Micro/Mini LED
+Near-Eye Display
+LED Video Wall
+Automotive LED - Lighting and Display
+General / Agricultural Lighting
+UV LED
+Infrared Sensing - IR LED / VCSEL / EEL
+Sapphire Market
+Energy
+Solar PV
+Lithium Battery and Energy Storage
+Consumer Electronics
+Notebook Computers
+TVs
+Smartphones
+Tablets
+Monitors / AIO
+Emerging Technologies
+Cloud / Edge Computing
+Artificial Intelligence
+Automotive Technologies
+Robot
+Selected Topics
+Semiconductors
+Telecommunications
+Computer System
+Consumer Electronics
+Automotive & EV
+Green Energy & Storage
+Display Panel & LED
+Economics
+Selected Topics
+Membership
+Semiconductor Research
+Display Research
+Optoelectronics Research
+Green Energy Research
+ICT Applications Research
+Selected Topics
+Price Trends
+DRAM (Index)
+DRAM Spot Price
+DRAM Contract Price
+Module Spot Price
+GDDR Spot Price
+LPDDR Spot Price
+Mobile DRAM Contract Price
+NAND Flash
+NAND Flash Spot Price
+NAND Flash Contract Price
+Wafer Spot Price
+Memory Card Spot Price
+PC-Client OEM SSD Contract Price
+SSD Street Price
+NAND Flash Wafer Contract Price
+eMMC Spot Price
+eMMC/UFS Contract Price
+TFT-LCD (Index)
+Large Size Panel Price
+LCD Smartphone Panel Price
+Street Price
+Large Size Panel Shipment
+PV
+Polysilicon
+Wafer
+Cell
+Module
+PV Glass
+Li-Ion Battery
+Battery Cell & Pack
+Precursor and Cathode Material
+Anode Material
+Separator
+Electrolyte
+Li & Co & Ni
+Other
+Press Center
+News
+Events
+Contact Us
+AI Agent
+Q&A Assistant
+Beta
+DataTrack
+About TrendForce News
+TrendForce News operates independently from our research team, curating key semiconductor and tech updates to support timely, informed decisions.
+Home
+News
+[News] SK hynix Reports 5x 1Q26 Profit Surge; Operating Margin Hits 72%, Outpacing TSMC and Micron
+2026-04-23
+Semiconductors
+editor
+SK hynix delivered yet another record-setting quarter, as tightening supply sent DRAM and NAND prices sharply higher. The company reported a striking 72% operating margin for 1Q26, according to its
+press release
+—outpacing global peers such as Micron (67.6%) and TSMC (58%), as highlighted by
+ZDNet
+.
+SK hynix reported first-quarter sales of KRW 52.5763 trillion, operating profit of KRW 37.6103 trillion, and net profit of KRW 40.3459 trillion. According to the
+Chosun Daily
+, this also marks the first time the South Korean memory giant has seen quarterly revenue top KRW 50 trillion and operating profit surpass KRW 30 trillion, extending its record streak to a fourth straight quarter.
+Reuters
+adds that its first-quarter operating profit surged more than five times from a year earlier.
+The Chosun Daily points out that a tightening supply of memory, fueled by surging AI demand, sent prices for commodity DRAM and NAND flash sharply higher, lifting overall profitability for SK hynix. DRAM made up 78% of the company’s total revenue, while NAND accounted for 21%, as per the report.
+According to data from TrendForce, cited by
+Reuters
+, contract prices for select DRAM products surged nearly 83% quarter-on-quarter in the first quarter, while certain NAND prices skyrocketed by roughly 160%.
+In its latest memory pricing outlook,
+TrendForce
+projects that conventional DRAM contract prices will still climb another 58–63% QoQ in the second quarter, despite potential softening in end-market shipments. NAND Flash is expected to extend its upcycle as well, with contract prices forecast to rise 70–75% QoQ in 2Q26.
+SK hynix, meanwhile, said it expects the pricing environment to remain favorable “for the time being,” with AI-driven demand continuing to offset softer end-market demand from PCs and smartphones, according to Reuters.
+HBM Demand to Exceed Supply Over Next 3 Years; LTA Update
+Notably,
+inews24
+reports, citing SK hynix’s earnings call, that HBM demand visibility remains exceptionally strong, with customer requirements over the next three years already far exceeding available supply capacity. The company said it is working to maximize HBM output within existing constraints, while carefully balancing allocation between HBM and standard DRAM to optimize overall supply efficiency, according to the report.
+According to
+IT Chosun
+, SK hynix said it expects memory price strength to continue, while also setting its sights on expanding supply of HBM4 to NVIDIA.
+It is worth noting that the memory titan, in a rare case, also revealed more details on long-term agreements (LTAs) with clients at the earnings call. IT Chosun suggests that the company is broadly reviewing multiple approaches and structural alternatives, noting that today’s framework differs from traditional LTA models. The company reportedly cautioned, however, that ongoing supply constraints make it difficult to accommodate all customer requests.
+As previously reported by
+Aju News
+, Samsung and SK hynix are moving away from one-year, short-term contracts with global big techs, transitioning instead to an LTA-only model spanning three to five years. According to
+Hankyung
+, SK hynix is reportedly securing long-term supply agreements (LTAs) for DRAM with major global AI players, including Microsoft and Google.
+Read more
+[News] SK hynix Breaks Ground on P&T7 Advanced Packaging Fab in Cheongju, Wafer-level Packaging Set for 2028 Ramp
+[News] From Annual Deals to 3–5 Year LTAs: Samsung and SK hynix Reportedly Reset Big Tech Memory Contracts
+(Photo credit: SK hynix)
+Please note that this article cites information from
+ZDNet
+,
+Chosun Daily
+,
+Reuters
+,
+inews24
+,
+IT Chosun
+,
+Aju News
+,
+Hankyung
+, and
+SK hynix
+.
+SK Hynix
+Next Article
+[News] Yuanjie’s Share Price Surpasses Kweichow Moutai’s, Hinting at a Boom in Optical Chip Demand
+Subject
+Latest
+Semiconductors
+Display
+Optical Semiconductors
+Energy
+Consumer Electronics
+Telecommunications
+Emerging Technologies
+Related Articles
+[News] Yuanjie’s Share Price Surpasses Kweichow Moutai’s, Hinting at a Boom in Optical Chip Demand
+2026.04.23
+[News] China OSAT SJ Semiconductor Reportedly Raises RMB 5B in IPO, Largest A-Share Offering of 2026 So Far
+2026.04.23
+[News] Samsung Xi’an NAND Output Reportedly Dips 5%–6% Amid 200+ Layer Shift; Impact May Extend into Next Year
+2026.04.22
+About US
+Research Report
+Terms of Use
+Privacy Policy
+Membership Terms & Conditions
+Contact Us
+© 2026 TrendForce Corp. All rights reserved
+Get in touch with us
+Your Email
+Message
+Send
+Cancel

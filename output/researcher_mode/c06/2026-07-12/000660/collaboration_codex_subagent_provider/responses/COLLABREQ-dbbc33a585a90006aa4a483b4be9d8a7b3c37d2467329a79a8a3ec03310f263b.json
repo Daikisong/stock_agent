@@ -1,0 +1,40 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-47cb4a13567f61bf51376d11",
+        "rationale": "공식 2Q25 실적자료를 전수 검토했으나, HBM3E 12단 판매 확대·AI 메모리 실적 기여·2026년 HBM 가시수요에 따른 선제 투자·잠정실적 제한은 현재 canonical fact에 동일한 공식 영문자료의 경제 의미로 이미 존재한다. 2025년 HBM 약 2배 성장 계획은 기준일 현재 FY2025 실제 HBM 매출 증가로 이미 실현·대체된 과거 전망이고, 이 자료에는 현재 미래 기간의 숫자형 guidance 또는 peer band가 없어 새 valuation_rerating fact를 추가하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "2026년 HBM 수요 가시성 문장은 숫자형 point/range를 제시하지 않아 valuation_rerating의 DURABLE_VISIBILITY 구조화 공백을 해소하지 않는다.",
+      "이 발행사 실적자료에는 비교기업 valuation band가 없어 PEER_BAND 공백이 계속 남는다."
+    ]
+  },
+  "payload_hash": "804578f205222368872046c0e75f8285a2e7480b6baded0c4eca42dc1822b32c",
+  "production_score_authority": false,
+  "prompt_hash": "2caefc703f2daa3d16deca08892e9945c14f5152db3f68748379dfa93064e3bd",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-dbbc33a585a90006aa4a483b4be9d8a7b3c37d2467329a79a8a3ec03310f263b",
+  "response_id": "COLLABRESP-1aaa6b550f99d0b8e583b7feaf45172cce2129eb7e1a6eb5274e13006d824d93",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

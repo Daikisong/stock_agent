@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "현재 336개 사실이 보여주는 삼성전자 DS 메모리의 핵심은 DRAM·HBM 판매, 고객 승인·배정, 대규모 CAPEX, 수율과 가격 사이클이다. 국내 상장사 중 이 제품·고객·생산·현금 메커니즘을 모두 직접 공유하는 가장 가까운 운영 peer이므로 핵심 비교기업으로 선택한다.",
+        "confidence": 0.99,
+        "material_differences": [
+          "SK하이닉스는 메모리 매출 집중도가 높은 반면 삼성전자는 모바일·가전·디스플레이·파운드리 등 여러 사업의 이익과 투자가 연결 재무에 함께 들어간다.",
+          "HBM 세대별 인증 시점, 고객별 공급 지위, 패키징 능력과 제품 믹스가 달라 같은 수요 국면에서도 실현 가격과 수익성은 같지 않다."
+        ],
+        "peer_name": "SK하이닉스",
+        "peer_symbol": "000660",
+        "shared_economic_drivers": [
+          "DRAM·HBM을 직접 제조하고 판매하므로 AI 서버 투자, 고객 인증과 물량 배정, 제품 믹스 및 메모리 가격이 매출과 마진을 함께 움직인다.",
+          "웨이퍼 공정과 첨단 패키징에 선행 설비투자가 필요하며 수율·가동률·생산능력 제약이 고정비 흡수와 현금창출을 좌우한다.",
+          "고객 재고조정과 공급 증설 시차 때문에 호황기의 가격 상승과 불황기의 이익 감소가 크게 나타나는 메모리 사이클을 공유한다."
+        ]
+      },
+      {
+        "comparability_rationale": "두 번째 국내 순수 메모리 제조사를 확보할 수 없는 상장 universe에서 장비·소재 업체보다 삼성전자에 가까운 팹 가동률·수율·CAPEX·감가상각 경제를 가진 보조 peer다. 메모리 제품과 고객 구조의 차이를 명시하고 제조 자본집약성 비교에만 제한해 사용한다.",
+        "confidence": 0.65,
+        "material_differences": [
+          "DB하이텍은 고객 설계를 생산하는 특화 공정 파운드리이고 삼성전자 비교 목적은 자체 DRAM·HBM 제품 판매여서 수익모델과 가격 결정 방식이 다르다.",
+          "HBM 고객 인증·물량 배정·메모리 계약가격·적층 패키징 병목은 DB하이텍에 직접 적용되지 않아 제품 peer가 아닌 팹 자본집약성 보조 비교군이다.",
+          "사업 규모와 제품·고객 포트폴리오가 삼성전자보다 좁아 전사 현금흐름의 다각화와 투자 여력을 같은 수준으로 해석할 수 없다."
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "반도체 웨이퍼 팹을 직접 운영하므로 가동률, 공정 수율, 제품 믹스와 고객 주문이 단위 원가와 영업 레버리지를 결정한다.",
+          "증설에 큰 선행 자본지출과 긴 리드타임이 필요하고 감가상각 부담이 뒤따르는 자본집약적 제조·현금흐름 구조를 공유한다.",
+          "B2B 반도체 고객의 수요 및 재고 변화가 주문, 가격, 생산능력 활용도에 전달되는 업황 민감성이 있다."
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "권위 있는 KRX KOSPI·KOSDAQ 2,689개 종목명/코드 목록에서 삼성전자 005930을 제외했다. DS 메모리의 제품·가격·고객·CAPA 메커니즘을 직접 공유하는 SK하이닉스를 핵심 peer로, 국내 추가 순수 메모리 제조사가 없는 제약에서 웨이퍼 팹의 자본집약적 현금경제를 공유하는 DB하이텍을 보조 peer로 선택했다. HBM 장비·소재 업체는 고객 CAPEX가 매출원천인 다른 수익모델이어서 제외했으며 배수·점수·Stage는 제안하지 않았다.",
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "db5e9d5125265f6bde51e59a95af9b8795539122dc5f8e6e0316e31bce3c419d",
+  "production_score_authority": false,
+  "prompt_hash": "7b0b115518d2cc130438e77cdb4ae0b7d67d1699c99d91885c45f63a38a771f5",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6f170846e5a581892335ccce355cdd15bb46d56478a7990b9e27071311abf9b8",
+  "response_id": "COLLABRESP-319e21748545097c86a97d02693f53ab0fe1d0ae4ad0c91255bfc94a0363cdc1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

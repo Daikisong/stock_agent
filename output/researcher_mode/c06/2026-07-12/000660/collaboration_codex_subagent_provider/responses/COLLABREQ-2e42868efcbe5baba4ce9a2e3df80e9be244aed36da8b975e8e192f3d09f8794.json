@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "3885e06527a44286bfd9318a7e97f4727d7002753186fba579331bc5de08b8ba",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f68b46997e6a33c93eb06104",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.04,
+        "rationale": "The broad 2025 forum snippet does not identify a current SK hynix HBM earnings or multiple bridge."
+      },
+      {
+        "candidate_id": "SGCAND-e5d40b28ea3a090e82da246f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "This is an online-training spreadsheet unrelated to the target or requested research sources."
+      },
+      {
+        "candidate_id": "SGCAND-62e0bc1fd138f818c32f37f1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The aggregator snippet is dated 2026-07-14, after the cutoff, and does not establish original broker or industry provenance."
+      },
+      {
+        "candidate_id": "SGCAND-f6e4f5d9eb888e70913daf6b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "This workforce-training spreadsheet is unrelated to the target and research objective."
+      },
+      {
+        "candidate_id": "SGCAND-977bba72c0dbec6779bc99b5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "A Scribd repost with only a copyright notice does not establish an original public-broker or industry source route."
+      },
+      {
+        "candidate_id": "SGCAND-65ee3f0ec72d1fa420d3d7b5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "This workforce-training spreadsheet is unrelated to the target and research objective."
+      },
+      {
+        "candidate_id": "SGCAND-2876c6ab7e562507df4edd84",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.82,
+        "rationale": "The May 2026 securities strategy report explicitly discusses the timing of SK hynix operating-profit expectations and the memory cycle, material to current expectation and rerating analysis."
+      },
+      {
+        "candidate_id": "SGCAND-d7ac19d9364943724665eda2",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.12,
+        "rationale": "The daily broker note gives only broad memory-price and export commentary without a target-specific earnings attribution or valuation multiple."
+      },
+      {
+        "candidate_id": "SGCAND-389b209c77bdd200e1b21acb",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "The supplied snippet is a cosmetics industry outlook and does not address the target or memory mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-2ad1604f3624ab82aae92d9b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "This 2023 market-flow seminar does not address the current target-specific HBM valuation mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-f6b9c261f25011939ca73cef",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.06,
+        "rationale": "The old broad forum supplies only a stock-pick mention and no current HBM earnings or valuation bridge."
+      },
+      {
+        "candidate_id": "SGCAND-05b738b28be0db908074b6cc",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.03,
+        "rationale": "The 2021 memory-capacity outlook is too stale and does not resolve the current HBM earnings or multiple question."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Full-text and publication-date eligibility must still be verified during bounded fetch; snippets were used only for discovery routing."
+    ]
+  },
+  "payload_hash": "d0e21e91a90a21581231c4436a7cf0f524402548bb65c8d5b437cf384806c232",
+  "production_score_authority": false,
+  "prompt_hash": "fdcd387e89358d2b3fc85be33db998d87d5138af9896a36c67148c227d9b7152",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2e42868efcbe5baba4ce9a2e3df80e9be244aed36da8b975e8e192f3d09f8794",
+  "response_id": "COLLABRESP-30f5e736ff1bb61c33c455d05a5f603d39ba889447bb981dce4714f42e9f0922",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

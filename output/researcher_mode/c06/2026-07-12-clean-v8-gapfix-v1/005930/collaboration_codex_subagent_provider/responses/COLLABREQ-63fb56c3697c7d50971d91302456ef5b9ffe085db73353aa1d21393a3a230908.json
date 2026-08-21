@@ -1,0 +1,52 @@
+{
+  "output_schema_hash": "9f03ef3ad12506b245ec35185f4ee8532e7dd420bb73cdb149d8686f2d4d7119",
+  "payload": {
+    "allowed_range": [
+      4.2,
+      5.6
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df의 ordinal 중간값 4.92점과 비교하면, HBM4 양산 출하·2026년 1분기 메모리 매출·ASP 상승이라는 실제 실행 근거가 있어 비슷하거나 소폭 강한 수준이다. 다만 이 anchor는 LOW confidence이고 exact anchor가 아니므로 상단을 크게 확장하지 않았다.",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b의 2.83~4.03점 약한 counter band보다는 실제 상용 출하와 가격·매출 실현이 강하다. 그러나 HBM 단독 이익 브리지와 일관된 저평가가 없어 두 anchor 사이의 불확실성을 범위에 남겼다."
+    ],
+    "counter_fact_ids": [],
+    "disagreements": [
+      "낮은 forward PE는 저평가를 시사하지만 trailing PE·PB, forward EV/EBITDA와 FCF yield는 같은 방향의 저평가를 확인하지 않는다.",
+      "HBM4 실제 출하와 메모리 매출·ASP 상승은 rerating 전제를 지지하지만, 메모리 전체 실적을 HBM 단독 지속 이익으로 귀속할 수는 없다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 5.0,
+    "rationale": "HBM4 양산 출하는 기술·샘플 단계에서 실제 상용 출하로 넘어갔음을 보여 주고, 2026년 1분기 메모리 매출 74,779,980백만원과 전년 평균 대비 메모리 ASP 146% 상승은 매출·이익 전환의 실물 기반을 강화한다. 이 조합은 valuation rerating의 운영 전제에는 긍정적이다. 반면 forward PE 5.59배만 보면 낮지만 trailing PE 21.86배, trailing PB 3.84배, forward EV/EBITDA 18.88배, forward FCF yield 1.99%가 혼재하고 HBM 단독 정상 이익 브리지가 없으므로 중간 수준으로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "현재 valuation 지표가 일관되게 싸지 않고, HBM4 출하와 메모리 전체 매출·ASP를 HBM 단독 정상 이익과 현금흐름으로 연결하는 검증된 브리지가 없다. DRAM 점유율 회복도 아직 구조적 우위로 확정하기 어렵다.",
+    "why_not_lower": "HBM4 양산 출하가 실제로 시작됐고, 2026년 1분기 메모리 매출과 ASP 상승도 현재 source-backed 실현치다. 단순 계획이나 제품 사양만 있는 사례보다 rerating의 운영 기반이 분명하다."
+  },
+  "payload_hash": "fb3e575a102d271ac7f6dfdfa8923cecc3e59d2ef40621548b94e2d6b8313063",
+  "production_score_authority": false,
+  "prompt_hash": "9c6517cc07c39233dc9d90ae409fdd1125e60dc19a5b18d658b0d43c96939545",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-63fb56c3697c7d50971d91302456ef5b9ffe085db73353aa1d21393a3a230908",
+  "response_id": "COLLABRESP-67016c9d0846a9b9b07138301fc400ca152ca1115096f72a5aff7aa4ffc32ee8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

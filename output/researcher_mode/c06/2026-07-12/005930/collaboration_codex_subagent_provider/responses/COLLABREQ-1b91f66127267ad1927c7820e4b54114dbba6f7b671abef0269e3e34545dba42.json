@@ -1,0 +1,47 @@
+{
+  "output_schema_hash": "7ccf1abf612f82b1a47f2c7b8c1b705921cefb34034b659c198cd5c411452333",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-1cd271c692678276cc3465d7",
+        "rationale": "Full review confirmed that the target-direct 2026 Q1 DRAM ASP and DRAM margin estimates are already durable current facts from this document. The remaining distinct numeric observations are NAND-only, which the exact C06 mechanism contract explicitly forbids as a product family, while the company-wide preliminary earnings and later-quarter broker forecasts are covered by later current evidence or do not establish a new target-objective mechanism.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-2466c6a8727cd5542c49b574",
+        "rationale": "The objective-reassessment reading found no omitted distinct valuation fact. Nine durable facts already preserve this report's HBM revenue, memory revenue/profit/margin, estimate revisions, forward BPS/PBR/EV-EBITDA, and target-PBR methodology. Its 3-5 year LTA and minimum-price/prepayment discussion is broker inference and is semantically covered by current contract-duration and term-discussion facts; it is not promoted to issuer-confirmed contract terms.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-26039c5b365a4f880e4dfeef",
+        "rationale": "The supplied article transport contains only a general pre-earnings-cycle introduction and no target-direct quantified bottleneck, contract, capacity, pricing, or realization evidence. Its generic claim that AI infrastructure and HBM may make the cycle different is already covered by stronger current evidence and cannot establish a new fact or absence.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "da61c76638e3bdb2ff906ab884a216096cc06354f86d93eabe0b0360049e08fc",
+  "production_score_authority": false,
+  "prompt_hash": "b0cc369c70efd16393fea2d8a36d061f55251c744938b678de228d90c8099da8",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1b91f66127267ad1927c7820e4b54114dbba6f7b671abef0269e3e34545dba42",
+  "response_id": "COLLABRESP-50d3278a3738efa4c2841dcfab4b964bf8d44b3b943f277d2d9a92aa7d9f8909",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-10552b2170335ff95e81b087",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "하나증권 산업 리포트로 CUSTOMER_OFFICIAL source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e49a3c7d66eff583674d58d9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "제3자 HBM 기사로 OpenAI 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-303f4b74cc707a6649304390",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "하나증권 보고서로 고객 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-eb0f77571a06b68716b34155",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "삼성증권 Earnings Tracker로 objective와 source family가 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7797f859d2b2d061e640a40c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "대학 강의 목록 자료로 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-f39b597eeb4cc5fe9eab0858",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Telegram 통계 페이지로 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6cc8289bb8a9635c367e2943",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver AI 사이클 분석으로 OpenAI original이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-692e4ee3c8c19f986a60424d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "미래에셋 AI 보고서로 CUSTOMER_OFFICIAL source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6ab9255f0903d1f2c5e1bd19",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver 투자 글로 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ff03c2b21597433195a73223",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "더밀크 제3자 분석 기사로 OpenAI original/full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b3b1be3c79b9218d41cf4d2d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "대신증권 CPO 리포트로 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-2fe257a84f395b3f7b896a33",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "서울신문 검색 목록으로 objective-bound full-source가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P3 material0은 source absence나 completion이 아니다."
+    ]
+  },
+  "payload_hash": "a84577da2ca1ea9f1a938c8ea65b89af21ad3b52d5eaa8feab25b044c47e3989",
+  "production_score_authority": false,
+  "prompt_hash": "a46c7505a90047a19f17ade2042db8aa576b5330737637b89bdfce95dea9c4d4",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9d6c5e175cd826cb5cd0c90f5d4a48202c511e5e763fe8e34f7c9c009082a80a",
+  "response_id": "COLLABRESP-e0482ddf53b1b1b9c7f7f2f1811c06154df7808873a7bbab399a50139cd717f1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

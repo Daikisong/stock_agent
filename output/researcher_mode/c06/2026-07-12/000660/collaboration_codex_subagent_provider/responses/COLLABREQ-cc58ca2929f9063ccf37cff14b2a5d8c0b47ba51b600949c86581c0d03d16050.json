@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "af6a09607a327476ccec9812ec08734f108bccfa93c2358405b7e196421354fb",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-8b428c6438024313c9cf350d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "(사전공고) [SK하이닉스] 2026 상반기 신입사원 채용 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-432939fc612b3a03b57250c2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스, 상반기 PI 성과급 지급…2분기 실적도 ‘역대 최고’ 예고 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-38e7ab96c457181805d3d68e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스 ISA 투자 방법 2026 — 배당소득세 15.4% 아끼면서 반도체 슈퍼사이클 .... 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-5b54b0f50975c148a5e93eb7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "더나은경제 - 더나은미래 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-e00a8a7ede835645b6c2b48a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "삼성전자 주가 전망 2026년 분기별 실적발표일 완벽 정리 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-81563e08faa6e26c211012df",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'최대실적' SK하이닉스 \"HBM 매출, 올해 2배 이상 늘 것…6세대 올해 양산\" 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-01426dc479998e3d0e621119",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스 HBM 반도체 관련주 TOP 3(대장주,핵심 수혜주 분석) 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-ebba9f3f4413b6cb5cc08850",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "HBM4 시장 규모, 점유율 및 2031년 성장 추세 보고서 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-9348dfacfb9f490d70948203",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스 300만원 목표가: HBM 성장과 투자 전략 분석 - MicroHard 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-075b8d9e6bba01a6a181f7c9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "HBM(고대역폭메모리) 관련주, '덩실덩실' 엠케이전자·SK하이닉스·삼성전·테크.... 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-431b577c8919010c964f6834",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "마이크론 실적발표 한국시간·실적·삼성전자·SK하이닉스 영향·가이던스·HBM·A.... 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-6d98ef2c4b365cb47ef69b73",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "삼성 이어 마이크론도 “HBM4 매출 10억달러 돌파…생산 극대화 집중” 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "1131b684b24a8fbd173c43cb5199bee8a64931427434d18aad9d02fdc0f2f998",
+  "production_score_authority": false,
+  "prompt_hash": "59196e998221ad1219f57de44da2d52cd00a0722603f8f82ebe7b73a7b3d397c",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cc58ca2929f9063ccf37cff14b2a5d8c0b47ba51b600949c86581c0d03d16050",
+  "response_id": "COLLABRESP-2e351cc6c8d6c74469b9c4b0484a174c343c5af8b2336f05adf7b96b8522b415",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,621 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "rationale": "누적 주요 고객 집중 2건을 유지하며 page4에서 중복하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "rationale": "누적 12건에 이어 세금납부, 금융자산 편입, 투자자산 처분, 무형자산 현금취득 4건을 추가했다. 정부보조금·리스 및 자본변동의 distinct remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+        "rationale": "임원 명단과 일반 지배구조·출자 상세가 중심이며 000660 메모리 objective 사실을 추론하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "rationale": "누적 6건에 이어 외화채 원부자재 사용, SK-U타워와 수처리센터 책임임차 3건을 추가했다. 지역 실적·감사 및 추가 자금운용 remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "rationale": "누적 6건에 이어 무형자산 취득·상각과 잔존 교환사채 3건을 추가했다. 내재파생상품·충당부채 등 distinct remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+        "rationale": "누적 4건에 이어 엔화 민감도 1건을 추가했다. 위안·유로 민감도, 약정준수, 공정가치 자산 등 distinct remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5b6d91276c1af970b04377e6",
+        "rationale": "SK스퀘어 재무와 임원 명단이 중심인 혼합 구간으로 000660 메모리 objective에 귀속할 새 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "rationale": "누적 6건에 이어 계약부채 1건을 추가했다. 연금자산·내재파생상품·금융손익 등 distinct remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "economic_mechanism": "2026년 1분기 연결 법인세 납부 현금은 3,288,174백만원으로 전년 동기 1,421,386백만원보다 늘어 영업현금의 세후 전환을 낮췄다.",
+        "exact_quote": "배당금의 수취\n3,952,793\n4,107\n법인세의 납부\n(3,288,174)\n(1,421,386)\n투자활동 현금흐름\n(17,634,899)\n(8,218,488)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "실제 세금 현금지출은 회계이익과 세후 현금 창출의 차이를 보여주는 현금 질 핵심 반대근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_INCOME_TAX_PAID",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_INCOME_TAX_CASH_PAYMENT",
+        "predicate_family": "INCOME_TAX_CASH_OUTFLOW_ACTUAL",
+        "primitive_tags": [
+          "tax_paid",
+          "actual",
+          "quarter"
+        ],
+        "product_family": "전사 현금흐름",
+        "question_family_id": "C06_INCOME_TAX_CASH_PAYMENT",
+        "question_family_tags": [
+          "income_tax",
+          "cash_outflow",
+          "cash_conversion"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 법인세 현금지출",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 3288174
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "economic_mechanism": "2026년 1분기 기타금융자산 증가에 3,500,000백만원의 현금을 배분해 단기 현금 외 금융자산 운용을 확대했다.",
+        "exact_quote": "기타금융자산의 감소\n1,308\n498\n기타금융자산의 증가\n(3,500,000)\n(1,172)\n기타수취채권의 감소\n4,950\n13,063",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "3.5조원 규모의 금융자산 편입은 생산설비 CAPEX와 구별되는 실제 자본배분이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_OTHER_FINANCIAL_ASSET_INCREASE",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_OTHER_FINANCIAL_ASSET_CASH_OUTFLOW",
+        "predicate_family": "FINANCIAL_ASSET_ALLOCATION_ACTUAL",
+        "primitive_tags": [
+          "other_financial_assets",
+          "cash_outflow",
+          "actual"
+        ],
+        "product_family": "전사 금융자산",
+        "question_family_id": "C06_OTHER_FINANCIAL_ASSET_CASH_ALLOCATION",
+        "question_family_tags": [
+          "financial_assets",
+          "cash_allocation",
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 기타금융자산",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 3500000
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "economic_mechanism": "2026년 1분기 장기투자자산 처분으로 4,123,908백만원의 현금을 회수해 투자자산 가치 실현이 현금흐름에 반영됐다.",
+        "exact_quote": "기타수취채권의 증가\n(6,508)\n(12,787)\n장기투자자산의 처분\n4,123,908\n6,241\n장기투자자산의 취득\n(14,120)\n(6,033)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "수준 3 투자자산 평가이익과 별개로 실제 현금화된 처분대금은 자본회수의 질을 확인한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_LONG_TERM_INVESTMENT_DISPOSAL",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_LONG_TERM_INVESTMENT_DISPOSAL_CASH_RECEIPT",
+        "predicate_family": "INVESTMENT_DISPOSAL_CASH_RECEIPT_ACTUAL",
+        "primitive_tags": [
+          "investment_disposal",
+          "cash_receipt",
+          "actual"
+        ],
+        "product_family": "전사 금융자산",
+        "question_family_id": "C06_LONG_TERM_INVESTMENT_DISPOSAL_CASH_RECEIPT",
+        "question_family_tags": [
+          "long_term_investment",
+          "disposal",
+          "cash_recovery"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 장기투자자산",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 4123908
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "economic_mechanism": "2026년 1분기 연결 무형자산 취득 현금유출은 207,963백만원으로 유형자산 CAPEX 외 기술·권리 투자 부담을 보여준다.",
+        "exact_quote": "유형자산의 취득\n(7,657,403)\n(6,284,222)\n무형자산의 취득\n(207,963)\n(170,465)\n관계기업투자주식의 처분\n3,518\n3,581",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "유형자산 취득과 별개인 무형자산 현금투자는 총 투자부담과 현금회수 평가에 필요하다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_INTANGIBLE_ASSET_ACQUISITION_CASH_OUTFLOW",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_INTANGIBLE_ASSET_ACQUISITION_CASH_OUTFLOW",
+        "predicate_family": "INTANGIBLE_CAPEX_ACTUAL",
+        "primitive_tags": [
+          "intangible_acquisition",
+          "cash",
+          "actual"
+        ],
+        "product_family": "전사 무형자산",
+        "question_family_id": "C06_INTANGIBLE_ASSET_ACQUISITION_CASH_OUTFLOW",
+        "question_family_tags": [
+          "intangible_assets",
+          "capex",
+          "cash_outflow"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 무형자산",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 207963
+      },
+      {
+        "business_segment": "별도 전사",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "economic_mechanism": "2023년 외화표시 회사채 조달금 2,237,710백만원 전액을 웨이퍼 등 원부자재 구매에 사용해 운영자금 계획과 실제 사용이 일치했다.",
+        "exact_quote": "회사채\n-\n2023년 04월 11일\n운영자금\n2,237,710\n웨이퍼 등 원부자재 구매\n2,237,710\n-\n-\n※ 상기 회사채는 외화표시사채로, 조달금액 USD 1,700,000,000를 이사회결의일(2023년 04월 03일) 서울외국환중개㈜ 고시 종가 환율 ($1 = 1,316.3원) 기준으로 환산한 금액입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "대규모 외화채 조달이 원부자재 운전자금에 실제 사용된 사실은 부채와 메모리 생산투입의 연결을 보여준다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "2023_EXCHANGEABLE_BOND_PROCEEDS_USED_FOR_WAFER_MATERIALS",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2023-04-11 through 2026-03-31 disclosure",
+        "predicate": "REPORTS_BOND_PROCEEDS_USED_FOR_WAFER_RAW_MATERIALS",
+        "predicate_family": "DEBT_PROCEEDS_USE_ACTUAL",
+        "primitive_tags": [
+          "operating_funds",
+          "raw_material_purchase",
+          "actual_use"
+        ],
+        "product_family": "웨이퍼 원부자재",
+        "question_family_id": "C06_BOND_PROCEEDS_WAFER_MATERIAL_USE",
+        "question_family_tags": [
+          "bond_proceeds",
+          "wafer_materials",
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 외화표시 회사채 자금",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 2237710
+      },
+      {
+        "business_segment": "별도 전사",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "economic_mechanism": "분당 SK-U타워를 5,072억원에 매각한 뒤 2027년 6월까지 월 1,883백만원에 책임임차해 과거 자산현금화가 현재 고정 임차료 의무로 이어진다.",
+        "exact_quote": "당사는 2022년 6월 30일 에스케이위탁관리부동산투자회사에 분당 SK-U타워를 5,072억원에 매각하고 책임임대차 전환을 완료하였습니다. 임대차 기간은 2022년 6월 30일부터 2027년 6월 29일까지 5년(임대차 보증금 17,330백만원, 월 임차료 1,883백만원)이며, 매년 계약서 상 조건을 반영하여 갱신 예정입니다. 계약 종료 전 임대차 계약을 5년 연장할 수 있는 연장 선택권을 보유하고 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "자산매각으로 받은 현금과 이후의 책임임차 의무를 함께 봐야 자본회수와 고정비를 과장 없이 평가할 수 있다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK_U_TOWER_SALE_LEASEBACK_THROUGH_2027_06_29",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2022-06-30 to 2027-06-29",
+        "predicate": "REPORTS_OFFICE_SALE_AND_LEASEBACK_TERMS",
+        "predicate_family": "SALE_LEASEBACK_FIXED_OBLIGATION",
+        "primitive_tags": [
+          "office_sale",
+          "responsible_lease",
+          "monthly_rent"
+        ],
+        "product_family": "전사 부동산 리스",
+        "question_family_id": "C06_SALE_LEASEBACK_OFFICE_OBLIGATION",
+        "question_family_tags": [
+          "sale_leaseback",
+          "fixed_rent",
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 분당 SK-U타워",
+        "subject_id": "000660",
+        "unit": "KRW",
+        "value": "sale KRW 507.2 billion; deposit KRW 17,330 million; monthly rent KRW 1,883 million"
+      },
+      {
+        "business_segment": "별도 전사",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "economic_mechanism": "수처리센터를 1,120,315백만원에 매각한 뒤 2033년 9월까지 월 6,192백만원에 책임임차해 생산지원 자산 현금화와 장기 고정비를 동시에 만들었다.",
+        "exact_quote": "당사는 2023년 9월 25일 클린인더스트리얼위탁관리부동산투자회사에 수처리센터를 1,120,315백만원에 매각하고 책임임대차 전환을 완료하였습니다. 임대차 기간은 2023년 9월 25일부터 2033년 9월 25일까지 10년(임대차 보증금 143,448백만원, 월 임차료 6,192백만원)이며, 매년 계약서 상 조건을 반영하여 갱신 예정입니다. 계약 종료 전 임대차 계약을 10년 연장할 수 있는 연장 선택권을 보유하고 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "장기 생산지원 시설의 책임임차는 과거 현금화 이익 뒤에 남은 실질 고정비와 자본운용 부담을 보여준다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "WATER_TREATMENT_CENTER_SALE_LEASEBACK_THROUGH_2033_09_25",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2023-09-25 to 2033-09-25",
+        "predicate": "REPORTS_WATER_CENTER_SALE_AND_LEASEBACK_TERMS",
+        "predicate_family": "SALE_LEASEBACK_FIXED_OBLIGATION",
+        "primitive_tags": [
+          "asset_sale",
+          "ten_year_lease",
+          "monthly_rent"
+        ],
+        "product_family": "전사 생산지원 부동산",
+        "question_family_id": "C06_SALE_LEASEBACK_WATER_CENTER_OBLIGATION",
+        "question_family_tags": [
+          "sale_leaseback",
+          "water_center",
+          "fixed_rent"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 수처리센터",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": "sale KRW 1,120,315 million; deposit KRW 143,448 million; monthly rent KRW 6,192 million"
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "economic_mechanism": "2026년 1분기 연결 무형자산 회계상 취득액은 184,745백만원이었다.",
+        "exact_quote": "기초장부금액\n4,049,402\n취득\n184,745\n처분 및 폐기\n(990)\n상각\n(210,566)\n대체\n(6,378)\n기타\n34,404\n기말장부금액\n4,050,617",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현금흐름표 취득액과 구별되는 회계상 무형자산 증가는 기술투자의 자산화와 상각 기반을 보여준다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_INTANGIBLE_ASSET_ADDITIONS",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_INTANGIBLE_ASSET_ADDITION",
+        "predicate_family": "INTANGIBLE_ASSET_ADDITION_ACTUAL",
+        "primitive_tags": [
+          "intangible_addition",
+          "accounting",
+          "actual"
+        ],
+        "product_family": "전사 무형자산",
+        "question_family_id": "C06_INTANGIBLE_ASSET_ADDITION_ACTUAL",
+        "question_family_tags": [
+          "intangible_assets",
+          "addition",
+          "capital_intensity"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 무형자산",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 184745
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "economic_mechanism": "2026년 1분기 연결 무형자산 상각은 210,566백만원으로 회계상 취득액 184,745백만원을 웃돌았다.",
+        "exact_quote": "기초장부금액\n4,049,402\n취득\n184,745\n처분 및 폐기\n(990)\n상각\n(210,566)\n대체\n(6,378)\n기타\n34,404\n기말장부금액\n4,050,617",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "무형자산 상각은 설비 감가상각과 별도로 이익 전환을 낮추는 기술투자 비용이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_INTANGIBLE_ASSET_AMORTIZATION",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_INTANGIBLE_ASSET_AMORTIZATION",
+        "predicate_family": "INTANGIBLE_ASSET_AMORTIZATION_ACTUAL",
+        "primitive_tags": [
+          "amortization",
+          "noncash_expense",
+          "actual"
+        ],
+        "product_family": "전사 무형자산",
+        "question_family_id": "C06_INTANGIBLE_ASSET_AMORTIZATION_ACTUAL",
+        "question_family_tags": [
+          "intangible_assets",
+          "amortization",
+          "earnings_conversion"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 무형자산",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 210566
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "economic_mechanism": "2026년 1분기말 해외 교환사채 잔액은 USD 227.6백만이고 교환대상 자기주식은 2,753,353주로, 추가 부채·주식 전환 가능성이 남아 있다.",
+        "exact_quote": "사채의 발행잔액 [USD, 일]\n227,600,000\n교환권 행사 및 교환가액 조정에 따라 변동된 교환대상 주식수 (단위 : 주)\n2,753,353\n이자율\n0.0175\n만기이자율\n0.0175\n만기일\n2030년 04월 11일",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "이미 행사된 교환사채와 구별되는 잔존 채무·자기주식 수는 추가 전환과 주당가치 희석 가능성을 정량화한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_REMAINING_EXCHANGEABLE_BOND_AND_SHARES",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "REPORTS_REMAINING_EXCHANGEABLE_BOND_BALANCE_AND_SHARES",
+        "predicate_family": "EXCHANGEABLE_BOND_REMAINING_OBLIGATION",
+        "primitive_tags": [
+          "bond_balance",
+          "exchange_shares",
+          "maturity"
+        ],
+        "product_family": "전사 자금조달",
+        "question_family_id": "C06_EXCHANGEABLE_BOND_REMAINING_BALANCE",
+        "question_family_tags": [
+          "exchangeable_bond",
+          "remaining_balance",
+          "dilution"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 해외 교환사채",
+        "subject_id": "000660",
+        "unit": "USD and shares",
+        "value": "USD 227,600,000 and 2,753,353 exchange shares"
+      },
+      {
+        "business_segment": "별도 전사",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+        "economic_mechanism": "JPY 대비 기능통화 환율이 10% 변동할 때 별도 세전이익 민감도는 424,696백만원으로, 달러 외 엔화 노출도 유의미하다.",
+        "exact_quote": "기능통화 또는 표시통화\nUSD\nJPY\nCNY\nEUR\n시장위험의 각 유형별 민감도분석 기술\n외화에 대한 기능통화의 환율이 10% 변동시, 동 환율변동이 법인세비용차감전순이익에 미치는 영향\n외화에 대한 기능통화의 환율이 10% 변동시, 동 환율변동이 법인세비용차감전순이익에 미치는 영향\n외화에 대한 기능통화의 환율이 10% 변동시, 동 환율변동이 법인세비용차감전순이익에 미치는 영향\n외화에 대한 기능통화의 환율이 10% 변동시, 동 환율변동이 법인세비용차감전순이익에 미치는 영향\n시장변수 상승 시 당기손익 증가\n2,538,467\n424,696\n23,579\n시장변수 상승 시 당기손익 감소\n(48,242)\n시장변수 하락 시 당기손익 증가\n48,242\n시장변수 하락 시 당기손익 감소\n(2,538,467)\n(424,696)\n(23,579)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "엔화 환율 민감도는 달러 민감도와 구별되는 별도 통화 노출로 전사 손익 변동 위험을 보완한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_JPY_TEN_PERCENT_PRETAX_FX_SENSITIVITY",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31 sensitivity",
+        "predicate": "REPORTS_JPY_FOREIGN_EXCHANGE_PRETAX_SENSITIVITY",
+        "predicate_family": "FOREIGN_EXCHANGE_RISK_SENSITIVITY",
+        "primitive_tags": [
+          "10_percent",
+          "pretax_income",
+          "market_risk"
+        ],
+        "product_family": "전사 환위험",
+        "question_family_id": "C06_JPY_FOREIGN_EXCHANGE_SENSITIVITY",
+        "question_family_tags": [
+          "FX",
+          "JPY",
+          "sensitivity"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 외화 금융자산·부채",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 424696
+      },
+      {
+        "business_segment": "별도 전사",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "2026년 1분기말 별도 계약부채는 398,716백만원으로 전기말 417,711백만원에서 감소했지만, 이를 HBM 수주잔고·계약물량으로 확대할 근거는 없다.",
+        "exact_quote": "선수금\n31\n선수수익\n44\n예수금\n339,335\n계약부채\n398,716\n기타\n75,052\n유동 소계\n813,178\n기타장기종업원급여부채\n1,509,556\n비유동 소계\n1,509,556\n합계\n2,322,734\n전기말\n(단위 : 백만원)\n공시금액\n선수금\n405\n선수수익\n44\n예수금\n229,431\n계약부채\n417,711",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "계약부채 실제 잔액은 이연된 수행의무의 전사 규모를 보여주되 제품·고객·갱신률을 추론하지 않는 정보 경계 사실이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_PARENT_CONTRACT_LIABILITY",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31",
+        "predicate": "REPORTS_CONTRACT_LIABILITY_BALANCE",
+        "predicate_family": "CONTRACT_LIABILITY_ACTUAL",
+        "primitive_tags": [
+          "contract_liability",
+          "actual",
+          "no_product_attribution"
+        ],
+        "product_family": "전사 계약부채",
+        "question_family_id": "C06_CONTRACT_LIABILITY_ACTUAL",
+        "question_family_tags": [
+          "contract_liability",
+          "deferred_revenue",
+          "attribution_boundary"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 계약부채",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 398716
+      }
+    ],
+    "unresolved_document_ids": [
+      "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+      "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+      "OFFICIALDOC-517ee88c46b03a911ecddcca",
+      "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+      "OFFICIALDOC-5d1c1167b9b6798bbb391320"
+    ],
+    "unresolved_research_notes": [
+      "page4 신규 12건 cap에 도달했다. prior48과 구별되는 정부보조금·지역 실적·내재파생상품·CNY/EUR 민감도·연금자산 및 금융손익 remainder가 5개 문서에 남아 있다."
+    ]
+  },
+  "payload_hash": "fbdb60d406c944070286c9e6f10719041517235cc8d84d7c7dd27f768018a30a",
+  "production_score_authority": false,
+  "prompt_hash": "fb63e18c72c023f699b59cbc65774fd0eb3c18c58be14a9b91bb61b607e1ad6e",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bc1428ec9f1e889b43c5981b9626ebdf8dfc8b3ebfd7b2050a8690fff3cc4a0b",
+  "response_id": "COLLABRESP-c85cae0a04b2596406d5105d677b5bcfbd16ad94a1b02589e7e41af742ff559a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

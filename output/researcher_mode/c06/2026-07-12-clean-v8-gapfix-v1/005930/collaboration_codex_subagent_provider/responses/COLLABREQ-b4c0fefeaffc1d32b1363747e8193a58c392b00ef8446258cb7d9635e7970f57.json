@@ -1,0 +1,63 @@
+{
+  "output_schema_hash": "67051a5af600f6dde5b403164855d82032081ea27abe5c105fc863202540a56b",
+  "payload": {
+    "allowed_range": [
+      7.4,
+      10.6
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23의 positive upper 8.74보다 메모리 100% 가동·actual capacity/output·ASP 146% 상승·HBM4 양산이 더 직접적이어서 소폭 상회하되, 타 archetype ordinal transfer라 큰 상향은 피한다.",
+      "ORDTRANSFER-9205e8ab347aff38184b148a의 5.43 midpoint는 fact signature 없는 counter proxy다. 현재는 다수 actual이 있어 그보다 높지만 HBM-only lock 부재가 격차를 제한한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [
+      "메모리 전체의 100% 가동·생산능력·ASP를 HBM4 전용 capacity와 계약 가격으로 전이하지 않는다.",
+      "HBM 매출 3배와 설비투자는 guidance·plan이며 NVIDIA HBM4는 협의 중이다. material 0은 병목 부재의 증명이 아니다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "proposed_points": 9.1,
+    "rationale": "100% 메모리 가동, 실제 생산량·생산능력, 제한된 공급 가용량, ASP 146% 상승과 HBM4 양산 출하는 realized bottleneck과 pricing 전환을 함께 보여준다. 1c 생산성과 cleanroom은 공급 대응력을 보강한다. 다만 total memory actual과 HBM-only economics를 분리하고, 공급 부족 전망·HBM 매출 3배·설비투자 계획 및 NVIDIA 협의 상태를 확정 고객 lock으로 보지 않아 중간 점수로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-2e14e423fe28bef557c6af3a",
+      "EFACT-3dcbb46fd5653fb3dc5dcd2e",
+      "EFACT-4d6a7fe870806b29408cc3a5",
+      "EFACT-5b70b07b35d08b89839b5ae7",
+      "EFACT-653a13dd35d5c7a1f6e4d3e1",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-7fbb65f7ab612c9f98c5b4fe",
+      "EFACT-7ff6bfcbd0d673fdb7f351e7",
+      "EFACT-939b29c020b166da3e38d343",
+      "EFACT-b7565fd844a544809e1ca148",
+      "EFACT-de5ea57b4d3bc79a7b40fe3e",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "HBM4-only capacity 잠김, 고객별 allocation, 계약 가격·물량·기간·취소조건이 없고 3배 매출·설비 확대는 forward plan이다.",
+    "why_not_lower": "메모리 100% 가동, actual output/capacity, 제한된 공급, 146% ASP 상승과 HBM4 양산 출하가 단순 업황 기대보다 강한 realized bottleneck/pricing 증거다."
+  },
+  "payload_hash": "fce78972d4dbb514d20b14212649fdcebcc0248814649e361d3398d2d294f7b6",
+  "production_score_authority": false,
+  "prompt_hash": "712df34b74dace60b1033cbe2469f3958cac539562f054d5e29032e2779450aa",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b4c0fefeaffc1d32b1363747e8193a58c392b00ef8446258cb7d9635e7970f57",
+  "response_id": "COLLABRESP-d38d519015d0a67aa0921d2a4a3e9cf3795384109a7ac1248e1193d3e9c31af1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

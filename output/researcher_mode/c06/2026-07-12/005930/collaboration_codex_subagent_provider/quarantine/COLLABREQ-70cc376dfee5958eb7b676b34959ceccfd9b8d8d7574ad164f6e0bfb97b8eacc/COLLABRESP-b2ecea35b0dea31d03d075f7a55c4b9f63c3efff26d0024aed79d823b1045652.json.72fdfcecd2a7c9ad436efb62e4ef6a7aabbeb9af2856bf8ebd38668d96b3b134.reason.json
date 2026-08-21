@@ -1,0 +1,9 @@
+{
+  "production_score_authority": false,
+  "quarantined_response_path": "output/researcher_mode/c06/2026-07-12/005930/collaboration_codex_subagent_provider/quarantine/COLLABREQ-70cc376dfee5958eb7b676b34959ceccfd9b8d8d7574ad164f6e0bfb97b8eacc/COLLABRESP-b2ecea35b0dea31d03d075f7a55c4b9f63c3efff26d0024aed79d823b1045652.json",
+  "reason": "FACT_EXTRACTION_SEMANTIC_VALIDATION:FACTS_EXTRACTED_WITHOUT_ACCEPTED_FACT:SGDOC-356ad0d7dc6b74c4d0fad844",
+  "request_id": "COLLABREQ-70cc376dfee5958eb7b676b34959ceccfd9b8d8d7574ad164f6e0bfb97b8eacc",
+  "response_id": "COLLABRESP-b2ecea35b0dea31d03d075f7a55c4b9f63c3efff26d0024aed79d823b1045652",
+  "reusable_provider_response": false,
+  "schema_version": "e2r_v5_collaboration_response_quarantine_v1"
+}

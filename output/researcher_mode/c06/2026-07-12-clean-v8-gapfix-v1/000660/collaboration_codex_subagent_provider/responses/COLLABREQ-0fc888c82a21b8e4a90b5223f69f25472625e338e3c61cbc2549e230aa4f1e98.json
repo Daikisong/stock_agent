@@ -1,0 +1,86 @@
+{
+  "output_schema_hash": "b6c5baffc117429990a455b67a47441ac7b895c59a2ca6b8c0b8a274b0120e72",
+  "payload": {
+    "business_model_summary": "SK하이닉스는 DRAM·HBM 중심의 자본집약적 메모리 제조사다. AI 서버용 HBM 수요, 제품 믹스와 ASP가 매출·이익을 키우고, 선단공정·EUV·첨단 패키징 투자와 수율·감가상각·운전자본·세금이 FCF 전환을 좌우한다. HBM4 고객 요청 물량 양산과 ASIC 공동개발은 상용 수요를 지지하지만, 실명 고객별 확정 물량·가격·기간·취소보호·선수금·RPO까지 증명하지는 않는다.",
+    "capacity_and_supply_constraints": [
+      "메모리 전반 가동률과 HBM 패키징·수율 병목",
+      "M15X와 P&T7 증설은 공급 기반을 늘리지만 집행기간과 비용이 크다",
+      "브로커 CAPA 전망과 고객 요청 물량은 HBM 전용 sold-out 기간이나 고객별 allocation을 정량 증명하지 않는다"
+    ],
+    "confidence": 0.88,
+    "cost_and_cash_drivers": [
+      "HBM의 큰 die와 수율이 원가와 공급량에 미치는 영향",
+      "M15X·EUV·용인 인프라·P&T7 첨단 패키징 투자와 감가상각",
+      "영업현금흐름에서 CAPEX·세금·재고 등 운전자본을 차감한 FCF 전환",
+      "ADR 조달·현금·차입을 함께 사용하는 투자재원 구조"
+    ],
+    "customer_and_channel_dependencies": [
+      "주요 고객과 공급 물량·가격을 월별 또는 분기별 합의한다",
+      "상위 익명 고객의 연결 매출 비중이 높아 고객 집중 위험이 있다",
+      "고객 요청 HBM4 양산과 ASIC 협업은 직접 수요 경로지만 고객 실명과 계약조건은 공개되지 않았다"
+    ],
+    "fact_row_indices": [
+      0,
+      616,
+      3,
+      5,
+      10,
+      14,
+      17,
+      20,
+      27,
+      36,
+      45,
+      49,
+      52,
+      53,
+      599,
+      600,
+      629,
+      634,
+      640,
+      963,
+      967,
+      970,
+      977,
+      979,
+      983,
+      984,
+      990,
+      993
+    ],
+    "research_complete": true,
+    "revenue_engines": [
+      "DRAM과 HBM의 출하량·제품 믹스·ASP 상승",
+      "AI 서버용 HBM 수요 확대와 HBM4 세대 전환",
+      "고객 요청 물량 양산 및 ASIC 공동개발을 통한 상용화 경로"
+    ],
+    "uncertainties": [
+      "HBM별 realized ASP·수율·전용 CAPA·마진·FCF가 전사 또는 DRAM 수치와 완전히 분리되지 않는다",
+      "signed HBM 계약의 기간·물량·가격·취소·선수금·backlog/RPO가 공식 자료로 충분히 확인되지 않았다",
+      "브로커 전망과 장기 투자계획은 실제 실적·집행과 다를 수 있다",
+      "고객 실명과 제품별 매출 귀속이 공개되지 않았다"
+    ]
+  },
+  "payload_hash": "d844c3ccd5ad9845e3279b1cdb9d90467c3fc75c657e61deb448536f83299762",
+  "production_score_authority": false,
+  "prompt_hash": "c11521af1eabebe41934c3e5cc889be45a138bddb790d0ad16e69a8c7a9ba3b1",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0fc888c82a21b8e4a90b5223f69f25472625e338e3c61cbc2549e230aa4f1e98",
+  "response_id": "COLLABRESP-9c2cc06aa4c4731a6cb809f862c7f495f69091977b1fdc742f5ac41fdf90581e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-2284ab247baedac7210f93c8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "HappyCampus 판매자 홈 navigation으로 broker 원문/PDF도 005930 research source도 아니다. family=NONE, nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-59cf11bf57895f6d0eabdd36",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "개인 Tistory blog는 HBM·증시 글 제목을 나열하지만 requested PUBLIC_BROKER_PDF original provenance가 없다. third-party commentary이므로 nonmaterial이고 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4593f3e3d53fcf48025f0337",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 매매·뉴스 피드는 broker full-source route가 아니며 snippet도 005930 valuation mechanism을 특정하지 않는다. nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-2712bef73776bd75b286fb90",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "HappyCampus 자료목록 navigation은 original broker report가 아니며 일반 면접·투자 문구만 포함한다. 005930 objective와 무관해 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P8 roster 4개를 exact-once 분류했으나 target-specific PUBLIC_BROKER_PDF full-source route는 확인되지 않았다.",
+      "material 0은 source absence가 아니며 metadata·snippet을 evidence로 사용하지 않았다."
+    ]
+  },
+  "payload_hash": "b15fba4b47767c6be2730ce733e3304a627115daed90bf3411a75943e6a52b59",
+  "production_score_authority": false,
+  "prompt_hash": "d400b1fad43d01a90f1634d64da19db4f6b8871b7ce5279fbfb4819257a3b49e",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1c03d4ecdeebeb1a85e75808509f8193d54c96e85d09586ebc3b40d830b03191",
+  "response_id": "COLLABRESP-4fd25a1b7d93a49ff43f6fe8cec8084ef4d6fb827c300cfa469f07aeab1f5e3e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

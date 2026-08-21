@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "INDEPENDENT_COMPLETENESS_REVIEWER로서 현재 prompt의 7개 component memo, current fact graph, RTMEMO-e528a95281031c4658e44711, structured result, ready Supervisor와 Source Graph를 독립 전수 검토했다. 7개 memo는 모두 complete이고 actual 메모리 매출·현금흐름, HBM4 인증·양산·누적매출·구매주문·CAPA 완판의 positive 경로를 가격·재고·증설·운전자본·계약조건 NDA·고객일정·peer 비교 counter와 함께 다룬다. Red Team은 7개 component와 current counter/supersession을 모두 검토했고, structured engine은 모든 component를 RESEARCH_READY로 분류하며 missing role이 없다. Source Graph는 292개 evidence document와 직접 source-backed fact/counter lineage를 보존한 STOPPED_ON_RESOLUTION 상태이고 7개 objective가 모두 resolved됐다. Current Supervisor에는 실행하지 않은 source-family direction이나 query brief가 없으며, broker metadata 후보는 evidence가 아니고 현재 concrete material fact gap과 결합되지 않는다. HBM 단독 마진·FCF, 계약 세부조건, HBM 전용 CAPA·수율·ROIC와 고객 일정은 점수에 반영된 monitoring limitation으로 보존하지만, exact current artifacts에는 이를 현재 blocking question으로 되살릴 새 verified executable public route가 없다. 따라서 approve=true는 zero/no-result, provider failure, fixed rounds, transport budget 또는 source absence 주장이 아니라 현재 memo·structured·counter 증거의 충분성과 실행 가능한 material route 부재에 근거한다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "e216ff543e94671182092122cbf0e3761552a0767362c25f66f876003f9bd97d",
+  "production_score_authority": false,
+  "prompt_hash": "87dabc3d94be1a2a78e2d188b656526e10e43a82c54480b7a74e65529ab115ca",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bb5fcfc5c9ce41f3a7d51c66ef451d165fc0addd474a3a532b3bbce3a610c6e6",
+  "response_id": "COLLABRESP-fee3b5cf614e5ce3d8378c7d120a9f397a438ffd641fb78b4c4d91981d10e1ed",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

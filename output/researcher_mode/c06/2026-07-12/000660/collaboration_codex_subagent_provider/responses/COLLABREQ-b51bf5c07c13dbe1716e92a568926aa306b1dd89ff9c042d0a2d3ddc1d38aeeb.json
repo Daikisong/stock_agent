@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "a700d541c72ff1c48300ae246bc77d06c10c035ffc2c3453ea7b1dd104a01aed",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7bdbc081b001db160c344397",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.01,
+        "rationale": "SK주식회사의 2023년 분기보고서 PDF로 SK하이닉스 공식 기업설명회 자료가 아니며, 요청된 출처군과 대상 회사의 HBM 수치 공백을 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-bc3d26d5cad6de398571ad68",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "비공식 실적 일정 블로그로 요청된 KIND·OPENDART·회사 발표자료가 아니다. 일정 메타데이터는 HBM 매출 절대값이나 수치형 전망 증거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-216f0a110647a28eb954e4ef",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "종합 산업 섹션 페이지로 특정 SK하이닉스 공식 발표자료가 아니며 HBM 매출·이익 전환 수치를 제공하지 않는다. 스니펫을 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-50bbfee563b95261a912e795",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.01,
+        "rationale": "KIND 원문 경로라는 출처군은 충족하지만 정정사항 안내이며 SK하이닉스 HBM 매출 전망 자료라는 식별 근거가 없다. 공식 도메인 일치만으로 실질 후보로 보지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-40322d92fc67193532f8f905",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.01,
+        "rationale": "2023년 증권사 패키징 산업자료로 이번 검색이 요구한 공식 회사 발표·공시 출처군이 아니다. HBM 기술 일반론은 2026년 회사 HBM 매출 절대값 또는 전망과 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-e19f609aee2d30bf05fd2a2e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.01,
+        "rationale": "PwC의 광범위한 2026 산업 전망 자료로 SK하이닉스 공식 기업설명회·공시가 아니다. 정책·산업 일반론은 대상 회사 HBM 수치 공백을 닫지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-edfbcea4a72fca490eccbb80",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "비공식 블로그의 미래 실적발표 일정과 과장된 전망 수치로 요청된 공식 출처군이 아니며 컷오프 현재 근거도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-90b6eb7651226a54f6ff91ef",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "종목 토론 게시물로 공식 출처군이 아니다. HBM4E·기업가치 전망 스니펫은 회사 공식 HBM 매출 절대값이나 수치형 가이던스로 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-a6d8f2680aefcf08f6baa641",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.01,
+        "rationale": "KIND 원문 경로라는 출처군은 충족하지만 제12기 주주총회 소집공고로 SK하이닉스의 최신 HBM 수치 자료라는 근거가 없다. 문서 유형만으로 실질성을 인정하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-cbf815ce20486a00bd8bac27",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "종목 토론 게시물로 요청된 공식 출처군이 아니다. HBM 비중과 장기공급계약 서술은 스니펫일 뿐 공식 HBM 매출·전망 수치가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-899fbb2c91b2495e93c71f19",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.03,
+        "rationale": "2026년 제3자 기사로 실적과 HBM 경쟁력을 다루지만 요청된 공식 회사 발표·공시 출처군이 아니다. 기사 스니펫을 회사 공식 수치 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-44706e3b93cea5be706734a1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "SK그룹 전반을 다룬 제3자 기사로 SK하이닉스 HBM 매출 절대값이나 수치형 전망을 제공하는 공식 기업설명회 자료가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "공식 도메인 또는 공시 첨부자료로 확인되는 SK하이닉스 HBM 수치 후보가 없으며, 비공식 일정·종목토론·제3자 전망은 역할 공백을 닫지 못한다. 모든 스니펫은 발견용이다."
+    ]
+  },
+  "payload_hash": "6bf6311507a84ab2943a64c7a72b84bd1d05697ac78ea5392b54a0266afc1a54",
+  "production_score_authority": false,
+  "prompt_hash": "31a80a0d1921bbe56ae60d9f4467738ebdcca974ae2c7fa9c057c2adb49c7c44",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b51bf5c07c13dbe1716e92a568926aa306b1dd89ff9c042d0a2d3ddc1d38aeeb",
+  "response_id": "COLLABRESP-d7259b6aa73eb93b626c8ea97dd1b42d2904cae7a99cf919fbcab16d74bcd439",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

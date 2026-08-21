@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5fe2067c7ce4fb64897541cb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·대시보드·뉴스/요약 경로로 original broker full-PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ca4918539707e730d96818bf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·대시보드·뉴스/요약 경로로 original broker full-PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-74b929dd3ebd62a08bbae14c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·대시보드·뉴스/요약 경로로 original broker full-PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-bf8d00e06eac088e0feb910d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·대시보드·뉴스/요약 경로로 original broker full-PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ecab9913beecaebde0c53cd6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·대시보드·뉴스/요약 경로로 original broker full-PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3ba10eebbffb7c45816f895f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·대시보드·뉴스/요약 경로로 original broker full-PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-936933f68a063f79522a396a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·대시보드·뉴스/요약 경로로 original broker full-PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a6749abccc473c8a687aaf03",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·대시보드·뉴스/요약 경로로 original broker full-PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3d16862c39919b95942dca34",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·대시보드·뉴스/요약 경로로 original broker full-PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-844dcf488025974cb716b688",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.1,
+        "rationale": "SK증권 공식 full PDF provenance는 맞지만 2023년 자료로 현재 2026-07-12 market-mispricing/estimate bridge의 current route가 아니다. stale historical route여서 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-f8528e2da947c164955c763c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·대시보드·뉴스/요약 경로로 original broker full-PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-434fe887a27626b94ca902b2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·대시보드·뉴스/요약 경로로 original broker full-PDF/landing provenance가 아니다. route-only 기준 nonmaterial이며 snippet은 evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P2 12개 exact-once 분류. 발견된 official PDF는 2023년 historical 문서라 current objective의 material route가 아니다.",
+      "material 0은 source absence가 아니며 snippet·metadata는 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "20972e29b37e1c6b26f6ac93f3c299401ef14ddad8a6957d7534a7e3afbe81c9",
+  "production_score_authority": false,
+  "prompt_hash": "27f8934c45263a3967ff03ae74689df965574e34ee782a085dbde1fcc228b66c",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ca46f5749ee6bf9298747ac672551f17e11c41ea3ad49765e7d51d22562dd910",
+  "response_id": "COLLABRESP-39527443b77ac5304a6c1ec00214fb3337da5567704cd4ee4177c07efae6b567",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

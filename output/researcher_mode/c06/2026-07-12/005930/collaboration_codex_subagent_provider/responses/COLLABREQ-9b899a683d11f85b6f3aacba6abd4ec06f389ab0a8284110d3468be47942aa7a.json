@@ -1,0 +1,55 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "CompanyGuide가 식별한 기준일 내 exact 삼성증권 report identity를 PUBLIC_BROKER_PDF full document로 resolve해 valuation 표와 cycle 분모 분석의 존재를 검증한다.",
+      "발행사 재전이 아닌 NVIDIA 공식 Vera Rubin catalog·event·partner route에서 Samsung HBM4 기술 관계의 독립 corroboration을 확인한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 삼성증권 과격한 조정 그러나 사이클은 전반전 2026 보고서",
+        "objective_id": "SGOBJ-e78cfba9e86bfa02e9a943ae",
+        "rationale": "CompanyGuide가 2026-07-08 삼성증권 보고서 후보와 exact title을 제공했지만 metadata와 preview는 증거가 아니다. 이전에 실행한 peer/PBR 일반 query나 다른 증권사 보고서를 반복하지 않고, 이 exact full report를 확보해 동일 시점 valuation 표와 cycle-peak 분모·PBR 선반영 분석이 실제 포함되는지만 기준일 내에서 검증한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "NVIDIA Vera Rubin Samsung HBM4 partner official",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "현재 source-backed business context가 NVIDIA Vera Rubin 플랫폼과 Samsung HBM4 관계를 명시하므로, 기존의 일반 HBM4 technical-session·qualification query와 달리 named counterparty와 named platform의 공식 catalog·event·partner page를 찾는 독립 경로다. 이 경로는 기술 관계의 corroboration만 검증하며 구매의무·가격·allocation 또는 계약조건을 추론하지 않는다.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "공식 HBM product/segment 손익·현금흐름 bridge, 공개 계약조건, HBM 전용 처리량, 초기 제품마진, 약정·운전자본 이후 HBM 투자수익은 이전 30개 query와 현재 source-family 실패 기록을 넘어서는 새 verified document class가 확인되지 않아 동의어 query를 만들지 않았다.",
+      "NVIDIA 공식 route가 기술적 플랫폼 관계를 확인하더라도 구매의무·취소·가격조정·allocation 조건이나 HBM 제품별 이익을 증명하지 않는다.",
+      "구조화 report 후보의 제목·날짜·broker identity는 discovery hint일 뿐이며 실제 full report가 fetch·parse되기 전에는 valuation 수치나 결론을 evidence로 사용하지 않는다."
+    ]
+  },
+  "payload_hash": "0471014af5225c675fb43e8fde0c8fe8b4d55da5d905a8e313e6fab0eba7724a",
+  "production_score_authority": false,
+  "prompt_hash": "834babbf3679b22f64717aeb825da5c186db48298f71506dea7f6fd45b8da45d",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9b899a683d11f85b6f3aacba6abd4ec06f389ab0a8284110d3468be47942aa7a",
+  "response_id": "COLLABRESP-9dbb4066035a8f40a725ac9ce912f1f9859afba5e4be5a820c2cf5a41245a71d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,615 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "rationale": "주요 고객 (가)와 (나)의 10% 초과 매출 집중 2건을 원자적으로 추출했다. 나머지 종속회사·금융표는 NAND 귀속 또는 후속 문서와 중복이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "rationale": "연결 매출·영업이익·순이익·영업현금·유형자산 취득 5건을 추출했다. 현금·재고 및 추가 자본 항목에 distinct remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+        "rationale": "임원 명단과 일반 지배구조·출자 상세가 중심이며 직책만으로 메모리 공급·계약·실적을 추론하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "rationale": "연결 재고자산 회전율 실제 1건을 추출했다. 재고 구성·평가 등 distinct remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "rationale": "연결 유형자산 감가상각 실제 1건을 추출했다. 유형자산 취득·장부가와 추가 자본집약도 remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+        "rationale": "별도 변동금리 차입금 스왑 위험관리 1건을 추출했다. 유동성·차입 및 투자자산 관련 distinct remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5b6d91276c1af970b04377e6",
+        "rationale": "SK스퀘어 재무와 임원 명단이 중심인 혼합 구간으로 000660 메모리 objective에 귀속할 새 경제 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "rationale": "DRAM 실제 매출과 결의 배당 2건을 추출했다. 연구개발비·자기주식 소각·비용 구조의 distinct remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "연결 반도체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "economic_mechanism": "2026년 1분기 단일 외부고객 (가)의 매출이 연결 매출의 10%를 넘고 7,780,590백만원에 달해 고객 집중 위험을 확인한다.",
+        "exact_quote": "당분기 중 단일 외부고객으로부터의 매출액이 연결회사 전체 매출액의 10%를 상회하는 고객 (가)로부터 발생한 매출액은 7,780,590백만원이며, 고객 (나)로부터 발생한 매출액은 6,536,458백만원입니다. 전분기 중 단일 외부고객으로부터의 매출액이 연결회사 전체 매출액의 10%를 상회하는 고객 (가)로부터 발생한 매출액은 4,786,233백만원 입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "단일 고객이 연결 매출의 10%를 넘는 실제 집중도는 수요 지속성과 고객 의존 위험의 핵심 반대근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CUSTOMER_A_REVENUE_ABOVE_TEN_PERCENT",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_REVENUE_FROM_CUSTOMER_A_ABOVE_TEN_PERCENT",
+        "predicate_family": "MEMORY_CUSTOMER_CONCENTRATION",
+        "primitive_tags": [
+          "customer_A",
+          "over_10_percent",
+          "actual_revenue"
+        ],
+        "product_family": "메모리 매출",
+        "question_family_id": "C06_MEMORY_CUSTOMER_CONCENTRATION",
+        "question_family_tags": [
+          "MEMORY",
+          "customer_concentration",
+          "revenue_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 주요 고객(가)",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 7780590
+      },
+      {
+        "business_segment": "연결 반도체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "economic_mechanism": "2026년 1분기 단일 외부고객 (나)의 매출도 연결 매출의 10%를 넘고 6,536,458백만원으로 공시돼 복수 대형 고객 집중을 확인한다.",
+        "exact_quote": "당분기 중 단일 외부고객으로부터의 매출액이 연결회사 전체 매출액의 10%를 상회하는 고객 (가)로부터 발생한 매출액은 7,780,590백만원이며, 고객 (나)로부터 발생한 매출액은 6,536,458백만원입니다. 전분기 중 단일 외부고객으로부터의 매출액이 연결회사 전체 매출액의 10%를 상회하는 고객 (가)로부터 발생한 매출액은 4,786,233백만원 입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "두 번째 10% 초과 고객은 고객 기반 집중과 주문 지속성 위험을 별도로 보여준다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CUSTOMER_B_REVENUE_ABOVE_TEN_PERCENT",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_REVENUE_FROM_CUSTOMER_B_ABOVE_TEN_PERCENT",
+        "predicate_family": "MEMORY_CUSTOMER_CONCENTRATION",
+        "primitive_tags": [
+          "customer_B",
+          "over_10_percent",
+          "actual_revenue"
+        ],
+        "product_family": "메모리 매출",
+        "question_family_id": "C06_MEMORY_CUSTOMER_CONCENTRATION",
+        "question_family_tags": [
+          "MEMORY",
+          "customer_concentration",
+          "revenue_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 주요 고객(나)",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 6536458
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "economic_mechanism": "SK하이닉스의 2026년 1분기 연결 매출액 실제치는 52,576,287백만원이다. 이 값은 HBM 단독 매출로 귀속하지 않는다.",
+        "exact_quote": "매출액 (주4,21,28)\n52,576,287",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "연결 매출 실제치는 EPS·FCF 기초 실적을 규정하되 특정 메모리 제품 기여를 분리하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_REVENUE",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_Q1_2026_CONSOLIDATED_REVENUE",
+        "predicate_family": "CONSOLIDATED_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "Q1_2026",
+          "consolidated_revenue"
+        ],
+        "product_family": "연결 전체",
+        "question_family_id": "C06_CONSOLIDATED_REVENUE_ACTUAL",
+        "question_family_tags": [
+          "consolidated",
+          "revenue",
+          "actual"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 매출액",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 52576287
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "economic_mechanism": "SK하이닉스의 2026년 1분기 연결 영업이익 실제치는 37,610,283백만원이다. HBM 단독 이익으로 귀속하지 않는다.",
+        "exact_quote": "영업이익\n37,610,283\n37,610,283\n7,440,504\n7,440,504",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "연결 영업이익은 이익 폭발의 실제 기초를 제공하지만 제품별 수익성은 별도로 확인해야 한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_OPERATING_PROFIT",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_Q1_2026_CONSOLIDATED_OPERATING_PROFIT",
+        "predicate_family": "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "primitive_tags": [
+          "Q1_2026",
+          "consolidated_operating_profit"
+        ],
+        "product_family": "연결 전체",
+        "question_family_id": "C06_CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "question_family_tags": [
+          "consolidated",
+          "operating_profit",
+          "actual"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 영업이익",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 37610283
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "economic_mechanism": "SK하이닉스의 2026년 1분기 연결 분기순이익 실제치는 40,345,909백만원이다. 이 역시 HBM 단독 귀속 수치가 아니다.",
+        "exact_quote": "분기순이익\n40,345,909\n40,345,909\n8,108,195\n8,108,195",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "연결 순이익은 EPS 변환의 실제 기초 실적이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_NET_INCOME",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_Q1_2026_CONSOLIDATED_NET_INCOME",
+        "predicate_family": "CONSOLIDATED_NET_INCOME_ACTUAL",
+        "primitive_tags": [
+          "Q1_2026",
+          "consolidated_net_income"
+        ],
+        "product_family": "연결 전체",
+        "question_family_id": "C06_CONSOLIDATED_NET_INCOME_ACTUAL",
+        "question_family_tags": [
+          "consolidated",
+          "net_income",
+          "actual"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_NET_INCOME_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 분기순이익",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 40345909
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "economic_mechanism": "SK하이닉스의 2026년 1분기 연결 영업활동 현금흐름은 26,330,119백만원 유입이었다. 이는 연결 현금창출이며 HBM 단독 현금흐름이 아니다.",
+        "exact_quote": "영업활동 현금흐름\n26,330,119\n9,023,671",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "영업현금 유입은 회계이익의 현금 전환을 검증하는 핵심 실제치다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_OPERATING_CASH_FLOW",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_Q1_2026_CONSOLIDATED_OPERATING_CASH_FLOW",
+        "predicate_family": "CONSOLIDATED_OPERATING_CASH_FLOW_ACTUAL",
+        "primitive_tags": [
+          "Q1_2026",
+          "cash_conversion"
+        ],
+        "product_family": "연결 전체",
+        "question_family_id": "C06_CONSOLIDATED_OPERATING_CASH_FLOW_ACTUAL",
+        "question_family_tags": [
+          "consolidated",
+          "operating_cash_flow",
+          "actual"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_CASH_FLOW_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_OPERATING_CASH_FLOW_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 영업활동 현금흐름",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 26330119
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "economic_mechanism": "2026년 1분기 연결 현금흐름표상 유형자산 취득 현금유출은 7,657,403백만원이었다. 메모리 전용 CAPEX로 귀속하지 않는다.",
+        "exact_quote": "유형자산의 취득\n(7,657,403)\n(6,284,222)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "유형자산 취득은 영업현금에서 자유현금으로 전환할 때 차감되는 실제 투자부담이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_PROPERTY_PLANT_EQUIPMENT_ACQUISITION_CASH_OUTFLOW",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_Q1_2026_CONSOLIDATED_CAPEX_CASH_OUTFLOW",
+        "predicate_family": "CONSOLIDATED_CAPEX_ACTUAL",
+        "primitive_tags": [
+          "Q1_2026",
+          "property_plant_equipment_acquisition"
+        ],
+        "product_family": "연결 전체 유형자산",
+        "question_family_id": "C06_CONSOLIDATED_CAPEX_ACTUAL",
+        "question_family_tags": [
+          "consolidated",
+          "capex",
+          "actual_cash_outflow"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_CASH_FLOW_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_CAPEX_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 유형자산 취득",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 7657403
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "economic_mechanism": "연결 재고자산 회전율은 2026년 1분기 2.9회로 전기 2.8회와 2024년 2.6회보다 높았다.",
+        "exact_quote": "재고자산회전율{회수}[연환산 매출원가÷{(기초재고+기말재고)÷2}]\n2.9회\n2.8회\n2.6회",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "재고 회전 개선은 현금회수와 재고 위험을 판단하는 보조 실제치이며 HBM 단독 지표는 아니다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_INVENTORY_TURNOVER",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_Q1_2026_INVENTORY_TURNOVER",
+        "predicate_family": "INVENTORY_EFFICIENCY_ACTUAL",
+        "primitive_tags": [
+          "Q1_2026",
+          "inventory_turnover"
+        ],
+        "product_family": "재고자산",
+        "question_family_id": "C06_INVENTORY_EFFICIENCY",
+        "question_family_tags": [
+          "inventory",
+          "turnover",
+          "capital_efficiency"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 재고자산",
+        "subject_id": "000660",
+        "unit": "times annualized",
+        "value": 2.9
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "economic_mechanism": "2026년 1분기 연결 유형자산 감가상각은 3,415,412백만원으로 공시됐다. 이는 자본집약도와 회계비용을 보여주며 HBM 단독 수치가 아니다.",
+        "exact_quote": "감가상각\n(3,415,412)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "대규모 감가상각은 설비투자 회수와 회계이익 전환을 제약하는 자본집약도 근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_PROPERTY_DEPRECIATION",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_Q1_2026_CONSOLIDATED_PROPERTY_DEPRECIATION",
+        "predicate_family": "DEPRECIATION_ACTUAL",
+        "primitive_tags": [
+          "Q1_2026",
+          "property_depreciation"
+        ],
+        "product_family": "유형자산",
+        "question_family_id": "C06_CAPITAL_INTENSITY_ACTUAL",
+        "question_family_tags": [
+          "depreciation",
+          "capital_intensity",
+          "actual"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [
+          "LATEST_ACTUAL_DEPRECIATION_AMORTIZATION"
+        ],
+        "subject": "SK하이닉스 연결 유형자산 감가상각",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 3415412
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+        "economic_mechanism": "회사는 변동금리 외화차입금 141,881백만원과 원화차입금 317,400백만원에 스왑을 적용해 금리변동 위험을 관리했다.",
+        "exact_quote": "회사는 변동금리부 외화차입금 141,881백만원에 대해 통화이자율스왑 계약을 체결하고 있으며, 변동금리부 원화차입금 317,400백만원에 대해 이자율스왑 계약을 체결하고 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "금리위험 헤지는 자금조달 변동성을 줄이는 실제 자본관리 근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_FLOATING_RATE_BORROWINGS_SWAP_HEDGE",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "HEDGES_FLOATING_RATE_BORROWINGS_WITH_SWAPS",
+        "predicate_family": "INTEREST_RATE_RISK_MANAGEMENT",
+        "primitive_tags": [
+          "cross_currency_interest_rate_swap",
+          "interest_rate_swap"
+        ],
+        "product_family": "변동금리 차입금",
+        "question_family_id": "C06_INTEREST_RATE_RISK_HEDGE",
+        "question_family_tags": [
+          "funding",
+          "interest_rate",
+          "hedge"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 변동금리 차입금",
+        "subject_id": "000660",
+        "unit": "KRW million notional",
+        "value": "외화 141,881백만원; 원화 317,400백만원"
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "SK하이닉스 별도 기준 2026년 1분기 DRAM 매출 실제치는 39,758,279백만원이었다. HBM 단독 매출로 재분류하지 않는다.",
+        "exact_quote": "DRAM\nNAND Flash\n기타\n부문 합계\n수익(매출액)\n39,758,279\n8,184,467\n115,842\n48,058,588",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 매출은 메모리 수요가 실제 매출로 전환된 규모를 직접 보여주지만 HBM 기여는 분리되지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_PARENT_DRAM_REVENUE",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_Q1_2026_DRAM_REVENUE",
+        "predicate_family": "DRAM_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "Q1_2026",
+          "DRAM_revenue"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "C06_DRAM_REVENUE_ACTUAL",
+        "question_family_tags": [
+          "DRAM",
+          "revenue",
+          "actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK하이닉스 DRAM",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 39758279
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "2026년 3월 25일 주주총회는 1,327,712백만원의 배당을 결의했으며 분기말에는 미지급 상태였다.",
+        "exact_quote": "2026년 3월 25일자 주주총회에서 배당금 1,327,712백만원이 결의되었으며, 당분기말 현재 미지급배당금은 미지급금에 포함되어 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "승인된 현금배당은 주주환원 규모를 보여주지만 분기말 미지급이라는 현금시점 한계를 함께 갖는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "2026_APPROVED_DIVIDEND_UNPAID_AT_Q1_END",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "approved 2026-03-25; unpaid at 2026-03-31",
+        "predicate": "APPROVED_ANNUAL_DIVIDEND_REMAINING_UNPAID_AT_QUARTER_END",
+        "predicate_family": "SHAREHOLDER_DISTRIBUTION",
+        "primitive_tags": [
+          "approved_dividend",
+          "unpaid_at_quarter_end"
+        ],
+        "product_family": "현금배당",
+        "question_family_id": "C06_SHAREHOLDER_DISTRIBUTION",
+        "question_family_tags": [
+          "capital_allocation",
+          "dividend",
+          "timing"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 현금배당",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 1327712
+      }
+    ],
+    "unresolved_document_ids": [
+      "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+      "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+      "OFFICIALDOC-517ee88c46b03a911ecddcca",
+      "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+      "OFFICIALDOC-5d1c1167b9b6798bbb391320"
+    ],
+    "unresolved_research_notes": [
+      "Page limit reached after 12 distinct facts; continue only the listed documents for remaining current v9 capital, inventory, research-and-development, and shareholder-allocation facts."
+    ]
+  },
+  "payload_hash": "832d7cd72acba8c1f7ad11f36ff21623f7d21eb05cbe521fc77e3ddcc027f90d",
+  "production_score_authority": false,
+  "prompt_hash": "4cf9af05586a09cfa461dffdbad452142e2cd5e426411833f7a005bb354ad096",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2023444e816ac7df976293e5616bff3004e6b01743f5b3e9a92e9e950c93c5ff",
+  "response_id": "COLLABRESP-5ed0a8ce00d91aabf00efa774a76bc7adcab3374becdc96a1c0119084ac5c8b3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

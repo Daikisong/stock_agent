@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "013df536ad18757146a169f8b1009b94cce8d94c041c9cc04642b2fbf3ad685c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-ec3556868c124d6d7f35a992",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "URL 소유자와 현재 discovery 메타데이터로는 후보에 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-ec6f84e10ba476bd5e309c93",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-ed731ca96e6d391af5d88ace",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-ed8079ab95319d6a7608b517",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-eda430c8cf97fd4c08c729c6",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-edad35fc497abb2529418f55",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-ee2e831694ff571df6235b57",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.78,
+        "rationale": "공식 HBM4E 뉴스 콘텐츠의 원문 자산 경로로, 샘플 출하·제품 진행 상태를 확인할 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-ee74772c49c6524444f5f7d1",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-ee9c68fa29aeb39926c5ff08",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "URL 소유자와 현재 discovery 메타데이터로는 후보에 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-eee1fe02959724a79b7915ac",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-ef021705eb13ec9e834966cd",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-ef1512ad1425a89542360d16",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 objective를 해결할 우선 후보는 아닙니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "모든 후보는 discovery 메타데이터만으로 분류했으며 snippet은 증거로 사용하지 않았습니다.",
+      "material 후보도 원문 fetch와 as-of-date 검증 전에는 EvidenceFact 또는 점수 재료가 아닙니다."
+    ]
+  },
+  "payload_hash": "6369fc0cf07d86ba84d5da8aeeafe0cc74daaabc53605f8aba35aa3dca5a75c3",
+  "production_score_authority": false,
+  "prompt_hash": "8ea047817015ac546ba36ab37ec3d8489da741914741c072693861e54e206b32",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9eb10b123e3b33952488a6675b593a1505f396437a796f0082f01c1060dc5e9d",
+  "response_id": "COLLABRESP-4072d8f68dfefbd993c3244c676ee3e2a6a936ca5a4d276b3e78b148c7072c2b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

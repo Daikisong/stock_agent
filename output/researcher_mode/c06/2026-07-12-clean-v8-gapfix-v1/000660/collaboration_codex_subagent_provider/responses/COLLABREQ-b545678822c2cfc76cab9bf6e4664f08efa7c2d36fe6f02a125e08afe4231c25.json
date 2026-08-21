@@ -1,0 +1,170 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "rationale": "prior156 이후 남은 FY2025F/FY2026F/FY2027F consolidated broker FCF 3개를 strict dedup해 추출했다. Supplied chunk0의 target-direct occurrences를 끝까지 재감사했으며 이후에는 distinct objective-local material atom이 없다. Parent document chunk1/2 coverage is separate deterministic transport work.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "The broker estimates FY2025 consolidated FCF as a model-derived annual cash-flow output; it is not issuer guidance, a reported actual, or HBM-only FCF.",
+        "exact_quote": "FCF -4,047 13,850 19,759 29,985 45,680",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "브로커 모델의 연간 FCF 산출값으로 기간·공식 결과 경계를 유지하며 reported actual·issuer guidance·HBM-only FCF로 승격하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "Yuanta FY2025 consolidated free-cash-flow estimate",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "broker-estimated consolidated free cash flow",
+        "predicate_family": "BROKER_FREE_CASH_FLOW_FORECAST",
+        "primitive_tags": [],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "yuanta_skh_fcf_fy2025f",
+        "question_family_tags": [
+          "FREE_CASH_FLOW_ESTIMATE",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated free-cash-flow estimate",
+        "subject_id": "000660:FCF:FY2025F:YUANTA_20251021",
+        "unit": "KRW billion",
+        "value": 19759
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "The broker estimates FY2026 consolidated FCF as a model-derived annual cash-flow output; it is not issuer guidance, a reported actual, or HBM-only FCF.",
+        "exact_quote": "FCF -4,047 13,850 19,759 29,985 45,680",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "브로커 모델의 연간 FCF 산출값으로 기간·공식 결과 경계를 유지하며 reported actual·issuer guidance·HBM-only FCF로 승격하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "Yuanta FY2026 consolidated free-cash-flow estimate",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "broker-estimated consolidated free cash flow",
+        "predicate_family": "BROKER_FREE_CASH_FLOW_FORECAST",
+        "primitive_tags": [],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "yuanta_skh_fcf_fy2026f",
+        "question_family_tags": [
+          "FREE_CASH_FLOW_ESTIMATE",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated free-cash-flow estimate",
+        "subject_id": "000660:FCF:FY2026F:YUANTA_20251021",
+        "unit": "KRW billion",
+        "value": 29985
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "The broker estimates FY2027 consolidated FCF as a model-derived annual cash-flow output; it is not issuer guidance, a reported actual, or HBM-only FCF.",
+        "exact_quote": "FCF -4,047 13,850 19,759 29,985 45,680",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "브로커 모델의 연간 FCF 산출값으로 기간·공식 결과 경계를 유지하며 reported actual·issuer guidance·HBM-only FCF로 승격하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "Yuanta FY2027 consolidated free-cash-flow estimate",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "broker-estimated consolidated free cash flow",
+        "predicate_family": "BROKER_FREE_CASH_FLOW_FORECAST",
+        "primitive_tags": [],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "yuanta_skh_fcf_fy2027f",
+        "question_family_tags": [
+          "FREE_CASH_FLOW_ESTIMATE",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated free-cash-flow estimate",
+        "subject_id": "000660:FCF:FY2027F:YUANTA_20251021",
+        "unit": "KRW billion",
+        "value": 45680
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "8ef01009cc3bd5a0b65eafdf786eb7f6740f2d0282ec6070c67203ae6c8543fc",
+  "production_score_authority": false,
+  "prompt_hash": "43ddc38ed4bc9acfb23e08be92fa1be4c0bae784b360435e27e3ee9bab2f988c",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b545678822c2cfc76cab9bf6e4664f08efa7c2d36fe6f02a125e08afe4231c25",
+  "response_id": "COLLABRESP-12183d12b7bc3550094dd1727d83be96e20c5d160d5ac50f80a80dd1d31f851a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

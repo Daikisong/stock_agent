@@ -1,0 +1,168 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-d34ebc1824c1b4940d7029b0",
+        "rationale": "transport chunk 0/2에서 durable graph와 중복되지 않는 삼성전자 2026F DRAM 매출·영업이익·마진 broker 전망 3건을 추출했다. NAND 및 비메모리·타 종목 수치는 C06 objective 범위에서 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-d34ebc1824c1b4940d7029b0",
+        "economic_mechanism": "DRAM 가격과 물량 가정이 매출로 전환되는 2026년 규모를 보여준다.",
+        "exact_quote": "DRAM Sales 13,282 14,262 18,152 28,076 53,879 76,408 86,257 98,051 53,789 73,772 314,595",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 매출의 target-direct broker 전망으로 valuation earnings bridge를 구성한다.",
+        "mechanism_scope_id": "005930:DRAM:REVENUE:2026F:YUANTA_0408",
+        "normalized_object": "2026년 DRAM 매출 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "유안타증권은 삼성전자 2026년 DRAM 매출을 314.595조원으로 전망했다.",
+        "predicate_family": "DRAM_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "REVENUE_FORECAST"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_FORWARD_REVENUE",
+        "question_family_tags": [
+          "DRAM_REVENUE",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 DRAM 매출",
+        "subject_id": "005930:DRAM:REVENUE:2026F:YUANTA_0408",
+        "unit": "KRW billion",
+        "value": 314595
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-d34ebc1824c1b4940d7029b0",
+        "economic_mechanism": "DRAM 가격과 제품 믹스가 영업이익으로 전환되는 2026년 규모를 보여준다.",
+        "exact_quote": "OP 3,666 3,494 6,424 15,452 45,667 66,303 74,593 84,076 14,734 29,036 270,639",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 매출이 이익으로 전환되는 target-direct broker 전망이다.",
+        "mechanism_scope_id": "005930:DRAM:OP:2026F:YUANTA_0408",
+        "normalized_object": "2026년 DRAM 영업이익 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "유안타증권은 삼성전자 2026년 DRAM 영업이익을 270.639조원으로 전망했다.",
+        "predicate_family": "DRAM_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "OPERATING_PROFIT_FORECAST"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_FORWARD_OPERATING_PROFIT",
+        "question_family_tags": [
+          "DRAM_PROFIT",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 DRAM 영업이익",
+        "subject_id": "005930:DRAM:OP:2026F:YUANTA_0408",
+        "unit": "KRW billion",
+        "value": 270639
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-d34ebc1824c1b4940d7029b0",
+        "economic_mechanism": "DRAM 가격과 제품 믹스 개선이 영업이익률로 전환되는 정도를 보여준다.",
+        "exact_quote": "OPM% 27.6% 24.5% 35.4% 55.0% 84.8% 86.8% 86.5% 85.7% 27.4% 39.4% 86.0%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM earnings bridge의 수익성 가정을 target-direct하게 정량화한다.",
+        "mechanism_scope_id": "005930:DRAM:OPM:2026F:YUANTA_0408",
+        "normalized_object": "2026년 DRAM 영업이익률 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "유안타증권은 삼성전자 2026년 DRAM 영업이익률을 86.0%로 전망했다.",
+        "predicate_family": "DRAM_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "MARGIN_FORECAST"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_FORWARD_OPERATING_MARGIN",
+        "question_family_tags": [
+          "DRAM_MARGIN",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 DRAM 영업이익률",
+        "subject_id": "005930:DRAM:OPM:2026F:YUANTA_0408",
+        "unit": "percent",
+        "value": 86.0
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-d34ebc1824c1b4940d7029b0"
+    ],
+    "unresolved_research_notes": [
+      "현재 요청은 parent 문서의 transport chunk 0/2이므로 남은 chunk를 별도 current request에서 검토해야 parent 문서 처리가 완료된다."
+    ]
+  },
+  "payload_hash": "4a6ef56a1a6709cec78e76eaa99cafd44ddc47e236ecb2afc6d3adbde50bc136",
+  "production_score_authority": false,
+  "prompt_hash": "574f0df54361a4d847eaa4951fe00d2adeba982031511c036c7b17fd590ddecf",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-941e2be7c8d48f766ea0a7b833abea8b3d53dd03cebc1c89cf67cc2a22f4ac29",
+  "response_id": "COLLABRESP-e090bc3986098fc9f9e9d22cfee3914847eaf22eff2f6304e6f761ed1a400179",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

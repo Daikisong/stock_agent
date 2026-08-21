@@ -1,0 +1,316 @@
+DS Tech 이수림 – Telegram
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림입니다.
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림입니다.
+DS Tech 이수림
+@dssemicon
+4.08K
+subscribers
+489
+photos
+140
+files
+1.03K
+links
+DS투자증권 반도체 Analyst 이수림입니다.
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+DS Tech 이수림
+4.08K subscribers
+DS Tech 이수림
+삼성전자_기업리포트_250131.pdf
+1.2 MB
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+[반도체] 삼성전자 - 4Q24 Re: 긴 호흡으로 접근
+투자의견 : 매수(유지)
+목표주가 : 71,000원(하향)
+현재주가 : 52,400원(01/31)
+Upside : 35.5%
+1. 4Q24 상세 실적 Review
+- DRAM B/G는 전분기 대비 -13% 감소하고 ASP는 19% 상승. DRAM 내 HBM의 매출비중은 4분기 30% 수준까지 증가하면서 ASP 상승을 견인. 다만 레거시 재고 소진이 같이 발생하며 상승 효과가 다소 희석
+- NAND는 B/G는 -3% 감소, ASP는 -7% 감소했을 것으로 추정. 서버용 eSSD 수요도 감소
+2. 1분기 실적 바닥을 확인할 것
+- 1Q25 영업이익은 5.7조원 전망
+- 갤럭시S25 판매 효과에 힘입어 MX 부문은 3.8조원의 영업이익을 기록할 것
+- 다만 1분기 동사 HBM의 수요 공백이 예상. 1) 미국의 대중국 첨단 반도체 수출 규제에 앞서 4분기 고객사들의 선제적인 HBM 구매가 나타났을 것, 2) 2분기 말~3분기 출시 예정인 HBM3e 12단 개선 제품에 대한 대기 수요 역시 존재
+- NAND는 1~2분기 적자 지속, 파운드리는 1분기 적자폭 심화 전망
+3. 투자의견 매수, 목표주가 71,000원 하향
+- 동사 주가는 파운드리 적자 해소와 고성능 메모리에서의 체질 개선이 동반되어야 반전을 꾀할 수 있을 것
+- Target P/B를 1.2배로 하향함에 따라 목표주가를 71,000원으로 하향
+- HBM 매출 증가는 긍정적이며 2025년 동사 HBM 매출 추정치를 기존 추정 대비 15% 수준 상향
+- 주요 GPU 공급업체의 중화권 제품에 탑재되는 HBM3e 8단은 이미 4분기부터 매출이 발생한 것으로 파악
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+👍
+1
+1.71K
+views
+07:33
+DS Tech 이수림
+https://n.news.naver.com/article/023/0003885496?sid=102
+Naver
+대만, 정부부처에 딥시크 금지령…유럽도 보안 우려
+대만 정부가 각 부처·기관에 중국 인공지능(AI) 스타트업 딥시크(DeepSeek)의 서비스 이용을 금지했다. 유럽 각국에서도 개인 정보와 보안 문제를 이유로 우려를 나타내고 있다. 로이터에 따르면, 대만 디지털부는
+294
+views
+03:35
+DS Tech 이수림
+https://n.news.naver.com/mnews/article/001/0015185935
+Naver
+트럼프 "협상용 아니다"…2월1일 加·中·멕시코 관세 강행 확인(종합)
+"3국, 관세 피할 방법 없다"…캐나다·멕시코에 25%·중국에 10% 부과 임박 트럼프 "석유·가스 관세 내달 18일께 부과"…반도체·철강 등에도 관세 예고 트럼프, 1일 행정명령 서명할 듯…캐나다 등 맞대응 예고에
+321
+views
+03:35
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+02/03 테크 주요 뉴스
+◆ 2025년까지 생산 능력을 대폭 확장할 13개의 AVP Fab
+https://bit.ly/4gnpJNa
+◆ 딥시크(DeepSeek)가 제한된 AI 칩을 사용했는지 여부를 조사하고 있는 미국
+https://bit.ly/4gq8N8w
+◆ 이탈리아 규제 기관, 중국 AI 앱 DeepSeek의 데이터 보호 차단
+https://bit.ly/4hha03x
+◆ 프랑스의 개인 정보 보호 감시 기관, AI, 데이터 보호에 대한 DeepSeek에 대해 문의 예정
+https://bit.ly/40U1GRj
+◆ 지난해 챗GPT 유료 구독자, 3배 늘어난 1550만명 규모...API 사용은 7배↑
+https://bit.ly/40ZdAJR
+◆ "더 빠르고 저렴하게"…오픈AI, 'o3-미니' 전격 출시
+https://bit.ly/3WDS9Lx
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+[News] 13 Advanced Packaging Facilities to Expand Capacity Significantly by 2025 | TrendForce News
+On January 16, Siliconware Precision Industries (SPIL), a subsidiary of ASE Technology Holding, officially inaugurated its new advanced packaging faci...
+306
+views
+22:20
+DS Tech 이수림
+Palantir Reports Q4 2024 Revenue Growth of 36% Y/Y, U.S. Revenue Growth of 52% Y/Y
+Issues FY 2025 Revenue Guidance of 31% Y/Y Growth, Eviscerating Consensus Estimates
+https://www.reuters.com/technology/palantir-forecasts-2025-revenue-above-estimates-ai-strength-2025-02-03/
+Reuters
+Palantir advises clients against using DeepSeek's AI tech; forecasts upbeat 2025 revenue
+Palantir recommends its clients steer clear of Chinese startup DeepSeek's AI models, a senior executive of the data analytics company said on Monday, days after doubts were raised about the United States' lead in AI technology.
+255
+views
+22:45
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+02/04 테크 주요 뉴스
+◆ 딥시크(DeepSeek), 50,000개의 엔비디아 GPU 보유 및 구축에 16억 달러 지출 루머
+https://bit.ly/4gsY8tI
+◆ 미국, NVIDIA의 싱가포르 매출 급증에 따라 DeepSeek의 금지된 AI 칩 구매 조사
+https://bit.ly/3WKQGDu
+◆ 중국 YMTC, 세계 최고 294층 낸드플래시 양산 성공
+https://bit.ly/4gll5PL
+◆ TSMC, 미국에서 2nm 생산, 타이난에서 1nm Fab 계획 중
+https://bit.ly/40IrgaP
+◆ 샘 올트먼 오픈 AI CEO “데이터센터용 AI 반도체 직접 개발”
+https://bit.ly/3WKghfR
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+Tom's Hardware
+DeepSeek might not be as disruptive as claimed, firm reportedly has 50,000 Nvidia GPUs and spent $1.6 billion on buildouts
+The fabled $6 million was just a portion of the total training cost.
+255
+views
+23:04
+DS Tech 이수림
+https://www.newdaily.co.kr/site/data/html/2025/02/04/2025020400022.html
+뉴데일리
+'틱톡' 美 정부에 안기나 … 트럼프, 국부펀드 설립하며 "틱톡 매입할 수도"
+미국 연방정부가 국부펀드 기금을 통해 중국계 동영상 공유 플랫폼 '틱톡'을 매입할 가능성이 대두됐다.3일(현지시간) 미 CNN에 따르면 도널드 트럼프 미 대통령은 이날 국부펀드를 설립하는 내용의 행정명령에 서명했다. 트럼프 대통령은 대선 운동 기간 연방정부 차원의 국부펀드 설립을 공언했다.트럼프 대통령은 국부펀드 기금으로 틱톡을 매입할 가능성을 시사했다.그는 행정명령 서명 후 취재진과 만나 "우리는 틱톡을 국부펀드에 넣을 수도 있고 아...
+249
+views
+00:08
+DS Tech 이수림
+https://www.digitaltoday.co.kr/news/articleView.html?idxno=551769
+DigitalToday
+딥시크, 보안 테스트 결과 충격…유해 프롬프트 공격 무방비
+[디지털투데이 AI리포터] 3일(현지시간) IT매체 테크레이더에 따르면 글로벌 IT 기업 시스코(Cisco)의 보안 테스트에서 중국 인공지능(AI) 기업 딥시크(DeepSeek)의 R1 모델은 심각한 취약점을 드러냈다. 시스코...
+285
+views
+01:09
+DS Tech 이수림
+https://n.news.naver.com/mnews/article/366/0001051065?rc=N&ntype=RANKING&sid=001
+Naver
+[단독] 샘 올트먼 오픈AI CEO “의료용 챗GPT 개발 검토… 한국 기업과 로봇 사업 논의 원해”
+4일 서울서 열린 개발자 워크숍 ‘빌더 랩’서 밝혀 샘 올트먼 오픈AI 최고경영자(CEO)가 의료용 챗GPT 개발을 검토하고 있다고 밝혔다. 이와 함께 현재 눈 여겨보고 있는 로봇 사업에 대해 한국 기업과 논의하고
+320
+views
+01:32
+DS Tech 이수림
+Forwarded from
+AWAKE - 실시간 주식 공시 정리채널
+2025.02.04 17:07:26
+기업명: 파크시스템스(시가총액: 1조 5,792억)
+보고서명: 매출액또는손익구조30%(대규모법인은15%)이상변동
+재무제표 종류 : 연결
+매출액 : 632억(예상치 : 605억)
+영업익 : 165억(예상치 : 170억)
+순이익 : 207억(예상치 : 130억)
+**최근 실적 추이**
+2024.4Q 632억/ 165억/ 207억
+2024.3Q 414억/ 87억/ 63억
+2024.2Q 447억/ 127억/ 134억
+2024.1Q 257억/ 5억/ 27억
+2023.4Q 455억/ 98억/ 80억
+* 변동요인
+반도체 공정의 미세화 및 새로운 어플리케이션 등장에 따른 원자현미경 수요 증가
+공시링크:
+https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250204901054
+회사정보:
+https://finance.naver.com/item/main.nhn?code=140860
+👍
+3
+211
+views
+08:08
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+AMD 4Q24 실적발표
+URL :
+https://bit.ly/4aMSQrW
+*위 내용은 공개 실적발표 내용으로 별도의 승인절차 없이 제공됩니다.
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+279
+views
+22:21
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+Alphabet 4Q24 실적발표
+URL :
+https://bit.ly/4grBsKr
+*위 내용은 공개 실적발표 내용으로 별도의 승인절차 없이 제공됩니다.
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+❤
+2
+👍
+1
+264
+views
+22:25
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+02/05 테크 주요 뉴스
+◆ 삼성-소뱅-오픈AI '스타게이트' 논의 촉각…SK 등 재계에 전방위 협력 요청
+https://bit.ly/3Q6kXss
+◆ TSMC, 트럼프의 칩 관세 접근으로 2025년 선단 공정 가격 15% 이상 인상 가능성
+https://bit.ly/4jM6TCk
+◆ 중국 GPU 시장, 공급 과잉과 파편화된 생태계로 어려움을 겪는 중
+https://bit.ly/3CCZioI
+◆ 중국의 무역 전쟁 보복, 1) Google에 대한 반독점 조사, 2) 특정 미국 수입품에 대해 최대 15%의 관세 부과
+https://bit.ly/42CS1zW
+◆ 애플, 스마트폰 출하량 삼성 또 제쳐…2년 연속 세계 1위
+https://bit.ly/4jNwr1F
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+미래를 보는 창 - 전자신문
+삼성-소뱅-오픈AI '스타게이트' 논의 촉각…SK 등 재계에 전방위 협력 요청
+도널드 트럼프 미국 대통령이 '역사상 가장 큰 인공지능(AI) 인프라 프로젝트'로 내세운 '스타게이트' 프로젝트에 삼성전자 합류 여부가 초미의 관심사로 떠올랐다. 이재용 삼성전자 회장이 사법 족쇄에서 벗어난 직후 첫 글로벌 사업 행보로 샘 올트먼 오픈AI 최고경영자(C
+❤
+2
+312
+views
+22:31
+DS Tech 이수림
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형 Alphabet 4Q24 실적발표 URL : https://bit.ly/4grBsKr *위 내용은 공개 실적발표 내용으로 별도의 승인절차 없이 제공됩니다. DS투자증권 리서치 텔레그램 링크 : https://t.me/DSInvResearch DS투자증권 반도체 텔레그램 링크 : https://t.me/dssemicon
+구글의 Capex 가이던스 750억 달러로 상향 나왔습니다. 구글은 실적 하회로 애프터에서 -8%의 조정이 나오고 있는 반면 Capex 상향에 브로드컴은 +5%, 엔비디아 +0.3% 등 상승 중입니다.
+332
+views
+22:51
+DS Tech 이수림
+https://m.etnews.com/20250205000198
+미래를 보는 창 - 전자신문
+애플 M5 양산 개시…'신공정으로 AI 성능 업그레이드'
+애플이 차세대 반도체 칩 'M5' 양산에 돌입했다. 맥 시리즈와 아이패드 등 애플 핵심 제품에 탑재되는 반도체다. 애플이 인공지능(AI) 성능을 강화하기 위해 새로운 공정 기술을 도입한 것으로 파악됐다. 5일 업계에 따르면 애플은 지난달부터 M5 칩 패키징을 시작한 것
+350
+views
+07:59
+DS Tech 이수림
+https://v.daum.net/v/20250205204615739
+다음 - 헤럴드경제
+[속보] 외교·산업부, 딥시크 접속 차단
+[헤럴드경제=유혜림 기자] 중국 인공지능(AI) 딥시크(Deepseek)가 이용자 데이터를 과도하게 수집한다는 논란 속에서 외교, 통상 분야 정부 부처들이 딥시크 접속을 차단했다. 5일 복수의 정부 관계자들에 따르면 외교통상부와 산업통상자원부가 자체 판단에 따라 외부 접속이 가능한 컴퓨터에서 딥시크 접속을 제한한 것으로 전해졌다. 한 해당 부처 관계자는
+290
+views
+12:27
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+02/06 테크 주요 뉴스
+◆ TSMC, CoWoS CAPA 확장 계획 25년 75~80K, 28년 150K
+https://bit.ly/414FROU
+◆ DDR4 가격, CXMT의 과잉공급으로 인해 계속 하락
+https://bit.ly/4hnFi8F
+◆ DeepSeek의 저비용 AI 모델로 광 트랜시버 출하량 2025년 56.5% 증가 예상
+https://bit.ly/40P1zVM
+◆ DeepSeek, 화웨이의 어센드 910C가 엔비디아 H100의 추론 능력의 60%에 도달했다 언급
+https://bit.ly/3EtHZXR
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+DIGITIMES
+TSMC launches 5-year CoWoS expansion; bolsters Nvidia's AI dominance amid DeepSeek challenge
+The global political and economic landscape is characterized by volatility; nevertheless, sources within the semiconductor industry suggest that TSMC's expansion strategy for advanced packaging, particularly its Chip-on-Wafer-on-Substrate (CoWoS) production…
+309
+views
+22:36
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형
+Amazon 4Q24 실적발표
+URL :
+https://bit.ly/3EEgwTd
+*위 내용은 공개 실적발표 내용으로 별도의 승인절차 없이 제공됩니다.
+DS투자증권 리서치 텔레그램 링크 :
+https://t.me/DSInvResearch
+DS투자증권 반도체 텔레그램 링크 :
+https://t.me/dssemicon
+❤
+1
+295
+views
+23:49
+DS Tech 이수림
+DS Tech 이수림
+DS투자증권 반도체 Analyst 이수림, RA 김진형 Amazon 4Q24 실적발표 URL : https://bit.ly/3EEgwTd *위 내용은 공개 실적발표 내용으로 별도의 승인절차 없이 제공됩니다. DS투자증권 리서치 텔레그램 링크 : https://t.me/DSInvResearch DS투자증권 반도체 텔레그램 링크 : https://t.me/dssemicon
+Amazon CAPEX
+2024년 83B 집행 (가이던스 75B 상회)
+2025년 104B 집행 예정(컨센 85B 상회)
+대부분 AWS의 AI에 쓰인다고 언급
+👏
+1
+💯
+1
+311
+views
+edited
+23:53
+DS Tech 이수림
+https://n.news.naver.com/mnews/article/277/0005542847?sid=104
+Naver
+"오픈AI, 텍사스 포함 15개주서 데이터센터 추가 건설"
+챗GPT 개발사 오픈AI가 미국 텍사스주를 비롯한 약 15개 주에서 데이터센터를 추가 건설할 계획이라고 6일(현지시간) 블룸버그 통신이 보도했다. 오픈AI는 지난달 21일 소프트뱅크, 오라클과 5000억달러 이상을
+315
+views
+00:05

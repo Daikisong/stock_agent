@@ -1,0 +1,264 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7d06bfdf0a73e3f3e281a3a6",
+        "rationale": "2025년 1분기 공식 earnings-call transcript 전수를 current 195 facts와 대조해 D램 전체·서버·범용 비트 성장, D램 실현 ASP 하락, HBM 판매 감소의 수출통제·수요이연 원인만 비중복 추출했다. 메모리 매출, HBM 판매 감소 결과, 이후 HBM3E/HBM4 계획과 2025년 2분기 전망은 current facts와 중복되거나 source available_at 기준 이미 지난 전망이어서 structured forward evidence로 만들지 않았다. NAND·관세 일반·다른 사업부 내용은 허용 범위 밖이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-7d799c06d629fdcae65aea26",
+        "rationale": "전수를 검토했으나 2026년 2분기 전사 잠정 매출·영업이익과 증감률은 메모리 단독 귀속이 아니고, AI 수요·HBM·서버 메모리 판매에 관한 문장은 구체적 메모리 매출·이익 수치가 아니라 시장 해석이다. current facts의 메모리 88~93.2조원 이익 추정·98% 기여 및 HBM4 매출보다 약하거나 중복이며, 외부감사·결산 미완료 한계도 전사 잠정실적에만 적용돼 MEMORY-local eps fact로 전용하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-84ffea138aeacabebf981fd8",
+        "rationale": "기사의 2026년 1분기 전사·DS 이익 전망과 D램·낸드 ASP 추정은 이후 official actual 및 current canonical의 메모리·DS 실제치, D램 혼합 ASP 사실로 대체됐다. HBM보다 범용 D램 수익성이 높다는 설명도 current fact와 중복이고, 목표주가·주가·SK하이닉스·파운드리는 범위 밖이다. 낸드는 금지된 product family이므로 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-8b2633299108ce81ca29d502",
+        "rationale": "전수를 검토했으나 전사 잠정실적·성과급 조정치·DS 혼합 이익률은 메모리 단독 귀속이 아니다. D램 가격, HBM4 누적 매출, HBM4 출하와 고객 탑재는 current facts와 중복한다. HBM4E 수율 70%는 익명·사내 설명으로 알려졌다는 제3자 서술이며 구체적 메모리 매출·이익 전환이나 issuer forward numeric guidance를 확정하지 않아 current eps_fcf objective의 직접 material fact로 만들지 않았다. 초대형 투자액·연간 전사 이익 전망·주가 전망도 범위 밖이다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7d06bfdf0a73e3f3e281a3a6",
+        "economic_mechanism": "서버 중심 비트 출하 확대가 2025년 1분기 D램 전체 출하량을 전분기보다 늘려 메모리 매출의 물량 기반을 지지했다.",
+        "exact_quote": "As a result, our QoQ bit growth increased by a low\nsingle digit.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current 195 facts에는 2025년 1분기 메모리 매출과 HBM 부진은 있으나 D램 전체 비트 출하의 전분기 대비 변화는 없다. 공식 issuer transcript의 실제 물량 지표이며, 범위값이어서 point-percent를 요구하는 QOQ_GROWTH structured role로는 태그하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:BIT_GROWTH:2025Q1",
+        "normalized_object": "2025년 1분기 D램 비트 출하량 전분기 대비 한 자릿수 초반 증가",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q1 vs 2024-Q4",
+        "predicate": "삼성전자 D램 비트 출하량이 2025년 1분기에 전분기 대비 한 자릿수 초반 증가했다",
+        "predicate_family": "DRAM_BIT_GROWTH_ACTUAL",
+        "primitive_tags": [
+          "DRAM_BIT_GROWTH",
+          "2025_Q1_ACTUAL"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_BIT_GROWTH_ACTUAL",
+        "question_family_tags": [
+          "DRAM_VOLUME",
+          "QUARTERLY_SHIPMENT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 1분기 D램 비트 출하 성장",
+        "subject_id": "005930:MEMORY:DRAM_BIT_GROWTH:2025Q1",
+        "unit": "percent QoQ range",
+        "value": "low-single-digit increase"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7d06bfdf0a73e3f3e281a3a6",
+        "economic_mechanism": "서버 D램 비트 출하의 두 자릿수 증가는 2025년 1분기 메모리 매출 믹스에서 서버 수요가 실제 물량으로 전환됐음을 보여준다.",
+        "exact_quote": "Despite\nthese conditions, our server DRAM bit shipments increased by a mid-teen\npercentage Q-on-Q which helped conventional DRAM post high single-digit bit\ngrowth.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current facts에는 2026년 1분기 서버 D램 증가와 다른 분기의 D램 물량은 있으나 2025년 1분기 서버 D램의 10%대 중반 증가는 없다. 별도 기간·제품 믹스의 공식 실제치이며 structured QOQ_GROWTH의 point-percent 요건은 충족하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:SERVER_BIT_GROWTH:2025Q1",
+        "normalized_object": "2025년 1분기 서버 D램 비트 출하량 전분기 대비 10%대 중반 증가",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q1 vs 2024-Q4",
+        "predicate": "삼성전자 서버 D램 비트 출하량이 2025년 1분기에 전분기 대비 10%대 중반 증가했다",
+        "predicate_family": "SERVER_DRAM_BIT_GROWTH_ACTUAL",
+        "primitive_tags": [
+          "SERVER_DRAM_BIT_GROWTH",
+          "2025_Q1_ACTUAL"
+        ],
+        "product_family": "서버 D램",
+        "question_family_id": "SERVER_DRAM_BIT_GROWTH_ACTUAL",
+        "question_family_tags": [
+          "SERVER_DRAM_VOLUME",
+          "QUARTERLY_SHIPMENT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 1분기 서버 D램 비트 출하",
+        "subject_id": "005930:MEMORY:SERVER_DRAM_BIT_GROWTH:2025Q1",
+        "unit": "percent QoQ range",
+        "value": "mid-teens increase"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7d06bfdf0a73e3f3e281a3a6",
+        "economic_mechanism": "서버 D램 판매 확대가 범용 D램 전체 비트 성장을 한 자릿수 후반으로 끌어올려 HBM 부진을 일부 상쇄한 물량 효과를 제시한다.",
+        "exact_quote": "Despite\nthese conditions, our server DRAM bit shipments increased by a mid-teen\npercentage Q-on-Q which helped conventional DRAM post high single-digit bit\ngrowth.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current 195 facts에는 2025년 1분기 범용 D램 비트 성장률이 없다. 서버 D램 하위 물량과 구분되는 범용 D램 합계 지표이며, 공식 issuer actual이지만 범위값이라 structured QOQ_GROWTH 역할은 부여하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:CONVENTIONAL_BIT_GROWTH:2025Q1",
+        "normalized_object": "2025년 1분기 범용 D램 비트 출하량 전분기 대비 한 자릿수 후반 증가",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q1 vs 2024-Q4",
+        "predicate": "삼성전자 범용 D램 비트 출하량이 2025년 1분기에 전분기 대비 한 자릿수 후반 증가했다",
+        "predicate_family": "CONVENTIONAL_DRAM_BIT_GROWTH_ACTUAL",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM_BIT_GROWTH",
+          "2025_Q1_ACTUAL"
+        ],
+        "product_family": "범용 D램",
+        "question_family_id": "CONVENTIONAL_DRAM_BIT_GROWTH_ACTUAL",
+        "question_family_tags": [
+          "CONVENTIONAL_DRAM_VOLUME",
+          "QUARTERLY_SHIPMENT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 1분기 범용 D램 비트 성장",
+        "subject_id": "005930:MEMORY:CONVENTIONAL_DRAM_BIT_GROWTH:2025Q1",
+        "unit": "percent QoQ range",
+        "value": "high-single-digit increase"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-7d06bfdf0a73e3f3e281a3a6",
+        "economic_mechanism": "D램 비트 출하가 늘었어도 평균판매가격이 하락해 2025년 1분기 메모리 매출·이익 전환을 제약한 실현가격 counter다.",
+        "exact_quote": "Meanwhile, ASP decreased by a mid-single percentage Q-on-Q.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current graph에는 2024년·2025년 3~4분기 및 2026년 D램 ASP 변화가 있지만 2025년 1분기 실현 ASP 하락은 없다. 같은 분기 물량 증가가 전부 이익으로 전환됐다고 보는 것을 제한하는 공식 counter다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:ASP:2025Q1",
+        "normalized_object": "2025년 1분기 D램 평균판매가격 전분기 대비 한 자릿수 중반 하락",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q1 vs 2024-Q4",
+        "predicate": "삼성전자 D램 평균판매가격이 2025년 1분기에 전분기 대비 한 자릿수 중반 하락했다",
+        "predicate_family": "DRAM_ASP_ACTUAL",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "2025_Q1_ACTUAL"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_ASP_ACTUAL",
+        "question_family_tags": [
+          "DRAM_REALIZED_PRICE",
+          "QUARTERLY_PRICING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 1분기 D램 평균판매가격",
+        "subject_id": "005930:MEMORY:DRAM_ASP:2025Q1",
+        "unit": "percent QoQ range",
+        "value": "mid-single-digit decrease"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-7d06bfdf0a73e3f3e281a3a6",
+        "economic_mechanism": "AI 칩 수출통제와 향상된 HBM 제품 출시를 기다린 고객의 수요 이연이 2025년 1분기 HBM 판매 감소를 야기해 제품 판매의 매출 전환을 제약했다.",
+        "exact_quote": "However, HBM sales decreased quarter-on-quarter caused by impacts of export\ncontrols on AI chips and deferred demand in anticipation of the upcoming\nenhanced HBM3E products.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current fact는 같은 분기 HBM 판매·가격 부진이라는 결과만 보유한다. 이 공식 transcript는 수출통제와 개선품 대기 수요 이연이라는 직접 원인을 추가하며, 일반 시장 배경이나 침묵을 새 fact로 바꾸지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:RISK_COUNTER:2025Q1_DEMAND_DEFERRAL",
+        "normalized_object": "수출통제·향상 제품 대기 수요 이연에 따른 2025년 1분기 HBM 판매 감소",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q1 vs 2024-Q4",
+        "predicate": "AI 칩 수출통제와 향상된 HBM 제품을 기다린 수요 이연으로 2025년 1분기 HBM 판매가 전분기 대비 감소했다",
+        "predicate_family": "HBM_SALES_DEFERRED_DEMAND_COUNTER",
+        "primitive_tags": [
+          "HBM_SALES_DECLINE",
+          "EXPORT_CONTROL",
+          "DEMAND_DEFERRAL"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_SALES_DEFERRED_DEMAND_COUNTER",
+        "question_family_tags": [
+          "HBM_SALES_CONVERSION",
+          "DEFERRED_CUSTOMER_DEMAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 1분기 HBM 판매 감소 원인",
+        "subject_id": "005930:MEMORY:HBM_SALES_DEMAND_DEFERRAL:2025Q1",
+        "unit": "sales direction and cause",
+        "value": "sales decreased due to AI-chip export controls and deferred demand for enhanced HBM products"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "fa41e23adac3a1043d8674d529633fb4261d926f62baebcb8818edc2b8e5ae71",
+  "production_score_authority": false,
+  "prompt_hash": "475e2752871cc5b1c4aa58baf306cb47d026a5a7225bf87b636ddbd2cda33e6a",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-68aa98a78b8b65c34fd95c77e449ccf5aa8b6d3a1557540280cc241f0f5e21eb",
+  "response_id": "COLLABRESP-70cb451c8134863e580ef6c70be17c7af4c67d843909788cd20877cb62fcd4ae",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1719ef95b8837cae0a2e6680",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.05,
+        "rationale": "검증된 발행사 2024년 재무·실적 원문 경로지만 2025년 3·4분기와 2026년 1분기 메모리/HBM 자료 및 실제 HBM4 양산 상태가 현재성을 대체했다."
+      },
+      {
+        "candidate_id": "SGCAND-1829361c62ade64337c4bc47",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "tumblr.com의 소셜 프로필·공유·전송 링크로, 요청된 issuer/customer/industry/trusted-media 원문 provenance와 후보 본문을 제공하지 않아 full-fetch 대상이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-186ccdc601ca0bdb07fdc8df",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2014년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-1909fef85a6fa7d7a94da24a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "x.com의 소셜 프로필·공유·전송 링크로, 요청된 issuer/customer/industry/trusted-media 원문 provenance와 후보 본문을 제공하지 않아 full-fetch 대상이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1a846944624939803de0dcd3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "facebook.com의 소셜 프로필·공유·전송 링크로, 요청된 issuer/customer/industry/trusted-media 원문 provenance와 후보 본문을 제공하지 않아 full-fetch 대상이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1c1de1349db2e220355e6fee",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "threads.com의 소셜 프로필·공유·전송 링크로, 요청된 issuer/customer/industry/trusted-media 원문 provenance와 후보 본문을 제공하지 않아 full-fetch 대상이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2089c1c93bd9baa699fcd165",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.94,
+        "rationale": "삼성 뉴스룸의 구체적 OpenAI 차세대 AI 데이터센터 협력 기사로, 삼성전자 메모리·HBM의 명시적 고객 수요, 공급 역할 또는 협력 범위를 확인할 수 있는 직접 full-fetch 원문 경로다. URL과 제목은 경로 판정에만 사용한다."
+      },
+      {
+        "candidate_id": "SGCAND-20eaf041505bfe2addca22af",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2023년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-27776090f16f98bfa77fb904",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "facebook.com의 소셜 프로필·공유·전송 링크로, 요청된 issuer/customer/industry/trusted-media 원문 provenance와 후보 본문을 제공하지 않아 full-fetch 대상이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-283a413a356948b58abc90c3",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2012년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-28add6160dda7ffb10a67586",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "발행사 뉴스룸 기사의 TTS 오디오 파생 파일로, 같은 HBM4 원문 기사가 이미 current graph에 full-fetch되어 있다. 별도 독립 사실 원문이 아니므로 중복 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-2a710f233b06f5908a4ba5d4",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2011년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "SGCAND-2089c1c93bd9baa699fcd165의 materiality는 supplied URL·official provenance에 따른 full-fetch 경로 판정이다. 원문 발행일·본문·as_of_date와 objective-local 사실은 fetch 후 검증해야 하며 현재 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "d28f01fee27242d13cd65306c3e3e3627fd591225010aa76b8cc59a77129d9a1",
+  "production_score_authority": false,
+  "prompt_hash": "000570b37ec4528351c6ca31e0af393a71e2cb94c83373fecda4fdeb7a2d9eb6",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9c7bc22fe2cb5b1ad6966aea193e0189fcf25e14b4c33f73e3e7a2ebde918f51",
+  "response_id": "COLLABRESP-1476929df81bda4ca01bce94aba1411958d2c5a82917a6773f6090012b990974",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2466c6a8727cd5542c49b574",
+        "rationale": "안정화된 current exact prompt와 SGDOC-2466 14,482자를 독립 전수검토했으나 신규 valuation_rerating fact가 없다. Current fact roster 597건에서 이 보고서의 HBM·메모리 매출 경로, 메모리 영업이익·마진, 2026E/2027E 영업이익 revision, forward BPS/PBR/EV-EBITDA와 목표 PBR 방법론이 이미 durable하게 보존된다. 1Q26 broker 예상은 이후 actual·최신 전망과 의미상 중복되고, 3~5년 공급계약·최저가격·선지급금은 issuer-confirmed 계약조건이 아니라 broker 추정이므로 새 사실로 승격하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "e2181475eb242a1d4372014cc8ec107613fb5d280fb1bd7cca6499696f81c680",
+  "production_score_authority": false,
+  "prompt_hash": "6a4ffd2f4024b2c9e029c3741bf9113734af2a0c20c8135f84bf56360202dbfb",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e489d804c561e98e14e4daaf7d33aa386cfb360e09b73a038d5194c894e58cf7",
+  "response_id": "COLLABRESP-6703437e883f892f45514aafc6131d42c1936dd7dedf72cf1b879356390c1067",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

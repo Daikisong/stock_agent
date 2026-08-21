@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4569ed39f880b3c4521422a0",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/ssd/datacenter-ssd/pm9a3/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-4ecc5cf88458bd2d04f47dc2",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/%ec%82%bc%ec%84%b1-%ec%b2%ad%eb%85%84%ed%9d%ac%eb%a7%9d%eb%b0%b0%ec%9b%80%ed%84%b0-%ea%b0%9c%ea%b0%95%ec%8b%9d-%ea%b0%9c%ec%b5%9c)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-516bbfc055b1517f49292254",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.95,
+        "rationale": "발행사 2026년 2분기 실적 발표 원문 경로로, 메모리 실적·수익성 및 전망을 직접 확인할 수 있어 full-fetch가 필요하다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-56f4f43c00ac3d72750f0494",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://semiconductor.samsung.com/dram/ddr/ddr4/)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-56f8e1dc344cf6aeec927722",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/medialibrary/kr/album/168)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-56fcb07188c07008c95c6a93",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/인터뷰-집에서-즐기는-공연장의-감동-삼성-tv-플러스)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-6e795847d018d227acc493b6",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.82,
+        "rationale": "발행사의 FMS 2026 차세대 메모리 발표 원문 경로로, 메모리 기술·공급 방향을 확인할 수 있어 full-fetch가 필요하다. URL·reference metadata는 탐색 경로 판정에만 사용하며 snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-71f88a32c0ac700d2f8fb4c5",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/medialibrary/kr/album/172)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-72d89a22943452c2c922d712",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/%ed%8f%b4%eb%9e%80%eb%93%9c-%ec%b5%9c%ec%b4%88-%eb%8d%94-%ec%8a%a4%ed%94%bc%eb%93%9c-%ed%94%84%eb%a1%9c%ec%a0%9d%ed%8a%b8-%ec%b0%b8%ea%b0%80%ed%8c%80-%ec%82%bc%ec%84%b1-%ea%b0%a4)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-72e1550b8d0c7f123cde1e38",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/medialibrary/kr/album/149)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-74e12196fb84d35181cf8d9f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/medialibrary/kr/album/135)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-74ec979a7a67e2143dda1763",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "발행사 계보는 맞지만 URL 경로(https://news.samsung.com/kr/%ec%82%bc%ec%84%b1%ec%a0%84%ec%9e%90-%eb%a9%95%ec%8b%9c%ec%bd%94-%ed%94%bc%ed%8a%b8%eb%8b%88%ec%8a%a4-%ed%8a%b8%eb%9e%98%ec%bb%a4-%ec%8b%9c%ec%9e%a5-%ec%b5%9c%ea%b3%a0-%ec%84%b1%ec%9e%a5-%eb%b8%8c)가 HBM·메모리 실적, 수요·공급, 고객 가시성 원문을 구체적으로 해결하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "선정 후보는 원문 증거가 아니며 full-fetch 뒤 발행일과 본문 적합성을 검증해야 한다."
+    ]
+  },
+  "payload_hash": "99a9b5803a1ce61a94e50808099ce1c845e01c5450ec6368f00613bead0c00f2",
+  "production_score_authority": false,
+  "prompt_hash": "886018ea6e1d084d456d4a311180c6f6c8120b4ba7d4e66d397f24431829393f",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch9_rankings",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-361e351c65bf2762da90cabfa25ec9499e7b4fc65cd6cb4cbbe0e45678afbf9a",
+  "response_id": "COLLABRESP-917cea29c6f062792b006e0520e31332f578d34f5870dc9a0b59ef7060c70e4f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

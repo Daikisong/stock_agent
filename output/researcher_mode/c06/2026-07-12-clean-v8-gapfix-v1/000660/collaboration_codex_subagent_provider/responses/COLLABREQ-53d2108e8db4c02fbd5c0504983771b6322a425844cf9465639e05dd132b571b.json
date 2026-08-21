@@ -1,0 +1,52 @@
+{
+  "output_schema_hash": "966be32c04325d5baac57ef31eb58ab98bcc872324c87bade8378eb6518a417a",
+  "payload": {
+    "allowed_range": [
+      18.5,
+      21.0
+    ],
+    "anchor_comparisons": [
+      "positive anchor CANCH-2fb324f77e56e0e487863c17보다 HBM-only FCF 분리가 약하다",
+      "counter anchor CANCH-17745cd4887afd21639e9dd6보다는 actual 이익과 현금흐름이 강하다"
+    ],
+    "counter_fact_ids": [
+      "EFACT-22b3c14ea08f7a3f6c58b170"
+    ],
+    "disagreements": [
+      "회의론자보다 actual 이익과 현금흐름의 지속 신호를 더 높게 본다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-2fb324f77e56e0e487863c17",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 19.75,
+    "rationale": "실제 순이익과 영업현금흐름 확대를 강하게 반영하되 CAPEX와 HBM-only 귀속 한계를 남긴다.",
+    "support_fact_ids": [
+      "EFACT-0295af0d92028218f77266f2",
+      "EFACT-d2e799df4d980691c6707a9e"
+    ],
+    "why_not_higher": "대규모 CAPEX와 HBM-only margin·FCF bridge가 분리되지 않았다.",
+    "why_not_lower": "공시 actual 순이익과 영업현금흐름 확대가 확인된다."
+  },
+  "payload_hash": "ac361f1e80e3d2fce64f01505fcded1c32bf7cf1912eafeb93345e34efc3b3be",
+  "production_score_authority": false,
+  "prompt_hash": "b55ac2a8968ca80b4e191a73784fe750a20dc8ca133797a5a820add504936d00",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-53d2108e8db4c02fbd5c0504983771b6322a425844cf9465639e05dd132b571b",
+  "response_id": "COLLABRESP-17a0549d18604df03a891419eb1e1c5ba87893ce9564175673dff86962fa293b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

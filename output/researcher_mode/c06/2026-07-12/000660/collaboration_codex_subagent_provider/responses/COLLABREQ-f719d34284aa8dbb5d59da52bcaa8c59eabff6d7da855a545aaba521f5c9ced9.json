@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "독립 검토 결과 7개 component memo는 모두 current COMPLETE이며, FY2025 HBM actual 매출 성장, 1Q26 연결 actual 손익·현금흐름, DRAM ASP·가동률, HBM4 양산과 고객 성능요구 충족을 positive 경로로 검토했다. 동시에 전사·DRAM 수치를 HBM 단독 손익·FCF로 귀속할 수 없는 점, signed 최소물량·가격·취소·위약 조건 부재, 고객별 qualification 미공개, 경쟁 공급·수요탄력, 운전자본·CAPEX·투자회수와 peak-earnings 위험을 7개 memo와 red team의 counter로 보존했다. Structured 결과는 actual earnings·cash conversion·revision·valuation·peer band를 포함하고 component별 missing role이 없다. Source 없는 target valuation 행과 route 불일치 guidance 행은 거절됐지만, 별도의 검증 행이 current structured 역할을 충족하므로 그 거절 자체가 남은 gap은 아니다. Source graph의 7개 objective는 issuer·OpenDART·broker 및 structured evidence의 현재 의미로 해결됐고, prompt에는 named customer나 특정 미실행 official document identity처럼 지금 실행 가능한 nonduplicate source-family 경로가 없다. HBM 단독 segment 기여·숫자형 issuer guidance·계약 세부와 고객 독립확인은 새 공시가 생길 때 갱신할 monitoring 제한이며 현재 공개 경로에서 답을 바꿀 material 질문으로 재개방하지 않는다. 승인은 검색 무결과, provider 오류, 고정 회차, transport 대기 또는 source absence 주장이 아니라 현재 positive·counter·structured 범위와 구체적인 신규 실행 경로 부재에 근거한다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "aaf9d3dce458295c744c6299f1f22cbf2c64cb554ce38b29449a1885d75a7a58",
+  "production_score_authority": false,
+  "prompt_hash": "fe9cfcbd9fc48bea0e98c482bd51820e7abbcd4c0884e35c1e25b7f7a41047a4",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f719d34284aa8dbb5d59da52bcaa8c59eabff6d7da855a545aaba521f5c9ced9",
+  "response_id": "COLLABRESP-9662efc877ac0e93fc26b4e11d0d3dca30aed7422ea3127ebc2451dd06026deb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

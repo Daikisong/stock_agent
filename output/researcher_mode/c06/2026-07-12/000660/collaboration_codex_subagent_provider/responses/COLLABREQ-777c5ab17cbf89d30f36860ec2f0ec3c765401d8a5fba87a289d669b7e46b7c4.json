@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "af6a09607a327476ccec9812ec08734f108bccfa93c2358405b7e196421354fb",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0351b4d50454c29195eb858a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.9,
+        "rationale": "검증된 SK하이닉스 뉴스룸에서 이미 확보한 풀스택 AI 메모리 원문이 직접 참조한 AI 인프라 구축 페이지다. 생산·패키징 기반, 투자 규모·시점 또는 HBM 공급능력과 현금지출의 연결을 담을 가능성이 있어 full fetch 우선 경로로 분류한다. 현재의 sparse reference metadata 자체는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-048031728f498ce250889e1c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 issuer 뉴스룸 문서가 아니라 별도 S3 attachment 경로이고 URL이 2026/08 게시물을 명시해 2026-07-12 이후의 미래 자료다. DOCX 경로명에 투자액이 있어도 point-in-time source나 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-048e0982b0bd65b251f331ba",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "공식 뉴스룸 fact 페이지라는 provenance는 맞지만 공급된 후보에는 제목·게시일·snippet이 없고, HBM 매출·이익·FCF 또는 숫자형 가이던스에 연결되는 구체적 신호가 없다. source-family 일치와 inherited scope만으로 material을 단정하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-0eb961d9441f9ab7208d2385",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.58,
+        "rationale": "검증된 SK하이닉스 뉴스룸의 fact 페이지이며 팹·설비 투자 경로에서 현재 목적을 상속한 공식 참조다. 메타데이터가 희소하므로 아직 evidence는 아니지만, 생산 클러스터·메모리 공급 기반의 투자 규모와 시점을 확인할 수 있는지 bounded full fetch로 판별할 가치가 있다."
+      },
+      {
+        "candidate_id": "SGCAND-11ae64260750bd9870b0a060",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "공식 뉴스룸 fact 페이지이나 제목·게시일·본문 단서가 전혀 없고, 현재 후보 레코드만으로 HBM 매출·이익·현금흐름 objective에 대한 경제적 관련성을 확립할 수 없다. 공식 도메인이라는 사실만으로 full fetch를 정당화하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1ef62b3ea0f07efa683a681b",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.82,
+        "rationale": "2026-07-08 풀스택 AI 메모리 원문이 생산·패키징 인프라 설명에서 참조한 검증된 issuer fact 페이지다. HBM용 첨단 패키징 투자와 생산 시점·공급능력 귀속을 더 구체적으로 확인할 공식 full-fetch 경로이며, reference metadata를 사실로 쓰지는 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2121068ea70b6ffce9399453",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.86,
+        "rationale": "검증된 SK하이닉스 뉴스룸의 엔비디아 다년 기술 파트너십 원문 경로다. 차세대 AI 메모리 공동개발의 범위·기간과 고객 로드맵 연계를 확인해 수요 지속성과 매출전환 한계를 판별할 가치가 있다. full fetch 전에는 공급계약·배정·구매의무로 해석하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-21c5c565a6fe80b1f8d6c518",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "별도 S3 ZIP attachment이며 URL이 2026/08 게시물을 명시해 as_of_date 이후 자료다. 검증된 requested issuer family도 아니고 압축파일 경로 자체는 연구 근거나 full-text 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-236469742fab77d7a04c7096",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "YouTube embed 경로로 요청된 issuer 뉴스룸·실적발표·발표자료 provenance가 아니며 제목·게시일·snippet도 없다. embed URL만으로 target의 HBM 수익·FCF 내용을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-2426d5232d4a65213c0053a9",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "공식 뉴스룸 경로지만 공급된 부모 원문의 연관기사에서 2026-07-25 자료로 표시돼 as_of_date 2026-07-12 이후다. 미래 행사의 AI 인프라 협력 내용을 현재 HBM 수익 근거로 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-32c371a18220051780ffaa4e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 issuer iHBM 기술 소개 경로지만 현재 목적에 필요한 HBM 매출·이익·현금흐름 귀속이나 숫자형 forward guidance가 아니라 열관리 제품 profile이다. 제품 사양만으로 eps_fcf_explosion을 진전시키지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-33826a6d837367ffcef2d287",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "URL 성격은 SK하이닉스 2Q26 issuer earnings release에 해당하지만 2026-07-12 시점에는 2분기 실적발표가 아직 point-in-time 이용 가능하다고 볼 수 없다. 동적 related-link에서 발견된 미래 실적 경로를 현재 자료로 fetch하거나 evidence로 쓰지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "partition 0의 12개 후보를 요청 순서대로 정확히 한 번씩 판정했다. material 4개는 모두 full fetch가 필요한 공식 원문 route일 뿐 현재 evidence가 아니다.",
+      "미래 경로 4건과 비공식 attachment/embed는 제외했고, 제목·게시일·본문 단서가 없는 공식 fact 페이지도 source-family 일치만으로 material을 만들지 않았다."
+    ]
+  },
+  "payload_hash": "7d62b1041b25e6c833f089428e077d0710a57518fa8ab678d51c5bf8af3a49e1",
+  "production_score_authority": false,
+  "prompt_hash": "91ff67ce9608cf8cf2e500f16b60277a06338ce78834425e55ee584fd0261a89",
+  "provenance": {
+    "agent_id": "hynix_current_leaves",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_current_leaves",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-777c5ab17cbf89d30f36860ec2f0ec3c765401d8a5fba87a289d669b7e46b7c4",
+  "response_id": "COLLABRESP-68e4373c3ee6bc465482d5a418ceef909a392d370a4c59309a0d4b653a3134a7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

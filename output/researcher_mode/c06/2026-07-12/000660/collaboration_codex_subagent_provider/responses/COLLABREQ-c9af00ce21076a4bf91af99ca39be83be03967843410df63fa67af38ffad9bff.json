@@ -1,0 +1,89 @@
+{
+  "output_schema_hash": "b84ead111945075ad6654621287531140a0432b172af3363373abd25408f28b5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-14b5f3d6720d15559d3b696e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.05,
+        "rationale": "DART 최상위 주소만 있는 메타데이터 희소 참조이며 문서 식별자나 실적·HBM 원문 경로가 없다. 후보 힌트는 OPENDART이지만 이 후보가 요청받은 ISSUER_NEWSROOM, ISSUER_PRESENTATION, KIND_KRX 중 어느 계열에도 검증되어 있지 않아 현재 fetch 경로로는 비물질적이다."
+      },
+      {
+        "candidate_id": "SGCAND-5f61745bccdcd1bcfd9122f5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.08,
+        "rationale": "SK하이닉스 도메인 문자열 뒤에 한국어 조사와 닫는 괄호가 붙은 비정규 URL이며, 홈페이지 이외의 뉴스룸·IR 프레젠테이션 경로를 식별하지 못한다. verified_official_domain_candidate도 false이므로 요청 원천 계열 일치나 목적 관련성을 인정할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-67cc2f6dcff1fe2b74430e49",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.08,
+        "rationale": "SK하이닉스 도메인 문자열 뒤에 한국어 조사와 닫는 괄호가 붙은 비정규 URL이며, 홈페이지 이외의 뉴스룸·IR 프레젠테이션 경로를 식별하지 못한다. 공식 도메인 검증도 통과하지 않았으므로 요청 원천 계열이나 EPS·FCF 목적의 원문 route로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-77147d08162585210b2208b0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "한국예탁결제원 전자투표 사이트 주소에 닫는 인용부호가 붙은 참조다. 주총 의결권 행사 서비스는 SK하이닉스 HBM 매출·이익·현금흐름 자료가 아니며 요청된 뉴스룸·프레젠테이션·KIND 원천에도 해당하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-93ca11135e0454d2a5be0df8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "한국예탁결제원 전자투표 모바일 주소에 닫는 인용부호가 붙은 참조다. 전자투표 기능 페이지는 HBM의 실적 기여나 FCF 전환을 검증할 원문이 아니고 요청 원천 계열도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c15a6c879c8e1870ddc38c8b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.04,
+        "rationale": "DART 최상위 주소에 한국어 조사와 닫는 괄호가 붙은 비정규 참조로 특정 공시 원문을 가리키지 않는다. OPENDART 힌트는 요청된 세 원천 계열과 다르고 공식 후보 검증도 false이므로 추가 fetch 우선순위를 부여하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "6개 후보를 입력 순서대로 모두 분류했으나 요청된 ISSUER_NEWSROOM, ISSUER_PRESENTATION, KIND_KRX 계열로 검증된 후보는 0개다. 후보들은 최상위 홈페이지, 비정규 URL 또는 전자투표 서비스 참조라서 HBM 세그먼트 기여나 수치형 실적 전망의 새 원문을 제공하지 못하며 해당 source gap은 계속 남는다.",
+      "후보 snippet은 모두 비어 있으며, 이번 판단은 원문 증거 채택이 아니라 fetch route 적합성 분류에만 사용되었다."
+    ]
+  },
+  "payload_hash": "be8c577b10345430b0e65a0c93494940369672e5f935616aae671a6e0bec1cd6",
+  "production_score_authority": false,
+  "prompt_hash": "91bde255020e09722510e2a18bbe9ea5e957596b90ebda6d4d3de64f9492638c",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c9af00ce21076a4bf91af99ca39be83be03967843410df63fa67af38ffad9bff",
+  "response_id": "COLLABRESP-a8c9ff3d03a32cba3aa7a5ebf8483a1749ab4a0b7f0e1085788bd66a9b820844",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

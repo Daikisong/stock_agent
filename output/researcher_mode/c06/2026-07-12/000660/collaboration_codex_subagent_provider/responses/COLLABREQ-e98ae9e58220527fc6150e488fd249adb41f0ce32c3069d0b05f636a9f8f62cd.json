@@ -1,0 +1,40 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-a29379eb8712c27a22cb9175",
+        "rationale": "공식 3Q25 한국어 실적자료를 전수 검토했으나, HBM·서버 제품 기반 분기 실적, 고용량 DDR5 출하 증가, 2026년 HBM 공급 협의 완료, HBM4 고객요구 충족·출하 및 판매 확대 일정, 2026년 D램 생산 고객수요 확보, 잠정실적 제한은 현재 canonical fact에 동일 공식 영문자료의 경제 의미로 이미 존재한다. HBM4 계획은 이후 실제 양산 facts로 더 최신화됐고, 새 숫자형 미래 guidance나 peer band가 없어 valuation_rerating fact를 추가하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "2026년 HBM 공급 협의 완료와 전 제품 고객수요 확보는 수량·가격 point/range가 없어 DURABLE_VISIBILITY의 구조화 guidance 공백을 해소하지 않는다.",
+      "이 발행사 실적자료에는 비교기업 valuation band가 없어 PEER_BAND 공백이 계속 남는다."
+    ]
+  },
+  "payload_hash": "f5b71df0e7fb85510a89b7599f20c163726c52f393116d396131d168d2427c8d",
+  "production_score_authority": false,
+  "prompt_hash": "f2b95885ba465f40970f77267d8ed0881de884122f6be2175c146aaa277fd70a",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e98ae9e58220527fc6150e488fd249adb41f0ce32c3069d0b05f636a9f8f62cd",
+  "response_id": "COLLABRESP-5036941212d21928334b177f2b0084767e22da3e6cbcc6136b549533eddc4f3e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

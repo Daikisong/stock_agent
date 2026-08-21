@@ -1,0 +1,123 @@
+{
+  "accepted_current_claim_count": 1,
+  "as_of_date": "2026-07-10",
+  "atomic_decision_count": 4,
+  "base_input_hash": "d3a89fb2dff84c7545d80a18d69297c6817ead7653d94d9cb7eca9e55fb362f7",
+  "claim_provenance_count": 1,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "base_builder_critical": 0,
+    "promoted_claim_without_provenance": 0,
+    "stage_chain_incomplete": 0
+  },
+  "effective_input_hash": "88e53371bc20be8f5311879f4b8e096b918be94bfaa3c91267221b907205e0cc",
+  "execution_mode": "PROMOTED_CHECKPOINT_RESUME_VALIDATED",
+  "hard_acceptance_pass": true,
+  "manifest_self_generated": true,
+  "materializer_called": true,
+  "promotion_applied": true,
+  "promotion_manifest_hash": "1b81d68cc35a4205207a919e381ce9aecacd30eb6da9895b7b816b23d330fbf1",
+  "run_mode": "LIVE_CENSUS_SELECTIVE_DEEP",
+  "schema_version": "e2r_live_current_orchestrator_v1",
+  "source_task_count": 10,
+  "stage_count": 12,
+  "stages": [
+    {
+      "audit_hash": "6b85c18d683130368dc40b61120cb8c99d6d458950b2dd104e0c7ba6c2aca14a",
+      "audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/live_materialization/2026-07-10/universe_audit.json",
+      "execution_mode": "CHECKPOINT_RESUME_VALIDATED",
+      "leaf_count": 1,
+      "leaf_tree_hash": "a0cdebd1c5e20ff368fd89e9708742f9f5528759c94f7077e41340499fc1f834",
+      "stage_id": "credential_provider_preflight"
+    },
+    {
+      "audit_hash": "6b85c18d683130368dc40b61120cb8c99d6d458950b2dd104e0c7ba6c2aca14a",
+      "audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/live_materialization/2026-07-10/universe_audit.json",
+      "execution_mode": "CHECKPOINT_RESUME_VALIDATED",
+      "leaf_count": 1,
+      "leaf_tree_hash": "c23bdb6379ed3b78c9072b9474cfe9ad1cab5ef0948bdee470926d46f7224b57",
+      "stage_id": "current_universe"
+    },
+    {
+      "audit_hash": "ca5c765b23dd9f83bd2348e73067448d0bfdca701680fdf77640cb501f883e20",
+      "audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/current_state/2026-07-10/bootstrap_completeness.json",
+      "execution_mode": "CHECKPOINT_RESUME_VALIDATED",
+      "leaf_count": 3,
+      "leaf_tree_hash": "1d3cb9f485ef944d5e72b0f87556ae4adc264bf0fe1e61135dd739c989a22572",
+      "stage_id": "current_state_bootstrap"
+    },
+    {
+      "audit_hash": "cbe4aaffa9ba51421c73afb7c40735b22cf463cc9227636abf9556b2c0217c6a",
+      "audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/live_materialization/2026-07-10/baseline_lane_audit.json",
+      "execution_mode": "CHECKPOINT_RESUME_VALIDATED",
+      "leaf_count": 1,
+      "leaf_tree_hash": "37542c6c0f1585ab56048785c13a7c516ad526ff41b5eb468d7ba62144c66fab",
+      "stage_id": "baseline_lanes"
+    },
+    {
+      "audit_hash": "cb6b8fd41de4674876926a1fc7c6ab02373d87bc8d9bb1aa85f4ffcacedfa6e8",
+      "audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/live_materialization/2026-07-10/trigger_fusion_audit.json",
+      "execution_mode": "CHECKPOINT_RESUME_VALIDATED",
+      "leaf_count": 2,
+      "leaf_tree_hash": "b3bf06a124c1a1c517ec330413bbcf68ed88fe708234491eac287cf9431a8ecd",
+      "stage_id": "trigger_fusion"
+    },
+    {
+      "audit_hash": "af4a69c53b6300b5ebb0e35d0fb635ad8e3f2b9b06c5e640345d58bbdce5c166",
+      "audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/live_materialization/2026-07-10/candidate_selection_audit.json",
+      "execution_mode": "CHECKPOINT_RESUME_VALIDATED",
+      "leaf_count": 1,
+      "leaf_tree_hash": "3935fc092946b1ccc353b396150deb28513f736a46c6c9aa6935302a52ee3c03",
+      "stage_id": "depth_selection"
+    },
+    {
+      "audit_hash": "f833488f4b6d3b9557cde84c6f6d629febc6f1d2c36612b091bad7748111a6fa",
+      "audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/live_materialization/2026-07-10/planner_validation.json",
+      "execution_mode": "CHECKPOINT_RESUME_VALIDATED",
+      "leaf_count": 3,
+      "leaf_tree_hash": "93f4b3825cc70b44e00b400f3d0d75848b651e6786b55ce4fb020cea82f12c12",
+      "stage_id": "research_brain"
+    },
+    {
+      "audit_hash": "dcf439e53867ec029f68f237993f065339f197f65639a753d1e2bb849231886c",
+      "audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/live_materialization/2026-07-10/source_task_audit.json",
+      "execution_mode": "CHECKPOINT_RESUME_VALIDATED",
+      "leaf_count": 2,
+      "leaf_tree_hash": "11ac21113030702c48e891b826f3824d8b72f080f4ded0c6418f9bdeca3c0126",
+      "stage_id": "source_task"
+    },
+    {
+      "audit_hash": "ce1f577499e49b09b20491c6f4d4a5aa7759ce14468628bcfd4d1d4061ab678f",
+      "audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/live_materialization/2026-07-10/provider_call_report.json",
+      "execution_mode": "CHECKPOINT_RESUME_VALIDATED",
+      "leaf_count": 3,
+      "leaf_tree_hash": "4208f583dbd4ba5c362fdbb6ef724a32663dd367912c210afc9ad236e939d31e",
+      "stage_id": "source_acquisition"
+    },
+    {
+      "audit_hash": "22df0ea10dc965cb7e4ff05599fe3fe631a0b42fa62b7cdb2ea19ed08499a927",
+      "audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/live_materialization/2026-07-10/claim_compiler_audit.json",
+      "execution_mode": "CHECKPOINT_RESUME_VALIDATED",
+      "leaf_count": 2,
+      "leaf_tree_hash": "7d930d31f42cbb906f16d6e3985717dcddf9c582f8f4dd0642c6effb8e249c33",
+      "stage_id": "claim_compiler"
+    },
+    {
+      "audit_hash": "a5a81e63aeb80c45d6afb2b19b5d6b51b402e44d86795e69ef8d20939612f2d8",
+      "audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/live_materialization/2026-07-10/adaptive_gap_audit.json",
+      "execution_mode": "CHECKPOINT_RESUME_VALIDATED",
+      "leaf_count": 2,
+      "leaf_tree_hash": "2a16ccd60088552dfeb169df491aa8e80a58c5e9cef1cba192207a1041ae2971",
+      "stage_id": "adaptive_closure"
+    },
+    {
+      "audit_hash": "a6e933637fd66823cf84baea2af8af962ab2f0ccc7d81b320cb14e5f39b62c0b",
+      "audit_path": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821/output/live_materialization/2026-07-10/atomic_score_audit.json",
+      "execution_mode": "CHECKPOINT_RESUME_VALIDATED",
+      "leaf_count": 2,
+      "leaf_tree_hash": "a534fc01c3abde06a415a2568fb5d784eafecb3ebc7638241e7a48770f1e3a72",
+      "stage_id": "atomic_decision"
+    }
+  ],
+  "status": "LIVE_CURRENT_ORCHESTRATION_PASS"
+}

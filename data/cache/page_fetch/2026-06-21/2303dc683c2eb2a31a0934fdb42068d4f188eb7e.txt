@@ -1,0 +1,248 @@
+피크 어닝: AI 수요는 진짜
+피크 어닝: AI 수요는 진짜
+광기의 해부학 원고 작성 1개월 뒤 업데이트 | 광기의 해부학을 쓴 지 한달여가 지났고, 이 책은 약 열흘 전에 이북으로 출간이 되었다. 그 사이 피크 어닝을 시사하는 증거가 많이 모여, 정리를 해 본다. 1. 요약 삼성전자와 SK하이닉스에 대한 현재 시장의 핵심 bull case는 명확함. AI 데이터센터 확장으로 HBM, 서버 DRAM, NAND, eSSD 수요가 동시 폭발하고, 공급 병목이 202
+피크 어닝: AI 수요는 진짜
+광기의 해부학 원고 작성 1개월 뒤 업데이트 | 광기의 해부학을 쓴 지 한달여가 지났고, 이 책은 약 열흘 전에 이북으로 출간이 되었다. 그 사이 피크 어닝을 시사하는 증거가 많이 모여, 정리를 해 본다. 1. 요약 삼성전자와 SK하이닉스에 대한 현재 시장의 핵심 bull case는 명확함. AI 데이터센터 확장으로 HBM, 서버 DRAM, NAND, eSSD 수요가 동시 폭발하고, 공급 병목이 202
+피크 어닝: AI 수요는 진짜
+광기의 해부학 원고 작성 1개월 뒤 업데이트 | 광기의 해부학을 쓴 지 한달여가 지났고, 이 책은 약 열흘 전에 이북으로 출간이 되었다. 그 사이 피크 어닝을 시사하는 증거가 많이 모여, 정리를 해 본다. 1. 요약 삼성전자와 SK하이닉스에 대한 현재 시장의 핵심 bull case는 명확함. AI 데이터센터 확장으로 HBM, 서버 DRAM, NAND, eSSD 수요가 동시 폭발하고, 공급 병목이 202
+피크 어닝: AI 수요는 진짜
+광기의 해부학 원고 작성 1개월 뒤 업데이트
+by
+그의 스킨 인 더 게임
+Jun 20. 2026
+광기의 해부학을 쓴 지 한달여가 지났고, 이 책은 약 열흘 전에 이북으로 출간이 되었다.
+그 사이 피크 어닝을 시사하는 증거가 많이 모여, 정리를 해 본다.
+1. 요약
+삼성전자와 SK하이닉스에 대한 현재 시장의 핵심 bull case는 명확함. AI 데이터센터 확장으로 HBM, 서버 DRAM, NAND, eSSD 수요가 동시 폭발하고, 공급 병목이 2027년까지 지속되며, 메모리 가격과 마진이 역사적 극단에서 유지된다는 논리임.
+HBM 쇼티지는 실제임. 일반 DRAM과 NAND도 AI 데이터센터 수요 때문에 타이트한 상황임. TrendForce는 HBM이 2027년 DRAM 웨이퍼 투입량의 30%까지 올라갈 수 있으나, bit supply 비중은 13%에 그칠 것으로 전망함. 즉 HBM은 bit 기준으로는 작지만, 웨이퍼·패키징·수율·고객 인증을 과도하게 소모하는 병목 제품임. [1]
+그러나 문제는 주식시장이 여기서 한 걸음 더 나아가고 있다는 점임. 현재 주가는 HBM shortage뿐 아니라, 일반 DRAM, NAND, eSSD, 서버 메모리, 소비자 메모리까지 모두 초고마진이 유지되는 시나리오를 가격에 반영하고 있음.
+일부 공격적 전망은 2027년 삼성전자 영업이익 570조 원, SK하이닉스 423조 원까지 제시하고 있음. 둘을 합치면 약 1,000조 원 영업이익임. [2]
+이 숫자가 실현되려면 단순히 HBM만 좋아서는 부족함.
+HBM뿐 아니라 일반 DRAM, 서버 DRAM, NAND, eSSD, 모바일·PC 메모리까지 전 영역에서 비정상적 가격과 마진이 장기간 유지되어야 함.
+본 글의 핵심 주장은 다음과 같음.
+AI 수요는 진짜임. HBM 쇼티지도 진짜임. 그러나 현재 주가와 컨센서스는 쇼티지자체가 아니라 쇼티지의 영구화를 가격에 반영하고 있음.
+핵심 리스크는 AI 수요 부재가 아님.
+핵심 리스크는 AI 수요가 존재하더라도, 그 수요가 현재 주가가 요구하는 만큼의 고가 HBM·DRAM·NAND 마진으로 귀속되지 않을 가능성임.
+2. HBM 쇼티지는 실제임
+Bearish thesis를 세우기 위해서는 먼저 bull case를 고찰해야 함.
+SK하이닉스는 12단 HBM4E 샘플을 주요 고객에게 출하했다고 발표했으며, AI 반도체용 고대역폭 메모리 경쟁에서 주도권을 유지하려는 움직임이 확인됨. [3]
+또한 SK그룹 최태원 회장은 SK하이닉스가 향후 5년간 웨이퍼 캐파를 두 배로 늘릴 계획이라고 언급함. 이는 현재 수급이 매우 타이트하다는 점을 보여주는 동시에, 높은 가격이 이미 공급 반응을 유발하고 있음을 의미함. [4]
+TrendForce는 2027년 HBM 계약가격이 배수 단위로 오를 수 있다고 분석함. 논리는 단순함. 일반 DRAM 가격이 급등하면서 DDR5 64GB RDIMM의 웨이퍼당 수익성이 HBM을 추월했고, 이에 따라 공급자들이 HBM 가격 협상에서 더 큰 가격 인상 명분을 갖게 되었다는 것임. [1]
+즉 공급자 입장에서는 합리적임.
+HBM은 제조 난도가 높고, 웨이퍼·패키징 캐파를 많이 소모함. 그런데 일반 DRAM 수익성이 HBM보다 높다면, HBM 공급을 배정하기 위해서는 HBM 가격이 더 올라야 함.
+따라서 HBM 가격 상승 가능성 자체를 부정할 필요는 없음.
+오히려 HBM 가격 상승은 현재 사이클의 중요한 특징임. 그러나,
+HBM 가격 상승이 단기 실적에 좋다는 점과, 그 가격 상승이 지속 가능하다는 점은 전혀 다른
+문제일 수 있음.
+3. 2027년 이익 추정의 문제는 TAM이 아니라 이익률임
+현재 시장은 “TAM이 커졌으니 이익 추정도 정당하다”는 프레임으로 움직이고 있음. 그러나 문제는 TAM 확대 자체가 아님. 문제는 삼성전자와 SK하이닉스가 그 TAM 안에서 차지해야 하는 영업이익의 절대 규모임.
+Gartner는 2026년 글로벌 반도체 매출이 1.3조 달러를 넘고, 메모리 매출이 세 배 증가할 것으로 전망함. 또한 2026년 DRAM 가격은 125%, NAND 가격은 234% 상승하고, 의미 있는 가격 완화는 2027년 말까지 어렵다고 봄. [5]
+이 전망은 bull case의 강력한 근거임.
+그러나 동시에 이익 추정의 민감도를 키움.
+SK증권의 2027년 삼성전자 570조 원, SK하이닉스 423조 원 전망은 합산 993조 원임. [2] 달러 환산 시 약 7,000억 달러 내외 규모임.
+이 정도 이익이 나오려면 삼성전자와 SK하이닉스가 글로벌 메모리 TAM의 상당 부분을 매출이 아니라 영업이익으로 흡수해야 함. 이는 단순한 업황 호조 수준이 아님. 거의 모든 조건이 동시에 맞아야 가능한 숫자임.
+필요조건은 다음과 같음.
+HBM 가격 급등 지속
+일반 DRAM 가격 급등 지속
+NAND 가격 급등 지속
+eSSD shortage 지속
+중국 공급 영향 제한
+hyperscaler capex 지속
+토큰 수요 폭증
+데이터센터 전력·허가·펀딩 차질 없음
+고객의 수요 파괴 없음
+이 중 일부만 틀려도 이익 컨센서스는 크게 흔들릴 수 있음.
+따라서 bearish point는 “TAM이 작다”가 아님.
+TAM도 크지만, 컨센서스가 요구하는 이익률은 더 큼.
+4. HBM 가격 2배 상승은 호재이자 악재임
+HBM 가격이 2027년에 큰 폭으로 오를 수 있다는 주장은 논리적으로 성립함. 일반 DRAM의 수익성이 HBM을 추월했다면, 공급자 입장에서는 HBM 가격을 크게 올릴 명분이 생김. [1]
+문제는 고객 입장임.
+HBM 가격 2배 상승은 AI 서버 원가 상승, 랙당 capex 상승, 데이터센터 ROI 악화를 의미함. 이는 하이퍼스케일러와 기업고객이 더 강하게 비용 절감 행동을 하도록 만듦.
+고객이 취할 수 있는 행동은 이미 정해져 있음.
+비싼 frontier model 사용 제한
+저가 중국 모델 및 open-weight 모델 사용
+model routing
+prompt caching
+quantization
+smaller model deployment
+데이터센터 capex 지연
+HBM 구매 협상력 회복 시도
+SK그룹 최태원 회장도 메모리 가격의 급격한 상승이 AI 생태계의 지속 가능성을 해칠 수 있다는 취지로 언급함. [4]
+즉 HBM 가격 2배 상승은 단기 EPS에는 bullish함.
+그러나 중기 수요에는 bearish함.
+이는 사이클 피크에서 흔히 나타나는 병목 자산의 가격 폭등 현상임.
+가격이 급등하면 공급자 이익은 폭발하지만, 바로 그 가격 상승이 고객의 ROI를 훼손하고 대체 행동을 촉발함.
+5. AI 사용량 증가가 곧 HBM 수요 증가는 아님
+AI bull case의 약점은 “AI 사용량”과 “고가 컴퓨팅 수요”를 동일시한다는 점임. 그러나 추론(inference) 경제학은 빠르게 바뀌고 있음.
+2026년 arXiv 논문은 2020~2026년 LLM 토큰 가격이 약 600배 하락했으며, 가격 하락의 핵심 동인이 GPU 하드웨어가 아니라 소프트웨어·아키텍처 혁신이라고 분석함. [6]
+Epoch AI도 동일 성능 벤치마크를 달성하는 추론 가격이 매우 빠르게 하락하고 있으며, 일부 성능 구간에서는 연 40배 수준의 가격 하락이 관찰되었다고 분석함. [7]
+이는 메모리 수요에 중요한 함의를 가짐.
+총 AI compute 수요는 단순 토큰 수가 아니라 다음 항목들의 함수임.
+총 compute 수요 = 작업 수 × 작업당 토큰 수 × 토큰당 활성 compute × agent loop × 하드웨어/소프트웨어 효율
+토큰 사용량은 늘 수 있음. 하지만 토큰당 활성 compute가 1/10, 1/30, 1/100로 낮아지면 총 고가 compute 수요는 기대보다 낮아질 수 있음.
+특히 MoE, distillation, quantization, KV-cache 최적화, routing이 확산될수록 같은 업무량 대비 HBM intensity는 낮아짐.
+기업들도 이미 비용을 의식하기 시작함. Business Insider는 token 비용 부담 때문에 일부 기업들이 토큰 사용 상한을 설정하고, AI 사용량과 비용을 관리하기 시작했다고 보도함. [8]
+따라서 핵심은 다음과 같음.
+AI 사용은 늘 수 있으나, 그 사용이 반드시 frontier model inference와 고가 HBM 수요로 선형 연결되는 것은 아님.
+오히려 기업 사용은 비용 최적화 방향으로 빠르게 이동 중임.
+6. 중국·open 모델 채택은 frontier compute intensity를 낮춤
+기업들은 모든 업무에 최고가 frontier model을 쓰지 않음. 일반적인 문서 처리, RAG, 고객응대, 코드 보조, 내부 agent workflow는 “충분히 좋은 모델”이면 됨.
+이 영역에서 중국 및 open-weight 모델의 경제성이 부각되고 있음.
+Axios는 Microsoft가 Copilot Cowork에서 DeepSeek 사용을 검토하고 있으며, unlimited access 방식이 테스트 과정에서 지속 가능하지 않아 usage-based pricing으로 이동하고 있다고 보도함. [9]
+Tom’s Hardware도 기업들이 중국 LLM 및 open-source 모델을 사용해 AI 운영비를 크게 절감하려는 흐름을 보도함. [10]
+이는 frontier AI 수요가 사라진다는 의미가 아니며,
+기업 수요가 점점 cost-aware routing 구조로 바뀌고 있음을 의미함.
+즉 AI 도입은 지속되나 그 방식이
+고가 GPU·HBM을 무제한 태우는 방식이 아니라, 작은 모델·중국 모델·캐싱·라우팅으로 처리된다면 데이터센터 capex와 HBM 수요의 기울기는 낮아질 수 있음.
+핵심은 다음과 같음.
+AI adoption은 bullish이나, compute intensity는 bearish일 수 있음.
+현재 컨센서스는 이 둘을 충분히 구분하지 않고 있음.
+7. 데이터센터 수요는 전력·허가·펀딩을 통과해야 실현됨
+반도체 수요는 “AI가 필요하다”만으로 실현되지 않음. 실제 수요가 되려면 데이터센터가 건설되고, 전력망 접속을 받고, 냉각·송전·부지·허가·자금 조달을 통과해야 함.
+미국에서는 2026년 1분기에만 75개 이상의 데이터센터 프로젝트, 약 1,300억 달러 규모가 지연 또는 차단되었다는 보도가 있음. 주요 이유는 전력요금 상승, 물 사용, 소음, 지역사회 반발임. [11]
+텍사스 ERCOT은 대형 전력수요 프로젝트를 묶어 심사하는 Batch Zero 절차를 승인했으며, 현재 43만8,000MW 이상의 대형 부하 요청을 평가 중이고 이 중 약 89%가 데이터센터에서 나온 것으로 보도됨. 최종 송전계획은 2027년 가을로 예정되어 있음. [12]
+이는 중요한 타이밍 리스크가 됨.
+2027년 메모리 이익 컨센서스는 데이터센터 수요가 원활하게 실현된다는 가정에 가까움. 그러나 실제 제도 일정은 2027년까지도 접속 심사와 송전계획 단계인 프로젝트가 많음을 시사함.
+수요 지연은 수요 소멸과 다르지만,
+메모리 사이클에서는 지연도 치명적임.
+선주문과 재고 축적이 먼저 발생하고, 실제 데이터센터 가동이 늦어지면 어느 순간 주문 공백과 가격 재협상이 나타날 수 있음.
+8. AI capex는 점점 신용 사이클에 의존함
+AI 데이터센터 build-out은 이제 hyperscaler의 내부 현금흐름만으로 설명하기 어려운 규모임.
+Morgan Stanley는 2028년까지 글로벌 데이터센터 건설비만 약 2.9조 달러에 이를 수 있다고 분석함. [13]
+Reuters Breakingviews는 AI 투자 붐 아래에 lease·purchase obligation 등 부외부채가 Morgan Stanley 추정 1.8조 달러에 이를 수 있다고 지적함. 즉 AI 인프라 투자는 점점 off-balance sheet JV, SPV, private credit, 장기 리스 구조에 의존하고 있음. [14]
+WSJ는 2026년 5대 hyperscaler capex 추정치가 7,600억 달러인 반면, 감가상각비 추정은 2,110억 달러에 그쳐 회계상 이익과 현금흐름 사이에 큰 시차가 존재한다고 지적함. 같은 보도는 2026년 순이익은 증가해도 합산 free cash flow는 91% 급감할 수 있다고 언급함. [15]
+이는 메모리 수요의 질을 바꿀수 있음.
+과거의 capex는 내부 현금흐름 기반의 성장 투자였으나,
+그러나 현재의 AI capex는 점점 신용시장과 리스시장에 의존하는 구조가 됨.
+신용 스프레드가 벌어지거나 private credit이 조여지면, 데이터센터 착공과 서버 발주, HBM 구매도 같이 영향을 받을 수 있음.
+따라서 삼성전자·SK하이닉스의 2027년 이익 컨센서스는 단순 반도체 수급 전망이 아니라 AI credit cycle 전망이기도 함.
+9. 중국 공급 반응: CXMT와 YMTC는 하단부 가격을 누름
+HBM은 중국이 단기간에 대체하기 어려움. 그러나 일반 DRAM과 NAND는 다름.
+이 영역에서 중국의 공급 반응은 이미 가시화되고 있음.
+CXMT는 2026년 1분기 글로벌 DRAM 시장 점유율이 8%까지 상승했고, 매출은 전년 대비 700% 이상 증가한 것으로 보도됨. 삼성전자와 SK하이닉스가 고부가 HBM과 서버 DRAM에 집중하는 동안, CXMT는 중국 내 스마트폰·PC·서버 범용 DRAM 수요를 빠르게 흡수하고 있음. [16]
+NAND에서는 YMTC가 같은 역할을 함. Counterpoint에 따르면 YMTC의 2026년 1분기 NAND 시장 점유율은 13%로 상승했고, 매출은 전년 대비 약 445% 증가함. [17]
+Reuters는 YMTC가 현재 두 개 NAND 팹에서 월 20만 장 수준의 웨이퍼 생산능력을 보유하고 있으며, 추가 팹을 통해 생산능력을 두 배 이상 늘릴 수 있다고 보도함. 완공 예정인 세 번째 우한 팹은 2027년에 월 5만 장 capacity를 목표로 하고 있음. [18]
+이 구조는 메모리 가격에 비대칭적임.
+HBM과 AI eSSD는 여전히 타이트할 수 있음.
+그러나 범용 DRAM, 모바일 NAND, 소비자 SSD, 중국 OEM SSD 영역에서는 중국 공급이 가격 상단을 누를 수 있음.
+따라서 현재 주요 애널리스트 컨센서스의 약점은 HBM이 아니라 non-HBM memory margin임.
+HBM shortage는 지속되더라도, 범용 DRAM/NAND 마진이 먼저 꺾이면 삼성전자·SK하이닉스의 전체 이익 추정은 흔들릴 수 있음.
+10. Cobweb cycle: 가격 상승이 다음 공급과 수요 파괴를 만듦
+메모리 산업은 전형적인 cobweb cycle 산업임.
+가격이 급등하면 생산자는 증설하고, 고객은 선구매·재고 축적을 늘림. 그러나 증설에는 시차가 있고, 고객 수요는 가격에 반응함. 이후 공급이 실제로 나오는 시점에 수요가 둔화되어 가격이 급락하는 구조가 반복됨.
+이번 사이클도 다르지 않음. 다만 단일 cobweb이 아니라 이중 cobweb에 가까움.
+상층부는 여전히 쇼티지임.
+HBM
+AI DRAM
+고성능 eSSD
+고용량 QLC
+일부 서버 DDR5
+그러나 하층부는 공급 반응이 시작됨.
+범용 DRAM
+모바일 DRAM
+PC DRAM
+모바일 NAND
+소비자 SSD
+중국 OEM SSD
+즉 상층부 쇼티지와 하층부 공급 반응이 동시에 진행 중임. 평균 가격과 평균 이익률을 하나의 직선으로 외삽하는 것은 위험함.
+현재 시장은 HBM 쇼티지 를 근거로 전체 메모리 가격과 마진의 영구 상승을 가격반영 하고 있음.
+그러나 실제로는 하단부 가격이 먼저 흔들리고, 이후 blended ASP와 blended margin이 하향될 가능성이 존재함.
+11. 국내 수급: NPS put에서 NPS ceiling으로 이동 가능성
+국내 수급 측면에서도 리스크가 존재함.
+국민연금은 2026년 국내주식 목표비중을 14.9%에서 20.8%로 상향했고, 리밸런싱 유예 종료 시점인 2026년 6월 말부터 적용하기로 함. 또한 국내주식 SAA 허용범위는 한시적으로 확대하되, 금융시장 안정과 기금운용 공정성을 이유로 공개하지 않기로 함. [19]
+이는 단기적으로 시장 충격 완화 장치임.
+그러나 코스피가 급등하고 삼성전자·SK하이닉스 비중이 커질수록 국민연금은 더 이상 하방 완충재가 아니라 상방 억제자로 바뀔 수 있음.
+연합인포맥스는 7월부터 리밸런싱 규칙이 적용될 예정이며, 코스피 급등 시 매도 오버행이 생길 수 있다고 보도함. [20]
+대통령도 최근 주식시장 양극화가 심각한 자산 양극화를 부른다고 언급함. 이는 지수 상승 자체보다 상승의 질과 쏠림이 정책적으로도 부담이 되기 시작했음을 의미함. [21]
+따라서 삼성전자·SK하이닉스는 실적 리스크뿐 아니라 수급 리스크도 보유함.
+지수가 더 오를수록 NPS와 정책당국은 시장 방어자보다 과열 억제자로 이동할 가능성이 있음.
+12. Bear thesis의 반대 리스크
+Bearish thesis의 주요 반대 리스크도 명확함.
+첫째, HBM 가격이 실제로 2027년 계약에서 2배 이상 상승하고, hyperscaler가 이를 무리 없이 흡수할 경우임. 이 경우 2027년 EPS 상향이 더 이어질 수 있음.
+둘째, CXMT와 YMTC의 수율·품질·고객 인증이 예상보다 늦어질 경우임. 중국 공급 반응이 하단 가격을 누르지 못하면, non-HBM memory margin도 더 오래 유지될 수 있음.
+셋째, 데이터센터 전력·허가·펀딩 병목이 정부 개입으로 빠르게 해소될 경우임. FERC와 ERCOT이 대형 전력수요 접속 절차를 개선하려는 움직임을 보이고 있는 만큼, 제도적 병목이 완화될 가능성은 존재함. [22]
+넷째, AI agentic workload가 효율 개선보다 더 빠르게 폭증할 경우임. 토큰당 compute는 줄어도 작업 수와 agent loop가 그보다 더 빠르게 증가하면 총 HBM 수요는 계속 증가할 수 있음.
+다만 이 모든 bull case는 “수요 증가율이 효율 개선, 가격 상승, 펀딩 제약, 중국 공급 반응을 모두 압도한다”는 가정을 필요로 함.
+현재 주가는 이미 그 가능성을 상당 부분 반영 중임.
+13. Downside catalysts
+향후 bearish catalyst는 다음과 같음.
+1) GPU cloud 가격 약세 지속
+H100/H200 rental 또는 GPU cloud 가격 약세가 지속될 경우(이미 약세가 발생중임), AI compute scarcity narrative가 약화될 수 있음. SemiAnalysis는 GPU pricing index를 통해 H100 rental 가격대와 public dashboard 가격의 괴리를 추적하고 있음. [23]
+2) 기업 token budget cap 확산
+기업들이 token usage ceiling, AI ROI 재검토, model routing을 확대하면 inference 수요의 가격 탄력성이 확인됨. [8]
+3) 중국 및 open model adoption 확대
+DeepSeek, Qwen 등 저가 모델 채택이 늘면 frontier compute intensity가 낮아짐. Microsoft의 DeepSeek 검토는 이 방향의 상징적 사례임. [9]
+4) 데이터센터 허가·전력 접속 지연
+데이터센터 프로젝트 지연과 ERCOT 대형 부하 심사는 2027년 수요 실현 지연 리스크를 의미함. [11][12]
+5) CXMT/YMTC 공급 확대 확인
+DRAM 8%, NAND 13% 점유율은 이미 의미 있는 수준임. 추가 ramp-up은 non-HBM 가격 상단을 누를 수 있음. [16][17][18]
+6) 하이퍼스케일러의 펀딩에 어려움 발생
+이미 케빈 왈시의 발언과 함께 시장은 기준금리 인하 가능성을 포기하고, 상승 가능성을 반영하고 있음. 미국 재무부 채권보다 안전한 것으로 간주되던 하이퍼스케일러 채권에 대한 시장 선호가 줄어들며, 펀딩에 어려움이 생길 수 있음. 또한 오프-밸런스 시트 부채와 실질적으로 현금이 동원되지 않은 순환적인 매출 고리에 문제가 생기는 것도 상정 가능. 현재 PE시장의 경색 문제 역시 AI 버블에 드래그로 작용할 가능성.
+7) NPS 리밸런싱 재개와 국내주식 비중 부담
+6월 말 유예 종료 이후, 비공개 SAA 밴드 안에서 완충은 가능하나 지수 급등 시 상방 수급 부담이 커질 수 있음. [19][20]
+14. 결론
+삼성전자·SK하이닉스의 현재 bull case는 강력함. HBM shortage는 실제이며, 2026~2027년 실적은 매우 좋을 가능성이 높음.
+그러나 주가는 이미 “좋은 실적”이 아니라 “완벽한 실적 경로”를 반영하고 있음.
+현재 컨센서스가 요구하는 조건은 과도함.
+HBM 가격 급등 지속 + 일반 DRAM 가격 급등 지속 + NAND 가격 급등 지속 + 중국 공급 영향 제한 + 데이터센터 전력·허가 문제 없음 + private credit 및 hyperscaler FCF 문제 없음 + token 사용량이 효율 개선보다 빠르게 증가 + 기업의 저가 모델 migration 영향 제한 + NPS 의 지속적 펌핑
+그러나,
+HBM 가격 상승은 단기 EPS에는 호재이나, 고객 ROI에는 악재임.
+토큰당 compute는 빠르게 낮아지고 있고, 기업들은 저가 모델·routing·caching으로 이동 중임.
+데이터센터는 전력·허가·펀딩 병목을 통과해야 하며, 중국은 CXMT와 YMTC를 통해 하단부 메모리 공급 반응을 만들고 있음.
+따라서 삼성전자·SK하이닉스의 핵심 리스크는 AI 수요 부재가 아님.
+핵심 리스크는 AI 수요가 존재하더라도, 현재 주가가 요구하는 만큼의 고가 HBM·DRAM·NAND 마진으로 귀속되지 않을 가능성임.
+따라서,
+HBM shortage는 bull case의 근거이나, HBM 가격 폭등은 동시에 피크 마진의 신호일 수 있음.
+Reference List
+[1] TrendForce, “HBM Contract Prices in 2027 May Rise by Multiples as DDR5 Profitability Surpasses HBM,” 2026.
+https://www.trendforce.com/presscenter/news/20260602-13074.html
+[2] Yonhap News, “SK Securities raises 2027 operating profit forecasts for Samsung Electronics and SK hynix,” 2026.
+https://www.yna.co.kr/view/AKR20260601107300008
+[3] Reuters, “SK Hynix says it ships samples of 12-layer next-gen HBM4E chips to major customers,” 2026.
+https://www.reuters.com/world/asia-pacific/sk-hynix-says-ships-samples-12-layer-next-gen-hbm4e-chips-major-customers-2026-06-17/
+[4] Reuters, “SK Hynix plans to double wafer capacity in next five years, group chairman says,” 2026.
+https://www.reuters.com/world/asia-pacific/sk-hynix-plans-double-wafer-capacity-next-five-years-group-chairman-says-2026-06-02/
+[5] Gartner, “Gartner Forecasts Worldwide Semiconductor Revenue to Exceed $1.3 Trillion in 2026,” 2026.
+https://www.gartner.com/en/newsroom/press-releases/2026-04-08-gartner-forecasts-worldwide-semiconductor-revenue-to-exceed-us-dollars-one-point-3-trillion-in-2026
+[6] arXiv, “LLM Inference Token Price Trends,” 2026.
+https://arxiv.org/abs/2603.28576
+[7] Epoch AI, “LLM inference price trends,” 2026.
+https://epoch.ai/data-insights/llm-inference-price-trends
+[8] Business Insider, “The AI token economy is coming for workplace budgets,” 2026.
+https://www.businessinsider.com/ai-token-economy-spending-workplace-budgets-usage-caps-software-engineer-2026-6
+[9] Axios, “Microsoft Copilot Cowork, tokenmaxxing, and DeepSeek consideration,” 2026.
+https://www.axios.com/2026/06/16/microsoft-copilot-cowork-tokenmaxxing-cowork
+[10] Tom’s Hardware, “Firms turn toward Chinese LLMs and open-source models to extend AI budgets,” 2026.
+https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-costs-spike-as-subscriptions-hit-pricing-wall-firms-turn-towards-chinese-llms-open-source-models-to-extend-budget
+[11] Tom’s Hardware, “More than 75 data center build-outs worth $130 billion blocked in early 2026,” 2026.
+https://www.tomshardware.com/tech-industry/artificial-intelligence/more-than-75-data-center-build-outs-worth-usd130-billion-have-been-successfully-blocked-in-the-first-four-months-of-2026-bipartisan-opposition-mounts-nationwide-over-fears-of-soaring-power-and-water-costs
+[12] Reuters, “Texas regulators approve framework to manage data centers’ power demands,” 2026.
+https://www.reuters.com/legal/litigation/texas-regulators-approve-framework-manage-data-centers-power-demands-2026-06-18/
+[13] Morgan Stanley, “AI Market Trends: Data center buildout and infrastructure investment,” 2026.
+https://www.morganstanley.com/insights/articles/ai-market-trends-institute-2026
+[14] Reuters Breakingviews, “Galbraith’s bezzle lurks beneath AI frenzy,” 2026.
+https://www.reuters.com/commentary/breakingviews/galbraiths-bezzle-lurks-beneath-ai-frenzy-2026-06-19/
+[15] Wall Street Journal, “Turbocharged earnings are pushing stocks higher. There’s a catch,” 2026.
+https://www.wsj.com/finance/turbocharged-earnings-are-pushing-stocks-higher-theres-a-catch-100839c9
+[16] Business Korea, “CXMT grows DRAM market share as China expands memory production,” 2026.
+https://www.businesskorea.co.kr/news/articleView.html?idxno=270184
+[17] Counterpoint Research, “NAND revenues record high in Q1 2026 from AI demand,” 2026.
+https://counterpointresearch.com/en/insights/nand-revenues-record-high-q1-2026-from-ai-demand
+[18] Reuters, “Chinese chipmaker YMTC plans new factories amid heightened US-China trade tensions,” 2026.
+https://www.reuters.com/world/china/chinese-chipmaker-ymtc-plans-new-factories-amid-heightened-us-sino-trade-2026-04-14/
+[19] Ministry of Health and Welfare, Korea, “National Pension Fund domestic equity target and SAA range adjustment,” 2026.
+https://www.mohw.go.kr/board.es?act=view&bid=0027&list_no=1490661&mid=a10503010100&nPage=1&tag=
+[20] Yonhap Infomax / Daum, “NPS rebalancing pressure and domestic equity overweight,” 2026.
+https://v.daum.net/v/20260619061006973
+[21] Yonhap Infomax / Daum, “President Lee warns stock market polarization can deepen asset inequality,” 2026.
+https://v.daum.net/v/20260619161430370
+[22] Reuters, “Top US energy regulator pushes grids to overhaul data center power rules,” 2026.
+https://www.reuters.com/business/energy/top-us-energy-regulator-pushes-grids-overhaul-data-center-power-rules-2026-06-18/
+[23] SemiAnalysis, “GPU Pricing Index,” 2026.
+https://semianalysis.com/gpu-pricing-index/
+keyword
+AI
+작가의 이전글
+NPS 를 조금더 뜯어보자
+지수를 빼지 않고 NPS도 수익 내는법
+작가의 다음글

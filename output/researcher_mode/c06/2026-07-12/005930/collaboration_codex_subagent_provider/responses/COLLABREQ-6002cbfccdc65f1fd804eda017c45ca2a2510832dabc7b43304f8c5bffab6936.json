@@ -1,0 +1,139 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e3ebdfe1cd66361f54700ef0",
+        "rationale": "2025년 1분기 한국어 컨퍼런스콜 원문을 전수 검토했으나 현재 prior250에 동일 영문 원문의 당시 실적·D램 ASP·HBM 약세 사실이 이미 수용돼 있고, 당시의 이후 분기 전망은 현재 시점에 실제 실적으로 대체돼 있어 이 objective에 추가할 distinct current/open fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-e6e7292ce2a07299c0d98c54",
+        "rationale": "2026년 1분기 연결 재무제표 주석 전체를 prior250과 대조했으며, 메모리 매출·전사 현금흐름·설비투자·약정 등 objective 관련 수치는 동일 공식 공시 경로의 현재 facts로 이미 수용돼 있다. 나머지 표와 주석은 메모리 EPS·FCF에 직접 귀속되지 않거나 중복이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-ed4f98c028ce25887eb247ee",
+        "rationale": "기사 본문 전체를 검토했으나 메모리 실적, ASP, HBM4 판매·믹스, LTA·2027 공급부족, 노사·공급망 위험은 prior250에 이미 있거나 같은 batch의 issuer 컨퍼런스콜 원문이 직접 제공한다. 전사·혼합 세그먼트 수치와 기사 요약을 별도 메모리 fact로 중복 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-f066f5fcd967ccd7d2b0d1f4",
+        "rationale": "2026년 1분기 영문 컨퍼런스콜 전체를 prior250과 대조해 기존 실적·ASP·HBM4·LTA·수급 facts는 중복 제거하고, 메모리 설비투자의 당분기 감소 원인과 신규 확보 생산능력 장비배치에 따른 연간 투자 증가라는 서로 다른 FCF 메커니즘 두 건만 추출했다. 전사 성과급·반도체 전체 공급망 발언은 메모리 귀속을 발명하지 않기 위해 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f066f5fcd967ccd7d2b0d1f4",
+        "economic_mechanism": "2026년 1분기 메모리 설비투자의 전분기 대비 감소는 전년도 평택 클린룸 선행투자의 시점 효과로, 당분기 현금지출 흐름을 해석할 때 수요 약화와 구분해야 한다.",
+        "exact_quote": "In the memory business, capex declined quarter-on-quarter, reflecting the\nfront-loaded nature of certain investments made last year, including the\naddition of new cleanroom space at the Pyeongtaek site.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 귀속이 명시된 현재 분기 설비투자 방향과 감소 원인을 함께 제시해 EPS의 FCF 전환을 해석하는 데 직접 필요하며, 감소를 구조적 투자 축소로 과대해석하지 않게 한다.",
+        "mechanism_scope_id": "005930:MEMORY:CAPEX_TIMING:2026Q1",
+        "normalized_object": "메모리 설비투자의 전분기 대비 감소와 선행투자 시점 효과",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "삼성전자 메모리 사업의 2026년 1분기 설비투자는 전년도 평택 신규 클린룸 선행투자 영향으로 전분기 대비 감소했다.",
+        "predicate_family": "MEMORY_CAPEX_QOQ_DECLINE",
+        "primitive_tags": [
+          "MEMORY_CAPEX",
+          "FCF_CONVERSION",
+          "CAPACITY_INVESTMENT"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_CAPEX_QOQ_DECLINE",
+        "question_family_tags": [
+          "MEMORY_CAPEX_QOQ_DECLINE",
+          "MEMORY_CAPEX_TIMING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 사업 2026년 1분기 설비투자",
+        "subject_id": "005930:MEMORY_CAPEX",
+        "unit": "",
+        "value": "declined quarter-on-quarter"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f066f5fcd967ccd7d2b0d1f4",
+        "economic_mechanism": "기확보한 팹·클린룸 공간에 장비를 배치하면서 2026년 메모리 설비투자가 유의하게 늘 전망이어서 공급 대응력은 높아지지만 이익의 FCF 전환에는 현금지출 부담이 된다.",
+        "exact_quote": "By strategically\nutilizing the fab and cleanroom space secured through our forward-thinking\ninvestments, we anticipate a significant rise in equipment expenditures as we\nprogress with the deployment of this newly acquired capacity. This planned\nexpansion is expected to contribute to a comprehensive increase in capex\nthroughout the entire fiscal year, thereby reinforcing our commitment to\nsustainable growth and operational efficiency for the memory business.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존의 정성적 대규모 메모리 CAPEX 전망을 실제 확보 공간의 장비 배치라는 집행 메커니즘으로 구체화해, 공급 증가와 FCF 부담을 동시에 판단할 수 있게 한다.",
+        "mechanism_scope_id": "005930:MEMORY:EQUIPMENT_CAPEX_DEPLOYMENT:FY2026",
+        "normalized_object": "신규 메모리 생산능력 배치에 따른 장비투자 증가 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026",
+        "predicate": "삼성전자는 새로 확보한 메모리 생산능력에 장비를 배치하면서 장비투자가 유의하게 증가하고 2026년 연간 설비투자도 전반적으로 늘 것으로 예상했다.",
+        "predicate_family": "MEMORY_EQUIPMENT_CAPEX_INCREASE_OUTLOOK",
+        "primitive_tags": [
+          "MEMORY_CAPEX",
+          "FCF_COUNTER",
+          "SUPPLY_RESPONSE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_EQUIPMENT_CAPEX_INCREASE_OUTLOOK",
+        "question_family_tags": [
+          "MEMORY_EQUIPMENT_CAPEX_INCREASE_OUTLOOK",
+          "MEMORY_CAPACITY_DEPLOYMENT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 신규 확보 생산능력 장비투자",
+        "subject_id": "005930:MEMORY_CAPEX",
+        "unit": "",
+        "value": "significant rise in equipment expenditures"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "c64f59d920f2d69dca244c11e51a2ba5a311c357b6df988d1c9300dcedd3fce9",
+  "production_score_authority": false,
+  "prompt_hash": "c8fb30323993c49650157b4e4bfb0e44cfcf34760813e21266af9446471dc2c9",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6002cbfccdc65f1fd804eda017c45ca2a2510832dabc7b43304f8c5bffab6936",
+  "response_id": "COLLABRESP-82f43d2ff2d423ad9fd64c6f987ab8ddc392ccb04975101fd38213b5bfdd4a9d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

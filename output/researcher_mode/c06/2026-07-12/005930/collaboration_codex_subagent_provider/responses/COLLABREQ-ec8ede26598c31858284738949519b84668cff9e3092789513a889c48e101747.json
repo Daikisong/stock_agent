@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-8593258f22e6654545ff968f",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "This verified Samsung financial-report component matches the issuer earnings family, but the historical period is long superseded and cannot materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-8cddcdcb3465db53920c08e5",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "This verified Samsung financial-report component matches the issuer earnings family, but the historical period is long superseded and cannot materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-8e4df95d9157da5441fc2df8",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "This verified Samsung financial-report component matches the issuer earnings family, but the historical period is long superseded and cannot materially resolve the current EPS/FCF objective."
+      },
+      {
+        "candidate_id": "SGCAND-8e8f375d61f240fe1d0bd407",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "This verified issuer event, presentation, or conference route matches the presentation family, but its historical subject and period do not materially resolve the current objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "This partition is fully classified. The supplied candidates are historical, unrelated, or unverified for the current objective; titles, snippets, and reference metadata were not treated as evidence."
+    ]
+  },
+  "payload_hash": "0ad95027ff1c8fc9c6ecf010ca897ae7817c21d1130434c7da5fb0711d2e369a",
+  "production_score_authority": false,
+  "prompt_hash": "f68391a7c2864920ed768abda181f36a0f9c94ea8fcd979f42267bde96cb9b19",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ec8ede26598c31858284738949519b84668cff9e3092789513a889c48e101747",
+  "response_id": "COLLABRESP-8575b514a862ba38da9d83ad66644ff12061f0f88c47a8ffc7d24d2ecdb13614",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "acceptance_report_hash": "a71ce437d6a1d1b87eff3b32ef8952351de0748da7f9d6b96f9d2af631722ec3",
+  "accepted_claim_ids": [
+    "CLM-94438945025662847395"
+  ],
+  "as_of_date": "2026-07-10",
+  "atomic_decision_count": 4,
+  "base_input_hash": "88e53371bc20be8f5311879f4b8e096b918be94bfaa3c91267221b907205e0cc",
+  "base_lineage_hash": "efe7b31e90984997ba47a403e8aabe0fcbec8d9dda3829b28569cb0b70d75162",
+  "claim_provenance_count": 1,
+  "evidence_origin_by_claim_id": {
+    "CLM-94438945025662847395": "CONTROLLED_CLAIM_PROBE"
+  },
+  "investment_recommendation_emitted": false,
+  "promoted_input_path": "output/live_materialization/2026-07-10/accepted_current_operation_input_manifest.json",
+  "promoted_input_sha256": "eea01ac30d59b3fd946ae6d109ce4a5a0da860e7bfb9abbf033bbc574dc087a5",
+  "schema_version": "e2r_live_acceptance_promotion_v1",
+  "score_finalization_policy": "MATERIAL_GAP_REMAINS_NO_SCORE_STAGE_0",
+  "scoring_readiness_eligible": false,
+  "source_roots": [
+    {
+      "path": "output/live_materialization/2026-07-10/evidence_documents.jsonl",
+      "tree_hash": "03751f0ec360c30f958000bd92675febee19002a0634080a0b49bc7041ff68bb"
+    },
+    {
+      "path": "output/live_acceptance/2026-07-10/claim_probe_samsung_q1",
+      "tree_hash": "4de422c1c44b4f3d423f9136ba9fa99cbd44f1de0b95eec8893fd5c70865114e"
+    },
+    {
+      "path": "output/targeted_smoke/2026-07-10",
+      "tree_hash": "c3a1a91ab5cdc73e34b1256886f99d91c023457be227c51efbc00fbce4f2d791"
+    }
+  ],
+  "source_task_count": 10,
+  "status": "FULL_LIVE_ACCEPTANCE_PROMOTED"
+}

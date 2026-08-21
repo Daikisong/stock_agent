@@ -1,0 +1,21 @@
+{
+  "atomic_decision_count": 3,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "atomic_stage_trace_mismatch": 0,
+    "claimless_nonzero_score": 0,
+    "event_partial_as_full_score": 0,
+    "hard_break_without_current_direct_open": 0,
+    "orphan_score": 0,
+    "unexplained_score_delta": 0
+  },
+  "hard_acceptance_pass": true,
+  "no_score_count": 3,
+  "primitive_state_count": 9,
+  "production_runtime_ready": false,
+  "schema_version": "e2r_live_current_atomic_score_audit_v1",
+  "score_valid_true_count": 0,
+  "stage_zero_count": 3,
+  "status": "CURRENT_ATOMIC_DECISION_PASS",
+  "unknown_primitive_count": 9
+}

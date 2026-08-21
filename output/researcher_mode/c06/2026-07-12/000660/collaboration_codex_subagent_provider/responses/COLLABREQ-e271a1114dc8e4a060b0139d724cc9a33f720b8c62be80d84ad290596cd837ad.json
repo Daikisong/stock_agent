@@ -1,0 +1,132 @@
+{
+  "output_schema_hash": "3885e06527a44286bfd9318a7e97f4727d7002753186fba579331bc5de08b8ba",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-01fb6efd4c929d9a69ec64c9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "The sparse Semicon China conference reference is an event-page route cited by an already fetched sector report, not a public broker PDF or industry report in the supplied provenance, and it exposes no SK hynix valuation mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-4df75ca1d572e7580fef9294",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "The Semiconductor Engineering home page is only a generic illustration reference from an already fetched report; the supplied metadata identifies neither a specific requested-family report nor target-specific HBM earnings or valuation evidence."
+      },
+      {
+        "candidate_id": "SGCAND-735e76802fb4fc94b5fa8e41",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "This Semicon China conference schedule page may support general China packaging context, but it is not identified as a requested public broker PDF or industry report and does not directly route to SK hynix forward valuation or HBM earnings attribution."
+      },
+      {
+        "candidate_id": "SGCAND-7cb601594abca74b4e2cfbc7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The Sustainalytics legal-disclaimer page is neither a public broker PDF nor an industry report and contains no target-specific HBM or valuation research route."
+      },
+      {
+        "candidate_id": "SGCAND-959f19400ec8f59a65f8353e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "The sparse Semicon China event page is a conference reference behind an already fetched sector report, not a supplied requested-family research document, and it does not expose the target's current valuation mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-72a870db4cffe02bfe1453ea",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.72,
+        "rationale": "The direct myasset broker-PDF route is titled for SK hynix and its discovery metadata exposes consensus comparison and estimate-change tables, making the full original report materially relevant for checking period-specific earnings revisions, valuation denominators, and any HBM bridge. The snippet itself is not treated as evidence."
+      },
+      {
+        "candidate_id": "SGCAND-dc3084d6c796384d19984965",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.04,
+        "rationale": "The broker-PDF discovery route concerns CPO, interconnect, sensing, and generic memory-IP demand rather than SK hynix HBM earnings, peer multiples, or a target-specific valuation bridge."
+      },
+      {
+        "candidate_id": "SGCAND-fe6d5804fc8f3b5c8ec185c4",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "The broad 2024 broker outlook supplies only macro asset-allocation and generic high-capacity-memory context in the discovery metadata, not current SK hynix HBM earnings attribution or forward peer valuation."
+      },
+      {
+        "candidate_id": "SGCAND-3b75cbfc9d7d93fec5fd2e5b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.03,
+        "rationale": "The Kiwoom small-cap strategy PDF discusses other issuers and memory-module inspection equipment; it does not provide the target's HBM earnings bridge or comparable forward P/B and ROE evidence."
+      },
+      {
+        "candidate_id": "SGCAND-f3da15e041313120784b530e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The 2010 daily broker compilation only lists the historical Hynix name in a portfolio and is too stale and semantically unrelated to the current HBM valuation objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "SGCAND-72a870db4cffe02bfe1453ea requires bounded full-document fetch to confirm its publication date and whether the report provides period- and denominator-complete forward valuation, HBM attribution, or peer comparison; all snippets remain discovery metadata only."
+    ]
+  },
+  "payload_hash": "36c41b9607764cad5d8dd9e9fcc80af4b4e38d93a3b34191059daf6c8dcd1bca",
+  "production_score_authority": false,
+  "prompt_hash": "86347e1b8d20de4786439c9ba28083b1eaf9fb00c0ba9be38f5596208214e366",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e271a1114dc8e4a060b0139d724cc9a33f720b8c62be80d84ad290596cd837ad",
+  "response_id": "COLLABRESP-3219e0b0e579ba330e10504b4eac4e8399abd4fe23851cd694183b95cda62503",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

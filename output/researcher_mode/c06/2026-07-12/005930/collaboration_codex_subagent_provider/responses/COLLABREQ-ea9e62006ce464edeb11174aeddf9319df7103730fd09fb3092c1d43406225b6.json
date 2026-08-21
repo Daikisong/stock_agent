@@ -1,0 +1,383 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-38a37465db4e35b0cb0e1aec",
+        "rationale": "current canonical에 없는 2027년 고객수요 접수와 수급격차 심화, 최저·타이트 메모리 재고, 일부 고객 다년계약 완료·구속력과 NDA 공개 한계, HBM4 생산여력 완판 및 2026년 3분기 HBM4 매출 비중 50% 이상 전망을 추출했다. 전사·혼합 DS 실적, 이미 존재하는 HBM4 양산·출하, 배당·자사주, MX·주가 내용은 반복하거나 메모리 fact로 전용하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-38f205f4508326cee27b1cbf",
+        "rationale": "2026년 2분기 전사 컨센서스는 이후 as-of 내 잠정실적과 current canonical의 메모리 이익 추정·실적 기여 facts보다 이전 전망이며 숫자도 메모리 귀속이 아니다. PC 약세를 서버가 상쇄한다는 정성 전망과 2027년까지의 업계 호황·생산증가율·AI 투자비중은 삼성전자 objective-direct 수치가 아니어서 새 fact로 만들지 않았다. LG전자 내용은 타깃 밖이다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.79,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-38a37465db4e35b0cb0e1aec",
+        "economic_mechanism": "2027년 고객 수요가 사전에 접수되고 있다는 회사 측 설명은 현재 판매를 넘어선 차기 연도 메모리 수요 가시성을 제공하되, 구매의무나 물량 확약을 뜻하지는 않는다.",
+        "exact_quote": "회사 쪽은 \"공급 부족을 우려한 기업들로부터 2027년 수요까지 미리 접수되고 있는 상황\"이라며",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 2026년 수요 초과 전망과 기간이 다른 2027년 수요 접수 상태다. 접수된 수요를 구속력 있는 주문으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:2027_DEMAND_INTAKE",
+        "normalized_object": "2027년 메모리 고객수요 사전 접수",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E",
+        "predicate": "삼성전자가 공급 부족을 우려한 기업들로부터 2027년 메모리 수요를 미리 접수하고 있다고 설명했다",
+        "predicate_family": "MEMORY_2027_CUSTOMER_DEMAND_INTAKE",
+        "primitive_tags": [
+          "MEMORY_DEMAND",
+          "2027_VISIBILITY"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_2027_DEMAND_INTAKE",
+        "question_family_tags": [
+          "MEMORY_2027_DEMAND_VISIBILITY",
+          "CUSTOMER_DEMAND_INTAKE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2027년 메모리 고객수요 접수",
+        "subject_id": "005930:MEMORY:2027_CUSTOMER_DEMAND_INTAKE",
+        "unit": "demand intake status",
+        "value": "customer demand through 2027 received in advance"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-38a37465db4e35b0cb0e1aec",
+        "economic_mechanism": "현재 접수 수요만으로 2027년 수급격차가 2026년보다 심화될 것이라는 회사 측 전망은 차기 연도까지 공급 제약이 이어질 가능성을 보여준다.",
+        "exact_quote": "\"현재 접수된 수요만 보더라도 내년도 수급 격차는 2026년보다 훨씬 더 심화될 것으로 보인다\"고 분석했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 2026년 demand-exceeds-supply 전망을 다음 연도의 상대적 격차 심화로 확장하는 별도 기간 사실이다.",
+        "mechanism_scope_id": "005930:MEMORY:2027_SUPPLY_DEMAND_GAP",
+        "normalized_object": "2027년 메모리 수급격차의 2026년 대비 심화 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E vs FY2026E",
+        "predicate": "삼성전자가 2027년 메모리 수급격차가 2026년보다 훨씬 심화될 것으로 전망했다",
+        "predicate_family": "MEMORY_2027_SUPPLY_DEMAND_GAP_OUTLOOK",
+        "primitive_tags": [
+          "DEMAND_EXCEEDS_SUPPLY",
+          "2027_SUPPLY_GAP"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_2027_SUPPLY_DEMAND_GAP",
+        "question_family_tags": [
+          "MEMORY_2027_SUPPLY_GAP",
+          "CAPACITY_SCARCITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2027년 메모리 수급격차 전망",
+        "subject_id": "005930:MEMORY:2027_SUPPLY_DEMAND_GAP",
+        "unit": "relative supply-demand gap outlook",
+        "value": "supply-demand gap expected to be much wider than 2026"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.76,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-38a37465db4e35b0cb0e1aec",
+        "economic_mechanism": "역대 최저 수준의 타이트한 메모리 재고 운영은 재고 부담보다 공급 여유가 제한된 현재 수급 상태를 나타낸다.",
+        "exact_quote": "재고 역시 역대 최저 수준으로 '타이트'하게 운영되고 있다고 했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "current canonical에 없는 삼성전자 메모리 재고의 정성적 최저·타이트 상태다. 수치나 재고일수는 문서에 없어 발명하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:INVENTORY_TIGHTNESS:2026-Q1",
+        "normalized_object": "역대 최저 수준의 타이트한 메모리 재고",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "삼성전자 메모리 재고가 역대 최저 수준으로 타이트하게 운영되고 있다고 설명됐다",
+        "predicate_family": "MEMORY_INVENTORY_TIGHTNESS",
+        "primitive_tags": [
+          "LOW_INVENTORY",
+          "TIGHT_SUPPLY"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_INVENTORY_TIGHTNESS",
+        "question_family_tags": [
+          "MEMORY_INVENTORY_TIGHTNESS",
+          "SUPPLY_CONSTRAINT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.89,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 재고 수준",
+        "subject_id": "005930:MEMORY:INVENTORY_TIGHTNESS:2026-Q1",
+        "unit": "inventory condition",
+        "value": "record-low and tight inventory level"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.77,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-38a37465db4e35b0cb0e1aec",
+        "economic_mechanism": "AI 미래 수요를 바탕으로 일부 고객과 중장기 물량 계약을 완료했다는 회사 측 설명은 협의 단계보다 진전된 고객 공급 가시성을 제공한다.",
+        "exact_quote": "주요 고객사들이 AI 관련 미래 수요에 대한 확신을 바탕으로 중장기 물량 확보를 요청해 이미 일부 고객사와 계약을 완료했다",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 3~5년 LTA 기간 보도와 달리 일부 고객사의 계약 완료 상태를 직접 전한다. 상대방·물량·가격·취소조건은 공개되지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:MULTIYEAR_CONTRACT_COMPLETION",
+        "normalized_object": "일부 고객사와 중장기 메모리 물량 계약 완료",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-04-30 현재",
+        "predicate": "삼성전자가 중장기 메모리 물량 확보를 요청한 일부 고객사와 계약을 완료했다고 밝혔다",
+        "predicate_family": "MEMORY_MULTIYEAR_CONTRACT_COMPLETION",
+        "primitive_tags": [
+          "CUSTOMER_COMMITMENT",
+          "MULTIYEAR_CONTRACT"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_MULTIYEAR_CONTRACT_COMPLETION",
+        "question_family_tags": [
+          "MEMORY_LONG_TERM_SUPPLY_AGREEMENT",
+          "CONTRACT_COMPLETION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 다년 공급계약 완료",
+        "subject_id": "005930:MEMORY:MULTIYEAR_CONTRACT_COMPLETION",
+        "unit": "contract completion status",
+        "value": "contracts completed with some customers"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.74,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-38a37465db4e35b0cb0e1aec",
+        "economic_mechanism": "회사가 다년계약을 상당한 구속력이 있는 계약으로 설명한 점은 단순 수요 문의보다 높은 사업 안정성과 가시성을 시사하지만 구체적 구매의무·위약조건은 공개되지 않았다.",
+        "exact_quote": "이번 다년계약은 상당한 구속력을 갖춰 양사의 사업 안정성과 가시성을 높여줄 것",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "계약 기간과 별개인 계약 질 서술이다. 상당한 구속력이라는 발행사 측 표현만 유지하고 take-or-pay, 선수금, 가격하한 또는 위약금으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:MULTIYEAR_CONTRACT_BINDING_QUALITY",
+        "normalized_object": "상당한 구속력을 갖춘 다년계약",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-04-30 현재",
+        "predicate": "삼성전자가 다년계약이 상당한 구속력을 갖춰 사업 안정성과 가시성을 높인다고 설명했다",
+        "predicate_family": "MEMORY_MULTIYEAR_CONTRACT_BINDING_QUALITY",
+        "primitive_tags": [
+          "BINDING_CONTRACT",
+          "MULTIYEAR_VISIBILITY"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_MULTIYEAR_CONTRACT_BINDING_QUALITY",
+        "question_family_tags": [
+          "MEMORY_CONTRACT_QUALITY",
+          "EARNINGS_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 다년계약 구속력",
+        "subject_id": "005930:MEMORY:MULTIYEAR_CONTRACT_BINDING_QUALITY",
+        "unit": "contract quality description",
+        "value": "significant binding force supporting business stability and visibility"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.83,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-38a37465db4e35b0cb0e1aec",
+        "economic_mechanism": "고객 NDA로 계약 세부내용을 공개할 수 없다는 명시적 한계는 계약 상대방·물량·가격·해지조건을 외부에서 검증할 수 없게 한다.",
+        "exact_quote": "고객사와의 기밀유지협약(NDA) 준수를 위해 구체적인 내용을 밝힐 수는 없으나",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "계약 완료·구속력 서술의 검증 범위를 직접 제한하는 명시적 정보 한계다. 비공개를 계약 부재로 해석하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:CONTRACT_NDA_LIMITATION",
+        "normalized_object": "고객 NDA에 따른 다년계약 세부정보 비공개",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-04-30 현재",
+        "predicate": "삼성전자가 고객사 NDA 때문에 메모리 다년계약의 구체적 내용을 공개할 수 없다고 밝혔다",
+        "predicate_family": "MEMORY_CONTRACT_NDA_LIMITATION",
+        "primitive_tags": [
+          "NDA",
+          "UNDISCLOSED_TERMS"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_CONTRACT_NDA_LIMITATION",
+        "question_family_tags": [
+          "MEMORY_CONTRACT_DISCLOSURE_LIMIT",
+          "NDA_LIMITATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 다년계약 세부정보 공개 한계",
+        "subject_id": "005930:MEMORY:CONTRACT_NDA_LIMITATION",
+        "unit": "disclosure limitation",
+        "value": "specific contract terms undisclosed due to customer NDA"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-38a37465db4e35b0cb0e1aec",
+        "economic_mechanism": "HBM4 생산여력이 완판됐다는 회사 측 설명은 양산·출하를 넘어 현재 계획 생산능력이 고객 수요로 소진된 상태를 나타낸다.",
+        "exact_quote": "삼성전자는 지난 2월 세계 최초로 양산 출하를 시작했던 HBM4가 시장의 호평을 받아 이미 생산 여력이 '완판'된 상태라고 밝혔다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 HBM4 양산 출하·매출 전환과 다른 생산여력 소진 상태다. 계약 물량·가격·완판 대상 기간은 문서에 없어 추가하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:CAPACITY_SOLD_OUT",
+        "normalized_object": "HBM4 생산여력 완판",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-04-30 현재",
+        "predicate": "삼성전자가 HBM4 생산 여력이 완판된 상태라고 밝혔다",
+        "predicate_family": "HBM4_CAPACITY_SOLD_OUT",
+        "primitive_tags": [
+          "HBM4_SOLD_OUT",
+          "CAPACITY_LOCK"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_CAPACITY_SOLD_OUT",
+        "question_family_tags": [
+          "HBM4_CAPACITY_SCARCITY",
+          "CUSTOMER_DEMAND_COVERAGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 생산여력 완판",
+        "subject_id": "005930:MEMORY:HBM4:CAPACITY_SOLD_OUT:2026",
+        "unit": "capacity booking status",
+        "value": "production capacity sold out"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-38a37465db4e35b0cb0e1aec",
+        "economic_mechanism": "2026년 3분기부터 HBM4가 HBM 매출의 절반 이상을 차지할 것이라는 전망은 HBM4 공급 확대가 매출 믹스로 전환되는 예상 시점과 최소 비중을 제시한다.",
+        "exact_quote": "올해 3분기부터 HBM4가 전체 HBM 매출의 절반 이상을 차지할 것으로 내다봤다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 HBM4 납품 증가·누적매출과 다른 다음 분기 HBM 내부 매출 믹스 전망이다. 제3자 매체 경로이므로 issuer-source numeric FORWARD_GUIDANCE structured role은 부여하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:REVENUE_MIX:2026-Q3",
+        "normalized_object": "2026년 3분기 HBM 매출 중 HBM4 비중 50% 이상 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q3E",
+        "predicate": "삼성전자가 2026년 3분기부터 HBM4가 전체 HBM 매출의 절반 이상을 차지할 것으로 전망했다",
+        "predicate_family": "HBM4_REVENUE_MIX_OUTLOOK",
+        "primitive_tags": [
+          "HBM4_MIX",
+          "REVENUE_CONVERSION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_REVENUE_MIX_OUTLOOK",
+        "question_family_tags": [
+          "HBM4_REVENUE_MIX",
+          "HBM_EARNINGS_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 매출 비중 전망",
+        "subject_id": "005930:MEMORY:HBM4:REVENUE_MIX:2026-Q3",
+        "unit": "percent minimum",
+        "value": 50
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "다년계약의 고객명·물량·가격·구매의무·취소·해지·위약 조건은 NDA로 공개되지 않아 발명하지 않았다.",
+      "오마이뉴스 문서의 DS 매출·영업이익은 메모리 외 사업을 포함하고 current canonical에 공식 DS 수치가 있어 별도 메모리 fact로 만들지 않았다.",
+      "테크M 문서의 2026년 2분기 전사 컨센서스는 메모리 귀속 숫자가 아니며 이후 잠정실적 시점보다 앞선 전망이라 제외했다."
+    ]
+  },
+  "payload_hash": "c75e9ccf379d7d042e8da5e6e509463ea35dbc2afebfa8c18e7e9b81101601fb",
+  "production_score_authority": false,
+  "prompt_hash": "c5d6b2ce261aa548c8f37fc0b24babcd43d60c21cd0d751b086555fe5cd7dcab",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ea9e62006ce464edeb11174aeddf9319df7103730fd09fb3092c1d43406225b6",
+  "response_id": "COLLABRESP-99aca553e58531c1549634f3798a54021f6c89d28b93132952f10edd49cb5233",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

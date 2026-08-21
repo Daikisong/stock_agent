@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-14febcab512d120417110e3c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "세계 반도체 기업 Top 10은 어디인가요? 매출, 기술력, 시장 포지션 총정리 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-d8dc149aeef189f10707e75b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "PHY 인터페이스（DDR PHY, HBM PHY）시장: AI 가속기 및 데이터센터 서버의 대역폭 수.... 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-2bd7f9e2a271d3036ede110c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "증권·자문 PDF 경로는 고객사 공식 원문이 아니다. 스니펫이나 보고서 해석으로 고객 qualification, 플랫폼 통합 또는 공급 관계를 입증할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-52199901c8d913f07b1eb84f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "AI 메모리 슈퍼사이클의 정점: 2026년 반도체 시장을 뒤흔들 HBM의 5가지 결정적 .... 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-932e964b193375d93f329745",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "[모닝리포트] 2026년 1월 13일: SK하이닉스, 셀트리온, 현대건설, LG유플러스, 미스.... 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c1079f142176b1125f2c69f0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "Perplexity 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-a5ce7b4e389bc568ed5a302e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "이기종 통합 실리콘 시장 규모, 점유율 [2034] 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-aec01853fc5149e476baa823",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "증권·자문 PDF 경로는 고객사 공식 원문이 아니다. 스니펫이나 보고서 해석으로 고객 qualification, 플랫폼 통합 또는 공급 관계를 입증할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-d1b65b4a1218d82d3e4f3f16",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "No.262 - 한국과학기술기획평가원 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-3912960a4a140e25d04427c9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "4월 24일~25일  해외 뉴스 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-3f9fe561e00b0a3502cc3002",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "[AI브리프 스페셜] 인공지능(AI) 반도체 산업 동향 - 소프트웨어정책연구소 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-44f76ea64545fda2411d2af6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "[모닝리포트] 2026년 3월 6일: 삼성전자, SK하이닉스, 한솔케미칼, 아모레퍼시픽, .... 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "모든 후보를 discovery route로만 판정했으며 스니펫을 EvidenceFact나 점수 근거로 사용하지 않았다.",
+      "이 partition에서는 요청된 CUSTOMER_OFFICIAL 고객사 원문 경로가 확인되지 않았다. 제3자 재전과 삼성전자 자체 발행자료는 고객사 독립 확인을 대체하지 않는다."
+    ]
+  },
+  "payload_hash": "1a13aafbce04595ae6c690ba6493db3bd5a21e11e1084f4dc390ac571e7ea1af",
+  "production_score_authority": false,
+  "prompt_hash": "a2383075eb0c6af6ee7285526b3e575930fb3e956799f5f159845de0af3a4087",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-def044af1ad69aa85a0096a4992bf03411cf10592a3820f85e6e7be5167cb57d",
+  "response_id": "COLLABRESP-ec65e8f18c5eac9f5748919ebd403670e6d0660df577914ea5febd39dc63001b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

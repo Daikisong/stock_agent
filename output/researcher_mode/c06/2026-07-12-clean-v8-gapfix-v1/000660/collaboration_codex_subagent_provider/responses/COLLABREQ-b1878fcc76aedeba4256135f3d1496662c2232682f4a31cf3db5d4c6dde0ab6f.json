@@ -1,0 +1,545 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "rationale": "Continuation page 8 reviews the complete supplied chunk0/2 and strictly excludes all 84 prior accepted semantic identities and exact quotes. Eleven additional objective-linked broker forecast atoms are extracted: two EBITDA denominators, two non-adjusted BPS denominators, one flat DPS counter, two cash balances, two net-debt positions and two cash-dividend assumptions. Lower-level table ratios and mechanically derivable growth percentages that repeat already accepted amounts are not treated as new material mechanisms. Other issuers and general sector statements are excluded. All facts retain broker-estimate, consolidated-memory and non-binding scope and are not promoted to issuer actuals or guidance, HBM-only economics, customer allocation, or signed contract terms. The canonical parent remains incomplete solely because transport chunk 1 of 2 is not supplied in this immutable request.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker forecasts SK hynix FY2026 consolidated EBITDA of KRW 282.208tn, supplying the denominator behind its forward EV/EBITDA estimate. This is a broker forecast, not issuer actual EBITDA or HBM-only earnings.",
+        "exact_quote": "EBITDA 5,943 36,049 61,136 282,208",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The forward EBITDA denominator materially connects the broker's earnings forecast to its accepted EV/EBITDA multiple while retaining consolidated scope.",
+        "mechanism_scope_id": "000660:MEMORY:FY2026_BROKER_EBITDA",
+        "normalized_object": "FY2026 broker-estimated consolidated EBITDA of KRW 282,208bn",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "broker_forecasts_forward_ebitda",
+        "predicate_family": "BROKER_FORWARD_EBITDA",
+        "primitive_tags": [
+          "FORWARD_EBITDA",
+          "VALUATION_DENOMINATOR"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "broker_forward_ebitda",
+        "question_family_tags": [
+          "forward_ebitda",
+          "valuation_denominator",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide memory valuation estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_VALUATION_ESTIMATE",
+        "unit": "KRW billion",
+        "value": 282208
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker forecasts SK hynix FY2027 consolidated EBITDA of KRW 437.343tn. It is a broker valuation denominator and cannot be attributed solely to HBM or treated as issuer guidance.",
+        "exact_quote": "61,136 282,208 437,343",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The later-period EBITDA denominator extends the valuation bridge with source and attribution limits explicit.",
+        "mechanism_scope_id": "000660:MEMORY:FY2027_BROKER_EBITDA",
+        "normalized_object": "FY2027 broker-estimated consolidated EBITDA of KRW 437,343bn",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027 forecast",
+        "predicate": "broker_forecasts_forward_ebitda",
+        "predicate_family": "BROKER_FORWARD_EBITDA",
+        "primitive_tags": [
+          "FORWARD_EBITDA",
+          "VALUATION_DENOMINATOR"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "broker_forward_ebitda",
+        "question_family_tags": [
+          "forward_ebitda",
+          "valuation_denominator",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide memory valuation estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_VALUATION_ESTIMATE",
+        "unit": "KRW billion",
+        "value": 437343
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker forecasts FY2026 consolidated BPS of KRW 468,827 for SK hynix. This is the projected financial-statement BPS, distinct from the adjusted BPS excluding NCI in the target-price table, and is not HBM-only book value.",
+        "exact_quote": "BPS 77,752 107,256 174,539 468,827",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit forward book-value denominator is material to PBR interpretation and is kept distinct from adjusted BPS and HBM-only value.",
+        "mechanism_scope_id": "000660:MEMORY:FY2026_BROKER_FORWARD_BPS",
+        "normalized_object": "FY2026 broker-estimated consolidated BPS of KRW 468,827",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "broker_forecasts_forward_book_value_per_share",
+        "predicate_family": "BROKER_FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "FORWARD_BOOK_VALUE",
+          "VALUATION_DENOMINATOR"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "broker_forward_book_value",
+        "question_family_tags": [
+          "forward_book_value",
+          "valuation_denominator",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK hynix issuer-wide memory valuation estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_VALUATION_ESTIMATE",
+        "unit": "KRW/share",
+        "value": 468827
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker forecasts FY2027 consolidated BPS of KRW 941,665 for SK hynix. It differs from the adjusted BPS excluding NCI used in the target-price bridge and remains a consolidated broker estimate, not HBM-only book value.",
+        "exact_quote": "174,539 468,827 941,665",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit FY2027 BPS completes the forward book-value sequence without duplicating adjusted BPS or overstating product attribution.",
+        "mechanism_scope_id": "000660:MEMORY:FY2027_BROKER_FORWARD_BPS",
+        "normalized_object": "FY2027 broker-estimated consolidated BPS of KRW 941,665",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027 forecast",
+        "predicate": "broker_forecasts_forward_book_value_per_share",
+        "predicate_family": "BROKER_FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "FORWARD_BOOK_VALUE",
+          "VALUATION_DENOMINATOR"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "broker_forward_book_value",
+        "question_family_tags": [
+          "forward_book_value",
+          "valuation_denominator",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK hynix issuer-wide memory valuation estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_VALUATION_ESTIMATE",
+        "unit": "KRW/share",
+        "value": 941665
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker forecasts DPS to remain KRW 3,000 in both FY2026 and FY2027, unchanged from the table's FY2025 actual despite sharp forecast earnings growth. This is a broker estimate, not an issuer dividend commitment, and it is a counterweight to assumed capital-return expansion.",
+        "exact_quote": "DPS 1,200 2,204 3,000 3,000 3,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The flat forward DPS is directly relevant to capital allocation and counterbalances the report's forecast earnings and cash expansion; it is not issuer guidance.",
+        "mechanism_scope_id": "000660:MEMORY:FY2026_FY2027_BROKER_DPS",
+        "normalized_object": "Broker-estimated DPS remains KRW 3,000 through FY2026-FY2027",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026-FY2027 forecast",
+        "predicate": "broker_forecasts_flat_dividend_per_share",
+        "predicate_family": "BROKER_FORWARD_DIVIDEND_PER_SHARE",
+        "primitive_tags": [
+          "FORWARD_DPS",
+          "CAPITAL_RETURN_COUNTER"
+        ],
+        "product_family": "Issuer-wide memory capital-allocation estimate",
+        "question_family_id": "broker_forward_dividend_per_share",
+        "question_family_tags": [
+          "forward_dividend",
+          "capital_allocation",
+          "flat_dividend",
+          "not_issuer_commitment"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide capital-allocation estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_CAPITAL_ALLOCATION_ESTIMATE",
+        "unit": "KRW/share",
+        "value": 3000
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker forecasts SK hynix FY2026 cash and cash equivalents of KRW 144.416tn. This is a consolidated balance-sheet estimate, not actual cash, issuer guidance, or HBM-only cash generation.",
+        "exact_quote": "현금및현금성자산 7,587 11,205 14,924 144,416",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The forward cash balance is material to FCF conversion and capital flexibility while remaining a broker estimate at consolidated scope.",
+        "mechanism_scope_id": "000660:MEMORY:FY2026_BROKER_CASH_BALANCE",
+        "normalized_object": "FY2026 broker-estimated cash and cash equivalents of KRW 144,416bn",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "broker_forecasts_cash_and_cash_equivalents",
+        "predicate_family": "BROKER_FORWARD_CASH_BALANCE",
+        "primitive_tags": [
+          "FORWARD_CASH",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Issuer-wide memory balance-sheet estimate",
+        "question_family_id": "broker_forward_cash_balance",
+        "question_family_tags": [
+          "forward_cash_balance",
+          "capital_flexibility",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide balance-sheet estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_BALANCE_SHEET_ESTIMATE",
+        "unit": "KRW billion",
+        "value": 144416
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker forecasts SK hynix FY2027 cash and cash equivalents of KRW 451.558tn. It is a broker balance-sheet forecast and cannot be treated as reported cash or HBM-only cash flow.",
+        "exact_quote": "14,924 144,416 451,558",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The later-period cash estimate extends the capital-flexibility view while preserving forecast and attribution boundaries.",
+        "mechanism_scope_id": "000660:MEMORY:FY2027_BROKER_CASH_BALANCE",
+        "normalized_object": "FY2027 broker-estimated cash and cash equivalents of KRW 451,558bn",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027 forecast",
+        "predicate": "broker_forecasts_cash_and_cash_equivalents",
+        "predicate_family": "BROKER_FORWARD_CASH_BALANCE",
+        "primitive_tags": [
+          "FORWARD_CASH",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Issuer-wide memory balance-sheet estimate",
+        "question_family_id": "broker_forward_cash_balance",
+        "question_family_tags": [
+          "forward_cash_balance",
+          "capital_flexibility",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide balance-sheet estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_BALANCE_SHEET_ESTIMATE",
+        "unit": "KRW billion",
+        "value": 451558
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker forecasts SK hynix FY2026 net debt of negative KRW 159.294tn, meaning a projected net-cash position. This is a consolidated broker forecast, not an actual balance or HBM-only cash result.",
+        "exact_quote": "순차입금 24,960 12,984 -5,581 -159,294",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The projected net-cash position materially informs balance-sheet and capital-allocation capacity, with forecast-only scope explicit.",
+        "mechanism_scope_id": "000660:MEMORY:FY2026_BROKER_NET_DEBT",
+        "normalized_object": "FY2026 broker-estimated net debt of negative KRW 159,294bn",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "broker_forecasts_net_cash_position",
+        "predicate_family": "BROKER_FORWARD_NET_DEBT",
+        "primitive_tags": [
+          "FORWARD_NET_DEBT",
+          "NET_CASH_POSITION"
+        ],
+        "product_family": "Issuer-wide memory balance-sheet estimate",
+        "question_family_id": "broker_forward_net_debt",
+        "question_family_tags": [
+          "forward_net_debt",
+          "net_cash",
+          "capital_flexibility"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide balance-sheet estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_BALANCE_SHEET_ESTIMATE",
+        "unit": "KRW billion",
+        "value": -159294
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker forecasts SK hynix FY2027 net debt of negative KRW 481.929tn, implying a larger projected net-cash position. It remains a consolidated broker estimate rather than reported actual cash or HBM-only economics.",
+        "exact_quote": "-5,581 -159,294 -481,929",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The later-period net-cash forecast extends the capital-flexibility path while preserving its broker and consolidated character.",
+        "mechanism_scope_id": "000660:MEMORY:FY2027_BROKER_NET_DEBT",
+        "normalized_object": "FY2027 broker-estimated net debt of negative KRW 481,929bn",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027 forecast",
+        "predicate": "broker_forecasts_net_cash_position",
+        "predicate_family": "BROKER_FORWARD_NET_DEBT",
+        "primitive_tags": [
+          "FORWARD_NET_DEBT",
+          "NET_CASH_POSITION"
+        ],
+        "product_family": "Issuer-wide memory balance-sheet estimate",
+        "question_family_id": "broker_forward_net_debt",
+        "question_family_tags": [
+          "forward_net_debt",
+          "net_cash",
+          "capital_flexibility"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide balance-sheet estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_BALANCE_SHEET_ESTIMATE",
+        "unit": "KRW billion",
+        "value": -481929
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker projects FY2026 cash-dividend outflow of KRW 2.095tn for SK hynix. It is an issuer-wide broker estimate rather than an announced or binding dividend commitment.",
+        "exact_quote": "현금배당 -826 -826 -1,681 -2,095",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The projected cash outflow quantifies the broker's capital-return assumption while remaining non-binding and forecast-only.",
+        "mechanism_scope_id": "000660:MEMORY:FY2026_BROKER_CASH_DIVIDEND",
+        "normalized_object": "FY2026 broker-estimated cash-dividend outflow of KRW 2,095bn",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "broker_forecasts_cash_dividend_outflow",
+        "predicate_family": "BROKER_FORWARD_CASH_DIVIDEND",
+        "primitive_tags": [
+          "FORWARD_CASH_DIVIDEND",
+          "CAPITAL_RETURN"
+        ],
+        "product_family": "Issuer-wide memory capital-allocation estimate",
+        "question_family_id": "broker_forward_cash_dividend",
+        "question_family_tags": [
+          "forward_cash_dividend",
+          "capital_allocation",
+          "not_issuer_commitment"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide capital-allocation estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_CAPITAL_ALLOCATION_ESTIMATE",
+        "unit": "KRW billion",
+        "value": 2095
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker projects FY2027 cash-dividend outflow of KRW 2.073tn for SK hynix, slightly below its FY2026 estimate despite a much larger projected cash balance. This is a broker capital-allocation assumption, not an issuer commitment.",
+        "exact_quote": "-1,681 -2,095 -2,073",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The slightly lower projected cash dividend is a material counterweight to the report's rapid earnings and net-cash expansion, without implying issuer policy.",
+        "mechanism_scope_id": "000660:MEMORY:FY2027_BROKER_CASH_DIVIDEND",
+        "normalized_object": "FY2027 broker-estimated cash-dividend outflow of KRW 2,073bn",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2027 forecast",
+        "predicate": "broker_forecasts_cash_dividend_outflow",
+        "predicate_family": "BROKER_FORWARD_CASH_DIVIDEND",
+        "primitive_tags": [
+          "FORWARD_CASH_DIVIDEND",
+          "CAPITAL_RETURN_COUNTER"
+        ],
+        "product_family": "Issuer-wide memory capital-allocation estimate",
+        "question_family_id": "broker_forward_cash_dividend",
+        "question_family_tags": [
+          "forward_cash_dividend",
+          "capital_allocation",
+          "capital_return_counter",
+          "not_issuer_commitment"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide capital-allocation estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_CAPITAL_ALLOCATION_ESTIMATE",
+        "unit": "KRW billion",
+        "value": 2073
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-4ad58a46779d88509f7896e6"
+    ],
+    "unresolved_research_notes": [
+      "All distinct target-wide current-objective material mechanisms identified in supplied chunk 0 are now accounted after strict prior dedup; lower-level repeated ratios and mechanically derivable growth cells are not independent material mechanisms.",
+      "The canonical document still cannot be declared complete because this request supplies chunk 0 of 2 only and all chunks are required. Chunk 1 must be independently reviewed before extraction_complete can become true.",
+      "Nothing in the broker model establishes issuer guidance, reported actual performance, HBM-only earnings or cash flow, or signed HBM price, volume, allocation, cancellation, prepayment, backlog or RPO terms."
+    ]
+  },
+  "payload_hash": "52b9c5b58186dc2484d01f22fdb20779f88b23f71723fef4542e2394bca8bfb2",
+  "production_score_authority": false,
+  "prompt_hash": "306aae745ddc0ea7f44bef4db100236c9678cada80e1b4405559c1351e0f2b3d",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b1878fcc76aedeba4256135f3d1496662c2232682f4a31cf3db5d4c6dde0ab6f",
+  "response_id": "COLLABRESP-6edda1fedf700912169350e955441e73f833aff2510cefc781ba2b8c6e062c4e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

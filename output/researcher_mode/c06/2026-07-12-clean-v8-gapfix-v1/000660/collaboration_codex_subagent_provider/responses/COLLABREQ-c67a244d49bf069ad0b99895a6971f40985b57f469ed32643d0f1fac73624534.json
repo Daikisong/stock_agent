@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f8b2e1aad7be9030252e6ae6",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "2026년 broker PDF provenance는 맞지만 IMF·글로벌 GDP 중심의 macro 문서로 current 000660 valuation mechanism을 target-direct로 해소하지 못해 nonmaterial이다. snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-70b58c89f138934574e49d7a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "세아제강 관련 Telegram retelling으로 wrong target이며 original PUBLIC_BROKER_PDF route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-46d547987d32f77ccd63356a",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "broker PDF provenance는 맞지만 2009년 market 자료이며 target 000660과 current valuation objective에 직접 맞지 않아 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-391517b1a440d38d733f256e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "2009년 broker compendium PDF로 family match는 되지만 current target valuation·earnings bridge를 해소하지 못해 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-b69f2301f5b24e4d428de42a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성SDI 관련 Telegram 게시물로 wrong target이고 original broker full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cc8e79ba410ce499cf9796f3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "미국주식 generic Telegram discovery page로 target 및 requested family provenance가 모두 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-be6288ec3ec3cab87f058fd4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "현대위아 관련 Telegram retelling으로 wrong target이며 original PUBLIC_BROKER_PDF route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-aa28a23ec5c509f8a05fe783",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "샌디스크에 대한 third-party blog로 wrong target이고 requested original broker provenance도 없다."
+      },
+      {
+        "candidate_id": "SGCAND-86d1a916b0ac787c92b22334",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "broker PDF provenance는 맞지만 2009년 채권·market 자료이며 current target valuation gap을 직접 해소하지 않아 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-4192659641a0569a25766db2",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "2009년 대우증권 earnings guide PDF로 family match는 되지만 current target 000660 및 requested valuation mechanism에 맞지 않아 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-49313f99a43b3c615c8e9115",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 기반 generic market 전략 게시물로 original PUBLIC_BROKER_PDF 및 target-direct route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b4b3a2998c49ccbb704fd64f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "포스코케미칼 관련 Telegram retelling으로 wrong target이며 original broker source route가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "12개 후보를 supplied order로 exact-once 분류했으며 material route는 없었다. 이는 supplied roster의 fetch 가치 판정일 뿐 source absence 또는 broader research completion을 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "f89bf0fb6e35c7dc0b3624d0d41aca155ecb0fa9693da1a2aa9a54df70cc4cb0",
+  "production_score_authority": false,
+  "prompt_hash": "6e25eb6174d7f41c3a476986abbdc5bc84e3ae25f2aeb3858e5207ddd1b00431",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c67a244d49bf069ad0b99895a6971f40985b57f469ed32643d0f1fac73624534",
+  "response_id": "COLLABRESP-c89868545ed98124b30f6aff6c425185eebe8b098f3e4abd4dae58210e568fe1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

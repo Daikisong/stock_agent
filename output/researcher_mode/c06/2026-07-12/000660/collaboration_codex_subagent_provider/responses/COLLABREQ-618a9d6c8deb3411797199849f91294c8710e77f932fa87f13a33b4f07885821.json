@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "861a9c664b67221591b6bfb8fb499c78a609f9e11f4b35e6d60b791d47048ec6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-e990e203b10a936eb7d53ef8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "HBM4 장비 발주를 다룬 제3자 기사로 요청된 발행사 공식 실적·공시 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ea125f09c4302e1eb8ba2348",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "2025년 실적을 재전한 제3자 기사로 현재 공식 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f15617014283c4a48945d80e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "2025년 실적 보도인 제3자 기사로 요청된 공식 발표·공시가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-abbf8c816943e696aa65d88c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "일반 기업정보 랜딩 페이지로 대상의 공식 실적 원문이나 가치평가 근거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d0a7edcad0ec9d7aa713c527",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "2024년 실적 뉴스 묶음으로 현재 공식 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6360acd361bdf8c36bbcddfa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "다른 장비업체 전망 블로그로 대상 발행사 공식 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9e89555fd4978759401668dd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "삼성전자 주가 페이지로 대상 회사와 요청 원천이 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-cb0e7ae24150290b23923032",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.01,
+        "rationale": "KIND 주주총회 자료지만 다른 발행사 문서라 대상 회사의 HBM 이익 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-95cc0eeaff0cf83cbd812d5d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "2024년 제3자 산업 기사로 현재 발행사 공식 실적·공시 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cbe18b3e5c245c85f37d9955",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "2023년 IPO 일정 자료의 부수적 HBM 언급으로 현재 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-b2bc7bb455375d66eb5dd0fa",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.01,
+        "rationale": "KIND 2026년 분기보고서이지만 문서 수치와 맥락상 다른 발행사 자료라 대상 회사 목적에 부적합하다."
+      },
+      {
+        "candidate_id": "SGCAND-00fc452f7529c3fe0d86a8e6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "기준일 이후 2분기 행사 일정을 다룬 블로그로 현재 판단에 쓸 수 없고 공식 원천도 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에는 요청된 공식 원천이면서 현재 목적을 해소할 material 후보가 없다."
+    ]
+  },
+  "payload_hash": "6e20793ae64e50624192fa07fad4c6e0c1fa77269c34c8cf3084932719a245b3",
+  "production_score_authority": false,
+  "prompt_hash": "6cf59f9036280b0ee47854e832550ec360ab6f34b6894703d1c18899c426df3b",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-618a9d6c8deb3411797199849f91294c8710e77f932fa87f13a33b4f07885821",
+  "response_id": "COLLABRESP-49ed8350e4c4b9b5dabea1124b75117bff41a1b9100734588b122f2894e22e49",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "output_schema_hash": "d0e7586d96ae7928dc035df4ba8d66e0f609b29db6e48dd1dc5eae4bc305b9cd",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-00159944171b8edc10daba52",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "공식 실적 페이지에 삽입된 외부 동영상 주소지만 요청된 공시·발행사 실적 문서 provenance를 직접 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-07824df1387aa066f822fdb3",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.05,
+        "rationale": "검증된 공식 FY2025 실적 페이지가 직접 참조한 보도자료 DOCX이나, 이미 full fetch된 웹 본문의 다운로드 사본으로 새 숫자형 미래 guidance나 peer band를 기대하기 어렵다."
+      },
+      {
+        "candidate_id": "SGCAND-1a330d960e23aeb76c6ce6b3",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 2Q25 실적 페이지가 참조한 보도자료 DOCX이지만 이미 검토된 웹 본문과 같은 다운로드 사본이며 현재 valuation 공백을 추가 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7688395d5ade75a6d843841d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스 중국어 뉴스룸의 일반 홈페이지로 특정 실적 발표 원문이 아니며 요청된 source family를 입증하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-a7a2b7f7fb8ba4c798aabd02",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "공식 3Q24 실적 발표지만 FY2025·1Q26 자료가 존재하는 현재 시점에는 공급·수요 상태가 오래되어 current valuation_rerating 공백에 부적합하다."
+      },
+      {
+        "candidate_id": "SGCAND-b2b60af54f3e7a4c841ccb2a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "공식 뉴스룸의 GSA 수상 기사로 실적 발표·공시가 아니고 고객 공급계약이나 valuation 근거를 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c0e1d84aafa9f8f7bde1be2e",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 FY2025 실적 페이지가 참조한 인포그래픽 ZIP이지만 이미 확보된 본문을 보조하는 압축 자산으로 새 durable visibility 또는 peer band가 기대되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ef8dc444d83e92c753af9803",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 공식 FY2024 실적 발표지만 기준일 현재 여러 최신 분기·연간 발표로 대체되어 current 공급 가시성 목적에 부적합하다."
+      },
+      {
+        "candidate_id": "SGCAND-f08f594eda20d5f66ee34884",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "공식 3Q25 페이지에 삽입된 외부 동영상 주소일 뿐 요청된 실적 발표 문서 family를 직접 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f1c259dbb0b357f28755f684",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "공식 2Q25 페이지의 외부 동영상 embed로 문서형 공식 실적 원천이 아니며 추가 목적 사실을 확인할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-fec3b36d05c31a25810fe22f",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.05,
+        "rationale": "공식 3Q25 실적 페이지가 참조한 보도자료 DOCX이나 이미 full fetch된 웹 본문의 다운로드 사본이어서 새 현재 fact를 기대하기 어렵다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "11개 후보는 모두 이미 검토된 공식 실적 페이지의 중복 다운로드 자산·외부 embed·오래된 실적·무관 뉴스 링크로, 새 fetch 대상은 없다."
+    ]
+  },
+  "payload_hash": "5f516e05b16b1513edde28d95f86c81a7a6660fcadf75b3fe67721beb50221bb",
+  "production_score_authority": false,
+  "prompt_hash": "326f7817bf066b7e5e5bbb942abf4ba779d896957c31c4fc910e1c94a08c7031",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2df118e96ebde2496619a33735c8b9b069401174a94ebe9ee21d3ba112490c77",
+  "response_id": "COLLABRESP-fbbb46145729db1f6b808ffca030f2197aab2078a4372a765293eeb4bf0ff196",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "bae53379d452ea93c99277440efed4e3cb3d1bbccb540a10fbcbd91183a91de3",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-2d63333ae182cbfed6270374",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “2022 Annual Report - Compal”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-7a2ec0f7de156bc570c1cb05",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Monday, June 15, 2026”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-b72b9ce6c2180891734f0339",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “u/ClawAssistant_Yiming”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-c93c9d0844fcdf750a160f0b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “KINPO ELECTRONICS, INC.”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-09acb6600a39f8b006c9536a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “WORLD-CLASS PRODUCT”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-820ef39d264aa4df3de412a6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Futures Rise Ahead Of Closely Watched Jobs Report”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-53576cae59354d434a8e5df8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “SEMICONDUCTORS INDUSTRY IN POLAND”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-a15f0c69b59c66e20f4724f0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “lrcx-20260628”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-43d2ab499af7196c7e53414c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 TRUSTED_BUSINESS_MEDIA 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Kioxia kicks off “massive buyback” – Is the “buyback bull market” for storage giants on the way....”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-85eab5a5d4f2971113cf3f65",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “KINPO ELECTRONICS INC.”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-26fc0c838a00de9ebe664595",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “K-Bio & Pharmaceutical Industry”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-e5ccb0358a20724092faeca4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Silicon Motion 20-F outlines key 2025 risk factors | SIMO SEC Filing - Form 20-F”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 12개 후보를 입력 순서대로 정확히 한 번씩 분류했다. verified issuer-domain 후보가 없고 모든 candidate source-family hint가 요청된 SK하이닉스 issuer earnings release·presentation·newsroom 범위 밖이므로 material fetch 후보가 없다.",
+      "모든 published_at이 비어 있고 snippet은 discovery metadata일 뿐이므로 발행일·원문·수치 귀속을 증명하지 않는다. FORWARD_GUIDANCE, SEGMENT_CONTRIBUTION, DURABLE_VISIBILITY 공백은 계속 미해결이다."
+    ]
+  },
+  "payload_hash": "3f627b219f56eaccb01d1494b0a7313f77d9316b61dc9986853cae1bf19069c5",
+  "production_score_authority": false,
+  "prompt_hash": "e66a00cd84ad3530372f5deec4083339ba3d5968481ce638f625f9274783f61d",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0d2fbb9cfe6fe2a590d42bb78eed4a364f4edfac165dd53de690005844fecef5",
+  "response_id": "COLLABRESP-61041155bae88d86c314d046cee1a861cceb412c1903d2137562bc5e64107366",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

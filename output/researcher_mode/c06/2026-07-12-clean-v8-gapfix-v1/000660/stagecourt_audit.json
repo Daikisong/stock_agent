@@ -1,0 +1,31 @@
+{
+  "accepted_claim_count_stage_boost": false,
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "as_of_date": "2026-07-12",
+  "blocking_green_guard_primitives": [],
+  "canonical_stage": "2",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "counter_thesis_incomplete_count": 0,
+    "event_changed_canonical_stage_count": 0,
+    "final_without_stage_count": 0,
+    "hard_break_without_claim_lineage_count": 0,
+    "llm_stage_authority_count": 0,
+    "mapping_rejection_count": 0,
+    "pending_disguised_as_stage0_count": 0,
+    "research_incomplete_count": 0,
+    "score_invalid_count": 0,
+    "stage_gate_incomplete_count": 0
+  },
+  "daily_event_overlay_separate": true,
+  "decision_status": "FINAL",
+  "green_gate_primitive_count": 4,
+  "green_gate_satisfied": false,
+  "llm_score_authority": false,
+  "llm_stage_authority": false,
+  "mapping_count": 20,
+  "revision_score": 100.0,
+  "schema_version": "e2r_v5_stagecourt_audit_v1",
+  "status": "STAGECOURT_AUDIT_PASS",
+  "target_id": "000660"
+}

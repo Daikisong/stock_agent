@@ -1,0 +1,125 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-1521b85eba03ea410b782f7b",
+        "rationale": "제품별 매출 표에서 2026년 1분기 메모리 제품 매출과 동일 표의 2025년 1분기 비교 기준을 각각 추출했다. 문서는 HBM 단독 매출을 제시하지 않고 DS 영업이익은 메모리·파운드리·System LSI 혼합값이므로 그 범위를 확대하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-1521b85eba03ea410b782f7b",
+        "economic_mechanism": "MEMORY_REVENUE_CONVERSION",
+        "exact_quote": "Revenue by major product for the three-month period ended March 31, 2026 are as follows:\nTV, monitor, and Smartphone and\n(In millions of Korean won) other other Memory Display panels Total(*)\nRevenue 7,727,817 37,503,639 74,779,980 6,693,457 133,873,444",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공식 영문 재무제표가 메모리 제품의 현재 분기 실현 매출을 직접 수치화하므로 earnings_visibility 목적을 보강한다. 제품 열은 Memory로 명시되지만 HBM 단독 귀속은 아니다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE_ACTUAL",
+        "normalized_object": "메모리 제품 매출액",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 메모리 제품 매출액이 74,779,980백만원이다",
+        "predicate_family": "MEMORY_REVENUE_ACTUAL",
+        "primitive_tags": [],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_REVENUE_ACTUAL",
+        "question_family_tags": [
+          "MEMORY_REVENUE_ACTUAL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "삼성전자 메모리 제품 매출",
+        "subject_id": "005930:MEMORY_REVENUE",
+        "unit": "KRW million",
+        "value": 74779980
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-1521b85eba03ea410b782f7b",
+        "economic_mechanism": "같은 영문 중간 연결재무제표의 전년 동기 제품별 표가 2026년 1분기 메모리 매출을 비교할 공식 기준점을 제공한다. 전년 동기 수치 자체를 현재 HBM 매출로 해석하지 않는다.",
+        "exact_quote": "Revenue by major product for the three-month period ended March 31, 2025 are as follows:\nTV, monitor, and Smartphone and\n(In millions of Korean won) other other Memory Display panels Total(*)\nRevenue 7,756,345 36,187,621 19,069,038 5,866,922 79,140,503",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 보고서가 함께 제시한 메모리 제품 전년 동기 매출 기준점으로, 현재 분기 매출 규모의 지속성과 변화 폭을 판단하는 데 직접 필요하다. HBM 단독 수치로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE_ACTUAL:2025-Q1_BASELINE",
+        "normalized_object": "2025년 1분기 메모리 제품 매출액",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q1 comparative presented in 2026-Q1 financial statements",
+        "predicate": "2025년 1분기 메모리 제품 매출액이 19,069,038백만원이었다",
+        "predicate_family": "MEMORY_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "HISTORICAL_BASELINE",
+          "MEMORY_REVENUE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_EARNINGS_BASELINE",
+        "question_family_tags": [
+          "MEMORY_EARNINGS_BASELINE",
+          "MEMORY_REVENUE_ACTUAL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "삼성전자 2025년 1분기 메모리 제품 매출 비교 기준",
+        "subject_id": "005930:MEMORY_REVENUE",
+        "unit": "KRW million",
+        "value": 19069038
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "이 문서의 Memory 제품 매출은 HBM 단독 매출·출하·고객 배정으로 귀속할 수 없다.",
+      "문서가 제시한 DS 영업이익은 memory, foundry, system LSI를 합친 값이므로 메모리 또는 HBM 영업이익으로 사용할 수 없다."
+    ]
+  },
+  "payload_hash": "ea0641d06aaa1a071d7d17e2683876b9db6d21e330e4600a9d97a6ce861f5889",
+  "production_score_authority": false,
+  "prompt_hash": "c645002e0cf72159fb8d0c0d53ee3d819fc2e2678dea7000707acae6dbd58ea6",
+  "provenance": {
+    "agent_id": "samsung-epoch108-fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_epoch108_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f17796deda2fc91e2498ebfa22cc1cdd51e6fe3f2f659c6fa76560cdcd1949f7",
+  "response_id": "COLLABRESP-c7c17aa9dcd439482ea8d8e647d230c2b192959e65d17633e5b4f4ecc337ef0d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

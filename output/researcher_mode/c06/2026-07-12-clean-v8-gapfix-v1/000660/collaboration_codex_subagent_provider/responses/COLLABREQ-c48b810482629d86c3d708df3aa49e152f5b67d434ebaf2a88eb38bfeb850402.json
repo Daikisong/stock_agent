@@ -1,0 +1,33 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "Prompt의 한국어 Shinhan report/file과 CompanyGuide landing route는 이미 실행·실패 lineage에 있고, 별도 영문 identity도 기존 생성 query와 동일한 stable query identity가 되어 새 query가 아니다. 동의어나 동일 transport를 반복하지 않는다.",
+      "NO_RESULT와 provider failure는 source absence나 research completion을 증명하지 않는다. Broker metadata도 evidence 또는 issuer-official DURABLE_VISIBILITY의 대체물이 아니다.",
+      "현재 immutable evidence 안에서는 아직 실행되지 않은 새 exact document identity나 distinct alternate transport가 확인되지 않아 PENDING을 유지한다."
+    ]
+  },
+  "payload_hash": "812e4f9efc4320d5689f03ad5a4db05fc9bf6dfafa442e24b97c65629184cafc",
+  "production_score_authority": false,
+  "prompt_hash": "4904ad15493311415a6638432dbb7bbcb429b63b11625fb34c09630845ef4a27",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c48b810482629d86c3d708df3aa49e152f5b67d434ebaf2a88eb38bfeb850402",
+  "response_id": "COLLABRESP-c35b3f53b6f60cfe344a64929dd07eea43f1d6402b12fbbdc9e5232b45f85591",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

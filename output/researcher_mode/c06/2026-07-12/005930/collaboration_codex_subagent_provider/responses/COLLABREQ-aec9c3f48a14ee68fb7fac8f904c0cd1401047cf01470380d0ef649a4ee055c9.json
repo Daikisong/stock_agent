@@ -1,0 +1,154 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-e562969193f9035edddbd8b3",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 EPS/FCF 메커니즘을 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-e57aa33f026e88d3d8b2c3ec",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e5832b5af114f4255fc55c89",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e59959bdfd234f8c3c5a838c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e5b1a1d4f00f0d289fc790e4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e63f86e958ba214fd317e5eb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e65490a9b47e32b2ea4066e5",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 EPS/FCF 메커니즘을 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-e6635ab67dc0e1a46471a36b",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 EPS/FCF 메커니즘을 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-e681223d2b919cafe936bb02",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e7111445455261f2a61c684c",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 EPS/FCF 메커니즘을 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-e7373216117a30fcfe4a1214",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.62,
+        "rationale": "공식 비교적 최신 분기 재무 주석 경로로, 이익과 현금 전환 메커니즘을 보강할 가능성이 있습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e774e78e1f0694a13f47c3e6",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "공식 발표 경로 후보지만 2026년 2분기 표기는 as_of_date 이후 공개 가능성을 배제할 수 없어 material 후보에서 제외합니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "모든 후보는 discovery 메타데이터만으로 분류했으며 snippet은 증거로 사용하지 않았습니다.",
+      "material 후보도 원문 fetch와 as-of-date 검증 전에는 EvidenceFact 또는 점수 재료가 아닙니다.",
+      "2026Q2 표기 후보는 원문 발행일 검증 전 material로 올리지 않았습니다."
+    ]
+  },
+  "payload_hash": "1a5f85897b5e3e3ab91bf54838a58b114e0245b49da6746dbbd119c799012f86",
+  "production_score_authority": false,
+  "prompt_hash": "fb72f26bbd7a9476bb890dc53b7b390d157f10526004f27fbdb609e1a6c4732c",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-aec9c3f48a14ee68fb7fac8f904c0cd1401047cf01470380d0ef649a4ee055c9",
+  "response_id": "COLLABRESP-bde4c3ca60eb77f7f59d68a2a55605a6ad5ff674a269d03cfc1bb96300986570",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

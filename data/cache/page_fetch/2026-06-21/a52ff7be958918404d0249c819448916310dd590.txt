@@ -1,0 +1,137 @@
+[미르의 글로벌 레이더]“TSMC 병목 막는다”…구글, 차세대 AI칩 핵심부품 삼성전자 ‘2나노 공정’ 위탁생산 협상
+[미디어펜=편집국]구글이 엔비디아의 독점 체제에 대응하기 위해 개발 중인 차세대 인공지능(AI) 반도체의 핵심 연결부품 생산기지로 한국 삼성전자의 최첨단 미세공정을 낙점했다.&nb
+[미르의 글로벌 레이더]“TSMC 병목 막는다”…구글, 차세대 AI칩 핵심부품 삼성전자 ‘2나노 공정’ 위탁생산 협상
+[미디어펜=편집국]구글이 엔비디아의 독점 체제에 대응하기 위해 개발 중인 차세대 인공지능(AI) 반도체의 핵심 연결부품 생산기지로 한국 삼성전자의 최첨단 미세공정을 낙점했다.&nb
+[미르의 글로벌 레이더]“TSMC 병목 막는다”…구글, 차세대 AI칩 핵심부품 삼성전자 ‘2나노 공정’ 위탁생산 협상
+[미디어펜=편집국]구글이 엔비디아의 독점 체제에 대응하기 위해 개발 중인 차세대 인공지능(AI) 반도체의 핵심 연결부품 생산기지로 한국 삼성전자의 최첨단 미세공정을 낙점했다.&nb
+검색
+2026-06-21 일요일
+홈
+경제
+경제일반
+금융
+증권
+산업
+자동차/항공
+조선/철강
+화학/에너지
+제약/바이오
+중기
+전자
+게임
+유통
+부동산
+글로벌
+칼럼
+정치
+사회
+연예
+최신
+영화
+연예
+스포츠
+스포츠종합
+축구
+야구
+골프
+여행
+문화
+[미르의 글로벌 레이더]“TSMC 병목 막는다”…구글, 차세대 AI칩 핵심부품 삼성전자 ‘2나노 공정’ 위탁생산 협상
+수정 2026-06-12 08:43:45
+입력 2026-06-12 08:43:56
+편집국 기자 | media@mediapen.com
+페이스북
+트위터
+카카오톡
+프린트
+가 +
+가 -
+[MIR Global Radar] Google in Advanced Talks with Samsung: Weaponizing 2nm Architecture for Next-Gen 'Icefish' AI Chip Components
+[미디어펜=편집국]구글이 엔비디아의 독점 체제에 대응하기 위해 개발 중인 차세대 인공지능(AI) 반도체의 핵심 연결부품 생산기지로 한국 삼성전자의 최첨단 미세공정을 낙점했다.
+11일(현지시간) 미국 테크 전문매체인 '더 인포메이션'에 따르면, 구글의 모회사 알파벳은 차세대 AI반도체(코드명 아이스피시) 공급망(SCM)의 조달 다변화를 위해 삼성전자와 구체적인 위탁 생산 협상을 전개하고 있다.
+구글은 대만 TSMC에 집중된 주문 폭주 리스크를 분산하기 위해 삼성전자의 최첨단 하드웨어 제조수율을 자사 가치사슬 전면에 결속하려는 전략적 행동에 착수했다.
+▲ 이미지 생성=제미나이
+▲‘TSMC 병목’ 뚫어낼 다변화 포석…메인 칩은 대만, 연결 부품은 삼성전자 ‘2나노’ 낙점
+구글이 차세대 자체 반도체 생산을 위해 선택한 카드는 대만과 한국의 최첨단 파운드리(반도체 위탁생산) 기술력을 조합한 수직 계열화 다원화 전술이다.
+더 인포메이션에 따르면, 구글은 차세대 AI칩 '아이스피시'의 메인 연산 칩 생산은 대만 TSMC에 위탁할 방침이다.
+반면, 이 메인 칩과 초고속 메모리를 정밀하게 연결, 데이터 병목현상을 해결해 주는 핵심 부품의 제조는 삼성전자의 최첨단 '2나노미터 제조 공정 기술'을 적용해 생산하는 방안을 조율 중이다.
+인공지능 호황으로 전세계 1위 위탁생산 기업인 TSMC의 생산 라인은 현재 글로벌 빅테크 기업들의 주문서가 밀려들며 극심한 공급 정체를 겪고 있다.
+구글은 TSMC가 전체 AI 인프라 확장의 발목을 잡는 병목 구간이 되는 위기를 방어하기 위해 세계 최고 수준의 미세 공정 품질 방어선을 구축한 삼성전자를 대체 가치사슬 파트너로 선택했다.
+Google Taps Samsung Electronics’ State-of-the-Art Fine Process as Manufacturing Base for Next-Gen AI Semiconductor Component
+Google has selected South Korea's Samsung Electronics’ state-of-the-art fine process as the manufacturing base for a core interconnect component of its next-generation artificial intelligence (AI) semiconductor, currently under development to counter Nvidia’s monopoly.On June 11 (local time), according to the US tech specialty media outlet The Information, Google’s parent company Alphabet is conducting specific contract manufacturing negotiations with Samsung Electronics to diversify procurement for its next-generation AI semiconductor (code-named Icefish) supply chain (SCM). To mitigate the risk of surging order backlogs concentrated at Taiwan’s TSMC, Google has initiated strategic actions to integrate Samsung Electronics’ cutting-edge hardware manufacturing yield across the forefront of its value chain.
+▲2028년 실전 대량 양산 확정…인텔 동맹과 함께 엔비디아 독점 장벽 타격
+구글이 추진하는 자체 AI 반도체 고도화 로드맵은 엔비디아가 장악한 글로벌 가속기 시장의 지배력을 약화시키기위한 포석이다.
+현재 구글의 차세대 칩 '아이스피시'는 설계 및 디자인 단계에 머물러 있으나, 파트너사와 공정 조율이 마무리되는 이르면 오는 2028년부터 본격적인 대량 양산 체제에 돌입한다.
+구글은 클라우드 매출 성장의 핵심 견인차 역할을 하는 자체 인하우스 AI칩 생태계를 확장하기 위해 지난 6월 인텔과 2028년 가동을 목표로 300만개 이상의 TPU 위탁 생산 협의를 완료했다.
+여기에 삼성전자의 2나노 부품 라인업까지 가세하면서 하반기 글로벌 자본시장에서 한국 반도체 기업의 파운드리 부문 장기 수주잔고와 미래이익 마진 전망치는 동반 우상향 곡선을 그릴 강력한 독점적 경쟁력을 확보했다.
+Diversification Strategy to Break the ‘TSMC Bottleneck’: Main Chip Assigned to Taiwan, Interconnect Component Slated for Samsung’s ‘2nm’
+The strategy selected by Google for its next-generation proprietary semiconductor production is a vertical integration and diversification tactic that combines the cutting-edge foundry (semiconductor contract manufacturing) technological capabilities of Taiwan and South Korea.According to The Information, Google intends to contract the production of the main computing chip for its next-generation AI chip, 'Icefish', to Taiwan’s TSMC. On the other hand, the company is coordinating a plan to apply Samsung Electronics’ state-of-the-art '2-nanometer manufacturing process technology' to manufacture the core component that precisely links this main chip to ultra-high-speed memory, thereby resolving data bottleneck phenomena. Driven by the artificial intelligence boom, the production lines of TSMC, the world's number one contract manufacturer, are currently experiencing extreme supply congestion as order pipelines from global big tech enterprises flood in. To defend against the crisis of TSMC becoming a bottleneck section that hinders the expansion of the entire AI infrastructure, Google chose Samsung Electronics—which has established a world-class fine process quality defense line—as an alternative value chain partner.
+[미디어펜=편집국]
+▶다른기사보기
+[이런 기사 어때요?]
+▶ [미르의 글로벌 레이더]최태원 SK 회장 “AI 과잉투자 아니다”
+▶ [미르의 글로벌 레이더]GM, ‘LFP 배터리’ 통해 ‘AI 데이터센터 ESS’시장 정조준
+▶ [미르의 글로벌 레이더]“젠슨황, 한국을 구매하다”…서울서 산업공급망·미래 인재까지 독점 구축
+<
+저작권자 © 미디어펜 무단전재 및 재배포금지>
+경제:
+경제일반
+·
+금융
+·
+증권
+산업:
+자동차/항공
+·
+조선/철강
+·
+화학/에너지
+·
+제약/바이오
+·
+중기
+·
+전자
+·
+게임
+·
+유통
+연예:
+최신
+·
+영화
+·
+연예
+스포츠:
+종합
+·
+축구
+·
+야구
+·
+골프
+·
+여행
+부동산
+글로벌
+칼럼
+정치
+사회
+문화
+RSS
+사이트맵
+회사소개
+연혁
+광고·제휴문의
+청소년보호정책
+이메일무단수집거부
+디지털 뉴스콘텐츠 이용규칙
+서울특별시 종로구 새문안로3길 30 세종로대우빌딩 복합동 508호
+전화번호: 02)6241-7700
+팩스: 02)6241-7708
+정기간행물ㆍ등록번호: 서울 아 00574
+등록일.발행일 2008.5.8
+발행인: 이의춘
+편집인·편집국장: 김태균
+청소년보호책임자: 김사성
+Copyright © 2013 미디어펜. All rights reserved.

@@ -1,0 +1,590 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "rationale": "The supplied chunk0/2 of the dated full Yuanta broker report was reviewed from start to end. Twelve distinct target-current material proposals are extracted from the SK hynix section; the rest of this chunk is general sector material or other issuers and was not attributed to SK hynix. The proposals preserve broker-estimate versus issuer-actual/guidance boundaries and DRAM or consolidated-memory versus HBM-only boundaries. Because this request contains only transport chunk 0 of 2 and the twelve-item page cap is reached while additional distinct target rows remain, the canonical parent document is not declared complete.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker forecasts SK hynix 1Q26 consolidated revenue of KRW 57.6tn, 226.5% higher year over year and 75.4% higher quarter over quarter, above the stated one-month consensus of KRW 51.7tn; this is a broker estimate rather than reported actual revenue or issuer guidance and is not attributed to HBM alone.",
+        "exact_quote": "동사 1Q26 예상 매출액과 영업이익은 각각 57.6조원(YoY +226.5%, QoQ +75.4%), 40.4조원(OPM\n70.1%, YoY +442.5%, QoQ +110.6%)으로 1개월기준 시장 컨센서스(매출액 51.7조원, 영업이익 36.4조원)를 상회할 전망이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The dated full broker report supplies an explicit target forecast and consensus comparator that informs the current earnings and expectation-gap objectives. It remains a consolidated broker estimate, not an issuer actual, guidance point, signed contract, or HBM-only contribution.",
+        "mechanism_scope_id": "000660:MEMORY:1Q26_BROKER_REVENUE_EXPECTATION_GAP",
+        "normalized_object": "1Q26 broker-estimated consolidated revenue of KRW 57.6tn versus KRW 51.7tn one-month consensus",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26 forecast",
+        "predicate": "broker_forecasts_quarterly_revenue_above_consensus",
+        "predicate_family": "BROKER_REVENUE_EXPECTATION_GAP",
+        "primitive_tags": [
+          "REVENUE_ESTIMATE",
+          "CONSENSUS_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "broker_quarterly_revenue_expectation_gap",
+        "question_family_tags": [
+          "broker_revenue_forecast",
+          "consensus_gap",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide memory earnings estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_EARNINGS_ESTIMATE",
+        "unit": "KRW trillion",
+        "value": 57.6
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker forecasts SK hynix 1Q26 consolidated operating profit of KRW 40.4tn at a 70.1% margin, above the stated one-month operating-profit consensus of KRW 36.4tn; the number is a broker forecast and cannot be treated as issuer-reported actual performance or HBM-only profit.",
+        "exact_quote": "동사 1Q26 예상 매출액과 영업이익은 각각 57.6조원(YoY +226.5%, QoQ +75.4%), 40.4조원(OPM\n70.1%, YoY +442.5%, QoQ +110.6%)으로 1개월기준 시장 컨센서스(매출액 51.7조원, 영업이익 36.4조원)를 상회할 전망이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit target forecast and consensus comparator materially constrain the earnings-conversion and market-expectation assessment. Attribution remains issuer-wide memory and broker-authored, not HBM-only or issuer guidance.",
+        "mechanism_scope_id": "000660:MEMORY:1Q26_BROKER_OPERATING_PROFIT_EXPECTATION_GAP",
+        "normalized_object": "1Q26 broker-estimated consolidated operating profit of KRW 40.4tn versus KRW 36.4tn one-month consensus",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26 forecast",
+        "predicate": "broker_forecasts_quarterly_operating_profit_above_consensus",
+        "predicate_family": "BROKER_OPERATING_PROFIT_EXPECTATION_GAP",
+        "primitive_tags": [
+          "OPERATING_PROFIT_ESTIMATE",
+          "CONSENSUS_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "broker_quarterly_operating_profit_expectation_gap",
+        "question_family_tags": [
+          "broker_operating_profit_forecast",
+          "consensus_gap",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide memory earnings estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_EARNINGS_ESTIMATE",
+        "unit": "KRW trillion",
+        "value": 40.4
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker estimates 1Q26 DRAM operating profit of KRW 34.5tn at a 77.5% margin, providing a product-family profit conversion estimate. This is DRAM-wide, includes conventional DRAM and potentially HBM, and does not isolate HBM-only earnings.",
+        "exact_quote": "DRAM/NAND예상영업이익은각각34.5조원(OPM77.5%,YoY+377.2%,QoQ+104.7%),5.8조원(OPM46.4%,YoY+9286.0%,\nQoQ +151.6%)으로 메모리반도체 공급업체의 Bargaining power가 극대화되었기 때문이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "A target-specific DRAM profit forecast directly advances the profit-conversion objective while preserving the essential limitation that DRAM-wide profit is not an HBM-only bridge.",
+        "mechanism_scope_id": "000660:DRAM:1Q26_BROKER_OPERATING_PROFIT",
+        "normalized_object": "1Q26 broker-estimated DRAM operating profit of KRW 34.5tn",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26 forecast",
+        "predicate": "broker_forecasts_dram_operating_profit",
+        "predicate_family": "DRAM_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "DRAM_OPERATING_PROFIT",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "broker_dram_operating_profit_forecast",
+        "question_family_tags": [
+          "dram_profit_forecast",
+          "profit_conversion",
+          "not_hbm_only"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix DRAM earnings estimate",
+        "subject_id": "000660:DRAM:EARNINGS_ESTIMATE",
+        "unit": "KRW trillion",
+        "value": 34.5
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker estimates a 70.0% quarter-over-quarter increase in SK hynix DRAM ASP for 1Q26. It is a forward broker estimate for the broad DRAM family, not realized pricing, issuer guidance, or HBM-specific ASP.",
+        "exact_quote": "당사 리서치센터는 DRAM/NAND 각각\n분기 ASP상승폭을 +70.0%,+65.0%로추정한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit target DRAM ASP estimate directly informs pricing power, while its broker-estimate and DRAM-wide scope prevents promotion to realized HBM pricing.",
+        "mechanism_scope_id": "000660:DRAM:1Q26_BROKER_ASP_QOQ",
+        "normalized_object": "1Q26 broker-estimated DRAM ASP increase of 70.0% quarter over quarter",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26 forecast",
+        "predicate": "broker_forecasts_dram_asp_qoq_increase",
+        "predicate_family": "DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "BROKER_ESTIMATE",
+          "QOQ_PRICING"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "broker_dram_asp_forecast",
+        "question_family_tags": [
+          "dram_asp_forecast",
+          "pricing_power",
+          "not_realized_pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix DRAM ASP estimate",
+        "subject_id": "000660:DRAM:ASP_ESTIMATE",
+        "unit": "% QoQ",
+        "value": 70.0
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker raises its 1H26 SK hynix consolidated revenue forecast to KRW 142.8tn, 258.1% higher year over year and 149.3% higher half over half, versus a stated one-month consensus of KRW 120.3tn. It is broker-authored and not an HBM-only revenue attribution.",
+        "exact_quote": "1H26 예상 매출액과 영업이익은 각각142.8조원(YoY +258.1%, HoH +149.3%),\n104.1조원(OPM 72.9%, YoY +524.9%, HoH +240.6%)으로 상향 조정하고, 이는 1개월기준 시장 컨센서스(매출액 120.3조원,\n영업이익 87.7조원)를 크게 상회할 전망이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The revised target forecast and explicit consensus comparator are material to the earnings and expectation-gap questions. No previous numeric estimate is stated, so the fact is not tagged as a structured revision role.",
+        "mechanism_scope_id": "000660:MEMORY:1H26_BROKER_REVENUE_EXPECTATION_GAP",
+        "normalized_object": "1H26 revised broker revenue forecast of KRW 142.8tn versus KRW 120.3tn consensus",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1H26 forecast",
+        "predicate": "broker_raises_half_year_revenue_forecast_above_consensus",
+        "predicate_family": "BROKER_REVENUE_EXPECTATION_GAP",
+        "primitive_tags": [
+          "REVENUE_ESTIMATE",
+          "CONSENSUS_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "broker_half_year_revenue_expectation_gap",
+        "question_family_tags": [
+          "broker_revenue_forecast",
+          "consensus_gap",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide memory earnings estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_EARNINGS_ESTIMATE",
+        "unit": "KRW trillion",
+        "value": 142.8
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker raises its 1H26 consolidated operating-profit forecast for SK hynix to KRW 104.1tn at a 72.9% margin, versus stated one-month consensus operating profit of KRW 87.7tn. This is a broker estimate and not issuer guidance, actual profit, or HBM-only earnings.",
+        "exact_quote": "1H26 예상 매출액과 영업이익은 각각142.8조원(YoY +258.1%, HoH +149.3%),\n104.1조원(OPM 72.9%, YoY +524.9%, HoH +240.6%)으로 상향 조정하고, 이는 1개월기준 시장 컨센서스(매출액 120.3조원,\n영업이익 87.7조원)를 크게 상회할 전망이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The target-specific revised profit forecast and explicit consensus comparator directly advance earnings conversion and expectation-gap research. Because the previous numeric estimate is not provided, no structured revision tag is asserted.",
+        "mechanism_scope_id": "000660:MEMORY:1H26_BROKER_OPERATING_PROFIT_EXPECTATION_GAP",
+        "normalized_object": "1H26 revised broker operating-profit forecast of KRW 104.1tn versus KRW 87.7tn consensus",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1H26 forecast",
+        "predicate": "broker_raises_half_year_operating_profit_forecast_above_consensus",
+        "predicate_family": "BROKER_OPERATING_PROFIT_EXPECTATION_GAP",
+        "primitive_tags": [
+          "OPERATING_PROFIT_ESTIMATE",
+          "CONSENSUS_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "broker_half_year_operating_profit_expectation_gap",
+        "question_family_tags": [
+          "broker_operating_profit_forecast",
+          "consensus_gap",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide memory earnings estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_EARNINGS_ESTIMATE",
+        "unit": "KRW trillion",
+        "value": 104.1
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker estimates SK hynix 2Q26 DRAM ASP will rise 45.0% quarter over quarter, slower than the preceding quarter but still above its prior estimate and market consensus. This is a broad-DRAM broker estimate, not realized HBM pricing.",
+        "exact_quote": "2Q26 메모리반도체 가격 상승폭(DRAM/NAND 각각 분기 ASP 예상 상승폭을 +45.0%,\n+35.0% 추정)은 전분기대비 둔화되겠지만, 기존 추정치 및 시장 컨센서스를 크게 상회할 것으로 예상하기 때문이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit target DRAM ASP estimate informs pricing power and also preserves the sequential-deceleration counterweight. It is neither realized pricing nor an HBM-specific ASP disclosure.",
+        "mechanism_scope_id": "000660:DRAM:2Q26_BROKER_ASP_QOQ",
+        "normalized_object": "2Q26 broker-estimated DRAM ASP increase of 45.0% quarter over quarter with sequential deceleration",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26 forecast",
+        "predicate": "broker_forecasts_dram_asp_qoq_increase_with_deceleration",
+        "predicate_family": "DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "BROKER_ESTIMATE",
+          "QOQ_PRICING"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "broker_dram_asp_forecast",
+        "question_family_tags": [
+          "dram_asp_forecast",
+          "pricing_power",
+          "sequential_deceleration",
+          "not_realized_pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix DRAM ASP estimate",
+        "subject_id": "000660:DRAM:ASP_ESTIMATE",
+        "unit": "% QoQ",
+        "value": 45.0
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker forecasts controlling-shareholder EPS of KRW 284,145 for 2026, providing the consolidated earnings denominator used by its valuation table. The estimate is not HBM-only EPS or issuer guidance.",
+        "exact_quote": "지배주주귀속EPS -12,517 27,182 58,955 284,145 457,761",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit forward EPS is a necessary broker valuation denominator and materially advances earnings and valuation research, while remaining consolidated and not HBM-attributed.",
+        "mechanism_scope_id": "000660:MEMORY:2026_BROKER_FORWARD_EPS",
+        "normalized_object": "2026 broker-estimated controlling-shareholder EPS of KRW 284,145",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "broker_forecasts_forward_eps",
+        "predicate_family": "BROKER_FORWARD_EPS",
+        "primitive_tags": [
+          "FORWARD_EPS",
+          "VALUATION_DENOMINATOR"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "broker_forward_eps",
+        "question_family_tags": [
+          "forward_eps",
+          "valuation_denominator",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide memory valuation estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_VALUATION_ESTIMATE",
+        "unit": "KRW/share",
+        "value": 284145
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker's forecast table places SK hynix at 3.6 times 2026 forward PER, based on consolidated forecast earnings. The multiple is not an HBM-only valuation and does not by itself prove market mispricing.",
+        "exact_quote": "PER -8.6 6.6 5.2 3.6 2.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "A dated forward earnings multiple with a stated forecast period directly informs valuation, but remains a broker model using consolidated earnings rather than an HBM-only denominator.",
+        "mechanism_scope_id": "000660:MEMORY:2026_BROKER_FORWARD_PER",
+        "normalized_object": "2026 broker-estimated forward PER of 3.6x",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "broker_estimates_forward_per",
+        "predicate_family": "BROKER_FORWARD_PER",
+        "primitive_tags": [
+          "FORWARD_PER",
+          "VALUATION_MULTIPLE"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "broker_forward_per",
+        "question_family_tags": [
+          "forward_per",
+          "valuation_multiple",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide memory valuation estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_VALUATION_ESTIMATE",
+        "unit": "x",
+        "value": 3.6
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker's forecast table places SK hynix at 2.2 times 2026 forward PBR. This is a consolidated broker valuation measure and is not an HBM-only multiple or direct proof of rerating.",
+        "exact_quote": "PBR 1.4 1.7 1.8 2.2 1.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The dated forward PBR is an explicit valuation input, but its consolidated denominator cannot be attributed to HBM and the multiple alone does not determine direction.",
+        "mechanism_scope_id": "000660:MEMORY:2026_BROKER_FORWARD_PB",
+        "normalized_object": "2026 broker-estimated forward PBR of 2.2x",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "broker_estimates_forward_pb",
+        "predicate_family": "BROKER_FORWARD_PB",
+        "primitive_tags": [
+          "FORWARD_PB",
+          "VALUATION_MULTIPLE"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "broker_forward_pb",
+        "question_family_tags": [
+          "forward_pb",
+          "valuation_multiple",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK hynix issuer-wide memory valuation estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_VALUATION_ESTIMATE",
+        "unit": "x",
+        "value": 2.2
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker's forecast table places SK hynix at 2.0 times 2026 forward EV/EBITDA. The multiple uses consolidated broker estimates and cannot be relabelled as an HBM-only valuation bridge.",
+        "exact_quote": "EV/EBITDA 17.5 4.0 3.6 2.0 0.6",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The dated forward EV/EBITDA is an explicit valuation input, with the necessary limitation that it is consolidated and broker-estimated rather than HBM-only.",
+        "mechanism_scope_id": "000660:MEMORY:2026_BROKER_FORWARD_EV_EBITDA",
+        "normalized_object": "2026 broker-estimated forward EV/EBITDA of 2.0x",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "broker_estimates_forward_ev_ebitda",
+        "predicate_family": "BROKER_FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION_MULTIPLE"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "broker_forward_ev_ebitda",
+        "question_family_tags": [
+          "forward_ev_ebitda",
+          "valuation_multiple",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK hynix issuer-wide memory valuation estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_VALUATION_ESTIMATE",
+        "unit": "x",
+        "value": 2.0
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker's projected financial statements estimate SK hynix 2026 free cash flow at KRW 126.915tn, providing a consolidated cash-conversion forecast. It is not reported actual FCF, issuer guidance, or HBM-only cash flow.",
+        "exact_quote": "FCF -4,047 13,850 25,854 126,915 319,071",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit target forecast directly informs expected FCF conversion and capital flexibility, while remaining a broker forecast at consolidated level rather than reported actual or HBM-only FCF.",
+        "mechanism_scope_id": "000660:MEMORY:2026_BROKER_FORWARD_FCF",
+        "normalized_object": "FY2026 broker-estimated consolidated free cash flow of KRW 126,915bn",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "broker_forecasts_forward_free_cash_flow",
+        "predicate_family": "BROKER_FORWARD_FREE_CASH_FLOW",
+        "primitive_tags": [
+          "FORWARD_FCF",
+          "CASH_CONVERSION"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "broker_forward_free_cash_flow",
+        "question_family_tags": [
+          "forward_fcf",
+          "cash_conversion",
+          "consolidated_not_hbm_attributed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide memory cash-flow estimate",
+        "subject_id": "000660:ISSUER_WIDE_MEMORY_CASH_FLOW_ESTIMATE",
+        "unit": "KRW billion",
+        "value": 126915
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-4ad58a46779d88509f7896e6"
+    ],
+    "unresolved_research_notes": [
+      "Transport coverage remains incomplete: this immutable request supplies chunk 0 of 2 (characters 0-219997 of 344806), and all chunks are required before parent-document completion.",
+      "The twelve-fact response cap is reached. Distinct target-specific remainder in the supplied chunk includes additional operating-margin, quarter-by-quarter DRAM sales/shipments/margins, FY2027 forecast, target-price/book-value bridge, CAPEX, operating-cash-flow and dividend-estimate atoms; a continuation/coverage pass must apply strict semantic dedup rather than treating those omissions as absence.",
+      "The report's memory-industry long-term-contract discussion is broker/industry-level and is not evidence of a signed SK hynix HBM purchase obligation, price, volume, allocation, cancellation term, prepayment, backlog or RPO."
+    ]
+  },
+  "payload_hash": "56039874dcff3ce44bba2edd9931985b1375ac1c4ffb0d5cab2b7a072bb06aab",
+  "production_score_authority": false,
+  "prompt_hash": "5e191c599ed40f24707dc95f5d8ba95cd19177d2bc1a6a82cf24e7098fa675e3",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-97237e9567ec3f70f17a785cf8ecb73edeaff1734eea12cc1367cdb346cd7571",
+  "response_id": "COLLABRESP-8e2d2470addb8cc4e51b7599d571395bccfa1a25f1b0db2628b2aa8f67402eef",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

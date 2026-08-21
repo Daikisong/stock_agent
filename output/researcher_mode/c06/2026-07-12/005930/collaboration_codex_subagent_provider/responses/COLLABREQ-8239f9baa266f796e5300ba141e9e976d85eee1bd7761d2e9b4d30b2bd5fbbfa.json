@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "rationale": "Independent continuation review found no additional distinct fact affecting the linked PEER_BAND objective beyond the twelve facts accepted on page 1. The remaining semiconductor operating tables, adjacent-industry sections, repeated valuation charts, and recommendation history either fall outside the production objective-local scope or repeat the accepted valuation mechanisms. Prior accepted facts therefore provide the accurate final FACTS_EXTRACTED disposition for transport chunk 1 of 2.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "ec7cb51a5f75d2daf0675c238c14ec5652b8aa2d5288c4c84c0bd9025793f8aa",
+  "production_score_authority": false,
+  "prompt_hash": "98869ab43ea04723679eb2ebf18ff3bad7e77d1388e3dff8b5ceb78ec58485e5",
+  "provenance": {
+    "agent_id": "codex_primary",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/codex_primary",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8239f9baa266f796e5300ba141e9e976d85eee1bd7761d2e9b4d30b2bd5fbbfa",
+  "response_id": "COLLABRESP-65e1304e3576fbb431dd72c99be47d7fa7a6be8e707d4d4c43b22eb0e6b702c1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

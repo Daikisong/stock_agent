@@ -1,0 +1,715 @@
+ 
+ 
+Analysts who prepared this report are registered as research analysts in Korea but not in any other jurisdiction, including the US.  
+Please see analyst certifications and important disclosures & disclaimers in Appendix 1 at the end of the report. 
+ 
+Equity Research 
+March 23, 2026 
+ 
+(Maintain)  Buy 
+Target price W300,000 
+Current price (3/20/26) W199,400 
+Upside 50.5% 
+ 
+OP (26F, Wbn) 251,015 
+Consensus OP (26F, Wbn) 197,711 
+EPS growth (26F, %) 424.6 
+Market EPS growth (26F, %) 118.0 
+P/E (26F, x) 5.8 
+Market P/E (26F, x) 9.2 
+KOSPI 5,781.20 
+Market cap (Wbn) 1,180,376 
+Shares (mn) 5,920 
+Free float (%) 75.1 
+Foreign ownership (%) 49.5 
+Beta (12M) 1.21 
+52-week low (W) 53,000 
+52-week high (W) 218,000 
+(%) 1M 6M 12M 
+Absolute 4.9 150.2 231.2 
+Relative 5.4 49.1 51.1 
+ 
+Mirae Asset Securities Co., Ltd. 
+Young-gun Kim 
+younggun.kim.a@miraeasset.com 
+  
+  
+  
+  
+  
+  
+(Dec.) 2024 2025 2026F 2027F 2028F 
+Revenue (Wbn) 300,871 333,606 601,224 758,733 846,872 
+OP (Wbn) 32,726 43,601 251,015 360,846 409,863 
+OP margin (%) 10.9 13.1 41.8 47.6 48.4 
+NP (Wbn) 33,621 44,261 231,920 339,213 394,608 
+EPS (W) 4,950 6,564 34,432 50,361 58,585 
+ROE (%) 9.0 10.8 42.9 41.2 33.3 
+P/E (x) 10.7 18.3 5.8 4.0 3.4 
+P/B (x) 0.9 1.9 2.0 1.3 1.0 
+Dividend yield (%) 2.7 1.4 0.8 0.8 0.8 
+Notes: Under consolidated K-IFRS; NP is attributable to owners of the parent 
+Source: Company data, Mirae Asset Securities Research estimates 
+005930 KS · Semiconductors 
+Samsung Electronics 
+Positive momentum continues 
+Reflecting continued strength in memory pricing  
+We maintain our target price for Samsung Electronics (SEC) at W300,000. We slightly 
+raised our earnings estimates to reflect the uptrend in memory prices but left our  
+target price unchanged, as it still implies sufficient upside from the current share price. 
+While 12-month forward P/E remains low in absolute terms, P/B is near the upper end 
+of the historical range. That said, if the elevated ROE level is sustained, we believe the 
+valuation floor could rise.  
+Concerns have recently emerged over a potential peak in memory prices. However, we 
+expect prices to remain  high, supported by: 1) the structural advancement in 
+smartphone specifications; 2) latent demand arising from the divergence in 
+supply/demand dynamics between data center and consumer IT applications; and 3) 
+current structural constraints on capacity expansion. Accordingly, we expect the 
+current high ROE level to be sustained. 
+Memory contract prices remain firm. As of mid-March, TrendForce’s 4Q26 PC DRAM 
+contract price estimate for DDR5 is holding steady, while its estimate for DDR4 has been 
+revised up by an additional 2.9%. On a per-Gb basis, DRAM price forecasts are trending 
+toward US$2.1, whereas our current 4Q26 ASP/Gb assumption for conventional DRAM 
+stands at only US$1.8, suggesting further upside to our estimates.  
+For 1Q26, we forecast revenue at W124tr (+32.2% QoQ) and operating profit at W41.3tr 
+(+105.9% QoQ). By division, we forecast operating profit at W3.5tr for DX (OP margin: 
+6.3%) and W37.2tr for DS (OP margin: 55.3%). For memory, we forecast DRAM and 
+NAND bit growth at +4.3% and +8.0%, respectively, and blended ASP growth at +55.4% 
+and +53%, respectively. Meanwhile, we expect foundry losses to narrow to roughly 
+W1tr. 
+For 2026, we now look for revenue of W601tr (+80% YoY) and operating profit of W251tr 
+(+476% YoY), up 1.5% and 3.0% from our previous estimates, respectively. Our bit 
+growth projections remain unchanged (+25% for DRAM and +20% for NAND), but we 
+raised our ASP growth forecasts (+3.0%p for DRAM and +9.9%p for NAND), reflecting 
+ongoing memory price strength. We forecast NAND OP margin to improve to 61.6%. 
+In its corporate value enhancement plan disclosure on Mar. 19, SEC reaffirmed its 
+intention to allocate up to 50% of three-year cumulative free cash flow to special 
+shareholder returns. We forecast 2026 net profit attributable to owners of the parent 
+at W226tr. Assuming a 25% payout ratio (the eligibility threshold for the dividend 
+income separate taxation scheme taking effect this year), we estimate 2026 DPS at 
+W8,610, implying a dividend yield of 4.3% (based on the current price).   
+Additionally, recent positive developments such as foundry orders from Nvidia, a 
+reported HBM4 supply deal with OpenAI, and reports of long-term supply agreements 
+with big tech companies could serve as valuation catalysts. 
+80
+130
+180
+230
+280
+330
+380
+430
+3.25 7.25 11.25 3.26
+Samsung Electronics KOSPI
+Samsung Electronics 
+Mirae Asset Securities Research   2 
+March 23, 2026 
+Table 1. SEC: SOTP valuation  
+2026F  
+EBITDA 
+(Wtr) 
+Target 
+EV/EBITDA 
+(x) 
+Implied 
+EV Notes 
+Operating value (Wtr) 295.9  6.4  1,882.6  
+ 
+  DX 14.4  6.9  98.9  
+ 
+    MX/NW 11.9  6.9  82.5  50% discount to avg. of Xiaomi and Apple 
+    VD/DA 2.5  6.6  16.4  Avg. of LG Electronics and Whirlpool 
+  DS 273.1  6.4  1,743.3   
+    Memory 263.4  6.3  1,647.0  Avg. of SK Hynix, Micron, and Kioxia 
+    Foundry/LSI 9.7  9.9  96.3  10% discount to avg. of TSMC, GlobalFoundries, 
+and Intel  
+  Samsung Display 6.3  4.3  26.6  Avg. of Innolux, BOE, and AUO 
+  Harman 2.1  6.5  13.8  Avg. of Hyundai Mobis and HL Mando 
+ 
+Market 
+cap 
+(Wtr) 
+Stake 
+(%) Value  
+Equity stake value (Wtr)   111.0   
+  Listed   57.6  
+  Samsung Biologics 80.4  31.2  25.1   
+  Samsung Epis Holdings 15.3  38.6  5.9   
+    SEMCO 28.2  23.7  6.7   
+    Samsung SDI 32.4  19.4  6.3   
+    Samsung SDS 13.3  22.6  3.0   
+    Other   10.7  
+  Unlisted   53.3  
+Net debt (Wtr)   -104.2  
+Fair market cap (Wtr)   2,042 50% discount to equity stake value reflected 
+No. of shares (mn)   6,793 Common + preferred 
+Fair value/share (W)   300,657  
+Target price (W)   300,000  
+Current price (W)   199,400  
+Upside (%)   50.5  
+Source: LSEG, Mirae Asset Securities Research 
+Figure 1. SEC: 12-month forward P/E   Figure 2. SEC: 12-month forward P/B  
+ 
+ 
+ 
+Source: LSEG, Mirae Asset Securities Research  Source: LSEG, Mirae Asset Securities Research 
+ 
+0
+20
+40
+60
+80
+100
+120
+0
+7
+14
+21
+28
+35
+06 08 10 12 14 16 18 20 22 24 26 28
+OP (R)
+12MF P/E (L)
+(x) (Wtr)
+-2 SD
+-1 SD
+Avg.
+0
+10
+20
+30
+40
+50
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+06 08 10 12 14 16 18 20 22 24 26 28
+ROE (R)
+12MF P/B (L)
+(x) (%)
++2 SD
++1 SD
+Samsung Electronics 
+Mirae Asset Securities Research   3 
+March 23, 2026 
+Table 2. SEC: Earnings outlook (Wtr, %) 
+ 1Q25 2Q25 3Q25 4Q25 1Q26F 2Q26F 3Q26F 4Q26F 2024 2025 2026F 2027F 
+USD/KRW 1,453  1,402  1,386  1,450  1,450  1,440  1,440  1,440  1,363  1,422  1,443  1,426  
+  QoQ/YoY 4.0  -3.5  -1.2  4.6  0.0  -0.7  0.0  0.0  4.4  4.3  1.4  -1.2  
+Revenue 79.1  74.6  86.1  93.8  124.0  140.4  162.2  174.6  300.9  333.6  601.2  758.7  
+  DX 51.7  43.6  48.4  44.3  56.4  45.7  47.9  47.6  174.9  188.0  197.5  218.7  
+  DS 25.1  27.9  33.1  44.0  67.3  92.3  109.2  120.3  111.1  130.1  389.1  523.8  
+  Samsung Display 5.9  6.4  8.1  9.5  5.6  6.1  7.7  9.3  29.2  29.8  28.6  32.1  
+  Harman 3.4  3.8  4.0  4.6  3.2  4.6  4.5  4.6  14.3  15.8  17.0  18.4  
+QoQ/YoY 4.4  -5.8  15.4  9.0  32.2  13.2  15.5  7.7  16.2  10.9  80.2  26.2  
+  DX 27.6  -15.8  11.0  -8.4  27.2  -18.8  4.7  -0.7  2.9  7.5  5.1  10.7  
+  DS -16.5  10.9  18.8  32.9  52.9  37.1  18.3  10.2  66.8  17.2  199.0  34.6  
+  Samsung Display -27.8  8.7  27.0  17.2  -41.3  8.7  27.0  20.9  -5.9  2.3  -4.0  12.1  
+  Harman -12.9  12.0  3.2  15.9  -29.1  41.5  -1.1  0.7  -0.8  10.6  7.5  8.5  
+OP 6.7  4.7  12.2  20.1  41.3  56.8  72.1  80.8  32.7  43.6  251.0  360.8  
+  DX 4.7  3.3  3.5  1.3  3.5  1.8  2.4  1.9  12.4  12.9  9.6  15.4  
+  DS 1.1  0.4  7.0  16.4  37.2  54.1  68.2  76.8  15.1  24.9  236.3  338.9  
+  Samsung Display 0.5  0.5  1.2  2.0  0.2  0.4  1.1  1.7  3.7  4.1  3.4  4.7  
+  Harman 0.3  0.5  0.4  0.3  0.3  0.4  0.4  0.4  1.3  1.5  1.5  1.6  
+QoQ/YoY 3.0  -30.1  160.2  65.0  105.9  37.4  26.9  12.0  398.3  33.2  475.7  43.8  
+  DX 108.0  -29.6  4.3  -61.5  165.3  -48.8  30.7  -21.4  -13.5  3.3  -25.4  60.5  
+  DS -61.4  -68.3  1,896.4  134.7  126.7  45.5  26.1  12.5  TTB  64.7  850.7  43.4  
+  Samsung Display -46.8  2.4  158.8  59.7  -88.1  80.8  149.6  58.7  -32.9  10.3  -18.0  39.6  
+  Harman -21.6  57.6  -13.1  -23.9  -5.4  34.1  -0.9  0.7  11.4  17.1  -1.0  7.4  
+OP margin 8.4  6.3  14.1  21.4  33.3  40.4  44.5  46.3  10.9  13.1  41.8  47.6  
+  DX 9.1  7.6  7.2  3.0  6.3  4.0  5.0  3.9  7.1  6.8  4.9  7.0  
+  DS 4.4  1.3  21.1  37.3  55.3  58.6  62.5  63.8  13.6  19.1  60.7  64.7  
+  Samsung Display 7.9  7.4  15.1  20.6  4.2  7.0  13.7  17.9  12.8  13.8  11.8  14.7  
+  Harman 9.0  12.6  10.6  7.0  9.3  8.8  8.8  8.8  9.2  9.7  8.9  8.8  
+EBITDA 18.2  16.0  24.0  32.3  54.6  70.2  85.6  94.4  75.4  90.5  304.8  417.1  
+  DX 5.8  4.4  4.6  2.5  4.8  3.1  3.6  3.1  16.7  17.3  14.6  20.4  
+  DS 10.6  9.7  16.8  26.5  48.2  65.3  79.5  88.2  49.9  63.6  281.2  386.3  
+  Samsung Display 1.1  1.1  1.9  2.6  1.0  1.1  1.8  2.4  6.4  6.8  6.3  7.6  
+  Harman 0.4  0.6  0.6  0.5  0.5  0.6  0.6  0.6  1.9  2.1  2.1  2.2  
+QoQ/YoY 1.2  -11.9  49.6  34.7  68.9  28.7  21.8  10.3  66.6  20.1  236.7  36.9  
+  DX 73.7  -24.0  4.6  -45.2  89.6  -36.2  18.2  -14.1  -10.6  4.1  -16.0  39.8  
+  DS -14.1  -8.6  72.6  58.1  81.9  35.4  21.7  11.0  227.1  27.6  341.9  37.4  
+  Samsung Display -26.8  0.7  65.0  40.6  -63.8  19.6  55.0  34.9  -28.1  6.1  -7.8  21.3  
+  Harman -15.9  38.9  -10.0  -15.5  -3.4  22.7  -0.7  0.5  9.1  12.7  1.4  5.2  
+Capex 12.0  11.1  9.2  20.4  17.4  17.6  17.6  17.9  53.6  52.7  70.5  84.2  
+  DS 10.9  9.8  7.8  19.0  16.3  16.3  16.3  16.3  46.3  47.5  65.3  78.7  
+  Samsung Display 0.5  0.8  0.8  0.7  0.5  0.7  0.7  0.8  4.8  2.8  2.7  2.9  
+  Other 0.6  0.5  0.5  0.8  0.5  0.6  0.6  0.7  2.5  2.4  2.5  2.6  
+QoQ/YoY -32.6  -7.5  -17.5  122.9  -14.8  1.4  0.0  1.3  1.0  -1.9  33.9  19.5  
+  DS -31.4  -10.7  -20.3  143.1  -13.8  0.0  0.0  0.0  -4.3  2.6  37.6  20.4  
+  Samsung Display -48.8  61.2  4.2  -20.1  -20.2  25.0  0.0  20.0  102.7  -42.2  -5.0  10.0  
+  Other -36.2  -6.2  0.5  49.8  -33.8  20.1  0.0  16.7  7.5  -6.1  4.6  6.3  
+FCF 6.2  4.9  14.8  11.9  37.2  52.6  67.9  76.6  21.7  37.9  234.3  332.9  
+  DS -0.3  -0.1  9.0  7.6  31.9  49.0  63.1  71.9  3.6  16.2  215.9  307.7  
+  Samsung Display 0.6  0.3  1.0  2.0  0.4  0.5  1.1  1.6  1.6  4.0  3.6  4.7  
+  Other 5.9  4.7  4.8  2.4  4.9  3.1  3.7  3.1  16.6  17.7  14.8  20.5  
+Source: Company data, Mirae Asset Securities Research 
+ 
+Samsung Electronics 
+Mirae Asset Securities Research   4 
+March 23, 2026 
+Table 3. SEC: Earnings forecast revisions (Wtr, %, %p) 
+ 1Q26F      2026F    2027F   
+Revised Previous Chg. Revised Previous Chg. Revised Previous Chg. 
+USD/KRW 1,450  1,450  0.0  1,443  1,443  0.0  1,426  1,426  0.0  
+Revenue 124.0  123.1  0.7  601.2  592.4  1.5  758.7  741.6  2.3  
+  DX 56.4  56.4  0.0  197.5  197.5  0.0  218.7  218.7  0.0  
+  DS 67.3  66.4  1.4  389.1  380.3  2.3  523.8  506.6  3.4  
+  Samsung Display 5.6  5.6  0.0  28.6  28.6  0.0  32.1  32.1  0.0  
+  Harman 3.2  3.2  0.0  17.0  17.0  0.0  18.4  18.4  0.0  
+OP 41.3  40.6  1.9  251.0  243.8  3.0  360.8  346.8  4.0  
+  DX 3.5  3.5  0.0  9.6  9.6  0.0  15.4  15.4  0.0  
+  DS 37.2  36.5  2.1  236.3  229.1  3.2  338.9  324.9  4.3  
+  Samsung Display 0.2  0.2  0.0  3.4  3.4  0.0  4.7  4.7  0.0  
+  Harman 0.3  0.3  0.0  1.5  1.5  0.0  1.6  1.6  0.0  
+OP margin 33.3  33.0  0.4  41.8  41.2  0.6  47.6  46.8  0.8  
+  DX 6.3  6.3  0.0  4.9  4.9  0.0  7.0  7.0  0.0  
+  DS 55.3  54.9  0.4  60.7  60.2  0.5  64.7  64.1  0.6  
+  Samsung Display 4.2  4.2  0.0  11.8  11.8  0.0  14.7  14.7  0.0  
+  Harman 9.3  9.3  0.0  8.9  8.9  0.0  8.8  8.8  0.0  
+EBITDA 54.6  53.8  1.4  304.8  297.4  2.5  417.1  402.7  3.6  
+  DX 4.8  4.8  0.0  14.6  14.6  0.0  20.4  20.4  0.0  
+  DS 48.2  47.5  1.6  281.2  273.9  2.7  386.3  371.9  3.9  
+  Samsung Display 1.0  1.0  0.0  6.3  6.3  0.0  7.6  7.6  0.0  
+  Harman 0.5  0.5  0.0  2.1  2.1  0.0  2.2  2.2  0.0  
+Capex 17.4  16.7  4.3  70.5  67.6  4.3  84.2  81.4  3.5  
+  DS 16.3  15.6  4.6  65.3  62.5  4.6  78.7  75.8  3.8  
+  Samsung Display 0.5  0.5  0.0  2.7  2.7  0.0  2.9  2.9  0.0  
+  Other 0.5  0.5  0.0  2.5  2.5  0.0  2.6  2.6  0.0  
+FCF 37.2  37.2  0.1  234.3  229.8  1.9  332.9  321.3  3.6  
+  DS 31.9  31.9  0.1  215.9  211.4  2.1  307.7  296.1  3.9  
+  Samsung Display 0.4  0.4  0.0  3.6  3.6  0.0  4.7  4.7  0.0  
+  Other 4.9  4.9  0.0  14.8  14.8  0.0  20.5  20.5  0.0  
+Source: Mirae Asset Securities Research 
+ 
+ 
+  
+Samsung Electronics 
+Mirae Asset Securities Research   5 
+March 23, 2026 
+Table 4. SEC: DS earnings outlook (Wtr, %) 
+ 1Q25 2Q25 3Q25 4Q25 1Q26F 2Q26F 3Q26F 4Q26F 2024 2025F 2026F 2027F 
+Revenue 25.1  27.9  33.1  44.0  67.3  92.3  109.2  120.3  111.1  130.1  389.1  523.8  
+  DRAM 13.2  14.5  18.7  28.0  45.4  63.1  76.3  84.0  54.4  74.4  268.8  372.9  
+  NAND 5.8  6.7  8.0  9.2  15.2  21.1  25.5  28.1  30.1  29.7  89.9  115.4  
+  Foundry/LSI 6.1  6.7  6.4  6.9  6.8  8.0  7.4  8.2  26.6  26.0  30.5  35.5  
+QoQ/YoY -16.5  10.9  18.8  32.9  52.9  37.1  18.3  10.2  66.8  17.2  199.0  34.6  
+  DRAM -15.8  9.8  28.9  49.6  62.1  39.2  20.9  10.1  89.8  36.8  261.2  38.7  
+  NAND -19.3  14.0  19.7  14.8  65.3  39.4  20.8  10.0  94.5  -1.3  202.9  28.4  
+  Foundry/LSI -15.1  10.5  -4.0  6.8  -1.1  18.4  -8.0  11.4  18.4  -2.1  16.9  16.7  
+OP 1.1  0.4  7.0  16.4  37.2  54.1  68.2  76.8  15.1  24.9  236.3  338.9  
+  DRAM 3.7  3.6  7.1  15.9  30.4  42.4  52.7  58.6  16.8  30.4  184.1  264.8  
+  NAND -0.8  -0.5  0.7  2.6  7.8  12.3  16.4  18.8  3.5  2.0  55.4  75.7  
+  Foundry/LSI -1.8  -2.7  -0.8  -2.1  -1.0  -0.6  -0.9  -0.6  -5.3  -7.6  -3.1  -1.6  
+QoQ/YoY -61.4  -68.3  1,896.4  134.7  126.7  45.5  26.1  12.5  TTB  64.7  850.7  43.4  
+  DRAM -21.4  -2.0  95.9  124.3  90.7  39.3  24.5  11.0  TTB  80.4  505.9  43.9  
+  NAND TTR  RR  TTB  259.6  200.0  57.5  33.0  14.5  TTB  -42.1  2,607.2  36.7  
+  Foundry/LSI RR  RR  RR  RR  RR  RR  RR  RR  RR  RR  RR  RR  
+OP margin 4.4  1.3  21.1  37.3  55.3  58.6  62.5  63.8  13.6  19.1  60.7  64.7  
+  DRAM 28.0  25.0  38.0  57.0  67.0  67.1  69.1  69.7  31.0  40.8  68.5  71.0  
+  NAND -13.0  -8.0  9.1  28.5  51.7  58.4  64.3  66.9  11.8  6.9  61.6  65.6  
+  Foundry/LSI -30.3  -41.0  -13.1  -31.3  -15.3  -7.4  -12.5  -7.0  -19.9  -29.1  -10.3  -4.6  
+EBITDA 10.4  9.5  16.6  26.3  48.0  65.1  79.3  88.0  49.2  62.8  280.4  385.5  
+  DRAM 6.8  6.9  10.8  20.0  35.0  47.2  57.8  64.0  27.2  44.6  204.0  285.7  
+  NAND 1.8  2.1  3.6  5.7  11.0  15.3  19.1  21.3  13.5  13.1  66.7  88.0  
+  Foundry/LSI 1.8  0.5  2.2  0.6  2.1  2.6  2.3  2.7  8.4  5.1  9.7  11.7  
+Capex 10.9  9.8  7.8  19.0  16.3  16.3  16.3  16.3  46.3  47.5  65.3  78.7  
+  DRAM 5.5  4.9  3.5  6.6  9.0  9.0  9.0  3.3  18.4  20.5  30.3  35.6  
+  NAND 3.3  3.4  2.3  3.8  2.5  2.5  2.5  10.0  13.0  12.8  17.3  20.0  
+  Foundry/LSI 2.2  1.5  1.9  8.6  4.9  4.9  4.9  3.0  14.9  14.2  17.7  23.1  
+Source: Company data, Mirae Asset Securities Research 
+ 
+  
+Samsung Electronics 
+Mirae Asset Securities Research   6 
+March 23, 2026 
+Table 5. SEC: Memory revenue outlook  
+1Q25 2Q25 3Q25 4Q25 1Q26F 2Q26F 3Q26F 4Q26F 2024 2025F 2026F 2027F 
+USD/KRW 1,453  1,402  1,386  1,450  1,450  1,440  1,440  1,440  1,363  1,422  1,443  1,426  
+  QoQ/YoY (%) 4.0  -3.5  -1.2  4.6  0.0  -0.7  0.0  0.0  4.4  4.3  1.4  -1.2  
+DRAM             
+  Revenue (US$bn) 9.1  10.4  13.5  19.3  31.3  43.8  53.0  58.3  39.8  52.3  186.4  261.6  
+    QoQ/YoY (%) -19.1  13.7  30.4  43.0  62.1  40.1  20.9  10.1  81.8  31.2  256.8  40.3  
+  Bit shipments (bn Gb) 20.5  22.8  26.2  26.7  27.8  29.5  30.9  32.1  88.8  96.1  120.4  144.3  
+    QoQ/YoY (%) 1.0  11.0  15.0  2.0  4.3  6.0  4.8  3.8  13.0  8.3  25.2  19.9  
+  ASP (US$) 0.44  0.45  0.52  0.72  1.12  1.49  1.71  1.82  0.45  0.54  1.55  1.81  
+    QoQ/YoY (%) -19.9  2.5  13.4  40.2  55.4  32.2  15.3  6.1  60.8  21.1  184.9  17.0  
+Conventional             
+  Revenue (US$bn) 8.1  9.0  11.4  16.8  28.5  40.4  47.8  51.2  33.0  45.3  167.8  230.1  
+    QoQ/YoY (%) 2.9  11.0  25.9  47.4  70.0  41.8  18.5  7.1  62.3  37.1  270.6  37.1  
+  Bit shipments (bn Gb) 19.9  21.9  24.7  25.0  25.7  27.0  27.8  28.3  83.7  91.4  108.8  127.4  
+    QoQ/YoY (%) 11.1  9.9  13.1  0.9  3.0  5.0  3.0  2.0  8.2  9.3  19.0  17.1  
+  ASP (US$) 0.41  0.41  0.46  0.67  1.11  1.50  1.72  1.81  0.39  0.50  1.54  1.81  
+    QoQ/YoY (%) -7.4  0.9  11.3  46.0  65.0  35.0  15.0  5.0  50.1  25.5  211.4  17.1  
+HBM             
+  Revenue (US$bn) 1.0  1.3  2.1  2.5  2.8  3.5  5.2  7.1  6.8  7.0  18.6  31.4  
+    QoQ/YoY (%) -71.1  37.1  61.1  19.5  10.3  23.7  49.1  37.6  336.8  2.5  166.9  69.1  
+    % of DRAM 10.6  12.8  15.8  13.2  9.0  7.9  9.8  12.2  17.1  13.3  10.0  12.0  
+Shipments (bn Gb) 0.6  0.9  1.5  1.8  2.1  2.5  3.1  3.8  5.1  4.7  11.6  16.9  
+    QoQ/YoY (%) -74.1  45.2  61.1  20.7  22.6  17.8  24.2  19.6  334.2  -7.7  145.0  46.1  
+    % of DRAM 3.0  4.0  5.5  6.6  7.7  8.6  10.1  11.7  5.8  4.9  9.6  11.7  
+  ASP (US$) 1.56  1.47  1.47  1.46  1.31  1.38  1.65  1.90  1.3  1.5  1.6  1.9  
+    QoQ/YoY (%) 11.6  -5.5  0.0  -1.0  -10.0  5.0  20.0  15.0  0.6  11.1  8.9  15.7  
+NAND             
+  Revenue (US$bn) 4.0  4.8  5.8  6.3  10.5  14.7  17.7  19.5  22.1  20.9  62.3  80.9  
+    QoQ/YoY (%) -22.5  18.2  21.2  9.7  65.2  40.4  20.8  10.0  86.4  -5.4  198.7  29.8  
+  Shipments (bn GB) 61.6  77.6  85.4  76.9  83.0  89.7  94.1  94.1  298.1  301.6  361.0  411.1  
+    QoQ/YoY (%) -10.0  26.0  10.0  -10.0  8.0  8.0  5.0  0.0  11.0  1.2  19.7  13.9  
+  ASP (US$) 0.07  0.06  0.07  0.08  0.13  0.16  0.19  0.21  0.07  0.07  0.17  0.20  
+    QoQ/YoY (%) -13.8  -6.2  10.1  21.9  53.0  30.0  15.0  10.0  67.9  -6.4  149.5  14.0  
+Source: Company data, Mirae Asset Securities Research 
+  
+Samsung Electronics 
+Mirae Asset Securities Research   7 
+March 23, 2026 
+Table 6. SEC: DS earnings forecast revisions (Wtr, %, %p) 
+ 1Q26F     2026F    2027F   
+Revised Previous Chg. Revised Previous Chg. Revised Previous Chg. 
+Revenue 67.3  66.4  1.4  389.1  380.3  2.3  523.8  506.6  3.4  
+  DRAM 45.4  44.5  2.0  268.8  263.5  2.0  372.9  365.8  1.9  
+  NAND 15.2  15.2  0.0  89.9  86.3  4.1  115.4  105.3  9.5  
+  Foundry/LSI 6.8  6.8  0.0  30.5  30.5  0.0  35.5  35.5  0.0  
+OP 37.2  36.5  2.1  236.3  229.1  3.2  338.9  324.9  4.3  
+  DRAM 30.4  29.7  2.5  184.1  179.9  2.3  264.8  258.6  2.4  
+  NAND 7.8  7.8  0.0  55.4  52.3  5.8  75.7  68.2  11.1  
+  Foundry/LSI -1.0  -1.0  RR  -3.1  -3.1  RR  -1.6  -1.9  RR  
+OP margin 55.3  54.9  0.4  60.7  60.2  0.5  64.7  64.1  0.6  
+  DRAM 67.0  66.7  0.3  68.5  68.3  0.2  71.0  70.7  0.3  
+  NAND 51.7  51.7  0.0  61.6  60.6  1.0  65.6  64.7  0.9  
+  Foundry/LSI -15.3  -15.3  0.0  -10.3  -10.2  -0.1  -4.6  -5.3  0.8  
+[Memory est.] 
+         
+  DRAM 
+         
+  Bit growth 4.3  3.3  1.0  25.2  24.1  1.1  19.9  19.9  -0.0  
+  ASP chg. 55.4  53.8  1.7  184.9  181.9  3.0  17.0  17.1  -0.0  
+    Conventional 
+         
+    Bit growth 3.0  3.0  0.0  19.0  18.2  0.9  17.1  17.1  0.0  
+    ASP chg. 65.0  65.0  0.0  211.4  209.3  2.0  17.1  17.1  0.0  
+    HBM 
+         
+    Bit growth 22.6  7.2  15.3  145.0  132.7  12.3  46.1  46.1  0.0  
+    ASP chg. -10.0  -10.0  0.0  8.9  9.0  -0.1  15.7  15.7  0.0  
+  NAND 
+         
+  Bit growth 8.0  8.0  0.0  19.7  19.7  0.0  13.9  13.9  0.0  
+  ASP chg. 53.0  53.0  0.0  149.5  139.6  9.9  14.0  8.4  5.6  
+Source: Mirae Asset Securities Research 
+ 
+Samsung Electronics 
+Mirae Asset Securities Research   8 
+March 23, 2026 
+Table 7. SEC: Shareholder return estimates (Wtr) 
+50% of 3Y FCF (W9.6tr/year) 50% of 3Y FCF (W9.8tr/year) 50% of 3Y FCF (W9.8tr/year) 
+2018 2019 2020 2021 2022 2023 2024 2025 2026F 
+NP (owners of the parent) 43.9 21.5 26.1 39.2 54.7 14.5 33.6 44.3 226.6 
+Operating cash flow 67.0  45.4  65.3  65.1  62.2  44.1  73.0  85.3  309.6  
+Capex 29.6  25.4  37.6  47.1  49.4  57.6  51.4  47.5  67.1  
+FCF 37.5  20.0  27.7  18.0  12.8  -13.5  21.6  37.8  242.5  
+% of FCF to be returned to 
+shareholders 50.0  50.0  50.0  50.0  50.0  50.0  50.0  50.0  50.0  
+Regular dividend pool 18.7 10.0 13.8 9.0 6.4 -6.7 10.8 18.9 121.3 
+Regular dividend payout 9.6  9.6  9.6  9.8  9.8  9.8  9.8  9.8  9.8  
+Special dividend pool 
+(cumulative) 9.1 9.5 13.8 -0.8 -4.2 -20.8 1.0 8.3 110.2 
+Share repurchases 0.9  0.0  0.0  0.0  0.0  0.0  1.8  8.2  0.0  
+Special dividend payout 0.2  0.0  10.7 0.0 0.0  0.0  0.0  1.3  47.3 
+Total dividend payout 9.8  9.6  20.3  9.8  9.8  9.8  9.8  11.1  57.1  
+Dividend payout ratio (%) 22.3  44.7  78.0  25.0  17.9  67.8  29.2  25.1  25.2  
+  Common stock 8.6  8.5  17.9  8.6  8.6  8.6  8.6  9.8  50.2  
+  Preferred stock 1.2  1.2  2.5  1.2  1.2  1.2  1.2  1.3  6.9  
+Total shareholder returns 10.7 9.6 20.3 9.8 9.8 9.8 11.6 19.3 57.1 
+No. of shares (ending, mn)          
+  Common stock 5,970  5,970  5,970  5,970  5,970  5,970  5,970  5,920  5,920  
+  (Treasury stock) 0  0  0  0  0  0  33  92  92  
+  Preferred stock 823  823  823  823  823  823  823  816  816  
+  (Treasury stock) 0  0  0  0  0  0  5  14  14  
+Adj. DPS (W)          
+  Common stock 1,416  1,416  2,994  1,444  1,444  1,444  1,446  1,668  8,610  
+  Preferred stock 1,417  1,417  2,995  1,445  1,445  1,445  1,447  1,669  8,611  
+Avg. share price (W)         (Current) 
+  Common stock 46,830  46,583  57,153  79,156  63,935  67,457  71,610  71,448  199,800  
+  Preferred stock 38,148  37,996  49,780  72,033  58,195  56,442  58,790  57,355  139,200  
+Dividend yield (%)          
+  Common stock 3.0  3.0  5.2  1.8  2.3  2.1  2.0  2.3  4.3 
+  Preferred stock 3.7  3.7  6.0  2.0  2.5  2.6  2.5  2.9  6.2 
+Net cash (ending) 83.6  88.7  103.7  105.3  108.0  82.8  97.3  104.3  246.3  
+Source: Company data, Mirae Asset Securities Research 
+  
+Samsung Electronics 
+Mirae Asset Securities Research   9 
+March 23, 2026 
+Samsung Electronics (005930 KS) 
+Income statement (summarized)      Balance sheet (summarized)     
+(Wbn) 2025 2026F 2027F 2028F  (Wbn) 2025 2026F 2027F 2028F 
+Revenue 333,606 601,224 758,733 846,872  Current assets 247,685 539,393 877,145 1,272,903 
+Cost of revenue 202,236 220,162 250,237 284,139  Cash & equivalents 57,856 186,215 474,645 815,549 
+GP 131,370 381,062 508,496 562,733  AR & other receivables 58,609 109,050 124,280 141,218 
+SG&A expenses 87,769 130,048 147,651 152,870  Inventory 52,637 97,938 111,616 126,828 
+OP (adj.) 43,601 251,015 360,846 409,863  Other current assets 78,583 146,190 166,604 189,308 
+OP 43,601 251,015 360,846 409,863  Non-current assets 319,257 348,416 376,722 406,395 
+Non-operating profit 5,880 8,099 17,942 30,675  Investments in associates 13,772 25,625 29,204 33,184 
+Net financial income 3,987 6,988 16,831 29,564  PP&E 215,305 232,111 256,339 281,533 
+Net income from associates 683 711 712 711  Intangible assets 29,481 29,980 30,479 30,978 
+Pretax profit 49,481 259,114 378,788 440,538  Total assets 566,942 887,809 1,253,867 1,679,298 
+Income tax 4,275 22,990 33,427 38,777  Current liabilities 106,411 175,580 197,483 221,842 
+Profit from continuing operations 45,207 236,123 345,361 401,761  AP & other payables 34,405 57,742 65,806 74,775 
+Profit from discontinued operations 0 0 0 0  Short-term financial liabilities 18,752 18,752 18,752 18,752 
+NP 45,207 236,123 345,361 401,761  Other current liabilities 53,254 99,086 112,925 128,315 
+Attributable to owners 44,261 231,920 339,213 394,608  Non-current liabilities 24,210 39,464 44,070 49,192 
+Attributable to minority interests 946 4,204 6,149 7,153  Long-term financial liabilities 6,487 6,487 6,487 6,487 
+Total comprehensive income 51,291 241,323 350,561 406,961  Other non-current liabilities 17,723 32,977 37,583 42,705 
+Attributable to owners 49,904 236,471 343,512 398,777  Total liabilities 130,622 215,044 241,552 271,034 
+Attributable to minority interests 1,387 4,853 7,049 8,183  Equity attributable to owners 424,313 656,554 989,955 1,378,752 
+EBITDA 90,528 304,766 417,088 469,224  Capital stock 898 898 898 898 
+FCF 37,793 201,672 318,770 373,627  Capital surplus 4,404 4,404 4,404 4,404 
+EBITDA margin (%) 27.1 50.7 55.0 55.4  Retained earnings 402,136 623,027 951,228 1,334,825 
+OP margin (%) 13.1 41.8 47.6 48.4  Minority interests 12,007 16,211 22,360 29,512 
+Net margin (%) 13.3 38.6 44.7 46.6  Shareholders' equity 436,320 672,765 1,012,315 1,408,264 
+           
+Cash flow statement (summarized)      Key valuation metrics/ratios      
+(Wbn) 2025 2026F 2027F 2028F   2025 2026F 2027F 2028F 
+Operating cash flow 85,315 268,729 395,739 454,681  P/E (x) 18.3 5.8 4.0 3.4 
+NP 45,207 236,123 345,361 401,761  P/CF (x) 8.3 4.4 3.2 2.9 
+Non-cash income/expenses 52,396 68,926 72,010 67,747  P/B (x) 1.9 2.0 1.3 1.0 
+   Depreciation 43,606 50,251 52,741 55,860  EV/EBITDA (x) 7.7 3.4 1.7 0.8 
+   Amortization 3,321 3,501 3,501 3,501  EPS (W) 6,564 34,432 50,361 58,585 
+   Other 5,469 15,174 15,768 8,386  CFPS (W) 14,474 45,289 61,965 69,705 
+Chg. in working capital -9,614 -20,435 -5,152 -5,730  BPS (W) 63,976 98,456 147,954 205,677 
+Chg. in AR & other receivables -2,535 -44,002 -13,286 -14,776  DPS (W) 1,668 1,668 1,668 1,668 
+   Chg. in inventory -3,591 -45,301 -13,678 -15,212  Dividend payout ratio (%) 21.6 4.1 2.8 2.4 
+Chg. in AP & other payables -3,257 12,504 3,567 3,968  Dividend yield (%) 1.4 0.9 0.9 0.9 
+Income tax -7,137 -22,990 -33,427 -38,777  Revenue growth (%) 10.9 80.2 26.2 11.6 
+Cash flow from investing activities -68,512 -128,750 -97,830 -103,896  EBITDA growth (%) 20.1 236.7 36.9 12.5 
+Chg. in PP&E -47,372 -67,057 -76,969 -81,053  OP growth (%) 33.2 475.7 43.8 13.6 
+Chg. in intangible assets -4,617 -4,000 -4,000 -4,000  EPS growth (%) 32.6 424.6 46.3 16.3 
+Chg. in financial assets -9,056 -58,493 -17,661 -19,642  AR turnover (x) 7.0 8.2 7.5 7.3 
+Other -7,467 800 800 799  Inventory turnover (x) 6.4 8.0 7.2 7.1 
+Cash flow from financing activities -13,478 -11,028 -11,012 -11,012  AP turnover (x) 15.9 11.4 9.2 9.1 
+Chg. in financial liabilities 5,909 0 0 0  ROA (%) 8.4 32.5 32.3 27.4 
+Chg. in equity 0 0 0 0  ROE (%) 10.8 42.9 41.2 33.3 
+   Dividends  -9,897 -11,028 -11,012 -11,012  ROIC (%) 13.2 67.3 84.7 87.7 
+Other -9,490 0 0 0  Debt-to-equity ratio (%) 29.9 32.0 23.9 19.2 
+Chg. in cash 4,151 128,358 288,430 340,904  Current ratio (%) 232.8 307.2 444.2 573.8 
+Beginning balance 53,706 57,856 186,215 474,645  Net debt-to-equity ratio (%) -23.1 -42.7 -58.6 -67.7 
+Ending balance 57,856 186,215 474,645 815,549  Interest coverage ratio (x) 72.0 315.3 453.3 514.9 
+Source: Company data, Mirae Asset Securities Research estimates 
+ 
+Samsung Electronics 
+Mirae Asset Securities Research   10 
+March 23, 2026 
+Appendix 1 
+Important disclosures and disclaimers 
+Two-year rating and TP history 
+ 
+Company Date Rating TP (W) 
+ 
+ 
+Samsung Electronics (005930) 03/18/26 Buy 300,000 
+ 02/23/26 Buy 275,000 
+ 01/30/26 Buy 247,000 
+ 01/12/26 Buy 187,000 
+ 12/15/25 Buy 155,000 
+ 10/31/25 Buy 142,000 
+ 10/15/25 Buy 127,000 
+ 09/22/25 Buy 111,000 
+ 09/15/25 Buy 96,000 
+ 08/01/25 Buy 88,000  
+ 07/14/25 Buy 78,000   
+ 02/03/25 Buy 80,000   
+ 11/14/24 Buy 84,000   
+ 05/16/24 Buy 110,000   
+ 01/03/24 Buy 105,000   
+ 
+ 
+ 
+ 
+Ratings distribution and investment banking services 
+ Buy Trading Buy Hold Sell 
+Ratings distribution 79.76% 1.19% 19.05% 0% 
+Investment banking services 83.33% 0% 16.67% 0% 
+* Based on recommendations in the last 12-months (as of December 31, 2025) 
+ 
+Disclosures 
+As of the publication date, Mirae Asset Securities Co., Ltd. has acted as a liquidity provider for equity-linked warrants backed by shares of Samsung Electronics as an 
+underlying asset; other than this, Mirae Asset Securities has no other special interests in the covered companies. 
+ 
+Analyst certification 
+The research analysts who prepared this report (the “Analysts”) are registere d with the Korea Financial Investment Association and are subject to Korean 
+securities regulations. They are neither registered as research analysts in any other jurisdiction nor subject to the laws or  regulations thereof. Each Analyst 
+responsible for the preparation of this report certifies that (i) all views expressed in this report accurately reflect the personal views of the  Analyst about any 
+and all of the issuers and securities named in this report and (ii) no part of the compensation of the Analyst w as, is, or will be directly or indirectly related to 
+the specific recommendations or views contained in this report. Mirae Asset Securities Co., Ltd. (“Mirae Asset Securities”) p olicy prohibits its Analysts and 
+members of their households from owning securities of any company in the Analyst’s area of coverage, and the Analysts do not serve as an officer, director, 
+or advisory board member of the subject companies. Except as otherwise specified herein, the Analysts have not received any c ompensation or any o ther 
+benefits from the subject companies in the past 12 months and have not been promised the same in connection with this report. Like all employees of Mirae 
+Asset Securities, the Analysts receive compensation that is determined by overall firm profitabil ity, which includes revenues from, among other business 
+units, the institutional equities, investment banking, proprietary trading, and private client divisions. At the time of publication of this report, the Analysts do 
+not know or have reason to know of any actual, material conflict of interest of the Analyst or Mirae Asset Securities except as otherwise stated herein.  
+ 
+Disclaimers 
+This report was prepared by Mirae Asset Securities, a broker -dealer registered in the Republic of Korea and a member of the K orea Exchange. Information 
+and opinions contained herein have been compiled in good faith and from sources believed to be reliable, but such information has not been independently 
+verified and Mirae Asset Securities makes no guarantee, representation or wa rranty, express or implied, as to the fairness, accuracy, completeness, or 
+correctness of the information and opinions contained herein or of any translation into English from the Korean language. In case of an English translation 
+of a report prepared in the Korean language, the original Korean language report may have been made available to investors in advance of this report.  
+The intended recipients of this report are sophisticated institutional investors who have substantial knowledge of the local business environment, its common 
+practices, laws, and accounting principles, and no person whose receipt or use of this report would violate any laws or regul ations or subject Mirae Asset 
+Stock ratings Sector ratings 
+Buy Expected 12-month return: +20% or greater Overweight Expected to outperform the market over 12 months 
+Hold Expected 12-month return: Greater than -10% and less than +10% Neutral Expected to perform in line with the market over 12 months   
+Sell Expected 12-month return: -10% or less  Underweight Expected to underperform the market over 12 months 
+As of May 12, 2025, the Trading Buy rating category has been removed from our investment rating system. 
+Stocks expected to deliver a 12-month return between +10% and less than +20% may be rated either Buy or Hold at the discretion of the research analyst.  
+Rating and TP history: Share price (─), TP (▬), Not Rated (■), Buy (▲), Trading Buy (■), Hold (●), Sell (♦) 
+* Our investment rating is a guide to the expected return of the stock over the next 12 months. 
+* Outside of the official ratings of Mirae Asset Securities Co., Ltd., analysts may call trading opportunities should technical or short-term material developments arise. 
+* The TP was determined by the research analyst through valuation methods discussed in this report, in part based on estimates of future earnings. 
+* TP achievement may be impeded by risks related to the subject securities and companies, as well as general market and economic conditions. 
+0
+100,000
+200,000
+300,000
+400,000
+Mar 24 Mar 25 Mar 26
+(W) Samsung Electronics
+Samsung Electronics 
+Mirae Asset Securities Research   11 
+March 23, 2026 
+Securities or any of its affiliates to registration or licensing requireme nts in any jurisdiction shall receive or make any use hereof.  
+This report is for general information purposes only and is not and shall not be construed as an offer or a solicitation of an offer to effect transactions in any 
+securities or other financial instruments. The report does not constitute investment advice to any person, and such person shall not be treated as a client of 
+Mirae Asset Securities by virtue of receiving this report. This report does not take into account the particular investment o bjectives, financial situations, or 
+needs of individual clients. The report is not to be relied upon in substitution for the exercise of independent judgment. Information and opinions contained 
+herein are as of the date hereof and are subject to change withou t notice. The price and value of the investments referred to in this report and the income 
+from them may depreciate or appreciate, and investors may incur losses on investments. Past performance is not a guide to fut ure performance. Future 
+returns are not guaranteed, and a loss of original capital may occur. Mirae Asset Securities, its affiliates, and their directors, officers, employees, and agents 
+do not accept any liability for any loss arising out of the use hereof.  
+Mirae Asset Securities may have issued other reports that are inconsistent with, and reach different conclusions from, the opinions presented in this report. 
+The reports may reflect different assumptions, views, and analytical methods of the analysts who prepared them. Mirae Asset S ecurities may make 
+investment decisions that are inconsistent with the opinions and views expressed in this research report. Mirae Asset Securit ies, its affiliates, and their 
+directors, officers, employees, and agents may have long or short positions in any of the s ubject securities at any time and may make a purchase or sale, or 
+offer to make a purchase or sale, of any such securities or other financial instruments from time to time in the open market or otherwise, in each case either 
+as principals or agents. Mirae Asset Securities and its affiliates may have had, or may be expecting to enter into, business relationships with the subject 
+companies to provide investment banking, market -making, or other financial services as are permitted under applicable laws and regu lations. 
+No part of this document may be copied or reproduced in any manner or form or redistributed or published, in whole or in part , without the prior written 
+consent of Mirae Asset Securities. For further information regarding company -specific information as it pertains to the representations and disclosures in 
+this Appendix 1, please contact compliance@miraeasset.us.com or +1 (212) 407 -1000. 
+ 
+Distribution 
+United Kingdom: This report is being distributed by Mirae Asset Securities (UK) Ltd. in the United Kingdom only to (i) investment professio nals falling within 
+Article 19(5) of the Financial Services and Markets Act 2000 (Financial Promotion) Order 2005 (the “Order”), an d (ii) high net worth companies and other 
+persons to whom it may lawfully be communicated, falling within Article 49(2)(A) to (E) of the Order (all such persons togeth er being referred to as “Relevant 
+Persons”). This report is directed only at Relevant Persons. Any person who is not a Relevant Person should not act or rely on this report or any of its contents.   
+United States: Mirae Asset Securities is not a registered broker-dealer in the United States and, therefore, is not subject to U.S. rules regarding the preparation 
+of research reports and the independence of research analysts. This report is distributed in the U.S. by Mirae Asset Securiti es (USA) Inc., a member of 
+FINRA/SIPC, to “major U.S. institutional investors” in reliance on the exemption from registration provided by Rule 15a -6(b)(4) under the U.S. Securities 
+Exchange Act of 1934, as amended. All U.S. persons that receive this document by their acceptance hereof represent and warran t that they are a major U.S. 
+institutional investor and have no t received this report under any express or implied understanding that they will direct commission income to Mirae Asset 
+Securities or its affiliates. Any U.S. recipient of this document wishing to effect a transaction in any securities discussed  herein should contact and place 
+orders with Mirae Asset Securities (USA) Inc. Mirae Asset Securities (USA) Inc. accepts responsibility for the contents of th is report in the U.S., subject to the 
+terms hereof, to the extent that it is delivered to a U.S. person other than a major U.S. institutional investor. Under no circumstances should any recipient of 
+this research report effect any transaction to buy or sell securities or related financial instruments through Mirae Asset Se curities. The securities described 
+in this report may not have been registered under the U.S. Securities Act of 1933, as amended, and, in such case, may not be offer ed or sold in the U.S. or to 
+U.S. persons absent registration or an applicable exemption from the registration requirements.   
+Hong Kong SAR: This report is distributed in Hong Kong SAR by Mirae Asset Securities (HK) Limited, which is regulated by the Hong Kong Sec urities and 
+Futures Commission. The contents of this report have not been reviewed by any regulatory authority in Hong Kon g SAR. This report is for distribution only 
+to professional investors within the meaning of Part I of Schedule 1 to the Securities and Futures Ordinance of Hong Kong SAR (Cap. 571, Laws of Hong Kong 
+SAR) and any rules made thereunder and may not be redistr ibuted in whole or in part in Hong Kong SAR to any person.  
+India: This report is being distributed by Mirae Asset Capital Markets (India) Private Limited (“MACM”) in India to the customers based in India and is personal 
+information only for those authorise d recipient(s). MACM is inter alia a Securities and Exchange Board of India (“SEBI”) registered Research Analyst in India 
+and is not registered outside India. MACM and Mirae Asset, Korea are group entities. MACM makes no guarantee, representation or warranty, express or 
+implied, as to the fairness, accuracy, completeness or correctness of the information and opinions contained herein. The user  assumes the entire risk of any 
+use made of this information. This report has been provided for assistance only and is not intended to be and must not alone be taken as the basis for an 
+investment decision. Recipient must read the entire Appendix 1 to the report carefully for Important Disclosures & Disclaimer s. 
+All other jurisdictions: Customers in all other countries who wish to effect a transaction in any securities referenced in this report should contact Mirae Asset 
+Securities or its affiliates only if distribution to or use by such customer of this report would not violate applicable laws and regulations and not subject Mirae 
+Asset Securities and its affiliates to any registration or licensing requirement within such jurisdiction.  
+Samsung Electronics 
+Mirae Asset Securities Research   12 
+March 23, 2026 
+Mirae Asset Securities International Network 
+Mirae Asset Securities Co., Ltd. (Seoul)  Mirae Asset Securities (HK) Ltd.  Mirae Asset Securities (UK) Ltd. 
+One-Asia Equity Sales Team 
+Mirae Asset Center 1 Building  
+26 Eulji-ro 5-gil, Jung-gu, Seoul 04539 
+Korea 
+ Units 8501, 8507-8508, 85/F 
+International Commerce Centre 
+1 Austin Road West 
+Kowloon 
+Hong Kong SAR 
+ 41st Floor, Tower 42 
+25 Old Broad Street, 
+London EC2N 1HQ 
+United Kingdom 
+ 
+Tel: 82-2-3774-2124  Tel: 852-2845-6332  Tel: 44-20-7982-8000  
+Mirae Asset Securities (USA) Inc.  Mirae Asset Wealth Management (Brazil) CCTVM  PT. Mirae Asset Sekuritas Indonesia 
+810 Seventh Avenue, 37th Floor  
+New York, NY 10019 
+USA 
+ 
+ 
+ Rua Funchal, 418, 18th Floor, E-Tower Building  
+Vila Olimpia 
+Sao Paulo - SP 
+04551-060 
+Brazil 
+ District 8, Treasury Tower Building Lt. 50 
+Sudirman Central Business District 
+Jl. Jend. Sudirman, Kav. 52-54  
+Jakarta Selatan 12190 
+Indonesia 
+Tel: 1-212-407-1000  Tel: 55-11-2789-2100  Tel: 62-21-5088-7000 
+Mirae Asset Securities (Singapore) Pte. Ltd.  Mirae Asset Securities (Vietnam) LLC  Mirae Asset Securities Mongolia UTsK LLC 
+6 Battery Road, #11-01 
+Singapore 049909 
+Republic of Singapore 
+ 
+ 7F, Saigon Royal Building 
+91 Pasteur St. 
+District 1, Ben Nghe Ward, Ho Chi Minh City 
+Vietnam  
+ 
+ #406, Blue Sky Tower, Peace Avenue 17 
+1 Khoroo, Sukhbaatar District 
+Ulaanbaatar 14240 
+Mongolia 
+ 
+Tel: 65-6671-9845  Tel: 84-8-3911-0633 (ext.110)  Tel: 976-7011-0806 
+Mirae Asset Investment Advisory (Beijing) Co., Ltd  Beijing Representative Office  Shanghai Representative Office 
+2401B, 24th Floor, East Tower, Twin Towers 
+B12 Jianguomenwai Avenue, Chaoyang District  
+Beijing 100022 
+China 
+ 
+ 2401A, 24th Floor, East Tower, Twin Towers 
+B12 Jianguomenwai Avenue, Chaoyang District  
+Beijing 100022 
+China 
+ 
+ 38T31, 38F, Shanghai World Financial Center 
+100 Century Avenue, Pudong New Area  
+Shanghai 200120 
+China 
+Tel: 86-10-6567-9699  Tel: 86-10-6567-9699 (ext. 3300)  Tel: 86-21-5013-6392 
+Ho Chi Minh Representative Office  Mirae Asset Capital Markets (India) Pvt Ltd   
+7F, Saigon Royal Building 
+91 Pasteur St. 
+District 1, Ben Nghe Ward, Ho Chi Minh City 
+Vietnam  
+ 
+ 1st Floor, Tower 4, Equinox Business Park, 
+LBS Marg, Off BKC, Kurla (West), Mumbai - 400 070 
+India 
+ 
+  
+Tel: 84-8-3910-7715  Tel: 91-22-62661300 / 48821300   
+ 
+ 
+ 

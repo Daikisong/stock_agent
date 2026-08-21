@@ -1,0 +1,45 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Use Mirae Asset Securities official research-report landing page and its directly attached PDF for the specific 2026-05-11 SK hynix report; verify publisher, target, publication date, and full-document availability before extraction.",
+      "In the fetched report, distinguish analyst estimates from issuer statements and test for explicit FY2026/FY2027 HBM revenue and operating-profit values, units, periods, assumptions, and downside or supersession discussion. Do not promote search snippets or the read-only lead."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 미래에셋 2026-05-11 HBM 매출 영업이익 리포트 PDF",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "A read-only lead identifies a specific 2026-05-11 Mirae Asset research-report landing page or attached PDF that is absent from all 33 executed queries. This is a meaningfully new publisher-and-date-bounded document route, not a synonym rewrite of the prior generic EPS, P/B, EV/EBITDA, or peer-report searches. Fetch the full report only to verify whether it contains explicit FY2026/FY2027 SK hynix HBM revenue and operating-profit forecast values and their assumptions or counterevidence; the lead itself is not a fact, and analyst estimates cannot substitute for issuer-only FORWARD_GUIDANCE or SEGMENT_CONTRIBUTION.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "The 2026-05-11 Mirae Asset document is only a discovery lead. Until the official landing page or PDF is fetched and its target, date, and numeric forecast rows are verified, it supplies no claim or EvidenceFact.",
+      "Even if the report contains FY2026/FY2027 forecasts, PUBLIC_BROKER_PDF is third-party analysis. It may inform the eps_fcf_explosion forecast bridge and counterevidence, but it cannot close issuer-only FORWARD_GUIDANCE or SEGMENT_CONTRIBUTION contracts and does not by itself resolve DURABLE_VISIBILITY."
+    ]
+  },
+  "payload_hash": "b6a462dfddf7a65d3bf250868dfdb89f1d8fecf0037ead3164477e0319c9c5df",
+  "production_score_authority": false,
+  "prompt_hash": "f65b69d6ec11de5e14359aa4af3c2779a74ae3f188c6376ce6b57a63a822e51e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-473008622e92e0978a1d303adbd550bdb9cf28def65f6b69465ab6414da97e84",
+  "response_id": "COLLABRESP-8bd68766bf981c4eef43e3698b3608fcc6432128b21a6ba57fa5fdfeb5590aad",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-942b21e43aac75b1898b077b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "[모닝리포트] 2026년 3월 3일: SK하이닉스, 삼성전자, 한국전력, 효성중공업, 삼성.... 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-9527e5ffbcf1abaa913ed576",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "기술_시장 자료 도메인 특화형 반도체/ASIC/SoC(System on Chip)/AI·ML추론 칩 백서 2026.... 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-efc3712b54486c992374585f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성전자주식회사 사내근로복지기금 | 고려대학교 산학협력 기술사업화 플랫.... 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-05e505866e3dc9a217f78864",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "주요 동향(2) : ICT 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-7b52c057633c9d963883d09c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "GDDR 메모리 시장 규모, 점유율 및 2031년 성장 추세 보고서 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-7d0b6c2b8e9720441578ea14",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "2025년에 바라보는 CES 2026 핵심 정리 (feat. SAMSUNG, SK, LG) 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-57938be3844d07cd335cf159",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "차세대 메모리 시장 규모 및 성장 2031 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-d76c157093a47f7a8e24263d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성전자-AMD, AI 반도체 ‘초밀착 동맹’… HBM4 우선 공급으로 판 바꾼다 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-47f4952350c14a0da353685d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "영업이익률 '58%'…SK하이닉스, TSMC 제치고 100兆 시대 연다 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-f64081deb2dbe310fd8873d3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "[삼성전자(주) 연혁과 역사] 1969년 1월13일 삼성전자공업주식회사 설립 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-3a36d50893924b4b52f3e185",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "2026년 반도체 관련주 전망과 투자 유망주 Top 10 분석 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-fbb86c33c85312b8d4546468",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "3D 스태킹 시장 규모, 점유율 | 글로벌 산업 보고서 [2034] 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "모든 후보를 discovery route로만 판정했으며 스니펫을 EvidenceFact나 점수 근거로 사용하지 않았다.",
+      "이 partition에서는 요청된 CUSTOMER_OFFICIAL 고객사 원문 경로가 확인되지 않았다. 제3자 재전과 삼성전자 자체 발행자료는 고객사 독립 확인을 대체하지 않는다."
+    ]
+  },
+  "payload_hash": "f12d74a89cfb2812b707498890083b012508b15a4d5fcd90e69f9fa973b2d163",
+  "production_score_authority": false,
+  "prompt_hash": "eea8ba321ff2ca6359bd7b18a1aae8b976121103ddedcaa0092ef847e11057c2",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-904c85cc56fcccdff0a26da39f851a1de70989412a8aab0ab6b52dce5570e149",
+  "response_id": "COLLABRESP-8cee3c6d1f3aedb5dec73d8079476293a91c029018304f2902ee8460cb6dff68",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

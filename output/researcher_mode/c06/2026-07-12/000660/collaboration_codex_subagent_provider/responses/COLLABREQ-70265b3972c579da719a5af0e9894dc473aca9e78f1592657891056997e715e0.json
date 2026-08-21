@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "09aab73a38069b2d403176596fb5f250a58d3ed14c7a93378156d522fc42d3c2",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-2b37e620f3a009cdee9c97f4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성전자용 제3자 기업모니터 페이지로 SK하이닉스 public broker PDF 원문이 아니다. 대상과 source-family가 모두 맞지 않으며 snippet에 as_of_date 이후 리포트 목록도 포함돼 있다."
+      },
+      {
+        "candidate_id": "SGCAND-5dd178dc04c6657c9504a4a9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-a1647de7fe3b0347f80c3983",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-2b1627d822077e66fcdda882",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.56,
+        "rationale": "하나증권 직접 산업 PDF이고 SK하이닉스의 2026년 HBM 공급량·DRAM CAPA 맥락을 명시한다. 발행 시점은 오래됐지만 current valuation 분모와 HBM earnings bridge를 원문에서 대조할 보조 경로로는 관련성이 있다."
+      },
+      {
+        "candidate_id": "SGCAND-6b401cd0c7e939570329179c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-9012bbb357922b3451718fff",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-e9b8f1613f4272fbb00c00f3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.04,
+        "rationale": "PBR과 예상 BPS를 언급하는 제3자 뉴스 기사이지만 요청된 public broker PDF 원문이 아니다. source-family가 맞지 않으므로 기사 snippet을 valuation 증거나 material fetch로 취급하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-d6acec522be4659c14165270",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.08,
+        "rationale": "신영증권 직접 PDF라는 계열은 맞지만 2024년 산업자료의 과거 BPS/PBR·CAPA 맥락이다. 2026-07-12 현재 SK하이닉스의 forward BPS/PBR 또는 EV/EBITDA 점값을 해소하는 경로로는 너무 오래되고 비특정적이다."
+      },
+      {
+        "candidate_id": "SGCAND-3e0893f1040202333d82795d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-f061806dd1b444b02d4bd50d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-e89ac5a58cdcfbe36522c81e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.76,
+        "rationale": "SK증권이 직접 제공하는 반도체 valuation PDF이며 제목과 발견 메타데이터가 SK하이닉스의 12개월 forward multiple band를 명시한다. PBR 중심 평가에서 새로운 multiple로 전환되는 경제적 연결과 기간별 배수를 원문 확인할 material 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-c36a03c9f2445dc9a46473e3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 모든 후보를 정확히 한 번씩 분류했다. material 후보도 아직 원문 fetch·parse 전이며, 발견 snippet은 증거로 사용하지 않았다."
+    ]
+  },
+  "payload_hash": "499cb066350500ca20ec07c876e572991937649bf5edb0d997b7ff644e48ec5a",
+  "production_score_authority": false,
+  "prompt_hash": "739a529d601ed6f4cacb8137e4c0ce5e40cdafb489182ecddbcfc4ba9fb12d50",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-70265b3972c579da719a5af0e9894dc473aca9e78f1592657891056997e715e0",
+  "response_id": "COLLABRESP-d802d9cecef6da5d0b93bdc6b5679cbd1e4743ee0cbe237de13a0d2ebce1af09",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

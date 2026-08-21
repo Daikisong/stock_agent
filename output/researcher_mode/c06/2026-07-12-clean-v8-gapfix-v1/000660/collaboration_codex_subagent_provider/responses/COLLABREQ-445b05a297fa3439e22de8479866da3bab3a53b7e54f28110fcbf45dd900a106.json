@@ -1,0 +1,229 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-7ad7370ba36a061011a502fc",
+        "rationale": "전문을 검토해 HBM 실현 가격 기여와 고객 공급량·가격 합의 주기 2건을 추출했다. 그 밖의 전사 매출·CAPEX·DRAM ASP·위험관리 수치는 current 67 semantic state와 중복되거나 HBM/허용 세그먼트에 독립 귀속되지 않는다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-a2de46b6c6bf08dc11a40d16",
+        "rationale": "전문을 검토했다. 배당·자금조달·현금흐름·유형자산 약정은 current 67의 주주환원·자금조달·현금흐름·생산설비 의미와 중복되고, NAND 의무와 일반 특수관계 거래는 허용 제품/현재 목표 범위 밖이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "rationale": "전문을 검토해 CIS의 AI 메모리 전환 결정과 HBM 고객 ASIC 개발 협업 2건을 추출했다. 연결 실적·DRAM 점유율·R&D 비용은 current semantic state와 중복되고, NAND 및 산업 일반 전망은 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-dd72c1e74089a8c8524a106a",
+        "rationale": "전문을 검토했다. DRAM 매출, 연결 비용·주당이익·배당·유형자산 약정·금융위험은 current 67의 동일 경제 의미와 중복되며, 특수관계 거래와 NAND 조건은 목표 직접성이 없거나 허용 범위 밖이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-de8e1147336ba33b29bf9138",
+        "rationale": "전문을 검토했다. 연결/별도 현금흐름·유형자산 취득·유동성·차입금·주식보상은 current semantic state와 중복되고, 회계기준 변경 및 일반 재무분류는 현재 HBM·메모리 목표를 직접 진전시키지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "메모리",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-7ad7370ba36a061011a502fc",
+        "economic_mechanism": "제한된 공급 환경에서 HBM이 가격 상승을 주도한 제품군에 포함돼 2026년 1분기 실적과 수익률 전환을 지지했다.",
+        "exact_quote": "계절적 비수기에도 불구하고 견조한 수요 대비 제한된 공급 환경이 지속되며 HBM 및 서버 DARM, 고성능/고용량 eSSD 등 다양한 제품이 가격 상승을 주도하면서 사상 최대 실적과 최고 수익률을 기록하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사 규제공시가 HBM을 실제 가격 상승 주도 제품군으로 명시해 HBM bottleneck-pricing의 실현 여부를 직접 진전시킨다. 단, HBM 단독 ASP 수치로 확대하지 않는다.",
+        "mechanism_scope_id": "SK_HYNIX_HBM_PRICING_POWER",
+        "normalized_object": "2026년 1분기 HBM의 실현 가격 상승 기여",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "HBM_INCLUDED_AMONG_PRODUCTS_LEADING_PRICE_INCREASES",
+        "predicate_family": "REALIZED_PRODUCT_PRICING",
+        "primitive_tags": [
+          "HBM",
+          "PRICING_ACTUAL"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_REALIZED_PRICING",
+        "question_family_tags": [
+          "HBM",
+          "REALIZED_PRICING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM",
+        "subject_id": "SK_HYNIX_HBM_2026Q1_PRICING",
+        "unit": "status",
+        "value": "가격 상승 주도 제품군에 포함"
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-7ad7370ba36a061011a502fc",
+        "economic_mechanism": "주요 고객 공급 물량과 가격이 월별 또는 분기별 상호 합의로 정해져 계약 가시성의 확인 주기가 짧다.",
+        "exact_quote": "당사는 주요 고객사들과 월별/분기별 상호 합의에 따른 공급 물량 및 가격을 결정하고 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객 공급량과 가격의 결정 주기를 발행사가 직접 밝혀 earnings visibility와 고객 allocation의 계약 성격을 판단하게 한다. 장기계약, 확정 물량 또는 고정가격으로 확대하지 않는다.",
+        "mechanism_scope_id": "SK_HYNIX_MEMORY_CUSTOMER_ALLOCATION_CADENCE",
+        "normalized_object": "주요 고객 공급 물량·가격 결정 주기",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 disclosure",
+        "predicate": "SUPPLY_VOLUME_AND_PRICE_SET_BY_MONTHLY_OR_QUARTERLY_MUTUAL_AGREEMENT",
+        "predicate_family": "CUSTOMER_SUPPLY_TERM_CADENCE",
+        "primitive_tags": [
+          "CUSTOMER_COMMITMENT",
+          "MEMORY_GENERIC"
+        ],
+        "product_family": "메모리 제품",
+        "question_family_id": "CUSTOMER_ALLOCATION_COMMITMENT_CADENCE",
+        "question_family_tags": [
+          "CUSTOMER_ALLOCATION",
+          "SUPPLY_TERM_CADENCE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 주요 고객 공급 물량 및 가격",
+        "subject_id": "SK_HYNIX_MEMORY_CUSTOMER_SUPPLY_TERMS",
+        "unit": "cadence",
+        "value": "월별/분기별 상호 합의"
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "economic_mechanism": "기존 CIS 사업부문을 AI 메모리 분야로 전환하기로 한 결정은 AI 메모리 공급 역량에 자원을 재배치하는 방향을 보여준다.",
+        "exact_quote": "2025년 3월 CIS 사업부문은 AI 메모리 분야로 전환하기로 결정하였습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "AI 메모리로의 자원 재배치 방향은 공급 대응과 자본배분 목적을 진전시키지만, 실제 CAPA·투자액·완료 시점은 확인되지 않아 계획을 실현치로 승격하지 않는다.",
+        "mechanism_scope_id": "SK_HYNIX_AI_MEMORY_SUPPLY_REALLOCATION",
+        "normalized_object": "CIS 사업부문의 AI 메모리 전환 결정",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-03",
+        "predicate": "DECIDED_TO_TRANSITION_CIS_BUSINESS_TO_AI_MEMORY",
+        "predicate_family": "AI_MEMORY_PORTFOLIO_REALLOCATION",
+        "primitive_tags": [
+          "PORTFOLIO_REALLOCATION",
+          "ISSUER_DECISION"
+        ],
+        "product_family": "AI 메모리",
+        "question_family_id": "AI_MEMORY_CAPACITY_REALLOCATION",
+        "question_family_tags": [
+          "AI_MEMORY",
+          "SUPPLY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 CIS 사업의 AI 메모리 전환",
+        "subject_id": "SK_HYNIX_CIS_TO_AI_MEMORY_TRANSITION",
+        "unit": "status",
+        "value": "AI 메모리 분야 전환 결정"
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.88,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "economic_mechanism": "HBM 성능·품질을 기반으로 고객과 ASIC 개발 협업을 진행해 고객 요구가 제품 개발에 연결되는 상용화 경로를 형성한다.",
+        "exact_quote": "당사는 HBM제품의 Time to Market을 실현하고 대역폭과 Density/Core Die 적층 단수 상향 등 업계 최고 수준의 성능과 품질에 기반하여 고객들과 ASIC 개발에 더욱 협력하고 있으며, 이를 토대로 HBM 시장을 선도하기 위해 최선의 노력을 다하고 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "발행사가 HBM 고객 공동개발 경로를 직접 설명해 제품 상용화와 고객 관계를 진전시키지만, 고객명·인증·물량·계약조건은 확인되지 않아 durable visibility로 분류하지 않는다.",
+        "mechanism_scope_id": "SK_HYNIX_HBM_CUSTOMER_ASIC_COLLABORATION",
+        "normalized_object": "HBM 기반 고객 ASIC 개발 협업",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 disclosure",
+        "predicate": "COLLABORATING_WITH_CUSTOMERS_ON_ASIC_DEVELOPMENT_FOR_HBM",
+        "predicate_family": "HBM_CUSTOMER_PRODUCT_COLLABORATION",
+        "primitive_tags": [
+          "ASIC_DEVELOPMENT",
+          "PRODUCT_COMMERCIALIZATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_CUSTOMER_PRODUCT_COLLABORATION",
+        "question_family_tags": [
+          "HBM",
+          "CUSTOMER_COLLABORATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 고객 ASIC 개발 협업",
+        "subject_id": "SK_HYNIX_HBM_ASIC_CUSTOMER_COLLABORATION",
+        "unit": "status",
+        "value": "고객들과 ASIC 개발 협력"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "54a03562414fa5fc53a5c55b251880a2b12010a746a9203888b6bee14fbfa470",
+  "production_score_authority": false,
+  "prompt_hash": "b385af56f28ff2fe55c26d47670b1da8cf1e85d209265fec54a85c04992af362",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-445b05a297fa3439e22de8479866da3bab3a53b7e54f28110fcbf45dd900a106",
+  "response_id": "COLLABRESP-4ecd9a83f7aaaba4191835e76e590d99c433d33bfd51a3a6e4a30181b66a9233",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "RESEARCH_SUPERVISOR_B 독립 재검토에서 positive·counter·supersession 경로와 7개 memo의 bounded score 근거가 일치한다. HBM-only 귀속, signed 계약조건, HBM-only CAPA·ASP의 공개 corroboration 한계는 상단 제한이지 deterministic score를 무효화하는 material gap이 아니다. 같은 source/query family 반복은 새 accepted lineage를 만들 합리적 경로가 아니므로 saturation을 승인한다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "4553bbfca891ee26ab5003fdeb605e99c8522989345fabb5ca3dc63b80f28da0",
+  "production_score_authority": false,
+  "prompt_hash": "06b2ce99b66e136ca395de28f37fe4927f3cd85469a8fd61d6b76dede3698ba6",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9a9720095d4355dd5b9c52ea86c147ac780c9a91371a29146663d7d5814e4be6",
+  "response_id": "COLLABRESP-c32cbde2dec8ec9fc7f9a7781470ba4737fa9a444fada888f7e8b0c336b423ff",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

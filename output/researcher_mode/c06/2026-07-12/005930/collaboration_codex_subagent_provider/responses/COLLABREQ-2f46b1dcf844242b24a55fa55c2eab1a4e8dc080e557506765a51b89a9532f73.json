@@ -1,0 +1,225 @@
+{
+  "output_schema_hash": "8798bef6149d264dd5c20d1476de0260b77b92c365ac2dfbfd680f02ad54e59f",
+  "payload": {
+    "confidence": 0.75,
+    "counter_case": "메모리 실적은 물량보다 가격 급등에 민감하고 일회성 비용·램프 비용·CAPEX·운전자본이 현금 잔존을 낮출 수 있다. 한화 보고서 원문을 찾지 못한 상태라 HBM4 물량·가격·원가·램프 비용의 명시적 bridge를 확인할 수 없으며 전사 FCF나 메모리 이익을 HBM 단독 현금전환으로 확대하지 않는다.",
+    "historical_anchor_ids": [
+      "CANCH-2fb324f77e56e0e487863c17",
+      "CANCH-d3ec23639ebd5c1f8d20fd03"
+    ],
+    "nearest_counter_anchor_ids": [
+      "CANCH-d3ec23639ebd5c1f8d20fd03"
+    ],
+    "nearest_positive_anchor_ids": [
+      "CANCH-2fb324f77e56e0e487863c17"
+    ],
+    "positive_case": "HBM·고용량 DDR5 믹스가 ASP와 메모리 매출을 높였고 실제 메모리 이익과 전사 현금전환이 함께 확인된다. 현재 근거는 회사와 메모리 사업 수준의 이익·현금 확대를 강하게 지지한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 76,
+        "reason": "일회성 비용이 메모리 이익을 낮춘 실제 counter다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 199,
+        "reason": "공식 메모리 매출은 이익 전환의 외형 기반이다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 270,
+        "reason": "가격 지속성에 대한 이익 민감도를 보여준다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 358,
+        "reason": "컨센서스 상회와 메모리 이익 기여를 연결한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 385,
+        "reason": "메모리 매출과 이익의 동시 최고 기록이다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 405,
+        "reason": "수요·램프 비용의 이익 상쇄 경로다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 417,
+        "reason": "분기 메모리 매출 성장의 직접 근거다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 430,
+        "reason": "물량보다 가격에 의존한 지속성 반증이다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 438,
+        "reason": "HBM 판매·가격 하락의 과거 실적 counter다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 444,
+        "reason": "외부 전사 FCF 상방 추정이지만 범위를 제한해 사용할 수 있다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 446,
+        "reason": "고부가 믹스에서 ASP·매출로 이어지는 경로다."
+      }
+    ],
+    "proposed_score_lower": 16.5,
+    "proposed_score_mid": 17.9,
+    "proposed_score_upper": 19.1,
+    "research_complete": true,
+    "researcher_summary": "공식 메모리 매출, 기록적 메모리 매출·이익, 컨센서스 상회와 구조화 실제 OCF·CAPEX·FCF는 메모리 가격·믹스가 전사 이익과 현금으로 전환된 경로를 지지한다. 그러나 연결·메모리 수치는 HBM 단독 경제성이 아니며 가격 의존, 일회성 비용, 램프 비용과 투자가 지속성을 제한한다. Supervisor가 지정한 한화 report 1110991의 exact 검색은 0건이었고 candidate·full fetch도 없었으므로 보고서 부재 또는 HBM4 bridge 부재가 입증된 것이 아니다. 공식 archive/download direct route가 남아 있어 새 수치를 선반영하지 않고 범위와 confidence를 낮춘다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "가격·믹스 개선이 있어도 평가충당금과 일회성 비용이 분기 이익 전환을 훼손할 수 있는 실측 counter다.",
+        "fact_row_index": 76,
+        "source_economic_mechanism": "재고자산 평가 충당금 등 일회성 비용이 2025년 2분기 메모리 실적을 낮췄다.",
+        "source_period_json": "\"2025-Q2\"",
+        "source_predicate": "2025년 2분기 메모리 실적이 재고자산 평가 충당금 등 일회성 비용으로 하락했다",
+        "source_value_json": "\"inventory valuation provisions and other one-time costs reduced performance\""
+      },
+      {
+        "component_interpretation": "대규모 메모리 매출은 이익·현금 확대의 외형 기반이지만 HBM 단독 매출은 아니다.",
+        "fact_row_index": 199,
+        "source_economic_mechanism": "MEMORY_REVENUE_CONVERSION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 메모리 제품 매출액이 74,779,980백만원이다",
+        "source_value_json": "74779980"
+      },
+      {
+        "component_interpretation": "현재 이익 폭발이 물량보다 가격 지속성에 민감해 가격 정상화 시 추정치와 현금이 빠르게 낮아질 수 있다.",
+        "fact_row_index": 270,
+        "source_economic_mechanism": "삼성전자 이익 추정치가 출하량보다 메모리 가격 지속성에 더 민감하다는 분석은 높은 가격 상승률의 둔화가 영업레버리지를 반대로 되돌릴 수 있다는 counter다.",
+        "source_period_json": "\"2026 outlook as of 2026-07-01\"",
+        "source_predicate": "메모리 가격 상승률이 둔화되면 삼성전자 이익 추정치가 빠르게 흔들릴 수 있고 단기 실적은 출하량보다 가격 지속성에 더 민감하다고 분석됐다.",
+        "source_value_json": "\"earnings estimates are more sensitive to price durability than shipment growth\""
+      },
+      {
+        "component_interpretation": "전사 실적 상회와 메모리 이익 기여가 실제 earnings bridge를 보여주지만 제품별 HBM 이익으로 귀속하지 않는다.",
+        "fact_row_index": 358,
+        "source_economic_mechanism": "전사 잠정실적의 컨센서스 상회와 54.3조원 메모리 영업이익 기여를 같은 문단이 연결해 valuation 재평가의 실제 earnings bridge를 제시한다.",
+        "source_period_json": "\"2026-Q1 preliminary result; one-month consensus as of 2026-04-08\"",
+        "source_predicate": "삼성전자 1Q26 잠정 매출 133.0조원과 영업이익 57.2조원은 1개월 컨센서스 123.4조원과 43.8조원을 크게 상회했고 메모리 영업이익 54.3조원이 성장을 견인했다",
+        "source_value_json": "\"revenue KRW 133.0tn and OP KRW 57.2tn versus consensus KRW 123.4tn and KRW 43.8tn; memory OP KRW 54.3tn\""
+      },
+      {
+        "component_interpretation": "기록적 매출과 이익의 동시 달성은 메모리 외형이 이익으로 전환된 공식 근거다.",
+        "fact_row_index": 385,
+        "source_economic_mechanism": "분기 메모리 매출과 영업이익의 동시 사상 최고 기록은 외형 확대가 수익성으로 전환됐음을 직접 보여준다.",
+        "source_period_json": "\"2025-Q4\"",
+        "source_predicate": "메모리 사업은 2025년 4분기에 사상 최고 분기 매출과 영업이익을 달성했다",
+        "source_value_json": "\"record-high quarterly revenue and operating profit\""
+      },
+      {
+        "component_interpretation": "수요 약세와 선단공정 램프 비용이 이익·현금 전환을 상쇄할 수 있음을 보여준다.",
+        "fact_row_index": 405,
+        "source_economic_mechanism": "모바일·PC 수요 약세와 연구개발비·선단공정 초기 램프업 비용이 가격·제품 믹스 개선의 이익 전환을 일부 상쇄했다.",
+        "source_period_json": "\"2024-Q4\"",
+        "source_predicate": "모바일·PC 메모리 수요 약세와 연구개발비·선단공정 초기 램프업 비용 증가로 2024년 4분기 메모리 실적이 하락했다",
+        "source_value_json": "\"weak mobile and PC demand plus higher R&D and advanced-process ramp-up costs reduced performance\""
+      },
+      {
+        "component_interpretation": "전분기 대비 매출 급증은 이익 폭발의 매출 기반을 강화하지만 가격과 물량 기여를 분리하지는 못한다.",
+        "fact_row_index": 417,
+        "source_economic_mechanism": "메모리 사업부 매출이 2026년 1분기에 전분기 대비 두 배 이상으로 늘어 실제 이익 폭발의 매출 기반이 확대됐다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q4\"",
+        "source_predicate": "삼성전자 메모리 사업부 매출이 2026년 1분기에 전분기 대비 101% 증가했다",
+        "source_value_json": "101"
+      },
+      {
+        "component_interpretation": "물량 증가 없는 가격 의존은 이익 증가의 반복성과 현금 지속성을 낮추는 핵심 counter다.",
+        "fact_row_index": 430,
+        "source_economic_mechanism": "메모리 물량이 크게 늘지 않은 상태에서 가격 급등에 의존한 이익은 가격 사이클이 둔화될 때 지속성이 약해질 수 있다.",
+        "source_period_json": "\"2026-Q2 current risk\"",
+        "source_predicate": "삼성전자 메모리 실적이 큰 물량 증가 없이 가격 급등에 의존한다는 불안이 제기됐다",
+        "source_value_json": "\"earnings depend on price surge without large volume growth\""
+      },
+      {
+        "component_interpretation": "HBM 물량과 가격이 동시에 약해질 때 제품 실적이 반대로 전환될 수 있다는 직접 counter다.",
+        "fact_row_index": 438,
+        "source_economic_mechanism": "HBM 판매 감소와 가격 하락이 동시에 발생해 메모리 실적을 낮춘 당시 이익 전환 counter다.",
+        "source_period_json": "\"2025-Q1\"",
+        "source_predicate": "2025년 1분기 HBM 판매 감소와 가격 하락이 실적에 부정적 영향을 줬다",
+        "source_value_json": "\"HBM 판매 감소 및 가격 하락에 따른 실적 영향\""
+      },
+      {
+        "component_interpretation": "큰 전사 FCF 전망은 상방을 제시하지만 외부 추정이며 HBM 단독 현금흐름은 아니다.",
+        "fact_row_index": 444,
+        "source_economic_mechanism": "키움증권의 잉여현금흐름 전망은 메모리 이익과 투자 이후 남는 전사 현금 규모를 valuation_rerating 논리와 연결한다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "키움증권은 삼성전자의 2026년 잉여현금흐름을 120조3000억원으로 추정했다",
+        "source_value_json": "120.3"
+      },
+      {
+        "component_interpretation": "고부가 믹스가 ASP와 메모리 매출로 이어진 직접 경로지만 HBM과 DDR5 기여는 분리되지 않는다.",
+        "fact_row_index": 446,
+        "source_economic_mechanism": "HBM과 고용량 DDR5의 판매 확대가 D램 평균판매가격을 올려 역대 최대 4분기 메모리 매출로 전환됐다.",
+        "source_period_json": "\"2024-Q4\"",
+        "source_predicate": "HBM과 고용량 DDR5 판매 확대가 D램 ASP를 높여 2024년 4분기 메모리 매출이 역대 최대를 기록했다",
+        "source_value_json": "\"HBM and high-density DDR5 sales expansion raised DRAM ASP and produced record fourth-quarter revenue\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      76,
+      199,
+      270,
+      358,
+      385,
+      405,
+      417,
+      430,
+      438,
+      444,
+      446
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "COMPANYGUIDE",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1,
+      2
+    ],
+    "uncertainties": [
+      "HBM4 물량·가격·제품 원가·램프 비용을 범용 메모리와 분리한 source-backed product economics가 아직 없다.",
+      "한화 report 1110991의 exact 검색 0건은 원문 부재를 뜻하지 않으며 CompanyGuide 또는 발행 증권사 공식 archive/download direct route가 미검증이다.",
+      "제품별 영업이익과 HBM 단독 OCF·CAPEX·FCF가 공개되지 않아 회사·DS·메모리 수치를 HBM에 귀속할 수 없다.",
+      "가격 상승 지속성과 실제 물량 기여, CAPEX·운전자본 부담이 후속 현금전환 폭을 좌우한다.",
+      "최신 EPS와 영업이익 리비전 방향이 완전히 일치하지 않아 추정치 지속성 신호가 혼재한다."
+    ],
+    "why_not_higher": "HBM4 제품별 물량·가격·원가·램프 비용과 현금 bridge가 없고 지정 보고서의 direct archive 원문도 아직 검증되지 않아 전사·메모리 호조를 HBM 단독 폭발로 확정할 수 없다.",
+    "why_not_lower": "공식 메모리 매출·이익 기록, 분기 매출 급증, 컨센서스 상회와 실제 현금전환 지표가 동시에 존재해 강한 회사·메모리 earnings 경로는 유지된다."
+  },
+  "payload_hash": "e7a2f1723ef2a33cdad5a810eee3928c98ee0d53358260dca09b976411bf6dc3",
+  "production_score_authority": false,
+  "prompt_hash": "98e66ca294d8a5ba4fce3768e028c60d96349a10befaf4d2895e4e76046ebfa3",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2f46b1dcf844242b24a55fa55c2eab1a4e8dc080e557506765a51b89a9532f73",
+  "response_id": "COLLABRESP-d5ca93f8b7a6ef31a35117cb27155d95448d0931570cc36e2819d4f215740079",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

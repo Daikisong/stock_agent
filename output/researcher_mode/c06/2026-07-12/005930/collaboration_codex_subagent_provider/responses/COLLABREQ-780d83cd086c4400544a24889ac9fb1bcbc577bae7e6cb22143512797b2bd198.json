@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "9decf3bdfe51b41f0a237cba06d244a331cb650b991febf81ffaf25dc35a5561",
+  "payload": {
+    "allowed_range": [
+      18.2,
+      20.8
+    ],
+    "anchor_comparisons": [
+      "강한 positive anchor의 18.96~21.36점 구간과 비교하면 현재 근거도 실현된 메모리 매출·이익과 양(+) FCF가 있어 같은 강도권이지만, 현금흐름이 전사 기준이라 midpoint 20.16보다 약간 보수적으로 본다.",
+      "counter anchor의 20.8~23.2점 구간은 exact fact signature가 없는 ordinal 기준이다. 현재 가격 의존·일회성 비용과 EPS 리비전 하락이 있어 그 상단 강도를 그대로 적용하지 않는다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-2bf2934ad088b585cc89843a",
+      "EFACT-992faa8a46788f671cefe250",
+      "EFACT-e449f48cdf920d528532a37f",
+      "EFACT-f05a97edeb8f85d49353381e",
+      "EFACT-f6519571c11130bacb0af98d"
+    ],
+    "disagreements": [
+      "research memo midpoint 19.2보다 실제 OCF·CAPEX·FCF의 동시 확인을 조금 더 반영해 19.6을 제안하지만, HBM 단독 현금전환으로 해석하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-2fb324f77e56e0e487863c17",
+      "CANCH-d3ec23639ebd5c1f8d20fd03"
+    ],
+    "proposed_points": 19.6,
+    "rationale": "공식 메모리 제품매출, 기록적 분기 메모리 매출·영업이익, 컨센서스 상회와 2026년 1분기 양(+) FCF는 가격·믹스 개선이 회계이익과 현금으로 전환된 현재 강도를 지지한다. 다만 연결 OCF·CAPEX·FCF는 HBM 단독 수치가 아니고 이익이 가격 급등에 민감하므로 강한 구간 안에서도 상단을 제한한다.",
+    "support_fact_ids": [
+      "EFACT-71eb35cf12f591c101571b4e",
+      "EFACT-cb2550bcc2cd6b3a1bd34e00",
+      "EFACT-d91f57ec5514398fe1ab72a9",
+      "EFACT-e854b59aa43bb7f73c1e0835",
+      "EFACT-f8f6e5abba8d72973f8cbc55",
+      "EFACT-f979df4935e2c87e7d55a6ed"
+    ],
+    "why_not_higher": "HBM 제품별 영업이익·현금흐름이 없고 최신 EPS 리비전 하락, 가격 의존과 일회성·램프업 비용이 지속성을 제한한다.",
+    "why_not_lower": "공식 제품매출과 기록적 메모리 이익, 컨센서스 상회, 실제 양(+) FCF가 이익 폭발과 현금전환을 여러 독립 경로로 확인한다."
+  },
+  "payload_hash": "7f482076ddf5c4c6ad8f94b926849ddd86aa4e98933891a6d4811a82c425d9ab",
+  "production_score_authority": false,
+  "prompt_hash": "88eec5522122561ccc840b072965baac71139c2067440723d19e62e6b814822d",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-780d83cd086c4400544a24889ac9fb1bcbc577bae7e6cb22143512797b2bd198",
+  "response_id": "COLLABRESP-599cccf7375080c02310cb540cd3e5bdc7d3a02b3880ee62b2f144327acc4519",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

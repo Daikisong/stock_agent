@@ -1,0 +1,53 @@
+{
+  "output_schema_hash": "d782de2e22ccb12bc74571ef228ce4cffb953a4d5c6cb93816551d72827246ba",
+  "payload": {
+    "allowed_range": [
+      12.8,
+      15.5
+    ],
+    "anchor_comparisons": [
+      "CANCH-fe4be151b6e34320ddc5f6a7는 POSITIVE STRONG ordinal anchor(14.28-16.38/21.0, confidence MEDIUM)다. 현재 근거의 실제성과 귀속 한계를 함께 반영해 exact 복제가 아닌 상대 위치만 사용했다.",
+      "CANCH-1aa76cb8e89d85cd78d325f4는 COUNTER MEDIUM ordinal anchor(9.95-12.05/21.0, confidence LOW)다. 현재 근거의 실제성과 귀속 한계를 함께 반영해 exact 복제가 아닌 상대 위치만 사용했다."
+    ],
+    "counter_fact_ids": [],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "CANCH-fe4be151b6e34320ddc5f6a7",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 14.2,
+    "rationale": "HBM4 양산 출하와 서버 메모리 판매 확대, 메모리 매출·ASP 상승은 실제 상용화와 수익 기반을 지지한다. 다만 주요 고객 확대와 공급부족은 계획·전망이고 고객별 주문량·가격·취소조건·장기계약이 없어 높은 장기 가시성으로 확정할 수 없다.",
+    "support_fact_ids": [
+      "EFACT-4d6a7fe870806b29408cc3a5",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-9d94cbc4213d1d3bc1129615",
+      "EFACT-b7565fd844a544809e1ca148",
+      "EFACT-cbd2e7a3a3670eba7a113d19",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "HBM4 고객별 qualification, 확정 주문, 계약기간·가격·취소조건과 HBM 매출 비중이 공개되지 않았다.",
+    "why_not_lower": "양산 출하와 메모리 매출·ASP의 실현 증거가 있으므로 단순 개발 또는 전망 단계 수준보다 높게 본다."
+  },
+  "payload_hash": "35a803b703a75c724d7ac7b731fc7786f343a95d03026a696cbf3743509b4178",
+  "production_score_authority": false,
+  "prompt_hash": "05f55366124e71f5352a773fb2f9e2141994f3653624d0672c2c45a68355a5ec",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-33256e813dd089093da3260226c854eba30b558db8c9411eb2b94df6dc12b8e4",
+  "response_id": "COLLABRESP-375ee1c8b7f1802842c7429208f51309ae0836369bd4f9b4579044faa3d3609c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

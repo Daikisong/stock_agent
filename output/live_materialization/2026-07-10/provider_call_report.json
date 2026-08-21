@@ -1,0 +1,39 @@
+{
+  "acquisition_class_counts": {
+    "FRESH_PROVIDER_CACHE": 4,
+    "PROVIDER_FAILED": 9,
+    "REAL_PROVIDER_FETCH": 2,
+    "REJECTED_BY_POLICY": 3
+  },
+  "actual_live_or_fresh_document_count": 6,
+  "actual_provider_call_count": 6,
+  "actual_provider_call_counts": {
+    "IssuerIR": 3,
+    "OpenDART": 3
+  },
+  "as_of_date": "2026-07-10",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "actual_live_or_fresh_document_empty": 0,
+    "fetched_without_content_hash": 0,
+    "future_document": 0,
+    "generic_portal_counted_as_symbol_evidence": 0,
+    "provider_failure_masked_no_result": 0,
+    "snapshot_counted_live": 0,
+    "snippet_document": 0,
+    "wrong_subject_document_to_claim": 0
+  },
+  "fresh_cache_request_count": 12,
+  "hard_acceptance_pass": true,
+  "production_runtime_ready": false,
+  "provider_fetch_result_count": 18,
+  "provider_request_count": 18,
+  "question_source_task_count": 9,
+  "result_hash": "91b5a238c9456707a4bca235021a2d348b8abc7249afa1bd46e589e6c644e40d",
+  "schema_version": "e2r_live_source_acquisition_audit_v1",
+  "status": "CURRENT_SOURCE_ACQUISITION_PASS",
+  "unique_evidence_document_count": 2,
+  "web_fallback_deferred_until_question_resolution": true,
+  "web_fetch_count": 0,
+  "web_search_task_count": 0
+}

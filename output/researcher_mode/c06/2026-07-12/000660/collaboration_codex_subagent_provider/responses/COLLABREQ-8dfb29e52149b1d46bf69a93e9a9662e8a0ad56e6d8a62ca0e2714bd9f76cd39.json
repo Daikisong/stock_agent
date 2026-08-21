@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "최종 STOPPED_ON_RESOLUTION prompt에서 7개 component memo는 모두 complete이며 current 21개 judge의 A/S/C 범위가 component별 공통 교집합을 유지한다. 갱신 valuation memo CRMEMO-775a9d는 actual HBM 성장·전사 이익과 peer·SOTP·multiple 근거를 브로커 LTA 귀속, FY2027 이후 감익, 거시 multiple 할인 및 경쟁 공급 counter와 분리한다. RTMEMO-0daf395는 7개 component를 모두 검토했고 SYNMEMO-096c 및 current supervisor와 정확히 결속되어 actual·forecast, issuer·broker, 공급 논의·binding commitment, 전사·HBM 단독 귀속의 경계를 보존한다. Structured roles는 모두 충족됐고 7개 source objective는 STOPPED_ON_RESOLUTION이며 supervisor의 missing fact, source direction, query brief, unresolved 및 next action은 모두 비어 있다. HBM 단독 손익·ROIC, 고객별 계약조건, 경쟁 공급의 actual 영향과 동일 기준 consensus는 향후 issuer·고객·실적자료에서 새 정보가 나올 때 확인할 monitoring 항목이지만 현재 prompt에는 지금 실행할 검증된 신규 material full-fetch route가 없다. Zero/no-result, provider 오류, fixed rounds 또는 source absence를 포화 증거로 사용하지 않고 current 의미상 충족과 executable route 부재를 독립 검토한 결과 승인한다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "63f752215b5149153d6cd015f8b3f0277b9cff16b48f46fba95332626f9eae14",
+  "production_score_authority": false,
+  "prompt_hash": "9659b98931128fd7fff3c16611d027b7c43221b25cb5b61c273098273db60deb",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8dfb29e52149b1d46bf69a93e9a9662e8a0ad56e6d8a62ca0e2714bd9f76cd39",
+  "response_id": "COLLABRESP-18e7bdf8d09060ed545f9fb8531b0133e803d69b4d0dca2e48bb0f73d6c4504d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "output_schema_hash": "496b8f90bced9f40620c5b448f182023418562f573ecdb67e6559d28a3b30ee9",
+  "payload": {
+    "allowed_range": [
+      3.2,
+      4.2
+    ],
+    "anchor_comparisons": [
+      "Both low-confidence cross-sector anchors are near the ceiling and are not exact analogues; their numeric bands cannot override the split between audited corporate data and opaque HBM detail.",
+      "The positive anchor resembles reliable official baselines, while the counter anchor captures missing fact signatures and disclosure gaps at the product and customer level."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1b7ea0a31b99641332cac15f",
+      "EFACT-2d9adec8b0d4434e530afdc5",
+      "EFACT-38845077848fa69caeb992ce",
+      "EFACT-4f576cd7cba9f5720973f2a5",
+      "EFACT-61735c2a94db0377111a4e18",
+      "EFACT-66a852e3b8f9484e6dad3710",
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-7ed0bdc27aff6817247539ec",
+      "EFACT-ce89050359be3b6f19cb2cec"
+    ],
+    "disagreements": [
+      "I distinguish strong official financial and operating baselines from lower-confidence HBM-specific claims rather than assigning one confidence level to all evidence."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "proposed_points": 3.7,
+    "rationale": "Issuer-disclosed memory sales and line operating hours, plus an external interim review finding no material departure from fair presentation, provide reproducible corporate and memory baselines. Confidence is lower for HBM customer allocation, qualification, contract terms, and product profit, which remain restricted or estimated.",
+    "support_fact_ids": [
+      "EFACT-09794909b5e3c9f009eb5007",
+      "EFACT-0beff561f9964f06b80cbe4b",
+      "EFACT-477c6cb45b164685a2a345e8",
+      "EFACT-71eb35cf12f591c101571b4e",
+      "EFACT-c56aa2a9eb9eb1bb77d693bc"
+    ],
+    "why_not_higher": "NDA restrictions, absent product profit, preliminary results, broker limitations, and mixed peer methodologies prevent a near-ceiling confidence level.",
+    "why_not_lower": "Official memory revenue, disclosed operating hours, and reviewed financial statements are stronger than an estimate-only information plane."
+  },
+  "payload_hash": "f7e98fafb3b6ff5d4e989a76be1d16d6025e7b81942b568406c4f0e1425b5ecf",
+  "production_score_authority": false,
+  "prompt_hash": "eee58f390c5620916f63a4b29662f699d95a9a101c6ed351c288db70a77cd991",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e1d74dfebcb92bac6b21d06407ee325c08523d86cd4b09d5747b9c5211478948",
+  "response_id": "COLLABRESP-affc92d5d7ad874d0c11c11dfcaac387822c3e2790fb3a161c636a1f551f8ef8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

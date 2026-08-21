@@ -1,0 +1,67 @@
+{
+  "output_schema_hash": "50905bea7ab0e1a29a8e2f52905267beeb753ffe108ab3e8ef8a2d48b35e2e46",
+  "payload": {
+    "challenged_fact_row_indices": [
+      42,
+      48,
+      65,
+      67,
+      84,
+      154,
+      158,
+      164,
+      223,
+      245
+    ],
+    "confidence": 0.84,
+    "recommended_research_directions": [],
+    "resolved_challenges": [
+      "영업현금흐름 actual, HBM 매출 성장, 제품 실행과 HBM4 고객 요청 양산은 서로 다른 경제 메커니즘으로 분리됐다.",
+      "M15X·용인 투자와 추가 증산 여력은 성장 근거인 동시에 고정 scarcity 주장에 대한 counter로 반영됐다.",
+      "자기주식 소각, 금융부채 감소, 매출채권 증가와 교환사채 희석은 자본배분의 양면 근거로 함께 반영됐다."
+    ],
+    "review_complete": true,
+    "reviewed_component_ids": [
+      "eps_fcf_explosion",
+      "earnings_visibility",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation",
+      "information_confidence"
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF",
+      "KIND_KRX",
+      "KRX_PRICE_MARKET_CAP"
+    ],
+    "unresolved_challenges": [
+      "전사 영업현금흐름에서 HBM-only FCF를 직접 분리할 수 없다.",
+      "고객 공동개발과 고객 요청 양산만으로 signed 물량·가격·기간·취소보호를 확정할 수 없다.",
+      "M15X·용인 투자에서 HBM 전용 CAPA 잠김과 고객별 allocation을 정량 분리할 수 없다."
+    ]
+  },
+  "payload_hash": "0b6d2edacb35c7574766dfbd52d7acaa9be2998e5639201982506d3969093684",
+  "production_score_authority": false,
+  "prompt_hash": "61bc53193742abecc4607af231c9996976f8bb0ddb5783d6b7638f3fe77c2dc5",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3bbfcb26fd58ba4b4bb2d9ff150da18add64e48a4fae837f6745cbc8251cbc37",
+  "response_id": "COLLABRESP-93519e3c466baeb8e7e7d8f44e3a1544a1529a597f6865da7399f52f5182b8d7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

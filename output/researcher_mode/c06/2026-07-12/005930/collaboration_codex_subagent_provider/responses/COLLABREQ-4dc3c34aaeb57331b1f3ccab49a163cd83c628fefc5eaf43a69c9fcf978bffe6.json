@@ -1,0 +1,126 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Use the July 2026 preliminary-results filing or issuer IR landing page as the primary route for the newest actual company-wide result, while leaving segment attribution and cash conversion unresolved unless an eligible source states them.",
+      "Seek an official technical catalog, session, or integration page for HBM4 corroboration, and keep technical relationship evidence separate from purchase obligations or booked capacity.",
+      "Use current-period full public broker PDFs only when they provide quantified price-volume bridges, consensus comparisons, or period-aligned peer tables; reject target-price-only discovery pages.",
+      "Use regulatory or issuer sources first for physical capacity commitments, with independent industry sources limited to corroborating line conversion, timing, and supply-response risk."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 2026년 2분기 잠정실적 매출 영업이익 공시",
+        "objective_id": "SGOBJ-eb3cecb1e00c95ccf544cac4",
+        "rationale": "2026-07-12 컷오프까지 공개된 가장 최근의 실제 전사 매출과 영업이익을 원문 공시 또는 발행사 자료에서 확인해, 1분기 이후 이익 가속이 기존 전망을 지지하는지 또는 반박하는지 점검한다. 잠정실적만으로 메모리 귀속이나 FCF를 추정하지 않는다.",
+        "source_families": [
+          "KIND_KRX",
+          "OPENDART",
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_NEWSROOM"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "Samsung Electronics HBM4 technical session integration 2026",
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "rationale": "기존의 고객 인증·공급 일정 검색과 다른 공식 기술 세션·통합 문서 경로를 사용해, 컷오프 이전 HBM4 기술 관계와 현재성을 독립적으로 확인한다. 기술 통합 또는 세션 등재는 구매 의무나 예약 물량의 증거와 분리한다.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL",
+          "ISSUER_NEWSROOM",
+          "INDUSTRY_REPORT",
+          "TRUSTED_BUSINESS_MEDIA"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 2Q26 DRAM NAND 출하량 가격변동 실적 분석",
+        "objective_id": "SGOBJ-7ba6c752cb327ae2c989b6dd",
+        "rationale": "컷오프 이전 최신 2분기 분석에서 DRAM과 NAND의 물량 변화와 실현가격 변화를 분리해, 메모리 이익 증가가 가격·물량 중 무엇에서 왔는지와 3분기 가격 인상 둔화 반론을 함께 확인한다. 제목이나 스니펫이 아니라 전체 문서의 수치와 기간을 요구한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF",
+          "INDUSTRY_REPORT",
+          "CONSENSUS_REVISION",
+          "TRUSTED_BUSINESS_MEDIA"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 2Q26 잠정실적 컨센서스 괴리 주가 반응",
+        "objective_id": "SGOBJ-e78cfba9e86bfa02e9a943ae",
+        "rationale": "2분기 잠정실적 발표 직전 기대치와 실제치의 차이, 발표 뒤 가격 반응을 컷오프 이전 자료에서 같은 기간 기준으로 확인한다. 목표주가만 있는 자료나 실적 귀속이 없는 낙관론은 시장 기대 괴리의 증거로 쓰지 않는다.",
+        "source_families": [
+          "CONSENSUS_REVISION",
+          "PUBLIC_BROKER_PDF",
+          "REUTERS",
+          "TRUSTED_BUSINESS_MEDIA"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 2027F 메모리 peer PBR ROE 비교표 2026년 7월",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "컷오프 이전 최신 공개 리포트에서 동일한 2027F 기간과 분모를 쓴 메모리 동종기업 PBR·ROE 표를 찾아 PEER_BAND를 검증한다. 회사별 기간이 다르거나 목표주가만 제시된 표는 배수 재평가 근거에서 제외한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF",
+          "VALUATION_MULTIPLES",
+          "CONSENSUS_REVISION"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 평택 HBM D램 라인 전환 웨이퍼 투입 2026",
+        "objective_id": "SGOBJ-44161aa1a529ae8101bf12b1",
+        "rationale": "검색 실패가 누적된 일반적인 HBM CAPEX 문구 대신 평택 라인 전환과 웨이퍼 투입이라는 물리적 공급 대응 경로를 확인한다. 컷오프 이전 발행사·공시를 우선하며, 독립 자료는 전환 시점과 공급 증가 또는 과잉공급 위험을 교차검증하는 데만 사용한다.",
+        "source_families": [
+          "ISSUER_NEWSROOM",
+          "KIND_KRX",
+          "OPENDART",
+          "INDUSTRY_REPORT",
+          "TRUSTED_BUSINESS_MEDIA"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "Samsung Electronics HBM4 11.7Gbps mass production customer qualification 2026",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "현재 사실 그래프에 나타난 11.7Gbps HBM4의 제품 사양, 양산 상태, 고객 검증 상태를 컷오프 이전 원문에서 서로 분리해 확인한다. 샘플·기술 사양만으로 고객 승인, 매출 발생, 장기 공급 의무를 추정하지 않고 반대 증거와 이후 정정도 함께 찾는다.",
+        "source_families": [
+          "ISSUER_NEWSROOM",
+          "ISSUER_PRESENTATION",
+          "CUSTOMER_OFFICIAL",
+          "INDUSTRY_REPORT",
+          "TRUSTED_BUSINESS_MEDIA"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "The full 2Q26 segment results and conference-call route indicated for after the as-of cutoff must not be requested or used in this run.",
+      "Preliminary company-wide actuals do not by themselves establish memory contribution, HBM mix, free cash flow, or customer commitments.",
+      "Technical HBM4 integration, product specification, or qualification progress does not prove booked volume, a long-term agreement, or customer concentration.",
+      "Broker estimates and peer tables require the full document plus explicit forecast period and denominator; snippets remain non-evidence discovery metadata.",
+      "If no eligible capacity filing or issuer statement exists by the cutoff, physical HBM capacity commitment remains unresolved rather than being inferred from media estimates."
+    ]
+  },
+  "payload_hash": "33ba4b322f5d50ee58f968be238f956f1dbb1d2c35cf0639a0ee3d8aa52bf700",
+  "production_score_authority": false,
+  "prompt_hash": "533312b8fd3d11a95b5bd280f3ec6509bb89b88e6cadc0558c5a2cca5dc86486",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4dc3c34aaeb57331b1f3ccab49a163cd83c628fefc5eaf43a69c9fcf978bffe6",
+  "response_id": "COLLABRESP-d8927682b496fa95ac92a2fadc6bde761c85b983fdc0b9d72980934b6e89c902",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

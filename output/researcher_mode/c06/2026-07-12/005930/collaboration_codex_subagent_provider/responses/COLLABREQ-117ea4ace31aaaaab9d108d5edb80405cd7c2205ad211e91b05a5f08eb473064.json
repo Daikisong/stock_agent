@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-901f7176da159909609063ae",
+        "rationale": "The current canonical roster already contains more precise reviewed 2026-Q1 issuer facts for memory revenue, DS revenue and operating profit, consolidated operating cash flow, PP&E acquisition, EPS, memory ASP, utilization, and investment, plus the same product-demand narrative. This preliminary presentation therefore adds no non-duplicate eps_fcf_explosion fact; its review-warning is also superseded by the later reviewed filing evidence.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "e312c5c9427ed02ae160a2278b06d813f839615c794959d93c1ae0b57ba89a19",
+  "production_score_authority": false,
+  "prompt_hash": "7733ce3d18cce9e56f9e47767f7d741be91434f16602289a91fb3a78c3f61e9f",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-117ea4ace31aaaaab9d108d5edb80405cd7c2205ad211e91b05a5f08eb473064",
+  "response_id": "COLLABRESP-06d414c97c9f3588453cd4cdafecd01d15436f08bf64a76e3f7dd33ea88307d9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

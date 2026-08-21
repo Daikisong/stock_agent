@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "b537b22c7f0244e2e87d441d76bebddfe4b010148487672996e9977ae3bb28e0",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-afc158a5b39d491e5931d959",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "비공식 Telegram 재전달이며 내용도 TSMC CoWoS·WMCM 생산능력 전망이다. SK하이닉스 발행사 공식 HBM CAGR·TAM 원문이 아니므로 요청한 issuer source gap을 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-dc3084d6c796384d19984965",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "제3자 산업 브로커 PDF이며 CPO·인터커넥트 중심 자료다. SK하이닉스 공식 HBM 시장 수요의 미래 CAGR 또는 TAM을 확인하는 발행사 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e403d24d728e2a8bf1455dd3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "비공식 Telegram 게시물이며 Super Micro 경영진 미팅 요약으로, SK하이닉스·HBM 시장 전망과 직접 관련되지 않는다. 요청한 발행사 공식 source family에도 해당하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 roster에는 ISSUER_NEWSROOM·ISSUER_PRESENTATION·ISSUER_EARNINGS_RELEASE 소유 후보가 없어 snippet을 issuer guidance로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "a522eab3675ffe0e295fb8711775c08b84579aefaf17042d63c897d38efac41d",
+  "production_score_authority": false,
+  "prompt_hash": "70d346e94d6aa04bf041758fe0ba02324a6ea5f3a4f726aa2a1fa8a6d458ab8d",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f6405312315945bc497fff71288b3e4c28242cd982088ff997524c8b00793575",
+  "response_id": "COLLABRESP-829942d3cacc6004bbe6cf7214877c3286c2a085e0d7ae5359303f50ec6a6f10",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

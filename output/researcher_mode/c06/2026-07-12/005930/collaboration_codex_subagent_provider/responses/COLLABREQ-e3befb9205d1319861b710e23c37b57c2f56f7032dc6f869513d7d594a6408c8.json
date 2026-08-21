@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ffd9b4e1a581c802be6d2fc5",
+        "rationale": "앞선 두 페이지에서 FY2026E와 FY2027E의 삼성전자 및 5개 메모리 peer PER/PBR 비교점 24건을 모두 추출했다. 원문을 다시 대조한 결과 현재 peer-band objective에 직접 관련하면서 기존 24건과 다른 추가 PER/PBR 점값은 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "c9c902e6cab6a3ffd55d19ac3c81478e3a272a214b0432ce6aa3d73f9a5f9f8f",
+  "production_score_authority": false,
+  "prompt_hash": "cbf961347530edb7c3601d3de58fbdcb6d023a635e63a68991ec46b0263cf1ea",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e3befb9205d1319861b710e23c37b57c2f56f7032dc6f869513d7d594a6408c8",
+  "response_id": "COLLABRESP-129fddde4fdcfc755db53b78d624d11ad0839601a16a801a8604dc4ac5b28231",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

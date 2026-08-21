@@ -1,0 +1,239 @@
+{
+  "output_schema_hash": "1e1d4e3100799854dabba517b22b43f3c9fde50cc680b3d0b3b997e9e3d210a7",
+  "payload": {
+    "confidence": 0.76,
+    "counter_case": "PBR은 이미 2024년 초보다 크게 올라 회복 기대의 일부가 반영됐다. HBM4 초기 마진이 전작보다 낮을 수 있고 고객 제품 일정 지연이나 정기 공급사 평가가 물량과 실적을 바꾸면 양산·매출의 지속성이 약해질 수 있다. 추가로 HBM4 초기 제품 수익성, 고객 플랫폼 일정과 공급사 평가에 따른 향후 allocation·납품·마진 변화이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a",
+      "ORDTRANSFER-75306723611a10615f950fec"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-75306723611a10615f950fec"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a"
+    ],
+    "positive_case": "HBM4가 시험·수율 단계에서 양산, 지속 납품, 누적 매출로 연속 전환됐다. 이는 과거 경쟁력 할인 사유가 실제 상용 성과로 바뀐 경로이며, 아직 남은 peer 대비 선행 배수 할인은 성과가 지속될 경우 재평가 여지를 만든다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 9,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 97,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 105,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 114,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 167,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 219,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 278,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 293,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 325,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 351,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 366,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 446,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      }
+    ],
+    "proposed_score_lower": 6.0,
+    "proposed_score_mid": 7.0,
+    "proposed_score_upper": 8.5,
+    "research_complete": true,
+    "researcher_summary": "HBM4의 안정적 수율, 최종 SiP 단계 고성능 평가, NVIDIA 플랫폼용 양산 개시와 북미 고객 지속 납품은 과거 HBM 경쟁력 의문이 실제 공급 실행으로 전환됐음을 보여준다. 첫 양산 출하 후 약 130일 만에 누적 매출 10억달러를 넘긴 사실은 기술 이벤트가 매출로 이어진 구체적 상용화 근거다. 주요 메모리 peer보다 낮은 선행 PER·PBR과 과거 상대 주가 부진은 할인 해소 여지를 지지한다. 다만 PBR은 이미 크게 상승했고 초기 HBM4 수익성, 고객 일정 지연과 정기 평가에 따른 물량 재배분이 지속적 재평가의 상단을 제한한다. 이번 semantic rewrite에서는 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다. 필요한 공식 bridge가 현재 fact에 추가되지 않았으므로 supervisor gap을 미해결로 유지한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다.",
+        "fact_row_index": 9,
+        "source_economic_mechanism": "삼성전자의 선행 PBR 상승은 주가 rerating이 자산가치 배수에 반영됐다는 현재 평가 수준의 counterbalance를 제공한다.",
+        "source_period_json": "\"12-month forward as of 2026-06-26; approximately 1.3x at 2024 start\"",
+        "source_predicate": "삼성전자 12개월 선행 PBR은 2024년 초 약 1.3배에서 2026년 6월 26일 약 2.7배로 상승했다.",
+        "source_value_json": "2.7"
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다.",
+        "fact_row_index": 97,
+        "source_economic_mechanism": "HBM4에 적용된 1c D램 공정의 안정적 수율은 양산 실행 위험을 낮춰 현재 공급과 매출 전환의 지속 가능성을 보강한다.",
+        "source_period_json": "\"2026-Q1 current as of 2026-03-17\"",
+        "source_predicate": "삼성전자가 1c D램 공정을 적용한 HBM4에서 안정적인 수율을 확보했다고 밝혔다",
+        "source_value_json": "\"stable yields\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다.",
+        "fact_row_index": 105,
+        "source_economic_mechanism": "고속 HBM4의 북미 팹리스 고객 지속 납품은 제품 양산이 고객 판매와 매출로 전환된 사실을 구체화한다.",
+        "source_period_json": "\"2026-H1 through 2026-07-07\"",
+        "source_predicate": "한화투자증권에 따르면 삼성전자는 2026년 상반기부터 11.7Gbps HBM4를 북미 팹리스 고객사에 지속 납품했다",
+        "source_value_json": "\"continuous delivery to North American fabless customer\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다.",
+        "fact_row_index": 114,
+        "source_economic_mechanism": "HBM4 양산이 엔비디아 베라 루빈 플랫폼용 제품으로 연결돼 범용적인 제품 출시보다 구체적인 AI 가속기 수요 노출을 보여준다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "삼성전자가 엔비디아 베라 루빈 플랫폼용 HBM4 양산을 개시했다",
+        "source_value_json": "\"mass production for NVIDIA Vera Rubin platform\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다.",
+        "fact_row_index": 167,
+        "source_economic_mechanism": "최종 SiP 인증 단계에서 최고 등급 평가를 받은 것은 HBM4가 단순 샘플을 넘어 고객 검증 관문을 통과했다는 직접 근거다.",
+        "source_period_json": "\"2025-12\"",
+        "source_predicate": "삼성전자 HBM4는 2025년 12월 최종 인증 단계인 SiP 테스트에서 11.7Gbps 성능으로 최고 등급 평가를 받았다",
+        "source_value_json": "\"11.7Gbps and highest-grade evaluation\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다.",
+        "fact_row_index": 219,
+        "source_economic_mechanism": "삼성전자의 2024년 이후 주가 상승률이 직접 메모리 peer보다 크게 낮고 보고서가 이를 과거 HBM 경쟁력 의문과 연결한 것은 메모리 경쟁력 회복 시 해소 가능한 상대 기대 격차를 수치화한다.",
+        "source_period_json": "\"2024 through 2026-05-14\"",
+        "source_predicate": "하나증권은 2024년 이후 삼성전자 주가 상승률 277%가 SK하이닉스 1,292%와 Micron 842%보다 낮고 과거 HBM 경쟁력 의문이 그 격차의 한 원인이라고 분석했다",
+        "source_value_json": "\"Samsung Electronics 277%; SK hynix 1,292%; Micron 842%\""
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다.",
+        "fact_row_index": 278,
+        "source_economic_mechanism": "HBM4 초기 수익성이 이전 세대보다 낮을 수 있어 물량 확대가 즉시 같은 비율의 이익 확대로 이어지지 않을 위험이 있다.",
+        "source_period_json": "\"2026-H2E\"",
+        "source_predicate": "IBK투자증권은 HBM4 초기 수익성이 HBM3E보다 낮을 것으로 추정했다",
+        "source_value_json": "\"HBM3E 대비 낮은 초기 수익성 추정\""
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다.",
+        "fact_row_index": 293,
+        "source_economic_mechanism": "엔비디아가 협력사 성과를 정기 점검해 물량 배분에 반영하고 AMD가 HBM4 우선공급 관계에서 공급 중단 방지 통제를 요구한다는 보도는 공급 신뢰가 고객 배정의 실제 조건으로 작동하는 경로를 제시한다.",
+        "source_period_json": "\"current as of 2026-04-15\"",
+        "source_predicate": "엔비디아는 협력사 성과 평가를 물량 배분에 반영하고 AMD는 삼성전자 HBM4 우선공급 관계에서 공급 중단 방지 관리를 요구하는 것으로 보도됐다",
+        "source_value_json": "\"NVIDIA periodic supplier review affects allocation; AMD requires interruption-prevention controls\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다.",
+        "fact_row_index": 325,
+        "source_economic_mechanism": "삼성전자의 12개월 선행 PER이 글로벌 메모리 동종사 평균보다 낮다는 증권사 비교는 메모리 이익 전망 대비 현재 시장 평가의 상대 격차를 수치화한다.",
+        "source_period_json": "\"12-month forward as of 2026-05-31\"",
+        "source_predicate": "미래에셋증권은 삼성전자의 현 주가 기준 12개월 선행 PER 5.7배가 마이크론·키오시아 평균 10.1배에 크게 못 미친다고 설명했다",
+        "source_value_json": "5.7"
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다.",
+        "fact_row_index": 351,
+        "source_economic_mechanism": "삼성전자의 12개월 선행 PBR이 글로벌 메모리 동종사 평균보다 낮다는 증권사 비교는 현재 주가가 반영한 순자산 기준 기대 격차를 수치화한다.",
+        "source_period_json": "\"12-month forward as of 2026-05-31\"",
+        "source_predicate": "미래에셋증권은 삼성전자의 현 주가 기준 12개월 선행 PBR 2.3배가 마이크론·키오시아 평균 6.2배에 크게 못 미친다고 설명했다",
+        "source_value_json": "2.3"
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다.",
+        "fact_row_index": 366,
+        "source_economic_mechanism": "HBM4 양산 출하가 약 130일 안에 누적 매출 10억달러로 전환돼 신제품의 실적 기여 속도를 보여준다.",
+        "source_period_json": "\"첫 양산 출하 후 약 130일\"",
+        "source_predicate": "HBM4 첫 양산 출하 후 약 130일 만에 누적 매출 10억달러를 돌파했다",
+        "source_value_json": "1000000000"
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 상용화 확인과 제품 마진·고객 일정·allocation에 기반한 지속적 재평가를 분리한다.",
+        "fact_row_index": 446,
+        "source_economic_mechanism": "고객사 제품 출하 지연으로 삼성전자의 2026년 HBM4 실적 기여가 당초 예상보다 축소됐다는 분석은 HBM4 생산·출하가 고객 최종제품 일정에 따라 같은 해 이익으로 전환되지 못할 수 있는 실행 counter다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "고객사 제품 출하 지연으로 삼성전자의 2026년 HBM4 실적 기여도가 당초 예상보다 축소됐다는 분석이 나왔다",
+        "source_value_json": "\"2026 contribution reduced versus prior expectation\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      9,
+      97,
+      105,
+      114,
+      167,
+      219,
+      278,
+      293,
+      325,
+      351,
+      366,
+      446
+    ],
+    "source_coverage": [
+      "ISSUER_GUIDANCE",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF",
+      "PUBLIC_BROKER_REPORT",
+      "TRUSTED_BUSINESS_MEDIA",
+      "KRX_PRICE_MARKET_CAP"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "HBM4 고객별 물량·가격·마진과 장기 점유율은 공개되지 않았다.",
+      "구조화 durable-visibility 행에 수치화된 HBM 매출 가이던스 중간값이 없어 지속성을 직접 계산할 수 없다.",
+      "현재가·시가총액 일부 구조화 계열이 비어 동일 기준일 배수를 독립 재계산하기 어렵다.",
+      "고객 일정과 정기 평가가 향후 물량 배분을 바꿀 수 있다.",
+      "미해결 supervisor gap: HBM4 초기 제품 수익성, 고객 플랫폼 일정과 공급사 평가에 따른 향후 allocation·납품·마진 변화"
+    ],
+    "why_not_higher": "고객별 수량·마진·장기 점유율이 없고 PBR 재평가가 이미 진행됐으며 초기 수익성·고객 일정·재평가 배분 위험이 남아 만점 지속성을 확정할 수 없다. 상용화 확인이 지속 가능한 재평가로 이어지는지 여부는 제품 마진과 고객 배분의 지속성에 달려 있다.",
+    "why_not_lower": "수율과 최종 시험, NVIDIA 플랫폼 양산, 북미 고객 지속 납품, 누적 10억달러 매출이 경쟁력 회복을 기술이 아닌 실제 상용화 경로로 확인한다. 기존 current positive facts는 그대로 유효하다."
+  },
+  "payload_hash": "57aca4fc98951996b1c9b7821340d7ef001d41331e29e5d65b0ab812516fd7c1",
+  "production_score_authority": false,
+  "prompt_hash": "9ad8462f64497622e2349cee474a90a68081ccf9c67e6a9035ae5234be7686ea",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-db5ba22ffb31150a61140b43e6651c2665f3bb43eba0f13596233e6b641331bd",
+  "response_id": "COLLABRESP-beb5060949d8ec62b34e4acf2b5cfc2a1c34aa370195d880a00efce8303b5ced",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

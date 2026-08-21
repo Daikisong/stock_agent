@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "독립 검토 결과 7개 current component memo가 모두 COMPLETE이고, 실제 메모리 매출·ASP·100% 가동·HBM4 출하·연결 OCF와 CAPEX·운전자본·고객관계의 plan/actual 경계를 함께 보존한다. Current Red Team은 7개 전부를 검토해 HBM 단독 손익·CAPA·yield·allocation·signed 물량·가격·기간·취소조건, valuation bridge와 투자 ROIC의 한계를 counter로 남겼고 review_complete이다. Structured result는 COMPLETE이며 각 component의 missing role이 없고, current valuation·target trailing valuation·durable visibility·revision·cash conversion 역할을 loss-accounted record로 보존한다. Source Graph는 모든 7개 objective를 resolved로 묶고, current official·customer corroboration·structured routes와 counter/supersession을 검토했으며 최신 Supervisor에도 실행되지 않은 source-family 또는 query direction이 없다. 남은 계약 상세, HBM 전용 capacity·수율, 고객별 allocation, HBM 투자 ROIC는 공개되지 않은 세부사항의 지속 모니터링 한계이지 exact prompt가 식별한 현재 실행 가능한 비중복 material route가 아니다. 이 승인은 검색 건수, zero/no-result, provider error, 고정 round 또는 source absence에 근거하지 않고 현재 의미 증거·counter·structured role·실행 경로의 결합 검토에 근거한다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "d91ce5f71f9a2ed5f6b8990bf4550ba89a2edb4957682c416767e722e54d2c61",
+  "production_score_authority": false,
+  "prompt_hash": "07912a56a34780b9e578b5e1ffde7b2235de4ac7d04cc8a1312629c261989c69",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b6d90b71e444b016e0b4ccac0a464bc05d8446b3d0d5d22cd51ca102e7970492",
+  "response_id": "COLLABRESP-0660e37c6c16b6eeb5c268af05737f8e6c2f1eba0b82def8544a6d71656cd0a8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

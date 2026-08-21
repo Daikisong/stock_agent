@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "semantic retry attempt 7에서 37개 prior query와 document class를 다시 대조했다. issuer earnings·IR·OPENDART/KIND 공시·SKHY registration statement·sustainability report·customer annual/quarterly filing·customer earnings call·broker archive가 이미 실행되어, 알려진 URL을 요구하지 않아도 의미상 새로운 target-scoped 공식 source class가 남지 않는다.",
+      "FORWARD_GUIDANCE는 issuer가 기간과 숫자를 명시한 매출·이익·출하·Capex point 또는 range가 없어 미해결이다. 기존 issuer earnings·IR·ADR filing을 다른 단어로 반복하지 않는다.",
+      "SEGMENT_CONTRIBUTION은 HBM 또는 최소 memory 제품군의 실제 매출·영업이익·마진·현금흐름 분해가 없어 미해결이다. 전사·DRAM actual을 HBM 단독 성과로 확대하지 않는다.",
+      "DURABLE_VISIBILITY는 target-attributable 기간·확정 물량/CAPA와 취소·위약·선수금 조건이 함께 있는 고객 commitment 원문이 없어 미해결이다. KIND 계약공시와 customer 10-Q·earnings-call class는 이미 시도됐다.",
+      "information-confidence에는 issuer와 독립된 customer 또는 official filing corroboration이 없지만 customer GTC·annual report·10-Q·earnings call class가 이미 실행됐다. 같은 공급·qualification 표현의 변형은 새 route가 아니다.",
+      "CompanyGuide broker metadata와 broker PDF archive는 이미 discovery·full-document route로 다뤄졌으며 issuer/customer 공식 class의 독립 corroboration을 대신하지 않는다.",
+      "새 URL을 사전에 알아야 하는 조건은 두지 않았지만, 현재 lineage에서 새로 검증 가능한 공식 문서 종류 자체를 식별할 수 없어 suggested_queries를 비워 둔다."
+    ]
+  },
+  "payload_hash": "cc5a7bdb47bee13691730366e2f43c29b058cf53784296f2270951abd8a4c35c",
+  "production_score_authority": false,
+  "prompt_hash": "19aff3bfcaed4e02bf15576c79eeee189466157b3b0aa0e755f013561f5e8606",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bd17c917b75053dcb153fe02f007aea5c62b2c6e527eb7675ec0b7c69b15f83f",
+  "response_id": "COLLABRESP-ab276c6cc4d78e3cc7cf369a58b985d964b89b3fce4e5ab088930413d955e157",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "d123cbff67ff3e65809d2f69ae3e2fa06b7e836d0c2fd358cc61b30df934b03b",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0a264681cc0b18ef7f80cb32",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'SK materials' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2183134b6fc70380f9064a0c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'THE STANFORD EMERGING TECHNOLOGY REVIEW 2026' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ef2345da7d701c2684f8fd33",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "삼성전자 지속가능경영보고서로 대상 회사가 SK하이닉스가 아니며 NVIDIA의 고객 공식 구매약정 문서도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0322bed74313d783a7236129",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "SEC 연차보고서지만 discovery metadata에 NVIDIA·SK하이닉스·HBM 구매약정 또는 선급금의 명시적 귀속이 없다."
+      },
+      {
+        "candidate_id": "SGCAND-64879875ae9fc322da451f9e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스 2024 지속가능경영보고서로 보이나 2026 현재 보고서가 아니며 snippet에는 HBM·AI memory 분리 매출 KPI가 없다. 미검증 CDN과 PUBLIC_BROKER_PDF 힌트만으로 issuer family를 추정하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-07e7a69a17952df52af0c074",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'INTEGRATED REPORT 2023' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-3b8b2ac61dc398a5a776302f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'MU - Strategic and Financial Blueprint of Micron Technology: Resolving the Memory Wall in the Gen-AI Era' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-9b355564e47fada0f5b0df93",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK스퀘어 2024 ESG 보고서로 대상 발행사인 SK하이닉스의 HBM 분리 KPI 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d915eace2dc63fe08594b22a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'B2C Marketing Strategies of Semiconductor Manufacturers: A Comparative Case Study of Memory and Non-Memor....' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-546b5fa9ea150849bfe71965",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'The AI Revolution' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e60bb7a9bd274f61410bb077",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "'2024 국가지능정보화' 후보는 URL 소유자와 discovery metadata상 SK하이닉스 공식 지속가능경영보고서의 HBM·AI memory 분리 KPI 또는 NVIDIA 공식 연차보고서의 SK하이닉스 HBM 구매약정·선급금 경로가 아니다. snippet은 증거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2834ea88bb8c7f2fd53e2d75",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "SEC 10-K 경로지만 discovery metadata에 NVIDIA·SK하이닉스·HBM 구매약정 또는 선급금의 명시적 귀속이 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에는 요청한 두 공식 원문 경로가 없다. HBM KPI와 고객 구매약정·선급금 공백은 unresolved이며 snippet은 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "9226a6ba1bd37a172e3c3b5113770000d811289fba1102653c39f5ec4198d6d3",
+  "production_score_authority": false,
+  "prompt_hash": "c9795b4bb08b6bf8599a5161557fd2eb4d633f9f76f9b3e5bf74f4412ddb306e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6451958ae4809c46d43f7b20fce1a3bb05e70bb21d9d31423969dbdc4acad287",
+  "response_id": "COLLABRESP-ae2dadb2eb27aa4be42800616bb7078db507c3395d6e54c8c5e0e288c9f8dbb5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

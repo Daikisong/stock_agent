@@ -1,0 +1,106 @@
+{
+  "output_schema_hash": "44f0ffbd106d6ef02aafb2674643ad9e311c68a32b75ecbbca9d606387f07c45",
+  "payload": {
+    "business_model_summary": "SK하이닉스의 핵심 현금 엔진은 HBM·서버 DRAM을 포함한 고부가 메모리의 가격·믹스 상승을 실제 출하와 매출·영업이익으로 전환하는 구조다. eps_fcf_explosion은 FY2025 HBM 매출 성장과 1Q26 전사 실적·영업현금흐름으로 실현됐지만 매출채권·재고와 대규모 Capex가 FCF를 흡수한다. earnings_visibility와 bottleneck_pricing은 HBM 생산 진입, 고객 수요 조율, 높은 가동률과 웨이퍼·TSV 집약도가 지지하나 물량·가격이 월별·분기별 합의되고 공개된 취소불능 조건은 없다. market_mispricing과 valuation_rerating은 actual 이익 개선, forward estimate와 peer·multiple 문맥이 재평가 경로를 만들지만 추정치·시장 전망이지 issuer guidance나 확정 가치가 아니다. capital_allocation은 강한 현금·유동성과 수요연계 투자 원칙을 갖지만 장기 증설, 운전자본, 교환사채 주식수 효과가 상쇄한다. information_confidence는 issuer·공시·독립 자료가 넓지만 HBM 단독 매출액·마진·현금흐름, named customer 계약·인증 조건이 비공개여서 actual, issuer plan, broker estimate, durable commitment를 엄격히 구분해야 한다.",
+    "capacity_and_supply_constraints": [
+      "1Q26 전사 반도체 평균가동률 100%와 HBM4의 웨이퍼·TSV 집약도는 단기 공급 여유가 제한됐음을 보여주지만 HBM 전용 가동률이나 장기 CAPA 잠금은 아니다.",
+      "HBM4·HBM4E 양산 준비와 생산 진입은 공급 실행을 지지하나 고객 테스트, 인증, 수율, 패키징 및 장비 납기 변경 위험이 남는다.",
+      "청주·용인 등 장기 생산거점 확대는 수요 대응 능력을 높일 수 있으나 이사회 승인, 건설 인력·장비 수급, 긴 리드타임과 단계적 집행에 노출된 issuer plan이다.",
+      "삼성전자·Micron 및 중국 경쟁사의 공급 확대 전망은 SK하이닉스의 scarcity premium과 고객 배정 우위를 약화할 수 있으며 실제 점유율·가격 하락과는 구분한다."
+    ],
+    "confidence": 0.9,
+    "cost_and_cash_drivers": [
+      "1Q26 연결 영업활동현금흐름은 강했지만 매출채권·재고 증가는 현금을 흡수했고 유형자산 취득 현금유출도 커, 회계이익에서 FCF로의 전환은 운전자본과 Capex에 좌우된다.",
+      "HBM의 높은 blended ASP와 일반 DRAM CAPA 잠식은 제한된 웨이퍼에서 이익 효율을 높일 수 있지만 HBM4의 TSV·다이 면적과 고급 패키징 투자는 더 많은 생산자원과 현금투입을 요구한다.",
+      "현금성자산이 차입금을 상회하고 실제 분기배당이 집행돼 재무 완충력이 확인되지만, 장기 투자는 수요 가시성에 맞춘 계획이고 교환사채의 자기주식 교부는 주식수·환원 효과를 제한한다.",
+      "브로커의 FY2026~FY2028 이익·FCF·valuation 수치는 시나리오와 기대를 제공할 뿐 actual 또는 issuer guidance가 아니며, HBM 단독 이익·현금 귀속에 사용할 수 없다."
+    ],
+    "customer_and_channel_dependencies": [
+      "핵심 고객과 2026년 HBM 공급 논의를 완료했고 고객 요청에 맞춘 생산이 진행 중이지만 고객명·확정 물량·가격·취소권·위약금·선수금은 공개되지 않았다.",
+      "주요 고객의 공급 물량과 가격을 월별 또는 분기별 상호 합의한다는 공시는 매출 가시성이 장기 고정계약만으로 잠긴 것이 아님을 보여준다.",
+      "Nvidia 등 downstream AI 투자와 GPU 수요는 HBM 수요를 지지하지만 CSP FCF·차입 여건 악화와 고객 Capex 둔화는 최종 수요 및 주문 지속성의 counter다.",
+      "structured peer 및 peer-band 자료는 상대적 valuation·사업 문맥을 보완하지만 직접 고객계약이나 SK하이닉스의 현금흐름을 대신하지 않으며, actual issuer economics와 분리한다."
+    ],
+    "fact_row_indices": [
+      1,
+      3,
+      7,
+      10,
+      12,
+      16,
+      23,
+      25,
+      36,
+      49,
+      69,
+      71,
+      89,
+      93,
+      100,
+      112,
+      116,
+      128,
+      140,
+      149,
+      153,
+      182,
+      188,
+      197,
+      199,
+      200,
+      210,
+      215,
+      217,
+      227,
+      229,
+      234,
+      238,
+      243,
+      247,
+      249,
+      250,
+      268,
+      270,
+      271,
+      276,
+      278
+    ],
+    "research_complete": true,
+    "revenue_engines": [
+      "FY2025 HBM 매출이 전년 대비 두 배 이상 증가하고 HBM 포함 고부가 제품이 전사 최대 실적에 기여한 actual은 제품 경쟁력이 매출로 전환된 핵심 엔진이다. 다만 정확한 HBM 매출액·비중·영업이익은 공개되지 않았다.",
+      "1Q26 DRAM은 출하량이 전분기와 비슷한 가운데 ASP가 60% 중반 상승해 물량과 구분된 가격 레버리지가 전사 매출·이익으로 전환됐다. 이는 일반 DRAM actual이며 HBM ASP로 좁히지 않는다.",
+      "HBM4 양산 진입과 고객 성능요구 충족, 서버용 고용량 DRAM 출하 증가는 차세대 제품·AI 서버 수요가 생산·출하로 이동하는 경로다. 고객명·제품별 출하량·확정 구매의무는 공개되지 않았다.",
+      "2026년 HBM 공급 논의 완료와 연간 수요 확보 평가는 forward visibility를 보완하지만 issuer discussion과 broker assessment이며 executed contract의 기간·물량·가격·취소 조건을 뜻하지 않는다."
+    ],
+    "uncertainties": [
+      "HBM 고객명, 인증 주체·일자, 계약 기간·물량·가격·취소권·위약금·선수금이 공개되지 않아 수요 조율과 durable commitment를 동일시할 수 없다.",
+      "전사·DRAM actual 매출·이익·현금흐름을 HBM 단독 실적으로 귀속할 수 없고 제품별 마진·FCF도 공개되지 않았다.",
+      "issuer의 증설·출하 계획과 broker의 시장·이익·valuation 전망은 actual 결과가 아니며 실행·수요·가격·거시 위험에 따라 달라질 수 있다.",
+      "경쟁사 공급 확대, 고객 Capex 재원 악화, 장비·건설·패키징 병목은 현재 강한 수급과 이익의 지속기간을 줄일 수 있다.",
+      "structured peer coverage는 비교 문맥일 뿐 target의 계약 질, 고객 집중, HBM 단독 현금전환을 직접 증명하지 않는다.",
+      "잠정 실적의 비검증 고지, 부문 공시 한계와 일부 broker 표의 내부 불일치는 정밀 수치 귀속의 신뢰구간을 넓힌다.",
+      "월·분기 가격·물량 합의 구조에서는 spot 약세와 장기 수요 전망이 공존할 수 있어 현행 가격 강세를 고정된 장기 판가로 연장할 수 없다."
+    ]
+  },
+  "payload_hash": "0ae0520862fbcec410e158e71ffcd8abae6fdf67b36d0034248d45c741796fed",
+  "production_score_authority": false,
+  "prompt_hash": "8f782f513e562047f2d8132a45d26f039d3d6e5e06d942c0a7623b79fd091e95",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c5fd86b3b7b4d57b84f32197137fbe3b157d61d0ae781a1f957740359a0906a0",
+  "response_id": "COLLABRESP-9763ea32cf42eac81d921a7d75492dedfb1e225c0dc7a9c7549b1caccb9d7979",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

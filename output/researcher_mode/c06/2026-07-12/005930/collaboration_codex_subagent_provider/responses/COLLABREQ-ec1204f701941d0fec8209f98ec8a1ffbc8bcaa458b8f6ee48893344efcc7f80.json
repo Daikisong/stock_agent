@@ -1,0 +1,80 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "국내 상장사 가운데 삼성전자 DS 메모리와 수익원, 메모리 가격 사이클, HBM 고객 구조, 설비투자·재고·현금흐름 메커니즘이 가장 직접적으로 겹치는 핵심 peer다.",
+        "confidence": 0.99,
+        "material_differences": [
+          "삼성전자는 메모리 외 사업을 함께 보유한 복합기업인 반면 SK하이닉스는 메모리 실적 민감도가 더 직접적이다.",
+          "HBM 고객별 인증 진행도와 제품 세대별 공급 믹스, D램·낸드 구성 및 투자 일정이 서로 다르다."
+        ],
+        "peer_name": "SK하이닉스",
+        "peer_symbol": "000660",
+        "shared_economic_drivers": [
+          "D램·낸드·HBM의 가격과 출하량, 제품 믹스가 매출과 수익성을 좌우한다.",
+          "AI 서버와 데이터센터 고객 수요, HBM 인증·물량배정, 메모리 재고가 실적 가시성에 직접 연결된다.",
+          "웨이퍼 생산능력·선단공정 전환·첨단 패키징에 큰 자본지출이 필요하고 높은 가동률에서 고정비 레버리지가 커진다."
+        ]
+      },
+      {
+        "comparability_rationale": "메모리 제품 peer는 아니지만 국내 상장 반도체 제조사 중 자체 팹의 가동률, 높은 자본집약도, 감가상각과 고객 주문에 따른 현금경제를 비교할 수 있는 제조·CAPEX 보조 peer다.",
+        "confidence": 0.73,
+        "material_differences": [
+          "DB하이텍의 중심 경제는 특화 파운드리 수탁생산이며 D램·낸드·HBM 제품의 가격과 재고 사이클을 직접 보유하지 않는다.",
+          "HBM 적층 다이와 첨단 패키징, AI 가속기 고객 인증·배정에 대한 직접 노출이 삼성전자 DS 메모리보다 작다."
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "반도체 웨이퍼 생산시설의 가동률과 제품 믹스가 고정비 흡수와 수익성을 좌우한다.",
+          "선단·특화 공정 투자를 위한 자본지출, 감가상각, 고객 주문 사이클이 현금전환에 영향을 준다.",
+          "공급능력이 단기간에 탄력적으로 늘기 어렵고 고객 수요와 생산 슬롯 배분이 매출 가시성을 결정한다."
+        ]
+      },
+      {
+        "comparability_rationale": "규모와 자본구조 차이는 크지만 국내 상장사 중 메모리 제품 매출, 가격·재고·고객 주문의 순환성을 관찰할 수 있어 DB하이텍의 제조경제와 다른 축을 보완하는 제한적 제품 peer다.",
+        "confidence": 0.7,
+        "material_differences": [
+          "제주반도체는 외부 생산을 활용하는 소규모 메모리 설계·판매 사업이어서 삼성전자처럼 대규모 웨이퍼 팹과 감가상각 부담을 직접 보유하지 않는다.",
+          "고성능 HBM과 서버용 고용량 D램보다 저전력·모바일 중심 제품 노출이 커 제품 성능, 고객군과 가격 사이클이 다르다."
+        ],
+        "peer_name": "제주반도체",
+        "peer_symbol": "080220",
+        "shared_economic_drivers": [
+          "메모리 반도체 제품 판매가 주된 매출원이라 메모리 수요, 판매가격, 재고와 고객 주문 변화에 노출된다.",
+          "제품 믹스와 고객 채널 집중도, 재고·매출채권 운전자본이 매출의 현금전환을 좌우한다.",
+          "모바일·연결기기 수요 변화가 메모리 출하와 가격 협상에 영향을 준다."
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "우선순위는 사업명이 아니라 경제 메커니즘에 두었다. SK하이닉스는 메모리 가격·HBM 고객·CAPEX·재고가 모두 겹치는 직접 peer이고, DB하이텍은 자체 팹의 가동률·감가상각·CAPEX 현금경제, 제주반도체는 메모리 제품 가격·재고·고객 주문의 순환성을 각각 보완한다. 예를 들어 같은 반도체 회사라도 장비 주문만 받는 회사는 메모리 ASP를 직접 얻지 않으므로 제외했고, 두 보조 peer의 차이는 별도로 명시했다.",
+    "unresolved_research_notes": [
+      "국내 상장사 중 삼성전자와 같은 대규모 D램·낸드·HBM 통합 제조 경제를 직접 공유하는 회사는 SK하이닉스가 유일해, 나머지 두 회사는 동일가중 직접 peer가 아니라 각각 팹 자본집약도와 메모리 제품 순환성을 보완하는 제한적 proxy다.",
+      "입력의 point-in-time structured peer availability roster가 비어 있고 배수 값도 제공되지 않았으므로, 선택 이후 기준일 구조화 데이터의 존재 여부와 동일 기간 값을 deterministic 경로에서 별도로 확인해야 한다.",
+      "삼성전자 제품별 이익과 일부 다년계약 조건이 공개되지 않아 고객·제품 믹스 차이를 완전히 정규화할 수 없다."
+    ]
+  },
+  "payload_hash": "8a1522842303f01217e6bffd1b75d5d6359636c3fda769e215b946cb8649b9a0",
+  "production_score_authority": false,
+  "prompt_hash": "dc49adfd3891c8989cc75d1b69eabeb4b904a69cc4282ad89108184678b5e166",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ec1204f701941d0fec8209f98ec8a1ffbc8bcaa458b8f6ee48893344efcc7f80",
+  "response_id": "COLLABRESP-b3ec3717baed80451b6e20444adc3085626b8da983ca79a92a143b129ae55715",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-44d110bea8976037357dc9b8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "검증된 삼성전자 공식 문서 경로이지만 2019년 자료라 2026년 HBM4 기술 통합의 현재 상태를 독립 확인하지 못한다. 메타데이터는 원문 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-453e4cce6decc179708ac837",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.18,
+        "rationale": "검증된 삼성전자 2025년 2분기 공식 컨퍼런스 자료이나 현재 2026년 기술 통합 상태보다 이전 시점이며 최신 공식 경로가 별도로 있다. 메타데이터는 원문 증거로 쓰지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-4582a754030cbd9fb36708f6",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "검증된 삼성전자 공식 사업보고서 경로이나 2017년 자료로 2026년 HBM4 기술 통합의 현재성을 확인할 수 없다. 메타데이터는 원문 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-4617736db9e35c51c49265e6",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 삼성전자 공식 컨퍼런스 경로이지만 2009년 자료라 요청된 2026년 HBM4 기술 관계와 시간상 무관하다. 메타데이터는 원문 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-46c189e9812da6ed5a101e1c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "검증된 삼성전자 공식 사업보고서 경로이나 2019년 자료로 2026년 HBM4 기술 통합의 현재 상태를 독립 확인하지 못한다. 메타데이터는 원문 증거로 쓰지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-48054814933319e9e49e747c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "2010년 비공식·미검증 중계 URL로 요청된 출처군을 충족하지 않고 2026년 HBM4 기술 통합의 현재 증거도 아니다. 스니펫이나 메타데이터를 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-485377d4bc0969d067180c31",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "2012년 비공식·미검증 중계 URL로 요청된 출처군을 충족하지 않고 2026년 HBM4 기술 통합의 현재 증거도 아니다. 스니펫이나 메타데이터를 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-495cd22af62d569962e0214e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "검증된 삼성전자 공식 컨퍼런스 경로이지만 2016년 자료라 2026년 HBM4 기술 통합의 현재 상태를 확인할 수 없다. 메타데이터는 원문 증거로 쓰지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-4cde03004039fa55c130248d",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "검증된 삼성전자 공식 분기보고서 경로이나 2018년 자료로 2026년 HBM4 기술 통합의 현재성을 확인하지 못한다. 메타데이터는 원문 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-4d25edefb8060257a741d29c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "검증된 삼성전자 2024년 3분기 공식 보고서 경로이나 현재 2026년 HBM4 기술 통합 상태보다 오래되어 독립적인 현재 증거가 아니다. 메타데이터는 원문 증거로 쓰지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-4d639f5e8b138f2175db4157",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 부모 경로에서 확인된 삼성전자 2019년 2분기 자료이지만 2026년 HBM4 기술 통합의 현재 상태를 확인하지 못한다. 메타데이터는 원문 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-5187c7025bb502cf9b87453c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "검증된 삼성전자 2017년 3분기 공식 실적 자료이나 요청된 2026년 HBM4 기술 통합과 시간상 맞지 않는다. 메타데이터는 원문 증거로 쓰지 않았다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 파티션에는 2026년 HBM4 기술 통합의 현재 상태를 독립 확인할 실질 후보가 없다. 모든 스니펫·메타데이터는 발견용으로만 취급했다."
+    ]
+  },
+  "payload_hash": "39461230dfe70b404594ba5576893ef8ffb8c8296a75ce286424e5f93437f255",
+  "production_score_authority": false,
+  "prompt_hash": "d820ab6e353c36badcb7a0cb78a85d956fcb5c4473ee12f8eee8ba3f7ec85d28",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bd9ae35c2af94c6dcb575f0b6957d6614bd0ad3ffdd02f46ac9b7f61b552a3e9",
+  "response_id": "COLLABRESP-187a03078c37445dd21e7c42e0bb00557c541949912cc1745db5b91c191d02bd",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-294f39629ba19934be9d981a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "텔레그램 채널이며 주제도 다른 바이오 종목이다. PUBLIC_BROKER_PDF 원문 및 SK하이닉스 병목 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-a4fbee358bdaac38623937f6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "한경매거진의 증권 태그 탐색 페이지로 원 증권사 PDF도, 대상 회사 full report도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d1a0792b0590a7af2bbd26fd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.05,
+        "rationale": "커뮤니티 게시물에서 IM증권 내용을 재전한 snippet이다. 원본 PUBLIC_BROKER_PDF가 아니므로 full-source route로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e11ed9551a887f3bbc011131",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "텔레그램 재전이며 Micron 경영진 발언이다. SK하이닉스 PUBLIC_BROKER_PDF와 대상·family가 모두 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-6b68f9cca3b78d20ec8d6f8a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.1,
+        "rationale": "제3자 블로그가 한국투자증권 리포트를 재전한 페이지다. LTA 단서는 있으나 원 증권사 PDF가 아니어서 요청 family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-844dcf488025974cb716b688",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.2,
+        "rationale": "SK증권 도메인의 원문 PDF로 source family는 맞지만 2023년 자료의 2024 전망이며 현재 2026-07-12 병목·가격 상태를 검증할 current report가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-94c4f180365c2e921cdeab95",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "개인 블로그이며 snippet에 as_of_date 이후인 2026-08-18 정보도 포함된다. PUBLIC_BROKER_PDF가 아니고 미래 누수라 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-245764d98aad2862196cd837",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.02,
+        "rationale": "D램 현물가 설명 블로그다. 원 증권사 PDF가 아니며 HBM 회사별 병목·계약 분석 full source를 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-6d3f610ccb70a914d991c5e8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.02,
+        "rationale": "제3자 뉴스 기사로 원 PUBLIC_BROKER_PDF가 아니다. 제목 수준의 실적·저평가 서술은 병목 full-source 분석을 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-995102f336edb1aaf7a3e20a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.05,
+        "rationale": "네이버 프리미엄콘텐츠의 재전/요약이다. 증권사 원문 PDF가 아니므로 HBM ASP·가격협상 snippet을 evidence route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-15809c398f362082f3675105",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.04,
+        "rationale": "증권사 의견을 재전하는 제3자 뉴스 기사로 PUBLIC_BROKER_PDF 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5f6d2d05d9cf36f51a7b3446",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "SK Inc.의 2023 반기보고서 PDF로 증권사 리서치가 아니며 SK하이닉스 2026 병목 목적과도 맞지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 roster에서는 현재 목적과 기간에 맞는 PUBLIC_BROKER_PDF full-report route를 확인하지 못했다. 이는 브로커 자료나 병목 증거의 부재를 뜻하지 않는다.",
+      "검색 snippet 및 재전 페이지는 발견 단서일 뿐 fetch·parse된 원문 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "ab44b6db79a0ac746c6eb7ed04d4cc52ecf52af189f7fac68238c8214d24dba8",
+  "production_score_authority": false,
+  "prompt_hash": "9e81bf39de2384a0c0d94539313d88ecf6a46eb64cd6549bd50c08891307ac38",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0e2dda32ba8e498fa63a43558cade0a97f319785812ce3f48c57be18a524a515",
+  "response_id": "COLLABRESP-ce37aa8983094f710b849a416ee614bb50907f749d7e45284f0647de1c9b25bb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-51d5e952c5a77567fc8a4164",
+        "rationale": "최종 coverage 전수감사에서도 미등기임원 명단·경력은 current objective의 계약·CAPA·실적·자본 사건이 아니며 cumulative accepted 0건이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "rationale": "Prior coverage pages의 cumulative accepted 23건이 자본환원, 차입·보증, 인수, 감사·재작성 및 채권 정보를 포착하며 distinct objective-local 잔여가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5f26f48e668c6305b4b1de3c",
+        "rationale": "Prior coverage pages의 cumulative accepted 8건이 IFRS 18 표시·현금흐름·MPM·세분화와 추정 불확실성을 포착하며 distinct 잔여가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-63db1e7e8734e63136032598",
+        "rationale": "의결권·정관·주주총회·임원 정보는 기존 자본 facts와 중복되거나 current objective의 직접 경제 사건이 아니며 cumulative accepted 0건이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-6601c7fcf9b10b37297bd96d",
+        "rationale": "Prior cumulative accepted 8건이 메모리 가격·CAPA·생산·가동률·매출과 회사 전체 집중도·레버리지를 포착하며 distinct 잔여가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-7424cf31cd84e314dd11c2d0",
+        "rationale": "임원 직책과 인사 이력은 실행된 계약·고객·생산·현금 사실이 아니며 cumulative accepted 0건이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-88c797c630d09c54e9bd7a06",
+        "rationale": "Prior cumulative accepted 5건이 관계사 거래, 별도 보증부 채무, LTI·PSU 지급 의무를 포착하며 distinct 잔여가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-913479eb6002c858cbacb8f3",
+        "rationale": "Prior cumulative accepted 2건이 별도 부채비율과 지분상품 가격 민감도를 포착하며 나머지 금융상품 합계는 current facts와 중복되거나 current objective에 추가 경제 의미가 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "86d0a30519c397182d0383e929a6f055c7a32dd4c5637d51bc4bb594ccd256f6",
+  "production_score_authority": false,
+  "prompt_hash": "d3f383438bb3ebc116ea8c05033f87f531694d4e527f5bc19390b6db8e28c529",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-715e5409f6cf086b64d6f12e60fc608667b3f66251486db84eb9c8127db6139c",
+  "response_id": "COLLABRESP-8eede0767af7965f3e66db1306a3926382bacc67ba6f62ec32b548eedc970606",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

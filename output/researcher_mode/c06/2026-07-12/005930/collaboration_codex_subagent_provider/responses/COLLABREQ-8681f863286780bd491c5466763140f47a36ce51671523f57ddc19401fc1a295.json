@@ -1,0 +1,592 @@
+{
+  "output_schema_hash": "12647df9cfc943fbb7dc25f550ef1cddd207e76d8eb01c99af411004e3af580d",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-473c73dfb985141c7f5727fd",
+        "rationale": "유안타증권 원문에서 DRAM·반도체 이익 bridge와 forward BPS·PBR 근거를 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-4d1a8341b0777325cdcaf813",
+        "rationale": "잠정실적의 HBM 기여 분석과 사업부문 수치 미공개 경계를 counterfact로 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-4e8c3e72a64142ee8a0bc2f2",
+        "rationale": "HBM 공급 병목의 기간과 삼성전자 P4 증설의 물량 기여 시점을 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "rationale": "BPS·PBR valuation bridge, DRAM ASP 전망, HBM4 첫 납품 분석을 실제와 구분해 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-5123f79f1af2c57d898245e9",
+        "rationale": "삼성전자 P5 투자규모와 차세대 HBM 생산 계획을 공급 반응으로 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-5be1161711c033a8ceef2597",
+        "rationale": "메모리 가격 협상력에 관한 정성적 재인용 외에 수치·기간·제품 귀속이 분명한 신규 objective-local 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-5d3a002c301ea447a2df0b3c",
+        "rationale": "본문 중심은 마이크론·SK하이닉스 및 NAND 산업 전망이며 삼성전자 HBM/DRAM에 직접 귀속되는 신규 사실이 없다.",
+        "status": "WRONG_TARGET_OR_SEGMENT"
+      },
+      {
+        "document_id": "SGDOC-5d7d9f693743beb0409d1928",
+        "rationale": "HBM3E 공급과 HBM4 양산 준비를 실제 공급과 향후 준비로 분리해 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-473c73dfb985141c7f5727fd",
+        "economic_mechanism": "유안타증권의 4Q25 잠정 추정에서 DRAM 매출과 영업이익률이 함께 상승해 가격 강세가 메모리 이익으로 전환된 것으로 나타난다.",
+        "exact_quote": "DRAM Sales 13,282 14,262 18,152 28,076 31,486 33,873 38,031 43,206 53,789 73,772 146,596\nY/Y 27.4% 6.0% 28.4% 77.9% 137.1% 137.5% 109.5% 53.9% 101.7% 37.1% 98.7%\nQ/Q -15.8% 7.4% 27.3% 54.7% 12.1% 7.6% 12.3% 13.6% - - -\nBit shipments Q/Q 2.0% 11.0% 14.0% 5.0% 1.0% 2.0% 8.5% 9.0% - - -\nASP Q/Q -20.0% 2.0% 14.0% 38.0% 15.0% 7.0% 5.0% 5.0% - - -\nOP 3,666 3,494 6,424 15,452 19,436 22,885 25,912 30,224 14,734 29,036 98,458\nOPM% 27.6% 24.5% 35.4% 55.0% 61.7% 67.6% 68.1% 70.0% 27.4% 39.4% 67.2%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "단순 가격 전망이 아니라 DRAM 가격·매출·이익률을 같은 표에서 연결해 메모리 실적-가치평가 bridge를 제공한다.",
+        "mechanism_scope_id": "MEMORY/DRAM/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "4Q25 DRAM 매출·영업이익·마진 추정",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25P",
+        "predicate": "4Q25 DRAM 매출 28.076조원, 영업이익 15.452조원, 영업이익률 55.0%로 추정됐다",
+        "predicate_family": "BROKER_DRAM_REVENUE_PROFIT_BRIDGE_ESTIMATE",
+        "primitive_tags": [
+          "VALUATION_EARNINGS_BRIDGE",
+          "DRAM_PROFITABILITY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "DRAM earnings bridge",
+          "broker estimate"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "삼성전자 DRAM 사업",
+        "subject_id": "005930",
+        "unit": "조원, %",
+        "value": "매출 28.076조원; 영업이익 15.452조원; OPM 55.0%"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-473c73dfb985141c7f5727fd",
+        "economic_mechanism": "유안타증권은 2026년 DRAM 매출과 영업이익이 2025년 추정치보다 크게 늘고 높은 마진을 낼 것으로 전망해 가치평가의 메모리 이익 전제를 수치화했다.",
+        "exact_quote": "DRAM Sales 13,282 14,262 18,152 28,076 31,486 33,873 38,031 43,206 53,789 73,772 146,596\nY/Y 27.4% 6.0% 28.4% 77.9% 137.1% 137.5% 109.5% 53.9% 101.7% 37.1% 98.7%\nQ/Q -15.8% 7.4% 27.3% 54.7% 12.1% 7.6% 12.3% 13.6% - - -\nBit shipments Q/Q 2.0% 11.0% 14.0% 5.0% 1.0% 2.0% 8.5% 9.0% - - -\nASP Q/Q -20.0% 2.0% 14.0% 38.0% 15.0% 7.0% 5.0% 5.0% - - -\nOP 3,666 3,494 6,424 15,452 19,436 22,885 25,912 30,224 14,734 29,036 98,458\nOPM% 27.6% 24.5% 35.4% 55.0% 61.7% 67.6% 68.1% 70.0% 27.4% 39.4% 67.2%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM의 연간 매출·영업이익·마진 전망이 함께 있어 valuation이 의존하는 메모리 이익 체력을 직접 확인한다.",
+        "mechanism_scope_id": "MEMORY/DRAM/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "2026년 DRAM 매출·영업이익·마진 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "2026년 DRAM 매출 146.596조원, 영업이익 98.458조원, 영업이익률 67.2%로 전망됐다",
+        "predicate_family": "BROKER_FORWARD_DRAM_REVENUE_PROFIT_BRIDGE",
+        "primitive_tags": [
+          "FORWARD_EARNINGS",
+          "DRAM_MARGIN"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "forward DRAM earnings",
+          "valuation bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DRAM 사업",
+        "subject_id": "005930",
+        "unit": "조원, %",
+        "value": "매출 146.596조원; 영업이익 98.458조원; OPM 67.2%"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-473c73dfb985141c7f5727fd",
+        "economic_mechanism": "유안타증권의 2026년 반도체 매출·영업이익 전망은 메모리 가격 상승을 전사 가치평가로 연결하는 사업부 이익 bridge를 제시한다.",
+        "exact_quote": "Semi Sales 26,055 28,584 33,092 45,808 51,499 56,805 61,851 69,037 112,842 133,538 239,191\nY/Y 11.3% -1.4% 12.3% 47.8% 97.7% 98.7% 86.9% 50.7% 71.1% 18.3% 79.1%\nQ/Q -15.9% 9.7% 15.8% 38.4% 12.4% 10.3% 8.9% 11.6% - - -\nOP 1,082 384 6,115 16,495 21,823 26,864 30,893 36,194 15,155 24,077 115,775\nOPM% 4.2% 1.3% 18.5% 36.0% 42.4% 47.3% 49.9% 52.4% 13.4% 18.0% 48.4%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "반도체 사업의 연간 매출과 이익을 함께 제시해 메모리 가격 상승의 전사 이익 기여를 정량화한다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "2026년 반도체 매출·영업이익·마진 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "2026년 반도체 매출 239.191조원, 영업이익 115.775조원, 영업이익률 48.4%로 전망됐다",
+        "predicate_family": "BROKER_FORWARD_SEMICONDUCTOR_REVENUE_PROFIT_BRIDGE",
+        "primitive_tags": [
+          "SEGMENT_CONTRIBUTION",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "semiconductor earnings bridge",
+          "forward margin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 반도체 사업",
+        "subject_id": "005930",
+        "unit": "조원, %",
+        "value": "매출 239.191조원; 영업이익 115.775조원; OPM 48.4%"
+      },
+      {
+        "business_segment": "메모리 가치평가",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-473c73dfb985141c7f5727fd",
+        "economic_mechanism": "유안타증권은 2026~2027년 예상 BPS를 제시하고 그 평균을 목표 PBR에 연결해 목표가를 산정했다.",
+        "exact_quote": "Adj BPS_P (비지배주주지분 제외) 28,971 35,342 37,528 39,406 43,611 50,817 52,002 57,930 63,766 79,032 94,033",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "목표 PBR 적용의 분모가 되는 기간 명시 forward book value다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "2026~2027년 조정 BPS",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F~2027F",
+        "predicate": "조정 BPS가 2026년 79,032원, 2027년 94,033원으로 전망됐다",
+        "predicate_family": "BROKER_FORWARD_BOOK_VALUE_ESTIMATE",
+        "primitive_tags": [
+          "FORWARD_BOOK_VALUE",
+          "VALUATION_INPUT"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "forward book value",
+          "PBR bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "삼성전자 가치평가 기준 BPS",
+        "subject_id": "005930",
+        "unit": "원",
+        "value": "2026F 79,032; 2027F 94,033"
+      },
+      {
+        "business_segment": "메모리 가치평가",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-473c73dfb985141c7f5727fd",
+        "economic_mechanism": "유안타증권은 2017년 서버 메모리 사이클의 PBR 밴드 상단을 기준으로 1.99배를 적용했다.",
+        "exact_quote": "Target PBR 1.99\nTarget Price 172,000 171,805\nClose Price (1월 8일) 138,800\nUpside potential 24%\n자료: 유안타증권 리서치센터, 주: Target PBR = 2017년 메모리반도체 Server cycle 구간 내 Band 상단 값 적용",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "목표배수의 숫자와 메모리 사이클 비교 기준이 함께 명시되어 단순 목표주가가 아닌 valuation bridge를 구성한다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "메모리 서버 사이클 기준 목표 PBR",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-01-08 평가",
+        "predicate": "2017년 메모리 서버 사이클 밴드 상단인 목표 PBR 1.99배를 적용했다",
+        "predicate_family": "BROKER_TARGET_PB_MEMORY_CYCLE_BASIS",
+        "primitive_tags": [
+          "FORWARD_PB",
+          "OWN_HISTORICAL_BAND"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "target PBR",
+          "memory cycle band"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 목표 PBR",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 1.99
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4d1a8341b0777325cdcaf813",
+        "economic_mechanism": "잠정실적에는 사업부문별 수치가 없어 HBM 판매 확대가 전사 이익에 기여했다는 분석을 직접 검증할 수 없다.",
+        "exact_quote": "이번 실적은 AI 서버 투자 확대에 따른 메모리 수요 증가와 D램·낸드 평균판매가격(ASP) 상승, HBM 판매 확대가 견인한 것으로 분석된다. 잠정실적 특성상 사업부문별 실적은 공개되지 않았지만, 증권가에서는 디바이스솔루션(DS) 부문이 전사 영업이익의 대부분을 차지했을 것으로 보고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 판매 확대의 이익 기여가 기사 분석이지 공시된 segment actual이 아니라는 경계를 직접 보여준다.",
+        "mechanism_scope_id": "MEMORY/HBM/GENERIC_INFORMATION/RISK_COUNTER",
+        "normalized_object": "2분기 잠정실적 HBM 기여도 공시 한계",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026년 2분기 잠정실적",
+        "predicate": "잠정실적에서 사업부문별 실적이 공개되지 않아 HBM 기여도는 분석 단계에 머문다",
+        "predicate_family": "PRELIMINARY_RESULTS_HBM_ATTRIBUTION_UNDISCLOSED",
+        "primitive_tags": [
+          "INFORMATION_LIMITATION",
+          "HBM_ATTRIBUTION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "segment attribution",
+          "preliminary results"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2분기 잠정실적의 HBM 기여도",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "사업부문별 실적 미공개"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4e8c3e72a64142ee8a0bc2f2",
+        "economic_mechanism": "삼성증권은 2027년 삼성전자 P4 증설이 bit growth에 기여해 HBM·범용 DRAM 점유율 확대를 뒷받침할 것으로 전망했다.",
+        "exact_quote": "메모리3사의범용DRAMbitgrowth가모두15%수준일것으로전망되는가운데,2027년삼성전자P4ph4/2증설이bitgrowth에기여하며\nQ측면에서수혜,HBM/범용DRAM시장에서의마켓쉐어확대기대.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 증설의 물량 기여 시점을 명시해 현재 가격 효과 이후 2027년 이익의 Q 성장 전제를 제시한다.",
+        "mechanism_scope_id": "MEMORY/HBM/CAPACITY_INVESTMENT/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "삼성전자 P4 증설 물량 효과 시점",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026~2027년 전망",
+        "predicate": "삼성전자 P4 증설이 2027년 bit growth에 기여할 것으로 전망됐다",
+        "predicate_family": "BROKER_HBM_SUPPLY_TIMING_AND_SAMSUNG_CAPACITY_EFFECT",
+        "primitive_tags": [
+          "CAPACITY_SCARCITY",
+          "SUPPLY_RESPONSE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "HBM supply timing",
+          "capacity response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 및 DRAM 공급능력",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "P4 증설 bit growth 기여 2027년"
+      },
+      {
+        "business_segment": "메모리 가치평가",
+        "confidence": 0.91,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "economic_mechanism": "교보증권은 2026년 BPS, 장기 평균 ROE와 자기자본비용을 명시해 목표 PBR 3.5배의 근거를 제시했다.",
+        "exact_quote": "이번 목표주가 조정은 10%를 크게 웃도는 상향이다. 단기 주가 흐름보다 이익 추정치 변화와 밸류에이션 재평가가 핵심이다. 목표주가 산정 자료에서는 2026년 예상 BPS 14만889원과 목표 PBR 3.5배가 적용됐다. 목표 PBR에는 2026~2030년 평균 ROE 30.2%, 5년 평균 자기자본비용 8.6%가 반영됐다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "BPS·PBR·ROE·자기자본비용이 함께 있어 단순 목표가가 아닌 valuation bridge를 제공한다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "교보증권 목표 PBR",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026년 가치평가",
+        "predicate": "2026년 예상 BPS 140,889원에 목표 PBR 3.5배를 적용했다",
+        "predicate_family": "BROKER_TARGET_PB_ROE_COST_OF_EQUITY_BRIDGE",
+        "primitive_tags": [
+          "FORWARD_PB",
+          "FORWARD_BOOK_VALUE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "market_mispricing",
+        "question_family_tags": [
+          "target PBR",
+          "valuation bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 목표 PBR",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 3.5
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "economic_mechanism": "교보증권은 2분기 DRAM 출하 증가보다 ASP 상승이 훨씬 클 것으로 추정해 이익 개선의 가격 의존도를 제시했다.",
+        "exact_quote": "사업부문별 실적 자료를 보면 2분기 이익 개선은 출하량 증가보다 가격 상승에 더 크게 의존한다. 교보증권은 2분기 D램 출하량이 전분기 대비 6% 늘어나는 데 그치는 반면, D램 ASP는 전분기 대비 46% 오를 것으로 추정했다. 전년 동기 대비 D램 ASP 상승률은 374%로 제시됐다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "출하와 가격을 분리해 이번 이익 체력이 물량보다 가격결정력에 의존한다는 점을 직접 수치화한다.",
+        "mechanism_scope_id": "MEMORY/DRAM/VALUATION_ANALYSIS/PRICING_POWER",
+        "normalized_object": "2분기 DRAM 출하량·ASP 전망",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026년 2분기 전망",
+        "predicate": "2분기 DRAM 출하량은 6% 증가, ASP는 46% 상승할 것으로 추정됐다",
+        "predicate_family": "BROKER_DRAM_VOLUME_ASP_FORECAST",
+        "primitive_tags": [
+          "PRICING_POWER",
+          "FORECAST_NOT_ACTUAL"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "DRAM ASP",
+          "volume versus price"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DRAM ASP 전망",
+        "subject_id": "005930",
+        "unit": "% QoQ",
+        "value": "출하량 +6% QoQ; ASP +46% QoQ"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.85,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "economic_mechanism": "교보증권은 엔비디아향 HBM4 첫 납품으로 삼성전자의 HBM 상용화가 진전됐다고 분석했지만 회사 확정 실적은 아니다.",
+        "exact_quote": "이번 분석에서 메모리 가격만큼 중요한 축은 HBM4다. 교보증권은 삼성전자가 엔비디아향 HBM4 첫 납품으로 HBM 추격을 본격화하고 있다고 평가했다. 이는 회사가 발표한 확정 실적이 아니라 애널리스트의 분석이라는 점을 구분해야 한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시 고객향 HBM4 공급의 상용화 진척을 제시하면서 동시에 독립 분석이라는 증거 한계를 보존한다.",
+        "mechanism_scope_id": "MEMORY/HBM/PRODUCT_SHIPMENT/PRODUCT_COMMERCIALIZATION",
+        "normalized_object": "엔비디아향 HBM4 첫 납품",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026년 7월 1일 현재",
+        "predicate": "엔비디아향 HBM4 첫 납품으로 HBM 추격을 본격화한 것으로 분석됐다",
+        "predicate_family": "BROKER_ANALYZED_HBM4_FIRST_NVIDIA_DELIVERY",
+        "primitive_tags": [
+          "PRODUCT_COMMERCIALIZATION",
+          "CUSTOMER_ATTRIBUTION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "HBM4 shipment",
+          "broker analysis"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "엔비디아향 HBM4 첫 납품 분석"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.91,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-5123f79f1af2c57d898245e9",
+        "economic_mechanism": "평택 P5에 대한 60조원 이상 투자와 차세대 HBM 생산 계획은 현재 공급 병목을 완화할 수 있는 향후 공급 반응이다.",
+        "exact_quote": "늘어나는 수요를 적기에 대응하기 위해 생산량 확대에도 주력하고 있다. 삼성전자는 평택 5공장(P5)에 60조 원 이상을 투입하며 공사를 2년 만에 재개했다. P5에서는 차세대 HBM을 생산할 계획이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "구체 투자규모와 HBM 생산 목적이 함께 제시돼 희소성 지속성의 핵심 counterfact다.",
+        "mechanism_scope_id": "MEMORY/HBM/CAPACITY_INVESTMENT/SUPPLY_RESPONSE",
+        "normalized_object": "평택 P5 차세대 HBM 생산 투자",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026년 3월 17일 현재 계획",
+        "predicate": "평택 P5에 60조원 이상을 투자해 차세대 HBM을 생산할 계획이다",
+        "predicate_family": "SAMSUNG_P5_HBM_CAPACITY_INVESTMENT_PLAN",
+        "primitive_tags": [
+          "CAPACITY_INVESTMENT",
+          "SUPPLY_RESPONSE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "HBM capacity",
+          "supply response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 평택 P5 HBM 생산능력",
+        "subject_id": "005930",
+        "unit": "원",
+        "value": "60조원 이상"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-5d7d9f693743beb0409d1928",
+        "economic_mechanism": "기사 기준 삼성전자는 HBM3E 공급 이후 HBM4 양산을 준비하고 있어 세대 전환 상용화가 진행 중이지만 HBM4 실현은 아직 계획 단계다.",
+        "exact_quote": "삼성전자는 지난해 5세대 HBM3E를 글로벌 빅테크에 공급한 데 이어 차세대 제품인 HBM4 양산을 준비하며 기술 경쟁력을 강화하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "실제 이전 세대 공급과 차세대 양산 준비를 분리해 HBM 상용화의 현재 상태를 제시한다.",
+        "mechanism_scope_id": "MEMORY/HBM/PRODUCT_PROFILE/PRODUCT_COMMERCIALIZATION",
+        "normalized_object": "HBM 세대 전환 상용화 상태",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025년 공급 및 2026년 4월 현재 준비",
+        "predicate": "HBM3E를 글로벌 빅테크에 공급했고 HBM4 양산을 준비하고 있다",
+        "predicate_family": "HBM3E_SUPPLY_AND_HBM4_PRODUCTION_PREPARATION",
+        "primitive_tags": [
+          "PRODUCT_SHIPMENT",
+          "PRODUCT_COMMERCIALIZATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "HBM shipment",
+          "mass-production preparation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM3E·HBM4",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "HBM3E 공급; HBM4 양산 준비"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-473c73dfb985141c7f5727fd",
+      "SGDOC-4e8c3e72a64142ee8a0bc2f2",
+      "SGDOC-50166fc79795674f74d656f5",
+      "SGDOC-5d7d9f693743beb0409d1928"
+    ],
+    "unresolved_research_notes": [
+      "12개 page cap에 도달했다. 동일 문서들에 forward EV/EBITDA·FCF, peer valuation, 가격 지속성 counter, segment attribution 한계 등 distinct objective-local 잔여가 있어 continuation이 필요하다."
+    ]
+  },
+  "payload_hash": "8ac72d7ca466157d87f90d9faa7ff830cc317a7df29467a31832f20f885e2096",
+  "production_score_authority": false,
+  "prompt_hash": "77b76767cc8288d02042891b4cf33a9f3edb87f3d592cdf35d6728dec18c6ba7",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8681f863286780bd491c5466763140f47a36ce51671523f57ddc19401fc1a295",
+  "response_id": "COLLABRESP-f92f812768e51ac74da889707c1843fb6dde841ac520e19f6441dea40be63d5c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

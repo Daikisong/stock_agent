@@ -1,0 +1,83 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-f849078db30b02245a69d543",
+        "rationale": "23,774자·4개 PDF 페이지를 전수 검토했다. 상세 투자지표의 FY2027F EV/EBITDA 4.30배 한 건만 비중복으로 추출했다. FY2026F 4.45배는 같은 하나증권 보고서가 포함된 기존 Morning Brief fact와 원문·경제 의미·독립성 그룹이 중복되어 반복하지 않았고, 메모리 Target EV/EBITDA 5.4배는 forward 기간 없는 목표배수라 구조화 역할로 태그하지 않았다. Foundry·NAND·투자권고 내용도 scope 밖으로 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f849078db30b02245a69d543",
+        "economic_mechanism": "하나증권의 예상 EV/EBITDA는 삼성전자 메모리 이익 전망을 포함한 기업가치가 예상 EBITDA 대비 몇 배인지 기간별로 수치화한다.",
+        "exact_quote": "투자지표 현금흐름표 (단위:십억원)\n2023 2024 2025F 2026F 2027F 2023 2024 2025F 2026F 2027F\n주당지표(원) 영업활동 현금흐름 44,137.4 72,982.6 69,421.6 82,212.4 83,459.6\nEPS 2,131 4,950 4,054 5,029 5,089 당기순이익 15,487.1 34,451.4 28,002.4 34,695.1 35,110.1\nBPS 52,002 57,930 60,815 64,408 68,061 조정 34,109.0 40,098.8 44,641.2 47,100.3 48,066.5\nCFPS 7,656 11,394 11,074 12,768 12,923 감가상각비 38,666.6 42,630.8 44,162.2 47,100.4 48,066.5\nEBITDAPS 6,659 11,094 10,710 12,680 12,900 외환거래손익 0.0 0.0 0.0 0.0 0.0\nSPS 38,120 44,293 45,972 47,347 49,584 지분법손익 (887.6) (751.0) (118.9) 0.0 0.0\nDPS 1,444 1,446 1,450 1,450 1,450 기타 (3,670.0) (1,781.0) 597.9 (0.1) 0.0\n주가지표(배) 영업활동 자산부채 변동 (5,458.7) (1,567.6) (3,222.0) 417.0 283.0\nPER 36.84 10.75 17.91 14.44 14.27 투자활동 현금흐름 (16,922.8) (85,381.7) (55,956.6) (61,108.8) (68,671.2)\nPBR 1.51 0.92 1.19 1.13 1.07 투자자산감소(증가) 3,903.8 (2,917.6) 217.2 (952.5) (646.5)\nPCFR 10.25 4.67 6.56 5.69 5.62 자본증가(감소) (57,513.0) (51,250.2) (53,871.6) (55,700.0) (65,000.0)\nEV/EBITDA 9.96 3.60 5.43 4.45 4.30",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 직접 투자지표 표가 기간 헤더와 EV/EBITDA 행을 함께 제시해 FY2027F 점값 4.30배를 명시한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EV_EBITDA:FY2027F:HANA_20250801",
+        "normalized_object": "삼성전자 2027년 예상 EV/EBITDA 4.30배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "하나증권은 삼성전자의 2027년 예상 EV/EBITDA를 4.30배로 제시했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "FORWARD_EV_EBITDA",
+          "FY2027F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2027년 예상 EV/EBITDA",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 4.3
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "4b7a59dc7a3df0c8e5da0a18edaccafcd476b644d905605ee4808c0885d595ce",
+  "production_score_authority": false,
+  "prompt_hash": "9a108ba62645776702f81a255783fd5faa41a96422cbdf2d37ac52d3345e10a5",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e4883668bfa30c477f1a7cca7bd28c555cdaddbc996aba6302f10093659bfa6c",
+  "response_id": "COLLABRESP-061aab010d4d8e732f02c575b8ece91b16a3260e444bed3b6129123b9682cc1b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

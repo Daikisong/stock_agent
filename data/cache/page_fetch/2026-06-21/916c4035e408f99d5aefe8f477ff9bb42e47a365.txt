@@ -1,0 +1,358 @@
+강해령의 테크앤더시티 – Telegram
+강해령의 테크앤더시티
+강해령의 테크앤더시티
+강해령의 테크앤더시티
+@technthecity
+7.74K
+subscribers
+227
+photos
+2
+videos
+158
+links
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+강해령의 테크앤더시티
+7.74K subscribers
+강해령의 테크앤더시티
+SK하이닉스 새로운 패키징 팹을 기존 M17 부지에 건설하네요.
+https://n.news.naver.com/article/015/0005236604?sid=101
+Naver
+SK, 최첨단 패키징에 19兆 베팅…HBM 주도권 굳힌다
+SK하이닉스가 충북 청주에 19조원을 투입해 최첨단 패키징 공장을 짓는다. 인근에 있는 D램 생산기지(M15X)에서 만든 D램을 쌓아 올려 고대역폭메모리(HBM) 등 완제품으로 만드는 시설이다. 이에 따라 SK하이닉
+❤
+18
+4.23K
+views
+11:46
+강해령의 테크앤더시티
+❤
+12
+👍
+4
+3.43K
+views
+11:48
+강해령의 테크앤더시티
+AI 반도체 분야에서 다양한 종류의 칩이 나오고 있는 점이 흥미롭습니다. 이미 너무 유명한 GPU, NPU 외에도 오늘 기사로 소개드린 디노티시아의 VDPU(벡터DB용 칩), 엔비디아가 인수한 Groq의 LPU 등도 있습니다.
+https://n.news.naver.com/article/015/0005237560?type=journalists
+Naver
+디노티시아, 1세대 VDPU 설계 완료…벡터DB 공략 [강해령의 테크앤더시티]
+토종 AI 솔루션 회사인 디노티시아가 벡터DB(데이터베이스)용 특수 칩인 벡터DB프로세싱유닛(VDPU) 설계를 완료했다. 생성형 AI 검색의 핵심 인프라인 벡터DB 처리 속도를 획기적으로 끌어올리는 세계 최초의 전용
+👍
+15
+3.69K
+views
+05:52
+강해령의 테크앤더시티
+TSMC 지난해 4분기 영업이익률이 54%
+❤
+13
+👏
+5
+3.42K
+views
+05:54
+강해령의 테크앤더시티
+Forwarded from
+연수르 해외주식
+☁️
+TSMC 컨퍼런스콜 주요 내용
+가이던스
+1Q26 Rev
+$34.6-35.8B(YoY +37.8%)
+1Q26 GPM
+63~65% vs 4Q25 62.3%
+1Q26 OPM
+54~56% vs 4Q25 54.0%
+2026 CapEx
+$52-56B vs 2025 $40.9B
+주요 코멘트
+장비투자 비용은 더욱 비싸질 것인다
+THE COST OF TOOLS ARE BECOMING MORE EXPENSIVE
+CapEx는 향후 3년간 더 높아질 것이다.
+CAPEX TO BE HIGHER IN THE NEXT THREE YEARS
+장기 GPM은 56%를 상회할 것이다.
+LONG TERN GROSS MARGINS OF 56% AND HIGHER IS ACHIEVABLE
+AI 수요가 견고하며, 2026년 매출은 USD 기준으로 30% 가까이 성장할 것으로 보인다.
+ROBUST AI RELATED DEMAND. EXPECTS 2026 REVENUE TO INCREASE CLOSE TO 30% IN U.S. DOLLAR TERMS.
+고객들이 강력한 시그널을 제공하고 있으며, 캐파를 확보하기 위해 직접 연락이 오고 있다.
+CUSTOMERS ARE PROVIDING STRONG SIGNALS AND REACHING OUT DIRECTLY TO REQUEST CAPACITY
+애리조나에서 캐파 확장에 박차를 가하고 있다. 애리조나 P2 팹 건설과 장비 반입은 2026년에 완료될 것이다. 애리조나 인근에 두 번째 부지 매입을 완료했다.
+CONSTRUCTION OF ARIZONA P2 FAB COMPLETE AND TOOL MOVE IN EXPECTED IN 2026
+WE COMPELETED PURCHASE OF A SECOND PIECE OF LAND NEARBY IN ARIZONA
+일본 두 번째 팹 건설이 시작했다.
+JAPAN SECOND FAB CONSTRUCTION HAS STARTED
+독일 FAB 건설은 진행중이다.
+IN GERMANY FAB CONSTRUCTION IS PROGRESSING
+대만에서는 N2 FAB의 여러 페이즈들을 준비 중이다.
+IN TAIWAN, PREPARING MULTIPLE PHASES OF N2 FABS
+고객들은 AI가 비즈니스에 정말로 도움이 되고 있다는 증거를 보여주고 있다. AI는 현실이며, 우리의 일상 속에서 성장하기 시작했다. 우리는 AI 메가트렌드를 믿고 있다.
+CUSTOMERS SHOW ME EVIDENCE THAT AI REALLY HELPS THEIR BUSINESS. AI IS REAL AND STARTED TO GROW IN OUR DAILY LIFE. WE BELIEVE IN AI MEGA TREND.
+강력한 수요 때문에 미국 모든 고객들과 AI 고객들이 미국 FAB에 캐파를 요청했기 때문에 우리는 애리조나에서 속도를 높여야 한다. 미국 내 캐파 확장 속도는 매우 좋다.
+DUE TO STRONG DEMAND, ALL MY CUSTOMERS AND AI CUSTOMERS IN THE US ASKED A LOT OF SUPPORT FROM US FABS SO WE NEED TO SPEED UP ARIZONA. PROGRESS IN SPEEDING UP CAPACITY IN US IS VERY GOOD.
+캐파는 매우 타이트하며, 우리는 GAP을 줄이기 위해 열심히 노력하고 있다. 애리조나 FAB들을 확장할 계획이다.
+CAPACITY IS VERY TIGHT, WE WORKING HARD TO NARROW THE GAP. WE ARE GOING TO EXPAND FABS IN ARIZONA
+대만의 전력문제에 대해 걱정하고 있다.
+I WORRY ABOUT ELECTRICITY IN TAIWAN
+CSP들이 우리에게 보낸 메시지는 TSMC의 칩이 그들의 가장 큰 병목이라는 것이다.
+CLOUD SERVICE PROVIDER'S MESSAGE TO ME IS SILICON FROM TSMC IS A BOTTLENECK AND THEY HAVE TO SOLVE SILICON BOTTLENECK FIRST.
+메모리의 높은 가격은 TSMC에 영향을 미치지 않는다.
+MEMORY HIGH PRICE WILL NOT IMPACT TSMC
+2026년과 2027년에 우리는 생산성을 향상시킬 것이고, 28년과 29년에는 CapEx를 매우 크게 늘리기 시작할 것이다.
+2026 AND 2027 WE ARE LOOKING TO IMPORVE OUR PRODUCTIVITY. 2028 AND 2029 WE START TO INCREASE CAPEX SIGNIFICANTLY.
+우리의 가장 큰 골칫거리는 수요-공급 격차이며, 우리는 이를 줄이기 위해 노력할 것이다.
+OUR HEADACHE IS THE DEMAND AND SUPPLY GAP AND WE NEED TO WORK HARD TO NARROW THE GAP
+Please open Telegram to view this post
+VIEW IN TELEGRAM
+👍
+15
+❤
+9
+3.91K
+views
+08:45
+강해령의 테크앤더시티
+✍️
+한경 반도체인사이트
+엔비디아가 불붙인 추론AI…낸드플래시 가격 2배 폭등
+https://naver.me/IxKgSYwS
+Naver
+엔비디아가 불붙인 추론AI…낸드플래시 가격 2배 폭등
+생성형 인공지능(AI)이 ‘훈련’ 중심에서 ‘추론’으로 이동하면서 낸드플래시 가격이 폭등하고 있다. AI가 추론을 잘하려면 데이터를 빨리 읽고 쓰는 D램뿐 아니라 많은 정보를 저장할 수 있는 낸드도 많이 필요해서다.
+❤
+25
+👍
+3
+21.8K
+views
+09:41
+강해령의 테크앤더시티
+Forwarded from
+몰?루
+(
+복싱이
+)
+https://www.hankyung.com/article/2026011875211
+하이브리드 본딩
+1) W2W -> V10(400단 이상), CIS
+2) C2W -> HBM 적층 사용( NCF, MUF 교체 대응)
+3) C2C -> SoIC ,X-Cube등
+❤
+19
+👍
+5
+🤔
+5
+👏
+1
+3.83K
+views
+09:39
+강해령의 테크앤더시티
+▶️
+삼성전자 TC본더 공급망에서 변화 조짐이 파악돼 기사로 다뤘습니다.
+https://n.news.naver.com/mnews/article/015/0005239954?sid=105
+=최근 삼성은 TC본더 공급을 두고 ASMPT와 논의 중. 그간 이 공급망에서는 자회사 세메스, 日 신카와 비중이 압도적이었습니다.
+=ASMPT는 SK하이닉스와 주로 거래를 하면서 유명해진 본더 회사죠.
+TC-NCF 장비 뿐만 아니라, 향후 하이브리드 본더 공급까지 가능성을 엿보는 것으로 취재됩니다. 하이브리드 본더는 베시도 같이 거론.
+=일단 세메스와의 본더 파트너십은 굉장히 좋은 것 같습니다. 지금 천안에 설치해놓은 다수의 하이브리드 본더도 삼성전자가 개발단계부터 굉장히 많이 관여한 것으로 알려져 있습니다.
+=세메스 제외 첫 번째 공급 후보군을 외산업체들 위주로 보는 분위기.
+Naver
+삼성, TC 본더 다변화 '눈독'…ASMPT와 논의 [강해령의 테크앤더시티]
+삼성전자가 고대역폭메모리(HBM)·3D 패키징용 열압착(TC) 본더 공급망을 다변화하기 위한 작업에 착수했다. 차세대 본딩 장비로 손꼽히는 하이브리드 본더 분야에서도 변화가 있을 것인지 주목된다. 21일 업계에 따르
+❤
+21
+👍
+3
+🤣
+3
+👎
+1
+18K
+views
+00:39
+강해령의 테크앤더시티
+Forwarded from
+한투증권 중국/신흥국 정정영
+* H200 허가
+========================
+~ Chinese officials have told the country’s largest tech firms including Alibaba Group Holding Ltd. they can prepare orders for Nvidia Corp.’s H200 AI chips, suggesting Beijing is close to formally approving imports of components essential to running artificial intelligence
+https://www.bloomberg.com/news/articles/2026-01-23/china-tells-alibaba-top-tech-firms-to-prep-nvidia-h200-orders
+Bloomberg.com
+China Tells Alibaba, Tech Firms to Prep Nvidia H200 Orders
+Chinese officials have told the country’s largest tech firms including Alibaba Group Holding Ltd. they can prepare orders for Nvidia Corp.’s H200 AI chips, suggesting Beijing is close to formally approving imports of components essential to powering artificial…
+❤
+14
+👎
+2
+2.46K
+views
+12:49
+강해령의 테크앤더시티
+✍️
+젠슨 황의 '신비로운' 메모리 플랫폼…삼성·SK 기회 잡나 [강해령의 테크앤더시티]
+https://n.news.naver.com/article/015/0005241588?type=journalists
+=날씨 너무 추우니까 댁에서 푹 쉬시면서 강해령의 테크앤더시티와 테크력 장전 어떠세요!
+😆
+👍
+💪
+=5일 CES 2026 기간 젠슨 황 엔비디아 CEO가 기조 연설에서 메모리 플랫폼에 대한 이야기를 잠깐 했죠.
+=ICMS. Inference Context Memory Storage 입니다. 한글로 풀면 '추론 맥락 메모리 스토리지'라는 것인데 컨셉이 재밌습니다.
+=GPU 서버 안에서 궂은 살림을 마다하지 않았던 DPU 기능을 극대화해 'KV 캐시' 관리에 들어간 게 컨셉입니다.
+=여기에 활용된 메모리 제품군은 SSD. 한 트레이에 600TB, 랙 하나에 16개의 KV캐시 전용 SSD가 탑재되니 엄청난 용량입니다.
+=젠슨 황이 GPU에 대당 할당된 KV캐시 메모리 용량이 1TB에 불과했다면 이제 16TB가 추가로 늘어났다고 설명했습니다.
+=낸드플래시 기반의 SSD 잘 만드는 삼성전자, SK하이닉스에게도 당연히 좋은 기회겠죠. 특히 엔비디아는 SSD-GPU 간 연결을 다이렉트로 하는 스토리지 넥스트 프로젝트도 진행 중입니다. SSD도 봄날 오는건가..
+Naver
+젠슨 황의 '신비로운' 메모리 플랫폼…삼성·SK 기회 잡나 [강해령의 테크앤더시티]
+젠슨 황 엔비디아 CEO가 'CES 2026'에서 발표했던 신비한 메모리 플랫폼이 하나 있었죠. 'Inference Context Memory Platform.' 추론 맥락 메모리 플랫폼? 오늘 테크앤더시티에서는 이
+❤
+25
+25.2K
+views
+edited
+06:41
+강해령의 테크앤더시티
+이재용 "숫자가 좀 나아졌다고 자만할 때가 아니다" "경쟁력을 회복할 수 있는 마지막 기회"
+https://n.news.naver.com/article/015/0005241633?sid=101
+반도체 쪽에서는
+#1cD램수율up
+#HBM4퀄
+#이미지센서
+#엑시노스
+#파운드리_고객사_확보
+등 주력하자는 메시지 아닐까 싶습니다 :)
+Naver
+이재용 회장, 임원들에게 "자만할 때 아냐…지금이 마지막 기회"
+이재용 삼성전자 회장이 최근 주력 사업인 반도체 부문 실적 반등세에도 불구하고 임원들에게 강도 높은 위기의식과 근본적인 경쟁력 회복을 주문했다. 25일 재계에 따르면 삼성그룹은 지난주부터 전 계열사 부사장 이하 임원
+❤
+18
+👍
+12
+😁
+1
+🤡
+1
+🖕
+1
+13K
+views
+edited
+04:32
+강해령의 테크앤더시티
+✍️
+[한경 반도체 인사이트]
+삼성 고성능 HBM4 내달 엔비디아 공급
+https://www.hankyung.com/article/2026012512541
+❤
+49
+🤔
+8
+🖕
+4
+👎
+1
+35.9K
+views
+edited
+08:49
+강해령의 테크앤더시티
+Forwarded from
+[삼성 이영진] 글로벌 AI/SW
+엔비디아-코어위브 파트너십 강화
+: 엔비디아, 코어위브 20억 달러 지분 투자(주당 $87.2)’
+: 30년까지 5GW+ AI 팩토리 구축 협력 가속
+: Rubin GPU, Vera CPU, BlueField 스토리지 등 차세대 엔비디아 풀스택 인프라 조기 도입
+: 코어위브 소프트웨어(SUNK, Mission Control)를 엔비디아 레퍼런스 아키텍처에 포함 추진
+: 엔비디아의 재무 역량을 활용해 코어위브의 토지, 전력, 데이터센터 셸 확보 가속
+https://investors.coreweave.com/news/news-details/2026/NVIDIA-and-CoreWeave-Strengthen-Collaboration-to-Accelerate-Buildout-of-AI-Factories/default.aspx
+Coreweave
+NVIDIA and CoreWeave Strengthen Collaboration to Accelerate Buildout of AI Factories
+CoreWeave to Adopt NVIDIA CPU and Storage Platforms and Multiple NVIDIA Generations Expanded Relationship to Offer CoreWeave Software to Global CSPs and Enterprises NVIDIA (Nasdaq: NVDA) and CoreWeave, Inc. (Nasdaq: CRWV) today announced an expansion of their…
+❤
+15
+👍
+2
+1.96K
+views
+13:29
+강해령의 테크앤더시티
+❤
+14
+5.82K
+views
+02:38
+강해령의 테크앤더시티
+❤
+11
+3.56K
+views
+02:44
+강해령의 테크앤더시티
+원래 있던 싱가포르 사이트에 낸드 팹 증설이라고 하네요~!
+❤
+30
+🖕
+1
+5.48K
+views
+02:45
+강해령의 테크앤더시티
+🫰
+소캠 전선 확장된다…엔비디아 이어 퀄컴·AMD까지 도입 추진 [강해령의 테크앤더시티]
+https://n.news.naver.com/article/015/0005243101?type=journalists
+=소캠을 적용하려는 기업이 늘어나고 있는 내용을 파악해서 썼습니다.
+=그간 소캠은 엔비디아만의 독특한 D램 모듈로 여겨졌죠. 그런데 엔비디아의 아성에 도전하는 퀄컴·AMD도 서버용 칩에 소캠을 탑재하려는 움직임이 포착됩니다.
+=모양도 다양하게 논의되고 있는듯합니다. 지금까지 나온 소캠은 1x4 형태지만, 2x2, 그러니까 정사각형 형태로 D램을 배치하는 방향도 강구되고 있다고 하네요.
+=아직 뚜렷한 소캠 표준이 없어서 가능한 일입니다.
+=LPDDR D램 주요 제조사인 삼성전자, SK하이닉스의 LPDDR 라인은 타이트해지는 물량 맞추기에 더욱 바빠질 것으로 보입니다.
+=메모리 대란에 소캠 수요까지 더 늘어난다면...
+#SOCAMM
+#삼성
+#SK
+#퀄컴
+#AMD
+#LPDDR
+Naver
+소캠 전선 확장된다…엔비디아 이어 퀄컴·AMD까지 도입 추진 [강해령의 테크앤더시티]
+'제2의 고대역폭메모리(HBM)'라고 불리는 소캠(SOCAMM) 전선이 확장되고 있다. 세계 1위 반도체 회사인 엔비디아의 소캠 도입에 이어, 세계적인 반도체 설계 회사인 퀄컴·AMD 등이 자사의 새로운 AI 서버용
+❤
+21
+👍
+1
+25.9K
+views
+23:23
+강해령의 테크앤더시티
+❤
+22
+👏
+3
+3.56K
+views
+07:30
+강해령의 테크앤더시티
+❤
+16
+👏
+6
+3.79K
+views
+07:42
+강해령의 테크앤더시티
+방금 나온 보도자료 요약입니다~
+👉
+SK하이닉스, AI 산업 중심지 미국에 AI 설루션 회사 설립 추진
+-미국 'AI Company'(가칭) 설립, 글로벌 AI 데이터센터 생태계 핵심 파트너로 도약 가속화
+- SK그룹 AI 시너지 창출 허브이자 국내 AI 산업 경쟁력 강화 기여
+-"넥스트 AI 시대 다양한 기회 확보 위한 도전... AI 파트너들과 협력해 한발 앞선 고객 가치 창출할 것"
+❤
+30
+5.72K
+views
+09:01

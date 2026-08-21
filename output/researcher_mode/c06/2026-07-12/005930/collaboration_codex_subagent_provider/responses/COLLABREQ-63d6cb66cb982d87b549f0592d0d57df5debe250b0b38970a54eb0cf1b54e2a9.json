@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-5b8fbc3e674628ce3da19c21",
+        "rationale": "Chunk 1 contains companywide financial notes, mixed-DS segment and inventory figures, affiliate capacity transactions, and a Tesla Foundry contract. None can be attributed to HBM- or memory-specific earnings visibility, and the companywide contract-liability figure is already an accepted current fact; therefore no distinct objective-linked fact remains in this chunk.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "95ff9875d674e39ca84fda53cad896d51fd2779c250b240b5245032e1dcfabd9",
+  "production_score_authority": false,
+  "prompt_hash": "39a9d8fe96b4f8caa237163575e7d7349b12042685322175ea9063bd55683a36",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-63d6cb66cb982d87b549f0592d0d57df5debe250b0b38970a54eb0cf1b54e2a9",
+  "response_id": "COLLABRESP-03178bd0976e7b2119fa9baf0469861c232df4c25445b9d1d844f6c179ee8389",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

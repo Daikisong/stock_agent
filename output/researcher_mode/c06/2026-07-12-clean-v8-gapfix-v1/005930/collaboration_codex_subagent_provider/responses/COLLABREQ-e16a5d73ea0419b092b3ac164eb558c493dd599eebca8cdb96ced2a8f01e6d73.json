@@ -1,0 +1,140 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo는 연결·DS 메모리·HBM 귀속을 분리하면서 actual 이익·OCF와 CAPEX·운전자본 counter를 함께 다루고, current material disagreement roster에 포함되지 않는다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo는 HBM4 actual과 MOU·협의·계획을 분리하고 signed 계약조건·backlog 공백을 보존한다. Prompt의 current judge disagreement roster에는 없다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo는 메모리 100% 가동·ASP actual과 HBM 전용 CAPA 잠김·계약가격 부재를 분리하며 current material disagreement가 아니다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo는 operating delta와 시장 기대 격차를 동일시하지 않고 혼합 valuation 및 revision·dispersion 한계를 보존한다. Current deterministic disagreement roster 밖이다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "Current evidence만으로 actual execution과 전사 valuation 지표에 적용할 하나의 명시적 comparison basis를 다시 정렬하고, Analyst [4.6,6.2], Skeptic [2.7,4.2], Calibration [3.7,5.3]의 빈 3-way intersection을 새 독립 A/S/C judges로 재검증해야 한다."
+        ],
+        "rationale": "이번 rewrite는 MOU와 추정 점유율을 positive selection에서 제외하고 denominator 경계를 개선했지만 current prompt의 judge ranges는 max lower 4.6이 min upper 4.2보다 커 여전히 교집합이 없다. 이전 rewrite 횟수는 completion 근거가 아니며 deterministic contract상 valuation memo는 insufficient다. 이는 새 source fact가 아니라 same-evidence interpretation disagreement다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo는 환원 actual과 자본약정·운전자본 부담을 균형 있게 다루고 전사 자본배분을 HBM ROIC로 바꾸지 않는다. Current material disagreement가 아니다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo는 AMD customer-official corroboration과 계약경제·HBM 단독 손익 공백을 구분한다. Current disagreement roster 밖이며 source 공백을 absence로 주장하지 않는다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-11f05de07efa5852c6e71412",
+        "rationale": "네 full-fetch query가 as-of 이후 문서여서 적절히 배제되고 objective resolution으로 종료됐다. 동일 미래 문서를 재사용하지 않으며 이 배제는 source absence가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-828cb4bb9fe49e835dfadd21",
+        "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY는 새 distinct query를 만들지 못한 상태이고 objective resolution 처리됐다. 반복 횟수나 빈 query를 research completion으로 사용하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-8ce8e0d17715285b367c314b",
+        "rationale": "한 문서는 full fetch 후 publication date를 검증하지 못해 비채택됐고 alternate route 없이 종료됐다. 날짜 실패는 source absence가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-93582c8d3e4a290b445687a0",
+        "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH query failure는 이미 alternate_route_required=false로 종결됐다. 동일 후보나 동의어 경로를 새 route로 포장하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-944cf2283ff44162e1cf00f0",
+        "rationale": "네 문서의 FUTURE_DOCUMENT_AFTER_FULL_FETCH rejection은 미래 누수 차단이다. 배제된 문서를 evidence로 만들거나 그 배제를 완료·absence 근거로 쓰지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-ae9bd8c7e122eaecfd5e3c57",
+        "rationale": "SEARCH_NO_RESULT_NOT_SATURATION 한 건은 zero-result-only이며 명시적으로 saturation이 아니다. source absence와 completion을 모두 주장할 수 없다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-ff4b69c29ce262d40861a274",
+        "rationale": "열두 QUERY_PROVIDER_ERROR는 transport 상태이며 source 의미 판정이 아니다. Provider 재시도 가능성과 별개로 prompt에는 새 verified material route가 없어 이번 review에서 direction을 만들지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [],
+    "new_source_family_directions": [],
+    "next_actions": [
+      "Current valuation evidence를 유지한 채 actual operating facts와 forward·trailing, equity·enterprise·cash, 연결·HBM denominator 각각이 허용하는 해석과 금지하는 해석을 하나의 명시적 comparison basis로 다시 semantic rewrite한다.",
+      "Rewritten valuation memo에 새 Analyst, Skeptic, Calibration judges를 독립 적용해 role range 3-way intersection을 재검증한다.",
+      "새 valuation judges가 생성된 뒤 Red Team, Synthesis와 Supervisor를 current lineage로 갱신하며 rewrite 반복 횟수 자체를 완료 근거로 쓰지 않는다."
+    ],
+    "query_direction_briefs": [],
+    "rationale": "현재 memos7, RT, synthesis, structured와 counter proof는 전수 제공됐고 structured missing roles는 없으며 counter materiality attestation도 validated됐다. Synthesis에는 judges가 미내장됐지만 이 Supervisor prompt가 current valuation A/S/C ranges를 직접 제공하므로 empty intersection을 판단할 수 있다. 두 차례 이상 semantic rewrite가 있었다는 사실은 completion을 증명하지 않으며 current ranges가 여전히 불교집합이므로 memos=false다. 반대로 prior full-fetch date failures, zero result, provider error와 no-new-valid-query를 새 route나 source absence로 바꿀 수 없고 prompt에 구체적인 새 verified identity도 없다. 따라서 missing source facts·directions·query briefs는 0, routes=false이며 남은 work는 same-evidence valuation rewrite와 judges refresh다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "valuation_rerating: actual-only support selection과 denominator 경계 개선 후에도 Analyst [4.6,6.2], Skeptic [2.7,4.2], Calibration [3.7,5.3]의 3-way intersection이 비어 있다. Positive execution의 조건부 rerating 가치와 HBM standalone earnings·cash bridge 부재의 penalty가 역할별로 다르게 해석된다."
+    ]
+  },
+  "payload_hash": "3b50a11cd15483a13f91ab39aa9b3c8681a929b4e71dc819c5c52d7bbef22a14",
+  "production_score_authority": false,
+  "prompt_hash": "f68d5b134588781a68963a0374cdd5ae044af7f9619397df4ad380f6b7ae8153",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e16a5d73ea0419b092b3ac164eb558c493dd599eebca8cdb96ced2a8f01e6d73",
+  "response_id": "COLLABRESP-087d70597d5a55deb201bdfcd327fa895abae442cfead073ec97153373e0830a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

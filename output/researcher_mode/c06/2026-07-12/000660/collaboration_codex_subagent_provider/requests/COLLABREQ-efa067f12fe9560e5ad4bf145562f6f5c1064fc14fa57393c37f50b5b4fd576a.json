@@ -1,0 +1,104 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "allowed_range": {
+        "items": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "anchor_comparisons": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "counter_fact_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "disagreements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "nearest_anchor_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "proposed_points": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "rationale": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "support_fact_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "why_not_higher": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "why_not_lower": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "anchor_comparisons",
+      "proposed_points",
+      "allowed_range",
+      "rationale",
+      "disagreements",
+      "support_fact_ids",
+      "counter_fact_ids",
+      "nearest_anchor_ids",
+      "why_not_higher",
+      "why_not_lower"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "pass_name": "CALIBRATION_JUDGE",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nFirst decode every evidence_fact_projection.facts row positionally with evidence_fact_projection.fact_fields. Each row preserves one exact fact_id and its economic meaning. Resolve source_independence_group_index through source_independence_group_dictionary. The count/hash rosters account only for repeated lineage; they are not omitted research, a top-N selection, or permission to skip rows. Review all fact_count rows. Act as the independent calibration judge for exactly one broad component. Compare the current support and counter fact shape with usable blind historical anchors, validate the component point scale and allowed range, and explain why the proposal is neither above nor below the selected anchor-calibrated band.\nReturn exactly one JSON object matching the supplied schema.\n{\"allowed_counter_fact_ids\": [\"EFACT-4d04a6aef1a34828271462ff\", \"EFACT-905f741caa330bed103a5660\", \"EFACT-fa0c552bb4992e26e213ad41\"], \"allowed_nearest_anchor_ids\": [\"ORDTRANSFER-79ec36a5021be9c2294bf200\", \"ORDTRANSFER-054f760d026b470c39e27df1\"], \"allowed_support_fact_ids\": [\"EFACT-23e8c20b3c9b312b4b630ee1\", \"EFACT-2b6d88631c21daa364467682\", \"EFACT-87302daba02f8d5d65943a4b\", \"EFACT-99b387941ace00f119e35749\", \"EFACT-c589801b18002cc79aa63e94\"], \"component_id\": \"bottleneck_pricing\", \"component_max_points\": 19.0, \"component_research_memo\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"component_max_points\": 19.0, \"counter_case\": \"2026년 HBM 비트 출하는 크게 늘어도 ASP는 하락할 수 있으며 삼성전자·Micron 공급 확대와 HBM4 공급망 경쟁은 scarcity premium을 낮출 수 있다. 높은 메모리 가격은 PC·모바일 수요 조정을 유발해 가격 전이의 한계가 된다.\", \"counter_fact_ids\": [\"EFACT-4d04a6aef1a34828271462ff\", \"EFACT-905f741caa330bed103a5660\", \"EFACT-fa0c552bb4992e26e213ad41\"], \"historical_anchor_ids\": [\"ORDTRANSFER-79ec36a5021be9c2294bf200\", \"ORDTRANSFER-054f760d026b470c39e27df1\"], \"memo_id\": \"CRMEMO-3ec47cfffb8cd6e555131c17\", \"nearest_counter_anchor_ids\": [\"ORDTRANSFER-054f760d026b470c39e27df1\"], \"nearest_positive_anchor_ids\": [\"ORDTRANSFER-79ec36a5021be9c2294bf200\"], \"positive_case\": \"현재 생산설비 100% 가동과 제한된 공급, 실제 DRAM ASP 급등이 가격 레버리지를 보여준다. HBM의 더 많은 TSV·큰 다이 면적 및 CAPA 잠식은 같은 수요에 더 많은 자원을 요구해 구조적 병목을 강화한다.\", \"positive_fact_ids\": [\"EFACT-23e8c20b3c9b312b4b630ee1\", \"EFACT-2b6d88631c21daa364467682\", \"EFACT-87302daba02f8d5d65943a4b\", \"EFACT-99b387941ace00f119e35749\", \"EFACT-c589801b18002cc79aa63e94\"], \"research_complete\": true, \"researcher_role\": \"BottleneckPricingResearcher\", \"researcher_summary\": \"1Q26 100% 평균가동률, 제한된 공급 속 HBM·서버 DRAM 가격 상승, 출하 정체에도 60% 중반 오른 DRAM ASP가 실제 병목과 가격 전이를 확인한다. HBM의 TSV·다이 면적 및 일반 DRAM CAPA 잠식도 구조적 제약이다. 다만 HBM ASP 하락 전망, 경쟁사 공급 확대와 PC 수요 탄력은 병목의 강도와 지속기간을 제한한다.\", \"resolution_fact_ids\": [], \"source_coverage\": [\"ISSUER_NEWSROOM\", \"OPENDART\", \"PUBLIC_BROKER_PDF\", \"TRUSTED_BUSINESS_MEDIA\"], \"structured_metrics\": {}, \"target_id\": \"000660\", \"uncertainties\": [\"공개된 60% 중반 ASP 상승은 일반 DRAM 강세가 주도한 DRAM blended 수치이며 HBM 단독 판가가 아니다.\", \"HBM 가격·물량 계약과 고객별 allocation 조건은 공개되지 않았다.\", \"경쟁사 HBM4 인증·출하 시기와 실제 공급량, PC·모바일 수요 탄력의 크기는 확정되지 않았다.\"]}, \"conditional_judge_rules\": {\"empty_support_plane\": {\"condition\": \"allowed_support_fact_ids is empty\", \"required_allowed_range\": [0, 0], \"required_proposed_points\": 0, \"required_support_fact_ids\": []}, \"positive_points_require_support\": \"proposed_points greater than zero requires at least one exact id from allowed_support_fact_ids in support_fact_ids\"}, \"evidence_fact_projection\": {\"advisory_tags_are_not_score_gates\": true, \"allowed_component_coverage\": {\"bottleneck_pricing\": 8, \"capital_allocation\": 8, \"earnings_visibility\": 8, \"eps_fcf_explosion\": 8, \"information_confidence\": 8, \"market_mispricing\": 8, \"valuation_rerating\": 8}, \"as_of_date_coverage\": {\"2026-07-12\": 8}, \"claim_id_roster\": {\"count\": 8, \"roster_hash\": \"3e1ecee3f1f4501dc06adbde8b64e0ea02643c0e2aa6ea4ca0cb62651eb1f6b1\"}, \"corroborating_independence_group_roster\": {\"count\": 4, \"roster_hash\": \"96433611789df379af2736bc4c802aa4413ab40f7d88f3269c7d2f61cc5feba5\"}, \"every_fact_id_preserved\": true, \"every_fact_lineage_accounted_by_count_and_hash\": true, \"fact_count\": 8, \"fact_fields\": [\"fact_row_index\", \"fact_id\", \"subject\", \"business_segment\", \"product_family\", \"economic_mechanism\", \"predicate\", \"value\", \"unit\", \"period\", \"direction\", \"current_lifecycle\", \"confidence\", \"structured_evidence_roles\", \"source_independence_group_index\", \"corroborating_independence_group_count\"], \"fact_roster_hash\": \"26e8dd7cee6ea6e904aa9601b9c0bbd05b89778de2b3d3899e57dd0fd5c91c93\", \"facts\": [[0, \"EFACT-23e8c20b3c9b312b4b630ee1\", \"HBM3E·HBM4 대량 도입과 2027년까지의 공급부족·가격인상 전망\", \"MEMORY\", \"HBM\", \"AI 추론 확대로 메모리 BoM 비중이 늘고 HBM3E·HBM4·HBM4E 대량 도입이 필요해 공급부족과 가격인상 사이클이 2027년까지 지속될 수 있다는 sector view는 SK하이닉스 HBM 이익의 기간을 뒷받침한다. 이는 산업 전망이며 회사 가격계약이나 확정 판가가 아니다.\", \"HBM3E와 HBM4·HBM4E의 대량 도입 필요로 메모리 공급부족과 가격인상 사이클이 2027년까지 지속될 가능성이 높다고 분석됐다\", \"HBM3E/HBM4/HBM4E mass adoption with shortage and price-increase cycle potentially lasting through 2027\", \"qualitative duration outlook\", \"through FY2027 outlook reported 2026-05-11\", \"POSITIVE\", \"OPEN\", 0.9, [], 2, 1], [1, \"EFACT-2b6d88631c21daa364467682\", \"HBM의 Blended ASP·CAPA 잠식과 SK하이닉스 이익 효율\", \"MEMORY\", \"HBM\", \"HBM은 DRAM Blended ASP를 높이는 동시에 일반 DRAM CAPA를 잠식해, HBM 수혜가 집중된 SK하이닉스가 더 적은 생산능력으로 더 많은 이익을 창출할 수 있게 했다는 분석이다. 이는 기존 DRAM 가격 사이클과 생산능력 규모만으로 역사적 valuation band를 적용하기 어렵게 만드는 구조적 이익 효율 근거다.\", \"HBM의 Blended ASP 상승과 CAPA 잠식 효과로 SK하이닉스가 더 적은 CAPA에도 더 많은 이익을 창출해 과거 DRAM 사이클과 다른 패턴을 보였다고 분석됐다\", \"HBM-driven blended-ASP uplift and capacity cannibalization enabled higher profit with less capacity\", \"qualitative valuation-earnings bridge\", \"structural cycle assessment current as of 2024-09-24\", \"POSITIVE\", \"CURRENT\", 0.93, [], 1, 1], [2, \"EFACT-4d04a6aef1a34828271462ff\", \"SK하이닉스 HBM4 공급 경쟁\", \"MEMORY\", \"HBM\", \"삼성전자의 초도 공급망 진입이 HBM4 대량양산기의 공급사 경쟁을 높일 수 있다는 보도는 SK하이닉스의 점유율·가격 지속성에 대한 counterfact다. 실제 점유율 하락이나 가격 인하로 단정하지 않는다.\", \"HBM4 대량양산 시 삼성전자의 초도 공급망 진입으로 메모리 공급사 경쟁이 심화할 수 있다\", \"competition expected to intensify on Samsung initial supply-chain entry\", \"qualitative industry expectation\", \"HBM4 mass-production ramp outlook reported 2026-04-23\", \"COUNTER\", \"OPEN\", 0.72, [], 3, 1], [3, \"EFACT-87302daba02f8d5d65943a4b\", \"SK하이닉스 DRAM ASP\", \"MEMORY\", \"DRAM\", \"DRAM 출하량이 전분기와 비슷한 가운데 ASP가 60% 중반 상승했다는 실제 가격 공시는 물량 증가와 구분되는 가격 기반 매출·이익 전환을 보여준다. 일반 DRAM 가격 강세이며 HBM ASP로 좁히지 않는다.\", \"2026년 1분기 DRAM 출하량은 전분기와 유사했고 ASP는 일반 DRAM 가격 강세로 전분기 대비 60% 중반 상승했다\", \"mid-60% QoQ increase\", \"percent QoQ\", \"2026-Q1 vs 2025-Q4\", \"POSITIVE\", \"CURRENT\", 1.0, [\"QOQ_GROWTH\"], 0, 1], [4, \"EFACT-905f741caa330bed103a5660\", \"SK하이닉스 PC DRAM 수요\", \"MEMORY\", \"DRAM\", \"메모리 가격 상승에 따른 구매 부담이 2026년 PC 출하 조정과 일부 수요 둔화로 이어질 수 있다는 공시는 DRAM 가격 강세의 수요탄력성 counterfact다. AI PC의 성장동력도 함께 언급돼 전면적 수요붕괴로 확대하지 않는다.\", \"메모리 가격 상승의 구매 부담으로 2026년 PC 출하량 조정과 일부 수요 둔화가 예상된다\", \"2026 PC shipment adjustment and partial demand slowdown expected\", \"qualitative outlook\", \"2026 outlook as of 2026-Q1\", \"COUNTER\", \"OPEN\", 1.0, [], 0, 1], [5, \"EFACT-99b387941ace00f119e35749\", \"SK하이닉스 HBM 및 서버 DRAM 수급과 가격\", \"MEMORY\", \"AI_MEMORY\", \"2026년 1분기에 견조한 수요 대비 제한된 공급이 지속됐고 HBM과 서버 DRAM 등이 가격 상승을 주도했다는 회사 공시는 현재의 수급 병목과 가격 전환을 직접 연결한다. HBM 단독 가격이나 장기 계약 잠금을 의미하지는 않는다.\", \"2026년 1분기 견조한 수요 대비 제한된 공급이 지속되며 HBM과 서버 DRAM 등이 가격 상승을 주도했다\", \"robust demand versus constrained supply; HBM and server DRAM among price-increase drivers\", \"qualitative company disclosure\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 0.98, [], 0, 1], [6, \"EFACT-c589801b18002cc79aa63e94\", \"SK하이닉스 반도체 생산설비 가동률\", \"MEMORY\", \"MEMORY_GENERIC\", \"반도체 생산설비 평균가동률 100%는 2026년 1분기 공급 여유가 제한적이었음을 보완한다. 공시는 HBM 전용 라인의 가동률이나 장래 CAPA 잠금을 따로 제시하지 않으므로 전사 반도체 범위로 제한한다.\", \"2026년 1분기 반도체 생산실적은 11,465,147백만원이고 생산설비 평균가동률은 100%였다\", 100, \"percent\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 0.9, [], 0, 1], [7, \"EFACT-fa0c552bb4992e26e213ad41\", \"HBM3E 공급의 SK하이닉스 중심 구조 완화와 경쟁사 출하\", \"MEMORY\", \"HBM\", \"보고서는 2H25~2026년에 HBM과 패키징 공급망이 완화되고, HBM3E 공급이 SK하이닉스 중심에서 삼성전자·Micron의 본격 출하까지 넓어질 것으로 전망했다. Nvidia 공급 안정성과 전세대 매출에는 긍정적이지만, SK하이닉스에는 고객 내 독점성·scarcity premium과 배정 우위가 낮아질 수 있는 직접 경쟁 counterfact다. 실제 점유율 하락이나 가격 인하는 확정하지 않는다.\", \"2H25~2026년 HBM3E 공급이 SK하이닉스 중심에서 삼성전자·Micron 출하까지 확대돼 수급 안정성이 강화될 것으로 전망됐다\", \"HBM3E supply broadening from SK hynix-centered supply to Samsung and Micron shipments; packaging alternatives also expanding\", \"qualitative supply-chain outlook\", \"2H2025-FY2026 outlook published 2025-09-04\", \"COUNTER\", \"OPEN\", 0.93, [], 2, 1]], \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"primitive_tag_roster_hash\": \"1c89b394f77aa0dc18b89967733931e81c4ddd023703fecf2cc83bdfcbd8f1bd\", \"prompt_projection_is_research_cap\": false, \"question_family_tag_roster_hash\": \"0df7260eac6ed1be96795c92ed73acf707d57a2f25bb62d0558dd72f4c90f918\", \"quote_id_roster\": {\"count\": 8, \"roster_hash\": \"5d0402933491b756d23dfa4261aea14a275a54fac35b05f8c452195abab86f76\"}, \"repeated_lineage_arrays_omitted_from_semantic_rows\": true, \"schema_version\": \"e2r_v5_citable_fact_prompt_projection_v3\", \"score_authority\": false, \"source_id_roster\": {\"count\": 6, \"roster_hash\": \"6359f44d285875d39c2fe25cda3c38029e1420970f5d6e17cd8a9bdacc1161a1\"}, \"source_independence_group_dictionary\": [\"OPENDART:opendart\", \"PUBLIC_BROKER_PDF:hanaw.com\", \"PUBLIC_BROKER_PDF:myasset.com\", \"TRUSTED_BUSINESS_MEDIA:sisajournal-e.com\"], \"target_id_coverage\": {\"000660\": 8}}, \"historical_component_anchors\": [{\"anchor_id\": \"ORDTRANSFER-79ec36a5021be9c2294bf200\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"reinsurance_rate_cycle_reserve_earnings_visibility\"], \"max_points\": 19.0, \"points_lower\": 18.05, \"points_mid\": 19.0, \"points_upper\": 19.0, \"role\": \"POSITIVE\", \"score_band\": \"STRONG\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-054f760d026b470c39e27df1\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"price_only_local_peak\", \"margin_or_backlog_slowdown\", \"relative_strength\", \"early_revision_signal\", \"source_name_level_proxy\", \"exact_url_pending\", \"performance_marketing_recovery_narrative_treated_as_insufficient_unless_advertiser_retention_and_channel_economics_are_verified\"], \"max_points\": 19.0, \"points_lower\": 18.05, \"points_mid\": 19.0, \"points_upper\": 19.0, \"role\": \"COUNTER\", \"score_band\": \"STRONG\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}], \"independent_role_mandate\": [\"HISTORICAL_ANCHOR_COMPARABILITY\", \"COMPONENT_SCORE_SCALE\", \"ALLOWED_RANGE_DISCIPLINE\"], \"judge_pass_name\": \"CALIBRATION_JUDGE\", \"judge_role\": \"CALIBRATION_JUDGE\", \"required_judge_output_fields\": [\"allowed_range\", \"anchor_comparisons\", \"counter_fact_ids\", \"disagreements\", \"nearest_anchor_ids\", \"proposed_points\", \"rationale\", \"support_fact_ids\", \"why_not_higher\", \"why_not_lower\"]}",
+  "prompt_hash": "de76968d4628a203bbd511869ee30805e61fe386d9d2b898c51d4c9235608926",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-efa067f12fe9560e5ad4bf145562f6f5c1064fc14fa57393c37f50b5b4fd576a",
+  "request_identity": {
+    "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+    "pass_name": "CALIBRATION_JUDGE",
+    "prompt_hash": "de76968d4628a203bbd511869ee30805e61fe386d9d2b898c51d4c9235608926",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_calibration_judge",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

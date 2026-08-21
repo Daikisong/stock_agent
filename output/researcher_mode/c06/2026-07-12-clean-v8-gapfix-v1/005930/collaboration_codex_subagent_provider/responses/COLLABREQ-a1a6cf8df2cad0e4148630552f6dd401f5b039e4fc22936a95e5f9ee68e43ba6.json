@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      13.8,
+      16.2
+    ],
+    "anchor_comparisons": [
+      "양의 ORDTRANSFER-79ec36a5021be9c2294bf200(18.05~19.0)은 구조적 병목의 강한 상단이지만 현재는 HBM 전용 계약·CAPA 잠김이 없어 그보다 낮다.",
+      "반증 ORDTRANSFER-054f760d026b470c39e27df1(18.05~19.0)은 강한 반증을 견딘 병목 사례의 상단 비교점이며, 현재 전망·귀속 공백 때문에 동일 점수를 허용하지 않는다."
+    ],
+    "counter_fact_ids": [],
+    "disagreements": [
+      "메모리 전체 100% 가동과 ASP 상승을 HBM 전용 CAPA 잠김 또는 계약가격으로 동일시하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-054f760d026b470c39e27df1"
+    ],
+    "proposed_points": 15.0,
+    "rationale": "100% 가동, 제한된 공급, 실제 생산량·생산능력 및 ASP 146% 상승은 병목과 가격 전환을 지지한다. 그러나 생산능력은 메모리 전체이고 공급부족 지속은 전망이며 HBM 전용 CAPA 잠김·고객 allocation·계약가격은 없어 만점권에서 감액한다.",
+    "support_fact_ids": [
+      "EFACT-3dcbb46fd5653fb3dc5dcd2e",
+      "EFACT-4d6a7fe870806b29408cc3a5",
+      "EFACT-5b70b07b35d08b89839b5ae7",
+      "EFACT-653a13dd35d5c7a1f6e4d3e1",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-7fbb65f7ab612c9f98c5b4fe",
+      "EFACT-7ff6bfcbd0d673fdb7f351e7",
+      "EFACT-b7565fd844a544809e1ca148",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "장기계약·선수금·고객 allocation·HBM 전용 CAPA 및 가격 증거가 없어 16점대 초반을 넘기지 않는다.",
+    "why_not_lower": "가동률·ASP·제한된 공급·실제 양산이 동시에 확인돼 단순 업황 코멘트 수준보다 높다."
+  },
+  "payload_hash": "581ac45e59f7179551a61e7a62b62805e789dbad5560661753bd3eebabbb8dbc",
+  "production_score_authority": false,
+  "prompt_hash": "4073c287c01c524daf2f92f345d3be1615cd49f9cf513f9ca598956bf1193eec",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a1a6cf8df2cad0e4148630552f6dd401f5b039e4fc22936a95e5f9ee68e43ba6",
+  "response_id": "COLLABRESP-6ad7d0b5ac84541d6f25954c6eb3c678bf6097eccff98aca7866a1193a4a105a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

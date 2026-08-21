@@ -1,0 +1,136 @@
+{
+  "output_schema_hash": "5345010c983e3143517048287274e45cc585d20f0bafd2091aec5087496f2ffb",
+  "payload": {
+    "confidence": 0.84,
+    "counter_case": "HBM4 고객별 수주잔고·장기계약·확정물량·가격·취소조건과 HBM 매출 비중이 없다. 공급 부족 지속 및 제한된 가용량은 전망·정성 코멘트이고, 구조화 EPS 전망의 최근 하향 방향은 향후 실적 가시성의 상단을 제한한다.",
+    "historical_anchor_ids": [
+      "CANCH-fe4be151b6e34320ddc5f6a7",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "nearest_counter_anchor_ids": [
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "nearest_positive_anchor_ids": [
+      "CANCH-fe4be151b6e34320ddc5f6a7"
+    ],
+    "positive_case": "서버 메모리 판매 확대와 HBM4 양산 출하가 실제로 확인되고, 메모리 매출 및 ASP도 강하다. 2025년 1분기 메모리 매출 비교 기준은 2026년 실현 규모의 방향성을 읽는 데 보조가 된다. 주요 고객 공급 확대 계획은 후속 가시성 후보지만 아직 실현 계약으로 승격하지 않는다.",
+    "prior_fact_dispositions": [],
+    "proposed_score_lower": 13.6,
+    "proposed_score_mid": 14.7,
+    "proposed_score_upper": 15.8,
+    "research_complete": true,
+    "researcher_summary": "2026년 1분기 메모리 매출 74,779,980백만원과 서버향 판매 확대, HBM4 양산 출하, 메모리 ASP 146% 상승은 이미 실현된 가시성의 기반이다. 반면 주요 고객 HBM4 공급 확대와 제한된 공급 가용량·공급부족 지속은 발행사 계획 또는 전망이며, 고객명·물량·가격·취소조건이 없어 장기 계약 가시성과 동일시하지 않는다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "실제 DS 메모리 판매·출하·가격 증거로 가시성 기반에 반영하되 HBM 고객별 계약으로 확대하지 않는다.",
+        "fact_row_index": 11,
+        "source_economic_mechanism": "2026년 1분기 데이터센터 AI 인프라 CAPEX 확대와 Agentic AI 초기 수요가 서버향 메모리 수요 강세를 만들었다는 회사의 시장 평가는 수급 우호성을 설명한다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "SERVER_MEMORY_DEMAND_STRENGTHENED_WITH_AI_INFRASTRUCTURE_CAPEX",
+        "source_value_json": "\"서버향 중심 수요 강세가 한층 더 확연\""
+      },
+      {
+        "component_interpretation": "실제 DS 메모리 판매·출하·가격 증거로 가시성 기반에 반영하되 HBM 고객별 계약으로 확대하지 않는다.",
+        "fact_row_index": 18,
+        "source_economic_mechanism": "2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS",
+        "source_value_json": "\"HBM4 양산 출하\""
+      },
+      {
+        "component_interpretation": "전년 비교 기준으로만 사용하며 독립적인 양의 점수 근거로 보지 않는다.",
+        "fact_row_index": 23,
+        "source_economic_mechanism": "메모리 제품 매출의 전년 비교 기준",
+        "source_period_json": "\"2025-Q1\"",
+        "source_predicate": "2025년 1분기 메모리 제품 매출액을 비교표에 보고했다",
+        "source_value_json": "19069038"
+      },
+      {
+        "component_interpretation": "발행사 계획 또는 전망으로 후속 가시성 후보에 반영하되 실현 매출·확정 주문·장기계약으로 승격하지 않는다.",
+        "fact_row_index": 28,
+        "source_economic_mechanism": "삼성전자는 다수의 주요 고객사로 HBM4 공급을 확대할 예정이라고 밝혔다. 고객명·확정물량·가격·계약조건은 제시되지 않은 계획이다.",
+        "source_period_json": "\"2026-Q2 onward\"",
+        "source_predicate": "PLANS_TO_EXPAND_HBM4_SUPPLY_TO_MULTIPLE_MAJOR_CUSTOMERS",
+        "source_value_json": "\"다수 주요 고객사 대상 HBM4 공급 확대 계획\""
+      },
+      {
+        "component_interpretation": "발행사 계획 또는 전망으로 후속 가시성 후보에 반영하되 실현 매출·확정 주문·장기계약으로 승격하지 않는다.",
+        "fact_row_index": 35,
+        "source_economic_mechanism": "삼성전자는 2026년 2분기 공급 계획을 설명하면서 메모리 공급 가용량이 제한되어 있다고 명시했다.",
+        "source_period_json": "\"2026-Q2 outlook\"",
+        "source_predicate": "REPORTS_LIMITED_MEMORY_SUPPLY_AVAILABILITY",
+        "source_value_json": "\"제한된 공급 가용량\""
+      },
+      {
+        "component_interpretation": "실제 DS 메모리 판매·출하·가격 증거로 가시성 기반에 반영하되 HBM 고객별 계약으로 확대하지 않는다.",
+        "fact_row_index": 38,
+        "source_economic_mechanism": "2026년 1분기 메모리 사업은 AI 수요 강세 아래 서버향 제품 판매 확대에 주력했다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "FOCUSED_ON_EXPANDING_SERVER_MEMORY_PRODUCT_SALES",
+        "source_value_json": "\"서버향 제품 중심 판매 확대에 주력\""
+      },
+      {
+        "component_interpretation": "실제 DS 메모리 판매·출하·가격 증거로 가시성 기반에 반영하되 HBM 고객별 계약으로 확대하지 않는다.",
+        "fact_row_index": 39,
+        "source_economic_mechanism": "메모리 제품 매출의 실제 수익 전환",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 메모리 제품 매출액을 보고했다",
+        "source_value_json": "74779980"
+      },
+      {
+        "component_interpretation": "실제 DS 메모리 판매·출하·가격 증거로 가시성 기반에 반영하되 HBM 고객별 계약으로 확대하지 않는다.",
+        "fact_row_index": 42,
+        "source_economic_mechanism": "메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.",
+        "source_period_json": "\"2026Q1 vs 2025 annual average\"",
+        "source_predicate": "MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE",
+        "source_value_json": "146"
+      }
+    ],
+    "selected_fact_row_indices": [
+      11,
+      18,
+      23,
+      28,
+      35,
+      38,
+      39,
+      42
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_GUIDANCE",
+      "COMPANYGUIDE"
+    ],
+    "structured_metric_row_indices": [
+      0
+    ],
+    "uncertainties": [
+      "HBM4 고객별 qualification, 확정 주문 및 계약조건이 공시되지 않았다.",
+      "메모리 매출에는 범용 DRAM·NAND 등 HBM 외 제품이 포함된다.",
+      "공급부족 전망과 주요 고객 확대 계획의 실제 매출 전환 시점이 불명확하다."
+    ],
+    "why_not_higher": "실현 매출·출하는 강하지만 장기계약/RPO, 고객별 주문과 HBM 매출 비중이 없어 최상단 가시성 앵커에는 미달한다.",
+    "why_not_lower": "HBM4 양산 출하와 서버향 판매 확대가 이미 실현됐고 메모리 매출·ASP도 확인되므로 단순 계획 단계의 약한 앵커보다는 높다."
+  },
+  "payload_hash": "ce49ab2a4b7e69873e539af88f0d1f921d86cf875778c279ebd576c2f012f516",
+  "production_score_authority": false,
+  "prompt_hash": "a1c93740b5b1353ebc64410a07fb9043884878755d78c4759e218ab4fc886f42",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-657c8a84f8de2f8bd6a6920098153f23f60b5393367454d1b271ed7e4c07e50a",
+  "response_id": "COLLABRESP-78ed11d58ea57545da514cc7cb217b3c79db7af42f16d0768b44273dee704360",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

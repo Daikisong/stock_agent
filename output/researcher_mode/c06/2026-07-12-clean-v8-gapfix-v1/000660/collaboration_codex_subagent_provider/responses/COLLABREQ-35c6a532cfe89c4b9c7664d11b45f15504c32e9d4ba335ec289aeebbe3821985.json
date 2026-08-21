@@ -1,0 +1,582 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Continuation page 14 adds 12 distinct consolidated cash-flow model atoms after strict dedup of 156 prior accepted facts. Stock versus flow, signs, and total-company versus HBM attribution are kept explicit.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated intangible-asset amortization, a non-cash earnings-to-cash-flow item without HBM-only attribution.",
+        "exact_quote": "무형자산상각비 796 780 553 445 380",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The non-cash flow estimate is objective-local historical bridge context but is superseded and not an issuer actual or HBM-only result.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_CASH_FLOW_MODEL",
+        "normalized_object": "SK hynix FY2024 intangible-asset amortization KRW 445 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker_forecast_intangible_asset_amortization",
+        "predicate_family": "BROKER_CONSOLIDATED_INTANGIBLE_AMORTIZATION_FORECAST",
+        "primitive_tags": [
+          "INTANGIBLE_AMORTIZATION",
+          "NONCASH",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "CONSOLIDATED_INTANGIBLE_AMORTIZATION_FORECAST",
+        "question_family_tags": [
+          "CASH_FLOW",
+          "AMORTIZATION",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated intangible-asset amortization broker forecast",
+        "subject_id": "000660:CONSOLIDATED_INTANGIBLE_AMORTIZATION:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 445
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated intangible-asset amortization, a non-cash earnings-to-cash-flow item without HBM-only attribution.",
+        "exact_quote": "무형자산상각비 796 780 553 445 380",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The non-cash flow estimate is objective-local historical bridge context but is superseded and not an issuer actual or HBM-only result.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_CASH_FLOW_MODEL",
+        "normalized_object": "SK hynix FY2025 intangible-asset amortization KRW 380 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker_forecast_intangible_asset_amortization",
+        "predicate_family": "BROKER_CONSOLIDATED_INTANGIBLE_AMORTIZATION_FORECAST",
+        "primitive_tags": [
+          "INTANGIBLE_AMORTIZATION",
+          "NONCASH",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "CONSOLIDATED_INTANGIBLE_AMORTIZATION_FORECAST",
+        "question_family_tags": [
+          "CASH_FLOW",
+          "AMORTIZATION",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated intangible-asset amortization broker forecast",
+        "subject_id": "000660:CONSOLIDATED_INTANGIBLE_AMORTIZATION:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 380
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated working-capital decrease as an operating-cash-flow inflow, without HBM-only attribution.",
+        "exact_quote": "운전자본감소(증가) -3,018 -2,690 794 9,555 6,624",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The working-capital inflow is material to the historical cash-conversion model but is superseded and not HBM-only evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_WORKING_CAPITAL_CASH_FLOW",
+        "normalized_object": "SK hynix FY2024 working-capital decrease generated KRW 9,555 billion cash inflow in historical broker model",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker_forecast_working_capital_decrease_increase",
+        "predicate_family": "BROKER_CONSOLIDATED_WORKING_CAPITAL_CHANGE_FORECAST",
+        "primitive_tags": [
+          "WORKING_CAPITAL_CHANGE",
+          "CASH_INFLOW",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "CONSOLIDATED_WORKING_CAPITAL_CHANGE_FORECAST",
+        "question_family_tags": [
+          "WORKING_CAPITAL",
+          "CASH_FLOW",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated working-capital cash-flow broker forecast",
+        "subject_id": "000660:CONSOLIDATED_WORKING_CAPITAL_CHANGE:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 9555
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated working-capital decrease as an operating-cash-flow inflow, without HBM-only attribution.",
+        "exact_quote": "운전자본감소(증가) -3,018 -2,690 794 9,555 6,624",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The working-capital inflow is material to the historical cash-conversion model but is superseded and not HBM-only evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_WORKING_CAPITAL_CASH_FLOW",
+        "normalized_object": "SK hynix FY2025 working-capital decrease generated KRW 6,624 billion cash inflow in historical broker model",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker_forecast_working_capital_decrease_increase",
+        "predicate_family": "BROKER_CONSOLIDATED_WORKING_CAPITAL_CHANGE_FORECAST",
+        "primitive_tags": [
+          "WORKING_CAPITAL_CHANGE",
+          "CASH_INFLOW",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "CONSOLIDATED_WORKING_CAPITAL_CHANGE_FORECAST",
+        "question_family_tags": [
+          "WORKING_CAPITAL",
+          "CASH_FLOW",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated working-capital cash-flow broker forecast",
+        "subject_id": "000660:CONSOLIDATED_WORKING_CAPITAL_CHANGE:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 6624
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker model of the receivables working-capital change as a cash outflow; not an ending receivable balance and not HBM-only.",
+        "exact_quote": "매출채권및기타채권의감소(증가) -2,526 3,342 -1,406 -3,178 -2,877",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed receivables outflow is a historical cash-conversion counterfact but is superseded and not HBM-only evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_WORKING_CAPITAL_CASH_FLOW",
+        "normalized_object": "SK hynix FY2024 receivables increase produced KRW 3,178 billion cash outflow in historical broker model",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker_forecast_receivables_decrease_increase",
+        "predicate_family": "BROKER_CONSOLIDATED_RECEIVABLE_CHANGE_FORECAST",
+        "primitive_tags": [
+          "RECEIVABLE_CHANGE",
+          "CASH_OUTFLOW",
+          "SIGNED_FLOW"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "CONSOLIDATED_RECEIVABLE_CHANGE_FORECAST",
+        "question_family_tags": [
+          "RECEIVABLES",
+          "WORKING_CAPITAL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated receivables cash-flow broker forecast",
+        "subject_id": "000660:CONSOLIDATED_RECEIVABLE_CHANGE:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -3178
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker model of the receivables working-capital change as a cash outflow; not an ending receivable balance and not HBM-only.",
+        "exact_quote": "매출채권및기타채권의감소(증가) -2,526 3,342 -1,406 -3,178 -2,877",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed receivables outflow is a historical cash-conversion counterfact but is superseded and not HBM-only evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_WORKING_CAPITAL_CASH_FLOW",
+        "normalized_object": "SK hynix FY2025 receivables increase produced KRW 2,877 billion cash outflow in historical broker model",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker_forecast_receivables_decrease_increase",
+        "predicate_family": "BROKER_CONSOLIDATED_RECEIVABLE_CHANGE_FORECAST",
+        "primitive_tags": [
+          "RECEIVABLE_CHANGE",
+          "CASH_OUTFLOW",
+          "SIGNED_FLOW"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "CONSOLIDATED_RECEIVABLE_CHANGE_FORECAST",
+        "question_family_tags": [
+          "RECEIVABLES",
+          "WORKING_CAPITAL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated receivables cash-flow broker forecast",
+        "subject_id": "000660:CONSOLIDATED_RECEIVABLE_CHANGE:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -2877
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker model of inventory decrease as a working-capital cash inflow; not the ending inventory stock and not HBM-only.",
+        "exact_quote": "재고자산의감소(증가) -697 -6,572 2,288 496 1,046",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed inventory inflow is historical cash-conversion context but superseded and not an HBM-only result.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_WORKING_CAPITAL_CASH_FLOW",
+        "normalized_object": "SK hynix FY2024 inventory decrease produced KRW 496 billion cash inflow in historical broker model",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker_forecast_inventory_decrease_increase",
+        "predicate_family": "BROKER_CONSOLIDATED_INVENTORY_CHANGE_FORECAST",
+        "primitive_tags": [
+          "INVENTORY_CHANGE",
+          "CASH_INFLOW",
+          "SIGNED_FLOW"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "CONSOLIDATED_INVENTORY_CHANGE_FORECAST",
+        "question_family_tags": [
+          "INVENTORY",
+          "WORKING_CAPITAL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated inventory cash-flow broker forecast",
+        "subject_id": "000660:CONSOLIDATED_INVENTORY_CHANGE:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 496
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker model of inventory decrease as a working-capital cash inflow; not the ending inventory stock and not HBM-only.",
+        "exact_quote": "재고자산의감소(증가) -697 -6,572 2,288 496 1,046",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed inventory inflow is historical cash-conversion context but superseded and not an HBM-only result.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_WORKING_CAPITAL_CASH_FLOW",
+        "normalized_object": "SK hynix FY2025 inventory decrease produced KRW 1,046 billion cash inflow in historical broker model",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker_forecast_inventory_decrease_increase",
+        "predicate_family": "BROKER_CONSOLIDATED_INVENTORY_CHANGE_FORECAST",
+        "primitive_tags": [
+          "INVENTORY_CHANGE",
+          "CASH_INFLOW",
+          "SIGNED_FLOW"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "CONSOLIDATED_INVENTORY_CHANGE_FORECAST",
+        "question_family_tags": [
+          "INVENTORY",
+          "WORKING_CAPITAL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated inventory cash-flow broker forecast",
+        "subject_id": "000660:CONSOLIDATED_INVENTORY_CHANGE:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 1046
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker model of trade and other payables increase as a working-capital cash inflow; not an ending liability stock and not HBM-only.",
+        "exact_quote": "매입채무및기타채무의증가(감소) 176 141 83 10,914 6,957",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed payables inflow is historical cash-conversion context but superseded and not an HBM-only result.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_WORKING_CAPITAL_CASH_FLOW",
+        "normalized_object": "SK hynix FY2024 trade and other payables increase produced KRW 10,914 billion cash inflow in historical broker model",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker_forecast_payables_increase_decrease",
+        "predicate_family": "BROKER_CONSOLIDATED_PAYABLE_CHANGE_FORECAST",
+        "primitive_tags": [
+          "PAYABLE_CHANGE",
+          "CASH_INFLOW",
+          "SIGNED_FLOW"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "CONSOLIDATED_PAYABLE_CHANGE_FORECAST",
+        "question_family_tags": [
+          "PAYABLES",
+          "WORKING_CAPITAL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated payables cash-flow broker forecast",
+        "subject_id": "000660:CONSOLIDATED_PAYABLE_CHANGE:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 10914
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker model of trade and other payables increase as a working-capital cash inflow; not an ending liability stock and not HBM-only.",
+        "exact_quote": "매입채무및기타채무의증가(감소) 176 141 83 10,914 6,957",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed payables inflow is historical cash-conversion context but superseded and not an HBM-only result.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_WORKING_CAPITAL_CASH_FLOW",
+        "normalized_object": "SK hynix FY2025 trade and other payables increase produced KRW 6,957 billion cash inflow in historical broker model",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker_forecast_payables_increase_decrease",
+        "predicate_family": "BROKER_CONSOLIDATED_PAYABLE_CHANGE_FORECAST",
+        "primitive_tags": [
+          "PAYABLE_CHANGE",
+          "CASH_INFLOW",
+          "SIGNED_FLOW"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "CONSOLIDATED_PAYABLE_CHANGE_FORECAST",
+        "question_family_tags": [
+          "PAYABLES",
+          "WORKING_CAPITAL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated payables cash-flow broker forecast",
+        "subject_id": "000660:CONSOLIDATED_PAYABLE_CHANGE:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 6957
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of cash taxes paid as an operating-cash-flow outflow, not a tax expense balance and not HBM-only.",
+        "exact_quote": "법인세납부 -1,015 -3,979 -1,384 -2,241 -4,697",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed cash-tax outflow is objective-local historical cash-conversion counterevidence but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_CASH_TAX_FLOW",
+        "normalized_object": "SK hynix FY2024 cash-tax payment KRW 2,241 billion outflow historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker_forecast_cash_taxes_paid",
+        "predicate_family": "BROKER_CONSOLIDATED_CASH_TAX_FORECAST",
+        "primitive_tags": [
+          "TAX_PAYMENT",
+          "CASH_OUTFLOW",
+          "SIGNED_FLOW"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "CONSOLIDATED_CASH_TAX_FORECAST",
+        "question_family_tags": [
+          "CASH_TAX",
+          "CASH_FLOW",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated cash-tax payment broker forecast",
+        "subject_id": "000660:CONSOLIDATED_CASH_TAX:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -2241
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of cash taxes paid as an operating-cash-flow outflow, not a tax expense balance and not HBM-only.",
+        "exact_quote": "법인세납부 -1,015 -3,979 -1,384 -2,241 -4,697",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed cash-tax outflow is objective-local historical cash-conversion counterevidence but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_CASH_TAX_FLOW",
+        "normalized_object": "SK hynix FY2025 cash-tax payment KRW 4,697 billion outflow historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker_forecast_cash_taxes_paid",
+        "predicate_family": "BROKER_CONSOLIDATED_CASH_TAX_FORECAST",
+        "primitive_tags": [
+          "TAX_PAYMENT",
+          "CASH_OUTFLOW",
+          "SIGNED_FLOW"
+        ],
+        "product_family": "Issuer-wide memory cash-flow estimate",
+        "question_family_id": "CONSOLIDATED_CASH_TAX_FORECAST",
+        "question_family_tags": [
+          "CASH_TAX",
+          "CASH_FLOW",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated cash-tax payment broker forecast",
+        "subject_id": "000660:CONSOLIDATED_CASH_TAX:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -4697
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "The page cap was reached. Continue source order with investing cash flow, financial-asset change, PPE investment, financing flows, debt changes, dividends, cash movement, free cash flow, and remaining valuation/model atoms. Preserve signed flow versus ending balance and consolidated broker-estimate versus HBM-only boundaries."
+    ]
+  },
+  "payload_hash": "5a1d88651665787f74581aee14a6b679c0c4381ce38b85fbf1b21eacf980ae34",
+  "production_score_authority": false,
+  "prompt_hash": "9e2e170a4c81ef04ddcb7a331e03c46aa6b119f6caa90a52993bbee476699286",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-35c6a532cfe89c4b9c7664d11b45f15504c32e9d4ba335ec289aeebbe3821985",
+  "response_id": "COLLABRESP-43bb5670365f9a0517866ad872401595d5138a7400282b6afdc0a4ed93437a79",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

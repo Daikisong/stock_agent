@@ -1,0 +1,70 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-9090dbe7d62ea6f7e55994e5",
+      "CRMEMO-571d8c5860f2b41df5b5bd74",
+      "CRMEMO-51d9d7d26e392069dd93f5d4",
+      "CRMEMO-2f852f588487ea7b340621fa",
+      "CRMEMO-bdedeaa55937a8527e2aada5",
+      "CRMEMO-49d146bc643b60c9fe57efe2",
+      "CRMEMO-c5d39b315123f0b4f7b2b9a4"
+    ],
+    "confidence": 0.9,
+    "cross_component_support": [
+      "eps_fcf_explosion·earnings_visibility·bottleneck_pricing은 메모리 100% 가동, 2026년 1분기 DS 메모리 매출 74,779,980백만원, 메모리 ASP 상승, HBM4 양산 출하라는 actual 실행 사슬을 공통 지지한다. 다만 이 사슬은 연결·DS 메모리 actual이며 HBM-only 이익·FCF 또는 고객 계약경제로 승격하지 않는다.",
+      "earnings_visibility·information_confidence는 AMD 공식 자료의 HBM3E 공급 이력과 HBM4 제품 정렬·기술협력으로 issuer-only 서술보다 높은 독립 corroboration을 공유한다. 동시에 AMD HBM4 관계는 MOU·technical alignment이므로 signed 가격·물량·allocation·기간·취소조건을 증명하지 않는다.",
+      "bottleneck_pricing·earnings_visibility는 HBM4 양산 actual, 서버향 판매 확대, 제한된 메모리 공급 가용량과 실현 ASP 상승이 단순 계획-only 단계보다 진전됐음을 함께 보여준다. HBM 매출 3배·증설은 guidance·plan으로 actual과 구분한다.",
+      "market_mispricing·valuation_rerating은 HBM4 양산과 메모리 매출·ASP actual, forward PE 5.59배를 operating foundation 및 조건부 rerating 여지로 공통 인식한다. 둘 다 trailing PE 21.86배·PB 3.84배, forward EV/EBITDA 18.88배, FCF yield 1.99%와의 period·denominator 불일치를 동시에 보존한다.",
+      "eps_fcf_explosion·capital_allocation은 양의 연결 영업이익·OCF와 실제 자기주식 프로그램·소각·배당, 투자등급 조달 접근성을 현금창출·배분의 양의 근거로 함께 본다. 그러나 17,127,003백만원 유형자산 취득 현금유출, 27,503,020백만원 자본약정과 28,670,819백만원 매출채권 운전자본 유출이 상단을 제한한다.",
+      "information_confidence·earnings_visibility·valuation_rerating은 HBM4 양산 actual과 AMD 독립 corroboration을 긍정하되 NVIDIA HBM4는 협의 중, OpenAI는 LOI·지원 계획·잠재 수요 전망이라는 동일 경계를 유지한다. 기술관계·MOU·계획은 signed contract economics가 아니다.",
+      "7개 component memo는 모두 complete이고 Red Team은 동일한 7개 component를 review_complete로 감사했다. 이는 현재 synthesis 산출의 계보 완결성을 뜻할 뿐, 아래 unresolved material question의 해소나 source absence를 뜻하지 않는다."
+    ],
+    "cross_component_tensions": [
+      "ACTUAL_ATTRIBUTION: 강한 연결 영업이익·OCF와 DS 메모리 매출·ASP actual은 존재하지만 HBM-only 매출·영업이익·마진·CAPEX·FCF bridge가 없어 eps_fcf_explosion·market_mispricing·valuation_rerating의 상단 해석을 제한한다.",
+      "CONTRACT_BOUNDARY: AMD HBM3E 공급 이력과 HBM4 MOU·기술협력, NVIDIA 협의, OpenAI LOI·지원 계획은 technical/relationship corroboration이다. 고객별 signed 가격·확정 물량·allocation·기간·취소조건·backlog/RPO로 전이할 수 없어 earnings_visibility·information_confidence와 valuation 조건 사이에 긴장이 남는다.",
+      "BOTTLENECK_DURATION: 메모리 100% 가동·capacity·146% ASP 상승·제한된 공급 가용량은 current tightness를 지지하지만 HBM4-only locked capacity, 고객 배정, realized contract pricing 및 shortage duration을 직접 확인하지 못한다.",
+      "VALUATION_EXPECTATION: forward PE 5.59배와 operating-profit revision UP은 재평가 여지를 보이지만 trailing PE/PB, forward EV/EBITDA, 낮은 FCF yield 및 최신 EPS revision DOWN과 충돌한다. 2Q26 전후 same-broker·same-denominator bridge가 없다.",
+      "CASH_ALLOCATION: 연결 OCF·주주환원 실행·조달 접근성은 긍정적이지만 큰 CAPEX, 향후 자본약정, 매출채권·재고 운전자본 유출, 차입·보증·충당부채는 actual 이익의 cash conversion과 자본배분 상단을 제한한다.",
+      "SOURCE_LIMIT: CUSTOMER_OFFICIAL 또는 broker ranking의 material 0은 source absence, 관계·계약 부재, expectation 반영 여부의 증명이 아니다. 미확인 상태를 반증으로 바꾸지 않는다.",
+      "JUDGE_INTERSECTION[eps_fcf_explosion]=NOT_EMBEDDED/NOT_INFERRED: immutable prompt에 judge artifact 또는 range가 없어 deterministic disagreement를 생성하지 않는다.",
+      "JUDGE_INTERSECTION[earnings_visibility]=NOT_EMBEDDED/NOT_INFERRED: immutable prompt에 judge artifact 또는 range가 없어 deterministic disagreement를 생성하지 않는다.",
+      "JUDGE_INTERSECTION[bottleneck_pricing]=NOT_EMBEDDED/NOT_INFERRED: immutable prompt에 judge artifact 또는 range가 없어 deterministic disagreement를 생성하지 않는다.",
+      "JUDGE_INTERSECTION[market_mispricing]=NOT_EMBEDDED/NOT_INFERRED: immutable prompt에 judge artifact 또는 range가 없어 deterministic disagreement를 생성하지 않는다.",
+      "JUDGE_INTERSECTION[valuation_rerating]=NOT_EMBEDDED/NOT_INFERRED: immutable prompt에 judge artifact 또는 range가 없어 deterministic disagreement를 생성하지 않는다.",
+      "JUDGE_INTERSECTION[capital_allocation]=NOT_EMBEDDED/NOT_INFERRED: immutable prompt에 judge artifact 또는 range가 없어 deterministic disagreement를 생성하지 않는다.",
+      "JUDGE_INTERSECTION[information_confidence]=NOT_EMBEDDED/NOT_INFERRED: immutable prompt에 judge artifact 또는 range가 없어 deterministic disagreement를 생성하지 않는다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "현재 근거는 메모리 100% 가동, DS 메모리 매출·ASP 상승, HBM4 양산, AMD의 HBM3E 공급 이력과 HBM4 기술협력으로 계획-only를 넘어선 actual·독립 corroboration을 보여준다. 그러나 연결·DS 메모리 수치를 HBM-only 이익·FCF로 잇는 bridge와 고객별 signed contract economics는 없고, NVIDIA는 협의 중이며 OpenAI는 LOI·지원 계획 수준이다. valuation 지표·revision 방향은 period와 denominator가 섞여 충돌하고, 큰 투자·운전자본 부담도 cash conversion을 제약한다. 따라서 7개 memo와 Red Team의 support·counter·unresolved를 완전히 종합하되 material 0을 absence proof로 쓰지 않는다. Judge artifacts는 prompt에 없으므로 7개 intersection 모두 NOT_EMBEDDED/NOT_INFERRED로 남긴다.",
+    "unresolved_material_questions": [
+      "NVIDIA-official HBM3E/HBM4 qualification·platform alignment·supply status와 OpenAI-official partnership·memory-support scope가 독립 확인 또는 반증되지 않았다. material 0 검색은 source absence가 아니다.",
+      "고객별 signed HBM 가격·확정 물량·allocation·기간·취소조건·backlog/RPO가 없어 AMD MOU와 NVIDIA/OpenAI plan을 durable contract economics로 전환할 수 없다.",
+      "연결·DS 메모리 actual에서 HBM-only 매출·영업이익·마진·CAPEX·FCF로 이어지는 공식 bridge가 없다.",
+      "메모리 100% 가동·capacity·ASP·공급 부족 outlook에서 HBM4-only locked capacity, realized pricing 및 shortage duration으로 이어지는 독립 exact evidence가 없다.",
+      "2Q26 전후 same-broker expectation revision과 period-specific valuation denominator bridge가 없어 operating delta의 사전 반영 여부와 conditional rerating 범위를 좁힐 수 없다.",
+      "큰 매출채권·재고 운전자본 유출, 자본약정·취득지출, 차입·보증·충당부채가 actual 이익의 cash conversion과 전사 자본배분 상단을 계속 제약한다."
+    ]
+  },
+  "payload_hash": "27856ed12a26435394785f13ff6c50f2442d3fc02968a6cd3eca147d01e180fd",
+  "production_score_authority": false,
+  "prompt_hash": "c34d56be962e470cb5ec8ea7dc6855c00ded4fe6cac80f63ed56d0e09e70726b",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8dd80cf86a12233b0eba72d162af59e0639c46e7234252c8ea3f312dbc34d762",
+  "response_id": "COLLABRESP-d83c0b8f3a416739499ab3a2662314411f309c3d0be2b842c1006047556e1316",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

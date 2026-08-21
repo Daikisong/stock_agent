@@ -1,0 +1,118 @@
+{
+  "output_schema_hash": "f0f7ea97d154d5dbe05bd4f97e994888e7d9c0c51cd57d8b759bb0aefe49f6d1",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-88c797c630d09c54e9bd7a06",
+        "rationale": "보증·관계사 거래와 임원·연구과제 상세가 중심이다. SAS 보조금 보증과 전사 R&D는 이미 추출됐고, SCS 설비는 NAND 인접, Tesla 계약은 Foundry라 C06 범위 밖이며 새 메모리/HBM 직접 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-913479eb6002c858cbacb8f3",
+        "rationale": "별도 DS 부문의 당분기 매출과 영업이익 2건을 혼합부문 정보 사실로 추출했다. HBM 또는 메모리 전용 실적으로 재분류하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-913479eb6002c858cbacb8f3",
+        "economic_mechanism": "MIXED_DS_SEGMENT_REVENUE_REPORTING",
+        "exact_quote": "영업부문에 대한 공시\n당분기\n(단위 : 백만원)\n기업 전체 총계\n기업 전체 총계 합계\n영업부문\nDX 부문\nDS 부문\n매출액\n34,900,578\n80,034,678\n109,277,909",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "별도 재무제표의 DS 부문 매출 규모를 직접 보여주지만 DS에는 메모리, Foundry, System LSI가 함께 포함되므로 메모리 또는 HBM 매출로 귀속하지 않는다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:INFORMATION_CONFIDENCE",
+        "normalized_object": "별도 DS 부문 분기 매출",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 별도 DS 부문 매출이 80,034,678백만원이었다",
+        "predicate_family": "DS_SEGMENT_REVENUE_ACTUAL",
+        "primitive_tags": [],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "DS_SEGMENT_REVENUE_REPORTING",
+        "question_family_tags": [],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.5,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 별도 DS 부문 매출",
+        "subject_id": "005930:DS:SEGMENT_REVENUE:2026-Q1",
+        "unit": "KRW million",
+        "value": 80034678
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-913479eb6002c858cbacb8f3",
+        "economic_mechanism": "MIXED_DS_SEGMENT_OPERATING_PROFIT_REPORTING",
+        "exact_quote": "영업부문에 대한 공시\n당분기\n(단위 : 백만원)\n기업 전체 총계\n기업 전체 총계 합계\n영업부문\nDX 부문\nDS 부문\n매출액\n34,900,578\n80,034,678\n109,277,909\n감가상각비\n153,838\n9,086,042\n9,282,579\n무형자산상각비\n463,742\n194,657\n724,494\n영업이익\n(2,500,444)\n51,735,660\n49,236,027",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "별도 재무제표의 DS 부문 영업이익을 직접 보여주지만 메모리와 비메모리 사업이 혼합된 부문 수치이므로 HBM 또는 메모리 이익으로 귀속하지 않는다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:INFORMATION_CONFIDENCE",
+        "normalized_object": "별도 DS 부문 분기 영업이익",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 별도 DS 부문 영업이익이 51,735,660백만원이었다",
+        "predicate_family": "DS_SEGMENT_OPERATING_PROFIT_ACTUAL",
+        "primitive_tags": [],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "DS_SEGMENT_OPERATING_PROFIT_REPORTING",
+        "question_family_tags": [],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.5,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 별도 DS 부문 영업이익",
+        "subject_id": "005930:DS:SEGMENT_OPERATING_PROFIT:2026-Q1",
+        "unit": "KRW million",
+        "value": 51735660
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "DS 부문은 메모리, Foundry, System LSI가 섞인 보고부문이므로 80,034,678백만원 매출과 51,735,660백만원 영업이익을 HBM 또는 메모리 실적으로 귀속하지 않았다.",
+      "관계사 보증·거래, Foundry Tesla 계약, NAND 인접 SCS 설비 거래는 현재 C06 메모리/HBM 사실로 사용하지 않았다."
+    ]
+  },
+  "payload_hash": "70bb8bbc2c67851aa7498fde18b9ead04af775ef8626171eab4098697baa584c",
+  "production_score_authority": false,
+  "prompt_hash": "8a0e0f8f9a504aea7912aa206eb149137614ea696babdc1d7ec376092f59b31e",
+  "provenance": {
+    "agent_id": "codex_primary",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/codex_primary",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-348849e5239fcf55081c2f41dc79d70e67c32bfa1a68766d662470dad9fd7e5e",
+  "response_id": "COLLABRESP-11cda7fc92560db8c6b9fc20c3370794f4b6ff698460914184c891035f5e6862",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

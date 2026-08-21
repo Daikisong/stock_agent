@@ -1,0 +1,169 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4c08866a214037b5f3304085",
+        "rationale": "5,137자 공식 뉴스룸 문서를 전수 검토하고 현재 505개 EvidenceFact와 의미 중복을 제거했다. HBM3E 전 고객 공급과 HBM4 속도 사양은 기존 current fact와 중복되며, 5만개 GPU 기반 AI 팩토리와 공정 효율은 memory·system semiconductor·foundry를 포괄해 memory/HBM 전용 수치로 귀속하지 않았다. 중복되지 않은 2025년 10월 31일의 HBM4 엔비디아 공급 협의, 요청 고객 전원 샘플 출하·양산 출하 준비, 고객 수요 대응 설비투자 계획 3건만 추출했고 모두 이후 실행 근거로 대체된 lifecycle을 명시했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4c08866a214037b5f3304085",
+        "economic_mechanism": "발행사가 엔비디아와 HBM4 공급을 긴밀히 협의 중이라고 밝혀 명명 고객으로 향하는 공급 논의 경로를 확인한다. 계약이나 확정 물량을 뜻하지 않는 비구속적 협의 상태이며, 이후 실제 공급 근거로 대체된 역사적 이정표다.",
+        "exact_quote": "삼성전자는 이미 공급 중인 메모리 제품뿐만 아니라 성능과 에너지 효율을 대폭 향상시킨 HBM4 공급을 엔비디아와 긴밀하게 협의 중이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명명된 AI 가속기 고객과의 HBM4 공급 논의는 당시 고객 상용화 경로를 직접 좁혀 earnings_visibility를 진전시켰다. 다만 공급계약이나 물량 확정으로 확대 해석하지 않고 이후 실제 공급 근거에 의해 대체된 상태로 표시한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:NVIDIA_SUPPLY_DISCUSSION",
+        "normalized_object": "엔비디아와의 HBM4 공급 협의 상태",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-10-31",
+        "predicate": "2025년 10월 31일 삼성전자가 엔비디아와 HBM4 공급을 긴밀하게 협의 중이라고 밝혔다",
+        "predicate_family": "HBM4_NVIDIA_SUPPLY_DISCUSSION",
+        "primitive_tags": [
+          "HBM4",
+          "NVIDIA",
+          "NON_BINDING_DISCUSSION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_NVIDIA_SUPPLY_DISCUSSION",
+        "question_family_tags": [
+          "HBM4_NVIDIA_SUPPLY_DISCUSSION",
+          "NAMED_CUSTOMER_DISCUSSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4의 엔비디아 공급 협의",
+        "subject_id": "005930:MEMORY:HBM4:NVIDIA_SUPPLY_DISCUSSION:2025-10-31",
+        "unit": "discussion status",
+        "value": "close HBM4 supply discussions with NVIDIA"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4c08866a214037b5f3304085",
+        "economic_mechanism": "요청한 모든 고객에게 HBM4 샘플 출하를 마치고 고객 일정에 맞춘 양산 출하를 준비했다는 발행사 설명은 고객 평가 단계와 상용 출하 준비 사이의 실행 진척을 보여준다. 이후 양산 출하 근거로 대체된 역사적 상태다.",
+        "exact_quote": "현재 삼성전자는 글로벌 전 고객사에게 HBM3E를 공급하고 있으며, HBM4도 샘플을 요청한 모든 고객사에 샘플 출하를 완료한 뒤 고객사 일정에 맞춰 양산 출하를 준비하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4의 고객 샘플 단계가 요청 고객 전체를 포괄하고 양산 출하 준비로 이동한 사실은 당시 qualification·commercialization 실행 가시성을 직접 보강한다. 같은 문장의 HBM3E 전 고객 공급 부분은 현재 fact와 중복되므로 별도 fact로 반복하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:SAMPLE_TO_MASS_SHIPMENT_READINESS",
+        "normalized_object": "HBM4 전 요청 고객 샘플 출하 완료 및 양산 출하 준비",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-10-31",
+        "predicate": "2025년 10월 31일 삼성전자가 HBM4 샘플 요청 고객 모두에게 샘플 출하를 완료하고 고객 일정에 맞춰 양산 출하를 준비 중이라고 밝혔다",
+        "predicate_family": "HBM4_SAMPLE_SHIPMENT_AND_MASS_PRODUCTION_READINESS",
+        "primitive_tags": [
+          "HBM4",
+          "ALL_REQUESTING_CUSTOMERS",
+          "SAMPLE_SHIPMENT"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_ALL_REQUESTING_CUSTOMER_SAMPLE_SHIPMENT",
+        "question_family_tags": [
+          "HBM4_SAMPLE_SHIPMENT",
+          "HBM4_MASS_PRODUCTION_READINESS",
+          "CUSTOMER_SCHEDULE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4의 요청 고객 전원 샘플 출하와 양산 출하 준비",
+        "subject_id": "005930:MEMORY:HBM4:ALL_REQUESTING_CUSTOMER_SAMPLES:2025-10-31",
+        "unit": "shipment and readiness status",
+        "value": "samples shipped to every requesting customer; mass-production shipments being prepared to customer schedules"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4c08866a214037b5f3304085",
+        "economic_mechanism": "발행사가 급격히 증가하는 고객 HBM4 수요에 대응하기 위한 선제 설비투자를 예고해 고객 수요와 공급능력 확충 계획을 직접 연결했다. 이후 실제 인프라 투자와 공급 근거로 대체된 역사적 계획이다.",
+        "exact_quote": "삼성전자는 급격하게 증가하고 있는 고객사 HBM4 수요에 차질 없이 대응하기 위해 선제적으로 설비 투자를 진행할 예정이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4로 명시된 고객 수요 증가와 그에 대응한 설비투자 계획을 같은 문장이 직접 연결해 당시 수요·공급 가시성을 보강한다. 투자액이나 잠긴 CAPA를 추정하지 않으며, 이후 실제 투자 근거에 의해 대체된 상태로 표시한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:CUSTOMER_DEMAND_CAPACITY_RESPONSE",
+        "normalized_object": "급증하는 HBM4 고객 수요 대응 선제 설비투자 계획",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-10-31 forward plan",
+        "predicate": "2025년 10월 31일 삼성전자가 급격히 증가하는 고객사 HBM4 수요에 대응하기 위해 선제적 설비투자를 진행할 예정이라고 밝혔다",
+        "predicate_family": "HBM4_CUSTOMER_DEMAND_CAPACITY_INVESTMENT_PLAN",
+        "primitive_tags": [
+          "HBM4",
+          "CUSTOMER_DEMAND",
+          "CAPACITY_INVESTMENT_PLAN"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_CUSTOMER_DEMAND_CAPACITY_INVESTMENT_PLAN",
+        "question_family_tags": [
+          "HBM4_CUSTOMER_DEMAND",
+          "HBM4_CAPACITY_INVESTMENT",
+          "SUPPLY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 고객 수요 대응 설비투자 계획",
+        "subject_id": "005930:MEMORY:HBM4:CUSTOMER_DEMAND_CAPACITY_RESPONSE:2025-10-31",
+        "unit": "capacity investment plan",
+        "value": "proactive equipment investment planned for rapidly increasing customer HBM4 demand"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "64208ab886c4b914b9e4991fd6627aeb4e55a35a9a7a198f2b5af61f71dcd1aa",
+  "production_score_authority": false,
+  "prompt_hash": "37641cc7a1cab5c8c52dcd3ef7f66750abdd1e34d6d9669ceb7a0a11f098dacf",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-65c517598fd294c94435b67a0b04a33634e58179954a6114fec912e9c235153d",
+  "response_id": "COLLABRESP-c26b50774b6c0d0178cc4aee39578f8cf24bc63afbc1f7568116a84b1665e025",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,1278 @@
+{
+  "output_schema_hash": "a3c7fa0a6c5b38ee78019d3b61868351ca67ab529d6e1ae2d44412f12d685261",
+  "payload": {
+    "fact_dispositions": [
+      {
+        "fact_row_index": 0,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 1,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 2,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 3,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 4,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 5,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 6,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 7,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 8,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 9,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 10,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 11,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 12,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 13,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 14,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 15,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 16,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 17,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 18,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 19,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 20,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 21,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 22,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 23,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 24,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 25,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 26,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 27,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 28,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 29,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 30,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 31,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 32,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 33,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 34,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 35,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 36,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 37,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 38,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 39,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 40,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 41,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 42,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 43,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 44,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 45,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 46,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 47,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 48,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 49,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 50,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 51,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 52,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 53,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 54,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 55,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 56,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 57,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 58,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 59,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 60,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 61,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 62,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 63,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 64,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 65,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 66,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 67,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 68,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 69,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 70,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 71,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 72,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 73,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 74,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 75,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 76,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 77,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 78,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 79,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 80,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 81,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 82,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 83,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 84,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 85,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 86,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 87,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 88,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 89,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 90,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 91,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 92,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 93,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 94,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 95,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 96,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 97,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 98,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 99,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 100,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 101,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 102,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 103,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 104,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 105,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 106,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 107,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 108,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 109,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 110,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 111,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 112,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 113,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 114,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 115,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 116,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 117,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 118,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 119,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 120,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 121,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 122,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 123,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 124,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 125,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 126,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 127,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 128,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 129,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 130,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 131,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 132,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 133,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 134,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 135,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 136,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 137,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 138,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 139,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 140,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 141,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 142,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 143,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 144,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 145,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 146,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 147,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 148,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 149,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 150,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 151,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 152,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 153,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 154,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 155,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 156,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 157,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 158,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 159,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 160,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 161,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 162,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 163,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 164,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 165,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 166,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 167,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 168,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 169,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 170,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 171,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 172,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 173,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 174,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 175,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 176,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 177,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 178,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 179,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 180,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 181,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 182,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 183,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 184,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 185,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 186,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 187,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 188,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 189,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 190,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 191,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 192,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 193,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 194,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 195,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 196,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 197,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 198,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 199,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 200,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 201,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 202,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 203,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 204,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 205,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 206,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 207,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 208,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 209,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 210,
+        "rationale": "해당 행은 위의 정확한 primitive mapping에서 직접 인용됐다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 211,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 212,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 213,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 214,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 215,
+        "rationale": "행 전체를 검토했으나 허용된 Stage primitive의 직접 의미와 일치하지 않아 점수·Stage 근거로 연결하지 않는다.",
+        "status": "NO_MATCH"
+      }
+    ],
+    "mapping_complete": true,
+    "mappings": [
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          210
+        ],
+        "primitive_id": "customer_preorder_or_allocation",
+        "semantic_rationale": "issuer가 고객이 요청한 HBM4 물량을 현재 양산 중이라고 직접 밝혀 고객 주문과 생산 실행의 연결에 맞는다. 계약 가격·기간·취소·보호조건은 추론하지 않는다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          112
+        ],
+        "primitive_id": "revenue_visibility_contract",
+        "semantic_rationale": "브로커가 Broadcom과의 Custom HBM 공급계약 관계를 직접 서술했다. 독립 공식 계약과 물량·가격·기간·취소 조건은 미확인이라는 한계를 유지한다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          23
+        ],
+        "primitive_id": "memory_price_increase_mentioned",
+        "semantic_rationale": "HBM4 가격 체결 결과가 우려 대비 양호했다는 직접적인 HBM 가격 언급이다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          187
+        ],
+        "primitive_id": "memory_price_increase_mentioned",
+        "semantic_rationale": "FY2026 HBM ASP 전망이 COUNTER로 기록돼 HBM 가격 상승 지속성의 반대 근거에 해당한다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          29,
+          92,
+          113,
+          137,
+          169,
+          177,
+          178,
+          192,
+          199
+        ],
+        "primitive_id": "medium_term_revision_visibility",
+        "semantic_rationale": "FY2026~FY2027 및 분기 매출·영업이익·순이익 추정치가 이전 값에서 상향된 사실을 직접 제시한다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          17
+        ],
+        "primitive_id": "medium_term_revision_visibility",
+        "semantic_rationale": "2Q26 DRAM 영업이익률 추정치의 하향 조정으로 중기 revision의 반대 메커니즘에 해당한다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          29,
+          64,
+          92,
+          113,
+          137,
+          169,
+          177,
+          178,
+          192,
+          199
+        ],
+        "primitive_id": "cash_or_revision_conversion",
+        "semantic_rationale": "상향 revision과 2026Q1 실제 영업현금흐름의 전년 대비 증가를 함께 직접 보여준다. HBM 단독 현금흐름으로 확대하지 않는다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          17
+        ],
+        "primitive_id": "cash_or_revision_conversion",
+        "semantic_rationale": "DRAM 영업이익률 revision 하향은 revision 전환의 반대 방향을 직접 보여준다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          104,
+          204,
+          210
+        ],
+        "primitive_id": "hbm_product_profile",
+        "semantic_rationale": "HBM Time-to-Market·성능·적층, 고객 ASIC 협업, HBM4 고객요청 물량 양산으로 제품 실행 특성을 직접 설명한다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          22,
+          126,
+          151,
+          210
+        ],
+        "primitive_id": "shipment_or_revenue_mix",
+        "semantic_rationale": "HBM 비중·매출 전망, 실제 HBM 매출 2배 이상 성장 및 현재 고객요청 물량 양산을 직접 다룬다. 전망과 actual을 구분한다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          79,
+          126
+        ],
+        "primitive_id": "actual_earnings_conversion",
+        "semantic_rationale": "공시된 실제 연결 매출과 issuer가 직접 연결한 HBM 매출 2배 이상 성장·기록적 실적 기여를 보여준다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          64
+        ],
+        "primitive_id": "margin_fcf_conversion",
+        "semantic_rationale": "2026Q1 실제 연결 영업현금흐름의 전년 대비 증가로 전사 현금 전환 개선을 직접 보여준다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          17,
+          46,
+          119,
+          127
+        ],
+        "primitive_id": "conventional_memory_drag",
+        "semantic_rationale": "DRAM 영업이익률·범용 DRAM ASP·전체 DRAM ASP·연결 영업이익의 둔화 전망으로 일반 메모리 사이클의 반대 압력을 보여준다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          71,
+          190,
+          200
+        ],
+        "primitive_id": "capacity_supply_response",
+        "semantic_rationale": "용인 팹·P&T7 첨단 패키징·M15X/EUV 투자 계획이 수요에 대한 생산·패키징 공급 대응을 직접 보여준다. HBM 전용 배정으로 확대하지 않는다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          190
+        ],
+        "primitive_id": "package_substrate_sympathy",
+        "semantic_rationale": "P&T7 첨단 패키징 설비의 다년 투자 계획이 패키징 공급 대응을 직접 설명한다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          73,
+          146
+        ],
+        "primitive_id": "market_expectation_gap",
+        "semantic_rationale": "실적 추정치 급상향·밸류에이션 매력 재부각 관찰과 FY2026 영업이익 컨센서스를 직접 제시해 시장 기대 맥락을 보여준다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          52,
+          105
+        ],
+        "primitive_id": "current_valuation_vs_earnings",
+        "semantic_rationale": "FY2027 forward PBR과 FY2026 forward PER이 이익·장부가 분모에 대한 현재 forward valuation을 직접 제시한다."
+      }
+    ],
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "ecd5c91a5edd655171e1c55638c570b54a0f256ada0a8040620b7d79214937de",
+  "production_score_authority": false,
+  "prompt_hash": "3979e61d398dd0419f0409015b86f54736a1111634a96aa1146fd6d571526d5c",
+  "provenance": {
+    "agent_id": "/root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_stagecourt_mapping",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e652395f561f6ab6dc8a381b95bb7e72f2721d8ed8df75720a49d832baf7db3c",
+  "response_id": "COLLABRESP-0b219af024356d5ff9fa000d4d32f1c17d453894486d741f90406a79d94a904d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

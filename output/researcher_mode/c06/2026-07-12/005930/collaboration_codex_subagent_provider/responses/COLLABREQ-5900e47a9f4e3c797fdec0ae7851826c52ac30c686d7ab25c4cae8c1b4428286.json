@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "6b8c147908a57aacaf44255658318cf4c640c3e39802154d59622712715d30e5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-07b9e8cd9039ebb8e667ff5e",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.08,
+        "rationale": "제목·URL·source provenance상 삼성전자 HBM/메모리의 CAPEX, 공급, 마진 또는 현금전환을 직접 검증할 원문 경로가 아니며 snippet 내용은 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-20514870c0e45af684800a9c",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.08,
+        "rationale": "제목·URL·source provenance상 삼성전자 HBM/메모리의 CAPEX, 공급, 마진 또는 현금전환을 직접 검증할 원문 경로가 아니며 snippet 내용은 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-a9ef6f36bad90382c9e820b0",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0,
+        "rationale": "as_of_date 이후 게시가 제목·URL에서 식별되는 후보여서 현재 시점 full fetch 대상으로 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-1f1cc32e1f78f280f3715c95",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.08,
+        "rationale": "제목·URL·source provenance상 삼성전자 HBM/메모리의 CAPEX, 공급, 마진 또는 현금전환을 직접 검증할 원문 경로가 아니며 snippet 내용은 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-65718451b3a24b7e539aea2e",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.08,
+        "rationale": "제목·URL·source provenance상 삼성전자 HBM/메모리의 CAPEX, 공급, 마진 또는 현금전환을 직접 검증할 원문 경로가 아니며 snippet 내용은 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-cd3a635753343208873e309c",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.08,
+        "rationale": "제목·URL·source provenance상 삼성전자 HBM/메모리의 CAPEX, 공급, 마진 또는 현금전환을 직접 검증할 원문 경로가 아니며 snippet 내용은 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-0bdf96121394c0a1b14f945b",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.58,
+        "rationale": "제목·URL·source provenance가 목표 기업 또는 메모리 peer의 HBM/메모리 CAPEX, 공급, 마진·현금전환을 검증할 full-source route를 직접 가리킨다. snippet은 사실로 쓰지 않고 원문 fetch 대상으로만 판정했다."
+      },
+      {
+        "candidate_id": "SGCAND-032eff7d05cbc985b6da80b3",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.08,
+        "rationale": "제목·URL·source provenance상 삼성전자 HBM/메모리의 CAPEX, 공급, 마진 또는 현금전환을 직접 검증할 원문 경로가 아니며 snippet 내용은 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-5eca03b18ade7c9cbd71f2dd",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.8,
+        "rationale": "제목·URL·source provenance가 목표 기업 또는 메모리 peer의 HBM/메모리 CAPEX, 공급, 마진·현금전환을 검증할 full-source route를 직접 가리킨다. snippet은 사실로 쓰지 않고 원문 fetch 대상으로만 판정했다."
+      },
+      {
+        "candidate_id": "SGCAND-fccd2873a6a3c0ca14aef153",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.08,
+        "rationale": "제목·URL·source provenance상 삼성전자 HBM/메모리의 CAPEX, 공급, 마진 또는 현금전환을 직접 검증할 원문 경로가 아니며 snippet 내용은 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-804838c14b66bb0d045e6a3f",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.08,
+        "rationale": "제목·URL·source provenance상 삼성전자 HBM/메모리의 CAPEX, 공급, 마진 또는 현금전환을 직접 검증할 원문 경로가 아니며 snippet 내용은 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-ae541b2d193c544143e53cc1",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.88,
+        "rationale": "제목·URL·source provenance가 목표 기업 또는 메모리 peer의 HBM/메모리 CAPEX, 공급, 마진·현금전환을 검증할 full-source route를 직접 가리킨다. snippet은 사실로 쓰지 않고 원문 fetch 대상으로만 판정했다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "선택은 full-fetch 경로 우선순위일 뿐 사실 채택이 아니다. 원문 fetch, as_of_date, 대상 귀속과 counter 검증 전에는 EvidenceFact로 사용할 수 없다."
+    ]
+  },
+  "payload_hash": "0ce6dcf6c8c854a6dee3d67361a9155a320f24c4c5cfd47520ff0e92c6c2878f",
+  "production_score_authority": false,
+  "prompt_hash": "ce3fbc6710b19a927abdad7d9c1866749ba76173d3fe919227cf8e01132154e6",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5900e47a9f4e3c797fdec0ae7851826c52ac30c686d7ab25c4cae8c1b4428286",
+  "response_id": "COLLABRESP-770291507bb7a53e78bbde4c33decf993e45ef2eb7ee6ab19505368e83e039c2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

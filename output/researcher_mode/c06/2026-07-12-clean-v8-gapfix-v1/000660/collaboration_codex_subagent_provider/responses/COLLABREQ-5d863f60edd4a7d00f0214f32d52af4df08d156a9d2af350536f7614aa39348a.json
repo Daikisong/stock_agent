@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "2ce21629ab54be8a911dbe8cd011ff413048ca24066732640f8e332185969fd2",
+  "payload": {
+    "allowed_range": [
+      1.65,
+      2.15
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-09ab96433f8087166845bf25의 1.75~2.25점 구간과 비교하면 감사·공시 기반 actual과 제품 실행은 부합하지만 정보 독립성과 HBM별 귀속 한계 때문에 중간 수준이다.",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64의 1.5~2.0점보다 actual 재무와 운영 정보가 더 충실하지만, 분기 MD&A·품질 outcome·외부 교차검증 공백으로 상단 격차가 작다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-4e2037f2e29108c0d4b9e66c",
+      "EFACT-720c15b2be6d3b574ccae715",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-a696155e4f4ed8929c20afd4",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c418009dc8a6493dd0a098b4",
+      "EFACT-e1106fe56703ab347c29ba19"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 1.9,
+    "rationale": "공시·감사 기반 actual 재무와 DRAM/HBM 제품·고객 실행은 정보 신뢰도를 지지한다. 그러나 많은 숫자가 동일 OPENDART 독립성 그룹에 묶이고, 분기 MD&A와 HBM별 손익·고객·계약·품질 결과의 외부 교차검증이 부족해 중간 이상으로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-59fe4fe59aecdedfd2cd7aac",
+      "EFACT-6da0de1ddbc18e6388a92e8e",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "단일 공시 독립성 그룹 의존, 분기 MD&A 부재, HBM별 손익·계약·고객·품질 outcome의 직접 귀속 및 외부 검증 공백이 남는다.",
+    "why_not_lower": "감사·공시 기반 actual 재무와 현재 제품·고객 실행 정보가 존재하며 단순 전망이나 무근거 추론만으로 구성되지 않았다."
+  },
+  "payload_hash": "527441b4e06abd7bb5bbf03dd984aff96ca4341a88e95ef7999737088a22d006",
+  "production_score_authority": false,
+  "prompt_hash": "098d48b5b298faa9b4d098f0513cbf7be77be446d59560e375070d420579708c",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5d863f60edd4a7d00f0214f32d52af4df08d156a9d2af350536f7614aa39348a",
+  "response_id": "COLLABRESP-d2ee9d53c7fa9b2492f14e0600fee72549a9e514b3c5e0aff75e87a8a0e4f363",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

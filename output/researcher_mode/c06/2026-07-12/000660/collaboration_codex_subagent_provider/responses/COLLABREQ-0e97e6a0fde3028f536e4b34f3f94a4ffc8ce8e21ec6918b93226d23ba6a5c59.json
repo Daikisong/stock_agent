@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "87d3c66f564a2179cc4a1c335203172b75ba4ad6a971f0dc4b406e1ae6e503bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+        "rationale": "The supplied standalone-financial-statement chunk contains issuer-wide liquidity, receivable, inventory, contract-asset, financial-risk, and property-plant-equipment tables. The current 20-fact roster already represents the same objective-relevant corporate liquidity, working-capital, contract-asset, and capital-expenditure mechanisms on a consolidated basis, while this chunk contains no distinct HBM/DRAM pricing, capacity scarcity, customer commitment, qualification, revenue conversion, earnings bridge, or valuation fact. General financial-statement background is therefore not emitted again.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "913916dabc497d7e7792b2f1cff8656a71ea8b36b8cf026f1733b7edc605e591",
+  "production_score_authority": false,
+  "prompt_hash": "23492a8d3a763a826fa82f5692637c0fc824902e04808322d7ee6d8209de155f",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0e97e6a0fde3028f536e4b34f3f94a4ffc8ce8e21ec6918b93226d23ba6a5c59",
+  "response_id": "COLLABRESP-b358af8cc2b7e84814e10f2ab6ec3275eae4ddc6d14ad7a4d38c140e3c4cc7a8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

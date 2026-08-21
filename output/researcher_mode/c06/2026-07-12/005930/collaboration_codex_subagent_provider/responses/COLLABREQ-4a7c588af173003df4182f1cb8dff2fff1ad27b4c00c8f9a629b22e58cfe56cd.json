@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "744a48df81396a3c04f7dd2bdd190da9ed944a5b26a9ceb90e34c0c5325513a1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7719f8dd333f6772a4f09478",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.95,
+        "rationale": "2026-02-03 키움증권 반도체 산업 원문 route로 삼성전자와 SK하이닉스, HBM 설비투자를 함께 명시해 동일 기간 peer valuation 표를 확인할 가능성이 높다. snippet은 증거가 아니므로 full PDF 검증이 필요하다."
+      },
+      {
+        "candidate_id": "SGCAND-f64eed14a12416ece3afe0fe",
+        "matched_requested_source_family": "VALUATION_MULTIPLES",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "WiseReport 기업 목록은 cutoff 뒤인 2026-07-31~08-03 리포트만 노출해 미래 누수이며 현재 peer band 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8d6d61ad9d24d77b388c3eb6",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.01,
+        "rationale": "하나증권 전략 landing snippet은 2026-08-08의 cutoff 이후 거시전략 자료로 삼성전자 peer valuation을 확인하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-d0f95e74d569623310f7ce44",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.01,
+        "rationale": "대덕전자 FCBGA 보고서로 subject가 삼성전자가 아니고 요청된 broker valuation source family도 확인되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-5dc322aaf356ed846fba113b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.25,
+        "rationale": "삼성증권 주간전략은 삼성전자·SK하이닉스의 코스피 이익 기여만 언급하고 동일 기간 P/B peer 수치나 band를 제시할 단서가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-a799ab11915b7f2b95c6c32c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.1,
+        "rationale": "다종목 Daily 추천 목록이며 PER·PBR 문구의 삼성전자 귀속과 peer 비교 기준이 없어 현재 objective를 해결하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-1d1dc243636e0e1f20da9f60",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.12,
+        "rationale": "2025년 시장전략의 종목 나열과 주가 성과 자료로 2026년 삼성전자 peer multiple의 기간·지표가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-e86c7b077a3d762d8a4b3b7b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "2026-07-21 조선업 보고서로 cutoff 이후이며 삼성중공업 등 다른 issuer가 subject다."
+      },
+      {
+        "candidate_id": "SGCAND-4497f1ca1786ce7c046bda13",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.34,
+        "rationale": "2025-05 반도체 자료는 삼성전자·SK하이닉스를 함께 다루지만 현재 2026 peer band가 아니라 오래된 이익 시계열만 드러난다."
+      },
+      {
+        "candidate_id": "SGCAND-6a8eaa1f29a87559292522ce",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.04,
+        "rationale": "삼성증권 주간전략은 ESS·전력기기·태양광 중심이며 삼성전자 peer valuation 단서가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-7e55a13d7559d2f01efc2467",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.03,
+        "rationale": "시장전략 PDF는 정책·에너지 테마를 다루며 삼성전자와 비교기업의 같은 기간 P/B를 확인하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-00d15ab04f031d424230941a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0,
+        "rationale": "2차전지 산업 보고서로 삼성SDI 등 배터리 issuer가 중심이며 삼성전자 반도체 peer valuation과 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "ranking_complete는 이 partition의 후보 분류 완료만 뜻한다. material 후보는 full fetch 후 2026-07-12 cutoff, 삼성전자 subject, peer identity, 동일 forecast period 및 numeric P/B를 검증해야 한다."
+    ]
+  },
+  "payload_hash": "de122d5189425989001334dda8c5230cf2e4d05d64a4d0d010270bfa795c4278",
+  "production_score_authority": false,
+  "prompt_hash": "7b676cb336fcd853b8986d2ad1d7f75c0599bab2b15e3810e5760dbd5cdb3716",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4a7c588af173003df4182f1cb8dff2fff1ad27b4c00c8f9a629b22e58cfe56cd",
+  "response_id": "COLLABRESP-cf75dd2b1f762230f3d62968c483e6437237e4c170ce0c015331c36ac81008a1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

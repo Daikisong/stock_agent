@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "rationale": "The coverage continuation independently rescanned the entire supplied transport chunk 2 of 3 and strictly deduplicated against the 20 cumulative accepted facts. Two distinct percentage-basis atoms remained: maximum/minimum target-price divergence of negative 0.42 percent for the 2023-02-02 entry and negative 7.70 percent for the 2022-12-10 entry. They retain historical broker provenance and SUPERSEDED lifecycle and are not attributed to HBM, issuer guidance, customer-official evidence, signed terms, or durable visibility. All other target-price history, average-divergence rows, and later maximum/minimum-divergence rows were already represented, and no further target-direct objective-local atom remains in this supplied chunk.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The ex-post maximum/minimum divergence attached to a historical broker target-price entry measures realized market-expectation error; it is not issuer guidance, an operating actual, a contract, or HBM-only economics.",
+        "exact_quote": "제시일자 23.02.02 22.12.10\n투자의견 Buy Buy\n목표주가 120,000 100,000\n괴리율(평균,%) (21.76) (16.97)\n괴리율(최대/최소,%) (0.42) (7.70)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This historical percentage calibrates prior valuation-expectation error but is superseded and cannot establish current operating execution or HBM economics.",
+        "mechanism_scope_id": "000660:MEMORY:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "Maximum/minimum target-price divergence of negative 0.42 percent for the 2023-02-02 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2023-02-02 target-price entry; table published 2024-11-15",
+        "predicate": "had historical maximum/minimum target-price divergence",
+        "predicate_family": "BROKER_TARGET_PRICE_EXTREME_DIVERGENCE",
+        "primitive_tags": [
+          "BROKER_TARGET_PRICE",
+          "DIVERGENCE_PERCENTAGE",
+          "HISTORICAL"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "market_mispricing",
+          "valuation_rerating",
+          "historical_calibration"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price record",
+        "subject_id": "000660:TARGET_PRICE_EXTREME_DIVERGENCE:2023-02-02:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": -0.42
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "economic_mechanism": "The ex-post maximum/minimum divergence attached to a historical broker target-price entry measures realized market-expectation error; it is not issuer guidance, an operating actual, a contract, or HBM-only economics.",
+        "exact_quote": "제시일자 23.02.02 22.12.10\n투자의견 Buy Buy\n목표주가 120,000 100,000\n괴리율(평균,%) (21.76) (16.97)\n괴리율(최대/최소,%) (0.42) (7.70)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This historical percentage calibrates prior valuation-expectation error but is superseded and cannot establish current operating execution or HBM economics.",
+        "mechanism_scope_id": "000660:MEMORY:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "Maximum/minimum target-price divergence of negative 7.70 percent for the 2022-12-10 entry",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2022-12-10 target-price entry; table published 2024-11-15",
+        "predicate": "had historical maximum/minimum target-price divergence",
+        "predicate_family": "BROKER_TARGET_PRICE_EXTREME_DIVERGENCE",
+        "primitive_tags": [
+          "BROKER_TARGET_PRICE",
+          "DIVERGENCE_PERCENTAGE",
+          "HISTORICAL"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_TARGET_PRICE_DIVERGENCE",
+        "question_family_tags": [
+          "market_mispricing",
+          "valuation_rerating",
+          "historical_calibration"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical broker target-price record",
+        "subject_id": "000660:TARGET_PRICE_EXTREME_DIVERGENCE:2022-12-10:DAISHIN_HISTORY",
+        "unit": "percent",
+        "value": -7.7
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "0ac3d1cf562106f51fb2b3b47b30f333e3e6f8a11db62a68b94f24ead1420ce3",
+  "production_score_authority": false,
+  "prompt_hash": "40b8770ced6015c76c9bc5c862cc4f992c0af51852ede0eb8ce64b9a432ad686",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-37cd4c781e75e4e2f1f6f76acd37a93231588225f7b98fa75a0842d3649d1062",
+  "response_id": "COLLABRESP-703e1410366e84e86cac8dc27a65e4028ed620fafe190758d1c12b69dacbb3fa",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

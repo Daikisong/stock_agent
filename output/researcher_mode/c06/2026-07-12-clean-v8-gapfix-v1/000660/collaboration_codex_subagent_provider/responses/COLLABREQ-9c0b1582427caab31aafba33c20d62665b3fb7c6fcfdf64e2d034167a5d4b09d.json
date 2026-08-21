@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "rationale": "The exact supplied transport chunk 1 of 2 was reviewed in full (128,809 characters). The sole SK hynix target span is a historical investment-rating and target-price chronology. It supplies no current earnings denominator, cash-flow bridge, DRAM/HBM attribution, issuer guidance or actual, customer allocation, or signed contract economics in this chunk, so the target-price-only history is not promoted to a production objective-local fact. All other text concerns other issuers, unrelated sectors, generic semiconductor commentary, or boilerplate. No absence is inferred from silence, and prior chunk-0 facts are not repeated.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "e094701101cef7fa6647fea8e22ee5ab3112289f3766a81302738ccfee694372",
+  "production_score_authority": false,
+  "prompt_hash": "00eb4e23e37359253a3bd2ed524d19c752177d98c446a69c15333c145dc84e81",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9c0b1582427caab31aafba33c20d62665b3fb7c6fcfdf64e2d034167a5d4b09d",
+  "response_id": "COLLABRESP-9fa6c5a3772e53d4a9dbf375c600adbf153294706dff34b6e7266fd8720d714f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "013df536ad18757146a169f8b1009b94cce8d94c041c9cc04642b2fbf3ad685c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-000def3862fb35368a753cfc",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.96,
+        "rationale": "The official consolidated fourth-quarter package is a direct route to current financial and cash-flow disclosures relevant to the earnings-conversion objective; full-document verification is still required."
+      },
+      {
+        "candidate_id": "SGCAND-001b4926e6203d7c122cf27f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "This is a corporate-governance report page, not an earnings, presentation, or cash-flow source for the stated objective."
+      },
+      {
+        "candidate_id": "SGCAND-004efd452d998134467a8d8c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The generic support news-alert page has no supplied metadata tying it to the requested financial mechanism or source families."
+      },
+      {
+        "candidate_id": "SGCAND-01926456d2d5c31b44f92580",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.08,
+        "rationale": "The official 2024 first-quarter presentation route matches the requested provenance but is superseded historical context for a current 2026 objective."
+      },
+      {
+        "candidate_id": "SGCAND-04372f55c8ed24e218c47e57",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "An account terms page is unrelated to memory earnings, profitability, or cash conversion."
+      },
+      {
+        "candidate_id": "SGCAND-04e7162df1c7302ceb2e9c58",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "The official business-introduction page matches issuer-presentation provenance but is a generic profile rather than current earnings evidence."
+      },
+      {
+        "candidate_id": "SGCAND-07102f05b8b79f5d5ddb4395",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.99,
+        "rationale": "The official 2026 first-quarter interim business report is current and can contain the financial and cash-flow bridge needed by the open objective; it must be fetched and checked in full."
+      },
+      {
+        "candidate_id": "SGCAND-08a93ab1655eb406a448acb7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The ethics page does not match a requested financial source family or the economic mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-090fe6bc10f8dae656697251",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A dishwasher catalogue is unrelated to the semiconductor earnings and cash-flow objective."
+      },
+      {
+        "candidate_id": "SGCAND-09f9d94ec22f049f370a0b9e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The dividend portal does not provide the requested operating earnings or cash-flow mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-0a17c144a5d36e4768933549",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "This is a Facebook sharing endpoint and neither owns nor establishes a requested issuer financial source."
+      },
+      {
+        "candidate_id": "SGCAND-0a9abe367b54124f9442f01a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "The X sharing endpoint mentions an HBM4E sample link but is not an issuer, customer, trusted-media, or Naver source and cannot satisfy the requested provenance."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Material routes remain discovery metadata only and require bounded full-document fetch before any evidentiary use."
+    ]
+  },
+  "payload_hash": "b4f6a0f89ded8c0c818c909d4ad8ddf7de256fc26a1873ab91757022c56db515",
+  "production_score_authority": false,
+  "prompt_hash": "5e3fdbddd095a4894c306175f1c8421de37ee84e4207f1a51c6c24b279d02f91",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-97fe0538fbe27953dd52363720759dde5176e1df68478445b9b92e700609f4b8",
+  "response_id": "COLLABRESP-37a8a00d61cb89d1d444eb9785e0b53b6d33f880ab340d57ec65cd4fb9bd8338",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

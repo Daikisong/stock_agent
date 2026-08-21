@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6b8412d13eaf6c84c390f094",
+        "rationale": "Chunk 3 contains sustainability materiality assessments, disclosure indexes, climate-risk reporting, and report methodology. It contains no HBM, DRAM, or memory statement, and its generic customer, supply-chain, production, and product-revenue references provide no HBM-specific customer commitment, qualification, revenue conversion, or earnings attribution. Therefore no distinct objective-linked fact remains in this chunk.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "431c03c39b27df7b3b2ad20add45a193e3d04acb44fc0a5efa5bf996e7eb0fd7",
+  "production_score_authority": false,
+  "prompt_hash": "5a658d565f684e39b147fa0b51d886046ff7757a28ab2664f816a70e3d0a87c3",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b06804dc89c5aa4c13b74d2d9c4d19b39e4d6891a729b7797a062ca41e47a024",
+  "response_id": "COLLABRESP-420d0e48891f1f7589bb7c57c64e7f24ca8978d075b7fd4e24f7db9c8c3f2f3a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

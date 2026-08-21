@@ -1,0 +1,155 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The complete memo balances consolidated profit and cash generation against CAPEX, working-capital and missing HBM-only earnings/FCF attribution. The current deterministic summary has no material disagreement and no supplied executable route that requires reopening it."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Actual HBM4 shipment and AMD official corroboration remain clearly separated from MOU, plan, negotiation and undisclosed signed contract economics. Honest-empty query output and material-zero candidates do not prove absence, but they also supply no new fetchable candidate or distinct route."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The memo symmetrically accounts for utilization, ASP and tight supply alongside absent HBM4-only locked capacity, realized contract price and shortage duration. The PUBLIC_BROKER_PDF lane is alternate-route-required and no distinct current route is embedded."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Operating evidence, expectation uncertainty and mixed valuation denominators are already bounded in the complete memo. Metadata-only report hints and material-zero ranking decisions are not facts, and no currently executable full-report route is supplied."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Actual execution and conditional rerating support are balanced against HBM-only earnings, FCF, contract and denominator limitations. The prior no-result is not saturation or absence and identifies no new executable candidate, so it remains a monitored limitation rather than an invented fact gap."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Cash generation and shareholder returns are fully assessed against CAPEX, commitments, working capital and financing burdens. This is the checkpoint's one resolved objective and no current artifact reopens the memo."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "AMD customer-official technical corroboration remains separate from NVIDIA/OpenAI issuer plans and from signed purchase economics. The bounded official searches and honest-empty follow-up do not prove absence, while the immutable snapshot supplies no distinct official candidate or untried executable route."
+      }
+    ],
+    "component_memos_sufficient": true,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-2f5ba2b1fd280981afbd3251",
+        "rationale": "Four fetched documents are post-cutoff and must remain excluded without any source-absence inference.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-3fac4f0f038171b3db7a7b0b",
+        "rationale": "Two fetched documents lack a verifiable cutoff-eligible publication date, making them unusable for the dated evidence plane but not evidence of absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-4a09852cabf968a8d4e9c5ce",
+        "rationale": "The candidate locator date is after the cutoff and is excluded without a factual absence conclusion.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-50b01ee66fb70d67784761de",
+        "rationale": "The full-fetch records have no verifiable eligible publication date and cannot support the as-of analysis or an absence claim.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-5a6f18b6796ab38bdafded3a",
+        "rationale": "Fourteen query-provider errors, including the latest honest-empty planning attempt recorded as transport failure, are not source absence. The current checkpoint does not mark them resolved or superseded and supplies no new exact route identity.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-66a93060cac94c19c5e1edc9",
+        "rationale": "PUBLIC_BROKER_PDF attempts produced no accepted claim-fact lineage for three objectives. This is a coverage failure, not absence proof; the family is alternate-route-required and no distinct executable candidate is present now.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-b7c982be24bd51146eafb902",
+        "rationale": "One no-result valuation search is neither saturation nor source absence. With no distinct current route supplied, it remains an unresolved checkpoint limitation rather than authority for a duplicate query.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "The planner returned no new valid query after semantic deduplication. This closes only the duplicate query lane and creates neither evidence nor an absence finding.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-e4e36ba1dec3bf95565da816",
+        "rationale": "Four query-linked full fetches resolved to post-cutoff documents and are excluded without implying that eligible evidence is absent.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-fbae1be843b3f6094a73511a",
+        "rationale": "CUSTOMER_OFFICIAL discovery has no accepted claim-fact lineage for the covered objective. Material-zero results are not absence proof, but the family requires an alternate route and no distinct executable official candidate or pending transport is supplied.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [],
+    "new_source_family_directions": [],
+    "next_actions": [
+      "Keep independent saturation review gated until the unresolved no-result, provider-error and source-family coverage records are deterministically resolved or superseded, or a genuinely distinct objective-bound executable route is supplied; do not repeat exhausted queries or infer absence from honest-empty or material-zero outcomes."
+    ],
+    "query_direction_briefs": [],
+    "rationale": "All seven memos are complete, structured role coverage is complete, counter and supersession proof covers all seven objectives, Red Team reviewed all seven components, score_valid is true, and the material-disagreement roster is empty. The honest-empty query, 99 material-zero rankings, no-result and provider failures are not source-absence or completion proof. They also yield no material candidate, pending fetch or distinct legal route in this immutable snapshot, so no fact gap or query direction is invented. Readiness remains fail-closed because the exact failure ledger contains 33 unresolved members, including a zero-result record, fourteen provider-error records and four alternate-route-required source-family coverage records.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "c3e72d8231a0d030e85a5f7122442d45a796ac74b3d745336e96229f279bdf87",
+  "production_score_authority": false,
+  "prompt_hash": "a532f41a28c5b5cef04dd3f4ae1ddafc131fab77676a8d29dae345180b22d11c",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b6a967dbfd5787cb11acb42c00ba9a505b399ec558c85315c3b9cb99d1151c3f",
+  "response_id": "COLLABRESP-06b0af0e3ae3cfc1c215f5110678908e831db9ab2d334741990d7b22d711e74e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

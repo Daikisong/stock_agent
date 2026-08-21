@@ -1,0 +1,53 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      7.0,
+      11.0
+    ],
+    "anchor_comparisons": [
+      "positive anchor ORDTRANSFER-e743368708b3aee88a83287c와 비교해 확인된 positive는 유지하되 미확인 항목만 상단에서 제한한다",
+      "counter anchor ORDTRANSFER-2bfdc4a0e53457e592939b89와 비교하면 현재 source-backed evidence가 0점 상태보다 강하다"
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca"
+    ],
+    "disagreements": [
+      "분석가와 회의론자의 범위가 겹치므로 anchor scale 중간값을 채택한다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "proposed_points": 9.0,
+    "rationale": "가동률과 제품 실행, 고객 협업이 실적 추정의 추가 상향 가능성을 만든다. 동시에 현재 가격 반영도와 고객 집중, 확정 계약경제 미분리 때문에 큰 시장 오판으로 단정할 수 없다. 두 범위가 겹치는 중간값으로 보정한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "현재 가격 반영도와 고객 집중, 확정 계약경제 미분리 때문에 큰 시장 오판으로 단정할 수 없다.",
+    "why_not_lower": "가동률과 제품 실행, 고객 협업이 실적 추정의 추가 상향 가능성을 만든다."
+  },
+  "payload_hash": "80c4bbbf86540a5077099ed6084becfa7860241474b535416cd6571426dc9a03",
+  "production_score_authority": false,
+  "prompt_hash": "b21e662c9ba3d88653976e208a3c53e358142f3471d0e5d340797525fdc37a9c",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-816a12ea42ae93ad4ddae6c985d0a09eb30873f3e920bd7c5630a7bdb1a7ae10",
+  "response_id": "COLLABRESP-b54449192bce4823529c3fd9837b7562267b9697fe469c996c0a1195675811b4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

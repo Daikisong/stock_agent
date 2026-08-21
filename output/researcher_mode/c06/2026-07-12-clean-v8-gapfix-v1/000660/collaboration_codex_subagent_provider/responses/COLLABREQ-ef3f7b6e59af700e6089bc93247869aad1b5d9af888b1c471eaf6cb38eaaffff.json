@@ -1,0 +1,82 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "국내 상장사 중 DRAM·NAND·HBM 제품, 고객 수요, 가격, CAPA와 수율 사이클을 가장 직접적으로 공유하는 peer다. 다만 삼성전자의 비메모리·세트 사업 혼합 때문에 연결 배수는 그대로 대입하지 않고 사업 차이를 조정해야 한다.",
+        "confidence": 0.99,
+        "material_differences": [
+          "삼성전자는 메모리 외 Foundry·System LSI·DX 사업을 함께 보유해 연결 손익이 크게 혼합된다.",
+          "SK하이닉스는 메모리 노출도가 더 직접적이므로 같은 HBM·DRAM 업황도 연결 이익 민감도가 다르다.",
+          "현재 prompt에는 두 회사의 동일 시점 trailing valuation 값이 제공되지 않았다."
+        ],
+        "peer_name": "삼성전자",
+        "peer_symbol": "005930",
+        "shared_economic_drivers": [
+          "DRAM·NAND 메모리 가격 및 재고 사이클",
+          "AI 서버용 HBM 수요와 고부가 메모리 제품 믹스",
+          "첨단 메모리 CAPA·수율·가동률이 이익과 현금흐름에 미치는 영향"
+        ]
+      },
+      {
+        "comparability_rationale": "직접 메모리 peer는 아니지만 제조 CAPA·가동률·수율과 업황 민감도를 비교할 수 있는 인접 반도체 제조 peer다. HBM 가격이나 고객 잠김의 직접 대용물이 아니라 자본집약적 제조 사이클의 보조 비교로 제한한다.",
+        "confidence": 0.72,
+        "material_differences": [
+          "DB하이텍은 성숙공정 Foundry 중심으로 DRAM·NAND·HBM 메모리를 제조하지 않는다.",
+          "메모리 가격·재고·고객 allocation보다 Foundry 웨이퍼 수요와 공정 믹스가 실적을 좌우한다.",
+          "현재 prompt에는 DB하이텍의 동일 시점 trailing valuation 값이 제공되지 않았다."
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "반도체 제조설비 가동률·수율·CAPA가 원가와 마진에 미치는 영향",
+          "고객 주문과 반도체 업황 변화에 따른 설비투자 회수 위험",
+          "공정·제품 믹스에 따른 ASP와 수익성 변화"
+        ]
+      },
+      {
+        "comparability_rationale": "HBM CAPA 확대와 첨단 패키징 투자 방향을 보조 확인하는 인접 공급망 peer다. 메모리 제조 valuation peer로 직접 섞기보다 HBM 투자 사이클의 외부 민감도 비교에만 사용해야 한다.",
+        "confidence": 0.64,
+        "material_differences": [
+          "한미반도체는 메모리 제조사가 아니라 후공정 장비 공급사여서 가격·재고·수율의 직접 경제성이 다르다.",
+          "장비 주문은 고객 CAPEX를 반영하지만 SK하이닉스의 HBM 판매량·계약·현금흐름을 대체하지 않는다.",
+          "현재 prompt에는 한미반도체의 동일 시점 trailing valuation 값이 제공되지 않았다."
+        ],
+        "peer_name": "한미반도체",
+        "peer_symbol": "042700",
+        "shared_economic_drivers": [
+          "AI·HBM 투자 사이클과 첨단 패키징 수요",
+          "메모리 업체의 CAPEX·생산능력 확대에 따른 주문 변화",
+          "첨단 공정 기술 경쟁력과 고객 인증이 매출 가시성에 미치는 영향"
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "삼성전자를 DRAM·NAND·HBM의 직접 peer로 두고, DB하이텍은 제조 CAPA·가동률, 한미반도체는 HBM 장비 투자 사이클의 인접 peer로 분리했다. 예를 들어 삼성전자는 같은 메모리 가격을 보지만 한미반도체는 메모리 가격보다 고객의 장비 발주를 본다. PIT valuation 값이 제공되지 않아 배수는 만들지 않았으며 structured fetch 전에는 PEER_BAND를 확정할 수 없다.",
+    "unresolved_research_notes": [
+      "2026-07-12 point_in_time_structured_peer_identity_roster가 0건이므로 선택 peer의 동일 시점 trailing P/E·P/B는 prompt에서 검증되지 않았다.",
+      "국내 KRX allowlist에서 SK하이닉스와 직접 대응하는 독립 메모리 제조사는 삼성전자뿐이며, DB하이텍과 한미반도체는 각각 Foundry·장비의 인접 peer다."
+    ]
+  },
+  "payload_hash": "ec0be54bf2c94cde07adf0960c752994c3eebd60cffae4a33d51d04d3bcf0e4f",
+  "production_score_authority": false,
+  "prompt_hash": "1f8219773343828ee11ec9d99e1b8eae5223a2bc7e1e25faf420caaac8ee1235",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ef3f7b6e59af700e6089bc93247869aad1b5d9af888b1c471eaf6cb38eaaffff",
+  "response_id": "COLLABRESP-25deb0fa7ca7493fabfd4f70b23cde323c611dfa342183d19773dffc3601922a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

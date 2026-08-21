@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "b7e92fff627639a7b79613e7f577843011464060c2f269a97af2931f31123c60",
+  "payload": {
+    "allowed_range": [
+      7.5,
+      10.5
+    ],
+    "anchor_comparisons": [
+      "현재의 이익 revision·peer P/E 할인·이익 기여도 격차는 POSITIVE MEDIUM anchor의 근거 형태보다 구체적이어서 5.7~7.2점 band를 상회할 여지가 있다.",
+      "다만 COUNTER WEAK anchor의 4.25~5.75점 band와 비교하면 이미 발생한 PBR band 상단 돌파와 이후 감익 전망 때문에 현저한 상단 이탈은 제한된다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-265baf3d80f96dfc1767e565",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-cd10742dea3f5402040d6cbc"
+    ],
+    "disagreements": [
+      "낮은 P/E를 전부 미반영으로 보지 않는다. 높은 P/B와 이미 발생한 band 상단 돌파 때문에 일부 기대는 가격에 반영된 것으로 본다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "proposed_points": 9.0,
+    "rationale": "FY2026 영업이익 성장과 선행 이익 추정치의 큰 폭 상향, KOSPI200 이익 기여도 대비 시가총액 비중 격차, 글로벌 반도체 peer 대비 낮은 12개월 선행 P/E가 기대와 이익 분모 사이의 간극을 직접 지지한다. EPS 상향과 PER 확장, 미완의 valuation 정상화 분석도 보완한다. 그러나 높은 P/B·ROE 비교와 이미 발생한 PBR band 상단 돌파는 일부 재평가가 선반영됐음을 뜻하고, 거시 할인·가격 상승 둔화·FY2027 이후 감익·컨센서스 기준 충돌은 지속성을 제한한다.",
+    "support_fact_ids": [
+      "EFACT-132f5e71cb14a5afb42a7881",
+      "EFACT-79481f0d366a0d98300acfb8",
+      "EFACT-8e9996c5203a21209d0002ed",
+      "EFACT-b3d48bea9ae741feec4d4a05",
+      "EFACT-ec9c9f406dd9bb953d673321",
+      "EFACT-efe36a3a0b5d627f829d0dde"
+    ],
+    "why_not_higher": "HBM 단독 이익 기여와 FY2027 이후 duration이 확인되지 않았고, 이익 상향에도 valuation 할인이 발생한 사례와 이미 진행된 multiple 확장이 있어 15점 상단 근처로 올릴 수 없다.",
+    "why_not_lower": "서로 다른 상대 기준에서 이익 revision, peer P/E 할인, 지수 이익 기여도 격차, EPS 주도 정상화가 동시에 확인돼 단순한 목표가격 주장보다 강한 현재 mispricing 근거가 있다."
+  },
+  "payload_hash": "fa610d6d99a5f5a2562677fb22f1388413b37e77901bb53acc08344849efb18b",
+  "production_score_authority": false,
+  "prompt_hash": "a2c9ca98ba5f002f729de7903c22ab694fc6f18630df94160855d26b15a9da75",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3f4fb324cf44fdbf18db697b9cf3e49ea767b13cf3384006c5c171b7853b4605",
+  "response_id": "COLLABRESP-87011c4507ce1bd19d3585e89a31217936bcddd5dd508cd197cb09832632f3b6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-efaa71f2ea3968cffb432ac5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.0,
+        "rationale": "네이버 종목 토론글은 사용자 게시물이며 PUBLIC_BROKER_PDF의 원문 owner·landing·PDF provenance가 아니다. 관세 관련 짧은 snippet도 HBM 가격·capacity·customer allocation의 full-source route를 특정하지 않으므로 nonmaterial이고 evidence로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2f2e4f3956b0e83f829b1bc8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.0,
+        "rationale": "네이버 종목 토론글이 외국계 report를 언급할 뿐 해당 broker 원문·report identity·attachment로 이어지는 검증된 경로가 없다. 따라서 requested family=NONE, nonmaterial이며 게시물 주장은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ca952915a275ef1d071c24d3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.0,
+        "rationale": "네이버 종목 토론글은 PUBLIC_BROKER_PDF 원문 경로가 아니며 Blackwell 생산 관련 게시 문구도 출처·기간·SK하이닉스 HBM 공급 귀속이 검증되지 않았다. family=NONE, nonmaterial이고 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-02badb999f9383b81d68a809",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.0,
+        "rationale": "관세 전망을 적은 네이버 종목 토론글로 broker 원문/PDF provenance와 bottleneck-pricing objective의 target-direct mechanism이 없다. family=NONE, nonmaterial이며 snippet을 근거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-145c12f4684090d6eef3d2b7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.0,
+        "rationale": "팍스넷 게시물이 흥국증권 연구원 문구를 재전달하지만 original broker landing/PDF URL이나 exact report identity를 제공하지 않는 third-party retelling이다. 따라서 PUBLIC_BROKER_PDF를 충족하지 않고 nonmaterial이며 숫자·전망 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-859d13e8df85efe3f5cddf02",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.0,
+        "rationale": "네이버 프리미엄의 모닝리포트 요약은 original broker report가 아닌 재가공 discovery 페이지다. 000660의 HBM 가격·capacity·customer allocation을 확인할 full broker document route가 없어 family=NONE, nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-dce9ef8c0f453df1806dc6b1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.0,
+        "rationale": "BusinessPost 기사 경로는 requested PUBLIC_BROKER_PDF 원문이 아니며 제목·snippet의 전망 수치도 broker full-source route나 issuer actual로 검증되지 않았다. family=NONE, nonmaterial이고 metadata를 evidence로 승격하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "authoritative roster 7개를 순서대로 exact-once 분류했으나 PUBLIC_BROKER_PDF original/landing/full-PDF route는 확인되지 않았다.",
+      "material 0은 source absence나 bottleneck-pricing question의 해소를 뜻하지 않으며 토론글·요약·기사 snippet을 evidence로 사용하지 않았다."
+    ]
+  },
+  "payload_hash": "fabf272c3e0f6f37fc18921789b1dee048811bc2f62f75f5d546e4d75bceeb3f",
+  "production_score_authority": false,
+  "prompt_hash": "9049755b043c53730f9f1ca87029f4ed4ccc1a9dc8bd130258be58e64590dd36",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b1747dfe2779627c3177860f1e38ef4340a2155764bcb18df8f7f34483ea7488",
+  "response_id": "COLLABRESP-27497f20c0c665dd20779b4a350990f238a3b31846d5a436d4e0057b85e5c92e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

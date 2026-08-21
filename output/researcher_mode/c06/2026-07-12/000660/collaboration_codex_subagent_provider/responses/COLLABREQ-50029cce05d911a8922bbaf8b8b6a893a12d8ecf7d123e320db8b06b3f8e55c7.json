@@ -1,0 +1,154 @@
+{
+  "output_schema_hash": "bae53379d452ea93c99277440efed4e3cb3d1bbccb540a10fbcbd91183a91de3",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-b3970e887a69c1af5924e50f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “[2025: Volume 5]”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-0eac7eb00a2a90768f089613",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “2020_ir_report_en.pdf”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-2183134b6fc70380f9064a0c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “THE STANFORD EMERGING TECHNOLOGY REVIEW 2026”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-ef2345da7d701c2684f8fd33",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “A Journey Towards a Sustainable Future”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-64879875ae9fc322da451f9e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “SK hynix Sustainability Report 2024”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-8b91801a531700fa5e3275a5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Samsung Electronics Disappointment already priced in”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-e27ab5b3432eef531d47084c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “경계의 확장 - HCI KOREA”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-19cf1d78ffb1ad3bfe89c8b7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Basic knowledge of electronic components purchasing -Ameya360website”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-9b355564e47fada0f5b0df93",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “WE ADD VALUE TO THE FUTURE”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-5ad0e471730e487e8eac136f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 GENERAL_WEB_DISCOVERY 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “SK hynix Q2 FY2026 earnings conference call - moomoo Community”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-6042e80f827241940f08815c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “2023 한국생물공학회 추계학술발표대회 및 국제심포지엄”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-b4534fc6c4fee111d7ef31b5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "unverified URL URL의 PUBLIC_BROKER_PDF 후보이며 요청된 SK하이닉스 issuer earnings release·presentation·newsroom provenance가 검증되지 않았다. 제목 “Compal Electronics, Inc. 2018 Annual Report”의 대상 또는 문서 형태도 요청 원천과 일치하지 않으므로 snippet을 증거로 승격하지 않고 NONE·비중요로 분류한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 12개 후보를 입력 순서대로 정확히 한 번씩 분류했다. verified issuer-domain 후보가 없고 모든 candidate source-family hint가 요청된 SK하이닉스 issuer earnings release·presentation·newsroom 범위 밖이므로 material fetch 후보가 없다.",
+      "모든 published_at이 비어 있고 snippet은 discovery metadata일 뿐이므로 발행일·원문·수치 귀속을 증명하지 않는다. FORWARD_GUIDANCE, SEGMENT_CONTRIBUTION, DURABLE_VISIBILITY 공백은 계속 미해결이다."
+    ]
+  },
+  "payload_hash": "864b72b48764a2deab8879fb65b32b1648e1fac6cdcb39f6b9b040d61d590a1b",
+  "production_score_authority": false,
+  "prompt_hash": "2e891f9fcea4d6a9913872e48c20d7b89da6a70eee172079b18482c2d054d9ba",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-50029cce05d911a8922bbaf8b8b6a893a12d8ecf7d123e320db8b06b3f8e55c7",
+  "response_id": "COLLABRESP-3a88c3d195761de41edbe6e8b8aadc4b95cae236cec45194ef56bdbb5c9c9f14",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

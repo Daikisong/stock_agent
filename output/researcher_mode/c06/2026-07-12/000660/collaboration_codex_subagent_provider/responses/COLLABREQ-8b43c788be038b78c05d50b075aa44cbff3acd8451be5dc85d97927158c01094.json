@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      2.3,
+      3.3
+    ],
+    "anchor_comparisons": [
+      "현재 fact shape는 실제 재원과 전사 가동 증거가 있어 1.0~1.4점 POSITIVE WEAK anchor보다 높다.",
+      "3.8~4.0점 STRONG anchors에 비해 HBM 단독 집행·cash return과 승인 완료가 없어 한 단계 아래 band가 적절하다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0110c93a9c546290e8d34635",
+      "EFACT-e97dce0c4e7031b25df2c916"
+    ],
+    "disagreements": [
+      "analyst의 3점대 상단은 HBM 단독 집행 확인 전 넓게 봐야 하고, skeptic의 2점대 하단은 실제 OCF·순현금·가동 사실을 과소평가할 수 있다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "proposed_points": 2.8,
+    "rationale": "다섯 support facts는 재원, 규율, HBM의 CAPA당 경제성, 순현금, 공급 제약을 함께 보여준다. 두 counterfacts는 현금전환 부담과 HBM 귀속·승인 불확실성을 직접 제한한다. LOW confidence anchors는 exact precedent가 아니므로 4점 상단을 복제하지 않고, weak와 strong 사이에서 현재 fact shape에 맞는 중상단 범위를 잡았다.",
+    "support_fact_ids": [
+      "EFACT-02d58ad600093d0014e8428a",
+      "EFACT-08f8b87524ceb3f3ee376bc2",
+      "EFACT-2b6d88631c21daa364467682",
+      "EFACT-bb3c20c5fdc5425689b78c4d",
+      "EFACT-c589801b18002cc79aa63e94"
+    ],
+    "why_not_higher": "HBM 전용 Capex와 실제 수익률, 혼합 투자 승인 완료가 없고 운전자본 흡수가 확인돼 strong ceiling을 적용할 수 없다.",
+    "why_not_lower": "전사 범위라는 한계를 지키더라도 실제 OCF·순현금·100% 가동률과 수요 연동 정책은 중간 이상의 자본 대응 능력을 뒷받침한다."
+  },
+  "payload_hash": "2c8f16d2416f6525c730659f660708668114421bbe9925a76cfd01751a62599d",
+  "production_score_authority": false,
+  "prompt_hash": "b907b95aed04dee2ffb7f4a6f440c1d8a67a6d6af36c7c8c415a0d939f06894e",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8b43c788be038b78c05d50b075aa44cbff3acd8451be5dc85d97927158c01094",
+  "response_id": "COLLABRESP-65ec37fd49d9e1468ca14bf02fe7400da860cf57b7abe631bf02ad5efbe6bf91",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

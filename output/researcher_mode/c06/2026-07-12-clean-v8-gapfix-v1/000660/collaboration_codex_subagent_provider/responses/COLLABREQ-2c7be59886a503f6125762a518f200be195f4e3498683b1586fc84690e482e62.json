@@ -1,0 +1,351 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "rationale": "Coverage audit로 transport chunk 0/2를 다시 전수 검토하고 prior 10건을 strict dedup한 뒤, 같은 target-direct 표에서 누락된 기간별 전사 영업이익률 3건과 코스피 내 전사 순이익 비중 4건을 원자적으로 추출했다. 모두 브로커 표이며 HBM-only actual·guidance·signed contract economics로 승격하지 않았다. 이 literal chunk의 distinct objective-local remainder는 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.84,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권 표가 제시한 2024년 SK하이닉스 전사 영업이익률 기준점이며 HBM-only 마진은 아니다.",
+        "exact_quote": "매출원가율상승시 영업이익률(%) 순이익비중(%)\n코스피 2025년 영업이익률상승시\n영업이익률상승폭\n기업명 주가수익률(%) 순이익변화율(%)\n(%p, 1개분기후행) 2024년 25년.E 26년.E 27년.E 2024년 25년.E 26년.E 27년.E\nSK하이닉스 226.6 2.1 47.7 35.5 44.7 48.9 46.3 11.8 16.0 16.6 15.7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "2025~2027 전망의 수익성 확장 여부를 판단할 비교 기준이며 제품별 HBM 이익 귀속은 제공하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "2024년 전사 영업이익률 기준점",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024",
+        "predicate": "2024년 영업이익률을 35.5%로 제시했다",
+        "predicate_family": "BROKER_OPERATING_MARGIN_SERIES",
+        "primitive_tags": [
+          "operating_margin",
+          "FY2024",
+          "broker_table"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_operating_margin_series",
+        "question_family_tags": [
+          "target_operating_margin_series",
+          "historical_baseline",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.8,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 수익성",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "%",
+        "value": 35.5
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.85,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권 표가 제시한 2025년 SK하이닉스 전사 영업이익률 전망이며 HBM-only 마진이나 issuer guidance가 아니다.",
+        "exact_quote": "매출원가율상승시 영업이익률(%) 순이익비중(%)\n코스피 2025년 영업이익률상승시\n영업이익률상승폭\n기업명 주가수익률(%) 순이익변화율(%)\n(%p, 1개분기후행) 2024년 25년.E 26년.E 27년.E 2024년 25년.E 26년.E 27년.E\nSK하이닉스 226.6 2.1 47.7 35.5 44.7 48.9 46.3 11.8 16.0 16.6 15.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2025년 전사 수익성 전망을 수치화하지만 HBM-only earnings bridge는 제공하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "2025년 전사 영업이익률 전망치",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "2025년 영업이익률을 44.7%로 전망했다",
+        "predicate_family": "BROKER_OPERATING_MARGIN_SERIES",
+        "primitive_tags": [
+          "operating_margin",
+          "FY2025E",
+          "broker_table"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_operating_margin_series",
+        "question_family_tags": [
+          "target_operating_margin_series",
+          "broker_forecast",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.8,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 수익성 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "%",
+        "value": 44.7
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권 표가 제시한 2027년 SK하이닉스 전사 영업이익률 전망이며 2026년 전망치보다 낮아지는 경로지만 HBM-only 마진은 아니다.",
+        "exact_quote": "매출원가율상승시 영업이익률(%) 순이익비중(%)\n코스피 2025년 영업이익률상승시\n영업이익률상승폭\n기업명 주가수익률(%) 순이익변화율(%)\n(%p, 1개분기후행) 2024년 25년.E 26년.E 27년.E 2024년 25년.E 26년.E 27년.E\nSK하이닉스 226.6 2.1 47.7 35.5 44.7 48.9 46.3 11.8 16.0 16.6 15.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2026년 48.9% 전망 뒤 2027년 46.3%로 낮아지는 전사 마진 경로는 이익 지속성의 counter이지만 HBM 단독 둔화를 뜻하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "2027년 전사 영업이익률 전망치",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2027E",
+        "predicate": "2027년 영업이익률을 46.3%로 전망했다",
+        "predicate_family": "BROKER_OPERATING_MARGIN_SERIES",
+        "primitive_tags": [
+          "operating_margin",
+          "FY2027E",
+          "broker_table"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_operating_margin_series",
+        "question_family_tags": [
+          "target_operating_margin_series",
+          "broker_forecast",
+          "counter",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.8,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 수익성 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "%",
+        "value": 46.3
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.83,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권 표가 제시한 2024년 코스피 내 SK하이닉스 전사 순이익 비중 기준점이며 HBM-only 비중은 아니다.",
+        "exact_quote": "매출원가율상승시 영업이익률(%) 순이익비중(%)\n코스피 2025년 영업이익률상승시\n영업이익률상승폭\n기업명 주가수익률(%) 순이익변화율(%)\n(%p, 1개분기후행) 2024년 25년.E 26년.E 27년.E 2024년 25년.E 26년.E 27년.E\nSK하이닉스 226.6 2.1 47.7 35.5 44.7 48.9 46.3 11.8 16.0 16.6 15.7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "향후 코스피 이익 기여도 변화의 기준점이지만 제품별 HBM 이익 귀속은 아니다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "2024년 코스피 내 전사 순이익 비중",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024",
+        "predicate": "2024년 코스피 순이익 비중을 11.8%로 제시했다",
+        "predicate_family": "BROKER_KOSPI_NET_INCOME_SHARE",
+        "primitive_tags": [
+          "net_income_share",
+          "FY2024",
+          "broker_table"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_kospi_net_income_share",
+        "question_family_tags": [
+          "target_kospi_net_income_share",
+          "historical_baseline",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.79,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 순이익 비중",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "%",
+        "value": 11.8
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.84,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권 표가 제시한 2025년 코스피 내 SK하이닉스 전사 순이익 비중 전망이며 HBM-only 이익 비중은 아니다.",
+        "exact_quote": "매출원가율상승시 영업이익률(%) 순이익비중(%)\n코스피 2025년 영업이익률상승시\n영업이익률상승폭\n기업명 주가수익률(%) 순이익변화율(%)\n(%p, 1개분기후행) 2024년 25년.E 26년.E 27년.E 2024년 25년.E 26년.E 27년.E\nSK하이닉스 226.6 2.1 47.7 35.5 44.7 48.9 46.3 11.8 16.0 16.6 15.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 순이익의 시장 내 비중 전망은 expectation concentration을 수치화하지만 HBM-only attribution을 제공하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "2025년 코스피 내 전사 순이익 비중 전망",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "2025년 코스피 순이익 비중을 16.0%로 전망했다",
+        "predicate_family": "BROKER_KOSPI_NET_INCOME_SHARE",
+        "primitive_tags": [
+          "net_income_share",
+          "FY2025E",
+          "broker_table"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_kospi_net_income_share",
+        "question_family_tags": [
+          "target_kospi_net_income_share",
+          "broker_forecast",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.79,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 순이익 비중 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "%",
+        "value": 16.0
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권 표가 제시한 2026년 코스피 내 SK하이닉스 전사 순이익 비중 전망이며 HBM-only 이익 비중은 아니다.",
+        "exact_quote": "매출원가율상승시 영업이익률(%) 순이익비중(%)\n코스피 2025년 영업이익률상승시\n영업이익률상승폭\n기업명 주가수익률(%) 순이익변화율(%)\n(%p, 1개분기후행) 2024년 25년.E 26년.E 27년.E 2024년 25년.E 26년.E 27년.E\nSK하이닉스 226.6 2.1 47.7 35.5 44.7 48.9 46.3 11.8 16.0 16.6 15.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2026년 시장 이익 기여도 전망을 수치화하지만 HBM-only attribution이나 계약경제는 제공하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "2026년 코스피 내 전사 순이익 비중 전망",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "2026년 코스피 순이익 비중을 16.6%로 전망했다",
+        "predicate_family": "BROKER_KOSPI_NET_INCOME_SHARE",
+        "primitive_tags": [
+          "net_income_share",
+          "FY2026E",
+          "broker_table"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_kospi_net_income_share",
+        "question_family_tags": [
+          "target_kospi_net_income_share",
+          "broker_forecast",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.79,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 순이익 비중 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "%",
+        "value": 16.6
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권 표가 제시한 2027년 코스피 내 SK하이닉스 전사 순이익 비중 전망이며 2026년보다 낮아지지만 HBM-only 이익 비중은 아니다.",
+        "exact_quote": "매출원가율상승시 영업이익률(%) 순이익비중(%)\n코스피 2025년 영업이익률상승시\n영업이익률상승폭\n기업명 주가수익률(%) 순이익변화율(%)\n(%p, 1개분기후행) 2024년 25년.E 26년.E 27년.E 2024년 25년.E 26년.E 27년.E\nSK하이닉스 226.6 2.1 47.7 35.5 44.7 48.9 46.3 11.8 16.0 16.6 15.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2026년 16.6% 뒤 2027년 15.7%로 낮아지는 전사 순이익 비중은 expectation concentration의 counter이며 HBM 둔화로 직접 귀속하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "2027년 코스피 내 전사 순이익 비중 전망",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2027E",
+        "predicate": "2027년 코스피 순이익 비중을 15.7%로 전망했다",
+        "predicate_family": "BROKER_KOSPI_NET_INCOME_SHARE",
+        "primitive_tags": [
+          "net_income_share",
+          "FY2027E",
+          "broker_table"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "target_kospi_net_income_share",
+        "question_family_tags": [
+          "target_kospi_net_income_share",
+          "broker_forecast",
+          "counter",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.79,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 순이익 비중 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "%",
+        "value": 15.7
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "4bab394d3cb6bc75d542ed9ebcacc47cce0d6bae06726188ad1b67e8437f9155",
+  "production_score_authority": false,
+  "prompt_hash": "0e95fe1f14d4d475102c37976748f06c5e7a9371c4006c1e0da0aad9c81b85c1",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2c7be59886a503f6125762a518f200be195f4e3498683b1586fc84690e482e62",
+  "response_id": "COLLABRESP-d6f33835f70b8cfe01660289e0604d6efbb0ea197ee307626db9103e26548f43",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

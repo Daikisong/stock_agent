@@ -1,0 +1,170 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2d4e62b92fc5e9de50b43b72",
+        "rationale": "HBM4의 NVIDIA Vera Rubin용 양산, 1c D램 기반 안정 수율, SOCAMM2 양산 상태를 직접 확인했다. HBM4E 규격·HCB·SSD·모바일 메모리 소개는 현재 earnings_visibility 목적에 직접적인 신규 매출·고객 확약을 더하지 않아 별도 fact로 승격하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2d4e62b92fc5e9de50b43b72",
+        "economic_mechanism": "HBM4 양산이 엔비디아 베라 루빈 플랫폼용 제품으로 연결돼 범용적인 제품 출시보다 구체적인 AI 가속기 수요 노출을 보여준다.",
+        "exact_quote": "The highlight of Samsung’s exhibition is its sixth-generation high-bandwidth memory (HBM4), now in mass production and optimized for NVIDIA’s next-generation Vera Rubin platform.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4가 특정 NVIDIA 차세대 플랫폼용 양산 단계에 있다는 점은 제품 규격 소개보다 직접적인 고객 수요 노출과 매출 전환 가시성을 뒷받침한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:NVIDIA_RUBIN:COMMERCIALIZATION",
+        "normalized_object": "엔비디아 베라 루빈 플랫폼용 HBM4 양산 개시",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "삼성전자가 엔비디아 베라 루빈 플랫폼용 HBM4 양산을 개시했다",
+        "predicate_family": "HBM4_NVIDIA_RUBIN_MASS_PRODUCTION",
+        "primitive_tags": [
+          "HBM4",
+          "NVIDIA_VERA_RUBIN",
+          "MASS_PRODUCTION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_NVIDIA_RUBIN_MASS_PRODUCTION",
+        "question_family_tags": [
+          "HBM4_NVIDIA_RUBIN_MASS_PRODUCTION",
+          "HBM4_NAMED_PLATFORM_COMMERCIALIZATION",
+          "HBM_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 엔비디아 베라 루빈용 HBM4 양산",
+        "subject_id": "005930:MEMORY:HBM4:NVIDIA_RUBIN:MASS_PRODUCTION:2026-Q1",
+        "unit": "commercialization status",
+        "value": "mass production for NVIDIA Vera Rubin platform"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2d4e62b92fc5e9de50b43b72",
+        "economic_mechanism": "HBM4에 적용된 1c D램 공정의 안정적 수율은 양산 실행 위험을 낮춰 현재 공급과 매출 전환의 지속 가능성을 보강한다.",
+        "exact_quote": "Leveraging its advanced sixth-generation 10-nanometer-class DRAM process, Samsung has achieved stable yields and industry-leading performance.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "수율 안정성은 HBM4가 단순 공개·샘플 단계를 넘어 양산 물량을 지속 공급할 수 있는지와 직접 연결되는 실행 증거다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:PRODUCTION_YIELD_STABILITY",
+        "normalized_object": "HBM4 1c D램 공정 안정 수율 확보",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 current as of 2026-03-17",
+        "predicate": "삼성전자가 1c D램 공정을 적용한 HBM4에서 안정적인 수율을 확보했다고 밝혔다",
+        "predicate_family": "HBM4_PRODUCTION_YIELD_STABILITY",
+        "primitive_tags": [
+          "HBM4",
+          "STABLE_YIELD",
+          "1C_DRAM"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_PRODUCTION_YIELD_STABILITY",
+        "question_family_tags": [
+          "HBM4_PRODUCTION_YIELD_STABILITY",
+          "HBM4_MASS_PRODUCTION_EXECUTION",
+          "HBM_QUALIFICATION_EXECUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 생산 수율 안정성",
+        "subject_id": "005930:MEMORY:HBM4:PRODUCTION_YIELD:2026-Q1",
+        "unit": "production yield status",
+        "value": "stable yields"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2d4e62b92fc5e9de50b43b72",
+        "economic_mechanism": "저전력 DRAM 기반 AI 서버 메모리 SOCAMM2의 양산 전환은 제품 소개를 넘어 서버 수요에 대응하는 상용화 상태를 보여준다.",
+        "exact_quote": "SOCAMM2, a low-power DRAM-based server memory module, offers high bandwidth and flexible integration for next-generation AI systems and is already in mass production as an industry-first.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "SOCAMM2의 실제 양산 상태는 AI 서버 메모리 제품의 매출 전환 가능성을 보강하지만 HBM4의 고객·수익 가시성보다 보조적인 근거다.",
+        "mechanism_scope_id": "005930:MEMORY:SOCAMM2:AI_SERVER:MASS_PRODUCTION",
+        "normalized_object": "AI 서버용 SOCAMM2 업계 최초 양산",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 current as of 2026-03-17",
+        "predicate": "삼성전자의 SOCAMM2가 AI 서버용 메모리 모듈로 양산 중이다",
+        "predicate_family": "SOCAMM2_AI_SERVER_MASS_PRODUCTION",
+        "primitive_tags": [
+          "SOCAMM2",
+          "AI_SERVER_MEMORY",
+          "MASS_PRODUCTION"
+        ],
+        "product_family": "SOCAMM2",
+        "question_family_id": "SOCAMM2_AI_SERVER_MASS_PRODUCTION",
+        "question_family_tags": [
+          "SOCAMM2_AI_SERVER_MASS_PRODUCTION",
+          "SOCAMM2_COMMERCIALIZATION",
+          "AI_SERVER_MEMORY_SHIPMENT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 AI 서버용 SOCAMM2 양산",
+        "subject_id": "005930:MEMORY:SOCAMM2:AI_SERVER:MASS_PRODUCTION:2026-Q1",
+        "unit": "commercialization status",
+        "value": "industry-first mass production"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "f3bccc5bac6a38c830c06851c94a730d925b1201e7e995cda624d6a1ea594984",
+  "production_score_authority": false,
+  "prompt_hash": "19bb0ee419104d96b6abf7c92ed6b54fc32d0275ac49bdefe1ab46814771bca1",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2f7d22e8ceae04396c88481e68b28c944eb4ddea3d494e74296feb4718350fb0",
+  "response_id": "COLLABRESP-132ebef05d20fc681f8ff2f92f1f13eb4c46bac0670ebea71df108b7eaaabdc6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

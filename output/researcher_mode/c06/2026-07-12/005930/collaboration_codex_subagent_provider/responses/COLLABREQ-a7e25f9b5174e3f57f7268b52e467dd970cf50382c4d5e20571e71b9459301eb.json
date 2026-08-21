@@ -1,0 +1,51 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      8.64,
+      9.76
+    ],
+    "anchor_comparisons": [
+      "긍정 앵커 ORDTRANSFER-e743368708b3aee88a83287c의 5.7~7.2점과 현재 실제·전망 근거를 비교했다.",
+      "반대 앵커 ORDTRANSFER-2bfdc4a0e53457e592939b89의 4.25~5.75점과 현재 불확실성·counterfact를 비교했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1ff68ad6eee1221423b38965",
+      "EFACT-caa96a468d8c424252c4431e"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "proposed_points": 9.2,
+    "rationale": "교정 역할로 긍정과 반대 사실 및 양쪽 앵커를 대칭 검토했다. HBM4 양산·매출 전환에도 선행 PER과 PBR이 비교군보다 낮다는 관측은 실적 개선 대비 시장 반영이 덜 됐을 가능성을 보여 준다. 동시에 현재 가격이 일부 2.0배 P/B 기준가치를 웃돌고 메모리 사이클 정점과 2028년 이익감소 전망은 단순 peer 수렴을 제한한다.",
+    "support_fact_ids": [
+      "EFACT-ba3851ffc2538f67427b0ec3",
+      "EFACT-c8d894a7d67c2050fd2961da"
+    ],
+    "why_not_higher": "계약 조건·제품별 actual 이익·현금 전환 또는 구조적 지속성의 직접 검증이 완전하지 않다.",
+    "why_not_lower": "현재 citable 긍정 사실과 공식·독립 출처가 실제 매출·수요·생산·현금 경로를 뒷받침한다."
+  },
+  "payload_hash": "cb74ffa9d1cbf92a02af7b110ac7a02ea5fb068bd89e2d3cdb480840a4c74e23",
+  "production_score_authority": false,
+  "prompt_hash": "c569dd94fe73d403b8f13890b582923af3ee3a923e9bda1465b5934eea895a14",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a7e25f9b5174e3f57f7268b52e467dd970cf50382c4d5e20571e71b9459301eb",
+  "response_id": "COLLABRESP-3044b57b9f46a1d71e7cefc255b4b92c52702c85d869568d2b575dfc6719b14f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

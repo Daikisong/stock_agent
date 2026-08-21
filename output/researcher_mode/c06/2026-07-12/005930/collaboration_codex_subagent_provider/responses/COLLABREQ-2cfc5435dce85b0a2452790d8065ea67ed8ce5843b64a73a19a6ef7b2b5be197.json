@@ -1,0 +1,564 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4fd9df3e1911c1e871056ffa",
+        "rationale": "기사 전문에서 prior 141에 없는 2026년 2분기 D램 가격 상승 추정과 주요 고객 메모리 수요 충족 제약을 추출했다. 전사·DS 혼합 이익, 기존 90조원대 메모리 이익 및 성과급 facts는 중복 또는 메모리 단독 귀속 부족으로 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-50658982f12aea8aa91c0035",
+        "rationale": "컨퍼런스콜 전문에서 prior에 없는 2025년 2분기 D램 비트 성장·재고·ASP, HBM 판매량 성장·HBM3E 믹스를 추출했다. 일회성 비용과 이후 실제로 해소된 과거 전망은 중복·후속 actual 우선 원칙으로 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-599bafab0f66cbffadd1b731",
+        "rationale": "2025년 1분기 공식 자료 전체에서 메모리 매출의 절대값·QoQ·YoY와 HBM 판매·가격 약화 counter를 추출했다. 전사 현금흐름과 타 사업부, 이후 해소된 정성 전망은 objective-direct 신규 fact가 아니어서 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-59d13a4c71f6436f2607e999",
+        "rationale": "2025년 4분기 공식 자료 전체를 검토했고 이 transport page에는 메모리 매출 37.1조원을 먼저 추출했다. 같은 문서의 중복 아닌 QoQ·YoY 및 실적 메커니즘은 page limit 때문에 continuation에서 처리한다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4fd9df3e1911c1e871056ffa",
+        "economic_mechanism": "D램 가격의 큰 폭 상승 추정은 같은 판매량에서 발생하는 메모리 매출과 이익 전환을 확대한다.",
+        "exact_quote": "증권가에서는 2분기 D램 가격 상승률이 전 분기 대비 60% 안팎, 낸드 가격은 70% 수준에 달했을 것으로 추정하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 메모리 이익 급증의 가격 기여도를 정량화하는 독립 추정이지만 발행사 확정 수치는 아니다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "D램 가격 전분기 대비 상승률 추정",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2E",
+        "predicate": "증권가는 2026년 2분기 D램 가격이 전분기 대비 약 60% 상승했을 것으로 추정했다",
+        "predicate_family": "DRAM_PRICE_QOQ_ESTIMATE",
+        "primitive_tags": [
+          "dram_price",
+          "pricing_power",
+          "estimate"
+        ],
+        "product_family": "D램",
+        "question_family_id": "dram_price_growth_estimate",
+        "question_family_tags": [
+          "dram_price_growth_estimate"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 D램 가격 상승률 추정",
+        "subject_id": "005930:DRAM:PRICE_QOQ_ESTIMATE",
+        "unit": "percent QoQ estimate",
+        "value": 60
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.78,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4fd9df3e1911c1e871056ffa",
+        "economic_mechanism": "고객 메모리 수요의 절반가량만 충족된다는 추정은 강한 수요에도 공급 제약이 단기 판매량 전환을 제한함을 보여준다.",
+        "exact_quote": "주요 고객사 메모리 수요 충족률 역시 50% 수준에 머물고 있는 것으로 분석된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "수요 강도와 동시에 미충족 물량이 현재 매출로 전환되지 못하는 공급 제약을 정량화한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:CUSTOMER_ALLOCATION",
+        "normalized_object": "주요 고객 메모리 수요 충족률",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q2E",
+        "predicate": "주요 고객사 메모리 수요 충족률이 약 50%에 머문 것으로 분석됐다",
+        "predicate_family": "MEMORY_DEMAND_FULFILLMENT_RATE",
+        "primitive_tags": [
+          "customer_demand",
+          "fulfillment_rate",
+          "supply_constraint"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_demand_fulfillment_constraint",
+        "question_family_tags": [
+          "memory_demand_fulfillment_constraint"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 주요 고객 메모리 수요 충족률",
+        "subject_id": "005930:MEMORY:DEMAND_FULFILLMENT",
+        "unit": "percent estimate",
+        "value": 50
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-50658982f12aea8aa91c0035",
+        "economic_mechanism": "D램 비트 판매 증가는 메모리 수요가 실제 판매 물량으로 전환된 속도를 보여준다.",
+        "exact_quote": "그 결과 전분기 대비 DRAM Bit Growth는 10% 초반을 기록하며\n가이던스를 달성하였고, 재고는 정상 수준 이하까지 감소되었습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사 컨퍼런스콜이 메모리 판매 물량의 분기 증가를 직접 확인한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:REVENUE_CONVERSION",
+        "normalized_object": "D램 비트 성장률",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q2",
+        "predicate": "2025년 2분기 D램 비트 성장은 전분기 대비 10% 초반으로 가이던스를 달성했다",
+        "predicate_family": "DRAM_BIT_GROWTH_QOQ",
+        "primitive_tags": [
+          "dram_bit_growth",
+          "shipment_growth",
+          "revenue_conversion"
+        ],
+        "product_family": "D램",
+        "question_family_id": "dram_bit_growth_actual",
+        "question_family_tags": [
+          "dram_bit_growth_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 D램 비트 성장",
+        "subject_id": "005930:DRAM:BIT_GROWTH_QOQ",
+        "unit": "percent QoQ range",
+        "value": "10% 초반 증가"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-50658982f12aea8aa91c0035",
+        "economic_mechanism": "D램 재고가 정상 수준 아래로 감소해 가격에는 우호적이지만 추가 수요를 즉시 판매로 전환할 재고 여력은 제한된다.",
+        "exact_quote": "그 결과 전분기 대비 DRAM Bit Growth는 10% 초반을 기록하며\n가이던스를 달성하였고, 재고는 정상 수준 이하까지 감소되었습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 판매 성장 문장에서 별도의 재고 상태를 명시해 향후 물량 전환의 제약을 보여준다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:RISK_COUNTER",
+        "normalized_object": "D램 재고 수준",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q2",
+        "predicate": "2025년 2분기 D램 재고가 정상 수준 이하까지 감소했다",
+        "predicate_family": "DRAM_INVENTORY_BELOW_NORMAL",
+        "primitive_tags": [
+          "dram_inventory",
+          "below_normal",
+          "counter"
+        ],
+        "product_family": "D램",
+        "question_family_id": "dram_inventory_constraint",
+        "question_family_tags": [
+          "dram_inventory_constraint"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 D램 재고 수준",
+        "subject_id": "005930:DRAM:INVENTORY_LEVEL",
+        "unit": "inventory status",
+        "value": "정상 수준 이하"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-50658982f12aea8aa91c0035",
+        "economic_mechanism": "컨벤셔널 D램 ASP 반등은 물량 성장에 가격 기여까지 더해 메모리 매출·이익 전환을 높인다.",
+        "exact_quote": "또한, Conventional DRAM의 ASP의 경우, 분기 시작 시점에는\n보수적인 시장 전망으로 한자리수 중반 수준 하락할 것으로\n예상했지만, 전분기 대비 한자리수 초반 상승으로 마감하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사가 D램 실제 ASP의 분기 반등을 직접 제시해 이익의 가격 축을 확인한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "컨벤셔널 D램 ASP 전분기 대비 상승률",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q2",
+        "predicate": "2025년 2분기 컨벤셔널 D램 ASP는 전분기 대비 한 자릿수 초반 상승했다",
+        "predicate_family": "DRAM_ASP_QOQ_GROWTH",
+        "primitive_tags": [
+          "dram_asp",
+          "pricing_power",
+          "qoq_growth"
+        ],
+        "product_family": "컨벤셔널 D램",
+        "question_family_id": "dram_asp_growth_actual",
+        "question_family_tags": [
+          "dram_asp_growth_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 컨벤셔널 D램 ASP",
+        "subject_id": "005930:DRAM:ASP_QOQ_ACTUAL",
+        "unit": "percent QoQ range",
+        "value": "한자리수 초반 상승"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-50658982f12aea8aa91c0035",
+        "economic_mechanism": "HBM 비트 판매량의 분기 증가는 고부가 메모리 수요가 실제 판매로 전환된 정도를 정량화한다.",
+        "exact_quote": "먼저 2분기 당사 HBM 판매량은 비트 기준으로 전 분기 대비 30% 수준\n증가하였고 HBM 전체 수량 중 HBM3E가 차지하는 비중은 80% 후반까지\n확대되었습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 구조화 공백인 분기 성장률을 발행사 HBM 판매량의 명시적 점 증감률로 직접 보강한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:REVENUE_CONVERSION",
+        "normalized_object": "HBM 비트 판매량 전분기 대비 증가율",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q2",
+        "predicate": "2025년 2분기 HBM 판매량은 비트 기준으로 전분기 대비 약 30% 증가했다",
+        "predicate_family": "HBM_BIT_SALES_QOQ_GROWTH",
+        "primitive_tags": [
+          "hbm_sales",
+          "bit_growth",
+          "qoq_growth"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_bit_sales_growth",
+        "question_family_tags": [
+          "hbm_bit_sales_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "삼성전자 HBM 판매량",
+        "subject_id": "005930:HBM:BIT_SALES_QOQ",
+        "unit": "percent QoQ",
+        "value": 30
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-50658982f12aea8aa91c0035",
+        "economic_mechanism": "HBM 판매량 중 HBM3E 비중 확대는 고부가 세대의 상용 판매 믹스 전환을 보여준다.",
+        "exact_quote": "먼저 2분기 당사 HBM 판매량은 비트 기준으로 전 분기 대비 30% 수준\n증가하였고 HBM 전체 수량 중 HBM3E가 차지하는 비중은 80% 후반까지\n확대되었습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 매출의 제품 믹스가 HBM3E로 실제 전환된 수준을 발행사가 수치 범위로 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:PRODUCT_COMMERCIALIZATION",
+        "normalized_object": "HBM 전체 판매 수량 중 HBM3E 비중",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q2",
+        "predicate": "2025년 2분기 HBM 전체 수량 중 HBM3E 비중이 80% 후반까지 확대됐다",
+        "predicate_family": "HBM3E_SALES_MIX_SHARE",
+        "primitive_tags": [
+          "hbm3e",
+          "sales_mix",
+          "commercialization"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "hbm3e_sales_mix",
+        "question_family_tags": [
+          "hbm3e_sales_mix"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM3E 판매 비중",
+        "subject_id": "005930:HBM3E:SALES_MIX",
+        "unit": "percent range",
+        "value": "80% 후반"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-599bafab0f66cbffadd1b731",
+        "economic_mechanism": "공식 사업부문 표의 메모리 매출이 제품 판매의 실제 분기 매출 전환 규모를 직접 제시한다.",
+        "exact_quote": "메모리 17.5 23.0 19.1 17%↓ 9%↑",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사 공식 표가 2025년 1분기 메모리 단독 매출을 수치화한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION",
+        "normalized_object": "메모리 매출",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q1",
+        "predicate": "2025년 1분기 메모리 매출은 19.1조원이었다",
+        "predicate_family": "MEMORY_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "memory_revenue",
+          "segment_revenue"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_revenue_actual",
+        "question_family_tags": [
+          "memory_revenue_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "삼성전자 메모리 매출",
+        "subject_id": "005930:MEMORY:REVENUE_Q1_2025",
+        "unit": "KRW trillion",
+        "value": 19.1
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-599bafab0f66cbffadd1b731",
+        "economic_mechanism": "메모리 매출의 분기 감소는 당시 이익 전환 모멘텀이 직전 분기보다 약해졌음을 보여주는 counter다.",
+        "exact_quote": "메모리 17.5 23.0 19.1 17%↓ 9%↑",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 단독 분기 매출 감소율을 발행사 표가 직접 제시해 성장 경로의 양면을 보존한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION",
+        "normalized_object": "메모리 매출 전분기 대비 증감률",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q1",
+        "predicate": "2025년 1분기 메모리 매출은 전분기 대비 17% 감소했다",
+        "predicate_family": "MEMORY_REVENUE_QOQ_GROWTH",
+        "primitive_tags": [
+          "memory_revenue",
+          "qoq_decline",
+          "counter"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_revenue_qoq_decline",
+        "question_family_tags": [
+          "memory_revenue_qoq_decline"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "삼성전자 메모리 매출",
+        "subject_id": "005930:MEMORY:REVENUE_QOQ_Q1_2025",
+        "unit": "percent QoQ",
+        "value": -17
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-599bafab0f66cbffadd1b731",
+        "economic_mechanism": "메모리 매출의 전년 동기 대비 증가는 분기 변동과 별도로 연간 기저의 매출 확장을 보여준다.",
+        "exact_quote": "메모리 17.5 23.0 19.1 17%↓ 9%↑",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 공식 표의 전년 동기 성장률이 메모리 매출 회복의 별도 비교축을 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION",
+        "normalized_object": "메모리 매출 전년 동기 대비 증가율",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q1",
+        "predicate": "2025년 1분기 메모리 매출은 전년 동기 대비 9% 증가했다",
+        "predicate_family": "MEMORY_REVENUE_YOY_GROWTH",
+        "primitive_tags": [
+          "memory_revenue",
+          "yoy_growth"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_revenue_yoy_growth",
+        "question_family_tags": [
+          "memory_revenue_yoy_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 매출",
+        "subject_id": "005930:MEMORY:REVENUE_YOY_Q1_2025",
+        "unit": "percent YoY",
+        "value": 9
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-599bafab0f66cbffadd1b731",
+        "economic_mechanism": "HBM 판매 감소와 가격 하락이 동시에 발생해 메모리 실적을 낮춘 당시 이익 전환 counter다.",
+        "exact_quote": "• 첨단 반도체 수출 통제 영향 등에 따른 HBM 판매 감소 및 가격하락에 따른 실적 영향 有",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 강한 HBM 이익 논리와 반대였던 실제 판매·가격 약화 구간을 발행사 자료가 직접 확인한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:RISK_COUNTER",
+        "normalized_object": "HBM 판매 및 가격의 실적 영향",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q1",
+        "predicate": "2025년 1분기 HBM 판매 감소와 가격 하락이 실적에 부정적 영향을 줬다",
+        "predicate_family": "HBM_SALES_PRICE_EARNINGS_DRAG",
+        "primitive_tags": [
+          "hbm_sales_decline",
+          "price_decline",
+          "earnings_drag"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_sales_price_earnings_drag",
+        "question_family_tags": [
+          "hbm_sales_price_earnings_drag"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 판매 및 가격 영향",
+        "subject_id": "005930:HBM:SALES_PRICE_DRAG_Q1_2025",
+        "unit": "earnings impact",
+        "value": "HBM 판매 감소 및 가격 하락에 따른 실적 영향"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-59d13a4c71f6436f2607e999",
+        "economic_mechanism": "공식 사업부문 표의 메모리 매출이 2025년 4분기 제품 판매의 실제 매출 전환 규모를 제시한다.",
+        "exact_quote": "Memory 23.0 26.7 37.1 39%↑ 62%↑ 84.5 104.1 23%↑",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사 공식 표가 2025년 4분기 메모리 단독 매출을 직접 수치화한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION",
+        "normalized_object": "메모리 매출",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q4",
+        "predicate": "2025년 4분기 메모리 매출은 37.1조원이었다",
+        "predicate_family": "MEMORY_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "memory_revenue",
+          "segment_revenue"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_revenue_actual",
+        "question_family_tags": [
+          "memory_revenue_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "삼성전자 메모리 매출",
+        "subject_id": "005930:MEMORY:REVENUE_Q4_2025",
+        "unit": "KRW trillion",
+        "value": 37.1
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-59d13a4c71f6436f2607e999"
+    ],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "012974db33ea31a9853858d431523467fed60735be2af1acaebb923fb40eba26",
+  "production_score_authority": false,
+  "prompt_hash": "cc9d87a256af8e8491a42897589a6b9e66bb588ff333b2089cfc3fea16abd207",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2cfc5435dce85b0a2452790d8065ea67ed8ce5843b64a73a19a6ef7b2b5be197",
+  "response_id": "COLLABRESP-f6fde3ad25ec6c2c205250bfe9625513c238558ea285ccc666f755e3b99a664d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

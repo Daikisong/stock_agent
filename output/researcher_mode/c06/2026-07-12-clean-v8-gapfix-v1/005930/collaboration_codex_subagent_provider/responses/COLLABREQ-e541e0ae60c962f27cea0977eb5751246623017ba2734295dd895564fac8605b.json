@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-64e0784ff32624a1be6fd07b",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "삼성전자 공식-domain provenance는 맞아 ISSUER_NEWSROOM family를 충족하지만, 이 확장 링크는 로그인·navigation·다른 제품·미디어 자산 또는 일반 페이지여서 HBM earnings visibility를 해소하는 target-direct full document가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6500e1c4ee20b0bd74029590",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "삼성전자 공식-domain provenance는 맞아 ISSUER_NEWSROOM family를 충족하지만, 이 확장 링크는 로그인·navigation·다른 제품·미디어 자산 또는 일반 페이지여서 HBM earnings visibility를 해소하는 target-direct full document가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-66ed5e18a29a64c86d375dac",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "소셜 공유·제3자·추적 또는 별도 사이트 확장 링크로 삼성전자 issuer 원문 provenance와 target-direct full-document route를 충족하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-67c30ebe3a6aff3b865f1398",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "소셜 공유·제3자·추적 또는 별도 사이트 확장 링크로 삼성전자 issuer 원문 provenance와 target-direct full-document route를 충족하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-6b3e0b56a7a0f743e2ee4f01",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "삼성전자 공식-domain provenance는 맞아 ISSUER_NEWSROOM family를 충족하지만, 이 확장 링크는 로그인·navigation·다른 제품·미디어 자산 또는 일반 페이지여서 HBM earnings visibility를 해소하는 target-direct full document가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6c9a33d5dde4b11a1d0cdfee",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "삼성전자 공식-domain provenance는 맞아 ISSUER_NEWSROOM family를 충족하지만, 이 확장 링크는 로그인·navigation·다른 제품·미디어 자산 또는 일반 페이지여서 HBM earnings visibility를 해소하는 target-direct full document가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6db4c8e8fc5af5ddac761b08",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "삼성전자 공식-domain provenance는 맞아 ISSUER_NEWSROOM family를 충족하지만, 이 확장 링크는 로그인·navigation·다른 제품·미디어 자산 또는 일반 페이지여서 HBM earnings visibility를 해소하는 target-direct full document가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-706b172beea1dc8e10793aed",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "삼성전자 공식-domain provenance는 맞아 ISSUER_NEWSROOM family를 충족하지만, 이 확장 링크는 로그인·navigation·다른 제품·미디어 자산 또는 일반 페이지여서 HBM earnings visibility를 해소하는 target-direct full document가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-71f9b18f82cdbb0a2a096c4f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "삼성전자 공식-domain provenance는 맞아 ISSUER_NEWSROOM family를 충족하지만, 이 확장 링크는 로그인·navigation·다른 제품·미디어 자산 또는 일반 페이지여서 HBM earnings visibility를 해소하는 target-direct full document가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-739a20de415163d0b1e67db1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "소셜 공유·제3자·추적 또는 별도 사이트 확장 링크로 삼성전자 issuer 원문 provenance와 target-direct full-document route를 충족하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-75a43be5bf41ffbedcdba65d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "소셜 공유·제3자·추적 또는 별도 사이트 확장 링크로 삼성전자 issuer 원문 provenance와 target-direct full-document route를 충족하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-75c6ec078d7f8fab2d539701",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "삼성전자 공식-domain provenance는 맞아 ISSUER_NEWSROOM family를 충족하지만, 이 확장 링크는 로그인·navigation·다른 제품·미디어 자산 또는 일반 페이지여서 HBM earnings visibility를 해소하는 target-direct full document가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "graph-expansion 후보는 metadata_sparse이며 snippet이 없으므로 material 판정은 URL provenance와 full-document route에 한정했다.",
+      "SGCAND-4408baec854ac2c517ac5a6e는 기존 HBM4 원문의 canonical duplicate일 수 있으므로 fetch 단계에서 document identity를 dedup해야 하며, 원문 검증 전 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "daabc70f25c183828dbbd1591e7bf073c43809136bee20cbc7d1a31fc0f4c123",
+  "production_score_authority": false,
+  "prompt_hash": "580297393ea7d068217b8ee75607fb8fef02995a9c5176f893656c91018f6fab",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e541e0ae60c962f27cea0977eb5751246623017ba2734295dd895564fac8605b",
+  "response_id": "COLLABRESP-3292d396d604378cde7dd4021d4e8fd12906f5faf3ca27a4ae6486149f818ea8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

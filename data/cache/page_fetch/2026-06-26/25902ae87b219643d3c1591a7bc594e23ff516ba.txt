@@ -1,0 +1,84 @@
+연간 영업이익 200조원 초과 전망 (SK하이닉스)
+연간 영업이익 200조원 초과 전망 (SK하이닉스)
+2026.04.06 발간
+연간 영업이익 200조 원
+초과 전망
+김형태 수석연구원, 송혜수 연구원
+SK하이닉스
+000660
+매
+수
+현재가
+876,000원
+(4월 3일)
+목표주가
+1,500,000원
+상승여력
+71.2%
+메모리 전 제품 가격 상승폭 확대. 수익성 개선 가속화
+DRAM, NAND 모두 예상을 상회하는 가격 상승세가 지속되고 있는 것으로 파악돼요.
+초과 수요 환경 속 제한적 B/G(Bit Growth, 출하용량성장률)는 연말까지 유지될 전망이에요.
+주요 빅테크 고객사들의 LTA(장기계약) 제안이 현실화되고 있으며 계약 주도권(가격결정력)은 공급사에 편중되어 있어요. 가격 전망 상향에 따라 실적 추정치를 상향 조정해요.
+'엔비디아' Rubin GPU 대량 출하 시점 지연 가능성은 동사 HBM3E 주도권이 예상보다 장기화될 수 있음을 의미해요.
+1Q26 Preview:
+역대급 수익성 개선, 매 분기 역대 최대 실적 기대
+매출
+매출은 50.4조 원(+53.5%, 전분기 대비), 영업이익은 35.5조 원(+85.1%)으로 컨센서스(46.6조 원, 31.6조 원)를 상회할 전망이에요.
+제품별 영업이익은 각각 DRAM 29조 원, NAND 6.6조 원을 예상해요. B/G(출하용량성장률)는 DRAM, NAND 각각 +0.2%, -1.1%, ASP(평균 판매 가격)는 +49%, +61%로 추정해요.
+기존 가정을 모두 상회했을 것으로 판단해요.
+DRAM 내 HBM 비중은 30% 내외로 축소 추정해요. 범용 제품ASP 상승 가속화의 영향이에요. DRAM, NAND 영업이익률 76%, 56%를 예상해요.
+연간 매출
+연간 매출은 275조 원(+183.1%, 전년 대비), 영업이익은 201.9조 원(+327.6%)을 추정해요.
+DRAM, NAND 영업이익률 각각 78.9%, 58.6%로 역대 최대 실적을 재차 경신할 전망이에요.
+하반기 미국 ADR 상장, 고부가 애플리케이션(HBM4, So-CAMM, V9 NAND) 다각화로 주가 상승 기대감 재점화를 예상해요.
+Valuation & Risk:
+지정학적 우려 완화 시 메모리의 주도력 복원 전망
+투자의견은 '매수'를 유지하며 목표주가는 1,500,000원으로 15.4% 상향해요.
+12개월 선행 주당 순자산가치(BPS) 498,547원, 목표 주가순자산비율(P/B) 3배를 적용했어요.
+1) 추가 주주환원,
+2) AI 자회사를 통한 비즈니스 영역의 확장,
+3) 구속력 있는 장기 계약,
+4) 제품의 다각화에 주목해요.
+매크로 불확실성 완화 시 주도주 지위를 회복할 전망이에요.
+더 자세한 내용은 리포트를 확인하세요.
+12월
+결산
+매출액
+(십억 원)
+지배순이익
+(십억 원)
+PER
+(배)
+2024
+66,193.0
+19,788.7
+6.4
+2025
+97,146.7
+42,919.34
+11.0
+2026
+(예상)
+274,996.1
+176,858.1
+3.5
+2027
+(예상)
+374,245.4
+231,984.8
+2.7
+2028
+(예상)
+434,732.0
+245,830.5
+2.5
+자료 : 회사 자료, 신한투자증권
+리포트 보러가기
+클릭시 현재가로 이동합니다.
+SK하이닉스
+유의사항
+본 콘텐츠는 투자를 유도할 목적이 아니라 투자자의 투자판단에 참고가 되는 정보제공을 목적으로 하고 있습니다. 따라서 종목의 선택이나 투자의 최종결정은 투자자 자신의 판단으로 하시기 바랍니다.
+본 콘텐츠에서 제공하는 모든 정보는 어떠한 경우에도 증권투자 결과에 대한 법적 책임소재의 증빙자료로 사용될 수 없습니다.
+본 콘텐츠는 2026년 4월 6일 발간된 신한투자증권 리포트 'SK하이닉스 - 연간 영업이익 200조원 초과 전망' 내용입니다.
+수신거부: 홈 상단 알림내역 > 설정 > 투자정보
+{"type":"page","settingURL":"./pages/page_setting.html","theme":"bigdataStyleV2","editView":"mobile","desktop":{"width":"100%","padding":{"top":"0","bottom":"0","left":"0","right":"0"},"responsive":false},"version":"2.0.0","tablet":{"width":"768px","padding":"desktop"},"mobile":{"width":"100%","padding":"desktop"},"backgroundColor":"Not Specified","styles":{"font":{"size":"","family":""},"lineHeight":""},"libraries":{"js":["/phone/asset/js/mobile_logger.js","/phone/asset/lib/jquery/jquery-1.11.1.min.js","/phone/asset/js/applink.js","https://developers.kakao.com/sdk/js/kakao.min.js","https://open.shinhansec.com/m/event2/js/cms_event.js","/phone/asset/lib/clipboard/clipboard.min.js"],"css":[]},"components":{"list-uzur227xt":{"type":"list","settingName":"list","theme":"none bullet"},"table-uxrsr698j":{"type":"table","settingName":"table","dataTable":{"use":false,"keys":[],"loadedData":null},"markup":{},"style":{"table":{"backColor":"Not Specified","line":{"style":"","width":"0","color":"Not Specified"}},"cell":{"text":{"align":"left","style":"normal","color":"Not Specified"},"backColor":"Not Specified","line":{"style":"","width":"0","color":"Not Specified"}}},"mobile":{"type":"#typeNone","cell":[]},"origincol":"<col style=\"width:26%;\"><col style=\"width:28%;\"><col style=\"width:28%;\"><col style=\"width:18%;\">","mobileColWidth":"<col style=\"width:26%;\"><col style=\"width:28%;\"><col style=\"width:28%;\"><col style=\"width:18%;\">","theme":"none","isDynamicTr":false},"button-um7yxrl4x":{"type":"button","settingName":"button","option":{"newWindow":"false","text":"","serverText":"","popup":{"use":false,"width":"500","height":"400","x":"0","y":"0","opt":[true,true,false,false,true,false],"title":"","layer":false,"layerSize":"","target":"_self"}},"style":{"backgroundColor":"Not Specified","border":{"width":"Not Specified","color":"Not Specified","style":"solid","radius":"2"},"text":{"size":"12","style":"normal","color":"Not Specified","family":"Nanum Gothic"},"padding":"5","align":"center","width":"fit"},"btnEvent":{"use":false,"target":[""],"type":"click","animation":["toggle"]},"theme":"none"},"button-uppmcxz02":{"type":"button","settingName":"button","option":{"newWindow":"false","text":"SK하이닉스","serverText":"","popup":{"use":false,"width":"500","height":"400","x":"0","y":"0","opt":[true,true,false,false,true,false],"title":"","layer":false,"layerSize":"","target":"_self"}},"style":{"backgroundColor":"Not Specified","border":{"width":"Not Specified","color":"Not Specified","style":"solid","radius":"2"},"text":{"size":"12","style":"normal","color":"Not Specified","family":"Nanum Gothic"},"padding":"5","align":"center","width":"fit"},"btnEvent":{"use":false,"target":[""],"type":"click","animation":["toggle"]},"theme":"none"},"button-u7isp4vi1":{"type":"button","settingName":"button","option":{"newWindow":"false","text":"리포트 보러가기","serverText":"","popup":{"use":false,"width":"500","height":"400","x":"0","y":"0","opt":[true,true,false,false,true,false],"title":"","layer":false,"layerSize":"","target":"_self"}},"style":{"backgroundColor":"Not Specified","border":{"width":"Not Specified","color":"Not Specified","style":"solid","radius":"2"},"text":{"size":"12","style":"normal","color":"Not Specified","family":"Nanum Gothic"},"padding":"5","align":"center","width":"fit"},"btnEvent":{"use":false,"target":[""],"type":"click","animation":["toggle"]},"theme":"none"},"image-ud1tbzppa":{"type":"image","settingName":"image","image":{"sizeType":"auto","originalWidth":137,"originalHeight":25,"widthUnit":"px"},"setting":{"maintainRatio":true},"theme":"none"}}}

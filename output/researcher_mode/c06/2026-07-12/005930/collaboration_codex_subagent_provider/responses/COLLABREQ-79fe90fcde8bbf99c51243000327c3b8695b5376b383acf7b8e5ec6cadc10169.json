@@ -1,0 +1,311 @@
+{
+  "output_schema_hash": "8392ff7273630732db1ccbd70c5a62a2a936adeb7927340fb423017d2ade23d8",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0b1c3e4633a1bfb73c180077",
+        "rationale": "2026년 7월 10일 기사 전체를 prior246과 대조했다. 기존 2027년 공급부족·HBM 생산에 따른 범용 D램 잠식·전사 잠정실적은 중복 제거하고, 2027 HBM 가격협상, 2027·2028 삼성전자 D램 ASP, 루빈 울트라 수요, AI 투자 둔화 counter, 2028 공급 개선 counter의 distinct current/open 메커니즘 6건을 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-0c9340244d9702f493aa4804",
+        "rationale": "2026년 1월 기사 전체를 검토했으나 2025년 4분기 D램·낸드 ASP, DS 이익과 HBM3E 수익성은 이후 확정 실적과 issuer facts로 대체됐고 prior246에도 관련 current facts가 있다. 당시 전망치를 현재 병목 fact로 중복 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-0e51fef814c612278411af86",
+        "rationale": "2025년 3분기 실적 발표 전 기사 전체를 검토했으나 HBM 매출 증가·메모리 영업이익·D램 ASP·범용 D램 공급 축소 전망은 이후 공식 3분기 실적과 current facts로 대체됐다. SK하이닉스 수치와 과거 예상도 삼성전자 current 병목 fact로 사용하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-1454acf757ccb96e754b906e",
+        "rationale": "2026년 1분기 확정 실적 발표 전 브리핑을 전수 검토했으나 전사 잠정실적과 D램·낸드 ASP 약 90% 추정은 이후 issuer 발표·공시의 실제 수치로 대체됐고 prior246에 수용돼 있다. 나머지 본문은 다른 기업·산업 일정으로 objective와 직접 관련이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0b1c3e4633a1bfb73c180077",
+        "economic_mechanism": "2027년 HBM 계약 가격을 주요 고객과 협상 중이라는 증권사 파악은 연 단위 HBM 가격이 향후 실적에 반영되는 구체적 협상 단계가 진행 중임을 보여준다.",
+        "exact_quote": "메리츠 증권은 메모리 공급이 최소 2027년 4분기까지 수요증가 속도를 따라잡기 어렵다고 전망했다. 하나증권은 2027년 HBM 계약 가격도 실적 상향의 또 다른 축이라며, 주요 고객사들과 가격 협상이 진행중인 것으로 파악된다고 언급했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 연 단위 가격결정 관행과 ASP 전망을 넘어 실제 2027년 고객 가격협상이 진행 중이라는 현재 상태를 추가한다. 계약 체결이나 가격 확정으로 확대하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:CONTRACT_PRICING:2027",
+        "normalized_object": "2027년 HBM 계약 가격 협상 진행 상태",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027",
+        "predicate": "하나증권은 삼성전자의 2027년 HBM 계약 가격 협상이 주요 고객사들과 진행 중인 것으로 파악했다.",
+        "predicate_family": "HBM_2027_CONTRACT_PRICE_NEGOTIATION",
+        "primitive_tags": [
+          "HBM",
+          "CUSTOMER_PRICE_NEGOTIATION",
+          "CONTRACT_PRICING"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_2027_CONTRACT_PRICE_NEGOTIATION",
+        "question_family_tags": [
+          "HBM_2027_CONTRACT_PRICE_NEGOTIATION",
+          "HBM_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2027년 HBM 계약 가격 협상",
+        "subject_id": "005930:HBM_CONTRACT_PRICING",
+        "unit": "",
+        "value": "pricing negotiations in progress"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0b1c3e4633a1bfb73c180077",
+        "economic_mechanism": "삼성전자 블렌디드 D램 ASP의 2027년 38.1% 상승 전망은 공급 병목이 가격과 이익으로 전환되는 크기를 직접 수치화한다.",
+        "exact_quote": "현대차증권은 2028년까지 에이전틱 AI 수요 증가 속 메모리 반도체 병목이 지속될 것으로 예상했다. 삼성전자의 2027년 D램 ASP(평균판매가격)은 블렌디드 기준 38.1%, 2028년 15.6% 상승을 추정했다. 특히 루빈 울트라의 경우 HBM 용량이 루빈 대비 4배 증가한다는 점에서 해당 가속기가 출시될 경우 2028년 상반기 재차 공급부족이 심화될 가능성을 제시했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 D램의 기간과 수치가 명시된 가격 전망으로, 일반적인 공급부족 서술보다 병목의 이익 전환 강도를 직접 보여준다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:ASP_OUTLOOK:2027",
+        "normalized_object": "삼성전자 블렌디드 D램 ASP 전년 대비 상승률 전망",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027E",
+        "predicate": "현대차증권은 삼성전자의 2027년 블렌디드 D램 ASP가 38.1% 상승할 것으로 추정했다.",
+        "predicate_family": "DRAM_ASP_YOY_OUTLOOK",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "PRICING_OUTLOOK"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_ASP_YOY_OUTLOOK",
+        "question_family_tags": [
+          "DRAM_ASP_YOY_OUTLOOK",
+          "DRAM_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2027년 블렌디드 D램 ASP",
+        "subject_id": "005930:DRAM_PRICING",
+        "unit": "percent YoY",
+        "value": 38.1
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0b1c3e4633a1bfb73c180077",
+        "economic_mechanism": "삼성전자 블렌디드 D램 ASP의 2028년 15.6% 상승 전망은 증설 효과가 나타나기 시작해도 가격 상승이 이어질 수 있다는 병목 지속 경로를 수치화한다.",
+        "exact_quote": "현대차증권은 2028년까지 에이전틱 AI 수요 증가 속 메모리 반도체 병목이 지속될 것으로 예상했다. 삼성전자의 2027년 D램 ASP(평균판매가격)은 블렌디드 기준 38.1%, 2028년 15.6% 상승을 추정했다. 특히 루빈 울트라의 경우 HBM 용량이 루빈 대비 4배 증가한다는 점에서 해당 가속기가 출시될 경우 2028년 상반기 재차 공급부족이 심화될 가능성을 제시했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2027년과 별개의 2028년 가격 기간·수치이며, 병목 지속 여부를 실제 가격 경로로 검증할 수 있게 한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:ASP_OUTLOOK:2028",
+        "normalized_object": "삼성전자 블렌디드 D램 ASP 전년 대비 상승률 전망",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2028E",
+        "predicate": "현대차증권은 삼성전자의 2028년 블렌디드 D램 ASP가 15.6% 상승할 것으로 추정했다.",
+        "predicate_family": "DRAM_ASP_YOY_OUTLOOK",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "PRICING_OUTLOOK"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_ASP_YOY_OUTLOOK",
+        "question_family_tags": [
+          "DRAM_ASP_YOY_OUTLOOK",
+          "DRAM_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2028년 블렌디드 D램 ASP",
+        "subject_id": "005930:DRAM_PRICING",
+        "unit": "percent YoY",
+        "value": 15.6
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0b1c3e4633a1bfb73c180077",
+        "economic_mechanism": "루빈 울트라의 HBM 용량이 루빈보다 4배 늘면 단위 가속기당 HBM 수요가 커져 2028년 상반기 공급부족이 다시 심화될 수 있다.",
+        "exact_quote": "현대차증권은 2028년까지 에이전틱 AI 수요 증가 속 메모리 반도체 병목이 지속될 것으로 예상했다. 삼성전자의 2027년 D램 ASP(평균판매가격)은 블렌디드 기준 38.1%, 2028년 15.6% 상승을 추정했다. 특히 루빈 울트라의 경우 HBM 용량이 루빈 대비 4배 증가한다는 점에서 해당 가속기가 출시될 경우 2028년 상반기 재차 공급부족이 심화될 가능성을 제시했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "제품명만 제시하는 것이 아니라 HBM 용량 4배라는 수요 강도와 2028년 상반기 공급부족 시점을 함께 연결해 병목의 지속 메커니즘을 구체화한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:CAPACITY_SCARCITY:2028H1",
+        "normalized_object": "루빈 울트라 단위당 HBM 용량 확대와 공급부족 재심화 가능성",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2028-H1",
+        "predicate": "현대차증권은 루빈 울트라의 HBM 용량이 루빈 대비 4배 늘어 출시 시 2028년 상반기 공급부족이 다시 심화될 가능성을 제시했다.",
+        "predicate_family": "HBM_RUBIN_ULTRA_SHORTAGE_RISK",
+        "primitive_tags": [
+          "HBM",
+          "RUBIN_ULTRA",
+          "SUPPLY_SHORTAGE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_RUBIN_ULTRA_SHORTAGE_RISK",
+        "question_family_tags": [
+          "HBM_RUBIN_ULTRA_SHORTAGE_RISK",
+          "HBM_CAPACITY_SCARCITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "루빈 울트라 HBM 용량 확대와 메모리 공급부족",
+        "subject_id": "005930:HBM_DEMAND_CAPACITY",
+        "unit": "multiple versus Rubin",
+        "value": "4x HBM capacity per accelerator"
+      },
+      {
+        "business_segment": "메모리 산업",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0b1c3e4633a1bfb73c180077",
+        "economic_mechanism": "AI 인프라 과잉투자와 자금조달 우려가 고객 설비투자 속도를 늦추면 현재의 서버 D램·eSSD 공급부족과 메모리 가격 병목이 예상보다 빨리 완화될 수 있다.",
+        "exact_quote": "BNK투자증권은 서버 D램과 기업용 SSD 공급 부족은 지속되고 있지만, AI 인프라 과잉투자와 자금 조달 우려에 따른 설비투자 속도 조절 리스크가 커지고 있다고 밝혔다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공급부족의 존재를 인정하면서도 최종 AI 수요와 투자 재원의 약화가 병목 기간을 단축할 수 있다는 명시적 반대 경로를 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:AI_MEMORY:DEMAND_CAPEX_SLOWDOWN_RISK",
+        "normalized_object": "AI 인프라 과잉투자·자금조달 우려에 따른 설비투자 둔화 위험",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2028 outlook",
+        "predicate": "BNK투자증권은 서버 D램과 기업용 SSD 공급부족이 지속되는 가운데 AI 인프라 과잉투자와 자금조달 우려에 따른 설비투자 속도 조절 위험이 커지고 있다고 밝혔다.",
+        "predicate_family": "AI_INFRA_CAPEX_SLOWDOWN_RISK",
+        "primitive_tags": [
+          "AI_INFRA_CAPEX",
+          "FUNDING_RISK",
+          "DEMAND_COUNTER"
+        ],
+        "product_family": "AI 메모리",
+        "question_family_id": "AI_INFRA_CAPEX_SLOWDOWN_RISK",
+        "question_family_tags": [
+          "AI_INFRA_CAPEX_SLOWDOWN_RISK",
+          "MEMORY_DEMAND_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "AI 인프라 설비투자 속도 조절 위험",
+        "subject_id": "005930:AI_MEMORY_DEMAND_RISK",
+        "unit": "",
+        "value": "capex slowdown risk is increasing"
+      },
+      {
+        "business_segment": "메모리 산업",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0b1c3e4633a1bfb73c180077",
+        "economic_mechanism": "2028년 업계 공급의 점진적 개선은 장기 병목과 가격 상승의 반대 경로지만, 공급이 증가 수요를 따라잡는 시점은 여전히 불확실하다.",
+        "exact_quote": "글로벌 메모리 업체인 마이크론도 최근 실적 발표에서 AI 수요 확대와 구조적인 공급 제약으로 D램과 낸드 수급이 2027년 이후까지 타이트할 것으로 전망했다. 다만 2028년에는 업계 공급이 점진적으로 개선될 것으로 보면서도, 증가하는 수요를 공급이 언제 따라잡을지는 아직 예측하기 어렵다고 밝혔다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동종 메모리 공급자의 전망이 2028년 공급 개선을 명시해 병목 지속 주장에 필요한 실제 counter를 제공하며, 동시에 수급 균형 시점의 불확실성도 보존한다.",
+        "mechanism_scope_id": "005930:MEMORY:INDUSTRY_SUPPLY_IMPROVEMENT:2028",
+        "normalized_object": "2028년 메모리 업계 공급 개선과 수요 추격 시점 불확실성",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2028",
+        "predicate": "마이크론은 2028년 메모리 업계 공급이 점진적으로 개선될 것으로 보면서도 증가하는 수요를 공급이 언제 따라잡을지는 예측하기 어렵다고 밝혔다.",
+        "predicate_family": "MEMORY_2028_SUPPLY_IMPROVEMENT_COUNTER",
+        "primitive_tags": [
+          "MEMORY_SUPPLY",
+          "CAPACITY_IMPROVEMENT",
+          "SHORTAGE_COUNTER"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_2028_SUPPLY_IMPROVEMENT_COUNTER",
+        "question_family_tags": [
+          "MEMORY_2028_SUPPLY_IMPROVEMENT_COUNTER",
+          "MEMORY_SUPPLY_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "2028년 메모리 업계 공급 개선 전망",
+        "subject_id": "005930:MEMORY_INDUSTRY_SUPPLY",
+        "unit": "",
+        "value": "gradual supply improvement; catch-up timing uncertain"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "17863755ec0e7e8b2707f1793e3fcc6f7563fb563924a0a93eadbead34eef163",
+  "production_score_authority": false,
+  "prompt_hash": "de6c08a32c877dc77e9a2561b6e5a940ed0a54870cc1700e6c97ffa747e9ccb8",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-79fe90fcde8bbf99c51243000327c3b8695b5376b383acf7b8e5ec6cadc10169",
+  "response_id": "COLLABRESP-17288f21268269c30f5adb9f9a0d4b89b5e73f3715909277c332a9cd97c1ab09",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

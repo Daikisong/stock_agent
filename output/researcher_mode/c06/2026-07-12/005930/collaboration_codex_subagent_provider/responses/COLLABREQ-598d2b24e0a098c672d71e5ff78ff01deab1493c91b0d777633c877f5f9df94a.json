@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-d0b28052ff8e3376b8e626ff",
+        "rationale": "미국 장비 반입 규제는 삼성전자 중국 시안의 NAND와 범용 메모리 중심 이슈이며 문서도 HBM 직접 타격이 제한적이라고 구분한다. C06 HBM current objective에 연결되는 target-direct 신규 fact는 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-e1ee451a87a80fa971feabd3",
+        "rationale": "PwC 보고서는 글로벌 반도체 수요·공급망·기술 일반론이며 삼성 언급도 혁신 기업의 예시에 그쳐 삼성전자 HBM의 계약·출하·가격·수율·현금전환 상태를 직접 갱신하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-e34b42d68decb7235f826ad1",
+        "rationale": "총파업 일정, 장기화 시 HBM 개발·고객 일정 차질 가능성은 기존 canonical의 파업 일정·생산차질·고객신뢰 counter와 중복되고 실제 HBM4E 일정 차질 발생을 확인하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-eed6ab771e86737e8965eaa3",
+        "rationale": "삼성전자 HBM4용 1c D램 개발 지연과 대량양산 확대 제약을 후속 양산 전 historical counter 1건으로 추출했다. 산업 전체 출하·ASP 전망과 장비 공급망 일반론은 target-direct fact로 승격하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f56641316126052c9c44eaae",
+        "rationale": "루빈 25% 감산의 직접 원인은 SK하이닉스·마이크론 HBM4 인증 지연이며 삼성전자 HBM4 12단 양산·11.7Gbps·1c/4nm·16단 확장 내용은 기존 official/current canonical과 중복된다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-f97787628db0487810d7df71",
+        "rationale": "기존 파업 counter에 없던 7,000명 이상 필수인력 출근 요구와 단기 라인중단 완화 관측을 조건부 mitigation 1건으로 추출했다. 최대 손실·공급영향 추정과 멀티소싱 가능성은 실제 발생 fact로 확대하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.83,
+        "current_lifecycle": "RESOLVED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-eed6ab771e86737e8965eaa3",
+        "economic_mechanism": "대신증권은 삼성전자가 HBM4에 적용할 1c D램 개발 완료가 당초 예상보다 늦고 대량양산 환경 구축에도 시간이 필요해 HBM4 생산을 빠르게 늘리기 어렵다고 판단했다. 이는 이후 1c HBM4 양산 전의 개발·램프업 counter다.",
+        "exact_quote": "SK하이닉스와MicronTechnology는HBM4양산에기존DRAM1b공정\n을적용예정이나,삼성전자는DRAM1c를적용.DRAM1c의개발완료시점이당초예상대비지연\n(2025년 6월 말 개발 완료 예상)되었고, 대량 양산 환경 구축에 시간이 필요한 만큼 HBM4 생산을\n빠르게늘리는일은그만큼제한될것이라는판단.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 1c HBM4 구성·양산 fact에는 드러나지 않는 이전 개발 지연과 램프업 제약을 source-backed historical counter로 보존하되, 후속 양산으로 해소된 lifecycle을 명시한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:DRAM1C_DEVELOPMENT_DELAY:2025",
+        "normalized_object": "HBM4 1c DRAM development and mass-production ramp delay",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "as of 2025-06-19, development completion expected by 2025-06 end",
+        "predicate": "대신증권은 삼성전자의 HBM4용 1c D램 개발 완료가 지연돼 대량양산 환경 구축과 HBM4 생산 확대가 제한될 것으로 판단했다",
+        "predicate_family": "HBM4_1C_DEVELOPMENT_RAMP_DELAY",
+        "primitive_tags": [
+          "HBM4",
+          "DRAM1C",
+          "DEVELOPMENT_DELAY",
+          "RAMP_CONSTRAINT"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_1C_DEVELOPMENT_DELAY",
+        "question_family_tags": [
+          "HBM4_1C_DEVELOPMENT_DELAY",
+          "QUALIFICATION_EXECUTION",
+          "PRODUCTION_RAMP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4용 1c D램 개발·양산 확대",
+        "subject_id": "005930:MEMORY:HBM4:DRAM1C:DEVELOPMENT_DELAY:2025",
+        "unit": "development and ramp status",
+        "value": "development delayed; rapid HBM4 production ramp constrained"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.78,
+        "current_lifecycle": "OPEN",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-f97787628db0487810d7df71",
+        "economic_mechanism": "24시간 연속 공정과 7,000명 이상의 필수인력 출근 요구는 총파업이 즉시 대규모 생산 중단으로 전환되는 위험을 완화하는 운영상 완충 장치다. 실제 무중단이나 손실 회피를 확정하지는 않는다.",
+        "exact_quote": "업계에서는 단기적으로 반도체 생산라인이 곧바로 멈출 가능성은 크지 않다고 본다. 반도체 공정은 24시간 연속 가동 체제로 운영되고, 법원도 일부 생산시설의 필수 인력 유지 필요성을 인정한 상태다. 삼성전자는 파업 중에도 7000명 이상의 필수 인력이 출근해야 한다고 노조에 통보한 것으로 전해졌다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 파업 일정·생산차질 counter와 다른 구체적인 필수인력 완충 장치다. 파업이 없었거나 생산이 완전히 유지됐다고 확대하지 않고 조건부 mitigation으로 제한한다.",
+        "mechanism_scope_id": "005930:MEMORY:STRIKE:ESSENTIAL_STAFF_MITIGATION:2026-05",
+        "normalized_object": "essential staffing mitigates immediate strike shutdown risk",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "planned strike period 2026-05-21 through 2026-06-07 as of 2026-05-20",
+        "predicate": "삼성전자는 파업 중에도 7,000명 이상의 필수인력이 출근하도록 통보했고 단기적으로 반도체 생산라인이 즉시 멈출 가능성은 크지 않다는 관측이 나왔다",
+        "predicate_family": "MEMORY_STRIKE_ESSENTIAL_STAFF_MITIGATION",
+        "primitive_tags": [
+          "ESSENTIAL_STAFF",
+          "CONTINUOUS_OPERATION",
+          "STRIKE_MITIGATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_STRIKE_ESSENTIAL_STAFF_MITIGATION",
+        "question_family_tags": [
+          "MEMORY_STRIKE_ESSENTIAL_STAFF_MITIGATION",
+          "SUPPLY_RELIABILITY",
+          "LABOR_RISK_RESOLUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 반도체 파업 시 필수인력 운영",
+        "subject_id": "005930:MEMORY:STRIKE:ESSENTIAL_STAFF:2026-05",
+        "unit": "required essential staff count",
+        "value": "more than 7,000 essential staff required to report"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d262cc5d6eda8c1becc649610d670a9738823182a62c68c43bb0700dfff06c47",
+  "production_score_authority": false,
+  "prompt_hash": "6331989974264f96f440be40ae74a410ad2285fb6d6f87c63151404a2b137429",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-598d2b24e0a098c672d71e5ff78ff01deab1493c91b0d777633c877f5f9df94a",
+  "response_id": "COLLABRESP-6505425072399fc353dc8a98f398056f5d2af5d470010f1b11ccf32d8b3736ef",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

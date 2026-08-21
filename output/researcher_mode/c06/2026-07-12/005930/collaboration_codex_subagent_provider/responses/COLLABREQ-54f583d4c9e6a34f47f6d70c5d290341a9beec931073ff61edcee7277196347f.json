@@ -1,0 +1,247 @@
+{
+  "output_schema_hash": "f22689e5ebcd4f562143086f6e1305dd482d5f02b619846dd9ef97e10003b34e",
+  "payload": {
+    "confidence": 0.74,
+    "counter_case": "큰 연결 자산취득 약정, 실제 DS CAPEX, 운전자본 현금흡수와 주주환원 현금유출이 투자 후 잔존 현금을 제약한다. HBM4 초기 수익성이 낮을 수 있고 HBM 전용 CAPEX·감가상각·램프비용·운전자본·FCF·ROIC가 없어 회사 자금여력을 HBM 투자효율로 바꿔 읽을 수 없다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e"
+    ],
+    "positive_case": "HBM4 직접 공급 인프라와 메모리 선단전환 투자가 전략적 재투자를 확인하고, 연결 현금 및 OCF는 대규모 투자를 집행할 회사 차원의 자금여력을 지지한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 3,
+        "reason": "HBM4 공급 인프라는 제품 직접 실행 근거지만 투자액·증분현금흐름·투자수익률을 제시하지 않아 그 경계를 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 13,
+        "reason": "미집행 자산취득 약정은 실제 연결 자금부담이지만 HBM 전용 약정으로 귀속하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 106,
+        "reason": "연결 매출채권 증가는 현금전환을 낮춘 실제 counter지만 DS·memory·HBM 기여분은 분리할 수 없다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 145,
+        "reason": "연결 현금은 투자 funding capacity를 보강하지만 HBM 투자 효율이나 회수율을 증명하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 175,
+        "reason": "메모리 선단전환 투자는 HBM 공급대응 방향과 현금지출 부담을 함께 보여준다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 190,
+        "reason": "자기주식 취득 현금유출은 전사 차원의 경쟁적 자금용도이며 HBM 현금흐름과 분리한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 222,
+        "reason": "DS 시설투자는 반도체 투자규모의 현재 context지만 memory·foundry·HBM별 배분은 알 수 없다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 254,
+        "reason": "2026년 메모리 CAPEX 확대 전망은 공급대응과 FCF 부담을 함께 키우며 세부계획 미확정이라는 한계를 보존한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 298,
+        "reason": "자기주식 소각 주식수는 실행된 환원 조치지만 별도 취득 현금유출과 중복되고 HBM 프로젝트의 증분수익·회수를 설명하지 않아 선택에서 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 321,
+        "reason": "연결 OCF는 전사 자금창출 근거이지만 DS·memory·HBM 귀속 전에는 제품 투자수익 근거가 아니다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 322,
+        "reason": "HBM4 초기 수익성 하방은 물량 증가가 같은 비율의 투자수익으로 전환되지 않을 직접 counter다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 401,
+        "reason": "연결 운전자본의 큰 현금흡수는 이익-현금 전환을 낮추지만 HBM 단독 수치로 해석하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 482,
+        "reason": "FCF 기반 환원정책은 전사 자본배분 규율의 context이며 HBM 투자 후 잔여 FCF를 직접 보여주지 않는다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 501,
+        "reason": "제3자 전사 FCF 전망은 실제 현금도 HBM 귀속치도 아니므로 제품 투자수익과 funding의 현재 근거에서 제외한다."
+      }
+    ],
+    "proposed_score_lower": 1.0,
+    "proposed_score_mid": 1.7,
+    "proposed_score_upper": 2.4,
+    "research_complete": true,
+    "researcher_summary": "HBM4 통합 공급 인프라와 메모리 선단전환 투자는 공급대응 방향을 보여주고, 연결 현금과 영업현금흐름은 이를 감당할 회사 전체 자금여력을 보강한다. 반면 미집행 자산약정, DS CAPEX, 운전자본 흡수, 환원 현금유출과 HBM4 초기 수익성 하방이 있다. 회사·DS·memory 수치는 HBM 전용 CAPEX·FCF·ROIC로 귀속하지 않은 채 중하단 범위로 재작성했다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "HBM4 공급 인프라 투자는 제품 직접 실행 근거지만 투자액·증분현금흐름·수익률은 제시하지 않는다.",
+        "fact_row_index": 3,
+        "source_economic_mechanism": "HBM4_INTEGRATED_SUPPLY_INFRASTRUCTURE",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "삼성전자가 HBM4에 로직·메모리·파운드리·패키징 원스톱 솔루션과 선제적 인프라 투자를 적용해 공급 안정성을 확보했다",
+        "source_value_json": "\"integrated one-stop solution and proactive infrastructure investment for supply stability\""
+      },
+      {
+        "component_interpretation": "연결 미집행 자산취득 약정은 전사 자금부담이며 HBM 전용 약정으로 귀속하지 않는다.",
+        "fact_row_index": 13,
+        "source_economic_mechanism": "CORPORATE_CAPITAL_COMMITMENT",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "2026년 3월 말 연결 기준 아직 발생하지 않은 유·무형자산 취득 약정액이 27,503,020백만원이다",
+        "source_value_json": "27503020"
+      },
+      {
+        "component_interpretation": "전사 매출채권 증가는 실제 현금흡수 counter지만 DS·memory·HBM으로 분해할 수 없다.",
+        "fact_row_index": 106,
+        "source_economic_mechanism": "WORKING_CAPITAL_CASH_CONVERSION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 매출채권 증가가 영업현금흐름을 27,680,587백만원 감소시켰다",
+        "source_value_json": "-27680587"
+      },
+      {
+        "component_interpretation": "연결 현금은 투자와 환원의 funding capacity를 지지하지만 HBM 투자 효율을 증명하지 않는다.",
+        "fact_row_index": 145,
+        "source_economic_mechanism": "CORPORATE_LIQUIDITY",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "2026년 1분기말 연결 현금및현금성자산이 73,306,751백만원이다",
+        "source_value_json": "73306751"
+      },
+      {
+        "component_interpretation": "메모리 선단전환 투자는 HBM 공급대응 방향과 현금지출 부담을 함께 보여준다.",
+        "fact_row_index": 175,
+        "source_economic_mechanism": "HBM 등 고부가 제품 판매 확대를 위한 선단공정 전환 투자가 2025년 4분기와 연간 모두 증가해 공급 대응을 강화했지만, 같은 기간 현금지출 부담도 높였음을 보여준다.",
+        "source_period_json": "\"2025-Q4 and FY2025\"",
+        "source_predicate": "삼성전자 메모리 투자가 HBM 등 고부가 제품 판매 확대 목적의 선단공정 전환 투자로 2025년 4분기와 연간 모두 증가했다",
+        "source_value_json": "\"memory investment increased in Q4 and FY2025\""
+      },
+      {
+        "component_interpretation": "별도 자기주식 취득 현금유출은 전사 환원 선택과 투자재원 경쟁을 보여주며 HBM cash flow와 구분한다.",
+        "fact_row_index": 190,
+        "source_economic_mechanism": "SHAREHOLDER_RETURN_CASH_USE",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 별도 자기주식 취득 현금유출이 7,614,808백만원이다",
+        "source_value_json": "7614808"
+      },
+      {
+        "component_interpretation": "DS 시설투자는 반도체 부문 투자 규모의 context이나 memory·foundry·HBM별 배분을 알 수 없다.",
+        "fact_row_index": 222,
+        "source_economic_mechanism": "CORPORATE_CAPITAL_ALLOCATION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 DS 부문 신·증설 및 보완 시설투자가 101,927억원이었다",
+        "source_value_json": "101927"
+      },
+      {
+        "component_interpretation": "2026 메모리 CAPEX 확대 전망은 공급대응과 FCF 부담을 동시에 키우며 세부계획은 미확정이다.",
+        "fact_row_index": 254,
+        "source_economic_mechanism": "2026년 메모리 대규모 CAPEX 증가 전망은 제한된 공급에 대응하는 증설 여력을 높이는 동시에, 이익이 FCF로 전환되는 과정의 현금지출 부담을 키우는 양면 요인이다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자는 2026년 세부 투자계획이 미확정인 상태에서 메모리 대규모 CAPEX 증가를 예상했다",
+        "source_value_json": "\"large memory capex increase expected; detailed plan not finalized\""
+      },
+      {
+        "component_interpretation": "연결 OCF는 강한 전사 자금창출 근거지만 DS·memory·HBM 귀속 전에는 투자수익 근거가 아니다.",
+        "fact_row_index": 321,
+        "source_economic_mechanism": "OPERATING_CASH_GENERATION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 연결 영업활동현금흐름이 40,274,106백만원이다",
+        "source_value_json": "40274106"
+      },
+      {
+        "component_interpretation": "HBM4 초기 수익성이 이전 세대보다 낮을 가능성은 물량 확대가 즉시 높은 투자수익으로 전환되지 않을 counter다.",
+        "fact_row_index": 322,
+        "source_economic_mechanism": "HBM4 초기 수익성이 이전 세대보다 낮을 수 있어 물량 확대가 즉시 같은 비율의 이익 확대로 이어지지 않을 위험이 있다.",
+        "source_period_json": "\"2026-H2E\"",
+        "source_predicate": "IBK투자증권은 HBM4 초기 수익성이 HBM3E보다 낮을 것으로 추정했다",
+        "source_value_json": "\"HBM3E 대비 낮은 초기 수익성 추정\""
+      },
+      {
+        "component_interpretation": "전사 운전자본 변동의 큰 현금흡수는 이익에서 현금으로의 전환 상단을 낮추지만 HBM 단독 수치는 아니다.",
+        "fact_row_index": 401,
+        "source_economic_mechanism": "WORKING_CAPITAL_CASH_CONVERSION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 영업활동 자산·부채 변동이 현금흐름을 25,543,731백만원 감소시켰다",
+        "source_value_json": "-25543731"
+      },
+      {
+        "component_interpretation": "FCF 50% 기반 환원정책은 전사 규율의 context이며 HBM 투자 후 잔여 FCF를 직접 보여주지 않는다.",
+        "fact_row_index": 482,
+        "source_economic_mechanism": "CORPORATE_SHAREHOLDER_RETURN",
+        "source_period_json": "\"2024-2026\"",
+        "source_predicate": "삼성전자는 2024~2026년 발생 FCF의 50%를 재원으로 연 9.8조원 정규배당을 유지하고 잔여 재원은 추가 환원할 계획이다",
+        "source_value_json": "\"FCF 50%; annual regular dividend KRW 9.8 trillion\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      3,
+      13,
+      106,
+      145,
+      175,
+      190,
+      222,
+      254,
+      321,
+      322,
+      401,
+      482
+    ],
+    "source_coverage": [
+      "ISSUER_NEWSROOM",
+      "OPENDART",
+      "TRUSTED_BUSINESS_MEDIA",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "연결 현금·OCF 및 DS 투자액을 memory 또는 HBM 단독으로 분해할 수 없다.",
+      "HBM 전용 CAPEX·감가상각·램프비용·운전자본·회수기간·ROIC가 공개되지 않았다.",
+      "연결 미집행 자산취득 약정과 DS 시설투자의 memory·foundry·HBM 배분이 없다.",
+      "2026년 메모리 CAPEX는 세부 투자계획 미확정 전망이며 실제 집행액이 아니다.",
+      "same-snapshot query 결과와 미회수 broker 원문은 새 사실로 선반영하지 않았다."
+    ],
+    "why_not_higher": "전사 유동성과 OCF는 강하지만 HBM 전용 투자액·현금회수·ROIC가 없고 운전자본 흡수 및 초기마진 하방이 있어 funding capacity를 높은 HBM 자본배분 품질로 간주할 수 없다.",
+    "why_not_lower": "HBM4 직접 공급 인프라, 메모리 선단전환 투자와 실제 연결 OCF·유동성이 있어 제품 공급대응과 회사 funding 근거가 전혀 없는 하단은 아니다."
+  },
+  "payload_hash": "80cbed8c07b15dc26ee50866ec2801011bf0cf398a6e3f6f82eb036b42321591",
+  "production_score_authority": false,
+  "prompt_hash": "2129a94a887fbbe567274b2e3b8dbe5289b9fdf8451244855541c74bfc297d42",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-54f583d4c9e6a34f47f6d70c5d290341a9beec931073ff61edcee7277196347f",
+  "response_id": "COLLABRESP-767710d653449f36c9877429fd180b7434d542bcb9a70d5abfc2d65beec8cc03",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-71dcc697a6ee57c57b8368fa",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 부모 경로에서 확인된 삼성전자 2020년 4분기 자료이나 2026년 HBM4 기술 통합의 현재 상태를 확인하지 못한다. 메타데이터는 원문 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-71f43c5b924b8385b75236dc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "2012년 2분기 비공식·미검증 중계 URL로 요청된 출처군을 충족하지 않고 2026년 HBM4 기술 통합의 현재 증거도 아니다. 스니펫이나 메타데이터를 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-724417750ad9a65013c971aa",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "검증된 삼성전자 2023년 4분기 공식 컨퍼런스 자료이나 2026년 HBM4 기술 통합의 현재 상태보다 오래되어 독립적인 현재 증거가 아니다. 메타데이터는 원문 증거로 쓰지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-738b7f8b7b3097cb0d1a8edd",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 삼성전자 2010년 공식 컨퍼런스 경로이나 요청된 2026년 HBM4 기술 통합과 시간상 무관하다. 메타데이터는 원문 증거로 승격하지 않았다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 파티션에는 2026년 HBM4 기술 통합의 현재 상태를 독립 확인할 실질 후보가 없다. 모든 스니펫·메타데이터는 발견용으로만 취급했다."
+    ]
+  },
+  "payload_hash": "ee1fda05994ea3467c6924aa8d57ab1abbab587858257cdecf422b837a53e55a",
+  "production_score_authority": false,
+  "prompt_hash": "be246dbdc04514e53963bc020272c6808dd5f06046523d2a3dba20cc2a726d6c",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7af052b0e5d00d32b37fc2ca200e92dd5e922fac93ecb87ffd8f08071c6ce11e",
+  "response_id": "COLLABRESP-0a72d88a720d0898e0334facb74d6b5d1406f98c50226542cf28ba71a20ba7e3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,534 @@
+{
+  "output_schema_hash": "624210fc6048edd8058cec50035d1aa616b5921624c2a46b59bb783e7ecdd25d",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "rationale": "Continuation page 2 adds twelve distinct SK hynix market-expectation facts not present on page 1: the annual operating-profit revision, DRAM/NAND margin forecasts, and attributable 2026-2027 consensus revenue, operating-profit, net-income, EPS, and 2026 BPS baselines. Further distinct house-estimate and valuation rows remain in the same full document.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "연간 영업이익 추정치의 상향은 기존 시장 기대와 새 이익 전망 사이의 격차를 직접 보여준다.",
+        "exact_quote": "목표주\n가 상향은 2026년 영업이익을 기존대비 17% 상향했기 때문이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 market_mispricing objective에 직접 연결되는 attributable earnings revision이다.",
+        "mechanism_scope_id": "000660:MEMORY:OPERATING_PROFIT_REVISION:2026",
+        "normalized_object": "2026년 영업이익 추정 상향률",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 forecast versus prior estimate",
+        "predicate": "하나증권이 목표주가 상향 근거로 2026년 영업이익 추정치를 기존 대비 17% 상향했다",
+        "predicate_family": "OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "ANNUAL_EARNINGS_REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "ANNUAL_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "ESTIMATE_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 영업이익 추정 상향",
+        "subject_id": "000660:OPERATING_PROFIT_REVISION:2026",
+        "unit": "percent",
+        "value": 17
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "DRAM의 높은 추정 영업이익률은 가격 상향이 이익 체력으로 전환된다는 밸류에이션-이익 연결고리를 제공한다.",
+        "exact_quote": "DRAM 영업이익률 70%\n를 초과하고, NAND 영업이익률도 과거 최고치를 갱신하는 49%에 달할 것으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "제품별 이익률 전망은 연간 이익 상향의 질과 market expectation gap을 직접 설명한다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM_MARGIN:2026",
+        "normalized_object": "2026년 DRAM 영업이익률 70% 초과 전망",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 forecast",
+        "predicate": "하나증권은 SK하이닉스의 2026년 DRAM 영업이익률이 70%를 초과할 것으로 추정했다",
+        "predicate_family": "SEGMENT_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "DRAM_MARGIN_FORECAST"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_OPERATING_MARGIN_FORECAST",
+        "question_family_tags": [
+          "DRAM_MARGIN",
+          "EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 DRAM 영업이익률 추정",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN:2026",
+        "unit": "percent",
+        "value": "above 70"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "NAND의 최고치 수준 이익률 전망은 DRAM 외 제품에서도 이익 기대가 확대되는지를 보여준다.",
+        "exact_quote": "DRAM 영업이익률 70%\n를 초과하고, NAND 영업이익률도 과거 최고치를 갱신하는 49%에 달할 것으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "NAND 수익성 기대는 기존 DRAM 중심 추정과 구별되는 추가 earnings bridge다.",
+        "mechanism_scope_id": "000660:MEMORY:NAND_MARGIN:2026",
+        "normalized_object": "2026년 NAND 영업이익률 추정치",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 forecast",
+        "predicate": "하나증권은 SK하이닉스의 2026년 NAND 영업이익률이 과거 최고치를 갱신하는 49%에 달할 것으로 추정했다",
+        "predicate_family": "SEGMENT_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "NAND_MARGIN_FORECAST"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "NAND_OPERATING_MARGIN_FORECAST",
+        "question_family_tags": [
+          "NAND_MARGIN",
+          "EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 NAND 영업이익률 추정",
+        "subject_id": "000660:NAND_OPERATING_MARGIN:2026",
+        "unit": "percent",
+        "value": 49
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "귀속 가능한 2026년 매출 컨센서스는 시장이 가격과 출하 효과를 어느 수준까지 반영했는지 비교할 기준점이다.",
+        "exact_quote": "Consensus Data\n2026 2027\n매출액(십억원) 211,689.6 242,898.2\n영업이익(십억원) 143,486.8 158,036.4\n순이익(십억원) 116,336.1 129,287.9\nEPS(원) 162,776 181,306\nBPS(원) 333,708 520,582",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 market_mispricing 판단에 필요한 attributable consensus baseline이다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSENSUS_REVENUE:2026",
+        "normalized_object": "2026년 매출액 컨센서스",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 consensus",
+        "predicate": "자료의 Consensus Data는 SK하이닉스 2026년 매출액을 211689.6십억원으로 제시한다",
+        "predicate_family": "CONSENSUS_REVENUE_FORECAST",
+        "primitive_tags": [
+          "CONSENSUS_REVENUE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSENSUS_REVENUE_FORECAST",
+        "question_family_tags": [
+          "CONSENSUS",
+          "REVENUE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 매출액 컨센서스",
+        "subject_id": "000660:CONSENSUS_REVENUE:2026",
+        "unit": "KRW billion",
+        "value": 211689.6
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "2027년 매출 컨센서스는 시장 기대의 다음 연도 기준점을 제공해 추정 지속성을 비교할 수 있게 한다.",
+        "exact_quote": "Consensus Data\n2026 2027\n매출액(십억원) 211,689.6 242,898.2\n영업이익(십억원) 143,486.8 158,036.4\n순이익(십억원) 116,336.1 129,287.9\nEPS(원) 162,776 181,306\nBPS(원) 333,708 520,582",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "다음 연도 시장 기대 기준점으로서 2026년 수치와 구별되는 기간별 fact다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSENSUS_REVENUE:2027",
+        "normalized_object": "2027년 매출액 컨센서스",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027 consensus",
+        "predicate": "자료의 Consensus Data는 SK하이닉스 2027년 매출액을 242898.2십억원으로 제시한다",
+        "predicate_family": "CONSENSUS_REVENUE_FORECAST",
+        "primitive_tags": [
+          "CONSENSUS_REVENUE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSENSUS_REVENUE_FORECAST",
+        "question_family_tags": [
+          "CONSENSUS",
+          "REVENUE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2027년 매출액 컨센서스",
+        "subject_id": "000660:CONSENSUS_REVENUE:2027",
+        "unit": "KRW billion",
+        "value": 242898.2
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "2026년 영업이익 컨센서스는 새 증권사 추정과 비교할 수 있는 직접적인 시장 기대 기준점이다.",
+        "exact_quote": "Consensus Data\n2026 2027\n매출액(십억원) 211,689.6 242,898.2\n영업이익(십억원) 143,486.8 158,036.4\n순이익(십억원) 116,336.1 129,287.9\nEPS(원) 162,776 181,306\nBPS(원) 333,708 520,582",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "페이지 1의 증권사 연간 이익 전망과 비교 가능한 current consensus baseline이다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSENSUS_OPERATING_PROFIT:2026",
+        "normalized_object": "2026년 영업이익 컨센서스",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 consensus",
+        "predicate": "자료의 Consensus Data는 SK하이닉스 2026년 영업이익을 143486.8십억원으로 제시한다",
+        "predicate_family": "CONSENSUS_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "CONSENSUS_OPERATING_PROFIT"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSENSUS_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "CONSENSUS",
+          "OPERATING_PROFIT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 영업이익 컨센서스",
+        "subject_id": "000660:CONSENSUS_OPERATING_PROFIT:2026",
+        "unit": "KRW billion",
+        "value": 143486.8
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "2027년 영업이익 컨센서스는 다음 연도 이익 기대가 유지되는지를 비교할 기준점이다.",
+        "exact_quote": "Consensus Data\n2026 2027\n매출액(십억원) 211,689.6 242,898.2\n영업이익(십억원) 143,486.8 158,036.4\n순이익(십억원) 116,336.1 129,287.9\nEPS(원) 162,776 181,306\nBPS(원) 333,708 520,582",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "시장 기대의 기간 구조를 보존하는 distinct forward consensus fact다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSENSUS_OPERATING_PROFIT:2027",
+        "normalized_object": "2027년 영업이익 컨센서스",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027 consensus",
+        "predicate": "자료의 Consensus Data는 SK하이닉스 2027년 영업이익을 158036.4십억원으로 제시한다",
+        "predicate_family": "CONSENSUS_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "CONSENSUS_OPERATING_PROFIT"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSENSUS_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "CONSENSUS",
+          "OPERATING_PROFIT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2027년 영업이익 컨센서스",
+        "subject_id": "000660:CONSENSUS_OPERATING_PROFIT:2027",
+        "unit": "KRW billion",
+        "value": 158036.4
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "2026년 순이익 컨센서스는 영업이익 이후 주주 귀속 이익에 대한 시장 기대를 수치화한다.",
+        "exact_quote": "Consensus Data\n2026 2027\n매출액(십억원) 211,689.6 242,898.2\n영업이익(십억원) 143,486.8 158,036.4\n순이익(십억원) 116,336.1 129,287.9\nEPS(원) 162,776 181,306\nBPS(원) 333,708 520,582",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "영업이익과 구별되는 순이익 expectation baseline이다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSENSUS_NET_INCOME:2026",
+        "normalized_object": "2026년 순이익 컨센서스",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 consensus",
+        "predicate": "자료의 Consensus Data는 SK하이닉스 2026년 순이익을 116336.1십억원으로 제시한다",
+        "predicate_family": "CONSENSUS_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "CONSENSUS_NET_INCOME"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSENSUS_NET_INCOME_FORECAST",
+        "question_family_tags": [
+          "CONSENSUS",
+          "NET_INCOME"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 순이익 컨센서스",
+        "subject_id": "000660:CONSENSUS_NET_INCOME:2026",
+        "unit": "KRW billion",
+        "value": 116336.1
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "2027년 순이익 컨센서스는 시장이 다음 연도 주주 귀속 이익을 어느 수준으로 보는지 나타낸다.",
+        "exact_quote": "Consensus Data\n2026 2027\n매출액(십억원) 211,689.6 242,898.2\n영업이익(십억원) 143,486.8 158,036.4\n순이익(십억원) 116,336.1 129,287.9\nEPS(원) 162,776 181,306\nBPS(원) 333,708 520,582",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "2026년과 구별되는 다음 연도 순이익 expectation fact다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSENSUS_NET_INCOME:2027",
+        "normalized_object": "2027년 순이익 컨센서스",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027 consensus",
+        "predicate": "자료의 Consensus Data는 SK하이닉스 2027년 순이익을 129287.9십억원으로 제시한다",
+        "predicate_family": "CONSENSUS_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "CONSENSUS_NET_INCOME"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSENSUS_NET_INCOME_FORECAST",
+        "question_family_tags": [
+          "CONSENSUS",
+          "NET_INCOME"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2027년 순이익 컨센서스",
+        "subject_id": "000660:CONSENSUS_NET_INCOME:2027",
+        "unit": "KRW billion",
+        "value": 129287.9
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "2026년 EPS 컨센서스는 주가에 내재된 이익 기대와 증권사 추정치를 비교하는 주당 기준점이다.",
+        "exact_quote": "Consensus Data\n2026 2027\n매출액(십억원) 211,689.6 242,898.2\n영업이익(십억원) 143,486.8 158,036.4\n순이익(십억원) 116,336.1 129,287.9\nEPS(원) 162,776 181,306\nBPS(원) 333,708 520,582",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재/forward earnings multiple 해석을 위한 attributable consensus denominator다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSENSUS_EPS:2026",
+        "normalized_object": "2026년 EPS 컨센서스",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 consensus",
+        "predicate": "자료의 Consensus Data는 SK하이닉스 2026년 EPS를 162776원으로 제시한다",
+        "predicate_family": "CONSENSUS_EPS_FORECAST",
+        "primitive_tags": [
+          "CONSENSUS_EPS"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSENSUS_EPS_FORECAST",
+        "question_family_tags": [
+          "CONSENSUS",
+          "EPS"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 EPS 컨센서스",
+        "subject_id": "000660:CONSENSUS_EPS:2026",
+        "unit": "KRW per share",
+        "value": 162776
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "2027년 EPS 컨센서스는 시장의 다음 연도 주당이익 기대를 수치화한다.",
+        "exact_quote": "Consensus Data\n2026 2027\n매출액(십억원) 211,689.6 242,898.2\n영업이익(십억원) 143,486.8 158,036.4\n순이익(십억원) 116,336.1 129,287.9\nEPS(원) 162,776 181,306\nBPS(원) 333,708 520,582",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "2026년과 구별되는 다음 연도 EPS expectation fact다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSENSUS_EPS:2027",
+        "normalized_object": "2027년 EPS 컨센서스",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027 consensus",
+        "predicate": "자료의 Consensus Data는 SK하이닉스 2027년 EPS를 181306원으로 제시한다",
+        "predicate_family": "CONSENSUS_EPS_FORECAST",
+        "primitive_tags": [
+          "CONSENSUS_EPS"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSENSUS_EPS_FORECAST",
+        "question_family_tags": [
+          "CONSENSUS",
+          "EPS"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2027년 EPS 컨센서스",
+        "subject_id": "000660:CONSENSUS_EPS:2027",
+        "unit": "KRW per share",
+        "value": 181306
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "2026년 BPS 컨센서스는 PBR과 주주가치 기대를 해석하는 시장 기준점이다.",
+        "exact_quote": "Consensus Data\n2026 2027\n매출액(십억원) 211,689.6 242,898.2\n영업이익(십억원) 143,486.8 158,036.4\n순이익(십억원) 116,336.1 129,287.9\nEPS(원) 162,776 181,306\nBPS(원) 333,708 520,582",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "PBR 해석에 필요한 attributable forward book-value expectation이다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSENSUS_BPS:2026",
+        "normalized_object": "2026년 BPS 컨센서스",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 consensus",
+        "predicate": "자료의 Consensus Data는 SK하이닉스 2026년 BPS를 333708원으로 제시한다",
+        "predicate_family": "CONSENSUS_BOOK_VALUE_FORECAST",
+        "primitive_tags": [
+          "CONSENSUS_BPS"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONSENSUS_BOOK_VALUE_FORECAST",
+        "question_family_tags": [
+          "CONSENSUS",
+          "BOOK_VALUE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 BPS 컨센서스",
+        "subject_id": "000660:CONSENSUS_BPS:2026",
+        "unit": "KRW per share",
+        "value": 333708
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-7cbf510e60eb402486fdbb7c"
+    ],
+    "unresolved_research_notes": [
+      "Additional distinct SK hynix house estimates, forward valuation multiples, and valuation-bridge facts remain for the next continuation page."
+    ]
+  },
+  "payload_hash": "b9f88be51c568754016c3ab668e3d8a9954d2d629111a6d1d9a7b968de2b6f97",
+  "production_score_authority": false,
+  "prompt_hash": "93a52be71bb72b3363bed9f82f03f98c466f3cfd84b5741e3a04c17cb672b019",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e5c56629f414bd1152ab38468351ddb849181d242fc2eac047f7522a9bfb2849",
+  "response_id": "COLLABRESP-c510d74fa5ef8604dd7dae524a5753a3d32a69550e1a9b0397b859309d7bbf15",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

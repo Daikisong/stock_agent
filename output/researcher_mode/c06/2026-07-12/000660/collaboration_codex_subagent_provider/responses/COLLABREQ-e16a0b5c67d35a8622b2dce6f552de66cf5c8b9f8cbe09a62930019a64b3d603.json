@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "2d9854ad3e4dc0a54f039c283be4adf9036f2cb73b0b111afaa1ac77b2f36903",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7dd16197bac66255bd7acb32",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A generic news-site landing page has no target-specific or requested issuer-source provenance."
+      },
+      {
+        "candidate_id": "SGCAND-5469a7781f7c1a094f7c029d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This automated report covers YC rather than SK hynix and is not an issuer-owned requested-family source."
+      },
+      {
+        "candidate_id": "SGCAND-236b23d2b745a946b31c9e4c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A general market blog is unrelated to the requested target earnings and cash-flow objective."
+      },
+      {
+        "candidate_id": "SGCAND-cc4728ec8e1248d34cdf946a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "The KIND quarterly filing metadata describes a materials supplier rather than SK hynix and supports no requested family match."
+      },
+      {
+        "candidate_id": "SGCAND-0e89bbfcee06d2e378b57d42",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party HBM production story is not an issuer earnings release, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-ab499010bab73907e901bdbb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A community investment post is not an eligible issuer-owned source."
+      },
+      {
+        "candidate_id": "SGCAND-086ef136e244a692de2459be",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party SK Group overview is not target earnings, presentation, or cash-flow material in a requested family."
+      },
+      {
+        "candidate_id": "SGCAND-fc19c825da964b1559c5cc62",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A generic market-news landing page does not identify a target source or requested family."
+      },
+      {
+        "candidate_id": "SGCAND-4483698f4bc6cec46be9ae56",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party 2025 result article is stale and lacks issuer-owned provenance."
+      },
+      {
+        "candidate_id": "SGCAND-f34b0c0860164940a74e2dda",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This sector comparison article is not an issuer earnings release, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-7f09457fd4a32517391fc1b3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A blog about Hana Micron is wrong-target and lacks requested issuer provenance."
+      },
+      {
+        "candidate_id": "SGCAND-22258a575a806b728dfbf2a1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This market-data page covers Dragonfly rather than the target and is unrelated to the objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate in this partition is an eligible current SK hynix issuer earnings release, presentation, or cash-flow source."
+    ]
+  },
+  "payload_hash": "cd107b0ec26e211bd3314d069db0280ed9872153d706400adef09751d819f4a8",
+  "production_score_authority": false,
+  "prompt_hash": "88b8d84f107b5d4ab722548e1af7601d221ff93cb2bee228308fb430a3d2fd8c",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e16a0b5c67d35a8622b2dce6f552de66cf5c8b9f8cbe09a62930019a64b3d603",
+  "response_id": "COLLABRESP-2d0a2c46caeca8dac5b8d13dd2e589572bbd76ffb7de58139c7d4cc2a7e94e2a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

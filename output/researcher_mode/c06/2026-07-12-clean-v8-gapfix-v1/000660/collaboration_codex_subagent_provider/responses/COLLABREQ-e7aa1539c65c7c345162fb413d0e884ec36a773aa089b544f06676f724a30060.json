@@ -1,0 +1,572 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Accepted the next 12 distinct source-order historical broker forecast atoms after strict deduplication against the 72 embedded prior facts: one controlling-net-income QoQ change, four net-income YoY turnarounds, four consolidated operating margins, and three DRAM operating margins. Further target-direct margin, shipment, ASP, and revision-table atoms remain beyond the page cap.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of quarter-on-quarter controlling-shareholder net-income change; it is neither issuer guidance nor HBM-only earnings.",
+        "exact_quote": "QoQ % 적지 적지 적지 적지 흑전 77% 54% -1% -77% 적전 흑전\nYoY % 적전 적전 적전 적지 흑전 흑전 흑전 흑전",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The exact row records a historical quarterly earnings deceleration, but the broker forecast is superseded and not HBM-attributable.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 4Q2024 controlling-shareholder net income quarter-on-quarter decline of 1 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "broker forecast controlling net income quarter on quarter change",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_QOQ_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "controlling_net_income",
+          "qoq_growth"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_controlling_net_income_qoq_4q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_QOQ:4Q2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": -1
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of year-on-year controlling-shareholder net-income turnaround; it is not an issuer actual or HBM-only result.",
+        "exact_quote": "YoY % 적전 적전 적전 적지 흑전 흑전 흑전 흑전",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It captures the historical direction of expected earnings recovery, while its superseded broker status prevents current-score use.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 1Q2024 controlling-shareholder net income year-on-year loss-to-profit turnaround historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "broker forecast controlling net income year on year turnaround",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_YOY_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "controlling_net_income",
+          "yoy_turnaround"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_controlling_net_income_yoy_1q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_YOY:1Q2024E:SKSEC_20240314",
+        "unit": "turnaround status",
+        "value": "loss-to-profit turnaround"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of year-on-year controlling-shareholder net-income turnaround; it is not an issuer actual or HBM-only result.",
+        "exact_quote": "YoY % 적전 적전 적전 적지 흑전 흑전 흑전 흑전",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It captures the historical direction of expected earnings recovery, while its superseded broker status prevents current-score use.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 2Q2024 controlling-shareholder net income year-on-year loss-to-profit turnaround historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker forecast controlling net income year on year turnaround",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_YOY_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "controlling_net_income",
+          "yoy_turnaround"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_controlling_net_income_yoy_2q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_YOY:2Q2024E:SKSEC_20240314",
+        "unit": "turnaround status",
+        "value": "loss-to-profit turnaround"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of year-on-year controlling-shareholder net-income turnaround; it is not an issuer actual or HBM-only result.",
+        "exact_quote": "YoY % 적전 적전 적전 적지 흑전 흑전 흑전 흑전",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It captures the historical direction of expected earnings recovery, while its superseded broker status prevents current-score use.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 3Q2024 controlling-shareholder net income year-on-year loss-to-profit turnaround historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker forecast controlling net income year on year turnaround",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_YOY_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "controlling_net_income",
+          "yoy_turnaround"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_controlling_net_income_yoy_3q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_YOY:3Q2024E:SKSEC_20240314",
+        "unit": "turnaround status",
+        "value": "loss-to-profit turnaround"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of year-on-year controlling-shareholder net-income turnaround; it is not an issuer actual or HBM-only result.",
+        "exact_quote": "YoY % 적전 적전 적전 적지 흑전 흑전 흑전 흑전",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It captures the historical direction of expected earnings recovery, while its superseded broker status prevents current-score use.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 4Q2024 controlling-shareholder net income year-on-year loss-to-profit turnaround historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "broker forecast controlling net income year on year turnaround",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_YOY_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "controlling_net_income",
+          "yoy_turnaround"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_controlling_net_income_yoy_4q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_YOY:4Q2024E:SKSEC_20240314",
+        "unit": "turnaround status",
+        "value": "loss-to-profit turnaround"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated operating-margin forecast derived from forecast operating profit and revenue; it is not HBM-only profitability.",
+        "exact_quote": "영업이익률 -67% -39% -20% 3% 13% 17% 22% 23% 15% -24% 19%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The metric gives historical consolidated earnings-conversion context, but its broker forecast is superseded and cannot be assigned to HBM.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix 1Q2024 consolidated operating margin 13 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "broker forecast consolidated operating margin",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "operating_margin",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_consolidated_operating_margin_1q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:1Q2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 13
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated operating-margin forecast derived from forecast operating profit and revenue; it is not HBM-only profitability.",
+        "exact_quote": "영업이익률 -67% -39% -20% 3% 13% 17% 22% 23% 15% -24% 19%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The metric gives historical consolidated earnings-conversion context, but its broker forecast is superseded and cannot be assigned to HBM.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix 2Q2024 consolidated operating margin 17 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker forecast consolidated operating margin",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "operating_margin",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_consolidated_operating_margin_2q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:2Q2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 17
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated operating-margin forecast derived from forecast operating profit and revenue; it is not HBM-only profitability.",
+        "exact_quote": "영업이익률 -67% -39% -20% 3% 13% 17% 22% 23% 15% -24% 19%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The metric gives historical consolidated earnings-conversion context, but its broker forecast is superseded and cannot be assigned to HBM.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix 3Q2024 consolidated operating margin 22 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker forecast consolidated operating margin",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "operating_margin",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_consolidated_operating_margin_3q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:3Q2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 22
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated operating-margin forecast derived from forecast operating profit and revenue; it is not HBM-only profitability.",
+        "exact_quote": "영업이익률 -67% -39% -20% 3% 13% 17% 22% 23% 15% -24% 19%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The metric gives historical consolidated earnings-conversion context, but its broker forecast is superseded and cannot be assigned to HBM.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix 4Q2024 consolidated operating margin 23 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "broker forecast consolidated operating margin",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "operating_margin",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_consolidated_operating_margin_4q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:4Q2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 23
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker DRAM operating-margin forecast; the source does not isolate HBM margin within DRAM.",
+        "exact_quote": "DRAM -46% -1% 10% 21% 30% 34% 40% 42% 32% 4% 37%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The forecast is direct DRAM profitability evidence but historical and superseded; it cannot establish an HBM-only margin.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix DRAM 1Q2024 operating margin 30 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "broker forecast DRAM operating margin",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "dram",
+          "operating_margin"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "sksec_skh_dram_operating_margin_1q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "bottleneck_pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN:1Q2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 30
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker DRAM operating-margin forecast; the source does not isolate HBM margin within DRAM.",
+        "exact_quote": "DRAM -46% -1% 10% 21% 30% 34% 40% 42% 32% 4% 37%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The forecast is direct DRAM profitability evidence but historical and superseded; it cannot establish an HBM-only margin.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix DRAM 2Q2024 operating margin 34 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker forecast DRAM operating margin",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "dram",
+          "operating_margin"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "sksec_skh_dram_operating_margin_2q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "bottleneck_pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN:2Q2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 34
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker DRAM operating-margin forecast; the source does not isolate HBM margin within DRAM.",
+        "exact_quote": "DRAM -46% -1% 10% 21% 30% 34% 40% 42% 32% 4% 37%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The forecast is direct DRAM profitability evidence but historical and superseded; it cannot establish an HBM-only margin.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix DRAM 3Q2024 operating margin 40 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker forecast DRAM operating margin",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "dram",
+          "operating_margin"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "sksec_skh_dram_operating_margin_3q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "bottleneck_pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN:3Q2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 40
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact upper bound was reached. Continue the supplied document in source order for the remaining DRAM and NAND margin rows, controlling-net-income margins, shipment and ASP assumptions, and forecast revision table, preserving quarter, segment, formula, broker provenance, and SUPERSEDED lifecycle."
+    ]
+  },
+  "payload_hash": "63c31efb15db80a64bc4d3523c7c237490c7968423be6ab4b6dfb45d0c20ad35",
+  "production_score_authority": false,
+  "prompt_hash": "35ba462d5533fd9c3de5a7158d2fb623c27178930d1f9b58a8ea7b5b36b50155",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e7aa1539c65c7c345162fb413d0e884ec36a773aa089b544f06676f724a30060",
+  "response_id": "COLLABRESP-f7d0329437c35799483076b07d9eb381950bd6a8ab319b863f8b17204635ff46",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

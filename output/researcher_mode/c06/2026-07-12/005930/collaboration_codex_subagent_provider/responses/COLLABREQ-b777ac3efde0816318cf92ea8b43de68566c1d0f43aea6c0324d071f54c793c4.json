@@ -1,0 +1,82 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9977003a0d4618446f663f74",
+        "rationale": "문서 전체를 현재 511개 fact와 대조해, 현재 graph에 없는 2028년 평택 5라인 HBM 핵심 생산거점 계획 1건만 추출했다. HBM4 양산·수율·속도·용량·공급 안정성, 2026년 HBM 매출 3배 전망, HBM4E·Custom HBM 샘플 일정은 기존 fact와 중복했다. HBM 공급 협력 요청과 HBM4 생산능력 확대의 일반 서술은 이후 고객 구매주문·주요 고객 공급 확대·P4 설비 발주 fact가 더 구체적으로 포괄하므로 반복하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9977003a0d4618446f663f74",
+        "economic_mechanism": "2028년 본격 가동 예정인 평택 5라인을 HBM 핵심 생산거점으로 활용하겠다는 발행사 계획은 AI·데이터센터 중장기 수요에 대응할 장기 공급 기반의 위치와 시점을 구체화한다. 다만 생산능력 규모, 투자액, 고객 주문 또는 가동 확정 실적은 제시하지 않았다.",
+        "exact_quote": "또한, 2028년부터 본격 가동될 평택사업장 2단지 5라인은 HBM 생산의 핵심 거점으로 활용될 예정이며, AI·데이터센터 중심의 중·장기 수요 확대 국면에서도 안정적인 공급 대응 역량을 지속적으로 확보해 나갈 예정이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 graph에 없는 HBM 전용 장기 생산거점의 위치와 2028년 가동 계획을 공식 원문이 명시해 중장기 공급 가시성을 보강한다. 다만 정량 CAPA와 투자액이 없어 보조 근거로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:PYEONGTAEK_P5_2028_CAPACITY_HUB_PLAN",
+        "normalized_object": "2028년 평택 5라인 HBM 핵심 생산거점 계획",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2028 onward plan published 2026-02-12",
+        "predicate": "삼성전자가 2028년부터 본격 가동될 평택사업장 2단지 5라인을 HBM 생산 핵심 거점으로 활용할 계획이다",
+        "predicate_family": "HBM_PYEONGTAEK_P5_CAPACITY_HUB_PLAN",
+        "primitive_tags": [
+          "HBM",
+          "PYEONGTAEK_P5",
+          "2028_CAPACITY_PLAN"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_2028_PYEONGTAEK_P5_CAPACITY_PLAN",
+        "question_family_tags": [
+          "HBM_2028_PYEONGTAEK_P5_CAPACITY_PLAN",
+          "HBM_CAPACITY_EXPANSION",
+          "LONG_TERM_SUPPLY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 평택 5라인 HBM 생산거점 계획",
+        "subject_id": "005930:MEMORY:HBM:PYEONGTAEK_P5:2028_CAPACITY_PLAN",
+        "unit": "capacity plan",
+        "value": "Pyeongtaek Campus 2 Line 5 planned as a core HBM production hub from 2028"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "49f99daecff3b19d241ae63e1379e29bb942ae7ad3d8e2144e203dbcbacd14ab",
+  "production_score_authority": false,
+  "prompt_hash": "fd54ddf27cf7c464749ecc60255cecc3404bf98e55426e223bde5cbd4c347d0b",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b777ac3efde0816318cf92ea8b43de68566c1d0f43aea6c0324d071f54c793c4",
+  "response_id": "COLLABRESP-2a5cf26a102881155bd08b225f09cbef8f744ae2cc7495c29df9a19dae2f770f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

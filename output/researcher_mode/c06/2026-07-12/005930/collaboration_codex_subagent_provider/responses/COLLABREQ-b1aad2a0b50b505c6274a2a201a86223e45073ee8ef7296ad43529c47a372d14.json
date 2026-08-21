@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "8392ff7273630732db1ccbd70c5a62a2a936adeb7927340fb423017d2ade23d8",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-909d4d9d02c7a65cc6aa32fd",
+        "rationale": "All bottleneck-pricing mechanisms in this report are already in the current canonical roster: 2026-Q1 DRAM blended ASP up low-90% QoQ, completed multi-year supply contracts with some customers, advance 2027 demand intake and a larger 2027 supply gap, HBM4's expected HBM-revenue mix, and reported LTA pricing conditions. Segment earnings and non-memory items are outside the sole objective or are likewise duplicated.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "a2605ca32c0bf46b14c085884d65a624e2ba4b5d983a01c59a431c3e11f71867",
+  "production_score_authority": false,
+  "prompt_hash": "72c2bc1e20481b494aa5fd3f2bb29648040123c739904437516302fa725e540b",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b1aad2a0b50b505c6274a2a201a86223e45073ee8ef7296ad43529c47a372d14",
+  "response_id": "COLLABRESP-539e3e9a93f735ab02bbf8c70e2007dceff2f991a2f4d19e940301b1bf9acbc9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

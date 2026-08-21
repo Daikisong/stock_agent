@@ -1,0 +1,39 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-27ddc49f8d84731bddfd9c8e",
+        "rationale": "chunk 1/2를 전수 검토하고 현재 505개 EvidenceFact와 의미 중복을 확인했다. 이 chunk는 Rainbow Robotics, Sound United 및 FläktGroup 인수 회계와 전사 자사주 매입 후속사건만 담고 있다. 로봇·오디오·공조 사업 인수는 memory/HBM 범위가 아니며, 전사 자사주 매입은 이 문서에 연결된 earnings_visibility objective의 memory/HBM 매출·이익 가시성, 고객 배정, CAPA 잠김, 가격, qualification 또는 수주 근거가 아니다. 따라서 이 literal chunk에 신규 objective-local material fact가 없다. 이 disposition의 범위는 제공된 chunk 1/2이며 parent 문서의 최종 집계는 deterministic transport accounting에 맡긴다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "SGDOC-27ddc49f8d84731bddfd9c8e의 chunk 1/2에 있는 인수 및 자사주 매입 정보는 memory/HBM earnings_visibility objective에 귀속할 수 없다."
+    ]
+  },
+  "payload_hash": "cf345991ac1f63e3c30b7dd80dcdf94d014c4078ee08abcb32c9142562f0d389",
+  "production_score_authority": false,
+  "prompt_hash": "d0cac2720cae77c81f2ba106980ebb3f9d9916f6928b50265a0f10f74aad2b54",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-98b223c845699ad1b47334bb9e2681d93a701b378ef8682791d6b8c30ebc54f7",
+  "response_id": "COLLABRESP-6dae33a602861c6011360db4e61f5d929d782f41e5ea6d71ce0d73ded7c2517f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

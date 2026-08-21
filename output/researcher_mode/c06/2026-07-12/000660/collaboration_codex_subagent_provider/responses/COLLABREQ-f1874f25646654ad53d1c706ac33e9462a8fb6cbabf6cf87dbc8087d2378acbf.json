@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "b0e6d5a03789db29fe18d8ed66ea112dbda1e0c6f166442b257b5b11949c6533",
+  "payload": {
+    "allowed_range": [
+      14.0,
+      17.0
+    ],
+    "anchor_comparisons": [
+      "The positive cross-sector ordinal anchor represents sustained scarcity pricing; current utilization, constrained supply, and realized ASP gains make the direction comparable, not the industry mechanics.",
+      "The counter cross-sector ordinal anchor flags local-peak and normalization risk, but its unrelated business patterns make it ordinal rather than exact."
+    ],
+    "counter_fact_ids": [
+      "EFACT-4d04a6aef1a34828271462ff",
+      "EFACT-905f741caa330bed103a5660",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "disagreements": [
+      "I treat realized utilization and pricing as stronger than a price narrative, while discounting both cross-sector anchors as non-exact analogues."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-054f760d026b470c39e27df1"
+    ],
+    "proposed_points": 15.5,
+    "rationale": "Full utilization, constrained HBM and server-DRAM supply, a mid-60% quarterly DRAM ASP increase despite flat shipments, and HBM capacity cannibalization demonstrate active pricing leverage. A through-2027 shortage view supports duration, but blended ASP is not HBM-only and competing supply can weaken scarcity.",
+    "support_fact_ids": [
+      "EFACT-23e8c20b3c9b312b4b630ee1",
+      "EFACT-2b6d88631c21daa364467682",
+      "EFACT-87302daba02f8d5d65943a4b",
+      "EFACT-99b387941ace00f119e35749",
+      "EFACT-c589801b18002cc79aa63e94"
+    ],
+    "why_not_higher": "Product-specific contract pricing is missing, while competing supply, HBM4 competition, and end-demand elasticity limit duration.",
+    "why_not_lower": "A lower placement would ignore 100% utilization, constrained supply, sharp ASP gains with flat shipments, and capacity-consumption mechanics."
+  },
+  "payload_hash": "ae89c1e1e2e169582ba0f19f6dbbe86e3829cf52656fe091eac85aa6720840b3",
+  "production_score_authority": false,
+  "prompt_hash": "ec751b44359adef7d9d8ceb1769e498ca9f86518a890e14ada72bfb3d8214d9c",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f1874f25646654ad53d1c706ac33e9462a8fb6cbabf6cf87dbc8087d2378acbf",
+  "response_id": "COLLABRESP-2c1d9dcaa8db4bd4c289c555da8fc7798d3beb16e303b3407582ca750d6902db",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

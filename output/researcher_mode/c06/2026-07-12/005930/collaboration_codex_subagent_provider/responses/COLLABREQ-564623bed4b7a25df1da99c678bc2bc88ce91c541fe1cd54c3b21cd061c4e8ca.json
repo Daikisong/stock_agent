@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "32c1fe00bdf4461b91f393ef76060c3bc358c7f349187b7d12512332300c9ac1",
+  "payload": {
+    "allowed_range": [
+      1.7,
+      3.1
+    ],
+    "anchor_comparisons": [
+      "Both low-confidence cross-sector anchors are near the ceiling and are not exact analogues; their numeric bands cannot override the split between audited corporate data and opaque HBM detail.",
+      "The positive anchor resembles reliable official baselines, while the counter anchor captures missing fact signatures and disclosure gaps at the product and customer level."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1b7ea0a31b99641332cac15f",
+      "EFACT-2d9adec8b0d4434e530afdc5",
+      "EFACT-38845077848fa69caeb992ce",
+      "EFACT-4f576cd7cba9f5720973f2a5",
+      "EFACT-61735c2a94db0377111a4e18",
+      "EFACT-66a852e3b8f9484e6dad3710",
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-7ed0bdc27aff6817247539ec",
+      "EFACT-ce89050359be3b6f19cb2cec"
+    ],
+    "disagreements": [
+      "The positive case places too much weight on corporate and memory-wide verification for HBM-specific margins, allocation, and contract durability."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "proposed_points": 2.3,
+    "rationale": "The audited and issuer baselines do not resolve the most decision-relevant HBM questions. Customer identity, qualification, multi-year terms, and product-level profit remain unavailable; several supporting estimates are preliminary or methodologically mixed and explicitly disclaim completeness.",
+    "support_fact_ids": [
+      "EFACT-477c6cb45b164685a2a345e8",
+      "EFACT-71eb35cf12f591c101571b4e",
+      "EFACT-c56aa2a9eb9eb1bb77d693bc"
+    ],
+    "why_not_higher": "Product-level economics and customer obligations remain undisclosed, while broker estimates and preliminary figures cannot substitute for official detail.",
+    "why_not_lower": "External review, issuer memory revenue, and disclosed operating hours preserve a credible baseline even though HBM-specific transparency is limited."
+  },
+  "payload_hash": "e71db32b7da95df4840efc89566ae5aa633d2611c5d8931fd304901a25a24b2c",
+  "production_score_authority": false,
+  "prompt_hash": "534f635780163296e3b6c5ca6c85afc5b1337872871d2c7f104ecf2b9adf857b",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-564623bed4b7a25df1da99c678bc2bc88ce91c541fe1cd54c3b21cd061c4e8ca",
+  "response_id": "COLLABRESP-eba8eec357b5acc0c23101746badcc521cf01dd949a4206de5f341b8eb806481",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

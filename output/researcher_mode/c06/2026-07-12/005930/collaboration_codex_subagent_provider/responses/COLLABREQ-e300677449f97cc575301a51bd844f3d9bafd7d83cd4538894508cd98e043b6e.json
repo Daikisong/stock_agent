@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "afab55a4d025f0c2bd9bc8d530ac6fb58a2e80caf251252fc340d097e1962c2c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-52cf27fdb8e0f6ab5b77a61a",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.5,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 HBM 검증·가격·고객 일정·공급병목 또는 그 반대 위험을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-b139c8a86462d457e0300b24",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "요청 provenance에는 해당하지만 오래된 반복자료, 일반 주가 해설 또는 구체적 HBM 검증·고객·공급 메커니즘이 없는 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-2db1e9251c694e442e29dc53",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.66,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 HBM 검증·가격·고객 일정·공급병목 또는 그 반대 위험을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-89a24de958cff646c1818169",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "요청 provenance에는 해당하지만 다른 기업 단독 자료·채용·일반 시장자료여서 삼성전자 information_confidence를 직접 보강하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-0c0b241fccf738351271f088",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "요청 provenance에는 해당하지만 다른 기업 단독 자료·채용·일반 시장자료여서 삼성전자 information_confidence를 직접 보강하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-47d41560363bfd8616ec0927",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "요청 provenance에는 해당하지만 오래된 반복자료, 일반 주가 해설 또는 구체적 HBM 검증·고객·공급 메커니즘이 없는 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-4e5d54ea162074972943e126",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.64,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 HBM 검증·가격·고객 일정·공급병목 또는 그 반대 위험을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-43fe474a477205638985f302",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "요청 provenance에는 해당하지만 다른 기업 단독 자료·채용·일반 시장자료여서 삼성전자 information_confidence를 직접 보강하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-faf0f0ff78ece6aa1e62ae7a",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "요청 provenance에는 해당하지만 다른 기업 단독 자료·채용·일반 시장자료여서 삼성전자 information_confidence를 직접 보강하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-d90cbbc1b1f775d3ad1e27bd",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.76,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 HBM 검증·가격·고객 일정·공급병목 또는 그 반대 위험을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-f769e36a3a36ef9481e93f0b",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "요청 provenance에는 해당하지만 다른 기업 단독 자료·채용·일반 시장자료여서 삼성전자 information_confidence를 직접 보강하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-8be753a4030576d2300810e6",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "요청 provenance에는 해당하지만 오래된 반복자료, 일반 주가 해설 또는 구체적 HBM 검증·고객·공급 메커니즘이 없는 후보입니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "각 partition 후보는 current discovery 메타데이터로 exact-once 분류했으며 snippet은 증거로 사용하지 않았습니다.",
+      "material 후보도 원문 및 as-of-date 검증 전에는 EvidenceFact, 점수 또는 Stage 권한이 아닙니다."
+    ]
+  },
+  "payload_hash": "d94eef9f705873e8a5b56607d9a8de9bbfcd6bf10145512f5bd582ba79f39c5d",
+  "production_score_authority": false,
+  "prompt_hash": "ce385ec4012079f16f948de05855346f7e205491844016bfbd3d9711856a0e40",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e300677449f97cc575301a51bd844f3d9bafd7d83cd4538894508cd98e043b6e",
+  "response_id": "COLLABRESP-ac255a8edd5e724c17c205aa8898edb8f1155cc8e68e21eec739f8c7bd92c432",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

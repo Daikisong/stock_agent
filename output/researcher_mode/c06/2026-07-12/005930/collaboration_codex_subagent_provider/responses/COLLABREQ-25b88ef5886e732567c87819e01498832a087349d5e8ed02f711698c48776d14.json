@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6b8412d13eaf6c84c390f094",
+        "rationale": "Chunk 2 contains supplier sustainability, workforce, compliance, generic product-quality, customer-service, and aggregate corporate statistics. It contains no HBM, DRAM, or memory statement; its supplier contracts, pre-qualification controls, customer references, and companywide operating-profit figure cannot be attributed to HBM customer qualification, commitments, revenue, or earnings visibility. Therefore no distinct objective-linked fact remains in this chunk.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "5174fccd63a11a1958206be68a596da5201da8502490feddfb184128f46fe5ab",
+  "production_score_authority": false,
+  "prompt_hash": "0f50407799725f7d8be3a78eb7b23adb2b3c7ae0cf345776cbe4a4a6b477dd04",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-25b88ef5886e732567c87819e01498832a087349d5e8ed02f711698c48776d14",
+  "response_id": "COLLABRESP-07260968c994e5205671a06223c4c2e0e538039def68c5dcb7b1234f1615d322",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

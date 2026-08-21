@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "af6a09607a327476ccec9812ec08734f108bccfa93c2358405b7e196421354fb",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-6f9c5dfefb337598473b3025",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "Instagram 프로필은 검증된 issuer-domain 문서가 아니고 특정 실적 발표·발표자료 원문도 아니다. HBM·메모리 이익 및 FCF 전환을 확인할 요청 source family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-763e3c2fa97b27f1820be12e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 SK하이닉스 국문 뉴스룸의 기업 heritage 페이지로 issuer provenance는 맞지만, 회사 연혁은 현재 HBM·메모리 매출, 이익, 현금흐름 전환 또는 그 반증을 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7c8f091ad5ec588c9b2a0c61",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 1.0,
+        "rationale": "검증된 SK하이닉스 영문 issuer 도메인의 2025년 2분기 재무실적 발표 원문이다. 메모리·HBM 매출 attribution, 영업이익, 현금흐름·투자 및 전망을 함께 확인하거나 이후 실적과 비교할 직접 자료이므로 최우선 full-fetch 후보다."
+      },
+      {
+        "candidate_id": "SGCAND-87b8365ee4daf601152f7eff",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 영문 뉴스룸의 heritage 페이지이지만 기업 연혁·브랜드 소개는 현재 HBM 수익성과 FCF 전환을 판단할 실적·재무 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9a95398d00c70917a0e3c212",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 SK하이닉스 뉴스룸 도메인의 이용약관 페이지로 source-family provenance는 맞지만, 실적·제품 mix·마진·현금흐름과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-9cb9867a56b88e262a916d72",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "외부 YouTube embed URL이고 영상 제목·본문·공식 채널 검증 정보가 없다. 요청된 issuer 뉴스룸·실적발표·발표자료 원문으로 확인할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-bf002c1c7ae82505288e49c6",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 SK하이닉스 영문 뉴스룸의 일반 홈 landing page라 issuer provenance는 맞지만, 현재 metadata에는 특정 실적 원문으로 한정되는 route가 없다. 범용 메뉴 페이지 자체를 HBM 이익·FCF 근거로 취급할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-c935a56b9ce4b43dbe964d7e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 SK하이닉스 국문 뉴스룸의 FMS 2026 경로이지만 공급된 metadata에는 제품 전시·행사 locator만 있고 HBM 매출 attribution, 이익 또는 현금흐름 전환이 드러나지 않는다. 공개일도 없어 as_of 적합성을 먼저 확인해야 하며 현 roster에서는 material fetch로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-d149d1db6170434a48b4e69c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 뉴스룸 도메인의 구독 페이지로 issuer provenance는 맞지만, 구독 양식은 실적·재무·제품 경제성 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d62b27495009bf414c41342d",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 SK하이닉스 뉴스룸의 중국어 일반 홈 경로라 provenance는 맞지만, 특정 실적발표나 HBM 이익·FCF 원문으로 식별되지 않는 범용 landing page다."
+      },
+      {
+        "candidate_id": "SGCAND-eabe5c03e5a0ede9076a0d4e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 뉴스룸 도메인의 post image ZIP 다운로드 경로지만 본문 재무자료가 아닌 이미지 묶음 locator다. HBM·메모리 실적과 현금흐름을 검증할 독립적인 텍스트 원문으로 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-ee44c8224bf9702070f081d0",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 1.0,
+        "rationale": "검증된 SK하이닉스 영문 issuer 도메인의 2025년 3분기 재무실적 발표 원문이다. 분기 HBM·메모리 매출 및 이익 전환, 투자·현금흐름과 다음 기간 전망을 확인하고 앞선 2분기 자료를 갱신할 직접 자료다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "공급된 partition 1의 12개 후보를 각각 정확히 한 번 판정했다. 2Q25·3Q25 실적발표 두 경로만 material이며, full fetch 뒤 공개일·본문·as_of_date와 HBM/메모리 이익·FCF attribution을 검증해야 한다.",
+      "공식 도메인의 메뉴·약관·연혁·구독·이미지 다운로드 경로는 source-family match와 material relevance를 분리해 처리했다."
+    ]
+  },
+  "payload_hash": "5b803df9fa2963b92c30c2505923e5161e2f55d6bc4af86199953ffc3af0f0cd",
+  "production_score_authority": false,
+  "prompt_hash": "2d221105a186e9b25b3c36a221b078b8703159bf8954028c813bf9e7dc1e2069",
+  "provenance": {
+    "agent_id": "hynix_current_leaves",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_current_leaves",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5f6caccab5b34076bb3bec541e4ceb58b79a7681508e8fc89d02e17ad267d03f",
+  "response_id": "COLLABRESP-0cf9056d52b78b9c59b826c46950c32ce06715505794d39105b7870bb60d06a6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

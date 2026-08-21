@@ -1,0 +1,48 @@
+{
+  "output_schema_hash": "6b8c147908a57aacaf44255658318cf4c640c3e39802154d59622712715d30e5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-9dceecf1d03f93be3512f139",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "미래에셋 ETF 마케팅 페이지로 삼성전자 HBM4와 현금흐름을 언급해도 독립 신용평가기관의 issuer report·surveillance 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f4cb4d92a304a2ae0f0e1abb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "SK㈜ 반기보고서로 삼성전자와 issuer·사업범위가 다르다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "두 후보 모두 요청된 삼성전자 credit-surveillance full-fetch route와 일치하지 않는다."
+    ]
+  },
+  "payload_hash": "317b16d51e474269fab08f1ce587b7ae47ca7d8177c253b7351f4dbcc7dd8514",
+  "production_score_authority": false,
+  "prompt_hash": "75551f01c0deec43779a1b1ad3996c7d4aca7b2523dd22faa3a5f102c12a91fe",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-86381b9f164864946d86577e08e089feb11df19a80e8bf3b2c73be6394f9358c",
+  "response_id": "COLLABRESP-f3278321da0bc86f4e9da457f79f50e59e158a75b0530dc887b9dfebe37d001e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

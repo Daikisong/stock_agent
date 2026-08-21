@@ -1,0 +1,53 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0d2b12cd510bed31ec8f0d67",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.05,
+        "rationale": "하나증권 원문 PDF이므로 요청된 source family provenance는 충족하지만 보고서 대상이 레이(228670)입니다. 표시된 EV/EBITDA는 삼성전자 forward valuation 또는 메모리 peer band가 아니므로 이 objective의 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-102a8832c88c5e4b1075dab1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "조선업 비교 자료이며 URL owner도 원 증권사가 아닌 제3자 저장 경로입니다. 조선사 EV/EBITDA 표는 삼성전자 valuation_rerating을 직접 보강하지 않고 requested PUBLIC_BROKER_PDF provenance도 충족하지 않습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "current partition 후보 2개를 exact-once로 분류했으며 snippet은 EvidenceFact로 사용하지 않았습니다.",
+      "두 후보 모두 삼성전자 forward EV/EBITDA 또는 동종 메모리 peer band의 원문 증거가 아니므로 material 후보가 없습니다."
+    ]
+  },
+  "payload_hash": "80c160970278a33e5db65d0a05bbe2efbf33bcf1bda0fd9ab89b4367eea7c82d",
+  "production_score_authority": false,
+  "prompt_hash": "ef354db0704d7233fa841c253fc462576f55bf3fe17b60e0b96aead92ed7fe61",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b028a3c2ffc5e150ed896799199cd74570dc21cf7bae8fa526e67288d2e45b8c",
+  "response_id": "COLLABRESP-d7abe7d2580020538df4bc27ee45d2073c79147c5a86947557d71c0443f6e269",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "memo": {
+    "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+    "challenged_fact_ids": [
+      "EFACT-0110c93a9c546290e8d34635",
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-265baf3d80f96dfc1767e565",
+      "EFACT-4d04a6aef1a34828271462ff",
+      "EFACT-905f741caa330bed103a5660",
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-c890adf15151ce383d70cf81",
+      "EFACT-cd10742dea3f5402040d6cbc",
+      "EFACT-dcd0816b6ba04c76c69e7a4b",
+      "EFACT-dde9f3ef4ad310f18beb72e8",
+      "EFACT-e2b5d15b4400874c34e4f2a2",
+      "EFACT-f2bc7dd32e2c1bc4f926425e",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "confidence": 0.9,
+    "counter_fact_ids": [
+      "EFACT-0110c93a9c546290e8d34635",
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-265baf3d80f96dfc1767e565",
+      "EFACT-4d04a6aef1a34828271462ff",
+      "EFACT-905f741caa330bed103a5660",
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-c890adf15151ce383d70cf81",
+      "EFACT-cd10742dea3f5402040d6cbc",
+      "EFACT-dcd0816b6ba04c76c69e7a4b",
+      "EFACT-dde9f3ef4ad310f18beb72e8",
+      "EFACT-e2b5d15b4400874c34e4f2a2",
+      "EFACT-f2bc7dd32e2c1bc4f926425e",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "memo_id": "RTMEMO-b76caa733d25d4c811fc7364",
+    "recommended_research_directions": [
+      "향후 issuer 또는 고객의 공식 자료가 새로 공개될 때 HBM 공급계약의 기간·물량·가격·취소·위약·선수금 조건을 확인하되 현재 비공개 공백을 source absence로 해석하지 않는다.",
+      "향후 실적 공시에서 HBM 또는 memory의 매출·마진·영업현금흐름 bridge와 전사 Capex·운전자본·FCF를 같은 기간으로 대조해 전사 actual의 제품 귀속과 현금 전환을 재검증한다.",
+      "향후 고객 플랫폼 양산 일정과 삼성전자·Micron·CXMT의 실제 인증·출하·점유율 자료가 공식적으로 확인될 때 scarcity premium과 고객 배분 우위의 지속성을 재평가한다.",
+      "향후 동일 기준 컨센서스와 actual surprise, forward P/E·P/B·EV/EBITDA·FCF yield를 같은 관측일로 갱신해 이익 상향과 배수 확장·수축을 분리 추적한다."
+    ],
+    "resolved_challenges": [
+      "FY2025 및 1Q26 연결 actual과 현금흐름 자료가 추가돼 전사 이익·현금 확대가 전적으로 전망에만 의존한다는 반론은 해소됐다. 다만 HBM 단독 손익·FCF 귀속까지 해소된 것은 아니다.",
+      "HBM4의 양산 진입·대규모 생산과 FY2025 HBM 매출 2배 이상 성장이 확인돼 제품 실행이 샘플·계획 단계에만 머문다는 반론은 해소됐다. 공급량·고객 구매의무·제품별 마진은 여전히 확인되지 않았다.",
+      "현재 trailing P/E·P/B, forward P/E·P/B·EV/EBITDA·FCF yield와 peer 비교가 구조화돼 valuation 기준점 자체가 없다는 반론은 해소됐다. 높은 trailing 배수와 추정치 기간·기관 차이는 별도 counter로 남는다.",
+      "1Q26 평균가동률 100%, 제한된 공급 속 HBM·서버 DRAM 가격 상승과 DRAM ASP 상승이 확인돼 병목과 가격 전이가 순수한 기술 사양 추론뿐이라는 반론은 해소됐다. HBM 단독 판가와 장기 잠금은 확인되지 않았다."
+    ],
+    "review_complete": true,
+    "reviewed_component_ids": [
+      "eps_fcf_explosion",
+      "earnings_visibility",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation",
+      "information_confidence"
+    ],
+    "schema_version": "e2r_red_team_memo_v1",
+    "source_coverage": [
+      "COMPANYGUIDE",
+      "COMPANYGUIDE+KRX_PRICE_MARKET_CAP",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "DETERMINISTIC_FORWARD_SCENARIO",
+      "DETERMINISTIC_FORWARD_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "ISSUER_GUIDANCE",
+      "ISSUER_NEWSROOM",
+      "KIND_KRX",
+      "KRX_PRICE_MARKET_CAP",
+      "KRX_PRICE_MARKET_CAP+COMPANYGUIDE",
+      "KRX_PRICE_MARKET_CAP+PUBLIC_BROKER_REPORT",
+      "OPENDART",
+      "PEER_STRUCTURED",
+      "PUBLIC_BROKER_PDF",
+      "PUBLIC_BROKER_REPORT",
+      "STRUCTURED_HISTORICAL_BAND",
+      "STRUCTURED_PEER_BAND",
+      "TARGET_OFFICIAL_TRAILING_VALUATION",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "target_id": "000660",
+    "unresolved_challenges": [
+      "earnings_visibility와 information_confidence에는 핵심고객 공급 논의·수요 확보가 signed 계약, 취소불능 물량, 가격·위약 조항으로 이어졌다는 issuer 또는 고객 원문이 없다. 월·분기 물량·가격 합의 사실은 durable commitment의 상단을 제한한다.",
+      "eps_fcf_explosion과 capital_allocation의 강한 전사 actual은 HBM 또는 memory 단독 이익·마진·영업현금흐름·FCF로 분리되지 않는다. 매출채권·재고 증가와 대규모 설비투자는 이익에서 현금으로의 전환을 계속 제약한다.",
+      "FY2026 급증 뒤 FY2027~FY2028 영업이익·EPS 감소 전망과 CSP CapEx 실행 미달·FCF·차입 부담은 earnings duration과 valuation_rerating 지속성의 직접 counter다. 장기 투자계획을 확정 수요나 확정 회수율로 바꿀 수 없다.",
+      "HBM4 고객 플랫폼 지연, 삼성전자·Micron의 HBM3E·HBM4 공급 확대 및 CXMT 증설 전망은 bottleneck_pricing의 scarcity premium과 고객 배분 우위가 장기간 유지된다는 가정을 약화한다. 실제 점유율·판가 하락으로 단정할 수는 없다.",
+      "market_mispricing과 valuation_rerating에는 이익 상향에도 목표 P/B가 낮아진 사례, DRAM 가격 상승률 둔화의 역사적 peak 관계, 문서 내 컨센서스·매출 전망 불일치가 남는다. 낮은 forward 배수만으로 현재 기대가 낮다고 확정할 수 없다.",
+      "단일 반도체 사업부문 공시 때문에 HBM·일반 DRAM·NAND의 수익성과 현금 기여를 독립 분해할 수 없고, broker estimate·issuer plan·actual·durable 계약의 증거 등급 차이를 계속 보존해야 한다."
+    ]
+  },
+  "pending_reasons": [],
+  "provider_name": "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE",
+  "status": "COMPLETE"
+}

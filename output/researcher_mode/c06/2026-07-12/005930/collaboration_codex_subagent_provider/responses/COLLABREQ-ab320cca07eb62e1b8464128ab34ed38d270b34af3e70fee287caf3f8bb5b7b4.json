@@ -1,0 +1,82 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-87a97cfe72263d55e45db712",
+        "rationale": "문서 전체를 기존 510개 current fact와 대조해, 이미 있는 2026년 5월 HBM4E 12단 글로벌 고객 샘플 공급은 반복하지 않고 고객 일정에 맞춘 HBM4E 양산 계획 1건만 신규 추출했다. 속도·용량·전력효율·열저항 등 제품 사양과 HBM4 공급 일반 서술은 현재 earnings_visibility objective에 직접적인 별도 사실이 아니거나 기존 HBM4 사실과 중복되어 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-87a97cfe72263d55e45db712",
+        "economic_mechanism": "HBM4E 고객 샘플 출하 뒤 최적화를 거쳐 고객 일정에 맞춰 양산하겠다는 발행사 계획은 고객 검증 단계에서 상용 생산으로 이어지는 실행 경로를 구체화한다. 다만 양산 개시일, 고객 승인 완료, 확정 물량이나 매출은 제시하지 않았다.",
+        "exact_quote": "Samsung plans to begin mass production for HBM4E aligned with customer schedules, following initial sample shipments and optimization.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객 일정과 연결된 HBM4E 양산 계획은 earnings visibility의 고객 검증 후 상용화 경로를 직접 진전시킨다. 단, 일정·물량·계약·매출 확정으로 확대 해석하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4E:CUSTOMER_SCHEDULED_MASS_PRODUCTION_PLAN",
+        "normalized_object": "초기 샘플·최적화 이후 고객 일정 연동 HBM4E 양산 계획",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward plan published 2026-05-29",
+        "predicate": "삼성전자가 초기 샘플 출하와 최적화 이후 고객 일정에 맞춰 HBM4E 양산을 시작할 계획이다",
+        "predicate_family": "HBM4E_CUSTOMER_SCHEDULED_MASS_PRODUCTION_PLAN",
+        "primitive_tags": [
+          "HBM4E",
+          "MASS_PRODUCTION_PLAN",
+          "CUSTOMER_SCHEDULE"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "HBM4E_CUSTOMER_SCHEDULED_MASS_PRODUCTION",
+        "question_family_tags": [
+          "HBM4E_CUSTOMER_SCHEDULED_MASS_PRODUCTION",
+          "HBM4E_COMMERCIALIZATION",
+          "CUSTOMER_SCHEDULE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4E 고객 일정 연동 양산 계획",
+        "subject_id": "005930:MEMORY:HBM4E:CUSTOMER_SCHEDULED_MASS_PRODUCTION:2026-05-29",
+        "unit": "commercialization plan",
+        "value": "mass production planned in alignment with customer schedules after initial samples and optimization"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "90fac05de9fc0b0c1ff64151a088d238726e638bc1286764cee4f3a2b8913a06",
+  "production_score_authority": false,
+  "prompt_hash": "6e4ee0536b5227026e8f0617aa5415b11132fb8690c6fee440ba6fd8e3d56568",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ab320cca07eb62e1b8464128ab34ed38d270b34af3e70fee287caf3f8bb5b7b4",
+  "response_id": "COLLABRESP-af28f932582c78128976d96fd72227bc8b75dbed3a4bb3ec1253c015d478053a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

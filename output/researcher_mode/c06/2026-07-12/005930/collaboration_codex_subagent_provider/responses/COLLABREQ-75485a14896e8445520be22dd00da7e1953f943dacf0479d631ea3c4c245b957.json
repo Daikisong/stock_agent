@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-5b8fbc3e674628ce3da19c21",
+        "rationale": "Chunk 2 is an R&D appendix. Its HBM4 mass-production shipment, 1c DRAM and 4nm base-die configuration, operating-speed, capacity, and integrated supply-stability statements duplicate already accepted current issuer facts. The older HBM3E sample-shipment and expected-production entry is product-profile/sample context without a current qualification, booking, or earnings-conversion fact, and the remaining entries concern other products or segments; therefore no distinct objective-linked fact remains in this chunk.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "7b6d8fc40bf7afe84e6c69f3a2080cedd7f6fa3c31c59bc514afa789103c872e",
+  "production_score_authority": false,
+  "prompt_hash": "2bc9ddab493d3ccbf3c443a1d98d05d3197b6c2178c4c1d3cc99525b1d29b8de",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-75485a14896e8445520be22dd00da7e1953f943dacf0479d631ea3c4c245b957",
+  "response_id": "COLLABRESP-09bb9575437204e4b2f727f2c90dc168d38bb7a4e64758723919997ccbbc4b99",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

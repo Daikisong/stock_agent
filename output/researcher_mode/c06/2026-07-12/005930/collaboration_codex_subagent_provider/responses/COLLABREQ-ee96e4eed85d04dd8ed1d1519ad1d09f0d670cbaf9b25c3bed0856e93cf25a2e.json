@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "8392ff7273630732db1ccbd70c5a62a2a936adeb7927340fb423017d2ade23d8",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9722c9772bc9be4d112e14b0",
+        "rationale": "The article's pricing evidence is industry-level export/ASP commentary rather than Samsung-specific realized pricing. Its Samsung-specific 2026 memory-margin estimate and HBM4-yield uncertainty are already represented by current canonical margin estimates and qualification/yield counterfacts. Equipment-company prices, sector stock moves, and non-target issuer estimates do not directly satisfy the bottleneck-pricing objective.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "39aff9df77df814aeefa9b0627a6c31ee11e4614cf12e105fc1eeca16bce05c5",
+  "production_score_authority": false,
+  "prompt_hash": "95a2999ba2db5b73d3b92aee89c2f7e5532ed6688dc9d175df3683a3b6979dd8",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ee96e4eed85d04dd8ed1d1519ad1d09f0d670cbaf9b25c3bed0856e93cf25a2e",
+  "response_id": "COLLABRESP-bc2790c9de4733f1763629828e0fd63fcfa5d67b2cd59a3ba3ad4fe95edaf4f3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,522 @@
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준 – Telegram
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+@KISemicon
+13.5K
+subscribers
+679
+photos
+9
+videos
+129
+files
+3.04K
+links
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+13.5K subscribers
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+TSMC 6월 매출: 263,709 NTD mn
+(-17.7% MoM, +26.9% YoY)
+12.8K
+views
+05:32
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Jul 11 2025)
+● Daily News Clipping
+▶
+차세대 'LPDDR6' 표준 나왔다…삼성·SK, AI 메모리 새 격전지 추가 (Zdnet) <
+https://vo.la/seBlJEI
+>
+▶
+SK하이닉스, HBM4·400단 낸드 웨이퍼 절단 바꾼다 (전자신문) <
+https://vo.la/YxdffzN
+>
+▶
+TSMC, 2분기 매출 2,637억대만달러(-17.7% MoM, +26.9% YoY)를 기록. 비우호적인 환 영향이 작용 (Digitimes) <
+https://vo.la/CUhYMIR
+>
+▶
+TSMC, 2028년 미국 내 SoIC 및 CoPoS 기술을 갖춘 첨단 패키징 fab 두 곳을 착공할 계획 (Trendforce) <
+https://vo.la/vdmcDVa
+>
+▶
+AMAT, 일본 반도체 장비 업체 고쿠사이의 최대 주주가 될 것 (Digitimes) <
+https://vo.la/zEXRWzm
+>
+▶
+中, AI 데이터센터 30여곳에 엔비디아 칩 11만개 투입 계획 (전자신문) <
+https://vo.la/PIIeWUj
+>
+▶
+삼성디스플레이, 애플 폴더블 전용 라인 구축 (전자신문) <
+https://vo.la/GvcUwNW
+>
+텔레그램 채널:
+https://t.me/KISemicon
+2.59K
+views
+edited
+22:00
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/박상현/황준태/홍예림] IT H/W – 7월 대만 IT: 성공적인 상반기
+● 상반기는 호실적, 하반기는 주의가 필요
+- 대만 IT 기업들의 6월 매출 특징은 크게 세 가지로 요약 가능. (1) 달러 환율 하락이 TSMC를 포함한 대부분의 기업 실적에 부정적으로 작용, (2) GB200 양산 효과가 지속되면서 관련 밸류체인들의 실적 차별화 지속, (3) PC ODM, 레거시 파운드리 등 그동안 소외되었던 기업들도 의미 있는 실적 회복세 시현
+- 특히 GB200 서버 ODM인 Wistron, Wywinn, Quanta의 6월 매출 증가율은 두 자리수 후반에서 세 자리수에 이르는 높은 성장세를 유지
+- ABF 기판, MLCC, CCL, FC-BGA 등 전기전자 관련 밸류체인 역시 AI 서버 수요 강세의 영향을 지속적으로 누리고 있음
+- PC ODM과 레거시 파운드리의 경우, 향후 이러한 실적 개선이 지속 가능한지에 대한 추가적인 관찰 필요
+- 환율 민감도가 높은 PC ODM 및 전통 제조업 기반의 레거시 IT 기업들은 하반기 매출 및 영업이익에서의 환율 부담이 상대적으로 크게 나타날 것
+- 이에 따라 하반기 대만 IT 기업의 실적 흐름은 AI 밸류체인과 non-AI 밸류체인 간 양극화 현상이 더욱 심화되는 형태로 전개될 것
+● 반도체: 엔비디아 밸류체인이 여전히 대장
+- 6월에도 엔비디아 밸류체인의 성장세 부각
+- 5월과의 차이점은 레거시 밸류체인들의 매출액도 전월대비 소폭 증가했다는 점
+- 이는 3분기 IT 성수기를 앞둔 영향과 더불어, 관세 회피를 위한 사전 PC 제조 수요가 일부 반영된 결과로 추정
+- 메모리에서는 DDR4 종산으로 인한 가격 급등이 매출 증가에 기여했다. 주요 공급사들의 종산 결정으로 인해 2분기 DDR4 가격은 계약 가격 기준 30% 이상, 채널 가격 기준 70% 이상 상승
+- 아직 PC CPU 시장에서는 DDR4를 사용하는 인텔 Icelake CPU의 점유율이 높기 때문에, 고객사들의 DDR4 수요는 당분간 지속될 것
+- 이에 따라 비정상적으로 높은 DDR4 가격 역시 연말까지 유지될 가능성이 크고, 이는 레거시 디램 공급사 및 모듈하우스들의 실적에 긍정적으로 작용할 전망
+● 전기전자: AI 서버 특수 지속
+- AI 인프라향 기판 공급사의 실적 성장은 비우호적인 환율 변화에도 불구하고 두 자릿수 성장 지속
+- 고다층, 고성능 고부가가치 기판의 견조한 수요는 핵심 원재료인 CCL 수요 강세로 지속적으로 이어지고 있음
+- Elite Material(두산전자 Peer), Union Tech, ITEQ의 매출액이 각각 53.2%, 22.2%, 7.6% 증가했는데, 이는 M7, M8 등 고부가가치 제품 중심으로의 제품 믹스 개선 결과로 판단
+- Foxconn의 매출액은 10.1% 성장. 스마트폰, PC 등 컨슈머 IT 기기 수요 부진과 비우호적인 환율 흐름 등의 악재에도 불구하고 GB200/300 등 강력한 AI 서버 수요로 두 자릿수 성장을 유지
+- AI 인프라 관련 기업만큼은 아니지만, MLCC 제조사도 견고한 성장세를 유지하고 있음
+- 테스트 소켓 공급사인 Winway(리노공업, ISC Peer)의 6월 매출액은 12.4% 감소
+- 다만, 동사의 높은 AI 서버향 매출 노출도를 고려할 때 이는 구조적인 성장 정체보다는 일시적인 조정으로 해석하는 것이 적절할 것
+본문:
+https://vo.la/ksKHqcB
+텔레그램:
+https://t.me/KISemicon
+3.32K
+views
+22:51
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Jul 14 2025)
+● Daily News Clipping
+▶
+엔비디아 CEO 젠슨 황, 7월 16일 베이징에서 미디어 브리핑을 열고 두 번째 중국 방문을 발표 (Reuters) <
+https://vo.la/XGmdquL
+>
+▶
+Trendforce, 3분기 낸드 플래시 고정 가격이 5~10% 상승할 것으로 전망. 스마트폰 수요 약세로 eMMC와 UFS 성장이 제한될 것으로 전망 (Trendforce) <
+https://vo.la/FWcSWYW
+>
+▶
+日, 반도체 패키징 경쟁력 확보 시동…30여개 기업 손 잡았다 (Zdnet) <
+https://vo.la/EANmZhR
+>
+▶
+구리 관세의 역습, 반도체 산업 흔들다. 미국, 50% 고율 구리 관세 부과...반도체에는 별도 (Zenet) <
+https://vo.la/rMkFlUZv
+>
+▶
+SEMI "AI 수요 폭증에 2028년 월 웨이퍼 캐파 1110만장 돌파" (디일렉) <
+https://vo.la/XJGRdrK
+>
+▶
+韓, AI·반도체 인재 해외 유출 심화…글로벌 경쟁력 확보 ‘비상’ (Techworld) <
+https://vo.la/wyGFrgQ
+>
+▶
+하나마이크론, 지주사 전환...하나반도체홀딩스 중심 계열사 재편 (디일렉) <
+https://vo.la/JjkiiZR
+>
+텔레그램 채널:
+https://t.me/KISemicon
+2.49K
+views
+22:14
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Jul 15 2025)
+● Daily News Clipping
+▶
+“반도체 수출 역대 최고… 中 의존 줄고, AI 수요로 질적 전환” (이데일리) <
+https://vo.la/FusXsZW
+>
+▶
+인텔, 18A 공정 수율 진전이 나타나고 있음. 노바레이크 CPU가 TSMC 2nm 팹에서 테이프 아웃된 것으로 확인. 18A 수율은 연말까지 70%에 근접할 전망 (Trendforce) <
+https://vo.la/FqWGEPH
+>
+▶
+젠슨 황, 중국 군이 미국 기술과 엔비디아 칩을 이용하는 것에 대해 우려할 필요 없다고 언급 (CNBC) <
+https://vo.la/vCDjUyz
+>
+▶
+키옥시아와 YMTC, 차세대 낸드플래시 생산을 위한 웨이퍼 본딩 기술인 CBA와 Xtacking을 선도적으로 사용 (Digitimes) <
+https://vo.la/ggMFjeT
+>
+▶
+미디어텍, 6월 매출 호조로 2분기 실적 목표치에 부합. 대만달러 절상되기 전에 공개한 목표치였기 때문에 달성하기 어려울 것으로 기존에 예상되었음 (Digitimes) <
+https://vo.la/vLaUgRK
+>
+▶
+티씨케이, 와이엠씨·와이컴과 특허소송 종결 (디일렉) <
+https://vo.la/lstWaYf
+>
+텔레그램 채널:
+https://t.me/KISemicon
+2.11K
+views
+22:00
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 조수헌] 두산테스나 2Q25 Preview: 실적 저점 통과 시그널
+● 영업이익은 컨센서스를 하회할 것
+- 2분기 매출액은 712억원(+20% QoQ, -29% YoY), 영업적자 7억원(적자지속 QoQ, 적자전환 YoY)으로 영업이익은 컨센서스(23억원)를 하회할 전망
+- 지난 1분기에 이어 2분기에도 적자지속을 전망하는 이유는 DP(Die Preparation) 사업부의 부진이 예상되기 때문
+- 반면 본업은 테스터 가동률 상승으로 개선될 것
+- SoC 부문은 차량용, 그리고 스마트폰 AP 물량 증가로 가동률이 18%p 상승해 실적 성장을 견인할 것
+- 적자지속이 전망되는 점은 아쉽지만 실적 저점은 통과했다는 점에서 주가의 추가 하락은 제한적일 것
+● 제품 믹스에 따른 수익성 개선 전망
+- 고객사의 고화소(2억화소, 200MP) 테스트 물량이 하반기로 갈수록 많아질 전망
+- 상반기 5천만화소 위주로 진행했으며, 1억화소 기준 2억화소 대비 27% 더 긴 시간이 소요
+- 모바일 AP 물량 증가도 수익성 개선에 긍정적으로 작용할 것
+- 엑시노스 2500 물량이 3월부터 증가하기 시작했으며 연말 엑시노스 2600까지 더하면 연간 실적 추정치의 추가 상향 조정도 가능할 것
+● 주가는 12MF PBR 1.1배로 상승여력 충분
+- 고화소 CIS 및 AP 물량 비중 증가를 통한 수익성 개선을 반영해 영업이익 추정치를 기존 대비 상향
+- 3분기 흑자전환을 시작으로 실적의 본격적인 개선을 고려하면 주가의 저점은 지났다고 판단
+- 현재 주가는 12MF PBR 1.1배로 밴드 하단에 위치해 있어 상승여력은 충분
+리포트 링크:
+https://vo.la/kaNYpOG
+★ 위 내용은 내부검수인의 결재가 완료된 것입니다.
+2.17K
+views
+01:19
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+https://blogs.nvidia.com/blog/nvidia-ceo-promotes-ai-in-dc-and-china/
+엔비디아 젠슨 황, 중국향 H20 판매 재개 가능성 언급
+Huang also provided an update to customers, noting that NVIDIA is filing applications to sell the NVIDIA H20 GPU again. The U.S. government has assured NVIDIA that licenses will be granted, and NVIDIA hopes to start deliveries soon.
+NVIDIA Blog
+NVIDIA CEO Jensen Huang Promotes AI in Washington, DC and China
+This month, NVIDIA founder and CEO Jensen Huang promoted AI in both Washington, D.C. and Beijing — emphasizing the benefits that AI will bring to business and society worldwide. In the U.S. capital, Huang met with President Trump and U.S. policymakers, reaffirming…
+2.91K
+views
+edited
+02:10
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Jul 16 2025)
+● Daily News Clipping
+▶
+엔비디아 젠슨 황, 트럼프 설득해 H20 GPU 대중 수출 규제 풀어 (Zdnet) <
+https://vo.la/TJerGee
+>
+▶
+AMD, 중국으로 M308 AI 칩 수출 재개 (CNBC) <
+https://vo.la/xxufjVQ
+>
+▶
+“세계 최고 자동화 팹 만든다”…SK하이닉스, 용인 클러스터에 AI 도입 (전자신문) <
+https://vo.la/LYXlWFC
+>
+▶
+엔비디아-미디어텍 공동 개발한 GB10 칩에 대해 예상보다 높은 수요 발생 중. 중국 기업들이 최고급 엔비디아 칩에 대한 수출 통제로 인해 여러 GB10을 연결하는 데 특히 관심을 보이고 있음 (Digitimes) <
+https://vo.la/fukJlZO
+>
+▶
+브로드컴, 스페인 마이크로칩 공장 투자 전격 철회 (Zdnet) <
+https://vo.la/XWpKGIz
+>
+▶
+말레이시아, 미국 하이엔드 AI 칩의 수출, 환적 시 허가를 받아야 한다고 발표. 말레이시아는 AI 서버 생산의 주요 허브로, 엔비디아 AI 칩이 말레이시아를 통해 출하되는데 차질을 빚을 수 있다는 우려 제기 (Trendforce) <
+https://vo.la/gGOgJIO
+>
+▶
+'소캠' 열린다...엔비디아, 올해 최대 80만장 도입 (전자신문) <
+https://vo.la/wKjtZRO
+>
+▶
+삼성 갤럭시, 올 2분기 세계 스마트폰 점유율 1위 유지 (전자신문) <
+https://vo.la/hITQpxy
+>
+텔레그램 채널:
+https://t.me/KISemicon
+2.34K
+views
+21:57
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Jul 17 2025)
+● Daily News Clipping
+▶
+ASML, 2분기 실적 컨센서스 상회했으나, 3분기 가이던스 예상치 하회. 2026년 성장을 확신할 수 없다고 경고 (CNBC) <
+https://vo.la/GsHUTbJ
+>
+▶
+Trendforce, H20 수출 승인으로 중국의 해외 AI 칩 조달 비율 49%까지 상승할 것으로 전망 (Trendforce) <
+https://vo.la/MyzBczO
+>
+▶
+美 "엔비디아 AI 칩 中 수출 재개, 희토류 협상 카드" (디일렉) <
+https://vo.la/dyZUgOe
+>
+▶
+"중국 AI는 월드 클래스" 외친 젠슨 황 속내는? (Zdnet) <
+https://vo.la/xvQpoRa
+>
+텔레그램 채널:
+https://t.me/KISemicon
+2.16K
+views
+22:04
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] 반도체 산업 Note: 혼재된 시그널
+● H20이 다시 나갈 수 있다, 중국으로
+- 한국시각 7월 16일 엔비디아는 미 정부가 중국향 AI GPU인 H20(이후 H20e로 표기)의 수출 승인을 진행하고 있다고 밝힘
+- SemiAnalysis가 대중 수출 제재 전 추산한 H20e 수요는 25년 연간 약 2천4백만개
+- ASP를 개당 $10,000로 가정할 경우 추산 매출액은 약 240억달러에
+- 엔비디아는 FY1Q26 실적발표에서 해당 분기 H20e 판매액이 46억달러라고 언급했는데, H20e 수출이 빠른 시일 내 재개되어 연간 추정 수요를 전부 달성한다고 가정할 때, 1분기 판매분을 제외하고 하반기 H20e로 197억달러의 추가 매출이 가능할 것으로 추정
+● 소음과 신호
+- 다만 일각에서는 H20e 판매 재개에 대한 낙관론 확산을 경계
+- 중국 금융 전문 매체인 차이롄사(财联社,
+CLS.cn
+)는 H20e의 판매가 재개된다 하더라도 이는 엔비디아의 기존 재고를 해소하는 수준이며, 이후 추가 생산은 없을 것이라 보도
+- 엔비디아는 FY1Q26 실적발표에서 FY1Q26에 수출 통제로 반영하지 못한 H20e 매출은 25억달러이며, FY2Q26은 관련해 80억 달러의 매출 손실이 있을 것으로 추정
+- 이를 합산한 총 105억달러를 H20e 수량으로 환산할 경우, 엔비디아가 보유한 H20e 재고는 약 백만개로 추정
+● 대중 수출 통제 예외 규정이 지속 적용될 가능성
+- 가능한 시나리오는 두 가지. 첫 번째는 차이롄사의 보도처럼 H20e은 재고 소진이후 추가적인 생산과 판매가 없을 것이라는 가정
+- 두 번째는 이후에도 미 상무부가 H20e 또는 이에 상응하는 성능의 HBM을 탑재한 중국 전용 AI GPU 판매를 조건부로 승인해 줄 가능성
+- 우리는 두 번째 시나리오가 보다 현실적이라고 판단. 미 상무부는 24년 12월 HBM에 대해 대역폭(bandwidth) 밀도와 관련한 추가적인 수출 통제 기준을 설정한 바 있음
+- 이에 따르면 HBM2 이상의 성능을 가진 메모리로, 대역폭 밀도가 단위 면적(mm2)당 2.0GB/s를 초과하는 HBM은 중국향 수출이 제한
+- 단, 대역폭 밀도가 mm2 당 3.3GB/s 미만인 ECCN 3A090.c 항목은 특정 조건 하에서 수출이 허용
+- HBM3e는 대역폭 밀도 조건을 초과해 원칙적으로는 수출 통제 대상
+- HBM3e를 채용한 H20e가 수출 허가를 득했으므로, 추후에도 지속 예외 규정을 적용 받아 HBM을 탑재한 AI GPU가 중국으로 출하될 가능성이 높다고 판단
+본문:
+https://vo.la/YaptyRH
+텔레그램:
+https://t.me/KISemicon
+7.42K
+views
+22:49
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙] SK하이닉스 주가 하락 코멘트
+▶
+SK하이닉스 주가는 장중 최대 8.47%까지 하락
+▶
+26년 HBM 가격 인하 우려가 제기하며 중립의견으로 하향 조정한 리포트에 주가가 크게 반응
+▶
+주가가 단기간에 급등해 밸류에이션 부담이 확대된 가운데, 상대적으로 주가 수준이 낮은 삼성전자로의 수급 이동이 SK하이닉스 주가에 추가 부담으로 작용
+▶
+동사의 HBM 매출 비중은 2분기 디램 내 50% 이상 차지할 것으로 추정, 높아진 기저로 인해 HBM 탑라인 성장이 크지 않을 것이라는 우려 확산
+▶
+26년 HBM 시장 환경과 경쟁 구도가 23~25년 구간과 달라지는 것은 사실
+▶
+그러나 경쟁사 대비 유리한 HBM 원가 구조와 높은 수율을 바탕으로 동사 실적은 25년 연내 분기 최대 실적을 매 분기 경신해갈 것으로 추정
+▶
+7월 24일 발표 예정인 2분기 실적은 시장 기대치를 상회할 전망, 이를 바탕으로 25년 실적 컨센서스 역시 상향 조정될 것
+▶
+단기적으로 주가의 변동성 확대될 수 있으나 2분기 실적 시즌을 지나며 주가 회복될 수 있을 것으로 판단
+▶
+7월 말 AMD를 시작으로 8월 말 엔비디아, 브로드컴까지 이어지는 실적 시즌 중 AI 수요 기대감을 재확인 할 수 있을 것
+▶
+삼성전자는 실적과 주가의 바닥을 확인, 그러나 아직 본업이 본격적으로 턴어라운드 했다고 보기에는 이른 시점
+▶
+SK하이닉스 목표주가 34만원과 투자의견 매수, 섹터 내 탑픽 의견 유지함
+텔레그램 채널:
+https://t.me/KISemicon
+13.9K
+views
+05:07
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Jul 18 2025)
+● Daily News Clipping
+▶
+삼성전자, 10나노급 6세대 D램 수율 안정화… HBM4 양산 ‘탄력’ (조선비즈) <
+https://vo.la/ElPdsRC
+>
+▶
+TSMC, 2분기 순이익 사상 최고치...칩 4개 중 1개 '3나노' (Zdnet) <
+https://vo.la/CAUoOVM
+>
+▶
+Trendforce, LPDDR4X 공급 부족으로 가격 상승. 가격 상승은 26년 초까지 지속될 것으로 보며, 스마트폰 브랜드의 LPDDR5X 채택 가속화가 LPDDR4X 가격 상승을 완화할 것으로 전망 (Trendforce) <
+https://vo.la/aKQXOFd
+>
+▶
+“낸드 시장 반등세…3분기 계약가격 최대 10% 상승 전망” (Techworld) <
+https://vo.la/HXItmCi
+>
+▶
+일부 메모리 모듈 공급업체, SK하이닉스의 DDR4 단종에 대한 입장이 다소 완화되어 최종 주문이 26년 4분기까지 연장될 수 있다고 언급 (Digitimes) <
+https://vo.la/BhAQWty
+>
+▶
+어플라이드, 첨단 반도체 패키징 힘준다 (전자신문) <
+https://vo.la/MGxnWlx
+>
+텔레그램 채널:
+https://t.me/KISemicon
+3.14K
+views
+21:55
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Jul 21 2025)
+● Daily News Clipping
+▶
+엔비디아, 중국 수출재개에도 생산 차질. 현재로서는 H20 생산을 재개할 계획 없음 (The Information) <
+https://vo.la/FyktjnX
+>
+▶
+中, ASML 대체 기술 국산화 박차… 印, 대만과 전략적 경제 협력 강화 (Zdnet) <
+https://vo.la/pnuGpXX
+>
+▶
+라피더스 2nm GAA 칩의 시제품 생산 시작됐다고 발표. 2027년 양산을 목표 (Trendforce) <
+https://vo.la/RvnTPXz
+>
+▶
+넥스틴, 'HBM 하이브리드 본딩' 검사 장비 개발 착수 (전자신문) <
+https://vo.la/wHJfczX
+>
+▶
+세미파이브 “커스텀 AI 반도체 글로벌 허브 노린다”…코스닥 상장 예비심사 돌입 (Techworld) <
+https://vo.la/SFlRttj
+>
+텔레그램 채널:
+https://t.me/KISemicon
+2.38K
+views
+22:12
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Jul 22 2025)
+● Daily News Clipping
+▶
+SK하이닉스, 엔비디아 H20향 'HBM3E' 대응 분주…추가 생산 검토 (Zdnet) <
+https://vo.la/ckUxguQ
+>
+▶
+엔비디아 제국 확장…RISC-V CPU 쿠다 지원 (전자신문) <
+https://vo.la/oVRffxn
+>
+▶
+H20 공급 차질, 엔비디아는 4월 미국의 수출 금지 조치로 TSMC에 예약된 생산 슬롯을 비웠음. TSMC는 해당 라인을 이미 재배치한 상태이기 때문에 H20 생산을 재개하는 데 최대 9개월 소요될 것 (Trendforce) <
+https://vo.la/rirsRkG
+>
+▶
+YMTC, 2025년 하반기에 중국 장비만을 이용한 낸드 생산 라인 시험 가동 시작할 것. 2026년 말에는 글로벌 낸드 시장 점유율 15% 이상으로 끌어올릴 것으로 예상 (Digitimes) <
+https://vo.la/wCDVoAx
+>
+▶
+2026년 ASIC의 HBM 채용이 더욱 가속화할 것. AI ASIC이 LPDDR과 GDDR에서 HBM으로 전환하고 있으며, 칩당 메모리 용량이 빠르게 증가하고 있음. ASIC의 HBM 수요는 26년 82% YoY 증가하며 전체 시장 수요의 33%를 차지할 것 (Trendforce) <
+https://vo.la/FUAlEwf
+>
+▶
+대만 AI 서버 제조 업체, 미국 관세 부과에 대한 선제 조치로 공격적인 해외 투자 진행. 2025년 상반기 해외 투자 신청 규모는 11.7억달러로 전년대비 925% 급증 (Digitimes) <
+https://vo.la/tmSBwhe
+>
+▶
+日 라피더스, TSMC•삼성 따라잡나...2년 만에 2나노 GAA 트랜지스터 동작 성공 (Techworld) <
+https://vo.la/YvIyltH
+>
+텔레그램 채널:
+https://t.me/KISemicon
+2.6K
+views
+22:11
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Jul 23 2025)
+● Daily News Clipping
+▶
+삼성전자, 'HBM4E 16단'서 하이브리드 본딩 도입 검토…샘플 평가 中 (Zdnet) <
+https://vo.la/rmOvQXM
+>
+▶
+“수직·평면 ‘투 트랙’으로”… 삼성전자, 차세대 D램 개발 전략 나왔다 (조선비즈) <
+https://vo.la/ZiMuZCy
+>
+▶
+CXMT, DDR5 및 LPDDR5 디램 공정 업그레이드를 적극 추진. 양산에 돌입하지 않은 상태이나 최근 샘플이 대만의 Nanya와 비슷한 품질로 테스트 통과했다는 소식. CXMT의 월 Capa는 2025년 말까지 28만장~30만장까지 확장될 수 있음. 이는 전세계 디램 시장 기준 15% 수준 (Digitimes) <
+https://vo.la/fPBPmyO
+>
+▶
+엔비디아·AMD, 중국 AI 칩 판매 재개…미국 수출 규제 완화 본격화 (Techworld) <
+https://vo.la/FFYEcgR
+>
+▶
+中 AI 굴기 계속된다… 화웨이, ‘엔비디아 2배 성능’ AI 시스템 첫 공개 (조선비즈) <
+https://vo.la/jMcLQIY
+>
+▶
+NXP, 2분기 매출이 예상보다 가파르게 감소한 실적 발표. 3분기 가이던스도 전분기대비 소폭 회복에 그치는 수준 (Digitimes) <
+https://vo.la/HpiGHLG
+>
+▶
+LG 엑사원, 퓨리오사AI '레니게이드' 도입 확정 (전자신문) <
+https://vo.la/XvcrtIK
+>
+텔레그램 채널:
+https://t.me/KISemicon
+2.25K
+views
+21:59
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Jul 24 2025)
+● Daily News Clipping
+▶
+삼성, 2025년 말부터 자체 엑세노스 2600 프로세서를 생산을 위해 2nm 공정을 사용할 계획. 삼성과 TSMC는 모두 2025년 하반기에 2nm 모바일 AP 생산을 시작할 것. 삼성은 2나노 공정에 대한 수요가 최소 3~4년 이상 지속될 것으로 보고 발열 문제 및 성능 개선에 집중하는 중 (Digitimes) <
+https://vo.la/vNGNduc
+>
+▶
+LPDDR6 제품 빠르면 올해 연말부터 시장에 출시될 수 있을 것. DDR6는 2027년에 대규모로 채택될 것으로 예상 (Trendforce) <
+https://vo.la/SUqolIS
+>
+▶
+오픈AI, 스타게이트 사업 지연설 반박…“데이터센터 용량 5GW 돌파” (디지털데일리) <
+https://vo.la/vEXQQkY
+>
+▶
+3M 떠난 반도체 칠러 냉각제, 삼성·SK 공급망에 中기업 대거 진입 (전자신문) <
+https://vo.la/PFJLkfd
+>
+▶
+“머스크, ‘AI 데이터센터’ 집중…xAI, 16조원 추가 자금 조달” (조선비즈) <
+https://vo.la/ynbLtQt
+>
+▶
+한미반도체, 테스와 HBM 하이브리드 본더 개발 협약 체결 (Zdnet) <
+https://vo.la/SfqoMnS
+>
+▶
+TI, 3분기 실적 감소 전망…"관세 불확실성에 수요 둔화" (Zdnet) <
+https://vo.la/IiqTzsD
+>
+텔레그램 채널:
+https://t.me/KISemicon
+2.4K
+views
+22:14
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+SK하이닉스 2분기 실적입니다!
+4.37K
+views
+22:35
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+<SK하이닉스 2Q25 실적 리뷰>
+* 매출액: 22.2조원(35.4% YoY, 컨센 7.3% 상회)
+* 영업이익: 9.2조원(68.5% YoY, 컨센 1.6% 상회)
+* OPM: 41.4%(8.1%p YoY, 예상치 하회)
+* 순이익: 7조원(69.8% YoY, 컨센 -2.3% 하회)
+5.12K
+views
+22:45
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+2Q25_Earnings Presentation_KOR.pdf
+2.4 MB
+3.36K
+views
+22:51
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+SK Hynix 2Q25 Earnings conference call.pdf
+371.7 KB
+14K
+views
+02:06
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+SK Hynix 2Q25 Earnings conference call.pdf
+SK하이닉스 2분기 실적 컨퍼런스콜 요약자료 입니다!
+10.1K
+views
+02:07

@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "77737d2392e9af34500898738b95b0335cb6dfd8c795e4203e11272e71064d64",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0bf1bacddaf8970b3b7eb7e5",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.54,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 메모리 ASP·공급부족·장기계약·수요 또는 이익 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-38f233a569f094f4b7056c3d",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.54,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 메모리 ASP·공급부족·장기계약·수요 또는 이익 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-466ded0db1875afd483b1aae",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.5,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 메모리 ASP·공급부족·장기계약·수요 또는 이익 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-5905b89e46383ce7e7df6f9d",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.48,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 메모리 ASP·공급부족·장기계약·수요 또는 이익 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-98c1b84ffafcabadb62b7d9d",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.48,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 메모리 ASP·공급부족·장기계약·수요 또는 이익 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-2054fe3381a3b275563d68da",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.66,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 메모리 ASP·공급부족·장기계약·수요 또는 이익 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-4d379fb4ef927a4af552ef7e",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.82,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 메모리 ASP·공급부족·장기계약·수요 또는 이익 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-cf9fc34ffe617e8b9571727b",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.8,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 메모리 ASP·공급부족·장기계약·수요 또는 이익 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-229f3dd4c6b95c245d44ae4f",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.7,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 메모리 ASP·공급부족·장기계약·수요 또는 이익 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-a8b146b712e2a9c14f71b2b6",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.44,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 메모리 ASP·공급부족·장기계약·수요 또는 이익 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-c9008d61faa3ae1ac4a3ce84",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.54,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 메모리 ASP·공급부족·장기계약·수요 또는 이익 연결을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-f9ef246804ee27a7d00087bb",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.08,
+        "rationale": "요청 source family에는 해당하지만 오래된 비교자료이거나 일반 실적·주가 해설에 가까워 현재 pricing/consensus 메커니즘을 직접 해결하기 어렵습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "각 partition 후보는 current discovery 메타데이터로 exact-once 분류했으며 snippet은 증거로 사용하지 않았습니다.",
+      "material 판정은 원문 fetch 우선순위일 뿐 원문·as-of-date 검증 전 EvidenceFact, 점수 또는 Stage 권한이 아닙니다."
+    ]
+  },
+  "payload_hash": "3ece1199e854231655e1fd6935641afdee00b9e5a4ea837c667620ea15517e07",
+  "production_score_authority": false,
+  "prompt_hash": "4110c2ec474bf49bcbd4ce2678f87b00dc40a43e72ed19199d21416fbd9fd542",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-41db25df132e6eaf66e6152c76ba6b868e4815eaff6bab018bab8b339b5acfcf",
+  "response_id": "COLLABRESP-91717c4e14ccb2f3663f967126f097ff9d27dc286be3ce1136a3fe40a4e84969",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

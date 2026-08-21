@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "b84ead111945075ad6654621287531140a0432b172af3363373abd25408f28b5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-57cbfeba42fbe9ec1d27f18b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "SKC 경영진 기사이며 SK하이닉스의 2026 주총 또는 발행사 전망 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c5982d5df08768be59bf061f",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "KIND 사업보고서이지만 snippet의 본사·홈페이지가 다른 기업을 가리켜 SK하이닉스 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-3676aba940d017f883351bf1",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "2026 KIND 주총 공고이지만 자기주식 임직원 보상 안건만 나타나고 대상 기업·경영 전망 연결이 없어 material route로 특정할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-52e9675d82acc5bc7d6b279e",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2024년 유상증자 투자설명서 정정 내용으로 2026 SK하이닉스 주총 경영계획과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-79bffbc19490646c8b4b43f0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.12,
+        "rationale": "SK하이닉스 주총·사업계획을 다룬 제3자 재게시 페이지지만 요청된 issuer/KIND 원문 family가 아니므로 material로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-c6948ab42e5e3665fa18eee6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.15,
+        "rationale": "2026 SK하이닉스 주총을 직접 다룬 언론 기사지만 배당·자본준비금 설명이며 발행사 원문 또는 KIND라는 요청 family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-450a724cb922ca2752daf577",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "2026 KIND 공고이나 정관·자기주식 조항만 보이고 SK하이닉스 숫자형 경영계획과의 대상 연결이 없다."
+      },
+      {
+        "candidate_id": "SGCAND-03e5a17f0ff863f4aae7cfd6",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.04,
+        "rationale": "KIND 홈페이지는 요청 family의 일반 진입점이지만 대상 기업·문서·주총 회차가 특정되지 않아 이 후보 자체를 fetch해도 objective를 해소할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-f4165971cbabfc79a06345cb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "HPSP 주주총회 기사에서 SK하이닉스 경력만 언급되며 대상 기업과 source family가 모두 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-cb0e7ae24150290b23923032",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "코스텍시스템의 2026 주주총회 KIND 공고로 SK하이닉스 경영 전망과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-d8012de1c45b20e730adf56f",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2023 회계기간을 보여주는 다른 KIND 문서로 대상과 2026 주총 mechanism이 확인되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-fa7143ff92f02f852c7aface",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.22,
+        "rationale": "SK하이닉스 2026 주총의 HBM4 공급·순현금 목표를 직접 다루지만 제3자 기사라 발행사/KIND 요청 family를 충족하지 않는다. snippet의 수치를 evidence로 사용하지 않았다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "SK하이닉스 주총을 직접 다룬 기사 후보도 있었지만 모두 요청 family 밖의 제3자 문서라 fetch 대상으로 올리지 않았다."
+    ]
+  },
+  "payload_hash": "a05197752962e99af33b35e4f1f0cdd013f560b82f56e8bf2689951404d183c7",
+  "production_score_authority": false,
+  "prompt_hash": "8433b4aa87013bea251c99ae55ead0f1c69c20511fd9f2b3b097669dd3865117",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-08d230c61e01ffa83ffd351c700e11172ab486e3b2c8999dd375ec187bcf6f71",
+  "response_id": "COLLABRESP-629c92e5f38cb377944f3f245038c457406ce89d5a48d8f9fadc29b57e449b57",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

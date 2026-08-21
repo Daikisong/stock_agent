@@ -1,0 +1,581 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "Previously accepted target-direct facts remain dispositioned; this continuation adds no duplicates from this document.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "Previously accepted target-direct facts remain dispositioned; this continuation adds no duplicates from this document.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "Previously accepted target-direct facts remain dispositioned; this continuation adds no duplicates from this document.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "This page adds twelve genuine historical payout, working-capital, cash-tax, revenue-growth, and investing-cash-flow atoms in source order after strict deduplication; more facts remain.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2025F 배당성향 4.5%의 역사적 브로커 전망으로, 현금배당 총액·실제 지급액·HBM 성과 배분을 뜻하지 않는다.",
+        "exact_quote": "배당성향 (%) -9.0 5.7 4.5 4.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This stale payout-ratio forecast is a formula-derived distribution measure, not an issuer commitment or actual cash distribution.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CORPORATE_CAPITAL_MODEL",
+        "normalized_object": "Historical FY2025F dividend payout ratio forecast of 4.5 percent",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "forecast_historical_dividend_payout_ratio",
+        "predicate_family": "HISTORICAL_DIVIDEND_PAYOUT_RATIO_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "payout_ratio",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_DIVIDEND_PAYOUT_RATIO_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_DIVIDEND_PAYOUT_RATIO_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 배당성향 브로커 전망",
+        "subject_id": "000660:DIVIDEND_PAYOUT_RATIO:FY2025F:MIRAE_2024-05-16",
+        "unit": "%",
+        "value": 4.5
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2026F 배당성향 4%의 역사적 브로커 전망으로, 현금배당 총액·실제 지급액·HBM 성과 배분을 뜻하지 않는다.",
+        "exact_quote": "배당성향 (%) -9.0 5.7 4.5 4.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This stale payout-ratio forecast is a formula-derived distribution measure, not an issuer commitment or actual cash distribution.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CORPORATE_CAPITAL_MODEL",
+        "normalized_object": "Historical FY2026F dividend payout ratio forecast of 4 percent",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "forecast_historical_dividend_payout_ratio",
+        "predicate_family": "HISTORICAL_DIVIDEND_PAYOUT_RATIO_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "payout_ratio",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_DIVIDEND_PAYOUT_RATIO_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_DIVIDEND_PAYOUT_RATIO_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 배당성향 브로커 전망",
+        "subject_id": "000660:DIVIDEND_PAYOUT_RATIO:FY2026F:MIRAE_2024-05-16",
+        "unit": "%",
+        "value": 4
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2024F 매입채무 및 기타채무 증가(감소) 1,357십억원의 현금흐름 조정 전망으로, 기말 채무 stock과 구분한다.",
+        "exact_quote": "매입채무 및 기타채무의 증가(감소) 83 1,357 392 363",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The stale working-capital flow preserves its positive sign and is not a liability balance, issuer actual, or HBM contract payment.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2024F consolidated trade and other payables increase/(decrease) cash-flow change forecast of KRW 1,357 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "forecast_historical_payables_cash_flow_change",
+        "predicate_family": "HISTORICAL_PAYABLES_CHANGE_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "working_capital_flow",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_PAYABLES_CHANGE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_PAYABLES_CHANGE_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 매입채무 및 기타채무 증감 브로커 전망",
+        "subject_id": "000660:PAYABLES_CHANGE:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 1357
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2025F 매입채무 및 기타채무 증가(감소) 392십억원의 현금흐름 조정 전망으로, 기말 채무 stock과 구분한다.",
+        "exact_quote": "매입채무 및 기타채무의 증가(감소) 83 1,357 392 363",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The stale working-capital flow preserves its positive sign and is not a liability balance, issuer actual, or HBM contract payment.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2025F consolidated trade and other payables increase/(decrease) cash-flow change forecast of KRW 392 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "forecast_historical_payables_cash_flow_change",
+        "predicate_family": "HISTORICAL_PAYABLES_CHANGE_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "working_capital_flow",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_PAYABLES_CHANGE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_PAYABLES_CHANGE_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 매입채무 및 기타채무 증감 브로커 전망",
+        "subject_id": "000660:PAYABLES_CHANGE:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 392
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2026F 매입채무 및 기타채무 증가(감소) 363십억원의 현금흐름 조정 전망으로, 기말 채무 stock과 구분한다.",
+        "exact_quote": "매입채무 및 기타채무의 증가(감소) 83 1,357 392 363",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The stale working-capital flow preserves its positive sign and is not a liability balance, issuer actual, or HBM contract payment.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2026F consolidated trade and other payables increase/(decrease) cash-flow change forecast of KRW 363 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "forecast_historical_payables_cash_flow_change",
+        "predicate_family": "HISTORICAL_PAYABLES_CHANGE_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "working_capital_flow",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_PAYABLES_CHANGE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_PAYABLES_CHANGE_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 매입채무 및 기타채무 증감 브로커 전망",
+        "subject_id": "000660:PAYABLES_CHANGE:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 363
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2024F 법인세 납부 -3,843십억원의 현금유출 전망으로, 손익계산서 세금비용이나 세금부채 stock과 구분한다.",
+        "exact_quote": "법인세납부 -1,384 -3,843 -4,900 -5,519",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The negative historical cash-tax flow is a stale consolidated cash drain, not tax expense, issuer actual, or HBM-only cash flow.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2024F consolidated cash tax paid forecast of KRW -3,843 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "forecast_historical_cash_tax_paid",
+        "predicate_family": "HISTORICAL_CASH_TAX_PAID_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "cash_flow",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_CASH_TAX_PAID_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_CASH_TAX_PAID_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 법인세 납부 브로커 전망",
+        "subject_id": "000660:CASH_TAX_PAID:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": -3843
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2025F 법인세 납부 -4,900십억원의 현금유출 전망으로, 손익계산서 세금비용이나 세금부채 stock과 구분한다.",
+        "exact_quote": "법인세납부 -1,384 -3,843 -4,900 -5,519",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The negative historical cash-tax flow is a stale consolidated cash drain, not tax expense, issuer actual, or HBM-only cash flow.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2025F consolidated cash tax paid forecast of KRW -4,900 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "forecast_historical_cash_tax_paid",
+        "predicate_family": "HISTORICAL_CASH_TAX_PAID_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "cash_flow",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_CASH_TAX_PAID_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_CASH_TAX_PAID_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 법인세 납부 브로커 전망",
+        "subject_id": "000660:CASH_TAX_PAID:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": -4900
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2026F 법인세 납부 -5,519십억원의 현금유출 전망으로, 손익계산서 세금비용이나 세금부채 stock과 구분한다.",
+        "exact_quote": "법인세납부 -1,384 -3,843 -4,900 -5,519",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The negative historical cash-tax flow is a stale consolidated cash drain, not tax expense, issuer actual, or HBM-only cash flow.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2026F consolidated cash tax paid forecast of KRW -5,519 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "forecast_historical_cash_tax_paid",
+        "predicate_family": "HISTORICAL_CASH_TAX_PAID_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "cash_flow",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_CASH_TAX_PAID_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_CASH_TAX_PAID_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 법인세 납부 브로커 전망",
+        "subject_id": "000660:CASH_TAX_PAID:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": -5519
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2024F 연결 매출액 YoY 성장률 97.3%의 역사적 브로커 전망으로, 매출 수준과 구분하며 HBM-only 성장률이 아니다.",
+        "exact_quote": "매출액증가율 (%) -26.6 97.3 25.3 16.5",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The stale annual revenue-growth formula is consolidated and cannot establish current or HBM-only growth.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2024F consolidated revenue YoY growth forecast of 97.3 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "forecast_historical_consolidated_revenue_yoy_growth",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_REVENUE_GROWTH_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "earnings_growth",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_REVENUE_GROWTH_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_CONSOLIDATED_REVENUE_GROWTH_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 매출 성장률 브로커 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_GROWTH:FY2024F:MIRAE_2024-05-16",
+        "unit": "% YoY",
+        "value": 97.3
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2025F 연결 매출액 YoY 성장률 25.3%의 역사적 브로커 전망으로, 매출 수준과 구분하며 HBM-only 성장률이 아니다.",
+        "exact_quote": "매출액증가율 (%) -26.6 97.3 25.3 16.5",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The stale annual revenue-growth formula is consolidated and cannot establish current or HBM-only growth.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2025F consolidated revenue YoY growth forecast of 25.3 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "forecast_historical_consolidated_revenue_yoy_growth",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_REVENUE_GROWTH_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "earnings_growth",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_REVENUE_GROWTH_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_CONSOLIDATED_REVENUE_GROWTH_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 매출 성장률 브로커 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_GROWTH:FY2025F:MIRAE_2024-05-16",
+        "unit": "% YoY",
+        "value": 25.3
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2026F 연결 매출액 YoY 성장률 16.5%의 역사적 브로커 전망으로, 매출 수준과 구분하며 HBM-only 성장률이 아니다.",
+        "exact_quote": "매출액증가율 (%) -26.6 97.3 25.3 16.5",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The stale annual revenue-growth formula is consolidated and cannot establish current or HBM-only growth.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2026F consolidated revenue YoY growth forecast of 16.5 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "forecast_historical_consolidated_revenue_yoy_growth",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_REVENUE_GROWTH_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "earnings_growth",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_REVENUE_GROWTH_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_CONSOLIDATED_REVENUE_GROWTH_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 매출 성장률 브로커 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_GROWTH:FY2026F:MIRAE_2024-05-16",
+        "unit": "% YoY",
+        "value": 16.5
+      },
+      {
+        "business_segment": "연결 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2024F 연결 투자활동 현금흐름 -14,464십억원의 역사적 브로커 flow 전망으로, 현금유출 부호를 유지하며 자산 stock이나 HBM-only CAPEX로 확대하지 않는다.",
+        "exact_quote": "투자활동으로 인한 현금흐름 -7,335 -14,464 -16,059 -16,971",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The stale investing cash-flow outflow is consolidated and does not prove issuer actual CAPEX or HBM-only investment allocation.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_FINANCIAL_MODEL",
+        "normalized_object": "Historical FY2024F consolidated investing cash flow forecast of KRW -14,464 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "forecast_historical_consolidated_investing_cash_flow",
+        "predicate_family": "HISTORICAL_INVESTING_CASH_FLOW_FORECAST",
+        "primitive_tags": [
+          "historical_broker_forecast",
+          "cash_flow",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_INVESTING_CASH_FLOW_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_INVESTING_CASH_FLOW_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 투자활동 현금흐름 브로커 전망",
+        "subject_id": "000660:INVESTING_CASH_FLOW:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": -14464
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "The twelve-fact upper bound was reached after FY2024F investing cash flow. FY2025F and FY2026F investing cash flow plus later investing, financing, and growth rows remain."
+    ]
+  },
+  "payload_hash": "b67e666e56a66fd8b0dc858167ec382152d50d51be4d449b14f574932507cb39",
+  "production_score_authority": false,
+  "prompt_hash": "b1761a4e86ef7b701f7289da16759dd05117370a09289b8282460d30f9dd837e",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2e1eb08b81890ffb5ff6e43804d8d27923fc2f9e108c9494ea307804e5d99d82",
+  "response_id": "COLLABRESP-64b5809f0d14deb0ebb6d1e68f11b7ed743407beeafa415b49ff00e6780c67a3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

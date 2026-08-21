@@ -1,0 +1,126 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "allowed_range": {
+        "items": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "anchor_comparisons": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "counter_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-6459972ca51023d1d4491408",
+            "EFACT-b15e02831a18564591fe308c"
+          ],
+          "type": "string"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "prefixItems": [
+          {
+            "enum": [
+              "EFACT-6459972ca51023d1d4491408"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-b15e02831a18564591fe308c"
+            ],
+            "type": "string"
+          }
+        ],
+        "type": "array"
+      },
+      "disagreements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "nearest_anchor_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "proposed_points": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "rationale": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "support_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-21677a91e8afb32e4876aa8c",
+            "EFACT-d9f801f19a001e7214e5af8c"
+          ],
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "why_not_higher": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "why_not_lower": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "anchor_comparisons",
+      "proposed_points",
+      "allowed_range",
+      "rationale",
+      "disagreements",
+      "support_fact_ids",
+      "counter_fact_ids",
+      "nearest_anchor_ids",
+      "why_not_higher",
+      "why_not_lower"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "e3b1c4b76182b80eea635818216153d90ee731c94cb8c6cc46eafaa60146f074",
+  "pass_name": "COMPONENT_SKEPTIC_JUDGE",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nFirst decode every evidence_fact_projection.facts row positionally with evidence_fact_projection.fact_fields. Each row preserves one exact fact_id and its economic meaning. Resolve source_independence_group_index through source_independence_group_dictionary. The count/hash rosters account only for repeated lineage; they are not omitted research, a top-N selection, or permission to skip rows. Review all fact_count rows. Act as the independent skeptic for exactly one broad component. Review every supplied counterfact and explicitly reflect business phase, valuation, customer or supplier concentration, and uncertainty in proposed component points and the allowed range. Compare with a nearest blind anchor and explain both bounds.\nReturn exactly one JSON object matching the supplied schema.\n{\"allowed_counter_fact_ids\": [\"EFACT-6459972ca51023d1d4491408\", \"EFACT-b15e02831a18564591fe308c\"], \"allowed_nearest_anchor_ids\": [\"ORDTRANSFER-0508f71bf609ed09f47c3acc\", \"ORDTRANSFER-55039467f24da62ebee5fae7\", \"ORDTRANSFER-7497c053a0ea965e06b50c88\", \"ORDTRANSFER-a07945c19eb9b2b62790d62e\", \"ORDTRANSFER-b21b177481b9b2eea2f1c13e\", \"ORDTRANSFER-c1052e06818f90d4a44560f0\"], \"allowed_support_fact_ids\": [\"EFACT-21677a91e8afb32e4876aa8c\", \"EFACT-d9f801f19a001e7214e5af8c\"], \"component_id\": \"capital_allocation\", \"component_max_points\": 4.0, \"component_research_memo\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"capital_allocation\", \"component_max_points\": 4.0, \"counter_case\": \"매출채권 증가와 교환사채 주식 교환이 현금회수 및 희석 counter로 남는다.\", \"counter_fact_ids\": [\"EFACT-6459972ca51023d1d4491408\", \"EFACT-b15e02831a18564591fe308c\"], \"historical_anchor_ids\": [\"ORDTRANSFER-0508f71bf609ed09f47c3acc\", \"ORDTRANSFER-55039467f24da62ebee5fae7\", \"ORDTRANSFER-7497c053a0ea965e06b50c88\", \"ORDTRANSFER-a07945c19eb9b2b62790d62e\", \"ORDTRANSFER-b21b177481b9b2eea2f1c13e\", \"ORDTRANSFER-c1052e06818f90d4a44560f0\"], \"memo_id\": \"CRMEMO-0cfc4ae2912114f8d9871563\", \"nearest_counter_anchor_ids\": [\"ORDTRANSFER-0508f71bf609ed09f47c3acc\"], \"nearest_positive_anchor_ids\": [\"ORDTRANSFER-c1052e06818f90d4a44560f0\"], \"positive_case\": \"금융부채 감소와 15,300,000주 자기주식 소각이 실제로 실행됐다.\", \"positive_fact_ids\": [\"EFACT-21677a91e8afb32e4876aa8c\", \"EFACT-d9f801f19a001e7214e5af8c\"], \"research_complete\": true, \"researcher_role\": \"CapitalAllocationResearcher\", \"researcher_summary\": \"부채 감소와 자기주식 소각은 긍정적이지만 채권 증가와 교환사채의 희석 구조가 순자본배분 효과를 제한한다.\", \"resolution_fact_ids\": [], \"source_coverage\": [\"OPENDART\", \"KIND_KRX\", \"PUBLIC_BROKER_PDF\"], \"structured_metrics\": {\"CAPEX_SUPPLY_RESPONSE\": {\"every_record_accounted_by_hash_and_series_count\": true, \"evidence_role\": \"CAPEX_SUPPLY_RESPONSE\", \"fixed_top_n_used\": false, \"metadata_projection\": {\"full_metadata_persisted_outside_prompt\": true, \"metadata_boolean_field_count\": 7, \"metadata_boolean_state_hash\": \"1e533846ca8d01c2bc5c62bb680c9c2923e6909a84629b70c3d4ca95cc50f21e\", \"metadata_distinct_field_count\": 7, \"metadata_field_observation_count\": 49, \"metadata_field_roster_hash\": \"fd20d55f3f0c0ef1da1380eca83f710b0ccab7e118f947d6ef0b82f349a876b1\", \"metadata_record_count\": 7, \"metadata_roster_hash\": \"d7b18086ac6ff7c00055f138ffdc0f8b92e7442d5c18593f28dfcc5ca46772d1\", \"metadata_value_type_counts\": {\"NoneType\": 3, \"bool\": 7, \"int\": 11, \"str\": 28}}, \"prompt_projection_is_research_cap\": false, \"record_count\": 7, \"record_roster_hash\": \"5e54bc21a8494ced5eae67cea7f3d542c93d8458f09017639e95e0e6fa4ce141\", \"schema_version\": \"e2r_v5_structured_prompt_projection_v2\", \"score_authority\": false, \"semantic_series\": [{\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": 8779848000000.0}, \"evidence_roles\": [\"CAPEX\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 7865366000000.0}, \"metric_id\": \"capex\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 28579343000000.0, \"median\": 12245756000000.0, \"minimum\": 6454687000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"5e54bc21a8494ced5eae67cea7f3d542c93d8458f09017639e95e0e6fa4ce141\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"9963fee56a05f5f6aec958cd878a17117edb491979367157309bee6b83a00b86\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}], \"semantic_series_count\": 1, \"source_pending\": false}, \"CASH_CONVERSION\": {\"every_record_accounted_by_hash_and_series_count\": true, \"evidence_role\": \"CASH_CONVERSION\", \"fixed_top_n_used\": false, \"metadata_projection\": {\"full_metadata_persisted_outside_prompt\": true, \"metadata_boolean_field_count\": 21, \"metadata_boolean_state_hash\": \"fd95d9683569a2cb78049f80babfbf648ac251fba76e9a285546ec1b1e7a3e1c\", \"metadata_distinct_field_count\": 7, \"metadata_field_observation_count\": 147, \"metadata_field_roster_hash\": \"2ef5d7be1b4ede2028fa9b8663ca2340a8bfeb3861c9af58b03962250d4b6aed\", \"metadata_record_count\": 21, \"metadata_roster_hash\": \"0ea05a10019ac2ece94fc2893af01a5693942b9f1f9dc7f572581f0a07b6845b\", \"metadata_value_type_counts\": {\"NoneType\": 9, \"bool\": 21, \"int\": 33, \"str\": 84}}, \"prompt_projection_is_research_cap\": false, \"record_count\": 21, \"record_roster_hash\": \"b3e0f3754a25b9388e3714ce459c2119fc3b8f167b1f5103c723f29f1463d939\", \"schema_version\": \"e2r_v5_structured_prompt_projection_v2\", \"score_authority\": false, \"semantic_series\": [{\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": 8779848000000.0}, \"evidence_roles\": [\"CAPEX\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 7865366000000.0}, \"metric_id\": \"capex\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 28579343000000.0, \"median\": 12245756000000.0, \"minimum\": 6454687000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"5e54bc21a8494ced5eae67cea7f3d542c93d8458f09017639e95e0e6fa4ce141\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"9963fee56a05f5f6aec958cd878a17117edb491979367157309bee6b83a00b86\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}, {\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": -4501657000000.0}, \"evidence_roles\": [\"FREE_CASH_FLOW\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 18464753000000.0}, \"metric_id\": \"free_cash_flow\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 24793783000000.0, \"median\": 13133245000000.0, \"minimum\": -4501657000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"e2bd85ba9e4aa2dbe0f491db2fa2be2f8701c246304ed86f5b08e17f97a3740f\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"9963fee56a05f5f6aec958cd878a17117edb491979367157309bee6b83a00b86\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}, {\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": 4278191000000.0}, \"evidence_roles\": [\"OPERATING_CASH_FLOW\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 26330119000000.0}, \"metric_id\": \"operating_cash_flow\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 53373126000000.0, \"median\": 26330119000000.0, \"minimum\": 4278191000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"20b4d767ffa616c84851507a49817814e2edbac7e8a50ec3e2e1fc6e4b0bfc4e\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"9963fee56a05f5f6aec958cd878a17117edb491979367157309bee6b83a00b86\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}], \"semantic_series_count\": 3, \"source_pending\": false}}, \"target_id\": \"000660\", \"uncertainties\": [\"향후 배당·소각 규모의 지속성이 확정되지 않았다\", \"HBM 투자회수와 주주환원 사이의 장기 배분 규칙이 공개되지 않았다\"]}, \"conditional_judge_rules\": {\"empty_support_plane\": {\"condition\": \"allowed_support_fact_ids is empty\", \"required_allowed_range\": [0, 0], \"required_proposed_points\": 0, \"required_support_fact_ids\": []}, \"positive_points_require_support\": \"proposed_points greater than zero requires at least one exact id from allowed_support_fact_ids in support_fact_ids\"}, \"evidence_fact_projection\": {\"advisory_tags_are_not_score_gates\": true, \"allowed_component_coverage\": {\"capital_allocation\": 4, \"information_confidence\": 4}, \"as_of_date_coverage\": {\"2026-07-12\": 4}, \"claim_id_roster\": {\"count\": 4, \"roster_hash\": \"320b1f1968c3ec6182aa5abae4e749e863059af1921d419b6ee0a86706949505\"}, \"corroborating_independence_group_roster\": {\"count\": 1, \"roster_hash\": \"f92624313baa0aaca744d69e2eb15bdf7e807a1a80c07fe08f13d2d9613c97c9\"}, \"every_fact_id_preserved\": true, \"every_fact_lineage_accounted_by_count_and_hash\": true, \"fact_count\": 4, \"fact_fields\": [\"fact_row_index\", \"fact_id\", \"subject\", \"business_segment\", \"product_family\", \"economic_mechanism\", \"predicate\", \"value\", \"unit\", \"period\", \"direction\", \"current_lifecycle\", \"confidence\", \"structured_evidence_roles\", \"source_independence_group_index\", \"corroborating_independence_group_count\"], \"fact_roster_hash\": \"f77932d95168c552d6e5b3dfeccb08970498333fefbdcc33a60d28e8d58bb2c4\", \"facts\": [[0, \"EFACT-21677a91e8afb32e4876aa8c\", \"SK하이닉스 연결 금융부채 범주 합계\", \"연결 전체\", \"금융부채\", \"연결 금융부채 범주 합계가 2025년 말 40,872,970백만원에서 2026년 1분기 말 36,477,745백만원으로 감소해 재무부담 변화를 보여준다.\", \"연결 금융부채 범주 합계는 2026년 1분기 말 36,477,745백만원으로 전기말 40,872,970백만원보다 감소했다.\", \"36,477,745 vs 40,872,970\", \"백만원\", \"2026-03-31 vs 2025-12-31\", \"POSITIVE\", \"CURRENT\", 0.99, [], 0, 1], [1, \"EFACT-6459972ca51023d1d4491408\", \"SK하이닉스 연결 매출채권 및 기타채권\", \"연결 전체\", \"매출채권 및 기타채권\", \"연결 채권 장부금액의 큰 증가는 매출 성장과 함께 운전자본 회수 부담을 확대할 수 있다. HBM 단독 채권이나 부실 증가로 귀속하지 않는다.\", \"연결 매출채권 및 기타채권 장부금액 합계는 2025년 말 19,005,457백만원에서 2026년 1분기 말 34,708,542백만원으로 증가했다.\", \"34,708,542 vs 19,005,457\", \"백만원\", \"2026-03-31 vs 2025-12-31\", \"COUNTER\", \"CURRENT\", 0.99, [], 0, 1], [2, \"EFACT-b15e02831a18564591fe308c\", \"SK하이닉스 해외 교환사채\", \"연결 전사\", \"전사 자금조달\", \"2026년 1분기 중 해외 교환사채 USD 510.8백만이 자기주식 6,179,194주로 교환돼 부채를 줄이는 대신 주식 유통과 희석 구조에 영향을 줬다.\", \"REPORTS_EXCHANGEABLE_BOND_EXERCISE\", \"USD 510,800,000 exchanged for 6,179,194 shares\", \"USD and shares\", \"2026-Q1\", \"COUNTER\", \"CURRENT\", 0.99, [], 0, 1], [3, \"EFACT-d9f801f19a001e7214e5af8c\", \"SK하이닉스 자기주식\", \"별도 전사\", \"주주환원\", \"2026년 1분기 중 자기주식 15,300,000주를 이익소각해 발행주식수를 직접 줄였다.\", \"REPORTS_TREASURY_SHARE_RETIREMENT\", 15300000, \"shares\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 0.99, [], 0, 1]], \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"primitive_tag_roster_hash\": \"fc78e5cd376191c33dd49f917af2d0e0c8eb345a3e4ad39305af4af1fc043698\", \"prompt_projection_is_research_cap\": false, \"question_family_tag_roster_hash\": \"cc16e7e2b27b611a84c10083ac45bde8fa3fce2ab5a190899c4d17bcb92a4b33\", \"quote_id_roster\": {\"count\": 4, \"roster_hash\": \"2cb2966eef8d5d7460d02d32dbad01c251cf906ca7be37dd46f192236ff13eef\"}, \"repeated_lineage_arrays_omitted_from_semantic_rows\": true, \"schema_version\": \"e2r_v5_citable_fact_prompt_projection_v3\", \"score_authority\": false, \"source_id_roster\": {\"count\": 3, \"roster_hash\": \"5e7b0b756845f73936d03af30b98eb19aee2388c0a30684b9b0d40a9a0a38e65\"}, \"source_independence_group_dictionary\": [\"OPENDART:opendart\"], \"target_id_coverage\": {\"000660\": 4}}, \"historical_component_anchors\": [{\"anchor_id\": \"ORDTRANSFER-0508f71bf609ed09f47c3acc\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"capital_allocation\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 4.0, \"points_lower\": 0.6, \"points_mid\": 0.8, \"points_upper\": 1.0, \"role\": \"COUNTER\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-55039467f24da62ebee5fae7\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"capital_allocation\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 4.0, \"points_lower\": 0.0, \"points_mid\": 0.0, \"points_upper\": 0.2, \"role\": \"COUNTER\", \"score_band\": \"ZERO\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-7497c053a0ea965e06b50c88\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"capital_allocation\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"margin_or_backlog_slowdown\", \"thesis_evidence_broken\", \"ev_slowdown_keyword_false_4c_battery_foil_customer_offset\", \"public_event_or_disclosure\", \"customer_or_order_quality\", \"capacity_or_volume_route\", \"repeat_order_or_conversion\", \"financial_visibility\", \"ceo_score_daily\", \"2024_02_07\", \"solus_advanced_materials_two_year_operating_loss_ev_market_slowdown\", \"but_battery_foil_sales_growth_and_2024_customer_requested_supply_expansion_target\", \"songdaiki_stock_web\"], \"max_points\": 4.0, \"points_lower\": 3.8, \"points_mid\": 4.0, \"points_upper\": 4.0, \"role\": \"COUNTER\", \"score_band\": \"STRONG\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-a07945c19eb9b2b62790d62e\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"capital_allocation\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"secaas_ai_transition_strategy_without_realized_contract_retention_yet\"], \"max_points\": 4.0, \"points_lower\": 0.0, \"points_mid\": 0.08, \"points_upper\": 0.28, \"role\": \"POSITIVE\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-b21b177481b9b2eea2f1c13e\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"capital_allocation\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"1q24_health_csm_ape_growth_ex_oneoff_profit_growth\"], \"max_points\": 4.0, \"points_lower\": 1.0, \"points_mid\": 1.2, \"points_upper\": 1.4, \"role\": \"POSITIVE\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-c1052e06818f90d4a44560f0\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"capital_allocation\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"songdaiki_stock_web\"], \"max_points\": 4.0, \"points_lower\": 3.8, \"points_mid\": 4.0, \"points_upper\": 4.0, \"role\": \"POSITIVE\", \"score_band\": \"STRONG\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}], \"independent_role_mandate\": [\"COUNTEREVIDENCE\", \"BUSINESS_PHASE\", \"VALUATION\", \"CONCENTRATION\", \"UNCERTAINTY\"], \"judge_pass_name\": \"COMPONENT_SKEPTIC_JUDGE\", \"judge_role\": \"SKEPTIC\", \"required_judge_output_fields\": [\"allowed_range\", \"anchor_comparisons\", \"counter_fact_ids\", \"disagreements\", \"nearest_anchor_ids\", \"proposed_points\", \"rationale\", \"support_fact_ids\", \"why_not_higher\", \"why_not_lower\"]}",
+  "prompt_hash": "395f762d40766d78f9776038eb310c3b2aba88169c1e2c9bbb370c38b383dbd8",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a046188b570a1806be792dca5d10a90e875425d75430eb29ebffaa70a7437d7d",
+  "request_identity": {
+    "output_schema_hash": "e3b1c4b76182b80eea635818216153d90ee731c94cb8c6cc46eafaa60146f074",
+    "pass_name": "COMPONENT_SKEPTIC_JUDGE",
+    "prompt_hash": "395f762d40766d78f9776038eb310c3b2aba88169c1e2c9bbb370c38b383dbd8",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_component_skeptic_judge",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-6d7f1cb3b17e5c046e1ba311",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인의 제품·기술 소개 페이지라 source-family provenance는 맞지만, 현재 C06의 시점 특정 고객 계약·HBM CAPA·가격·매출/현금흐름을 검증하는 개별 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6ed7c0bdd05e79ce14f9905f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 도메인의 일반 행사/파트너 탐색 페이지로, 현재 C06 메모리 고객·CAPA·가격·현금흐름 gap을 검증할 개별 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7440a3be6dfc5df250457e8f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인의 제품·기술 소개 페이지라 source-family provenance는 맞지만, 현재 C06의 시점 특정 고객 계약·HBM CAPA·가격·매출/현금흐름을 검증하는 개별 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-74fdaeee572bfbcb826dc950",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인의 제품·기술 소개 페이지라 source-family provenance는 맞지만, 현재 C06의 시점 특정 고객 계약·HBM CAPA·가격·매출/현금흐름을 검증하는 개별 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-751828bf0e084965c1bd570b",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 지원·도구·연락처 페이지로 source-family provenance는 맞지만, 현재 C06 경제 메커니즘을 검증할 시점 특정 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7539617cee00bc838be1ac37",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인의 제품·기술 소개 페이지라 source-family provenance는 맞지만, 현재 C06의 시점 특정 고객 계약·HBM CAPA·가격·매출/현금흐름을 검증하는 개별 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-790855c4cd3ac9d0c7909402",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인의 제품·기술 소개 페이지라 source-family provenance는 맞지만, 현재 C06의 시점 특정 고객 계약·HBM CAPA·가격·매출/현금흐름을 검증하는 개별 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7976cfe3c9f41bce41b03182",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인의 제품·기술 소개 페이지라 source-family provenance는 맞지만, 현재 C06의 시점 특정 고객 계약·HBM CAPA·가격·매출/현금흐름을 검증하는 개별 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7d74eaa68e41959e1b416ddf",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 지원·도구·연락처 페이지로 source-family provenance는 맞지만, 현재 C06 경제 메커니즘을 검증할 시점 특정 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7ef535037cf0ebb0156a272b",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인의 제품·기술 소개 페이지라 source-family provenance는 맞지만, 현재 C06의 시점 특정 고객 계약·HBM CAPA·가격·매출/현금흐름을 검증하는 개별 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7fcf9b631cc1c3c56216fed8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인의 제품·기술 소개 페이지라 source-family provenance는 맞지만, 현재 C06의 시점 특정 고객 계약·HBM CAPA·가격·매출/현금흐름을 검증하는 개별 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-83f6e7af13ce8525fd481965",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인이지만 Foundry 기술·공정·생태계 페이지로, DS 메모리의 HBM 고객·계약·CAPA·가격 가시성에 직접 귀속할 수 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "7e1eb05346bbaa9a5eb53826c03f8f3b6798d818ccccaaf2a012e33033eda63e",
+  "production_score_authority": false,
+  "prompt_hash": "e61aadc5329dc7dd93ff72332bcf725d4d182b3c1e94a72ee735ff4ee6b83a8b",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fad284b0b9f75889b4595f00b8ab3c8fd51df896773d2198cc402fab72dc8f96",
+  "response_id": "COLLABRESP-26c0eb40335bd449f30ad2e2dd8eecabfe3c06a08dc56b98466bd7bc784abf4d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

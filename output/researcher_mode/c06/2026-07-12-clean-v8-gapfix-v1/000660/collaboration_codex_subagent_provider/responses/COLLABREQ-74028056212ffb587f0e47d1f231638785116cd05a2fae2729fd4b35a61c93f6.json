@@ -1,0 +1,602 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "Cumulative page-4 review retains prior nine facts and adds the last distinct ADR depositary/custody atom; remaining language is semantic repetition, procedural explanation, or non-objective-local detail.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "Cumulative review retains prior nine facts and adds five distinct period-mapped quarterly consolidated/DRAM revenue revisions; additional genuine broker model atoms remain after the page cap.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "Cumulative review retains prior nine facts and adds three distinct regulatory-effectiveness and settlement-schedule atoms; further finalized funding and project terms remain.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Cumulative review retains prior nine facts and adds three target-direct historical valuation calibration atoms, all explicitly SUPERSEDED; further distinct target model rows remain.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "economic_mechanism": "ADR 원주의 해외예탁기관 예탁 및 국내 보관 구조",
+        "exact_quote": "ADR은 해외 발행 절차를 통해 확정된 해외 투자자들이 발행일 당일에 취득하게 되고, 원주는 발행과 동시에 곧바로 해외 예탁기관인 Citibank, N.A.(이하 \"해외 예탁기관\")에 예탁되는 바, 실제로 원주는 국내 보관기관(Custodian)인 한국예탁결제원이 해외 예탁기관을대신하여 보관하게 됩니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Issuer filing supplies the remaining distinct ADR custody structure relevant to capital-allocation and information-quality review, without implying operating, HBM, customer, or contract economics.",
+        "mechanism_scope_id": "000660|CORPORATE_GENERIC|ADR_DEPOSITARY_STRUCTURE",
+        "normalized_object": "ADR 원주는 Citibank N.A.에 예탁되고 한국예탁결제원이 국내 보관",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-06-24 ADR decision",
+        "predicate": "adr_underlying_share_depositary_structure",
+        "predicate_family": "ISSUER_ADR_DEPOSITARY_STRUCTURE",
+        "primitive_tags": [
+          "issuer_official",
+          "depositary",
+          "custodian"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "ISSUER_ADR_DEPOSITARY_STRUCTURE",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence",
+          "adr_structure"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:ADR_DEPOSITARY_STRUCTURE:2026-06-24",
+        "unit": "institution roster",
+        "value": "Citibank, N.A. depositary; Korea Securities Depository domestic custodian"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "분기 연결 매출 전망 상향으로 시장 기대 경로 갱신",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E\n매출액 80,300 96,099 107,613 77,715 92,439 103,372 3% 4% 4%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Dated broker table provides old, revised, and change values for target-wide quarterly revenue; it is a broker estimate, not issuer guidance or HBM-only revenue.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|QUARTERLY_REVENUE_REVISION",
+        "normalized_object": "2Q26E 연결 매출 80,300십억원, 종전 77,715십억원 대비 3% 상향",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E; report published 2026-05-07",
+        "predicate": "broker_consolidated_revenue_estimate_revised",
+        "predicate_family": "BROKER_QUARTERLY_REVENUE_REVISION",
+        "primitive_tags": [
+          "broker_estimate",
+          "consolidated",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "BROKER_QUARTERLY_REVENUE_REVISION",
+        "question_family_tags": [
+          "market_mispricing",
+          "eps_fcf_explosion",
+          "revenue_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_REVISION:2Q26E:SKS_2026-05-07",
+        "unit": "KRW bn",
+        "value": 80300
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "분기 연결 매출 전망 상향으로 시장 기대 경로 갱신",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E\n매출액 80,300 96,099 107,613 77,715 92,439 103,372 3% 4% 4%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The period-mapped broker revision is distinct from annual estimates and remains consolidated and non-HBM-attributed.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|QUARTERLY_REVENUE_REVISION",
+        "normalized_object": "3Q26E 연결 매출 96,099십억원, 종전 92,439십억원 대비 4% 상향",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E; report published 2026-05-07",
+        "predicate": "broker_consolidated_revenue_estimate_revised",
+        "predicate_family": "BROKER_QUARTERLY_REVENUE_REVISION",
+        "primitive_tags": [
+          "broker_estimate",
+          "consolidated",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "BROKER_QUARTERLY_REVENUE_REVISION",
+        "question_family_tags": [
+          "market_mispricing",
+          "eps_fcf_explosion",
+          "revenue_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_REVISION:3Q26E:SKS_2026-05-07",
+        "unit": "KRW bn",
+        "value": 96099
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "분기 연결 매출 전망 상향으로 시장 기대 경로 갱신",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E\n매출액 80,300 96,099 107,613 77,715 92,439 103,372 3% 4% 4%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The fourth-quarter revision is independently period-mapped and remains a consolidated broker forecast rather than issuer or HBM-only evidence.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|QUARTERLY_REVENUE_REVISION",
+        "normalized_object": "4Q26E 연결 매출 107,613십억원, 종전 103,372십억원 대비 4% 상향",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q26E; report published 2026-05-07",
+        "predicate": "broker_consolidated_revenue_estimate_revised",
+        "predicate_family": "BROKER_QUARTERLY_REVENUE_REVISION",
+        "primitive_tags": [
+          "broker_estimate",
+          "consolidated",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "BROKER_QUARTERLY_REVENUE_REVISION",
+        "question_family_tags": [
+          "market_mispricing",
+          "eps_fcf_explosion",
+          "revenue_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_REVISION:4Q26E:SKS_2026-05-07",
+        "unit": "KRW bn",
+        "value": 107613
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "DRAM 분기 매출 전망 상향이 전사 earnings bridge를 강화",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E\n매출액 80,300 96,099 107,613 77,715 92,439 103,372 3% 4% 4%\nDRAM 61,082 73,709 83,342 58,511 70,268 79,337 4% 5% 5%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Broker table quantifies a DRAM segment revenue revision but does not identify HBM-only revenue or issuer guidance.",
+        "mechanism_scope_id": "000660|MEMORY|DRAM|QUARTERLY_REVENUE_REVISION",
+        "normalized_object": "2Q26E DRAM 매출 61,082십억원, 종전 58,511십억원 대비 4% 상향",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E; report published 2026-05-07",
+        "predicate": "broker_dram_revenue_estimate_revised",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_REVENUE_REVISION",
+        "primitive_tags": [
+          "broker_estimate",
+          "dram_segment",
+          "not_hbm_only"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "BROKER_QUARTERLY_DRAM_REVENUE_REVISION",
+        "question_family_tags": [
+          "earnings_visibility",
+          "market_mispricing",
+          "dram_revenue_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:DRAM_REVENUE_REVISION:2Q26E:SKS_2026-05-07",
+        "unit": "KRW bn",
+        "value": 61082
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "DRAM 분기 매출 전망 상향이 전사 earnings bridge를 강화",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E\n매출액 80,300 96,099 107,613 77,715 92,439 103,372 3% 4% 4%\nDRAM 61,082 73,709 83,342 58,511 70,268 79,337 4% 5% 5%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The third-quarter DRAM revenue revision is distinct and period-mapped, with no HBM-only attribution.",
+        "mechanism_scope_id": "000660|MEMORY|DRAM|QUARTERLY_REVENUE_REVISION",
+        "normalized_object": "3Q26E DRAM 매출 73,709십억원, 종전 70,268십억원 대비 5% 상향",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E; report published 2026-05-07",
+        "predicate": "broker_dram_revenue_estimate_revised",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_REVENUE_REVISION",
+        "primitive_tags": [
+          "broker_estimate",
+          "dram_segment",
+          "not_hbm_only"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "BROKER_QUARTERLY_DRAM_REVENUE_REVISION",
+        "question_family_tags": [
+          "earnings_visibility",
+          "market_mispricing",
+          "dram_revenue_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:DRAM_REVENUE_REVISION:3Q26E:SKS_2026-05-07",
+        "unit": "KRW bn",
+        "value": 73709
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "ADR 발행을 위한 미국 등록신고서 효력 발생",
+        "exact_quote": "본건 ADR의 발행을 위하여 미국 증권거래위원회(Securities and Exchange Commission, 이하 \"SEC\")에 Form F-1 등록 신고서(registration statement)를 제출하였으며, 미국시간 기준 2026년 7월 9일자로 효력이 발생하였습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Issuer regulatory filing confirms completion of a concrete ADR procedural gate; it is information quality, not proof of operating visibility or HBM economics.",
+        "mechanism_scope_id": "000660|CORPORATE_GENERIC|SEC_F1_EFFECTIVENESS",
+        "normalized_object": "ADR Form F-1 등록신고서가 미국시간 2026-07-09 효력 발생",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-07-09 US time",
+        "predicate": "sec_form_f1_became_effective",
+        "predicate_family": "ISSUER_ADR_REGULATORY_EFFECTIVENESS",
+        "primitive_tags": [
+          "issuer_official",
+          "sec",
+          "resolution"
+        ],
+        "product_family": "Issuer-wide information quality",
+        "question_family_id": "ISSUER_ADR_REGULATORY_EFFECTIVENESS",
+        "question_family_tags": [
+          "information_confidence",
+          "capital_allocation",
+          "regulatory_effectiveness"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:SEC_F1_EFFECTIVE:2026-07-09",
+        "unit": "regulatory status",
+        "value": "effective"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "ADR 원주 발행 관련 국내 증권신고서 효력 발생",
+        "exact_quote": "금융위원회에 증권신고서를 제출하여 2026년 7월 10일자로 효력이 발생하였습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The issuer filing confirms the domestic registration became effective, resolving a procedural uncertainty without implying customer, HBM, or signed supply economics.",
+        "mechanism_scope_id": "000660|CORPORATE_GENERIC|KOREAN_FILING_EFFECTIVENESS",
+        "normalized_object": "금융위원회 제출 증권신고서가 2026-07-10 효력 발생",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-07-10",
+        "predicate": "korean_securities_registration_became_effective",
+        "predicate_family": "ISSUER_ADR_REGULATORY_EFFECTIVENESS",
+        "primitive_tags": [
+          "issuer_official",
+          "financial_services_commission",
+          "resolution"
+        ],
+        "product_family": "Issuer-wide information quality",
+        "question_family_id": "ISSUER_ADR_REGULATORY_EFFECTIVENESS",
+        "question_family_tags": [
+          "information_confidence",
+          "capital_allocation",
+          "regulatory_effectiveness"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:KOREAN_SECURITIES_FILING_EFFECTIVE:2026-07-10",
+        "unit": "regulatory status",
+        "value": "effective"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "ADR 원주 청약·납입·교부·상장 일정 확정",
+        "exact_quote": "5) 상기 '9. 납입일' 및 청약일은 2026년 7월 14일로, '11. 신주권교부예정일'은 2026년 7월 15일로 결정되었습니다. '12. 신주의 상장 예정일'은 2026년 7월 29일 예정이나 변동될 수 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Final filing specifies the equity-transaction timetable while retaining the listing-date contingency; this is issuer-wide capital information only.",
+        "mechanism_scope_id": "000660|CORPORATE_GENERIC|ADR_SETTLEMENT_SCHEDULE",
+        "normalized_object": "청약·납입 7월14일, 신주 교부 7월15일, 상장 예정 7월29일",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-07",
+        "predicate": "adr_underlying_share_settlement_schedule",
+        "predicate_family": "ISSUER_EQUITY_SETTLEMENT_SCHEDULE",
+        "primitive_tags": [
+          "issuer_official",
+          "schedule",
+          "listing_date_contingent"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "ISSUER_EQUITY_SETTLEMENT_SCHEDULE",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence",
+          "settlement_schedule"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:ADR_SETTLEMENT_SCHEDULE:2026-07",
+        "unit": "date schedule",
+        "value": "subscription/payment 2026-07-14; delivery 2026-07-15; planned listing 2026-07-29"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "과거 주가 기준의 시장 valuation calibration",
+        "exact_quote": "현재주가(24/5/14) 185,300원",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Historical broker snapshot gives a dated target price denominator solely for superseded calibration; it is not current price, issuer guidance, HBM economics, or investment authority.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|HISTORICAL_MARKET_PRICE",
+        "normalized_object": "2024-05-14 SK하이닉스 주가 185,300원",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2024-05-14; report published 2024-05-16",
+        "predicate": "historical_market_price",
+        "predicate_family": "HISTORICAL_MARKET_PRICE_CALIBRATION",
+        "primitive_tags": [
+          "broker_snapshot",
+          "historical",
+          "superseded"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "HISTORICAL_MARKET_PRICE_CALIBRATION",
+        "question_family_tags": [
+          "market_mispricing",
+          "valuation_rerating",
+          "historical_price"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:MARKET_PRICE:2024-05-14:MIRAE",
+        "unit": "KRW/share",
+        "value": 185300
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "과거 forward earnings multiple calibration",
+        "exact_quote": "P/E(24F,x) 9.4",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Historical broker multiple is preserved with its earnings period and remains superseded, non-HBM-attributed, and non-authoritative.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|HISTORICAL_FORWARD_PE",
+        "normalized_object": "FY2024F P/E 9.4배",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "broker_forward_pe_estimate",
+        "predicate_family": "HISTORICAL_FORWARD_PE",
+        "primitive_tags": [
+          "broker_estimate",
+          "historical",
+          "superseded",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "HISTORICAL_FORWARD_PE",
+        "question_family_tags": [
+          "market_mispricing",
+          "valuation_rerating",
+          "forward_pe"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:FORWARD_PE:FY2024F:MIRAE_2024-05-16",
+        "unit": "x",
+        "value": 9.4
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "과거 시가총액 기준의 시장 valuation calibration",
+        "exact_quote": "시가총액(십억원) 134,899",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Dated broker market-cap snapshot is a superseded valuation calibration fact and is not current, issuer guidance, signed contract evidence, or HBM-only economics.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|HISTORICAL_MARKET_CAP",
+        "normalized_object": "2024-05-14 기준 시가총액 134,899십억원",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2024-05-14; report published 2024-05-16",
+        "predicate": "historical_market_capitalization",
+        "predicate_family": "HISTORICAL_MARKET_CAP_CALIBRATION",
+        "primitive_tags": [
+          "broker_snapshot",
+          "historical",
+          "superseded"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "HISTORICAL_MARKET_CAP_CALIBRATION",
+        "question_family_tags": [
+          "market_mispricing",
+          "valuation_rerating",
+          "market_cap"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:MARKET_CAP:2024-05-14:MIRAE",
+        "unit": "KRW bn",
+        "value": 134899
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-cec48c4b300fe56a6ba42cb7",
+      "SGDOC-e387fbf074539d32a618025a",
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "The fourth 12-fact page exhausted SGDOC-ce7946 but additional distinct current broker revision rows, finalized issuer funding/project terms, and historical superseded broker model rows remain in the other three documents."
+    ]
+  },
+  "payload_hash": "91ab7604b75b0042e7eee5bc74ef115a52c45247ae5e5f99d56b852cdcd5ee1f",
+  "production_score_authority": false,
+  "prompt_hash": "1784772bb9dce2550788c587fbe8c29b4e9d804cee914b0aa19d3e8f36ff05fe",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-74028056212ffb587f0e47d1f231638785116cd05a2fae2729fd4b35a61c93f6",
+  "response_id": "COLLABRESP-206da1f38233c0fef4b82fdbb51cc5687207299c0e967c280044af9355b35877",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

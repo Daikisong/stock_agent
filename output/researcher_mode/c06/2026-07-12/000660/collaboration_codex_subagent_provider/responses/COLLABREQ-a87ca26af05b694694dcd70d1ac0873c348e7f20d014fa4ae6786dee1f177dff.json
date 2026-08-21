@@ -1,0 +1,302 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0964968626eef4530df63603",
+        "rationale": "full document 958줄과 반복 렌더링·차트 OCR 구간을 Gold-blind로 전수 검토하고 current canonical 136건과 의미 중복을 대조했다. 1Q25 DRAM 믹스의 전사 이익 전환, 96GB 서버 DRAM·Reasoning AI 수요, 실적 상향에도 적용된 매크로 valuation 할인, 미국 매출과 직접수출 관세 노출의 attribution 한계, 수요 가시성 기반 Capex discipline, 2024~2028 HBM 수요 CAGR 등 서로 다른 valuation_rerating 사실·반증 6건을 추출했다. 기간이 끝난 2025F P/B·BPS·EV/EBITDA·peer·실적 추정표, 목표주가·매매 지시, 이후 canonical이 대체한 2026 HBM 고객 물량과 HBM4 인증·양산 일정, NAND·면책문구·반복 본문·차트 OCR 수치는 제외했다. 더 남은 objective-linked 사실이나 반증은 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0964968626eef4530df63603",
+        "economic_mechanism": "2025년 1분기에는 고수익 DRAM의 이익률이 전분기보다 개선되고 매출 비중이 80%로 확대되면서, 계절적 판매량 감소와 NAND 가격 하락에도 전사 이익을 지지했다. 이는 DRAM 제품 믹스가 전사 수익성과 valuation 분모로 전환되는 실제 메커니즘이며, 2026년 실적이나 HBM 단독 기여로 확대하지 않는다.",
+        "exact_quote": "- 계절적 비수기 영향으로 판매량 감소, 낸드 가격 하락으로 매출 감소. 영업이익 규모도 전분기\n대비 소폭 줄었지만 수익성 높은 디램 이익률 개선되고 매출 비중이 80%로 확대되면서 전사 이\n익 개선 가능해짐.\n- 고부가 제품 비중 확대로 디램 컨벤셔널 가격 하락에도 수익성 전분기대비 개선, 낸드는 가격\n하락과 판매량 감소에도 흑자 기조는 유지.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 믹스와 이익률이 전사 이익으로 연결된 실제 관찰은 SK하이닉스의 메모리 수익성 개선이 valuation 재평가로 이어질 수 있는지 직접 검증한다.",
+        "mechanism_scope_id": "000660:MEMORY:1Q25_DRAM_MIX_PROFIT_CONVERSION",
+        "normalized_object": "DRAM 매출 믹스와 이익률 개선이 만든 전사 이익 방어",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2025 actual",
+        "predicate": "2025년 1분기 DRAM 매출 비중이 80%로 확대되고 고수익 DRAM 이익률이 개선돼 전사 이익을 지지했다",
+        "predicate_family": "DRAM_MIX_PROFIT_CONVERSION_ACTUAL",
+        "primitive_tags": [
+          "DRAM",
+          "REVENUE_MIX",
+          "PROFITABILITY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_MIX_PROFIT_CONVERSION_ACTUAL",
+        "question_family_tags": [
+          "DRAM_MIX",
+          "PROFIT_CONVERSION",
+          "EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1Q25 DRAM 매출비중과 전사 이익 전환",
+        "subject_id": "000660:DRAM:1Q25_MIX_PROFIT_CONVERSION",
+        "unit": "% revenue mix and qualitative profitability change",
+        "value": "DRAM revenue mix 80%; DRAM profitability improved QoQ despite conventional DRAM price decline"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.91,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0964968626eef4530df63603",
+        "economic_mechanism": "SK하이닉스는 2025년 1분기에 DDR5 기반 96GB 수요 증가를 경험했고, Reasoning AI의 훈련·추론이 더 많은 메모리와 고용량 서버 인프라를 요구해 중장기 서버 DRAM 수요를 견인할 것으로 설명했다. 이는 관찰된 고용량 수요와 향후 수요 논리를 연결하지만, 특정 고객 계약이나 확정 매출 가이던스는 아니다.",
+        "exact_quote": "- 딥시크는 AI개발 비용 절감할 수 있음. 이는 AI 시장 진입 장벽 낮춘 효과로 보임. AI 개발 시\n도 증가 중이고, HBM뿐만 아니라 고용량 서버 디램 수요도 같이 확대 중.\n- 1분기 당사도 D5기반 96GB수요 증가 경험. 올해 지속적으로 고용량 수요는 증가할 것.\n- 추가적으로 오픈AI o3, 딥시크 r1 등 Reasoning AI 모델은 더 많은 메모리 필요로 할 것. AI\n모델이 더 정교한 결과 제공하기위해 더 많은 하드웨어 자원을 필요로 함. 훈련에서 추론 영역\n으로 확대 중. 고용량 메모리 창출하는 요인임.\n- 고품질 추론 서비스를 위해서 모델 훈련도 필요하기 때문에 고용량 서버 인프라 확대는 필연\n적. 당사 고용량 서버가 중장기 서버 수요의 핵심이 될 것으로 전망. 향후 AI 개발 응용 점차 확\n대되고 장기 AI 성장과 메모리 수요 견인할 것.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 외 고용량 서버 DRAM의 실제 수요와 장기 수요 동인은 AI 메모리 earnings duration과 사업 믹스의 폭을 통해 valuation_rerating의 지속성을 직접 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:HIGH_CAPACITY_SERVER_DRAM_REASONING_AI_DEMAND",
+        "normalized_object": "Reasoning AI가 확대하는 고용량 서버 DRAM 수요와 SK하이닉스의 실제 수요 관찰",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2025 actual and medium-term outlook stated 2025-04-24",
+        "predicate": "SK하이닉스는 2025년 1분기 96GB DDR5 수요 증가를 경험했고 Reasoning AI 확산이 고용량 서버 메모리 수요를 늘릴 것으로 전망했다",
+        "predicate_family": "HIGH_CAPACITY_SERVER_DRAM_REASONING_AI_DEMAND",
+        "primitive_tags": [
+          "DRAM",
+          "DDR5",
+          "AI_MEMORY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HIGH_CAPACITY_SERVER_DRAM_REASONING_AI_DEMAND",
+        "question_family_tags": [
+          "SERVER_DRAM",
+          "REASONING_AI",
+          "DEMAND_DURATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "96GB 서버 DRAM 실제 수요와 Reasoning AI 메모리 수요",
+        "subject_id": "000660:DRAM:96GB_REASONING_AI_DEMAND_1Q25",
+        "unit": "qualitative actual demand and forward outlook",
+        "value": "1Q25 observed 96GB DDR5 demand increase; continued high-capacity server-memory demand outlook"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0964968626eef4530df63603",
+        "economic_mechanism": "실적발표 당일 주가는 1H25 실적이 시장 기대를 웃돌 것이라는 추정에도 1.5% 하락했고, 분석사는 연간 영업이익 추정 상향과 동시에 관세·하반기 매크로 불확실성을 반영해 12개월 선행 Target PBR을 1.8배에서 1.6배로 낮췄다. 이는 이익 상향만으로 배수 재평가가 보장되지 않고 불확실성이 valuation을 상쇄할 수 있음을 보여주는 관찰이다.",
+        "exact_quote": "4월 24일 목요일, 동사 실적발표 컨퍼런스콜 후 당일 주가는 -1.5% 하락 마감. 1H25 예상 실적은\n시장 기대치보다 높을 것으로 추정됨에도 불구하고, 미 정부 관세, 2H25 하반기 IT Set 수요를 포함한\n매크로 불확실성에 대한 우려를 반영했을 것.\n당사 리서치센터는 SK하이닉스에 대한 1H25 실적 추정치를 상향 조정하여 2025년 연간 예상\n영업이익을 36.7조원으로 추정. 다만 글로벌 반도체 칩에 대한 품목 관세 등 2H25 매크로 불확실성이\n높다는 점을 고려하여 12M Forward Target PBR 1.6배(기존 1.8배)로 적용하고, 목표주가는 26만원을\n유지하는 바.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "실적 상향과 valuation 배수 하향이 동시에 발생한 직접 사례는 SK하이닉스의 저평가가 이익 개선만으로 해소되는지, 위험 할인에 막히는지를 검증하는 핵심 반증이다.",
+        "mechanism_scope_id": "000660:MEMORY:EARNINGS_UPGRADE_MACRO_VALUATION_DISCOUNT_20250424",
+        "normalized_object": "실적 상향을 상쇄한 관세·매크로 불확실성과 valuation multiple 할인",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-04-24 market and valuation snapshot",
+        "predicate": "1H25 실적 상향에도 관세와 하반기 매크로 불확실성이 주가 하락과 Target PBR 하향에 반영됐다",
+        "predicate_family": "EARNINGS_UPGRADE_MACRO_VALUATION_DISCOUNT",
+        "primitive_tags": [
+          "MEMORY",
+          "TARGET_PBR",
+          "MARKET_REACTION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "EARNINGS_UPGRADE_MACRO_VALUATION_DISCOUNT",
+        "question_family_tags": [
+          "VALUATION_MULTIPLE",
+          "MACRO_DISCOUNT",
+          "EARNINGS_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "1H25 실적 상향에도 적용된 매크로 valuation 할인",
+        "subject_id": "000660:MEMORY:1H25_EARNINGS_MACRO_TARGET_PBR_DISCOUNT",
+        "unit": "% market reaction and x target PBR",
+        "value": "post-call stock -1.5%; 12M forward Target PBR cut to 1.6x from 1.8x"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0964968626eef4530df63603",
+        "economic_mechanism": "감사보고서 기준 미국향 매출 비중은 AI 매출 때문에 60%로 높지만, 관세 부과 기준에서 메모리의 미국 직접수출 비중은 높지 않으며 정책 세부사항이 없어 정확한 영향을 산출하기 어렵다고 회사가 설명했다. 지역별 매출 비중을 곧바로 관세 노출로 해석할 수 없다는 attribution 한계와 정책 불확실성을 함께 보여준다.",
+        "exact_quote": "- 감사 보고서 기준으로 AI향 매출 때문에 미국향 매출 비중은 60%로 높은 상황. 다만 관세 부\n과 기준을 고려하면 메모리의 미국 직접 수출 비중이 높은 편은 아님.\n- 복잡한 글로벌 반도체 공급망 특성상 명확한 영향도 산출하기 위해서, 관세 기준 등 정책의\n세부 사항이 필요. 현재로서는 정확한 영향 산출하기에는 제약이 있음.\n- 향후 관세가 발표된 시점에 고객과 협의해서 공급 안정성 유지할 수 있도록 대응해나갈 것.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "미국 매출 비중과 실제 관세 노출의 불일치 및 측정 제약은 매출 지속성과 위험 할인에 직접 영향을 주며 단순 60% 노출 해석을 막는 중요 counterfact다.",
+        "mechanism_scope_id": "000660:MEMORY:US_REVENUE_TARIFF_ATTRIBUTION_UNCERTAINTY",
+        "normalized_object": "지역별 매출 비중과 직접수출 관세 노출 사이의 차이 및 영향 측정 한계",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "tariff-policy assessment stated 2025-04-24",
+        "predicate": "미국향 매출 비중은 60%지만 메모리 직접수출 비중은 높지 않고 정책 세부사항 부재로 관세 영향을 정확히 산출하기 어렵다고 설명됐다",
+        "predicate_family": "US_REVENUE_TARIFF_ATTRIBUTION_UNCERTAINTY",
+        "primitive_tags": [
+          "MEMORY",
+          "US_REVENUE",
+          "POLICY_UNCERTAINTY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "US_REVENUE_TARIFF_ATTRIBUTION_UNCERTAINTY",
+        "question_family_tags": [
+          "TARIFF_RISK",
+          "GEOGRAPHIC_EXPOSURE",
+          "ATTRIBUTION_LIMIT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "미국향 매출 비중과 메모리 직접수출·관세 영향의 불확실성",
+        "subject_id": "000660:MEMORY:US_REVENUE_TARIFF_ATTRIBUTION_UNCERTAINTY",
+        "unit": "% revenue share and qualitative policy uncertainty",
+        "value": "reported US revenue share 60%; direct US memory-export share not high; exact tariff impact unavailable"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.91,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0964968626eef4530df63603",
+        "economic_mechanism": "SK하이닉스는 가시성이 확보된 제품과 필수 투자·미래 인프라를 우선하고 전년 대비 다소 늘어난 투자 방향을 유지하되, 기존 팹 믹스 최적화와 저수익 자원 재배분, 차입금 축소와 현금 확대를 병행한다고 설명했다. 이는 무차별 증설보다 수요 가시성과 재무여력을 연동한 공급 대응 정책이며 실제 집행액을 확정하는 가이던스는 아니다.",
+        "exact_quote": "- 당사는 Capex discipline 준수하면서 가시성이 확보된 제품 위주로 투자 중. 관세 등 보호무\n역주의 확산되면서 시장 예측이 어려운 상황.\n- 이러한 불확실성 대비해서 올해 신중하지만 유연한 투자기조 유지할 계획. 시장 수요 대응위\n한 필수투자 우선시하고, 경쟁력이 적기 사업화 할 수 있도록 미래 인프라 투자위주. 전년비 다\n소 증가하는 기존 투자 방향성 유지할 것.\n- 불확실성 높은 대외환경에서 안정적인 사업 운영 영위할 수 있도록 기존 팹 제품 Mix 최적화,\n저수익 제품 자원의 재분배 등 투자 효율성 강화. 차입금 축소, 현금 보유 수준 확대 등 재무 건\n전성도 강화해나갈 것.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "수요 가시성에 연동한 증설과 재무규율은 메모리 사이클의 과잉투자 위험과 이익 지속성을 함께 좌우해 valuation premium의 질을 직접 검증한다.",
+        "mechanism_scope_id": "000660:MEMORY:VISIBILITY_LINKED_CAPEX_DISCIPLINE_2025",
+        "normalized_object": "제품 수요 가시성과 재무건전성을 연동한 메모리 투자·공급 규율",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025 investment policy and forward infrastructure strategy stated 2025-04-24",
+        "predicate": "SK하이닉스는 수요 가시성이 확보된 제품과 필수·미래 인프라 투자를 우선하면서 팹 믹스 최적화와 재무건전성 강화를 병행할 계획이라고 밝혔다",
+        "predicate_family": "VISIBILITY_LINKED_CAPEX_DISCIPLINE",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPACITY_INVESTMENT",
+          "SUPPLY_DISCIPLINE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "VISIBILITY_LINKED_CAPEX_DISCIPLINE",
+        "question_family_tags": [
+          "CAPEX_DISCIPLINE",
+          "DEMAND_VISIBILITY",
+          "FINANCIAL_RESILIENCE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "수요 가시성 기반 Capex discipline과 재무건전성",
+        "subject_id": "000660:MEMORY:VISIBILITY_LINKED_CAPEX_DISCIPLINE_2025",
+        "unit": "qualitative investment policy",
+        "value": "visibility-linked product investment; essential and future-infrastructure priority; existing direction of modest YoY investment increase; debt reduction and cash increase"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0964968626eef4530df63603",
+        "economic_mechanism": "회사 질의응답 요약은 글로벌 AI 투자 확대와 HBM 수요 가시성을 근거로 2024~2028년 HBM 시장의 연평균 50% 성장을 전망했다. 이는 2028년까지 이어지는 수요 duration을 정량화하지만 시장 전망이며, 특정 고객의 확정 구매 의무나 SK하이닉스 점유율·매출 성장률로 확대하지 않는다. 같은 문단의 2026년 고객 물량 협의는 이후 canonical의 수요 확보 사실이 더 최신이므로 별도 fact로 중복 생성하지 않았다.",
+        "exact_quote": "- 딥시크와 같은 효율적인 AI 덕분에 AI 사업이 기존 전망을 뛰어넘는 성장 잠재력을 보여줌.\n향후 불확실성 있겠지만 지금까지 글로벌 기업들의 AI 투자 확대 기조 유지 중. 국가들 구축 노\n력도 지속 증가 중.\n- HBM 수요 가시성 기반으로 2024~2028년까지 연평균 50% 성장 전망 중. HBM4가 주력 제\n품이 되고, 해당 제품은 기존 제품대비 I/O 수가 두배 늘어나기 때문에 이에 대한 지속 수요 증\n가 예상됨.\n- 2026년 물량은 기존 계획대로 주요 고객과 연간 물량 가시성 확보할 계획. 이후 다른 고객과\n의 협의도 마무리하려고 하는 중.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 수요 성장의 기간과 속도는 SK하이닉스의 earnings duration과 역사적 메모리 valuation band 상향 가능성을 직접 좌우한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_2024_2028_DEMAND_GROWTH_VISIBILITY",
+        "normalized_object": "2028년까지 이어지는 HBM 시장 수요 성장 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-2028 outlook stated 2025-04-24",
+        "predicate": "HBM 수요 가시성을 바탕으로 2024년부터 2028년까지 연평균 50% 성장이 전망됐다",
+        "predicate_family": "HBM_MULTIYEAR_DEMAND_GROWTH_VISIBILITY",
+        "primitive_tags": [
+          "HBM",
+          "DEMAND_CAGR",
+          "AI_INVESTMENT"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_2024_2028_DEMAND_GROWTH_VISIBILITY",
+        "question_family_tags": [
+          "HBM_DEMAND",
+          "MULTIYEAR_GROWTH",
+          "DURABLE_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "2024~2028년 HBM 수요 성장 가시성",
+        "subject_id": "000660:HBM:2024_2028_DEMAND_GROWTH_VISIBILITY",
+        "unit": "% CAGR",
+        "value": 50
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "02dfc23950ece09198419218eced06685cd8de0b1154911b4527be27b506b0ae",
+  "production_score_authority": false,
+  "prompt_hash": "10fbb61e3bee040ecab547fbed03cceedf93d2675804861a506fd9b2c541102b",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a87ca26af05b694694dcd70d1ac0873c348e7f20d014fa4ae6786dee1f177dff",
+  "response_id": "COLLABRESP-0c946b882f0d0471c506fc6e6338394c5647c35b6fd06205c7bd9c05a143ec0d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

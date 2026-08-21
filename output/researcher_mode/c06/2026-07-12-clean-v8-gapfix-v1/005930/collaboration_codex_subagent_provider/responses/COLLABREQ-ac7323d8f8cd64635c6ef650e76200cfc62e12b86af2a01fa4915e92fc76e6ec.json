@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "검증된 delegated issuer IR landing page에서 컨퍼런스콜 원문·첨부자료를 full-fetch한다.",
+      "검증된 issuer newsroom에서 HBM4 양산·출하 원문과 후속 업데이트를 확인한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 irsvc.teletogether.com 2026년 1분기 실적발표 HBM",
+        "objective_id": "SGOBJ-eb3cecb1e00c95ccf544cac4",
+        "rationale": "Prompt가 검증한 official allowlist의 delegated IR 경로를 사용해 최신 분기 컨퍼런스콜 원문과 첨부자료를 찾는다. OPENDART에 없는 HBM 매출·이익 전환, DRAM ASP, 메모리 CAPEX와 forward guidance를 확인하되 전사 수치를 HBM으로 오귀속하지 않고 반대 설명도 같은 원문에서 검토한다.",
+        "source_families": [
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_PRESENTATION"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 news.samsung.com HBM4 양산 출하 2026",
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "rationale": "Prompt가 검증한 삼성 공식 뉴스룸 경로에서 HBM4 양산·상용 출하의 시점과 제품 상태를 확인한다. 제품 공개·샘플·계획을 고객 qualification, 장기계약 또는 확정 물량으로 확대하지 않고 후속 정정·지연도 함께 확인한다.",
+        "source_families": [
+          "ISSUER_NEWSROOM"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "현재 exact prompt의 prior executed-query와 semantic failure roster는 0건이지만 source coverage는 OPENDART뿐이고 target_business_model도 없다.",
+      "HBM 고객·qualification의 독립 확인, attributable consensus revision, point-in-time valuation은 prompt에 검증된 고객사·broker 문서 identity가 없어 이름을 추측한 query를 만들지 않았으며 계속 unresolved다.",
+      "위 두 route가 기존 OPENDART 사실을 보강하지 못하면 표현만 바꾼 재검색 대신 새로 확인된 문서 identity 또는 supervisor direction이 필요하다."
+    ]
+  },
+  "payload_hash": "d8ad699fe221eff7c488efe52454fd578702bf522ed4b77e85018d03a8c6d908",
+  "production_score_authority": false,
+  "prompt_hash": "9a949699c245740ff4db850a8f3ac8cad4c41a7c30b04bc066f47cf82e87fd0f",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ac7323d8f8cd64635c6ef650e76200cfc62e12b86af2a01fa4915e92fc76e6ec",
+  "response_id": "COLLABRESP-659bc4ef9b7e1ab3a2e3298795df3fb84d456a6972b109b5d6cb098c8481b83d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

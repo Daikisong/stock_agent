@@ -1,0 +1,570 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Accepted the next 12 distinct source-order model atoms after strict deduplication against 180 embedded prior facts: FY2024E/FY2025E cash change, beginning cash, ending cash, FCF, gross profit, and gross margin. Stock, flow, sign, table lineage, and historical lifecycle are preserved.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of the period increase in consolidated cash; it is a flow, not an ending balance or HBM-only cash generation.",
+        "exact_quote": "현금의 증가(감소) 2,082 -81 2,610 21,166 25,003",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is a historical corporate cash-flow forecast, not a current cash balance or product-level cash-flow fact.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CASH_CHANGE:FY2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 cash increase KRW 21,166 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker forecast cash increase during period",
+        "predicate_family": "BROKER_CONSOLIDATED_CASH_CHANGE_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "cash_change",
+          "period_flow"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_cash_change_fy2024e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_CASH_CHANGE:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 21166
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of the period increase in consolidated cash; it is a flow, not an ending balance or HBM-only cash generation.",
+        "exact_quote": "현금의 증가(감소) 2,082 -81 2,610 21,166 25,003",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is a historical outer-year corporate cash-flow forecast, not a current cash balance or product-level cash-flow fact.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CASH_CHANGE:FY2025E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 cash increase KRW 25,003 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker forecast cash increase during period",
+        "predicate_family": "BROKER_CONSOLIDATED_CASH_CHANGE_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "cash_change",
+          "period_flow"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_cash_change_fy2025e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_CASH_CHANGE:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 25003
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker model opening-cash balance; it is a stock at the start of the period, not a cash flow or HBM-only balance.",
+        "exact_quote": "기초현금 2,976 5,058 4,977 7,587 28,753",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the historical opening cash stock and cannot substitute for ending cash or current liquidity.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:BEGINNING_CASH:FY2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 beginning cash balance KRW 7,587 billion historical SK Securities model",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E opening balance; published 2024-03-14",
+        "predicate": "broker model beginning cash balance",
+        "predicate_family": "BROKER_CONSOLIDATED_BEGINNING_CASH_FORECAST",
+        "primitive_tags": [
+          "broker_model",
+          "beginning_cash",
+          "balance_sheet_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_beginning_cash_fy2024e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_BEGINNING_CASH:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 7587
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker model opening-cash balance; it is a stock at the start of the period, not a cash flow or HBM-only balance.",
+        "exact_quote": "기초현금 2,976 5,058 4,977 7,587 28,753",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the historical outer-year opening cash stock and cannot substitute for ending cash or current liquidity.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:BEGINNING_CASH:FY2025E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 beginning cash balance KRW 28,753 billion historical SK Securities model",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E opening balance; published 2024-03-14",
+        "predicate": "broker model beginning cash balance",
+        "predicate_family": "BROKER_CONSOLIDATED_BEGINNING_CASH_FORECAST",
+        "primitive_tags": [
+          "broker_model",
+          "beginning_cash",
+          "balance_sheet_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_beginning_cash_fy2025e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_BEGINNING_CASH:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 28753
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker model ending-cash balance; it is a period-end stock and is kept separate from cash change and balance-sheet cash equivalents.",
+        "exact_quote": "기말현금 5,058 4,977 7,587 28,753 53,757",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the historical period-end cash stock separately from the period flow and current liquidity evidence.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:ENDING_CASH:FY2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 ending cash balance KRW 28,753 billion historical SK Securities model",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E closing balance; published 2024-03-14",
+        "predicate": "broker model ending cash balance",
+        "predicate_family": "BROKER_CONSOLIDATED_ENDING_CASH_FORECAST",
+        "primitive_tags": [
+          "broker_model",
+          "ending_cash",
+          "balance_sheet_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_ending_cash_fy2024e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_ENDING_CASH:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 28753
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker model ending-cash balance; it is a period-end stock and is kept separate from cash change and balance-sheet cash equivalents.",
+        "exact_quote": "기말현금 5,058 4,977 7,587 28,753 53,757",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the historical outer-year closing cash stock and its one-billion-won table-lineage difference from balance-sheet cash equivalents.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:ENDING_CASH:FY2025E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 ending cash balance KRW 53,757 billion historical SK Securities model",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E closing balance; published 2024-03-14",
+        "predicate": "broker model ending cash balance",
+        "predicate_family": "BROKER_CONSOLIDATED_ENDING_CASH_FORECAST",
+        "primitive_tags": [
+          "broker_model",
+          "ending_cash",
+          "balance_sheet_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_ending_cash_fy2025e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_ENDING_CASH:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 53757
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated free-cash-flow forecast; the model does not isolate HBM free cash flow or provide issuer guidance.",
+        "exact_quote": "FCF 7,530 -3,582 -1,480 16,775 21,215",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The forecast directly records historical FCF expectations but is not an issuer actual or HBM-only cash-flow bridge.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2024 free cash flow KRW 16,775 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker forecast consolidated free cash flow",
+        "predicate_family": "BROKER_CONSOLIDATED_FREE_CASH_FLOW_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "free_cash_flow",
+          "period_flow"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_free_cash_flow_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_FREE_CASH_FLOW:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 16775
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated free-cash-flow forecast; the model does not isolate HBM free cash flow or provide issuer guidance.",
+        "exact_quote": "FCF 7,530 -3,582 -1,480 16,775 21,215",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The outer-year forecast directly records historical FCF expectations but is not an issuer actual or HBM-only cash-flow bridge.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2025 free cash flow KRW 21,215 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker forecast consolidated free cash flow",
+        "predicate_family": "BROKER_CONSOLIDATED_FREE_CASH_FLOW_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "free_cash_flow",
+          "period_flow"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_free_cash_flow_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_FREE_CASH_FLOW:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 21215
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated gross-profit forecast; it is not an HBM-only profit or issuer-owned forecast.",
+        "exact_quote": "매출총이익 18,952 15,628 -533 24,335 37,458",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is historical consolidated earnings-conversion evidence, but not current, issuer-owned, or HBM-only profit.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2024 gross profit KRW 24,335 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker forecast consolidated gross profit",
+        "predicate_family": "BROKER_CONSOLIDATED_GROSS_PROFIT_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "gross_profit",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_gross_profit_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_GROSS_PROFIT:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 24335
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated gross-profit forecast; it is not an HBM-only profit or issuer-owned forecast.",
+        "exact_quote": "매출총이익 18,952 15,628 -533 24,335 37,458",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is historical outer-year consolidated earnings-conversion evidence, but not current, issuer-owned, or HBM-only profit.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2025 gross profit KRW 37,458 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker forecast consolidated gross profit",
+        "predicate_family": "BROKER_CONSOLIDATED_GROSS_PROFIT_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "gross_profit",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_gross_profit_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_GROSS_PROFIT:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 37458
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated gross-margin forecast; it is not an HBM-only margin or issuer-owned forecast.",
+        "exact_quote": "매출총이익률(%) 44.1 35.0 -1.6 39.9 46.7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is historical consolidated profitability evidence but cannot establish current or HBM-only margin.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2024 gross margin 39.9 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forecast consolidated gross margin",
+        "predicate_family": "BROKER_CONSOLIDATED_GROSS_MARGIN_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "gross_margin",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_gross_margin_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_GROSS_MARGIN:FY2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 39.9
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated gross-margin forecast; it is not an HBM-only margin or issuer-owned forecast.",
+        "exact_quote": "매출총이익률(%) 44.1 35.0 -1.6 39.9 46.7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is historical outer-year consolidated profitability evidence but cannot establish current or HBM-only margin.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2025 gross margin 46.7 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forecast consolidated gross margin",
+        "predicate_family": "BROKER_CONSOLIDATED_GROSS_MARGIN_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "gross_margin",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_gross_margin_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_GROSS_MARGIN:FY2025E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 46.7
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact upper bound was reached. Continue the supplied source in order for remaining distinct consolidated earnings, return, leverage, per-share, and valuation-model atoms. Completion remains false because the document's target-direct model remainder is not yet exhausted."
+    ]
+  },
+  "payload_hash": "e090172781d7240b24644a4e66a9d51f3bc20212fa4c1e9f52329b58938a4829",
+  "production_score_authority": false,
+  "prompt_hash": "9d079c1ec3ff6890c146c0e685f399fd3ef5978a7a0a6c4d086b582fdb8a1a95",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-26431c81d65e930a124d03b8e3359c93e76e4d7c416d1ff4013bfcece76a3ff7",
+  "response_id": "COLLABRESP-bbce05803a94482d3ea9ec5db4aa46de1b770cae8355bb6644f02f783fba2f05",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

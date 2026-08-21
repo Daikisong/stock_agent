@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "rationale": "The supplied literal transport chunk was reviewed in full. Its potentially related passages are market-level memory/DRAM/HBM cycle commentary, SK hynix P/E and P/B discussion, and a historical 2021 Samsung Electronics share-price example. None supplies a distinct, current 005930-specific valuation-rerating fact for the C06 HBM/memory objective. Other-company, industry-general, NAND/LPDDR, and unrelated sector material was excluded rather than attributed to the target. This disposition applies only to the supplied chunk and does not assert that the unsupplied remainder of the canonical parent document lacks material facts.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "557d2ce99a9376105ef6759b64a9f654b0eaa1837cf97e770ec615ca35e35b06",
+  "production_score_authority": false,
+  "prompt_hash": "c38961fa7ea0498332ce0d40e094df148e075b1ba13d34c036bda4a01dcf14d2",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2068ad955bd3584c62bf80f979fdfc28047d14a5ca11f95e2428fa815ac21e91",
+  "response_id": "COLLABRESP-efd26362b77788b39672b52b4b4425e1a6ddd3ccb371d4e0e09695050b8ce8a9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

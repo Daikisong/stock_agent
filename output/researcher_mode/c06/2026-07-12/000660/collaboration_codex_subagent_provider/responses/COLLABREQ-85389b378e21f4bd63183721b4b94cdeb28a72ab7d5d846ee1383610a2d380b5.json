@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "3885e06527a44286bfd9318a7e97f4727d7002753186fba579331bc5de08b8ba",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-8c29624ce8ff66edf2bff77f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "This third-party morning-news roundup provides only generic memory commentary and is not an original requested source."
+      },
+      {
+        "candidate_id": "SGCAND-f67cae2cab25ac0529185ab1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "The global market-strategy PDF does not provide target-specific HBM earnings or valuation evidence."
+      },
+      {
+        "candidate_id": "SGCAND-88dcb7bfc7d10fb203d928c2",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "The US market-strategy report discusses AI competition broadly and does not resolve the SK hynix valuation mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-0ca2e02312fc6aa1609eb916",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "The global equity strategy report contains no supplied target-specific HBM earnings or multiple information."
+      },
+      {
+        "candidate_id": "SGCAND-0b30095d4549391eea779551",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "The KOSDAQ sector-selection report is unrelated to SK hynix."
+      },
+      {
+        "candidate_id": "SGCAND-f4f0ec525fe816fa824ae063",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.08,
+        "rationale": "The daily compilation offers only a generic statement that an event is positive for memory vendors, without target-specific HBM attribution or valuation."
+      },
+      {
+        "candidate_id": "SGCAND-bf102107991cba7959403265",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The aggregator result concerns KOSDAQ construction and healthcare names, not the target or requested research mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-19382bda5f1920fe5fc7c58f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.85,
+        "rationale": "The current 2026-06-24 broker meeting note directly changes the SK hynix target price and therefore offers a high-priority route to the underlying earnings estimate and valuation multiple."
+      },
+      {
+        "candidate_id": "SGCAND-0e0403eee879089f4125c73c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "The supplied report metadata concerns other industries and issuers and does not expose a relevant SK hynix HBM mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-ddafef1f1cca0cf4404615ae",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.15,
+        "rationale": "The Taiwan value-chain report gives generic HBM3E and Nvidia context but no supplied SK hynix earnings, currentness, or valuation link."
+      },
+      {
+        "candidate_id": "SGCAND-e376a7e3234587aa3397cc66",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The 2017 trend report is far too stale to resolve the current HBM and valuation objective."
+      },
+      {
+        "candidate_id": "SGCAND-b6cd72cda4df5e9b45ee5c9c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.03,
+        "rationale": "The broad 2025 geopolitical data-war report does not provide target-specific HBM earnings or valuation evidence."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Full-text and publication-date eligibility must still be verified during bounded fetch; snippets were used only for discovery routing."
+    ]
+  },
+  "payload_hash": "04bda9cb69ebea8cef5781b8d90cc3a028b04309db63362df1bdb4924386e338",
+  "production_score_authority": false,
+  "prompt_hash": "0fd69d338b186f6a845bb5c8eaaf60ff7423e8efe8c6038e460d8e7b12a75592",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-85389b378e21f4bd63183721b4b94cdeb28a72ab7d5d846ee1383610a2d380b5",
+  "response_id": "COLLABRESP-358b505e1ed3f22b699475c2b0e35944a36e487df052a4e7d604976286c477ca",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

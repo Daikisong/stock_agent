@@ -1,0 +1,49 @@
+{
+  "as_of_date": "2026-07-12",
+  "production_score_authority": false,
+  "provider_name": "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE",
+  "provider_prompt_hash": "451757c1881644623bd8fcb9a2cbd7ced96e2d418d26007483f559f2e0eab907",
+  "provider_response_hash": "cae3ec17e5db319e43d96c959b2f8e9715ca122d484452ca71fd4f93a86fc811",
+  "response": {
+    "peers": [
+      {
+        "comparability_rationale": "국내 상장사 중 메모리 생산, DRAM/HBM 가격 사이클, 대규모 CAPEX와 수율 경제를 가장 직접적으로 공유하는 핵심 비교기업이다.",
+        "confidence": 0.96,
+        "material_differences": [
+          "삼성전자는 파운드리·모바일·가전 등 비메모리 사업 비중이 크다",
+          "HBM 고객·제품 믹스와 수율, 시장점유율이 SK하이닉스와 다르다"
+        ],
+        "peer_name": "삼성전자",
+        "peer_symbol": "005930",
+        "shared_economic_drivers": [
+          "DRAM과 HBM을 포함한 메모리 가격·출하·수율 사이클",
+          "대규모 선단공정·패키징 CAPEX와 감가상각 부담",
+          "AI 서버 고객의 고대역폭 메모리 수요"
+        ]
+      },
+      {
+        "comparability_rationale": "완전한 제품 peer는 아니지만 국내 상장 범위에서 HBM 증설·패키징 병목과 투자 사이클을 공유하는 보조 비교기업이다. 절대 멀티플 비교보다 HBM CAPEX 민감도 보정에만 적합하다.",
+        "confidence": 0.72,
+        "material_differences": [
+          "메모리 제조사가 아니라 HBM 패키징 장비 공급사다",
+          "웨이퍼 가격·재고·메모리 ASP 및 대규모 팹 감가상각에 직접 노출되지 않는다"
+        ],
+        "peer_name": "한미반도체",
+        "peer_symbol": "042700",
+        "shared_economic_drivers": [
+          "HBM 증설과 첨단 패키징 투자 사이클",
+          "AI 메모리 수요와 고객 CAPEX 집행",
+          "병목 장비의 공급능력과 수율 개선"
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "삼성전자를 직접 메모리 peer로, 한미반도체를 HBM CAPEX·패키징 병목의 보조 peer로 선정했다. 단순 반도체 업종 라벨이 아니라 실제 공유 경제요인과 차이를 기준으로 선정했다.",
+    "unresolved_research_notes": [
+      "국내 상장 allowlist에는 삼성전자 외에 SK하이닉스와 같은 HBM·DRAM 통합 메모리 생산기업이 없어 두 번째 peer는 HBM 장비 공급사다. 따라서 peer band는 사업구조 차이를 반영해 보조적으로만 사용해야 한다."
+    ]
+  },
+  "schema_version": "e2r_v5_peer_selection_cache_v1",
+  "selection_input_hash": "2d65aafa62ff99cf71523ee93d0d8f5ca38bfea3e578ec3850bcbcb2cd371ee9",
+  "target_id": "000660"
+}

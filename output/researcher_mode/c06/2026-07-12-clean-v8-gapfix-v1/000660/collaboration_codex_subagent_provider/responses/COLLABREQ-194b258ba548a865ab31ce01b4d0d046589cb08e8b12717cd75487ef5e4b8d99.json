@@ -1,0 +1,251 @@
+{
+  "output_schema_hash": "0b59783cc5a12f755bec5bc64b4b0efed12a1c707ebd083a1c6b1ff644a6fede",
+  "payload": {
+    "confidence": 0.89,
+    "counter_case": "유형자산 취득과 R&D 지출이 크고 매출채권·재고 증가가 현금을 묶는다. 교환사채 행사는 부채를 줄이는 대신 주식 유통·희석에 영향을 주며, 승인 배당은 분기말 미지급이었다. 전사·별도 수치에서 HBM 전용 투자회수나 realized ROIC를 만들 수 없다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e"
+    ],
+    "positive_case": "연결 현금성자산이 차입금을 웃돌고 금융부채가 감소했으며 실제 차입상환이 신규 차입보다 컸다. 승인 배당과 자기주식 소각은 주주환원 실행을 보여주고 CAPEX_SUPPLY_RESPONSE·CASH_CONVERSION structured rows는 투자와 현금 흐름을 함께 검토하게 한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 7,
+        "reason": "연결 현금 잔액은 순현금과 부채비율을 함께 제공하는 row 105와 중복되어 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 16,
+        "reason": "금융부채 감소를 자본구조 개선 근거로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 19,
+        "reason": "별도 순현금은 연결 순현금·부채 정보를 제공하는 row 105로 대체해 범위 중복을 피한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 38,
+        "reason": "R&D 총지출은 비용화·자산화 구성을 함께 주는 row 43과 중복되어 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 39,
+        "reason": "연결 채권 증가를 현금 회수와 운전자본 counter로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 41,
+        "reason": "별도 유형자산 취득과 감가상각 비교를 투자 현금소요 counter로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 43,
+        "reason": "R&D 비용화·자산화 경계를 재투자와 당기 부담 근거로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 44,
+        "reason": "차입 약정 준수는 즉시 제약 부재를 보이지만 자본배분 actual보다 덜 직접적이어서 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 58,
+        "reason": "승인 배당을 유지하되 분기말 미지급 상태를 보존한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 64,
+        "reason": "연결 유형자산 회계상 취득액은 취득·감가상각 현금소요를 함께 보여주는 row 41과 중복되어 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 71,
+        "reason": "별도 부채비율·순현금은 연결 자본여력 row 105와 중복되어 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 75,
+        "reason": "교환사채의 부채감소와 주식 유통·희석 trade-off를 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 84,
+        "reason": "현금 순증가는 연결 순현금 자본구조 row 105에 포함되는 방향과 중복되어 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 93,
+        "reason": "R&D 전년동기 비교는 비용화·자산화 경계를 제공하는 row 43보다 capital-allocation 해석에 덜 직접적이어서 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 94,
+        "reason": "실제 자기주식 소각을 주주환원 actual로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 102,
+        "reason": "별도 채권 증가는 연결 채권 부담 row 39와 중복되어 범위를 통일한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 103,
+        "reason": "차입보다 큰 상환 현금유출을 실제 부채 축소 근거로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 105,
+        "reason": "연결 순현금·부채비율을 자본여력 근거로 유지하되 HBM ROIC로 귀속하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 107,
+        "reason": "연결 재고 증가를 운전자본 counter로 유지한다."
+      }
+    ],
+    "proposed_score_lower": 1.0,
+    "proposed_score_mid": 1.4,
+    "proposed_score_upper": 1.8,
+    "research_complete": true,
+    "researcher_summary": "연결 순현금 자본여력, 금융부채 감소와 순상환, 승인 배당 및 실제 자기주식 소각은 재무안정과 주주환원의 actual을 보여준다. 반면 CAPEX와 R&D 현금·비용 부담, 매출채권과 재고 증가, 교환사채의 주식 유통·희석 효과가 자본배분의 질을 제한한다. 이 사실들은 회사 전체 또는 별도 범위이며 HBM별 투자회수·FCF·realized ROIC로 귀속하지 않는다. 따라서 긍정과 부담을 같은 evidence plane에서 균형 있게 반영한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "금융부채 감소는 자본구조 개선 방향을 지지하지만 HBM 투자수익률이나 HBM FCF는 아니다.",
+        "fact_row_index": 16,
+        "source_economic_mechanism": "연결 금융부채 범주 합계가 2025년 말 40,872,970백만원에서 2026년 1분기 말 36,477,745백만원으로 감소해 재무부담 변화를 보여준다.",
+        "source_period_json": "\"2026-03-31 vs 2025-12-31\"",
+        "source_predicate": "연결 금융부채 범주 합계는 2026년 1분기 말 36,477,745백만원으로 전기말 40,872,970백만원보다 감소했다.",
+        "source_value_json": "\"36,477,745 vs 40,872,970\""
+      },
+      {
+        "component_interpretation": "연결 채권 증가는 이익의 현금 회수 부담을 보여주는 counter이며 HBM 단독 채권이나 부실로 확대하지 않는다.",
+        "fact_row_index": 39,
+        "source_economic_mechanism": "연결 채권 장부금액의 큰 증가는 매출 성장과 함께 운전자본 회수 부담을 확대할 수 있다. HBM 단독 채권이나 부실 증가로 귀속하지 않는다.",
+        "source_period_json": "\"2026-03-31 vs 2025-12-31\"",
+        "source_predicate": "연결 매출채권 및 기타채권 장부금액 합계는 2025년 말 19,005,457백만원에서 2026년 1분기 말 34,708,542백만원으로 증가했다.",
+        "source_value_json": "\"34,708,542 vs 19,005,457\""
+      },
+      {
+        "component_interpretation": "별도 유형자산 취득이 감가상각을 웃돌아 재투자와 현금소요가 크지만 연결·HBM 전용 CAPEX로 귀속하지 않는다.",
+        "fact_row_index": 41,
+        "source_economic_mechanism": "본사 별도 유형자산 취득 규모가 감가상각보다 커 투자 집행과 현금소요가 이어졌음을 보여준다. 연결 CAPEX나 HBM 전용 투자로 귀속하지 않는다.",
+        "source_period_json": "\"2026-01-01~2026-03-31\"",
+        "source_predicate": "2026년 1분기 본사 별도 유형자산 취득은 7,004,155백만원, 감가상각은 2,839,481백만원이었다.",
+        "source_value_json": "\"취득 7,004,155; 감가상각 2,839,481\""
+      },
+      {
+        "component_interpretation": "대규모 R&D는 기술 재투자를 확인하지만 당기 비용·현금 부담이며 HBM 전용 realized ROIC로 볼 수 없다.",
+        "fact_row_index": 43,
+        "source_economic_mechanism": "연구개발비 대부분이 경상개발비로 비용화되고 일부만 자산화돼 당기 이익과 장기 자산 형성의 경계가 드러난다. HBM 전용 연구개발비로 귀속하지 않는다.",
+        "source_period_json": "\"2026-01-01~2026-03-31\"",
+        "source_predicate": "2026년 1분기 연구개발비 총지출 2,297,080백만원 중 99,015백만원을 개발비로 자산화하고 2,198,065백만원을 경상개발비로 처리했다.",
+        "source_value_json": "\"총지출 2,297,080; 자산화 99,015; 경상개발비 2,198,065\""
+      },
+      {
+        "component_interpretation": "승인된 배당은 주주환원 의사결정을 확인하지만 분기말 미지급이라 현금 집행 시점을 구분한다.",
+        "fact_row_index": 58,
+        "source_economic_mechanism": "2026년 3월 25일 주주총회는 1,327,712백만원의 배당을 결의했으며 분기말에는 미지급 상태였다.",
+        "source_period_json": "\"approved 2026-03-25; unpaid at 2026-03-31\"",
+        "source_predicate": "APPROVED_ANNUAL_DIVIDEND_REMAINING_UNPAID_AT_QUARTER_END",
+        "source_value_json": "1327712"
+      },
+      {
+        "component_interpretation": "교환사채 행사는 부채 축소와 주식 유통·희석의 trade-off를 동시에 만든다.",
+        "fact_row_index": 75,
+        "source_economic_mechanism": "2026년 1분기 중 해외 교환사채 USD 510.8백만이 자기주식 6,179,194주로 교환돼 부채를 줄이는 대신 주식 유통과 희석 구조에 영향을 줬다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_EXCHANGEABLE_BOND_EXERCISE",
+        "source_value_json": "\"USD 510,800,000 exchanged for 6,179,194 shares\""
+      },
+      {
+        "component_interpretation": "실제 자기주식 소각은 발행주식수를 줄인 주주환원 actual로 평가한다.",
+        "fact_row_index": 94,
+        "source_economic_mechanism": "2026년 1분기 중 자기주식 15,300,000주를 이익소각해 발행주식수를 직접 줄였다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_TREASURY_SHARE_RETIREMENT",
+        "source_value_json": "15300000"
+      },
+      {
+        "component_interpretation": "차입보다 큰 상환 현금유출은 실제 부채 축소 우선순위를 확인하지만 동시에 현금 사용이다.",
+        "fact_row_index": 103,
+        "source_economic_mechanism": "2026년 1분기 연결 차입금 상환 현금유출은 3,760,030백만원으로, 차입 1,006,250백만원을 웃돌아 순차입 축소 방향을 보여준다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_DEBT_REPAYMENT_CASH_OUTFLOW",
+        "source_value_json": "3760030"
+      },
+      {
+        "component_interpretation": "연결 순현금 자본여력은 투자·환원 대응력을 지지하지만 HBM별 realized ROIC나 FCF는 아니다.",
+        "fact_row_index": 105,
+        "source_economic_mechanism": "2026년 1분기 말 연결 현금성자산 등이 차입금을 초과했고 부채비율은 35.56%였다. 이는 회사 전체 자본여력이며 HBM별 투자회수나 FCF로 귀속하지 않는다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "연결 현금및현금성자산 등은 54,329,761백만원, 차입금은 19,317,665백만원, 부채비율은 35.56%였고 순차입금비율은 부의 값이라 표시하지 않았다.",
+        "source_value_json": "\"54,329,761 cash vs 19,317,665 debt; debt ratio 35.56%\""
+      },
+      {
+        "component_interpretation": "연결 재고 증가는 운전자본·가격 위험을 높이는 counter이며 HBM 재고로 귀속하지 않는다.",
+        "fact_row_index": 107,
+        "source_economic_mechanism": "연결 재고 장부금액 증가가 운전자본과 가격·수요 변동 노출을 키운다. 구성에는 전 제품군이 섞여 있어 HBM 재고로 귀속하지 않는다.",
+        "source_period_json": "\"2026-03-31 vs 2025-12-31\"",
+        "source_predicate": "연결 재고자산 장부금액 합계는 2025년 말 14,289,390백만원에서 2026년 1분기 말 15,974,133백만원으로 증가했다.",
+        "source_value_json": "\"15,974,133 vs 14,289,390\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      16,
+      39,
+      41,
+      43,
+      58,
+      75,
+      94,
+      103,
+      105,
+      107
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "HBM 전용 CAPEX, R&D, 운전자본, FCF와 realized ROIC가 공개되지 않았다.",
+      "매출채권·재고 증가가 향후 현금 회수와 가격 위험에 미칠 기간별 영향이 불확실하다.",
+      "교환사채 교환과 자기주식 소각의 최종 주당가치 순효과는 공개 수량만으로 확정할 수 없다.",
+      "승인 배당의 실제 지급 시점과 이후 환원 규모를 분기말 상태만으로 확정할 수 없다."
+    ],
+    "why_not_higher": "순현금·부채축소·환원 actual에도 CAPEX·R&D·채권·재고 부담과 희석 trade-off가 크고 HBM별 realized ROIC가 없다.",
+    "why_not_lower": "연결 순현금, 실제 부채 상환과 감소, 승인 배당 및 자기주식 소각이 동시에 확인돼 자본배분 실행 근거가 분명하다."
+  },
+  "payload_hash": "c73d72caf447b67b9df16cfac02f6b6d16e3e6c7a72415d28e39ce47b1e167b2",
+  "production_score_authority": false,
+  "prompt_hash": "6afe784b5b415755f501e5ca82b1969921d911d9a5cf2b9e9c1b32324adf40dc",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-194b258ba548a865ab31ce01b4d0d046589cb08e8b12717cd75487ef5e4b8d99",
+  "response_id": "COLLABRESP-8b367f00af70a90925ddd5a696d13a7b14acb4e34721b0265a1d880a1afbcfe1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

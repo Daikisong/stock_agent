@@ -1,0 +1,47 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "2026년 정기주주총회에 연결된 SK하이닉스 공식 뉴스룸·IR 첨부자료와 KIND 행사 공시에서 숫자형 경영계획을 확인한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 2026 정기주주총회 경영계획 매출 전망",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "기존 검색은 1분기 실적발표와 ADR 자료에 집중되어 있으므로, 별도 공식 행사인 2026년 정기주주총회의 경영계획 자료·발언·첨부문서를 찾는다. 2026-07-12까지 공개된 발행사 원문에서 공개일보다 뒤의 기간을 대상으로 하는 매출 또는 실적의 기계 판독 가능한 숫자형 point/range와 정확한 인용문이 함께 있을 때만 FORWARD_GUIDANCE 후보로 삼고, 증권사 추정치나 정성적 성장 표현은 대체 근거로 사용하지 않는다.",
+        "source_families": [
+          "ISSUER_NEWSROOM",
+          "ISSUER_PRESENTATION",
+          "KIND_KRX"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "HBM 숫자형 SEGMENT_CONTRIBUTION은 1Q26 IR, 분기·사업보고서, ADR offering 자료를 겨냥한 기존 검색과 의미가 겹치지 않는 더 최신의 발행사 경로가 확인되지 않아 새 query를 만들지 않았다. 제3자 HBM 추정치는 발행사 전용 요건을 대체하지 않는다.",
+      "PEER_BAND는 기존 peer PBR·ROE·EV/EBITDA 비교 검색과 다수의 public broker 후보가 이미 있고, 제공된 resolution contract에도 LLM fact-extractable role이 비어 있어 표현이나 매체만 바꾼 추가 검색은 gap을 닫지 못한다.",
+      "2026-07-12 이후 공개되는 2Q26 실적발표나 후속 가이던스는 이번 as-of 판단에 사용할 수 없다."
+    ]
+  },
+  "payload_hash": "d8fe464b19f5cfcc926712accaa2f761e55a3f887d19da6f9f1ed34f3c552b5c",
+  "production_score_authority": false,
+  "prompt_hash": "416aa86bc30f5ab26103fa3967ceee98add8769c7a815134a2b4311e541b3568",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-eeb73a50c93f408f65dfda67e931d7b13e8c85cef4ea27b3eaa9511a1a555137",
+  "response_id": "COLLABRESP-35e55c58357f17f0241ee55e1d7f3c628841d14bf157c743a9a0f990573140ae",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6e253f2bee9aeb0f98a082ec",
+        "rationale": "전송 청크 0/3의 원문 219,974자를 처음부터 끝까지 검토하고 current 520개 fact/522개 claim과 의미 중복을 대조했다. 이 청크에서 2025년 3분기 누적 메모리 ASP 보합, 9개월 누적 메모리 생산량·가동률, 2025년 3분기 DRAM 점유율 하락 등 신규 objective-local 사실 4건을 추출했다. 메모리 제품의 3분기 매출 26,690,323백만원과 9개월 누적 매출 66,937,858백만원, 사상 최대 분기 매출·HBM3E 판매 확대·2026년 공급부족은 current canonical과 중복해 반복하지 않았다. DS 매출·영업이익·CAPEX는 Foundry·System LSI가 섞였고 전사 현금흐름·계약부채·주요 고객과 Tesla Foundry 계약은 MEMORY/HBM 귀속이 없어 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e253f2bee9aeb0f98a082ec",
+        "economic_mechanism": "2025년 3분기 누적 메모리 제품 평균판매가격이 2024년 연평균과 비슷한 수준에 머물렀다. 메모리 전체의 가격 기여가 기준 연도보다 확대되지 않았다는 반대 근거지만 HBM 단독 ASP는 아니다.",
+        "exact_quote": "In 3Q25, the average selling price (ASP) of TVs decreased by approximately 6% and the ASP of smartphones\nincreased by around 2% compared to the previous year's annual average. ASPs stayed similar for memory-products\nand digital cockpits, but decreased by roughly 9% for smartphone-use OLED panels.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 graph의 2025년 1분기 메모리 ASP 전년동기 대비 1% 상승과 기간·비교기준이 다른 공식 실제치다. 9개월 누적 가격이 전년 연평균과 보합이라는 점은 당시 수익 가시성의 가격 반대 근거를 추가하지만 HBM 단독 수치는 아니어서 비핵심이다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:2025_9M_ASP_FLAT_VS_FY2024",
+        "normalized_object": "2025년 3분기 누적 메모리 ASP가 2024년 연평균 대비 보합",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-9M average vs FY2024 annual average",
+        "predicate": "삼성전자 메모리 제품 평균판매가격이 2025년 3분기 누적 기준으로 2024년 연평균과 비슷한 수준이었다",
+        "predicate_family": "MEMORY_ASP_VS_PRIOR_YEAR_AVERAGE",
+        "primitive_tags": [
+          "MEMORY",
+          "ASP",
+          "PRICING_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_ASP_ACTUAL",
+        "question_family_tags": [
+          "MEMORY_ASP_ACTUAL",
+          "MEMORY_PRICING",
+          "ASP_FLAT_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 3분기 누적 메모리 평균판매가격",
+        "subject_id": "005930:MEMORY:MEMORY_GENERIC:ASP:2025_9M_VS_FY2024",
+        "unit": "relative ASP level",
+        "value": "similar to FY2024 annual average"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-6e253f2bee9aeb0f98a082ec",
+        "economic_mechanism": "2025년 9개월 누적 DS 메모리 생산량은 패키징 후 1Gb 환산 기준 1조6,388억7,600만 단위였다. 당시 실제 공급 실행 규모를 보여 주지만 HBM 물량·수율·제품 믹스는 분리되지 않는다.",
+        "exact_quote": "The DS Division’s memory output in 1Gb equivalents was 1,638,876 million\n(major production sites: Korea [Hwaseong, Pyeongtaek, etc.] and China).",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 graph의 2025년 1분기 생산량 468,476백만 단위에서 기간을 9개월 누적으로 확장한 별도 실제 기준점이다. 공급 실행의 지속 규모를 확인하지만 HBM 전용 생산량이 아니므로 비핵심이다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:2025_9M_OUTPUT_1638876M_1GB_EQ",
+        "normalized_object": "2025년 9개월 누적 DS 메모리 생산량 1,638,876백만 1Gb 환산 단위",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-9M",
+        "predicate": "삼성전자 DS 부문의 2025년 9개월 누적 메모리 생산량이 1Gb 환산 기준 1,638,876백만 단위였다",
+        "predicate_family": "MEMORY_OUTPUT_ACTUAL",
+        "primitive_tags": [
+          "MEMORY",
+          "PRODUCTION_OUTPUT",
+          "ONE_GB_EQUIVALENT"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_SUPPLY_OUTPUT_ACTUAL",
+        "question_family_tags": [
+          "MEMORY_SUPPLY_OUTPUT_ACTUAL",
+          "MEMORY_CAPACITY_EXECUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DS 메모리 2025년 9개월 누적 생산량",
+        "subject_id": "005930:MEMORY:MEMORY_GENERIC:OUTPUT:2025_9M",
+        "unit": "million 1Gb equivalents",
+        "value": 1638876
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e253f2bee9aeb0f98a082ec",
+        "economic_mechanism": "2025년 9개월 누적 DS 메모리 생산라인의 가동 가능 시간과 실제 가동 시간이 각각 65,520시간으로 같아 공시 가동률이 100%였다. 시간 기준 완전 가동의 지속을 보여 주지만 웨이퍼 투입·수율·HBM 전용 CAPA를 뜻하지는 않는다.",
+        "exact_quote": "(Hours)\n3Q25\nOrganization Item\nPotential production time Actual production time Utilization rate\nDS Division Memory 65,520 65,520 100%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 graph의 2025년 1분기 100% 가동률에서 기간을 9개월 누적으로 확장해 시간 기준 완전 가동이 이어졌음을 공식 수치로 확인한다. HBM 전용 가동률은 아니므로 비핵심으로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:2025_9M_UTILIZATION_100PCT",
+        "normalized_object": "2025년 9개월 누적 DS 메모리 시간 기준 가동률 100%",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-9M",
+        "predicate": "삼성전자 DS 메모리 생산라인의 2025년 9개월 누적 시간 기준 가동률이 100%였다",
+        "predicate_family": "MEMORY_UTILIZATION_ACTUAL",
+        "primitive_tags": [
+          "MEMORY",
+          "UTILIZATION",
+          "CAPACITY_SCARCITY"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_CAPACITY_UTILIZATION",
+        "question_family_tags": [
+          "MEMORY_CAPACITY_UTILIZATION",
+          "MEMORY_CAPACITY_CONSTRAINT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DS 메모리 2025년 9개월 누적 생산라인 가동률",
+        "subject_id": "005930:MEMORY:MEMORY_GENERIC:UTILIZATION:2025_9M",
+        "unit": "percent",
+        "value": 100
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e253f2bee9aeb0f98a082ec",
+        "economic_mechanism": "삼성전자의 DRAM 매출 기준 세계 시장점유율은 2024년 41.5%에서 2025년 3분기 33.6%로 낮아졌다. 회사 추정치라는 한계가 있지만 경쟁 지위 약화는 메모리 이익 가시성의 반대 근거다.",
+        "exact_quote": "< Market share of DRAM >\nProduct 3Q25 2024 2023\nSamsung Electronics Business Report 24\nDRAM 33.6% 41.5% 42.2%\n※ Global market share in revenue; data from research firm DRAMeXchange. (Figure for 3Q25 is a Company estimate.)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 graph의 2025년 1분기 DRAM 점유율 35.8%보다 늦은 분기의 33.6%를 회사 추정치라는 불확실성과 함께 정량화한다. 점유율 하락 지속은 earnings_visibility의 경쟁 반대 근거지만 단일 분기 추정치여서 비핵심이다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:2025Q3_MARKET_SHARE_33_6_VS_2024_41_5",
+        "normalized_object": "DRAM 매출 기준 세계 시장점유율 2024년 41.5%에서 2025년 3분기 33.6%로 하락",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q3 vs FY2024",
+        "predicate": "삼성전자 DRAM 매출 기준 세계 시장점유율이 2024년 41.5%에서 2025년 3분기 33.6%로 하락했다",
+        "predicate_family": "DRAM_MARKET_SHARE_CHANGE",
+        "primitive_tags": [
+          "DRAM",
+          "MARKET_SHARE",
+          "COMPETITIVE_POSITION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_COMPETITIVE_POSITION",
+        "question_family_tags": [
+          "DRAM_COMPETITIVE_POSITION",
+          "MEMORY_EARNINGS_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 3분기 DRAM 세계 시장점유율",
+        "subject_id": "005930:MEMORY:DRAM:MARKET_SHARE:2025Q3",
+        "unit": "percent revenue market share",
+        "value": "33.6 vs 41.5"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "b26edcf870d3a46a3f745c2029d8b4856bf2a2bda8bbee994764a5cd1b7ec380",
+  "production_score_authority": false,
+  "prompt_hash": "1ba1ff7d0ad1ca28be12f946a0b58533d724f337e262108602e64b5098055ff1",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fb1c76b825323f74443a015a549aa39b7ddc74fad84a9dae827a311dbd879248",
+  "response_id": "COLLABRESP-11361f3f591e18c9597110086f219411d6b6f3abf0e32be6d14e744d91310deb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

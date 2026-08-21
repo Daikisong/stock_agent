@@ -1,0 +1,626 @@
+한화 Tech – Telegram
+한화 Tech
+한화 Tech
+한화 Tech
+@hanwhatech
+1.99K
+subscribers
+62
+photos
+7
+files
+1.15K
+links
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+한화 Tech
+1.99K subscribers
+한화 Tech
+삼성전자 3q23 잠정실적 발표
+- 매출액 67조원(+11.6% qoq)
+- 영업이익 2.4조원(+258.2% qoq)
+컨센서스 상회했습니다
+769
+views
+23:47
+한화 Tech
+[한화투자증권 반도체 김광진]
+★ 삼성전자 : 3Q23 잠정실적 리뷰
+- 자료링크 :
+https://zrr.kr/pJcc
+▶
+3Q23 잠정실적 리뷰 : DS의 제한적인 실적 개선 속 SDC, MX 선방
+- 3Q23 잠정실적은 매출액 67.0조원(+11.6% QoQ), 영업이익 2.4조원(+258.2% QoQ)로 매출액은 당사 추정치 부합, 영업이익은 상회. 부문별 영업이익은 DS -3.7조원(디램 -0.3조원, 낸드 -2.8조원, LSI/파운드리 -0.5조원), SDC 1.9조원, MX/NW 3.2조원, VD/가전 0.6조원, 하만 0.3조원 등으로 추정
+- 영업이익 기대치 상회의 주 요인은 SDC와 MX부문의 실적 상회 때문. SDC는 중소형 OLED 패널의 계절적 성수기 진입 효과와 함께 경쟁사의 북미 고객사향 초도 물량 공급 지연에 따른 반사 수혜 효과까지 반영된 것으로 추정. MX는 신규 플래그십 스마트폰 출시 효과로 기대치를 상회하는 판매량 달성한 것으로 추정
+- 반면, DS부문의 실적 개선은 다소 완만하게 진행. 디램은 고부가제품군(DDR5, HBM) 비중이 전분기 대비 상승하며 Mix개선 되었으나, 경쟁사 대비 낮은 수준으로 추정되며 판매 증가율도 당초 기대치를 하회(QoQ +9%). 이에 따라 적자폭 축소 수준에 그친 것으로 추정. 낸드도 판매 이연 및 저가 판매 지양 등의 영향으로 판매 증가율이 당초 기대치를 하회(QoQ Flat 수준)했으며, 감산에 따른 비용 부담의 증가로 적자폭 제한적 축소. 파운드리도 더딘 가동률 회복 영향으로 적자 지속 추정. 다만 예상 대비 더디지만 전분기 대비 실적 개선되며 적자폭 축소(0.7조원)된 부분과 디램/낸드 모두 가격 하락 종료 및 상승이 확인된 부분은 긍정적(디램 +5%, 낸드 +2% 상승)
+▶
+DS부문 실적 개선이 중요. 4Q23부터 본격화 기대
+- 결국 주가와 실적의 본격적인 반등을 위해서는 DS부문의 실적 개선이 필수적이며 4Q23부터는 본격화될 것으로 기대. 메모리는 3Q23 가격 하락의 종료가 확인된 만큼 4Q23에는 추가 상승 유력. 디램은 Blended ASP 기준 +HSD%, 낸드는 +10% 내외의 QoQ 상승 전망. 판매량도 3Q23 당초 목표치를 다소 하회했던 만큼 4Q23에는 기존 예상치를 상회하는 판매 증가 전망. 이에 따라 메모리 적자는 약 1.7조원 수준 개선될 것으로 판단
+- HBM에서도 긍정적 소식 기대. 고객사 승인 및 양산 일정을 고려할 때 HBM3는 1H24, HBM3E는 2H24부터는 본격적인 매출 기여 전망. 특히 3Q24 이후 2.5D 패키징과의 연계 공급 가능성이 열려있다는 부분도 DS 실적 개선 측면에서 분명한 잠재력
+▶
+목표주가 9.4만원 유지
+- 투자의견과 목표주가 유지. 3Q23 DS부문의 실적 개선이 당초 시장 기대치에 다소 미치지 못한 것은 사실이나, 그보다 가격 하락의 종료가 확인된 부분에 집중할 필요. 4Q23부터는 P와 Q의 동시 상승에 따른 DS부문의 가파른 실적 개선을 전망
+- 채널 :
+https://t.me/hanwhatech
+상기 내용은 컴플라이언스 승인을 필함
+768
+views
+07:09
+한화 Tech
+[한화 Tech 김광진/이용욱/유영솔]
+2023.10.12(목)
+★ 데일리 뉴스 플로우
+▶
+반도체
+메모리 시장 내년 하반기 본격 회복…"서버 수요가 주도할 것" IDC, 내년 글로벌 반도체 시장 규모 6210억달러 전망
+내년 D램, 낸드 시장 각각 17.3%, 14.9% 성장 예상
+-link:
+https://www.thelec.kr/news/articleView.html?idxno=23442
+Micron, 서버 및 PC 앱에 전력을 공급하기 위해 1베타 기술확장
+-link:
+https://www.digitimes.com/news/a20231006VL207/micron-us-memory-fab.html
+AMD, 오픈소스 AI 소프트웨어 전문업체 인수
+-link:
+https://www.digitimes.com/news/a20231011VL206/amd-ai-ic-design-distribution-chips+components.html
+중국, 2025년까지 컴퓨팅 성능 배가를 위해 데이터 센터 건설 급증 준비
+-link:
+https://www.digitimes.com/news/a20231011VL200/2025-china-data-center-east-asia-it+ce.html?chid=10
+▶
+2차전지
+[단독] 리튬 배터리 판매·보관·폐기 규제 법안 미국서 첫 발의 '업계 촉각' 리튬이온 배터리 안전성 확보 목적 ...샌디에이고 시의회 공공안전위원회 회의서 안건 통과
+-link:
+https://www.theguru.co.kr/mobile/article.html?no=61056
+[단독] 현대차, 中 전기차 '아크폭스' 만든다…중대 결단
+-link:
+https://naver.me/xBsY2gWK
+삼성SDI-스텔란티스 합작 2공장, 미 인디애나 코코모에 짓는다. 건설중인 1공장 인근…배터리 생산 총 67GWh 규모 '기가팩토리' 완성
+-link:
+https://m.yna.co.kr/view/AKR20231011140000003?section=industry/index
+샤오미 '가솔린 엔진+대용량 배터리' EREV 개발
+-link:
+https://www.theguru.co.kr/mobile/article.html?no=61054
+▶
+통신
+알뜰폰 업계, 아이폰15 출시 앞두고 가입자 유치 ‘경쟁’
+젊은 소비자 자급제 수요 많은 아이폰 특성상 가입자 유치 기회
+-link:
+https://n.news.naver.com/mnews/article/366/0000938438?sid=105
+LG유플러스, 이노와이어리스와 함께 UAM 상공망 품질 측정 통합 솔루션을 개발
+-link:
+https://n.news.naver.com/mnews/article/030/0003143878?sid=105
+채널:
+https://t.me/hanwhatech
+543
+views
+23:17
+한화 Tech
+[한화투자증권 2차전지 이용욱]
+★ LG에너지솔루션 : 3Q23 잠정실적 코멘트 – 기대보다 빨랐던 얼티엄셀즈 가동률 상승
+- 자료링크 :
+https://zrr.kr/NBAd
+▶
+3분기 실적 리뷰
+- 동사의 3분기 실적은 매출액 8.2조 원, 영업이익 7,312억 원(OPM 8.9%)으로 최근 하향된 컨센서스 6,751억 원(OPM 8.1%) 8% 상회. AMPC 2,155억 원 효과 제외한 영업이익도 5,157억 원(OPM 6.3%)으로 당사 추정치(4,647억 원) 11% 상회
+- 실적의 컨센서스 상회 배경은 얼티엄셀즈 1공장 출하(4.8GWh 추정)가 예상보다 컸기 때문. 당초 3분기 얼티엄셀즈 1공장의 출하는 3.8GWh(vs. 2Q23 2.5GWh 추정)로 더디게 상승할 것으로 추정했음. 이에 따라, 3분기 AMPC 이익은 2,155억 원으로 당사 추정치(1,654억 원) 상회. 한편, ESS 부문은 주택용 수요 지연으로 QoQ 매출 감소한 것으로 추정(기존 가이던스: QoQ +20% 증가). 소형전지 부문은 예상대로 Tesla의 라인 업그레이드로 매출/출하량 모두 감소한 것으로 추정
+▶
+4분기 전망 및 주가 흐름
+- 우리의 기존 4분기 예상 실적은 매출액 9.5조 원, 영업이익 8,974억 원(9.5%)이었음. AMPC 제외 시 5,549억 원(5.8%)
+- 기존에도 4분기 얼티엄셀즈 출하량은 7.5GWh로 가파르게 상승할 것이라 예상했기 때문에, 4분기에 대한 전망치 변화 없음. 1) GM/Tesla향 출하 증가, 2) ESS 회복, 3) 배터리 ASP 하락 폭 둔화에 대한 전망도 그대로 유지
+- 이번 LGES의 잠정실적을 통해 얼티엄셀즈 가동률이 예상보다 빠르게 올라간 것을 확인했으며, 이는 우려 대비 견조한 북미 전기차 수요 암시. 그러나, 4분기 전방위에 걸친 수요 회복에 대한 불확실성도 여전히 존재. 10월 중순부터 이어질 글로벌 완성차 및 배터리 업체의 실적발표에서 4Q23 수요 가이던스가 중요할 것으로 판단
+- 현재 2차전지 업종 주가 조정의 가장 큰 이유 중 하나는 전기차 수요 부진에 대한 우려. 여전히 미국 대선 등 정책적 불확실성 상존하고 있으나, 양극재/분리막을 제외하면 2차전지 업종의 YTD 수익률은 마이너스 수준. 1) 전방 전기차 수요가 예상보다 견조하고 2) 연말 양극재 대규모 수주가 연이어 발표되고, 3) 리튬 가격까지 반등한다면 업황 턴어라운드 가능하다고 판단
+- 채널 :
+https://t.me/hanwhatech
+상기 내용은 컴플라이언스 승인을 필함
+661
+views
+23:39
+한화 Tech
+국가별 6g 후보 주파수 대역 제시현황
+한국 7.125-8.5
+중국 6.525-7.125
+미국 12.7-13.25
+—————————————————
+https://naver.me/5dPZcact
+Naver
+6G 주파수 글로벌 경쟁…6㎓ 이하 중·저대역 재조명
+6세대(6G) 이동통신 후보 주파수에 대한 국제 논의를 앞두고 6㎓ 이하 중·저대역(서브6㎓, FR1)이 새롭게 부각됐다. 기존 후보군으로 꼽히던 고주파 대역 대비 넓은 커버리지를 확보하면서 6G 기술로의 단계적 전
+607
+views
+07:45
+한화 Tech
+[한화 Tech 김광진/이용욱/유영솔]
+2023.10.13(금)
+★ 데일리 뉴스 플로우
+▶
+반도체
+日정부, 반도체 예산 30조원 증액 방침…라피더스·TSMC 등 지원
+-link:
+https://n.news.naver.com/article/003/0012142264?sid=104
+美 마이크론, 중국 정부 판매금지 조치 불구 현지 수입박람회 참석 '강행' 인텔·퀄컴·AMD·텍사스 인스트루먼츠 등도 참여 마이크론, 美 정부 제재에도 中 시장 공략 지속
+-link:
+https://www.theguru.co.kr/mobile/article.html?no=61120
+삼성·SK는 '무기한 유예' TSMC는 '1년 연장' 유력...K-반도체 웃었다
+-link:
+https://n.news.naver.com/article/014/0005085059?sid=101
+▶
+2차전지
+삼성SDI-CATL, BMW '노이어 클라쎄' 전기차 3시리즈 수주戰
+-link:
+https://www.etnews.com/20231012000232
+中 LFP '탈피'… 기아, EV5 중국 제외 시장서는 韓 NCM 배터리 쓴다. 中 전략모델 EV5, 국내 출시땐 NCM 배터리 탑재. EV3, EV4 등 저가라인업도 국내산 사용 가능성 높아. 中 시장에서만 中배터리 쓴다? 국내산 늘리는 기아
+-link:
+https://www.dailian.co.kr/news/view/1282327/?sc=Daum
+中 전기차 유망주 ‘WM모터’ 파산…내수 침체·경쟁 심화 못버텨
+-link:
+https://www.g-enews.com/article/Global-Biz/2023/10/20231011175415587b418061615_1
+도요타와 이데미츠,전고체전지산 위해 손잡아
+-link:
+https://asia.nikkei.com/Business/Automobiles/Toyota-Idemitsu-join-hands-to-produce-solid-state-EV-batteries
+SKC, 폴리우레탄 원료사업 4,103억 원에 매각
+-link:
+https://www.pinpointnews.co.kr/news/articleView.html?idxno=221111
+채널:
+https://t.me/hanwhatech
+Naver
+日정부, 반도체 예산 30조원 증액 방침…라피더스·TSMC 등 지원
+일본 경제산업성이 반도체 산업을 육성하기 위해 총 3조4000억엔(약 30조5534억원) 규모의 예산 지원을 검토하고 있다고 아사히신문이 12일 복수의 정부 관계자를 인용, 보도했다. 경제산업성은 이달 안에 내놓을
+❤
+2
+669
+views
+23:03
+한화 Tech
+[한화 Tech Daily News Flow]
+2023년 10월 16일(월)
+▶
+반도체
+美, 삼성‧SK 中 반도체 공장에 장비 반입 일부 허용...극자외선 노광장비 등은 통제 대상
+-link:
+https://economist.co.kr/article/view/ecn202310150014
+대만 TSMC, 1나노 반도체 공장 증설 계획 무산설 나와
+-link:
+https://view.asiae.co.kr/article/2023101515315565521
+中 반도체 수입 줄었는데 밀수는 늘었다...美 수출규제에 中 1~9월 반도체 수입 15% 감소. “엔비디아 등 특정 반도체 수출 규제에 암거래 성행”
+-link:
+https://www.mk.co.kr/news/world/10850035
+▶
+2차전지
+CATL은 포기했는데…中배터리제조사 '고션', 美서 공장부지 매입. 시카고서 80km 떨어진 맨티노에 20억달러 투자…내년 완공 목표. 中기업에 美보조금 지급 반대하는 하원 공화당의 반대 직면할 듯
+-link:
+https://www.yna.co.kr/view/AKR20231013005400009?input=1179m
+중국 소유의 일본계 배터리 업체 AESC는 워싱턴의 조사 강화에도 불구하고 확장 할 수 있다고 확신
+-link:
+https://asia.nikkei.com/Business/Technology/China-owned-EV-battery-maker-says-U.S.-plants-are-on-track
+폭스바겐·유미코아 배터리 소재 합작 공장 부지, 폴란드 낙점…2.4조 원 투입. 폴란드 니사에 건설…오는 2025년 가동 목표 . 전기차 220만 대 사용 가능한 양극재 생산
+-link:
+https://www.theguru.co.kr/mobile/article.html?no=61225
+삼성SDI, LFP 배터리 속도전…양산 밑그림 완성. 샘플 제작 성능 테스트 진행. 용량 개선·출력 강화 차별화. 연내 개발라인·2025년 이후 양산 추진
+-link:
+https://www.etnews.com/20231013000203
+▶
+통신
+통신3사, 영업익 1兆전망에도 울상...5G가입자 증가세 정체 우려에 통합요금제 등 정부 압박까지
+- link:
+https://naver.me/5bu3OD0i
+정부, 지자체 기간통신사업자 등록 허용 담은 전기통신사업법 개정안 시행령 작업 착수. 지자체에서 공공와이파이와 공익목적의 비영리 사업을 실시하는 경우에 한해 기간통신사업을 등록 가능
+- link:
+https://n.news.naver.com/mnews/article/030/0003145500?sid=105
+이코노미스트
+美, 삼성‧SK 中 반도체 공장에 장비 반입 일부 허용
+미국 정부가 삼성전자와 SK하이닉스의 중국 반도체 공장에 대한 미국산 반도체 장비 반입을 일부 허용한다는 방침을 공식화했다. 다만 일부 최첨단 장
+👍
+1
+511
+views
+23:03
+한화 Tech
+[한화 Tech 김광진/이용욱/유영솔]
+2023.10.17(화)
+★ 데일리 뉴스 플로우
+▶
+반도체
+"美 반도체기업 대중국 수출통제 강화 조치 발표 예정" 지난해 대중국 수출통제 조치에 추가될 듯. "엔비디아 등 우회"…이르면 이번주 중 발표
+-link: https://n.news.naver.com/article/003/0012149222?sid=104
+中, '미국·일본산 반도체 제조원료' 반덤핑 관세 연장 검토. 2018년에 요오드화수소산 대상…관영지 "美 반도체 제재 때문에 유지할 듯"
+-link:
+https://n.news.naver.com/article/001/0014264140?sid=104
+마이크론, 말레이시아에 신규 조립 및 테스트 시설 오픈
+-link: https://www.digitimes.com/news/a20231016VL204/malaysia-memory-chips-micron.html
+▶
+2차전지
+中 배터리 'SVOLT' 시대?... BMW와 11조 원 공급계약 체결. 올해 초 BMW는 160GWh 규모의 배터리 주문 계획을 밝혔으며, 공급사로 중국 업체들이 최종 선정. SVOLT가 BMW 유럽지역의 90GWh 물량을 담당하고, 중국 시장용 70GWh는 CATL, EVE Energy가 생산
+-link:
+https://www.newspim.com/news/view/20231016000408
+'르노 배터리 셀 제조' 엔비전AESC, 유럽투자은행으로부터 실탄 확보. 佛 두에공장 설립에 4.5억 유로 대출 승인. 2025년 가동…2030년까지 최대 30GWh 용량. LG에너지솔루션도 르노에 계속 공급
+-link:
+https://www.theguru.co.kr/news/article.html?no=61277
+중국은 대출 기관에 자동차 대출, 소비자 신용에 돈을 쏟아 붓도록 지시. 중국 정부는 소비를 촉진하고 사회 초년생의 어려움을 완화하기를 희망
+-link:
+https://asia.nikkei.com/Spotlight/Caixin/China-tells-lenders-to-pour-money-into-car-loans-consumer-credit
+▶
+통신
+SKT "메타버스서 콘텐츠 거래 가능"…'이프랜드'에 경제시스템 도입…이프랜드에 유료 재화 '스톤' 도입…콘텐츠 매매·후원 등 가능. 신규 콘텐츠 1만6000여개 추가…기존 대비 5배 이상 확대
+-link:
+https://n.news.naver.com/mnews/article/031/0000779248?sid=105
+LGU+, DX플랫폼 '화물잇고'로 물류혁신 선도한다…'화물잇고'는 접수, 배차, 운송, 정산 등 화물 중개 및 운송에 필요한 모든 프로세스를 원스톱으로 제공
+-link:
+https://n.news.naver.com/mnews/article/138/0002158671?sid=105
+채널:
+https://t.me/hanwhatech
+Naver
+"美 반도체기업 대중국 수출통제 강화 조치 발표 예정"
+조 바이든 미국 행정부가 미 업체들의 인공지능(AI) 반도체 대중국 수출 차단을 강화하는 조치를 취할 예정인 것으로 전해졌다. 16일 홍콩 사우스차이나모닝포스트는 로이터통신이 보도한 미 정부 관계자의 말을 인용, 바
+👍
+1
+486
+views
+22:52
+한화 Tech
+[한화투자증권 반도체 김광진]
+★ 원익QnC : 단기 실적보다 고객사들의 실적 및 가동률 회복 시점에 초점
+- 자료링크 :
+https://zrr.kr/mI4u
+▶
+3Q23 컨센서스 하회 전망
+- 3Q23 예상실적은 매출액 2,005억원(-1% QoQ), 영업이익 215억원(-23% QoQ)로 당초 시장 기대치를 다소 하회할 전망. 주 원인은 메모리 업체들의 감산 추가 확대에 따른 쿼츠 부품 공급량 감소 때문. 기존 예상대로 북미 주력 고객사향 공급은 증가하였으나 그 외 고객사들로의 공급 감소가 이를 상쇄하면서 쿼츠 부문 매출액은 603억원(-3% QoQ)으로 전분기 대비 소폭 역성장 할 전망. 또한 상반기 실적 방어에 크게 기여했던 자회사 모멘티브도 계절성으로 인해 성장세 다소 둔화된 것으로 추정. 비용 측면에서도 생산라인 이전 및 통합 과정에서 발생한 일회성 비용들이 인식될 것으로 예상
+▶
+단기 실적보다 전방 고객사들의 실적 및 가동률 회복에 초점
+- 실적 회복이 당초 기대 대비 다소 더디지만 과도한 실망감은 경계. 메모리 감산을 통한 수급 균형 회복 과정에서 불가피한 일시적 성장통. 단기 실적 보다 전방 고객사들의 실적 개선 및 가동률 회복 시점에 초점을 맞추는 것이 타당
+3Q23 이미 감산의 효과는 디램/낸드 가격 하락의 종료로 확인됐으며, 4Q23에는 가격 반등에 따른 메모리 업체들의 유의미한 실적 개선이 확인될 것. 업황의 회복이 확인됨에 따라 1Q24부터는 웨이퍼 투입량이 재차 증가하면서 라인 가동률의 점진적 회복 가능성 높으며 4Q24까지 꾸준히 상승 전망. 동사 실적도 가동률 상승에 동반해 성장 전망
+▶
+목표주가 40,000원 유지
+- 투자의견과 목표주가 유지. 메모리 업황이 회복 구간에 들어간 것은 사실이나 수급 균형의 회복이 인위적 공급 축소를 통해 만들어진 만큼 동사와 같은 소재 업체들의 실적 회복에는 다소 간의 시차가 존재할 수밖에 없음을 염두에 둘 필요. 당사는 내년에도 메모리 업계의 보수적인 Capex 기조가 이어질 가능성이 높다는 점에서 장비 업종보다 감산 종료만으로도 실적 성장이 가능한 소재 업종을 상대적으로 선호. 동사는 그 중에서도 가장 Valuation 레벨이 낮은 편에 속한다는 점에서 매력적인 선택지 중 하나
+- 채널 :
+https://t.me/hanwhatech
+상기 내용은 컴플라이언스 승인을 필함
+526
+views
+00:03
+한화 Tech
+[한화투자증권 2차전지 이용욱]
+★ 양극재 9월 수출액 코멘트
+- 자료링크 :
+https://bit.ly/3rYFCGs
+▶
+3Q23 양극재 업체 실적은 컨센서스 하회, 4Q23 ASP도 추가 5~10% 하락 우려 대두
+- 2023년 9월 국내 양극재 수출액과 수출량은 각각 10.2억 달러(MoM -11.9%)와 2.4만 톤(MoM -10.8%)을 기록했다. 이에 따른 양극재 수출 가격은 41.9달러/kg로 전월 대비 1.2% 하락했다. 한편, 양극재 가격은 10월 잠정치(1~10일) 기준 MoM -8.3% 하락하며 큰 폭 하락세를 이어갔다. 분기별로 보면, 양극재 수출 가격은 3Q23 QoQ -15.4% 하락했고, 4Q23에도 추가로 5~10% 하락할 가능성이 커졌다. 다만, 지난주 탄산리튬 선물가격이 장중 상한가를 기록했고, 중국 탄산리튬 현물가격도 소폭 반등했다. 아직, 추세적인 반등으로 보기는 이르지만 리튬 가격이 반등하거나 최소 Flat으로 유지된다면, 양극재 업체들은 1H24 내에 6~8%의 안정적인 수익성 회복이 예상된다.
+- 9월 양극재 수출량이 7~8월 대비 크게 감소한 점은 아쉽다. 그러나, 3Q23 분기 기준 QoQ +9.3% 증가한 점은 긍정적이다. 엘앤에프가 위치한 대구지역에서 유일하게 QoQ -10% 하락했다. 3분기 테슬라 라인 업그레이드 영향으로 추정된다. 한편, 4Q23에는 1) GM/Tesla 등을 비롯한 주요 업체들의 신차 효과, 2) 연말 성수기를 고려하면 수출량은 4Q23에도 지속 성장할 것으로 기대된다. ASP 변동성이 여느 때보다 커지며 주요 업체들의 실적 추정도 어려워졌지만, 2차전지 업종의 핵심은 Q 성장이다.
+- 7~9월 누적 양극재 수출액은 33.0억 달러(약 4.3조 원)로 2Q23 35.7억 달러(약 4.7조 원) 대비 8% 감소했다. 양극재 업체들의 3Q23 합산 매출액 컨센서스는 5.0조 원(약 44.2억 달러)이다. 이미 잠정실적에서 매출액 컨센서스를 하회한 에코프로비엠 외에도 나머지 업체들의 2Q23 매출액도 최근 하향 조정된 컨센서스를 하회할 것으로 예상된다.
+양극재 업종 주가는 고점 대비 40~50%가량 하락하며, 이제 시장은 반등의 시기를 기다리고 있다. 여전히 전기차 수요 우려, 트럼프 재선 이슈 등 불확실성은 높다. 그러나, Q 성장이 지속되고 있기에 업황 개선 트리거만 보이면 주가도 언제든 반등할 수 있다고 판단한다. 1) 10월 글로벌 완성차 & 배터리 업체 실적발표에서 4Q23에 대한 가이던스, 2) 향후 리튬 가격 추이, 3) 양극재 업체들의 대규모 수주 등에 주목하자.
+- 채널 :
+https://t.me/hanwhatech
+상기 내용은 컴플라이언스 승인을 필함
+3.29K
+views
+edited
+00:07
+한화 Tech
+KT 배당정책 공시
+별도 조정 당기순이익 50%
+1Q24부터 분기배당 실시
+————————————
+https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20231017800121
+629
+views
+03:33
+한화 Tech
+[한화 Tech 김광진/이용욱/유영솔]
+2023.10.19(목)
+★ 데일리 뉴스 플로우
+▶
+반도체
+TSMC, 대만 북부 착공 예정이던 1나노 공장 증설 포기
+-link:
+https://n.news.naver.com/article/366/0000940189?cds=news_my_20s
+日 언론 “SK하이닉스, 키옥시아·웨스턴디지털 합병에 반대”
+-link:
+https://n.news.naver.com/article/366/0000940202?cds=news_my_20s
+"내년 AI 열풍 지속할 것…HBM 시대 열린다" 트렌드포스, '2024년 테크트렌드' 발표. 빅테크, 자체 AI칩 개발 가속…"HBM 수요 늘 수밖에"
+-link:
+https://n.news.naver.com/article/018/0005598789?cds=news_my_20s
+"2차선→8차선 확장 기술"…삼성·SK하이닉스, HBM 다음 전장. 국제 행사서 기존 D램 한계 극복 기술 'CXL' 앞다퉈 소개
+-link:
+https://n.news.naver.com/article/421/0007118783?cds=news_my_20s
+삼성전자 “3D D램·1000단 이상 낸드 개발…차세대 공정 기술로 미래 반도체 선도”
+-link:
+https://n.news.naver.com/article/030/0003146456?cds=news_my_20s
+▶
+2차전지
+中 칭산그룹(니켈 및 스테인리스 기업), 칠레에 2.3억 달러 LFP 생산 공장 건설 추진. 2025년 5월부터 가동 예정
+-link:
+https://www.g-enews.com/view.php?ud=202310181436138650b418061615_1
+소니 & 혼다의 전기차 Afeela는 'smartphone-on-wheels'을 한단계 발전 시킴. 전장 기반의 전기차는 산업이 구독 수입을 향해 전환되고 있다 강조
+-link:
+https://asia.nikkei.com/Business/Automobiles/Sony-Honda-s-Afeela-EV-takes-smartphone-on-wheels-a-step-further
+▶
+통신
+“스타링크는 생명줄”… 전쟁통에 몸값 치솟는 스페이스X
+-link:
+https://naver.me/5WHGQOhR
+통신사, 6G·AI 기술개발 속도낸다
+skt- 내달 그룹사 AI서밋
+kt- 이달말 초거대 AI 상용화
+lgu+- lg전자와 6g 행사
+-link:
+https://naver.me/FzQIVfp1
+채널:
+https://t.me/hanwhatech
+Naver
+TSMC, 대만 북부 착공 예정이던 1나노 공장 증설 포기
+대만 파운드리(위탁생산) 기업 TSMC가 대만 북부에 착공할 예정이던 1나노(나노미터·10억분의 1m) 반도체 공장 증설을 포기했다. 18일 자유시보 등 대만 언론에 따르면 TSMC는 전날 성명을 통해 “현 상황에서
+❤
+1
+604
+views
+22:58
+한화 Tech
+[한화 Tech 김광진/이용욱/유영솔]
+2023.10.20(금)
+★ 데일리 뉴스 플로우
+▶
+반도체
+TSMC, 2023년 4분기 11% 순차적 매출 성장 예상
+-link:
+https://www.digitimes.com/news/a20231019VL207/chips+components-ic-manufacturing-tsmc-smartphone.html
+TSMC, 2024년 7nm 이하 주조 공장 견적을 3~6% 인상할 계획… 16nm 이상 공정 제조에 대한 견적은 안정적으로 유지될 것
+-link:
+https://www.digitimes.com/news/a20231018PD219/tsmc-ic-manufacturing-sub-7nm-us-china-chip-war.html?chid=10
+삼성전자, 130조원 車반도체 도전장…獨 뮌헨서 파운드리 포럼. 2026년 2나노 전장 솔루션 양산
+-link:
+https://n.news.naver.com/article/015/0004904399?sid=101
+[전자신문 테크서밋]SK하이닉스 “전공정·후공정 영역 사라진다...2025년 말 HBM4 개발 예정”
+-link:
+https://n.news.naver.com/article/030/0003146825?cds=news_my_20s
+폭스콘, 엔비디아와 협력해 AI 공장 건설
+-link:
+https://www.digitimes.com/news/a20231018PD223/ai-electric-vehicles-ic-design-distribution-foxconn-nvidia-ict-manufacturing-hhtd23.html
+▶
+2차전지
+[단독]현대차·LG엔솔, 인니 IBC(국영 배터리 기업)와 배터리 합작공장(연 10GWh 캐파 향후 33GWh까지 확대. 2024년 4월부터 본격 양산 계획) 지분매각 협상. IBC, 지분 최대 40% 확보 목표
+-link:
+https://www.newswave.kr/news/articleView.html?idxno=510649
+테슬라, 사이버트럭 11월30일 고객 인도 시작. "기가팩토리 사이버트럭 생산 능력 연간 12.5만 대 도달" 주장
+-link:
+https://www.theguru.co.kr/mobile/article.html?no=61446
+혼다와 GM은 일본에 운전자 없는 택시 도입 계획. 2026년 도쿄에 벤처기업 설립 예정, 레벨 4 기준 충족 예상
+-link:
+https://asia.nikkei.com/Business/Automobiles/Honda-and-GM-to-launch-driverless-taxis-in-Japan
+리비안, 아마존에 배송 전기밴 공급 1만 대 돌파. 아마존, 2030년까지 전기밴 10만 대 이상 운영 계획. 리비안, 소비자향 픽업·SUV까지 5.2만 대 생산 목표
+-link:
+https://www.theguru.co.kr/mobile/article.html?no=61449
+현대차, 아이오닉 5·6 美 리스 가격 대폭 인하…현지 출시 이후 가장 저렴. 테슬라 모델3 月 리스 가격 인하로 가격 경쟁력↓. 시장 변화 추이 고려 지속해서 가격 정책 수정키로
+-link:
+https://www.theguru.co.kr/mobile/article.html?no=61459
+▶
+통신
+“국감 소나기 피했네” 통신 3사, 종합감사에도 5G·가계통신비 빠져 ‘안도’
+3사 CEO 증인 채택 흐지부지. 가게통신비 관련 질의가 빠질 것으로 예상
+-link:
+https://n.news.naver.com/mnews/article/366/0000940744?sid=105
+日, 5G 주파수 추가 확보 나서…26㎓·40㎓ 고대역도 추진
+생성형AI XR로 인한 통신량 폭증 대비한 선제 할당
+-link:
+https://n.news.naver.com/mnews/article/030/0003146876?sid=105
+채널:
+https://t.me/hanwhatech
+DIGITIMES
+TSMC expects 11% sequential revenue growth in 4Q23
+TSMC expects to post revenues of between US$18.8 billion and US$19.6 billion in the fourth quarter of 2023, which is an 11.1% sequential increase at the midpoint. Gross margin and operating margin for the quarter are estimated at 51.5-53.5% and 39.5-41.5%…
+643
+views
+22:53
+한화 Tech
+[한화 Tech 김광진/이용욱/유영솔]
+2023.10.23(월)
+★ 데일리 뉴스 플로우
+▶
+반도체
+삼성전자, HBM3E·엑시노스2400 공개…반도체 불황 극복한다
+-link:
+https://n.news.naver.com/article/018/0005601337?sid=101
+엔비디아 RTX 4090, 미국의 최근 제재에 따라 가격 급등 및 재고 소진
+-link:
+https://www.digitimes.com/news/a20231020PD213/china-gpu-graphics-card-nvidia.html?chid=10
+IBM, 22배 빠른 AI칩 공개..엔비디아 넘을까
+-link:
+https://n.news.naver.com/article/092/0002308673?cds=news_edit
+▶
+2차전지
+'세계 80% 공급' 흑연도 수출 막아 中 의존 높은 한국기업 타격 우려. 가공 공정도 中서 70% 이뤄져. 산업부, 공급망 긴급점검 나서
+-link:
+https://www.mk.co.kr/news/business/10854965
+中 리튬인산철 현물가 대폭 하락... 하지만 관련 기업들은 '생산능력 확장'. 리튬인산철 현물 가격 연초 대비 58% 하락. 중국 리튬기업들의 생산라인 증설에 따른 공급과잉, 경쟁 격화 및 관련 기업 채산성 악화 우려
+-link:
+https://www.nvp.co.kr/news/articleView.html?idxno=309393
+도요타, 2025년부터 테슬라 EV 충전 표준 채택. 포드/GM/닛산은 이미 서명 완료
+-link:
+https://asia.nikkei.com/Business/Automobiles/Toyota-to-adopt-Tesla-EV-charging-standard-from-2025
+테슬라 전기차 충전기가 도요타를 잡았으나 다음 격전지는 아시아가 될 것. 애널리스트들은 중국을 제외하면, 아시아는 NACS(북미 충전 표준)가 따라 잡을 수 있는 수준이라 평가
+-link:
+https://asia.nikkei.com/Business/Automobiles/Tesla-s-EV-chargers-win-over-Toyota-but-next-test-will-be-Asia
+채널:
+https://t.me/hanwhatech
+Naver
+삼성전자, HBM3E·엑시노스2400 공개…반도체 불황 극복한다
+삼성전자는 챗GPT 등 인공지능(AI) 수요가 급증하자 이 시장을 주도할 차세대 제품 및 기술을 대거 공개했다. AI 기술을 품은 차세대 AP(애플리케이션 프로세서)에 이어 첨단 AI반도체로 꼽히는 고대역폭 메모리(
+602
+views
+22:58
+한화 Tech
+[한화 Tech 김광진/이용욱/유영솔]
+2023.10.24(화)
+★ 데일리 뉴스 플로우
+▶
+반도체
+엔비디아, ‘AI 공장’ 설립 위해 폭스콘과 맞손…엔비디아 AI 소프트웨어 활용해 폭스콘 고객사 자체 AI 공장 구축 지원
+-link:
+https://n.news.naver.com/article/018/0005601730?sid=105
+中, 美 제재로 범용 반도체 생산 주력...세계 3분의 1 차지. DB하이텍, PSMC, 뱅가드 등 8인치 파운드리에 영향 미칠 듯
+-link:
+https://n.news.naver.com/article/092/0002308801?sid=105
+TSMC 웨이저쟈 CEO , 파운드리 경쟁서 삼성 향해 '작심발언' 3나노, 3분기 매출 비중 6%…"내년 여러 고객 수요". GAA' 적용 2나노 2025년 양산…기술 우위 자신감
+-link:
+https://n.news.naver.com/article/003/0012162600?sid=101
+TSMC 1.4나노 반도체공장 무산, 수자원 풍부한 가오슝 새 후보지로 떠올라
+-link:
+https://m.businesspost.co.kr/BP?command=mobile_view&idxno=330692
+▶
+2차전지
+엘앤에프, 유럽 배터리社에 20조 규모 양극재 공급한다. 2025년부터 5년간 공급 계약. 엘앤에프 수주 중 역대 최대. K배터리에 편중된 고객 다각화
+-link:
+https://www.hankyung.com/article/2023102395101
+현대차, 유럽전기차에 삼성SDI 배터리 쓴다…국내 배터리 3사와 모두 공급계약. 2026년부터 7년간…규모는 비공개. 현대차 차세대 전기차에 P6 배터리 공급
+-link:
+https://view.asiae.co.kr/article/2023102308141745951
+中 흑연 수출통제에 배터리 생산 ‘비상’…정부 수급대응 TF 가동. 中의존도 93%…수입 차질·지연땐 타격 불가피. 中 당국 대화 강화하고, 국내 생산계획 '속도'. 대체수입처 확보 및 대체재 개발 R&D 투자도
+-link:
+https://www.edaily.co.kr/news/read?newsId=03056966635775872&mediaCodeNo=257&OutLnkChk=Y
+'흔왕달동력(Sunwoda)' 단독 IPO 추진..."기업가치 모회사 뛰어넘어"
+-link:
+https://www.newspim.com/news/view/20231023000308
+▶
+통신
+점점 사라지는 알뜰폰 ‘0원 요금제’… 가입자 수 증가세 주춤해질 듯. 9월 초 30여종에서 이달 말 8종으로 급감
+-link:
+https://biz.chosun.com/it-science/ict/2023/10/23/IRFQLWEHARFQVFMQFICVWGBYU4/?utm_source=naver&utm_medium=original&utm_campaign=biz
+SKT, 트럭 자율주행 대중화 나선다…마스오토와 '맞손'. AI 기반 대형트럭 자율주행 기술 고도화. 화물운송 주행 데이터 수집하고 분석 협력
+-link:
+https://n.news.naver.com/mnews/article/648/0000020394?sid=105
+채널:
+https://t.me/hanwhatech
+Naver
+엔비디아, ‘AI 공장’ 설립 위해 폭스콘과 맞손
+AI 컴퓨팅 기업 엔비디아(CEO 젠슨 황)가 대만에서 열린 혼하이 테크 데이(Hon Hai Tech Day)에서 혼하이 테크놀로지 그룹(Hon Hai Technology Group, 폭스콘)과 손을 잡아 AI 산업
+576
+views
+23:04
+한화 Tech
+[한화 Tech 김광진/이용욱/유영솔]
+2023.10.25(수)
+★ 데일리 뉴스 플로우
+▶
+반도체
+엔비디아표 윈도PC용 CPU 온다…반도체 지각변동"엔비디아, ARM 기반 MS 윈도PC용 CPU 개발"
+CPU 2위 AMD도 ARM 쪽 합류…인텔 지위 타격
+PC시장 뒤흔들듯…삼성·TSMC 파운드리도 촉각
+엔비디아發 지각변동 "모든 IT기업 사업에 영향"
+-link:
+https://n.news.naver.com/article/018/0005603055?sid=101
+엔비디아,"미정부, 대중 AI칩 수출 앞당겨 적용" 美정부, 당초 밝힌 1달 유예 없이 1주만에 시행…엔비디아는 "단기 수익에는 영향 없어"
+-link:
+https://n.news.naver.com/article/015/0004906275?sid=101
+[2023 스냅드래곤서밋] 퀄컴, PC 혁신 이끌 AI 플랫폼 ‘스냅드래곤 X 엘리트’ 공개…24년 중반 출시 예정
+- link:
+https://it.chosun.com/news/articleView.html?idxno=2023092102825
+온세미, 부천에 전력반도체용 SiC 제조시설 완공. 완전 가동시 8인치 SiC 웨이퍼 연간 100만개 이상 생산…글로벌 완성차에 공급. 부천에 1.4조원 투자
+-link:
+https://n.news.naver.com/article/001/0014284151?sid=105
+▶
+2차전지
+[단독] 中흑연 수출통제 돌파구 찾나...'포스코인터 파트너' 마다가스카르 광산 선적 완료. 몰로 광산서 생산한 흑연 대규모 선적.다운스트림 기술 파트너에 인도…가공 후 고객사 공급 추진
+-link:
+https://www.theguru.co.kr/mobile/article.html?no=61660
+'포스코 투자' 프롤로지움, 내년 전고체 배터리 공급. 전고체 배터리, 고체 전해질 사용…누수·과열 위험성 낮아…프롤로지움, 생산 시설 확충 주력·글로벌 기업 파너십 확대
+-link:
+https://www.theguru.co.kr/mobile/article.html?no=61677
+‘LS-엘앤에프 배터리솔루션’ 신규 합작 법인 승인 완료…中·폴란드·베트남 경쟁당국 승인. 구자은 회장 “배·전·반 산업육성”2026년 초도 양산 계획 탄력예고
+-link:
+https://n.news.naver.com/article/016/0002214503?sid=101
+▶
+통신
+'제2중동 붐' 올라탄 KT, 사우디에 데이터센터 짓는다…한국-사우디 건설협력 50주년 기념행사에 참석해 MOU체결
+-link:
+https://naver.me/F1eMHdn9
+SKT, 'A.전화' 서비스 출시로 아이폰도 통화 녹음 기능 제공…통화 내용 맥락 분석, 요약 서비스까지
+-link:
+https://naver.me/FTqkocJ6
+채널:
+https://t.me/hanwhatech
+Naver
+엔비디아표 윈도PC용 CPU 온다…반도체 '지각변동'
+인공지능(AI) 반도체 선두주자 엔비디아가 PC용 중앙처리장치(CPU) 칩 시장에 진출하면서 산업계가 요동치고 있다. 엔비디아는 영국 반도체 설계업체인 ARM과 손잡고 마이크로소프트(MS) 윈도 PC용 CPU를 공급
+545
+views
+23:12
+한화 Tech
+[한화투자증권 2차전지 이용욱]
+★ 포스코퓨처엠: 예상된 실적 부진, N86 수율 개선이 관건
+- 자료링크 :
+https://zrr.kr/ghIs
+▶
+3분기 실적은 컨센서스 하회
+- 3분기 실적은 매출액 1.3조 원, 영업이익 371억 원(OPM 2.9%)으로 컨센서스(669억 원)를 하회했다. 양극재 판매량(QoQ +24%)과 수익성 모두 기대치에 못미친 것이 주효했다. 유럽향 N65 판매 부진이 지속되고 있고, N86도 수율 개선세도 더뎠다. 판가(QoQ -5%) 하락에 따른 스프레드 악화와 재고평가손도 손익에 부담을 가중시켰다. 음극재도 수요 부진으로 판매량이 QoQ Flat했으며, 인조흑연 음극재 생산을 앞두고 비용이 발생하며 수익성 또한 BEP 수준으로 추정된다.
+▶
+4분기까지 수익성 개선은 제한적
+- 동사의 4분기 실적으로 매출액 1.3조 원 영업이익 363억 원(OPM 2.8%)을 전망한다. 전사업 부문 모두 어려운 시기가 예상된다. 양극재는 유럽향 N65 수요 부진과 N86 생산 증가가 서로 상쇄되며 출하량은 QoQ +5% 증가하는데 그칠 전망이다. N86 비중이 70%(vs. 3Q23 41%)까지 상승하며 blended ASP는 QoQ -7% 하락이 예상된다. 다만, 수율이 부진한 N86 비중이 높아지며 수익성은 3Q23과 유사한 수준으로 전망한다. 음극재 또한 수요 부진으로 판매량 증대가 없는 한편, 4Q23 인조흑연 음극재 생산이 시작되며 비용은 증가할 전망이다.
+▶
+투자의견 BUY, 목표주가 54만 원 유지
+- 양극재 업종 주가는 고점 대비 50%가량 하락하며, 반등 시기를 기다리고 있다. 실적발표에서 언급한 유럽향 수요 둔화는 아쉬우나 미국(GM)향 기대감은 여전하기에 실적 회복을 위해 개별적으로는 1) N86 수율 개선, 업황면에서는 2) 리튬 가격의 안정화가 중요할 것으로 판단한다. 최근 경쟁사의 수주 뉴스를 필두로 양극재 업체들의 수주 모멘텀도 기대되며, 동사는 원소재 확보 강점으로 경쟁사 중 수주 가시성도 가장 높다고 판단한다. 중국의 흑연 수출 규제로 천연흑연 부문의 원소재 다변화는 중장기 과제지만, 전세계에서 중국을 제외하면 동사가 유일한 대안이므로 중장기 음극재 사업부 가치도 높아질 것으로 기대된다.
+- 채널 :
+https://t.me/hanwhatech
+상기 내용은 컴플라이언스 승인을 필함
+1.34K
+views
+23:52
+한화 Tech
+632
+views
+23:12
+한화 Tech
+SK hynix 3Q23_Earnings Presentation_KOR.pdf
+2.9 MB
+601
+views
+23:16
+한화 Tech
+[한화 Tech 김광진/이용욱/유영솔]
+2023.10.26(목)
+★ 데일리 뉴스 플로우
+▶
+반도체
+퀄컴 새 프로세서에 TSMC 3나노 활용 포기, 삼성전자 수주 기회 열리나
+-link:
+https://www.businesspost.co.kr/BP?command=article_view&num=330911
+SK하이닉스, 현존 초고속 모바일용 D램 상용화...퀄컴과 협력. 퀄컴 스냅드래곤8 3세대와 호환성 검증
+-link:
+https://zdnet.co.kr/view/?no=20231025153609
+삼성전자 GAA공정 초격차 나선다…1.4nm 부터 '나노시트' 4개로 확대. "나노시트 확대 통해 트랜지스터 넓이 개선" 3nm, 2nm 공정에서는 나노시트 3개 적용
+-link:
+https://www.thelec.kr/news/articleView.html?idxno=23666
+마이크론, 퀄컴과 협력해 생성 AI 가속화…1베타 모바일에 최적화된 메모리라고 주장하는 저전력 더블 데이터 레이트 5X(LPDDR5X) 메모리의 생산 샘플이 현재 Qualcomm의 최신 플래그십 제품에 사용될 수 있도록 출하되고 있다
+-link:
+https://www.digitimes.com/news/a20231025VL205/ai-memory-micron-qualcomm.html
+▶
+2차전지
+GM '볼트EV' LG에너지솔루션과 결별, 가격 경쟁력 높이려 LFP 배터리 선택
+-link:
+https://www.businesspost.co.kr/BP?command=article_view&num=330935
+혼다 x GM, 저가 전기차 공동 개발을 위한 50억 달러 계획 폐기. 일본 완성차 업체는 2040년까지 100% 전기차 판매 목표 유지
+-link:
+https://asia.nikkei.com/Business/Automobiles/Honda-GM-scrap-5bn-plan-to-co-develop-cheaper-EVs
+리비안, 제2공장 건설 예정대로...40만 대 추가생산. 조지아 공장 내년 건설 계획...2030년 연간 총 55만 대 생산 가능
+-link:
+https://www.theguru.co.kr/news/article.html?no=61709
+나노원머티리얼즈, 퀘벡 LFP 양극재 공장 생산량 '10배 확대' 기대감. 사전타당성조사 결과 발표…연간 2.5만 톤 규모 확보 가능. 북미 고객사 수요 대응
+-link:
+https://www.theguru.co.kr/news/article.html?no=61732
+▶
+통신
+KT와 LG유플러스 5G 기지국 수 차이 1만->2백개 좁혀…LG유플, 지난해 주파수 추가 할당에 1년새 5G 기지국 2만개 이상 증설
+-link:
+https://naver.me/5Gh5tNov
+네카오·SKT·KT·LG가 만든 초거대AI, 신뢰성 평가체계 구축 예정
+챗GPT發 AI 부작용 우려 선제 대응
+-link:
+https://naver.me/FiOEFtN8
+채널:
+https://t.me/hanwhatech
+비즈니스포스트
+퀄컴 새 프로세서에 TSMC 3나노 활용 포기, 삼성전자 수주 기회 열리나
+468
+views
+23:40

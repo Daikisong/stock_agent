@@ -1,0 +1,13 @@
+{
+  "archive_content_hash": "03aba83e59a7fe8403ee9af6354f4433e679e06a848178bf936d0c4f398a2c34",
+  "archive_directory_label": "2026-06-28",
+  "archive_directory_label_is_not_fetch_date": true,
+  "company_name": "SK하이닉스",
+  "corp_code": "00164779",
+  "identity_cross_checked_with_krx_roster": true,
+  "mapping_modify_date": "2024-03-28",
+  "production_score_authority": false,
+  "schema_version": "e2r_v5_peer_corp_code_mapping_v1",
+  "source_id": "STRUCTSRC-f127ea763267eed9389c482b",
+  "symbol": "000660"
+}

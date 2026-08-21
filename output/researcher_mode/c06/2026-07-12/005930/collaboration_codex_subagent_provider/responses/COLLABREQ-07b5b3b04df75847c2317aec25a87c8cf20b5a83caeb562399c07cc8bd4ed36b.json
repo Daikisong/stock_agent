@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "dc536a8af2933835e927038c1f26dc7b4bc43be098e7b2ba68db150603f3075a",
+  "payload": {
+    "allowed_range": [
+      14.05,
+      16.8
+    ],
+    "anchor_comparisons": [
+      "긍정 앵커 CANCH-db7d19872308799e9ca0696c의 13.8~16.2점과 현재 실제·전망 근거를 비교했다.",
+      "반대 앵커 CANCH-17745cd4887afd21639e9dd6의 10.32~12.72점과 현재 불확실성·counterfact를 비교했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-2bf2934ad088b585cc89843a",
+      "EFACT-e449f48cdf920d528532a37f",
+      "EFACT-f05a97edeb8f85d49353381e",
+      "EFACT-f6519571c11130bacb0af98d"
+    ],
+    "disagreements": [
+      "제품별 actual 현금 전환과 공개 계약조건이 없어 상단 전부는 수용하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-db7d19872308799e9ca0696c",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 15.04,
+    "rationale": "상방 역할로 모든 긍정 사실을 검토했다. 2026년 1분기 메모리 매출 급증, HBM·고용량 DDR5 믹스, HBM 영업이익과 전사 FCF 전망은 이익·현금 레버리지의 상방 경로다. 다만 과거 HBM 판매 감소, 물량보다 가격 급등 의존, 재고·램프 비용과 CAPEX·운전자본 부담은 높은 이익이 잔여현금으로 그대로 남지 않을 위험이다.",
+    "support_fact_ids": [
+      "EFACT-536119c3b7272c9ebee07624",
+      "EFACT-71eb35cf12f591c101571b4e",
+      "EFACT-bc95c1a79d29243f3b4e9b06",
+      "EFACT-e854b59aa43bb7f73c1e0835",
+      "EFACT-f8f6e5abba8d72973f8cbc55",
+      "EFACT-f979df4935e2c87e7d55a6ed"
+    ],
+    "why_not_higher": "계약 조건·제품별 actual 이익·현금 전환 또는 구조적 지속성의 직접 검증이 완전하지 않다.",
+    "why_not_lower": "현재 citable 긍정 사실과 공식·독립 출처가 실제 매출·수요·생산·현금 경로를 뒷받침한다."
+  },
+  "payload_hash": "d163f5ec0e902f73bcc3da8579891f2576fdf094e98983c783597d8a7c139285",
+  "production_score_authority": false,
+  "prompt_hash": "2dbb606554bb66840059940ca2260803e0ca261d451a4519eb7ef158beef82dd",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-07b5b3b04df75847c2317aec25a87c8cf20b5a83caeb562399c07cc8bd4ed36b",
+  "response_id": "COLLABRESP-b05c05cac93cad6a68c1b7e5bf5c228d12d32183f2d5d37484eca3fd732cb0a7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

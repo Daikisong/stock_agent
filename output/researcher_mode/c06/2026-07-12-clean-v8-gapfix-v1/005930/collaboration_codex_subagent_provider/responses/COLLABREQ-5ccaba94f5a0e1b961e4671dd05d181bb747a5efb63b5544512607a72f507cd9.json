@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "b58f75b99cb89b659a2beb3f7eb1b06275cec9f5112426baa0302f2d81fbdcdc",
+  "payload": {
+    "allowed_range": [
+      2.8,
+      3.8
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-09ab96433f8087166845bf25 is only a low-confidence ordinal anchor centered at 2.0. The current record is stronger because AMD independently names Samsung as the primary HBM3E partner for MI350X/MI355X, identifies HBM4 alignment for MI455X, and Samsung reports actual HBM4 mass-production shipments.",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64 is a low-confidence counter anchor centered at 1.75 for a weak execution-to-cash bridge. The current evidence clears that level on technical execution and counterparty corroboration, but the same cash-bridge weakness remains because price, committed volume, contract duration, cancellation terms, backlog, HBM-only margin, and cash conversion are not disclosed."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1",
+      "EFACT-6a317a6c41253b0fafc79d56"
+    ],
+    "disagreements": [
+      "I would not treat AMD's official technical corroboration or the MI455X MOU alignment as evidence of signed purchase obligations, fixed allocation, price, duration, or non-cancellable backlog.",
+      "I would not treat the absence of a financially material long-term supply-order transaction in one filing as proof that all customer arrangements are absent."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 3.3,
+    "rationale": "Information confidence is above the historical middle band because four current positive facts jointly establish a named-customer technical relationship, realized HBM3E supply history, future HBM4 product alignment, platform collaboration, and actual HBM4 shipment execution. This is materially better than issuer-only planning. The evidence does not support an upper-band score, however, because AMD's statements concern technology and relationship rather than binding purchase economics, while NVIDIA supply remains under discussion and the filing reports no financially material long-term supply-order transaction.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-4d0e0f24a3a1645c5962f1b3",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-f295131e6dc092d197e8eb93"
+    ],
+    "why_not_higher": "No supplied fact establishes binding customer purchase obligations, price, committed volume, allocation period, cancellation penalties, backlog, HBM-only profitability, or cash conversion; the HBM4 AMD alignment is MOU-based and NVIDIA HBM4 supply is still under discussion.",
+    "why_not_lower": "AMD's official source independently confirms Samsung's realized HBM3E partner history and named-product relationship, while the HBM4 shipment fact shows actual execution rather than a development plan alone."
+  },
+  "payload_hash": "0da1db063f9361f9090cabcbc02f920f50186a6f553ee6825776cd4c28b1e892",
+  "production_score_authority": false,
+  "prompt_hash": "1e78aca8bc3f7ab511b41d37494e405d43bb3a2cddb545aa1755a6d23dcb6957",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5ccaba94f5a0e1b961e4671dd05d181bb747a5efb63b5544512607a72f507cd9",
+  "response_id": "COLLABRESP-8cf826d6078809814c36bb465d4f955a267fb30074e6e8c85f462c678763103c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

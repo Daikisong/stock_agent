@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "cfbb3a6d40edb7f8fafe720e5026f7a34e128868a12326f3dab30a455167a1ef",
+  "payload": {
+    "allowed_range": [
+      6.4,
+      8.1
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df의 LOW-confidence MEDIUM positive ordinal band와 ORDTRANSFER-c2ec77e0538ebb9af9ce204b의 LOW-confidence WEAK counter ordinal band를 비교했다. 현재 actual HBM 성장·전사 이익·복수 valuation bridge는 MEDIUM보다 강하지만 exact anchor가 아니며 duration counter가 material해 STRONG으로 이전하지 않았다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "disagreements": [
+      "actual 결과와 다수 valuation bridge는 할인 축소 가능성을 지지하지만, LTA 브로커 파악과 forward peer 추정을 issuer actual 또는 고정 구매의무로 승격할 수 없다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 7.3,
+    "rationale": "FY2025 HBM actual 매출 2배 이상 성장과 2026년 1분기 전사 actual 이익·마진, HBM 차등 SOTP, 역사적 PBR 상단 돌파와 EPS·PER 동반 상승, peer 추정 수익성·배수 차이는 제품 경쟁력이 전사 가치로 연결되는 경로를 지지한다. LTA 보호장치는 브로커 평가로만 보조 사용하며 HBM 단독 현금과 공개 계약조건 부재, 감익·경쟁 공급 전망을 상단 제한으로 반영했다.",
+    "support_fact_ids": [
+      "EFACT-027939805cca9c1f11e1e81e",
+      "EFACT-122bf71db78558e5780ed3c8",
+      "EFACT-3e4c5596b1c40a463ba54d38",
+      "EFACT-7ccc530bd085e12d2428c531",
+      "EFACT-b3d48bea9ae741feec4d4a05",
+      "EFACT-b74e88a671a1247b0ce230d5"
+    ],
+    "why_not_higher": "HBM 단독 actual 이익·FCF와 LTA의 고객·기간·물량·가격·취소·위약 조건이 없고, FY2027 이후 감익 및 경쟁 공급 확대 전망이 valuation duration을 제한한다.",
+    "why_not_lower": "issuer actual HBM 성장과 전사 이익 전환, peer·SOTP·관찰된 multiple regime 근거가 여러 경로에서 재평가 가능성을 지지하므로 medium 이하만 허용하는 것은 과도하다."
+  },
+  "payload_hash": "8196d136960222f61fa5ccc99eb14f2b043b41615ff7e2daf92822aa5f957e95",
+  "production_score_authority": false,
+  "prompt_hash": "49d19e209c893503b5a576d00a6ee9b0ca25214591232df563fdd0e7205cd6fa",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c86ea3fcaf86fef20222844fae7c6cc13f996db9880d5a9dd189e8da6cf2f2cd",
+  "response_id": "COLLABRESP-580fa8f844f5d0d15c45d7c9a3351d9d336e784f849c94704ad652c18b4795ec",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

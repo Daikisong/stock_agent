@@ -1,0 +1,119 @@
+{
+  "output_schema_hash": "2b2ead62b601fb91b932f294b182b605d1d86464f1c2af7d7b91d9eefa6743f2",
+  "payload": {
+    "confidence": 0.82,
+    "counter_case": "중요 장기공급계약 미보고는 특정 공시 범위의 부재일 뿐 모든 HBM 계약 부재를 뜻하지 않으며, 상위 5개 고객 23%도 회사 전체 수치다. 고객명·HBM 계약조건·qualification outcome·HBM 매출과 마진은 공개되지 않았고 추정치는 실제와 달라질 수 있다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-90c2b7d4695e62e277703a64",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797"
+    ],
+    "positive_case": "규제공시 재무 수치와 감사 맥락, 공식 HBM4 양산 출하가 함께 있어 기본 보고 신뢰도는 양호하다. 재무제표 재작성 및 감사 강조사항이 없다는 사실은 현재 공시의 형식적 신뢰성을 보강한다.",
+    "prior_fact_dispositions": [],
+    "proposed_score_lower": 3.0,
+    "proposed_score_mid": 3.4,
+    "proposed_score_upper": 3.8,
+    "research_complete": true,
+    "researcher_summary": "분기보고서의 재무제표 재작성 없음과 감사 강조사항·핵심감사사항 없음은 보고 신뢰도의 긍정 요소이고, HBM4 양산 출하는 공식 발행사 자료로 확인된다. 그러나 재무 추정치가 실제와 다를 수 있다는 명시적 불확실성, 회사 전체 중요 장기공급계약 수주거래 미보고, 회사 전체 상위 5개 고객 매출 비중 23%는 HBM 고객·계약 투명성의 한계를 남긴다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "공식 공시·발행사 자료의 확인 가능성을 지지하지만 HBM 고객별 계약·품질·경제조건까지 확인된 것으로 보지 않는다.",
+        "fact_row_index": 39,
+        "source_economic_mechanism": "분기보고서는 재무제표 재작성 해당사항이 없다고 명시해 보고 수치가 과거 오류 정정으로 다시 작성된 사례가 아님을 확인한다.",
+        "source_period_json": "\"2026Q1 report date\"",
+        "source_predicate": "DISCLOSED_NO_FINANCIAL_STATEMENT_RESTATEMENT",
+        "source_value_json": "\"NONE\""
+      },
+      {
+        "component_interpretation": "현재 공시의 한계 또는 반증으로 반영하되 제한된 공시 범위를 HBM 전 계약·고객의 부재로 확대하지 않는다.",
+        "fact_row_index": 76,
+        "source_economic_mechanism": "분기 연결재무제표에는 경영진의 추정과 가정이 포함되며 실제 결과가 달라질 수 있어 보고 수치의 추정 불확실성을 남긴다.",
+        "source_period_json": "\"2026Q1\"",
+        "source_predicate": "DISCLOSED_FINANCIAL_STATEMENT_ESTIMATION_UNCERTAINTY",
+        "source_value_json": "\"actual results may differ from estimates\""
+      },
+      {
+        "component_interpretation": "현재 공시의 한계 또는 반증으로 반영하되 제한된 공시 범위를 HBM 전 계약·고객의 부재로 확대하지 않는다.",
+        "fact_row_index": 78,
+        "source_economic_mechanism": "2026년 1분기말 재무제표에 중요한 영향을 미치는 장기공급계약 수주거래가 없다는 제한된 공시는 계약 기반 가시성을 제약하지만 다른 계약의 부재로 확대할 수 없다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "NO_MATERIAL_LONG_TERM_SUPPLY_ORDER_TRANSACTION_REPORTED",
+        "source_value_json": "\"재무제표에 중요한 영향을 미치는 장기공급계약 수주거래 없음\""
+      },
+      {
+        "component_interpretation": "공식 공시·발행사 자료의 확인 가능성을 지지하지만 HBM 고객별 계약·품질·경제조건까지 확인된 것으로 보지 않는다.",
+        "fact_row_index": 83,
+        "source_economic_mechanism": "2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS",
+        "source_value_json": "\"HBM4 양산 출하\""
+      },
+      {
+        "component_interpretation": "현재 공시의 한계 또는 반증으로 반영하되 제한된 공시 범위를 HBM 전 계약·고객의 부재로 확대하지 않는다.",
+        "fact_row_index": 96,
+        "source_economic_mechanism": "상위 5대 고객이 전체 매출의 약 23%를 차지해 회사 전체 매출의 고객 집중 위험이 존재하지만 이를 메모리/HBM 고객 집중도로 해석할 수는 없다.",
+        "source_period_json": "\"2026Q1\"",
+        "source_predicate": "TOP_FIVE_CUSTOMERS_ACCOUNT_FOR_REVENUE_SHARE",
+        "source_value_json": "23"
+      },
+      {
+        "component_interpretation": "공식 공시·발행사 자료의 확인 가능성을 지지하지만 HBM 고객별 계약·품질·경제조건까지 확인된 것으로 보지 않는다.",
+        "fact_row_index": 128,
+        "source_economic_mechanism": "2026년 1분기 감사보고서 표에는 강조사항과 핵심감사사항이 모두 해당 없음으로 표시됐다.",
+        "source_period_json": "\"2026Q1\"",
+        "source_predicate": "DISCLOSED_NO_AUDIT_EMPHASIS_OR_KEY_AUDIT_MATTER",
+        "source_value_json": "\"NONE\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      39,
+      76,
+      78,
+      83,
+      96,
+      128
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_GUIDANCE"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "장기공급계약 미보고의 범위가 HBM 전 계약을 포괄하지 않는다.",
+      "상위 5개 고객 비중은 회사 전체이고 HBM 고객 집중도가 아니다.",
+      "HBM 고객별 qualification, 가격, 물량, 취소조건 및 품질 결과가 비공개다."
+    ],
+    "why_not_higher": "규제공시 신뢰도는 높지만 HBM 고객·계약·품질·마진의 직접 공시가 없어 최고 정보신뢰도 앵커에는 미달한다.",
+    "why_not_lower": "감사된 공시 맥락과 공식 HBM4 양산 출하가 있어 단순 발행사 전망만 존재하는 낮은 앵커보다 높다."
+  },
+  "payload_hash": "db13db72d5bc8f6b9faf12d67fd87d4e4b4c2a204394b8d1561e2c4f9926a2b3",
+  "production_score_authority": false,
+  "prompt_hash": "650fe230005b0467b119409cbdb92ba96081c521cfff702afa1c18d297a202f5",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a621abed5574d8930ef21627a3dde5a2e543ef5ef11a5728f520eaadc76b63f1",
+  "response_id": "COLLABRESP-9626ffba136e96afe7ecab9760f9a5df5491076aea3ed3e9f1dac5b23f033de7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

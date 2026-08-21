@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-2652d40804ba5845426195fb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 discovery metadata가 요청된 PUBLIC_BROKER_PDF provenance를 지지하지 않거나, issuer 지속가능보고서·대학요람·학회자료·정부 일반자료처럼 다른 source family이므로 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-055f69b489a2fa19067b2326",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 discovery metadata가 요청된 PUBLIC_BROKER_PDF provenance를 지지하지 않거나, issuer 지속가능보고서·대학요람·학회자료·정부 일반자료처럼 다른 source family이므로 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-a612e37c36dff7c512b7fe0b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 discovery metadata가 요청된 PUBLIC_BROKER_PDF provenance를 지지하지 않거나, issuer 지속가능보고서·대학요람·학회자료·정부 일반자료처럼 다른 source family이므로 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-7705502d5c29a287924c8404",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 discovery metadata가 요청된 PUBLIC_BROKER_PDF provenance를 지지하지 않거나, issuer 지속가능보고서·대학요람·학회자료·정부 일반자료처럼 다른 source family이므로 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-531020c6bb0e009b4ac06d39",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 discovery metadata가 요청된 PUBLIC_BROKER_PDF provenance를 지지하지 않거나, issuer 지속가능보고서·대학요람·학회자료·정부 일반자료처럼 다른 source family이므로 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-666ddb1d169a8e79e60f19c5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 discovery metadata가 요청된 PUBLIC_BROKER_PDF provenance를 지지하지 않거나, issuer 지속가능보고서·대학요람·학회자료·정부 일반자료처럼 다른 source family이므로 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-6bae9e7e8084f14efd5cccc7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 discovery metadata가 요청된 PUBLIC_BROKER_PDF provenance를 지지하지 않거나, issuer 지속가능보고서·대학요람·학회자료·정부 일반자료처럼 다른 source family이므로 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-85a8b9a83ca4470b04811e6a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 discovery metadata가 요청된 PUBLIC_BROKER_PDF provenance를 지지하지 않거나, issuer 지속가능보고서·대학요람·학회자료·정부 일반자료처럼 다른 source family이므로 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-a1c98e5eba0203304e1cccf6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 discovery metadata가 요청된 PUBLIC_BROKER_PDF provenance를 지지하지 않거나, issuer 지속가능보고서·대학요람·학회자료·정부 일반자료처럼 다른 source family이므로 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-2e289c47d390c9ce2a1abd5b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 discovery metadata가 요청된 PUBLIC_BROKER_PDF provenance를 지지하지 않거나, issuer 지속가능보고서·대학요람·학회자료·정부 일반자료처럼 다른 source family이므로 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-b7b9c3e408a63ffedbce023d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 discovery metadata가 요청된 PUBLIC_BROKER_PDF provenance를 지지하지 않거나, issuer 지속가능보고서·대학요람·학회자료·정부 일반자료처럼 다른 source family이므로 material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-55444787e5f95bb644dfd96e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "원 증권사 연구 provenance는 요청 family와 맞지만, 현재 metadata상 다른 기업·다른 산업 보고서이거나 삼성전자 peer roster와 동일 기간 valuation 비교표로 이어지는 단서가 없어 material 후보가 아닙니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "각 current partition 후보를 exact-once로 분류했으며 snippet과 검색 metadata는 EvidenceFact로 사용하지 않았습니다.",
+      "material route도 전체 원문에서 발간일, peer roster, 동일 기준일·forward 기간과 valuation 통계를 확인하기 전에는 점수·Stage 권한이 없습니다."
+    ]
+  },
+  "payload_hash": "e8e941817e28ec562559fa2253a44186bab2ab8e1e516fe3e08ca844d56ba5dc",
+  "production_score_authority": false,
+  "prompt_hash": "a02d7385d7c1c4dbe6368d73a14ad8e837c41951d72c842d638e7620135a0bd6",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-98be96747b9f319343ab0d2e990d8239866a532fd8bf191c45d11643cd99db44",
+  "response_id": "COLLABRESP-00108d69a5c18c0a6dd8f3be5ede8a4a4481cc28092e88f1cfd1ecd69dd39880",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

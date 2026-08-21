@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "7a8a654a83864502ea64397505de8138796820d04f77eac54d7aea2db528ac32",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-61366dfc5d3c6a3dd0ecdb4d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스/역사 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-7e3aaf63f23e6fcdd1e4f07c",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 1,
+        "rationale": "SK하이닉스 공식 도메인의 실적발표 전용 landing page다. 2026년 1분기 회사 원문과 발표자료 링크를 찾아 숫자가 있는 forward guidance 또는 segment contribution을 검증할 수 있는 가장 직접적인 issuer-owned route이므로 material하다. snippet 자체는 증거가 아니며 full fetch 원문과 기준일만 사용해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-ac71a727e0513cac514cd9fb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스(000660) 분석 (2026) | 적정주가·HBM·실적·전망 30년차 리포트 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-da47da6069516bed30c0c64a",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스 공식 2Q26 실적발표라는 source family와 target은 맞지만 제목과 snippet이 7월 29일 발표 내용을 가리켜 as_of_date=2026-07-12 뒤의 미래 문서다. 미래누수이므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-372b3fb781f874a90aba484c",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.02,
+        "rationale": "KIND 공시 원문 family는 맞지만 대상이 SK스퀘어의 2025년 분기보고서다. SK하이닉스 2026년 1분기 DRAM 품목 매출과 회사가 달라 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-574f00e39f33f6d3d4e457a8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.88,
+        "rationale": "SK하이닉스 공식 뉴스룸의 2026년 HBM 시장전망 전용 문서다. 현재 objective가 요구하는 HBM 성장 기간·수치와 회사 전망의 attribution을 원문에서 확인할 가능성이 높아 fetch 가치가 있다. snippet은 증거가 아니며 full fetch에서 게시일, 숫자, 발언 주체가 모두 cutoff와 issuer-only 조건을 만족하는지 검증해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-6fb08e3bd0d5dfce7626e893",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "수급구조 변화 사이클로 본 반도체 호황의 PEAK-OUT 시점 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-bfb7eb531609a9d96c5632c3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "삼성전자·SK하이닉스 시총 1조달러 돌파… 저평가 해소되나 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-177c048bf11601d6fadfc79d",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.02,
+        "rationale": "공식 issuer 실적발표 형식이지만 발행 주체와 대상은 삼성전자다. SK하이닉스의 HBM 매출 guidance나 DRAM 품목 매출을 입증할 수 없어 wrong-subject 비적합이다."
+      },
+      {
+        "candidate_id": "SGCAND-91d847e26fd2a825eadc97dd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "엔비디아 슈퍼칩 품은 MS, 온디바이스 AI PC 상용화 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-d63afdff8e34f26624fb8388",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "5월 3주 주요 제조업 전망 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-62c29c905eb546e66e1024a6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK하이닉스 | 한국경제 후보는 제3자 기사·블로그·포털·일반 웹 자료이거나 요청 target과 무관해, SK하이닉스 issuer 원문 또는 OPENDART/KIND 원문이라는 요청 source family를 만족하지 않는다. snippet은 discovery metadata일 뿐 evidence가 아니므로 material하지 않다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "공식 IR landing page는 동적 페이지이므로 full fetch에서 2026-07-12 이후 자료가 섞이지 않았는지 다시 검증해야 한다.",
+      "공식 시장전망 글은 full document에서 회사 자체 guidance와 제3자 시장전망을 구분해야 한다."
+    ]
+  },
+  "payload_hash": "b4efab40e5862be7bbfbfbf2ad48e7f1b29b7595d35186260aebccf7ce966c2f",
+  "production_score_authority": false,
+  "prompt_hash": "9da5e5098f25a9ae49fe75a46a5e917bf70715f2f1d686ab2eb678a3f2c4903f",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3976b2b185c6a53e0defdeb6cc7eaa8d342b30c31ed6655c4b9d0afe5a478142",
+  "response_id": "COLLABRESP-b3deeafb28aa06566bf7863f3160f03cbe7505e5809f289db4b921db8f9187d1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

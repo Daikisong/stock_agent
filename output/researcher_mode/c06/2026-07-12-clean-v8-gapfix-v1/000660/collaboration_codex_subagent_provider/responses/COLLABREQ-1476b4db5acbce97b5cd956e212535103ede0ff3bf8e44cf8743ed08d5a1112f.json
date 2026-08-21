@@ -1,0 +1,143 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The current three-role judge ranges have no common intersection. This is a same-evidence weighting disagreement, so the component memo requires a semantic rewrite and new independent judges rather than a new source claim."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The current complete memo accounts for positive and counter evidence, preserves attribution limits, and its current judge ranges intersect."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The current three-role judge ranges have no common intersection. This is a same-evidence weighting disagreement, so the component memo requires a semantic rewrite and new independent judges rather than a new source claim."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The current complete memo accounts for positive and counter evidence, preserves attribution limits, and its current judge ranges intersect."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "Pre-cutoff full broker-report evidence that tests whether 2026 sold-out visibility is durable and links it to attributable earnings and valuation rather than metadata preview."
+        ],
+        "rationale": "The current memo itself is reviewed, but the structured engine remains SOURCE_PENDING for DURABLE_VISIBILITY. The exact pre-cutoff broker PDF candidate is discovery metadata only and has not been full-fetched in this prompt snapshot."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The current three-role judge ranges have no common intersection. This is a same-evidence weighting disagreement, so the component memo requires a semantic rewrite and new independent judges rather than a new source claim."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The current three-role judge ranges have no common intersection. This is a same-evidence weighting disagreement, so the component memo requires a semantic rewrite and new independent judges rather than a new source claim."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-85964f73e5ad6f1c2b0b9e42",
+        "rationale": "Four query members ended in QUERY_PROVIDER_ERROR. This is a transport/provider failure, remains retryable, and is not evidence that the source is absent.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-9f189ef4313bb76da9d0c2eb",
+        "rationale": "Six documents were correctly excluded after full fetch because they postdate the cutoff. The resolved exclusion is neither retryable nor source-absence proof.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-b5e3b8331dcb08b996ec83cf",
+        "rationale": "Six matching query members terminated at future-document validation after full fetch. Repeating that route is not required and the result does not prove absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "valuation_rerating",
+        "direction": "POSITIVE",
+        "fact_need": "Full text of Samsung report 1043825, 1F00120251030_000660_d.pdf, to verify the period and economic basis of the stated 2026 sold-out visibility and any attributable earnings or valuation bridge.",
+        "why_material": "The structured record lacks DURABLE_VISIBILITY and the metadata-only title cannot establish contract duration, capacity lock, earnings attribution, or a rerating mechanism."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": false,
+        "direction": "Fetch and validate only the full pre-cutoff Samsung report identified by provider report 1043825 and file 1F00120251030_000660_d.pdf.",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "Its title directly bears on the missing durability mechanism, but its metadata is not evidence and the exact full PDF is not fetched in this prompt snapshot.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      }
+    ],
+    "next_actions": [
+      "Rewrite the four disagreement component memos using only the current evidence and commission new independent Analyst, Skeptic, and Calibration reviews.",
+      "Have the query planner execute only the bounded exact Samsung PUBLIC_BROKER_PDF identity for valuation DURABLE_VISIBILITY.",
+      "If the full PDF passes cutoff and source validation, extract source-backed facts and rematerialize the structured valuation role; otherwise preserve the gap without an absence claim.",
+      "Refresh Red Team and Synthesis after the memo/judge and any accepted structured-evidence changes."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "Do not repeat the three already executed general source queries.",
+          "Do not broaden to title synonyms, unrelated brokers, or general sold-out searches.",
+          "Do not treat provider summary or preview metadata as evidence."
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "research_need": "Resolve the exact 2025-10-30 Samsung report '2026 production already sold out' using provider report 1043825 / file 1F00120251030_000660_d.pdf, then test its literal period, capacity or contract basis, earnings attribution, and valuation bridge."
+      }
+    ],
+    "rationale": "The exact snapshot contains complete component memo records and a verified seven-objective counter route proof, but four current components retain material nonintersecting judge ranges. Those four require same-evidence semantic rewrites and new judges, not invented facts. Valuation remains SOURCE_PENDING for DURABLE_VISIBILITY, and the prompt contains one bounded pre-cutoff Samsung broker-PDF identity whose full text could materially resolve that role. The candidate metadata is not evidence, and no later query response is assumed. Future-dated rejections and provider errors are classified losslessly and never used as source-absence or fixed-round completion proof. Therefore counter checking is complete, but memo, structured, route, and readiness gates remain open without score or Stage authority.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": false,
+    "unresolved_material_questions": [
+      "How should consolidated and DRAM actuals versus HBM-only EPS/FCF attribution and CAPEX/inventory counterweights be reconciled on the same evidence?",
+      "How should memory-wide utilization and HBM pricing be weighted against the absence of HBM-only capacity, yield, allocation, and durable lock evidence?",
+      "How should net cash and shareholder returns be reconciled with CAPEX, R&D, working-capital, dilution, and absent HBM-specific realized ROIC on the same evidence?",
+      "How should official actuals be weighted against source-independence and HBM contract, quality, and margin gaps on the same evidence?",
+      "Does the exact pre-cutoff Samsung broker PDF establish durable 2026 visibility and a source-backed earnings/valuation bridge, rather than only a metadata headline?"
+    ]
+  },
+  "payload_hash": "f65bcb43603a0876566fad89729b50e7814232c8f8e4476a46efbd6cd5baa826",
+  "production_score_authority": false,
+  "prompt_hash": "6548cb2f3f95f7e6539de7da3261aad7399fccb57591a3b4532e7bb77091b17f",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1476b4db5acbce97b5cd956e212535103ede0ff3bf8e44cf8743ed08d5a1112f",
+  "response_id": "COLLABRESP-3bbf9d8418ecdcaf4986026db1fdb8dd94488d5604680bf78a06fe42ce9ce9d6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

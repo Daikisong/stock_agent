@@ -1,0 +1,541 @@
+{
+  "output_schema_hash": "7ccf1abf612f82b1a47f2c7b8c1b705921cefb34034b659c198cd5c411452333",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3a0a575285c9380044c2279a",
+        "rationale": "세 차례 감사에서 같은 배치의 더 구체적인 삼성증권 인용과 중복되며 독립적인 objective-local 잔여는 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-3a5f37d70ee8bcf876271218",
+        "rationale": "Prior 7건에 더해 HBM3E 기반 기록 매출과 2026년 D램 생산능력 투자 계획을 추출했고 objective-local 잔여를 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-3cf56c7114a0fafff829b8b4",
+        "rationale": "Prior 2건이 수용됐으며 이후 재감사에서도 그와 구별되는 잔여는 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-4167e86530753cdaa8d0ef59",
+        "rationale": "회사 전체 잠정이익과 산업 일반 내용뿐으로 타깃 MEMORY/HBM 직접 잔여는 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-420b335d8fc17abb5522e8b6",
+        "rationale": "산업 일반 AI 투자·금융 위험 시나리오이며 타깃 직접 사실이나 완전한 HBM earnings bridge가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-42225381e004187635ed02f3",
+        "rationale": "Prior blended ASP 2건이 수용됐고 추가 distinct 잔여는 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-447d279e0572cd669d760acc",
+        "rationale": "Prior 9건 외 메모리 매출·D램 이익 revision과 전사 BPS/PBR/PER/FCF valuation rows를 귀속 한계와 함께 추출해 잔여를 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-45c80c41fe4ed5e1589a9e01",
+        "rationale": "Prior 4건 외 HBM4 고객 product feedback, 1c DDR5 양산, HBM 경쟁 counter를 추출했고 잔여를 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.92,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3a5f37d70ee8bcf876271218",
+        "economic_mechanism": "삼성전자는 HBM3E 판매 확대와 서버 수요 강세에 대응해 메모리 사업 역대 최대 매출을 달성했다고 설명했다.",
+        "exact_quote": "HBM3E 판매 확대와 함께 서버를 포함한 수요 강세에\n대해 적극 대응 중이며 그 가운데 역대 최대 매출 달성.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM3E 판매 진전이 타깃 메모리 매출의 실제 최고치로 전환됐다는 직접 귀속 증거다.",
+        "mechanism_scope_id": "MEMORY/HBM/REVENUE_ACTUAL/REVENUE_CONVERSION",
+        "normalized_object": "HBM3E 판매 확대 기반 메모리 매출",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025년 3분기",
+        "predicate": "HBM3E 판매 확대와 서버 수요 강세 속 메모리 역대 최대 매출을 달성했다",
+        "predicate_family": "HBM3E_SALES_SUPPORT_RECORD_MEMORY_REVENUE",
+        "primitive_tags": [
+          "REVENUE_ACTUAL",
+          "HBM3E_SALES"
+        ],
+        "product_family": "HBM3E 중심 메모리",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "HBM3E revenue conversion",
+          "memory revenue actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 매출",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "역대 최대 매출"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3a5f37d70ee8bcf876271218",
+        "economic_mechanism": "삼성전자는 2026년 메모리 투자 증가를 고려하고 AI 수요 대응을 위해 D램 투자 비중과 선단 공정 생산능력을 확대할 계획이다.",
+        "exact_quote": "2026 년 적극 투자 기조 하에 전년대비 상당한 증가를 고려 중. DRAM 의 경우\nAI 연관 수요 증가에 대비해 전체 투자 중 DRAM 비중이 증가할 것으로 예상.\n선단 공정을 위주로 캐파를 확대할 계획.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격 병목의 지속성을 낮출 수 있는 타깃의 직접적인 D램 공급 대응 계획이다.",
+        "mechanism_scope_id": "MEMORY/DRAM/CAPACITY_INVESTMENT/SUPPLY_RESPONSE",
+        "normalized_object": "2026년 AI 수요 대응 D램 생산능력 투자",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026년 계획",
+        "predicate": "2026년 D램 투자 비중과 선단 공정 생산능력을 확대할 계획이다",
+        "predicate_family": "DRAM_CAPEX_SHARE_AND_ADVANCED_CAPACITY_PLAN",
+        "primitive_tags": [
+          "CAPACITY_INVESTMENT",
+          "SUPPLY_RESPONSE"
+        ],
+        "product_family": "D램",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "DRAM capex",
+          "supply response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 D램 생산능력 투자",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "전년 대비 투자 상당 증가; D램 비중 증가; 선단 캐파 확대"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-447d279e0572cd669d760acc",
+        "economic_mechanism": "SK증권은 2026E 메모리 매출 추정치를 118.1조원에서 153.4조원으로 30% 상향했다.",
+        "exact_quote": "실적 전망치 변경 내역\n변경 후 변경 전 차이\n4Q25E 2025E 2026E 4Q25E 2025E 2026E 4Q25E 2025E 2026E\n매출액 87.5 327.3 388.4 84.8 323.5 364.6 3% 1% 7%\nDX 42.6 185.4 189.4 43.7 186.9 179.9 -3% -1% 5%\nVD/CE 14.2 56.7 57.7 14.6 57.6 59.5 -3% -2% -3%\nMX/NW 28.4 128.7 131.7 29.1 129.3 138.4 -2% 0% -5%\nDS 37.7 123.8 183.2 34.8 119.7 150.5 8% 3% 22%\nMemory 31.0 98.0 153.4 27.1 91.8 118.1 14% 7% 30%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "full broker PDF가 메모리 사업 forward 매출의 이전·수정 추정과 변화율을 직접 제시한다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK증권 삼성전자 2026E 메모리 매출 revision",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026E",
+        "predicate": "2026E 메모리 매출 전망을 118.1조원에서 153.4조원으로 상향했다",
+        "predicate_family": "BROKER_MEMORY_REVENUE_REVISION",
+        "primitive_tags": [
+          "FORWARD_REVISION",
+          "MEMORY_ATTRIBUTION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "memory revenue revision",
+          "valuation bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026E 메모리 매출 revision",
+        "subject_id": "005930",
+        "unit": "조원; %",
+        "value": "118.1→153.4; +30%"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-447d279e0572cd669d760acc",
+        "economic_mechanism": "SK증권은 2026E D램 영업이익 추정치를 33.3조원에서 60.8조원으로 82% 상향했다.",
+        "exact_quote": "실적 전망치 변경 내역\n변경 후 변경 전 차이\n4Q25E 2025E 2026E 4Q25E 2025E 2026E 4Q25E 2025E 2026E\n매출액 87.5 327.3 388.4 84.8 323.5 364.6 3% 1% 7%\nDX 42.6 185.4 189.4 43.7 186.9 179.9 -3% -1% 5%\nVD/CE 14.2 56.7 57.7 14.6 57.6 59.5 -3% -2% -3%\nMX/NW 28.4 128.7 131.7 29.1 129.3 138.4 -2% 0% -5%\nDS 37.7 123.8 183.2 34.8 119.7 150.5 8% 3% 22%\nMemory 31.0 98.0 153.4 27.1 91.8 118.1 14% 7% 30%\nDRAM 21.9 66.5 112.5 17.7 60.6 80.3 24% 10% 40%\nNAND 8.4 30.5 39.8 8.6 30.1 36.7 -2% 1% 9%\nFoundry/LSI 6.7 25.8 29.8 7.7 27.9 32.4 -13% -7% -8%\nSDC 9.0 29.4 31.2 7.9 27.6 29.4 14% 7% 6%\nHarman 3.8 15.0 15.9 3.8 14.8 15.5 0% 1% 3%\n영업이익 14.9 38.5 85.9 10.5 32.4 54.5 42% 19% 58%\nDX 2.0 13.5 12.5 2.4 13.9 13.7 -16% -3% -9%\nVD/CE (0.2) 0.2 0.5 0.2 1.1 1.1 적전 -79% -55%\nMX/NW 2.2 13.2 12.0 2.1 12.9 12.6 5% 3% -5%\nDS 11.5 20.0 68.1 6.6 13.6 35.7 74% 47% 91%\nMemory 11.9 26.0 68.2 7.4 20.0 36.0 61% 30% 89%\nDRAM 10.7 24.4 60.8 7.2 20.3 33.3 49% 20% 82%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "D램 귀속 forward 영업이익의 이전·수정 수치를 함께 제시해 메모리 가치평가의 이익 revision을 세분화한다.",
+        "mechanism_scope_id": "MEMORY/DRAM/VALUATION_ANALYSIS/MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK증권 삼성전자 2026E D램 영업이익 revision",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026E",
+        "predicate": "2026E D램 영업이익 전망을 33.3조원에서 60.8조원으로 상향했다",
+        "predicate_family": "BROKER_DRAM_OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "OPERATING_PROFIT_REVISION",
+          "DRAM_ATTRIBUTION"
+        ],
+        "product_family": "D램",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "DRAM operating-profit revision",
+          "valuation bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "삼성전자 2026E D램 영업이익 revision",
+        "subject_id": "005930",
+        "unit": "조원",
+        "value": 60.8
+      },
+      {
+        "business_segment": "삼성전자 전사(메모리 가치평가 문맥)",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-447d279e0572cd669d760acc",
+        "economic_mechanism": "메모리 이익 회복을 전제로 한 SK증권 삼성전자 모델은 2026E BPS를 70,508원으로 추정했다; 이는 전사 지표이지 메모리 부문 BPS가 아니다.",
+        "exact_quote": "현금흐름표 주요투자지표\n12월 결산(십억원) 2023 2024 2025E 2026E 2027E 12월 결산(십억원) 2023 2024 2025E 2026E 2027E\n영업활동현금흐름 44,137 72,983 78,700 115,883 130,921 성장성 (%)\n당기순이익(손실) 15,487 34,451 38,720 76,224 88,566 매출액 -14.3 16.2 8.8 18.7 10.0\n비현금성항목등 36,520 42,947 50,251 54,129 55,166 영업이익 -84.9 398.3 17.5 123.5 16.6\n유형자산감가상각비 35,532 39,650 42,884 42,942 40,864 세전계속사업이익 -76.3 241.0 18.3 102.0 16.2\n무형자산상각비 3,134 2,981 3,146 2,942 2,619 EBITDA -45.2 66.6 12.1 56.0 9.0\n기타 -2,147 316 4,221 8,245 11,683 EPS -73.6 132.3 12.3 96.3 16.2\n운전자본감소(증가) -5,459 -1,568 -6,760 -5,564 1,620 수익성 (%)\n매출채권및기타채권의감소(증가) 236 -3,139 -10,941 -12,890 -323 ROA 3.4 7.1 7.3 12.8 13.0\n재고자산의감소(증가) -3,207 2,541 -13,178 -12,876 -323 ROE 4.1 9.0 9.4 16.7 16.7\n매입채무및기타채무의증가(감소) 1,104 -1,539 15,125 14,944 374 EBITDA마진 17.5 25.0 25.8 33.9 33.6\n기타 -9,031 -9,298 -11,254 -22,358 -30,061 안정성 (%)\n법인세납부 -6,621 -6,450 -7,744 -13,451 -15,629 유동비율 258.8 243.3 206.7 233.2 278.7\n투자활동현금흐름 -16,923 -85,382 -93,159 -70,095 -56,177 부채비율 25.4 27.9 31.5 32.1 27.6\n금융자산의감소(증가) 44,817 -31,810 -10,818 -14,317 -8,233 순차입금/자기자본 -21.9 -23.2 -17.3 -24.9 -31.5\n유형자산의감소(증가) -57,513 -51,250 -73,561 -51,000 -48,000 EBITDA/이자비용(배) 48.6 83.4 108.0 143.5 229.2\n무형자산의감소(증가) -2,911 -2,319 -4,978 -1,621 -500 배당성향 67.8 29.2 25.9 13.1 11.3\n기타 -1,316 -2 -3,802 -3,157 556 주당지표 (원)\n재무활동현금흐름 -8,593 -7,797 -9,952 -6,212 -7,805 EPS(계속사업) 2,131 4,950 5,558 10,913 12,680\n단기금융부채의증가(감소) 2,145 5,871 3,426 3,738 2,149 BPS 52,002 57,930 61,028 70,508 81,755\n장기금융부채의증가(감소) -865 -960 730 -296 -300 CFPS 7,823 11,226 12,392 17,725 19,136\n자본의증가(감소) 0 0 0 0 0 주당 현금배당금 1,444 1,446 1,456 1,456 1,456\n배당금지급 -9,864 -10,889 -9,830 -9,654 -9,654 Valuation지표 (배)\n기타 -9 -1,820 -4,278 0 0 PER 36.8 10.7 19.3 9.9 8.5\n현금의 증가(감소) 19,400 -15,375 -25,372 37,614 50,366 PBR 1.5 0.9 1.8 1.5 1.3\n기초현금 49,681 69,081 53,706 28,333 65,947 PCR 10.0 4.7 8.7 6.1 5.6\n기말현금 69,081 53,706 28,333 65,947 116,313 EV/EBITDA 10.0 3.6 7.6 4.5 3.8\nFCF -13,376 21,732 5,139 64,883 82,921 배당수익률 1.8 2.7 1.4 1.4 1.4\n자료 : 삼성전자, SK증권 추정",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "full broker PDF의 기간 헤더와 BPS 행이 forward book value를 직접 확정하며 전사 지표임을 명시적으로 보존한다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "삼성전자 2026E 주당순자산",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026E",
+        "predicate": "2026E BPS를 70,508원으로 추정했다",
+        "predicate_family": "FORWARD_BOOK_VALUE_ESTIMATE",
+        "primitive_tags": [
+          "FORWARD_BOOK_VALUE",
+          "VALUATION_ANALYSIS"
+        ],
+        "product_family": "메모리 가치평가",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "forward book value",
+          "valuation bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "삼성전자 2026E 주당순자산",
+        "subject_id": "005930",
+        "unit": "원/주",
+        "value": 70508
+      },
+      {
+        "business_segment": "삼성전자 전사(메모리 가치평가 문맥)",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-447d279e0572cd669d760acc",
+        "economic_mechanism": "메모리 이익 회복을 전제로 한 SK증권 삼성전자 모델은 2026E PBR을 1.5배로 추정했다; 이는 전사 배수다.",
+        "exact_quote": "현금흐름표 주요투자지표\n12월 결산(십억원) 2023 2024 2025E 2026E 2027E 12월 결산(십억원) 2023 2024 2025E 2026E 2027E\n영업활동현금흐름 44,137 72,983 78,700 115,883 130,921 성장성 (%)\n당기순이익(손실) 15,487 34,451 38,720 76,224 88,566 매출액 -14.3 16.2 8.8 18.7 10.0\n비현금성항목등 36,520 42,947 50,251 54,129 55,166 영업이익 -84.9 398.3 17.5 123.5 16.6\n유형자산감가상각비 35,532 39,650 42,884 42,942 40,864 세전계속사업이익 -76.3 241.0 18.3 102.0 16.2\n무형자산상각비 3,134 2,981 3,146 2,942 2,619 EBITDA -45.2 66.6 12.1 56.0 9.0\n기타 -2,147 316 4,221 8,245 11,683 EPS -73.6 132.3 12.3 96.3 16.2\n운전자본감소(증가) -5,459 -1,568 -6,760 -5,564 1,620 수익성 (%)\n매출채권및기타채권의감소(증가) 236 -3,139 -10,941 -12,890 -323 ROA 3.4 7.1 7.3 12.8 13.0\n재고자산의감소(증가) -3,207 2,541 -13,178 -12,876 -323 ROE 4.1 9.0 9.4 16.7 16.7\n매입채무및기타채무의증가(감소) 1,104 -1,539 15,125 14,944 374 EBITDA마진 17.5 25.0 25.8 33.9 33.6\n기타 -9,031 -9,298 -11,254 -22,358 -30,061 안정성 (%)\n법인세납부 -6,621 -6,450 -7,744 -13,451 -15,629 유동비율 258.8 243.3 206.7 233.2 278.7\n투자활동현금흐름 -16,923 -85,382 -93,159 -70,095 -56,177 부채비율 25.4 27.9 31.5 32.1 27.6\n금융자산의감소(증가) 44,817 -31,810 -10,818 -14,317 -8,233 순차입금/자기자본 -21.9 -23.2 -17.3 -24.9 -31.5\n유형자산의감소(증가) -57,513 -51,250 -73,561 -51,000 -48,000 EBITDA/이자비용(배) 48.6 83.4 108.0 143.5 229.2\n무형자산의감소(증가) -2,911 -2,319 -4,978 -1,621 -500 배당성향 67.8 29.2 25.9 13.1 11.3\n기타 -1,316 -2 -3,802 -3,157 556 주당지표 (원)\n재무활동현금흐름 -8,593 -7,797 -9,952 -6,212 -7,805 EPS(계속사업) 2,131 4,950 5,558 10,913 12,680\n단기금융부채의증가(감소) 2,145 5,871 3,426 3,738 2,149 BPS 52,002 57,930 61,028 70,508 81,755\n장기금융부채의증가(감소) -865 -960 730 -296 -300 CFPS 7,823 11,226 12,392 17,725 19,136\n자본의증가(감소) 0 0 0 0 0 주당 현금배당금 1,444 1,446 1,456 1,456 1,456\n배당금지급 -9,864 -10,889 -9,830 -9,654 -9,654 Valuation지표 (배)\n기타 -9 -1,820 -4,278 0 0 PER 36.8 10.7 19.3 9.9 8.5\n현금의 증가(감소) 19,400 -15,375 -25,372 37,614 50,366 PBR 1.5 0.9 1.8 1.5 1.3\n기초현금 49,681 69,081 53,706 28,333 65,947 PCR 10.0 4.7 8.7 6.1 5.6\n기말현금 69,081 53,706 28,333 65,947 116,313 EV/EBITDA 10.0 3.6 7.6 4.5 3.8\nFCF -13,376 21,732 5,139 64,883 82,921 배당수익률 1.8 2.7 1.4 1.4 1.4\n자료 : 삼성전자, SK증권 추정",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "full broker PDF가 기간 헤더와 PBR 행을 직접 제시하며 전사 배수라는 한계를 보존한다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "삼성전자 2026E PBR",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026E",
+        "predicate": "2026E PBR을 1.5배로 추정했다",
+        "predicate_family": "FORWARD_PB_ESTIMATE",
+        "primitive_tags": [
+          "FORWARD_PB",
+          "VALUATION_ANALYSIS"
+        ],
+        "product_family": "메모리 가치평가",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "forward P/B",
+          "valuation bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 2026E PBR",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 1.5
+      },
+      {
+        "business_segment": "삼성전자 전사(메모리 가치평가 문맥)",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-447d279e0572cd669d760acc",
+        "economic_mechanism": "메모리 이익 회복을 전제로 한 SK증권 삼성전자 모델은 2026E PER을 9.9배로 추정했다; 이는 목표 P/E 15배와 구별되는 전사 forward multiple이다.",
+        "exact_quote": "현금흐름표 주요투자지표\n12월 결산(십억원) 2023 2024 2025E 2026E 2027E 12월 결산(십억원) 2023 2024 2025E 2026E 2027E\n영업활동현금흐름 44,137 72,983 78,700 115,883 130,921 성장성 (%)\n당기순이익(손실) 15,487 34,451 38,720 76,224 88,566 매출액 -14.3 16.2 8.8 18.7 10.0\n비현금성항목등 36,520 42,947 50,251 54,129 55,166 영업이익 -84.9 398.3 17.5 123.5 16.6\n유형자산감가상각비 35,532 39,650 42,884 42,942 40,864 세전계속사업이익 -76.3 241.0 18.3 102.0 16.2\n무형자산상각비 3,134 2,981 3,146 2,942 2,619 EBITDA -45.2 66.6 12.1 56.0 9.0\n기타 -2,147 316 4,221 8,245 11,683 EPS -73.6 132.3 12.3 96.3 16.2\n운전자본감소(증가) -5,459 -1,568 -6,760 -5,564 1,620 수익성 (%)\n매출채권및기타채권의감소(증가) 236 -3,139 -10,941 -12,890 -323 ROA 3.4 7.1 7.3 12.8 13.0\n재고자산의감소(증가) -3,207 2,541 -13,178 -12,876 -323 ROE 4.1 9.0 9.4 16.7 16.7\n매입채무및기타채무의증가(감소) 1,104 -1,539 15,125 14,944 374 EBITDA마진 17.5 25.0 25.8 33.9 33.6\n기타 -9,031 -9,298 -11,254 -22,358 -30,061 안정성 (%)\n법인세납부 -6,621 -6,450 -7,744 -13,451 -15,629 유동비율 258.8 243.3 206.7 233.2 278.7\n투자활동현금흐름 -16,923 -85,382 -93,159 -70,095 -56,177 부채비율 25.4 27.9 31.5 32.1 27.6\n금융자산의감소(증가) 44,817 -31,810 -10,818 -14,317 -8,233 순차입금/자기자본 -21.9 -23.2 -17.3 -24.9 -31.5\n유형자산의감소(증가) -57,513 -51,250 -73,561 -51,000 -48,000 EBITDA/이자비용(배) 48.6 83.4 108.0 143.5 229.2\n무형자산의감소(증가) -2,911 -2,319 -4,978 -1,621 -500 배당성향 67.8 29.2 25.9 13.1 11.3\n기타 -1,316 -2 -3,802 -3,157 556 주당지표 (원)\n재무활동현금흐름 -8,593 -7,797 -9,952 -6,212 -7,805 EPS(계속사업) 2,131 4,950 5,558 10,913 12,680\n단기금융부채의증가(감소) 2,145 5,871 3,426 3,738 2,149 BPS 52,002 57,930 61,028 70,508 81,755\n장기금융부채의증가(감소) -865 -960 730 -296 -300 CFPS 7,823 11,226 12,392 17,725 19,136\n자본의증가(감소) 0 0 0 0 0 주당 현금배당금 1,444 1,446 1,456 1,456 1,456\n배당금지급 -9,864 -10,889 -9,830 -9,654 -9,654 Valuation지표 (배)\n기타 -9 -1,820 -4,278 0 0 PER 36.8 10.7 19.3 9.9 8.5\n현금의 증가(감소) 19,400 -15,375 -25,372 37,614 50,366 PBR 1.5 0.9 1.8 1.5 1.3\n기초현금 49,681 69,081 53,706 28,333 65,947 PCR 10.0 4.7 8.7 6.1 5.6\n기말현금 69,081 53,706 28,333 65,947 116,313 EV/EBITDA 10.0 3.6 7.6 4.5 3.8\nFCF -13,376 21,732 5,139 64,883 82,921 배당수익률 1.8 2.7 1.4 1.4 1.4\n자료 : 삼성전자, SK증권 추정",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 회복 보고서의 forward earnings multiple을 period·denominator와 함께 직접 제시하며 목표배수와 분리한다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "삼성전자 2026E PER",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026E",
+        "predicate": "2026E PER을 9.9배로 추정했다",
+        "predicate_family": "FORWARD_PE_ESTIMATE",
+        "primitive_tags": [
+          "FORWARD_PE",
+          "VALUATION_ANALYSIS"
+        ],
+        "product_family": "메모리 가치평가",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "forward P/E",
+          "valuation bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026E PER",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 9.9
+      },
+      {
+        "business_segment": "삼성전자 전사(메모리 가치평가 문맥)",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-447d279e0572cd669d760acc",
+        "economic_mechanism": "메모리 이익 회복을 전제로 한 SK증권 삼성전자 모델은 2026E 전사 FCF를 64.883조원으로 추정했다; 메모리 부문 FCF로 오귀속하지 않는다.",
+        "exact_quote": "현금흐름표 주요투자지표\n12월 결산(십억원) 2023 2024 2025E 2026E 2027E 12월 결산(십억원) 2023 2024 2025E 2026E 2027E\n영업활동현금흐름 44,137 72,983 78,700 115,883 130,921 성장성 (%)\n당기순이익(손실) 15,487 34,451 38,720 76,224 88,566 매출액 -14.3 16.2 8.8 18.7 10.0\n비현금성항목등 36,520 42,947 50,251 54,129 55,166 영업이익 -84.9 398.3 17.5 123.5 16.6\n유형자산감가상각비 35,532 39,650 42,884 42,942 40,864 세전계속사업이익 -76.3 241.0 18.3 102.0 16.2\n무형자산상각비 3,134 2,981 3,146 2,942 2,619 EBITDA -45.2 66.6 12.1 56.0 9.0\n기타 -2,147 316 4,221 8,245 11,683 EPS -73.6 132.3 12.3 96.3 16.2\n운전자본감소(증가) -5,459 -1,568 -6,760 -5,564 1,620 수익성 (%)\n매출채권및기타채권의감소(증가) 236 -3,139 -10,941 -12,890 -323 ROA 3.4 7.1 7.3 12.8 13.0\n재고자산의감소(증가) -3,207 2,541 -13,178 -12,876 -323 ROE 4.1 9.0 9.4 16.7 16.7\n매입채무및기타채무의증가(감소) 1,104 -1,539 15,125 14,944 374 EBITDA마진 17.5 25.0 25.8 33.9 33.6\n기타 -9,031 -9,298 -11,254 -22,358 -30,061 안정성 (%)\n법인세납부 -6,621 -6,450 -7,744 -13,451 -15,629 유동비율 258.8 243.3 206.7 233.2 278.7\n투자활동현금흐름 -16,923 -85,382 -93,159 -70,095 -56,177 부채비율 25.4 27.9 31.5 32.1 27.6\n금융자산의감소(증가) 44,817 -31,810 -10,818 -14,317 -8,233 순차입금/자기자본 -21.9 -23.2 -17.3 -24.9 -31.5\n유형자산의감소(증가) -57,513 -51,250 -73,561 -51,000 -48,000 EBITDA/이자비용(배) 48.6 83.4 108.0 143.5 229.2\n무형자산의감소(증가) -2,911 -2,319 -4,978 -1,621 -500 배당성향 67.8 29.2 25.9 13.1 11.3\n기타 -1,316 -2 -3,802 -3,157 556 주당지표 (원)\n재무활동현금흐름 -8,593 -7,797 -9,952 -6,212 -7,805 EPS(계속사업) 2,131 4,950 5,558 10,913 12,680\n단기금융부채의증가(감소) 2,145 5,871 3,426 3,738 2,149 BPS 52,002 57,930 61,028 70,508 81,755\n장기금융부채의증가(감소) -865 -960 730 -296 -300 CFPS 7,823 11,226 12,392 17,725 19,136\n자본의증가(감소) 0 0 0 0 0 주당 현금배당금 1,444 1,446 1,456 1,456 1,456\n배당금지급 -9,864 -10,889 -9,830 -9,654 -9,654 Valuation지표 (배)\n기타 -9 -1,820 -4,278 0 0 PER 36.8 10.7 19.3 9.9 8.5\n현금의 증가(감소) 19,400 -15,375 -25,372 37,614 50,366 PBR 1.5 0.9 1.8 1.5 1.3\n기초현금 49,681 69,081 53,706 28,333 65,947 PCR 10.0 4.7 8.7 6.1 5.6\n기말현금 69,081 53,706 28,333 65,947 116,313 EV/EBITDA 10.0 3.6 7.6 4.5 3.8\nFCF -13,376 21,732 5,139 64,883 82,921 배당수익률 1.8 2.7 1.4 1.4 1.4\n자료 : 삼성전자, SK증권 추정",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "full broker model의 period와 FCF 행이 forward cash bridge를 직접 수치화하며 전사 지표의 귀속 한계를 보존한다.",
+        "mechanism_scope_id": "MEMORY/MEMORY_GENERIC/VALUATION_ANALYSIS/VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "삼성전자 2026E 전사 잉여현금흐름",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026E",
+        "predicate": "2026E 전사 FCF를 64.883조원으로 추정했다",
+        "predicate_family": "FORWARD_FCF_ESTIMATE",
+        "primitive_tags": [
+          "FORWARD_FCF",
+          "CASH_CONVERSION"
+        ],
+        "product_family": "메모리 가치평가",
+        "question_family_id": "valuation_rerating",
+        "question_family_tags": [
+          "forward FCF",
+          "valuation bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026E 잉여현금흐름",
+        "subject_id": "005930",
+        "unit": "십억원",
+        "value": 64883
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.85,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-45c80c41fe4ed5e1589a9e01",
+        "economic_mechanism": "삼성전자는 HBM4 개발 제품이 고객사로부터 긍정적 평가를 받았다고 밝혔지만 이를 계약·인증·구매 의무로 확대하지 않는다.",
+        "exact_quote": "삼성전자는 HBM4와 7세대 그래픽 D램(GDDR7) 등을 개발해 고객사로부터 \"삼성이 돌아왔다\"는 평가를 받고 있다고 밝혔다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "외부 고객 반응을 issuer가 명시했으나 고객명·인증·계약·물량은 확인되지 않은 product feedback로만 제한한다.",
+        "mechanism_scope_id": "MEMORY/HBM/PRODUCT_PROFILE/PRODUCT_COMMERCIALIZATION",
+        "normalized_object": "삼성전자 HBM4 고객 제품 평가",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025년 4분기 실적 발표 시점",
+        "predicate": "HBM4 개발 제품이 고객사로부터 긍정적 평가를 받았다고 밝혔다",
+        "predicate_family": "ISSUER_REPORTED_HBM4_CUSTOMER_PRODUCT_FEEDBACK",
+        "primitive_tags": [
+          "CUSTOMER_FEEDBACK_NOT_CONTRACT",
+          "PRODUCT_COMMERCIALIZATION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "HBM4 customer feedback",
+          "product profile"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 고객 평가",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "삼성이 돌아왔다 평가"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-45c80c41fe4ed5e1589a9e01",
+        "economic_mechanism": "삼성전자의 1c 나노 DDR5 본격 양산은 고용량 서버 D램 공급을 늘릴 수 있는 실제 공급 대응이다.",
+        "exact_quote": "삼성전자는 6세대 10나노급 1c 나노 DDR5를 본격 양산하고,",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "D램 가격 병목의 지속성을 완화할 수 있는 타깃의 실제 선단제품 양산 진척이다.",
+        "mechanism_scope_id": "MEMORY/DRAM/PRODUCT_SHIPMENT/SUPPLY_RESPONSE",
+        "normalized_object": "삼성전자 1c 나노 DDR5 양산",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025년 4분기 실적 발표 시점",
+        "predicate": "6세대 10나노급 1c 나노 DDR5를 본격 양산했다",
+        "predicate_family": "DRAM_1C_DDR5_MASS_PRODUCTION",
+        "primitive_tags": [
+          "PRODUCT_SHIPMENT",
+          "SUPPLY_RESPONSE"
+        ],
+        "product_family": "DDR5",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "DDR5 mass production",
+          "supply response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 1c 나노 DDR5",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "본격 양산"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-45c80c41fe4ed5e1589a9e01",
+        "economic_mechanism": "차세대 HBM 공급업체 간 경쟁 격화 전망은 가격·마진 지속성에 대한 반대 증거이며 삼성전자의 추격을 확정 점유율로 해석하지 않는다.",
+        "exact_quote": "다만 HBM 시장에서 경쟁이 격화될 것이란 전망도 나온다. SK하이닉스가 기술·품질 우위를 바탕으로 시장을 선도하고 있지만, 삼성전자와 마이크론이 HBM4 등 차세대 제품으로 추격하고 있기 때문이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공급자 경쟁 심화는 HBM 병목에 따른 가격·마진 프리미엄의 지속성을 직접 제한한다.",
+        "mechanism_scope_id": "MEMORY/HBM/RISK/RISK_COUNTER",
+        "normalized_object": "HBM4 공급업체 경쟁",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026년 전망",
+        "predicate": "삼성전자와 마이크론의 HBM4 추격으로 HBM 경쟁 격화가 전망됐다",
+        "predicate_family": "HBM4_SUPPLIER_COMPETITION_RISK",
+        "primitive_tags": [
+          "RISK_COUNTER",
+          "SUPPLIER_COMPETITION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "bottleneck_pricing",
+        "question_family_tags": [
+          "HBM competition",
+          "pricing counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 경쟁환경",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "경쟁 격화 전망"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d16f479585129696b31096e1fb1f9ebcebeb17d6092deb1cb4b380c37ede2013",
+  "production_score_authority": false,
+  "prompt_hash": "5a3243f7126963f2f953448b25d1be2a83139db9e51b4ef8a399330bace5be84",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8437de3c88a63b73d76d446fe0dd871f40d8acf4b95803832ed36defb53b9e3c",
+  "response_id": "COLLABRESP-e945e1fab22e635aa62999e7e9f7ea7040d3b200fe345c4ff487807e44eef432",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

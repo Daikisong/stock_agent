@@ -1,0 +1,73 @@
+{
+  "as_of_date": "2026-07-12",
+  "comparison_executed": true,
+  "completion_based_on_fixed_rounds": false,
+  "frozen_production_file_count": 12,
+  "full_mandatory_target_roster_selected": true,
+  "gold_critical_fact_miss_count": 1,
+  "gold_visibility_during_production": false,
+  "latest_trading_snapshot_date": "2026-07-10",
+  "mandatory_target_ids": [
+    "005930",
+    "000660"
+  ],
+  "missing_mandatory_target_ids": [],
+  "post_run_gold_status": "V5_FULL_THESIS_GOLD_POST_RUN_RECALL_FAIL",
+  "production_execution_mode": "SEALED_PRODUCTION_POST_RUN_ONLY",
+  "production_lane_manifest": "output/researcher_mode/c06/2026-07-12/production_lane_manifest.json",
+  "production_research_complete": true,
+  "research_provider": {
+    "provider_identity": {
+      "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+      "direct_score_or_stage_authority": false,
+      "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+      "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+      "transport_class": "CollaborationCodexSubagentTransport"
+    },
+    "provider_identity_error": null,
+    "provider_identity_hash": "f95acea216695050b7034ce0f309935093cf3f3b3bda70a086401b2312574cb6",
+    "provider_identity_resolved": true,
+    "provider_name": "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE",
+    "provider_selected_explicitly": true,
+    "score_or_stage_authority": false,
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "sealed_production_verification_reasons": [],
+  "sealed_production_verified": true,
+  "selected_target_ids": [
+    "005930",
+    "000660"
+  ],
+  "status": "PHASE94_CURRENT_RESEARCHER_MODE_PENDING",
+  "target_completion_gates": {
+    "000660": {
+      "counter_thesis_complete": true,
+      "deterministic_stagecourt_final": true,
+      "deterministic_total_score_complete": true,
+      "fact_extraction_complete": true,
+      "master_canary_leaf_contract": true,
+      "no_unresolved_material_judge_disagreement": true,
+      "production_semantic_saturation_certified": true,
+      "seven_component_research_complete": true,
+      "source_graph_checkpoint_ready": true,
+      "structured_valuation_revision_complete": true
+    },
+    "005930": {
+      "counter_thesis_complete": true,
+      "deterministic_stagecourt_final": true,
+      "deterministic_total_score_complete": true,
+      "fact_extraction_complete": true,
+      "master_canary_leaf_contract": true,
+      "no_unresolved_material_judge_disagreement": true,
+      "production_semantic_saturation_certified": true,
+      "seven_component_research_complete": true,
+      "source_graph_checkpoint_ready": true,
+      "structured_valuation_revision_complete": true
+    }
+  },
+  "target_statuses": {
+    "000660": "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
+    "005930": "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+  },
+  "unexpected_selected_target_ids": []
+}

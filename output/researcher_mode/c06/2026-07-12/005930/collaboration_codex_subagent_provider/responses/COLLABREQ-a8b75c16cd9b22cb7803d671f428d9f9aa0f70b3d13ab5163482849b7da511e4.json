@@ -1,0 +1,129 @@
+{
+  "output_schema_hash": "a7e037c139a33ac8cc9a150024495ef4dc2d733048ea2f9f6f7bbcd6f629607c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7a6a270afb6ca8f7444735b3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "이전 분기·연도의 삼성전자 실적 또는 전망을 다루어 최신 2Q26 actual을 확인하는 현재 목적을 supersede하지 못한다. 또한 제3자 경로로 요청된 KIND·OPENDART·issuer family와 일치하지 않아 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-cd826e149841bb2c707105a8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "이전 분기·연도의 삼성전자 실적 또는 전망을 다루어 최신 2Q26 actual을 확인하는 현재 목적을 supersede하지 못한다. 또한 제3자 경로로 요청된 KIND·OPENDART·issuer family와 일치하지 않아 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-452ec1c741eeaa3851af0f5f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "삼성전자가 아닌 다른 발행사·대상에 관한 결과로 target scope가 틀리며, 요청된 삼성전자 official source family와도 일치하지 않는다. material이 아니고 snippet은 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-672bd37225ca5698acda9b12",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "이전 분기·연도의 삼성전자 실적 또는 전망을 다루어 최신 2Q26 actual을 확인하는 현재 목적을 supersede하지 못한다. 또한 제3자 경로로 요청된 KIND·OPENDART·issuer family와 일치하지 않아 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-788a901fee818e0eb4f1682a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "이전 분기·연도의 삼성전자 실적 또는 전망을 다루어 최신 2Q26 actual을 확인하는 현재 목적을 supersede하지 못한다. 또한 제3자 경로로 요청된 KIND·OPENDART·issuer family와 일치하지 않아 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-cdab87690bd5d003cc2c0388",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "2Q26 발표 전 예상·일정·관전 포인트를 다룬 제3자 경로로 최신 actual 원문이 아니다. 요청된 KIND·OPENDART·issuer family와 일치하지 않으며 snippet 전망을 근거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-d98af46aedf94b0b62dba8cd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.yna.co.kr의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-78d35c5694f9ea42e2333e9f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "삼성전자가 아닌 다른 발행사·대상에 관한 결과로 target scope가 틀리며, 요청된 삼성전자 official source family와도 일치하지 않는다. material이 아니고 snippet은 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-375ea65735276cbf82f44653",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "삼성전자가 아닌 다른 발행사·대상에 관한 결과로 target scope가 틀리며, 요청된 삼성전자 official source family와도 일치하지 않는다. material이 아니고 snippet은 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-bfc751e8aa94f2bca3fc9995",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "2Q26 발표 전 예상·일정·관전 포인트를 다룬 제3자 경로로 최신 actual 원문이 아니다. 요청된 KIND·OPENDART·issuer family와 일치하지 않으며 snippet 전망을 근거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-576a5558f99f3fe6ca3cf3a2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "이전 분기·연도의 삼성전자 실적 또는 전망을 다루어 최신 2Q26 actual을 확인하는 현재 목적을 supersede하지 못한다. 또한 제3자 경로로 요청된 KIND·OPENDART·issuer family와 일치하지 않아 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-a6210a98c48d0b9bb842037c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "이전 분기·연도의 삼성전자 실적 또는 전망을 다루어 최신 2Q26 actual을 확인하는 현재 목적을 supersede하지 못한다. 또한 제3자 경로로 요청된 KIND·OPENDART·issuer family와 일치하지 않아 material에서 제외한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Wrong-target issuer pages and third-party schedule pages were excluded even when their titles shared earnings keywords.",
+      "Every selected route still requires full-document fetch; no snippet was treated as evidence."
+    ]
+  },
+  "payload_hash": "e3bb0953819281882d46adfdfbb528c065314f3f07e8d46adcadebed10985320",
+  "production_score_authority": false,
+  "prompt_hash": "74a55abd8605eca5f8e2b9dfc6a1edb513fb70ee0fb853b65d602be72254030e",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a8b75c16cd9b22cb7803d671f428d9f9aa0f70b3d13ab5163482849b7da511e4",
+  "response_id": "COLLABRESP-e7d5b899e34835a396ef2eaab89c19f1fe413802a1b8a6c6507389b5a559df06",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

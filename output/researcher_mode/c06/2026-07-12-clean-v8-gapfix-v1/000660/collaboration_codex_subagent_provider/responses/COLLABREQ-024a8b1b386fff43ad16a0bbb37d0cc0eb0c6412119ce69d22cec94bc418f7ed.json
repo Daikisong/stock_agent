@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4df4bd586d35acb1e241ad82",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·포털·블로그·리포트 요약/검색 또는 generic industry commentary로 original broker full-PDF/landing provenance가 아니다. route-only 기준에서 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-629cf979d26cb529ceac5905",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·포털·블로그·리포트 요약/검색 또는 generic industry commentary로 original broker full-PDF/landing provenance가 아니다. route-only 기준에서 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8a18f2d76e6f8a721f240a91",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.95,
+        "rationale": "삼성증권 소유 다운로드 URL의 2026-06-02 sector full PDF이고 full-fetch document route도 연결되어 있다. 000660의 HBM/LTA 및 valuation mechanism을 후속 원문 검증할 target-relevant broker route이므로 material이다; snippet 자체는 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e6976221993694458b49a78c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·포털·블로그·리포트 요약/검색 또는 generic industry commentary로 original broker full-PDF/landing provenance가 아니다. route-only 기준에서 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-eba7b144d07a7008920ab867",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·포털·블로그·리포트 요약/검색 또는 generic industry commentary로 original broker full-PDF/landing provenance가 아니다. route-only 기준에서 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6fb08e3bd0d5dfce7626e893",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·포털·블로그·리포트 요약/검색 또는 generic industry commentary로 original broker full-PDF/landing provenance가 아니다. route-only 기준에서 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a8bc774e44cbbc18a5ee345a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·포털·블로그·리포트 요약/검색 또는 generic industry commentary로 original broker full-PDF/landing provenance가 아니다. route-only 기준에서 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-abbf8c816943e696aa65d88c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·포털·블로그·리포트 요약/검색 또는 generic industry commentary로 original broker full-PDF/landing provenance가 아니다. route-only 기준에서 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ee4c5772b641b9c9b98b4695",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·포털·블로그·리포트 요약/검색 또는 generic industry commentary로 original broker full-PDF/landing provenance가 아니다. route-only 기준에서 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6427960746cd9a214470e9c0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·포털·블로그·리포트 요약/검색 또는 generic industry commentary로 original broker full-PDF/landing provenance가 아니다. route-only 기준에서 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9144bf8f409e4f52112040a9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·포털·블로그·리포트 요약/검색 또는 generic industry commentary로 original broker full-PDF/landing provenance가 아니다. route-only 기준에서 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-949c9dd51be181e4e5e2f9c0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·포털·블로그·리포트 요약/검색 또는 generic industry commentary로 original broker full-PDF/landing provenance가 아니다. route-only 기준에서 nonmaterial이며 snippet은 evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P0 12개 exact-once 분류. material route는 full original broker PDF 1개이며 내용의 증거성은 후속 full-document 검증 대상이다.",
+      "nonmaterial 및 material0/1 accounting은 source availability나 claim truth의 판정이 아니다."
+    ]
+  },
+  "payload_hash": "7df2a1fb0d1bd67fd6c7d7b9deb6b4ead45d430c3e045f45e06119c76d9937a8",
+  "production_score_authority": false,
+  "prompt_hash": "a60323d8f81185f927579b8b8e5b37d86da4467af75a9bed092543a3ec87b1fe",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-024a8b1b386fff43ad16a0bbb37d0cc0eb0c6412119ce69d22cec94bc418f7ed",
+  "response_id": "COLLABRESP-ebadcd4eb585ccbd0ea178ddc7c0806c7b15951f4f713a478ecdfba3fca3ed1b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

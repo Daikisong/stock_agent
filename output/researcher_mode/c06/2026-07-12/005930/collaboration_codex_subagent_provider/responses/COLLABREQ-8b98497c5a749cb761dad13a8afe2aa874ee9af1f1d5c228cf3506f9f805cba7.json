@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-301d560f0ba2176f8187f6ad",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.82,
+        "rationale": "삼성전자, 연간 영업이익 300조 넘본다...1분기 57조원: as-of 이전 현재 실적과 메모리·DS 귀속 또는 수익성 연결을 다루는 독립 경로라 positive/counter 검증에 유용하다. snippet은 discovery metadata일 뿐 증거로 사용하지 않으며 material route도 fetch·본문·발행일 검증 전에는 scoring fact가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c0c7e022477209fb4cb7d825",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.72,
+        "rationale": "삼성·하이닉스, 2분기 또 최대실적 가능성…영업익 150조 전망: as-of 이전 메모리 가격·수요·공급 또는 이익 전망을 구체적으로 다뤄 forward bridge와 반증을 확인할 수 있다. snippet은 discovery metadata일 뿐 증거로 사용하지 않으며 material route도 fetch·본문·발행일 검증 전에는 scoring fact가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4632aa0c9052306efc48bb69",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.82,
+        "rationale": "투자자 정보 - Samsung: 검증된 issuer IR landing/notices가 2026년 1분기 발표자료·컨퍼런스콜 원문으로 이어질 수 있어 material route다. snippet은 discovery metadata일 뿐 증거로 사용하지 않으며 material route도 fetch·본문·발행일 검증 전에는 scoring fact가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8c0bcf2fd5ac25e016b8b4d6",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.8,
+        "rationale": "삼성전자 \"2분기도 메모리 호황...2027년 주문량, 현 캐파 상회\"(종합): 현재 실적의 비용·세트부문 부담·고점론·귀속 한계 등 반대 메커니즘을 포함해 counter/supersession 검증에 유용하다. snippet은 discovery metadata일 뿐 증거로 사용하지 않으며 material route도 fetch·본문·발행일 검증 전에는 scoring fact가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-19fc614b587f9ca3aa8633ee",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.15,
+        "rationale": "삼성전자, 2026년 1분기 실적 발표: 검증된 issuer 원문 후보가 별도로 있는 재가공·비검증 복제 경로라 추가 material source가 아니다. snippet은 discovery metadata일 뿐 증거로 사용하지 않으며 material route도 fetch·본문·발행일 검증 전에는 scoring fact가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cf028f77bb7d445632e1bcf3",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.82,
+        "rationale": "삼성전자, 1분기 매출 133.9조·영업익 57.2조 ‘사상 최대’…AI 반도체가 실적 견....: as-of 이전 현재 실적과 메모리·DS 귀속 또는 수익성 연결을 다루는 독립 경로라 positive/counter 검증에 유용하다. snippet은 discovery metadata일 뿐 증거로 사용하지 않으며 material route도 fetch·본문·발행일 검증 전에는 scoring fact가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-259507cf10c00a707a060e32",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성전자 2026년 2분기 영업이익 89조원 잠정실적 총정리: 블로그·요약성 재가공 페이지로 original issuer 또는 검증 가능한 독립 원문 계보를 제공하지 않는다. snippet은 discovery metadata일 뿐 증거로 사용하지 않으며 material route도 fetch·본문·발행일 검증 전에는 scoring fact가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a82f965d973bdd9d0daeee04",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.65,
+        "rationale": "D램값 두 배 올랐다…삼성·하이닉스 이익도 두 배 뛴 듯: as-of 이전 기대치·컨센서스 경로로 실제 실적과의 expectation gap 및 supersession을 검증할 수 있다. snippet은 discovery metadata일 뿐 증거로 사용하지 않으며 material route도 fetch·본문·발행일 검증 전에는 scoring fact가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f451867a80e363cd734cfa06",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.25,
+        "rationale": "[컨콜] 삼성전자 \"2분기 HBM4E 첫 샘플 공급\"..AI 메모리 초격차 속도전: HBM4E 샘플 일정만 다루고 메모리 이익·마진·현금전환 귀속이 없어 이 EPS objective에는 불충분하다. snippet은 discovery metadata일 뿐 증거로 사용하지 않으며 material route도 fetch·본문·발행일 검증 전에는 scoring fact가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2192cd4cf4156ffd90cbf554",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.82,
+        "rationale": "전자공고 │ 재무정보 │ 투자자 정보: 검증된 issuer IR landing/notices가 2026년 1분기 발표자료·컨퍼런스콜 원문으로 이어질 수 있어 material route다. snippet은 discovery metadata일 뿐 증거로 사용하지 않으며 material route도 fetch·본문·발행일 검증 전에는 scoring fact가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8050338c9bacd663ed127dc3",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성전자 실적발표 주가 영향: 실적 전망과 SK하이닉스 비교 기준: 블로그·요약성 재가공 페이지로 original issuer 또는 검증 가능한 독립 원문 계보를 제공하지 않는다. snippet은 discovery metadata일 뿐 증거로 사용하지 않으며 material route도 fetch·본문·발행일 검증 전에는 scoring fact가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9ccf2d1efb12e2c916a719b2",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.15,
+        "rationale": "삼성전자, 2025년 4분기 실적 발표: 검증된 issuer 원문 후보가 별도로 있는 재가공·비검증 복제 경로라 추가 material source가 아니다. snippet은 discovery metadata일 뿐 증거로 사용하지 않으며 material route도 fetch·본문·발행일 검증 전에는 scoring fact가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "material=true 후보도 discovery route이므로 full fetch, canonical owner, published/available cutoff, exact quote와 counter/supersession 검증이 남아 있다. false 후보는 미래·구자료·재가공·오대상 또는 objective 직접성 부족으로 제외했다."
+    ]
+  },
+  "payload_hash": "3adcdda7f8ea88134d937a829a20e4f3ac3b1b6825a23dbb40934d83b53bd91e",
+  "production_score_authority": false,
+  "prompt_hash": "6beff57f73d7524c5f331ddcb102b883385f6b31ea1b5c75f8f04a6adb84ddd3",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8b98497c5a749cb761dad13a8afe2aa874ee9af1f1d5c228cf3506f9f805cba7",
+  "response_id": "COLLABRESP-7584f51d1bd60390d13793df3c85e3b24d4bbba1ee0dc3a85cd578289044b335",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "output_schema_hash": "ac38d7a1ad036b5041831d640bfc4eacd0e9f7da4e3f709d0adbcdd661d39dc7",
+  "payload": {
+    "confidence": 0.72,
+    "counter_case": "대규모 투자와 HBM-only margin·현금회수·계약조건 미공개는 높은 multiple의 지속성을 제한한다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df"
+    ],
+    "positive_case": "HBM 매출이 실제로 두 배 넘게 성장해 record result에 기여했고 공급기반 투자도 이어진다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 65,
+        "reason": "제품 실행은 유지되지만 HBM 실현 매출 성장보다 valuation bridge가 간접적이다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 84,
+        "reason": "실현된 HBM 매출 성장과 record result 연결을 핵심 rerating positive로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 154,
+        "reason": "성장 공급기반과 동시에 투자부담을 보여주는 양면 evidence로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 158,
+        "reason": "고객 공동개발은 계약경제나 valuation multiple의 직접 근거가 아니다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 164,
+        "reason": "HBM4 양산은 긍정적이나 매출 성장 actual과 투자계획이 더 직접적인 rerating 근거다."
+      }
+    ],
+    "proposed_score_lower": 6.0,
+    "proposed_score_mid": 8.0,
+    "proposed_score_upper": 10.0,
+    "research_complete": true,
+    "researcher_summary": "HBM 매출의 실현 성장과 공급기반 투자는 rerating을 지지하지만 CAPEX, HBM-only margin, 계약경제 미확인 때문에 bounded range가 필요하다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "실현된 HBM 매출 성장과 record result 연결은 valuation 분모의 질적 개선을 지지한다.",
+        "fact_row_index": 84,
+        "source_economic_mechanism": "HBM sales more than doubled year over year and the issuer explicitly linked that growth to its record result, establishing realized HBM revenue conversion without supplying an HBM margin or mix percentage.",
+        "source_period_json": "\"FY2025 vs FY2024\"",
+        "source_predicate": "sales grew more than twofold year over year and contributed to record results",
+        "source_value_json": "\"more than 2x\""
+      },
+      {
+        "component_interpretation": "공급 기반 확장은 성장 지속성을 지지하지만 큰 투자부담과 HBM-only 회수기간 미확인이 rerating 상단을 제한한다.",
+        "fact_row_index": 154,
+        "source_economic_mechanism": "The issuer expects 2026 investment to rise significantly year over year, centered on M15X ramp-up, Yongin infrastructure preparation, and EUV equipment; this is a qualitative memory-wide investment plan without a numeric amount, HBM-only capacity, customer allocation, or contract commitment.",
+        "source_period_json": "\"FY2026 vs FY2025\"",
+        "source_predicate": "expects annual investment to increase significantly",
+        "source_value_json": "\"significant year-over-year investment increase centered on M15X, Yongin, and EUV\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      84,
+      154
+    ],
+    "source_coverage": [
+      "ISSUER_NEWSROOM",
+      "OPENDART",
+      "PUBLIC_BROKER_PDF",
+      "KRX_PRICE_MARKET_CAP"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "HBM-only margin과 현금회수기간이 공개되지 않았다",
+      "forward multiple은 브로커 추정과 시장가격 변화에 민감하다"
+    ],
+    "why_not_higher": "HBM-only margin·FCF와 장기 계약경제가 확인되지 않았다.",
+    "why_not_lower": "HBM 매출의 실현 성장과 record result 기여가 발행사 자료에서 확인된다."
+  },
+  "payload_hash": "6258166433aa0eace79f6f8c534f538d7f52fdda3d046a74f2e910fd6ade67d6",
+  "production_score_authority": false,
+  "prompt_hash": "6e111ef8006d2a89d5249fa009253c6786cf38768c29c6622b4df483d930e3a9",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-54e3a19c07610eca7d220a22d4bce12cb1f68d7a514fe19cab507a55db874a02",
+  "response_id": "COLLABRESP-7ef8cebafa21c028c409ad1ce08feebb4de5132279eb2a93688849ad90393f82",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a8ab5bc4ebb698708ae5ff31",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.4,
+        "rationale": "The verified issuer HBM4 product page is relevant background, but a product specification alone does not resolve current qualification, allocation, capacity, or earnings conversion."
+      },
+      {
+        "candidate_id": "SGCAND-a9587b8adfbd2e0670e95183",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.8,
+        "rationale": "The verified issuer 2026 first-quarter statement of income supplies current original revenue and profit context for earnings visibility."
+      },
+      {
+        "candidate_id": "SGCAND-b2fdfaef264a1f80706be624",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.05,
+        "rationale": "The generic IR FAQ matches the issuer family but does not resolve the current memory operating questions."
+      },
+      {
+        "candidate_id": "SGCAND-b419c36d401c0fa88a0e893e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.25,
+        "rationale": "The 2026 first-quarter balance sheet is an issuer source but does not directly resolve HBM demand, capacity, allocation, qualification, or memory earnings attribution."
+      },
+      {
+        "candidate_id": "SGCAND-b9b1ded6931a6892d9432277",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.95,
+        "rationale": "The verified issuer article about Samsung and NVIDIA and an advanced HBM4E solution is a direct original route for customer relationship and qualification evidence."
+      },
+      {
+        "candidate_id": "SGCAND-bfa6872b20423c55f05a8fa3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "This Facebook sharing endpoint is not an eligible original source family and cannot inherit issuer authority from the shared item."
+      },
+      {
+        "candidate_id": "SGCAND-bfe193b10a4817229303d583",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.2,
+        "rationale": "The historical balance sheet matches the issuer family but does not materially resolve the current HBM visibility mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-c0f59fc54a4b19a065725511",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "A verified-domain 404 page has no substantive material for the research objective."
+      },
+      {
+        "candidate_id": "SGCAND-c3a1dbec45d4283d25115b81",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.75,
+        "rationale": "The verified issuer 2025 second-quarter full conference PDF is an original source route for memory outlook, profitability, capacity, and customer commentary."
+      },
+      {
+        "candidate_id": "SGCAND-d0c3e10e3450d4e2cec3a8c1",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "The leadership-and-mission page is issuer-owned but has the wrong subject for current memory earnings visibility."
+      },
+      {
+        "candidate_id": "SGCAND-d2c62288a733b74542d282b8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "This LINE sharing endpoint is third-party transport and cannot satisfy the requested issuer-source family."
+      },
+      {
+        "candidate_id": "SGCAND-d754888cb94b39fc2883d551",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.9,
+        "rationale": "The verified issuer commercial-HBM4 shipment article is a direct original route relevant to product qualification, customer delivery, and the transition toward revenue conversion."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Product and newsroom routes still require full-content and as-of-date validation; shipment or specification statements alone do not establish the complete earnings bridge."
+    ]
+  },
+  "payload_hash": "40c8f04b69865e7ed19804073c55a03c23d38ae531287cd98f9c36287127f0d3",
+  "production_score_authority": false,
+  "prompt_hash": "5e8f7930b86d8dd43d9e9151d39938fd04e751ec0bac46267108df898e4564e4",
+  "provenance": {
+    "agent_id": "samsung-epoch107-rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_epoch107_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ec03d1229a95241320a0e6129c199fab9ac8ad36dbb800a0c07fbb0cb91cf471",
+  "response_id": "COLLABRESP-c7489e99ca4ab99f06417e3a01b1ba1b228051393e902dc01e49df21b62cacc1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

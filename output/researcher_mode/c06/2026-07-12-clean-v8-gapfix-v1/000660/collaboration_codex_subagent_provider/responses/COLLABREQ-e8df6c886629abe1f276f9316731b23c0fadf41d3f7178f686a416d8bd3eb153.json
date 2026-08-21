@@ -1,0 +1,66 @@
+{
+  "output_schema_hash": "4cf21b0ae2136cb418664f2a3c3800c862328634464a2b7611be2ee586d974ab",
+  "payload": {
+    "allowed_range": [
+      1.0,
+      1.4
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e의 1.0~1.4점 구간과 비교하면 순현금 개선·부채 감소·배당·주식 소각은 부합하지만 대규모 CAPEX와 HBM별 수익성 부재로 중간 수준이다.",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc의 0.6~1.0점보다 현금·부채·주주환원 실행은 명확히 강하나 재고·매출채권·투자 부담 때문에 차이는 제한된다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-62724280ce8a0d4997a36f35",
+      "EFACT-6459972ca51023d1d4491408",
+      "EFACT-68380c1d51423fc5e672e63b",
+      "EFACT-6a46eb88222723dffed4cb6d",
+      "EFACT-9fdeaa2b756caf1fc9e5d690",
+      "EFACT-b15e02831a18564591fe308c",
+      "EFACT-eb7bbf5be9f2d8629eb0c50d",
+      "EFACT-f9fa114a3daa17bcad2e20e9"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "proposed_points": 1.2,
+    "rationale": "순현금 및 부채구조 개선, 배당과 주식 소각 등 실제 자본배분 실행을 모두 positive로 반영한다. 동시에 대규모 CAPEX·R&D, 재고·매출채권, HBM 투자수익률과 회수기간 부재를 반영해 우수하지만 검증이 끝나지 않은 자본배분으로 판단한다.",
+    "support_fact_ids": [
+      "EFACT-0b9e70905467d2dbab1b361a",
+      "EFACT-21677a91e8afb32e4876aa8c",
+      "EFACT-2a5c9f33dcc58bbaef146c81",
+      "EFACT-6a5438af79a463ece8fe62b4",
+      "EFACT-84886f3397f7bbc2bee937cd",
+      "EFACT-a88fbe9f73705566b2cb8cdc",
+      "EFACT-c50c5649fa26bea0cfce0e68",
+      "EFACT-d86605614919821796fffc66",
+      "EFACT-d9f801f19a001e7214e5af8c",
+      "EFACT-ef16520d0f9ee4210108fc41",
+      "EFACT-f344a6f409575d6f77888831"
+    ],
+    "why_not_higher": "대규모 CAPEX·R&D와 운전자본 부담이 있고 HBM별 투자수익률·회수기간·증분 FCF가 없어 자본 효율의 상단을 확정할 수 없다.",
+    "why_not_lower": "순현금 개선, 부채 감소, 배당 및 주식 소각은 공시된 실제 실행으로 자본배분의 질을 지지한다."
+  },
+  "payload_hash": "74dbaca4d024e8a60b813c2a12005213a7d144776f2c77419f3cf81e2e726369",
+  "production_score_authority": false,
+  "prompt_hash": "d1a541eecd1999024666be9d1e917ffc9e7e11e494ef66d1cd47d9b3a0aa537a",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e8df6c886629abe1f276f9316731b23c0fadf41d3f7178f686a416d8bd3eb153",
+  "response_id": "COLLABRESP-c2020b1368897faa95776fc0d86b3e7460256f9d6375514a70f23c68b9273e07",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

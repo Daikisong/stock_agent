@@ -1,0 +1,360 @@
+ 
+ 
+Analysts who prepared this report are registered as research analysts in Korea but not in any other jurisdiction, including the US.  
+Please see analyst certifications and important disclosures & disclaimers in Appendix 1 at the end of the report. 
+ 
+Equity Research 
+January 24, 2025 
+ 
+(Maintain)  Buy 
+Target price ▲ W277,000 
+Current price (1/23/25) W219,500 
+Upside 26.2% 
+ 
+OP (24, Wbn) 23,468 
+Consensus OP (24F, Wbn) 23,392 
+EPS growth (24, %) TTB 
+Market EPS growth (24F, %) 68.9 
+P/E (24, x) 7.0 
+Market P/E (24F, x) 10.7 
+KOSPI 2,515.49 
+Market cap (Wbn) 159,797 
+Shares (mn) 728 
+Free float (%) 74.1 
+Foreign ownership (%) 55.9 
+Beta (12M) 2.04 
+52-week low (W) 132,300 
+52-week high (W) 241,000 
+(%) 1M 6M 12M 
+Absolute 29.4 7.1 55.9 
+Relative 25.6 18.1 53.6 
+ 
+Mirae Asset Securities Co., Ltd. 
+Young-gun Kim 
+younggun.kim.a@miraeasset.com 
+  
+  
+(Dec.) 2022 2023 2024 2025F 2026F 
+Revenue (Wbn) 44,622 32,766 66,193 83,252 108,326 
+OP (Wbn) 6,809 -7,730 23,468 34,778 50,848 
+OP margin (%) 15.3 -23.6 35.5 41.8 46.9 
+NP (Wbn) 2,230 -9,112 18,085 27,993 41,775 
+EPS (W) 3,063 -12,517 24,842 38,452 57,383 
+ROE (%) 3.6 -15.6 29.0 32.9 35.1 
+P/E (x) 24.5 - 7.0 5.7 3.8 
+P/B (x) 0.8 1.8 1.7 1.6 1.1 
+Dividend yield (%) 1.6 0.8 0.7 0.5 0.5 
+Notes: Under consolidated K-IFRS; NP is attributable to owners of the parent 
+Source: Company data, Mirae Asset Securities Research estimates 
+000660 KS · Semiconductors 
+SK Hynix 
+Solid performance to continue  
+Lift TP to W277,000 (from W270,000) 
+We maintain our Buy rating on SK Hynix and lift our target price by 2.6% to W277,000, 
+as we revised up our 2025 operating profit estimate by 5.9% to W34.8tr (target P/B 
+unchanged at 2x). The company  has recorded meaningful increases in the 
+contributions of high-bandwidth memory (HBM) chips (to more than 40% of DRAM 
+revenue) and enterprise SSDs (to more than 70% of NAND revenue), cementing its 
+status as a key player in the AI ecosystem. We believe the company deserves a valuation 
+premium, given its solid operating profit growth and ROE. 
+4Q24 review and 2025 outlook 
+For 4Q24, SK Hynix reported in-line results, with revenue of W19.8tr (+12.5% QoQ) and 
+operating profit of W8.1tr (+15.0% QoQ). Despite weak demand for IT devices, the HBM 
+business delivered a strong performance, driven by an increased mix of HBM3E chips 
+and the launch of 12-layer HBM chip shipments (helping to mitigate the negative effects 
+of the down-cycle in conventional memory bit growth/ASP).  
+We expect earnings to temporarily slow in 1Q25, with revenue declining 11% QoQ to 
+W17.6tr and operating profit falling 21% QoQ to W6.4tr. For NAND, declines in both bit 
+growth (-17%) and ASP (-10%) are likely. However, DRAM should show resilience, with 
+blended ASP rising 1.6% thanks to HBM (offsetting a likely 12% decline in conventional 
+DRAM ASP).  
+From 3Q25, quarterly earnings should again hit record highs. As a result, we see full-
+year operating profit jumping 48% YoY to W34.8tr. For the HBM business, we forecast 
+2025 revenue at W31.2tr (+140% YoY) and operating profit at W18.5tr (+150% YoY). 
+Considering the valuation levels of AI-focused component suppliers, we believe the 
+HBM business alone justifies SK Hynix’s current value.  
+Improving business stability and financial health  
+The company appears to have finalized contracts for most of its planned HBM supply 
+volume for 2025. On its earnings call, management also suggested that HBM supply 
+agreements for 2026 are likely to be finalized within 1H25. With the HBM segment 
+(which represents around 40% of DRAM revenue) poised to grow over 100% this year 
+and supply contracts for next year close to being secured, we see potential for 
+significant improvement in overall operational efficiency. Additionally, the company’s 
+financials are improving rapidly, with net debt having decreased by around W15tr from 
+the 2Q23 peak. We expect the company to achieve a net cash position by 3Q25. 
+80
+100
+120
+140
+160
+180
+200
+1.24 5.24 9.24 1.25
+SK Hynix KOSPI
+SK Hynix 
+Mirae Asset Securities Research   2 
+January 24, 2025 
+SK Hynix (000660 KS) 
+Income statement (summarized)      Balance sheet (summarized)     
+(Wbn) 2023 2024F 2025F 2026F  (Wbn) 2023 2024F 2025F 2026F 
+Revenue 32,766 66,193 83,252 108,326  Current assets 30,468 41,082 69,341 114,795 
+Cost of revenue 33,299 34,364 33,728 39,338  Cash & equivalents 7,587 12,376 34,916 70,660 
+GP -533 31,829 49,524 68,988  AR & other receivables 6,874 11,859 14,329 18,522 
+SG&A expenses 7,197 8,361 14,746 18,141  Inventory 13,481 15,022 18,150 23,461 
+OP (adj.) -7,730 23,468 34,778 50,848  Other current assets 2,526 1,825 1,946 2,152 
+OP -7,730 23,468 34,778 50,848  Non-current assets 69,862 75,459 78,793 81,799 
+Non-operating profit -3,928 -1,275 -387 486  Investments in associates 1,367 1,565 1,891 2,445 
+Net financial income -1,252 -1,027 -397 476  PP&E 52,705 58,736 62,198 64,984 
+Net income from associates 15 14 0 0  Intangible assets 3,835 3,783 3,262 2,812 
+Pretax profit -11,658 22,193 34,391 51,334  Total assets 100,330 116,540 148,134 196,594 
+Income tax -2,520 4,100 6,375 9,525  Current liabilities 21,008 24,961 29,089 36,096 
+Profit from continuing operations -9,138 18,093 28,016 41,809  AP & other payables 5,139 9,027 10,907 14,098 
+Profit from discontinued operations 0 0 0 0  Short-term financial liabilities 11,968 7,440 7,919 8,732 
+NP -9,138 18,093 28,016 41,809  Other current liabilities 3,901 8,494 10,263 13,266 
+Attributable to owners -9,112 18,085 27,993 41,775  Non-current liabilities 25,819 20,182 20,459 20,929 
+Attributable to minority interests -25 7 23 34  Long-term financial liabilities 22,013 18,852 18,852 18,852 
+Total comprehensive income -9,037 18,545 28,016 41,809  Other non-current liabilities 3,806 1,330 1,607 2,077 
+Attributable to owners -9,015 18,533 27,985 41,762  Total liabilities 46,826 45,143 49,547 57,025 
+Attributable to minority interests -22 12 31 47  Equity attributable to owners 53,505 71,390 98,557 139,505 
+EBITDA 5,943 36,164 49,351 66,024  Capital stock 3,658 3,658 3,658 3,658 
+FCF -4,047 13,569 23,404 36,633  Capital surplus 4,373 4,479 4,479 4,479 
+EBITDA margin (%) 18.1 54.6 59.3 60.9  Retained earnings 46,729 63,933 91,099 132,047 
+OP margin (%) -23.6 35.5 41.8 46.9  Minority interests -1 7 29 64 
+Net margin (%) -27.8 27.3 33.6 38.6  Shareholders' equity 53,504 71,397 98,586 139,569 
+           
+Cash flow statement (summarized)      Key valuation metrics/ratios      
+(Wbn) 2023 2024F 2025F 2026F   2023 2024F 2025F 2026F 
+Operating cash flow 4,278 29,489 40,917 54,146  P/E (x) - 7.0 5.7 3.8 
+NP -9,138 18,093 28,016 41,809  P/CF (x) 17.5 3.5 3.2 2.4 
+Non-cash income/expenses 15,033 17,992 21,333 24,212  P/B (x) 1.8 1.7 1.6 1.1 
+   Depreciation 13,121 12,121 14,051 14,726  EV/EBITDA (x) 21.7 3.8 3.0 1.7 
+   Amortization 553 576 522 450  EPS (W) -12,517 24,842 38,452 57,383 
+   Other 1,359 5,295 6,760 9,036  CFPS (W) 8,098 49,567 67,786 90,689 
+Chg. in working capital 794 -3,744 -1,672 -2,839  BPS (W) 76,616 101,115 138,431 194,679 
+Chg. in AR & other receivables -1,406 -4,904 -2,424 -4,115  DPS (W) 1,200 1,200 1,200 1,200 
+   Chg. in inventory 2,288 -1,490 -3,128 -5,311  Dividend payout ratio (%) -9.0 4.6 3.0 2.0 
+Chg. in AP & other payables 83 -1,126 466 792  Dividend yield (%) 0.8 0.7 0.5 0.5 
+Income tax -1,384 -1,853 -6,375 -9,525  Revenue growth (%) -26.6 102.0 25.8 30.1 
+Cash flow from investing activities -7,335 -16,740 -17,702 -17,835  EBITDA growth (%) -71.6 508.5 36.5 33.8 
+Chg. in PP&E -6,785 -15,900 -17,513 -17,513  OP growth (%) TTR TTB 48.2 46.2 
+Chg. in intangible assets -454 -526 0 0  EPS growth (%) TTR TTB 54.8 49.2 
+Chg. in financial assets -82 -4 -190 -322  AR turnover (x) 5.6 7.3 6.5 6.7 
+Other -14 -310 1 0  Inventory turnover (x) 2.2 4.6 5.0 5.2 
+Cash flow from financing activities 5,697 -7,725 -348 -14  AP turnover (x) 16.5 16.8 13.6 12.7 
+Chg. in financial liabilities 9,184 -7,688 479 813  ROA (%) -8.9 16.7 21.2 24.3 
+Chg. in equity 36 106 0 0  ROE (%) -15.6 29.0 32.9 35.1 
+   Dividends  -826 -826 -827 -827  ROIC (%) -8.0 25.9 36.0 49.3 
+Other -2,697 683 0 0  Debt-to-equity ratio (%) 87.5 63.2 50.3 40.9 
+Chg. in cash 2,610 4,788 22,540 35,744  Current ratio (%) 145.0 164.6 238.4 318.0 
+Beginning balance 4,977 7,587 12,376 34,916  Net debt-to-equity ratio (%) 48.3 16.9 -10.2 -32.4 
+Ending balance 7,587 12,376 34,916 70,660  Interest coverage ratio (x) -5.3 17.1 29.2 41.6 
+Source: Company data, Mirae Asset Securities Research estimates 
+ 
+SK Hynix 
+Mirae Asset Securities Research   3 
+January 24, 2025 
+Appendix 1 
+Important disclosures and disclaimers 
+Two-year rating and TP history 
+ 
+Company Date Rating TP (W) 
+ 
+ 
+SK Hynix (000660) 01/24/25 Buy 277,000 
+ 10/24/24 Buy 270,000 
+ 07/25/24 Buy 260,000 
+ 05/16/24 Buy 240,000 
+ 04/26/24 Buy 220,000 
+ 03/05/24 Buy 200,000 
+ 12/29/23 Buy 173,000 
+ 06/12/23 Buy 150,000 
+ 01/26/23 Buy 120,000 
+ 06/07/22 Buy 133,000  
+ 
+ 
+Stock ratings Sector ratings 
+Buy Expected 12-month performance: +20% or greater Overweight Expected to outperform the market over 12 months 
+Trading Buy Expected 12-month performance: +10% to +20%  Neutral Expected to perform in line with the market over 12 months   
+Hold Expected 12-month performance: -10% to +10% Underweight Expected to underperform the market over 12 months 
+Sell Expected 12-month performance: -10% or worse   
+Rating and TP history: Share price (─), TP (▬), Not Rated (■), Buy (▲), Trading Buy (■), Hold (●), Sell (♦) 
+* Our investment rating is a guide to the expected return of the stock over the next 12 months. 
+* Outside of the official ratings of Mirae Asset Securities Co., Ltd., analysts may call trading opportunities should technical or short-term material developments arise. 
+* The TP was determined by the research analyst through valuation methods discussed in this report, in part based on estimates of future earnings. 
+* TP achievement may be impeded by risks related to the subject securities and companies, as well as general market and economic conditions. 
+ 
+Ratings distribution and investment banking services 
+ Buy Trading Buy Hold Sell 
+Ratings distribution 84.62% 7.14% 8.24% 0% 
+Investment banking services 85.71% 0% 14.29% 0% 
+* Based on recommendations in the last 12-months (as of December 31, 2024) 
+ 
+Disclosures 
+As of the publication date, Mirae Asset Securities Co., Ltd. has acted as a liquidity provider for equity-linked warrants backed by shares of SK Hynix as an underlying asset; 
+other than this, Mirae Asset Securities has no other special interests in the covered companies. 
+ 
+Analyst certification 
+The research analysts who prepared this report (the “Analysts”) are registered with the Korea Financial Investment Associatio n and are subject to Korean 
+securities regulations. They are neither re gistered as research analysts in any other jurisdiction nor subject to the laws or regulations thereof. Each Analyst 
+responsible for the preparation of this report certifies that (i) all views expressed in this report accurately reflect the p ersonal views of the Analyst about any 
+and all of the issuers and securities named in this report and (ii) no part of the compensation of the Analyst was, is, or wi ll be directly or indirectly related to 
+the specific recommendations or views contained in this report. Mi rae Asset Securities Co., Ltd. (“Mirae Asset Securities”) policy prohibits its Analysts and 
+members of their households from owning securities of any company in the Analyst’s area of coverage, and the Analysts do not serve as an officer, director, 
+or advisory board member of the subject companies. Except as otherwise specified herein, the Analysts have not received any compensat ion or any other 
+benefits from the subject companies in the past 12 months and have not been promised the same in connection with this report. Like all employees of Mirae 
+Asset Securities, the Analysts receive compensation that is determined by overall firm profitability, which includes revenues  from, among other business 
+units, the institutional equities, investment banking, proprietary trading, and private client divisions. At the time of publication of this report, the Analysts do 
+not know or have reason to know of any actual, material conflict of interest of the Analyst or Mirae Asset Securities except as otherwise stated herein. 
+ 
+Disclaimers 
+This report was prepared by Mirae Asset Securities, a broker -dealer registered in the Republic of Korea and a member of the Korea Exchange. Information 
+and opinions contained herein have been compiled in good faith and from sources believed to be reliable, but such information has not been independently 
+verified and Mirae Asset Securities makes no guarantee, representation or warranty, express or implied, as to the fairness, a ccuracy, completeness, or 
+correctness of the information and opinions contained herein or of any translation into English from the Korean language. In case of an English translation 
+of a report prepared in the Korean language, the original Korean language report may have been made available to investors in  advance of this report. 
+The intended recipients of this report are sophisticated institutional investors who have substantial knowledge of the local business environment, its common 
+practices, laws, and accounting principles, and no person whose receipt or use of this repor t would violate any laws or regulations or subject Mirae Asset 
+Securities or any of its affiliates to registration or licensing requirements in any jurisdiction shall receive or make any u se hereof. 
+This report is for general information purposes only and is not and shall not be construed as an offer or a solicitation of an offer to effect transactions in any 
+securities or other financial instruments. The report does not constitute investment advice to any person, and such person sh all not be treated as a client of 
+Mirae Asset Securities by virtue of receiving this report. This report does not take into account the particular investment o bjectives, financial situations, or 
+needs of individual clients. The report is not to be relied upon in substitution for the exercise of independent judgment. Information and opinions contained 
+herein are as of the date hereof and are subject to change without notice. The price and value of the investments referred to  in this report and the income 
+from them may depreciate or appreciate, and investors may incur losses on investments. Past performance is not a guide to future performance. Future 
+returns are not guaranteed, and a loss of original capital may occur. Mirae Asset Securities, its affiliates, and their direc tors, officers, employees, and agents 
+do not accept any liability for any loss arising out of the use hereof.  
+0
+50,000
+100,000
+150,000
+200,000
+250,000
+300,000
+Jan 23 Jan 24 Jan 25
+(W) SK Hynix
+SK Hynix 
+Mirae Asset Securities Research   4 
+January 24, 2025 
+Mirae Asset Securities may have issued other reports that are inconsistent with, and reach different conclusions from, the op inions presented in this report. 
+The reports may reflect different assumptions, views, and analytical methods of the analysts who prepared them. Mirae Asset S ecurities may make 
+investment decisions that are inconsistent with the opinions and views expressed in this research report. Mira e Asset Securities, its affiliates, and their 
+directors, officers, employees, and agents may have long or short positions in any of the subject securities at any time and may make a purchase or sale, or 
+offer to make a purchase or sale, of any such securities or other financial instruments from time to time in the open market or otherwise, in each case either 
+as principals or agents. Mirae Asset Securities and its affiliates may have had, or may be expecting to enter into, business relationships with the su bject 
+companies to provide investment banking, market -making, or other financial services as are permitted under applicable laws and regulations.  
+No part of this document may be copied or reproduced in any manner or form or redistributed or published, in w hole or in part, without the prior written 
+consent of Mirae Asset Securities. For further information regarding company -specific information as it pertains to the representations and disclosures in 
+this Appendix 1, please contact compliance@miraeasset.us.c om or +1 (212) 407-1000. 
+ 
+Distribution 
+United Kingdom: This report is being distributed by Mirae Asset Securities (UK) Ltd. in the United Kingdom only to (i) investment professio nals falling within 
+Article 19(5) of the Financial Services and Markets Act 2000 (Financial Promotion) Order 2005 (the “Order”), an d (ii) high net worth companies and other 
+persons to whom it may lawfully be communicated, falling within Article 49(2)(A) to (E) of the Order (all such persons togeth er being referred to as “Relevant 
+Persons”). This report is directed only at Relevant Persons. Any person who is not a Relevant Person should not act or rely on this report or any of its contents.   
+United States: Mirae Asset Securities is not a registered broker-dealer in the United States and, therefore, is not subject to U.S. rules regarding the preparation 
+of research reports and the independence of research analysts. This report is distributed in the U.S. by Mirae Asset Securiti es (USA) Inc., a member of 
+FINRA/SIPC, to “major U.S. institutional investors” in reliance on the exemption from registration provided by Rule 15a -6(b)(4) under the U.S. Securities 
+Exchange Act of 1934, as amended. All U.S. persons that receive this document by their acceptance hereof represent and warran t that they are a major U.S. 
+institutional investor and have no t received this report under any express or implied understanding that they will direct commission income to Mirae Asset 
+Securities or its affiliates. Any U.S. recipient of this document wishing to effect a transaction in any securities discussed  herein should contact and place 
+orders with Mirae Asset Securities (USA) Inc. Mirae Asset Securities (USA) Inc. accepts responsibility for the contents of th is report in the U.S., subject to the 
+terms hereof, to the extent that it is delivered to a U.S. person other than a major U.S. institutional investor. Under no circumstances should any recipient of 
+this research report effect any transaction to buy or sell securities or related financial instruments through Mirae Asset Se curities. The securities described 
+in this report may not have been registered under the U.S. Securities Act of 1933, as amended, and, in such case, may not be offer ed or sold in the U.S. or to 
+U.S. persons absent registration or an applicable exemption from the registration requirements.   
+Hong Kong: This report is distributed in Hong Kong by Mirae Asset Securities (HK) Limited, which is regulated by the Hong Kong Securit ies and Futures 
+Commission. The contents of this report have not been reviewed by any regulatory authority in Hong Kong. This report is for distribution only to professional 
+investors within the meaning of Part I of Schedule 1 to the Securities and Futures Ordinance of Hong Kong (Cap. 571, Laws of Hong Kong) and any rules 
+made thereunder and may not be redistributed in whole or i n part in Hong Kong to any person. 
+India: This report is being distributed by Mirae Asset Capital Markets (India) Private Limited (“MACM”) in India to the customers based in India and is personal 
+information only for those authorised recipient(s). MACM is inter alia a Securities and Exchange Board of India (“SEBI”) registered Research Analyst in India 
+and is not registered outside India. MACM and Mirae Asset, Korea are group entities. MACM makes no guarantee, representation or warranty, express or 
+implied, as to the fairness, accuracy, completeness or correctness of the information and opinions contained herein. The user assumes the entire risk of any 
+use made of this information. This report has been provided for assistance only and is not intended to be an d must not alone be taken as the basis for an 
+investment decision. Recipient must read the entire Appendix 1 to the report carefully for Important Disclosures & Disclaimer s. 
+All other jurisdictions: Customers in all other countries who wish to effect a transaction in any securities referenced in this report should contact Mirae Asset 
+Securities or its affiliates only if distribution to or use by such customer of this report would not violate applicable laws and regulations and not subject Mirae 
+Asset Securities and its affiliates to any registration or licensing requirement within such jurisdiction.  
+  
+SK Hynix 
+Mirae Asset Securities Research   5 
+January 24, 2025 
+Mirae Asset Securities International Network 
+Mirae Asset Securities Co., Ltd. (Seoul)  Mirae Asset Securities (HK) Ltd.  Mirae Asset Securities (UK) Ltd. 
+One-Asia Equity Sales Team 
+Mirae Asset Center 1 Building  
+26 Eulji-ro 5-gil, Jung-gu, Seoul 04539 
+Korea 
+ Units 8501, 8507-8508, 85/F 
+International Commerce Centre 
+1 Austin Road West 
+Kowloon 
+Hong Kong 
+ 41st Floor, Tower 42 
+25 Old Broad Street, 
+London EC2N 1HQ 
+United Kingdom 
+ 
+Tel: 82-2-3774-2124  Tel: 852-2845-6332  Tel: 44-20-7982-8000  
+Mirae Asset Securities (USA) Inc.  Mirae Asset Wealth Management (Brazil) CCTVM  PT. Mirae Asset Sekuritas Indonesia 
+810 Seventh Avenue, 37th Floor  
+New York, NY 10019 
+USA 
+ 
+ 
+ Rua Funchal, 418, 18th Floor, E-Tower Building  
+Vila Olimpia 
+Sao Paulo - SP 
+04551-060 
+Brazil 
+ District 8, Treasury Tower Building Lt. 50 
+Sudirman Central Business District 
+Jl. Jend. Sudirman, Kav. 52-54  
+Jakarta Selatan 12190 
+Indonesia 
+Tel: 1-212-407-1000  Tel: 55-11-2789-2100  Tel: 62-21-5088-7000 
+Mirae Asset Securities (Singapore) Pte. Ltd.  Mirae Asset Securities (Vietnam) LLC  Mirae Asset Securities Mongolia UTsK LLC 
+6 Battery Road, #11-01 
+Singapore 049909 
+Republic of Singapore 
+ 
+ 7F, Saigon Royal Building 
+91 Pasteur St. 
+District 1, Ben Nghe Ward, Ho Chi Minh City 
+Vietnam  
+ 
+ #406, Blue Sky Tower, Peace Avenue 17 
+1 Khoroo, Sukhbaatar District 
+Ulaanbaatar 14240 
+Mongolia 
+ 
+Tel: 65-6671-9845  Tel: 84-8-3911-0633 (ext.110)  Tel: 976-7011-0806 
+Mirae Asset Investment Advisory (Beijing) Co., Ltd  Beijing Representative Office  Shanghai Representative Office 
+2401B, 24th Floor, East Tower, Twin Towers 
+B12 Jianguomenwai Avenue, Chaoyang District  
+Beijing 100022 
+China 
+ 
+ 2401A, 24th Floor, East Tower, Twin Towers 
+B12 Jianguomenwai Avenue, Chaoyang District  
+Beijing 100022 
+China 
+ 
+ 38T31, 38F, Shanghai World Financial Center 
+100 Century Avenue, Pudong New Area  
+Shanghai 200120 
+China 
+Tel: 86-10-6567-9699  Tel: 86-10-6567-9699 (ext. 3300)  Tel: 86-21-5013-6392 
+Ho Chi Minh Representative Office  Mirae Asset Capital Markets (India) Pvt Ltd   
+7F, Saigon Royal Building 
+91 Pasteur St. 
+District 1, Ben Nghe Ward, Ho Chi Minh City 
+Vietnam  
+ 
+ 1st Floor, Tower 4, Equinox Business Park, 
+LBS Marg, Off BKC, Kurla (West), Mumbai - 400 070 
+India 
+ 
+  
+Tel: 84-8-3910-7715  Tel: 91-22-62661300 / 48821300   
+ 

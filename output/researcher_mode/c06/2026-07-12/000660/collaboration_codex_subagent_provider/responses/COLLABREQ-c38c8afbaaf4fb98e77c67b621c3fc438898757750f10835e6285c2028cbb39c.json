@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "2d9854ad3e4dc0a54f039c283be4adf9036f2cb73b0b111afaa1ac77b2f36903",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4f73f45102e953f04a64f7f2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "Third-party Micron news is neither an SK hynix issuer earnings release, issuer presentation, nor cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-61366dfc5d3c6a3dd0ecdb4d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A community encyclopedia history page is not an issuer-owned current earnings, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-f41b9c669a918e044beec507",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This general investment-news article does not have the requested issuer-owned earnings, presentation, or cash-flow provenance."
+      },
+      {
+        "candidate_id": "SGCAND-b2c2246077bb7a32196ca3d7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party transcript retelling from 2021 does not satisfy the requested issuer-owned source families or current period."
+      },
+      {
+        "candidate_id": "SGCAND-bfb7eb531609a9d96c5632c3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party market-valuation story is outside the requested issuer earnings, presentation, and cash-flow source families."
+      },
+      {
+        "candidate_id": "SGCAND-1b4027f0910ce505e0aadec3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A media report of broker estimates is not an issuer-owned earnings release, presentation, or cash-flow statement."
+      },
+      {
+        "candidate_id": "SGCAND-4b350696cb567bb18769c55a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party transcript retelling from 2023 does not have the requested issuer-source provenance or current period."
+      },
+      {
+        "candidate_id": "SGCAND-a0ed5a4bb7ee8ba13225ca84",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party value-up article is not an issuer earnings release, issuer presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-d4f7c251d95c495f42d4d9e9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A stock-analysis blog is not an eligible issuer-owned earnings, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-f061806dd1b444b02d4bd50d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party 2026 second-quarter transcript is not issuer-owned and describes a result after the supplied as-of date."
+      },
+      {
+        "candidate_id": "SGCAND-e5f5a0a017ef41ead2127595",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "Third-party Micron news is not a requested SK hynix issuer earnings, presentation, or cash-flow source."
+      },
+      {
+        "candidate_id": "SGCAND-c36a03c9f2445dc9a46473e3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party 2025 transcript retelling lacks the requested issuer-owned provenance and current reporting period."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate in this partition is an eligible current SK hynix issuer earnings release, issuer presentation, or cash-flow source; the official-source objective remains unresolved."
+    ]
+  },
+  "payload_hash": "1e93c0d6e63153d0d9d2c53e51b34a350d17104d2585f572c1a7a828559794d3",
+  "production_score_authority": false,
+  "prompt_hash": "da156b0bebafd0fe1475585a95fdf2a0dec48dbe739d1e1fadc28f96c9ad2696",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c38c8afbaaf4fb98e77c67b621c3fc438898757750f10835e6285c2028cbb39c",
+  "response_id": "COLLABRESP-ae8e5efbf0152445909b0585be95515e2dc16aeb541b61ccf843ffa98d03a2c4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

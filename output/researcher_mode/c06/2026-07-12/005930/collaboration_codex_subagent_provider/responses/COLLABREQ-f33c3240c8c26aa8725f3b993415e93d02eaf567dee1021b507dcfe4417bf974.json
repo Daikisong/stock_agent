@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-82b66a8afd51ff0848006caf",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2021년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-82f145eb865416e4eba6976b",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2020년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-843d7999d377e0b195fc0bc3",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2023년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-84d02295ce8177e73faa8304",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "검증된 발행사 연계 컨퍼런스 페이지이지만 supplied metadata가 현재 HBM 고객·capacity·실적을 특정하지 않거나 오래된 분기를 가리키며, 후속 2025~2026 원문이 현재 상태를 통제한다."
+      },
+      {
+        "candidate_id": "SGCAND-855c01b7b78c486ff1c157ab",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 전략 프레젠테이션 경로지만 supplied metadata가 현재 메모리/HBM 고객·capacity·실적 자료임을 특정하지 못해 current objective의 full-fetch 우선순위가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-857225e3b1ff80bede203104",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "검증된 발행사 연계 컨퍼런스 페이지이지만 supplied metadata가 현재 HBM 고객·capacity·실적을 특정하지 않거나 오래된 분기를 가리키며, 후속 2025~2026 원문이 현재 상태를 통제한다."
+      },
+      {
+        "candidate_id": "SGCAND-85a38cd29d741241cc520d7b",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "검증된 발행사 연계 컨퍼런스 페이지이지만 supplied metadata가 현재 HBM 고객·capacity·실적을 특정하지 않거나 오래된 분기를 가리키며, 후속 2025~2026 원문이 현재 상태를 통제한다."
+      },
+      {
+        "candidate_id": "SGCAND-865add292cc4c04e8a215570",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2022년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-8986f0f5911336acbaaff385",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2017년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-89b63d7779e5691018b568da",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "linkedin.com의 소셜 프로필·공유·전송 링크로, 요청된 issuer/customer/industry/trusted-media 원문 provenance와 후보 본문을 제공하지 않아 full-fetch 대상이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-89d1238a9f0df3ed341c5aca",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2017년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-8ac03155544bd42a572a2d22",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2011년 실적·사업보고서 경로지만 현재 HBM4 상용화, 고객 일정과 capacity 상태보다 훨씬 이전이며 후속 공시로 대체된 역사자료다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "03c49175faf98a53569f171be76277f00dd06345f1e05715faed922cdcafe568",
+  "production_score_authority": false,
+  "prompt_hash": "600a680c7fd5fa8704b9b9740d309b8e061cdcefd677494a02be2ba8647e4534",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f33c3240c8c26aa8725f3b993415e93d02eaf567dee1021b507dcfe4417bf974",
+  "response_id": "COLLABRESP-0c56ed8c62769ecaa05a11d61e9ddf6beddc1d3e753129a9d6b90a65c01a73b0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,222 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 memo는 메모리 매출·이익과 HBM 전망, 전사 FCF를 분리하고 최신 EPS 하향 및 램프 비용을 counter로 반영한다. HBM 단독 현금흐름 비공시를 확정치로 채우지 않아 현재 evidence 범위의 판단으로 충분하다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "공개되지 않은 고객별 최소구매·가격조정·취소·납기·실제 배정 및 현금 전환을 현재 구매주문·완판·중장기 약정과 구분하는 명시적 uncertainty disposition"
+        ],
+        "rationale": "구매주문과 중장기 약정은 가시성을 지지하지만 계약 보호와 실제 납품 전환의 강도에 대한 analyst-skeptic 의견차가 material이다. NH exact archive 검색과 epoch147 ranking이 새 원문을 만들지 못했으므로 새 검색이 아니라 현재 사실로 range와 비공개 범위를 재작성해야 한다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "HBM4 완판·가격 프리미엄과 일반 메모리 가동률을 공정별 HBM CAPA·수율로 확대하지 않는 병목 지속성의 명시적 uncertainty disposition"
+        ],
+        "rationale": "direct HBM4 sold-out 근거는 강하지만 memory-wide utilization과 DRAM 가격을 HBM 물리병목으로 볼 수 있는지 judge spread가 material이다. 미래에셋 exact archive와 global ranking이 material 원문을 찾지 못했으므로 현재 근거만으로 범위를 재보정해야 한다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "forward multiple 할인과 PBR 선반영, cycle-peak 분모, peer 사업믹스·상장시장 차이를 함께 보존해 할인 전체를 오판으로 단정하지 않는다. 현재 공개근거의 한계를 range와 counter로 충분히 반영한다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "HBM4 상업화와 상대가치 경로를 초기 마진·고객 일정·allocation 및 이미 상승한 PBR과 함께 제한적으로 제시한다. 미공개 값을 추정으로 채우지 않아 현재 memo는 충분하다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "전사 유동성·OCF·주주환원과 비공개 HBM 전용 CAPEX·운전자본·FCF·ROIC를 분리하는 투자효율 uncertainty disposition"
+        ],
+        "rationale": "실제 자금여력은 강하지만 HBM 투자수익을 입증하지 않으며 이 차이에 대한 judge disagreement가 material이다. 미래에셋 exact archive 원문도 확보되지 않았으므로 동일 검색이 아니라 현재 commitments·working-capital·초기마진 counter로 memo range를 재작성해야 한다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "공식 재무·메모리 기준점과 고객 공식 기술 참여를 계약·qualification·HBM 제품이익과 구분하고 공개되지 않은 필드를 source absence로 단정하지 않는다. 이미 실행한 고객·broker route의 동의어 반복 없이 현재 신뢰도 범위를 충분히 표현한다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-0b5855f2582cd708850e51f8",
+        "rationale": "full fetch 뒤에도 발행일을 기준일 내로 검증하지 못했던 문서다. 관련 objective resolution 뒤에는 같은 문서를 다시 사용하지 않으며 source absence로 보지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-433c3c6e8fbe85ad567cccbe",
+        "rationale": "snippet만 있어 full-document evidence 요건을 충족하지 못했으나 관련 objective가 이미 resolution됐다. snippet을 사실로 승격하거나 같은 locator를 반복하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-4719db379703acca37cc3116",
+        "rationale": "full document가 목표 회사·주제와 달라 제외됐고 관련 objective가 이미 resolution됐다. 같은 결과를 증거로 재사용하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-47c4b6795be6845d81bf7187",
+        "rationale": "기준일 이후 문서 또는 locator를 현재 판단에서 제외한 미래누수 차단이다. 관련 objective resolution으로 닫혔으며 source absence를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-79103d90fcc4353dfb4dbfe1",
+        "rationale": "full content가 사실 추출에 필요한 본문을 갖추지 못했던 결과다. 관련 objective resolution 뒤 동일 locator를 반복하지 않으며 원문 부재 주장에도 쓰지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-7dbfbf0cf8c6429efaeda10b",
+        "rationale": "full document가 목표 회사·주제와 달라 제외됐고 관련 objective가 이미 resolution됐다. 같은 결과를 증거로 재사용하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-828cb4bb9fe49e835dfadd21",
+        "rationale": "LLM이 exact·semantic 중복을 벗어난 새 query를 만들지 못한 이력이며 현재 objective resolution으로 닫혔다. 동의어 변형을 새 route로 취급하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-8312902036dbcdbf6b5f52f9",
+        "rationale": "기준일 이후 문서 또는 locator를 현재 판단에서 제외한 미래누수 차단이다. 관련 objective resolution으로 닫혔으며 source absence를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-85ebcad89f6a756735258189",
+        "rationale": "기준일 이후 문서 또는 locator를 현재 판단에서 제외한 미래누수 차단이다. 관련 objective resolution으로 닫혔으며 source absence를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-985b2134a561517e578cc5f4",
+        "rationale": "검색 0건만으로 원문 부재를 입증할 수는 없다. 다만 exact official archive 경로와 epoch147 global ranking이 소비됐고 objective가 resolution됐으므로 동일·동의어 검색은 반복하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-ce794acdfca65d7f60260640",
+        "rationale": "full content가 사실 추출에 필요한 본문을 갖추지 못했던 결과다. 관련 objective resolution 뒤 동일 locator를 반복하지 않으며 원문 부재 주장에도 쓰지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-ce9ce6a9661dca1d99511b54",
+        "rationale": "snippet만 있어 full-document evidence 요건을 충족하지 못했으나 관련 objective가 이미 resolution됐다. snippet을 사실로 승격하거나 같은 locator를 반복하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-e7e558fc96bd12913f58a215",
+        "rationale": "과거 provider 오류는 문서 부재가 아니지만 관련 objective resolution으로 닫혔다. 동일 route를 다시 실행할 근거로 사용하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-ea76398e53aa7bb88a62ee5e",
+        "rationale": "과거 provider 오류는 문서 부재가 아니지만 관련 objective resolution으로 닫혔다. 동일 route를 다시 실행할 근거로 사용하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-ef2eccfb702d6de4b716113e",
+        "rationale": "full fetch 뒤에도 발행일을 기준일 내로 검증하지 못했던 문서다. 관련 objective resolution 뒤에는 같은 문서를 다시 사용하지 않으며 source absence로 보지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "earnings_visibility",
+        "direction": "RESOLUTION",
+        "fact_need": "고객별 계약 보호와 실제 납품·현금 전환이 공개되지 않았다는 한계를 구매주문·완판·중장기 약정의 긍정 근거와 함께 range에 반영한 semantic rewrite",
+        "why_material": "새 owner 원문 route가 확인되지 않아도 contract existence와 enforceable cash visibility의 차이를 명시해야 material judge disagreement를 정직하게 재판정할 수 있다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "direction": "RESOLUTION",
+        "fact_need": "HBM4 완판·가격 프리미엄은 직접 반영하되 memory-wide utilization·inventory·DRAM 가격을 HBM 공정별 CAPA·수율로 치환하지 않는 semantic rewrite",
+        "why_material": "추가 material 원문이 없는 상태에서는 scope와 duration discount를 명시하는 것이 analyst-skeptic spread를 해소하는 유일한 정직한 경로다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "direction": "RESOLUTION",
+        "fact_need": "전사 funding capacity와 비공개 HBM project return을 분리하고 asset commitment·working-capital·초기마진 counter를 range에 반영한 semantic rewrite",
+        "why_material": "추가 원문 없이도 자금조달 능력을 배분품질로 오해하지 않도록 현재 evidence의 상·하한을 재보정해야 material judge disagreement를 다시 판단할 수 있다."
+      }
+    ],
+    "new_source_family_directions": [],
+    "next_actions": [
+      "earnings_visibility, bottleneck_pricing, capital_allocation 세 memo를 새 source 없이 current facts와 counter만으로 semantic rewrite한다.",
+      "세 rewrite에서 공개되지 않은 계약·공정 CAPA·HBM 투자수익을 0 또는 확정값으로 만들지 말고 uncertainty와 score range에 반영한다.",
+      "rewrite된 세 memo에 대해 independent ANALYST·SKEPTIC·CALIBRATION 판단을 다시 받아 material disagreement가 제거됐는지 확인한다.",
+      "NH·미래에셋 exact archive, epoch147 ranking, 동일·동의어 query와 이미 실패한 locator는 반복하지 않는다."
+    ],
+    "query_direction_briefs": [],
+    "rationale": "current facts 547, memos 7, current judges, RTMEMO-f73fee90f8326d3c52585ebe, SYNMEMO-cd3c2ec4f3a70cf803e8ad90, structured records와 11개 parser-verified counter/supersession routes를 검토했다. epoch147 global100 ranking은 material 0으로 source graph에 소비됐고 checkpoint는 STOPPED_ON_RESOLUTION이며 모든 objective와 15개 failure group이 resolution됐다. NH·미래에셋 exact official archive 검색이 원문을 만들지 못한 사실은 공개정보 부재의 증명이 아니지만, 동일·동의어·이미 실행한 route를 새 합리적 positive route로 반복할 수는 없다. 따라서 source/query 방향은 추가하지 않고 reasonable_positive_routes_remaining은 false다. 다만 deterministic contract상 earnings_visibility, bottleneck_pricing, capital_allocation의 material judge disagreement가 남아 세 memo는 충분하지 않다. 새 evidence를 꾸며내지 않고 현재 긍정·counter 근거의 scope와 uncertainty range를 semantic rewrite한 뒤 새 independent judges가 합의하는지 확인해야 하므로 아직 independent saturation review ready는 아니다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "현재 공개근거만으로 구매주문·완판·중장기 약정의 가시성을 어느 범위까지 인정하고 비공개 계약 보호와 납품·현금 전환을 어떻게 discount할 것인가?",
+      "HBM4 직접 완판·가격 근거와 memory-wide scarcity proxy를 분리했을 때 병목 지속성의 합리적 range는 무엇인가?",
+      "전사 유동성·OCF·주주환원과 미공개 HBM project return을 분리했을 때 capital allocation의 합리적 range는 무엇인가?"
+    ]
+  },
+  "payload_hash": "04fc56bd4ddcfb19079372e1d43b25f0a9ca709fcdef383551201e0f86a3e9d9",
+  "production_score_authority": false,
+  "prompt_hash": "8d4ad8154c127ad83576bfbdf06227cc818ccd24c15b99b02a22dbc10e669e07",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d54e68ffc31ed5429172c62f6502d7891288d71e6a0c55bb0a16ad6d26b8d3d7",
+  "response_id": "COLLABRESP-a43656851df11eb7ea6233eb876ca8ca7b8e310f8b548fb6c1c57df322d7140a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

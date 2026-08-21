@@ -1,0 +1,598 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-51d5e952c5a77567fc8a4164",
+        "rationale": "미등기임원 명단과 직무 이력으로 구성된 조각이며 현재 open objective의 메모리 경제 메커니즘이나 회사 전체 자본·정보 사실을 새로 확정하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "rationale": "보고기간 후 자사주 소각·취득·차입금 상환과 배당 정책·집행의 신규 사실을 추출했다. 12개 페이지 제한으로 추가 자본배분·리스크 사실의 중복 여부를 다음 페이지에서 최종 감사해야 한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5f26f48e668c6305b4b1de3c",
+        "rationale": "종속회사 목록·요약재무와 회계표시 기준 변경 설명이 대부분이며 메모리/HBM 직접 귀속 사실이 아니거나 현재 objective의 회사 전체 사실으로 쓰기에는 주변 정보다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-63db1e7e8734e63136032598",
+        "rationale": "주주총회·지배구조·임원 현황 조각으로, 현재 메모리 경제 메커니즘 및 자본배분 판단에 새로 필요한 직접 사실은 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-6601c7fcf9b10b37297bd96d",
+        "rationale": "메모리 ASP·생산능력·생산실적·가동률·투자·제품매출과 연결 부채비율을 추출했다. 페이지 제한 때문에 잔여 회사 전체 자본 사실과 중복 여부를 다음 페이지에서 최종 감사해야 한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-7424cf31cd84e314dd11c2d0",
+        "rationale": "임원 명단과 경력으로 구성되어 있으며 명단상 메모리 직책을 계약·CAPA·실적 증거로 승격할 수 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-88c797c630d09c54e9bd7a06",
+        "rationale": "임원·계열사 거래 및 Foundry 계약·비메모리 연구개발 내용으로, 반도체 일반 매출을 메모리/HBM에 귀속하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-913479eb6002c858cbacb8f3",
+        "rationale": "별도 재무위험·금융상품 수치는 current facts와 중복되고 DS 부문 수치는 Foundry/System LSI가 섞여 MEMORY scope로 귀속할 수 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "보고기간 후 자기주식 소각은 이미 매입한 주식을 제거하여 주식 수와 투입 자본을 줄인 자본환원 실행이다.",
+        "exact_quote": "회사는 2026년 3월 30일 이사회 결의에 따라 자기주식 중 보통주 73,359,314주(취득가액 4,632,139백만원) 및 우선주 13,603,461주(취득가액 713,932백만원)를 소각하였습니다 (소각일: 2026년 4월 2일).",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "대규모 자기주식 소각은 실제 자본환원 규모와 주식 수 변화를 직접 확인한다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_RETURN",
+        "normalized_object": "2026-04-02 자기주식 소각",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-04-02",
+        "predicate": "CANCELLED_TREASURY_SHARES",
+        "predicate_family": "CAPITAL_RETURN_EXECUTION",
+        "primitive_tags": [
+          "TREASURY_SHARE_CANCELLATION"
+        ],
+        "product_family": "자기주식",
+        "question_family_id": "C06_CAPITAL_RETURN_EXECUTION",
+        "question_family_tags": [
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 자기주식 소각",
+        "subject_id": "005930:CAPITAL_RETURN",
+        "unit": "주",
+        "value": "보통주 73,359,314주 및 우선주 13,603,461주"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "주식기준 보상을 위한 자기주식 취득은 현금 사용과 주식보상 재원을 동시에 확정한다.",
+        "exact_quote": "회사는 2026년 3월 18일 이사회 결의에 따라 주식기준 보상에 사용할 목적으로 자기주식을 취득하였으며, 보고기간종료일 이후 보통주 28,371,401주(취득가액 5,633,816백만원)를 취득하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "5.6조원 규모 현금 사용과 보상 목적 보유주식 증가는 자본배분의 현금 회수·희석 해석을 제한한다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_RETURN",
+        "normalized_object": "보고기간 후 보통주 자기주식 취득가액",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31 이후 보고서 제출 전",
+        "predicate": "ACQUIRED_TREASURY_SHARES_FOR_COMPENSATION",
+        "predicate_family": "CAPITAL_RETURN_EXECUTION",
+        "primitive_tags": [
+          "TREASURY_SHARE_ACQUISITION",
+          "COMPENSATION_FUNDING"
+        ],
+        "product_family": "자기주식",
+        "question_family_id": "C06_CAPITAL_RETURN_EXECUTION",
+        "question_family_tags": [
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 자기주식 취득",
+        "subject_id": "005930:CAPITAL_RETURN",
+        "unit": "백만원",
+        "value": 5633816
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "보고기간 후 종속기업 차입금 상환은 현금을 사용하면서 차입 부담을 낮춘다.",
+        "exact_quote": "회사는 2026년 4월 23일 삼성디스플레이㈜로부터 차입한 무담보차입금 중 10조원을 상환하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "10조원 상환은 보고기간 말 차입금의 후속 감소와 현금 사용을 함께 보여주는 중대한 자본배분 사건이다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:LIQUIDITY",
+        "normalized_object": "삼성디스플레이 무담보차입금 상환",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-04-23",
+        "predicate": "REPAID_UNSECURED_SUBSIDIARY_BORROWING",
+        "predicate_family": "DELEVERAGING_EXECUTION",
+        "primitive_tags": [
+          "DEBT_REPAYMENT",
+          "LIQUIDITY_USE"
+        ],
+        "product_family": "차입금",
+        "question_family_id": "C06_BALANCE_SHEET_DELEVERAGING",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 무담보차입금 상환",
+        "subject_id": "005930:CORPORATE_LIQUIDITY",
+        "unit": "조원",
+        "value": 10
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "회사는 2024~2026년 FCF의 50%를 재원으로 연 9.8조원 정규배당과 잔여 재원 추가 환원을 계획했다.",
+        "exact_quote": "당사는 2024년부터 2026년까지 3년간 발생하는 잉여현금흐름의 50%를 재원으로 활용하여 연간 9.8조원 수준의 정규배당을 유지하되, 정규배당 이후에도 잔여 재원이 발생하는 경우에 추가로 환원할 계획입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FCF 연계 비율과 연간 현금배당 규모를 함께 명시해 자본환원 계획의 수치적 가시성을 제공한다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:SHAREHOLDER_RETURN",
+        "normalized_object": "연간 정규배당 정책",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-2026",
+        "predicate": "MAINTAINS_ANNUAL_REGULAR_DIVIDEND_POLICY",
+        "predicate_family": "FORWARD_CAPITAL_RETURN_POLICY",
+        "primitive_tags": [
+          "DIVIDEND_POLICY",
+          "FREE_CASH_FLOW_ALLOCATION"
+        ],
+        "product_family": "현금배당",
+        "question_family_id": "C06_SHAREHOLDER_RETURN_POLICY",
+        "question_family_tags": [
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "삼성전자 2024~2026 주주환원 정책",
+        "subject_id": "005930:SHAREHOLDER_RETURN_POLICY",
+        "unit": "조원/년",
+        "value": 9.8
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "2026년 1분기 현금배당은 선언된 주주환원 정책의 실제 집행 규모를 확인한다.",
+        "exact_quote": "분기 배당금은 제58기 1분기 2,447,284백만원(주당 372원), 제57기 1분기 2,447,284백만원(주당 365원), 2분기 2,453,793백만원(주당 367원), 3분기 2,453,345백만원(주당 370원)이며, 제56기 1분기 2,452,154백만원(주당 361원), 2분기 2,452,154백만원(주당 361원), 3분기 2,452,154백만원(주당 361원)입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "분기 현금환원 총액과 주당액이 정책의 실제 이행을 직접 보여준다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:SHAREHOLDER_RETURN",
+        "normalized_object": "2026년 1분기 분기배당금",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1",
+        "predicate": "DECLARED_QUARTERLY_CASH_DIVIDEND",
+        "predicate_family": "CAPITAL_RETURN_EXECUTION",
+        "primitive_tags": [
+          "DIVIDEND_ACTUAL"
+        ],
+        "product_family": "현금배당",
+        "question_family_id": "C06_DIVIDEND_EXECUTION",
+        "question_family_tags": [
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 1분기 배당",
+        "subject_id": "005930:DIVIDEND_EXECUTION",
+        "unit": "백만원",
+        "value": 2447284
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-6601c7fcf9b10b37297bd96d",
+        "economic_mechanism": "메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.",
+        "exact_quote": "메모리 평균 판매가격은 전년 연간 평균 대비 약 146% 상승하였으며",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 가격의 실제 상승폭은 병목 가격력과 실적 전환을 직접 측정한다.",
+        "mechanism_scope_id": "005930:MEMORY:PRICING_POWER",
+        "normalized_object": "2026년 1분기 메모리 평균판매가격 상승률",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-eb3cecb1e00c95ccf544cac4",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae",
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1 vs 2025 annual average",
+        "predicate": "MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE",
+        "predicate_family": "REALIZED_MEMORY_PRICING",
+        "primitive_tags": [
+          "MEMORY_ASP",
+          "PRICING_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "C06_MEMORY_REALIZED_PRICING",
+        "question_family_tags": [
+          "bottleneck_pricing",
+          "eps_fcf_explosion"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 평균판매가격",
+        "subject_id": "005930:MEMORY_PRICING",
+        "unit": "%",
+        "value": 146
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-6601c7fcf9b10b37297bd96d",
+        "economic_mechanism": "공시된 메모리 생산능력은 공급 가능한 물량 기반과 후속 증설 필요성을 정량화한다.",
+        "exact_quote": "(생산능력)\n(단위 : 천대, 천개)\n부 문\n품 목\n제58기 1분기\n제57기\n제56기\nDX 부문\nTV, 모니터 등\n13,818\n56,283\n51,795\n스마트폰 등\n67,950\n270,050\n265,700\nDS 부문\n메모리\n658,532,038\n2,245,908,090\n2,238,240,405",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 공급능력의 직접 수치가 병목과 공급 대응의 기준점을 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:SUPPLY_CAPACITY",
+        "normalized_object": "2026년 1분기 메모리 생산능력",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1",
+        "predicate": "REPORTED_MEMORY_PRODUCTION_CAPACITY",
+        "predicate_family": "MEMORY_CAPACITY_ACTUAL",
+        "primitive_tags": [
+          "MEMORY_CAPACITY",
+          "PRODUCTION_CAPACITY_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "C06_MEMORY_CAPACITY_ACTUAL",
+        "question_family_tags": [
+          "earnings_visibility",
+          "capital_allocation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 생산능력",
+        "subject_id": "005930:MEMORY_CAPACITY",
+        "unit": "천개",
+        "value": 658532038
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-6601c7fcf9b10b37297bd96d",
+        "economic_mechanism": "메모리 실제 생산량은 수요에 대응해 공급된 물량 기반을 확인한다.",
+        "exact_quote": "DS 부문의 메모리 생산실적은 658,532백만개(1Gb 환산 기준)이며 한국(화성, 평택 등), 중국에서 생산하고 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "실제 생산 물량은 단순 설비계획이 아니라 공급 실행 수준을 직접 보여준다.",
+        "mechanism_scope_id": "005930:MEMORY:SUPPLY_RESPONSE",
+        "normalized_object": "2026년 1분기 1Gb 환산 메모리 생산실적",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-eb3cecb1e00c95ccf544cac4",
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1",
+        "predicate": "REPORTED_MEMORY_PRODUCTION_OUTPUT",
+        "predicate_family": "MEMORY_PRODUCTION_ACTUAL",
+        "primitive_tags": [
+          "MEMORY_PRODUCTION",
+          "SUPPLY_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "C06_MEMORY_PRODUCTION_ACTUAL",
+        "question_family_tags": [
+          "earnings_visibility",
+          "eps_fcf_explosion"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 생산실적",
+        "subject_id": "005930:MEMORY_PRODUCTION",
+        "unit": "백만개",
+        "value": 658532
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-6601c7fcf9b10b37297bd96d",
+        "economic_mechanism": "메모리 생산라인의 100% 가동은 해당 분기의 유휴 공급 여력이 없었음을 보여준다.",
+        "exact_quote": "DS 부문\n메모리\n21,600\n21,600\n100.00%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "100% 가동률은 공급 병목과 추가 투자 필요성을 직접 뒷받침한다.",
+        "mechanism_scope_id": "005930:MEMORY:CAPACITY_SCARCITY",
+        "normalized_object": "2026년 1분기 메모리 생산라인 가동률",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1",
+        "predicate": "MEMORY_LINES_OPERATED_AT_FULL_UTILIZATION",
+        "predicate_family": "MEMORY_CAPACITY_UTILIZATION",
+        "primitive_tags": [
+          "CAPACITY_UTILIZATION",
+          "FULL_UTILIZATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "C06_MEMORY_CAPACITY_UTILIZATION",
+        "question_family_tags": [
+          "earnings_visibility",
+          "bottleneck_pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 가동률",
+        "subject_id": "005930:MEMORY_CAPACITY",
+        "unit": "%",
+        "value": 100
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-6601c7fcf9b10b37297bd96d",
+        "economic_mechanism": "차세대 메모리 기술과 중장기 수요 대응 투자는 향후 공급경쟁력 확보를 위한 실행 방향이다.",
+        "exact_quote": "당사는 메모리 차세대 기술 경쟁력 강화 및 중장기 수요 대비를 위한 투자를 지속 추진하였고",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공식적인 메모리 투자 방향은 공급 대응과 자본 회수의 후속 검증 기준을 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:CAPACITY_INVESTMENT",
+        "normalized_object": "메모리 차세대 기술·중장기 수요 대응 투자",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1 and ongoing",
+        "predicate": "CONTINUED_MEMORY_INVESTMENT_FOR_NEXT_GENERATION_AND_DEMAND",
+        "predicate_family": "MEMORY_CAPACITY_INVESTMENT",
+        "primitive_tags": [
+          "MEMORY_INVESTMENT",
+          "SUPPLY_RESPONSE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "C06_MEMORY_CAPACITY_INVESTMENT",
+        "question_family_tags": [
+          "earnings_visibility",
+          "capital_allocation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 투자",
+        "subject_id": "005930:MEMORY_CAPACITY_INVESTMENT",
+        "unit": "",
+        "value": "차세대 기술 경쟁력 강화 및 중장기 수요 대비 투자 지속"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-6601c7fcf9b10b37297bd96d",
+        "economic_mechanism": "메모리 제품 매출은 가격과 생산 물량이 실제 매출로 전환된 규모를 직접 보여준다.",
+        "exact_quote": "(1) 주요 제품별 매출실적\n(단위 : 억원)\n구 분\n제58기 1분기\n제57기\n제56기\nTV, 모니터 등\n77,278\n308,609\n309,316\n스마트폰 등\n375,036\n1,264,744\n1,144,249\n메모리\n747,800\n1,040,812\n844,630",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "제품 단위 메모리 매출은 혼합 DS 매출보다 직접적인 메모리 실적 귀속을 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE_CONVERSION",
+        "normalized_object": "2026년 1분기 메모리 제품 매출",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae",
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1",
+        "predicate": "REPORTED_MEMORY_PRODUCT_REVENUE",
+        "predicate_family": "MEMORY_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "MEMORY_REVENUE",
+          "REVENUE_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "C06_MEMORY_REVENUE_CONVERSION",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 매출",
+        "subject_id": "005930:MEMORY_REVENUE",
+        "unit": "억원",
+        "value": 747800
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-6601c7fcf9b10b37297bd96d",
+        "economic_mechanism": "연결 부채비율 상승은 대규모 메모리 투자와 주주환원 이후의 재무여력 해석에 제약을 준다.",
+        "exact_quote": "보고기간종료일 현재 당사의 부채비율은 다음과 같습니다.\n(단위 : 백만원)\n구 분\n제58기 1분기말\n제57기말\n부 채\n146,703,628\n130,621,773\n자 본\n486,635,976\n436,320,337\n부채비율\n30.1%\n29.9%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "부채비율의 실제 변화는 투자·환원 이후 남은 재무 완충력을 평가하는 핵심 counterfact다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:LEVERAGE",
+        "normalized_object": "2026년 1분기말 연결 부채비율",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "CONSOLIDATED_DEBT_RATIO_INCREASED",
+        "predicate_family": "CORPORATE_LEVERAGE_ACTUAL",
+        "primitive_tags": [
+          "LEVERAGE",
+          "DEBT_RATIO"
+        ],
+        "product_family": "부채비율",
+        "question_family_id": "C06_CORPORATE_LEVERAGE",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 부채비율",
+        "subject_id": "005930:CORPORATE_LEVERAGE",
+        "unit": "%",
+        "value": 30.1
+      }
+    ],
+    "unresolved_document_ids": [
+      "OFFICIALDOC-56aa9eb670784ed47994f756",
+      "OFFICIALDOC-6601c7fcf9b10b37297bd96d"
+    ],
+    "unresolved_research_notes": [
+      "12개 transport page limit에 도달했다. OFFICIALDOC-56aa9eb670784ed47994f756의 추가 자본배분·우발위험 사실과 OFFICIALDOC-6601c7fcf9b10b37297bd96d의 잔여 회사 전체 투자·현금 사실을 prior48 및 이번 12개와 semantic dedup하는 continuation이 필요하다."
+    ]
+  },
+  "payload_hash": "96bb32375aacc00714d4cd347895dd38714d71984140498433a6813314723c93",
+  "production_score_authority": false,
+  "prompt_hash": "a8ce7e405fcceb3edf8dec13aaaf2efa1921d590342be248e6265521926be0b7",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5b56dcb1143b45a28c2fb5b5be95d7d792e4eca905fd50d546c06715ba8ac64d",
+  "response_id": "COLLABRESP-52e1a368fe92a58f9fb757a431e601f56ab9257b9e432ff9aab47b945f03b4e2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

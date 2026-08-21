@@ -1,0 +1,827 @@
+삼성전자 반도체, 차세대 AI를 위한 첨단 메모리 기술 공개 | 삼성반도체
+삼성전자 반도체, 차세대 AI를 위한 첨단 메모리 기술 공개
+삼성전자 반도체, 차세대 AI를 위한 첨단 메모리 기술 공개 | 삼성반도체
+삼성전자 반도체, 차세대 AI를 위한 첨단 메모리 기술 공개
+본문으로 이동
+Select your country or region to find out what content fits your location
+Remember for next time?
+언어를 선택해주세요
+Global / English
+한국 / 한국어
+中国大陆 / 中文
+日本 / 日本語
+Continue
+제품
+제품 유형
+응용처
+DRAM
+개요
+DDR
+HBM
+GDDR
+LPDDR
+SSD
+개요
+PC SSD
+데이터 센터 SSD
+엔터프라이즈 SSD
+오토모티브 SSD
+eStorage
+개요
+UFS
+eMMC
+CXL 메모리
+개요
+CMM-D
+MCP
+개요
+uMCP
+eMCP
+프로세서
+개요
+모바일 프로세서
+오토모티브 프로세서
+웨어러블 프로세서
+모뎀
+RF
+UWB
+와이파이/블루투스
+이미지센서
+개요
+모바일 이미지센서
+오토모티브 이미지센서
+글로벌 셔터 센서
+ToF 센서
+디스플레이 IC
+개요
+모바일 DDI
+패널 DDI
+보안 솔루션
+개요
+결제용 칩
+지문인증카드 솔루션
+NFC
+eSE/eSIM/SIM
+모바일 & IoT SE
+전력관리 IC
+개요
+모바일 전력관리 IC
+액세서리 전력관리 IC
+메모리 전력관리 IC
+LED
+Display
+AI
+서버
+오토모티브
+네트워크
+모바일
+라이프스타일
+고객지원
+품질 지원
+품질 관리
+고객 서비스
+규정 정보
+도구 & 자료
+기술 자료
+용어사전
+Consumer Storage
+지원
+개요
+도구 및 소프트웨어
+문서
+FAQs
+워런티
+Magician 소프트웨어
+SSD Upgrade
+협업 허브
+DS Open-Ecosystem
+Contact Info
+글로벌 네트워크
+기술
+프로세서
+온디바이스 AI
+모바일 패키지
+GPU 테크놀로지
+ENSS
+이미지센서
+픽셀 테크놀로지
+초고화소 이미지센서
+HDR 테크놀로지
+리모자이크 테크놀로지
+Foundry
+Online Foundry
+Foundry B2B Service
+CONNECT
+개요
+소개
+회사정보
+품질 정책
+공정 기술
+개요
+로직 노드
+스페셜티 기술
+공정 추천
+Advanced Packaging
+개요
+첨단 이종 집적화
+패키지 턴키 서비스
+SAFE™
+개요
+IP 얼라이언스
+EDA 얼라이언스
+클라우드 얼라이언스
+디자인 서비스 얼라이언스
+MDI 얼라이언스
+OSAT 얼라이언스
+Foundry Events
+개요
+Samsung Foundry Forum
+SAFE™ Forum
+제조
+개요
+제조 공정 사업장
+팹 자동화
+지속 가능한 제조 공정
+MPW 서비스
+응용 서비스
+개요
+HPC / AI
+Connectivity
+오토모티브
+IoT
+테크 아카이브
+개요
+#EUV
+#GAA
+#이종 집적 기술
+US Fab
+뉴스 & 이벤트
+뉴스
+이벤트
+테크 블로그
+지속가능경영
+주요 성과
+개요
+추진체계
+보고서 및 규정
+BCMS
+자주 묻는 질문
+환경
+개요
+친환경 반도체 기술
+기후 변화 대응
+자원 순환
+환경 보전
+노동과 인권
+개요
+노동인권 정책
+다양성과 포용
+인재양성
+안전
+건강한 복지
+사회공헌
+개요
+임직원 기부
+지역사회 상생
+지역사회 소통
+지속가능한 공급망
+개요
+상생협력 강화
+환경안전 지원
+공급망 관리
+회사 소개
+회사 정보
+개요
+우리의 스토리
+사업 영역
+경영진
+연혁
+네트워크
+채용
+Click here to learn more about
+Samsung Foundry Forum & SAFE™
+.
+Click here to learn more about
+Samsung Foundry Forum & SAFE™
+.
+Click here to learn more about
+Samsung Foundry Forum
+.
+Samsung Foundry Forum
+더 알아보려면 여기를 클릭하세요
+Samsung Foundry Forum
+についての詳細はここをクリックして下さい
+点击这里了解更多关于
+Samsung Foundry Forum & SAFE™
+한국
+Global / English
+한국 / 한국어
+中国 / 中文
+日本 / 日本語
+키워드 검색
+추천 검색
+닫기
+관련 검색
+닫기
+검색 히스토리
+초기화
+닫기
+검색하시려면 Enter를 입력해주세요
+RDIMM
+DDR5
+eMMC 5.1
+엑시노스 2600
+삼성전자 반도체, 차세대 AI를 위한 첨단 메모리 기술 공개
+초 거대 AI(Hyperscale AI)를 지원하는 HBM-PIM과 CXL 기반의 PNM 기술로 업계를 선도하다!
+페이스북
+X
+링크드인
+메일
+공유
+최근 인공지능(AI) 분야에서 화두가 되고 있는 중요한 트렌드 중 하나는 ‘초거대 AI(Hyperscale Artificial Intelligence, 이하 초거대 AI)’이다. 초거대 AI는 기존 AI에서 한 단계 진화한 AI로, 인간의 뇌처럼 여러 상황에 대해 스스로 학습하여 사고하고 판단할 수 있다. 예컨대, 인공지능의 활용 사례로 많이 알려진 이미지 분석과 같은 작업에서 한발 더 나아가 사람의 언어를 이해하고 이를 바탕으로 이미지를 만들어낼 수도 있다. 이러한 수준의 AI를 구현하기 위해서는 훨씬 더 대용량의 데이터에 대한 학습과 연산이 필요하며, 이를 수행할 수 있는 컴퓨팅 인프라가 갖춰져야만 한다.
+최근 활발하게 연구, 도입되고 있는 대용량 추천 시스템과 언어 모델 등을 살펴보면, 모델의 크기가 커질수록 정확도가 증가하는 추세이다. 그런데 이러한 모델을 구현할 수 있는 충분한 D램 용량과 대역폭이 지원되지 않으면 컴퓨팅 성능이 제한될 수 있다. 이에, 삼성전자는 이를 극복할 수 있는 메모리 기술을 선제적으로 개발하고 있다.
+앞서 설명한 초거대 AI 모델을 지원하기 위해, 삼성전자가 제시하는 솔루션은 PIM(Processing-in-Memory)과 PNM(Processing-near-Memory) 기술이다. 삼성전자는 이미 해당 기술을 활용한 메모리 솔루션을 확보하였으며, 이를 구현하는데 필요한 소프트웨어에 대한 표준화도 완료했다.
+HBM-PIM과 GPU를 함께 탑재한 AI용 가속기 구현
+PIM(Processing-in-Memory)은 프로세서가 수행하는 데이터 연산 기능을 메모리 내부에 구현한 기술이다. PIM이 없는 시스템에서는 프로세서가 메모리로부터 명령어를 불러오고 실행하며 그 결과를 다시 메모리(기억장치)에 저장한다. 이로 인해 다량의 데이터 이동이 필요하다. PIM을 활용하면, 메모리 내부에서 연산 처리가 가능해 CPU와 메모리 간 데이터 이동이 줄어들기 때문에 AI 가속기 시스템의 성능과 에너지 효율을 높일 수 있다. 이 개념을 활용한 솔루션이 바로 HBM-PIM이다.
+* 삼성전자 HBM-PIM 기술 설명
+바로가기↗
+삼성전자는 AMD와의 협력을 통해, 이미 상용화된 AMD의 GPU ‘MI-100’ 가속기 카드에 HBM-PIM 메모리를 탑재했다. 이를 바탕으로 HBM-PIM Cluster를 구현한 다음, 각종 대규모 AI 및 HPC(High-Performance Computing) 어플리케이션에 적용했다.
+그 결과, HBM-PIM을 활용하지 않은 기존 GPU 가속기 대비, 평균적으로 성능은 약 2배 증가하고 에너지 소모는 약 50%가 감소했음을 확인했다.
+삼성전자가 8개의 GPU 가속기로 시스템을 구성하고 대용량 AI 언어 모델을 학습시킨 결과, HBM-PIM을 탑재한 GPU 가속기를 사용했을 때 HBM을 탑재한 GPU 가속기보다 1년 동안 사용하는 에너지를 약 2,100GWh 절감할 수 있을 것으로 확인되었다. 2,100GWh의 에너지 사용을 절감하면 탄소 배출량을 약 96만 톤 가량 줄일 수 있으며, 이는 약 1억 그루의 소나무가 1년 동안 흡수하는 탄소보다 많은 양이다.
+* 환산 기준: 국내 강원·중부 지방의 소나무의 경우, 한 그루당 1년 동안 8.6kg의 온실가스를 흡수 (국립산림과학원이 2019년 7월 발표한 '19년 주요산림수종의 표준 탄소 흡수량 기준)
+이로서 현재 데이터센터들이 초거대 AI와 관련해 직면하고 있는 메모리 용량과 대역폭 한계로 인한 병목현상을 효율적으로 개선하고 전력량 절감에도 기여할 수 있을 것으로 기대된다. 특히, 이는 이미 상용화된 GPU와 HBM-PIM을 이용해 구현할 수 있는 솔루션이다.
+또한, 삼성전자는 이를 지원할 수 있는 소프트웨어에 대한 준비도 병행하고 있다. 개방형 소프트웨어 표준인 SYCL을 활용해 금번에 구현한 GPU 가속기를 사용할 수 있는 소프트웨어 사양을 정의하였으며, 이를 바탕으로 한 소프트웨어도 11월 공개할 예정이다. 이에 따라 향후 고객들은 통합된 소프트웨어 환경에서 PIM 메모리 솔루션을 사용할 수 있을 것으로 기대된다.
+해당 소프트웨어 표준화를 위해 협력 중인 Codeplay Software의 최고사업책임자(Chief Business Officer) Charles Macfarlane는 “Codeplay는 SYCL 표준 정의에 함께 참여하여 HBM-PIM을 활용한 GPU 가속기에 적합한 첫 소프트웨어 솔루션을 구현했다”며,“삼성전자와 함께 소프트웨어 표준화를 지속 진행함으로써 라이브러리와 툴 생태계를 더욱 확장하고 알고리즘 개발에 집중할 수 있는 환경을 제공하겠다”고 밝혔다.
+고용량 AI 모델을 위한 CXL 기반의 PNM 솔루션 개발
+CXL은 컴퓨팅 시스템에서 사용되는 인터페이스로, 프로세서와 함께 사용되는 가속기와 메모리를 보다 효율적으로 사용하고 메모리 용량의 확장을 용이하게 해준다.
+* 삼성전자 CXL 메모리 기술 설명
+바로가기↗
+PNM(Processing-near-Memory)도 PIM처럼 메모리를 데이터 연산 기능에 활용해 CPU와 메모리 간 데이터 이동을 줄여주는 기술이다. 연산 기능을 메모리 옆에 위치시켜 CPU-메모리 간 발생하는 병목현상을 줄이고 시스템 성능을 개선할 수 있다.
+삼성전자가 금번에 개발한 CXL 인터페이스 기반의 PNM 기술은 고용량 AI 모델의 처리에 적합한 솔루션이다. 높은 메모리 대역폭을 요구하는 추천 시스템이나 인-메모리 데이터베이스 등의 응용에서 약 2배 이상 성능이 향상되는 것을 확인했다.
+AI 모델별 특성에 적합한 메모리 솔루션 제공
+AI 모델에 활용되는 데이터는 특성에 따라 밀집데이터와 희소데이터로 분류된다. 밀집데이터는 전체 데이터 군집 안에서 유효한 데이터의 비율이 높아 밀집되고 연결된 경우이며, 희소데이터는 유효한 데이터의 비율이 낮게 존재한다.
+자율주행, 음성인식 등의 AI 응용은 밀집데이터에 해당되며, 사용자 기반 추천 알고리즘(페이스북 친구 추천)등은 희소데이터에 해당된다. 삼성전자는 밀집데이터를 기반으로 하는 AI 모델에는 PIM 기술을 적용하고, 희소데이터 기반 AI 모델은 PNM 기술을 적용하여 고객의 다양한 요구에 대응할 예정이다.
+삼성전자 메모리사업부 신사업기획팀장 박철민 상무는 “HBM-PIM Cluster 기술은 업계 최초의 거대 규모 인공지능 분야 맞춤형 메모리 솔루션”이라며, “통합 소프트웨어 표준화 과정을 거쳐 CXL-PNM 솔루션과 도 접목하여, 에너지 절감 및 탄소 배출 저감 효과를 극대화하여 환경경영에 기여할 것이다”라고 밝혔다.
+AMD의 Accelerated Data Center Business 담당 Josh Friedrich 부사장(Corporate Vice President)은 “AMD는 업계와의 협력을 바탕으로 고객을 위한 새롭고 혁신적인 기술을 지속적으로 찾아나가고 있다”며, “컴퓨팅 집약적 시스템 성능을 향상시킬 수 있는 PIM과 같은 혁신적인 메모리 기술을 연구하고 제시하는 삼성전자의 노력에 박수를 보낸다”고 밝혔다.
+미국 에너지부(U.S. Department of Energy) 산하 연구소인 Oak Ridge National Laboratory의 Corporate Fellow이자 Computer Science와 Math Division을 이끌고 있는 Jeffrey Vetter는 “고성능 컴퓨팅과 AI 어플리케이션에서 흔히 발생하는 메모리 대역폭과 전력 효율 문제를 해결하는 데에 있어 PIM과 같은 컴퓨팅 메모리 기술의 구현이 필요하다”며, “삼성전자와의 협력을 통해 이러한 메모리 기술의 적용 가능성과 효율성을 연구할 수 있을 것으로 기대한다”고 밝혔다.
+삼성전자는 향후 HBM-PIM과 CXL 기반 PNM 기술의 확산을 위해 IT 업계 및 학계와 적극적으로 소통할 계획이다. HBM-PIM과 CXL 기반의 PNM 솔루션을 지원하는 통합 소프트웨어를 공개할 예정이며, 업계 최대 슈퍼 컴퓨팅 학회인 SC22에도 참가하여 해당 솔루션을 전시하고 시연할 예정이다.
+#Hyperscale AI
+#HBM-PIM
+#CXL-PNM
+Related contents
+삼성전자 반도체의 이야기를 만나보세요
+반도체 뉴스룸에서 더 많은 최신 뉴스를 확인하려면 아래의 버튼을 클릭하세요.
+삼성전자 반도체 뉴스룸 바로가기
+관련 컨텐츠
+다음 아티클
+2023-08-31
+관련 테크 기사
+테크 블로그 바로가기
+죄송합니다. 알맞은 검색 결과가 없습니다.
+다른 검색어나, 보다 일반적인 단어로 다시 검색해 주세요.
+관련 뉴스
+press release
+Samsung begins mass production of data center SSD
+Jul 18, 2021
+samsung Kim
+뉴스 바로가기
+홈
+테크 블로그
+삼성전자 반도체, 차세대 AI를 위한 첨단 메모리 기술 공개
+제품
+제품 유형
+DRAM
+SSD
+eStorage
+CXL 메모리
+MCP
+프로세서
+이미지센서
+디스플레이 IC
+보안 솔루션
+전력관리 IC
+LED
+Display
+응용처
+AI
+서버
+오토모티브
+네트워크
+모바일
+라이프스타일
+고객지원
+제품 유형
+품질 관리
+고객 서비스
+규정 정보
+도구 & 자료
+기술 자료
+용어 사전
+Consumer Storage 지원
+개요
+도구 및 소프트웨어
+문서
+FAQs
+워런티
+Magician
+소프트웨어
+SSD Upgrade
+협업 허브
+DS
+Open-Ecosystem
+Contact Info
+글로벌 네트워크
+B2B
+Workplace
+SOC-Developer
+협업 허브
+DS Open-Ecosystem
+Contact Info
+Global Network
+B2B
+Workplace
+SOC-Developer
+기술
+온디바이스 AI
+모바일 패키지
+GPU 테크놀로지
+ENSS
+픽셀 테크놀로지
+초고화소
+이미지센서
+HDR 테크놀로지
+리모자이크 테크놀로지
+Foundry
+소개
+공정 기술
+Advanced
+Packaging
+SAFE
+™
+Foundry Events
+제조
+응용 서비스
+테크
+아카이브
+US
+Fab
+CONNECT
+뉴스 & 이벤트
+뉴스
+이벤트
+테크 블로그
+지속가능경영
+주요 성과
+환경
+노동과 인권
+사회공헌
+지속가능한
+공급망
+회사 소개
+회사 정보
+우리의 스토리
+사업영역
+경영진
+연혁
+투자자 정보
+윤리
+반도체 뉴스룸
+네트워크
+채용
+윤리&준법경영
+경영원칙
+부정제보
+법위반제보
+공식 채널
+공식 채널 인스타그램
+공식 채널 X
+공식 채널 페이스북
+공식 채널 링크드인
+공식
+채널 유튜브
+반도체 뉴스룸
+반도체 뉴스룸
+반도체 뉴스룸 페이스북
+반도체 뉴스룸 유튜브
+반도체 뉴스룸 인스타그램
+Global / English
+Global / English
+한국 / 한국어
+中国 / 中文
+日本 / 日本語
+개인정보 처리방침
+법적고지
+쿠키
+접근성
+사이트맵
+Copyright© 2025 Samsung. All rights reserved.
+최상단으로 이동
+정보통신접근성 품질인증서 다운로드
+1
+2
+Contact us
+As of July 31, 2025,
+this page is no longer
+available.
+We apologize for any inconvenience.
+Choose a customer type*
+Business customer
+Individual customer
+이 필드는 반드시 입력해야 합니다.
+Choose your continent and location*
+Continent*
+Continent*
+Africa
+Asia - pacific
+Europe
+CIS
+Latin America
+Middle East
+North America
+South America
+Others
+Continent
+*
+이 필드는 반드시 입력해야 합니다.
+장소*
+장소*
+Location
+*
+이 필드는 반드시 입력해야 합니다.
+Choose a topic for your question*
+Inquiry Category*
+Inquiry Category*
+Technical Support
+Sales
+Corporate Functions
+Website Feedback
+Memory Solution Lab
+Foundry
+Inquiry Category
+*
+이 필드는 반드시 입력해야 합니다.
+Inquiry Type*
+Inquiry Type*
+Inquiry Type
+*
+이 필드는 반드시 입력해야 합니다.
+Product Category*
+Product Category*
+Product Category
+*
+이 필드는 반드시 입력해야 합니다.
+Product Type*
+Product Type*
+Product Type
+*
+이 필드는 반드시 입력해야 합니다.
+* Find help about consumer storage product at
+samsung.com
+support.
+Get support
+By submitting this form, you are confirming you agree to share your personal information with Samsung to use for this business request. Samsung's web sites and communications are subject to Samsung's
+Privacy Policy
+.
+다음
+1
+2
+Contact us
+Enter your contact info and inquiry
+User Type
+Business customer
+Request Type
+Technical support
+Product Category
+DRAM Component
+장소
+EU / UK
+Inquiry Type
+Product Spec
+Product Type
+Client
+Enter the your information
+이름*
+이 필드는 반드시 입력해야 합니다.
+성*
+이 필드는 반드시 입력해야 합니다.
+회사*
+이 필드는 반드시 입력해야 합니다.
+이메일*
+이 필드는 반드시 입력해야 합니다.
+Confirm Email*
+이 필드는 반드시 입력해야 합니다.
+제목
+이 필드는 반드시 입력해야 합니다.
+Question or Message*
+이 필드는 반드시 입력해야 합니다.
+Please, Check"I'm not a robot"
+뒤로
+제출
+Cookies
+Our site uses cookies. We’d also like to set optional cookies to give you the best experience
+and
+provide
+you relevant advertising. you can choose to manage your preferences or accept all cookies. You
+can also
+read
+our
+Privacy
+Policy
+and
+Cookie
+Policy
+for more
+information.
+Configure
+Accept all
+Continue without accepting
+쿠키 정보
+이 사이트는 쿠키를 사용해서 사용자 경험을 맞춤화하고 사이트 트래픽을 분석합니다. 동의를 클릭하거나 사이트를 계속 탐색함으로써 쿠키 사용에 동의합니다.
+자세한 내용은
+개인정보 보호 정책
+및
+쿠키 정책
+을 참고하세요.
+구성
+Accept all
+동의
+Manage your cookies
+We use cookies to improve you experience on our website and
+to show you experience on our website and to show you relevant advertising, manage your settings for
+our cookies below.
+Essential Cookies
+These cookies are essential as they enable you to move around the website. This category cannot
+be disabled.
+View More
+Company
+Domain
+Samsung Electronics
+semiconductor.samsung.com, image.semiconductor.samsung.com, smetrics.samsung.com
+Analytical or
+performance cookies
+These cookies collect information about how you use our website, for example which pages you
+visit most often. All information these cookies collect is used to improve how the website
+works.
+View More
+Analytical or performance cookies
+Cookie
+Domain
+Google
+ajax.googleapis.com, apis.google.com, calendar.google.com,
+developers.google.com, docs.google.com, google.com, maps.googleapis.com,
+spreadsheets.google.com, www.google.com, www.google.ie
+Google
+www.google-analytics.com, www.googletagmanager.com, www.gstatic.com
+Adobe
+assets.adobedtm.com
+Functionality
+Cookies
+These cookies allow our website to remember choices you make (such as your user name, language or
+the region you are in) and tailor the website to provide enhanced features and content for you.
+View More
+Functionality Cookies
+Cookie
+Domain
+Purpose
+Akamai
+176-34-86-175_s-23-203-249-81_ts-1604430438-clienttons-s.akamaihd.net,
+176-34-86-175_s-23-203-249-81_ts-1604432488-clienttons-s.akamaihd.net,
+176-34-86-175_s-23-203-249-90_ts-1604428164-clienttons-s.akamaihd.net,
+176-34-86-175_s-95-101-143-18_ts-1604428258-clienttons-s.akamaihd.net,
+176-34-86-175_s-95-101-143-24_ts-1604428321-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-81_ts-1604425495-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-81_ts-1604425563-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-81_ts-1604425669-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-81_ts-1604427540-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-81_ts-1604427617-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-81_ts-1604427664-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-81_ts-1604427922-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-81_ts-1604439090-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-81_ts-1604439174-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-81_ts-1604441206-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-81_ts-1604441267-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-90_ts-1604425484-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-90_ts-1604425610-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-90_ts-1604427737-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-90_ts-1604427797-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-90_ts-1604438922-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-90_ts-1604438968-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-90_ts-1604439033-clienttons-s.akamaihd.net,
+34-242-207-243_s-23-203-249-90_ts-1604441023-clienttons-s.akamaihd.net,
+34-242-207-243_s-95-101-129-82_ts-1604425732-clienttons-s.akamaihd.net,
+34-245-202-11_s-23-203-249-81_ts-1604425513-clienttons-s.akamaihd.net,
+34-245-202-11_s-23-203-249-81_ts-1604427569-clienttons-s.akamaihd.net,
+34-245-202-11_s-23-203-249-90_ts-1604425365-clienttons-s.akamaihd.net,
+34-246-182-217_s-23-203-249-81_ts-1604424915-clienttons-s.akamaihd.net,
+34-246-182-217_s-23-203-249-81_ts-1604425000-clienttons-s.akamaihd.net,
+34-246-182-217_s-23-203-249-81_ts-1604425155-clienttons-s.akamaihd.net,
+34-246-182-217_s-23-203-249-81_ts-1604425567-clienttons-s.akamaihd.net,
+34-246-182-217_s-23-203-249-81_ts-1604427446-clienttons-s.akamaihd.net,
+34-246-182-217_s-23-203-249-81_ts-1604429495-clienttons-s.akamaihd.net,
+34-246-182-217_s-23-203-249-90_ts-1604424817-clienttons-s.akamaihd.net,
+34-246-182-217_s-23-203-249-90_ts-1604424939-clienttons-s.akamaihd.net,
+34-246-182-217_s-23-203-249-90_ts-1604427359-clienttons-s.akamaihd.net,
+34-246-182-217_s-23-203-249-90_ts-1604429563-clienttons-s.akamaihd.net,
+34-246-182-217_s-95-101-129-82_ts-1604425062-clienttons-s.akamaihd.net,
+34-246-182-217_s-95-101-143-18_ts-1604429398-clienttons-s.akamaihd.net,
+34-246-182-217_s-95-101-143-24_ts-1604429274-clienttons-s.akamaihd.net,
+34-246-182-217_s-95-101-143-24_ts-1604429365-clienttons-s.akamaihd.net,
+34-246-182-217_s-95-101-143-24_ts-1604429616-clienttons-s.akamaihd.net,
+364bf52c.akstat.io, 364bf5fa.akstat.io, 364bf6cc.akstat.io, 36c3fef2.akstat.io,
+54-154-186-178_s-23-203-249-81_ts-1604425586-clienttons-s.akamaihd.net,
+54-154-186-178_s-23-203-249-81_ts-1604429882-clienttons-s.akamaihd.net,
+54-154-186-178_s-23-203-249-90_ts-1604425341-clienttons-s.akamaihd.net,
+54-154-186-178_s-23-203-249-90_ts-1604425577-clienttons-s.akamaihd.net,
+54-154-186-178_s-23-203-249-90_ts-1604425679-clienttons-s.akamaihd.net,
+54-154-186-178_s-23-203-249-90_ts-1604427498-clienttons-s.akamaihd.net,
+54-154-186-178_s-23-203-249-90_ts-1604431774-clienttons-s.akamaihd.net,
+54-154-186-178_s-92-123-142-66_ts-1604427735-clienttons-s.akamaihd.net,
+54-246-30-86_s-23-203-249-81_ts-1604425115-clienttons-s.akamaihd.net,
+54-246-30-86_s-23-203-249-81_ts-1604427273-clienttons-s.akamaihd.net,
+54-246-30-86_s-23-203-249-81_ts-1604427303-clienttons-s.akamaihd.net,
+54-246-30-86_s-23-203-249-81_ts-1604427359-clienttons-s.akamaihd.net,
+54-246-30-86_s-23-203-249-81_ts-1604431429-clienttons-s.akamaihd.net,
+54-246-30-86_s-23-203-249-81_ts-1604431547-clienttons-s.akamaihd.net,
+54-246-30-86_s-23-203-249-81_ts-1604435637-clienttons-s.akamaihd.net,
+54-246-30-86_s-23-203-249-90_ts-1604427151-clienttons-s.akamaihd.net,
+54-246-30-86_s-23-203-249-90_ts-1604429503-clienttons-s.akamaihd.net,
+54-246-30-86_s-23-203-249-90_ts-1604429594-clienttons-s.akamaihd.net,
+54-246-30-86_s-23-203-249-90_ts-1604433473-clienttons-s.akamaihd.net,
+54-246-30-86_s-23-203-249-90_ts-1604433539-clienttons-s.akamaihd.net,
+54-246-30-86_s-88-221-134-224_ts-1604435698-clienttons-s.akamaihd.net,
+54-246-30-86_s-95-101-129-96_ts-1604424926-clienttons-s.akamaihd.net,
+54-246-30-86_s-95-101-129-96_ts-1604424989-clienttons-s.akamaihd.net,
+54-75-39-103_s-23-203-249-81_ts-1604425265-clienttons-s.akamaihd.net,
+54-75-39-103_s-23-203-249-81_ts-1604425415-clienttons-s.akamaihd.net,
+54-75-39-103_s-23-203-249-90_ts-1604425504-clienttons-s.akamaihd.net,
+54-75-39-103_s-95-101-143-24_ts-1604432234-clienttons-s.akamaihd.net,
+54-75-41-190_s-23-203-249-81_ts-1604424935-clienttons-s.akamaihd.net,
+54-75-41-190_s-23-203-249-81_ts-1604425058-clienttons-s.akamaihd.net,
+54-75-41-190_s-23-203-249-81_ts-1604425120-clienttons-s.akamaihd.net,
+54-75-41-190_s-23-203-249-81_ts-1604425189-clienttons-s.akamaihd.net,
+54-75-41-190_s-23-203-249-81_ts-1604427540-clienttons-s.akamaihd.net,
+54-75-41-190_s-23-203-249-90_ts-1604424875-clienttons-s.akamaihd.net,
+54-75-41-190_s-23-203-249-90_ts-1604425270-clienttons-s.akamaihd.net,
+54-75-41-190_s-23-203-249-90_ts-1604427110-clienttons-s.akamaihd.net,
+54-75-41-190_s-23-203-249-90_ts-1604429433-clienttons-s.akamaihd.net,
+54-75-41-190_s-23-203-249-90_ts-1604429456-clienttons-s.akamaihd.net,
+54-75-41-190_s-92-123-140-11_ts-1604427291-clienttons-s.akamaihd.net,
+54-75-41-190_s-92-123-140-11_ts-1604427412-clienttons-s.akamaihd.net,
+54-75-41-190_s-95-101-129-96_ts-1604425019-clienttons-s.akamaihd.net,
+54-75-41-190_s-95-101-143-18_ts-1604429529-clienttons-s.akamaihd.net,
+684dd305.akstat.io, 684dd306.akstat.io, 684dd307.akstat.io, 684dd308.akstat.io,
+684dd309.akstat.io, 684dd30a.akstat.io, 684dd30c.akstat.io, 684dd30d.akstat.io,
+6852bd07.akstat.io, 6852bd08.akstat.io, 6852bd09.akstat.io, 6852bd0a.akstat.io,
+6852bd0b.akstat.io, 6852bd0c.akstat.io, 6852bd0d.akstat.io, 6852bd0e.akstat.io,
+6852bd0f.akstat.io, 6852bd10.akstat.io, 6852bd11.akstat.io, 6852bd12.akstat.io,
+6852bd13.akstat.io, 6852bd14.akstat.io, 685d5b18.akstat.io, 685d5b19.akstat.io,
+685d5b1b.akstat.io, 686eb51b.akstat.io, 686eb704.akstat.io,
+bcsecure01-a.akamaihd.net, brightcove04pmdo-a.akamaihd.net,
+ds-aksb-a.akamaihd.net,
+el24ucyccuqvax5bs2kq-pblhb6-a723eeea5-clientnsv4-s.akamaihd.net,
+el24ucyccuqvax5bt4yq-ptbmxa-6ef8e4803-clientnsv4-s.akamaihd.net,
+el24ucyccuqwcx5bs4uq-p03zy7-676237e5e-clientnsv4-s.akamaihd.net,
+el3lnwiccuqvax5bstvq-pch0tk-1cdf76638-clientnsv4-s.akamaihd.net,
+el3lnwiccuqvax5buy2q-pqnfkn-f673b4feb-clientnsv4-s.akamaihd.net,
+el3lnwiccuqvax5buzkq-pl30i3-08d7d87df-clientnsv4-s.akamaihd.net,
+el3lnwiccuqwcx5bu4ya-pyg66y-cb19a994e-clientnsv4-s.akamaihd.net,
+el3lnwiccuqxax5bstjq-puyi2b-1f022524f-clientnsv4-s.akamaihd.net,
+el3lnwiccuqxax5bsuua-pioden-695058c8f-clientnsv4-s.akamaihd.net,
+el3lnwiccuqxax5bsvta-pqns0s-b6979dbf5-clientnsv4-s.akamaihd.net,
+el3lnwiccuqxax5btzpq-pbifp1-07760bdf0-clientnsv4-s.akamaihd.net,
+el3lnwiccuqxax5bu23q-p2ez1a-7d289db29-clientnsv4-s.akamaihd.net,
+el3lnwixzp4swx5bs5pq-pnfw20-03cb87b70-clientnsv4-s.akamaihd.net,
+el3lnwixzp4swx5bsryq-p52tb9-f3dab0dd0-clientnsv4-s.akamaihd.net,
+el3lnwixzp4swx5bu35q-pdannf-fd1139023-clientnsv4-s.akamaihd.net,
+el3lnwixzp4swx5buxna-pyccr1-f710a073b-clientnsv4-s.akamaihd.net,
+el3lnwky3wdkax5bsxbq-p3hn9l-a2a7437e4-clientnsv4-s.akamaihd.net,
+el3lnwky3wdkex5bt23a-pfcryk-8b7c1430e-clientnsv4-s.akamaihd.net,
+elzm742y3wdkex5bs4lq-p0p40d-3a2e745b5-clientnsv4-s.akamaihd.net,
+elzm742y3wdkex5bzofa-pqb527-96b6b1fc9-clientnsv4-s.akamaihd.net,
+elzm74yccuqvax5b2szq-pf5z0b-8e0fe713e-clientnsv4-s.akamaihd.net,
+elzm74yccuqvax5bs5nq-pt4puj-60e29ce0a-clientnsv4-s.akamaihd.net,
+elzm74yccuqvax5bzo4a-ptxi68-223a872ab-clientnsv4-s.akamaihd.net,
+elzm74yccuqwcx5b2r3a-p84t0a-b5b6d0cb9-clientnsv4-s.akamaihd.net,
+elzm74yccuqwcx5btaca-p2p13t-2edd5f4d6-clientnsv4-s.akamaihd.net,
+elzm74yccuqwcx5buakq-p7s1ie-7095e2510-clientnsv4-s.akamaihd.net,
+elzm74yccuqxax5b2o7q-partxm-0ba99e22d-clientnsv4-s.akamaihd.net,
+elzm74yccuqxax5bs6fa-pnivpg-c492934bb-clientnsv4-s.akamaihd.net,
+elzm74yccuqxax5bt5qq-pcrjf9-bdc24fa26-clientnsv4-s.akamaihd.net,
+elzm74yccuqxax5bzp4q-pkl6rx-fb475a90e-clientnsv4-s.akamaihd.net,
+elzm74yxzp4swx5bs4ga-p9xzbs-ed47165ae-clientnsv4-s.akamaihd.net,
+elzm74yxzp4swx5bs7cq-p4s4el-cd1a19887-clientnsv4-s.akamaihd.net,
+elzm74yxzp4swx5bt4ka-p0qvim-2e8a5e71e-clientnsv4-s.akamaihd.net,
+elzm74yxzp4swx5bt6hq-pzy1yp-35d9d01e0-clientnsv4-s.akamaihd.net,
+elzm74yxzp4swx5bt7mq-p1duy0-1060998fa-clientnsv4-s.akamaihd.net,
+elzm74yxzp4swx5bucja-p0twy9-19851792c-clientnsv4-s.akamaihd.net,
+elzm74yxzp4swx5bzqza-pn76ir-1c0c55ff7-clientnsv4-s.akamaihd.net,
+elzm74yxzp4swx5bzsda-pqodge-888ec876f-clientnsv4-s.akamaihd.net,
+g2nlvmqcchiscx5bva5a-pwotro-14b66ca5a-clientnsv4-s.akamaihd.net,
+g2nlvmqccuqvax5bs7hq-p4vzcl-ad59a5fd9-clientnsv4-s.akamaihd.net,
+g2nlvmqccuqxax5bsz6q-pm3a6a-3feb7d021-clientnsv4-s.akamaihd.net,
+g2nlvmqxzp4swx5bs5uq-pd12b9-62c8cb38d-clientnsv4-s.akamaihd.net,
+g2nlvmqxzp4swx5bt3va-p7puv0-d4fafcfea-clientnsv4-s.akamaihd.net,
+g2nlvmsy3wdkax5bs5zq-p675cj-d0b1fd299-clientnsv4-s.akamaihd.net,
+g33b4vqccuqvax5btwhq-pfp8ei-5c0ea4329-clientnsv4-s.akamaihd.net,
+g33b4vqccuqvax5btytq-pupet4-0083df35c-clientnsv4-s.akamaihd.net,
+g33b4vqccuqvax5btzpq-pr1f2f-01d5fb765-clientnsv4-s.akamaihd.net,
+g33b4vqccuqvax5bvzcq-phk9tj-828709858-clientnsv4-s.akamaihd.net,
+g33b4vqccuqvax5bw2bq-py1x2v-a7310f6e5-clientnsv4-s.akamaihd.net,
+g33b4vqccuqvax5bx3za-pge3ox-a91a32353-clientnsv4-s.akamaihd.net,
+g33b4vqccuqwcx5bu4na-pqdvvi-3aaa5c611-clientnsv4-s.akamaihd.net,
+g33b4vqccuqwcx5bwzaq-pvw5k6-d3e3dcd05-clientnsv4-s.akamaihd.net,
+g33b4vqccuqwcx5bx22q-p8kovq-e038e0c0c-clientnsv4-s.akamaihd.net,
+g33b4vqccuqxax5bstpa-p4rsfx-bd0382a30-clientnsv4-s.akamaihd.net,
+g33b4vqccuqxax5btyeq-poz8cc-9955b8a36-clientnsv4-s.akamaihd.net,
+g33b4vqxzp4swx5bu27q-pxv1vf-89db7a111-clientnsv4-s.akamaihd.net,
+g33b4vqxzp4swx5bv25q-pt8447-731cc407d-clientnsv4-s.akamaihd.net,
+g33b4vsy3wdkax5bswnq-plqmrf-ff7289811-clientnsv4-s.akamaihd.net,
+g33b4vsy3wdkex5bsuoq-p56ka1-9bf23f300-clientnsv4-s.akamaihd.net,
+gzfsozyccuqwcx5bs3dq-p2yzo8-69eb1f4d7-clientnsv4-s.akamaihd.net,
+gzfsozyccuqwcx5bs4qa-p299q7-a9521f4ee-clientnsv4-s.akamaihd.net,
+gzfsozyccuqwcx5bsyyq-pv69oz-aed1b09c6-clientnsv4-s.akamaihd.net,
+gzfsozyccuqwcx5bwfuq-pw4gfb-c2c42381f-clientnsv4-s.akamaihd.net,
+gzfstpqccuqvax5bssvq-p0x8hm-7a3d7367f-clientnsv4-s.akamaihd.net,
+gzfstpqccuqvax5bsxsq-p2oajs-b2e67f00b-clientnsv4-s.akamaihd.net,
+gzfstpqccuqvax5bsy3a-pfuzjd-60f8ba5de-clientnsv4-s.akamaihd.net,
+gzfstpqccuqvax5bu2ia-p6uwyn-30e7a92df-clientnsv4-s.akamaihd.net,
+gzfstpqccuqwcx5bswqa-pplxq4-ee58ceb89-clientnsv4-s.akamaihd.net,
+gzfstpqccuqwcx5bu3mq-p6qff7-f4c4075e7-clientnsv4-s.akamaihd.net,
+gzfstpqccuqwcx5buz4q-pbk4m8-d20c90e54-clientnsv4-s.akamaihd.net,
+gzfstpqccuqxax5bt4ka-p3fi1s-1fcad7cd5-clientnsv4-s.akamaihd.net,
+gzfstpqxzp4swx5bsttq-p683qt-2c3f6e21e-clientnsv4-s.akamaihd.net,
+gzfstpqxzp4swx5bsu5q-pyioyl-3b5424f35-clientnsv4-s.akamaihd.net,
+gzfstpqxzp4swx5bsvra-ps8whv-800c4ca06-clientnsv4-s.akamaihd.net,
+gzfstpqxzp4swx5bt2ka-p3owfu-9bef421db-clientnsv4-s.akamaihd.net,
+gzfstpqxzp4swx5btynq-p80cg4-5fbda6ae3-clientnsv4-s.akamaihd.net,
+gzfstpsy3wdkax5btvta-pc4hb3-c24fbde0b-clientnsv4-s.akamaihd.net,
+i03f9f400-ds-aksb-a.akamaihd.net, i03fa4400-ds-aksb-a.akamaihd.net,
+i03faac00-ds-aksb-a.akamaihd.net, i03fae300-ds-aksb-a.akamaihd.net,
+i03fb4f00-ds-aksb-a.akamaihd.net, i22f29600-ds-aksb-a.akamaihd.net,
+i22f44600-ds-aksb-a.akamaihd.net, i22f47c00-ds-aksb-a.akamaihd.net,
+i22f4a100-ds-aksb-a.akamaihd.net, i22f55c00-ds-aksb-a.akamaihd.net,
+i22f5ca00-ds-aksb-a.akamaihd.net, i22f6b100-ds-aksb-a.akamaihd.net,
+i22f7bf00-ds-aksb-a.akamaihd.net, i22fdb800-ds-aksb-a.akamaihd.net,
+i22fdd700-ds-aksb-a.akamaihd.net, i3430c200-ds-aksb-a.akamaihd.net,
+i34d04400-ds-aksb-a.akamaihd.net, i34d71700-ds-aksb-a.akamaihd.net,
+i36486200-ds-aksb-a.akamaihd.net, i364b2700-ds-aksb-a.akamaihd.net,
+i369aba00-ds-aksb-a.akamaihd.net, i36d85900-ds-aksb-a.akamaihd.net,
+i36d86800-ds-aksb-a.akamaihd.net, i36e56b00-ds-aksb-a.akamaihd.net,
+i36f61e00-ds-aksb-a.akamaihd.net, i36f6c000-ds-aksb-a.akamaihd.net,
+i3f23f800-ds-aksb-a.akamaihd.net, ib0225600-ds-aksb-a.akamaihd.net,
+s.go-mpulse.net, trial-eum-clientnsv4-s.akamaihd.net,
+trial-eum-clienttons-s.akamaihd.net,
+warfnl2y3wdkex5buhra-pvnsej-42dd2535b-clientnsv4-s.akamaihd.net,
+warfnlyccuqvax5bvjta-pivu9l-324052216-clientnsv4-s.akamaihd.net,
+warfnlyccuqxax5bwjua-pt5xj8-63e5f59c4-clientnsv4-s.akamaihd.net,
+warfnlyxzp4swx5bugca-p9ihiy-2a56daf9f-clientnsv4-s.akamaihd.net,
+warfnlyxzp4swx5buiqq-p5eemy-20706e9d7-clientnsv4-s.akamaihd.net To provide the
+optimized image quality and enhance page loading speed
+To provide the optimized image quality and enhance page loading speed
+Amazon
+(Cloud Front)
+Amazon (Cloud Front) d15mv1adrb1s6e.cloudfront.net,
+d1vp9jkpfdwr15.cloudfront.net, d25jv1xpupcva6.cloudfront.net,
+d2cmqkwo8rxlr9.cloudfront.net, d2m3ikv8mpgiy8.cloudfront.net,
+d334tbn9icrqnt.cloudfront.net, d38nbbai6u794i.cloudfront.net,
+d3dvvd5arbl3b4.cloudfront.net, d3nkfb7815bs43.cloudfront.net,
+d9qz450atvita.cloudfront.net To speed up the delivery of your static content
+(e.g., images, style sheets, JavaScript, etc.) to viewers across the globe
+To speed up the delivery of your static content (e.g., images, style sheets,
+JavaScript, etc.) to viewers across the globe
+Brightcove
+admin.brightcove.com, metrics.brightcove.com, players.brightcove.net,
+sadmin.brightcove.com, vjs.zencdn.net
+To support video streaming
+Advertising
+Cookies
+These cookies gather information about your browser habits. They remember that you've visited our
+website and share this information with other organizations such as advertisers.
+View More
+advertising cookies
+Cookie
+Domain
+Facebook
+atdmt.com, connect.facebook.net, cx.atdmt.com, facebook.com, www.facebook.com
+Google Advertising
+ad.doubleclick.net, adservice.google.com, adservice.google.ie,
+cm.g.doubleclick.net, doubleclick.net, googleads.g.doubleclick.net,
+pubads.g.doubleclick.net, static.doubleclick.net, stats.g.doubleclick.net,
+www.googleadservices.com
+Google
+s.ytimg.com, www.youtube.com, youtube.com
+Linkedin
+ads.linkedin.com, linkedin.com, px.ads.linkedin.com, www.linkedin.com
+닫기
+Agree and Proceed
+Manage your cookies
+Cookies are small files that store information on your computer, TV, mobile phone, or other device.
+They
+enable the entity that put the cookie on your device to recognize you across different websites,
+services,
+devices, and/or browsing sessions.
+I accept to
+allow
+all
+cookies
+Save

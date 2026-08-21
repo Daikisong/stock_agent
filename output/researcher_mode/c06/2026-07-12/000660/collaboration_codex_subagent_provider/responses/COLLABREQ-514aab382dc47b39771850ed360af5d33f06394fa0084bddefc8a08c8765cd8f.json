@@ -1,0 +1,390 @@
+{
+  "output_schema_hash": "5a5b9b0266462c7cd0c0a378900448786d8f59371b2e4159b16dcc38f62d33bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e379b880d5c418870a907a2a",
+        "rationale": "3,665줄 전체를 다시 검토했다. CXMT의 HBM 증설·2027 HBM 중심 CAPA라는 경쟁 반증 2건과 중국발 가격전쟁 완화, DRAM 점유율, 재무제약, 한국 원가우위, 고부가 CAPA 전환, HBM4 생태계 장벽이라는 서로 다른 valuation 위험·완화 근거 6건을 현재 의미 버전으로 재검증했다. 목표주가·단독 valuation band, 중국 일반 산업 설명, 반복 본문은 제외하고 중국 증설을 SK하이닉스 확정 손실로 확대하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-e379b880d5c418870a907a2a",
+        "economic_mechanism": "CXMT가 IPO와 중국 대기금 지원을 결합해 HBM 전용 후공정 팹을 가동하고 2026년 양산 물량의 상당 비중을 HBM3에 배정한다는 분석은 SK하이닉스의 HBM 경쟁 우위와 장기 valuation duration에 대한 직접적인 경쟁 반증이다. 다만 이는 보고서의 채널체크 기반 계획·평가이며 실제 생산량이나 고객 계약으로 확대하지 않는다.",
+        "exact_quote": "첫째, 메모리 분야에서는 CXMT 의 HBM3 및 HBM3E 양산 체제 구축에 집중한다. CXMT 는\n2026년 상반기 IPO 를 통해 조달할 자금에 더해, 대기금 3기의 지원을 받아 상하이에 HBM\n전용 후공정 팹을 본격 가동할 계획인 것으로 파악된다. 이는 삼성과 SK 하이닉스 등 한국\n기업과의 기술 격차를 3~4년 내로 좁히겠다는 의지이며, 화웨이의 AI 가속기인 'Ascend'\n시리즈에 국산 HBM을 탑재하기 위한 필수 전략이다. 이미 CXMT는 2026년 양산 물량의 상당\n비중을 HBM3 라인에 할당하며 공격적인 행보를 보이고 있는 것으로 파악된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "국가지원을 받은 HBM 경쟁 공급의 확대 속도는 SK하이닉스 HBM의 경쟁 지속기간과 재평가 배수의 유지 가능성을 직접 반증한다.",
+        "mechanism_scope_id": "000660:MEMORY:CXMT_STATE_BACKED_HBM3_HBM3E_EXPANSION",
+        "normalized_object": "CXMT의 국가지원 HBM3·HBM3E 생산능력 확대와 한국 추격 계획",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026 production plan and 3-4 year technology-gap objective reported 2026-03-29",
+        "predicate": "CXMT는 국가지원으로 HBM3·HBM3E 양산 체제와 상하이 HBM 전용 후공정 팹을 구축해 한국과의 기술격차를 3~4년 내 좁히고 2026년 양산 물량의 상당 비중을 HBM3에 배정할 계획인 것으로 분석됐다",
+        "predicate_family": "COMPETITOR_HBM_CAPACITY_EXPANSION",
+        "primitive_tags": [
+          "HBM",
+          "CAPACITY",
+          "COMPETITOR"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "CXMT_STATE_BACKED_HBM_EXPANSION",
+        "question_family_tags": [
+          "CXMT",
+          "HBM3_HBM3E",
+          "COMPETITIVE_SUPPLY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "CXMT의 국가지원 HBM3·HBM3E 양산 확대",
+        "subject_id": "COMPETITOR:CXMT:HBM3_HBM3E_EXPANSION",
+        "unit": "qualitative capacity plan, years and production-allocation share description",
+        "value": "Shanghai dedicated HBM back-end fab; 3-4 year technology-gap objective; significant share of 2026 production allocated to HBM3"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.85,
+        "current_lifecycle": "OPEN",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-e379b880d5c418870a907a2a",
+        "economic_mechanism": "보고서는 중국 정부의 메모리 정책이 보조금 기반 양적 팽창에서 수익성 기반 자급률 제고로 이동했고, 글로벌 단가 인하보다 중국 AI 인프라용 안정 물량을 우선한다고 평가한다. 이는 중국 IPO가 곧바로 글로벌 가격전쟁으로 이어진다는 위험을 완화하지만 채널체크 기반 전망이라는 한계를 유지한다.",
+        "exact_quote": "특히, 일각에서 우려하는 ‘제2의 치킨게임’ 가능성은 현저하게 낮다는 판단이다. 현재 중국\n정부의 기조는 보조금을 통한 양적 팽창에서 '수익성 기반의 자급률 제고'로 선회한다. 무분별한\n반도체 팹 증설로 글로벌 단가를 낮추기보다는, Huawei 등 자국 AI 인프라(중국 내수 Cloud\nService Providers 및 통신업체)에 공급할 '안정적인 물량'을 확보하는 것이 최우선 과제다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "중국발 가격전쟁의 가능성은 메모리 이익 변동성과 SK하이닉스에 적용할 duration multiple의 핵심 하방 위험이다.",
+        "mechanism_scope_id": "000660:MEMORY:CHINA_DOMESTIC_SELF_SUFFICIENCY_OVER_PRICE_WAR",
+        "normalized_object": "중국 메모리 증설의 내수 자급 목적과 글로벌 가격전쟁 위험 완화",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 IPO and medium-term expansion policy reported 2026-03-29",
+        "predicate": "중국 메모리 증설은 글로벌 단가 인하보다 수익성 기반 자급률 제고와 자국 AI 인프라용 안정 물량 확보를 우선해 제2의 치킨게임 가능성이 낮다고 평가됐다",
+        "predicate_family": "COMPETITIVE_OVERSUPPLY_RISK_RESOLUTION",
+        "primitive_tags": [
+          "MEMORY",
+          "OVERSUPPLY_RISK",
+          "SELF_SUFFICIENCY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CHINA_MEMORY_EXPANSION_DISCIPLINE",
+        "question_family_tags": [
+          "CHINA_MEMORY",
+          "PRICE_WAR_RISK",
+          "DOMESTIC_DEMAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "중국 메모리 산업의 수익성 기반 자급률 확대 기조",
+        "subject_id": "INDUSTRY:CHINA_MEMORY:DOMESTIC_SELF_SUFFICIENCY",
+        "unit": "qualitative policy and market-risk assessment",
+        "value": "second memory price war assessed materially unlikely; stable domestic AI-infrastructure supply prioritized"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-e379b880d5c418870a907a2a",
+        "economic_mechanism": "CXMT의 2027년 말 DRAM Capa가 300K 초반에 도달하고 증설 대부분이 HBM3와 차세대 제품 양산에 쓰일 수 있다는 채널체크는 범용 DRAM보다 SK하이닉스의 고부가 HBM 경쟁 영역에 중국 자본이 집중된다는 별도의 경쟁 반증이다.",
+        "exact_quote": "당사 채널 체크에 따르면 2027년말 CXMT 의 DRAM 예상 Capa 는 300K 초반 수준에\n도달하겠지만, 증설되는 Capa의 대부분이 HBM3 및 차세대 제품을 위한 양산 전개에 집중되어,\n글로벌 DRAM 생산 점유율은 2025년대비 오히려 감소할 가능성도 배제할 수 없다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "중국 경쟁사의 증설이 HBM으로 집중되는 정도와 규모는 SK하이닉스의 HBM 경쟁 프리미엄 지속기간을 직접 시험한다.",
+        "mechanism_scope_id": "000660:MEMORY:CXMT_2027_HBM3_CAPACITY_MIX",
+        "normalized_object": "CXMT 2027년 저300K Capa의 HBM3·차세대 제품 중심 배분",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2027 year-end forecast reported 2026-03-29",
+        "predicate": "CXMT의 2027년 말 DRAM Capa는 300K 초반으로 예상되며 증설 Capa 대부분이 HBM3와 차세대 제품 양산에 집중될 것으로 분석됐다",
+        "predicate_family": "COMPETITOR_HBM_CAPACITY_MIX",
+        "primitive_tags": [
+          "HBM3",
+          "CAPACITY",
+          "COMPETITOR"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "CXMT_2027_HBM_CAPACITY_MIX",
+        "question_family_tags": [
+          "CXMT",
+          "2027_CAPACITY",
+          "HBM_MIX"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "CXMT의 2027년 예상 DRAM Capa와 HBM3 중심 증설 믹스",
+        "subject_id": "COMPETITOR:CXMT:HBM_CAPACITY_MIX:2027",
+        "unit": "thousand wafers per month range and qualitative capacity mix",
+        "value": "low-300K DRAM capacity with most incremental capacity focused on HBM3 and next-generation products"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-e379b880d5c418870a907a2a",
+        "economic_mechanism": "CXMT의 절대 Capa가 늘어도 고부가 제품 전환 때문에 글로벌 DRAM 생산 점유율이 2025년보다 낮아질 수 있다는 분석은 중국 증설이 글로벌 범용 DRAM 가격을 훼손할 것이라는 위험을 완화한다. HBM 경쟁 확대 가능성은 별도의 counterfact로 분리했다.",
+        "exact_quote": "당사 채널 체크에 따르면 2027년말 CXMT 의 DRAM 예상 Capa 는 300K 초반 수준에\n도달하겠지만, 증설되는 Capa의 대부분이 HBM3 및 차세대 제품을 위한 양산 전개에 집중되어,\n글로벌 DRAM 생산 점유율은 2025년대비 오히려 감소할 가능성도 배제할 수 없다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "경쟁사의 글로벌 DRAM 점유율 방향은 범용 DRAM의 공급과잉·가격 하락 위험과 메모리 valuation 변동성을 직접 결정한다.",
+        "mechanism_scope_id": "000660:MEMORY:CXMT_2027_GLOBAL_DRAM_SHARE_DECLINE_RISK",
+        "normalized_object": "CXMT 증설에도 2025년 대비 글로벌 DRAM 생산 점유율 감소 가능성",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027 year-end forecast versus 2025 base",
+        "predicate": "CXMT의 글로벌 DRAM 생산 점유율은 2027년 말 Capa 증가에도 2025년보다 오히려 감소할 가능성이 있다고 분석됐다",
+        "predicate_family": "COMPETITOR_DRAM_SHARE_RISK_RESOLUTION",
+        "primitive_tags": [
+          "DRAM",
+          "MARKET_SHARE",
+          "RISK_RESOLUTION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "CXMT_GLOBAL_DRAM_SHARE_RISK",
+        "question_family_tags": [
+          "CXMT",
+          "GLOBAL_DRAM_SHARE",
+          "OVERSUPPLY_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "CXMT의 글로벌 DRAM 생산 점유율 전망",
+        "subject_id": "COMPETITOR:CXMT:GLOBAL_DRAM_SHARE:2027",
+        "unit": "qualitative share direction",
+        "value": "global DRAM production share may decline versus 2025 despite low-300K capacity forecast"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.89,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e379b880d5c418870a907a2a",
+        "economic_mechanism": "2026년 상반기 SK하이닉스와 삼성전자의 HBM4·서버 DDR5 전환이 중국 업체에 저마진 내수 범용 시장의 여백을 만들고 양측의 직접 가격 충돌을 줄인다는 분석이다. 이는 SK하이닉스가 저마진 경쟁에서 벗어나 수익성 중심 포트폴리오를 유지할 수 있다는 valuation-duration 근거다.",
+        "exact_quote": "2026년 상반기, 삼성전자와 SK 하이닉스가 HBM4 및 서버용 DDR5 등 초고부가 라인으로\n캐파를 전환함에 따라, 상대적으로 수익성이 낮은 중국 내수 소비자향 범용(Conventional)\n메모리 시장에 자연스러운 ‘전략적 여백’ 이 발생하고 있는 것으로 파악된다. 중국 업체들의\n증설 물량은 이 유휴 시장을 흡수하는 수준에 머물고 있으며, 이는 한국 기업들이 중장기적\n관점에서 소비자향 저마진 경쟁 리스크에서 벗어나 수익성 중심의 포트폴리오 재편을 완성하는\n계기가 될 것이다. 결과적으로 중장기적 관점에서 한국과 중국 기업 간의 직접적인 가격 충돌\n구간은 오히려 축소되며, ‘시장의 구조적 이원화’가 가속화될 전망이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고부가 제품 전환이 저마진 가격경쟁을 실제로 피하게 하는지는 메모리 ROE 안정성과 구조적 re-rating의 직접 근거다.",
+        "mechanism_scope_id": "000660:MEMORY:HIGH_VALUE_CAPACITY_SHIFT_AND_MARKET_BIFURCATION",
+        "normalized_object": "SK하이닉스 고부가 메모리 Capa 전환에 따른 저마진 경쟁 회피와 시장 이원화",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "shift observed in 1H2026 with medium-term portfolio outlook",
+        "predicate": "SK하이닉스와 삼성전자의 HBM4·서버 DDR5 Capa 전환은 중국 업체가 저마진 내수 범용 시장의 여백을 흡수하게 해 양국 기업 간 직접 가격 충돌을 줄이고 수익성 중심 포트폴리오 재편을 지원할 것으로 분석됐다",
+        "predicate_family": "HIGH_VALUE_CAPACITY_SHIFT_PRICE_RISK_REDUCTION",
+        "primitive_tags": [
+          "HBM4",
+          "SERVER_DDR5",
+          "PROFITABILITY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "KOREA_CHINA_MEMORY_MARKET_BIFURCATION",
+        "question_family_tags": [
+          "CAPACITY_MIX",
+          "MARKET_BIFURCATION",
+          "PRICE_COMPETITION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스·삼성전자의 고부가 메모리 Capa 전환과 중국과의 가격 충돌 축소",
+        "subject_id": "000660:HIGH_VALUE_CAPACITY_SHIFT:CHINA_PRICE_COLLISION",
+        "unit": "qualitative capacity-mix and price-competition effect",
+        "value": "high-value capacity shift creates low-margin domestic-China market space and reduces direct Korea-China price collision"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-e379b880d5c418870a907a2a",
+        "economic_mechanism": "CXMT가 대규모 투자와 매출을 웃도는 R&D로 적자이고 연간 100억 위안 이상의 감가상각 부담을 지며, 흑자전환도 ASP·출하 증가를 전제로 한다는 표는 중국 경쟁사의 무제한 저가 증설 능력을 제약하는 재무 반증이다.",
+        "exact_quote": "재무 현황 및 실적 전망\n현황 현재 CXMT는 대규모 시설 투자와 R&D 비용 지출로 인해 적자 상태\n누적 결손금 2025년 6월 말 기준 약 408.6억 위안 (약 7.7조 원)\n적자 원인 고정자산 감가상각비 부담(연간 100억 위안 이상) 및 매출액을 상회하는 R&D 투자\n실적 전망 회사는 2026년 또는 2027년 흑자 전환 예상 (ASP 및 출하량 증가 전제)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "경쟁사의 손실 흡수력과 손익분기 조건은 글로벌 DRAM 가격전쟁의 지속 가능성과 SK하이닉스 valuation 하방을 직접 제한한다.",
+        "mechanism_scope_id": "000660:MEMORY:CXMT_FINANCIAL_CONSTRAINT_AND_CONDITIONAL_BREAKEVEN",
+        "normalized_object": "CXMT의 재무 부담과 조건부 흑자전환이 제한하는 경쟁 증설 지속력",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "deficit as of 2025-06-30; current loss status and FY2026/FY2027 conditional breakeven outlook reported 2026-03-29",
+        "predicate": "CXMT는 대규모 투자와 R&D로 적자이며 408.6억 위안의 누적 결손, 연 100억 위안 이상의 감가상각과 매출 초과 R&D를 부담하고 2026년 또는 2027년 흑자전환도 ASP·출하 증가를 전제로 한다",
+        "predicate_family": "COMPETITOR_FINANCIAL_EXPANSION_CONSTRAINT",
+        "primitive_tags": [
+          "DRAM",
+          "DEPRECIATION",
+          "R_AND_D"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "CXMT_FINANCIAL_CAPACITY_CONSTRAINT",
+        "question_family_tags": [
+          "CXMT",
+          "FINANCIAL_CONSTRAINT",
+          "CONDITIONAL_BREAKEVEN"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "CXMT의 적자·감가상각·R&D 부담과 조건부 흑자전환 전망",
+        "subject_id": "COMPETITOR:CXMT:FINANCIAL_CONSTRAINT",
+        "unit": "CNY billion and qualitative profitability conditions",
+        "value": "loss-making; accumulated deficit CNY 40.86bn; annual depreciation above CNY 10bn; R&D above revenue; breakeven conditional on ASP and shipments"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.87,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e379b880d5c418870a907a2a",
+        "economic_mechanism": "보고서는 중국의 DUV 우회가 추가 공정·마스크 비용을 수반하는 반면 한국 메모리 기업은 EUV 숙련도로 공정을 줄여 중국 대비 웨이퍼당 가공 원가가 최소 20% 우위라고 평가한다. 이 제조원가 격차는 중국 추격 국면에서도 SK하이닉스의 수익성과 ROE 방어를 지지한다.",
+        "exact_quote": "한국 메모리 산업의 수익성 방어 전략은 단순한 '미세화 경쟁'을 넘어, 압도적인 제조 효율성과\n'시스템 반도체 모델'로의 진화에 방점을 찍고 있다. 앞서 언급했듯 중국이 커비\n매뉴팩처링(Curvy Manufacturing) 등 연산 리소그래피로 DUV 장비의 한계를 우회하고 있으나,\n이는 공정 스텝의 복잡화와 마스크 비용 증가라는 경제적 대가를 수반한다. 반면, EUV 숙련도를\n확보한 한국 기업들은 공정 단계를 간소화해 '시간당 생산성(Throughput)'을 극대화하고, 이는\n중국 대비 웨이퍼당 가공 원가에서 최소 20% 이상의 우위를 점하는 강력한 경제적 해자로\n작용하고 있다.\n특히 차세대 메모리 경쟁의 승부처인 HBM4는 메모리의 개념을 '시스템 반도체'로 재정의하고\n있다는 점을 주목한다. 베이스 다이(Base Die)가 파운드리 선단 공정으로 전환됨에 따라, 설계\n단계부터 '파운드리-팹리스-메모리 제조사' 간의 유기적인 IP(설계 자산) 공유와 공정 최적화가\n필수적이다. 이는 SK 하이닉스-TSMC-NVIDIA 로 이어지는 '전략적 연합군' 모델이든,\n삼성전자가 추진하는 파운드리-메모리 'Turn-key 솔루션' 모델이든 상관없이, 결국 선단\n파운드리 공정에 대한 접근권과 고도의 로직 IP 설계 역량이 승패를 가르는 핵심 변수가 됨을\n의미한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "중국 대비 정량 원가 우위는 SK하이닉스의 장기 마진·ROE 방어와 peer 대비 프리미엄 배수의 직접 경제 근거다.",
+        "mechanism_scope_id": "000660:MEMORY:EUV_WAFER_PROCESSING_COST_MOAT_VS_CHINA",
+        "normalized_object": "한국 메모리 기업의 EUV 숙련도 기반 중국 대비 웨이퍼 가공원가 우위",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current manufacturing comparison reported 2026-03-29",
+        "predicate": "EUV 숙련도를 확보한 한국 메모리 기업은 공정 단순화와 처리량 향상으로 중국 대비 웨이퍼당 가공 원가에서 최소 20% 우위를 가진다고 평가됐다",
+        "predicate_family": "MEMORY_MANUFACTURING_COST_MOAT",
+        "primitive_tags": [
+          "MEMORY",
+          "COST_ADVANTAGE",
+          "THROUGHPUT"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "KOREA_MEMORY_EUV_COST_MOAT",
+        "question_family_tags": [
+          "EUV",
+          "WAFER_COST",
+          "COMPETITIVE_MOAT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스를 포함한 한국 메모리 기업의 EUV 기반 웨이퍼 가공 원가 우위",
+        "subject_id": "000660:KOREA_MEMORY:EUV_WAFER_COST_ADVANTAGE",
+        "unit": "% minimum cost advantage",
+        "value": "at least 20% wafer-processing cost advantage versus China"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e379b880d5c418870a907a2a",
+        "economic_mechanism": "HBM4가 선단 파운드리 접근권과 로직 IP 협업을 필요로 하고, 중국 업체는 규제·현지 파운드리 90% 이상 가동률·공정 성숙도 한계로 자본만으로 이를 넘기 어렵다는 채널체크는 SK하이닉스-TSMC-NVIDIA 생태계의 경쟁 지속성을 지지한다. 이를 공급계약이나 고객 구매의무로 확대하지 않는다.",
+        "exact_quote": "특히 차세대 메모리 경쟁의 승부처인 HBM4는 메모리의 개념을 '시스템 반도체'로 재정의하고\n있다는 점을 주목한다. 베이스 다이(Base Die)가 파운드리 선단 공정으로 전환됨에 따라, 설계\n단계부터 '파운드리-팹리스-메모리 제조사' 간의 유기적인 IP(설계 자산) 공유와 공정 최적화가\n필수적이다. 이는 SK 하이닉스-TSMC-NVIDIA 로 이어지는 '전략적 연합군' 모델이든,\n삼성전자가 추진하는 파운드리-메모리 'Turn-key 솔루션' 모델이든 상관없이, 결국 선단\n파운드리 공정에 대한 접근권과 고도의 로직 IP 설계 역량이 승패를 가르는 핵심 변수가 됨을\n의미한다.\n미국의 규제로 인해 7nm 이하 선단 공정 활용과 핵심 로직 IP 도입이 제한된 중국 업체들에게,\nHBM4는 단순히 자본력만으로 극복하기 어려운 '공정 및 생태계의 복합 장벽'이 된다. 특히\n당사 채널 체크에 따르면, 중국 내수 AI GPU 및 ASIC 수요는 폭발적으로 증가하고 있으나\n이를 뒷받침할 SMIC, Hua Hong 등의 현지 파운드리의 선단공정 가동률은 90%이상인 것으로\n파악되며, 선단 공정의 성숙도 면에서도 중단기적 한계가 뚜렷하다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "중국 경쟁사의 HBM4 진입 속도를 제한하는 복합 장벽은 SK하이닉스 기술 프리미엄의 지속기간과 구조적 valuation re-rating을 직접 지지한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_CHINA_PROCESS_AND_ECOSYSTEM_BARRIER",
+        "normalized_object": "중국 업체의 HBM4 진입을 제한하는 선단공정·로직IP·파운드리 Capa 장벽",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current HBM4 ecosystem and medium-term constraint reported 2026-03-29",
+        "predicate": "선단 파운드리와 로직 IP가 필수인 HBM4는 규제를 받는 중국 업체가 자본만으로 넘기 어려운 복합 장벽이며 중국 현지 선단 파운드리 가동률도 90% 이상이고 공정 성숙도에 중단기 한계가 있다고 분석됐다",
+        "predicate_family": "HBM4_COMPETITIVE_ECOSYSTEM_BARRIER",
+        "primitive_tags": [
+          "HBM4",
+          "LOGIC_IP",
+          "ECOSYSTEM_BARRIER"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_CHINA_PROCESS_ECOSYSTEM_BARRIER",
+        "question_family_tags": [
+          "HBM4",
+          "FOUNDRY_ACCESS",
+          "CHINA_COMPETITION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "HBM4의 중국 공정·생태계 진입 장벽",
+        "subject_id": "000660:HBM4:CHINA_PROCESS_ECOSYSTEM_BARRIER",
+        "unit": "% utilization threshold and qualitative technology barrier",
+        "value": "advanced-foundry and logic-IP access required; local China advanced-foundry utilization above 90%; medium-term maturity constraint"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "5df35f4ca530785e8c7580a71cc6dfd1db92cca305e6995844c8d6fd1e39ae16",
+  "production_score_authority": false,
+  "prompt_hash": "75c2fbb50b919a648680565e1a6268c852c9c2405d6022723423381891eb3a85",
+  "provenance": {
+    "agent_id": "root-phase101-c06-facts",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_facts",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-514aab382dc47b39771850ed360af5d33f06394fa0084bddefc8a08c8765cd8f",
+  "response_id": "COLLABRESP-265584f16dd56b8100ece9555e4b0682f999a0d7ec365ba96de068e07f192441",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

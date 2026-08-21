@@ -1,0 +1,229 @@
+{
+  "output_schema_hash": "65d81e583b3b77a4ecf2abe934747d40526049140293f6ad5e3486fafc4d4bbe",
+  "payload": {
+    "confidence": 0.79,
+    "counter_case": "계약 세부조건과 고객별 qualification이 공개되지 않았고 고객 출하 지연·초기 수익성 저하 가능성이 있어 완판을 반복 이익·현금 확정으로 볼 수 없다.",
+    "historical_anchor_ids": [
+      "CANCH-185f96ac06f45b8c95582b98",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "nearest_counter_anchor_ids": [
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "nearest_positive_anchor_ids": [
+      "CANCH-185f96ac06f45b8c95582b98"
+    ],
+    "positive_case": "발행사 수요·구매주문·매출 성장 안내와 계약 완료·완판이 서로 다른 단계에서 수요의 매출 전환 가능성을 지지한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 39,
+        "reason": "현재 prompt에서 원문 의미와 component 귀속을 독립 재검토해 직접 근거 또는 직접 counter로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 54,
+        "reason": "현재 prompt에서 원문 의미와 component 귀속을 독립 재검토해 직접 근거 또는 직접 counter로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 173,
+        "reason": "고객 공식 기술 협력·제품 소개는 qualification 통과·구매계약·배정·매출 전환을 직접 입증하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 217,
+        "reason": "현재 prompt에서 원문 의미와 component 귀속을 독립 재검토해 직접 근거 또는 직접 counter로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 230,
+        "reason": "일반 LTA 가격 반영 지연 분석은 특정 계약의 실제 가격조정 조건과 연결되지 않는다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 234,
+        "reason": "보도된 LTA 비중 30%는 구매의무·기간·취소 조건이 없어 더 직접적인 계약 완료 근거와 중복 선택하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 247,
+        "reason": "현재 prompt에서 원문 의미와 component 귀속을 독립 재검토해 직접 근거 또는 직접 counter로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 256,
+        "reason": "현재 prompt에서 원문 의미와 component 귀속을 독립 재검토해 직접 근거 또는 직접 counter로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 294,
+        "reason": "보도된 고객 평가·배분 통제는 공식 고객별 배정 물량이나 현재 매출 연결을 입증하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 369,
+        "reason": "현재 prompt에서 원문 의미와 component 귀속을 독립 재검토해 직접 근거 또는 직접 counter로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 447,
+        "reason": "현재 prompt에서 원문 의미와 component 귀속을 독립 재검토해 직접 근거 또는 직접 counter로 유지한다."
+      }
+    ],
+    "proposed_score_lower": 10.6,
+    "proposed_score_mid": 12.3,
+    "proposed_score_upper": 14.4,
+    "research_complete": true,
+    "researcher_summary": "계획 HBM CAPA의 수요·구매주문, 일부 메모리 중장기 계약 완료, HBM4 완판과 공식 HBM 매출 성장 안내가 가시성을 지지한다. 반면 고객별 qualification·배정·가격·취소 조건은 비공개이고 고객 일정 지연과 초기 수익성 하방이 남는다. 미회수 NH 1100084 원문과 NO_RESULT는 근거로 쓰지 않았다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "2026년 HBM 계획물량 수요 확보는 판매 가시성을 높이지만 확정 구매수량·취소 조건까지 뜻하지 않는다.",
+        "fact_row_index": 39,
+        "source_economic_mechanism": "2026년 HBM bit 생산 계획물량에 대해 이미 상당한 고객수요를 확보해 공급 확대 계획의 판매 가시성을 뒷받침한다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자가 2026년 HBM 생산 계획물량에 대해 상당한 고객수요를 이미 확보했다고 밝혔다",
+        "source_value_json": "\"significant customer demand secured for planned volumes\""
+      },
+      {
+        "component_interpretation": "다년계약의 상당한 구속력은 단기 문의보다 강하지만 비공개 의무·위약 조건을 보완하지 못한다.",
+        "fact_row_index": 54,
+        "source_economic_mechanism": "회사가 다년계약을 상당한 구속력이 있는 계약으로 설명한 점은 단순 수요 문의보다 높은 사업 안정성과 가시성을 시사하지만 구체적 구매의무·위약조건은 공개되지 않았다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 다년계약이 상당한 구속력을 갖춰 사업 안정성과 가시성을 높인다고 설명했다",
+        "source_value_json": "\"significant binding force supporting business stability and visibility\""
+      },
+      {
+        "component_interpretation": "실제 HBM bit 출하 증가는 과거 수요의 출하 전환 사례이나 2026년 계약 이행 보장은 아니다.",
+        "fact_row_index": 85,
+        "source_economic_mechanism": "HBM bit 출하가 2025년 3분기에 전분기 대비 mid-80% 증가해 HBM 수요가 실제 공급·매출 기반으로 전환된 규모를 보여준다.",
+        "source_period_json": "\"2025-Q3 vs 2025-Q2\"",
+        "source_predicate": "삼성전자 HBM bit 출하량이 2025년 3분기에 전분기 대비 mid-80% 증가했다",
+        "source_value_json": "\"mid-80 increase\""
+      },
+      {
+        "component_interpretation": "HBM qualification NDA 비공개는 명명 고객별 승인·배정의 외부 검증을 제한한다.",
+        "fact_row_index": 180,
+        "source_economic_mechanism": "고객 NDA 때문에 HBM qualification 상태를 추가 공개할 수 없어 고객 승인 여부를 외부에서 직접 확인하는 데 제한이 남았다.",
+        "source_period_json": "\"2025-Q3\"",
+        "source_predicate": "삼성전자는 고객 NDA로 인해 HBM qualification 상태를 추가로 설명할 수 없다고 밝혔다",
+        "source_value_json": "\"qualification details not commentable due to client NDA\""
+      },
+      {
+        "component_interpretation": "다년계약 물량·가격·해지 조건의 NDA 비공개를 가시성 상단의 직접 제약으로 반영한다.",
+        "fact_row_index": 217,
+        "source_economic_mechanism": "고객 NDA로 계약 세부내용을 공개할 수 없다는 명시적 한계는 계약 상대방·물량·가격·해지조건을 외부에서 검증할 수 없게 한다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 고객사 NDA 때문에 메모리 다년계약의 구체적 내용을 공개할 수 없다고 밝혔다",
+        "source_value_json": "\"specific contract terms undisclosed due to customer NDA\""
+      },
+      {
+        "component_interpretation": "일부 고객과 중장기 메모리 계약 완료는 협의보다 강하지만 이행 조건은 남아 있다.",
+        "fact_row_index": 247,
+        "source_economic_mechanism": "AI 미래 수요를 바탕으로 일부 고객과 중장기 물량 계약을 완료했다는 회사 측 설명은 협의 단계보다 진전된 고객 공급 가시성을 제공한다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 중장기 메모리 물량 확보를 요청한 일부 고객사와 계약을 완료했다고 밝혔다",
+        "source_value_json": "\"contracts completed with some customers\""
+      },
+      {
+        "component_interpretation": "HBM4 생산여력 완판은 계획 CAPA의 수요 소진이지 매출 인식·현금 회수 확정은 아니다.",
+        "fact_row_index": 256,
+        "source_economic_mechanism": "HBM4 생산여력이 완판됐다는 회사 측 설명은 양산·출하를 넘어 현재 계획 생산능력이 고객 수요로 소진된 상태를 나타낸다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 HBM4 생산 여력이 완판된 상태라고 밝혔다",
+        "source_value_json": "\"production capacity sold out\""
+      },
+      {
+        "component_interpretation": "HBM4 초기 수익성 하방 추정은 매출 증가가 같은 비율의 이익으로 연결되지 않을 위험이다.",
+        "fact_row_index": 279,
+        "source_economic_mechanism": "HBM4 초기 수익성이 이전 세대보다 낮을 수 있어 물량 확대가 즉시 같은 비율의 이익 확대로 이어지지 않을 위험이 있다.",
+        "source_period_json": "\"2026-H2E\"",
+        "source_predicate": "IBK투자증권은 HBM4 초기 수익성이 HBM3E보다 낮을 것으로 추정했다",
+        "source_value_json": "\"HBM3E 대비 낮은 초기 수익성 추정\""
+      },
+      {
+        "component_interpretation": "준비된 2026년 HBM CAPA에 구매주문 확보는 단순 수요 문의보다 강한 주문 가시성이다.",
+        "fact_row_index": 369,
+        "source_economic_mechanism": "준비한 HBM 생산능력에 고객 구매주문이 이미 확보돼 2026년 HBM 매출 전망이 단순 수요 문의보다 강한 주문 기반을 가진다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자가 준비한 2026년 HBM 생산능력에 대해 고객사 구매주문을 이미 확보했다고 설명했다",
+        "source_value_json": "\"customer purchase orders already secured for prepared capacity\""
+      },
+      {
+        "component_interpretation": "공식 2026년 HBM 매출 3배 초과 성장 안내는 연간 매출 전환 범위를 제시하는 예측정보다.",
+        "fact_row_index": 418,
+        "source_economic_mechanism": "삼성전자가 공식 실적 컨퍼런스콜에서 2026년 HBM 매출이 전년 대비 3배를 초과할 것으로 안내한 것은 HBM 수요와 출하 확대가 연간 매출 성장으로 전환될 최소 규모를 제시한다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자는 2026년 HBM 매출이 전년 대비 3배를 초과해 증가할 것으로 전망했다",
+        "source_value_json": "3"
+      },
+      {
+        "component_interpretation": "고객 제품 출하 지연에 따른 HBM4 기여 축소는 고객 일정 의존 하방을 보여준다.",
+        "fact_row_index": 447,
+        "source_economic_mechanism": "고객사 제품 출하 지연으로 삼성전자의 2026년 HBM4 실적 기여가 당초 예상보다 축소됐다는 분석은 HBM4 생산·출하가 고객 최종제품 일정에 따라 같은 해 이익으로 전환되지 못할 수 있는 실행 counter다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "고객사 제품 출하 지연으로 삼성전자의 2026년 HBM4 실적 기여도가 당초 예상보다 축소됐다는 분석이 나왔다",
+        "source_value_json": "\"2026 contribution reduced versus prior expectation\""
+      },
+      {
+        "component_interpretation": "증설 후에도 메모리 수요가 공급을 넘는다는 전망은 수요를 보강하되 HBM 단독 물량은 아니다.",
+        "fact_row_index": 453,
+        "source_economic_mechanism": "투자와 증설 계획을 반영한 뒤에도 2026년 고객 메모리 수요가 삼성전자의 공급을 초과할 것으로 예상돼 수요-공급 병목의 지속성을 보여준다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자는 2026년 고객 메모리 수요가 투자·증설 계획을 고려한 공급을 초과할 것으로 예상했다",
+        "source_value_json": "\"customer demand expected to exceed supply after investment and capacity expansion\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      39,
+      54,
+      85,
+      180,
+      217,
+      247,
+      256,
+      279,
+      369,
+      418,
+      447,
+      453
+    ],
+    "source_coverage": [
+      "ISSUER_NEWSROOM",
+      "TRUSTED_BUSINESS_MEDIA",
+      "COMPANYGUIDE"
+    ],
+    "structured_metric_row_indices": [
+      0
+    ],
+    "uncertainties": [
+      "고객별 구매의무·최소물량·가격조정·취소·납기 조건이 비공개다.",
+      "명명 고객별 HBM4 qualification과 실제 배정 물량을 검증하기 어렵다.",
+      "CompanyGuide 최신 EPS 방향은 DOWN이고 영업이익 방향은 UP이라 전망 신호가 단일 방향이 아니다.",
+      "NH 1100084 원문 미회수와 검색 0건은 사실 증거가 아니다."
+    ],
+    "why_not_higher": "고객별 구속조건·현금회수·qualification·배정이 직접 확인되지 않아 상단으로 올리지 않는다.",
+    "why_not_lower": "구매주문·계약 완료·완판·공식 매출 성장 안내와 실제 출하 증가가 있어 낮은 범위로 내리기 어렵다."
+  },
+  "payload_hash": "e039767c159eb912923ae9328f43500b72909fa6026b37b7396069f1c26f11ad",
+  "production_score_authority": false,
+  "prompt_hash": "fc3b01050fcb895ced7fa3ffd8d0aa5b8768b0ddd72ad8bf326c5baff13a7025",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a71dc0b7b979efef8d454697035f6d4acc6dac5d3193f37065675e1354ebed12",
+  "response_id": "COLLABRESP-25236b53a6ebaaa7aff8a857d894b87956f813a8c44065c6b1f2773018662994",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

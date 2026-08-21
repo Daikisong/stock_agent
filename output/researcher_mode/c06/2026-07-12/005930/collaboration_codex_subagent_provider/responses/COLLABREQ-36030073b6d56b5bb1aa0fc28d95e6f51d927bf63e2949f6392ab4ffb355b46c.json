@@ -1,0 +1,58 @@
+{
+  "output_schema_hash": "ee731c734ea53b60560e0969f98822fbc1787f1fcdb5c91c028efea577cbbb6f",
+  "payload": {
+    "allowed_range": [
+      2.8,
+      3.6
+    ],
+    "anchor_comparisons": [
+      "Both cross-sector anchors are low-confidence ordinal references near the ceiling; neither can establish product-level return on invested capital for the current mixed corporate and memory evidence.",
+      "The positive anchor supports simultaneous investment and return capacity, while the counter anchor highlights how commitments and working capital can absorb apparent cash strength."
+    ],
+    "counter_fact_ids": [
+      "EFACT-09bca4086b235701b1d84801",
+      "EFACT-38d8612a550c7b15e83db302",
+      "EFACT-60fb6751333ef31d586334e5",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-c8cce781c38410832d5bd2a8"
+    ],
+    "disagreements": [
+      "I treat actual cash generation and executed share cancellation as stronger than an intention-only allocation case, while retaining the investment burden."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "proposed_points": 3.2,
+    "rationale": "Large first-quarter operating cash flow, substantial cash, executed share cancellation, and a strong broker free-cash-flow estimate support capacity to fund investment and shareholder returns. Yet the evidence is corporate or DS-wide, not an HBM-specific return calculation, and sizeable commitments plus working-capital outflows limit the ceiling.",
+    "support_fact_ids": [
+      "EFACT-4ca12a741765c57da0832791",
+      "EFACT-91896907330221fdcfdd97b2",
+      "EFACT-9c8e2f378d921c9782b5b6ac",
+      "EFACT-f8f6e5abba8d72973f8cbc55"
+    ],
+    "why_not_higher": "Unperformed asset commitments, receivables and working-capital outflows, unsettled memory spending detail, and missing HBM-specific returns prevent the maximum.",
+    "why_not_lower": "A lower placement would ignore large observed operating cash flow and cash balances alongside an executed share cancellation."
+  },
+  "payload_hash": "a1bbf86ed92e0a3d2ed84784db14b8d3c66f25df9361e9889926d94112cf982c",
+  "production_score_authority": false,
+  "prompt_hash": "328fb4ded1424b906e667e2a469fdbbb70ca6683bb6806483a689320d019b138",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-36030073b6d56b5bb1aa0fc28d95e6f51d927bf63e2949f6392ab4ffb355b46c",
+  "response_id": "COLLABRESP-f234cef49ccdcdc58de158c69e9be53c619e19a90cf2278c01c6ee9fb2ad3946",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

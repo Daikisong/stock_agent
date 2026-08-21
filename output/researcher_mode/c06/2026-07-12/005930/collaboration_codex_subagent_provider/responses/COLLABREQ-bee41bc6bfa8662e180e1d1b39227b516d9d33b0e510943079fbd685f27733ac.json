@@ -1,0 +1,154 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4a2444d5c7af67ca9f6c941c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-bb072f3bde18f5afe0345738",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 discovery metadata가 원 증권사 리서치 PDF provenance를 지지하지 않거나, 지속가능보고서·정부자료·뉴스·기술자료·공시 첨부처럼 다른 문서 유형이므로 요청된 PUBLIC_BROKER_PDF 및 삼성전자 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-b2408de99981f6eb3951b763",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-2824bd0a98634aac38a06237",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-d08cff1c877bb2c882ccad19",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-9eff4a49cd3c8dbe82849f36",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-19b98748e21bb65f27b4ca08",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-76d4ed0179b16ecfa5c66d24",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-3dd6d4af1bbc60217548f672",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-2091ae78bfe8797a0973cd7f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-6658f43b9c9f1ad819a51a66",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-ab6cce7f4facd49c37158ca2",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "증권사 연구물 또는 broker-report transport provenance는 요청 family와 맞지만, 현재 제목과 metadata가 다른 기업·다른 산업·종합 전망이거나 삼성전자의 동일 기간 peer valuation 표로 이어지는 직접 단서가 없어 PEER_BAND material 후보가 아닙니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "current 9개 partition의 100개 후보를 exact-once로 분류했으며 검색 snippet은 EvidenceFact로 사용하지 않았습니다.",
+      "동일 현대차증권 보고서의 landing page와 PDF transport는 원문 회수 후 내용 hash로 중복 제거해야 합니다.",
+      "material route도 peer 명단·동일 기준일과 forward 기간·valuation 단위를 원문에서 검증하기 전에는 점수·Stage 권한이 없습니다."
+    ]
+  },
+  "payload_hash": "93ae717f5e1fec6be853f6f26304525ee8d3fba721b9303e822133ffc1a25616",
+  "production_score_authority": false,
+  "prompt_hash": "fc69028b871a171ed02deb0e78a97e6619dc17cc5d1f4c1c48cb1127b0ac4b81",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bee41bc6bfa8662e180e1d1b39227b516d9d33b0e510943079fbd685f27733ac",
+  "response_id": "COLLABRESP-691687caef8bb04bcec6003d7b1570469755b87b9f30e19a279ee9d831c856f7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,499 @@
+{
+  "output_schema_hash": "3b90e3222de7391a98590e36a2465e5c752fa6e639cc6de6dad522fe1118d5cd",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-1709fe1fcbba59b4bb64c5ff",
+        "rationale": "이 페이지에서 고객별 HBM4 램프, 1c 수율 성숙, 경쟁 counterfact, P&T7 및 용인 HBM 증설 일정 등 앞 페이지와 겹치지 않는 5건을 추가 추출했다. NAND 내용은 범위 밖이라 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-307fb9014727799335a8db49",
+        "rationale": "2025년 3월의 오래된 섹터 전망은 현재 canonical의 후속 실제치·전망보다 약하고, 이 batch의 valuation gap을 채울 동일 기준 target forward multiple도 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-4ad2b2c5d23cebf2ce49609c",
+        "rationale": "앞 페이지의 당시 인증 지연·샘플 성숙도와 겹치지 않는 HBM4 IO 및 로직 다이 전환의 기술 복잡도 1건을 추가 추출했고, 근거가 약한 9개월 추측은 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-5a3f1affd4616ae845ce6c2d",
+        "rationale": "앞 페이지의 SK하이닉스 BPS·P/B·PER·CAPA 일정과 겹치지 않는 HBM 시장/제품 믹스/공급점유율 및 target forward ROE 4건을 추가 추출했다. Nanya 자체 실적과 NAND 내용은 target·범위 밖이라 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.89,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-1709fe1fcbba59b4bb64c5ff",
+        "economic_mechanism": "고객 요구성능과 고객별 제품 양산 시점에 맞춰 HBM4를 램프업할 준비가 됐다는 회사 임원 발언은 고객 일정과 공급 전환의 결박을 보여준다. 확정 물량이나 구매의무로 확대하지 않는다.",
+        "exact_quote": "김기태 SK하이닉스 HBM마케팅담당(부사장)은 23일 열린 2026년도 1분기 실적 컨퍼런스콜에서 “HBM4는 초기 단계부터 고객사와 긴밀히 협력해 선제적으로 개발·공급 체계를 구축해왔으며 고객 요구성능에 만족하는 제품을 고객별 제품 양산 시점에 맞춰 램프업해 적시 공급할 수 있도록 준비하고 있다”고 말했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객별 양산 일정과 HBM4 램프업 준비를 직접 연결해 공급 가시성을 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_CUSTOMER_ALIGNED_RAMP",
+        "normalized_object": "HBM4 고객별 양산 시점 연계 램프업",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 outlook stated 2026-04-23",
+        "predicate": "SK하이닉스는 고객 요구성능과 고객별 제품 양산 시점에 맞춰 HBM4를 램프업해 공급할 준비를 하고 있다",
+        "predicate_family": "HBM4_CUSTOMER_ALIGNED_RAMP_READINESS",
+        "primitive_tags": [
+          "HBM4",
+          "CUSTOMER",
+          "RAMP_UP"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_CUSTOMER_ALIGNED_RAMP",
+        "question_family_tags": [
+          "HBM4_RAMP",
+          "CUSTOMER_TIMING",
+          "SUPPLY_READINESS"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.89,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4 고객별 양산 대응",
+        "subject_id": "000660:HBM4_CUSTOMER_ALIGNED_RAMP",
+        "unit": "qualitative issuer-executive statement",
+        "value": "customer-specific production-timed ramp readiness"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.88,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-1709fe1fcbba59b4bb64c5ff",
+        "economic_mechanism": "HBM4E 코어다이에 적용할 1c D램이 이미 양산을 시작했고 수율과 양산 능력이 성숙 수준이라는 임원 설명은 차세대 제품의 제조 실행 위험을 낮추는 근거다. HBM4E 완제품 인증 완료로 확대하지 않는다.",
+        "exact_quote": "이어 “코어다이는 높아진 고객 성능 요구에 대응하기 위해 1c 나노를 적용할 예정이며, 우리 1c 나노는 업계 최고 수준의 성능을 입증했고 작년말부터 양산을 시작해 수율 및 양산 능력도 이미 성숙 수준에 도달했다”며, “이를 통해 고객에 안정적인 성능과 물량으로 HBM4E를 공급할 수 있을 것이며, 추가 기술과 고객 분석을 거쳐 HBM4E를 적기 개발하고 우수한 양산 능력과 제품 품질을 통해 HBM 기술 리더십을 이어나갈 계획”이라고 부연했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "차세대 HBM 공급의 핵심 코어다이 공정 수율과 양산 성숙도를 직접 설명한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4E_1C_YIELD_MATURITY",
+        "normalized_object": "HBM4E용 1c D램 수율 및 양산 성숙도",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "production started by end-2025; status stated 2026-04-23",
+        "predicate": "HBM4E 코어다이용 1c D램은 양산을 시작했고 수율과 양산 능력이 성숙 수준에 도달했다",
+        "predicate_family": "HBM4E_1C_YIELD_AND_MASS_PRODUCTION_MATURITY",
+        "primitive_tags": [
+          "HBM4E",
+          "1C_DRAM",
+          "YIELD",
+          "MASS_PRODUCTION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4E_1C_YIELD_MATURITY",
+        "question_family_tags": [
+          "HBM4E",
+          "1C_DRAM",
+          "YIELD_MATURITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4E용 1c D램 양산 성숙도",
+        "subject_id": "000660:HBM4E_1C_YIELD_MATURITY",
+        "unit": "qualitative issuer-executive statement",
+        "value": "yield and mass-production capability at mature level"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.72,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-1709fe1fcbba59b4bb64c5ff",
+        "economic_mechanism": "삼성전자의 초도 공급망 진입이 HBM4 대량양산기의 공급사 경쟁을 높일 수 있다는 보도는 SK하이닉스의 점유율·가격 지속성에 대한 counterfact다. 실제 점유율 하락이나 가격 인하로 단정하지 않는다.",
+        "exact_quote": "HBM4의 대량 양산이 본격화할 시 삼성전자의 초도 공급망 진입으로 메모리 제조사 간 경쟁은 심화할 것으로 예상된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "구조적 수요 우위와 함께 봐야 할 공급사 경쟁 counterfact다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_SUPPLIER_COMPETITION_RISK",
+        "normalized_object": "HBM4 대량양산기 공급사 경쟁 심화 가능성",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "HBM4 mass-production ramp outlook reported 2026-04-23",
+        "predicate": "HBM4 대량양산 시 삼성전자의 초도 공급망 진입으로 메모리 공급사 경쟁이 심화할 수 있다",
+        "predicate_family": "HBM4_SUPPLIER_COMPETITION_INTENSIFICATION",
+        "primitive_tags": [
+          "HBM4",
+          "COMPETITION",
+          "SAMSUNG_ENTRY"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_COMPETITION_RISK",
+        "question_family_tags": [
+          "HBM4_COMPETITION",
+          "SUPPLIER_ENTRY",
+          "COUNTERFACT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.72,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4 공급 경쟁",
+        "subject_id": "000660:HBM4_SUPPLIER_COMPETITION_RISK",
+        "unit": "qualitative industry expectation",
+        "value": "competition expected to intensify on Samsung initial supply-chain entry"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-1709fe1fcbba59b4bb64c5ff",
+        "economic_mechanism": "P&T7의 웨이퍼 테스트와 WLP 라인 준공 일정은 AI 메모리 후공정 공급 대응의 단계적 증설 시점을 보여준다. 실제 가동률이나 HBM 전용 물량으로 확대하지 않는다.",
+        "exact_quote": "P&T7는 SK하이닉스가 청주에 건설 중인 다섯번째 생산시설로, 내년 10월 웨이퍼 테스트 라인과 2028년 2월 웨이퍼레벨패키징(WLP) 라인까지 순차적으로 준공을 완료할 예정이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "AI 메모리 후공정 병목에 대응하는 구체적 시설 일정을 제시한다.",
+        "mechanism_scope_id": "000660:MEMORY:PT7_AI_MEMORY_PACKAGING_TIMELINE",
+        "normalized_object": "P&T7 웨이퍼 테스트 및 WLP 준공 일정",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027-10 to 2028-02",
+        "predicate": "P&T7는 2027년 10월 웨이퍼 테스트 라인과 2028년 2월 WLP 라인을 순차 준공할 예정이다",
+        "predicate_family": "AI_MEMORY_PACKAGING_CAPACITY_RAMP_TIMELINE",
+        "primitive_tags": [
+          "AI_MEMORY",
+          "WAFER_TEST",
+          "WLP",
+          "CAPEX"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "AI_MEMORY_PACKAGING_CAPACITY_TIMELINE",
+        "question_family_tags": [
+          "AI_MEMORY_CAPACITY",
+          "PACKAGING",
+          "PT7"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 P&T7 AI 메모리 패키징 설비 일정",
+        "subject_id": "000660:PT7_AI_MEMORY_PACKAGING_TIMELINE",
+        "unit": "facility completion timeline",
+        "value": "wafer-test line 2027-10; WLP line 2028-02"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-1709fe1fcbba59b4bb64c5ff",
+        "economic_mechanism": "용인 1기 페이즈1 클린룸 개장을 3개월 앞당기고 HBM을 주력 생산한다는 계획은 수요 초과에 대한 중기 공급 대응을 보여준다. 생산량이나 매출 기여 시점은 추론하지 않는다.",
+        "exact_quote": "용인 반도체 클러스터의 경우 1기 공장(팹) 페이즈1 클린룸 오픈 시점을 기존 내년 5월에서 2월로 3개월 단축을 결정했다. 페이즈1에선 HBM을 주력으로 생산할 계획이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 수요 초과에 대한 대규모 생산설비의 제품 귀속과 일정이 함께 제시된다.",
+        "mechanism_scope_id": "000660:MEMORY:YONGIN_PHASE1_HBM_CAPACITY_RAMP",
+        "normalized_object": "용인 1기 페이즈1 HBM 생산 및 조기 개장",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "opening planned 2027-02",
+        "predicate": "용인 1기 페이즈1 클린룸 개장을 2027년 2월로 앞당기고 HBM을 주력 생산할 계획이다",
+        "predicate_family": "YONGIN_PHASE1_HBM_CAPACITY_RAMP_TIMELINE",
+        "primitive_tags": [
+          "HBM",
+          "YONGIN",
+          "CAPACITY",
+          "FAB"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "YONGIN_HBM_CAPACITY_RAMP",
+        "question_family_tags": [
+          "HBM_CAPACITY",
+          "YONGIN",
+          "RAMP_TIMELINE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 용인 1기 페이즈1 HBM 생산",
+        "subject_id": "000660:YONGIN_PHASE1_HBM_CAPACITY_RAMP",
+        "unit": "facility ramp timeline",
+        "value": "clean-room opening accelerated by three months to 2027-02"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.72,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4ad2b2c5d23cebf2ce49609c",
+        "economic_mechanism": "HBM4는 입출력 단자가 전세대의 두 배이고 처음으로 파운드리 로직 다이를 쓰므로 고객 테스트와 통합의 복잡도가 커질 수 있다. 실제 인증 실패나 일정 지연 폭은 단정하지 않는다.",
+        "exact_quote": "세대가 바뀐 데 따른 기술적 어려움이 커진 점도 엔비디아의 테스트 기간이 길어질 수 있는 요인으로 꼽힌다. HBM4의 입출력(IO) 단자 수는 2,048개로 HBM3E의 두 배에 달한다. 또, 6세대 HBM에서는 처음으로 로직 다이(베이스 다이)를 파운드리에서 생산할 예정이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "qualification 지연 가능성을 만드는 세대 전환의 구체적 기술 요인을 제시한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_QUALIFICATION_TECHNICAL_COMPLEXITY",
+        "normalized_object": "HBM4 IO 및 로직 다이 전환에 따른 인증 복잡도",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "reported 2025-07-15",
+        "predicate": "HBM4는 HBM3E의 두 배인 2,048개 IO와 첫 파운드리 로직 다이 적용으로 테스트 복잡도가 높다",
+        "predicate_family": "HBM4_QUALIFICATION_TECHNICAL_COMPLEXITY",
+        "primitive_tags": [
+          "HBM4",
+          "IO_2048",
+          "LOGIC_DIE",
+          "QUALIFICATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_QUALIFICATION_TECHNICAL_COMPLEXITY",
+        "question_family_tags": [
+          "HBM4_QUALIFICATION",
+          "IO_COMPLEXITY",
+          "LOGIC_DIE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.72,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4 인증 기술 복잡도",
+        "subject_id": "000660:HBM4_QUALIFICATION_TECHNICAL_COMPLEXITY",
+        "unit": "technical qualification profile",
+        "value": "2048 IO terminals, twice HBM3E, plus first foundry logic die"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.78,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-5a3f1affd4616ae845ce6c2d",
+        "economic_mechanism": "2026년 HBM 시장 매출과 비트 출하량의 큰 폭 증가 전망은 SK하이닉스의 earnings bridge를 지지하지만, HBM ASP 하락 전망은 성장의 가격 희석 위험을 함께 보여준다. 회사 자체 가이던스로 취급하지 않는다.",
+        "exact_quote": "2026년 전체 HBM 시장 규모는 전년 대비 57% 성장할 것으로 전망되며, 비트 출하량은 68% 증가, ASP는\n10% 하락할 것으로 예상. ASP 하락은 HBM3E 가격이 20% 하락할 것으로 보이는 데 기인하나, HBM4\n출시가 일부 가격 하락 영향을 상쇄할 것으로 판단.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 성장의 물량·가격 양면을 같은 전망에서 제시해 forward valuation의 earnings bridge를 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_2026_MARKET_GROWTH_ASP_PROFILE",
+        "normalized_object": "2026년 HBM 시장 매출·비트·ASP 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "2026년 HBM 시장은 매출 57%와 비트 출하 68% 증가가 예상되지만 ASP는 10% 하락할 전망이다",
+        "predicate_family": "HBM_MARKET_REVENUE_BIT_GROWTH_AND_ASP_PROFILE",
+        "primitive_tags": [
+          "HBM",
+          "REVENUE_GROWTH",
+          "BIT_GROWTH",
+          "ASP"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_MARKET_GROWTH_AND_ASP_PROFILE",
+        "question_family_tags": [
+          "HBM_MARKET_GROWTH",
+          "BIT_SHIPMENTS",
+          "ASP_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.78,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "2026년 HBM 시장 성장과 ASP 전망",
+        "subject_id": "000660:HBM_MARKET_2026_GROWTH_ASP_PROFILE",
+        "unit": "YoY percent forecast",
+        "value": "market revenue +57%; bit shipments +68%; ASP -10%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.77,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-5a3f1affd4616ae845ce6c2d",
+        "economic_mechanism": "HBM4가 2026년 HBM 시장 매출의 32%를 차지할 전망은 차세대 제품 전환이 시장 매출 믹스에 미치는 규모를 보여준다. SK하이닉스의 확정 매출 비중으로 전용하지 않는다.",
+        "exact_quote": "HBM4는 2026년 전체 HBM 시장 매출 중 32%를 차지할\n것으로 전망.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "HBM4 제품 전환의 시장 매출 규모를 정량화해 rerating bridge를 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_2026_MARKET_REVENUE_SHARE",
+        "normalized_object": "2026년 HBM4 시장 매출 비중 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "HBM4는 2026년 전체 HBM 시장 매출의 32%를 차지할 것으로 전망된다",
+        "predicate_family": "HBM4_MARKET_REVENUE_SHARE_FORECAST",
+        "primitive_tags": [
+          "HBM4",
+          "MARKET_SHARE",
+          "REVENUE_MIX"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_MARKET_REVENUE_MIX",
+        "question_family_tags": [
+          "HBM4_MIX",
+          "MARKET_REVENUE_SHARE",
+          "PRODUCT_TRANSITION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.77,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "2026년 HBM4 시장 매출 비중",
+        "subject_id": "000660:HBM4_2026_MARKET_REVENUE_SHARE",
+        "unit": "% of HBM market revenue",
+        "value": 32
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.76,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-5a3f1affd4616ae845ce6c2d",
+        "economic_mechanism": "브로커는 SK하이닉스가 2026년 엔비디아 HBM4의 주요 공급사로 60~70% 점유율을 가질 것으로 전망했다. 이는 valuation bridge의 고객 배분 가정이지 확정 계약이나 실제 점유율이 아니다.",
+        "exact_quote": "2026년에도 SK하이닉스는 Nvidia의 주요 HBM4 공급업체로, 시장점유율은\n60~70%에 달할 것으로 예상.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4 earnings bridge의 핵심 공급사 점유율 가정을 target 직접 귀속으로 제시한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_2026_SUPPLIER_SHARE_FORECAST",
+        "normalized_object": "2026년 SK하이닉스 HBM4 공급 점유율 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "SK하이닉스는 2026년 엔비디아 HBM4의 주요 공급사로 60~70% 시장점유율이 예상된다",
+        "predicate_family": "SKHYNIX_HBM4_SUPPLIER_SHARE_FORECAST",
+        "primitive_tags": [
+          "HBM4",
+          "NVIDIA",
+          "SUPPLIER_SHARE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SKHYNIX_HBM4_SUPPLIER_SHARE",
+        "question_family_tags": [
+          "HBM4_SUPPLIER_SHARE",
+          "NVIDIA",
+          "VALUATION_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.76,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 HBM4 공급 점유율 전망",
+        "subject_id": "000660:HBM4_2026_SUPPLIER_SHARE_FORECAST",
+        "unit": "% forecast",
+        "value": "60-70"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-5a3f1affd4616ae845ce6c2d",
+        "economic_mechanism": "동일 기준 peer 표가 SK하이닉스의 2025~2027년 ROE 경로와 P/B를 함께 제시해 forward book-value multiple의 수익성 분모를 보완한다.",
+        "exact_quote": "[표 26] Peer Group Valuation (계속)\nROE (%) BPS PBR (배)\n시가총액\n회사명 종목코드 투자의견 주가\n(US$백만)\n2025 2026 2027 2025 2026 2027 2025 2026 2027\n南亞科 2408 TT BUY 275.0 26,628 4.0 5.6 6.6 54.37 84.40 97.25 5.1 3.3 2.8\n해외 동종 업계 -- -- -- -- -- -- -- -- -- -- --\n마이크론 테크놀로지 MU US N/R 362.8 408,278 2.7 17.2 41.8 39.9 47.6 76.4 9.1 7.6 4.8\n삼성전자 005930 KS N/R 149800.0 659,864 8.7 10.0 21.5 56753.9 63149.2 77683.1 2.6 2.4 1.9\nSK하이닉스 000660 KS N/R 768000.0 373,565 28.2 42.0 47.4 98463.5 154838. 253407. 7.8 5.0 3.0\n6 2\n해외 평균 -- -- 13.2 23.0 36.9 6.5 5.0 3.2\n국내 동종 업계 -- -- -- -- -- -- -- -- -- -- --\n윈본드전자 2344 TT N/R 116.5 15,182 0.8 2.6 22.1 23.0 22.4 28.6 5.1 5.2 4.1\n마이크로닉스 2337 TT Hold-OPF 73.7 3,942 (5.7) (7.9) 3.9 24.8 22.6 24.1 3.0 3.3 --\n국내 업계 평균 -- -- (2.4) (2.6) 13.0 4.0 4.2 4.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "P/B와 함께 보는 forward ROE 경로가 rerating의 이익·자본 효율 bridge를 직접 채운다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_ROE_PROFILE_2025_2027",
+        "normalized_object": "SK하이닉스 2025~2027년 예상 ROE 경로",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F-FY2027F",
+        "predicate": "유안타 peer 표의 SK하이닉스 예상 ROE는 2025년 28.2%, 2026년 42.0%, 2027년 47.4%다",
+        "predicate_family": "FORWARD_ROE_PROFILE",
+        "primitive_tags": [
+          "ROE",
+          "FY2025F",
+          "FY2026F",
+          "FY2027F"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SKHYNIX_FORWARD_ROE_PROFILE",
+        "question_family_tags": [
+          "FORWARD_ROE",
+          "PEER_TABLE",
+          "PBR_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2025~2027년 예상 ROE",
+        "subject_id": "000660:FORWARD_ROE_PROFILE:2025_2027",
+        "unit": "%",
+        "value": "28.2, 42.0, 47.4"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "4cb39fba2b8307d0a408a479f24c886b8b6ff75dda4d3f319f11c1e519e35762",
+  "production_score_authority": false,
+  "prompt_hash": "4d33772354e4379af9fb56fbf77ea1baa5ac49916b7b8429fd3655d1fb7e1614",
+  "provenance": {
+    "agent_id": "codex_primary",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/codex_primary",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e597b42acf94e2d93cd3dbd66a951909326792fcb89870685e771efe518db604",
+  "response_id": "COLLABRESP-09a0a95bd512f66c37d5943aac71383159c1c4215b2d234ef3c6517436071f83",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

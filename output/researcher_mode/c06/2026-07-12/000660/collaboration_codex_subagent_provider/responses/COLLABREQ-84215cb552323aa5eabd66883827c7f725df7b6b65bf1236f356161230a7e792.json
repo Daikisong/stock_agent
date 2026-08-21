@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "9b676f062f8f95702f14aa53b9b51067a0a2044c9a523d64ddcdcbdea42db294",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-c90cfcb1e014d1053180e721",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.05,
+        "rationale": "The broad 2024 value-up report does not provide a current target-specific HBM earnings or valuation mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-a45f6ab84d58053fc26b6a80",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.58,
+        "rationale": "The broker report directly compares memory-vendor PBR with HBM revenue mix; although historical, it is material evidence for testing the claimed HBM-to-rerating relationship."
+      },
+      {
+        "candidate_id": "SGCAND-b63f735e4c8f39049fe9f8f5",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.74,
+        "rationale": "This 2026 securities report covers Chinese memory supply, high-value product competition, and SK hynix valuation, making it relevant counter and valuation context."
+      },
+      {
+        "candidate_id": "SGCAND-43740590cad6aecd11002c46",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.03,
+        "rationale": "The daily broker compilation only mentions unrelated research items and does not expose a target-specific HBM valuation claim."
+      },
+      {
+        "candidate_id": "SGCAND-d7978db947fa89a1e917f6d8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.15,
+        "rationale": "This third-party premium transcript retells a 2025 call but does not satisfy the requested issuer, filing, earnings-release, or cash-flow provenance."
+      },
+      {
+        "candidate_id": "SGCAND-e1932edc91caa765ca7cdf04",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.95,
+        "rationale": "A current May 2026 securities report directly links tight memory supply and SK hynix performance to structurally higher ROE and an increased target PBR."
+      },
+      {
+        "candidate_id": "SGCAND-34a6529656e699a40794b620",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.04,
+        "rationale": "The broker report is about AI substrate vendors and does not resolve SK hynix HBM earnings attribution or valuation."
+      },
+      {
+        "candidate_id": "SGCAND-95921b54495df5a5c624d7d9",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.03,
+        "rationale": "The daily macro compilation contains no supplied target-specific HBM earnings, consensus, or multiple information."
+      },
+      {
+        "candidate_id": "SGCAND-4dc51e88311d997a0b762930",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.78,
+        "rationale": "The June 2026 global memory outlook discusses long-term supply contracts and the current memory cycle, a material industry route for testing capacity tightness and valuation durability."
+      },
+      {
+        "candidate_id": "SGCAND-934d16c0f97e2194f6ab4238",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.66,
+        "rationale": "The 2026 research forum includes SK hynix forward financial and valuation figures within a current industry outlook, offering a usable earnings-and-multiple route."
+      },
+      {
+        "candidate_id": "SGCAND-655e36a8cbc0b62272fe450d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "The report concerns Samsung and its valuation, not SK hynix."
+      },
+      {
+        "candidate_id": "SGCAND-55c9fafe1ec9022ed96955ec",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The URL identifies a 2026-07-29 SK hynix report, after the 2026-07-12 cutoff, so it is ineligible for this run."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Full-text and publication-date eligibility must still be verified during bounded fetch; snippets were used only for discovery routing."
+    ]
+  },
+  "payload_hash": "2b50304813b81a9e01c56c01f50cdac7e35b51407dbae15886c40518ebd37d7a",
+  "production_score_authority": false,
+  "prompt_hash": "25a40292d4505cf8e49731efa282f68e9626c78ab211cfdcb4100c15bd10b302",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-84215cb552323aa5eabd66883827c7f725df7b6b65bf1236f356161230a7e792",
+  "response_id": "COLLABRESP-a03c0ec09d03dbcc07dc302a4998f650cfc8f19eea1a57db57b161d8395bbf26",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

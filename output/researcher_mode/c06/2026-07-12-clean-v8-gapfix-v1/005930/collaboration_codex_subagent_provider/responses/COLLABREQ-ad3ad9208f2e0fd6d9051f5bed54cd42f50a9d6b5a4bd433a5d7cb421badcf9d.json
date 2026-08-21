@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": false,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "I independently reviewed the seven complete component memos, the full seven-component Red Team record, the complete structured-role roster, the current fact projection, and the terminal Source Graph supplied in this request. The existing memos preserve the key attribution and plan-versus-contract limits, and counter coverage is complete. However, the information-confidence projection explicitly requires an independent corroboration review: all 15 current relationship facts lack an explicit corroborating source group. The named AMD HBM3E/HBM4 relationship is material and a bounded AMD customer-official technical route is reasonably available in principle, while the two executed queries and 38 supplied documents cover issuer, filing, and issuer-affiliated families rather than CUSTOMER_OFFICIAL. This route need not reveal price, volume, or a signed contract; its purpose is only independent technical corroboration. I therefore do not approve semantic saturation. This conclusion does not use zero results, provider errors, fixed rounds, transport limits, or source absence as proof, and it carries no score or Stage authority.",
+    "reasonable_positive_routes_remaining": true,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "A named AMD HBM3E/HBM4 supply and technical-collaboration relationship is supported only by issuer-family facts in the supplied graph. A bounded AMD customer-official product, newsroom, or platform route has not been tried and could independently corroborate the technical relationship without being mislabelled as purchase terms."
+    ]
+  },
+  "payload_hash": "cfb53c15e3e1d3651f457ba69aa3845dfdeb2e4a5505ba53edd1a65db6ccaf39",
+  "production_score_authority": false,
+  "prompt_hash": "70ff12c4b849686d8d91af4016de49a0674968f4a17d2e051ad6375d37a5532e",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ad3ad9208f2e0fd6d9051f5bed54cd42f50a9d6b5a4bd433a5d7cb421badcf9d",
+  "response_id": "COLLABRESP-8477c6f44ae64709d5e079941fda261c0e8b6edb69c050d789bbb8913634f16b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

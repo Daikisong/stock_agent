@@ -1,0 +1,47 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "검색 포털의 뉴스룸 결과 대신 OPENDART·KIND에서 삼성전자 신규시설투자 결정 또는 정정 공시 원문과 접수일을 회수합니다.",
+      "공시 본문이 HBM4·메모리 사업에 투자·capacity를 직접 귀속하는지 확인하고, DS 전체나 파운드리 혼합 금액은 HBM 전용 근거로 사용하지 않습니다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 HBM4 메모리 신규시설투자 결정 2026 공시",
+        "objective_id": "SGOBJ-44161aa1a529ae8101bf12b1",
+        "rationale": "직전 issuer-newsroom 검색은 provider error와 후보 0건으로 원문 route를 만들지 못했습니다. 뉴스룸·양산 확대 vocabulary를 반복하지 않고, 법정공시의 `신규시설투자 결정` 문서 유형으로 전환해 삼성전자 HBM4 또는 메모리 귀속 투자·capacity 결정을 찾습니다. 2026-07-12 이하의 삼성전자 원 공시에서 대상 사업, 투자 금액·기간 또는 생산능력 변화가 명시될 때만 capital_allocation 후보가 되며, DS 혼합 투자나 제3자 요약은 이를 대체하지 못합니다.",
+        "source_families": [
+          "OPENDART",
+          "KIND_KRX"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "기존 query 및 직전 issuer-newsroom query와 다른 statutory-disclosure route와 vocabulary를 사용했습니다.",
+      "공시 검색 결과가 없다는 사실만으로 HBM 투자가 없다고 추론하지 않으며, 원문이 회수되어야만 사실 후보가 됩니다.",
+      "검색 snippet은 discovery metadata일 뿐 evidence가 아니고, 발행일·ticker·원문 소유자·HBM 귀속을 full document에서 검증해야 합니다."
+    ]
+  },
+  "payload_hash": "bc7566bc3d46711c57503627f4727ac0df28db62c05673d7836f77fe38952501",
+  "production_score_authority": false,
+  "prompt_hash": "7d77ee5d6a48fdd2f801964ec2c2903800cb1f292042e7caa9f88df42f1e92ac",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-46b8a40bde4c8c15b0868c460e5586c243f75453f0b300a55e9e5cc850bf49e1",
+  "response_id": "COLLABRESP-00d9a55cdf31971c27b8e1360705f78cf169c40f75f48b02b6352c649913fc93",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

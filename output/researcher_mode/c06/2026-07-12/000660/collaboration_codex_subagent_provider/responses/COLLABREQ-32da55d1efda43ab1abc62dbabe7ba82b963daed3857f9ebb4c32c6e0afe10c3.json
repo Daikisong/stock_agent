@@ -1,0 +1,68 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-81f7f76effcd55845f30e428",
+      "CRMEMO-8496044fbbc4ca15486333ef",
+      "CRMEMO-3ec47cfffb8cd6e555131c17",
+      "CRMEMO-c88a0fddbea7cc558300a9ca",
+      "CRMEMO-dc66992c9a567425997691f5",
+      "CRMEMO-98400f666b2a9889b8f84026",
+      "CRMEMO-d936e5d4f25fe8e268b58b67"
+    ],
+    "confidence": 0.86,
+    "cross_component_support": [
+      "eps_fcf_explosion: FY2025·4Q25·1Q26 연결 actual, 1Q26 DRAM 매출·ASP 상승, FY2025 HBM 매출 2배 이상 성장과 actual 현금흐름은 가격·믹스가 전사 이익과 현금으로 전환됐다는 점을 함께 지지한다. 다만 이 연결·DRAM 결과를 HBM 단독 이익·FCF로 귀속하지 않는다.",
+      "earnings_visibility: HBM4 양산 진입과 고객 성능요구 충족, 향후 3년 고객 요청수요의 공급능력 초과, FY2026 수요 확보 평가와 핵심고객 공급논의 완료는 생산·수요·일정 가시성을 서로 보강한다.",
+      "bottleneck_pricing: 1Q26 반도체 평균가동률 100%, 제한된 공급, 실제 DRAM ASP 급등과 HBM의 TSV·다이 면적 증가 및 일반 DRAM CAPA 잠식은 물리적 병목과 가격 전이 경로를 함께 확인한다.",
+      "market_mispricing: 큰 폭의 forward 이익 상향, 낮은 선행 P/E와 직접 메모리 peer 대비 P/E, 이익 기여도 대비 시가총액 비중 및 EPS·PER 동반 상승은 이익 분모와 시장 기대 사이의 잔여 격차 가능성을 지지한다.",
+      "valuation_rerating: 실제 HBM 매출 성장과 1Q26 연결 이익·마진, forward 이익 상향, 직접 메모리 peer 대비 낮은 P/E·EV/EBITDA와 높은 ROE, HBM 차등 SOTP는 단순 서사가 아닌 source-backed 재평가 경로를 제공한다.",
+      "capital_allocation: actual OCF와 순현금성 유동성, 높은 가동률과 수요연계 투자 원칙은 장기 증설과 주주환원을 감당할 현재 재무 기반을 지지한다.",
+      "information_confidence: issuer가 직접 확인한 HBM4 양산·고객 성능요구 충족과 FY2025 HBM actual 매출 성장은 실행과 결과의 primary evidence이며, 공급논의는 일정 가시성의 보조 근거다."
+    ],
+    "cross_component_tensions": [
+      "eps_fcf_explosion의 강한 전사 actual과 현금창출은 매출채권·재고 증가, actual CAPEX·구매약정, 금융상품평가이익 및 FY2027~FY2028 감익 전망과 맞선다. 사용 가능한 A/S/C 범위의 교집합은 [16.0, 16.5]로 비어 있지 않지만 지속성 불확실성은 남는다.",
+      "earnings_visibility의 수요 확보·공급논의·LTA 논의는 signed 계약, 최소물량, 가격, 취소·위약 조건이 없고 주요 고객 물량·가격이 월·분기 합의라는 사실과 긴장한다. A/S/C 교집합은 [14.2, 14.5]로 비어 있지 않다.",
+      "bottleneck_pricing의 100% 평균가동률과 실제 DRAM ASP 상승은 HBM 단독 ASP·allocation 부재, 경쟁사 공급 확대, M15X·용인 램프 및 PC·모바일 수요탄력과 맞선다. A/S/C 교집합은 [14.0, 15.0]로 비어 있지 않다.",
+      "market_mispricing의 이익 상향·낮은 forward P/E는 이미 발생한 PBR band 상단 돌파, peer 대비 P/B 프리미엄, 감익 전망과 컨센서스 기준 불일치에 의해 제한된다. A/S/C 교집합은 단일점 [7.5, 7.5]로 비어 있지 않지만 합의 폭이 매우 좁다.",
+      "valuation_rerating의 낮은 forward 상대배수와 actual 이익은 높은 trailing P/E·P/B, 낮은 forward FCF yield, peer 대비 P/B 프리미엄과 peak-earnings 가능성에 맞선다. 현재 memo CRMEMO-dc66992c9a567425997691f5에 귀속되는 A/S/C 세 응답은 모두 pending이므로 교집합을 계산하거나 material disagreement가 해소됐다고 선언할 수 없으며, memo 자체 범위 [6.3, 7.6]은 독립 judge 교집합을 대체하지 않는다.",
+      "capital_allocation의 순현금·OCF는 운전자본 흡수, 유형자산 취득과 30.435조원 구매약정 및 단계적 장기 투자계획과 긴장한다. A/S/C 교집합은 [2.7, 2.8]로 비어 있지 않다.",
+      "information_confidence의 강한 issuer primary evidence는 독립 고객 corroboration, signed 계약조건, HBM 단독 손익·현금흐름의 부재와 broker forecast 불일치에 의해 제한된다. A/S/C 교집합은 [3.2, 3.4]로 비어 있지 않다.",
+      "7개 component를 가로질러 HBM 성장·수요·병목·actual 이익은 같은 방향을 가리키지만, 연결/DRAM/company evidence를 HBM 단독 economics로 확대하거나 peer·broker estimate를 issuer actual·guidance로 승격하면 attribution 오류가 발생한다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "현재 7개 메모와 RTMEMO-5c6a7519b22fb1103f96add7를 전수 검토했다. FY2025·1Q26 actual, HBM 매출 성장, HBM4 양산·성능요구 충족, 고객 요청수요와 제한된 CAPA, 실제 DRAM ASP 상승은 HBM·AI 메모리 성장의 전사 수익화와 병목을 강하게 지지한다. 동시에 HBM 단독 손익·FCF, signed 고객계약, 고객별 qualification·allocation, 경쟁 공급과 이익 duration이 공개되지 않아 연결·DRAM·broker·peer 근거의 귀속 경계를 보존해야 한다. 현재 완결된 6개 component의 A/S/C 교집합은 모두 비어 있지 않지만 valuation_rerating의 current memo-bound 세 judge 응답은 pending이므로 그 component의 교집합과 material disagreement 해소 여부는 아직 판정할 수 없다. synthesis_complete=true는 7개 메모와 red-team 쟁점을 빠짐없이 검토했다는 뜻일 뿐, 총점·Stage·투자결론 또는 모든 monitoring 불확실성의 해소를 뜻하지 않는다.",
+    "unresolved_material_questions": [
+      "HBM 또는 최소 memory 제품군의 실제 매출액·영업이익률·OCF·CAPEX·FCF와 issuer의 기간·숫자형 forward guidance가 향후 공개되는가?",
+      "핵심고객 HBM 공급논의와 LTA가 실제 signed 계약으로 전환됐는지, 최소물량·가격조정·선수금·취소·위약·해지 조건은 무엇인가?",
+      "HBM4의 고객별 qualification, 실제 출하·배정량과 고객 플랫폼 램프 일정은 생산 준비와 같은 속도로 실현되는가?",
+      "삼성전자·Micron·CXMT와 M15X·용인 증설의 actual 공급이 HBM 점유율·가격·마진 및 scarcity premium의 기간을 얼마나 바꾸는가?",
+      "FY2027 이후 이익 duration과 직접 peer 대비 낮은 forward multiple이 구조적 저평가인지 cycle peak의 낮은 분모인지 어떻게 구분되는가?",
+      "운전자본·actual CAPEX·구매약정과 장기 투자계획 이후 높은 연결 이익이 지속 가능한 FCF와 HBM 단독 ROIC로 전환되는가?",
+      "named customer의 독립 확인과 일관된 issuer 숫자형 guidance가 생겨 공급논의·broker estimate의 정보 한계를 보완하는가?",
+      "현재 valuation memo에 정확히 귀속되는 독립 A/S/C judge 세 역할이 모두 완료돼 교집합과 material disagreement 상태를 판정할 수 있는가?",
+      "미국 CSP의 CapEx 실행률, FCF·차입·금리·전력 제약과 수출통제가 AI 투자계획의 실제 주문·현금 전환을 훼손하는가?"
+    ]
+  },
+  "payload_hash": "908cf4ba77d55ef993f0ea393f29986e19796df3096d4dfba9461721a1041a66",
+  "production_score_authority": false,
+  "prompt_hash": "ff1fc4087aecd6152cef5e627dab6a4d7f4700bb99386d0553fa0e85f00b9daa",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-32da55d1efda43ab1abc62dbabe7ba82b963daed3857f9ebb4c32c6e0afe10c3",
+  "response_id": "COLLABRESP-51dc48a93d30c0d7760fc01e792c56c672affbd37dd130b86ecd201e9939f4f1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

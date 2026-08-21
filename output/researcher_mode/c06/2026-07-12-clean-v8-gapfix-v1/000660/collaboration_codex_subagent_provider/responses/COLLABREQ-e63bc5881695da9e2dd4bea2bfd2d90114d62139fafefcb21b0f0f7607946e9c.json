@@ -1,0 +1,941 @@
+{
+  "output_schema_hash": "745843df0dda9b69e8d8f0b7b85e2f5d45fd78a96c87f1e73535a8215546f4a5",
+  "payload": {
+    "fact_dispositions": [
+      {
+        "fact_row_index": 0,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 1,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 2,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 3,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 4,
+        "rationale": "NO_MATCH: 금리 100bp 변동 시 향후 1년 연결 세전이익은 10,792백만원 증가 또는 감소할 것으로 추정된다. does not directly prove an allowed primitive; 연결 전체/금리위험 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 5,
+        "rationale": "NO_MATCH: announced cancellation of all treasury shares held does not directly prove an allowed primitive; Corporate/Issuer-wide capital allocation scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 6,
+        "rationale": "Directly cited by margin_fcf_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 7,
+        "rationale": "NO_MATCH: 고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다. does not directly prove an allowed primitive; Memory/Memory products scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 8,
+        "rationale": "NO_MATCH: REPORTS_CONSOLIDATED_CASH_BALANCE does not directly prove an allowed primitive; 연결 전사/전사 유동성 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 9,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 10,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 11,
+        "rationale": "Directly cited by margin_fcf_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 12,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 13,
+        "rationale": "Directly cited by capacity_supply_response/SUPPORT, hbm_product_profile/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 14,
+        "rationale": "NO_MATCH: REPORTS_TOTAL_BORROWINGS_AND_BONDS does not directly prove an allowed primitive; 연결 전사/전사 자금조달 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 15,
+        "rationale": "NO_MATCH: REPORTS_USD_FOREIGN_EXCHANGE_PRETAX_SENSITIVITY does not directly prove an allowed primitive; 별도 전사/전사 환위험 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 16,
+        "rationale": "Directly cited by actual_earnings_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 17,
+        "rationale": "NO_MATCH: 2026년 1분기 말 별도 일부 기계장치가 차입금 관련 담보로 제공됐다. does not directly prove an allowed primitive; 별도 전체/유형자산 담보 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 18,
+        "rationale": "Directly cited by capacity_supply_response/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 19,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 20,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 21,
+        "rationale": "NO_MATCH: 연결 금융부채 범주 합계는 2026년 1분기 말 36,477,745백만원으로 전기말 40,872,970백만원보다 감소했다. does not directly prove an allowed primitive; 연결 전체/금융부채 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 22,
+        "rationale": "NO_MATCH: REPORTS_JPY_FOREIGN_EXCHANGE_PRETAX_SENSITIVITY does not directly prove an allowed primitive; 별도 전사/전사 환위험 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 23,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER, capacity_supply_response/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 24,
+        "rationale": "NO_MATCH: REPORTS_NET_CASH_CAPITAL_STRUCTURE does not directly prove an allowed primitive; 별도 전사/전사 유동성 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 25,
+        "rationale": "Directly cited by capacity_supply_response/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 26,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 27,
+        "rationale": "NO_MATCH: REPORTS_PARENT_DEFINED_BENEFIT_SURPLUS does not directly prove an allowed primitive; 별도 전사/전사 종업원급여 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 28,
+        "rationale": "Directly cited by actual_earnings_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 29,
+        "rationale": "NO_MATCH: 2026년 1분기 말 연결 일부 기계장치 등이 차입금 관련 담보로 제공됐다. does not directly prove an allowed primitive; 연결 전체/유형자산 담보 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 30,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 31,
+        "rationale": "NO_MATCH: REPORTS_EUR_FOREIGN_EXCHANGE_PRETAX_SENSITIVITY does not directly prove an allowed primitive; 별도 전사/전사 환위험 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 32,
+        "rationale": "Directly cited by actual_earnings_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 33,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 34,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 35,
+        "rationale": "NO_MATCH: 무상할당 배출권 664만tCO2-eq보다 추정 배출량 684만tCO2-eq가 20만tCO2-eq 많다. does not directly prove an allowed primitive; 연결 전체/온실가스 배출권 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 36,
+        "rationale": "NO_MATCH: REPORTS_LONG_TERM_INVESTMENT_DISPOSAL_CASH_RECEIPT does not directly prove an allowed primitive; 연결 전사/전사 금융자산 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 37,
+        "rationale": "NO_MATCH: 회사는 K-IFRS 1118 채택이 순손익을 바꾸지는 않지만 영업손익 계산·보고 방식과 일부 외환·파생상품 손익 표시 위치를 바꿀 수 있다고 평가했다. does not directly prove an allowed primitive; Corporate/Financial reporting scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 38,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 39,
+        "rationale": "NO_MATCH: 기업공시서식 기준 때문에 분기보고서의 경영진단 및 분석의견 하위 항목들이 기재되지 않았다. does not directly prove an allowed primitive; Corporate/Management reporting scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 40,
+        "rationale": "NO_MATCH: REPORTS_CNY_FOREIGN_EXCHANGE_PRETAX_SENSITIVITY does not directly prove an allowed primitive; 별도 전사/전사 환위험 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 41,
+        "rationale": "Directly cited by hbm_product_profile/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 42,
+        "rationale": "Directly cited by capacity_supply_response/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 43,
+        "rationale": "NO_MATCH: plans process transition and AI-memory portfolio expansion does not directly prove an allowed primitive; DRAM/SOCAMM2 and GDDR7 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 44,
+        "rationale": "NO_MATCH: 2026년 1분기 감사보고서와 연결감사보고서는 삼정회계법인의 적정의견이며 표상 추가 제한사항은 모두 해당사항 없음이다. does not directly prove an allowed primitive; Corporate/Financial reporting scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 45,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 46,
+        "rationale": "NO_MATCH: 연결 금융자산 범주 합계는 2026년 1분기 말 111,742,418백만원으로 전기말 69,804,530백만원보다 증가했다. does not directly prove an allowed primitive; 연결 전체/금융자산 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 47,
+        "rationale": "NO_MATCH: plans to expand product supply does not directly prove an allowed primitive; DRAM/LPDDR6 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 48,
+        "rationale": "NO_MATCH: developed server-memory module does not directly prove an allowed primitive; DRAM/DDR5 RDIMM scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 49,
+        "rationale": "NO_MATCH: was not independently verified and carries no accuracy or completeness warranty does not directly prove an allowed primitive; Corporate/Issuer-wide information quality scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 50,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 51,
+        "rationale": "NO_MATCH: began mass production and plans full-scale supply does not directly prove an allowed primitive; DRAM/SOCAMM2 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 52,
+        "rationale": "NO_MATCH: reported total annual dividend per share does not directly prove an allowed primitive; Corporate/Issuer-wide capital allocation scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 53,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 54,
+        "rationale": "Directly cited by capacity_supply_response/SUPPORT, package_substrate_sympathy/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 55,
+        "rationale": "Directly cited by actual_earnings_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 56,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER, capacity_supply_response/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 57,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 58,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 59,
+        "rationale": "NO_MATCH: 2026년 1분기 말 주요 차입금 계약의 부채비율·담보채무비율 조건을 준수했다. does not directly prove an allowed primitive; 연결 전체/차입금 약정 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 60,
+        "rationale": "NO_MATCH: REPORTS_CONSOLIDATED_DEFINED_BENEFIT_SURPLUS does not directly prove an allowed primitive; 연결 전사/전사 종업원급여 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 61,
+        "rationale": "Directly cited by margin_fcf_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 62,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 63,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 64,
+        "rationale": "NO_MATCH: REPORTS_DEBT_COVENANT_COMPLIANCE does not directly prove an allowed primitive; 별도 전사/전사 자금조달 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 65,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 66,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 67,
+        "rationale": "Directly cited by capacity_supply_response/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 68,
+        "rationale": "Directly cited by margin_fcf_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 69,
+        "rationale": "NO_MATCH: REPORTS_LEVEL_THREE_LONG_TERM_INVESTMENT_FAIR_VALUE does not directly prove an allowed primitive; 연결 전사/전사 금융자산 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 70,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER, conventional_memory_drag/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 71,
+        "rationale": "Directly cited by capacity_supply_response/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 72,
+        "rationale": "Directly cited by actual_earnings_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 73,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER, conventional_memory_drag/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 74,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 75,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER, capacity_supply_response/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 76,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 77,
+        "rationale": "Directly cited by actual_earnings_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 78,
+        "rationale": "NO_MATCH: APPROVED_ANNUAL_DIVIDEND_REMAINING_UNPAID_AT_QUARTER_END does not directly prove an allowed primitive; 별도 전체/현금배당 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 79,
+        "rationale": "Directly cited by memory_price_increase_mentioned/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 80,
+        "rationale": "NO_MATCH: REPORTS_REMAINING_EXCHANGEABLE_BOND_BALANCE_AND_SHARES does not directly prove an allowed primitive; 연결 전사/전사 자금조달 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 81,
+        "rationale": "NO_MATCH: may differ materially from actual future performance does not directly prove an allowed primitive; Corporate/Issuer-wide information quality scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 82,
+        "rationale": "NO_MATCH: HEDGES_FLOATING_RATE_BORROWINGS_WITH_SWAPS does not directly prove an allowed primitive; 별도 전체/변동금리 차입금 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 83,
+        "rationale": "NO_MATCH: expects continued demand expansion does not directly prove an allowed primitive; Memory/HBM and server DRAM scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 84,
+        "rationale": "NO_MATCH: REPORTS_OFFICE_SALE_AND_LEASEBACK_TERMS does not directly prove an allowed primitive; 별도 전사/전사 부동산 리스 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 85,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 86,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER, capacity_supply_response/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 87,
+        "rationale": "Directly cited by capacity_supply_response/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 88,
+        "rationale": "NO_MATCH: 2026년 1분기 연결 배출부채는 기초 4,359백만원에서 4,221백만원을 환입해 기말 138백만원으로 감소했다. does not directly prove an allowed primitive; 연결 전체/온실가스 배출부채 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 89,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 90,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 91,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 92,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 93,
+        "rationale": "NO_MATCH: 중간 연결재무제표에는 연차 연결재무제표가 요구하는 모든 재무위험관리 및 공시사항이 포함되지 않는다. does not directly prove an allowed primitive; Corporate/Financial reporting scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 94,
+        "rationale": "Directly cited by capacity_supply_response/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 95,
+        "rationale": "NO_MATCH: 별도 부채비율은 43.97%에서 33.89%로 하락했고 2026년 1분기 말 순차입금비율은 부의 값이라 표시하지 않았다. does not directly prove an allowed primitive; 별도 전체/자본구조 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 96,
+        "rationale": "Directly cited by memory_price_increase_mentioned/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 97,
+        "rationale": "Directly cited by margin_fcf_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 98,
+        "rationale": "NO_MATCH: 2026년 1분기 말 연결 외화 금융자산과 부채는 USD·JPY·CNY·EUR별로 큰 순노출 차이를 보였다. does not directly prove an allowed primitive; 연결 전체/외화 금융상품 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 99,
+        "rationale": "NO_MATCH: 2026년 1분기 말 위험회피수단으로 지정된 파생상품의 공정가치 변동은 모두 효과적이어서 전액 기타포괄손익으로 인식됐다. does not directly prove an allowed primitive; 연결 전체/파생상품 위험회피 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 100,
+        "rationale": "NO_MATCH: REPORTS_EXCHANGEABLE_BOND_EXERCISE does not directly prove an allowed primitive; 연결 전사/전사 자금조달 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 101,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 102,
+        "rationale": "NO_MATCH: REPORTS_REVENUE_FROM_CUSTOMER_A_ABOVE_TEN_PERCENT does not directly prove an allowed primitive; 연결 반도체/메모리 매출 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 103,
+        "rationale": "NO_MATCH: reports customer demand exceeding supply capability does not directly prove an allowed primitive; Memory/Memory scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 104,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT, shipment_or_revenue_mix/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 105,
+        "rationale": "NO_MATCH: reported total annual dividend amount does not directly prove an allowed primitive; Corporate/Issuer-wide capital allocation scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 106,
+        "rationale": "NO_MATCH: 잔존 교환사채에는 2027년 4월 11일 투자자 put option과 2028년 4월 25일부터 조건부 발행자 call option이 존재한다. does not directly prove an allowed primitive; 연결 전체/해외 교환사채 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 107,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER, conventional_memory_drag/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 108,
+        "rationale": "NO_MATCH: REPORTS_REVENUE_FROM_CUSTOMER_B_ABOVE_TEN_PERCENT does not directly prove an allowed primitive; 연결 반도체/메모리 매출 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 109,
+        "rationale": "NO_MATCH: 기능통화 대비 외화환율 10% 상승 시 세전손익 영향은 USD +2,953,682백만원, JPY +409,171백만원, CNY -23,135백만원, EUR -51,622백만원으로 제시됐다. does not directly prove an allowed primitive; 연결 전체/외화 금융상품 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 110,
+        "rationale": "NO_MATCH: REPORTS_CASH_AND_CASH_EQUIVALENTS_NET_INCREASE does not directly prove an allowed primitive; 연결 전사/전사 유동성 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 111,
+        "rationale": "NO_MATCH: is subject to incomplete external review and possible change does not directly prove an allowed primitive; Corporate/Issuer-wide information quality scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 112,
+        "rationale": "NO_MATCH: REPORTS_EXCHANGEABLE_BOND_EMBEDDED_DERIVATIVE_LIABILITY does not directly prove an allowed primitive; 별도 전사/전사 자금조달 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 113,
+        "rationale": "NO_MATCH: REPORTS_ONE_HUNDRED_BASIS_POINT_INTEREST_RATE_SENSITIVITY does not directly prove an allowed primitive; 별도 전사/전사 자금조달 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 114,
+        "rationale": "NO_MATCH: is subject to incomplete external review and possible change does not directly prove an allowed primitive; Corporate/Issuer-wide information quality scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 115,
+        "rationale": "NO_MATCH: 공급자금융약정에 참여 중이나 2026년 1분기 말 관련 단기차입금은 없다. does not directly prove an allowed primitive; 연결 전체/공급자금융 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 116,
+        "rationale": "NO_MATCH: REPORTS_INTANGIBLE_ASSET_ADDITION does not directly prove an allowed primitive; 연결 전사/전사 무형자산 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 117,
+        "rationale": "NO_MATCH: announced additional dividend per share does not directly prove an allowed primitive; Corporate/Issuer-wide capital allocation scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 118,
+        "rationale": "Directly cited by actual_earnings_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 119,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 120,
+        "rationale": "Directly cited by margin_fcf_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 121,
+        "rationale": "Directly cited by actual_earnings_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 122,
+        "rationale": "NO_MATCH: 2026년 3월 25일 결의로 주식발행초과금 3,604,391백만원과 감자차익 479,244백만원이 이익잉여금으로 전입됐다. does not directly prove an allowed primitive; Corporate/Capital allocation scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 123,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 124,
+        "rationale": "NO_MATCH: 별도 연구개발비 총지출은 2026년 1분기 2,297,080백만원으로 전년 동기 1,396,595백만원보다 컸다. does not directly prove an allowed primitive; Corporate/Corporate research and development scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 125,
+        "rationale": "NO_MATCH: reported net cash position does not directly prove an allowed primitive; Corporate/Issuer-wide liquidity scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 126,
+        "rationale": "NO_MATCH: REPORTS_TREASURY_SHARE_RETIREMENT does not directly prove an allowed primitive; 별도 전사/주주환원 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 127,
+        "rationale": "Directly cited by actual_earnings_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 128,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 129,
+        "rationale": "Directly cited by hbm_product_profile/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 130,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 131,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 132,
+        "rationale": "Directly cited by actual_earnings_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 133,
+        "rationale": "NO_MATCH: entered full-scale mass production does not directly prove an allowed primitive; DRAM/DDR5 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 134,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER, conventional_memory_drag/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 135,
+        "rationale": "Directly cited by actual_earnings_conversion/SUPPORT, shipment_or_revenue_mix/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 136,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 137,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 138,
+        "rationale": "NO_MATCH: REPORTS_DEBT_REPAYMENT_CASH_OUTFLOW does not directly prove an allowed primitive; 연결 전사/전사 자금조달 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 139,
+        "rationale": "NO_MATCH: 변동금리 차입금 480,469백만원 상당을 통화이자율·이자율 스왑으로 헤지해 해당 차입금의 분기 세전이익 금리 변동을 없앴다. does not directly prove an allowed primitive; 연결 전체/금리위험 헤지 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 140,
+        "rationale": "NO_MATCH: 연결 현금및현금성자산 등은 54,329,761백만원, 차입금은 19,317,665백만원, 부채비율은 35.56%였고 순차입금비율은 부의 값이라 표시하지 않았다. does not directly prove an allowed primitive; 연결 전체/자본구조 scope is not promoted to HBM contract, allocation, qualification, valuation, or economics.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 141,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 142,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER, conventional_memory_drag/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 143,
+        "rationale": "Directly cited by capacity_supply_response/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 144,
+        "rationale": "Directly cited by hbm_product_profile/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 145,
+        "rationale": "Directly cited by hbm_product_profile/SUPPORT, shipment_or_revenue_mix/SUPPORT. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 146,
+        "rationale": "Directly cited by margin_fcf_conversion/COUNTER. Scope and attribution limits in the fact are preserved.",
+        "status": "MAPPED"
+      }
+    ],
+    "mapping_complete": true,
+    "mappings": [
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          0,
+          1,
+          2,
+          9,
+          10,
+          12,
+          20,
+          26,
+          33,
+          34,
+          38,
+          45,
+          62,
+          63,
+          65,
+          74,
+          76,
+          85,
+          92,
+          101,
+          104,
+          123,
+          128,
+          135
+        ],
+        "primitive_id": "actual_earnings_conversion",
+        "semantic_rationale": "Realized revenue, profit, EPS, growth, or HBM-linked sales rows directly evidence actual earnings conversion; consolidated and mixed-basket rows remain explicitly non-HBM-only."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          16,
+          28,
+          32,
+          55,
+          72,
+          77,
+          118,
+          121,
+          127,
+          132
+        ],
+        "primitive_id": "actual_earnings_conversion",
+        "semantic_rationale": "Non-operating valuation, FX, dividend, disposal, derivative, or weak regional-profit rows directly counter the quality and HBM attribution of reported earnings."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          6,
+          11,
+          61,
+          68,
+          97,
+          120
+        ],
+        "primitive_id": "margin_fcf_conversion",
+        "semantic_rationale": "Reported margin, operating cash flow, receivable aging, and inventory-turnover rows directly support margin or cash-conversion quality without assigning company-wide cash to HBM."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          3,
+          19,
+          23,
+          30,
+          50,
+          53,
+          56,
+          57,
+          58,
+          66,
+          70,
+          73,
+          75,
+          86,
+          89,
+          90,
+          91,
+          107,
+          119,
+          130,
+          131,
+          134,
+          136,
+          137,
+          141,
+          142,
+          146
+        ],
+        "primitive_id": "margin_fcf_conversion",
+        "semantic_rationale": "Cash costs, capex, depreciation, working-capital growth, provisions, leases, and non-operating cash items directly counter margin or FCF conversion; none is recast as HBM-only."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          13,
+          18,
+          25,
+          42,
+          54,
+          67,
+          71,
+          143
+        ],
+        "primitive_id": "capacity_supply_response",
+        "semantic_rationale": "Current utilization and disclosed supply, packaging, portfolio-reallocation, fab, and investment plans directly evidence a supply response while preserving plan-versus-completed and memory-versus-HBM limits."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          23,
+          56,
+          75,
+          86,
+          87,
+          94
+        ],
+        "primitive_id": "capacity_supply_response",
+        "semantic_rationale": "Actual capex, depreciation, and production-asset growth directly evidence the cash and capital-intensity counter-side of supply response without claiming HBM-only capacity."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          54
+        ],
+        "primitive_id": "package_substrate_sympathy",
+        "semantic_rationale": "The named Cheongju and Indiana advanced-packaging preparation plan directly matches the advanced-packaging primitive, without inferring numerical capacity or allocation."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          13,
+          41,
+          129,
+          144,
+          145
+        ],
+        "primitive_id": "hbm_product_profile",
+        "semantic_rationale": "HBM generation, custom-product preparation, product execution, ASIC collaboration, and HBM4 production rows directly describe the HBM product profile; no qualification or contract is inferred."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          104,
+          135,
+          145
+        ],
+        "primitive_id": "shipment_or_revenue_mix",
+        "semantic_rationale": "HBM inclusion in current high-value sales, realized HBM sales growth, and current HBM4 mass production directly match shipment or revenue-mix evidence, with no invented mix percentage."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          79,
+          96
+        ],
+        "primitive_id": "memory_price_increase_mentioned",
+        "semantic_rationale": "The disclosed DRAM pricing outlook and current statement that HBM led price increases directly match the memory-price primitive; forecast and actual remain separated."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          70,
+          73,
+          107,
+          134,
+          142
+        ],
+        "primitive_id": "conventional_memory_drag",
+        "semantic_rationale": "Inventory allowances, wafer-work-in-process loss provision, and rising memory or consolidated inventory directly evidence conventional-memory working-capital drag, not HBM inventory."
+      }
+    ],
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "c06b49d1f207c0d4367192d844e0a54d6f85449ad4ad89a32166124c3cccfed1",
+  "production_score_authority": false,
+  "prompt_hash": "6708571c1ea07f669c1af923c9113eae021647a45de3d737a35227759ac9fa13",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e63bc5881695da9e2dd4bea2bfd2d90114d62139fafefcb21b0f0f7607946e9c",
+  "response_id": "COLLABRESP-a5061146b093b7d897a87580fc40ff6ef42f8985dc0cd5e1dfca5b01f38f58db",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

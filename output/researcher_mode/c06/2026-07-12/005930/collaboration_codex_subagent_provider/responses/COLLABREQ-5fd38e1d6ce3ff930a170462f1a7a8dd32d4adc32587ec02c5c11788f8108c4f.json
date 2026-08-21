@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "490110d92341a79daf7e8a281153aa7d96072ebe37f4354e685b7d607c29eb92",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-611fd02cdc118d46b4d92c7e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-8cc7958e400a98d78b8c9c82",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-ae555ebee84749057cf20b6b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-e831ff8df07bb5842b7f9955",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-6a6c57dd620032347a13eade",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-63fb5fa094c53360e54ae635",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-94edb36e4ca2c3844763509f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-e890d1b5133fba7ceecdc514",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-673e6baca352609b754215c3",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-e3dee90a1885f60d4058704f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-7bd59478abf93dbe7fff04cc",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-32c20ef9690951c7224f9796",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0,
+        "rationale": "문서 제목·URL이 2026-07-12 cutoff 이후 발행 또는 예정 시점을 가리켜 당시 판단에 사용할 수 없는 미래누수 경로다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "ec16bdf1c7a704839788e16ed6584be500994bfbf27abc5d38cc4382dd6ea181",
+  "production_score_authority": false,
+  "prompt_hash": "321a62aa24811a5b3a97832df64964613c070bdaa06e9e4886794792ee760f88",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5fd38e1d6ce3ff930a170462f1a7a8dd32d4adc32587ec02c5c11788f8108c4f",
+  "response_id": "COLLABRESP-498c25b4278f83396936d7e064bfe02f7f717b63d996891c7e1b4051068cdea0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

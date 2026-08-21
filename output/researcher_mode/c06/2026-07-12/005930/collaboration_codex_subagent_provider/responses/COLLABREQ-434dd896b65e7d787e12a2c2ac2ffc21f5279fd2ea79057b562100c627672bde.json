@@ -1,0 +1,96 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-fd17d16b0f45895852b9c077",
+        "rationale": "기사 본문을 prior254와 전수 대조했다. 잠정 전사실적, 메모리 이익 추정, 가격·수익성, 사업부 미공개 사실은 이미 수용된 current facts와 중복이므로 제외하고, 삼성전자를 포함한 주요 3사의 웨이퍼 생산능력 확대 효과가 2028년에야 본격화된다는 distinct 공급 시계열 한 건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-fd3ff8d02ad0e3fd29ac7dfa",
+        "rationale": "2026년 1분기 issuer earnings presentation 전체를 prior254와 대조했으며 메모리 매출 74.8조원, 전분기·전년동기 성장, DS 실적, ASP·고부가 제품, 전사 현금흐름과 설비투자는 동일 공식 공시 또는 current facts에 이미 수용돼 있다. 외부검토 전이라는 당시 한계도 5월 공시로 후속 검증돼 current/open fact가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-feba81136e646b13f025fc0b",
+        "rationale": "2025년 3분기 issuer earnings presentation을 전수 검토했으나 메모리 매출 26.7조원과 26% QoQ·20% YoY, HBM3E·서버 제품, DRAM ASP 및 당시 현금흐름은 prior254의 presentation·script 계열 facts로 모두 accounting돼 있다. 이후 분기 실적에 대체된 전망과 반복 표를 새 fact로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-fff9c46ea04245ce54c56fcc",
+        "rationale": "2025년 4분기 한국어 컨퍼런스콜 전체를 prior254와 대조했다. 4분기 메모리 실적·DRAM ASP, HBM4 qualification·출하·PO·매출 전망, 2026~2027 수급·다년계약·CAPEX는 동일 issuer 영문 원문 또는 더 최신 2026년 1분기 자료에서 이미 수용됐다. 전사 FCF·주주환원은 메모리 귀속을 발명하지 않기 위해 objective-local fact로 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-fd17d16b0f45895852b9c077",
+        "economic_mechanism": "삼성전자를 포함한 주요 메모리 3사의 웨이퍼 생산능력 확대 효과가 2028년에야 본격화될 것이라는 전망은 단기 공급부족과 가격·이익 지속성을 지지하지만, AI 수요 지속을 전제로 한다.",
+        "exact_quote": "카운터포인트리서치는 AI 기반 수요가 지속될 경우 메모리 가격이 2027년에도 하락하기 어려울 것으로 전망했다. 주요 메모리 3사의 웨이퍼 아웃 기준 생산능력 확대 효과도 2028년에야 본격화될 것으로 예상돼 단기간 내 공급 부족이 해소되기는 쉽지 않다는 분석이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 current facts가 주로 2027년 수급을 다루는 데 비해, 삼성전자를 포함한 공급자들의 증설 효과가 실제로 나타나는 시점을 2028년으로 제시해 이익 지속 기간을 한 단계 더 구체화한다. AI 수요 지속이라는 원문의 조건은 그대로 보존했다.",
+        "mechanism_scope_id": "005930:MEMORY:INDUSTRY_CAPACITY_EXPANSION:2028",
+        "normalized_object": "주요 메모리 3사의 웨이퍼 생산능력 확대 효과 본격화 시점",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2028",
+        "predicate": "카운터포인트리서치는 삼성전자를 포함한 주요 메모리 3사의 웨이퍼 생산능력 확대 효과가 2028년에야 본격화될 것으로 예상했다.",
+        "predicate_family": "MEMORY_CAPACITY_EXPANSION_EFFECT_HORIZON",
+        "primitive_tags": [
+          "MEMORY_CAPACITY",
+          "SUPPLY_SHORTAGE",
+          "EARNINGS_DURABILITY"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_CAPACITY_EXPANSION_EFFECT_HORIZON",
+        "question_family_tags": [
+          "MEMORY_CAPACITY_EXPANSION_EFFECT_HORIZON",
+          "MEMORY_SUPPLY_SHORTAGE_DURATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자를 포함한 주요 메모리 3사의 생산능력 확대 효과",
+        "subject_id": "005930:MEMORY_INDUSTRY_CAPACITY",
+        "unit": "year",
+        "value": 2028
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "cd0ca0dc68bc67aef8a8afa1a42ee328b24a4b087652c572b08d8a670f25c21d",
+  "production_score_authority": false,
+  "prompt_hash": "9279d18f85422c0a7916048f126c8d85ace76bbe0d694cbcd03908e4293976b8",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-434dd896b65e7d787e12a2c2ac2ffc21f5279fd2ea79057b562100c627672bde",
+  "response_id": "COLLABRESP-f864fffcc5d4879fcfdd248de6e103824ad1537698d47cc1a5abb3635fc8c382",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

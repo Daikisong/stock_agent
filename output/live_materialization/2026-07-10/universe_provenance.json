@@ -1,0 +1,63 @@
+{
+  "as_of_date": "2026-07-10",
+  "blockers": [],
+  "eligible_universe_hash": "c761cec40da23647ddade4d2dbf4a38dd71b782eb7d40ec557fe35f325349f7b",
+  "raw_universe_hash": "610fedfa6fa5f17099d535b3bb36c3936166ca49fa0563263d55c629e6e21520",
+  "request_attempts": [
+    {
+      "canonical_url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_isu_base_info?basDd=20260710",
+      "content_hash": "82c0031bc13af348ac1e1304aca28f309632975110f2508534e93216791dfa90",
+      "effective_date": "2026-07-10",
+      "error_category": null,
+      "fetched_at": "2026-07-10T17:33:12+00:00",
+      "market": "KOSPI",
+      "provider_request_id": "KRXREQ-daab9411ebbeeb7025ce0835",
+      "request_id": "KRXREQ-daab9411ebbeeb7025ce0835",
+      "row_count": 0,
+      "rows": null,
+      "status": "FETCHED"
+    },
+    {
+      "canonical_url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_isu_base_info?basDd=20260710",
+      "content_hash": "82c0031bc13af348ac1e1304aca28f309632975110f2508534e93216791dfa90",
+      "effective_date": "2026-07-10",
+      "error_category": null,
+      "fetched_at": "2026-07-10T17:33:12+00:00",
+      "market": "KOSDAQ",
+      "provider_request_id": "KRXREQ-eeacdbec255eb45e3f03d1ce",
+      "request_id": "KRXREQ-eeacdbec255eb45e3f03d1ce",
+      "row_count": 0,
+      "rows": null,
+      "status": "FETCHED"
+    },
+    {
+      "canonical_url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_isu_base_info?basDd=20260709",
+      "content_hash": "294ce27d06b1ec6440b1daed20dbb15cb8ad89f7b59e9a33c508711154bdefbe",
+      "effective_date": "2026-07-09",
+      "error_category": null,
+      "fetched_at": "2026-07-10T17:33:12+00:00",
+      "market": "KOSPI",
+      "provider_request_id": "KRXREQ-65cbbf63681bbc54172e6698",
+      "request_id": "KRXREQ-65cbbf63681bbc54172e6698",
+      "row_count": 945,
+      "rows": null,
+      "status": "FETCHED"
+    },
+    {
+      "canonical_url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_isu_base_info?basDd=20260709",
+      "content_hash": "d902ae0511d1028cd26623244137afe952c153443aff9cc21e1395878205c3a4",
+      "effective_date": "2026-07-09",
+      "error_category": null,
+      "fetched_at": "2026-07-10T17:33:13+00:00",
+      "market": "KOSDAQ",
+      "provider_request_id": "KRXREQ-cbf554e34709654f99848f1e",
+      "request_id": "KRXREQ-cbf554e34709654f99848f1e",
+      "row_count": 1820,
+      "rows": null,
+      "status": "FETCHED"
+    }
+  ],
+  "schema_version": "e2r_live_krx_universe_provenance_v1",
+  "source_effective_date": "2026-07-09",
+  "status": "CURRENT_UNIVERSE_MATERIALIZATION_PASS"
+}

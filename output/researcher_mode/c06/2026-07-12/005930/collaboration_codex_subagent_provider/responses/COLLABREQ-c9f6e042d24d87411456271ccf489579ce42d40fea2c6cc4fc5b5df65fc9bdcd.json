@@ -1,0 +1,39 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3461c5b7b3212a3c026daf0e",
+        "rationale": "2026년 3월 31일 연결 재무상태표는 전사 자산·부채·자본의 기간말 잔액만 제시한다. 현재 eps_fcf_explosion objective에 직접 필요한 메모리/HBM 귀속 손익·현금흐름, 전분기 실적 성장률 또는 수치형 forward guidance는 포함하지 않는다. 전사 현금·재고·유형자산 잔액이나 전기말 대비 변화를 메모리 EPS·FCF의 분기 성장 또는 전망으로 재해석하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "이 재무상태표는 eps_fcf_explosion의 QOQ_GROWTH 또는 FORWARD_GUIDANCE structured 역할을 충족하지 않는다."
+    ]
+  },
+  "payload_hash": "498f94f0b209517e5a9d86a298c4549f9c6a2123a062569b83850b0d0043a395",
+  "production_score_authority": false,
+  "prompt_hash": "285fa2a8b2500c325ca2dd667f5a014fe3bf33886255741f0e3ff8412b1b9bf9",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c9f6e042d24d87411456271ccf489579ce42d40fea2c6cc4fc5b5df65fc9bdcd",
+  "response_id": "COLLABRESP-2c1468a1ad6301f778b24e875be73d0677001afde98c6f3a36b10c7aaa6c8f26",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

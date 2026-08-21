@@ -1,0 +1,54 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      6.0,
+      7.8
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23의 6.84~8.74 ordinal 밴드 하단과 현재 증거가 가장 가깝다. 메모리 100% 가동과 HBM 가격 상승은 지지하지만 HBM 전용 장기 CAPA 잠김은 아니다.",
+      "ORDTRANSFER-9205e8ab347aff38184b148a의 4.48~6.38 밴드보다는 강하다. 다만 고객 집중과 재고·재공품 위험 때문에 positive 앵커의 중심 이상으로 올릴 근거는 부족하다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332"
+    ],
+    "disagreements": [
+      "현재 분기 병목 신호는 인정하지만 이를 장기 구조적 쇼티지 또는 HBM 전용 공급 잠김으로 확대하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "proposed_points": 6.9,
+    "rationale": "현재 메모리 설비 100% 가동과 HBM의 가격 상승 주도는 병목·가격 강도의 직접 신호다. 동시에 이 가동률은 HBM 전용이 아니고 장기 고정가격·취소불가 물량·RPO·sold-out 기간이 없다. 고객 집중, 재고평가충당금, 재공품 계약손실을 함께 반영하면 weak 앵커보다 높되 medium positive 앵커 하단에 가까운 6.9점이 균형적이다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-acae6dd071cb2075b264bc92"
+    ],
+    "why_not_higher": "HBM 전용 CAPA·가동률·배정 물량과 장기 고정가격·취소불가 계약이 없고 고객 집중 및 재고·재공품 손실 위험이 있기 때문이다.",
+    "why_not_lower": "실제 100% 가동과 HBM 가격 상승 주도라는 서로 보완적인 현재 positive facts가 있어 병목 신호가 단순 전망에 머물지 않기 때문이다."
+  },
+  "payload_hash": "c19dc5360cfdf5af60334dbef60262e27f47453915f8413c8bfc74918f8c3c02",
+  "production_score_authority": false,
+  "prompt_hash": "678dd79bf412808e832f7838da3c7cb230f7a76e8165c578672fdbfb3373e377",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-726302efd7f301d45178f5e90467ae827c231d01b5cab4a411f3a5fb12885522",
+  "response_id": "COLLABRESP-4856bf45c40c0691c4c3981f53c197d23f34d409d1a937ddb1df72d4608e911a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

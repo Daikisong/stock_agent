@@ -1,0 +1,70 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-c286456474ef4dd27ba02f2c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 제품·지원·사업 페이지이지만 현재 HBM·메모리 earnings visibility의 날짜 있는 실적·계약·CAPA 원문이 아니거나 사업 범위가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-c33d1ea9d04182416904c923",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "법률·쿠키·윤리·지속가능성 안내 페이지로 HBM·메모리 실적, 고객 약정, CAPA나 수익성의 현재 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c3aee6a423daed7ab3c52139",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 제품·지원·사업 페이지이지만 현재 HBM·메모리 earnings visibility의 날짜 있는 실적·계약·CAPA 원문이 아니거나 사업 범위가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-c447870ec4a3ccc06ff7b3c8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 제품·지원·사업 페이지이지만 현재 HBM·메모리 earnings visibility의 날짜 있는 실적·계약·CAPA 원문이 아니거나 사업 범위가 다르다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "8dad51df80292b6b8bca4f10c48e73948a5d5277e87a74536994396d956cfef7",
+  "production_score_authority": false,
+  "prompt_hash": "dd3292db9964bf52f3d0574467637c2af4f2e66ae28f3ffb390f47353c735927",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e6348fecc209ca8c2f47c609053fef23b5936812fa33c1f5494fe3110c4cb577",
+  "response_id": "COLLABRESP-25536dec503358c25b8b7eb4e01db2599d51d1476da1ca6ddc6ba8184a185fd5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

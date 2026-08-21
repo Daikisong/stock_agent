@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "5f8a475fdee5406c09e33688c77d936238d26a72ed0c7983f4ab482f15500289",
+  "payload": {
+    "allowed_range": [
+      16.8,
+      18.7
+    ],
+    "anchor_comparisons": [
+      "positive ordinal anchor 18.05~19.0점은 완판·가동률·실현가격이 함께 있는 강한 병목 기준이다. 현재 증거는 그 구조와 가깝지만 전용 CAPA가 없어 상단을 남긴다.",
+      "counter ordinal anchor도 동일한 18.05~19.0점 구간이라 역할만으로 강도를 구분하지 못한다. 따라서 현재 facts의 방향과 메커니즘으로 별도 감액한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0b6b02299ea60f931cf17c4e",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-cc2cfc3b24f0987278efc0b7",
+      "EFACT-f05a97edeb8f85d49353381e"
+    ],
+    "disagreements": [
+      "research memo midpoint 17.3보다 가동률·완판·가격 프리미엄의 동시 확인을 더 반영해 18.0을 제안한다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-054f760d026b470c39e27df1"
+    ],
+    "proposed_points": 18.0,
+    "rationale": "공시 시간 기준 100% 가동률, HBM4 완판, 낮은 재고와 공급 충족률, 고객수요 초과가 실제 공급 여유 부족을 보여준다. 범용 D램 가격 58~63% 상승, 고속 HBM4 프리미엄과 HBM 투입에 따른 범용 공급 감소가 병목의 가격 전환을 확인한다. 현재 경제 강도는 최대점에 가깝지만 HBM 전용 처리량 부재로 여지를 둔다.",
+    "support_fact_ids": [
+      "EFACT-13d6da3b116a9a0ad8043f62",
+      "EFACT-1df441a716b0204f7b107e70",
+      "EFACT-477c6cb45b164685a2a345e8",
+      "EFACT-4e0d88dc056c9e8dcd45ea47",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-a2243488e8b8f0197fd8bd56",
+      "EFACT-b676fc3afacb1117c1ba65be",
+      "EFACT-fd86be3f3b91aa151f046cfb"
+    ],
+    "why_not_higher": "시간 가동률은 HBM 전용 웨이퍼·수율·패키징 처리량이 아니며 가격 둔화와 증설 대응, 가격 의존 위험이 남는다.",
+    "why_not_lower": "완판, 100% 시간 가동률, 타이트한 재고·낮은 공급 충족률, 실제 가격 급등과 HBM4 프리미엄이 병목을 독립적으로 확인한다."
+  },
+  "payload_hash": "f60ad7113a79bec830bd7931ab0f0ab6b84d6cc1f096444633fc73b185d10ce9",
+  "production_score_authority": false,
+  "prompt_hash": "9f2f707b0e0c8e92940e91584426b6ef71123378dcc35d9096c4584f133277c4",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-95b04eac2a4f66eda30b8138d175a5f39fb982aa6712584149a836997d7fc3a3",
+  "response_id": "COLLABRESP-574d58153a2c03ec7272fb4a025f51b9b780d8e5776adb888a3a38992ec245ab",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

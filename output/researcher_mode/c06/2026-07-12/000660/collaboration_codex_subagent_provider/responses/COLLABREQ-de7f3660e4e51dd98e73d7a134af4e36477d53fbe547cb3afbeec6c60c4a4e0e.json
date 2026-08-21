@@ -1,0 +1,58 @@
+{
+  "output_schema_hash": "c08969c69eea105be261755d0723986860ec16cd557529ba67c15b40652e406a",
+  "payload": {
+    "allowed_range": [
+      2.4,
+      3.4
+    ],
+    "anchor_comparisons": [
+      "1.5~2.0점 COUNTER WEAK anchor보다 현재 공식 HBM 사실은 강하지만, 정보 제한 counterfacts가 광범위해 강한 확신으로 이동하기 어렵다.",
+      "4.75~5.0점 COUNTER STRONG anchor가 상징하는 고점 확신과 비교하면 단일 issuer 집중, 비검증 release, 계약·segment 공백 때문에 현저히 낮아야 한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-a943dca289563cc8583d4b78",
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-dcd0816b6ba04c76c69e7a4b",
+      "EFACT-e2b5d15b4400874c34e4f2a2",
+      "EFACT-fc43dd3418fa06939957246d"
+    ],
+    "disagreements": [
+      "네 개 issuer 발표를 네 개의 독립 확인으로 세는 데 동의하지 않는다. 동일 source group의 실행 서술이며 고객·감사·계약 원문 검증이 빠져 있다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-90c2b7d4695e62e277703a64",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "proposed_points": 2.9,
+    "rationale": "다섯 counterfacts를 반영하면 정보의 양과 검증 독립성은 다르다. 실적자료는 별도 독립 검증이 없고 물량·가격은 월·분기 합의이며, 단일 사업부문 공시로 HBM 재무 분해가 불가능하다. 브로커 FY2026 매출 수치의 내부 불일치와 forward statements의 실현 위험도 남는다. 네 support facts는 중요하지만 동일 issuer independence group에 집중된다.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-a74dac2b9e727f8592e52c41",
+      "EFACT-b74e88a671a1247b0ce230d5",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "HBM별 계약·물량·가격·마진과 독립 인증이 없고 비검증·내부 불일치가 함께 있어 strong confidence band를 지지하지 않는다.",
+    "why_not_lower": "공식 자료가 HBM4 양산과 성능요구 충족, HBM 매출 성장, 공급 논의를 구체적으로 명시하므로 정보가 없는 weak 사례는 아니다."
+  },
+  "payload_hash": "904dc59ffa50a31d78f228642d0d1efb7c00993399a95fd1e02a67a28155b72b",
+  "production_score_authority": false,
+  "prompt_hash": "34f7c67702ac95e39a5716a1fd59ad9d38728a954d0b15a7b8b7ff72ac2f75de",
+  "provenance": {
+    "agent_id": "root-phase101-c06-judge-info-S",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_judge_info-S",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-de7f3660e4e51dd98e73d7a134af4e36477d53fbe547cb3afbeec6c60c4a4e0e",
+  "response_id": "COLLABRESP-586459293974d3e00f7e97f965155adbe1171436bffb20cd057f3a2dfd0317d8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

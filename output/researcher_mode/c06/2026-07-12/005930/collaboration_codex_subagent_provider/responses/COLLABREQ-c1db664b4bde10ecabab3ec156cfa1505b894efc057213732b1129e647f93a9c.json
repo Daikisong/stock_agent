@@ -1,0 +1,143 @@
+{
+  "output_schema_hash": "ef8bec05eaff9d5b655423cb2213c766fce65996f07820e6913fb7fecb29d3fe",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-658ae019fa727bff186915d6",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.96,
+        "rationale": "삼성전자 공식 IR의 earnings-release landing page로서 최신 잠정실적 원문과 후속 문서를 발견할 수 있는 직접 경로다. 메타데이터가 희소해도 원문 landing page는 material route이며, 실제 수치와 컷오프는 full fetch에서 검증해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-982685af58de726eb0d7ed53",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "일반 기업정보 포털 landing page로 2Q26 잠정실적 원문을 특정하지 않고 요청된 KIND·OPENDART·issuer family 소유자도 아니다. material source route로 선택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2169cefe570e2a174acc32d1",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.87,
+        "rationale": "삼성전자 2Q26 DRAM·NAND의 B/G와 ASP를 분리한 분석을 가리키며 요청된 가격·물량 bridge에 직접 대응한다. ThinkPool의 전체 기사와 원출처 귀속을 fetch해야 하며 snippet 수치는 사실로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-9f6fd933d11ebdbc6f8ce256",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.96,
+        "rationale": "삼성전자 반도체 공식 newsroom의 HBM4E·NVIDIA partnership·system integration 문서로, HBM 기술 관계와 현재성을 확인할 직접 issuer route다. 기술 통합은 구매 의무나 예약 물량과 별개이므로 full document에서 의미를 제한해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-deb9bd7b36f181e24c983ea9",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.72,
+        "rationale": "2026 GTC에서의 삼성전자 HBM4 및 AI infrastructure 전시를 다룬 요청 family 내 독립 보도 경로다. issuer 발표의 독립적 교차확인 후보로 material이지만 고객 구매계약을 입증하지는 않으며 full fetch가 필요하다."
+      },
+      {
+        "candidate_id": "SGCAND-e29727ea4ad8706ddbd7bcbb",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.99,
+        "rationale": "삼성전자 공식 newsroom의 2026년 2분기 잠정실적 전용 문서로 최신 actual 매출·영업이익 원문을 확인하는 최우선 경로다. 잠정 전사 수치만으로 메모리 귀속이나 FCF를 추론하지 않고 full document를 검증해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-bd528180e628592a3366aaa6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "행사·학회·일반 기술 페이지의 metadata만으로는 삼성전자 HBM4 integration 또는 qualification 문서를 식별할 수 없고 URL 소유자도 요청된 canonical family를 뒷받침하지 않는다. material이 아니며 full-source route로 선택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1b0acf6735d0e07530d3fc7f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.77,
+        "rationale": "삼성전자 공식 2026 1Q interim business report PDF로 DS 제품·사업 현황과 HBM 관련 공시 서술을 확인할 수 있는 current issuer route다. HBM customer integration의 직접 증명 여부는 full document에서 판단해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-273315159f98a22d46079706",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.63,
+        "rationale": "삼성전자 공식 2026 sustainability report이며 metadata가 HBM 생산 확대 목표를 가리켜 capacity visibility의 issuer route가 될 수 있다. 2030 목표는 현재 booked demand가 아니므로 full fetch 후 장기 계획으로만 한정해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-757d4806a13661e100012ef8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "행사·학회·일반 기술 페이지의 metadata만으로는 삼성전자 HBM4 integration 또는 qualification 문서를 식별할 수 없고 URL 소유자도 요청된 canonical family를 뒷받침하지 않는다. material이 아니며 full-source route로 선택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ff55c570d4902d67091a8896",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.hani.co.kr의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-4a759601a807523122124daa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.hankookilbo.com의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Selected issuer, KIND, trusted-media, and landing-page routes remain discovery metadata until the complete documents are fetched and dated.",
+      "The 2Q26 preliminary issuer materials can establish company-wide actuals but cannot by themselves establish memory attribution or free cash flow."
+    ]
+  },
+  "payload_hash": "30ccf60d9d1251ed48e8ac5e5a99e9d20d4b61b2b9dfb2055c011a0645d9e025",
+  "production_score_authority": false,
+  "prompt_hash": "5f04003822db758255fd9a1e7a16cdde2947c53dfbb1b0e95e1f4407399fd734",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c1db664b4bde10ecabab3ec156cfa1505b894efc057213732b1129e647f93a9c",
+  "response_id": "COLLABRESP-208acd9a7fc3c2d3e4bbdc17c898caeeeb8728a756dfed423f044c4e70ca9940",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

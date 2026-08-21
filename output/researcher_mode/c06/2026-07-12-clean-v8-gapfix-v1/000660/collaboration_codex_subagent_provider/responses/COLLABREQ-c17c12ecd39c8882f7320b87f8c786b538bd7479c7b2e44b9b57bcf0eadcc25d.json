@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "703e2f06337de4af61b475b7dc59dff87c297535ed91eef1e9716dada5a480c1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-58f97d64bac044241cd8858b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial blog is not OPENDART original material."
+      },
+      {
+        "candidate_id": "SGCAND-269940b19e81a82938690ac4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.03,
+        "rationale": "Third-party DART explainer is not the original OPENDART route."
+      },
+      {
+        "candidate_id": "SGCAND-c870883bb242902e58751e30",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.12,
+        "rationale": "Samsung Securities content is broker material but this candidate requested OPENDART, so the source-family edge does not match."
+      },
+      {
+        "candidate_id": "SGCAND-92f2b5f1a51ef8e0d79886e5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial investment blog is not OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-40daddf65e245e3707f94009",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.35,
+        "rationale": "The URL is a direct Samsung Securities research PDF route, but the candidate requested OPENDART. It cannot be material on this mismatched source-family edge."
+      },
+      {
+        "candidate_id": "SGCAND-e61b9d308a7928f9ffe4f3f8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "Edaily media article does not match OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-ff78aa68eed750b5a6e81f08",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial blog is not original disclosure material."
+      },
+      {
+        "candidate_id": "SGCAND-c8c54917f6b9be11741d0ba4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial commentary is not OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-eff343a432662b1aacd31d36",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.04,
+        "rationale": "MSN repost is not the requested original OPENDART route."
+      },
+      {
+        "candidate_id": "SGCAND-66baf4d462d7e920e8d574db",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "The Bell analysis is third-party media, not OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-32d8b541d5e33fe13470eee8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial blog is not OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-44943f9cae8d6ffd7acdffa6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial risk commentary is not original OPENDART material."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "A direct broker PDF appears but is outside this OPENDART query edge; no matching original filing route is present. Snippets are not evidence."
+    ]
+  },
+  "payload_hash": "ce9c042e0759061e8508463193d5ef85b694cc711617def772b36e63d23bfb4f",
+  "production_score_authority": false,
+  "prompt_hash": "fc56f349987af77aa282dfac637b7c50904b50ab16b57c2bafd50ec6f16b892b",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c17c12ecd39c8882f7320b87f8c786b538bd7479c7b2e44b9b57bcf0eadcc25d",
+  "response_id": "COLLABRESP-06024375aa6e5d660f5155348bbdf1a584ee62f0fcdbe2a46ceaa7596b3afab0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "output_schema_hash": "2aa2068441c0afd368451f442d212ab1426e39e77461819a63f5b6c851c22ca7",
+  "payload": {
+    "challenged_fact_row_indices": [
+      23,
+      29,
+      69,
+      82,
+      107,
+      111,
+      133,
+      134,
+      189,
+      219,
+      233,
+      249,
+      294,
+      298,
+      305,
+      372,
+      473,
+      479,
+      521,
+      551,
+      562,
+      573
+    ],
+    "confidence": 0.93,
+    "recommended_research_directions": [],
+    "resolved_challenges": [
+      "메모리·HBM actual과 broker 전망을 분리해 전망을 발행사 실적으로 승격하지 않았다.",
+      "시간 기준 100% 가동률을 HBM 전용 웨이퍼·수율·패키징 CAPA로 확대 해석하지 않았다.",
+      "고객 공식 기술 협력을 구매의무·물량·가격이 있는 공급계약으로 확대 해석하지 않았다.",
+      "전사 영업현금흐름과 현금을 HBM 단독 FCF 또는 투자 회수로 직접 귀속하지 않았다.",
+      "peer PER·PBR 격차를 사업구조 차이를 무시한 확정 오평가로 사용하지 않았다."
+    ],
+    "review_complete": true,
+    "reviewed_component_ids": [
+      "eps_fcf_explosion",
+      "earnings_visibility",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation",
+      "information_confidence"
+    ],
+    "source_coverage": [
+      "COMPANYGUIDE",
+      "COMPANYGUIDE+KRX_PRICE_MARKET_CAP",
+      "CUSTOMER_OFFICIAL",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "DETERMINISTIC_FORWARD_SCENARIO",
+      "DETERMINISTIC_FORWARD_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "GENERAL_WEB_DISCOVERY",
+      "ISSUER_GUIDANCE",
+      "ISSUER_NEWSROOM",
+      "KIND_KRX",
+      "KRX_PRICE_MARKET_CAP",
+      "KRX_PRICE_MARKET_CAP+COMPANYGUIDE",
+      "KRX_PRICE_MARKET_CAP+PUBLIC_BROKER_REPORT",
+      "OPENDART",
+      "PEER_STRUCTURED",
+      "PUBLIC_BROKER_PDF",
+      "PUBLIC_BROKER_REPORT",
+      "STRUCTURED_HISTORICAL_BAND",
+      "STRUCTURED_PEER_BAND",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "unresolved_challenges": [
+      "HBM4 단독 actual 매출총이익률·영업이익·FCF bridge는 공개되지 않았다.",
+      "고객별 물량·가격조정·최저가격·선수금·취소·위약 조건은 NDA로 확인할 수 없다.",
+      "HBM 전용 웨이퍼 투입·수율·첨단 패키징 처리량과 증설 ramp actual이 분리되지 않았다.",
+      "고객 최종제품 일정 지연이 qualification·allocation·매출 인식에 미칠 영향이 남아 있다.",
+      "가격 상승 의존 이익이 물량 증가와 구조적 반복 수요로 얼마나 전환되는지 다음 실적에서 확인해야 한다.",
+      "대규모 CAPEX와 운전자본 이후 HBM 투자별 실현 ROIC·잔여현금 회수는 아직 검증되지 않았다.",
+      "현재 주가에 반영된 HBM 이익 기대와 peer 사업구조 차이를 완전히 분해할 수 없다."
+    ]
+  },
+  "payload_hash": "94de87839bd26a61c99904d6849c694472dc006ebf08f4e11f8741830531b0af",
+  "production_score_authority": false,
+  "prompt_hash": "3d9307b312afc81a1446d2e9ea12c72a851ffade25946a738258dc050effcd27",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-473b6f708538f73be65a35075ed3e0e7ce4ec76a523f000df1d8ac5775ab5dc0",
+  "response_id": "COLLABRESP-a568b7d4ff34255e7d410d0227f4aa5de1eef68a60b5ca5fa75edcacf7f2f001",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

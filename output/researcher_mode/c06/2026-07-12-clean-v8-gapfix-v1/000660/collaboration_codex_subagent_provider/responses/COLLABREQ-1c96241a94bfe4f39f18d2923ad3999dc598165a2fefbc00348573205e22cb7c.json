@@ -1,0 +1,105 @@
+{
+  "output_schema_hash": "e01435777a651f1ea1f3ce45ecf604d10d4eb3cf49c50825b60ac3d391db4cec",
+  "payload": {
+    "confidence": 0.8,
+    "counter_case": "매출채권과 CAPEX 현금소요가 자본효율 상단을 제한한다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0"
+    ],
+    "positive_case": "금융부채 감소는 투자 국면의 재무완충력을 높인다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 142,
+        "reason": "부채 감소 positive 유지"
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 398,
+        "reason": "매출채권 운전자본 counter 유지"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 422,
+        "reason": "별도 CAPEX는 연결 투자 부담의 보조 근거"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 430,
+        "reason": "R&D 비용화는 보조 자본배분 근거"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 533,
+        "reason": "배당은 다음 chunk의 주주환원 맥락과 종합"
+      }
+    ],
+    "proposed_score_lower": 2.0,
+    "proposed_score_mid": 3.0,
+    "proposed_score_upper": 3.5,
+    "research_complete": true,
+    "researcher_summary": "부채 감소와 배당 여력은 긍정적이나 대규모 CAPEX와 매출채권 증가는 현금전환과 투자 유연성을 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "부채 감소는 대규모 투자 국면의 재무완충력을 지지한다.",
+        "fact_row_index": 142,
+        "source_economic_mechanism": "연결 금융부채 범주 합계가 2025년 말 40,872,970백만원에서 2026년 1분기 말 36,477,745백만원으로 감소해 재무부담 변화를 보여준다.",
+        "source_period_json": "\"2026-03-31 vs 2025-12-31\"",
+        "source_predicate": "연결 금융부채 범주 합계는 2026년 1분기 말 36,477,745백만원으로 전기말 40,872,970백만원보다 감소했다.",
+        "source_value_json": "\"36,477,745 vs 40,872,970\""
+      },
+      {
+        "component_interpretation": "매출채권 증가는 cash conversion과 투자 여력의 counter다.",
+        "fact_row_index": 398,
+        "source_economic_mechanism": "연결 채권 장부금액의 큰 증가는 매출 성장과 함께 운전자본 회수 부담을 확대할 수 있다. HBM 단독 채권이나 부실 증가로 귀속하지 않는다.",
+        "source_period_json": "\"2026-03-31 vs 2025-12-31\"",
+        "source_predicate": "연결 매출채권 및 기타채권 장부금액 합계는 2025년 말 19,005,457백만원에서 2026년 1분기 말 34,708,542백만원으로 증가했다.",
+        "source_value_json": "\"34,708,542 vs 19,005,457\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      142,
+      398
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "KIND_KRX",
+      "PUBLIC_BROKER_PDF"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "ADR 조달의 최종 희석·소각·배당 순효과가 완결되지 않았다",
+      "HBM 전용 투자수익률은 분리되지 않는다"
+    ],
+    "why_not_higher": "대규모 투자와 운전자본 부담이 남아 있다.",
+    "why_not_lower": "부채 감소와 주주환원 실행 근거가 있다."
+  },
+  "payload_hash": "e15dc7ab72886e700bc845e6f9cc22036c3446f78a9619f136935deb4cc3bcc1",
+  "production_score_authority": false,
+  "prompt_hash": "f1ac478825afd374db84ebc6a4f88d7e21c747a4000649204c1420dfe18885af",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1c96241a94bfe4f39f18d2923ad3999dc598165a2fefbc00348573205e22cb7c",
+  "response_id": "COLLABRESP-84ec7d291581afdb533b4948f92d416a0fe894baeffe99af886977d0b7a26939",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

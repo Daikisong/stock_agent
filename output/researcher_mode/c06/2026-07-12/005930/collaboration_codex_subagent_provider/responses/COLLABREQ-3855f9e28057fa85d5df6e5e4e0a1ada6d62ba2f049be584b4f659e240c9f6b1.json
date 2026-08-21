@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "58239b4e5b675bd16311dad8ff9393a25e87996b6d3ff75b7fc5f41df65dcea2",
+  "payload": {
+    "allowed_range": [
+      12.5,
+      16.0
+    ],
+    "anchor_comparisons": [
+      "The positive anchor's 14.28-16.38 band is broadly comparable because current issuer facts include customer demand, purchase orders, completed multi-year arrangements and sold-out HBM4 production capacity.",
+      "The counter anchor's 7.77-9.87 band understates current order visibility, though its caution is useful because customer-level quantities, pricing, termination terms and shipment conversion remain undisclosed."
+    ],
+    "counter_fact_ids": [
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-80daa96c00cd5d7b5782c27a",
+      "EFACT-a79b8e5bedf94ee44504539e",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "I place more weight than the memo midpoint on issuer-stated purchase orders and completed mid-to-long-term customer arrangements.",
+      "I assign no contract or qualification weight to the customer-official technology introduction by itself."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-fe4be151b6e34320ddc5f6a7",
+      "CANCH-a55bc660ba3191bbb73fafc7"
+    ],
+    "proposed_points": 14.4,
+    "rationale": "Customer demand for planned production, purchase orders against prepared capacity, completed mid-to-long-term arrangements and sold-out HBM4 production capacity create a stronger visibility plane than non-binding demand indications. Multi-year contract language supports duration, while the customer-official technology reference corroborates participation but is not treated as an order. The case remains below the top band because contract economics and actual shipment conversion are not disclosed.",
+    "support_fact_ids": [
+      "EFACT-16ee255de13b7acf64e98eaa",
+      "EFACT-1ec0fca52ff40b01ed1890f6",
+      "EFACT-6430c66a53268479f230de39",
+      "EFACT-83b9afe8727ec3fd962620a4",
+      "EFACT-8b6707b4ab45897a5a448a93",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-d05fe1b53b1bb5081130ea1c"
+    ],
+    "why_not_higher": "A higher value requires customer-specific committed quantities, minimum-purchase and cancellation terms, price-reset mechanics and evidence that orders converted to shipment and cash without customer schedule delay.",
+    "why_not_lower": "A lower value would ignore the combination of purchase orders, sold-out planned capacity and completed longer-duration customer arrangements, which is materially stronger than generic demand commentary."
+  },
+  "payload_hash": "26873bdd1b71678a9cd9510d625f6fe8f1dec68e4c40b44393b2ce55eb6f58f5",
+  "production_score_authority": false,
+  "prompt_hash": "3921cfa6d65f0b3780b7f35753052552e42acea302070e1b7aacb026619b05a6",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3855f9e28057fa85d5df6e5e4e0a1ada6d62ba2f049be584b4f659e240c9f6b1",
+  "response_id": "COLLABRESP-a3a53b30d42421a525a1d5ff3b792038420f87ff5bfc0be236d9166962d11117",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

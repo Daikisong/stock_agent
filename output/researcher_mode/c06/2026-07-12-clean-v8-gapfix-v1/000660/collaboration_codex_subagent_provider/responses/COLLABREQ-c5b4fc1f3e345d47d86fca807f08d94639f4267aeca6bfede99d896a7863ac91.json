@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-20dca4a914565f075e54e44a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.05,
+        "rationale": "커뮤니티 게시물에서 해외 증권사 전망을 재전한 snippet이다. PUBLIC_BROKER_PDF 원문이 아니므로 HBM 가격협상·수익성 full-source route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ffbb6cb6101cfbf62885a13e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.92,
+        "rationale": "유진투자증권 도메인의 반도체 원문 PDF로 SK하이닉스 CAPA 제약과 custom HBM 협상 내용을 직접 다룬다. 병목과 계약화 경계를 확인할 full-report route다."
+      },
+      {
+        "candidate_id": "SGCAND-c26e8f10983ad903bd76f6a2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "대림대 파일 다운로드 경로의 회사 사업보고서로 보이며 PUBLIC_BROKER_PDF 원문이 아니다. provenance와 목적이 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f4d497b2f0be0bf249f3a161",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.8,
+        "rationale": "IBK투자증권 도메인의 산업리포트 PDF 다운로드 경로이며 HBM 공급·CAPA·수요 상향을 다룬다. 다만 2024년 자료이므로 현재성은 fetch 후 별도 판단한다."
+      },
+      {
+        "candidate_id": "SGCAND-13de80c03a8c7278df9a4c09",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.08,
+        "rationale": "네이버 프리미엄콘텐츠가 HSBC 전망을 재전한 글로 원 PUBLIC_BROKER_PDF가 아니다. 수치 snippet은 발견 단서일 뿐 full source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c6614b3e355f862c38805b22",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.82,
+        "rationale": "SK증권 도메인의 2025 연간전망 원문 PDF로 SK하이닉스 HBM 출하와 범용 메모리 가격 counter를 함께 다룬다. 병목 메커니즘의 historical/current bridge를 검토할 수 있다."
+      },
+      {
+        "candidate_id": "SGCAND-9ca396d599372194ed6806c0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성전자 중심의 제3자 기사이며 원 증권사 PDF가 아니다. SK하이닉스 병목 목적 및 요청 family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c94fceb0492349e7810a089f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.02,
+        "rationale": "SK증권 원문 PDF 경로라 source family는 맞지만 snippet은 국방비·거시경제 자료로 반도체/HBM 병목 목적과 subject가 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f68632e1078861e06006b5a1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.78,
+        "rationale": "미래에셋증권 도메인의 반도체 원문 PDF이며 HBM으로의 CAPA 쏠림과 DRAM 공급 균형을 직접 분석한다. 2024년 자료라는 한계를 두고 구조적 메커니즘을 확인할 full source다."
+      },
+      {
+        "candidate_id": "SGCAND-b6ecac4fbb331c090c063548",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.05,
+        "rationale": "서울경제 기사로 메모리 병목을 다루지만 PUBLIC_BROKER_PDF 원문이 아니다. 기사 요약을 broker full report로 간주할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-5273d6f64c28010b7543b458",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "네이버 프리미엄콘텐츠의 뉴스 모음이며 snippet도 거시 고용자료다. 대상·목적·source family가 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ae6975939dc9ed5b80df4cfd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "한국경제 기자 색인 페이지로 특정 증권사 PDF나 HBM 병목 full source가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "4개 broker PDF 후보는 full text와 content hash를 fetch·parse한 뒤 대상·기간·원문 의미를 확인해야 evidence가 된다.",
+      "material0 후보 판정은 이 transport roster의 부적합성일 뿐 HBM 병목 또는 계약 증거의 부재를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "fbfb0f61b2af861de965482dd9efc0f993de0b8041704f700dc85a7653abc74e",
+  "production_score_authority": false,
+  "prompt_hash": "8eafb2f1da0f2309ed65edd2856dff51861ed8745e0f0f06ace567525f509cb0",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c5b4fc1f3e345d47d86fca807f08d94639f4267aeca6bfede99d896a7863ac91",
+  "response_id": "COLLABRESP-00d71a840865e712f6dab2a6705c8f3ae206c1fcf708a5e6f01e9ff67dd1abce",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

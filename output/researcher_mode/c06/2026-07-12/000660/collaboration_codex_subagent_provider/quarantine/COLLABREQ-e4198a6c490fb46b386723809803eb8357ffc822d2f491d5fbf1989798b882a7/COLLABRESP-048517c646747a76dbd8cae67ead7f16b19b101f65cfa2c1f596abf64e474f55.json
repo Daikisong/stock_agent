@@ -1,0 +1,539 @@
+{
+  "output_schema_hash": "2d31ad9067a303f4e40525c923492de165ee1da261aeb7792c72cc46ff2b226e",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+        "rationale": "coverage round1에서 full transport를 prior37과 독립 대조했다. 새 objective-local distinct fact 0건을 확인했으며, 기존 identity와 일반 배경은 재출력하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "rationale": "coverage round1에서 full transport를 prior37과 독립 대조했다. 새 objective-local distinct fact 0건을 확인했으며, 기존 identity와 일반 배경은 재출력하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "rationale": "coverage round1에서 full transport를 prior37과 독립 대조했다. 새 objective-local distinct fact 0건을 확인했으며, 기존 identity와 일반 배경은 재출력하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-05b7a9d03e5a17bb237f32fa",
+        "rationale": "coverage round1에서 full transport를 prior37과 독립 대조했다. 새 objective-local distinct fact 0건을 확인했으며, 기존 identity와 일반 배경은 재출력하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-2585d63d70d2e243b822c981",
+        "rationale": "coverage round1에서 full transport를 prior37과 독립 대조했다. 새 objective-local distinct fact 0건을 확인했으며, 기존 identity와 일반 배경은 재출력하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "rationale": "coverage round1에서 full transport를 prior37과 독립 대조했다. 새 objective-local distinct fact 1건을 확인했으며, 기존 identity와 일반 배경은 재출력하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "rationale": "coverage round1에서 full transport를 prior37과 독립 대조했다. 새 objective-local distinct fact 3건을 확인했으며, 기존 identity와 일반 배경은 재출력하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "rationale": "coverage round1에서 full transport를 prior37과 독립 대조했다. 새 objective-local distinct fact 8건을 확인했으며, 기존 identity와 일반 배경은 재출력하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "HBM·고성능 서버제품이 견인한 실적 이후 현금이 전분기 대비 10.9조원 늘고 순현금으로 전환됐다. HBM 단독 현금흐름으로 귀속하지 않는다.",
+        "exact_quote": "Building on this strong performance, the company’s cash and cash equivalents at the end of the third quarter increased by 10.9 trillion won from the previous quarter, reaching 27.9 trillion won. Meanwhile, interest bearing debt stood at 24.1 trillion won, enabling the company to successfully transition to a net cash position of 3.8 trillion won.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM·고성능 서버제품이 견인한 실적 이후 현금이 전분기 대비 10.9조원 늘고 순현금으로 전환됐다. HBM 단독 현금흐름으로 귀속하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:Q3_NET_CASH_CONVERSION",
+        "normalized_object": "3Q25 현금·부채·순현금 전환",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2025",
+        "predicate": "3Q25 현금및현금성자산은 27.9조원, 이자부채는 24.1조원으로 순현금 3.8조원이다",
+        "predicate_family": "Q3_NET_CASH_CONVERSION",
+        "primitive_tags": [],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "Q3_NET_CASH_CONVERSION",
+        "question_family_tags": [
+          "Q3_NET_CASH_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q25 순현금 전환",
+        "subject_id": "000660:MEMORY:Q3_2025_NET_CASH",
+        "unit": "KRW trillion",
+        "value": "cash 27.9; interest-bearing debt 24.1; net cash 3.8"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "고객 수요에 대응한 M15X 공급능력 실행이지만 HBM 전용 캐파나 계약 물량으로 확대하지 않는다.",
+        "exact_quote": "In order to address higher-than-expected customer demand, SK hynix plans to expand its production capacity through M15X, where equipment installation has recently begun after the early opening of a new cleanroom, and to accelerate the migration to advanced process technologies.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객 수요에 대응한 M15X 공급능력 실행이지만 HBM 전용 캐파나 계약 물량으로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:M15X_DEMAND_LINKED_CAPACITY_EXPANSION",
+        "normalized_object": "M15X 조기 클린룸·장비 설치 기반 생산능력 확대",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward plan stated 2025-10-29",
+        "predicate": "예상보다 높은 고객 수요에 대응해 M15X 생산능력을 확대하고 조기 개방 클린룸에 장비 설치를 시작했다",
+        "predicate_family": "M15X_DEMAND_LINKED_CAPACITY_EXPANSION",
+        "primitive_tags": [],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "M15X_DEMAND_LINKED_CAPACITY_EXPANSION",
+        "question_family_tags": [
+          "M15X_DEMAND_LINKED_CAPACITY_EXPANSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 M15X 생산능력 확대",
+        "subject_id": "000660:MEMORY:M15X_DEMAND_CAPACITY",
+        "unit": "qualitative capacity plan",
+        "value": "M15X capacity expansion; equipment installation begun"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "수요 대응 투자 증가 방향은 공급 확대 재료인 동시에 FCF의 추가 자본지출 부담이다. 숫자가 없어 FORWARD_GUIDANCE로 태그하지 않는다.",
+        "exact_quote": "As a result, investment for next year is expected to increase compared to this year, reflecting the company’s continued commitment to a market-aligned investment strategy.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "수요 대응 투자 증가 방향은 공급 확대 재료인 동시에 FCF의 추가 자본지출 부담이다. 숫자가 없어 FORWARD_GUIDANCE로 태그하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:FY2026_INVESTMENT_INCREASE_OUTLOOK",
+        "normalized_object": "차년도 투자 증가 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026 outlook stated 2025-10-29",
+        "predicate": "차년도 투자는 당해연도보다 증가할 것으로 예상된다",
+        "predicate_family": "FY2026_INVESTMENT_INCREASE_OUTLOOK",
+        "primitive_tags": [],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FY2026_INVESTMENT_INCREASE_OUTLOOK",
+        "question_family_tags": [
+          "FY2026_INVESTMENT_INCREASE_OUTLOOK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 투자",
+        "subject_id": "000660:MEMORY:FY2026_INVESTMENT_OUTLOOK",
+        "unit": "qualitative investment outlook",
+        "value": "increase versus prior year"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "전사 실적의 가격·출하 동인을 명시하지만 NAND를 포함하므로 HBM 단독 이익으로 귀속하지 않는다.",
+        "exact_quote": "The company achieved its highest-ever quarterly performance, driven by the full-scale rise in prices of DRAM and NAND, as well as the increasing shipments of high-performance products for AI servers. In particular, operating profit exceeded 10 trillion won for the first time in the company’s history.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 실적의 가격·출하 동인을 명시하지만 NAND를 포함하므로 HBM 단독 이익으로 귀속하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_PRICING_AND_AI_SERVER_SHIPMENT_EARNINGS_DRIVER",
+        "normalized_object": "메모리 가격·AI 서버제품 출하의 실적 기여",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2025",
+        "predicate": "DRAM·NAND 가격 상승과 AI 서버용 고성능제품 출하 증가가 사상최대 분기 실적을 견인했다",
+        "predicate_family": "MEMORY_PRICING_AND_AI_SERVER_SHIPMENT_EARNINGS_DRIVER",
+        "primitive_tags": [],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_PRICING_AND_AI_SERVER_SHIPMENT_EARNINGS_DRIVER",
+        "question_family_tags": [
+          "MEMORY_PRICING_AND_AI_SERVER_SHIPMENT_EARNINGS_DRIVER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q25 실적 동인",
+        "subject_id": "000660:MEMORY:Q3_2025_EARNINGS_DRIVER",
+        "unit": "qualitative actual driver",
+        "value": "DRAM/NAND pricing rise and AI-server product shipment growth"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "안정 양산 중인 1cnm 전환을 통한 DRAM 공급대응 계획이며 고객 계약이나 확정 물량을 뜻하지 않는다.",
+        "exact_quote": "In response, SK hynix plans to accelerate the migration to its most advanced 1cnm process, or the sixth-generation of the 10-nanometer technology, which is already in stable mass production. This will enable the company to establish a full DRAM lineup across server, mobile, and graphics applications, and to flexibly respond to customer needs through expanded supply.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "안정 양산 중인 1cnm 전환을 통한 DRAM 공급대응 계획이며 고객 계약이나 확정 물량을 뜻하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM_1CNM_SUPPLY_EXPANSION_PLAN",
+        "normalized_object": "1cnm 전환과 DRAM 공급 확대",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward plan stated 2025-10-29",
+        "predicate": "1cnm 공정 전환을 가속해 DRAM 전 라인업과 공급 확대를 추진한다",
+        "predicate_family": "DRAM_1CNM_SUPPLY_EXPANSION_PLAN",
+        "primitive_tags": [],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_1CNM_SUPPLY_EXPANSION_PLAN",
+        "question_family_tags": [
+          "DRAM_1CNM_SUPPLY_EXPANSION_PLAN"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1cnm DRAM 공급",
+        "subject_id": "000660:DRAM:1CNM_SUPPLY_PLAN",
+        "unit": "qualitative supply plan",
+        "value": "accelerated 1cnm migration and expanded DRAM supply"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "기존 실적 수준 fact와 별개의 전분기 성장 원자값이다. HBM 단독 성장으로 귀속하지 않는다.",
+        "exact_quote": "■ 3Q25 Financial Results (K-IFRS)\nUnit: Billion KRW\n3Q25\nQoQ\nYoY\n2Q25\nChange\n3Q24\nChange\nRevenues\n24,448.9\n22,232\n10%\n17,573.1\n39%\nOperating Profit\n11,383.4\n9,212.9\n24%\n7,030\n62%\nOperating Margin\n47%\n41%\n6%p\n40%\n7%p\nNet Income\n12,597.5\n6,996.2\n80%\n5,753.4\n119%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 실적 수준 fact와 별개의 전분기 성장 원자값이다. HBM 단독 성장으로 귀속하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:Q3_REVENUE_QOQ_GROWTH",
+        "normalized_object": "3Q25 매출 전분기 성장률",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2025 vs 2Q2025",
+        "predicate": "3Q25 매출은 24,448.9십억원으로 전분기 대비 10% 증가했다",
+        "predicate_family": "Q3_REVENUE_QOQ_GROWTH",
+        "primitive_tags": [],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "Q3_REVENUE_QOQ_GROWTH",
+        "question_family_tags": [
+          "Q3_REVENUE_QOQ_GROWTH"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 3Q25 매출",
+        "subject_id": "000660:MEMORY:Q3_2025_REVENUE_QOQ",
+        "unit": "%",
+        "value": 10
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "기존 실적 수준 fact와 별개의 전분기 성장 원자값이다. HBM 단독 성장으로 귀속하지 않는다.",
+        "exact_quote": "■ 3Q25 Financial Results (K-IFRS)\nUnit: Billion KRW\n3Q25\nQoQ\nYoY\n2Q25\nChange\n3Q24\nChange\nRevenues\n24,448.9\n22,232\n10%\n17,573.1\n39%\nOperating Profit\n11,383.4\n9,212.9\n24%\n7,030\n62%\nOperating Margin\n47%\n41%\n6%p\n40%\n7%p\nNet Income\n12,597.5\n6,996.2\n80%\n5,753.4\n119%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 실적 수준 fact와 별개의 전분기 성장 원자값이다. HBM 단독 성장으로 귀속하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:Q3_OPERATING_PROFIT_QOQ_GROWTH",
+        "normalized_object": "3Q25 영업이익 전분기 성장률",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2025 vs 2Q2025",
+        "predicate": "3Q25 영업이익은 11,383.4십억원으로 전분기 대비 24% 증가했다",
+        "predicate_family": "Q3_OPERATING_PROFIT_QOQ_GROWTH",
+        "primitive_tags": [],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "Q3_OPERATING_PROFIT_QOQ_GROWTH",
+        "question_family_tags": [
+          "Q3_OPERATING_PROFIT_QOQ_GROWTH"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 3Q25 영업이익",
+        "subject_id": "000660:MEMORY:Q3_2025_OP_QOQ",
+        "unit": "%",
+        "value": 24
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "기존 실적 수준 fact와 별개의 전분기 성장 원자값이다. HBM 단독 성장으로 귀속하지 않는다.",
+        "exact_quote": "■ 3Q25 Financial Results (K-IFRS)\nUnit: Billion KRW\n3Q25\nQoQ\nYoY\n2Q25\nChange\n3Q24\nChange\nRevenues\n24,448.9\n22,232\n10%\n17,573.1\n39%\nOperating Profit\n11,383.4\n9,212.9\n24%\n7,030\n62%\nOperating Margin\n47%\n41%\n6%p\n40%\n7%p\nNet Income\n12,597.5\n6,996.2\n80%\n5,753.4\n119%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 실적 수준 fact와 별개의 전분기 성장 원자값이다. HBM 단독 성장으로 귀속하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:Q3_NET_INCOME_QOQ_GROWTH",
+        "normalized_object": "3Q25 순이익 전분기 성장률",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2025 vs 2Q2025",
+        "predicate": "3Q25 순이익은 12,597.5십억원으로 전분기 대비 80% 증가했다",
+        "predicate_family": "Q3_NET_INCOME_QOQ_GROWTH",
+        "primitive_tags": [],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "Q3_NET_INCOME_QOQ_GROWTH",
+        "question_family_tags": [
+          "Q3_NET_INCOME_QOQ_GROWTH"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 3Q25 순이익",
+        "subject_id": "000660:MEMORY:Q3_2025_NI_QOQ",
+        "unit": "%",
+        "value": 80
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "제3자 전망으로 target HBM 수익화 잠재력을 보완하지만 actual·issuer guidance·고객 약정이 아니다.",
+        "exact_quote": "UBS는 2026년 엔비디아의 차세대 ‘Rubin(루빈)’ 플랫폼에 탑재될 HBM4 시장에서도 SK하이닉스가 약 70%의 점유율을 달성할 것으로 예상했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "제3자 전망으로 target HBM 수익화 잠재력을 보완하지만 actual·issuer guidance·고객 약정이 아니다.",
+        "mechanism_scope_id": "000660:MEMORY:SKHYNIX_HBM4_SHARE_FORECAST_2026",
+        "normalized_object": "2026년 Rubin HBM4 점유율 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "UBS는 SK하이닉스가 2026년 Rubin용 HBM4 시장에서 약 70% 점유율을 달성할 것으로 예상했다",
+        "predicate_family": "SKHYNIX_HBM4_SHARE_FORECAST_2026",
+        "primitive_tags": [],
+        "product_family": "HBM",
+        "question_family_id": "SKHYNIX_HBM4_SHARE_FORECAST_2026",
+        "question_family_tags": [
+          "SKHYNIX_HBM4_SHARE_FORECAST_2026"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 Rubin HBM4 점유율",
+        "subject_id": "000660:HBM:RUBIN_SHARE_FORECAST",
+        "unit": "% forecast",
+        "value": 70
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "가격 프리미엄 지속성의 counter지만 제3자 가능성 진술이며 실제 가격 하락으로 확정하지 않는다.",
+        "exact_quote": "일부 시장조사기관과 외신은 2026년 이후 HBM 가격이 경쟁 심화와 생산능력 확대로 조정 국면에 들어갈 가능성을 제기한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격 프리미엄 지속성의 counter지만 제3자 가능성 진술이며 실제 가격 하락으로 확정하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_PRICE_ADJUSTMENT_RISK_AFTER_2026",
+        "normalized_object": "2026년 이후 HBM 가격 조정 위험",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026 onward outlook",
+        "predicate": "경쟁 심화와 생산능력 확대로 2026년 이후 HBM 가격이 조정될 가능성이 제기됐다",
+        "predicate_family": "HBM_PRICE_ADJUSTMENT_RISK_AFTER_2026",
+        "primitive_tags": [],
+        "product_family": "HBM",
+        "question_family_id": "HBM_PRICE_ADJUSTMENT_RISK_AFTER_2026",
+        "question_family_tags": [
+          "HBM_PRICE_ADJUSTMENT_RISK_AFTER_2026"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 가격 환경",
+        "subject_id": "000660:HBM:PRICE_ADJUSTMENT_RISK",
+        "unit": "qualitative third-party risk",
+        "value": "possible price adjustment after 2026"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "HBM 투자 집중이 범용 DRAM 공급을 제약해 수익성을 보조하는 메커니즘이나 회사 단독 실현값은 아니다.",
+        "exact_quote": "이밖에 HBM 집중 투자는 범용 메모리 시장의 수익성 개선으로 이어지는 선순환 구조를 만들고 있다. HBM에 상대적으로 많은 투자가 이루어지면서 범용 D램의 수급 상황이 개선되고 있기 때문이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 투자 집중이 범용 DRAM 공급을 제약해 수익성을 보조하는 메커니즘이나 회사 단독 실현값은 아니다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_INVESTMENT_CONVENTIONAL_DRAM_SUPPLY_EFFECT",
+        "normalized_object": "HBM 투자 집중의 범용 DRAM 수급 개선",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current market mechanism stated 2026-01-05",
+        "predicate": "HBM 집중 투자가 범용 DRAM 수급과 수익성 개선으로 이어지는 메커니즘이 제시됐다",
+        "predicate_family": "HBM_INVESTMENT_CONVENTIONAL_DRAM_SUPPLY_EFFECT",
+        "primitive_tags": [],
+        "product_family": "DRAM",
+        "question_family_id": "HBM_INVESTMENT_CONVENTIONAL_DRAM_SUPPLY_EFFECT",
+        "question_family_tags": [
+          "HBM_INVESTMENT_CONVENTIONAL_DRAM_SUPPLY_EFFECT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 메모리 투자 배분",
+        "subject_id": "000660:DRAM:HBM_INVESTMENT_SUPPLY_EFFECT",
+        "unit": "qualitative mechanism",
+        "value": "HBM investment supports conventional DRAM supply balance"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "HBM의 높은 웨이퍼 집약도는 캐파 병목을 강화하지만 공급 확대에 더 많은 자본·생산자원이 필요하다는 counter도 된다.",
+        "exact_quote": "더욱이 HBM은 일반 D램과 같은 용량을 만들더라도 더 많은 웨이퍼가 필요해, 그만큼 생산 자원이 많이 들어갑니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM의 높은 웨이퍼 집약도는 캐파 병목을 강화하지만 공급 확대에 더 많은 자본·생산자원이 필요하다는 counter도 된다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_WAFER_INTENSITY",
+        "normalized_object": "HBM의 범용 DRAM 대비 웨이퍼 집약도",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "current mechanism stated 2026-06-29",
+        "predicate": "같은 용량의 HBM은 일반 DRAM보다 더 많은 웨이퍼와 생산자원이 필요하다",
+        "predicate_family": "HBM_WAFER_INTENSITY",
+        "primitive_tags": [],
+        "product_family": "HBM",
+        "question_family_id": "HBM_WAFER_INTENSITY",
+        "question_family_tags": [
+          "HBM_WAFER_INTENSITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 생산자원",
+        "subject_id": "000660:HBM:WAFER_INTENSITY",
+        "unit": "qualitative resource intensity",
+        "value": "more wafers than conventional DRAM for same capacity"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-3051d060ade5ba704c18da64"
+    ],
+    "unresolved_research_notes": [
+      "coverage audit가 12-fact page limit에 도달했고 SGDOC-3051d의 target capacity-shortage와 일정 sufficiency 관련 distinct remainder가 남아 continuation이 필요하다."
+    ]
+  },
+  "payload_hash": "6b896e2e3e5d9504e8bf1a3f0988d9687907502dd2125f2e7963ae3759393eda",
+  "production_score_authority": false,
+  "prompt_hash": "274d142be56a63be16e51298fc12f93ebf714f7dff6db83bad3db5a8844dffd2",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e4198a6c490fb46b386723809803eb8357ffc822d2f491d5fbf1989798b882a7",
+  "response_id": "COLLABRESP-048517c646747a76dbd8cae67ead7f16b19b101f65cfa2c1f596abf64e474f55",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

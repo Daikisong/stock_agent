@@ -1,0 +1,116 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "SK하이닉스 issuer earnings·presentation·공시 원문에서 HBM 귀속 매출, 수익성, capacity, CAPEX와 cash flow를 기간이 같은 자료로 연결합니다.",
+      "공급 가시성과 qualification은 고객 공식자료·Reuters·산업자료로 독립 확인하고, 계획·샘플·일반 수요 전망을 구매의무로 확대하지 않습니다.",
+      "시장 기대와 rerating은 cutoff 이전 공개 broker PDF의 EPS revision, forward multiple 기간, peer 표를 원문에서 확인합니다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 2026년 1분기 경영실적 HBM 매출 영업현금흐름",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "현재 graph에는 MEMORY·HBM 긍정 사실과 전사 counterfact가 함께 있으나, HBM에 귀속되는 매출·이익과 현금전환의 연결이 보이지 않습니다. 2026-07-12 이전 최신 issuer 실적 원문에서 HBM 매출 또는 mix, 메모리 수익성, 영업현금흐름·CAPEX를 같은 기간 기준으로 확인해 전사 수치를 HBM 실적으로 확대하지 않기 위한 검색입니다.",
+        "source_families": [
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_PRESENTATION",
+          "CASH_FLOW"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 2026 HBM 고객 공급 물량 확정 컨퍼런스콜",
+        "objective_id": "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+        "rationale": "현재 HBM 긍정 상태가 있어도 출하 계획과 고객 구매의무·booked period는 다릅니다. issuer 컨퍼런스콜과 고객 공식 자료에서 2026년 공급 물량이 확정됐는지, 기간·취소 조건·allocation인지 단순 수요 전망인지 구분해 earnings visibility를 검증합니다.",
+        "source_families": [
+          "ISSUER_PRESENTATION",
+          "ISSUER_EARNINGS_RELEASE",
+          "CUSTOMER_OFFICIAL"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 2026 HBM DRAM ASP 공급부족 실적발표",
+        "objective_id": "SGOBJ-96e6fadd695c6b292e28d22e",
+        "rationale": "MEMORY DRAM에는 positive와 open counter 상태가 함께 있어 가격 상승 headline만으로 bottleneck을 확정할 수 없습니다. 최신 실적발표에서 회사의 실제 ASP 방향과 HBM·DRAM 공급 제약을 확인하고, 독립 산업자료로 일시적 shortage 또는 oversupply 가능성도 함께 확인합니다.",
+        "source_families": [
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_PRESENTATION",
+          "INDUSTRY_REPORT"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 2026 EPS 컨센서스 수정 forward PER HBM 리포트",
+        "objective_id": "SGOBJ-ec638d635428191a67369c54",
+        "rationale": "HBM 사실이 주가 기대에 얼마나 반영됐는지 보려면 목표주가 단독이 아니라 추정치 변경 전후와 forward PER의 기준연도·분모가 필요합니다. 발행일이 cutoff 이전인 공개 리포트에서 EPS revision과 현재 multiple을 함께 확인하는 source route입니다.",
+        "source_families": [
+          "CONSENSUS_REVISION",
+          "PUBLIC_BROKER_PDF",
+          "VALUATION_MULTIPLES"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 메모리 경쟁사 forward PBR ROE 비교 2026 PDF",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "valuation rerating을 검증하려면 SK하이닉스 단독 목표배수보다 같은 기간의 메모리 peer PBR·ROE 표가 필요합니다. 2026-07-12 이전 공개 PDF에서 peer 정의, forward period, SK하이닉스의 상대 배수와 할인·프리미엄 근거를 회수합니다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF",
+          "INDUSTRY_REPORT"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 2026 HBM 생산능력 시설투자 현금흐름 IR",
+        "objective_id": "SGOBJ-fb7995224e0c3fac0a347e8c",
+        "rationale": "capital allocation에는 전사 CAPEX가 아니라 HBM·메모리 capacity에 귀속되는 투자와 현금부담이 필요합니다. issuer IR·공시에서 투자 대상, 기간, capacity 효과와 cash flow를 확인하고 일반 설비투자나 타 제품 투자를 HBM 투자로 재분류하지 않습니다.",
+        "source_families": [
+          "ISSUER_PRESENTATION",
+          "ISSUER_EARNINGS_RELEASE",
+          "OPENDART",
+          "CASH_FLOW"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 HBM 고객 인증 지연 공급 차질 2026",
+        "objective_id": "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+        "rationale": "정보 신뢰도는 issuer의 긍정 설명만으로 닫지 않습니다. cutoff 이전 고객 공식자료와 독립 보도에서 HBM qualification 상태, 인증 지연·공급 차질·고객 집중 counterevidence를 찾아 현재 긍정 사실의 독립 corroboration과 supersession을 확인합니다.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL",
+          "REUTERS",
+          "TRUSTED_BUSINESS_MEDIA",
+          "INDUSTRY_REPORT"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "현재 prompt에는 개별 fact 원문이 아니라 semantic group과 roster hash가 제시되어 있어, 새 문서의 exact quote와 attribution이 확보되기 전에는 각 gap이 해결된 것이 아닙니다.",
+      "검색 snippet은 discovery metadata일 뿐이며 full document의 발행일·target·source owner·수치 단위를 검증해야 합니다.",
+      "모든 query는 2026-07-12 cutoff를 적용하며, 이후 발행 문서는 현재 판단에 사용하지 않습니다."
+    ]
+  },
+  "payload_hash": "eb6f7f1ced41352e2d8ed7473b43ba10ba1dca6367d845cb94ef02d080aac994",
+  "production_score_authority": false,
+  "prompt_hash": "bede732db0c004c5c9b0882aa170d77bc565ba331e1828da6658f338cd106b70",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1a0ba84afb2b8af75112df4194fe1bfd86697442f5d08a703e0738295321170a",
+  "response_id": "COLLABRESP-54dc752a69b6b275b9ddec390e16ba2877022bd05f5671b36a1828142d97c332",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

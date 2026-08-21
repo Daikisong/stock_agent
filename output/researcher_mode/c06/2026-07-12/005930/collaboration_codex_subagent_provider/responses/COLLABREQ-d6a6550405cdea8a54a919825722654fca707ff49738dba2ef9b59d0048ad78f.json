@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f2500620e56a61e33443bff5",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "글로벌 ETF 동향으로 삼성전자 HBM 목표와 무관하다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-adfec057721f653fb0a85841",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "해운 탄소규제 보고서로 메모리 병목과 무관하다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1e7402f95c96d7fe3161aeff",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "운송플랫폼 공급 경쟁 보고서로 삼성전자 HBM 공급 목표와 무관하다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a05669c6c60696f4a8ee76df",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "인도 자동차 산업 자료로 연구 대상과 무관하다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e695bdfbe3f85d020a28cd07",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "기후투자·Asset Owner 보고서로 삼성전자 HBM 메커니즘과 무관하다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-94750e412255cc20e1a3b35c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "반도체 이익수정 집계는 포함하지만 HBM 전용 물리 CAPA·패키징·고객 배정·실현가격을 검증하지 않는다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-85f26e2713eb643b55719bec",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "제약·바이오 월간 자료로 연구 대상과 무관하다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b89d8d13c99e4120ca117de3",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "글로벌 ETF 동향으로 삼성전자 HBM 목표와 무관하다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-4ae2274c441d97b4947c61ea",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "시장 급락·비트코인 등을 다룬 마켓뷰로 HBM 공정별 병목 근거가 없다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-af306de8b313925703a17c27",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "휴젤 기업 보고서로 삼성전자 메모리 목표와 무관하다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8a15e68cb960ab5b07257cc1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "중국 AI 산업 일반론으로 삼성전자 HBM 전용 CAPA나 가격 메커니즘을 직접 다루지 않는다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-395befced2bddc1fed5b0369",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성전자가 이익수정 표에 언급되지만 집계 자료일 뿐 HBM 전용 CAPA·수율·패키징·ASP를 검증하지 않는다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P7 roster의 모든 후보를 분류했으나 미래에셋 report id 1108000 / 1F01420260625_005930_a.pdf의 정확한 공식 archive 원문은 이 partition에서 회수되지 않았다. snippet·목차·이익수정 메타데이터는 HBM CAPA 또는 가격 사실이 아니다."
+    ]
+  },
+  "payload_hash": "8929bf8c6b85f8b977b02faf5a27c7ac2bba2fe846bcf49829bd8b6fc785bd4c",
+  "production_score_authority": false,
+  "prompt_hash": "4ba78e8878ce90866584e972a89b0bfcd3d0797879744043cb62ed6a036abf40",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d6a6550405cdea8a54a919825722654fca707ff49738dba2ef9b59d0048ad78f",
+  "response_id": "COLLABRESP-4d903f46cb6e03b327c3ff3862600ff189ccc618c47cf479a3d196910b643024",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

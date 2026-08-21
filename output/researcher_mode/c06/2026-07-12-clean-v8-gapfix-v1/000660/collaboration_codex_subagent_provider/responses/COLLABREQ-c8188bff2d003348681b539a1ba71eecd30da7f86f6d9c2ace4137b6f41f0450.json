@@ -1,0 +1,196 @@
+{
+  "output_schema_hash": "e0f23cc5d8ae35aa7c3965df6379aa81c313f2d6d584003d64132445f0bb789c",
+  "payload": {
+    "confidence": 0.72,
+    "counter_case": "고객 집중과 대규모 투자, HBM-only margin·현금회수·계약조건 미공개가 높은 multiple의 지속성을 제한한다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a",
+      "ORDTRANSFER-75306723611a10615f950fec",
+      "ORDTRANSFER-a99b35934948524825bcefbe",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b",
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-cf3c9742b856a43c5c18a073"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df"
+    ],
+    "positive_case": "HBM 매출이 실제 두 배 넘게 성장해 record result에 기여했고 생산기반 확장도 이어진다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 25,
+        "reason": "중립 계약 맥락은 rerating의 직접 근거가 아니다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 34,
+        "reason": "매출 확대와 고객 집중 risk를 함께 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 95,
+        "reason": "가동률은 성장 actual보다 rerating bridge가 간접적이다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 211,
+        "reason": "추가 positive는 HBM 실현 매출과 중복된다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 325,
+        "reason": "브로커 valuation 신호는 발행사 actual보다 권위가 낮다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 390,
+        "reason": "중복 counter를 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 392,
+        "reason": "발행사 공급기반 확장 계획을 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 399,
+        "reason": "일반 메모리 counter는 HBM rerating 경로보다 간접적이다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 466,
+        "reason": "브로커 multiple은 structured valuation과 중복된다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 531,
+        "reason": "추가 production positive는 핵심 네 근거와 중복된다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 574,
+        "reason": "외부 valuation thesis는 actual 근거보다 후순위다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 579,
+        "reason": "추가 positive를 최소 roster에서 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 588,
+        "reason": "중복 counter를 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 670,
+        "reason": "제품 실행은 실현 매출 성장보다 valuation bridge가 간접적이다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 689,
+        "reason": "실현 HBM 매출 성장과 record result 연결을 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 759,
+        "reason": "성장 공급기반과 투자부담을 함께 보여주는 근거다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 763,
+        "reason": "고객 공동개발은 signed economics가 없어 직접 valuation 근거가 아니다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 769,
+        "reason": "HBM4 양산은 긍정적이나 실현 매출과 투자계획보다 직접성이 낮다."
+      }
+    ],
+    "proposed_score_lower": 6.0,
+    "proposed_score_mid": 8.0,
+    "proposed_score_upper": 10.0,
+    "research_complete": true,
+    "researcher_summary": "HBM 실현 매출 성장과 공급기반 확장은 rerating을 지지하지만 고객 집중, CAPEX, HBM-only margin·계약경제 미확인이 상단을 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "실현 매출 확대를 지지하지만 고객 집중은 rerating 지속성의 counter다.",
+        "fact_row_index": 34,
+        "source_economic_mechanism": "고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.",
+        "source_value_json": "\"7,780,590 and 6,536,458 vs 4,786,233\""
+      },
+      {
+        "component_interpretation": "공급기반 확장은 성장 지속성을 지지하지만 HBM-only allocation은 아니다.",
+        "fact_row_index": 392,
+        "source_economic_mechanism": "To prioritize customer-demand fulfillment, the issuer plans early maximization of M15X production capacity and stable mid-to-long-term capacity expansion through Yongin Fab 1; the quote does not identify HBM-only capacity or committed customer allocation.",
+        "source_period_json": "\"early and mid-to-long term from 2026-01-28\"",
+        "source_predicate": "plans early production maximization and mid-to-long-term capacity expansion",
+        "source_value_json": "\"M15X early production maximization and Yongin Fab 1 mid-to-long-term production-base expansion\""
+      },
+      {
+        "component_interpretation": "실현 HBM 매출 성장과 record result 연결은 valuation 분모의 질적 개선을 지지한다.",
+        "fact_row_index": 689,
+        "source_economic_mechanism": "HBM sales more than doubled year over year and the issuer explicitly linked that growth to its record result, establishing realized HBM revenue conversion without supplying an HBM margin or mix percentage.",
+        "source_period_json": "\"FY2025 vs FY2024\"",
+        "source_predicate": "sales grew more than twofold year over year and contributed to record results",
+        "source_value_json": "\"more than 2x\""
+      },
+      {
+        "component_interpretation": "성장투자는 공급기반을 지지하지만 큰 자본부담과 HBM-only 회수기간 미확인이 상단을 제한한다.",
+        "fact_row_index": 759,
+        "source_economic_mechanism": "The issuer expects 2026 investment to rise significantly year over year, centered on M15X ramp-up, Yongin infrastructure preparation, and EUV equipment; this is a qualitative memory-wide investment plan without a numeric amount, HBM-only capacity, customer allocation, or contract commitment.",
+        "source_period_json": "\"FY2026 vs FY2025\"",
+        "source_predicate": "expects annual investment to increase significantly",
+        "source_value_json": "\"significant year-over-year investment increase centered on M15X, Yongin, and EUV\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      34,
+      392,
+      689,
+      759
+    ],
+    "source_coverage": [
+      "ISSUER_NEWSROOM",
+      "OPENDART",
+      "PUBLIC_BROKER_PDF",
+      "KRX_PRICE_MARKET_CAP"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "HBM-only margin과 투자 회수기간이 공개되지 않았다",
+      "forward multiple은 시장가격과 브로커 추정 변화에 민감하다"
+    ],
+    "why_not_higher": "HBM-only margin·FCF와 장기 계약경제가 확인되지 않았다.",
+    "why_not_lower": "HBM 매출의 실현 성장과 공급기반 확장이 발행사 자료에서 확인된다."
+  },
+  "payload_hash": "427a4b269cdfdbe8708a836ab074b47d06cd5cdfcc30b33e101530b129f84e21",
+  "production_score_authority": false,
+  "prompt_hash": "9f99cfa2f3392df8bf4593666d1d339463691cd0d2f3f6f4dc460063785016ac",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c8188bff2d003348681b539a1ba71eecd30da7f86f6d9c2ace4137b6f41f0450",
+  "response_id": "COLLABRESP-19b1bd11b087226b8728e0a14ed60ca110e3ce225e85e8fe2f70bfd8e17e4802",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

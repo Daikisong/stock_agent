@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "rationale": "이전 page에서 objective-local distinct facts 24건이 이미 accepted되었고, 동일 supplied transport chunk의 잔여를 재감사한 결과 추가로 분리할 material fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "e5aadb37e751726fb72529f14aa2a9aebce4fc08dbf390d7457d2b4b541fa1f4",
+  "production_score_authority": false,
+  "prompt_hash": "63b35cf196c09b480551b570aba97a2d8c95b7f8396785d86e24765b6b989cc3",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c39f1a10142b6a792fb99bef55f9cf4c65c676c7ad367d33a98d55bd6f1927a7",
+  "response_id": "COLLABRESP-7c75ac5dba72f2ec8f3e36e0b79b1e7ddf5d3440ef04ec9c2d4c51fcb5264aab",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

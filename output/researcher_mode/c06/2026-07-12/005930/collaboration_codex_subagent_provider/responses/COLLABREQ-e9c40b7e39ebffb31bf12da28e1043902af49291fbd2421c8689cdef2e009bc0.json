@@ -1,0 +1,309 @@
+{
+  "output_schema_hash": "b242ef9c2123fc756d971337e60ad704a6c372fecdf42a2e8234c5e9298c8251",
+  "payload": {
+    "confidence": 0.84,
+    "counter_case": "이익은 물량보다 가격 급등에 민감하고, 선단공정 CAPEX·성과급이 현금 전환을 낮춘다. 고객 제품 지연과 2028년 이익 감소 전망 때문에 현재 급증을 영구화할 수 없다.",
+    "historical_anchor_ids": [
+      "CANCH-c094a80aeb36ad023bf63495",
+      "CANCH-d3ec23639ebd5c1f8d20fd03"
+    ],
+    "nearest_counter_anchor_ids": [
+      "CANCH-d3ec23639ebd5c1f8d20fd03"
+    ],
+    "nearest_positive_anchor_ids": [
+      "CANCH-c094a80aeb36ad023bf63495"
+    ],
+    "positive_case": "현재 분기 메모리 매출과 이익이 동시 급증했고 HBM4 매출 전환과 높은 D램 이익률이 확인된다. 컨센서스 상향과 실제 cash-conversion 계열은 EPS와 FCF의 동행 가능성을 지지한다.",
+    "prior_fact_dispositions": [],
+    "proposed_score_lower": 17.5,
+    "proposed_score_mid": 19.5,
+    "proposed_score_upper": 21.0,
+    "research_complete": true,
+    "researcher_summary": "메모리 가격·고부가 믹스·실제 매출 급증이 기록적 영업이익으로 전환됐고, 구조화 actual·revision·cash 자료도 이를 보강한다. 다만 가격 의존도, 대규모 CAPEX와 성과급, 고객 일정 및 2028년 정상화가 FCF와 지속성을 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "하반기 분기 이익과 가격 강세라는 높은 전제가 연간 이익 상회의 조건이므로 전망치의 하방 위험으로 반영한다.",
+        "fact_row_index": 5,
+        "source_economic_mechanism": "연간 컨센서스 상회 기대에는 하반기 매 분기 약 100조원의 영업이익과 DS 수익성·메모리 가격 강세 지속이라는 높은 전제가 포함돼, 현재 이익 폭증의 지속성에 조건이 붙는다.",
+        "source_period_json": "\"2026-H2\"",
+        "source_predicate": "삼성전자 2026년 연간 컨센서스 상회에는 하반기 분기당 약 100조원 영업이익과 DS 수익성·메모리 가격 강세 지속이 핵심 전제로 분석됐다.",
+        "source_value_json": "\"about KRW 100tn operating profit per quarter in 2026-H2\""
+      },
+      {
+        "component_interpretation": "2026~2027년 메모리 영업이익 전망은 가격과 믹스가 미래 이익으로 전환될 수 있는 규모를 보여주되 추정치로 취급한다.",
+        "fact_row_index": 34,
+        "source_economic_mechanism": "메모리 영업이익 전망은 가격·매출 증가가 삼성전자 DS 메모리의 미래 이익으로 전환되는 규모를 수치화한다.",
+        "source_period_json": "\"FY2026E and FY2027E\"",
+        "source_predicate": "흥국증권은 삼성전자 메모리 영업이익을 2026년 269.4조원, 2027년 376.8조원으로 전망했다",
+        "source_value_json": "\"KRW 269.4 trillion FY2026E; KRW 376.8 trillion FY2027E\""
+      },
+      {
+        "component_interpretation": "완료된 2026년 1분기 전사 이익의 대부분이 메모리에서 발생했다는 추정은 이익 폭발의 사업 귀속을 보강한다.",
+        "fact_row_index": 49,
+        "source_economic_mechanism": "2026년 1분기 전사 영업이익의 90% 이상이 메모리에서 발생했다는 추정은 메모리 가격·수요 상승이 실제 전사 이익으로 전환된 기여도를 정량화한다.",
+        "source_period_json": "\"2026-Q1 잠정실적\"",
+        "source_predicate": "2026년 1분기 삼성전자 전체 영업이익의 90% 이상이 메모리 부문에서 발생한 것으로 추산됐다",
+        "source_value_json": "90"
+      },
+      {
+        "component_interpretation": "연간 영업이익 전망 구간의 상향은 컨센서스 revision 방향을 보여주지만 실제 확정 실적은 아니다.",
+        "fact_row_index": 60,
+        "source_economic_mechanism": "메모리 수요와 가격 상승이 이어지며 시장의 삼성전자 연간 영업이익 전망 구간이 1분기 전후보다 2분기 이후 상향된 것으로 보도됐다.",
+        "source_period_json": "\"FY2026E revision from around 2026-Q1 to 2026-Q2\"",
+        "source_predicate": "삼성전자 2026년 연간 영업이익 전망치는 1분기 전후 200조~300조원대 초반에서 2분기 이후 300조원 중후반대로 높아진 것으로 보도됐다.",
+        "source_value_json": "\"from KRW 200tn-low 300tn range to mid-high KRW 300tn range\""
+      },
+      {
+        "component_interpretation": "HBM4의 높은 상대 수익성은 고부가 제품 매출이 이익으로 전환되는 질을 높인다.",
+        "fact_row_index": 62,
+        "source_economic_mechanism": "전작 대비 높은 HBM4 수익성이 HBM 판매 확대의 이익 전환 품질을 높이는 제품 믹스 효과를 제공한다.",
+        "source_period_json": "\"2026-07-07 현재\"",
+        "source_predicate": "HBM4의 수익성이 전작보다 월등히 높은 것으로 알려졌다",
+        "source_value_json": "\"전작 대비 월등히 높은 수익성\""
+      },
+      {
+        "component_interpretation": "영업이익 연동 성과급은 이익 급증분의 비용 귀속을 늘려 순현금 전환을 제약한다.",
+        "fact_row_index": 74,
+        "source_economic_mechanism": "기존 성과급까지 포함한 반도체 성과급이 반도체 영업이익의 12.5%로 예상돼 현재 이익 급증분 중 임직원 보상비로 귀속될 몫을 보여준다.",
+        "source_period_json": "\"FY2026 expected compensation formula\"",
+        "source_predicate": "기존 성과급을 포함한 반도체 성과급 지급액이 반도체 영업이익의 12.5%로 예상됐다",
+        "source_value_json": "12.5"
+      },
+      {
+        "component_interpretation": "2분기 성과급 충당금은 강한 메모리 영업이익의 보고이익 전환을 낮춘 실제 비용 counter다.",
+        "fact_row_index": 81,
+        "source_economic_mechanism": "DS 특별성과급을 포함한 상반기 성과급 충당금이 2분기 잠정실적에 비용으로 반영돼 강한 메모리 이익의 보고 이익 전환을 낮췄으며 실제 현금 지급 시점은 문서에 없다.",
+        "source_period_json": "\"2026-H1 accrual reflected in 2026-Q2 provisional result\"",
+        "source_predicate": "2026년 2분기 실적에 DS 특별성과급을 포함한 상반기 성과급 충당금 18조~19조원이 반영된 것으로 추정됐다",
+        "source_value_json": "\"18-19\""
+      },
+      {
+        "component_interpretation": "선단공정 전환 투자는 성장 기반인 동시에 현금흐름 전환을 낮추는 자본지출 부담이다.",
+        "fact_row_index": 114,
+        "source_economic_mechanism": "HBM 등 고부가 제품 판매 확대를 위한 선단공정 전환 투자가 2025년 4분기와 연간 모두 증가해 공급 대응을 강화했지만, 같은 기간 현금지출 부담도 높였음을 보여준다.",
+        "source_period_json": "\"2025-Q4 and FY2025\"",
+        "source_predicate": "삼성전자 메모리 투자가 HBM 등 고부가 제품 판매 확대 목적의 선단공정 전환 투자로 2025년 4분기와 연간 모두 증가했다",
+        "source_value_json": "\"memory investment increased in Q4 and FY2025\""
+      },
+      {
+        "component_interpretation": "재고 관련 일회성 charge 감소는 전분기 비용 counter가 일부 해소됐음을 보여주되 반복 이익과 구분한다.",
+        "fact_row_index": 147,
+        "source_economic_mechanism": "2025년 2분기에 발생한 재고 관련 일회성 charge가 3분기에 줄어 메모리 실적 개선의 일부로 작용했다.",
+        "source_period_json": "\"2025-Q3\"",
+        "source_predicate": "2025년 3분기에 전분기의 메모리 재고 관련 일회성 charge가 줄어 실적 개선에 일부 기여했다",
+        "source_value_json": "\"prior-quarter one-time inventory charge reduced\""
+      },
+      {
+        "component_interpretation": "실현 D램 ASP 40% 상승은 매출과 영업레버리지 확대의 직접 가격 근거다.",
+        "fact_row_index": 148,
+        "source_economic_mechanism": "서버향 고부가 D램 수요 대응과 함께 실제 평균판매단가가 한 분기 만에 약 40% 상승해 메모리 매출과 이익 전환의 가격 축을 직접 강화했다.",
+        "source_period_json": "\"2025-Q4 vs 2025-Q3\"",
+        "source_predicate": "삼성전자 D램 평균판매단가가 2025년 4분기에 전분기 대비 약 40% 상승했다",
+        "source_value_json": "40"
+      },
+      {
+        "component_interpretation": "2026년 대규모 CAPEX와 미확정 세부계획은 FCF 폭발을 제한하는 핵심 불확실성이다.",
+        "fact_row_index": 157,
+        "source_economic_mechanism": "2026년 메모리 대규모 CAPEX 증가 전망은 제한된 공급에 대응하는 증설 여력을 높이는 동시에, 이익이 FCF로 전환되는 과정의 현금지출 부담을 키우는 양면 요인이다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자는 2026년 세부 투자계획이 미확정인 상태에서 메모리 대규모 CAPEX 증가를 예상했다",
+        "source_value_json": "\"large memory capex increase expected; detailed plan not finalized\""
+      },
+      {
+        "component_interpretation": "2026년 2분기 메모리 영업이익 추정은 현재 이익 전환 규모를 직접 수치화하되 사업부 추정임을 유지한다.",
+        "fact_row_index": 168,
+        "source_economic_mechanism": "메리츠증권 추정이 메모리 사업의 현재 분기 영업이익 규모를 93조2000억원으로 수치화해 메모리 매출의 이익 전환 규모를 제시한다.",
+        "source_period_json": "\"2026-Q2 잠정실적\"",
+        "source_predicate": "메모리 사업부의 2026년 2분기 영업이익이 93조2000억원으로 추정됐다",
+        "source_value_json": "93200000"
+      },
+      {
+        "component_interpretation": "D램 영업이익률 추정은 가격 급등이 높은 이익률로 전환된 정도를 보여준다.",
+        "fact_row_index": 177,
+        "source_economic_mechanism": "D램의 높은 분기 영업이익률 추정은 가격 급등이 삼성전자 메모리 이익으로 전환된 정도를 보여준다.",
+        "source_period_json": "\"2026Q1\"",
+        "source_predicate": "증권사들은 삼성전자의 2026년 1분기 D램 영업이익률을 78%로 추정했다",
+        "source_value_json": "78"
+      },
+      {
+        "component_interpretation": "현재 이익 추정이 출하보다 가격 지속성에 민감하므로 가격 둔화 시 영업레버리지 역전 위험을 반영한다.",
+        "fact_row_index": 187,
+        "source_economic_mechanism": "삼성전자 이익 추정치가 출하량보다 메모리 가격 지속성에 더 민감하다는 분석은 높은 가격 상승률의 둔화가 영업레버리지를 반대로 되돌릴 수 있다는 counter다.",
+        "source_period_json": "\"2026 outlook as of 2026-07-01\"",
+        "source_predicate": "메모리 가격 상승률이 둔화되면 삼성전자 이익 추정치가 빠르게 흔들릴 수 있고 단기 실적은 출하량보다 가격 지속성에 더 민감하다고 분석됐다.",
+        "source_value_json": "\"earnings estimates are more sensitive to price durability than shipment growth\""
+      },
+      {
+        "component_interpretation": "성과급을 제외한 메모리 영업이익은 반복 영업력과 일회성 비용을 분리하는 보조 근거다.",
+        "fact_row_index": 208,
+        "source_economic_mechanism": "성과급 충당금을 제거한 메모리 영업이익 추정은 반복적인 메모리 이익 전환력과 일회성 비용 효과를 분리한다.",
+        "source_period_json": "\"2026-Q2 provisional result, excluding performance bonus provision\"",
+        "source_predicate": "대신증권은 성과급 충당금을 제외한 삼성전자 2026년 2분기 메모리반도체 영업이익을 109조원으로 추정했다",
+        "source_value_json": "109000000"
+      },
+      {
+        "component_interpretation": "고부가 제품 판매와 범용 가격 급등이 동시에 기록적 매출·이익으로 연결된 복합 메커니즘이다.",
+        "fact_row_index": 212,
+        "source_economic_mechanism": "AI 고부가 메모리 판매 확대와 범용 메모리 가격 급등이 함께 작용해 메모리 매출과 영업이익의 기록적 실적으로 전환됐다는 복합 이익 메커니즘이다.",
+        "source_period_json": "\"2026-Q2\"",
+        "source_predicate": "고부가 메모리 판매 확대와 범용 메모리 가격 급등이 기록적 매출과 영업이익의 원인으로 분석됐다",
+        "source_value_json": "\"AI 고부가 메모리 판매 확대 및 범용 메모리 가격 급등\""
+      },
+      {
+        "component_interpretation": "2분기 전사 이익 중 메모리 귀속 비중 추정은 이익 폭증의 메모리 직접성을 강화한다.",
+        "fact_row_index": 233,
+        "source_economic_mechanism": "메모리 사업이 잠정 전사 영업이익의 98% 이상을 차지했다는 추정은 이익 폭증의 사업 귀속을 정량적으로 제시한다.",
+        "source_period_json": "\"2026-Q2 잠정실적\"",
+        "source_predicate": "2026년 2분기 삼성전자 전체 영업이익의 98% 이상이 메모리 사업부에서 나온 것으로 추정됐다",
+        "source_value_json": "98"
+      },
+      {
+        "component_interpretation": "2028년 이익 감소 컨센서스는 2026~2027년 급증을 영구 성장으로 외삽할 수 없다는 counter다.",
+        "fact_row_index": 242,
+        "source_economic_mechanism": "하이퍼스케일러 설비투자 증가세 둔화가 반영되면 삼성전자 영업이익이 2028년부터 감소할 수 있다는 컨센서스는 현재 메모리 이익 급증을 영구 성장으로 외삽하는 가치평가의 반대 근거다.",
+        "source_period_json": "\"FY2028E vs FY2027E\"",
+        "source_predicate": "2028년 삼성전자 영업이익 컨센서스가 전년 대비 4.99% 감소한 406조원으로 제시돼 시장이 2026~2027년을 메모리 슈퍼사이클 정점으로 가정하고 있다고 분석됐다",
+        "source_value_json": "-4.99"
+      },
+      {
+        "component_interpretation": "HBM4가 양산 후 빠르게 누적 매출로 전환돼 신제품 실적 기여가 이미 시작됐음을 보여준다.",
+        "fact_row_index": 246,
+        "source_economic_mechanism": "HBM4 양산 출하가 약 130일 안에 누적 매출 10억달러로 전환돼 신제품의 실적 기여 속도를 보여준다.",
+        "source_period_json": "\"첫 양산 출하 후 약 130일\"",
+        "source_predicate": "HBM4 첫 양산 출하 후 약 130일 만에 누적 매출 10억달러를 돌파했다",
+        "source_value_json": "1000000000"
+      },
+      {
+        "component_interpretation": "사상 최고 분기 매출과 영업이익의 동시 달성은 외형이 수익으로 전환된 가장 직접적인 현재 근거다.",
+        "fact_row_index": 257,
+        "source_economic_mechanism": "분기 메모리 매출과 영업이익의 동시 사상 최고 기록은 외형 확대가 수익성으로 전환됐음을 직접 보여준다.",
+        "source_period_json": "\"2025-Q4\"",
+        "source_predicate": "메모리 사업은 2025년 4분기에 사상 최고 분기 매출과 영업이익을 달성했다",
+        "source_value_json": "\"record-high quarterly revenue and operating profit\""
+      },
+      {
+        "component_interpretation": "1분기 메모리 영업이익률 컨센서스는 높은 가격이 이익률로 전환된 강도를 보강한다.",
+        "fact_row_index": 275,
+        "source_economic_mechanism": "증권가 컨센서스가 완료된 2026년 1분기 메모리 매출의 수익 전환 효율을 추정했다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "증권가 컨센서스는 2026년 1분기 삼성전자 메모리 사업부 영업이익률을 74.3%로 추정했다",
+        "source_value_json": "74.3"
+      },
+      {
+        "component_interpretation": "1분기 메모리 매출의 전분기 대비 두 배 증가는 이익 폭발의 매출 기반을 확인한다.",
+        "fact_row_index": 282,
+        "source_economic_mechanism": "메모리 사업부 매출이 2026년 1분기에 전분기 대비 두 배 이상으로 늘어 실제 이익 폭발의 매출 기반이 확대됐다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q4\"",
+        "source_predicate": "삼성전자 메모리 사업부 매출이 2026년 1분기에 전분기 대비 101% 증가했다",
+        "source_value_json": "101"
+      },
+      {
+        "component_interpretation": "물량 증가보다 가격 급등 의존도가 높다는 지적은 이익 지속성의 핵심 counter다.",
+        "fact_row_index": 293,
+        "source_economic_mechanism": "메모리 물량이 크게 늘지 않은 상태에서 가격 급등에 의존한 이익은 가격 사이클이 둔화될 때 지속성이 약해질 수 있다.",
+        "source_period_json": "\"2026-Q2 current risk\"",
+        "source_predicate": "삼성전자 메모리 실적이 큰 물량 증가 없이 가격 급등에 의존한다는 불안이 제기됐다",
+        "source_value_json": "\"earnings depend on price surge without large volume growth\""
+      },
+      {
+        "component_interpretation": "고객 제품 일정 지연은 HBM4 생산이 같은 해 이익으로 전환되는 속도를 늦출 수 있다.",
+        "fact_row_index": 301,
+        "source_economic_mechanism": "고객사 제품 출하 지연으로 삼성전자의 2026년 HBM4 실적 기여가 당초 예상보다 축소됐다는 분석은 HBM4 생산·출하가 고객 최종제품 일정에 따라 같은 해 이익으로 전환되지 못할 수 있는 실행 counter다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "고객사 제품 출하 지연으로 삼성전자의 2026년 HBM4 실적 기여도가 당초 예상보다 축소됐다는 분석이 나왔다",
+        "source_value_json": "\"2026 contribution reduced versus prior expectation\""
+      },
+      {
+        "component_interpretation": "전년동기 대비 메모리 매출 급증은 현재 업사이클의 실제 외형 전환을 확인한다.",
+        "fact_row_index": 303,
+        "source_economic_mechanism": "메모리 사업부 매출이 전년동기 대비 크게 증가해 현재 메모리 업사이클의 실적 전환 규모를 보여준다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "삼성전자 메모리 사업부 매출이 2026년 1분기에 전년동기 대비 292% 증가했다",
+        "source_value_json": "292"
+      }
+    ],
+    "selected_fact_row_indices": [
+      5,
+      34,
+      49,
+      60,
+      62,
+      74,
+      81,
+      114,
+      147,
+      148,
+      157,
+      168,
+      177,
+      187,
+      208,
+      212,
+      233,
+      242,
+      246,
+      257,
+      275,
+      282,
+      293,
+      301,
+      303
+    ],
+    "source_coverage": [
+      "COMPANYGUIDE",
+      "COMPANYGUIDE+KRX_PRICE_MARKET_CAP",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "DETERMINISTIC_FORWARD_SCENARIO",
+      "DETERMINISTIC_FORWARD_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "GENERAL_WEB_DISCOVERY",
+      "ISSUER_GUIDANCE",
+      "ISSUER_NEWSROOM",
+      "KIND_KRX",
+      "KRX_PRICE_MARKET_CAP",
+      "KRX_PRICE_MARKET_CAP+COMPANYGUIDE",
+      "KRX_PRICE_MARKET_CAP+PUBLIC_BROKER_REPORT",
+      "OPENDART",
+      "PEER_STRUCTURED",
+      "PUBLIC_BROKER_PDF",
+      "PUBLIC_BROKER_REPORT",
+      "STRUCTURED_HISTORICAL_BAND",
+      "STRUCTURED_PEER_BAND",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1,
+      2
+    ],
+    "uncertainties": [
+      "사업부 영업이익 상당수가 증권가 추정이며 발행사 제품별 확정 손익은 제한적이다.",
+      "2026년 대규모 CAPEX의 세부 집행과 실제 FCF 시점이 아직 확정되지 않았다.",
+      "메모리 가격 상승률 둔화 시 영업레버리지와 revision이 얼마나 역전될지 불확실하다."
+    ],
+    "why_not_higher": "가격 의존도가 높고 CAPEX·성과급·고객 일정이 FCF 전환을 제한하며 2028년 정상화 counter가 남아 있다.",
+    "why_not_lower": "실제 메모리 매출·영업이익의 동시 기록과 ASP·마진·HBM4 매출 전환, 구조화 actual/revision/cash 계열이 폭발적 이익 전환을 뒷받침한다."
+  },
+  "payload_hash": "dfa394815a72fb81bab5b8e11cfa64c9f2f7c008002ffe15da82c236cbd5b7e8",
+  "production_score_authority": false,
+  "prompt_hash": "e142fdc96691390bafaae8625d0c01880444691fba1917557d0d2c44143014cb",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e9c40b7e39ebffb31bf12da28e1043902af49291fbd2421c8689cdef2e009bc0",
+  "response_id": "COLLABRESP-fd883c347627867cea87f6e6215d5b590853b45033ad248f312317efe001ca8b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

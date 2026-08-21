@@ -1,0 +1,587 @@
+[ IT는 SK ] – Telegram
+[ IT는 SK ]
+최도연, 박형우, 한동희, 이동주, 박제민 (SK증권)
+[ IT는 SK ]
+최도연, 박형우, 한동희, 이동주, 박제민 (SK증권)
+[ IT는 SK ]
+@skitteam
+11.9K
+subscribers
+982
+photos
+253
+files
+3.14K
+links
+최도연, 박형우, 한동희, 이동주, 박제민 (SK증권)
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+[ IT는 SK ]
+11.9K subscribers
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+MARVELL FY4Q25 컨퍼런스 콜
+실적 발표 이후 애프터마켓 주가 -14% 하락
+▶️
+주요 코멘트
+ASIC 강세로 데이터센터 시장 매출액 +78% YoY, +24% QoQ
+데이터센터 시장 FY1Q26 매출액 가이던스 +mid-single digits QoQ
+데이터센터 부문에는 계절적 요인으로 인해 매출이 감소 존재
+FY26 회계연도에는 기존 AI 매출 목표인 25억 달러를 매우 크게 초과할 것으로 예상
+두 개의 주요 AI 맞춤형 프로그램이 대량 생산에 돌입, 하나는 ARM CPU
+다른 하나는 AI XPU로 성능이 우수하여 올해 대량 생산 예상
+XPU 매출이 FY2027까지도 지속 성장할 것으로 기대
+추가적인 미국 하이퍼스케일 고객과도 협력 중
+▶️
+QnA
+Q 경쟁사가 XPU 차지할 것이라는 논의가 많다. 양측이 동시에 자신감을 가지긴 어려운데 어떻게 봐야하는가?
+A 기밀 유지 및 프로그램 보호 문제로 인해 자세한 사항을 공개할 수는 없음. 다만 현재 XPU 프로그램의 증가에 매우 만족. 첫 번째 실리콘이 성공적으로 출시되었으며, 상당한 규모의 대량 생산이 진행 중. 이 성장은 4분기부터 우리의 수익에 반영되었으며, 추가적인 성장이 예상. 동시에, 우리는 이 고객과 함께 차세대 AI XPU 개발에 깊이 관여. 샘플링 및 품질 검증 단계를 완료하는 대로 양산에 돌입할 계획
+Q 데이터센터 매출에서 AI와 비 AI 매출 비중을 어떻게 나눌 수 있는가?
+A AI 매출은 데이터센터 매출의 절반 이상을 차지. 이 비중은 앞으로 계속 증가할 것. 전기광학 제품이 약 절반, ASIC이 25% 차지
+Q 데이터센터향 매출이 이번 실적과 다음 분기 가이던스가 시장 예상대비 성장세가 약한 이유가 무엇인가? 공급 문제인가?
+A 연간 매출액 성장률은 여전히 매우 높은 수준, 우리는 사업이 매우 좋은 궤도를 유지하고 있다고 확신
+Q ASIC 고객들의 지속성을 어떻게 평가하는가? 고객이 다른 디자인 파트너를 찾게 되는 주요 원인은 무엇인가? 가격인가 성능인가?
+A 당사는 모든 주요 하이퍼스케일러와 ASIC 프로그램 진행 중, 두 곳에서 이미 컴퓨팅 관련 제품 대량 생산 중. 세번 째 고객도 가시적인 성과 예상. ASIC에서 중요한 기술 리더십, 제조 역량, 고객 지원 등을 모두 갖추고 있어 장기적인 고객 관계 유지에 자신감
+Q 네 번째로 확보한 고객은 NIC 관련 사업인가 컴퓨팅 관련 사업인가?
+A 네 번쨰 고객과는 이미 NIC 디자인 윈을 확보한 상황. 여기서 더 넓게 확장할 계획
+Q HBM4 관련하여 ASIC 기회를 어느정도로 규모로 예상하는가? 이 기술이 Marvell 에게 중요한 영향을 미칠 시점은 언제인가?
+A 주요 파트너들과 긴밀히 협력 중. 맞춤형 HBM을 통해 칩 전면부 면적을 줄여 면적당 성능 극대화 가능. 향후 몇 년동안 맞춤형 HBM 채택이 증가할 것으로 예상, 이는 Marvell에게도 상당한 기회 제공
+* 위 내용은 공개 실적발표 내용으로 별도의 승인절차 없이 제공합니다.
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+Telegram
+[ IT는 SK ]
+최도연, 박형우, 한동희, 이동주, 박제민 (SK증권)
+👍
+1
+6.35K
+views
+제민 박
+, edited
+00:45
+[ IT는 SK ]
+제이앤티씨, 대면적 TGV 유리기판 글로벌 서플라이 체인에 샘플 공급(파이낸셜뉴스)
+https://n.news.naver.com/mnews/article/014/0005317233?rc=N&ntype=RANKING&sid=101
+Naver
+제이앤티씨, 대면적 TGV 유리기판 글로벌 서플라이 체인에 샘플 공급
+제이앤티씨는 대면적 레이저 글라스 관통(TGV) 유리기판에 대해 미국 2개사 등 글로벌 반도체 유리기판 서플라이 체인 11개사에 샘플 공급을 시작했다고 6일 밝혔다. 유리기판은 기존의 플라스틱 대신 유리를 원재료로
+8.36K
+views
+Mingyu Kwon
+,
+05:12
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+2025.03.07. 주요 뉴스
+OpenAI·오라클, '스타게이트' 프로젝트 위해 수십억 달러 규모의 엔비디아 칩 확보 추진
+- 26년 말까지 총 64,000개의 엔비디아 GB200 반도체가 배치될 예정
+- 올 여름까지 초기 물량 16,000개가 먼저 배치
+https://buly.kr/1c8f8Xg
+알리바바, AI 추론 모델 발표로 주가 8% 상승
+- AI 모델 DeepSeek의 R1과 동등한 수준이라고 주장하는 AI 추론 모델을 공개
+- 자사의 챗봇 서비스 Qwen Chat에서 이용
+https://buly.kr/E78SmSk
+SK하이닉스, CIS 사업부문 AI 메모리 분야로 전환
+https://buly.kr/BIUL5Pk
+브로드컴, AI 칩 수요 호조로 2분기 강력한 실적 전망
+- 장 마감 후 주가는 8% 이상 급등
+https://buly.kr/DEYfsNi
+마벨, 24년 만에 최악의 하루…미온적인 매출 전망에 AI 투자 둔화 우려 재점화
+- 주가는 19.8% 폭락
+https://buly.kr/6XlsbFj
+TSMC의 C.C. 웨이, 트럼프의 CHIPS 법안 지원 중단 요구에 "TSMC는 공정성만을 원할 뿐"
+https://buly.kr/ChoOvvZ
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+Bloomberg.com
+OpenAI, Oracle Eye Nvidia Chips Worth Billions for Stargate Site
+OpenAI and Oracle Corp. plan to begin filling a massive new data center in Texas with tens of thousands of powerful AI chips from Nvidia Corp. in the coming months, part of a push to get the first facility for their $100 billion Stargate infrastructure venture…
+❤
+1
+1.18K
+views
+제민 박
+,
+21:57
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+Broadcom FY1Q25 실적발표
+▶️
+FY1Q25 실적 (Non-GAAP)
+매출액 $14.92B (+6% QoQ, +25% YoY): 컨센서스 +2%
+EBITDA margin 68.0% (+3%p QoQ, +8%p YoY): 컨센서스 +1.8%p
+EPS $1.60 (+13% QoQ, +45% YoY): 컨센서스 +6%
+▶️
+FY2Q25 가이던스
+매출액 $14.90B (Flat QoQ, +19% YoY): 컨센서스 +1%
+EBITDA margin 66.0% (-2%p QoQ, +11%p YoY): 컨센서스 +2%p
+▶️
+URL:
+https://buly.kr/FsI2bo1
+* 위 내용은 공개 실적발표 내용으로 별도의 승인절차 없이 제공합니다.
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+Broadcom Inc.
+Broadcom Inc. Announces First Quarter Fiscal Year 2025 Financial Results and Quarterly Dividend | Broadcom Inc.
+The Investor Relations website contains information about Broadcom Inc. 's business for stockholders, potential investors, and financial analysts.
+3.23K
+views
+제민 박
+,
+23:13
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+Broadcom FY1Q25 컨퍼런스 콜
+실적 발표 이후 애프터마켓 주가 +12% 상승
+▶️
+주요 코멘트
+AI 관련 매출은 41억 달러로 전년 대비 77% 증가
+38억 달러로 예상했던 가이던스를 초과 달성
+AI 관련 매출이 포함된 반도체 솔루션 부문 매출총이익률 68%로 YoY 70bp 상승
+2분기 가이던스는 44억 달러로 증가 예상
+업계 최초의 2나노미터(nm) AI XPU를 개발 중
+대규모 AI 가속기 클러스터 구축을 지원, 50만개 가속기 클러스터 구축이 목표
+우리가 협력하고 있는 3개의 하이퍼스케일러는 27년말까지 100만개의 XPU 클러스터 구축을 목표
+현재 XPU를 대량 출하하는 3개의 고객 외에도 새롭게 4개 기업이 브로드컴과 협력
+이 4개 기업은 기존 추정치인 27년 600~900억 SAM에 포함되지 않음
+▶️
+주요 QnA
+Q 4개의 추가 확보된 고객들이 현재 3개 주요 고객만큼 커질 가능성이 있는가? ASIC 트렌드 전반에 대해서 어떻게 보는가?
+A 신규 협력 4개 기업은 자체 프론티어 모델을 훈련하는 상황. 일반적으로 최초의 칩을 개발하는 데 약 1년 반 이상의 시간 필요. 장기적으로는 유사한 수준의 수요 창출이 가능할 것
+우리는 하이퍼스케일러들이 자체적으로 칩을 설계할 수 있게 돕는 역할. 우리가 하드웨어를 제공한다고 해도, 이들 하이퍼스케일러들이 자체 소프트웨어 모델과 알고리즘을 개발하고 최적화하는 과정이 필요. 해당 과정이 끝나야 XPU가 실제로 배포될 수 있음. 이러한 이유로 현재까지 실제로 대량생산 단계에 도달한 고객은 3개 뿐
+Q 디자인 윈과 출하 사이에 전환 비율이 어느정도 된다고 보는가?
+A 우리는 단순히 고객이 우리 제품을 설계에 포함했다는 이유만으로 디자인 윈이라고 하지 않음. 실제 대량 생산이 되고 배포 단계에 도달해야 디자인 윈으로 인정. 장기적인 성장을 지속할 수 있는 고객과만 협력하는 중
+Q AI 시장이 추론 중심으로 이동하면 브로드컴의 TAM이 더 커진다고 볼 수 있는가?
+A 트레이닝과 추론을 각각 최적화하는 별도의 XPU 제품군을 개발하는 중. 트레이닝과 추론 간 시장 점유율 변화가 브로드컴의 전체 시장 규모에 미치는 영향은 크지 않을 것. 트레이닝과 추론을 위한 칩 아키텍처(Chip Architecture)는 매우 다르며, 고객들의 요구사항도 차이 존재. 기존 제시한 600~(00억 달러 SAM에는 트레이닝과 추론을 포함한 수치, 트레이닝 비중이 다소 더 높은 편
+Q 과거 인터뷰에서 2027~2028년 XPU 출하량 700만개 증가, XPU 평균 판매 가격(ASP)이 약 20,000달러가 될 것으로 예상했는데 이 전망에 변화가 있는가?
+A XPU 출하량 700만 개 전망은 현재 대량 출하 중인 3개 고객만을 기준으로 한 수치. ASP는 유지될 것으로 생각
+Q 현재 AI 네트워크 매출이 반도체(AI Compute) 대비 어느 정도 비중을 차지하는가?
+A AI 관련 매출에서 컴퓨팅(Compute)과 네트워크(Network)의 비율은 약 70 대 30 정도. 네트워크 매출 역시 지속적으로 증가 중. 일반적인 추세로 70:30을 유지하면서 성장할 것으로 예상
+* 위 내용은 공개 실적발표 내용으로 별도의 승인절차 없이 제공합니다.
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+Telegram
+[ IT는 SK ]
+최도연, 박형우, 한동희, 이동주, 박제민 (SK증권)
+👍
+2
+5.89K
+views
+제민 박
+,
+00:14
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+2025.03.10. 주요 뉴스
+OpenAI, Oracle, Nvidia 칩 수십억 달러 규모 계약 논의, Stargate 사이트 구축
+- 26년 말까지 Nvidia의 GB200 반도체 64,000개를 보유할 것으로 예상
+- 초기 16,000개의 칩이 올여름까지 설치될 계획
+https://buly.kr/CWtf3Xo
+트럼프, 한국의 관세 정책에 의문 제기하며 삼성에 주목
+- 한국 정부 관계자, 2012년 FTA 이후 미국과 한국간 관세 거의 없어
+https://buly.kr/AEzoIwO
+Microsoft, OpenAI와 경쟁할 AI 추론 모델 개발 중
+https://buly.kr/1n3RCH7
+삼성, 브로드컴과 실리콘 포토닉스 협력… 2년 내 상용화 전망
+https://buly.kr/DPTRwyy
+삼성전자·SK하이닉스·마이크론, 차세대 D램 양산 수싸움… “EUV 노하우가 승패 가른다”
+https://buly.kr/CWtf3YT
+GPU 확보 경쟁 나선 통신사들… 정부 매입 목표량 뛰어넘었다
+https://buly.kr/8ekzTbp
+AI에 돈 쏟는 中 빅테크…개발 경쟁 격화
+https://buly.kr/6igegdZ
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+DIGITIMES
+OpenAI, Oracle eye Nvidia chips worth billions for Stargate site
+OpenAI and Oracle plan to begin filling a massive new data center in Texas with tens of thousands of powerful AI chips from Nvidia in the coming months, part of a push to get the first facility for their US$100 billion Stargate infrastructure venture up…
+1.12K
+views
+제민 박
+,
+23:01
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+강해지는 국면
+2Q25: 26년 HBM 계약 통한 강한 AI 확인 예상
+빅테크들의 2025년 CapEx 계획 시장 예상치 상회
+TSMC CoWoS 생산 능력 상향
+엔비디아 블랙웰 본격화 및 ASIC 진영의 하이엔드 HBM 수요 증가(2E,3->3E)
+-> 전년대비 계약 빠르게 종료
+26년 HBM 전망치 상향 국면
+Commodity DRAM 고정가격 안정화 국면 시작
+DRAM 3사의 제한적인 D5 재고 상황, AI 강세 및 중국 이구환신 정책
+-> 서버 D5, 플래그십 모바일향 LPD5X 수요 확대, HBM 강세에 따른 선단공정 생산 능력 잠식
+2Q25 재고조정 안정화 시작의 기존 전망 유지
+->2Q25 메모리 출하 반등을 통해 확인할 것
+과거 Commodity 사이클에서의 주가 반등 논리는
+가격 하락률의 안정화 시작이었다는 점을 기억
+반도체 비중 확대, SK하이닉스 탑픽 유지
+AI 사이클 내 메모리가 가장 강해지는 국면은 HBM과 Commodity가 시너지를 내는 구간
+->2Q25 HBM 강세 재확인과 재고조정 안정화로 시너지 기대감 점증
+AI CapEx의 상승은 HBM 수요 상향 요인
+->2Q25부터 2026년 HBM 전망 상향과 이에 수반되는 Commodity 생산능력 잠식 확대
+->2026년 메모리 증익에 대한 가시성을 높이는 요소
+SK하이닉스 최선호주 유지
+-> HBM 우위 속 M15X (HBM 기준 90K/월) 활용한 시장 수요 흡수 여력 강화
+-> ASIC 진영으로의 저변 확대 가속화 예상
+▶️
+보고서 링크:
+https://buly.kr/2UiT8pf
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+당사는 컴플라이언스 등록된 자료에 대해서만 제공 가능하며 본 자료는 컴플라이언스 등록된 자료입니다.
+❤
+1
+10.9K
+views
+DOMA HAN
+, edited
+23:14
+[ IT는 SK ]
+[SK증권 IT 장비/소재 이동주]
+IT 소부장, AI-Driven
+▶️
+Summary
+1. 레거시 관련 전공정 주가 지난주부터 하락 반전. 그러나 중국 이구환신 효과로 DRAM/NAND 재고 소진이 확인되어, 레거시 업황은 개선될 전망. 3-4월 supply chain에서의 동향 변화까지 감지된다면 다시 강한 상승 반전 예상
+2. AI-driven 수요 사이클 지속. CSP에 이어 Telco도 AI DC 구축 시작으로 GPU 확보 노력. 2-3년 투자 사이클 진입. AI 후공정 업체의 다운사이드 리스크보다 업사이드 리턴이 큰 구간
+3. 업황 이외 모멘텀 check: ASIC, 유리기판, 폴더블, 극저온 식각
+Top-picks: 리노공업, 파크시스템스, 테크윙, 넥스틴
+▶️
+보고서 링크:
+https://buly.kr/EdskqCe
+*SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+*SK증권 리서치 텔레그램 채널 :
+https://t.me/sksresearch
+당사는 컴플라이언스 등록된 자료에 대해서만 제공 가능하며 본 자료는 컴플라이언스 등록된 자료입니다.
+3.67K
+views
+Dongjoo Nate
+,
+00:03
+[ IT는 SK ]
+[SK증권 반도체 한동희, 박제민]
+▶️
+TSMC 25년 2월 매출액
+- NT$ 260.0B (-11.3% MoM, +43.1% YoY)
+3.87K
+views
+제민 박
+,
+05:35
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+2025.03.11. 주요 뉴스
+오라클, AI 클라우드 수요 강세로 내년 회계연도 매출 15% 성장 전망
+- 회사의 대규모 영업 잔고가 내년 회계연도 매출을 15% 성장시키는 데 기여할 것
+https://buly.kr/BeJsUdv
+화웨이, 페이퍼 컴퍼니 통해 TSMC에서 200만 개 이상의 AI 칩 다이 확보
+- 또한 1년 이상의 생산을 지속할 수 있을 만큼의 고대역폭 메모리(HBM)를 비축
+https://buly.kr/1GJAcjS
+NVIDIA, GTC에서 GB300 공개 예정… 5월 출하 개시 전망, 냉각 수요 증가
+https://buly.kr/HHc7syP
+TSMC 1분기 매출 저점 근접, AI 급등
+- 올해 첫 두 달간의 누적 매출 전년 동기 대비 39.2% 증가
+https://buly.kr/FsI42QQ
+CoreWeave, IPO 앞두고 OpenAI와 120억 달러 규모 클라우드 계약 체결
+https://buly.kr/6tbQ0bV
+폭스콘, 첫 대형 언어 모델 공개
+- H100 GPU 120개를 사용해 학습, 메타 Llama 3.1 아키텍처 기반
+https://buly.kr/90aVmPw
+AI 열풍으로 미국 벤처 캐피털, 3년 만에 최대 투자
+- 올 1분기 동안 이미 300억 달러 이상이 신생 기업에 투자, 500억 달러 조달 진행 중
+https://buly.kr/FWSY4o7
+미국, 중국 구형 반도체 덤핑 관련 청문회 개최… 타이완 파운드리 수혜 전망
+- 자동차, 가전제품, 통신 장비에 널리 사용되는 중국산 구형 반도체에 추가 관세를 부과할 가능성
+https://buly.kr/6Mr94FC
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+Reuters
+Oracle gives strong long-term growth outlook as AI cloud demand soars
+Oracle CEO Safra Catz on Monday gave a strong growth outlook for its fiscal 2026 and 2027, indicating that the skyrocketing demand for advanced artificial intelligence computing shows no signs of slowing down.
+❤
+1
+1.04K
+views
+제민 박
+,
+21:51
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+ORACLE FY3Q25 실적발표
+▶️
+FY3Q25 실적 (Non-GAAP)
+매출액 $14.13B (+1% QoQ, +6% YoY): 컨센서스 -2%
+OPM 44.1% (+1%p QoQ, +1%p YoY): 컨센서스 +0.6%p
+EPS $1.47 (+0% QoQ, +4% YoY): 컨센서스 -1%
+▶️
+FY3Q25 주요 코멘트
+수주 잔고(RPO): 1,300억 달러 (전년 대비 +62%)
+3분기 동안 $48B 이상의 판매 계약 체결
+OpenAI, xAI, Meta, NVIDIA, AMD 등과 클라우드 계약 체결
+$130B 규모의 판매 백로그(RPO)로 인해 오는 6월 시작되는 다음 회계연도 매출 15% 성장 예상
+향후 ‘Stargate 계약’ 체결 전망, AI 훈련 및 추론 비즈니스 확장 기대
+올해 안에 데이터 센터 용량 2배 확대 계획
+마이크로소프트, 구글, 아마존과 협력한 데이터베이스 멀티클라우드 매출이 최근 3개월 동안 92% 증가
+AI 훈련을 위한 GPU 소비량이 지난 12개월 동안 244% 증가
+▶️
+URL:
+https://buly.kr/3CNVPuN
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+Oracle
+Oracle Announces Fiscal 2025 Third Quarter Financial Results
+Q3 Remaining Performance Obligations $130 billion, up 62% in USD up 63% in constant currency Q3 GAAP Earnings per Share up 20% to $1.02, Non-GAAP Earnings per Share up 4% to $1.47 Q3 Total Revenue $14.1 billion, up 6% in USD and up 8% in constant currency…
+❤
+1
+3.91K
+views
+제민 박
+,
+22:04
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+ORACLE FY3Q25 컨퍼런스 콜
+▶️
+주요 코멘트
+올해 말까지 사용 가능한 전력 용량이 두 배, 다음 회계연도 말까지 세 배로 증가할 것으로 예상
+클라우드 인프라 매출은 3분기 동안 51% 증가하면서 CSP들보다 훨씬 높은 성장률 기록 중
+용량 확장을 둔화시켰던 부품 지연 문제는 FY1Q26(CY3Q25) 에는 해소될 것으로 예상
+수주 잔고(RPO): 1,300억 달러 (전년 대비 +62%)
+3분기 동안 $48B 이상의 판매 계약 체결
+RPO 중 약 31%가 향후 12개월 내에 매출로 인식될 예정
+AI 훈련을 위해 64,000개의 NVIDIA GB200 GPU로 구성된 대규모 액체 냉각 클러스터를 구축
+이와 별개로 3분기 동안 AMD와 대형 계약 체결, MI355x 활용 3만개 클러스터 구축 예정
+▶️
+주요 QnA
+Q Stargate 프로젝트에 선발될 수 있었던 요인은 무엇인가? 오라클의 독자적인 가치는?
+A 대규모 AI 클러스터를 구축하는 기술을 보유, 경쟁사 대비 더 빠르고 경제적. 기술적 우위가 비용 절감으로 이어지면서 대형 게약 많이 체결 가능. Stargate 계약 없이도 1300억 달러 이상의 RPO를 기록
+Q Stargate 프로젝트가 진행될 경우, 이는 오라클의 재무제표에 어떻게 반영될 예정인가?
+A 보통의 계약과 다르지 않게 처리할 것. 숫자가 커질 뿐
+Q 현재 AI 훈련과 추론(inferencing)의 시장 기회에 대해 어떻게 평가하는가? 일부 투자자들은 AI 훈련의 수익성이 점점 감소할 것이라는 우려 존재
+A AI 추론 시장은 훨씬 더 큰 기회. AI 훈련은 1~2개의 대형 계약을 체결하는 반면, AI 추론은 수십만 개의 기업이 활용할 수 있는 시장. RPO는 일부 변동성이 있을 수 있지만, 앞으로도 매우 큰 수치가 나올 것이라 예상. 향후 몇 개월 내에 매우 중요한 계약들이 체결될 것으로 보이며, 이로 인해 RPO는 계속해서 증가할 것. 현재 수요는 매우 강력하며, 고객들은 오라클 클라우드에 자리를 확보하고 용량을 예약하기 위해 장기 계약을 체결 중.
+Q 오라클의 AI 데이터 플랫폼이 추론 시장에서 경쟁사 대비 어떤 차별점을 갖고 있는가?
+A 오라클 데이터베이스 23 AI는 버튼 하나만 누르면 기존 데이터를 벡터 형식으로 변환하여 AI 모델이 쉽게 학습할 수 있도록 지원. 이 기능은 오라클 독자적인 기능
+Q AI 기반 에이전트(Agents)에 대해 조금 더 구체적으로 설명해 주실 수 있는가? 이 변화는 오라클의 SaaS 비즈니스에 어떤 영향을 주는가?
+A AI 에이전트는 우리가 헬스케어 분야에서 차별화되는 가장 중요한 요소 중 하나. 차트 정리, 보험사 제출 등 의사가 하는 일을 많은 부분 자동화. 대규모 병원 및 정부 기관들이 오라클의 시스템을 선택하는 결정적인 요인. 경쟁사들은 아직 이러한 기능을 "개발 중"이라거나 "향후 제공할 계획"이라고 말하고 있지만, 우리는 이미 실전에서 사용 중. 결국, 미래의 애플리케이션은 대부분 AI 에이전트로 구성될 것, 기존 애플리케이션에서 일부 AI 기능을 추가하는 것이 아니라, 전체 애플리케이션이 AI 에이전트들로 이루어진 환경으로 변화할 것. 내부적으로도 AI 에이전트를 활용하여 회계, 재무 분석, 결산 작업 등을 자동화 중이며 매우 효과적임
+Q AI 기능들이 온프레미스 고객들의 클라우드 전환 속도를 가속화하는가?
+A 클라우드 이용하지 않던 고객들이 AI 기능 활용을 위해 클라우드 이동 중.
+* 위 내용은 공개 실적발표 내용으로 별도의 승인절차 없이 제공합니다.
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+Telegram
+[ IT는 SK ]
+최도연, 박형우, 한동희, 이동주, 박제민 (SK증권)
+❤
+1
+920
+views
+제민 박
+,
+23:34
+[ IT는 SK ]
+[SK증권 반도체 한동희, 박제민]
+3월 1~10일 반도체 수출액 잠정치
+DRAM 5.8억달러 (+2% MoM, -8% QoQ)
+DRAM 모듈 2억달러 (-37% MoM, -60% QoQ)
+NAND 1억달러 (+41% MoM, -36% QoQ)
+MCP 5.2억달러 (+24% MoM, -32% QoQ)
+SSD 0.9억달러 (-40% MoM, -54% QoQ)
+[3월 1~10일/2월 1~28일] 전월 대비 비중
+DRAM 35%
+DRAM 모듈 18%
+NAND 34%
+MCP 23%
+SSD 15%
+* 위 내용은 공개 발표 내용으로 별도의 승인절차 없이 제공합니다.
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+1.1K
+views
+제민 박
+,
+01:52
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+2025.03.12. 주요 뉴스
+NAND 가격 상승: 4월 마이크론과 샌디스크가 선두
+- 샌디스크, 4월 1일부터 낸드 가격을 10% 이상 인상할 예정
+https://buly.kr/uTf1Y6
+칩스법 폐지로 미국 반도체 시장 점유율이 한 자릿수로 하락 가능
+- 2032년까지 점유율 10%에서 14% 증가 예상, CHIPS 법 폐지 시 8%
+https://buly.kr/7QLhJjR
+Meta, 첫 자체 AI 트레이닝 칩 테스트 시작
+https://buly.kr/AEzp0mb
+삼성전자, 시스템 LSI 및 파운드리에 대한 내부 조사 강화
+https://buly.kr/GkrrIyw
+삼성전자, 상반기 채용 시작...시스템 반도체 부문은 제외
+https://buly.kr/DPTSfTe
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+❤
+1
+1.15K
+views
+제민 박
+,
+21:49
+[ IT는 SK ]
+[SK증권 IT 장비/소재 이동주]
+리노공업 (투자의견 매수, 목표주가 28만원으로 상향)
+▶️
+비수기에도 역대급 실적
+4Q24 매출액 834억원 (QoQ +21%, YoY +44%), 영업이익 370억원 (QoQ +21%, YoY 23%) 기록하며 시장 컨센서스 상회. 3분기 물량 이연 + 신제품 주문 확대. 수익성도 양산용 소켓 비중 상승에도 예상보다 견조
+▶️
+불모지 모바일에서도 성과는 기대 이상
+고사양 AP, 5G 탑재 등 모바일 부품 집적도 상향으로 소켓당 핀 접적도 증가 불가피. 동사가 압도적 우위를 보이는 영역으로 기존 거래선에서의 지위는 더욱 공고, 신규 거래선 확장까지 나타날 수 있음
+▶️
+신공장 디자인 캐파 0.9 - 1조원 수준
+2026년 하반기 준공 타겟. 모바일뿐 만 아니라 XR, 전장, IoT, 로봇 등 중장기 다양한 영역으로의 확장 가능성을 함의하는 규모로 해석
+▶️
+2025년 순이익 추정치 15% 조정, 목표주가 28만원으로 상향
+▶️
+보고서 링크:
+https://buly.kr/B7ZbvuX
+*SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+*SK증권 리서치 텔레그램 채널 :
+https://t.me/sksresearch
+당사는 컴플라이언스 등록된 자료에 대해서만 제공 가능하며 본 자료는 컴플라이언스 등록된 자료입니다.
+12.3K
+views
+Dongjoo Nate
+,
+23:20
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+강해지는 국면 (3/10)
+2Q25: 26년 HBM 계약 통한 강한 AI 확인 예상
+빅테크들의 2025년 CapEx 계획 시장 예상치 상회
+TSMC CoWoS 생산 능력 상향
+엔비디아 블랙웰 본격화 및 ASIC 진영의 하이엔드 HBM 수요 증가(2E,3->3E)
+-> 전년대비 계약 빠르게 종료
+26년 HBM 전망치 상향 국면
+Commodity DRAM 고정가격 안정화 국면 시작
+DRAM 3사의 제한적인 D5 재고 상황, AI 강세 및 중국 이구환신 정책
+-> 서버 D5, 플래그십 모바일향 LPD5X 수요 확대, HBM 강세에 따른 선단공정 생산 능력 잠식
+2Q25 재고조정 안정화 시작의 기존 전망 유지
+->2Q25 메모리 출하 반등을 통해 확인할 것
+과거 Commodity 사이클에서의 주가 반등 논리는
+가격 하락률의 안정화 시작이었다는 점을 기억
+반도체 비중 확대, SK하이닉스 탑픽 유지
+AI 사이클 내 메모리가 가장 강해지는 국면은 HBM과 Commodity가 시너지를 내는 구간
+->2Q25 HBM 강세 재확인과 재고조정 안정화로 시너지 기대감 점증
+AI CapEx의 상승은 HBM 수요 상향 요인
+->2Q25부터 2026년 HBM 전망 상향과 이에 수반되는 Commodity 생산능력 잠식 확대
+->2026년 메모리 증익에 대한 가시성을 높이는 요소
+SK하이닉스 최선호주 유지
+-> HBM 우위 속 M15X (HBM 기준 90K/월) 활용한 시장 수요 흡수 여력 강화
+-> ASIC 진영으로의 저변 확대 가속화 예상
+▶️
+보고서 링크:
+https://buly.kr/2UiT8pf
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+당사는 컴플라이언스 등록된 자료에 대해서만 제공 가능하며 본 자료는 컴플라이언스 등록된 자료입니다.
+👍
+2
+❤
+1
+2.65K
+views
+DOMA HAN
+,
+01:44
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+2025.03.13. 주요 뉴스
+메모리 현물가 업데이트: NAND 웨이퍼 가격 상승 지속, 추가 인상 전망
+- DRAM: SK하이닉스의 DDR5 제품에 대한 강한 수요
+- NAND: 시장 전반적으로 강한 구매 심리
+https://buly.kr/9iFYQsZ
+TSMC, 인텔 파운드리 부문의 합작 투자 제안
+- TSMC는 지분 50%를 초과하여 보유하지 않을 것
+https://buly.kr/ChoR6k2
+인텔, 업계 베테랑 Lip-Bu Tan CEO로 임명
+https://buly.kr/AapLKth
+어도비, 기대 이하의 전망으로 AI 수익화 우려…주가 하락
+- 인공지능(AI) 관련 수익화 속도가 더딘 가운데 스타트업들과의 치열한 경쟁에 직면
+https://buly.kr/7QLhgGt
+삼성-바이두 2nm 칩 협력, 미·중 갈등 속 난항 보도
+https://buly.kr/44xJ2m7
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+[Insights] Memory Spot Price Update: NAND Wafer Prices Keep Climbing, with More Hikes Ahead | TrendForce News
+According to TrendForce's latest memory spot price trend report, regarding DRAM, the spot market continues to see an increase in trading activities, m...
+1.09K
+views
+제민 박
+,
+21:53
+[ IT는 SK ]
+[SK증권 반도체/한동희, 박제민]
+2025.03.14. 주요 뉴스
+Nvidia, HBM3E 공급 불확실성 속 삼성 패키징 공장 방문
+- 업계 소식통, 삼성이 HBM3E 품질 테스트의 최종 단계에 들어갔다고 추측
+https://buly.kr/AEzpjps
+삼성, 파운드리 회복의 희망을 4nm에 걸다
+- Groq은 SF4X를 HyperAccel 칩에 적용했으며, 이 칩은 2025년 1분기에 양산될 예정
+https://buly.kr/7mBE0Pt
+Kioxia, 2025년 하반기 NAND 공급 부족 전망
+- 2025년 전체 NAND 출하량이 10~15% 증가할 것으로 예상, 하반기에 낸드 공급 부족 가능성
+https://buly.kr/FAd3CgQ
+화웨이 Ascend 910C, 엔비디아에 도전… 중국 AI 경쟁 가열
+https://buly.kr/2fdFYlT
+TSMC 기술 유출 우려에… 대만 정부 “美 공장, ‘한 단계 뒤처진 공정’ 고수”
+https://buly.kr/5JMcH0N
+소프트뱅크, OpenAI와 일본에 AI 데이터 센터 건설… 니케이 보도
+https://buly.kr/7bGT1Y0
+* SK증권 리서치 IT팀 채널 :
+https://t.me/skitteam
+DIGITIMES
+Nvidia reportedly visits Samsung packaging plant amid HBM3E supply uncertainty
+High bandwidth memory (HBM) major client Nvidia is said to have visited Samsung Electronics' advanced packaging plant again, just over a month after their last visit. Industry sources speculate that Samsung is supplying fifth-generation HBM3E and has entered…
+942
+views
+제민 박
+,
+21:56
+[ IT는 SK ]
+# 삼성SDI
+- 단일판매ㆍ공급계약 체결(자율공시)
+[ SK증권 박형우, 권민규 ]
+2차전지, IT부품/전기전자
+- 내용: ESS 배터리 공급계약
+- 계약금액:
+4,374 억원
+- 계약상대: NextEra Energy
+- 판매·공급지역: 미국
+- 계약기간
+24.04.15~25.11.20
+- 계약금·선급급 유무: 없음
+- 계약(수주)일: 25.03.13
+- 기타 중요사항:
+동 고객에 대한 ESS 공급은 다수의 프로젝트로 나누어 진행될 예정이며,
+이 중 계약을 체결한 프로젝트 건에 대한 공시 사항입니다.
+추후 확정되는 공급계약에 대해서는 수시공시 기준에 따라 공시하겠습니다.
+상기 계약금액은 USD 301M으로 계약일(2025.03.13) 최초 고시환율(1,452.00)을
+적용하여 원화 환산
+상기 계약기간의 시작일은 양사 합의로 일부 공급을 시작한 날짜를 기재
+- 링크:
+https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250314800002
+14.9K
+views
+Mingyu Kwon
+,
+22:54
+[ IT는 SK ]
+1.08K
+views
+박형우
+,
+23:42

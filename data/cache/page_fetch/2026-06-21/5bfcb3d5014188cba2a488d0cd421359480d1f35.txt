@@ -1,0 +1,703 @@
+서론: AI라는 거대한 동력과 그 쌍둥이 의존성 생성형 인공지능(AI)의 폭발적인 성장은 데이터센터 아키텍처의 패러다임 전환을 이끄는 단일하고도 가장 강력한 촉매제로 작용하고 있다. 연산 능력에 대한 끝없는 갈증은 두 가지 핵심적이고 타협 불가능한 기술적 의존성을 낳았다. 바로 고대역폭 메모리(HBM)가 제공하는 전례 없는 메모리 대역폭과 첨단 열 관리 솔루션이 제공하는 액체 냉각(수냉식) 기술이다.이 보고서는 HBM과 수냉식 냉각이 더 이상 분리된 공급망이 아니라, 하나의 운명 공동체로서 깊이 얽힌 생태계를 형성하고 있다는 핵심 명제를 제시한다. 차세대 AI 가속기의 성능은 이제 데이터를 얼마나 빨리 공급할 수 있는지, 그리고 그 과정에서 발생하는 막대한 폐열을 얼마나 효율적으로 제거할 수 있는지에 의..
+[Report]AI 시대 HBM과 수냉식 냉각의 미래 보고서
+서론: AI라는 거대한 동력과 그 쌍둥이 의존성 생성형 인공지능(AI)의 폭발적인 성장은 데이터센터 아키텍처의 패러다임 전환을 이끄는 단일하고도 가장 강력한 촉매제로 작용하고 있다. 연산 능력에 대한 끝없는 갈증은 두 가지 핵심적이고 타협 불가능한 기술적 의존성을 낳았다. 바로 고대역폭 메모리(HBM)가 제공하는 전례 없는 메모리 대역폭과 첨단 열 관리 솔루션이 제공하는 액체 냉각(수냉식) 기술이다.이 보고서는 HBM과 수냉식 냉각이 더 이상 분리된 공급망이 아니라, 하나의 운명 공동체로서 깊이 얽힌 생태계를 형성하고 있다는 핵심 명제를 제시한다. 차세대 AI 가속기의 성능은 이제 데이터를 얼마나 빨리 공급할 수 있는지, 그리고 그 과정에서 발생하는 막대한 폐열을 얼마나 효율적으로 제거할 수 있는지에 의..
+[Report]AI 시대 HBM과 수냉식 냉각의 미래 보고서
+서론: AI라는 거대한 동력과 그 쌍둥이 의존성 생성형 인공지능(AI)의 폭발적인 성장은 데이터센터 아키텍처의 패러다임 전환을 이끄는 단일하고도 가장 강력한 촉매제로 작용하고 있다. 연산 능력에 대한 끝없는 갈증은 두 가지 핵심적이고 타협 불가능한 기술적 의존성을 낳았다. 바로 고대역폭 메모리(HBM)가 제공하는 전례 없는 메모리 대역폭과 첨단 열 관리 솔루션이 제공하는 액체 냉각(수냉식) 기술이다.이 보고서는 HBM과 수냉식 냉각이 더 이상 분리된 공급망이 아니라, 하나의 운명 공동체로서 깊이 얽힌 생태계를 형성하고 있다는 핵심 명제를 제시한다. 차세대 AI 가속기의 성능은 이제 데이터를 얼마나 빨리 공급할 수 있는지, 그리고 그 과정에서 발생하는 막대한 폐열을 얼마나 효율적으로 제거할 수 있는지에 의..
+[Report]AI 시대 HBM과 수냉식 냉각의 미래 보고서
+[Report]AI 시대 HBM과 수냉식 냉각의 미래 보고서
+본문 바로가기
+R&D/기술/정책 동향 data 및 GPT, AI 활용
+블로그 내 검색
+검색
+관리
+글쓰기
+로그인
+로그아웃
+메뉴
+홈
+태그
+보고서
+[Report]AI 시대 HBM과 수냉식 냉각의 미래 보고서
+by Re_search_Lab
+2025. 9. 18.
+728x90
+서론: AI라는 거대한 동력과 그 쌍둥이 의존성
+생성형 인공지능(AI)의 폭발적인 성장은 데이터센터 아키텍처의 패러다임 전환을 이끄는 단일하고도 가장 강력한 촉매제로 작용하고 있다. 연산 능력에 대한 끝없는 갈증은 두 가지 핵심적이고 타협 불가능한 기술적 의존성을 낳았다. 바로 고대역폭 메모리(HBM)가 제공하는 전례 없는 메모리 대역폭과 첨단 열 관리 솔루션이 제공하는 액체 냉각(수냉식) 기술이다.
+이 보고서는 HBM과 수냉식 냉각이 더 이상 분리된 공급망이 아니라, 하나의 운명 공동체로서 깊이 얽힌 생태계를 형성하고 있다는 핵심 명제를 제시한다. 차세대 AI 가속기의 성능은 이제 데이터를 얼마나 빨리 공급할 수 있는지, 그리고 그 과정에서 발생하는 막대한 폐열을 얼마나 효율적으로 제거할 수 있는지에 의해 근본적으로 제약받는다.
+1
+본 분석은 가치 사슬 전반에 걸친 핵심 주체들을 조망하며 시작된다. 엔비디아(NVIDIA), AMD, 인텔(Intel)과 같은 기업들이 가속기를 설계하고, SK하이닉스, 삼성전자, 마이크론(Micron)이 메모리를 제조하며, 쿨잇 시스템즈(CoolIT Systems), 아세텍(Asetek), 서브머(Submer)가 냉각 솔루션을 제공한다. 그리고 구글(Google), 아마존 웹 서비스(AWS), 마이크로소프트(Microsoft)와 같은 하이퍼스케일러들이 이 기술들을 대규모로 구축하며 시장의 수요를 견인한다. 이 복잡하게 얽힌 관계 속에서 기술의 공진화(co-evolution)가 어떻게 AI 시대의 하드웨어 혁신을 정의하는지 심층적으로 분석하고자 한다.
+1부: HBM 경기장: 고도의 기술 과점 시장
+HBM 시장은 기술 리더십, 제조 수율, 그리고 전략적 고객 관계가 시장 지배력을 결정하는 전형적인 과점 형태로 운영된다. 이 영역은 단순한 경쟁을 넘어선, 막대한 자본과 기술력이 격돌하는 첨단 기술의 전쟁터이다.
+1.1. 3강 체제: 경쟁 구도와 시장 점유율 역학
+현재 HBM 시장은 SK하이닉스, 삼성전자, 마이크론이라는 세 개의 거인이 지배하고 있다. 특히 SK하이닉스는 HBM3 및 HBM3E 세대에서 명확한 선발주자 우위를 확보하며 시장을 선도하고 있다.
+현재 시장 구조
+: 2024년 4분기 기준 시장조사기관 트렌드포스(TrendForce)의 자료에 따르면, 전 세계 HBM 시장 점유율은 SK하이닉스 52.5%, 삼성전자 42.4%, 마이크론 5.1% 순으로 나타났다.
+4
+키움증권은 2024년 전체를 기준으로 SK하이닉스 65%, 삼성전자 32%, 마이크론 3%로 추정하며, 분석 기관에 따라 다소 차이를 보이지만 SK하이닉스의 우위는 공통된 견해다.
+5
+SK하이닉스의 지배력
+: SK하이닉스의 리더십은 HBM3의 성공적인 조기 양산과 HBM3E를 엔비디아에 선도적으로 공급하기 시작한 데서 비롯된다.
+7
+이는 엔비디아의 주력 AI 가속기 공급망에서 핵심 공급업체로서의 입지를 공고히 하는 결정적 계기가 되었다.
+8
+회사는 HBM4 12단 제품을 연내, 16단 제품을 내년에 공급하겠다는 공격적인 로드맵과 미국 내 첨단 패키징 시설에 대한 전략적 투자를 통해 '초격차'를 유지하려 하고 있다.
+9
+삼성전자의 맹추격
+: 삼성전자는 격차를 좁히기 위해 공격적으로 나서고 있다. 회사는 HBM 생산 능력을 전년 대비 4배, 그리고 다음 해에는 다시 2배 이상 확대할 계획을 발표했다.
+7
+삼성의 전략은 HBM3E 8단 및 12단 제품을 엔비디아와 같은 핵심 고객사로부터 성공적으로 인증받고, AWS 및 브로드컴(Broadcom) 등으로 고객 기반을 다변화하는 데 초점을 맞추고 있다.
+5
+초기에는 인증 과정에서 어려움을 겪었으나, 삼성의 방대한 제조 규모와 메모리, 파운드리, 패키징을 아우르는 수직적 통합 능력은 SK하이닉스의 선두 자리에 장기적으로 강력한 위협이 될 것이다.
+마이크론의 공격적인 추격
+: 초기에 3위에 머물렀던 마이크론은 HBM3를 건너뛰고 HBM3E에 직접 집중하는 '패스트 팔로워(fast-follower)' 전략을 구사하고 있다.
+11
+이 전략은 초기 성공을 거두어, 2025년 HBM 공급 물량이 이미 매진되었으며 2025년까지 시장 점유율을 20% 중반대로 끌어올릴 것이라고 발표했다.
+12
+마이크론은 경쟁사 8단 HBM3E 제품 대비 20% 낮은 소비 전력을 강점으로 내세우며 고객 기반을 3개의 주요 기업으로 확대하여 빠르게 시장 점유율을 높이고 있다.
+11
+HBM 시장은 정적인 과점 상태가 아니라, HBM3E나 HBM4와 같은 새로운 기술 세대로의 전환이 시장 점유율 변동의 기회를 창출하는 역동적인 경주장이다. SK하이닉스는 엔비디아의 H100 GPU에 필요한 HBM3를 안정적으로 대량 공급하며 선두를 차지했고, 이는 깊은 신뢰 관계의 기반이 되었다. 삼성전자가 엔비디아의 최신 가속기용 HBM3E 인증에 지연을 겪는 동안 생긴 공백은 마이크론에게 기회로 작용했다. 마이크론이 한 세대를 건너뛰고 '전력 효율성'이라는 특정 성능 지표에 집중한 것은, 집중된 시장에서 전형적인 후발주자의 파괴적 전략이다. 이는 데이터센터 운영 비용(TCO) 절감을 중시하는 고객에게 강력하게 어필한다. 이러한 구도는 차세대 HBM4가 다음 격전지가 될 것임을 시사한다. 엔비디아의 '루빈(Rubin)' 아키텍처에 맞는 고성능, 고수율의 HBM4 제품을 가장 먼저 공급하는 기업이 다시 한번 시장 판도를 재편할 수 있다.
+15
+삼성이 HBM4에 자사의 1c D램 공정을 적용하려는 것은 바로 이 다음 라운드에서 SK하이닉스를 뛰어넘기 위한 전략적 베팅이다.
+16
+1.2. 엔비디아 관문: HBM 시장의 킹메이커
+엔비디아는 HBM 시장에서 가장 중요한 단일 고객사다. AI 학습 및 추론 시장을 지배하는 엔비디아의 GPU는 HBM 수요의 핵심 동력이다.
+10
+엔비디아와의 공급 계약 확보는 HBM 제조사의 기술력과 생산 능력을 최종적으로 인정받는 것과 같다.
+18
+인증 장벽
+: 엔비디아 가속기용 HBM 인증 과정은 수개월이 소요될 정도로 악명 높고 까다롭다.
+7
+이 '퀄 테스트(qual test)'를 통과하지 못하면 가장 수익성 높은 시장에서 배제될 수 있으며, 이는 삼성이 직면했던 도전 과제 중 하나였다.
+7
+공급망 다변화 전략
+: 엔비디아는 리스크를 완화하고 협상력을 높이기 위해 다중 공급망을 구축하려는 강력한 전략적 동기를 가지고 있다. 회사는 HBM4 샘플에 대해 세 공급사 모두와 적극적으로 협력하고 있다.
+18
+이 전략은 SK하이닉스와 같은 단일 공급업체에 대한 과도한 의존을 방지하고 가격 경쟁을 유도한다.
+8
+엔비디아의 심층적 통합
+: 엔비디아는 단순한 고객을 넘어 HBM 설계 과정의 핵심적인 부분으로 진화하고 있다. 회사는 HBM4E에 사용될 베이스 다이(base die)를 직접 설계하고, 이를 TSMC에서 제조할 계획인 것으로 알려졌다.
+8
+이 움직임은 로직 인터페이스를 표준화하여 메모리 제조사로부터 공급받는 D램 코어 다이를 상품화(commoditize)하고, 상당한 수준의 아키텍처 제어권과 부가가치를 엔비디아로 이전시키는 효과를 낳는다.
+엔비디아의 HBM 전략은 단순 조달에서 심층적인 공동 설계 및 통제로 진화하고 있으며, 이는 메모리 공급업체와의 권력 구도를 근본적으로 바꾸고 있다. 초기에는 엔비디아가 HBM 요구사항을 명시하고 JEDEC 표준 부품을 구매했다. 그러나 AI 가속기가 복잡해지면서 GPU와 HBM 간의 인터페이스가 성능의 핵심 병목 지점으로 부상했다. 이 인터페이스 최적화가 성능 향상의 열쇠가 된 것이다. 베이스 다이를 직접 설계함으로써
+8
+, 엔비디아는 범용 표준에 의존하는 대신 자사의 GPU 아키텍처에 완벽하게 맞춰진 독점적인 맞춤형 인터페이스를 만들 수 있다. 이는 HBM 모듈을 사실상 두 부분으로 나눈다. D램 코어 다이('메모리')는 SK하이닉스/삼성/마이크론이 공급하고, 로직 인터페이스('두뇌')는 엔비디아가 통제하는 구조다. 이로 인해 메모리 공급업체의 차별화 요소는 순수한 D램 성능과 수율로 축소되며, 엔비디아는 가격 협상과 물량 배분에서 막강한 영향력을 갖게 된다. 이는 또한 엔비디아가 JEDEC 표준을 뛰어넘는 HBM4 사양을 요구하는 이유를 설명한다.
+16
+그들은 자신들의 필요에 맞춘 사실상의 시장 표준을 설정하고, 공급업체들이 그 조건 하에서 경쟁하도록 강요하고 있다.
+1.3. 2025년 이후의 전장 예측
+HBM 시장 전체는 폭발적인 성장을 앞두고 있으며, 분석가들은 2025년까지 HBM이 전체 D램 매출의 30% 이상을 차지할 것으로 전망한다.
+20
+핵심 병목 현상이었던 TSMC의 CoWoS 패키징 생산 능력이 확대되면서 2025년 HBM 수요는 전년 대비 151% 증가할 것으로 예상된다.
+5
+2025년 점유율 전망
+: 키움증권은 2025년 시장 점유율을 SK하이닉스 50%, 삼성전자 37%, 마이크론 13%로 예측했다.
+5
+이 전망은 삼성이 엔비디아의 B200/B300 제품 인증에 성공하고 마이크론이 공격적인 확장 계획을 실행한다는 가정에 기반한다. 마이크론 스스로는 2025년까지 20% 중반대의 점유율을 목표로 하고 있다.
+12
+HBM4 변곡점
+: 진정한 승부는 2026년 엔비디아의 '루빈' 플랫폼에 채택될 것으로 예상되는 HBM4에서 갈릴 것이다.
+15
+세 공급사 모두 HBM4 제품의 샘플 공급 및 인증 경쟁에 돌입했으며, 최종 인증 결정은 2026년 1분기 말경으로 예상된다.
+18
+이 경쟁의 승자가 다음 제품 주기의 지배적인 점유율을 확보할 가능성이 높다.
+표 1: HBM 시장 점유율 비교 (2023-2025E)
+공급업체
+2023년 실적
+2024년 추정치
+2025년 전망치
+SK하이닉스
+9% 수준 (마이크론 기준 역산)
+13
+52.5% ~ 65%
+4
+50%
+5
+삼성전자
+-
+32% ~ 42.4%
+4
+37%
+5
+마이크론
+9%
+13
+3% ~ 5.1%
+4
+13% ~ 25%
+5
+주: 2024년 및 2025년 수치는 트렌드포스, 키움증권 등 여러 출처의 데이터를 종합한 것으로, 측정 기준(매출액 vs. 출하량) 및 시점에 따라 차이가 있을 수 있음.
+2부: 피할 수 없는 열: 수냉식 냉각의 시대
+AI 붐은 수냉식 냉각을 선택이 아닌 필수로 만들었다. 이 섹션에서는 급성장하는 수냉식 냉각 시장의 기술 경쟁과 핵심 주체들을 분석한다.
+2.1. 공랭식 시대의 종말
+전력 밀도 문제
+: 엔비디아의 블랙웰 시리즈와 같은 AI 가속기는 기존의 공랭식(air cooling) 방식으로는 감당할 수 없는 수준의 열설계전력(TDP)을 가진다. 단일 GPU의 온도는 88°C까지 치솟을 수 있으며, 서버 랙 하나의 전력 소비량은 기존 8kW에서 30~100kW까지 증가했다.
+1
+좁은 면적에 집중된 이 막대한 열 발생은 데이터센터의 성능과 집적도를 제한하는 주된 병목 현상이 되었다.
+3
+시장의 폭발적 성장
+: 데이터센터 수냉식 냉각 시장은 이러한 문제의 직접적인 결과로 기하급수적인 성장을 경험하고 있다. 시장 전망치는 기관마다 다르지만, 모두 거대한 확장을 가리키고 있다.
+Stratistics MRC
+: 2024년 34억 4,000만 달러에서 2030년 159억 9,000만 달러로 성장 (연평균 성장률 29.2%).
+23
+Data Bridge Market Research
+: 2024년 215억 8,000만 달러에서 2032년 763억 달러로 성장 (연평균 성장률 17.10%).
+24
+Research Nester
+: 2024년 11억 달러에서 2037년 897억 7,000만 달러로 성장 (연평균 성장률 40.3%).
+25
+Fortune Business Insights
+: 2024년 138억 4,000만 달러에서 2032년 424억 달러로 성장 (연평균 성장률 12.4%).
+26
+이러한 수치의 편차는 시장의 정의(예: 전체 냉각 시장 vs. 수냉식 한정, 부품 vs. 전체 시스템)에 따른 것이지만, 성장 방향성에 대한 강력한 합의를 보여준다.
+효율성 및 지속가능성 동인
+: 순수한 성능 외에도, 수냉식 냉각은 전력 사용 효율(PUE, Power Usage Effectiveness) 개선의 필요성에 의해 주도된다. 냉각은 데이터센터 전체 에너지 소비의 최대 40%를 차지할 수 있다.
+23
+수냉식 냉각은 PUE를 1.03 수준까지 낮출 수 있는 경로를 제공하며, 이는 공랭식 시설의 일반적인 PUE 1.8~2.0에 비해 극적인 개선이다.
+27
+이는 운영 비용(OPEX)을 절감하고, 점점 더 엄격해지는 환경·사회·지배구조(ESG) 목표를 달성하는 데 기여한다.
+25
+표 2: 수냉식 냉각 시장 성장 전망 (2024-2030년대)
+시장조사기관
+2024년 시장 규모 (USD)
+전망 연도 시장 규모 (USD)
+전망 연평균 성장률 (CAGR)
+비고
+Stratistics MRC
+34억 4,000만
+159억 9,000만 (2030년)
+29.2%
+데이터센터 액체 냉각
+Data Bridge
+215억 8,000만
+763억 (2032년)
+17.10%
+전체 데이터센터 냉각
+Research Nester
+11억
+897억 7,000만 (2037년)
+40.3%
+데이터센터 액체 냉각
+Fortune Business Insights
+138억 4,000만
+424억 (2032년)
+12.4%
+전체 데이터센터 냉각
+2.2. 두 가지 철학: 칩 직접 냉각 vs. 액침 냉각
+칩 직접 냉각(DLC / D2C)
+: 현재 시장의 주류 방식이다. CPU나 GPU와 같은 발열 부품에 '콜드 플레이트(cold plate)'를 직접 부착하는 방식이다.
+29
+이 플레이트 내부의 미세 채널을 통해 냉각수(일반적으로 물 또는 물-글리콜 혼합물)가 순환하며 열을 원점에서 흡수하고, 냉각 분배 장치(CDU, Coolant Distribution Unit)로 이송한다.
+29
+핵심 주체
+: 쿨잇 시스템즈와 아세텍이 이 분야의 선구자이자 시장 리더다.
+31
+이들은 HPE, Dell, 슈퍼마이크로(Supermicro), 기가바이트(Gigabyte) 등 주요 서버 OEM과 광범위하게 협력하여 공장에서 직접 설치되고 보증되는 솔루션을 제공한다.
+30
+장점
+: 검증된 기술로 신뢰성이 높고 확장이 용이하다. 기존의 공랭식 서버 아키텍처와 유사하여 기존 데이터센터에 적용하기가 비교적 쉽다.
+37
+발열이 심한 지점(hotspot)을 고효율로 직접 냉각할 수 있다.
+29
+액침 냉각(Immersion Cooling)
+: 서버 전체나 부품을 비전도성(dielectric) 액체에 완전히 담그는 보다 혁신적인 접근 방식이다.
+38
+열이 부품에서 액체로 직접 전달된다.
+핵심 주체
+: 서브머(Submer)는 이 기술, 특히 단상(single-phase) 액침 냉각의 선두 주자다.
+38
+종류
+:
+단상(Single-Phase)
+: 냉각수가 항상 액체 상태를 유지한다. 구조가 더 간단하고 안전하며 유지보수가 용이하다.
+39
+서브머의 '스마트쿨런트(SmartCoolant)'는 이 방식을 위해 설계된 생분해성 합성 액체다.
+39
+이상(Two-Phase)
+: 뜨거운 부품 표면에서 냉각수가 끓어 기체로 변하고, 이 기체가 상승하여 코일에서 응축된 후 다시 액체로 '비처럼' 떨어지는 방식이다. 열전달 효율은 더 높을 수 있지만, 복잡하고 비싼 냉매를 사용하며 시스템을 밀폐해야 한다.
+39
+장점
+: 잠재적으로 더 높은 냉각 성능과 집적도를 제공한다. 에너지 효율이 뛰어나고(PUE < 1.03), 물을 전혀 사용하지 않으며, 안정적인 열 환경 덕분에 하드웨어의 신뢰성과 수명이 향상된다.
+27
+DLC는 현재의 진화적 경로이며, 액침 냉각은 데이터센터 설계를 근본적으로 재고해야 하는 혁명적이고 잠재적으로 더 효율적인 장기적 해결책이다.
+표 3: 수냉식 냉각 기술 비교 분석
+핵심 기준
+칩 직접 냉각 (DLC)
+단상 액침 냉각
+이상 액침 냉각
+냉각 효율 (PUE)
+우수 (1.1 ~ 1.3)
+최우수 (< 1.03)
+27
+최우수 (< 1.02)
+39
+랙 집적도
+높음
+매우 높음
+매우 높음
+기존 시설 적용
+비교적 용이
+어려움 (설계 변경 필요)
+매우 어려움 (완전 밀폐 필요)
+총소유비용 (TCO)
+초기 비용 낮음, 운영비 절감
+초기 비용 높음, 운영비 크게 절감
+초기 비용 매우 높음
+기술 성숙도
+높음 (상용화 활발)
+중간 (성장 단계)
+낮음 (특수 분야 적용)
+대표 기업
+CoolIT, Asetek
+31
+Submer
+38
+Allied Control
+41
+2.3. 냉각 생태계: 핵심 주체와 파트너십
+솔루션 제공업체
+:
+쿨잇 시스템즈
+: DLC 분야의 리더로, 모듈형 확장 솔루션에 특화되어 있으며 HPE, 기가바이트, 슈퍼마이크로 등 주요 OEM과 협력한다.
+30
+엔비디아의 GB200 슈퍼칩을 포함한 최신 제품 냉각의 핵심 파트너다.
+30
+아세텍
+: D2C 기술의 선구자로, CPU, GPU, 메모리 냉각을 위한 통합 펌프/콜드 플레이트 유닛에 집중하여 높은 신뢰성과 이중화를 제공한다.
+32
+서브머
+: 단상 액침 냉각을 주도하며, '마이크로포드(MicroPod)'와 같은 '데이터센터-인-어-박스' 솔루션과 고밀도 '스마트포드(SmartPod)' 시스템을 통해 지속가능성과 TCO 절감을 강조한다.
+27
+서버 OEM
+: 슈퍼마이크로, HPE, Dell, 기가바이트, 레노버와 같은 기업들은 이러한 냉각 솔루션을 자사의 AI 서버 플랫폼에 통합하는 핵심적인 채널 파트너다.
+30
+이들은 냉각 솔루션 제공업체 및 AI 칩 제조사(엔비디아, AMD)와 긴밀히 협력하여 최적화된 열 관리 설계를 구현한다.
+33
+하이퍼스케일러 및 데이터센터 운영사
+: 구글, AWS, 마이크로소프트, 메타는 수요를 창출하는 최종 사용자다. 이들의 거대한 규모와 TCO 및 에너지 효율에 대한 집중은 기술 채택에 강력한 영향력을 행사한다. 알리바바 클라우드와 같이 자체적으로 수냉식 AI 데이터센터를 구축하는 사례도 있다.
+25
+열 관리를 중심으로 새로운, 깊이 통합된 공급망이 형성되고 있다. AI 칩 설계자, 냉각 전문가, 서버 OEM은 이제 제품 설계의 가장 초기 단계부터 협력해야만 한다. 공랭식 시대에는 열 관리가 나중에 고려되는 문제였다. 서버가 설계된 후, 그에 맞춰 팬이 추가되었다. 그러나 수냉식, 특히 DLC의 경우 콜드 플레이트, 튜브, 매니폴드와 같은 냉각 장치가 서버의 물리적 설계에 필수적인 부분으로 통합된다. 이는 나중에 추가할 수 없는 요소다. 이러한 현실은 협력을 강제한다. 엔비디아는 새로운 GPU가 출시되기 훨씬 전에 쿨잇과 같은 파트너에게 열 모델을 제공해야 한다. 그러면 쿨잇은 슈퍼마이크로와 협력하여 해당 칩과 냉각 요구사항을 수용할 수 있는 서버 섀시와 콜드 플레이트 시스템을 설계한다.
+30
+이는 파트너십이 무엇보다 중요한 긴밀한 생태계를 창출한다. 냉각 솔루션 기업의 성공은 이제 가장 인기 있는 AI 플랫폼에 대해 선도적인 서버 OEM과의 설계 계약을 얼마나 확보하느냐에 달려 있다. 이는 수많은 파트너십 발표에서 명확히 드러난다.
+33
+이는 냉각 시장이 주요 서버 및 칩 회사와 가장 깊고 신뢰할 수 있는 관계를 구축한 기업들을 중심으로 통합될 가능성이 높음을 시사한다.
+3부: 기술의 융합: 메모리, 패키징, 열 관리의 동시 최적화
+이 섹션은 HBM의 진화와 패키징 및 냉각 기술 발전 사이의 불가분한 관계를 상세히 설명하며 보고서의 핵심 논지를 구성한다.
+3.1. 3D 스택의 열 병목 현상
+내재된 구조적 문제
+: HBM의 높은 대역폭을 가능하게 하는 3D 적층 구조는 동시에 가장 큰 열적 약점이기도 하다.
+2
+코어 D램 다이에서 발생한 열은 층 사이에 갇혀 빠져나갈 경로가 제한적이다.
+3
+심화되는 문제
+: 이 문제는 세대가 거듭될수록 악화된다. 적층되는 다이의 수가 8개에서 12개, 그리고 16개로 증가함에 따라 총 전력 소비가 증가하고 스택의 열 저항도 높아져 열 방출이 기하급수적으로 어려워진다.
+54
+16단 HBM 스택은 12단 스택보다 20°C 이상 뜨거워질 수 있으며, 이는 심각한 성능 및 신뢰성 위험을 초래한다.
+56
+내부 열 관리 기술
+: 메모리 제조사들은 이 문제를 완화하기 위해 여러 내부 기술을 사용한다.
+TSV를 통한 열 방출
+: 데이터를 전송하는 실리콘 관통 전극(TSV)은 열이 스택 아래로 전달되는 통로 역할도 한다.
+54
+서멀 범프 및 언더필
+: 다이 사이에 '더미(dummy)' 또는 '서멀(thermal)' 범프를 추가하여 열 경로를 확보한다. 갭을 채우는 언더필(underfill) 소재(MUF 또는 NCF)에는 실리카나 알루미나와 같은 열전도성 물질을 첨가하여 열전달을 개선한다.
+54
+SK하이닉스의 MR-MUF 공정은 기존 NCF 방식보다 열 특성 면에서 우위에 있는 것으로 평가된다.
+54
+외부 솔루션의 필요성
+: 이러한 내부적인 노력에도 불구하고, HBM 스택 자체의 높은 열 밀도와 인접한 고전력 GPU로 인해 첨단 외부 냉각 솔루션은 필수적이다.
+1
+TSMC의 CoWoS와 같은 기술을 사용하여 실리콘 인터포저 위에 구축된 전체 GPU-HBM 패키지는 칩 직접 수냉(DLC)이 필요한 집중적인 발열 지점이 된다.
+3
+3.2. 패키징의 미래는 열 관리다
+하이브리드 본딩
+: 마이크로 범프나 언더필 없이 다이의 구리 패드를 직접 접합하는 차세대 패키징 기술이다.
+56
+이 기술의 핵심적인 열적 장점은 열 저항이 높은 언더필 층을 제거하여 다이 간 거리를 좁히고 열이 빠져나갈 수 있는 더 직접적인 경로를 만든다는 것이다.
+55
+하이브리드 본딩을 적용하면 HBM 스택의 최고 온도를 최대 8°C까지 낮출 수 있다.
+56
+기술적으로 어렵지만, 16단 이상의 HBM 스택을 구현하기 위한 핵심 기술로 간주된다.
+56
+첨단 열 계면 물질 (TIM)
+: HBM/GPU 패키지에서 냉각 콜드 플레이트로 열을 전달하는 데 사용되는 물질의 중요성이 커지고 있다. 업계는 이 중요한 계면에서의 열 저항을 최소화하기 위해 액체 금속, 그래핀 시트, 정밀하게 설계된 복합재료와 같은 더 효율적인 물질로 전환하고 있다.
+3
+필수적인 공동 설계
+: 이러한 패키징 기술의 개발은 칩 및 냉각 솔루션 개발과 동시에 이루어져야 한다. 미래 칩의 열 방출을 정확하게 시뮬레이션하는 열 테스트 장치(TTV)는 이제 실제 칩이 나오기 전에 열 관리 솔루션을 개발하고 검증하여 시장 출시 기간을 단축하는 데 필수적인 도구가 되었다.
+60
+3.3. 통합 로드맵: 액체 냉각에서 임베디드 냉각으로
+미래 세대의 심화되는 열 문제를 해결하기 위한 HBM 냉각의 장기 로드맵이 부상하고 있다. 카이스트(KAIST) 연구진이 제안한 로드맵은 설득력 있는 비전을 제공한다.
+61
+HBM4 - 칩 직접 수냉 (DLC)
+: 현재 및 차세대 HBM은 AI 가속기 패키지 상단에 콜드 플레이트를 부착하는 첨단 DLC 솔루션에 의존할 것이다.
+61
+HBM5 - 액침 냉각 (Immersion Cooling)
+: 2029년경 HBM5 시대에는 HBM 스택의 베이스 다이가 더 많은 로직 기능을 수행하며 그 자체가 중요한 열원이 될 수 있다. 패키지 전체가 너무 뜨거워져 상부 냉각만으로는 한계에 부딪힐 것이다. 이는 전체 서버를 비전도성 액체에 담그는 액침 냉각의 채택을 필요로 할 가능성이 높다.
+61
+HBM7 이후 - 임베디드 냉각 (Embedded Cooling)
+: 2035년경 HBM7에서는 액침 냉각조차 충분하지 않을 수 있다. 궁극적인 해결책은 HBM 스택의 D램 다이
+사이에
+직접 미세 유체 채널을 통합하는 '임베디드 냉각'으로 간주된다. 냉각수가 메모리 스택 내부를 흐르며 가장 근본적인 수준에서 열을 제거하는 것이다.
+61
+이를 위해서는 데이터, 전력, 접지용 TSV와 함께 유체 수송을 위한 새로운 종류의 TSV("유체 TSV")가 필요하게 될 것이다.
+61
+HBM 기술 로드맵과 데이터센터 냉각 기술 로드맵은 하나로 합쳐졌다. 미래의 HBM 세대는 특정하고 점점 더 공격적인 냉각 기술을 염두에 두고 설계되고 있으며, 이로써 두 기술은 불가분의 관계가 되었다. 과거 HBM 개발은 대역폭과 용량에 초점을 맞추었고, 열 관리는 시스템 통합업체가 해결해야 할 부차적인 문제였다. 그러나 카이스트의 데이터는
+61
+근본적인 변화를 보여준다. 이제 HBM5와 HBM7의
+정의
+자체가 필요한 냉각 방식(각각 액침 및 임베디드 냉각)을
+포함
+하게 된 것이다. 이는 SK하이닉스와 삼성전자의 메모리 설계자들이 더 이상 단순한 반도체 소자를 설계하는 것이 아니라, 열-유체 시스템을 설계하고 있음을 의미한다. 이는 반도체 물리학에 유체 역학과 재료 과학을 결합하는 완전히 새로운 역량을 요구한다. 또한 냉각 전문가 및 시스템 아키텍트와의 훨씬 더 초기 단계의 깊은 협력이 필요하다. 그 함의는 심대하다. 3D 적층 공정에 미세 유체 기술을 통합하는 데 성공하는 기업은 HBM7 시대에 극복할 수 없는 경쟁 우위를 갖게 될 것이다. 이는 향후 10년간 메모리 기업들의 R&D 우선순위와 인재 확보 전략을 재편할 3차 효과(third-order effect)이다.
+4부: 새로운 지평: HBM4, PIM, 그리고 AI 메모리 아키텍처의 미래
+이 섹션은 현재의 지형을 넘어 AI 하드웨어의 미래를 정의할 차세대 기술, 즉 대역폭 향상(HBM4)과 효율성 개선(PIM)이라는 두 가지 트랙에 초점을 맞춘다.
+4.1. HBM4와 그 너머: 대역폭을 향한 끝없는 추구
+JEDEC 표준
+: HBM4에 대한 공식 JEDEC 표준은 I/O 인터페이스를 1024비트에서 2048비트로 두 배 확장했다. 핀당 최대 8Gbps의 데이터 전송 속도와 결합하여 스택당 이론적으로 2TB/s의 대역폭을 가능하게 한다.
+62
+이는 HBM3E의 약 1.2TB/s에서 상당한 도약이다.
+고객 주도 사양
+: 엔비디아와 같은 주요 고객들은 표준을 넘어, 자사의 '루빈' GPU에 사용될 맞춤형 HBM4 변종에 대해 10~11Gbps의 데이터 전송 속도를 요구하고 있다.
+16
+이는 약 2.5TB/s의 대역폭을 가진 맞춤형 "HBM4E"의 등장을 예고한다.
+63
+용량 및 효율성
+: HBM4는 용량 또한 증가할 것이다. JEDEC 표준은 최대 16단 스택을 지원하여 스택당 64GB 용량 구현이 가능하다.
+62
+또한 HBM3E보다 20~30% 더 전력 효율이 높을 것으로 예상되며, 이는 데이터센터 TCO에 중요한 요소다.
+62
+기술적 과제
+: I/O 핀 수가 두 배로 증가함에 따라 설계 및 제조 복잡성이 급격히 높아져 수율 확보가 중요한 과제가 되었다.
+62
+바로 이 지점에서 하이브리드 본딩과 같은 첨단 패키징 기술이 핵심적인 역할을 하게 된다.
+표 4: HBM 세대별 사양 로드맵 (HBM3E ~ HBM4E)
+주요 사양
+HBM3E
+HBM4 (JEDEC)
+HBM4E (맞춤형 전망)
+최대 대역폭/스택
+~1.2 TB/s
+62
+~2.0 TB/s
+62
+~2.5 TB/s
+63
+최대 용량/스택
+36GB (12단)
+62
+64GB (16단, 32Gb 다이)
+62
+64GB 이상
+I/O 인터페이스
+1024-bit
+62
+2048-bit
+62
+2048-bit
+핀당 데이터 속도
+~9.2 Gbps
+8.0 Gbps
+62
+10~11 Gbps
+16
+4.2. PIM (Processing-In-Memory): 메모리 장벽을 허무는 패러다임 전환
+문제점
+: 전통적인 폰 노이만(von Neumann) 아키텍처에서는 데이터가 메모리(DRAM)와 프로세서(GPU) 사이를 끊임없이 오간다. AI 워크로드에서 시간과 에너지의 대부분을 소비하는 것은 연산 자체가 아니라 바로 이 데이터 이동이며, 이는 '메모리 장벽(memory wall)'이라는 병목 현상을 야기한다.
+66
+PIM 솔루션
+: PIM은 연산 기능을 메모리 소자 내부에 직접 통합하는 기술이다.
+67
+HBM-PIM의 경우, HBM 스택의 각 메모리 뱅크 내에 소규모 AI 연산 장치가 배치된다.
+70
+이를 통해 간단하고 병렬화 가능한 연산을 '그 자리에서(in-place)' 수행하여 호스트 GPU로의 데이터 이동을 획기적으로 줄일 수 있다.
+67
+성능 향상
+: PIM 기술의 주요 지지자인 삼성전자는 상당한 이점을 입증했다. AMD의 MI-100 가속기를 사용한 테스트에서 HBM-PIM은 특정 AI 애플리케이션의 성능을 2배 이상 향상시키고 에너지 소비를 70% 이상 절감했다.
+72
+이 기술은 단순히 HBM 대역폭을 늘리는 것을 넘어선, 중요한 다음 단계로 여겨진다.
+66
+4.3. PIM 소프트웨어의 도전: 마지막 관문
+가장 큰 장애물
+: PIM의 광범위한 채택을 가로막는 주된 장애물은 하드웨어가 아닌 소프트웨어다.
+67
+엔비디아의 CUDA와 같은 기존 프로그래밍 언어, 컴파일러, 프레임워크 생태계는 프로세서 중심의 폰 노이만 모델을 기반으로 구축되었다. PIM이 효과를 발휘하려면 완전히 새로운 프로그래밍 모델이 필요하다.
+78
+생태계 구축
+: PIM의 잠재력을 실현하기 위해서는 새로운 소프트웨어 스택을 구축하기 위한 대규모의 협력적인 노력이 필요하다.
+표준화
+: JEDEC과 같은 표준화 기구는 PIM 명령어 세트와 하드웨어 인터페이스를 표준화해야 한다.
+71
+프로그래밍 모델 및 컴파일러
+: 개발자가 데이터 배치나 커널 실행을 수동으로 관리하지 않고도 특정 기능을 PIM 장치로 쉽게 오프로드할 수 있는 새로운 프레임워크가 필요하다.
+82
+애플리케이션 통합
+: 텐서플로우(TensorFlow)나 파이토치(PyTorch)와 같은 AI 프레임워크가 PIM 하드웨어를 투명하게 인식하고 활용할 수 있도록 수정되어야 한다.
+현재 진행 상황
+: 삼성전자는 개방형 표준인 SYCL 기반의 소프트웨어를 개발하고 AMD, 자일링스(Xilinx)와 같은 파트너와 초기 상용화를 위해 협력하며 이 생태계를 적극적으로 구축하고 있다.
+72
+그러나 이는 CUDA가 지배적인 위치에 오르기까지 10년 이상이 걸렸던 것처럼 장기적인 과제다.
+67
+개방형 인터커넥트 표준인 CXL(Compute Express Link)의 등장은 PIM/PNM(Processing-Near-Memory) 장치를 시스템에 보다 원활하게 통합할 수 있는 중요한 플랫폼을 제공할 수 있다.
+74
+차세대 AI 컴퓨팅의 패권 경쟁은 반도체 팹(fab)뿐만 아니라 소프트웨어 생태계에서도 벌어질 것이다. HBM4가 진화적인 단계라면, PIM은 개발자들의 마음을 사로잡는 데 성공 여부가 모든 것을 결정하는 혁명적인 단계다. 엔비디아의 지배력은 GPU 하드웨어만큼이나 CUDA라는 소프트웨어 해자(moat)에 기반한다. CUDA는 개발자들이 엔비디아 GPU를 쉽게 사용하게 만들어 엄청난 락인(lock-in) 효과를 창출했다. 아무리 강력한 PIM 하드웨어도 프로그래밍하기 너무 어렵다면 쓸모가 없다. 프로그래밍 모델에 대한 자료들은
+79
+데이터 분산, 스크래치패드 메모리 관리, 커널 실행 등 관련된 복잡성을 강조한다. 삼성전자가 표준화된 소프트웨어 플랫폼을 만들려는 노력은
+73
+바로 이 도전을 인정한 것이다. 그들은 'PIM을 위한 CUDA'를 만들려고 하고 있다. 따라서 PIM의 성공은 개방적이고 접근 가능한 소프트웨어 생태계를 만들기 위한 수년간의 산업 전반의 노력에 달려 있다. 성공한다면 엔비디아의 폐쇄적인 생태계를 뒤흔들 수 있다. 실패한다면 PIM은 학술적인 틈새 기술로 남을 것이다. 이는 PIM 이니셔티브를 HBM4의 하드웨어 경쟁보다 훨씬 더 높은 위험과 보상을 가진 전략으로 만든다. 이것은 컴퓨팅의 근본적인 패러다임을 바꾸려는 베팅이다.
+5부: 전략적 전망 및 제언
+이 마지막 섹션은 보고서의 분석 결과를 종합하여 일관된 전략적 전망을 제시하고, 생태계 전반의 이해관계자들에게 실행 가능한 통찰력을 제공한다.
+5.1. 얽힌 운명: AI 하드웨어의 새로운 법칙
+AI 하드웨어 시장에서의 성공은 더 이상 단일 영역에서의 탁월함만으로는 불가능하다. 이제는 메모리, 첨단 패키징, 열 관리라는 통합된 시스템을 완벽하게 마스터해야 한다. 한 영역에서의 결정이 다른 영역에 직접적인 영향을 미친다. 예를 들어, HBM을 16단으로 적층하기로 한 결정(메모리)은 하이브리드 본딩 기술의 개발(패키징)을 필수적으로 만들고, 액침 냉각의 채택(열 관리)을 촉진한다. 이 상호 연결성이 새로운 경쟁 환경을 정의한다.
+5.2. 경쟁 벡터와 핵심 성공 요인
+HBM 공급업체 (SK하이닉스, 삼성전자, 마이크론)
+: 핵심 성공 요인은 더 이상 D램 공정 기술과 수율에만 국한되지 않는다. 이제 다음을 포함한다.
+첨단 패키징 리더십
+: MR-MUF, 그리고 결정적으로 하이브리드 본딩과 같은 기술의 숙달.
+열 공동 설계 역량
+: 냉각 파트너와 협력하여 설계 초기 단계부터 열 방출을 모델링하고 관리하는 능력.
+전략적 고객 연계
+: 로드맵을 조율하고 맞춤형 사양을 충족시키기 위해 핵심 AI 가속기 설계자(특히 엔비디아)와의 깊고 협력적인 관계.
+PIM에 대한 장기적 베팅
+: 삼성의 경우, 성공은 PIM을 위한 실행 가능한 소프트웨어 생태계를 촉진할 수 있는 능력에 달려 있다.
+냉각 솔루션 제공업체 (쿨잇, 아세텍, 서브머)
+:
+OEM 설계 계약 확보
+: 선도적인 서버 OEM과의 공장 설치 계약 확보가 시장 점유율 확보의 주요 경로다.
+성능과 신뢰성
+: 보수적인 데이터센터 운영자를 설득하기 위해서는 우수한 열 성능, 에너지 효율(PUE), 장기적인 신뢰성을 입증하는 것이 중요하다.
+로드맵 연계
+: HBM5 시대를 위한 액침 솔루션 개발과 같이, HBM의 미래 요구사항에 맞춰 기술 로드맵을 조정하는 것이 장기적인 생존의 열쇠가 될 것이다.
+AI 가속기 설계자 (엔비디아, AMD, 인텔)
+:
+공급망 통제
+: HBM 공급망을 적극적으로 관리하고 다변화하는 것은 리스크 완화와 비용 통제 모두에 필수적이다.
+아키텍처 통합
+: 엔비디아의 맞춤형 베이스 다이 설계와 같은 움직임은, 메모리와 냉각을 외부 부품이 아닌 아키텍처의 필수적인 부분으로 취급하여 전체 컴퓨팅 패키지를 가장 효과적으로 공동 설계할 수 있는 기업이 리더십을 차지할 것임을 보여준다.
+5.3. 2030년 데이터센터 비전
+보고서는 2030년 데이터센터의 미래 비전으로 마무리된다. 그곳은 액체가 지배적인 냉각 매체이며, 최고 밀도의 AI 클러스터에는 액침 냉각이 주류가 될 것이다. HBM 스택은 더 높고, 더 조밀하며, 잠재적으로 내장된 냉각 채널을 특징으로 할 것이다. PIM 아키텍처가 성숙하고 특정 AI 워크로드에 채택되어 호스트 GPU의 작업을 오프로드함에 따라 메모리와 프로세서 간의 구분은 흐려지기 시작할 것이다. 궁극적으로 데이터센터는 와트당 성능을 극대화하기 위해 실리콘 다이부터 시설 수준까지 공동 설계된, 고도로 통합된 수냉식 시스템으로 진화할 것이며, 이는 메모리와 냉각 사이의 상생 혁명의 정점을 기록할 것이다.
+참고 자료
+"AI칩 처리속도 높이고 발열 줄여라"… 제2 HBM 경쟁 불붙어 - 매일경제, 9월 18, 2025에 액세스,
+https://www.mk.co.kr/news/business/11338083
+Thermal Issues Related to Hybrid Bonding of 3D-Stacked High Bandwidth Memory: A Comprehensive Review - MDPI, 9월 18, 2025에 액세스,
+https://www.mdpi.com/2079-9292/14/13/2682
+Thermal Management for Advanced Semiconductor Packaging 2026-2036: Technologies, Markets, and Opportunities - IDTechEx, 9월 18, 2025에 액세스,
+https://www.idtechex.com/en/research-report/thermal-management-for-advanced-semiconductor-packaging/1106
+'HBM 메모리 수요 입증' SK하이닉스 실적으로 내다본 인공지능 반도체 ..., 9월 18, 2025에 액세스,
+https://it.donga.com/107335/
+“SK하이닉스 먹여 살린 HBM” 내년 전망은? - 모바일한경, 9월 18, 2025에 액세스,
+https://plus.hankyung.com/apps/newsinside.view?aid=202412028098b&category=&sns=y
+“SK하이닉스 먹여 살린 HBM” 내년 전망은? - 매거진한경, 9월 18, 2025에 액세스,
+https://magazine.hankyung.com/business/article/202412028098b
+'SK하이닉스 잡는다' 삼성전자 이유 있는 자신감…HBM3E 로드맵 공개 - 더구루, 9월 18, 2025에 액세스,
+https://www.theguru.co.kr/news/article.html?no=75144
+엔비디아의 HBM 밸류체인 재편에...AI 반도체 공급망 지각변동, 9월 18, 2025에 액세스,
+https://www.metroseoul.co.kr/article/20250901500576
+"HBM4 12단 연내 양산 16단은 내년 하반기 공급" - 매일경제, 9월 18, 2025에 액세스,
+https://www.mk.co.kr/news/business/11225898
+HBM 첫 해외 생산기지…美 사업 로드맵은?[SK하닉, 美 보조금 확정①] - 뉴시스, 9월 18, 2025에 액세스,
+https://mobile.newsis.com/view/NISX20240807_0002841085
+마이크론 "HBM 고객사 3곳으로 확장"…HBM4 양산도 자신감 - 지디넷 ..., 9월 18, 2025에 액세스,
+https://zdnet.co.kr/view/?no=20241219085020
+마이크론, HBM 시장 점유율 2025년까지 20% 중반대 까지 올릴 것 - ServerBiz, 9월 18, 2025에 액세스,
+http://serverbiz.co.kr/news/?vid=1436
+HBM을 대하는 메모리 반도체 3사의 입장 - 바이라인네트워크, 9월 18, 2025에 액세스,
+https://byline.network/2024/07/03-109/
+'꼴찌의 반란' 마이크론 “AI 칩 큰손 4곳에 HBM 대량 공급 중, 점유율 25% 전망”... SK하이닉스·삼성전자 양강 구도에 균열?, 9월 18, 2025에 액세스,
+https://biz.chosun.com/it-science/ict/2025/06/26/QL4NR2BKQVCNVIHHIRSFPPMHKM/
+내년 HBM4 SK하이닉스·삼성전자 양자대결, '안정성 vs 성능'으로 엔비디아 공급 승부, 9월 18, 2025에 액세스,
+https://www.businesspost.co.kr/BP?command=article_view&num=412148
+이번엔 다르다… 삼성전자, 한층 빨라진 HBM4 스텝 - 뉴데일리 경제, 9월 18, 2025에 액세스,
+https://biz.newdaily.co.kr/site/data/html/2025/09/15/2025091500109.html
+“AI 반도체 발열 잡는 냉각 기술로 승부…수랭식 한계 극복” - 조선비즈, 9월 18, 2025에 액세스,
+https://biz.chosun.com/it-science/ict/2025/04/22/PBC3VJ3U3RBMHCL73GAAT32WZI/
+HBM4 패권 전쟁 본격화…글로벌 공급망 재편 움직임 - 이코리아, 9월 18, 2025에 액세스,
+https://www.ekoreanews.co.kr/news/articleView.html?idxno=82194
+엔비디아, HBM4 공급망 넓힌다…메모리 3사 '가격전략' 주목 - 뉴시스, 9월 18, 2025에 액세스,
+https://mobile.newsis.com/view/NISX20250912_0003326391
+“HBM, 2025년 D램 매출의 30% 차지… 가격도 5~10% 상승” | 세계일보, 9월 18, 2025에 액세스,
+https://www.segye.com/newsView/20240507515856
+엔비디아, TSMC·SK하이닉스보다 공급망 우위 확보 위해 '27년 HBM 로직 다이 설계 계획(25.08.26) - YouTube, 9월 18, 2025에 액세스,
+https://www.youtube.com/watch?v=Z2gwxXi3Vt8
+＂버티브(VRT), 엔비디아가 선택한 기업..수주 맞춰 증설＂ - 알파경제, 9월 18, 2025에 액세스,
+https://alphabiz.co.kr/news/view/1065570382051869
+[시장보고서]데이터센터 액체 냉각 시장 예측(-2030년) - 글로벌인포메이션, 9월 18, 2025에 액세스,
+https://www.giikorea.co.kr/report/smrc1503290-data-center-liquid-cooling-market-forecasts-global.html
+데이터 센터 냉각 시장 규모, 범위 및 성장 동력 2030년까지 - Data Bridge Market Research, 9월 18, 2025에 액세스,
+https://www.databridgemarketresearch.com/ko/reports/global-data-center-cooling-market
+2037년까지 데이터센터 액체 냉각 시장 규모는 897억 7천만 달러에 달할 것 | CAGR 40.3% 예측 - Research Nester, 9월 18, 2025에 액세스,
+https://www.researchnester.com/kr/reports/data-center-liquid-cooling-market/4747
+데이터 센터 냉각 시장 규모, 공유 및 글로벌 보고서 [2032] - Fortune Business Insights, 9월 18, 2025에 액세스,
+https://www.fortunebusinessinsights.com/ko/industry-reports/data-center-cooling-market-101959
+Immersion Cooling – The Future of Data Center Technology - PTI Solutions, 9월 18, 2025에 액세스,
+https://www.ptisolutions.com/immersion-cooling-the-future-of-data-center-technology/
+Submer: Datacenters that make sense | Liquid Cooling at Scale, 9월 18, 2025에 액세스,
+https://submer.com/
+What Is Direct-to-Chip Liquid Cooling? - Supermicro, 9월 18, 2025에 액세스,
+https://www.supermicro.com/en/glossary/direct-to-chip-liquid-cooling
+CoolIT Systems Showcases AI and HPC Liquid Cooling Solutions at SC24, 9월 18, 2025에 액세스,
+https://www.coolitsystems.com/coolit-systems-showcases-ai-and-hpc-liquid-cooling-solutions-at-sc24/
+CoolIT Systems - YouTube, 9월 18, 2025에 액세스,
+https://www.youtube.com/user/coolitsystems
+Direct-to-Chip Liquid Cooling for Data Centers: Enhancing Efficiency and Sustainability, 9월 18, 2025에 액세스,
+https://www.akcp.com/index.php/2023/08/28/direct-to-chip-liquid-cooling-for-data-centers-enhancing-efficiency-and-sustainability/
+CoolIT Systems Collaborates with Gigabyte at SC23, 9월 18, 2025에 액세스,
+https://www.coolitsystems.com/coolit-systems-collaborates-with-gigabyte-at-sc23/
+CoolIT at Supercomputing 2023, 9월 18, 2025에 액세스,
+https://www.coolitsystems.com/coolit-at-supercomputing-2023/
+CoolIT continues its collaboration with HPE | Scientific Computing World, 9월 18, 2025에 액세스,
+https://www.scientific-computing.com/press-releases/coolit-continues-its-collaboration-hpe
+CoolIT Continues Collaboration with Hewlett Packard Enterprise on Direct Liquid Cooling Designs for HPC Systems - PRWeb, 9월 18, 2025에 액세스,
+https://www.prweb.com/releases/coolit-continues-collaboration-with-hewlett-packard-enterprise-on-direct-liquid-cooling-designs-for-hpc-systems-879989212.html
+CoolIT: Leading the Pack on Liquid Cooling - TechArena, 9월 18, 2025에 액세스,
+https://www.techarena.ai/content/coolit-leading-the-pack-on-liquid-cooling
+Immersion cooling for computer components | Submer, 9월 18, 2025에 액세스,
+https://submer.com/immersion-cooling/
+What Is Immersion Cooling? - Submer, 9월 18, 2025에 액세스,
+https://submer.com/blog/what-is-immersion-cooling/
+Single-Phase Immersion Cooling with Submer | Solution - GIGABYTE Global, 9월 18, 2025에 액세스,
+https://www.gigabyte.com/Solutions/submer-single-phase-immersion-cooling
+Two-Phase immersion cooling - Submer, 9월 18, 2025에 액세스,
+https://submer.com/blog/two-phase-immersion-cooling/
+Event: CoolIT Systems at NVIDIA GTC AI Conference and Expo 2024, 9월 18, 2025에 액세스,
+https://www.coolitsystems.com/event-coolit-systems-at-nvidia-gtc-ai-conference-and-expo-2024/
+Asetek Direct to Chip (D2C) liquid cooling technology - Asetek, 9월 18, 2025에 액세스,
+https://www.asetek.com/company/about-asetek/asetek-heritage-technology/data-center/technology-for-data-centers/d2c-ingredient-coolers/
+레노버, 엔비디아 손잡고 수냉 서버로 데이터센터 공략 - 시사저널e, 9월 18, 2025에 액세스,
+https://www.sisajournal-e.com/news/articleView.html?idxno=411769
+슈퍼마이크로, 차세대 직접 수냉식 솔루션 DLC-2 공개…데이터센터 에너지 및 냉각수 절약, 소음 저감, 공간 활용 최적화 중점 - KIPOST(키포스트), 9월 18, 2025에 액세스,
+https://www.kipost.net/news/articleView.html?idxno=328491
+아이크래프트, '엔비디아 액체 냉각 파트너' 레노버와 협력 부각 ↑ [특징주] - 파이낸셜뉴스, 9월 18, 2025에 액세스,
+https://www.fnnews.com/news/202505151416049916
+Supermicro Liquid Cooling solutions | Performance Intensive Computing, 9월 18, 2025에 액세스,
+https://www.performance-intensive-computing.com/technology/supermicro-liquid-cooling-solutions
+Supermicro Systems with AMD Instinct™ Series GPUs, 9월 18, 2025에 액세스,
+https://www.supermicro.com/en/accelerators/amd
+AMD: Pioneering the Future of AI Liquid Cooling Markets - fibermall.com, 9월 18, 2025에 액세스,
+https://www.fibermall.com/blog/amd-ai-liquid-cooling.htm
+CoolIT Systems Partners with Switch Datacenters to Launch Advanced Energy-Efficient Data Centers, 9월 18, 2025에 액세스,
+https://www.coolitsystems.com/coolit-systems-partners-with-switch-datacenters-to-launch-advanced-energy-efficient-data-centers/
+CoolIT Systems Announces Strategic Agreement With nVent, 9월 18, 2025에 액세스,
+https://www.coolitsystems.com/demo-coolit-celebrates-20th-anniversary-with-revenue-milestone-and-strong-market-position-2/
+버티브, 엔비디아와 첨단 액체 냉각 솔루션 구축 협력…'NPN' 합류 - 데이터넷, 9월 18, 2025에 액세스,
+https://www.datanet.co.kr/news/articleView.html?idxno=192146
+[단독] 엔비디아 올라탄 LS일렉…AI서버 액체냉각 '정조준' - 한국경제, 9월 18, 2025에 액세스,
+https://www.hankyung.com/article/2025062343841
+Advanced Packaging Technologies in Memory Applications for Future Generative AI Era - IEDM, 9월 18, 2025에 액세스,
+https://iedm23.mapyourshow.com/mys_shared/iedm23/handouts/15-6_Tue_14482.pdf
+[HBM 파헤치기기] HBM 제조 공정 기술 분석 : ③ 핵심은 발열과 웨이퍼 와피지 컨트롤, 9월 18, 2025에 액세스,
+https://seongyun-dev.tistory.com/114
+어플라이드, "HBM에 하이브리드 본딩 적용 필요"… 폼팩터·열방출 ..., 9월 18, 2025에 액세스,
+https://www.thelec.kr/news/articleView.html?idxno=28081
+Thermal Management for CoWoS: Advanced Modules for AI & HPC Systems - T-Global USA, 9월 18, 2025에 액세스,
+https://www.tglobal-usa.com/blogs/the-role-of-advanced-thermal-modules-in-advanced-packaging-technology/
+SK하이닉스 "차세대 HBM 패키징기술 개발…최적기술로 고단적층" - YouTube, 9월 18, 2025에 액세스,
+https://www.youtube.com/shorts/-wtvQUhjMvg
+“경쟁사 패키징 기술 전환 빨라지는데”···삼성전자, HBM '사면초가' - 시사저널e, 9월 18, 2025에 액세스,
+https://www.sisajournal-e.com/news/articleView.html?idxno=305787
+Rapid Development and Optimization of Thermal Management Solutions for Advanced Semiconductor Packaging - 3D InCites, 9월 18, 2025에 액세스,
+https://www.3dincites.com/2024/02/rapid-development-and-optimization-of-thermal-management-solutions-for-advanced-semiconductor-packaging/
+카이스트 HBM 로드맵 "2029년부터 냉각 기술이 경쟁력 좌우" - 전자 ..., 9월 18, 2025에 액세스,
+https://www.thelec.kr/news/articleView.html?idxno=36904
+SK하이닉스, 차세대 HBM4 전쟁 서막을 열다: 기술 초격차로 'AI 메모리 왕좌' 굳히기, 9월 18, 2025에 액세스,
+https://skywork.ai/skypage/ko/SK%ED%95%98%EC%9D%B4%EB%8B%89%EC%8A%A4,-%EC%B0%A8%EC%84%B8%EB%8C%80-HBM4-%EC%A0%84%EC%9F%81-%EC%84%9C%EB%A7%89%EC%9D%84-%EC%97%B4%EB%8B%A4:-%EA%B8%B0%EC%88%A0-%EC%B4%88%EA%B2%A9%EC%B0%A8%EB%A1%9C-'AI-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EC%99%95%EC%A2%8C'-%EA%B5%B3%ED%9E%88%EA%B8%B0/1948202541757841408
+HBM4 표준 확정: 성능 향상 > 하드웨어 뉴스 - 퀘이사존, 9월 18, 2025에 액세스,
+https://quasarzone.com/bbs/qn_hardware/views/1835263
+“이젠 'HBM4'가 승부수”…SK 선두? 삼성·마이크론 '추격' - 재외동포신문, 9월 18, 2025에 액세스,
+https://www.dongponews.net/news/articleView.html?idxno=53169
+HBM3부터 HBM4까지: AI 메모리 세대별 비교와 시장 경쟁 전망 - Goover, 9월 18, 2025에 액세스,
+https://seo.goover.ai/report/202505/go-public-report-ko-4d33306d-a00b-4d73-b74b-2a8fc9767c46-0-0.html
+인공지능 혁명을 견인하는 고대역폭 메모리(HBM) 시장의 현황과 미래 전망 - Goover, 9월 18, 2025에 액세스,
+https://seo.goover.ai/report/202503/go-public-report-ko-674fb369-914d-4570-af1b-5ea3b868aeca-0-0.html
+[이혁재의 칩 비하인드] HBM 후속 PIM 개발 필요하다 | 서울경제, 9월 18, 2025에 액세스,
+https://www.sedaily.com/NewsView/2GVBK56ES8
+Real-world Implementation and Future of AI Acceleration Systems based on Processing-in-Memory, 9월 18, 2025에 액세스,
+http://prism.sejong.ac.kr/dossa-6/dossa_paper/dossa_2024_invited_talk4_slide.pdf
+HBM 이어 PIM으로...삼성전자·SK하이닉스, '똑똑한 메모리' 경쟁 본격화 - 블로터, 9월 18, 2025에 액세스,
+https://www.bloter.net/news/articleView.html?idxno=610974
+Smart Memory Enables AI Growth | Samsung Semiconductor Global, 9월 18, 2025에 액세스,
+https://semiconductor.samsung.com/news-events/tech-blog/the-industrys-first-hbm-pim/
+AI Drives Renewed Interest in PIM - EE Times, 9월 18, 2025에 액세스,
+https://www.eetimes.com/ai-drives-renewed-interest-in-pim/
+PIM은 AI 가속기의 미래가 될 것인가? (삼성의 MI100 PIM) | by daewoo kim, 9월 18, 2025에 액세스,
+https://moon-walker.medium.com/pim%EC%9D%80-ai-%EA%B0%80%EC%86%8D%EA%B8%B0%EC%9D%98-%EB%AF%B8%EB%9E%98%EA%B0%80-%EB%90%A0-%EA%B2%83%EC%9D%B8%EA%B0%80-%EC%82%BC%EC%84%B1%EC%9D%98-mi100-pim-2320c6bca73e
+Samsung has developed in-memory processing to boost the performance of AI systems in data centres using the latest interconnect standards. (READ THESE INFO) - Reddit, 9월 18, 2025에 액세스,
+https://www.reddit.com/r/Netlist_/comments/yl5yx6/samsung_has_developed_inmemory_processing_to/
+Samsung Electronics Semiconductor Unveils Cutting-edge Memory Technology to Accelerate Next-generation AI, 9월 18, 2025에 액세스,
+https://semiconductor.samsung.com/news-events/tech-blog/samsung-electronics-semiconductor-unveils-cutting-edge-memory-technology-to-accelerate-next-generation-ai/
+How the AI Revolution Spurred Samsung to Rethink Memory and Data Processing, 9월 18, 2025에 액세스,
+https://semiconductor.samsung.com/news-events/tech-blog/how-the-ai-revolution-spurred-samsung-to-rethink-memory-and-data-processing/
+"생각하는 메모리 PIM, 차세대 기술 중 가장 상용화 빠를 것" - 지디넷코리아, 9월 18, 2025에 액세스,
+https://zdnet.co.kr/view/?no=20250716154703
+Pathfinding Future PIM Architectures by Demystifying a Commercial PIM Technology - arXiv, 9월 18, 2025에 액세스,
+https://arxiv.org/html/2308.00846v3
+www.sigarch.org, 9월 18, 2025에 액세스,
+https://www.sigarch.org/processing-in-memory-tutorials-experiences-from-past-two-years-and-thoughts-looking-forward/#:~:text=Processing%2Din%2DMemory%20(PIM,storage)%20systems%20compute%2Dcapable.
+The Processing-in-Memory Model - Computer Science and Engineering, 9월 18, 2025에 액세스,
+https://www.cs.ucr.edu/~ygu/papers/SPAA21/PIM.pdf
+Processing-in-Memory Tutorials: Experiences from Past Two Years and Thoughts Looking Forward | SIGARCH, 9월 18, 2025에 액세스,
+https://www.sigarch.org/processing-in-memory-tutorials-experiences-from-past-two-years-and-thoughts-looking-forward/
+Samsung's HBM-PIM technology delivers a 2.5x performance boost to Xilinx's Alveo AI accelerator - OC3D, 9월 18, 2025에 액세스,
+https://overclock3d.net/news/memory/samsungs-hbm-pim-technology-delivers-a-2-5x-performance-boost-to-xilinxs-alveo-ai-accelerator/
+SimplePIM: A Software Framework for Productive and Efficient Processing-in-Memory - Ethz, 9월 18, 2025에 액세스,
+https://people.inf.ethz.ch/omutlu/pub/SimplePIM_pact23.pdf
+PIM Is All You Need: A CXL-Enabled GPU-Free System for Large Language Model Inference - arXiv, 9월 18, 2025에 액세스,
+https://arxiv.org/html/2502.07578v1
+[Literature Review] PIM Is All You Need: A CXL-Enabled GPU-Free System for Large Language Model Inference - Moonlight, 9월 18, 2025에 액세스,
+https://www.themoonlight.io/en/review/pim-is-all-you-need-a-cxl-enabled-gpu-free-system-for-large-language-model-inference
+PIM Is All You Need: A CXL-Enabled GPU-Free System for Large Language Model Inference - Deep Blue Repositories, 9월 18, 2025에 액세스,
+https://deepblue.lib.umich.edu/bitstream/handle/2027.42/198658/3676641.3716267.pdf?sequence=1
+An LPDDR-based CXL-PNM Platform for TCO-efficient Inference of Transformer-based Large Language Models - Illinois Experts, 9월 18, 2025에 액세스,
+https://experts.illinois.edu/en/publications/an-lpddr-based-cxl-pnm-platform-for-tco-efficient-inference-of-tr
+PIM Is All You Need: A CXL-Enabled GPU-Free System for LLM Inference - YouTube, 9월 18, 2025에 액세스,
+https://www.youtube.com/watch?v=wopmHahtpeM
+삼성전자, HBM-PIM 응용사례 공개… AI 메모리 제품군 확대 - 테크월드뉴스, 9월 18, 2025에 액세스,
+https://www.epnc.co.kr/news/articleView.html?idxno=214000
+삼성전자, 인공지능 탑재 메모리 제품군 확대 - Samsung Newsroom, 9월 18, 2025에 액세스,
+https://news.samsung.com/kr/%EC%82%BC%EC%84%B1%EC%A0%84%EC%9E%90-%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5-%ED%83%91%EC%9E%AC-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EC%A0%9C%ED%92%88%EA%B5%B0-%ED%99%95%EB%8C%80
+728x90
+공유하기
+게시글 관리
+R&D/기술/정책 동향 data 및 GPT, AI 활용
+저작자표시
+비영리
+변경금지
+(새창열림)
+'
+보고서
+' 카테고리의 다른 글
+[Report]MSR 기반 해양 추진 시스템에서 한국의 선도자 우위 분석
+(0)
+2025.09.19
+[Report]망간 다이보라이드(MnB2​): 신규 고에너지 물질의 종합 기술 평가 및 추진체·촉매 응용 분야 분석
+(0)
+2025.09.19
+[Report]AI 시대를 위한 데이터센터 열 관리-수냉식 냉각 통합
+(1)
+2025.09.18
+[Report]수냉식 냉각 기술 활용 AI 시대의 메모리 모듈 적용과 미래 전망
+(0)
+2025.09.18
+[Report]AI 및 HPC 시대의 메모리 및 냉각 기술 혁신, HBM과 수냉식 냉각의 부상에 대한 종합 분석 보고서
+(0)
+2025.09.18
+관련글
+[Report]MSR 기반 해양 추진 시스템에서 한국의 선도자 우위 분석
+[Report]망간 다이보라이드(MnB2​): 신규 고에너지 물질의 종합 기술 평가 및 추진체·촉매 응용 분야 분석
+[Report]AI 시대를 위한 데이터센터 열 관리-수냉식 냉각 통합
+[Report]수냉식 냉각 기술 활용 AI 시대의 메모리 모듈 적용과 미래 전망
+250x250
+분류 전체보기
+보고서
+시리즈
+Report(EN)
+기업정보
+삼성전기
+정책 및 규제 자료 검색
+최근글
+인기글
+전체 방문자
+Today :
+Yesterday :
+TOP
+Designed by 티스토리
+© AXZ Corp.
+티스토리툴바
+R&D/기술/정책 동향 data 및 GPT, AI 활용
+구독하기

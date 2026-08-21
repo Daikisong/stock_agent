@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "861a9c664b67221591b6bfb8fb499c78a609f9e11f4b35e6d60b791d47048ec6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f03e2a59fe256191f769fefa",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.92,
+        "rationale": "검증된 SK하이닉스 공식 3Q25 실적 발표로, 2026년 HBM 공급 논의·고객 수요 가시성을 확인할 수 있는 직접 원천 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-f93c9f951a8daa78acc08c65",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "공식 사이트의 지속가능성 하위 페이지로 기업설명회 자료가 아니며 HBM 이익·FCF 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-fb9461b25640c2b6a4915d45",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "지속가능성 하위 페이지로 요청된 공시·발행사 프레젠테이션 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-bae0d6d07ab24ad940cdd4f2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "증권 플랫폼의 제3자 뉴스 화면으로 요청된 공식 원천이 아니며 snippet은 증거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-94c4f180365c2e921cdeab95",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "개인 테마 블로그이고 기준일 이후 배당기준일 정보도 섞여 있어 현재 판단과 공식 원천 요건을 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1fed6a2a04656fc5f122ed4f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "SK텔레콤의 2020 연차보고서로 대상 회사와 기간이 모두 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-a31f641f9c3811c3d9a75120",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "일반 뉴스 목록 페이지이고 snippet도 다른 회사 장기계약 기사라 대상 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-6a2df824dd26a08e1ab7bd74",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "일반 CEO 기사 목록이며 대상 회사의 공식 실적·프레젠테이션 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7dd16197bac66255bd7acb32",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "경제신문 홈페이지 랜딩으로 특정 대상 문서나 요청된 공식 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f9ecf593185c56d3b694e480",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "산업 뉴스 목록이며 snippet의 장기공급계약은 다른 회사 내용이라 대상 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-844dcf488025974cb716b688",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.01,
+        "rationale": "2023년 제3자 증권사 자료로 오래되었고 후보가 요청한 공식 공시·발행사 프레젠테이션도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-eb6ffd5fe97b0cfbc19f3e48",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "기준일 이후 7월 29일 2분기 실적 이벤트와 추정치를 다룬 블로그로 미래누수이며 공식 원천도 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "3Q25 공식 실적 후보는 원문 fetch 후에만 증거로 사용할 수 있고, 나머지 후보는 요청 원천·대상·기준일을 충족하지 않는다."
+    ]
+  },
+  "payload_hash": "c9720ac5523a01019ee05fa52e5ed20da447d5b1e0e01e97e62d6f5da2d34b89",
+  "production_score_authority": false,
+  "prompt_hash": "a96a07d94f727b2c6690af4b979f363b3e8b16bb96dfc4c8951f65fdd7d4e88d",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-77a148bdc9a51dc2e8a6c0db0e968f624e1a1fd05decbf36f3e315bbc3e9997f",
+  "response_id": "COLLABRESP-247a58d1dbf1cf2744ea3293cfd0e729791e62211aeab819cdbc4ef1f13e9fe9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

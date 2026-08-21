@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6e253f2bee9aeb0f98a082ec",
+        "rationale": "전송 청크 1/3의 원문 219,944자를 처음부터 끝까지 검토하고, prompt에 투영된 current 524개 fact/526개 claim 및 같은 parent의 chunk0 accepted 4건과 의미 중복을 대조했다. 이 청크는 연결·별도 재무제표 주석, 관계자 거래, 감사, 지배구조, 주주·임직원, 계열사 거래, 우발채무와 DX 연구개발을 담고 있다. DS 재고·매출·거래·설비 관련 수치는 Memory와 Foundry/System LSI가 섞이거나 별도·전사 기준이어서 MEMORY/HBM earnings_visibility에 귀속할 수 없고, chunk0의 메모리 ASP·생산량·가동률·DRAM 점유율보다 새로운 objective-local 사실도 없다. 따라서 이 청크에서는 채택할 신규 물질적 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "867bcd8a499430362c7b02387df2b8fe88d5f4943d602c32b67f82d1db674d9a",
+  "production_score_authority": false,
+  "prompt_hash": "3ce26f40c9b0583a3da69e2b4d3332295bc4bec308377fc069cc03132fd5a200",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-57a26ffcd1d05a9540e3f93ba8512e850942830fdbf3e5431e2d0ba5655bd4ec",
+  "response_id": "COLLABRESP-8a817b9b671ce9077b9853cb6e12ccfa930529b00d90ba459c64230d107eab0f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

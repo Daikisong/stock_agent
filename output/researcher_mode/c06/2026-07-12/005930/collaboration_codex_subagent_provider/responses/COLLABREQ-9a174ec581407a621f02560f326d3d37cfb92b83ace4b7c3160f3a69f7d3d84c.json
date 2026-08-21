@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-479d0b9302e2110fed271dc2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "2026년 반도체 관련주 전망 AI HBM 유망주 분석 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-1c5ff40da3efdf8fbdc8eeac",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "[단독] 전영현, 엔비디아와 HBM3E 12단 공급 논의 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-756e9f6a92e9a146afd3965a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "반도체/장비 - 유안타증권 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-6801ab873495b8db670df270",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "(배포용)_2025_AI_동향과_이슈로_살펴보는_AI_시대에_꼭_알아야_할_핵심용어_단면.p.... 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-3afd9ee2cc07db763f0307d0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "그래픽 처리 장치(GPU) 시장 규모, 추세, 점유율 및 2031년 산업 보고서 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c58edc73b7d88d997afad738",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "HBM4 전환점, 삼성전자의 반격 시나리오 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-7a46541190e7ec2d4b5f5790",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "2026년 반도체 관련주 전망 AI HBM 핵심 종목 분석 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-f48430d9449f013d0634394f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "언론·뉴스 재전 경로로서 고객사 공식 원문이 아니다. 관련 주제를 언급하더라도 스니펫은 discovery metadata일 뿐이며 CUSTOMER_OFFICIAL provenance가 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-46d6ca005dd88fd500ae6a91",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "2026년 반도체 시장 전망 AI·HBM 슈퍼사이클과 유망주 TOP5 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-3695d00ff10a213a09ce0145",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "VRAM 시장 규모, 점유율 및 2031년 성장 추세 보고서 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c92844f7c78aa8e3a1176cba",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "2026년 반도체 관련주 전망: AI·HBM TOP 3 투자전략 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-22b8df0d261d111cdc7c4710",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성전자-AMD, 차세대 AI 메모리 솔루션 협력 확대 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "모든 후보를 discovery route로만 판정했으며 스니펫을 EvidenceFact나 점수 근거로 사용하지 않았다.",
+      "이 partition에서는 요청된 CUSTOMER_OFFICIAL 고객사 원문 경로가 확인되지 않았다. 제3자 재전과 삼성전자 자체 발행자료는 고객사 독립 확인을 대체하지 않는다."
+    ]
+  },
+  "payload_hash": "70f36a759d1a7e937bd73d3a1edca49ee474635bce96479c374cc6dedbc6c1a3",
+  "production_score_authority": false,
+  "prompt_hash": "efec17c10f58a177d77ceb9184991e12d1e421ce8fac528c5880df4b8f98cc2b",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9a174ec581407a621f02560f326d3d37cfb92b83ace4b7c3160f3a69f7d3d84c",
+  "response_id": "COLLABRESP-a4672ff0e9a42ddc20e58429052e8721f1cb446e4d843088b2718247e4adb203",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

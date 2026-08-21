@@ -1,0 +1,79 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "현재 facts의 HBM 양산·고객 협력·메모리 ASP와 CAPA 메커니즘을 직접 공유하는 국내 상장 메모리 제조 피어다.",
+        "confidence": 0.98,
+        "material_differences": [
+          "삼성전자는 모바일·파운드리·디스플레이 등 연결 사업 비중이 커 SK하이닉스보다 메모리 순수도가 낮다.",
+          "제품 믹스, HBM 고객 배분, 파운드리 기반 base-die 내재화와 CAPA 규모가 다르다."
+        ],
+        "peer_name": "SK하이닉스",
+        "peer_symbol": "000660",
+        "shared_economic_drivers": [
+          "DRAM·HBM 수요, 메모리 ASP 및 재고 사이클",
+          "AI 가속기 고객 협력·qualification과 HBM 세대 전환",
+          "선단 DRAM·HBM CAPA, 가동률, 수율 및 대규모 설비투자"
+        ]
+      },
+      {
+        "comparability_rationale": "반도체 제조의 CAPA·가동률·수율과 고정비 레버리지를 비교하는 인접 제조 피어이며 직접 메모리 피어와 분리해야 한다.",
+        "confidence": 0.7,
+        "material_differences": [
+          "DB하이텍은 특화 파운드리로 DRAM·HBM 제품, 메모리 ASP 및 재고 사이클을 직접 공유하지 않는다.",
+          "고객 계약 구조, 제품 수명과 설비투자 규모가 삼성전자 메모리 사업과 다르다."
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "반도체 웨이퍼 제조 CAPA, 가동률 및 수율",
+          "고정비가 큰 제조 모델과 업황·제품 믹스에 따른 마진 레버리지",
+          "공정 투자와 고객 qualification의 선행성"
+        ]
+      },
+      {
+        "comparability_rationale": "HBM 투자 사이클의 장비 측 민감도를 보여 주는 인접 공급망 피어이며 직접 상대가치 피어로 사용하면 안 된다.",
+        "confidence": 0.72,
+        "material_differences": [
+          "한미반도체는 장비 공급사로 메모리 생산자가 아니며 메모리 ASP·재고·고객 배분 경제성을 직접 공유하지 않는다.",
+          "수주·백로그·프로젝트형 장비 매출 구조가 삼성전자의 대규모 메모리 제조 구조와 다르다."
+        ],
+        "peer_name": "한미반도체",
+        "peer_symbol": "042700",
+        "shared_economic_drivers": [
+          "HBM 세대 전환과 첨단 패키징 장비 수요",
+          "HBM 생산자의 설비투자·발주 사이클",
+          "수율·생산성 향상을 위한 패키징 공정 투자"
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "확장된 HBM 양산·고객 협력 facts를 반영해 직접 메모리 제조 피어 1개와 CAPA 제조·HBM 패키징 투자 축의 인접 피어 2개를 선택했다. PIT availability가 0이므로 identity와 경제적 방향만 제안하고 배수는 만들지 않았다.",
+    "unresolved_research_notes": [
+      "point_in_time_structured_peer_identity_roster가 비어 있어 cutoff 기준 실제 multiple availability를 확인할 수 없으며 valuation 값이나 PEER_BAND를 생성하지 않았다.",
+      "KRX listed equity 범위에서는 SK하이닉스만 직접 DRAM·HBM 제조 피어이고 DB하이텍과 한미반도체는 각각 제조·장비 인접 피어다."
+    ]
+  },
+  "payload_hash": "df69ece7f5ee66146f49b9c8a3898e1ce27cf9a277b88b42965d75ee8405b7c2",
+  "production_score_authority": false,
+  "prompt_hash": "8428355b8c910f4fce056dc2ca9ef52301b9e8c1ef92bafa002a928c56882ee2",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-275aa79e740ceb95ef0d3afc1669b888189fdb4f424d92426531c32b345d37a0",
+  "response_id": "COLLABRESP-8788fbbdbb665feab064c2e368496a848dd7443b65ba2e7560f8d8f1e5c2adfb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

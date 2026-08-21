@@ -1,0 +1,39 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "rationale": "The supplied literal transport chunk 1 of 3 was reviewed in full. It contains aviation, refining, chemicals, steel, nuclear, cosmetics, financials, and ship-engine material but no target-direct SK hynix, HBM, DRAM, or memory fact for any current open objective. This chunk-only disposition does not assert that the unsupplied parent chunks lack facts.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "The supplied chunk is exhausted with zero target-direct facts; the canonical parent document remains subject to its separately transported chunks under deterministic aggregation."
+    ]
+  },
+  "payload_hash": "1d3cb525d7f0439e212229db33b58845b86ea65204a2248b87c11c97ed9c695b",
+  "production_score_authority": false,
+  "prompt_hash": "d533e2b4d8fd704741319817fb05c8e433c94a0a7e5e82794463f899f339207b",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-da010d40091514038d89d721c15489a50fbe533a9f490122f1b1501f5ddfae8f",
+  "response_id": "COLLABRESP-e1d20386d0dd75eb989ce493c4b787fb45fc9dbb79bfbada61ba08116db51db3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

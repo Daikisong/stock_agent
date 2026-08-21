@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "861a9c664b67221591b6bfb8fb499c78a609f9e11f4b35e6d60b791d47048ec6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1560f32877fd8643c8318f87",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "ETF 관련 제3자 기사로, 요청된 발행사 실적·공시 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1c1d19d72088f56be4ae540f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "일반 주가 페이지이며 기준일 이후 시세가 섞여 있고 발행사 프레젠테이션도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2a731b1ee77675aab3648621",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.08,
+        "rationale": "SK하이닉스의 KIND 사업보고서지만 2024년 연간 자료여서 현재 2026년 HBM 이익·현금흐름 공백을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-3ce009c15abc7c3f123e8041",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "증권 뉴스 묶음의 부수적 종목 언급으로 요청된 공식 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4f73f45102e953f04a64f7f2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "마이크론 실적을 다룬 제3자 기사로 대상 회사의 공식 실적 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-69fad2e1b3224e41d8ec3382",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.96,
+        "rationale": "검증된 SK하이닉스 공식 도메인의 2026년 1분기 경영실적 발표 원문으로, 최신 실적과 향후 설명을 확인할 직접 fetch 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-fd0c11b5a63df21d14b33812",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.03,
+        "rationale": "KIND 주주총회 공고이지만 2025년 회의 정보로 현재 HBM 이익 전환·FCF 수치 공백과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-454f49da6589dbff8870837b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "장비업체 실적을 다룬 제3자 기사로 대상 발행사의 요청 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-dc90f1c9d23dff861cb77b9c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.01,
+        "rationale": "인물 프로필 형식의 제3자 기사로 발행사 프레젠테이션·공시 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1f382ba35e11c9e736eefe7d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "일반 기업정보·주가 페이지이며 기준일 이후 값이 섞여 있고 요청된 공식 원천이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-950d1c8e80912b291267c9ec",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0,
+        "rationale": "다른 회사 대표 프로필에서 SK하이닉스를 고객으로 언급한 제3자 자료다."
+      },
+      {
+        "candidate_id": "SGCAND-9f66a4460d126c8f40707131",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "대상 실적을 재전한 제3자 기사이며 요청된 공식 실적 발표 원문은 별도 후보에 있다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "material 후보는 원문 fetch 후에만 증거로 사용할 수 있으며, 현재 snippet은 증거가 아니다."
+    ]
+  },
+  "payload_hash": "530b83e6632ccc9753db48c5ca27df79306092dd5c95b2d4f197f7bb7584cd29",
+  "production_score_authority": false,
+  "prompt_hash": "d3f0d9cb1d4cb5f47663a336c03b5d9bb10bfb1773efd4f5d3714dd527979b89",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-64370637afcea4d923344c249d487d830fecf06cdd44df57bdc39e1aca68d275",
+  "response_id": "COLLABRESP-ed9b82bce25cc77555f015a3fafed8a69316f4dbe4096f3933df3d16fb2fe7fd",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

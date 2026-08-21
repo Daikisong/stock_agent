@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5fd165b09602dcb992ea7772",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 제3자 분석글로 고객사 공식 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f8eab6b614e4deb66329a05b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "일반 기사 목록으로 objective-bound full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-222fad2b4ef2d3beee325f01",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "상업 시장조사 페이지이며 CUSTOMER_OFFICIAL 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-38fec8cbef569bbd4b152f89",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "PwC 산업 전망 PDF로 특정 고객사의 공식 삼성 HBM 관계 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c7dfee61353aa61493bef85b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "TikTok 검색·탐색 페이지로 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4906a70b49be25ada819a289",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "다른 회사의 KRX 분기보고서로 대상 고객 관계 조사와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-7bac1defad3ed675b76c4074",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.04,
+        "rationale": "제3자 기술 분석 페이지로 NVIDIA 고객 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7e8e3178d8ead7e7c8dbce33",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.04,
+        "rationale": "매일경제 제3자 기사이며 요청된 CUSTOMER_OFFICIAL source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-90018b0c00adb288111e770c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "미래에셋 증권 PDF로 고객사 공식 source family와 일치하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b1094b61b3eb71b9fddc8ad6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.06,
+        "rationale": "서울경제 제3자 기사로 OpenAI·AMD 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ae5cc846400656dc9644c428",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "유안타 증권 리포트로 고객사 공식 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b26209f2ba5e9a889587028d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "하나증권 일일 PDF로 CUSTOMER_OFFICIAL 원문이 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 material0은 직접 CUSTOMER_OFFICIAL full-fetch route가 없다는 뜻이며, source absence나 완료 증명이 아니다."
+    ]
+  },
+  "payload_hash": "51cca0b9b0d70acd026d840615eebcb3cf31bee5310dcec4f1bdde1542701313",
+  "production_score_authority": false,
+  "prompt_hash": "65134bc8fcf1d4b993fa058f1193177e7ed4f0617676e099e64b588e4fcf8266",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-49ca3540450537ed6888ec6f0b684e157764a12dcc3c132b95bf75122d5d4adc",
+  "response_id": "COLLABRESP-a6d7584e1489752ef7bc0075f4a7250bfb525542355493979bcf252116dda0ff",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

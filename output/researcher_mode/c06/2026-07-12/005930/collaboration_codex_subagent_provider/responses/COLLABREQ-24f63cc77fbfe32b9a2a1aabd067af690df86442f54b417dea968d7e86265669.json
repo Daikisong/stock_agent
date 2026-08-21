@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-d34ebc1824c1b4940d7029b0",
+        "rationale": "이 transport chunk의 distinct C06 target-direct DRAM 2026F 매출·영업이익·마진 3건은 prior page에서 이미 수용됐다. 나머지 삼성전자 구간의 1Q26 잠정실적·컨센서스 격차·장기계약·목표 PBR·peer valuation은 current durable graph와 의미상 중복되고, NAND·비메모리 및 타 종목 구간은 objective 범위 밖이므로 현재 chunk에 추가 distinct fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "6f89ed5f509b4d556f0ed9bf3c6f70bfbb36e3d0dc32ca7c72c409a3c12e9a2e",
+  "production_score_authority": false,
+  "prompt_hash": "7d86b62687d15a7ca66b829fbc5d2ed018c1410a54706f887ffc8237dfef6870",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-24f63cc77fbfe32b9a2a1aabd067af690df86442f54b417dea968d7e86265669",
+  "response_id": "COLLABRESP-5cc5f5ce972c412a5bd629985c4c92a94da1e4fc022d47797830535f9a2a1be0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

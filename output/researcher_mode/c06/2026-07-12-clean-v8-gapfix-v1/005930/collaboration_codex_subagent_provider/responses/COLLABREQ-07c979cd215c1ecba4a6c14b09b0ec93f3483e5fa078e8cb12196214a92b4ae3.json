@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-bfd5eb1df2d36f5a6b28851c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인의 제품·기술 소개 페이지라 source-family provenance는 맞지만, 현재 C06의 시점 특정 고객 계약·HBM CAPA·가격·매출/현금흐름을 검증하는 개별 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c0febc07d0ce113f65a6219c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인의 제품·기술 소개 페이지라 source-family provenance는 맞지만, 현재 C06의 시점 특정 고객 계약·HBM CAPA·가격·매출/현금흐름을 검증하는 개별 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c5049f593930bcd3dd68acb8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 지원·도구·연락처 페이지로 source-family provenance는 맞지만, 현재 C06 경제 메커니즘을 검증할 시점 특정 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c6419f5318c7286c8ee497ee",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인의 제품·기술 소개 페이지라 source-family provenance는 맞지만, 현재 C06의 시점 특정 고객 계약·HBM CAPA·가격·매출/현금흐름을 검증하는 개별 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c6a138776640aa5b8fe21292",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 도메인의 태그 검색/목록 페이지이지만 특정 시점의 target-direct 원문이나 경제적 사건을 식별하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-c70f1d410ff177da74e6688f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인의 제품·기술 소개 페이지라 source-family provenance는 맞지만, 현재 C06의 시점 특정 고객 계약·HBM CAPA·가격·매출/현금흐름을 검증하는 개별 원문 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c760c7ac3e97be4278f9a55a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인이지만 Foundry 기술·공정·생태계 페이지로, DS 메모리의 HBM 고객·계약·CAPA·가격 가시성에 직접 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-c76687910c1225700330c86a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 B2B 제품 목록이지만 호텔 TV/공조 서비스로, 대상 회사의 C06 메모리 경제 메커니즘과 다른 사업이다."
+      },
+      {
+        "candidate_id": "SGCAND-c799ea09238dc646160ae68c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "인증 로그인 페이지로서 공개 원문·공시·뉴스룸 본문에 도달하는 검증 가능한 문서 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c7a218115d7f49e803a7f385",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 B2B 제품 목록이지만 호텔 TV/공조 서비스로, 대상 회사의 C06 메모리 경제 메커니즘과 다른 사업이다."
+      },
+      {
+        "candidate_id": "SGCAND-c81a37bd8798e25a6c65d58b",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 반도체 도메인이지만 Foundry 기술·공정·생태계 페이지로, DS 메모리의 HBM 고객·계약·CAPA·가격 가시성에 직접 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-c85b542e7c459282ea6c733e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "삼성 공식 도메인의 일반 행사/파트너 탐색 페이지로, 현재 C06 메모리 고객·CAPA·가격·현금흐름 gap을 검증할 개별 원문 경로가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "7e5106c3925ab8ab3feaa20003ad8fd0bd39e034e4f574d6284047ade52b0a09",
+  "production_score_authority": false,
+  "prompt_hash": "5c1a0e759727f8ec93c2e54c08fdae11b48a2f6984b60166b9650630ca21c1f0",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-07c979cd215c1ecba4a6c14b09b0ec93f3483e5fa078e8cb12196214a92b4ae3",
+  "response_id": "COLLABRESP-b84f6d653f5498897983ead9e091c29cfca419591449669cd1ab0694b4b7a709",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

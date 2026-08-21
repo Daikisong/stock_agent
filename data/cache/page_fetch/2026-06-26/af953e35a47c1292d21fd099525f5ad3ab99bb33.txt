@@ -1,0 +1,239 @@
+SK하이닉스, ‘COMPUTEX 2025’ 참가… HBM4와 AI 메모리 포트폴리오 공개 – SK hynix Newsroom
+SK hynix Newsroom | SK하이닉스, ‘COMPUTEX 2025’ 참가… HBM4와 AI 메모리 포트폴리오 공개
+SK하이닉스, ‘COMPUTEX 2025’ 참가… HBM4와 AI 메모리 포트폴리오 공개 | SK hynix Newsroom
+▲ 컴퓨텍스 2025에 마련된 SK하이닉스 부스 SK하이닉스가 20일부터 23일까지 나흘간 대만 타이베이에서 열리는 ‘컴퓨텍스 타이베이 2025(COMPUTEX TAIPEI 2025, 이하 컴퓨텍스)’에 참가해 AI 서버·PC·모바일 등을 아우르는 폭넓은 제품 포트폴리오를 공개했다. 컴퓨텍스는 글로벌 IT 기업이 모여 최신 기술과 설루션을 소개하는 아시아 최대
+SK하이닉스, ‘COMPUTEX 2025’ 참가… HBM4와 AI 메모리 포트폴리오 공개 | SK hynix Newsroom
+▲ 컴퓨텍스 2025에 마련된 SK하이닉스 부스 SK하이닉스가 20일부터 23일까지 나흘간 대만 타이베이에서 열리는 ‘컴퓨텍스 타이베이 2025(COMPUTEX TAIPEI 2025, 이하 컴퓨텍스)’에 참가해 AI 서버·PC·모바일 등을 아우르는 폭넓은 제품 포트폴리오를 공개했다. 컴퓨텍스는 글로벌 IT 기업이 모여 최신 기술과 설루션을 소개하는 아시아 최대
+Skip to the content
+FACT
+PRESS
+TECH&AI
+STORY
+IR
+검색창 열기
+KR
+KR
+EN
+CN
+검색
+검색하기
+HBM4
+낸드플래시
+AI 메모리
+반도체공정
+반도체산업
+메뉴 열기
+FACT
+PRESS
+TECH&AI
+STORY
+IR
+KR
+EN
+CN
+메뉴 닫기
+TECH&AI
+SK하이닉스, ‘COMPUTEX 2025’ 참가… HBM4와 AI 메모리 포트폴리오 공개
+1cDDR5
+AI메모리
+COMPUTEX
+eSSD
+HBM
+HBM4
+낸드플래시
+컴퓨텍스
+2025-05-22
+SK하이닉스
+AI 요약
+SK하이닉스는 컴퓨텍스 2025에 참가해 AI 서버, 모바일, PC용 차세대 메모리 기술과 ESG 경영 성과를 공개하며 AI 메모리 리더로서의 위상을 강화했다.
+공유 하기
+URL 복사
+페이스북 공유
+X 공유
+카카오톡 공유
+출력
+TECH&AI
+SK하이닉스, ‘COMPUTEX 2025’ 참가… HBM4와 AI 메모리 포트폴리오 공개
+▲ 컴퓨텍스 2025에 마련된 SK하이닉스 부스
+SK하이닉스가 20일부터 23일까지 나흘간 대만 타이베이에서 열리는 ‘컴퓨텍스 타이베이 2025(COMPUTEX TAIPEI 2025, 이하 컴퓨텍스)’에 참가해 AI 서버·PC·모바일 등을 아우르는 폭넓은 제품 포트폴리오를 공개했다.
+컴퓨텍스는 글로벌 IT 기업이 모여 최신 기술과 설루션을 소개하는 아시아 최대 규모의 ICT 박람회로, AI, 데이터센터 등 주요 산업의 혁신 기술과 트렌드가 공유되는 자리다. ‘AI Next’를 주제로 열린 올해 행사에는 1,400여 기업이 참가해 AI와 로봇, 차세대 기술, 미래 모빌리티와 관련한 다양한 전시를 진행했다.
+▲ SK하이닉스 부스와 미디어타워(왼쪽)
+▲ SK하이닉스의 주요 제품을 보여주는 미디어월(왼쪽)
+이번 행사에서 SK하이닉스는 ‘MEMORY, POWERING AI AND TOMORROW’를 슬로건으로 ▲HBM for AI ▲Data Center ▲Mobile/PC ▲Ethic & ESG 등 4개 섹션의 부스를 꾸리고 다양한 AI 메모리 설루션을 선보였다.
+▲ HBM for AI 섹션
+▲ HBM4와 HBM3E
+▲ 엔비디아 AI 서버용 GPU 모듈 GB200과 HBM3E 12단 36GB
+HBM for AI 섹션에서 SK하이닉스는 ‘HBM4
+*
+12단’과 ‘HBM3E 12단’을 공개했다. 이와 함께 회사는 내년을 목표로 개발 중인 HBM4 16단의 로드맵을 제시했다. HBM4는 현존 최고 속도인 초당 2TB(테라바이트)가 특징인 차세대 HBM으로, 지난 3월 SK하이닉스는 12단 제품 샘플을 주요 고객사에 업계 최초로 공급했다[
+관련기사
+]. HBM과 로직(Logic) 반도체를 연결해주는 베이스 다이(Base-die) 성능 개선 및 전력 감축을 목표로 개발 중인 HBM4 12단은 올 하반기 양산에 들어갈 예정이라고 회사는 밝혔다.
+이밖에도, SK하이닉스는 엔비디아의 AI 서버용 GPU 모듈인 GB200과 여기에 탑재되는 HBM3E 12단 36GB(기가바이트)를 함께 전시했다.
+*
+HBM(High Bandwidth Memory): 여러 개의 D램을 수직으로 연결해 기존 D램보다 데이터 처리 속도를 혁신적으로 끌어올린 고부가가치, 고성능 제품. HBM은 1세대(HBM)-2세대(HBM2)-3세대(HBM2E)-4세대(HBM3)-5세대(HBM3E)-6세대(HBM4) 순으로 개발됨
+▲ Data Center 섹션
+▲ SK하이닉스 서버용 DIMM 라인업
+▲ SK하이닉스 서버용 스토리지 라인업
+▲ 솔리다임 설루션 제품
+Data Center 섹션에서는 AI 서버에 장착돼 성능을 극대화하고 전력 소모를 줄여줄 서버 D램 모듈과 eSSD(기업용 SSD) 제품이 공개됐다. 서버 D램 모듈로는 초당 8Gb(기가비트) 속도의 D램이 탑재된 64GB~256GB 용량의 ‘RDIMM
+*
+’ 라인업과 초당 12.8Gb 속도의 D램이 들어간 96GB~256GB 용량의 ‘MRDIMM
+*
+’ 제품군, 초당 7.5Gb 속도의 ‘LPDDR5X
+*
+’가 도입된 128GB 용량의 SOCAMM
+*
+등이 소개됐다.
+특히 SK하이닉스가 세계 최초로 개발한 10나노(nm)급 6세대(1c)
+*
+미세공정 기술이 적용된 DDR5 기반 고성능 모듈이 많은 주목을 받았다고 회사는 설명했다.
+*
+RDIMM(Registered Dual In-line Memory Module): 여러 개의 D램이 기판에 결합된 서버용 모듈 제품
+*
+MRDIMM(Multiplexed Rank Dual In-line Memory Module): 모듈의 기본 동작 단위인 랭크(Rank) 2개가 동시 작동되어 속도가 향상된 제품
+*
+LPDDR5X: 모바일용 저전력 D램 규격인 LPDDR의 7세대(5X) 제품으로 1-2-3-4-4X-5-5X 순으로 개발됨
+*
+SOCAMM(Small Outline Compression Attached Memory Module): 저전력 D램 기반의 AI 서버 특화 메모리 모듈
+*
+10나노(nm)급 D램 공정 기술은 1x(1세대)-1y(2세대)-1z(3세대)-1a(4세대)-1b(5세대)-1c(6세대) 순으로 개발되어 왔으며, SK하이닉스는 2024년 8월 세계 최초로 1c 기술 개발에 성공했다.
+초고용량 스토리지 설루션인 eSSD 존에서는 0.5TB부터 최대 61TB에 이르기까지 다양한 용량의 제품들이 모습을 드러냈다. 특히 238단 4D 낸드 기반의 PCIe
+*
+5세대 제품인 ‘PEB110’과 QLC
+*
+기반 61TB의 고용량을 구현한 ‘PS1012’ 등이 AI 데이터센터에 최적화된 성능을 제공할 것이라고 회사는 강조했다.
+*
+PCIe(Peripheral Component Interconnect express): 디지털 기기의 메인보드에서 사용하는 직렬 구조의 고속 입출력 인터페이스
+*
+낸드플래시 셀(Cell)에 몇 비트를 저장하는지에 따라 SLC(Single Level Cell, 1비트)-MLC(Multi Level Cell, 2비트)-TLC(Triple Level Cell, 3비트)-QLC(Quadruple Level Cell, 4비트)로 나뉨
+▲ Mobile/PC 섹션
+▲ Mobile/PC 섹션
+▲ PC용 D램 및 낸드 제품
+▲ Mobile용 D램 및 낸드 제품
+▲ Ethic & ESG 섹션
+Mobile/PC 섹션에서는 온디바이스 AI를 이끌 D램 및 낸드 제품이 관객들을 맞았다. 모바일용 제품으로는 초당 10.7Gb 속도의 저전력 D램 ‘LPDDR5X’, 238단 4D 낸드 기반의 스토리지 ‘UFS 4.1’ 등이 공개됐고, PC용 제품으로는 1c DDR5 D램 기반 ‘CSODIMM
+*
+’, LPDDR5X 여러 개를 모듈화한 ‘LPCAMM2
+*
+’, AI PC 등에 탑재되는 고성능 SSD ‘PCB01’, 단일 칩 기준으로 세계 최고 속도인 초당 28Gb의 그래픽 D램 ‘GDDR7’ 등이 소개됐다.
+*
+CSODIMM(Compression SODIMM): PC에서 사용하는 초소형 모듈 ‘SODIMM(Small Outline DIMM)’을 기반으로 해 새롭게 만든 폼팩터. SODIMM 대비 고성능/고밀도를 구현할 수 있음
+*
+LPCAMM2(Low-Power Compression Attached Memory Module): LPDDR5X 기반의 모듈 설루션 제품으로 기존 DDR5 SODIMM 2개를 LPCAMM2 1개로 대체하는 성능 효과를 가지면서 공간을 절약하고 저전력과 고성능 특성을 구현
+또, SK하이닉스는 기가바이트(GIGABYTE), 에이수스(ASUS), 레노보(Lenovo) 등 글로벌 파트너사들의 하드웨어에 장착된 자사 D램 및 낸드 제품을 선보이며, 노트북부터 서버까지 폭넓은 수요에 대응할 수 있는 포트폴리오를 갖췄다고 설명했다.
+이외에도 SK하이닉스는 Ethic & ESG 섹션에서 ‘2025년 세계에서 가장 윤리적인 기업(World’s Most Ethical Companies®)’에 선정된 사례를 들며, 글로벌 최고 수준의 윤리경영을 통해 이해관계자와 신뢰를 강화하고 있다고 강조했다[
+관련기사
+].
+▲ (왼쪽에서 두 번째부터) SK하이닉스 CMO 김주선 사장과 엔비디아 젠슨 황 CEO
+▲ 이번 컴퓨텍스 2025에서 SK하이닉스와 엔비디아는 파트너십을 더욱 견고히 다졌다.
+SK하이닉스는 “이번 행사에서 회사의 AI 메모리 리더로서의 인식을 높이고, 글로벌 기업과의 파트너십을 더 견고히 할 수 있었다”며 “AI 서버와 데이터센터는 물론, 온디바이스 AI 등 다양한 분야에서 고객과의 협업을 통해 최적의 제품을 적기에 공급, 풀스택 AI 메모리 프로바이더로서의 위상을 강화해나갈 것”이라고 말했다.
+이미지 다운로드
+1cDDR5
+AI메모리
+COMPUTEX
+eSSD
+HBM
+HBM4
+낸드플래시
+컴퓨텍스
+URL 복사
+페이스북 공유
+X 공유
+카카오톡 공유
+목록 보기
+연관 기사
+[하이피디아 2편 – PKG개발] HBM을 완성한 핵심 패키지 기술, 데이터 이동을 위한 초고속 엘리베이터 ‘TSV’
+2026-06-24
+TECH&AI
+STORY
+HBM
+SK하이닉스 앰버서더
+TSV
+어드밴스드패키징
+채용
+SK하이닉스와 AI 메모리의 미래: 꼭 알아야 할 5가지
+2026-06-23
+TECH&AI
+AI
+AI메모리
+DRAM
+HBM
+NAND
+데이터센터
+SK하이닉스, HPED 2026서 AI 시대 이끌 ‘풀 스택 AI 메모리 크리에이터’로서 기술 역량 입증… HPE와 공고한 파트너십도 재확인
+2026-06-19
+TECH&AI
+AI
+AI메모리
+CXL
+eSSD
+HBM
+HPE
+HPE Discover
+SK하이닉스, 차세대 AI 메모리 ‘HBM4E’ 12단 샘플 공급
+2026-06-18
+PRESS
+AI
+AI메모리
+HBM
+HBM4E
+MR-MUF
+[하이피디아 2편 – PKG개발] HBM을 완성한 핵심 패키지 기술, 데이터 이동을 위한 초고속 엘리베이터 ‘TSV’
+2026-06-24
+TECH&AI
+STORY
+HBM
+SK하이닉스 앰버서더
+TSV
+어드밴스드패키징
+채용
+SK하이닉스와 AI 메모리의 미래: 꼭 알아야 할 5가지
+2026-06-23
+TECH&AI
+AI
+AI메모리
+DRAM
+HBM
+NAND
+데이터센터
+SK하이닉스, HPED 2026서 AI 시대 이끌 ‘풀 스택 AI 메모리 크리에이터’로서 기술 역량 입증… HPE와 공고한 파트너십도 재확인
+2026-06-19
+TECH&AI
+AI
+AI메모리
+CXL
+eSSD
+HBM
+HPE
+HPE Discover
+SK하이닉스, 차세대 AI 메모리 ‘HBM4E’ 12단 샘플 공급
+2026-06-18
+PRESS
+AI
+AI메모리
+HBM
+HBM4E
+MR-MUF
+Homepage
+INSTAGRAM
+YOUTUBE
+Heritage
+Media Library
+메뉴 토글
+맨 위로
+FACT
+PRESS
+TECH&AI
+STORY
+IR
+문의하기
+개인정보처리방침
+뉴스룸 운영정책
+뉴스룸 이용안내
+SK하이닉스 뉴스레터
+구독하기
+홈페이지
+인스타그램
+유튜브
+페이스북
+카카오채널

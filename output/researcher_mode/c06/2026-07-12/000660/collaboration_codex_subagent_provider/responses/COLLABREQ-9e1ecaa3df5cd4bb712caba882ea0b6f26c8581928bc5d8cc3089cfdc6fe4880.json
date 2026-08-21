@@ -1,0 +1,552 @@
+{
+  "output_schema_hash": "b5b5f90834d3aa488eeb61cf89dbab833ca36e1257ca7f76331902c40710d32e",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-d33ba57cbaa79f08bce5a38c",
+        "rationale": "prior 6건을 보존하고 영업이익률·DRAM 출하·고객 주문과 재고·하반기 수요·AI 수요·잠정실적 한계 6건을 추가했다. LPDDR/GDDR 계획과 일부 전사 현금 정보 등 distinct remainder를 계속 감사해야 한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "rationale": "prior 6건을 보존하고 영업이익률·DRAM 가격·HBM 역량 계획·LPDDR6·SOCAMM2·독립검증 한계 6건을 추가했다. 실적 검토 미완료·변경 가능성·forward risk 등 distinct remainder를 계속 감사해야 한다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-d33ba57cbaa79f08bce5a38c",
+        "economic_mechanism": "2Q25 영업이익이 늘었지만 영업이익률은 전분기보다 1%p 낮아져 이익 성장과 마진 변화를 분리한다.",
+        "exact_quote": "■ 2Q25 Financial Results (K-IFRS)\nUnit: Billion KRW\n2Q25\nQoQ\nYoY\n1Q25\nChange\n2Q24\nChange\nRevenues\n22,232\n17,639.1\n26%\n16,423.3\n35%\nOperating Profit\n9,212.9\n7,440.5\n24%\n5,468.5\n68%\nOperating Margin\n41%\n42%\n-1%p\n33%\n8%p",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "영업이익 증가와 별개인 분기 마진 하락을 측정한다.",
+        "mechanism_scope_id": "000660:MEMORY:2Q25_OPERATING_MARGIN_QOQ_CHANGE",
+        "normalized_object": "2Q25 영업이익률 QoQ 변화",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2Q2025 vs 1Q2025",
+        "predicate": "2Q25 영업이익률은 41%로 1Q25보다 1%p 낮아졌다",
+        "predicate_family": "2Q25_OPERATING_MARGIN_QOQ_CHANGE",
+        "primitive_tags": [
+          "OPERATING_MARGIN",
+          "QOQ_CHANGE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "2Q25_OPERATING_MARGIN_QOQ_CHANGE",
+        "question_family_tags": [
+          "2Q25_OPERATING_MARGIN_QOQ_CHANGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 2Q25 영업이익률의 전분기 대비 변화",
+        "subject_id": "000660:MEMORY:2Q25_OPERATING_MARGIN_QOQ",
+        "unit": "%p QoQ",
+        "value": -1
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-d33ba57cbaa79f08bce5a38c",
+        "economic_mechanism": "글로벌 빅테크 AI 투자가 이어진 가운데 DRAM 출하가 회사 기대를 웃돌아 수요가 실제 출하로 전환됐다.",
+        "exact_quote": "The company said that an aggressive investment by global big tech companies into AI led to a steady increase in demand for AI memory. Shipments of both DRAM and NAND flash were higher than expected, helping the company log the best quarterly results.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 수요가 실제 출하 기대치 상회로 이어졌음을 보여 준다. NAND 결과는 DRAM 사실로 귀속하지 않는다.",
+        "mechanism_scope_id": "000660:DRAM:2Q25_SHIPMENT_ABOVE_EXPECTATION",
+        "normalized_object": "2Q25 DRAM 출하 기대치 상회",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2025",
+        "predicate": "글로벌 빅테크의 AI 투자 속에서 2Q25 DRAM 출하가 회사 예상보다 높았다",
+        "predicate_family": "2Q25_DRAM_SHIPMENT_ABOVE_EXPECTATION",
+        "primitive_tags": [
+          "DRAM",
+          "SHIPMENT",
+          "AI_DEMAND"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "2Q25_DRAM_SHIPMENT_ABOVE_EXPECTATION",
+        "question_family_tags": [
+          "2Q25_DRAM_SHIPMENT_ABOVE_EXPECTATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "2Q25 DRAM 출하의 기대치 상회",
+        "subject_id": "000660:DRAM:2Q25_SHIPMENT_ABOVE_EXPECTATION",
+        "unit": "qualitative shipment result",
+        "value": "DRAM shipments higher than expected"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-d33ba57cbaa79f08bce5a38c",
+        "economic_mechanism": "고객이 메모리 주문과 완제품 생산을 늘렸지만 회사 재고는 안정적으로 유지돼 주문 증가가 재고 축적 없이 흡수됐다는 issuer 설명이다. 계약 물량은 아니다.",
+        "exact_quote": "In the second quarter, the inventory level was kept steady as customers increased both memory orders and production of their finished products.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객 주문 증가와 재고 흡수 상태를 직접 연결하지만 구속 계약으로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:2Q25_CUSTOMER_MEMORY_ORDER_AND_INVENTORY",
+        "normalized_object": "2Q25 고객 주문 증가와 안정적 재고",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2025",
+        "predicate": "2Q25 고객의 메모리 주문과 완제품 생산이 늘어난 동안 SK하이닉스 재고 수준은 안정적으로 유지됐다",
+        "predicate_family": "2Q25_CUSTOMER_MEMORY_ORDER_AND_INVENTORY",
+        "primitive_tags": [
+          "CUSTOMER_ORDERS",
+          "INVENTORY",
+          "NONBINDING_DEMAND"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "2Q25_CUSTOMER_MEMORY_ORDER_AND_INVENTORY",
+        "question_family_tags": [
+          "2Q25_CUSTOMER_MEMORY_ORDER_AND_INVENTORY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "2Q25 고객 메모리 주문·완제품 생산과 재고",
+        "subject_id": "000660:MEMORY:2Q25_CUSTOMER_ORDERS_INVENTORY",
+        "unit": "qualitative order and inventory condition",
+        "value": "customer memory orders and finished-product production increased; inventory stayed steady"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-d33ba57cbaa79f08bce5a38c",
+        "economic_mechanism": "고객 신제품 출시 계획이 하반기 메모리 수요 성장으로 이어질 것이라는 issuer 전망이다. 고객 구매의무나 확정 물량은 아니다.",
+        "exact_quote": "Demand for memory is expected to continue to grow as customers plan to launch new products in the second half.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "구체적 하반기 수요 촉매를 제시하지만 비구속 전망으로 제한한다.",
+        "mechanism_scope_id": "000660:MEMORY:2H25_CUSTOMER_PRODUCT_LAUNCH_MEMORY_DEMAND",
+        "normalized_object": "2H25 고객 신제품 출시 기반 메모리 수요 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2H2025",
+        "predicate": "고객의 2H25 신제품 출시 계획으로 메모리 수요가 계속 증가할 것으로 전망됐다",
+        "predicate_family": "2H25_CUSTOMER_PRODUCT_LAUNCH_MEMORY_DEMAND",
+        "primitive_tags": [
+          "CUSTOMER_PRODUCT_LAUNCH",
+          "MEMORY_DEMAND",
+          "NONBINDING_OUTLOOK"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "2H25_CUSTOMER_PRODUCT_LAUNCH_MEMORY_DEMAND",
+        "question_family_tags": [
+          "2H25_CUSTOMER_PRODUCT_LAUNCH_MEMORY_DEMAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "2H25 고객 신제품 출시에 따른 메모리 수요 전망",
+        "subject_id": "000660:MEMORY:2H25_CUSTOMER_PRODUCT_LAUNCH_DEMAND",
+        "unit": "qualitative demand outlook",
+        "value": "memory demand expected to keep growing with customer product launches"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-d33ba57cbaa79f08bce5a38c",
+        "economic_mechanism": "빅테크의 AI 추론 성능 경쟁은 고성능·고용량 메모리 수요를, 각국 Sovereign AI 투자는 장기 메모리 수요를 만들 것이라는 issuer 시장 전망이다.",
+        "exact_quote": "Particularly, SK hynix foresees that increasing competition among big tech companies to enhance inference of AI models would lead to higher demand for high-performance and high-capacity memory products. Ongoing investments by nations to build sovereign AI\n*\nwould also help generate long-term demand for memory, it said.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "AI 메모리 수요의 용도와 기간을 설명하지만 회사 확정 주문으로 해석하지 않는다.",
+        "mechanism_scope_id": "000660:AI_MEMORY:INFERENCE_AND_SOVEREIGN_AI_DEMAND",
+        "normalized_object": "AI 추론·Sovereign AI 기반 장기 메모리 수요",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward outlook stated 2025-07-24",
+        "predicate": "빅테크 AI 추론 경쟁과 각국 Sovereign AI 투자가 고성능·고용량 메모리의 장기 수요를 높일 것으로 전망됐다",
+        "predicate_family": "AI_INFERENCE_AND_SOVEREIGN_AI_MEMORY_DEMAND",
+        "primitive_tags": [
+          "AI_INFERENCE",
+          "SOVEREIGN_AI",
+          "LONG_TERM_DEMAND"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "AI_INFERENCE_AND_SOVEREIGN_AI_MEMORY_DEMAND",
+        "question_family_tags": [
+          "AI_INFERENCE_AND_SOVEREIGN_AI_MEMORY_DEMAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "AI 추론 경쟁·Sovereign AI의 메모리 수요",
+        "subject_id": "000660:AI_MEMORY:INFERENCE_SOVEREIGN_AI_DEMAND",
+        "unit": "qualitative demand outlook",
+        "value": "higher high-performance and high-capacity memory demand; long-term memory demand"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-d33ba57cbaa79f08bce5a38c",
+        "economic_mechanism": "2Q25 실적은 잠정치이고 2025년 7월 24일 시점에서만 유효하므로 후일에도 그대로 유효하다고 가정할 수 없다.",
+        "exact_quote": "※ Please note that the financial results discussed herein are preliminary and speak only as of July 24, 2025. Readers should not assume that this information remains operative at a later time.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "실적 수치의 잠정성과 적용 시점 한계를 직접 명시한다.",
+        "mechanism_scope_id": "000660:MEMORY:2Q25_PRELIMINARY_RESULT_LIMITATION",
+        "normalized_object": "2Q25 잠정실적의 후일 유효성 제한",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2Q2025 results as of 2025-07-24",
+        "predicate": "2Q25 실적 정보는 잠정치이며 2025년 7월 24일 이후에도 유효하다고 가정해서는 안 된다",
+        "predicate_family": "2Q25_PRELIMINARY_RESULT_LIMITATION",
+        "primitive_tags": [
+          "PRELIMINARY_RESULTS",
+          "SOURCE_LIMITATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "2Q25_PRELIMINARY_RESULT_LIMITATION",
+        "question_family_tags": [
+          "2Q25_PRELIMINARY_RESULT_LIMITATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2Q25 잠정실적의 시점 한계",
+        "subject_id": "000660:MEMORY:2Q25_PRELIMINARY_RESULT_LIMITATION",
+        "unit": "source-quality limitation",
+        "value": "preliminary; operative only as of 2025-07-24"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "economic_mechanism": "1Q26 영업이익률이 전분기보다 14%p 상승해 영업이익 증가와 별개로 수익성 개선 폭을 측정한다.",
+        "exact_quote": "■ 1Q26 Financial Results (K-IFRS)\nUnit: Billion KRW\n1Q26\nQoQ\nYoY\n4Q25\nChange\n1Q25\nChange\nRevenue\n52,576.3\n32,826.7\n60%\n17,639.1\n198%\nOperating Profit\n37,610.3\n19,169.6\n96%\n7,440.5\n405%\nOperating Margin\n72%\n58%\n14%p\n42%\n30%P",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "최신 분기 이익률의 개선 폭을 직접 측정한다.",
+        "mechanism_scope_id": "000660:MEMORY:1Q26_OPERATING_MARGIN_QOQ_CHANGE",
+        "normalized_object": "1Q26 영업이익률 QoQ 상승폭",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2026 vs 4Q2025",
+        "predicate": "1Q26 영업이익률은 72%로 4Q25보다 14%p 상승했다",
+        "predicate_family": "1Q26_OPERATING_MARGIN_QOQ_CHANGE",
+        "primitive_tags": [
+          "OPERATING_MARGIN",
+          "QOQ_CHANGE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "1Q26_OPERATING_MARGIN_QOQ_CHANGE",
+        "question_family_tags": [
+          "1Q26_OPERATING_MARGIN_QOQ_CHANGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 1Q26 영업이익률의 전분기 대비 변화",
+        "subject_id": "000660:MEMORY:1Q26_OPERATING_MARGIN_QOQ",
+        "unit": "%p QoQ",
+        "value": 14
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "economic_mechanism": "회사는 메모리 효율 기술이 AI 서비스 규모와 수요를 키워 DRAM의 유리한 가격여건이 이어질 것으로 전망했다. 이는 실제 확정 가격이나 고객 계약 가격은 아니다.",
+        "exact_quote": "SK hynix also predicted that the spread of memory efficiency technologies will enhance the economic viability of AI services, leading to an expansion of the overall service scale and further drive memory demand. Based on this, the company forecasted that favorable pricing conditions will continue for both DRAM and NAND flash.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 가격 지속성에 대한 issuer 전망이지만 실제 가격·계약 조건으로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:DRAM:FORWARD_PRICING_CONDITION",
+        "normalized_object": "DRAM 유리한 가격여건 지속 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward outlook stated 2026-04-23",
+        "predicate": "메모리 효율 기술의 AI 서비스 확대 효과를 근거로 DRAM의 유리한 가격여건이 계속될 것으로 전망했다",
+        "predicate_family": "FORWARD_DRAM_PRICING_CONDITION",
+        "primitive_tags": [
+          "DRAM_PRICING",
+          "ISSUER_OUTLOOK"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "FORWARD_DRAM_PRICING_CONDITION",
+        "question_family_tags": [
+          "FORWARD_DRAM_PRICING_CONDITION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM 가격여건 전망",
+        "subject_id": "000660:DRAM:FORWARD_PRICING_CONDITION",
+        "unit": "qualitative issuer pricing outlook",
+        "value": "favorable DRAM pricing conditions expected to continue"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "economic_mechanism": "회사는 HBM 성능·수율·품질·공급 안정성을 함께 강화할 계획이라고 밝혔으나 달성치나 고객 인증 완료는 제시하지 않았다.",
+        "exact_quote": "Regarding HBM, the company will further strengthen its capabilities, encompassing performance, yield, quality, and supply stability.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "HBM 경쟁력 강화 방향을 보여 주지만 성과 실현이나 구속 공급 약정은 아니다.",
+        "mechanism_scope_id": "000660:HBM:CAPABILITY_STRENGTHENING_PLAN",
+        "normalized_object": "HBM 복합 역량 강화 계획",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward plan stated 2026-04-23",
+        "predicate": "HBM 성능·수율·품질·공급 안정성 역량을 강화할 계획이다",
+        "predicate_family": "HBM_SUPPLY_CAPABILITY_STRENGTHENING_PLAN",
+        "primitive_tags": [
+          "HBM",
+          "YIELD",
+          "QUALITY",
+          "SUPPLY_STABILITY"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_SUPPLY_CAPABILITY_STRENGTHENING_PLAN",
+        "question_family_tags": [
+          "HBM_SUPPLY_CAPABILITY_STRENGTHENING_PLAN"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 성능·수율·품질·공급 안정성 강화 계획",
+        "subject_id": "000660:HBM:CAPABILITY_STRENGTHENING_PLAN",
+        "unit": "qualitative execution plan",
+        "value": "performance, yield, quality and supply stability capabilities to be strengthened"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "economic_mechanism": "회사는 1cnm LPDDR6 출하를 본격 증산할 계획이지만, 출하량·고객·매출 규모는 제시하지 않았다.",
+        "exact_quote": "In DRAM, the company will fully ramp up the shipment of LPDDR6, which applied 1cnm process, or the sixth-generation of the 10-nanometer technology, for the world’s first time, and the 192GB SOCAMM2, which is based on the same process and began mass production this month.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "신제품 출하 확대 계획을 보여 주지만 숫자 없는 비구속 제품 계획이다.",
+        "mechanism_scope_id": "000660:DRAM:LPDDR6_SHIPMENT_RAMP_PLAN",
+        "normalized_object": "1cnm LPDDR6 출하 증산 계획",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward plan stated 2026-04-23",
+        "predicate": "1cnm 공정을 적용한 LPDDR6 출하를 본격 확대할 계획이다",
+        "predicate_family": "LPDDR6_SHIPMENT_RAMP_PLAN",
+        "primitive_tags": [
+          "LPDDR6",
+          "1CNM",
+          "SHIPMENT_PLAN"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "LPDDR6_SHIPMENT_RAMP_PLAN",
+        "question_family_tags": [
+          "LPDDR6_SHIPMENT_RAMP_PLAN"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1cnm LPDDR6 출하 증산 계획",
+        "subject_id": "000660:DRAM:LPDDR6_SHIPMENT_RAMP",
+        "unit": "qualitative shipment plan",
+        "value": "full shipment ramp planned for 1cnm LPDDR6"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "economic_mechanism": "1cnm 기반 192GB SOCAMM2가 2026년 4월 양산에 들어가 제품 계획이 실제 생산 단계로 전환됐다.",
+        "exact_quote": "In DRAM, the company will fully ramp up the shipment of LPDDR6, which applied 1cnm process, or the sixth-generation of the 10-nanometer technology, for the world’s first time, and the 192GB SOCAMM2, which is based on the same process and began mass production this month.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "서버 메모리 제품이 실제 양산 단계에 진입했음을 보여 준다.",
+        "mechanism_scope_id": "000660:DRAM:SOCAMM2_MASS_PRODUCTION_START",
+        "normalized_object": "192GB SOCAMM2 양산 개시",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "April 2026",
+        "predicate": "1cnm 기반 192GB SOCAMM2가 2026년 4월 양산을 시작했다",
+        "predicate_family": "SOCAMM2_MASS_PRODUCTION_START",
+        "primitive_tags": [
+          "SOCAMM2",
+          "1CNM",
+          "MASS_PRODUCTION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SOCAMM2_MASS_PRODUCTION_START",
+        "question_family_tags": [
+          "SOCAMM2_MASS_PRODUCTION_START"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 192GB SOCAMM2 양산 개시",
+        "subject_id": "000660:DRAM:SOCAMM2_MASS_PRODUCTION_START",
+        "unit": "product production status",
+        "value": "192GB SOCAMM2 mass production began"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "economic_mechanism": "회사는 1Q26 자료의 정보가 별도 독립 검증을 거치지 않았고 정확성·완전성을 보증하지 않는다고 명시했다.",
+        "exact_quote": "This material has been prepared by the Company for informational purposes only, and the information contained herein has not undergone any separate, independent verification process. No representations or warranties are made regarding the fairness, accuracy, or completeness of the information contained in this material, and such information should not be relied upon.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "issuer 자료의 검증 경계와 신뢰도 한계를 직접 명시한다.",
+        "mechanism_scope_id": "000660:MEMORY:1Q26_NO_INDEPENDENT_VERIFICATION",
+        "normalized_object": "1Q26 실적자료의 독립 검증·보증 부재",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "1Q2026 earnings release published 2026-04-23",
+        "predicate": "1Q26 자료는 별도 독립 검증을 거치지 않았고 정확성·완전성 보증이 없다",
+        "predicate_family": "1Q26_NO_INDEPENDENT_VERIFICATION",
+        "primitive_tags": [
+          "INDEPENDENT_VERIFICATION",
+          "SOURCE_LIMITATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "1Q26_NO_INDEPENDENT_VERIFICATION",
+        "question_family_tags": [
+          "1Q26_NO_INDEPENDENT_VERIFICATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1Q26 자료의 독립 검증 부재",
+        "subject_id": "000660:MEMORY:1Q26_NO_INDEPENDENT_VERIFICATION",
+        "unit": "source-quality limitation",
+        "value": "no separate independent verification; no accuracy or completeness warranty"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-d33ba57cbaa79f08bce5a38c",
+      "SGDOC-f6575d1419961bf2a8a0ec20"
+    ],
+    "unresolved_research_notes": [
+      "page2도 12-fact limit에 도달했다. d33ba의 남은 제품 계획과 f657의 검토 미완료·수치 변경 가능성·forward-looking risk 및 잔여 objective-local 사실을 prior24와 dedup하는 final audit가 필요하다."
+    ]
+  },
+  "payload_hash": "19848f03a4610b9b6f7b52175fb747b5e92402a379c0c0e5dcfeaa6aadcf1b6f",
+  "production_score_authority": false,
+  "prompt_hash": "9ac646264fcc78de693d8e2dcdbbaf6b6548bfb00fcdbcfb084007c7809880d1",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9e1ecaa3df5cd4bb712caba882ea0b6f26c8581928bc5d8cc3089cfdc6fe4880",
+  "response_id": "COLLABRESP-cc3b39790b5b1b6298e30092f986ee7e4fc7b4776911aab9af279a98cd4134df",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

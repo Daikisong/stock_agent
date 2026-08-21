@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "3712a19e2ab3625ad2b9df613ad4e238d533f1cda4897c76f733b45f0eb2524b",
+  "payload": {
+    "allowed_range": [
+      2.7,
+      3.6
+    ],
+    "anchor_comparisons": [
+      "현재는 실제 OCF·순현금·가동률과 수요 연동 투자정책이 함께 있어 1.0~1.4점의 POSITIVE WEAK anchor보다 경제 근거가 강하다.",
+      "3.8~4.0점의 POSITIVE STRONG anchor와 비교하면 HBM 전용 집행액·수익률이 없고 혼합 투자 승인 조건이 남아 완전한 상단에는 못 미친다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0110c93a9c546290e8d34635",
+      "EFACT-e97dce0c4e7031b25df2c916"
+    ],
+    "disagreements": [
+      "전사 현금과 가동률을 HBM 전용 자본효율로 해석하지 않는다. 다만 실제 재원과 공급 제약을 보여주는 전사 범위 보조근거로는 유효하다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e"
+    ],
+    "proposed_points": 3.2,
+    "rationale": "전사 기준 1분기 OCF와 순현금은 투자 재원의 실재성을 보여주고, 100% 반도체 설비 가동률은 공급 대응 필요성을 확인한다. 가시수요·효율·재무건전성을 연동한 Capex discipline과 HBM의 ASP·CAPA당 이익 효율은 자본 배분의 질을 보완한다. 다만 이 수치들은 HBM 단독이 아니며, 운전자본 흡수와 NAND·HBM 혼합 장기투자의 미확정 조건을 감안해야 한다.",
+    "support_fact_ids": [
+      "EFACT-02d58ad600093d0014e8428a",
+      "EFACT-08f8b87524ceb3f3ee376bc2",
+      "EFACT-2b6d88631c21daa364467682",
+      "EFACT-bb3c20c5fdc5425689b78c4d",
+      "EFACT-c589801b18002cc79aa63e94"
+    ],
+    "why_not_higher": "HBM 단독 Capex·증설량·수익률이 없고 운전자본 현금 흡수와 혼합 투자 승인 조건이 남아 4점에 근접한 확정 band는 어렵다.",
+    "why_not_lower": "실제 OCF·순현금·가동률과 수요 연동 투자정책이 동시에 존재해 계획만 있고 재원·가동 증거가 없는 weak 사례보다 강하다."
+  },
+  "payload_hash": "d953615a1cf2585fb6a0564496ddd1535d53168252bedc233b74992cf71db5b1",
+  "production_score_authority": false,
+  "prompt_hash": "cf49fc418d358f9788647f1e58614e97c2c17bf4f400d61b394e39477da7293f",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0fc7c862532bdc59450ae0e60395a012e436b7e91cccadbc992787e16a89b37d",
+  "response_id": "COLLABRESP-929a00fe29e51c1492d27cf39337dabcf8752560f6435b70b5da8ba58b6c0296",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

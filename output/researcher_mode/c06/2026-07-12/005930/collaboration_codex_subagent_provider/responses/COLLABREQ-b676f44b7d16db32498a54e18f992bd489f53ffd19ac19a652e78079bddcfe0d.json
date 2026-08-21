@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-d34ebc1824c1b4940d7029b0",
+        "rationale": "transport chunk 1/2 전체 128,809자를 검토했다. 이 구간은 대부분 타 업종·타 기업 자료이며 삼성전자는 마지막 투자등급·목표주가 이력 표에 비교 대상으로 한 번만 등장한다. 해당 목표주가 이력은 current durable fact에 이미 있고, 신규 삼성전자 메모리·DRAM·HBM 직접 귀속 사실은 없다. 이 chunk의 NO_MATERIAL_FACT는 parent 문서 전체의 부재를 뜻하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "79a6dea06305e3a540a0351c5c10ed24be7db629df49d0c05e403cc2325e2da6",
+  "production_score_authority": false,
+  "prompt_hash": "2dfcabf478ddb9acde1f465335f764544139f9c96ae2b89c7a2817474405e4cc",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b676f44b7d16db32498a54e18f992bd489f53ffd19ac19a652e78079bddcfe0d",
+  "response_id": "COLLABRESP-634500ae7ac31fbbd83830345952c91b7586b824ac75c17b1516ab6dfd9ee80a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

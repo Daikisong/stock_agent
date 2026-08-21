@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "NH 1100084는 CompanyGuide 파일명을 다시 검색하지 않고 NH투자증권 공식 download.nhqv.com 리서치 archive에서 제목·발행일이 일치하는 full PDF만 검증한다.",
+      "미래에셋 1108000은 securities.miraeasset.com의 공식 bbs/download archive에서 제목·발행일이 일치하는 full PDF를 한 번만 회수하고 bottleneck·capital fact attribution을 분리한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "site:download.nhqv.com/CommFile/cis/rsh/epr 삼성전자 \"구조적 성장에 초점\" 2026-05-22",
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "rationale": "기존 NH 1100084·CompanyGuide 파일명 일반검색의 0건을 반복하지 않고, 현재 source graph에서 확인되는 NH투자증권 공식 리서치 PDF archive 경로만 대상으로 원문을 수리한다. 보고서가 회수되기 전에는 장기계약 summary를 최소구매·가격조정·취소·납기 조건의 사실로 사용하지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "site:securities.miraeasset.com/bbs/download 삼성전자 \"27년에 더욱 부각될 생산능력\" 2026-06-25",
+        "objective_id": "SGOBJ-7ba6c752cb327ae2c989b6dd",
+        "rationale": "기존 미래에셋 1108000·CompanyGuide 파일명 일반검색과 달리, source graph에 실제 원문 PDF가 존재했던 미래에셋 공식 download archive로만 범위를 제한한다. 한 번 회수한 동일 원문을 bottleneck과 capital 검토에 공유하되, full PDF 확인 전에는 summary의 CAPA·성과급 표현을 HBM 전용 수치나 현금 bridge로 승격하지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "두 공식 archive query가 찾을 PDF의 실제 attachment identity와 본문은 아직 미확인이다. 검색 결과·snippet만으로 보고서 존재나 내용을 확정하지 않는다.",
+      "NH 원문이 장기계약의 최소구매·가격조정·취소·납기 조건과 실제 출하 전환을 공개하는지는 미확인이다.",
+      "미래에셋 원문이 HBM 전용 공정별 CAPA·수율·패키징 처리량을 범용 메모리 capacity와 분리하고 HBM 투자·운전자본·FCF bridge를 제시하는지는 미확인이다.",
+      "공식 archive에서도 원문을 회수하지 못하거나 동일 0건으로 끝나면 일반 HBM·계약·CAPA 동의어 query로 되돌아가지 말고 해당 fetch/no-result를 supervisor에 반환해야 한다."
+    ]
+  },
+  "payload_hash": "3749624aa3aef3b3603460c3ed469a8f31f5291a0eb8322f7f026c060d4d3936",
+  "production_score_authority": false,
+  "prompt_hash": "87bcd97f6359643c00458ce6cc5d3c6d65358ae3f7d28e9716e60dd7e5d8c940",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ad655f9021201845e1a17c1ed3ed0d1d0c90adc0ed6f037061b31dd35e8554fb",
+  "response_id": "COLLABRESP-6110b68a61ca8ff36f61401e05df95180300b9a19530214b104fad23facc6ad2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

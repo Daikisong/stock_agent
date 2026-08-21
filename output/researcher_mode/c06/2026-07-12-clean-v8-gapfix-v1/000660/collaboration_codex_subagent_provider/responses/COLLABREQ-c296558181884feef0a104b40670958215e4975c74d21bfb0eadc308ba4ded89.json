@@ -1,0 +1,417 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "rationale": "누적 accepted 15건을 보존했다. 후속 fair-value 구간은 OFFICIALDOC-517ee8에 중복 운송되어 그 문서에서만 새 의미를 추출했고 이 문서의 distinct remainder는 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "rationale": "누적 accepted 21건을 보존하며 독립 coverage 최종감사에서 추가 distinct fact는 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+        "rationale": "임원 명단·일반 지배구조 중심으로 누적 및 coverage 감사에서 target-wide current objective에 귀속할 material fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "rationale": "누적 accepted 16건을 보존하며 독립 coverage 최종감사에서 추가 distinct fact는 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "rationale": "누적 accepted 17건을 보존하고 연결 수준3 투자자산 변동, 리스부채 변동, 교환사채 put/call 조건, 배출부채 환입 4건을 추가해 material remainder를 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+        "rationale": "누적 accepted 14건을 보존했다. 잔여 별도 투자·대여 표는 이미 수락된 수준3 투자, MMT, 채권·재고 및 관계사 대여 의미와 중복되어 새 fact를 생성하지 않고 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5b6d91276c1af970b04377e6",
+        "rationale": "SK스퀘어 혼합 구간으로 누적 및 coverage 감사에서 000660 target-wide current objective에 귀속할 material fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "rationale": "누적 accepted 20건을 보존하고 별도 배당금수익, 파생상품손실, 장기투자자산 환율이익, 종속·관계기업 투자처분이익 4건을 추가해 금융손익 remainder를 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "economic_mechanism": "관측 불가능한 투입변수를 쓰는 수준3 장기투자자산의 평가이익이 연결 금융자산과 이익 변동을 크게 만들었다. 이는 현금 유입이나 HBM 영업이익이 아니며 처분·환율 변동과 분리해 해석해야 한다.",
+        "exact_quote": "수준 3 공정가치 측정으로 분류되는 금융자산의 변동내용에 대한 공시\n(단위 : 백만원)\n측정 전체\n공정가치\n금융자산, 분류\n단기금융상품\n장기투자자산\n공정가치 서열체계의 모든 수준\n수준 3\n기초금액\n222,500\n14,547,099\n취득\n0\n14,120\n처분\n0\n(4,120,220)\n평가\n0\n9,881,310\n환율변동\n0\n335,274\n분기말금액\n222,500\n20,657,583",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "issuer 연결 수준3 평가이익이 매우 커 이익의 현금성·평가 의존도를 판별하는 핵심 counterfact다.",
+        "mechanism_scope_id": "000660_CONSOLIDATED_LEVEL_THREE_INVESTMENT_MOVEMENT",
+        "normalized_object": "Q1_2026_CONSOLIDATED_LEVEL_THREE_LONG_TERM_INVESTMENT_MOVEMENT",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-01-01~2026-03-31",
+        "predicate": "연결 수준3 장기투자자산은 기초 14,547,099백만원에서 평가이익 9,881,310백만원과 처분 4,120,220백만원 등의 변동을 거쳐 분기말 20,657,583백만원이 됐다.",
+        "predicate_family": "CONSOLIDATED_LEVEL_THREE_FINANCIAL_ASSET_MOVEMENT",
+        "primitive_tags": [
+          "level_three_asset",
+          "valuation_gain"
+        ],
+        "product_family": "수준3 금융자산",
+        "question_family_id": "C06_CONSOLIDATED_LEVEL_THREE_INVESTMENT_MOVEMENT",
+        "question_family_tags": [
+          "FAIR_VALUE",
+          "NONCASH_GAIN"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 수준3 금융자산",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "기초 14,547,099; 취득 14,120; 처분 -4,120,220; 평가 +9,881,310; 환율 +335,274; 기말 20,657,583"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "economic_mechanism": "리스 상환은 현금소요를 만들고 신규 리스·이자·환율 변동이 감소분을 상쇄해 기말 부채가 소폭 늘었다. HBM 전용 시설이나 CAPEX로 귀속하지 않는다.",
+        "exact_quote": "리스부채에 대한 양적 정보 공시\n당분기\n(단위 : 백만원)\n공시금액\n기초장부금액\n2,509,943\n증가\n86,409\n종료\n(1,614)\n이자비용\n24,365\n상환\n(162,606)\n환율변동\n58,254\n기말장부금액\n2,514,751",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "issuer 연결 리스부채의 실제 상환·신규 부담을 보여줘 자본·현금 배분을 보완한다.",
+        "mechanism_scope_id": "000660_CONSOLIDATED_LEASE_LIABILITY_MOVEMENT",
+        "normalized_object": "Q1_2026_CONSOLIDATED_LEASE_LIABILITY_ADDITION_REPAYMENT_INTEREST_MOVEMENT",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-01-01~2026-03-31",
+        "predicate": "2026년 1분기 연결 리스부채는 86,409백만원 증가하고 162,606백만원 상환했으며 이자비용 24,365백만원과 환율변동 58,254백만원을 반영해 2,514,751백만원으로 끝났다.",
+        "predicate_family": "CONSOLIDATED_LEASE_LIABILITY_MOVEMENT",
+        "primitive_tags": [
+          "lease_repayment",
+          "lease_interest"
+        ],
+        "product_family": "리스부채",
+        "question_family_id": "C06_CONSOLIDATED_LEASE_LIABILITY_MOVEMENT",
+        "question_family_tags": [
+          "LEASE_LIABILITY",
+          "CASH_OUTFLOW"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 리스부채 변동",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "기초 2,509,943; 증가 86,409; 상환 -162,606; 이자 24,365; 환율 +58,254; 기말 2,514,751"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "economic_mechanism": "투자자 조기상환권은 2027년 현금상환 가능성을, 발행자 call은 주가·잔액·세금 조건에 따른 자본구조 선택권을 만든다. 실제 행사나 확정 현금유출은 아니다.",
+        "exact_quote": "투자자의 조기상환권(Put Option)\n- 납입일로부터 4년 (2027. 04. 11)이 되는 날- 지배기업의 지배권 변동(Change of Control)이 발생하는 경우- 지배기업의 지배권 변동(Change of Control)이 발생하는 경우\n발행자의 조기상환권(Call Option)\n- 2028년 4월 25일 부터 사채만기일 30 영업일 전까지 30 연속거래일 중 20 거래일의 종가가 교환가격의 130% 이상인 경우- 미상환사채잔액이 총 발행총액의 10% 미만인 경우(Clean Up Call)- 관련 법령의 개정 등으로 인한 추가 조세부담사유가 발생하는 경우",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "issuer 잔존 교환사채의 상환·희석 경로와 시점을 결정하는 명시적 계약 조건이다.",
+        "mechanism_scope_id": "000660_EXCHANGEABLE_BOND_PUT_CALL_OPTIONS",
+        "normalized_object": "REMAINING_EXCHANGEABLE_BOND_2027_PUT_AND_2028_CONDITIONAL_CALL_OPTIONS",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31 현재 잔존 교환사채 조건",
+        "predicate": "잔존 교환사채에는 2027년 4월 11일 투자자 put option과 2028년 4월 25일부터 조건부 발행자 call option이 존재한다.",
+        "predicate_family": "EXCHANGEABLE_BOND_PUT_AND_CALL_OPTION_TERMS",
+        "primitive_tags": [
+          "bond_put_option",
+          "bond_call_option"
+        ],
+        "product_family": "해외 교환사채",
+        "question_family_id": "C06_EXCHANGEABLE_BOND_PUT_CALL_OPTIONS",
+        "question_family_tags": [
+          "DEBT_TERMS",
+          "LIQUIDITY_RISK"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 교환사채 조기상환 조건",
+        "subject_id": "000660",
+        "unit": "조건",
+        "value": "투자자 put 2027-04-11; 발행자 조건부 call 2028-04-25 이후"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "economic_mechanism": "배출부채 환입으로 기말 환경 관련 충당 부담이 감소했다. 다만 별도 공시된 추정 배출량의 무상할당 초과 가능성을 소멸시키거나 현금 유입을 뜻하지 않는다.",
+        "exact_quote": "기타충당부채에 대한 공시\n당분기\n(단위 : 백만원)\n판매보증충당부채\n배출부채\n복구충당부채\n기타충당부채 합계\n기초\n222,751\n4,359\n1,827\n228,937\n사용\n(594)\n0\n0\n(594)\n환입\n(44,015)\n(4,221)\n0\n(48,236)\n기말\n178,142\n138\n1,827\n180,107",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "issuer 연결 배출부채 actual의 감소를 보여주지만 환경 비용 위험의 완전 해소로 확대하지 않는다.",
+        "mechanism_scope_id": "000660_CONSOLIDATED_EMISSIONS_LIABILITY_REVERSAL",
+        "normalized_object": "Q1_2026_CONSOLIDATED_EMISSIONS_LIABILITY_REVERSAL_AND_ENDING_BALANCE",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-01-01~2026-03-31",
+        "predicate": "2026년 1분기 연결 배출부채는 기초 4,359백만원에서 4,221백만원을 환입해 기말 138백만원으로 감소했다.",
+        "predicate_family": "CONSOLIDATED_EMISSIONS_LIABILITY_REVERSAL",
+        "primitive_tags": [
+          "emissions_liability",
+          "provision_reversal"
+        ],
+        "product_family": "온실가스 배출부채",
+        "question_family_id": "C06_CONSOLIDATED_EMISSIONS_LIABILITY_REVERSAL",
+        "question_family_tags": [
+          "PROVISION",
+          "ENVIRONMENTAL_COST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 배출부채",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "기초 4,359; 환입 -4,221; 기말 138"
+      },
+      {
+        "business_segment": "본사 별도",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "별도 당기손익에 큰 배당금수익이 포함돼 본사 이익이 영업성과뿐 아니라 투자·종속회사 분배에 좌우된다. 연결 이익이나 HBM 영업이익으로 귀속하지 않는다.",
+        "exact_quote": "금융수익 및 금융비용\n당분기\n(단위 : 백만원)\n공시금액\n이자수익\n213,711\n배당금수익\n3,952,469",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "issuer 본사 별도 배당수익 규모가 커 별도 순이익의 영업·비영업 질을 구분하는 핵심 counterfact다.",
+        "mechanism_scope_id": "000660_PARENT_DIVIDEND_INCOME_ACTUAL",
+        "normalized_object": "Q1_2026_PARENT_DIVIDEND_INCOME",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-01-01~2026-03-31",
+        "predicate": "2026년 1분기 본사 별도 금융수익에는 배당금수익 3,952,469백만원이 포함됐다.",
+        "predicate_family": "PARENT_DIVIDEND_INCOME_ACTUAL",
+        "primitive_tags": [
+          "dividend_income",
+          "parent_only_profit"
+        ],
+        "product_family": "배당금수익",
+        "question_family_id": "C06_PARENT_DIVIDEND_INCOME_ACTUAL",
+        "question_family_tags": [
+          "NONOPERATING_INCOME",
+          "PROFIT_QUALITY"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 배당금수익",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": 3952469
+      },
+      {
+        "business_segment": "본사 별도",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "파생상품 관련 손실이 별도 금융비용을 크게 늘려 본사 순이익 변동성을 만들었다. 연결 기준이나 HBM 영업손실로 귀속하지 않는다.",
+        "exact_quote": "이자비용\n138,282\n외환차이\n1,210,764\n파생상품관련손실\n1,498,127\n기타\n0\n금융비용 소계\n2,847,173",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "issuer 본사 별도 파생손실이 material하며 금융손익 변동성과 이익 질을 직접 제한한다.",
+        "mechanism_scope_id": "000660_PARENT_DERIVATIVE_LOSS_ACTUAL",
+        "normalized_object": "Q1_2026_PARENT_DERIVATIVE_RELATED_LOSS",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-01-01~2026-03-31",
+        "predicate": "2026년 1분기 본사 별도 금융비용에는 파생상품 관련 손실 1,498,127백만원이 포함됐다.",
+        "predicate_family": "PARENT_DERIVATIVE_LOSS_ACTUAL",
+        "primitive_tags": [
+          "derivative_loss",
+          "finance_cost"
+        ],
+        "product_family": "파생상품",
+        "question_family_id": "C06_PARENT_DERIVATIVE_LOSS_ACTUAL",
+        "question_family_tags": [
+          "DERIVATIVE_LOSS",
+          "PROFIT_VOLATILITY"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 파생상품 관련 손실",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": 1498127
+      },
+      {
+        "business_segment": "본사 별도",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "장기투자자산 환율효과가 별도 외환이익을 만들었으므로 해당 이익은 영업·현금창출과 구분해야 한다. HBM 가격·판매 실적으로 귀속하지 않는다.",
+        "exact_quote": "당분기 중 발생한 장기투자자산의 환율변동효과 외환이익 425,901백만원(전분기: 외환이익 169,533백만원)이 포함되어 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "issuer 본사 별도 외환이익의 투자자산 귀속을 명시해 영업이익과 비영업 변동을 분리한다.",
+        "mechanism_scope_id": "000660_PARENT_LONG_TERM_INVESTMENT_FX_GAIN",
+        "normalized_object": "Q1_2026_PARENT_LONG_TERM_INVESTMENT_FOREIGN_EXCHANGE_GAIN",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-01-01~2026-03-31",
+        "predicate": "2026년 1분기 본사 별도 장기투자자산의 환율변동효과로 외환이익 425,901백만원이 발생했다.",
+        "predicate_family": "PARENT_LONG_TERM_INVESTMENT_FX_GAIN_ACTUAL",
+        "primitive_tags": [
+          "investment_fx_gain",
+          "profit_quality"
+        ],
+        "product_family": "장기투자자산",
+        "question_family_id": "C06_PARENT_LONG_TERM_INVESTMENT_FX_GAIN",
+        "question_family_tags": [
+          "FX_GAIN",
+          "NONOPERATING_INCOME"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 장기투자자산 환율효과",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": 425901
+      },
+      {
+        "business_segment": "본사 별도",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "투자 처분이익이 별도 영업외수익에 포함돼 본사 이익의 일부가 반복 영업이 아닌 자산 처분에서 발생했다. 연결·HBM 영업성과로 귀속하지 않는다.",
+        "exact_quote": "기타수익 및 기타비용\n당분기\n(단위 : 백만원)\n공시금액\n유형자산처분이익\n10,587\n종속기업및관계기업투자처분이익\n74,367\n기타\n2,240\n기타영업외수익 합계\n87,194",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "issuer 본사 별도 비반복 처분이익을 구분해 이익의 반복성과 현금전환을 보수적으로 해석하게 한다.",
+        "mechanism_scope_id": "000660_PARENT_INVESTMENT_DISPOSAL_GAIN",
+        "normalized_object": "Q1_2026_PARENT_SUBSIDIARY_AND_ASSOCIATE_INVESTMENT_DISPOSAL_GAIN",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-01-01~2026-03-31",
+        "predicate": "2026년 1분기 본사 별도 기타영업외수익에는 종속기업·관계기업 투자처분이익 74,367백만원이 포함됐다.",
+        "predicate_family": "PARENT_SUBSIDIARY_ASSOCIATE_INVESTMENT_DISPOSAL_GAIN",
+        "primitive_tags": [
+          "investment_disposal_gain",
+          "nonrecurring_income"
+        ],
+        "product_family": "종속기업 및 관계기업 투자",
+        "question_family_id": "C06_PARENT_INVESTMENT_DISPOSAL_GAIN",
+        "question_family_tags": [
+          "DISPOSAL_GAIN",
+          "PROFIT_QUALITY"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 종속·관계기업 투자 처분이익",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": 74367
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "5373eef5b730f8f9b3a3c69dac27edc24f478a65ef08e4630d07da5183a2a6fd",
+  "production_score_authority": false,
+  "prompt_hash": "dcab3032e2adb5fa09a03bb23967e6bcb1612e05705e5cfbf0645989e220d4d3",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c296558181884feef0a104b40670958215e4975c74d21bfb0eadc308ba4ded89",
+  "response_id": "COLLABRESP-c0ad3c8782bc7ae0da0e7c581c13409bc35c6a78c09ffdd2c223a4e58af15e88",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

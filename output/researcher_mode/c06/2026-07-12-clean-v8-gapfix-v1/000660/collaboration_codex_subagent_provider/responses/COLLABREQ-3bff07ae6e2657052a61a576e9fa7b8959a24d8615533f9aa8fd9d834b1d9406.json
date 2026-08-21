@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-de9b1a22bb3bcbf3419ce913",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "언론/목록/영상 route로 original broker PDF가 아니며, 노출 metadata만으로 현재 target earnings mechanism을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-ed6a99b478f77e6073ae0c05",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 유료 콘텐츠의 리포트 요약·재서술로 original PUBLIC_BROKER_PDF route가 아니며 snippet을 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-d632b59f0b92ed85c7b1fe69",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "PwC 산업전망 PDF는 증권사 원문이 아니며 snippet도 SK하이닉스의 current HBM earnings mechanism을 직접 식별하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-db226de85d48b696dd51b7d0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "KIND 공시·첨부 route로 requested PUBLIC_BROKER_PDF provenance가 아니며 현재 HBM earnings objective의 broker 원문도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4019ad7f50d00518171d60c6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "언론/목록/영상 route로 original broker PDF가 아니며, 노출 metadata만으로 현재 target earnings mechanism을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-7d687f584d91719cae42b297",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "언론/목록/영상 route로 original broker PDF가 아니며, 노출 metadata만으로 현재 target earnings mechanism을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-5ad37510c00a70fa6c24c14c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 유료 콘텐츠의 리포트 요약·재서술로 original PUBLIC_BROKER_PDF route가 아니며 snippet을 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-039c94a971150b51961ace4e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "공공·협회 자료이지만 requested broker family와 target-direct subject가 아니어서 현재 objective의 full-source route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4c7b3a00938d4631c5a948d3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "ETF/분석 플랫폼의 해설 route로 original PUBLIC_BROKER_PDF가 아니며, 계약·CAPA·earnings 사실을 snippet에서 확정할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-f3f3ea1ac8d015e4b8ef2e8a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "언론/목록/영상 route로 original broker PDF가 아니며, 노출 metadata만으로 현재 target earnings mechanism을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-03a85e75e949cfcf527f6ff9",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.12,
+        "rationale": "삼성증권 공식 HBM sector PDF route이나 파일 경로상 2023년 자료여서 2026-07-12 현재 계약·qualification·earnings bridge를 갱신하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-9f4c7dbe316a0aaf4b22764f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 유료 콘텐츠의 리포트 요약·재서술로 original PUBLIC_BROKER_PDF route가 아니며 snippet을 evidence로 승격할 수 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 분류는 discovery provenance와 full-fetch 가능성을 판정한 것이며, 선정 route도 원문 fetch·날짜·target 귀속·quote 검증 전에는 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "39dc6365f4606a396eb117a03d84e5a4b2487c35a2ef2393d2569338680c25c5",
+  "production_score_authority": false,
+  "prompt_hash": "3f9bd9f527c2ece80b3943326e0cd5c65cb0cd581c54ff665dcc173ee9645700",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3bff07ae6e2657052a61a576e9fa7b8959a24d8615533f9aa8fd9d834b1d9406",
+  "response_id": "COLLABRESP-8e5e730a02fd604aaf239c629d8557a9e232c6a99da9ef95a88a23a39fa92c41",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

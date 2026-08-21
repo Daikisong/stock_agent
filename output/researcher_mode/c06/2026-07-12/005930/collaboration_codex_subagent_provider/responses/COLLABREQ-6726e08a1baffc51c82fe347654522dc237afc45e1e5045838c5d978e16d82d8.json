@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-92422a7b89ab4fd7884f1b9c",
+        "rationale": "For eps_fcf_explosion, the canonical roster already carries multiple 2026-Q2 memory operating-profit estimates, price-led earnings conversion, DRAM/NAND pricing, and the counter-risk that memory price growth can slow. The article's company-wide provisional profit and annual-consensus discussion is not a distinct memory-attributed earnings/FCF fact, while foundry, mobile, and appliance risks are outside the memory mechanism.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "5a60f40af4616af2034155597f78999f2e510c4dfcd61ef23b2f66357eb2c3c5",
+  "production_score_authority": false,
+  "prompt_hash": "3a16414888430924d840daf2dc7c55e20aec2b54722ff586f8341b83d994fb7a",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6726e08a1baffc51c82fe347654522dc237afc45e1e5045838c5d978e16d82d8",
+  "response_id": "COLLABRESP-cd0b3124c9816a14096dbb856e8e7426b3ed938e03854c5dbe6b5819e538561f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

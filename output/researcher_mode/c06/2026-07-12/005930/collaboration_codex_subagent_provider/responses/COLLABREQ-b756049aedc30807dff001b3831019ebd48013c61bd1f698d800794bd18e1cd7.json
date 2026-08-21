@@ -1,0 +1,386 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6855a4b280668cdc85eed417",
+        "rationale": "19,655자 원문을 전수 검토했다. 순수 메모리 peer 비교를 직접 지지하는 FY2026E 메모리 영업이익 97% 추정과 할인 불필요 의견 2건, 삼성전자 직접 표의 FY2026F~FY2028F P/E·P/B 6건만 추출했다. 목표주가·투자의견, EV/EBITDA, 산업 일반 수익성, 사업부 추정치는 지정된 peer/PER/PBR/discount 범위 밖이라 제외했으며 문서에는 같은 기간의 순수 메모리 peer 수치 자체는 없었다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6855a4b280668cdc85eed417",
+        "economic_mechanism": "삼성전자 연간 영업이익의 대부분이 메모리에서 발생한다는 증권사 추정은 복합기업 전체 이익을 순수 메모리 peer와 비교할 수 있게 하는 이익 귀속 연결고리다.",
+        "exact_quote": "다만, 동사 올해 영업이익의 97%가 메모리 반도체에서 발생한다는\n절대주가(%) 13.5 88.5 190.2 점에서 영업이익 관점에서 동사는 메모리 반도체 Pure Player와 유사하며 순수\n상대주가(%p) 8.6 22.4 42.5\n메모리 회사 대비 Valuation Discount를 받을 필요는 없다고 보임",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2026E 이익의 메모리 귀속 비중을 직접 수치화해 순수 메모리 peer 비교의 경제적 분모를 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_PROFIT_CONCENTRATION:FY2026E:HYUNDAI_20260629",
+        "normalized_object": "삼성전자 FY2026E 영업이익 중 메모리 반도체 기여 추정 97%",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "현대차증권은 삼성전자 2026년 영업이익의 97%가 메모리 반도체에서 발생한다고 추정했다",
+        "predicate_family": "MEMORY_PROFIT_CONCENTRATION",
+        "primitive_tags": [
+          "MEMORY_OPERATING_PROFIT_SHARE",
+          "FY2026E"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_MEMORY_PROFIT_CONCENTRATION_PEER_BRIDGE",
+        "question_family_tags": [
+          "MEMORY_EARNINGS_ATTRIBUTION",
+          "PURE_MEMORY_PEER_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 FY2026 메모리 영업이익 기여 추정",
+        "subject_id": "005930",
+        "unit": "percent of operating profit estimate",
+        "value": 97
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6855a4b280668cdc85eed417",
+        "economic_mechanism": "메모리 영업이익 집중도를 근거로 복합기업 할인보다 순수 메모리 회사와 유사한 평가가 타당하다는 증권사 의견은 현재 상대가치 할인 적용 여부를 직접 다룬다.",
+        "exact_quote": "다만, 동사 올해 영업이익의 97%가 메모리 반도체에서 발생한다는\n절대주가(%) 13.5 88.5 190.2 점에서 영업이익 관점에서 동사는 메모리 반도체 Pure Player와 유사하며 순수\n상대주가(%p) 8.6 22.4 42.5\n메모리 회사 대비 Valuation Discount를 받을 필요는 없다고 보임",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "순수 메모리 peer 대비 할인 적용 여부를 메모리 이익 귀속 근거와 함께 직접 판단한 상대가치 의견이다.",
+        "mechanism_scope_id": "005930:MEMORY:PURE_MEMORY_PEER_DISCOUNT:FY2026E:HYUNDAI_20260629",
+        "normalized_object": "삼성전자 순수 메모리 peer 대비 valuation discount 불필요 의견",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E valuation view as of 2026-06-29",
+        "predicate": "현대차증권은 영업이익 관점에서 삼성전자가 메모리 반도체 Pure Player와 유사해 순수 메모리 회사 대비 valuation discount가 필요하지 않다고 판단했다",
+        "predicate_family": "PURE_MEMORY_PEER_VALUATION_DISCOUNT",
+        "primitive_tags": [
+          "PURE_MEMORY_PEER",
+          "DISCOUNT_VIEW"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_PURE_MEMORY_PEER_DISCOUNT",
+        "question_family_tags": [
+          "PURE_MEMORY_PEER_COMPARISON",
+          "VALUATION_DISCOUNT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 순수 메모리 peer 대비 valuation discount 의견",
+        "subject_id": "005930",
+        "unit": "relative valuation view",
+        "value": "no valuation discount warranted versus pure-memory companies"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-6855a4b280668cdc85eed417",
+        "economic_mechanism": "현대차증권의 FY2026F P/E는 메모리 이익 집중도가 높은 삼성전자의 예상 주당이익 대비 시장평가 배수를 기간별로 제시한다.",
+        "exact_quote": "요약 실적 및 Valuation\n구분 매출액 영업이익 순이익 EBITDA EPS 증감율 P/E P/B EV/EBITDA ROE 배당수익률\n(십억원) (십억원) (십억원) (십억원) (원) (%) (배) (배) (배) (%) (%)\n2024 300,871 32,726 33,621 75,357 5,433 144.1 9.8 0.9 3.5 9.0 2.7\n2025 333,606 43,601 44,261 90,528 7,241 33.3 16.6 1.9 7.6 10.8 1.4\n2026F 753,566 357,641 308,250 424,878 52,330 622.7 6.5 3.1 4.3 53.8 0.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 직접 valuation 표가 FY2026F 기간과 P/E 6.5배를 동일 행·열에 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_PE:FY2026F:HYUNDAI_20260629",
+        "normalized_object": "삼성전자 FY2026F P/E 6.5배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "현대차증권은 삼성전자의 FY2026F P/E를 6.5배로 제시했다",
+        "predicate_family": "FORWARD_PE",
+        "primitive_tags": [
+          "PE",
+          "FORWARD_PE",
+          "FY2026F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_PE",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_PE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 FY2026F P/E",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 6.5
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-6855a4b280668cdc85eed417",
+        "economic_mechanism": "현대차증권의 FY2026F P/B는 메모리 이익 집중도가 높은 삼성전자의 예상 장부가치 대비 시장평가 배수를 기간별로 제시한다.",
+        "exact_quote": "요약 실적 및 Valuation\n구분 매출액 영업이익 순이익 EBITDA EPS 증감율 P/E P/B EV/EBITDA ROE 배당수익률\n(십억원) (십억원) (십억원) (십억원) (원) (%) (배) (배) (배) (%) (%)\n2024 300,871 32,726 33,621 75,357 5,433 144.1 9.8 0.9 3.5 9.0 2.7\n2025 333,606 43,601 44,261 90,528 7,241 33.3 16.6 1.9 7.6 10.8 1.4\n2026F 753,566 357,641 308,250 424,878 52,330 622.7 6.5 3.1 4.3 53.8 0.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 직접 valuation 표가 FY2026F 기간과 P/B 3.1배를 동일 행·열에 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_PB:FY2026F:HYUNDAI_20260629",
+        "normalized_object": "삼성전자 FY2026F P/B 3.1배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "현대차증권은 삼성전자의 FY2026F P/B를 3.1배로 제시했다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "PB",
+          "FORWARD_PB",
+          "FY2026F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_PB"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 FY2026F P/B",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 3.1
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-6855a4b280668cdc85eed417",
+        "economic_mechanism": "현대차증권의 FY2027F P/E는 메모리 중심 삼성전자의 다음 연도 예상 주당이익 대비 시장평가 배수를 제시한다.",
+        "exact_quote": "요약 실적 및 Valuation\n구분 매출액 영업이익 순이익 EBITDA EPS 증감율 P/E P/B EV/EBITDA ROE 배당수익률\n(십억원) (십억원) (십억원) (십억원) (원) (%) (배) (배) (배) (%) (%)\n2024 300,871 32,726 33,621 75,357 5,433 144.1 9.8 0.9 3.5 9.0 2.7\n2025 333,606 43,601 44,261 90,528 7,241 33.3 16.6 1.9 7.6 10.8 1.4\n2026F 753,566 357,641 308,250 424,878 52,330 622.7 6.5 3.1 4.3 53.8 0.5\n2027F 930,845 453,659 399,674 530,257 68,134 30.2 5.0 2.0 2.8 43.7 0.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 직접 valuation 표가 FY2027F 기간과 P/E 5.0배를 동일 행·열에 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_PE:FY2027F:HYUNDAI_20260629",
+        "normalized_object": "삼성전자 FY2027F P/E 5.0배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "현대차증권은 삼성전자의 FY2027F P/E를 5.0배로 제시했다",
+        "predicate_family": "FORWARD_PE",
+        "primitive_tags": [
+          "PE",
+          "FORWARD_PE",
+          "FY2027F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_PE",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_PE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 FY2027F P/E",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 5.0
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-6855a4b280668cdc85eed417",
+        "economic_mechanism": "현대차증권의 FY2027F P/B는 메모리 중심 삼성전자의 다음 연도 예상 장부가치 대비 시장평가 배수를 제시한다.",
+        "exact_quote": "요약 실적 및 Valuation\n구분 매출액 영업이익 순이익 EBITDA EPS 증감율 P/E P/B EV/EBITDA ROE 배당수익률\n(십억원) (십억원) (십억원) (십억원) (원) (%) (배) (배) (배) (%) (%)\n2024 300,871 32,726 33,621 75,357 5,433 144.1 9.8 0.9 3.5 9.0 2.7\n2025 333,606 43,601 44,261 90,528 7,241 33.3 16.6 1.9 7.6 10.8 1.4\n2026F 753,566 357,641 308,250 424,878 52,330 622.7 6.5 3.1 4.3 53.8 0.5\n2027F 930,845 453,659 399,674 530,257 68,134 30.2 5.0 2.0 2.8 43.7 0.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 직접 valuation 표가 FY2027F 기간과 P/B 2.0배를 동일 행·열에 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_PB:FY2027F:HYUNDAI_20260629",
+        "normalized_object": "삼성전자 FY2027F P/B 2.0배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "현대차증권은 삼성전자의 FY2027F P/B를 2.0배로 제시했다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "PB",
+          "FORWARD_PB",
+          "FY2027F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_PB"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 FY2027F P/B",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 2.0
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-6855a4b280668cdc85eed417",
+        "economic_mechanism": "현대차증권의 FY2028F P/E는 메모리 중심 삼성전자의 장기 예상 주당이익 대비 시장평가 배수를 제시한다.",
+        "exact_quote": "요약 실적 및 Valuation\n구분 매출액 영업이익 순이익 EBITDA EPS 증감율 P/E P/B EV/EBITDA ROE 배당수익률\n(십억원) (십억원) (십억원) (십억원) (원) (%) (배) (배) (배) (%) (%)\n2024 300,871 32,726 33,621 75,357 5,433 144.1 9.8 0.9 3.5 9.0 2.7\n2025 333,606 43,601 44,261 90,528 7,241 33.3 16.6 1.9 7.6 10.8 1.4\n2026F 753,566 357,641 308,250 424,878 52,330 622.7 6.5 3.1 4.3 53.8 0.5\n2027F 930,845 453,659 399,674 530,257 68,134 30.2 5.0 2.0 2.8 43.7 0.5\n2028F 1,065,591 493,428 445,534 573,775 75,978 11.5 4.5 1.5 1.8 33.6 0.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 직접 valuation 표가 FY2028F 기간과 P/E 4.5배를 동일 행·열에 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_PE:FY2028F:HYUNDAI_20260629",
+        "normalized_object": "삼성전자 FY2028F P/E 4.5배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2028F",
+        "predicate": "현대차증권은 삼성전자의 FY2028F P/E를 4.5배로 제시했다",
+        "predicate_family": "FORWARD_PE",
+        "primitive_tags": [
+          "PE",
+          "FORWARD_PE",
+          "FY2028F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_PE",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_PE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 FY2028F P/E",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 4.5
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-6855a4b280668cdc85eed417",
+        "economic_mechanism": "현대차증권의 FY2028F P/B는 메모리 중심 삼성전자의 장기 예상 장부가치 대비 시장평가 배수를 제시한다.",
+        "exact_quote": "요약 실적 및 Valuation\n구분 매출액 영업이익 순이익 EBITDA EPS 증감율 P/E P/B EV/EBITDA ROE 배당수익률\n(십억원) (십억원) (십억원) (십억원) (원) (%) (배) (배) (배) (%) (%)\n2024 300,871 32,726 33,621 75,357 5,433 144.1 9.8 0.9 3.5 9.0 2.7\n2025 333,606 43,601 44,261 90,528 7,241 33.3 16.6 1.9 7.6 10.8 1.4\n2026F 753,566 357,641 308,250 424,878 52,330 622.7 6.5 3.1 4.3 53.8 0.5\n2027F 930,845 453,659 399,674 530,257 68,134 30.2 5.0 2.0 2.8 43.7 0.5\n2028F 1,065,591 493,428 445,534 573,775 75,978 11.5 4.5 1.5 1.8 33.6 0.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 직접 valuation 표가 FY2028F 기간과 P/B 1.5배를 동일 행·열에 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_PB:FY2028F:HYUNDAI_20260629",
+        "normalized_object": "삼성전자 FY2028F P/B 1.5배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2028F",
+        "predicate": "현대차증권은 삼성전자의 FY2028F P/B를 1.5배로 제시했다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "PB",
+          "FORWARD_PB",
+          "FY2028F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_PB"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 FY2028F P/B",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 1.5
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "fc39631b6c816b8f83e037764cf80965597b4cd0a8819f97b319799de1ac9e12",
+  "production_score_authority": false,
+  "prompt_hash": "5fec12b7ee887aa7534780d870861c7274625093ec1abedfbc7136e381c5b069",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b756049aedc30807dff001b3831019ebd48013c61bd1f698d800794bd18e1cd7",
+  "response_id": "COLLABRESP-a144f0d4dcfc73b227284275ec8dca51d6c52ff78dfea0aea398a62c98c564fe",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

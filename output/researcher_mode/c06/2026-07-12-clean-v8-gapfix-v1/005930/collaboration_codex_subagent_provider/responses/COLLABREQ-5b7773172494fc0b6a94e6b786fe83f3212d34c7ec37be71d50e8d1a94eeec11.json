@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "8a99e028b46d82720a78e0d0944d807c7b374d6815bb9d4b70454ce2da574702",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-149096a03f4b9ffc75b1dc43",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "KOTRA 기사이며 NVIDIA/OpenAI customer-official 원문·landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-966f8b77d1959c6c58a74f09",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "Thinkpool의 broker-report 재전재 snippet으로 DB증권 original PDF 또는 공식 landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b3704fa77cd26112142dcccc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "매일경제 일반 기사이며 요청한 PUBLIC_BROKER_PDF original/full-source route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f64081deb2dbe310fd8873d3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 회사연혁 페이지로 NVIDIA/OpenAI customer-official 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-38027f6959a1b2cf24809b2f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "비공식 블로그성 재서술로 OpenAI customer-official 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-38a5a3699e09b2eb97c4655d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "일반 기업 기사로 broker original PDF 또는 공식 report landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9c1c49ce5fd96925bde7c033",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "언론의 과거 broker 인용 기사로 현재 요청의 broker full-report route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b38e8e357e990d619b506eba",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.05,
+        "rationale": "KB증권 공식 도메인이라 requested broker family provenance는 맞지만 일반 홈페이지 navigation으로 특정 삼성전자 full report route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c19904d51350cf5d2728c26d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 미디어 기사로 customer-official 원문·landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0b12eb4f0e7d9d4375700771",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "SK증권 PDF지만 이 candidate가 요청한 CUSTOMER_OFFICIAL family와 맞지 않고 NVIDIA/OpenAI 공식 status 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f4cb4d92a304a2ae0f0e1abb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "SK주식회사 사업보고서 PDF로 요청한 삼성전자 bottleneck broker report와 subject/source family가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-e74faebeea977c0c2ddf6845",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스 페이지로 OpenAI customer-official original 또는 official landing이 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "제공된 12개 roster에는 NVIDIA/OpenAI CUSTOMER_OFFICIAL 원문 또는 objective-bound PUBLIC_BROKER_PDF full report route가 없다. 이 local material 0은 source absence나 계약·병목 부재 증명이 아니며 새로운 discovery가 필요할 수 있다."
+    ]
+  },
+  "payload_hash": "0e5dd37e91bd01e7b86432d56aae860444814615c5496919f448311f2a751064",
+  "production_score_authority": false,
+  "prompt_hash": "4a61d38e31b1ccea9159beca09a47183be514cd4e7ecd3f400682aa5ebf9c375",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5b7773172494fc0b6a94e6b786fe83f3212d34c7ec37be71d50e8d1a94eeec11",
+  "response_id": "COLLABRESP-9df474e2240054e0273aaa1f5e97742b3cce6016b4ffe1b74206bceb1bf1f13e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "ed8bffb268fec77cfc844c32dcf17c93759c76c34f135bd51d3cae35ddc37564",
+  "payload": {
+    "allowed_range": [
+      15.8,
+      18.5
+    ],
+    "anchor_comparisons": [
+      "CANCH-0f9dd0807dd915f5d67d49eb는 POSITIVE 역할의 STRONG ordinal anchor이며 허용 대역은 17.01~19.11점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 MEDIUM와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "CANCH-1aa76cb8e89d85cd78d325f4는 COUNTER 역할의 MEDIUM ordinal anchor이며 허용 대역은 9.95~12.05점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "긍정 사실의 실현 정도는 강하지만, ordinal anchor의 상단은 미해결 귀속·지속성 자료가 닫힐 때만 정당화된다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-80daa96c00cd5d7b5782c27a",
+      "EFACT-a79b8e5bedf94ee44504539e",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "현재의 실적·판매·공급 사실을 단순한 기대만으로 낮춰 보는 해석에는 동의하지 않는다.",
+      "반대로 전사·메모리 수치를 HBM 단독 경제성으로 간주하거나 미해결 supervisor gap을 닫힌 것으로 보는 해석에도 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-0f9dd0807dd915f5d67d49eb",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 17.2,
+    "rationale": "계약·주문 기반 실적 가시성의 모든 긍정 사실을 검토했다. 이미 확보한 고객 구매주문, 완료된 중장기 물량 계약, 구속력 있는 다년계약과 완판된 HBM4 생산여력은 2026년 출하량을 단순 수요 기대보다 강하게 고정한다. 구조화 리비전 이력에서도 영업이익 방향은 상승이고 장기간 EPS 추정 상향 폭이 컸다. 다만 계약 세부가 NDA로 닫혀 구매의무·취소·가격조정 조건을 검증할 수 없다. LTA 가격이 현물 상승을 늦게 반영할 수 있고 고객 제품 출하 지연은 HBM4 매출 인식과 이익 기여를 뒤로 미룰 수 있으며, 성과평가에 따른 물량 배분도 고정되지 않는다. 추가로 공개 가능한 HBM 계약기간·물량·가격조정·선수금·취소·위약 조건과 qualification·allocation 기준이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다. 따라서 강한 현재 성과는 인정하되 제품별 귀속과 지속성이 확인된 최상단으로 보지는 않았다.",
+    "support_fact_ids": [
+      "EFACT-16ee255de13b7acf64e98eaa",
+      "EFACT-1ec0fca52ff40b01ed1890f6",
+      "EFACT-83b9afe8727ec3fd962620a4",
+      "EFACT-8b6707b4ab45897a5a448a93",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-d05fe1b53b1bb5081130ea1c"
+    ],
+    "why_not_higher": "구매주문과 계약 존재는 강하지만 NDA로 구매의무·가격·취소조건을 확인할 수 없고 고객 일정 및 LTA 가격 지연 위험이 남는다. 계약 존재와 실제 구매의무·마진·인식시점 가시성을 구분한다.",
+    "why_not_lower": "6개의 current positive 사실이 계약·주문 기반 실적 가시성의 실제 전환을 보여 주고 있어 counter만으로 확인된 성과를 무효화할 수 없다."
+  },
+  "payload_hash": "a5a2d2171ad0bb8eddafbf79c0a2d0ae7708fe3916810cd228187428cee93a23",
+  "production_score_authority": false,
+  "prompt_hash": "a15d43059cd2fbc10beebd21f3b6bfe0931a509a14f48a22f34e1b0530316700",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-22a4a46a1f6386cdf3ce6ab59f4c156dfe1b5c2b0a7878302c8965efeabb4e87",
+  "response_id": "COLLABRESP-f1c473e12752eeac2f923573f1d259617309bcbbe1a7b482f62234f390130b34",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

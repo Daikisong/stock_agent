@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-ef44f80b2ef6a40f2467bc4c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 채널 또는 공유용 링크로 원문 내용·발행일·대상 귀속을 보존하는 독립 full-fetch 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ef5248c0a1e311076d885130",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ef9e2ce665a1e484c4a08f64",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "기존 뉴스룸 기사에 딸린 TTS 오디오 자산으로 별도 원문 문서나 새로운 경제적 사실을 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f05dd8618c908b40d3341e30",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f1112fd562e908c11009631d",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f1386e50bcbd8a369e390e8a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 제품·지원·B2B 페이지지만 현재 C06의 시점 특정 HBM 고객계약·CAPA·가격·매출/현금흐름을 검증하는 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f1b33a5bdf6216ff34577a69",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 회사·채용·홈 landing page로 시점 특정 HBM·메모리 고객·공급·수익성 원문을 특정하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-f1fd6acc2fb3ea994a1a76db",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 또는 발견 경로이지만 현재 C06 목적의 시점 특정 HBM 고객·공급·CAPA·가격·실적 원문으로 확인되지 않아 material route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f21bc81ee3ad8f8158d97f0a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 지속가능성·환경·인권 일반 페이지로 issuer provenance는 맞지만 HBM 고객계약·CAPA·가격·이익에 직접 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-f253fbd8d903e1aecd18e70a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.97,
+        "rationale": "삼성전자 공식 뉴스룸의 개별 GTC HBM4E 최초 공개 기사 URL이다. HBM4E 제품·NVIDIA AI 동맹·공급 및 고객 가시성을 full-fetch해 검증할 수 있는 target-direct issuer 원문 route이므로 material이다. 기사 본문과 발행일을 fetch한 뒤에만 evidence로 승격해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-f2a5d2abef5492a305d75ffd",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 반도체 경로이나 Foundry 공정·생태계·행사 페이지로 DS 메모리 HBM의 고객·공급·수익성 메커니즘과 범위가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-f33b130a84ad48602e7e3fb4",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "공식 회사·채용·홈 landing page로 시점 특정 HBM·메모리 고객·공급·수익성 원문을 특정하지 못한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "SGCAND-f253fbd8d903e1aecd18e70a는 fetch 후보이며 아직 evidence가 아니다. 공식 기사 본문·발행일·HBM4E 고객/공급 주장을 full-fetch 검증해야 한다."
+    ]
+  },
+  "payload_hash": "68298aebd44d4286afe572bba6f4d80d95f4dda053f6c1488c72397037b42691",
+  "production_score_authority": false,
+  "prompt_hash": "3ae757a53b06e0d41712e69085304baff9e0cb335582ad78d3d607d58e852a3b",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-74606742c66a79a205e1ed4797898c53431c59ba367cdfe51b8cd7a245550ea9",
+  "response_id": "COLLABRESP-92ed39aca2b76886d3e7e098c888d3fd0f87cacba5181a5ad5bf9059d720df1c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

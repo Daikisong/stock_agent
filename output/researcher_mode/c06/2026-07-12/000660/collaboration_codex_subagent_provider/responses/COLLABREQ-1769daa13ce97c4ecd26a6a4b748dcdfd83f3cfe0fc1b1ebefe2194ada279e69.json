@@ -1,0 +1,658 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+        "rationale": "v9 continuation prior 3건을 exact/semantic dedup하고 page3에서 distinct fact 0건을 추가했다. issuer actual/plan, broker forecast, discovery provenance를 분리하고 current objective 중 mechanism-compatible 범위만 attribution했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "rationale": "v9 continuation prior 6건을 exact/semantic dedup하고 page3에서 distinct fact 0건을 추가했다. issuer actual/plan, broker forecast, discovery provenance를 분리하고 current objective 중 mechanism-compatible 범위만 attribution했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "rationale": "v9 continuation prior 6건을 exact/semantic dedup하고 page3에서 distinct fact 0건을 추가했다. issuer actual/plan, broker forecast, discovery provenance를 분리하고 current objective 중 mechanism-compatible 범위만 attribution했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-05b7a9d03e5a17bb237f32fa",
+        "rationale": "v9 continuation prior 1건을 exact/semantic dedup하고 page3에서 distinct fact 0건을 추가했다. issuer actual/plan, broker forecast, discovery provenance를 분리하고 current objective 중 mechanism-compatible 범위만 attribution했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-2585d63d70d2e243b822c981",
+        "rationale": "v9 continuation prior 2건을 exact/semantic dedup하고 page3에서 distinct fact 1건을 추가했다. issuer actual/plan, broker forecast, discovery provenance를 분리하고 current objective 중 mechanism-compatible 범위만 attribution했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "rationale": "v9 continuation prior 3건을 exact/semantic dedup하고 page3에서 distinct fact 2건을 추가했다. issuer actual/plan, broker forecast, discovery provenance를 분리하고 current objective 중 mechanism-compatible 범위만 attribution했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "rationale": "v9 continuation prior 1건을 exact/semantic dedup하고 page3에서 distinct fact 5건을 추가했다. issuer actual/plan, broker forecast, discovery provenance를 분리하고 current objective 중 mechanism-compatible 범위만 attribution했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "rationale": "v9 continuation prior 2건을 exact/semantic dedup하고 page3에서 distinct fact 4건을 추가했다. issuer actual/plan, broker forecast, discovery provenance를 분리하고 current objective 중 mechanism-compatible 범위만 attribution했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-2585d63d70d2e243b822c981",
+        "economic_mechanism": "협의로 변경 가능한 장비 납기에 따른 HBM 설비 실행 일정 불확실성",
+        "exact_quote": "5) 위, 5. 계약기간 종료일(납기)은 고객사와의 협의에 따라 변경될 수 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "공시된 종료일이 고정 가동일을 보장하지 않으므로 장비 도입 일정을 확정적 HBM 생산능력 가동으로 해석하는 것을 제한한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:RISK:RISK_COUNTER",
+        "normalized_object": "고객사 협의에 따라 변경 가능한 TC BONDER 납기",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "delivery end date stated as 2026-04-01",
+        "predicate": "TC BONDER 계약기간 종료일인 납기는 고객사와 협의해 변경될 수 있다",
+        "predicate_family": "hbm_equipment_delivery_schedule_changeable",
+        "primitive_tags": [],
+        "product_family": "HBM",
+        "question_family_id": "hbm_capacity_equipment_delivery_risk",
+        "question_family_tags": [
+          "hbm_capacity_equipment_delivery_risk"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 제조용 TC BONDER 납기",
+        "subject_id": "000660:HBM:TC_BONDER_DELIVERY_SCHEDULE",
+        "unit": "contract term",
+        "value": "delivery end date changeable by customer agreement"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "청주 100조원은 NAND 신규 팹·생산장비와 HBM 후공정 첨단 패키징을 함께 포함하는 혼합 메모리 투자다. 이 가운데 신규 팹의 구체 일정과 투자 계획은 향후 이사회 승인 후 확정되므로, 100조원 전체를 HBM 전용 확정 투자나 확정 집행 일정으로 볼 수 없다.",
+        "exact_quote": "청주에는 100조 원이 투입됩니다. 이는 낸드 신규 팹을 짓고 생산 장비를 갖추면서, HBM 후공정을 위한 첨단 패키징 역량 강화 등에 쓰일 예정입니다. 신규 팹에 대한 구체적인 일정과 투자 계획은 향후 이사회를 거쳐 확정될 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "청주 투자의 제품 배분과 신규 팹 승인 조건은 HBM 공급능력 귀속과 투자 집행 시점, FCF 부담을 과대평가하지 않게 한다.",
+        "mechanism_scope_id": "000660:MEMORY:CHEONGJU_CAPEX_BOARD_APPROVAL_CONDITION",
+        "normalized_object": "청주 100조원 혼합 메모리 투자의 세부 이사회 승인 조건",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "long-term plan announced 2026-06-29; detailed new-fab plan pending future board approval",
+        "predicate": "청주 100조원은 NAND 신규 팹·장비와 HBM 후공정 패키징 역량에 함께 쓰이며 신규 팹의 구체 일정·투자 계획은 향후 이사회 승인을 거쳐 확정된다",
+        "predicate_family": "MIXED_MEMORY_CAPEX_BOARD_APPROVAL_CONDITION",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPEX",
+          "HBM_PACKAGING",
+          "CHEONGJU"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CHEONGJU_MEMORY_CAPEX_BOARD_APPROVAL_CONDITION",
+        "question_family_tags": [
+          "CHEONGJU_MEMORY_CAPEX_BOARD_APPROVAL_CONDITION",
+          "MIXED_MEMORY_CAPEX",
+          "BOARD_APPROVAL",
+          "HBM_BACKEND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "SK하이닉스 청주 100조원 혼합 메모리 투자 세부 승인 조건",
+        "subject_id": "000660:MEMORY:CHEONGJU_CAPEX_BOARD_APPROVAL_CONDITION",
+        "unit": "KRW trillion",
+        "value": 100
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "SK하이닉스는 업계 전반의 대형 프로젝트 동시 진행으로 건설 인력과 장비 수급이 타이트해질 수 있음을 공식적으로 인정했다. 팹별 클린룸 가동 시점을 나눠 자원을 배분할 계획이지만 이는 완화 계획이지 수급 제약이 해소됐다는 증거는 아니므로, 장기 생산능력 확대 일정과 투자 집행에 실행 위험이 남는다.",
+        "exact_quote": "대규모 프로젝트가 업계 전반에서 동시다발적으로 진행되는 만큼, 건설 인력과 장비 수급이 타이트해질 수 있다는 점은 충분히 인식하고 있습니다. 이에 SK하이닉스는 팹별 클린룸 가동 시점을 단계적으로 나눠 준비하는 등, 한정된 자원을 효율적으로 배분해 건설이 차질 없이 진행되도록 대응해 나갈 계획입니다. 아울러 이러한 연속적인 투자가 국내 건설 경기와 연관 산업 전반에 활력을 더하는 계기가 될 것으로도 기대하고 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "건설 인력·장비 제약과 단계 가동 계획은 생산능력 확대의 실행 속도와 장기 투자 현금지출 일정에 직접 영향을 주는 공식 counterfact다.",
+        "mechanism_scope_id": "000660:MEMORY:FAB_CONSTRUCTION_RESOURCE_CONSTRAINT",
+        "normalized_object": "복수 메모리 팹 건설의 인력·장비 수급 제약과 단계 가동 완화",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "multi-fab long-term construction plan announced 2026-06-29",
+        "predicate": "업계의 대형 프로젝트 동시 진행으로 건설 인력·장비 수급이 타이트해질 수 있어 SK하이닉스는 팹별 클린룸 가동 시점을 단계적으로 나눠 대응할 계획이다",
+        "predicate_family": "MEMORY_CAPEX_EXECUTION_RESOURCE_RISK",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPEX",
+          "CONSTRUCTION",
+          "EXECUTION_RISK"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_FAB_CONSTRUCTION_RESOURCE_CONSTRAINT",
+        "question_family_tags": [
+          "MEMORY_FAB_CONSTRUCTION_RESOURCE_CONSTRAINT",
+          "CAPEX_EXECUTION_RISK",
+          "CONSTRUCTION_LABOR",
+          "EQUIPMENT_SUPPLY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 복수 팹 건설의 인력·장비 수급 위험과 완화 계획",
+        "subject_id": "000660:MEMORY:FAB_CONSTRUCTION_RESOURCE_CONSTRAINT",
+        "unit": "qualitative execution risk and mitigation",
+        "value": "construction labor and equipment may tighten; cleanroom activation timing to be staggered as mitigation"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "BofA의 2026년 HBM 시장규모와 성장률 추정은 SK하이닉스 HBM 사업이 참여하는 주소가능시장의 확대 경로를 정량화한다. 이는 BofA 전망이며 SK하이닉스 매출 또는 회사 가이던스가 아니다.",
+        "exact_quote": "BofA는 2026년 HBM 시장 규모를 전년 대비 58% 증가한 546억 달러로 추산했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "HBM 시장의 정량 성장 경로는 목표 기업의 매출 전환 가능성에 영향을 주지만 제3자 시장 추정이어서 issuer guidance를 대신하지 않는다.",
+        "mechanism_scope_id": "000660:HBM:2026_ADDRESSABLE_MARKET_GROWTH",
+        "normalized_object": "2026년 HBM 주소가능시장 규모와 전년 대비 성장률",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "BofA는 2026년 HBM 시장이 전년 대비 58% 성장해 546억달러에 이를 것으로 추산했다",
+        "predicate_family": "HBM_ADDRESSABLE_MARKET_GROWTH_2026",
+        "primitive_tags": [
+          "HBM",
+          "MARKET_GROWTH",
+          "REVENUE_CONVERSION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_ADDRESSABLE_MARKET_GROWTH_2026",
+        "question_family_tags": [
+          "HBM_MARKET_GROWTH",
+          "ADDRESSABLE_MARKET",
+          "THIRD_PARTY_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스가 참여하는 2026년 HBM 주소가능시장 성장 전망",
+        "subject_id": "000660:HBM:2026_ADDRESSABLE_MARKET_GROWTH",
+        "unit": "USD and YoY % third-party forecast",
+        "value": "USD 54.6bn; +58% YoY"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "골드만삭스의 ASIC향 HBM 수요 증가와 시장비중 전망은 HBM 수요가 범용 GPU 외 고객별 AI칩으로 넓어지는 경로를 보여준다. 이는 산업 수요 추정이며 SK하이닉스의 확정 주문이나 매출이 아니다.",
+        "exact_quote": "골드만삭스는 특히 ASIC(주문형 반도체) 기반 AI 칩향 HBM 수요가 82% 급증하며 시장의 3분의 1을 차지할 것으로 전망했는데, 이는 AI 인프라 투자가 범용 GPU를 넘어 세분화된 영역으로 확장되고 있음을 시사한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "GPU 외 ASIC 수요의 정량 확대는 HBM 매출 수요처 다변화를 지지하지만 제3자 시장 전망이다.",
+        "mechanism_scope_id": "000660:HBM:2026_ASIC_DEMAND_DIVERSIFICATION",
+        "normalized_object": "2026년 ASIC 기반 AI칩향 HBM 수요 성장과 시장비중",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "골드만삭스는 2026년 ASIC 기반 AI칩향 HBM 수요가 82% 증가해 시장의 3분의 1을 차지할 것으로 전망했다",
+        "predicate_family": "ASIC_HBM_DEMAND_MIX_2026",
+        "primitive_tags": [
+          "HBM",
+          "ASIC",
+          "CUSTOMER_DIVERSIFICATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "ASIC_HBM_DEMAND_MIX_2026",
+        "question_family_tags": [
+          "ASIC_HBM_DEMAND",
+          "DEMAND_DIVERSIFICATION",
+          "THIRD_PARTY_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM의 ASIC AI칩 수요처 확대",
+        "subject_id": "000660:HBM:2026_ASIC_DEMAND_DIVERSIFICATION",
+        "unit": "YoY % and market share third-party forecast",
+        "value": "ASIC HBM demand +82%; one-third of HBM market"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "2026년 HBM 출하의 약 3분의 2가 HBM3E라는 전망은 HBM3E 리더십이 있는 SK하이닉스의 현재 수익화 구간과 HBM4로의 점진적 전환 속도를 함께 보여준다. 이는 시장 분석이며 회사 제품별 출하 가이던스가 아니다.",
+        "exact_quote": "주요 리서치와 증권사 분석에 따르면, 2026년 기준 HBM 전체 출하량에서 HBM3E가 차지하는 비중이 약 2/3 수준으로 예상되며, HBM4는 점진적으로 비중을 확대하는 형태가 될 것으로 전망된다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "HBM3E 중심 출하 믹스는 목표 기업의 현세대 제품 수익화 기간에 영향을 주지만 제3자 제품믹스 전망이다.",
+        "mechanism_scope_id": "000660:HBM:2026_HBM3E_PRODUCT_MIX",
+        "normalized_object": "2026년 HBM3E 출하비중과 HBM4 전환 속도",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "주요 리서치와 증권사는 2026년 HBM 출하량 중 HBM3E 비중을 약 3분의 2로 예상하고 HBM4는 점진적으로 확대될 것으로 전망했다",
+        "predicate_family": "HBM3E_SHIPMENT_MIX_2026",
+        "primitive_tags": [
+          "HBM3E",
+          "HBM4",
+          "SHIPMENT_MIX"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM3E_SHIPMENT_MIX_2026",
+        "question_family_tags": [
+          "HBM3E_SHIPMENT_MIX",
+          "HBM4_TRANSITION",
+          "PRODUCT_MIX"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "2026년 HBM3E 중심 출하 믹스와 HBM4 전환",
+        "subject_id": "000660:HBM:2026_HBM3E_PRODUCT_MIX",
+        "unit": "shipment share third-party forecast",
+        "value": "HBM3E about two-thirds of 2026 HBM shipments; HBM4 gradual share expansion"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "골드만삭스의 2026년 전체 HBM 점유율 전망은 SK하이닉스의 HBM3·HBM3E 지위가 주소가능시장 성장에서 회사 수익으로 전환될 수 있는 범위를 제시한다. 이는 제3자 전망이며 회사 가이던스나 확정 고객배정이 아니다.",
+        "exact_quote": "골드만삭스는 “최소 2026년까지 SK하이닉스가 HBM3 · HBM3E 분야에서 지배적인 위치를 유지하며 전체 HBM 시장 점유율 50% 이상을 이어갈 것”이라고 분석했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "목표 기업의 forward HBM 점유율은 시장 성장의 매출 전환과 이익 지속기간을 직접 제약하지만 제3자 전망이다.",
+        "mechanism_scope_id": "000660:HBM:2026_SHARE_OUTLOOK",
+        "normalized_object": "SK하이닉스 전체 HBM 점유율의 2026년까지 유지 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "through FY2026F",
+        "predicate": "골드만삭스는 SK하이닉스가 최소 2026년까지 HBM3·HBM3E 지배력을 유지하며 전체 HBM 점유율 50% 이상을 이어갈 것으로 분석했다",
+        "predicate_family": "SKHYNIX_HBM_SHARE_OUTLOOK_2026",
+        "primitive_tags": [
+          "HBM",
+          "HBM3E",
+          "MARKET_SHARE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SKHYNIX_HBM_SHARE_OUTLOOK_2026",
+        "question_family_tags": [
+          "HBM_MARKET_SHARE_OUTLOOK",
+          "HBM3E_LEADERSHIP",
+          "REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 전체 HBM 시장 점유율 전망",
+        "subject_id": "000660:HBM:2026_SHARE_OUTLOOK",
+        "unit": "% third-party market-share forecast",
+        "value": "overall HBM market share at least 50% through 2026"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "UBS의 Google TPU v7p·v7e 첫 HBM3E 공급사 전망은 SK하이닉스의 ASIC 고객 수요 참여 가능성을 구체화한다. 이는 분석기관 전망일 뿐 확정 계약, 구매의무, 실제 출하 또는 고객 확인이 아니다.",
+        "exact_quote": "UBS는 “SK하이닉스가 구글의 최신 TPU(Tensor Processing Unit)인 v7p 및 v7e의 HBM3E 첫 번째 공급사가 될 것”이라고 분석하며 빅테크 고객사 내 입지를 강조했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "구체적인 ASIC 고객 플랫폼의 공급사 전망은 HBM 수요처 다변화와 잠재 매출 전환에 직접 영향을 주지만 확정 배정은 아니다.",
+        "mechanism_scope_id": "000660:HBM:GOOGLE_TPU_SUPPLIER_OUTLOOK",
+        "normalized_object": "Google TPU v7p·v7e의 SK하이닉스 HBM3E 공급사 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward supplier outlook published 2026-01-05",
+        "predicate": "UBS는 SK하이닉스가 Google TPU v7p·v7e의 HBM3E 첫 공급사가 될 것으로 분석했다",
+        "predicate_family": "GOOGLE_TPU_HBM3E_FIRST_SUPPLIER_OUTLOOK",
+        "primitive_tags": [
+          "HBM3E",
+          "GOOGLE_TPU",
+          "CUSTOMER_DIVERSIFICATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "GOOGLE_TPU_HBM3E_FIRST_SUPPLIER_OUTLOOK",
+        "question_family_tags": [
+          "GOOGLE_TPU",
+          "HBM3E_SUPPLIER",
+          "CUSTOMER_ALLOCATION_OUTLOOK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스의 Google TPU v7p·v7e HBM3E 첫 공급사 전망",
+        "subject_id": "000660:HBM:GOOGLE_TPU_SUPPLIER_OUTLOOK",
+        "unit": "qualitative third-party supplier forecast",
+        "value": "expected first HBM3E supplier for Google TPU v7p and v7e"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "SK하이닉스는 HBM과 고성능 AI 서버 제품 판매가 3Q25 사상 최대 분기 실적을 견인했다고 귀속했고, 전사 매출 24.4489조원·영업이익 11.3834조원·순이익 12.5975조원을 보고했다. 전사 숫자이므로 HBM 단독 손익으로 확대하지 않는다.",
+        "exact_quote": "· Reports revenues of 24.4489 trillion won, operating profit of 11.3834 trillion won, net profit of 12.5975 trillion won\n· Record-high quarterly performance driven by strong sales of HBM and high-performance server products",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM·AI 서버 제품의 실제 판매 기여와 실현된 영업이익 규모를 회사 원문이 직접 연결해 eps_fcf_explosion 객체를 보완한다.",
+        "mechanism_scope_id": "000660:AI_MEMORY:Q3_2025_ACTUAL_EARNINGS",
+        "normalized_object": "HBM·AI 서버 제품 귀속 3Q25 전사 실제 실적",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2025",
+        "predicate": "SK하이닉스는 HBM과 고성능 서버 제품 판매가 견인한 3Q25 사상 최대 분기 실적으로 매출 24.4489조원, 영업이익 11.3834조원, 순이익 12.5975조원을 기록했다",
+        "predicate_family": "Q3_AI_MEMORY_DRIVEN_ACTUAL_EARNINGS",
+        "primitive_tags": [
+          "HBM",
+          "AI_MEMORY",
+          "OPERATING_PROFIT",
+          "REVENUE_ACTUAL"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "Q3_2025_AI_MEMORY_DRIVEN_ACTUAL_EARNINGS",
+        "question_family_tags": [
+          "ACTUAL_EARNINGS",
+          "HBM_ATTRIBUTION",
+          "AI_SERVER_MEMORY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM·AI 서버 제품 기반 3Q25 실제 실적",
+        "subject_id": "000660:AI_MEMORY:Q3_2025_ACTUAL_EARNINGS",
+        "unit": "KRW trillion",
+        "value": "revenue KRW 24.4489tn; operating profit KRW 11.3834tn; net profit KRW 12.5975tn"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "AI 서버 수요 증가와 함께 128GB 이상 고용량 DDR5 출하량이 3Q25에 전분기 대비 2배 이상으로 늘어, 서버 DRAM 수요가 실제 출하로 전환된 것을 보여준다. 정확한 출하량·매출액·이익률은 공개되지 않았다.",
+        "exact_quote": "Driven by surging demand for AI servers, shipments of high-capacity DDR5s of 128GB or more have more than doubled from the previous quarter.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고용량 서버 DRAM 수요가 실제 출하로 전환된 크기를 회사가 직접 제시해 제품 매출·이익 전환 경로를 보완한다.",
+        "mechanism_scope_id": "000660:DRAM:HIGH_CAPACITY_DDR5_SHIPMENTS_Q3_2025",
+        "normalized_object": "128GB 이상 DDR5 출하량 전분기 대비 증가",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2025 vs 2Q2025",
+        "predicate": "SK하이닉스의 128GB 이상 고용량 DDR5 출하량은 AI 서버 수요에 힘입어 3Q25에 전분기 대비 2배 이상으로 늘었다",
+        "predicate_family": "HIGH_CAPACITY_DDR5_SHIPMENT_QOQ_GROWTH",
+        "primitive_tags": [
+          "DRAM",
+          "DDR5",
+          "SERVER_MEMORY",
+          "SHIPMENT_GROWTH"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HIGH_CAPACITY_DDR5_SHIPMENT_GROWTH_Q3_2025",
+        "question_family_tags": [
+          "SERVER_DRAM_SHIPMENTS",
+          "DDR5_DEMAND_CONVERSION",
+          "QOQ_SHIPMENT_GROWTH"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 128GB 이상 고용량 DDR5 출하 증가",
+        "subject_id": "000660:DRAM:HIGH_CAPACITY_DDR5_SHIPMENTS_Q3_2025",
+        "unit": "relative QoQ shipment growth threshold",
+        "value": "more than 2x quarter-on-quarter"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "HBM4가 2025년 9월 개발을 완료하고 양산에 진입했으며 고객 성능요구를 충족했다는 회사 발표는 이전 샘플·인증 불확실성을 낮추고 제품 출하 전 실행 단계를 보여준다. 고객명·인증 주체·인증 일자·구매의무는 공개되지 않았다.",
+        "exact_quote": "HBM4, which completed development in September and entered mass production, fully meets customer performance requirements and supports industry-leading speeds.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4의 고객 성능요구 충족과 양산 진입을 회사가 직접 확인해 차세대 HBM 수익화 전 인증·제조 위험을 낮춘다.",
+        "mechanism_scope_id": "000660:HBM:HBM4_CUSTOMER_REQUIREMENTS_MASS_PRODUCTION_202509",
+        "normalized_object": "HBM4 개발 완료·양산 진입·고객 성능요구 충족",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "development completed and mass production entered in 2025-09; stated 2025-10-29",
+        "predicate": "SK하이닉스 HBM4는 2025년 9월 개발을 완료하고 양산에 진입했으며 고객 성능요구를 충족했다",
+        "predicate_family": "HBM4_CUSTOMER_REQUIREMENTS_MASS_PRODUCTION_STATUS",
+        "primitive_tags": [
+          "HBM4",
+          "QUALIFICATION",
+          "CUSTOMER_REQUIREMENTS",
+          "MASS_PRODUCTION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_CUSTOMER_REQUIREMENTS_AND_MASS_PRODUCTION",
+        "question_family_tags": [
+          "HBM4_QUALIFICATION",
+          "CUSTOMER_PERFORMANCE_REQUIREMENTS",
+          "MASS_PRODUCTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4 고객 성능요구 충족과 양산 진입",
+        "subject_id": "000660:HBM:HBM4_CUSTOMER_REQUIREMENTS_MASS_PRODUCTION_202509",
+        "unit": "qualitative qualification and production status",
+        "value": "development completed in 2025-09; entered mass production; fully meets customer performance requirements"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "회사는 HBM4 출하를 4Q25에 시작하고 FY2026에 본격 판매를 확대할 계획이라고 밝혀 양산 제품의 매출 전환 일정을 제시했다. 이는 2025년 10월 29일 기준 계획이며 실제 출하량·매출액·고객 구매의무를 확정하지 않는다.",
+        "exact_quote": "Shipments will begin in the fourth quarter this year, with full-scale sales expansion planned for next year.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4의 양산이 출하와 본격 판매로 전환되는 일정을 회사가 직접 제시해 eps_fcf_explosion의 차세대 매출 가시성을 보완한다.",
+        "mechanism_scope_id": "000660:HBM:HBM4_SHIPMENT_SALES_RAMP_2025_2026",
+        "normalized_object": "HBM4 출하 개시와 본격 판매 확대 계획",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2025 shipment start plan; FY2026 full-scale sales expansion plan",
+        "predicate": "SK하이닉스는 HBM4 출하를 4Q25에 시작하고 FY2026에 본격 판매를 확대할 계획이라고 밝혔다",
+        "predicate_family": "HBM4_SHIPMENT_AND_SALES_RAMP_TIMELINE",
+        "primitive_tags": [
+          "HBM4",
+          "SHIPMENT_PLAN",
+          "SALES_EXPANSION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_SHIPMENT_AND_SALES_RAMP_TIMELINE",
+        "question_family_tags": [
+          "HBM4_SHIPMENT",
+          "SALES_RAMP",
+          "COMMERCIALIZATION_TIMELINE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "SK하이닉스 HBM4 출하 개시·판매 확대 일정",
+        "subject_id": "000660:HBM:HBM4_SHIPMENT_SALES_RAMP_2025_2026",
+        "unit": "commercialization timeline",
+        "value": "shipments planned to begin in 4Q2025; full-scale sales expansion planned for FY2026"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-c6b7e864fbcb27a49bbae8d8"
+    ],
+    "unresolved_research_notes": [
+      "v9 page3가 12-fact cap에 도달했다. SGDOC-c6b7에 prior36과 중복되지 않는 잠정실적 시점 한계 counterfact 1건이 남아 final continuation이 필요하다."
+    ]
+  },
+  "payload_hash": "ec0ef21c9609a9ae7be7a911970d43790d17328510fa8876b5ef4f9273ee9634",
+  "production_score_authority": false,
+  "prompt_hash": "64bfa4048eaa4558d61970e5e7e27b40de25fbd89f703442c7bba01e1f9a452b",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1769daa13ce97c4ecd26a6a4b748dcdfd83f3cfe0fc1b1ebefe2194ada279e69",
+  "response_id": "COLLABRESP-2432c7dfa165b340284df477fa95e8de4734d7307f8d7b78df2a9b089d60bbeb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

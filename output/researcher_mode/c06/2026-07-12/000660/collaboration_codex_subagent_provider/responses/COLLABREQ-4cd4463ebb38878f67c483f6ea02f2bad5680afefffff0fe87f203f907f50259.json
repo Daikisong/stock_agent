@@ -1,0 +1,34 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "Frozen-route replay suppression patch 전에 생성된 exact boundary request지만, 현재 prompt의 39개 executed query와 58개 failure를 의미 단위로 다시 검토했다. 생성 시점이나 transport 상태 자체는 새 research route가 아니다.",
+      "Semantic retry attempt 3의 lineage와 직전 unresolved notes에도 새로 검증된 문서 identity, 파일명, 문서일자 또는 미실행 official document class가 없다. 발행사·고객사 공식 자료, broker 원문, KIND 계약, AMD·Broadcom literal route의 동의어를 반복하지 않는다.",
+      "Current prompt의 supervisor projection은 missing material fact, query direction, new source-family direction, source-family gap이 없고 reasonable_positive_routes_remaining=false로 제시한다. 특정 고객·플랫폼·계약을 추정하거나 deterministic fallback을 만들지 않고 suggested_queries를 비운다.",
+      "Provider 오류·무결과·미래 문서·snippet 거절과 retry 횟수는 source absence 또는 fixed-round completion의 증거가 아니다. 이번 응답은 현재 exact prompt에서 신규 검증 query가 없다는 PENDING 결과이며 score 또는 Stage 권한이 없다."
+    ]
+  },
+  "payload_hash": "b5921cb311246786e4b8b8c329f411bbbfe44a0b06e8f18098a4789ed3dd7a42",
+  "production_score_authority": false,
+  "prompt_hash": "c2a13e3c9869e052f07109beb672b391344d28fb3193473cacd09a18c1063eb7",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4cd4463ebb38878f67c483f6ea02f2bad5680afefffff0fe87f203f907f50259",
+  "response_id": "COLLABRESP-8e6f9d4e708c34af34af38d9b2246c800f2c5b162a739a7707a7c177174b7385",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

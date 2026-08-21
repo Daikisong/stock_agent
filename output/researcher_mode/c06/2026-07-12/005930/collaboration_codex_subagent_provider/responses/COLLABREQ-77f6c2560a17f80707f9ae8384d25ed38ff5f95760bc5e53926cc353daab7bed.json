@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "34d3346e67ce0de4b206b6c88895f5de9f064a90367543cee42cc1296624845e",
+  "payload": {
+    "allowed_range": [
+      13.2,
+      16.3
+    ],
+    "anchor_comparisons": [
+      "positive anchor 17.01~19.11점은 strong 물량·이익 가시성의 ordinal 기준이지만, 현재 계약은 핵심 조건이 닫혀 있어 같은 midpoint를 확정하기 어렵다.",
+      "counter anchor 9.95~12.05점보다 현재는 구매주문과 완료 계약이 훨씬 강하다. 다만 NDA·가격 지연·고객 일정 위험을 감안해 두 anchor 사이 상단 이하가 적절하다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-80daa96c00cd5d7b5782c27a",
+      "EFACT-a79b8e5bedf94ee44504539e",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "research memo midpoint 16.7은 물량 가시성을 잘 반영하지만, 계약 질과 매출 인식시점 검증 공백을 더 크게 감액해 14.7을 제안한다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-0f9dd0807dd915f5d67d49eb",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 14.7,
+    "rationale": "선택된 모든 counter는 물량 가시성과 마진 가시성의 차이를 드러낸다. NDA로 구매의무·취소·가격조정식을 확인할 수 없고 LTA 가격은 현물 상승을 늦게 반영할 수 있다. 고객 제품 지연과 정기 성과평가에 따른 배분 변경도 있다. 구매주문·계약 완료는 인정하지만 조건 미공개 때문에 강한 band의 지속성을 낮춰 본다.",
+    "support_fact_ids": [
+      "EFACT-16ee255de13b7acf64e98eaa",
+      "EFACT-1ec0fca52ff40b01ed1890f6",
+      "EFACT-83b9afe8727ec3fd962620a4",
+      "EFACT-8b6707b4ab45897a5a448a93",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-d05fe1b53b1bb5081130ea1c"
+    ],
+    "why_not_higher": "구매의무·취소·가격조정 조건이 비공개이고 LTA 가격 반영 지연, 고객 일정과 공급사 평가가 마진·인식 시점을 흔들 수 있다.",
+    "why_not_lower": "발행사가 준비 CAPA의 구매주문, 일부 중장기 계약 완료와 HBM4 완판을 확인해 단순 수요 문의보다 높은 실제 물량 가시성이 있다."
+  },
+  "payload_hash": "4403b493a2da60e0079a9dbb1fe83d9db653a569f47cf2e6920955b835520e57",
+  "production_score_authority": false,
+  "prompt_hash": "cff6277af8ee887f3f57870b5a90afa109620c9426a89e103e3769bcf8a07cf3",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-77f6c2560a17f80707f9ae8384d25ed38ff5f95760bc5e53926cc353daab7bed",
+  "response_id": "COLLABRESP-f539c244bd070210ee3980bf532905c1ae714c10d09211523a53550ef41a923e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

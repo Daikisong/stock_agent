@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "9a22a6b66723589764c62110d458b6437b5ad244cc73cdd2c11a47a430f4aff3",
+  "payload": {
+    "allowed_range": [
+      4.8,
+      7.2
+    ],
+    "anchor_comparisons": [
+      "POSITIVE MEDIUM anchor ORDTRANSFER-c54e0c02076da1642b64c8df보다 현재는 HBM 매출과 SOTP 차등이라는 직접 근거가 많아 중간 band 아래로 단정하기 어렵다.",
+      "그러나 POSITIVE STRONG anchor ORDTRANSFER-505a232bb2f7dc1ce7f89a4a와 비교하면 HBM 단독 cash conversion, 계약 duration, 지속 가능한 이익 증가가 빠져 있어 상단 근접은 정당화되지 않는다.",
+      "COUNTER STRONG anchor ORDTRANSFER-75306723611a10615f950fec와 비교할 때 현재의 거시 할인·감익·공급 경쟁은 실제 상단 제약이지만, 아직 점유율 하락이나 가격 인하가 확정된 것은 아니므로 반대 근거만으로 재평가 메커니즘 전체를 부정하지 않는다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "disagreements": [
+      "HBM 매출 성장과 더 높은 SOTP 배수는 가치 잠재력을 보이지만, 현재 주가가 그 잠재력을 덜 반영했다는 사실까지 직접 입증하지는 않는다.",
+      "낮은 P/E·EV/EBITDA는 저평가뿐 아니라 FY2026 이후 이익 감속을 반영한 cycle-peak 할인일 수도 있다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a",
+      "ORDTRANSFER-75306723611a10615f950fec"
+    ],
+    "proposed_points": 6.0,
+    "rationale": "실적 상향에도 주가 하락과 Target PBR 하향이 동시에 발생한 사례는 이익 성장만으로 multiple 확장이 보장되지 않음을 보여준다. FY2027~FY2028 영업이익·EPS 감소 전망은 현재 낮은 배수가 구조적 오평가가 아니라 이익 정점 할인일 가능성을 남긴다. 경쟁사의 HBM 공급 확대도 희소성 프리미엄과 고객 배정 우위를 약화시킬 수 있다. 고객 집중과 계약 조건, HBM 단독 현금흐름이 공개되지 않은 점까지 고려한다. 다만 실제 HBM 매출 성장과 별도 고배수 SOTP, PBR band 돌파가 있어 재평가 근거를 약한 수준으로만 낮추지는 않는다.",
+    "support_fact_ids": [
+      "EFACT-122bf71db78558e5780ed3c8",
+      "EFACT-3e4c5596b1c40a463ba54d38",
+      "EFACT-b3d48bea9ae741feec4d4a05",
+      "EFACT-b74e88a671a1247b0ce230d5"
+    ],
+    "why_not_higher": "이미 관찰된 PBR·PER 확장, 거시 할인 사례, FY2027 이후 감익 경로와 경쟁 공급 확대를 감안하면 현재 근거만으로 지속적인 상단 재평가를 확정할 수 없다.",
+    "why_not_lower": "HBM 매출이 실제로 전사 실적에 기여했고, 일반메모리보다 높은 HBM 가치 배수와 peer 수익성·배수 비교가 존재해 단순 기대나 목표가격 주장에 그치지 않는다."
+  },
+  "payload_hash": "a427ec22dabd0a317e85452d975d2e2507d04dba73cdbfb3fe6f6121ed4ced91",
+  "production_score_authority": false,
+  "prompt_hash": "0f4d812730b61100949377085f077592a0074a524dcb762916f976854bdcd210",
+  "provenance": {
+    "agent_id": "root-phase101-c06-valuation-skeptic",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_valuation_skeptic",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-52a4cedafd05036a497619e243c1deb76a536de7907ef0b2ad09a9a81a222c43",
+  "response_id": "COLLABRESP-7a37df440cc985d8a9978eee5e1efce3675651d7283b132d5125a03586eedea4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

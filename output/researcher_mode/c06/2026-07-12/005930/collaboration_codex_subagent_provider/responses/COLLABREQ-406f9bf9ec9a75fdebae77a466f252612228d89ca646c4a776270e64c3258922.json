@@ -1,0 +1,391 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "rationale": "valuation_rerating objective에 직접 연결되는 DRAM peer forward 배수, 삼성전자 메모리·HBM SOTP 배수, target-side forward valuation, 상대성과 격차와 명시적 정보 한계를 중복 없이 추출했다. 파운드리·장비 등 금지 또는 비대상 세그먼트 사실은 제안하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "주요 DRAM 업체들의 2026~2027년 forward EV/EBITDA 상향과 국내 메모리 업체 배수 상향 필요성은 삼성전자 메모리 사업의 직접 peer valuation 기준을 제공한다.",
+        "exact_quote": "주요 DRAM 업체\n들의 EV/EBITDA는 2026년 5.0배, 2027년 4.4배로 상향되었고, 파운드리 업체들은 2026년\n13.2배, 2027년 10.9배로 올라왔다. 국내 메모리 업체들의 멀티플도 상향 조정이 필요하다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 시점의 명시적 DRAM peer forward 배수와 국내 메모리 적용 판단이 함께 있어 valuation_rerating의 미확보 peer 기준을 직접 보완한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM_PEER_FORWARD_EV_EBITDA:2026_2027:HANA_2026_05_15",
+        "normalized_object": "주요 DRAM 업체 FY2026E~FY2027E forward EV/EBITDA peer profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E-FY2027E; report dated 2026-05-15",
+        "predicate": "하나증권은 주요 DRAM 업체들의 EV/EBITDA가 2026년 5.0배와 2027년 4.4배로 상향됐고 국내 메모리 업체 배수도 상향 조정이 필요하다고 판단했다",
+        "predicate_family": "DRAM_PEER_FORWARD_EV_EBITDA_PROFILE",
+        "primitive_tags": [
+          "PEER_VALUATION",
+          "EV_EBITDA",
+          "DRAM"
+        ],
+        "product_family": "D램",
+        "question_family_id": "MEMORY_PEER_BAND",
+        "question_family_tags": [
+          "MEMORY_PEER_BAND",
+          "DRAM_PEER_FORWARD_EV_EBITDA",
+          "DOMESTIC_MEMORY_RERATING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 재평가 기준이 되는 주요 DRAM 업체 forward EV/EBITDA",
+        "subject_id": "005930:DRAM_PEER_FORWARD_EV_EBITDA:2026_2027:HANA_2026_05_15",
+        "unit": "times",
+        "value": "FY2026E 5.0x; FY2027E 4.4x"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "삼성전자 메모리 EBITDA에 SK하이닉스·Micron·Nanya의 평균 EV/EBITDA를 적용한 SOTP는 메모리 이익을 기업가치로 전환하는 직접 peer 가정을 수치화한다.",
+        "exact_quote": "도표 7. 밸류에이션\n영업가치(십억원) 사업부 EBITDA Target EV/EBITDA Value 비고1 비고2\nSK하이닉스, Micron,\n메모리 383,257 4.8 1,854,965 Peer Group 평균 EV/EBITDA 적용\nNanya",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 메모리 사업부에 직접 적용된 명시적 peer roster와 4.8배 평균 배수가 있어 같은 보고서의 target-side peer band를 구성한다.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_EV_EBITDA:SOTP:2026-05-15",
+        "normalized_object": "삼성전자 메모리 사업부 peer EV/EBITDA 4.8배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "12-month target valuation; report dated 2026-05-15",
+        "predicate": "하나증권은 삼성전자 메모리 사업부 가치 산정에 SK하이닉스·Micron·Nanya peer 평균 EV/EBITDA 4.8배를 적용했다",
+        "predicate_family": "PEER_EV_EBITDA_VALUATION",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "MEMORY_PEER_GROUP",
+          "SOTP"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_MEMORY_PEER_EV_EBITDA",
+        "question_family_tags": [
+          "SAMSUNG_MEMORY_PEER_EV_EBITDA",
+          "PEER_VALUATION",
+          "SAMSUNG_MEMORY_SOTP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 사업부 peer valuation",
+        "subject_id": "005930:MEMORY",
+        "unit": "times",
+        "value": 4.8
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "삼성전자 HBM EBITDA에 적용된 target EV/EBITDA는 HBM 이익 기여에 별도로 부여한 SOTP 가치평가 가정을 수치화한다.",
+        "exact_quote": "도표 7. 밸류에이션\n영업가치(십억원) 사업부 EBITDA Target EV/EBITDA\n메모리 383,257 4.8\nHBM 20,774 12.7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "HBM 사업부의 별도 EBITDA와 12.7배 target multiple이 명시돼 메모리 전체 peer 배수와 구별되는 HBM 가치 프리미엄을 보완한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:TARGET_EV_EBITDA:SOTP:2026-05-15",
+        "normalized_object": "삼성전자 HBM 사업부 target EV/EBITDA 12.7배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "12-month target valuation; report dated 2026-05-15",
+        "predicate": "하나증권은 삼성전자 HBM 사업부 가치 산정에 target EV/EBITDA 12.7배를 적용했다",
+        "predicate_family": "TARGET_EV_EBITDA_VALUATION",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "HBM",
+          "SOTP"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SAMSUNG_HBM_TARGET_EV_EBITDA",
+        "question_family_tags": [
+          "SAMSUNG_HBM_TARGET_EV_EBITDA",
+          "HBM_VALUATION",
+          "SAMSUNG_HBM_SOTP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 사업부 valuation",
+        "subject_id": "005930:HBM",
+        "unit": "times",
+        "value": 12.7
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "같은 보고서의 forward PER·PBR·EV/EBITDA와 ROE는 메모리 이익 증가가 삼성전자 전체 수익성과 시장 배수로 연결되는 target-side valuation 좌표를 제공한다.",
+        "exact_quote": "Financial Data (십억원, %, 배, 원)\n투자지표 2024 2025 2026F 2027F\n매출액 300,870.9 333,605.9 731,028.4 885,089.0\n영업이익 32,726.0 43,601.1 393,427.3 531,858.2\n세전이익 37,529.7 49,481.5 398,176.1 536,607.0\n순이익 33,621.4 44,261.0 312,869.8 421,642.8\nEPS 4,950 6,564 46,903 63,418\n증감율 132.29 32.61 614.55 35.21\nPER 10.75 18.27 6.06 4.48\nPBR 0.92 1.87 2.58 1.65\nEV/EBITDA 3.60 7.67 3.36 1.91\nROE 9.03 10.85 54.39 45.26",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 보고서·동일 연도 축에서 삼성전자 forward 이익 배수와 ROE가 함께 제시돼 peer 배수 적용 후의 target-side 상대가치 좌표를 제공한다.",
+        "mechanism_scope_id": "005930:MEMORY:HANA_FORWARD_VALUATION_PROFILE:2026_2027:2026_05_15",
+        "normalized_object": "삼성전자 FY2026F~FY2027F forward valuation 및 ROE profile",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F-FY2027F; report dated 2026-05-15",
+        "predicate": "하나증권은 삼성전자의 FY2026F~FY2027F PER·PBR·EV/EBITDA·ROE profile을 제시했다",
+        "predicate_family": "FORWARD_VALUATION_PROFILE",
+        "primitive_tags": [
+          "PER",
+          "PBR",
+          "EV_EBITDA",
+          "ROE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_VALUATION_PROFILE",
+        "question_family_tags": [
+          "SAMSUNG_FORWARD_VALUATION_PROFILE",
+          "FORWARD_MULTIPLES",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026~2027년 예상 valuation 및 ROE profile",
+        "subject_id": "005930:FORWARD_VALUATION_PROFILE:2026_2027:HANA_2026_05_15",
+        "unit": "multiple and percent",
+        "value": "FY2026F PER 6.06x, PBR 2.58x, EV/EBITDA 3.36x, ROE 54.39%; FY2027F PER 4.48x, PBR 1.65x, EV/EBITDA 1.91x, ROE 45.26%"
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "목표주가 상향이 12개월 선행 실적에서 2027년 가중치 확대와 글로벌 peer multiple 상승을 반영했다는 설명은 목표가를 단순 숫자가 아닌 forward earnings-peer valuation bridge에 연결한다.",
+        "exact_quote": "목표주가를 430,000원으로 상향한다. 목표주\n가 상향은 12개월 선행 실적 전망치에서 2027년 실적 가중치가 확대되었고, 앞서 언급한\n글로벌 반도체 업체들의 멀티플 상승을 반영했기 때문이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "목표주가 숫자뿐 아니라 forward 실적 기간 가중치와 peer multiple 상승이라는 산식 방향이 명시돼 valuation rerating mechanism을 직접 설명한다.",
+        "mechanism_scope_id": "005930:MEMORY:TARGET_PRICE_FORWARD_EARNINGS_PEER_MULTIPLE:2026_05_15",
+        "normalized_object": "삼성전자 12개월 목표주가와 forward earnings·peer multiple 상향 근거",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "12-month target; report dated 2026-05-15",
+        "predicate": "하나증권은 2027년 실적 가중치 확대와 글로벌 반도체 업체 multiple 상승을 반영해 삼성전자 12개월 목표주가를 430,000원으로 상향했다",
+        "predicate_family": "TARGET_PRICE_FORWARD_EARNINGS_PEER_MULTIPLE_BRIDGE",
+        "primitive_tags": [
+          "TARGET_PRICE",
+          "12M_FORWARD",
+          "PEER_MULTIPLE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_TARGET_PRICE_EARNINGS_MULTIPLE_BRIDGE",
+        "question_family_tags": [
+          "SAMSUNG_TARGET_PRICE_EARNINGS_MULTIPLE_BRIDGE",
+          "FORWARD_EARNINGS_WEIGHT",
+          "PEER_MULTIPLE_RERATING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 12개월 목표주가의 forward earnings 및 peer multiple 근거",
+        "subject_id": "005930:TARGET_PRICE_BRIDGE:HANA_2026_05_15",
+        "unit": "KRW per share",
+        "value": 430000
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "삼성전자의 2024년 이후 주가 상승률이 직접 메모리 peer보다 크게 낮고 보고서가 이를 과거 HBM 경쟁력 의문과 연결한 것은 메모리 경쟁력 회복 시 해소 가능한 상대 기대 격차를 수치화한다.",
+        "exact_quote": "삼성전자의 주가 퍼포먼스는 여\n타 메모리 업체들보다 여전히 열위에 있다. 2026년 연초 이후 상승률도 주요 DRAM 3사 중\n에 가장 저조하고, 2024년 이후 주가 상승률로 보면 삼성전자 277%, SK하이닉스 1,292%,\nMicron 842%로 그 격차가 심하다. 이는 삼성전자가 메모리 외의 사업부가 포함되어 있고,\n2024~2025년에 HBM 관련 경쟁력에 의문 부호가 붙었기 때문으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 기간의 직접 peer 상대성과와 HBM 관련 할인 원인이 함께 제시돼 현재 시장 기대 격차의 크기와 경제적 원인을 연결한다.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_RELATIVE_PERFORMANCE_HBM_DISCOUNT:2024_TO_2026_05_14",
+        "normalized_object": "삼성전자와 주요 메모리 peer의 2024년 이후 주가 상승률 격차",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024 through 2026-05-14",
+        "predicate": "하나증권은 2024년 이후 삼성전자 주가 상승률 277%가 SK하이닉스 1,292%와 Micron 842%보다 낮고 과거 HBM 경쟁력 의문이 그 격차의 한 원인이라고 분석했다",
+        "predicate_family": "MEMORY_PEER_RELATIVE_PERFORMANCE_HBM_DISCOUNT_GAP",
+        "primitive_tags": [
+          "PEER_PERFORMANCE",
+          "HBM_COMPETITIVENESS",
+          "EXPECTATION_GAP"
+        ],
+        "product_family": "메모리 및 HBM",
+        "question_family_id": "SAMSUNG_MEMORY_PEER_RELATIVE_PERFORMANCE_GAP",
+        "question_family_tags": [
+          "SAMSUNG_MEMORY_PEER_RELATIVE_PERFORMANCE_GAP",
+          "RELATIVE_PERFORMANCE",
+          "HBM_VALUATION_DISCOUNT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 peer 대비 주가 성과 격차",
+        "subject_id": "005930:MEMORY_PEER_RELATIVE_PERFORMANCE:2024_TO_2026_05_14",
+        "unit": "percent cumulative share-price change",
+        "value": "Samsung Electronics 277%; SK hynix 1,292%; Micron 842%"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "보고서가 HBM4 진행 속도로 확보한 고객 신뢰와 2026년 실적 입증 전망을 연결한 것은 과거 HBM 경쟁력 할인에서 벗어날 수 있는 재평가 실행 조건을 제시한다.",
+        "exact_quote": "다만, HBM4\n에서는 가장 양호한 속도를 기반으로 고객사로부터 신뢰를 얻었고, 2026년부터는 HBM 경\n쟁력을 실적으로 입증할 것으로 기대된다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "확정 공급계약으로 과장하지 않고 증권사 기대임을 유지하면서도 HBM 경쟁력 할인 해소의 고객 신뢰·실적 입증 조건을 직접 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4_CUSTOMER_TRUST_EARNINGS_PROOF:2026:HANA_2026_05_15",
+        "normalized_object": "HBM4 고객 신뢰 기반 2026년 HBM 경쟁력 실적 입증 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E; report dated 2026-05-15",
+        "predicate": "하나증권은 삼성전자가 HBM4에서 양호한 진행 속도로 고객 신뢰를 얻었고 2026년부터 HBM 경쟁력을 실적으로 입증할 것으로 기대했다",
+        "predicate_family": "HBM4_CUSTOMER_TRUST_EARNINGS_PROOF_OUTLOOK",
+        "primitive_tags": [
+          "HBM4",
+          "CUSTOMER_TRUST",
+          "RERATING_CONDITION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "SAMSUNG_HBM4_RERATING_CREDIBILITY",
+        "question_family_tags": [
+          "SAMSUNG_HBM4_RERATING_CREDIBILITY",
+          "HBM4_CUSTOMER_TRUST",
+          "EARNINGS_PROOF_OUTLOOK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 고객 신뢰와 2026년 실적 입증 전망",
+        "subject_id": "005930:HBM4:CUSTOMER_TRUST_EARNINGS_PROOF:2026",
+        "unit": "qualitative rerating condition",
+        "value": "HBM4 customer trust established; HBM competitiveness expected to be demonstrated in 2026 earnings"
+      },
+      {
+        "business_segment": "DS 메모리 valuation context",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "보고서가 자체적으로 자료와 정보의 정확성·완전성을 보장하지 않는다고 명시해 peer 배수, 이익 전망과 목표 valuation의 확실성을 제한한다.",
+        "exact_quote": "본 조사자료는 고객의 투자에 정보를 제공할 목적으로 작성되었으며, 어떠한 경우에도\n무단 복제 및 배포 될 수 없습니다. 또한 본 자료에 수록된 내용은 당사가 신뢰할 만한\n자료 및 정보로 얻어진 것이나, 그 정확성이나 완전성을 보장할 수 없으므로 투자자 자\n신의 판단과 책임하에 최종결정을 하시기 바랍니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "보고서의 forward peer 배수와 목표 valuation을 사실 확정치가 아닌 분석 추정으로 취급해야 한다는 문서 자체의 명시적 정보 한계다.",
+        "mechanism_scope_id": "005930:MEMORY:BROKER_VALUATION_INFORMATION_LIMITATION:2026_05_15",
+        "normalized_object": "하나증권 삼성전자 valuation 자료의 정확성·완전성 제한",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "report published 2026-05-15",
+        "predicate": "하나증권은 보고서 수록 내용의 정확성이나 완전성을 보장할 수 없다고 명시했다",
+        "predicate_family": "BROKER_RESEARCH_ACCURACY_COMPLETENESS_LIMITATION",
+        "primitive_tags": [
+          "SOURCE_LIMITATION",
+          "ACCURACY",
+          "COMPLETENESS"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "BROKER_VALUATION_SOURCE_LIMITATION",
+        "question_family_tags": [
+          "BROKER_VALUATION_SOURCE_LIMITATION",
+          "INFORMATION_CONFIDENCE",
+          "FORECAST_UNCERTAINTY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 valuation 전망에 사용된 하나증권 자료의 정확성 한계",
+        "subject_id": "005930:HANA_RESEARCH_SOURCE_LIMITATION:2026_05_15",
+        "unit": "information-quality limitation",
+        "value": "accuracy and completeness not guaranteed"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "c0644e005c5fd9c240a8ecb785790f84ffb432ab37e3bd178b7f13e5ddfff736",
+  "production_score_authority": false,
+  "prompt_hash": "4936aad646f2974e44efd3bca494cc1fc39d1cebfa93aa0fd2df3dd81e82a896",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-406f9bf9ec9a75fdebae77a466f252612228d89ca646c4a776270e64c3258922",
+  "response_id": "COLLABRESP-5a85c61bfb931c65db218f6bfe193b618434701095d29833aa603a7a15934a8f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

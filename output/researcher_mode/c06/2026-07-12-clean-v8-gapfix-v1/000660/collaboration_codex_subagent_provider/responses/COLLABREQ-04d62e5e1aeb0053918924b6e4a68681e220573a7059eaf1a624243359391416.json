@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "ac59062b5e36a2816c62ae50a12b696421c65d3251977171a8f220354f488748",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0eb279bc0269ea37c72136c9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party disclosure mirror·기사·해설·Telegram으로 original KIND_KRX/broker source provenance가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-10df31f4c75d0574b99c08fd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party disclosure mirror·기사·해설·Telegram으로 original KIND_KRX/broker source provenance가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a73838d80ca260328ac2b7aa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party disclosure mirror·기사·해설·Telegram으로 original KIND_KRX/broker source provenance가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cd2c566782be8a4b94c58d4d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "broker full-PDF provenance는 맞지만 2009~2010 historical market/industry 자료로 current 000660 valuation objective의 실행 가능한 route가 아니어서 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-2fb6594cee63e72423194825",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "broker full-PDF provenance는 맞지만 2009~2010 historical market/industry 자료로 current 000660 valuation objective의 실행 가능한 route가 아니어서 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-a54ff16543ce76d672071acf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party disclosure mirror·기사·해설·Telegram으로 original KIND_KRX/broker source provenance가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4718ac1c68bec6a5a2e6211d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party disclosure mirror·기사·해설·Telegram으로 original KIND_KRX/broker source provenance가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-affee99d5491d4f129b37992",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "broker full-PDF provenance는 맞지만 2009~2010 historical market/industry 자료로 current 000660 valuation objective의 실행 가능한 route가 아니어서 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-e2428079665eaffe96c935e9",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.97,
+        "rationale": "KIND 공식 2026-07-06 target ADR 유상증자 원문 route로 capital-allocation/희석 구조를 full-source 검증할 수 있어 material이다. snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-75c29b0d618ea0ea1b05902c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "broker full-PDF provenance는 맞지만 2009~2010 historical market/industry 자료로 current 000660 valuation objective의 실행 가능한 route가 아니어서 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-b94bc712336d6bb6fcbde8b2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party disclosure mirror·기사·해설·Telegram으로 original KIND_KRX/broker source provenance가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0a3e93130049e8f92e2381ac",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "third-party disclosure mirror·기사·해설·Telegram으로 original KIND_KRX/broker source provenance가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P4 roster 12개 exact-once; official KIND target disclosure 1개를 material route로 선정했다.",
+      "material0/nonmaterial은 source absence나 completion이 아니며 metadata/snippet은 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "b85f6e55eaa28abca555e90a9c47ad12c960bf4885aad3e89ffceb279354eff7",
+  "production_score_authority": false,
+  "prompt_hash": "cb0e90ce663b9ad2a3d971ac0e8069baff137575c3cb74c8a4b32d262d83a2e2",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-04d62e5e1aeb0053918924b6e4a68681e220573a7059eaf1a624243359391416",
+  "response_id": "COLLABRESP-c4e77b3929c9c97e6bbb4dc935926048ba1a2b3419513ff157eddd7eab53195f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

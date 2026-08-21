@@ -1,0 +1,222 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "rationale": "continuation에서 원문 전체와 앞 page의 12건을 다시 대조해 남아 있던 FY2026F·FY2027F PBR 2개와 EV/EBITDA 2개를 exact quote 기반으로 추출했다. 전체 16건이 현재 valuation_rerating objective에 직접 영향을 주는 서로 다른 사실을 포괄한다. 이후 공개된 canonical과 같은 HBM4 고객 일정·공급부족·경쟁 의미, NAND·AI Co·관세 일반론, 목표주가·매매 지시, 반복 재무표·차트 OCR·면책에는 추가로 독립된 objective-local fact가 없어 이 문서를 완료한다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타 추정재무제표의 valuation 표는 FY2026F PBR을 2.8배로 제시했다. 이는 해당 브로커의 forward point estimate이며 목표 PBR이나 다른 기관 추정치를 대체하지 않는다.",
+        "exact_quote": "Valuation 지표 (단위: 원, 배, %)\n당기순이익 -9,138 19,797 42,951 99,729 101,733\n결산(12월) 2023A 2024A 2025P 2026F 2027F\n감가상각비 13,121 11,985 13,587 15,973 15,803\nEPS -12,517 27,182 58,991 136,965 139,716\n외환손익 332 352 -1,002 -3,170 -3,170\nBPS 77,752 107,256 167,214 312,012 459,711\n종속,관계기업관련손익 0 0 2,174 0 0 EBITDAPS 8,164 49,517 84,629 214,147 215,973\n자산부채의 증감 794 -5,600 2,413 -15,128 3,379 SPS 45,008 90,924 133,443 286,339 312,109\n기타현금흐름 -831 3,261 -5,153 -5,382 -5,502 DPS 1,200 2,204 2,429 2,429 2,429\nPER -8.6 6.6 9.0 6.3 6.2\n투자활동 현금흐름 -7,335 -18,005 -34,306 -40,883 -39,061\nPBR 1.4 1.7 3.2 2.8 1.9\n투자자산 -19 -113 -135 -2,363 -436\nEV/EBITDA 17.5 4.0 6.1 3.5 3.0\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2026 forward P/B는 시장 가격과 추정 장부가치를 잇는 직접 valuation multiple이다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_PB_FY2026F",
+        "normalized_object": "유안타 2026-01 보고서의 SK하이닉스 FY2026F PBR",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "유안타는 SK하이닉스 FY2026F PBR을 2.8배로 추정했다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "MEMORY",
+          "PBR",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 FY2026F PBR",
+        "subject_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_PB_FY2026F",
+        "unit": "x",
+        "value": 2.8
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타 추정재무제표의 valuation 표는 FY2027F PBR을 1.9배로 제시했다. 이는 해당 브로커의 forward point estimate이며 목표 PBR이나 다른 기관 추정치를 대체하지 않는다.",
+        "exact_quote": "Valuation 지표 (단위: 원, 배, %)\n당기순이익 -9,138 19,797 42,951 99,729 101,733\n결산(12월) 2023A 2024A 2025P 2026F 2027F\n감가상각비 13,121 11,985 13,587 15,973 15,803\nEPS -12,517 27,182 58,991 136,965 139,716\n외환손익 332 352 -1,002 -3,170 -3,170\nBPS 77,752 107,256 167,214 312,012 459,711\n종속,관계기업관련손익 0 0 2,174 0 0 EBITDAPS 8,164 49,517 84,629 214,147 215,973\n자산부채의 증감 794 -5,600 2,413 -15,128 3,379 SPS 45,008 90,924 133,443 286,339 312,109\n기타현금흐름 -831 3,261 -5,153 -5,382 -5,502 DPS 1,200 2,204 2,429 2,429 2,429\nPER -8.6 6.6 9.0 6.3 6.2\n투자활동 현금흐름 -7,335 -18,005 -34,306 -40,883 -39,061\nPBR 1.4 1.7 3.2 2.8 1.9\n투자자산 -19 -113 -135 -2,363 -436\nEV/EBITDA 17.5 4.0 6.1 3.5 3.0\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2027 forward P/B는 장기 장부가치 증가에 따른 multiple 압축 경로를 직접 보여준다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_PB_FY2027F",
+        "normalized_object": "유안타 2026-01 보고서의 SK하이닉스 FY2027F PBR",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "유안타는 SK하이닉스 FY2027F PBR을 1.9배로 추정했다",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "MEMORY",
+          "PBR",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 FY2027F PBR",
+        "subject_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_PB_FY2027F",
+        "unit": "x",
+        "value": 1.9
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타 추정재무제표의 valuation 표는 FY2026F EV/EBITDA를 3.5배로 제시했다. 이는 해당 브로커의 forward point estimate이며 다른 기관 추정치를 대체하지 않는다.",
+        "exact_quote": "Valuation 지표 (단위: 원, 배, %)\n당기순이익 -9,138 19,797 42,951 99,729 101,733\n결산(12월) 2023A 2024A 2025P 2026F 2027F\n감가상각비 13,121 11,985 13,587 15,973 15,803\nEPS -12,517 27,182 58,991 136,965 139,716\n외환손익 332 352 -1,002 -3,170 -3,170\nBPS 77,752 107,256 167,214 312,012 459,711\n종속,관계기업관련손익 0 0 2,174 0 0 EBITDAPS 8,164 49,517 84,629 214,147 215,973\n자산부채의 증감 794 -5,600 2,413 -15,128 3,379 SPS 45,008 90,924 133,443 286,339 312,109\n기타현금흐름 -831 3,261 -5,153 -5,382 -5,502 DPS 1,200 2,204 2,429 2,429 2,429\nPER -8.6 6.6 9.0 6.3 6.2\n투자활동 현금흐름 -7,335 -18,005 -34,306 -40,883 -39,061\nPBR 1.4 1.7 3.2 2.8 1.9\n투자자산 -19 -113 -135 -2,363 -436\nEV/EBITDA 17.5 4.0 6.1 3.5 3.0\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2026 forward EV/EBITDA는 기업가치와 현금성 이익을 연결하는 직접 multiple이다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_EV_EBITDA_FY2026F",
+        "normalized_object": "유안타 2026-01 보고서의 SK하이닉스 FY2026F EV/EBITDA",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "유안타는 SK하이닉스 FY2026F EV/EBITDA를 3.5배로 추정했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "MEMORY",
+          "EV_EBITDA",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스 FY2026F EV/EBITDA",
+        "subject_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_EV_EBITDA_FY2026F",
+        "unit": "x",
+        "value": 3.5
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b77065c834c9ddcc5517847f",
+        "economic_mechanism": "유안타 추정재무제표의 valuation 표는 FY2027F EV/EBITDA를 3.0배로 제시했다. 이는 해당 브로커의 forward point estimate이며 다른 기관 추정치를 대체하지 않는다.",
+        "exact_quote": "Valuation 지표 (단위: 원, 배, %)\n당기순이익 -9,138 19,797 42,951 99,729 101,733\n결산(12월) 2023A 2024A 2025P 2026F 2027F\n감가상각비 13,121 11,985 13,587 15,973 15,803\nEPS -12,517 27,182 58,991 136,965 139,716\n외환손익 332 352 -1,002 -3,170 -3,170\nBPS 77,752 107,256 167,214 312,012 459,711\n종속,관계기업관련손익 0 0 2,174 0 0 EBITDAPS 8,164 49,517 84,629 214,147 215,973\n자산부채의 증감 794 -5,600 2,413 -15,128 3,379 SPS 45,008 90,924 133,443 286,339 312,109\n기타현금흐름 -831 3,261 -5,153 -5,382 -5,502 DPS 1,200 2,204 2,429 2,429 2,429\nPER -8.6 6.6 9.0 6.3 6.2\n투자활동 현금흐름 -7,335 -18,005 -34,306 -40,883 -39,061\nPBR 1.4 1.7 3.2 2.8 1.9\n투자자산 -19 -113 -135 -2,363 -436\nEV/EBITDA 17.5 4.0 6.1 3.5 3.0\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2027 forward EV/EBITDA는 장기 enterprise-value multiple 압축 경로를 직접 보여준다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_EV_EBITDA_FY2027F",
+        "normalized_object": "유안타 2026-01 보고서의 SK하이닉스 FY2027F EV/EBITDA",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "유안타는 SK하이닉스 FY2027F EV/EBITDA를 3.0배로 추정했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "MEMORY",
+          "EV_EBITDA",
+          "FORWARD_VALUATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION_MULTIPLE",
+          "BROKER_ESTIMATE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스 FY2027F EV/EBITDA",
+        "subject_id": "000660:MEMORY:YUANTA_JAN2026_FORWARD_EV_EBITDA_FY2027F",
+        "unit": "x",
+        "value": 3.0
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "c23fb1aa4d825fed67180295b2d60df60009de0a9b067ef1701f27e44d96fa6b",
+  "production_score_authority": false,
+  "prompt_hash": "9325186202ad69f5e2ebb8482237b72bba8b85f8a76109391e81e8b97721080d",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2ae822c16cb8d64b0ee02dd314cd727067689fbcd1f9e69d8d4fcb87ae7ddf8d",
+  "response_id": "COLLABRESP-3a4244a1a24e41617c80c1329d058289bb12cc923caab478cb77e1db714e93f5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

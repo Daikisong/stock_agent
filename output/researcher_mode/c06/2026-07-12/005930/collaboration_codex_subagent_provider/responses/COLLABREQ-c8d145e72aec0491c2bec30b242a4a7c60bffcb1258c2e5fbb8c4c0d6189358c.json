@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-00e67e2a2578cd57ba387262",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer financial-report component has earnings-release provenance, but its old reporting period is superseded and immaterial to the current EPS/FCF mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-01d76c06fbedd1460bee269d",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer financial-report component has earnings-release provenance, but its old reporting period is superseded and immaterial to the current EPS/FCF mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-026db68f91c594a63482713d",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified issuer event or presentation route has the requested presentation provenance, but its historical period or subject is immaterial to the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-02ae9216cf267e9231bec903",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0,
+        "rationale": "The route is unverified, generic, or not an eligible earnings, cash-flow, or issuer-presentation source for the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-05ce34c5d3a52bb8934ae87e",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer financial-report component has earnings-release provenance, but its old reporting period is superseded and immaterial to the current EPS/FCF mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-06736344229011b1c6542958",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified issuer event or presentation route has the requested presentation provenance, but its historical period or subject is immaterial to the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-072c53233b0e74e52bc263d4",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer document has cash-flow or consolidated-statement provenance, but its old reporting period is superseded and immaterial to current earnings conversion."
+      },
+      {
+        "candidate_id": "SGCAND-08e8e0573d166844d1791a11",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified issuer event or presentation route has the requested presentation provenance, but its historical period or subject is immaterial to the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-0aecd18c3ba9ce62318bb2d9",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer document has cash-flow or consolidated-statement provenance, but its old reporting period is superseded and immaterial to current earnings conversion."
+      },
+      {
+        "candidate_id": "SGCAND-0e8c0bb82af1a5fcdbb59160",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified issuer event or presentation route has the requested presentation provenance, but its historical period or subject is immaterial to the current objective."
+      },
+      {
+        "candidate_id": "SGCAND-1133b07474dbd6ab08cc5204",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer financial-report component has earnings-release provenance, but its old reporting period is superseded and immaterial to the current EPS/FCF mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-12f46f7c4ee680fb7042eaf2",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer document has cash-flow or consolidated-statement provenance, but its old reporting period is superseded and immaterial to current earnings conversion."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Every candidate in this transport roster was classified. No candidate is materially current; titles, snippets, and reference metadata were not promoted to evidence."
+    ]
+  },
+  "payload_hash": "28936d5612bc777ba25f3e5032445c052eeae8424ad2f19cf5644cddc2738c4a",
+  "production_score_authority": false,
+  "prompt_hash": "a2a14a4322eaf8883a694f71f990d57ee76d58e16d1c1815911e0b394f4f4736",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c8d145e72aec0491c2bec30b242a4a7c60bffcb1258c2e5fbb8c4c0d6189358c",
+  "response_id": "COLLABRESP-21927211e747aed2a364fd0ce2f822d99e79c887609a8e78fd80b4eb47168517",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

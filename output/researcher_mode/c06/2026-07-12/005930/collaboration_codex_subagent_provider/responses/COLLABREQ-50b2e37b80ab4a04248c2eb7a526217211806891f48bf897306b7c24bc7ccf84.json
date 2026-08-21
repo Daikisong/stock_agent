@@ -1,0 +1,55 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "검색 결과의 direct PDF만 수집하지 말고 발간일·보고서명·작성기관이 표시된 원 리서치센터 landing 또는 publication catalog와 전체 문서를 한 경로로 확인합니다.",
+      "peer 자료는 Samsung Electronics 포함 여부와 동일 기준의 peer roster·multiple 통계를 우선하며, 발간일 불명이나 snippet-only 결과는 재사용하지 않습니다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 peer group comparison 리서치센터 발간일 2026",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "직전 peer 검색은 direct PDF의 발간일 미확인과 snippet-only fetch 실패가 남았으므로, 삼성전자 peer comparison 보고서의 날짜가 표시된 원 증권사 리서치센터 landing 또는 catalog 페이지와 연결된 전체 PDF를 찾습니다. 2026-07-12 이전 발간, peer roster, 동일 기간 valuation 배수와 비교 통계가 모두 확인돼야 하며 날짜 없는 direct PDF나 검색 snippet만으로는 공백을 닫지 않습니다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "Samsung Electronics peer average multiple research publication 2026",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "영문 원문에서 Samsung Electronics의 peer average multiple을 제시한 보고서와 공식 publication record를 함께 발견하기 위한 독립 경로입니다. cutoff 이전 발간일, 비교기업 명단, 기준일·forward 기간과 평균·중앙값·범위를 원문에서 확인하고, 단순 relative-valuation 문구나 산업 평균만 있는 자료는 PEER_BAND 해결로 보지 않습니다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF",
+          "INDUSTRY_REPORT"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "현재 PEER_BAND의 LLM fact-extractable role 계약이 비어 있으므로 새 문서는 downstream 구조화 계약이 수용하기 전까지 source candidate입니다.",
+      "발간일이 cutoff 이전임을 검증하지 못하거나 전체 문서에서 peer roster와 비교 통계를 재현하지 못하면 이번 route도 gap을 해결하지 못합니다."
+    ]
+  },
+  "payload_hash": "5a20445960c00b5007a3dc2b340bb22ab980b225270fead1592f0a4e7f2d6ddf",
+  "production_score_authority": false,
+  "prompt_hash": "c6cf512ad56ee3b8113e0206a7bc1113687ab71588362e77311d8aaa4e54ebb4",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-50b2e37b80ab4a04248c2eb7a526217211806891f48bf897306b7c24bc7ccf84",
+  "response_id": "COLLABRESP-c8f9982b64301e8961f831ef818494e5ae920ce07a4cf20ddf7d5ae5f4f731ff",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

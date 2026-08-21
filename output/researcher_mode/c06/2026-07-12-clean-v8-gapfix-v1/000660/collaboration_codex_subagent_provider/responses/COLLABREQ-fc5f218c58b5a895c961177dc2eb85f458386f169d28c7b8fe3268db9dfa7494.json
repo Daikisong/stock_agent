@@ -1,0 +1,609 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "The June KIND document has ten previously accepted issuer-financing facts and no additional distinct current-objective atom remains.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "The current broker document has seventy-one previously accepted target facts and is exhausted for additional distinct current-objective atoms in this continuation.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "The final KIND filing has twenty-two previously accepted issuer-wide financing and CAPEX facts and no additional distinct current-objective atom remains.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Twelve new historical consolidated EBITDA, EBITDA-growth, and pretax-profit forecasts are proposed and explicitly marked SUPERSEDED; further target-direct rows remain after the page cap.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 2Q24F 연결 EBITDA를 7,562십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369\nQoQ/YoY RR RR RR TTB 734.0 48.9 38.6 9.6 -45.1 TTR TTB 23.9\nDRAM -1,476 -91 607 1,617 2,654 3,995 5,564 6,451 9,478 658 18,665 23,395\nNAND -1,835 -2,689 -2,114 -1,169 282 416 516 206 -2,092 -7,807 1,420 1,525\n영업이익률 -66.9 -39.4 -19.8 3.1 23.2 28.3 33.5 33.9 15.3 -23.6 30.4 30.1\nDRAM -50.0 -2.0 10.0 22.0 35.0 40.4 46.0 48.9 33.4 3.1 43.6 43.8\nNAND -109.3 -118.7 -89.7 -35.7 6.5 8.8 10.2 3.8 -14.7 -81.5 7.3 6.1\nEBITDA 155 612 1,541 3,582 6,073 7,562 9,241 9,826 20,945 5,889 32,702 37,686",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a period-specific historical broker forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical 2Q24F consolidated EBITDA forecast of KRW 7,562 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F; report published 2024-05-16",
+        "predicate": "Historical 2Q24F consolidated EBITDA forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_FORECAST",
+        "primitive_tags": [
+          "EBITDA",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_FORECAST",
+        "question_family_tags": [
+          "EBITDA",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2Q24F 연결 EBITDA 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA:2Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 7562
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 3Q24F 연결 EBITDA를 9,241십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369\nQoQ/YoY RR RR RR TTB 734.0 48.9 38.6 9.6 -45.1 TTR TTB 23.9\nDRAM -1,476 -91 607 1,617 2,654 3,995 5,564 6,451 9,478 658 18,665 23,395\nNAND -1,835 -2,689 -2,114 -1,169 282 416 516 206 -2,092 -7,807 1,420 1,525\n영업이익률 -66.9 -39.4 -19.8 3.1 23.2 28.3 33.5 33.9 15.3 -23.6 30.4 30.1\nDRAM -50.0 -2.0 10.0 22.0 35.0 40.4 46.0 48.9 33.4 3.1 43.6 43.8\nNAND -109.3 -118.7 -89.7 -35.7 6.5 8.8 10.2 3.8 -14.7 -81.5 7.3 6.1\nEBITDA 155 612 1,541 3,582 6,073 7,562 9,241 9,826 20,945 5,889 32,702 37,686",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a period-specific historical broker forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical 3Q24F consolidated EBITDA forecast of KRW 9,241 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "3Q24F; report published 2024-05-16",
+        "predicate": "Historical 3Q24F consolidated EBITDA forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_FORECAST",
+        "primitive_tags": [
+          "EBITDA",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_FORECAST",
+        "question_family_tags": [
+          "EBITDA",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q24F 연결 EBITDA 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA:3Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 9241
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 4Q24F 연결 EBITDA를 9,826십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369\nQoQ/YoY RR RR RR TTB 734.0 48.9 38.6 9.6 -45.1 TTR TTB 23.9\nDRAM -1,476 -91 607 1,617 2,654 3,995 5,564 6,451 9,478 658 18,665 23,395\nNAND -1,835 -2,689 -2,114 -1,169 282 416 516 206 -2,092 -7,807 1,420 1,525\n영업이익률 -66.9 -39.4 -19.8 3.1 23.2 28.3 33.5 33.9 15.3 -23.6 30.4 30.1\nDRAM -50.0 -2.0 10.0 22.0 35.0 40.4 46.0 48.9 33.4 3.1 43.6 43.8\nNAND -109.3 -118.7 -89.7 -35.7 6.5 8.8 10.2 3.8 -14.7 -81.5 7.3 6.1\nEBITDA 155 612 1,541 3,582 6,073 7,562 9,241 9,826 20,945 5,889 32,702 37,686",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a period-specific historical broker forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical 4Q24F consolidated EBITDA forecast of KRW 9,826 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "4Q24F; report published 2024-05-16",
+        "predicate": "Historical 4Q24F consolidated EBITDA forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_FORECAST",
+        "primitive_tags": [
+          "EBITDA",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_FORECAST",
+        "question_family_tags": [
+          "EBITDA",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q24F 연결 EBITDA 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA:4Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 9826
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 FY2024F 연결 EBITDA를 32,702십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369\nQoQ/YoY RR RR RR TTB 734.0 48.9 38.6 9.6 -45.1 TTR TTB 23.9\nDRAM -1,476 -91 607 1,617 2,654 3,995 5,564 6,451 9,478 658 18,665 23,395\nNAND -1,835 -2,689 -2,114 -1,169 282 416 516 206 -2,092 -7,807 1,420 1,525\n영업이익률 -66.9 -39.4 -19.8 3.1 23.2 28.3 33.5 33.9 15.3 -23.6 30.4 30.1\nDRAM -50.0 -2.0 10.0 22.0 35.0 40.4 46.0 48.9 33.4 3.1 43.6 43.8\nNAND -109.3 -118.7 -89.7 -35.7 6.5 8.8 10.2 3.8 -14.7 -81.5 7.3 6.1\nEBITDA 155 612 1,541 3,582 6,073 7,562 9,241 9,826 20,945 5,889 32,702 37,686",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a period-specific historical broker forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F consolidated EBITDA forecast of KRW 32,702 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "Historical FY2024F consolidated EBITDA forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_FORECAST",
+        "primitive_tags": [
+          "EBITDA",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_FORECAST",
+        "question_family_tags": [
+          "EBITDA",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2024F 연결 EBITDA 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 32702
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 FY2025F 연결 EBITDA를 37,686십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369\nQoQ/YoY RR RR RR TTB 734.0 48.9 38.6 9.6 -45.1 TTR TTB 23.9\nDRAM -1,476 -91 607 1,617 2,654 3,995 5,564 6,451 9,478 658 18,665 23,395\nNAND -1,835 -2,689 -2,114 -1,169 282 416 516 206 -2,092 -7,807 1,420 1,525\n영업이익률 -66.9 -39.4 -19.8 3.1 23.2 28.3 33.5 33.9 15.3 -23.6 30.4 30.1\nDRAM -50.0 -2.0 10.0 22.0 35.0 40.4 46.0 48.9 33.4 3.1 43.6 43.8\nNAND -109.3 -118.7 -89.7 -35.7 6.5 8.8 10.2 3.8 -14.7 -81.5 7.3 6.1\nEBITDA 155 612 1,541 3,582 6,073 7,562 9,241 9,826 20,945 5,889 32,702 37,686",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a period-specific historical broker forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F consolidated EBITDA forecast of KRW 37,686 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "Historical FY2025F consolidated EBITDA forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_FORECAST",
+        "primitive_tags": [
+          "EBITDA",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_FORECAST",
+        "question_family_tags": [
+          "EBITDA",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025F 연결 EBITDA 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 37686
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 표는 2Q24F 연결 EBITDA 증가율을 24.5%로 전망했다. 표의 분기 값은 QoQ, 연간 값은 YoY이며, 모두 과거 브로커 전망으로 SUPERSEDED다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369\nQoQ/YoY RR RR RR TTB 734.0 48.9 38.6 9.6 -45.1 TTR TTB 23.9\nDRAM -1,476 -91 607 1,617 2,654 3,995 5,564 6,451 9,478 658 18,665 23,395\nNAND -1,835 -2,689 -2,114 -1,169 282 416 516 206 -2,092 -7,807 1,420 1,525\n영업이익률 -66.9 -39.4 -19.8 3.1 23.2 28.3 33.5 33.9 15.3 -23.6 30.4 30.1\nDRAM -50.0 -2.0 10.0 22.0 35.0 40.4 46.0 48.9 33.4 3.1 43.6 43.8\nNAND -109.3 -118.7 -89.7 -35.7 6.5 8.8 10.2 3.8 -14.7 -81.5 7.3 6.1\nEBITDA 155 612 1,541 3,582 6,073 7,562 9,241 9,826 20,945 5,889 32,702 37,686\nQoQ/YoY -91.4 295.7 151.9 132.5 69.5 24.5 22.2 6.3 -9.2 -71.9 455.3 15.2",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a period-specific historical broker forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical 2Q24F consolidated EBITDA growth forecast of 24.5 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F; report published 2024-05-16",
+        "predicate": "Historical 2Q24F consolidated EBITDA growth forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_FORECAST",
+        "primitive_tags": [
+          "EBITDA_GROWTH",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_FORECAST",
+        "question_family_tags": [
+          "EBITDA_GROWTH",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2Q24F 연결 EBITDA 증가율 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_GROWTH:2Q24F:MIRAE_2024-05-16",
+        "unit": "percent QoQ",
+        "value": 24.5
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 표는 3Q24F 연결 EBITDA 증가율을 22.2%로 전망했다. 표의 분기 값은 QoQ, 연간 값은 YoY이며, 모두 과거 브로커 전망으로 SUPERSEDED다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369\nQoQ/YoY RR RR RR TTB 734.0 48.9 38.6 9.6 -45.1 TTR TTB 23.9\nDRAM -1,476 -91 607 1,617 2,654 3,995 5,564 6,451 9,478 658 18,665 23,395\nNAND -1,835 -2,689 -2,114 -1,169 282 416 516 206 -2,092 -7,807 1,420 1,525\n영업이익률 -66.9 -39.4 -19.8 3.1 23.2 28.3 33.5 33.9 15.3 -23.6 30.4 30.1\nDRAM -50.0 -2.0 10.0 22.0 35.0 40.4 46.0 48.9 33.4 3.1 43.6 43.8\nNAND -109.3 -118.7 -89.7 -35.7 6.5 8.8 10.2 3.8 -14.7 -81.5 7.3 6.1\nEBITDA 155 612 1,541 3,582 6,073 7,562 9,241 9,826 20,945 5,889 32,702 37,686\nQoQ/YoY -91.4 295.7 151.9 132.5 69.5 24.5 22.2 6.3 -9.2 -71.9 455.3 15.2",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a period-specific historical broker forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical 3Q24F consolidated EBITDA growth forecast of 22.2 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "3Q24F; report published 2024-05-16",
+        "predicate": "Historical 3Q24F consolidated EBITDA growth forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_FORECAST",
+        "primitive_tags": [
+          "EBITDA_GROWTH",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_FORECAST",
+        "question_family_tags": [
+          "EBITDA_GROWTH",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q24F 연결 EBITDA 증가율 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_GROWTH:3Q24F:MIRAE_2024-05-16",
+        "unit": "percent QoQ",
+        "value": 22.2
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 표는 4Q24F 연결 EBITDA 증가율을 6.3%로 전망했다. 표의 분기 값은 QoQ, 연간 값은 YoY이며, 모두 과거 브로커 전망으로 SUPERSEDED다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369\nQoQ/YoY RR RR RR TTB 734.0 48.9 38.6 9.6 -45.1 TTR TTB 23.9\nDRAM -1,476 -91 607 1,617 2,654 3,995 5,564 6,451 9,478 658 18,665 23,395\nNAND -1,835 -2,689 -2,114 -1,169 282 416 516 206 -2,092 -7,807 1,420 1,525\n영업이익률 -66.9 -39.4 -19.8 3.1 23.2 28.3 33.5 33.9 15.3 -23.6 30.4 30.1\nDRAM -50.0 -2.0 10.0 22.0 35.0 40.4 46.0 48.9 33.4 3.1 43.6 43.8\nNAND -109.3 -118.7 -89.7 -35.7 6.5 8.8 10.2 3.8 -14.7 -81.5 7.3 6.1\nEBITDA 155 612 1,541 3,582 6,073 7,562 9,241 9,826 20,945 5,889 32,702 37,686\nQoQ/YoY -91.4 295.7 151.9 132.5 69.5 24.5 22.2 6.3 -9.2 -71.9 455.3 15.2",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a period-specific historical broker forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical 4Q24F consolidated EBITDA growth forecast of 6.3 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "4Q24F; report published 2024-05-16",
+        "predicate": "Historical 4Q24F consolidated EBITDA growth forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_FORECAST",
+        "primitive_tags": [
+          "EBITDA_GROWTH",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_FORECAST",
+        "question_family_tags": [
+          "EBITDA_GROWTH",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q24F 연결 EBITDA 증가율 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_GROWTH:4Q24F:MIRAE_2024-05-16",
+        "unit": "percent QoQ",
+        "value": 6.3
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 표는 FY2024F 연결 EBITDA 증가율을 455.3%로 전망했다. 표의 분기 값은 QoQ, 연간 값은 YoY이며, 모두 과거 브로커 전망으로 SUPERSEDED다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369\nQoQ/YoY RR RR RR TTB 734.0 48.9 38.6 9.6 -45.1 TTR TTB 23.9\nDRAM -1,476 -91 607 1,617 2,654 3,995 5,564 6,451 9,478 658 18,665 23,395\nNAND -1,835 -2,689 -2,114 -1,169 282 416 516 206 -2,092 -7,807 1,420 1,525\n영업이익률 -66.9 -39.4 -19.8 3.1 23.2 28.3 33.5 33.9 15.3 -23.6 30.4 30.1\nDRAM -50.0 -2.0 10.0 22.0 35.0 40.4 46.0 48.9 33.4 3.1 43.6 43.8\nNAND -109.3 -118.7 -89.7 -35.7 6.5 8.8 10.2 3.8 -14.7 -81.5 7.3 6.1\nEBITDA 155 612 1,541 3,582 6,073 7,562 9,241 9,826 20,945 5,889 32,702 37,686\nQoQ/YoY -91.4 295.7 151.9 132.5 69.5 24.5 22.2 6.3 -9.2 -71.9 455.3 15.2",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a period-specific historical broker forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F consolidated EBITDA growth forecast of 455.3 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "Historical FY2024F consolidated EBITDA growth forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_FORECAST",
+        "primitive_tags": [
+          "EBITDA_GROWTH",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_FORECAST",
+        "question_family_tags": [
+          "EBITDA_GROWTH",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2024F 연결 EBITDA 증가율 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_GROWTH:FY2024F:MIRAE_2024-05-16",
+        "unit": "percent YoY",
+        "value": 455.3
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 표는 FY2025F 연결 EBITDA 증가율을 15.2%로 전망했다. 표의 분기 값은 QoQ, 연간 값은 YoY이며, 모두 과거 브로커 전망으로 SUPERSEDED다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369\nQoQ/YoY RR RR RR TTB 734.0 48.9 38.6 9.6 -45.1 TTR TTB 23.9\nDRAM -1,476 -91 607 1,617 2,654 3,995 5,564 6,451 9,478 658 18,665 23,395\nNAND -1,835 -2,689 -2,114 -1,169 282 416 516 206 -2,092 -7,807 1,420 1,525\n영업이익률 -66.9 -39.4 -19.8 3.1 23.2 28.3 33.5 33.9 15.3 -23.6 30.4 30.1\nDRAM -50.0 -2.0 10.0 22.0 35.0 40.4 46.0 48.9 33.4 3.1 43.6 43.8\nNAND -109.3 -118.7 -89.7 -35.7 6.5 8.8 10.2 3.8 -14.7 -81.5 7.3 6.1\nEBITDA 155 612 1,541 3,582 6,073 7,562 9,241 9,826 20,945 5,889 32,702 37,686\nQoQ/YoY -91.4 295.7 151.9 132.5 69.5 24.5 22.2 6.3 -9.2 -71.9 455.3 15.2",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a period-specific historical broker forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F consolidated EBITDA growth forecast of 15.2 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "Historical FY2025F consolidated EBITDA growth forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_FORECAST",
+        "primitive_tags": [
+          "EBITDA_GROWTH",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_FORECAST",
+        "question_family_tags": [
+          "EBITDA_GROWTH",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025F 연결 EBITDA 증가율 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_GROWTH:FY2025F:MIRAE_2024-05-16",
+        "unit": "percent YoY",
+        "value": 15.2
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 2Q24F 연결 세전이익을 4,404십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369\nQoQ/YoY RR RR RR TTB 734.0 48.9 38.6 9.6 -45.1 TTR TTB 23.9\nDRAM -1,476 -91 607 1,617 2,654 3,995 5,564 6,451 9,478 658 18,665 23,395\nNAND -1,835 -2,689 -2,114 -1,169 282 416 516 206 -2,092 -7,807 1,420 1,525\n영업이익률 -66.9 -39.4 -19.8 3.1 23.2 28.3 33.5 33.9 15.3 -23.6 30.4 30.1\nDRAM -50.0 -2.0 10.0 22.0 35.0 40.4 46.0 48.9 33.4 3.1 43.6 43.8\nNAND -109.3 -118.7 -89.7 -35.7 6.5 8.8 10.2 3.8 -14.7 -81.5 7.3 6.1\nEBITDA 155 612 1,541 3,582 6,073 7,562 9,241 9,826 20,945 5,889 32,702 37,686\nQoQ/YoY -91.4 295.7 151.9 132.5 69.5 24.5 22.2 6.3 -9.2 -71.9 455.3 15.2\n세전이익 -3,525 -3,788 -2,470 -1,875 2,373 4,404 5,423 5,968 4,003 -11,658 18,168 21,970",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a period-specific historical broker forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical 2Q24F consolidated pretax profit forecast of KRW 4,404 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F; report published 2024-05-16",
+        "predicate": "Historical 2Q24F consolidated pretax profit forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_PRETAX_PROFIT_FORECAST",
+        "primitive_tags": [
+          "PRETAX_PROFIT",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_PRETAX_PROFIT_FORECAST",
+        "question_family_tags": [
+          "PRETAX_PROFIT",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2Q24F 연결 세전이익 전망",
+        "subject_id": "000660:CONSOLIDATED_PRETAX_PROFIT:2Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 4404
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 3Q24F 연결 세전이익을 5,423십억원으로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355\nNAND 1,679 2,265 2,357 3,279 4,351 4,717 5,057 5,396 14,230 9,580 19,520 24,922\n영업이익 -3,402 -2,882 -1,792 346 2,886 4,297 5,954 6,527 6,809 -7,730 19,665 24,369\nQoQ/YoY RR RR RR TTB 734.0 48.9 38.6 9.6 -45.1 TTR TTB 23.9\nDRAM -1,476 -91 607 1,617 2,654 3,995 5,564 6,451 9,478 658 18,665 23,395\nNAND -1,835 -2,689 -2,114 -1,169 282 416 516 206 -2,092 -7,807 1,420 1,525\n영업이익률 -66.9 -39.4 -19.8 3.1 23.2 28.3 33.5 33.9 15.3 -23.6 30.4 30.1\nDRAM -50.0 -2.0 10.0 22.0 35.0 40.4 46.0 48.9 33.4 3.1 43.6 43.8\nNAND -109.3 -118.7 -89.7 -35.7 6.5 8.8 10.2 3.8 -14.7 -81.5 7.3 6.1\nEBITDA 155 612 1,541 3,582 6,073 7,562 9,241 9,826 20,945 5,889 32,702 37,686\nQoQ/YoY -91.4 295.7 151.9 132.5 69.5 24.5 22.2 6.3 -9.2 -71.9 455.3 15.2\n세전이익 -3,525 -3,788 -2,470 -1,875 2,373 4,404 5,423 5,968 4,003 -11,658 18,168 21,970",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a period-specific historical broker forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical 3Q24F consolidated pretax profit forecast of KRW 5,423 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "3Q24F; report published 2024-05-16",
+        "predicate": "Historical 3Q24F consolidated pretax profit forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_PRETAX_PROFIT_FORECAST",
+        "primitive_tags": [
+          "PRETAX_PROFIT",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_PRETAX_PROFIT_FORECAST",
+        "question_family_tags": [
+          "PRETAX_PROFIT",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q24F 연결 세전이익 전망",
+        "subject_id": "000660:CONSOLIDATED_PRETAX_PROFIT:3Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 5423
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact transport-page upper bound was reached after strict source-order deduplication. Further distinct target-direct historical broker atoms remain only in SGDOC-f87582d14c66af24ff78d6d8."
+    ]
+  },
+  "payload_hash": "129a8b7f7880ba6fe9e3a391a7970057bee32bcd4903bce6e658dae459f720ba",
+  "production_score_authority": false,
+  "prompt_hash": "d6832392bad57ef274038ee6a365a810d20f8da7ed0190896e1b8ba04d80f524",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fc5f218c58b5a895c961177dc2eb85f458386f169d28c7b8fe3268db9dfa7494",
+  "response_id": "COLLABRESP-1e1f73f63994afbe3136509c78e955a24e7ac39cdc6a39f9fbeb04a67ab41d75",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

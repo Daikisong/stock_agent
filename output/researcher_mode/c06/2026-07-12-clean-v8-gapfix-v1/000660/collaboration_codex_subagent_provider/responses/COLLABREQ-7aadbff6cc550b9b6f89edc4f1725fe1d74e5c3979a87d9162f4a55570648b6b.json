@@ -1,0 +1,52 @@
+{
+  "output_schema_hash": "294ab39b8e207d82a68e8a1b9ce2467d07cbb439633b0a0583c372d12b5a659b",
+  "payload": {
+    "allowed_range": [
+      16.0,
+      18.5
+    ],
+    "anchor_comparisons": [
+      "positive anchor CANCH-2fb324f77e56e0e487863c17보다 HBM-only FCF 분리가 약하다",
+      "counter anchor CANCH-17745cd4887afd21639e9dd6보다는 actual 이익과 현금흐름이 강하다"
+    ],
+    "counter_fact_ids": [
+      "EFACT-22b3c14ea08f7a3f6c58b170"
+    ],
+    "disagreements": [
+      "분석가보다 HBM-only 귀속 부재와 CAPEX 부담을 더 크게 본다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-2fb324f77e56e0e487863c17",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 17.25,
+    "rationale": "CAPEX 증가와 HBM-only 현금전환 미분리를 우선 반영하되 actual 현금창출을 0으로 보지 않는다.",
+    "support_fact_ids": [
+      "EFACT-0295af0d92028218f77266f2",
+      "EFACT-d2e799df4d980691c6707a9e"
+    ],
+    "why_not_higher": "대규모 CAPEX와 HBM-only margin·FCF bridge가 분리되지 않았다.",
+    "why_not_lower": "공시 actual 순이익과 영업현금흐름 확대가 확인된다."
+  },
+  "payload_hash": "eec761902f0b35d9c1a020879b5295aa3b10b194da535fafb5a0f019e8a2ea58",
+  "production_score_authority": false,
+  "prompt_hash": "138650edced27b9b3160810256d4c191a4c5a2ab7b2056cb7abd80d5eca766b3",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7aadbff6cc550b9b6f89edc4f1725fe1d74e5c3979a87d9162f4a55570648b6b",
+  "response_id": "COLLABRESP-bba1060f7740ec0fcad43263a0b9698684225db689eca576c317d83367a6bec0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

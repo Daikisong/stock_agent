@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-8ed346960bf4942ba072d556",
+        "rationale": "This English 1Q 2025 issuer presentation duplicates current canonical facts extracted from the corresponding issuer disclosure: memory sales of KRW 19.1 trillion with QoQ/YoY changes and the earnings drag from ASP erosion and HBM sales decline caused by advanced-chip export controls. Issuer-wide cash-flow and balance-sheet totals cannot be attributed to the memory mechanism under the sole eps_fcf_explosion objective, and the remaining forward statements are historical by the current as-of date.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "f11ead16a1e1728c92893e8ded18c9377cd8593d6f64787459dba9b0a8957a51",
+  "production_score_authority": false,
+  "prompt_hash": "f2e4b52c322fef13a016e5cdcb9c6a7d59249980092d2bc5b312798612d95059",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-167f5a5593b9f9b5989914208bf97177f768d26bdd7ca456920073c44cec7fac",
+  "response_id": "COLLABRESP-155b6fb35bdc7cf532801430dde31349954da73bc70ac9ac3aa61749d4130341",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

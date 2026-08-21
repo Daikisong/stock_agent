@@ -1,0 +1,44 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "STRUCTCAND-84b75e6e8e5198419ecd39ec의 대신 1110739 전체 PUBLIC_BROKER_PDF를 한 번만 취득해 valuation 배수·기간·분모, 이익·주주환원 연결과 반대 위험을 원문 기준으로 검증한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "SK하이닉스 대신 1110739 1F00620260707_000660_a.pdf 슈퍼 모멘텀",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "2026-07-07자 대신 '슈퍼 모멘텀' STRUCTCAND-84b75e6e8e5198419ecd39ec에만 결박된 신규 원문 경로다. 기존 무결과인 LS 1108519, 미래에셋 1104231, KB 1111523과 발행사·보고서 ID·파일명·제목이 모두 다르다. 후보 metadata와 요약은 발견 단서일 뿐 증거가 아니므로 전체 PDF를 취득한 뒤 발행일·종목·보고서 ID·파일명을 검증하고, 기간·분모가 있는 현재/선행 배수, 이익 및 주주환원과 valuation 연결, 반대 위험의 정확한 원문만 추출해야 한다. 제3자 추정은 issuer/customer-official DURABLE_VISIBILITY 또는 FORWARD_GUIDANCE를 대체하지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "LS 1108519, 미래에셋 1104231, KB 1111523의 무결과는 자료 부재를 증명하지 않지만 동일 보고서·번역판·동의어 경로는 반복하지 않는다.",
+      "PUBLIC_BROKER_PDF 원문이 valuation 메커니즘을 보강하더라도 issuer/customer-official만 허용되는 DURABLE_VISIBILITY 역할은 별도의 공백으로 남는다."
+    ]
+  },
+  "payload_hash": "299268f70f7ae6e60faaa8ff4b333a70803e8b3a23dae0372b6b41eb665da6fe",
+  "production_score_authority": false,
+  "prompt_hash": "0287364674adc78564fe2188061e2af6adaf46978f9db85f641c71fa920af71e",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-80fc759b547cc5b4a9531aefc01579af7f43762b6f23342ae1c935497fcbcd65",
+  "response_id": "COLLABRESP-060113d86a0b47317289715a471e1e89336c660f05544703efb046ab8f53f369",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

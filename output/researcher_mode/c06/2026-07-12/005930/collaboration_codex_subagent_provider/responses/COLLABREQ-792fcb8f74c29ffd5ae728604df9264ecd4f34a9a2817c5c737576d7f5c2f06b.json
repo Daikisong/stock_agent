@@ -1,0 +1,133 @@
+{
+  "output_schema_hash": "dcacac7525165c4a7cf6c62e9a61fead32dbc2bbc589a11e5854297092ec9b0b",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-6407e09fc4449a3eefc55d2b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "컷오프 뒤 시점 또는 컷오프 뒤 자료를 가리키는 discovery metadata여서 as-of 재현성에 사용할 수 없다. 요청된 현재 source route로 매칭하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-af91b5cb7e7410cd37ece463",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.82,
+        "rationale": "삼성전자 반도체 공식 tech blog의 NVIDIA GTC 2026 세션 문서로 HBM과 system-level integration의 기술 맥락을 확인할 직접 issuer route다. 제품 채택·qualification·구매 의무는 별도이므로 full fetch가 필요하다."
+      },
+      {
+        "candidate_id": "SGCAND-4133d7610e56660288379660",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 kitpa.org의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-8b76279793423f2b70920a73",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "행사·학회·일반 기술 페이지의 metadata만으로는 삼성전자 HBM4 integration 또는 qualification 문서를 식별할 수 없고 URL 소유자도 요청된 canonical family를 뒷받침하지 않는다. material이 아니며 full-source route로 선택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-676c150485630b8ce7194329",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "2Q26 발표 전 예상·일정·관전 포인트를 다룬 제3자 경로로 최신 actual 원문이 아니다. 요청된 KIND·OPENDART·issuer family와 일치하지 않으며 snippet 전망을 근거로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b9705d5cc99e10a802f306bb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "행사·학회·일반 기술 페이지의 metadata만으로는 삼성전자 HBM4 integration 또는 qualification 문서를 식별할 수 없고 URL 소유자도 요청된 canonical family를 뒷받침하지 않는다. material이 아니며 full-source route로 선택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-4476900afa3186304eefef5d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "행사·학회·일반 기술 페이지의 metadata만으로는 삼성전자 HBM4 integration 또는 qualification 문서를 식별할 수 없고 URL 소유자도 요청된 canonical family를 뒷받침하지 않는다. material이 아니며 full-source route로 선택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c5a335c43bb113d8a135bb40",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.msn.com의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-110c6fc4f3d870919276e2e5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "이전 분기·연도의 삼성전자 실적 또는 전망을 다루어 최신 2Q26 actual을 확인하는 현재 목적을 supersede하지 못한다. 또한 제3자 경로로 요청된 KIND·OPENDART·issuer family와 일치하지 않아 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-953b0c66035b6b2959ff5b90",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "행사·학회·일반 기술 페이지의 metadata만으로는 삼성전자 HBM4 integration 또는 qualification 문서를 식별할 수 없고 URL 소유자도 요청된 canonical family를 뒷받침하지 않는다. material이 아니며 full-source route로 선택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-fb40725bc1b650d32d0ff0cd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "삼성전자 실적을 언급하지만 www.ytn.co.kr의 제3자 기사·재전달 경로이며, 이 query가 요청한 KIND·OPENDART·issuer 원문 family에는 해당하지 않는다. 관련 snippet을 evidence로 승격하지 않고 material에서 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-cee41a1dd5a7bb917732811e",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.99,
+        "rationale": "KIND의 삼성전자 2026년 2분기 연결 영업(잠정)실적 정정 공시로, 요청된 최신 official actual의 직접 원문이다. 정정 전후 수치와 접수일을 full fetch로 확인해야 하며 세부 사업부 실적은 이 공시만으로 추정하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Conference programs and third-party earnings retellings that did not match a requested canonical family were classified non-material.",
+      "Selected issuer technical material must be read in full; technical integration does not establish a customer purchase obligation."
+    ]
+  },
+  "payload_hash": "67e648282a32a99c3f2f48e28f6d2e0db0a5dfee4eb899f1a73521ebad5dff9d",
+  "production_score_authority": false,
+  "prompt_hash": "1bddc123236029a24ad40400429bc76d0d29b6e94f4731b240ff2a5add7fecfb",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-792fcb8f74c29ffd5ae728604df9264ecd4f34a9a2817c5c737576d7f5c2f06b",
+  "response_id": "COLLABRESP-a34fe1425e88872f6ee5e24aa6867352f15775520394100f891f97065f588b92",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

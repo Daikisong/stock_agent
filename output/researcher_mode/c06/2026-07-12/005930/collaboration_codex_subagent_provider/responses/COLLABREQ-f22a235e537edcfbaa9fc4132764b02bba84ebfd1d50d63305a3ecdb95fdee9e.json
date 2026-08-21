@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      11.2,
+      14.5
+    ],
+    "anchor_comparisons": [
+      "Current evidence is stronger than the counter anchor midpoint of 11.52 because it includes observed 2026-Q1 memory revenue, growth and operating-profit contribution rather than only an unsupported component score.",
+      "Current evidence does not fully reach the positive anchor midpoint of 14.88 because HBM-specific profit and margin and company-level FCF remain forecasts, with explicit attribution and duration gaps."
+    ],
+    "counter_fact_ids": [
+      "EFACT-2bf2934ad088b585cc89843a",
+      "EFACT-992faa8a46788f671cefe250",
+      "EFACT-e449f48cdf920d528532a37f",
+      "EFACT-f05a97edeb8f85d49353381e",
+      "EFACT-f6519571c11130bacb0af98d"
+    ],
+    "disagreements": [
+      "The analyst range is optimistic on duration because it leans on OPEN HBM profit and company FCF forecasts.",
+      "The skeptic range is somewhat narrow because it discounts the already observed memory revenue and profit bridge too heavily."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-0714e46eb37d4c4b066de92c",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 12.8,
+    "rationale": "On the 24-point component scale, the current record belongs between the two ordinal anchors. Actual memory earnings strength and product-mix pricing justify moving above the counter band, but HBM-only cash conversion is absent and important support remains forecast-based. A centered value near the top of the counter band and below the positive midpoint preserves both current strength and uncertainty.",
+    "support_fact_ids": [
+      "EFACT-536119c3b7272c9ebee07624",
+      "EFACT-71eb35cf12f591c101571b4e",
+      "EFACT-bc95c1a79d29243f3b4e9b06",
+      "EFACT-cb2550bcc2cd6b3a1bd34e00",
+      "EFACT-e854b59aa43bb7f73c1e0835",
+      "EFACT-f8f6e5abba8d72973f8cbc55",
+      "EFACT-f979df4935e2c87e7d55a6ed"
+    ],
+    "why_not_higher": "Calibration cannot move into the middle of the positive anchor band without HBM-only actual economics and evidence that pricing and EPS revisions remain durable.",
+    "why_not_lower": "Calibration should remain above the counter anchor midpoint because current actual memory revenue, growth and operating profit materially exceed a prose-only or ungrounded counter profile."
+  },
+  "payload_hash": "24a1fabda75d552ae62d221fc1d992940be73a75b92f1e5e1adbdebd75b36fd8",
+  "production_score_authority": false,
+  "prompt_hash": "804aae8d3acf45ac3f98f10876f3f6f23f55117d65b84883df2ac24d7e7fd072",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f22a235e537edcfbaa9fc4132764b02bba84ebfd1d50d63305a3ecdb95fdee9e",
+  "response_id": "COLLABRESP-5b2f70c0bc5821eb9d7124fc8eb5f843576ec5f64f443840a44f2a1594b1530a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

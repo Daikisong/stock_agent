@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "50e9b24076957d0d9f2938f114392431d2a42f70ff2d2c73e20f5dd230627aa5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1e744bc333229ece07c543d3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-2f7d6365190cc9812dbce7b7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-b139c8a86462d457e0300b24",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-30be6776541f1668754c7162",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-c6bdfa10b2f82c502a4f7844",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-05214c53c14e57035ea00d89",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-41afb6a0a08f56b8a8eddf05",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-09c9193f087852926574ef9e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-400ed577428f6bc9db375ad9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-2fdc3b3f4b9ca212bcd40b05",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-faa265a6b77c7e8db1f9ab9e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-ec04895fa01aa3d20b902322",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 뉴스·웹 페이지로 요청된 OPENDART 또는 KIND_KRX 원문 계열과 일치하지 않는다. 대상이나 투자 관련 표현이 있더라도 발견 snippet만으로는 삼성전자 HBM4 또는 메모리 신규시설투자 공시 원문을 확인할 수 없어 비관련이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "전체 roster 중 이 partition의 후보를 정확히 한 번씩 분류했으나, 삼성전자 HBM4 또는 메모리 신규시설투자를 직접 확인할 OPENDART·KIND_KRX 원문 후보가 없어 연구 목적은 미해결이다. 제3자 검색 snippet은 근거로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "d3a9fcd19c5dec4615be855aa47f05651852fc195c704f9fffb146c0bc4235c4",
+  "production_score_authority": false,
+  "prompt_hash": "423abae1d32b2344770f41fce0ffb05f704e91145528ce0d86e5e9ecc63c5e01",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a38703b130c6f569225601c04f68be9da09343b89837b8d2ed39a5a259964974",
+  "response_id": "COLLABRESP-f6352c0ef0cadabcefb96e79a21ba96afde3e3f26808039010543effab6b75a4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

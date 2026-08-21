@@ -1,0 +1,53 @@
+{
+  "output_schema_hash": "0cb076e07b90377006034095ca65092daf23d1d3faba163d5adf0cbcadede164",
+  "payload": {
+    "allowed_range": [
+      3.2,
+      3.8
+    ],
+    "anchor_comparisons": [
+      "positive anchor ORDTRANSFER-09ab96433f8087166845bf25와 비교해 확인된 positive는 유지하되 미확인 항목만 상단에서 제한한다",
+      "counter anchor ORDTRANSFER-90c2b7d4695e62e277703a64와 비교하면 현재 source-backed evidence가 0점 상태보다 강하다"
+    ],
+    "counter_fact_ids": [
+      "EFACT-4e2037f2e29108c0d4b9e66c",
+      "EFACT-a696155e4f4ed8929c20afd4"
+    ],
+    "disagreements": [
+      "회의론자보다 확인된 actual과 실행 신호의 지속성을 더 높게 본다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 3.5,
+    "rationale": "공식 감사의견과 발행사 직접 HBM 제품 실행 공시가 재무·사업 정보의 신뢰도를 지지한다. 다만 분기보고서의 서술형·위험 공시 범위가 제한되고 signed 고객 계약의 핵심 조건을 독립 확인하지 못했다.",
+    "support_fact_ids": [
+      "EFACT-59fe4fe59aecdedfd2cd7aac",
+      "EFACT-e00a584221085d366d802f39"
+    ],
+    "why_not_higher": "분기보고서의 서술형·위험 공시 범위가 제한되고 signed 고객 계약의 핵심 조건을 독립 확인하지 못했다.",
+    "why_not_lower": "공식 감사의견과 발행사 직접 HBM 제품 실행 공시가 재무·사업 정보의 신뢰도를 지지한다."
+  },
+  "payload_hash": "ab23aa88b36a3e1ca38595f28ab6bc9f41470aff8742a72bded314eda8292c22",
+  "production_score_authority": false,
+  "prompt_hash": "89e9ff1aa6f96c6f3c6d3eff2a19cfd74c86be20cce6030bd25781ca86857690",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d713049429803244e3ece672f01c8abdf58818058d75ec26b8293e98c1161506",
+  "response_id": "COLLABRESP-77f20bf805157197eed8c7a79a45a4159b24594314654feaf11cec2ede6fa0bc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

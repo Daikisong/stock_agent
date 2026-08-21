@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4124ed6c39adea96e3ba89ea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "정치 리스크 단문 네이버 종목 토론글로 broker PDF와 HBM 병목 목적에 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-b957e4d0d935e8fb2ae2e708",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "주가 하락 단문 네이버 종목 토론글이며 full-source 연구자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d7c53aa951c4935422923383",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "기술적 주가 코멘트인 네이버 종목 토론글로 source family와 경제 메커니즘을 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e59a5de291b09f6e3a011538",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "가상 주가 단문 네이버 종목 토론글로 PUBLIC_BROKER_PDF 원문이 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 4개 후보는 모두 토론글이어서 요청 family의 full-source route가 아니다. 이 판정은 broker 자료 또는 병목 증거의 부재를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "c1cab019e42465f435600b537bceba6a26bc7d2c365493d69d11435b5bd3a959",
+  "production_score_authority": false,
+  "prompt_hash": "3d1f803155b242ce1ee30b3989d7cfe41a67f98fd1ede9dc72d1ca4ab3934ac1",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a8df197d7fc04a34ddd3cd40e2001c2c48bf0918dd2f10550ca207cbfe60743e",
+  "response_id": "COLLABRESP-a320640d54d52a0fdb82762d78d701568e7c3679c1a3b84f14f216f5d2678a47",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

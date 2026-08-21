@@ -1,0 +1,36 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "semantic retry attempt 5의 lineage와 37개 prior literal을 전수 대조했지만, 현재 prompt에는 기존 issuer guidance·DART·IR·customer official·filing 경로와 의미상 구별되는 새 verified document class 또는 exact identity가 없다.",
+      "FORWARD_GUIDANCE는 issuer가 기간과 숫자를 명시한 미래 매출·이익·출하·Capex guidance가 없어 미해결이다. 현재 structured broker forecast와 revision은 issuer guidance로 승격하지 않는다.",
+      "SEGMENT_CONTRIBUTION은 HBM 또는 최소 memory 제품군의 실제 매출·영업이익·마진·현금흐름 기여가 없어 미해결이며, 전사·DRAM actual을 HBM 단독으로 귀속하지 않는다.",
+      "DURABLE_VISIBILITY는 target-attributable 기간·확정 물량 또는 CAPA와 취소권·위약금·선수금 조건이 있는 고객 commitment 원문이 없어 미해결이다. 공급 논의·요청수요·broker LTA 서술은 계약이 아니다.",
+      "information-confidence의 독립 customer corroboration 필요는 남지만, 기존 CUSTOMER_OFFICIAL·NVIDIA filing/행사 검색과 구별되는 새 verified customer document identity가 현재 prompt에 없으므로 동의어 query를 만들지 않는다.",
+      "CompanyGuide의 structured broker candidate metadata는 discovery hint일 뿐 issuer/customer-official/filing 원문 identity가 아니므로 새 query의 사실 근거나 공식 document class로 사용하지 않는다."
+    ]
+  },
+  "payload_hash": "23a783061883807a0115a2195dfe8b309a1f148689b59be501140b97fe12dcad",
+  "production_score_authority": false,
+  "prompt_hash": "edaeee2829d4146d8290c349688e27a86103569a9430367b4cdde25140979456",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8354a023843b9294b0dfd51f06c7269d00ed7e81b4867a1d746f3a64f20b4dbf",
+  "response_id": "COLLABRESP-7229731cd4524026da32fd25e3785800d3dd0d9d31cc96ec7781900536d5f723",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

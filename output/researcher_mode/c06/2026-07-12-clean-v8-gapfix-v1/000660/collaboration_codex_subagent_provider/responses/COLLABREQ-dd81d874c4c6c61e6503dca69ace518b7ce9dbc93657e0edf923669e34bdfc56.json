@@ -1,0 +1,33 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "Semantic retry attempt 3 contains no new verified issuer document identity or alternate official retrieval route. Its requested SK hynix earnings/IR presentation direction remains semantically covered by the already executed official-site IR query, so another wording would be a duplicate.",
+      "The four exact PUBLIC_BROKER_PDF identities have already returned no result, and the current prompt adds no new report id, file name, publication title, or source-owned landing route. Generic site or HBM visibility terms would be deterministic template expansion rather than identity-based source repair.",
+      "DURABLE_VISIBILITY remains unresolved and still requires exact issuer- or customer-official forward HBM evidence. This empty response neither proves source absence nor permits memory-wide utilization, guidance, or collaboration to be upgraded into a signed contract, fixed allocation, or cancellation protection."
+    ]
+  },
+  "payload_hash": "400ade74a5021f93b72a7191d1bd6bbda624e1689652b30e0feacbf8629cabf2",
+  "production_score_authority": false,
+  "prompt_hash": "40598363c29bc538242327ef9d879b622ccc982b261f476dbc5a62583b2dc692",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-dd81d874c4c6c61e6503dca69ace518b7ce9dbc93657e0edf923669e34bdfc56",
+  "response_id": "COLLABRESP-ba40c28d964cf773220f959859c633671127f4cb98f5a3ca21f10a95f5323e01",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

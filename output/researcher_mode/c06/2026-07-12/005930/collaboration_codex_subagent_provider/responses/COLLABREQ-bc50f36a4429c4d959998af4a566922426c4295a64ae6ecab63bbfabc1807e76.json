@@ -1,0 +1,171 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-209d1895a65d38683795e638",
+        "rationale": "현재 canonical에 없는 메모리 사업부 영업이익 54조4천억원·영업이익률 74.3%의 증권가 컨센서스 추정과, 제품별 세부 실적 미공개라는 직접 불확실성 3건을 양면 추출했다. 공식 메모리 매출과 중복·충돌하는 73조3천억원 추정 매출, 기존 DS 혼합 실적·HBM4 양산, 일반 시장 D램 가격·타사 비교·장기 전망은 반복하거나 target actual로 전용하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.78,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-209d1895a65d38683795e638",
+        "economic_mechanism": "증권가 컨센서스가 완료된 2026년 1분기 메모리 매출의 영업이익 전환 규모를 추정했다.",
+        "exact_quote": "최근 증권가 컨센서스(시장 평균 전망치)에 따르면 1분기 삼성전자 메모리 사업부는 매출 73조3천억원, 영업익 54조4천억원을 기록, 영업이익률이 74.3%에 달한 것으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 canonical에는 메모리 매출은 있으나 메모리 사업부 영업이익의 직접 귀속 수치가 없다. 완료 분기의 earnings conversion을 정량화하지만 발행사 공시가 아닌 증권가 컨센서스 추정치이므로 추정 상태를 보존한다.",
+        "mechanism_scope_id": "005930:MEMORY:OPERATING_PROFIT_ESTIMATE:2026-Q1",
+        "normalized_object": "메모리 사업부 분기 영업이익 컨센서스 추정치",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "증권가 컨센서스는 2026년 1분기 삼성전자 메모리 사업부 영업이익을 54조4천억원으로 추정했다",
+        "predicate_family": "MEMORY_OPERATING_PROFIT_ESTIMATE",
+        "primitive_tags": [
+          "MEMORY_OPERATING_PROFIT",
+          "CONSENSUS_ESTIMATE",
+          "EARNINGS_CONVERSION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_OPERATING_PROFIT_ESTIMATE",
+        "question_family_tags": [
+          "MEMORY_OPERATING_PROFIT_ESTIMATE",
+          "MEMORY_EARNINGS_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 사업부 2026년 1분기 영업이익 추정",
+        "subject_id": "005930:MEMORY:OPERATING_PROFIT_ESTIMATE:2026-Q1",
+        "unit": "KRW million",
+        "value": 54400000
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.78,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-209d1895a65d38683795e638",
+        "economic_mechanism": "증권가 컨센서스가 완료된 2026년 1분기 메모리 매출의 수익 전환 효율을 추정했다.",
+        "exact_quote": "최근 증권가 컨센서스(시장 평균 전망치)에 따르면 1분기 삼성전자 메모리 사업부는 매출 73조3천억원, 영업익 54조4천억원을 기록, 영업이익률이 74.3%에 달한 것으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 canonical에는 메모리 ASP·매출은 있으나 메모리 단독 영업이익률이 없다. 매출의 이익 전환 강도를 직접 정량화하지만 증권가 추정치라는 불확실성을 별도 counterfact와 함께 유지한다.",
+        "mechanism_scope_id": "005930:MEMORY:OPERATING_MARGIN_ESTIMATE:2026-Q1",
+        "normalized_object": "메모리 사업부 분기 영업이익률 컨센서스 추정치",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "증권가 컨센서스는 2026년 1분기 삼성전자 메모리 사업부 영업이익률을 74.3%로 추정했다",
+        "predicate_family": "MEMORY_OPERATING_MARGIN_ESTIMATE",
+        "primitive_tags": [
+          "MEMORY_OPERATING_MARGIN",
+          "CONSENSUS_ESTIMATE",
+          "EARNINGS_CONVERSION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_OPERATING_MARGIN_ESTIMATE",
+        "question_family_tags": [
+          "MEMORY_OPERATING_MARGIN_ESTIMATE",
+          "MEMORY_EARNINGS_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 사업부 2026년 1분기 영업이익률 추정",
+        "subject_id": "005930:MEMORY:OPERATING_MARGIN_ESTIMATE:2026-Q1",
+        "unit": "percent",
+        "value": 74.3
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.93,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-209d1895a65d38683795e638",
+        "economic_mechanism": "발행사가 제품별 세부 실적을 공개하지 않아 메모리 영업이익과 마진이 증권가 추정에 의존한다.",
+        "exact_quote": "이번 실적 발표에선 제품별 세부 실적이 따로 공개되지 않지만, 증권가에서는 메모리 사업부에서 D램 약 43조원, 낸드플래시 약 11조원에 달하는 영업이익을 낸 것으로 추정한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 영업이익·마진 추정치의 source certainty를 직접 제한하는 명시적 공시 범위 사실이다. 제품별 미공개를 모든 계약이나 모든 메모리 정보의 부재로 일반화하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:PRODUCT_RESULT_DISCLOSURE_LIMITATION:2026-Q1",
+        "normalized_object": "메모리 제품별 실적의 발행사 비공개와 추정 의존",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 실적 발표는 제품별 세부 실적을 별도로 공개하지 않아 메모리 제품별 영업이익이 증권가 추정치로 남았다",
+        "predicate_family": "MEMORY_PRODUCT_RESULT_DISCLOSURE_LIMITATION",
+        "primitive_tags": [
+          "PRODUCT_RESULT_NOT_SEPARATELY_DISCLOSED",
+          "MEMORY_ESTIMATE_UNCERTAINTY"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PRODUCT_RESULT_DISCLOSURE_LIMITATION",
+        "question_family_tags": [
+          "MEMORY_PRODUCT_RESULT_DISCLOSURE_LIMITATION",
+          "MEMORY_ESTIMATE_UNCERTAINTY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 1분기 제품별 실적 공시 범위",
+        "subject_id": "005930:MEMORY:PRODUCT_RESULT_DISCLOSURE_LIMITATION:2026-Q1",
+        "unit": "disclosure limitation",
+        "value": "product-level detail not separately disclosed; memory profit remains a securities-industry estimate"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "메모리 영업이익 54조4천억원과 영업이익률 74.3%는 제품별 발행사 공시가 아닌 증권가 컨센서스 추정치이므로 확정 actual로 승격하지 않았다.",
+      "범용 D램 계약가의 90% 이상 QoQ 상승은 시장 가격 설명이며 삼성전자 실현 ASP로 귀속하지 않았다.",
+      "엔비디아·AMD·브로드컴 언급은 고객별 구매의무·배정 물량·매출 비중을 제시하지 않아 계약 또는 고객집중도 fact로 만들지 않았다.",
+      "연간 영업이익 전망과 HBM4E 샘플 계획은 완료된 1분기 메모리 actual이 아니며 정량 발행사 forward guidance도 아니다."
+    ]
+  },
+  "payload_hash": "8bb602bffd1e531ca1658e7c1704818e59839148e8346ba5166367dc7e6582a0",
+  "production_score_authority": false,
+  "prompt_hash": "858076f7eefea8580ff5565e335cda1dfe4f82b38f19df6f0fb348f103c7bb5a",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bc50f36a4429c4d959998af4a566922426c4295a64ae6ecab63bbfabc1807e76",
+  "response_id": "COLLABRESP-0eab03128fe12b60062f24b0059f767cd7ea95244c7822745370255b93b8d2bc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

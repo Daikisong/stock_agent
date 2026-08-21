@@ -1,0 +1,53 @@
+{
+  "cache_value_hash": "cc11ecb453f1181a4aeccbfdc1d7c56f998a2f27034674a2534c3e086a26421b",
+  "canonical_url": "https://opendart.fss.or.kr/api/list.json",
+  "content_hash": "661fb6965f9d0d988a3826166ed92ba90d240d0941ea9be56b8e3d13a0dd9cc3",
+  "payload": {
+    "list": [
+      {
+        "corp_cls": "K",
+        "corp_code": "00445054",
+        "corp_name": "하나마이크론",
+        "flr_nm": "하나마이크론",
+        "rcept_dt": "20260514",
+        "rcept_no": "20260514901418",
+        "report_nm": "기업가치제고계획(자율공시)              (2025년 이행현황)",
+        "rm": "코",
+        "stock_code": "067310"
+      },
+      {
+        "corp_cls": "K",
+        "corp_code": "00445054",
+        "corp_name": "하나마이크론",
+        "flr_nm": "하나마이크론",
+        "rcept_dt": "20260514",
+        "rcept_no": "20260514001281",
+        "report_nm": "주식매수선택권부여에관한신고",
+        "rm": "",
+        "stock_code": "067310"
+      },
+      {
+        "corp_cls": "K",
+        "corp_code": "00445054",
+        "corp_name": "하나마이크론",
+        "flr_nm": "하나마이크론",
+        "rcept_dt": "20260514",
+        "rcept_no": "20260514001268",
+        "report_nm": "분기보고서 (2026.03)",
+        "rm": "",
+        "stock_code": "067310"
+      }
+    ],
+    "message": "정상",
+    "page_count": 100,
+    "page_no": 1,
+    "status": "000",
+    "total_count": 3,
+    "total_page": 1
+  },
+  "provider_request_id": "HTTP-661fb6965f9d0d988a38",
+  "request_fingerprint": "43d572fa572862df3408fa542104dfa05b90fd11a86f92473cf7377c3865285c",
+  "schema_version": "e2r_v5_current_structured_cache_v2",
+  "status_code": 200,
+  "text": null
+}

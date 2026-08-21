@@ -1,0 +1,167 @@
+{
+  "output_schema_hash": "e89d38e55d0370441ed74377621b281c98f6d85d13d2fa83da5ab177b464ebd9",
+  "payload": {
+    "confidence": 0.93,
+    "counter_case": "행 25의 17,127,003백만원 유형자산 취득 현금유출은 성장투자의 현금 부담이다. 연결 이익·OCF와 DS 메모리 매출을 HBM별 매출·마진·CAPEX·FCF로 분해할 수 없으므로 강한 actual만으로 EPS/FCF 폭발을 확정하지 않는다.",
+    "historical_anchor_ids": [
+      "CANCH-0714e46eb37d4c4b066de92c",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "nearest_counter_anchor_ids": [
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "nearest_positive_anchor_ids": [
+      "CANCH-0714e46eb37d4c4b066de92c"
+    ],
+    "positive_case": "행 17의 full utilization, 행 72의 DS 메모리 매출, 행 79의 실현 ASP 상승은 메모리 수익 전환을 직접 지지한다. 행 60과 76은 연결 영업이익과 OCF actual로 전사 현금창출 여력을 확인하지만 HBM 단독 수치로 승격하지 않는다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 17,
+        "reason": "Current lifecycle과 direction이 유지되며 semantic rewrite의 positive·counter·context accounting에 계속 필요하다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 25,
+        "reason": "Current lifecycle과 direction이 유지되며 semantic rewrite의 positive·counter·context accounting에 계속 필요하다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 60,
+        "reason": "Current lifecycle과 direction이 유지되며 semantic rewrite의 positive·counter·context accounting에 계속 필요하다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 72,
+        "reason": "Current lifecycle과 direction이 유지되며 semantic rewrite의 positive·counter·context accounting에 계속 필요하다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 76,
+        "reason": "Current lifecycle과 direction이 유지되며 semantic rewrite의 positive·counter·context accounting에 계속 필요하다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 79,
+        "reason": "Current lifecycle과 direction이 유지되며 semantic rewrite의 positive·counter·context accounting에 계속 필요하다."
+      }
+    ],
+    "proposed_score_lower": 13.0,
+    "proposed_score_mid": 14.0,
+    "proposed_score_upper": 15.0,
+    "research_complete": true,
+    "researcher_summary": "메모리 100% 가동, 2026년 1분기 메모리 매출 74,779,980백만원과 ASP 상승, 연결 영업이익·영업현금흐름은 강한 actual 전환을 확인한다. 다만 연결 수치를 HBM 단독 이익·FCF로 귀속할 공식 bridge가 없고 유형자산 취득 현금유출도 커서 연결·DS 메모리·HBM 경계를 분리한 중상단 범위로 재서술한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "메모리 생산라인의 100% 가동은 해당 분기의 유휴 공급 여력이 없었음을 보여준다. 이 행을 POSITIVE 근거로 사용하되 연결·DS 메모리·HBM 귀속을 분리한다.",
+        "fact_row_index": 17,
+        "source_economic_mechanism": "메모리 생산라인의 100% 가동은 해당 분기의 유휴 공급 여력이 없었음을 보여준다.",
+        "source_period_json": "\"2026Q1\"",
+        "source_predicate": "MEMORY_LINES_OPERATED_AT_FULL_UTILIZATION",
+        "source_value_json": "100"
+      },
+      {
+        "component_interpretation": "연결 유형자산 취득 현금지출 이 행을 COUNTER 근거로 사용하되 연결·DS 메모리·HBM 귀속을 분리한다.",
+        "fact_row_index": 25,
+        "source_economic_mechanism": "연결 유형자산 취득 현금지출",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 유형자산 취득 현금지출을 보고했다",
+        "source_value_json": "-17127003"
+      },
+      {
+        "component_interpretation": "연결 영업이익 실제치 이 행을 POSITIVE 근거로 사용하되 연결·DS 메모리·HBM 귀속을 분리한다.",
+        "fact_row_index": 60,
+        "source_economic_mechanism": "연결 영업이익 실제치",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 연결 영업이익을 보고했다",
+        "source_value_json": "57232797"
+      },
+      {
+        "component_interpretation": "메모리 제품 매출의 실제 수익 전환 이 행을 POSITIVE 근거로 사용하되 연결·DS 메모리·HBM 귀속을 분리한다.",
+        "fact_row_index": 72,
+        "source_economic_mechanism": "메모리 제품 매출의 실제 수익 전환",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 메모리 제품 매출액을 보고했다",
+        "source_value_json": "74779980"
+      },
+      {
+        "component_interpretation": "연결 영업현금흐름 실제치 이 행을 POSITIVE 근거로 사용하되 연결·DS 메모리·HBM 귀속을 분리한다.",
+        "fact_row_index": 76,
+        "source_economic_mechanism": "연결 영업현금흐름 실제치",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 연결 영업활동현금흐름을 보고했다",
+        "source_value_json": "40274106"
+      },
+      {
+        "component_interpretation": "메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다. 이 행을 POSITIVE 근거로 사용하되 연결·DS 메모리·HBM 귀속을 분리한다.",
+        "fact_row_index": 79,
+        "source_economic_mechanism": "메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.",
+        "source_period_json": "\"2026Q1 vs 2025 annual average\"",
+        "source_predicate": "MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE",
+        "source_value_json": "146"
+      }
+    ],
+    "selected_fact_row_indices": [
+      17,
+      25,
+      60,
+      72,
+      76,
+      79
+    ],
+    "source_coverage": [
+      "COMPANYGUIDE",
+      "COMPANYGUIDE+KRX_PRICE_MARKET_CAP",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "DETERMINISTIC_FORWARD_SCENARIO",
+      "DETERMINISTIC_FORWARD_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "ISSUER_GUIDANCE",
+      "ISSUER_NEWSROOM",
+      "KRX_PRICE_MARKET_CAP",
+      "KRX_PRICE_MARKET_CAP+COMPANYGUIDE",
+      "KRX_PRICE_MARKET_CAP+DETERMINISTIC_FORWARD_SCENARIO",
+      "KRX_PRICE_MARKET_CAP+DETERMINISTIC_FORWARD_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "OPENDART",
+      "PEER_STRUCTURED",
+      "STRUCTURED_HISTORICAL_BAND",
+      "STRUCTURED_PEER_BAND",
+      "TARGET_OFFICIAL_TRAILING_VALUATION",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1,
+      2
+    ],
+    "uncertainties": [
+      "HBM별 매출·영업이익·마진·FCF bridge가 공개되지 않았다.",
+      "연결 OCF와 CAPEX 중 DS 메모리 및 HBM 귀속액이 분리되지 않았다.",
+      "메모리 전체 ASP·가동률을 HBM 단독 경제성으로 전이할 수 없다."
+    ],
+    "why_not_higher": "HBM 단독 매출·마진·FCF와 고객 계약 경제성이 없고 17,127,003백만원 CAPEX 현금유출이 크다.",
+    "why_not_lower": "메모리 매출·ASP·100% 가동과 양의 연결 영업이익·OCF가 같은 기간 actual로 확인된다."
+  },
+  "payload_hash": "73eaf2253daac3f33a06994f58575c6bc6b03165ee9427eb2e5ce5a7868a0002",
+  "production_score_authority": false,
+  "prompt_hash": "8c59319ca59d1cbac30ded11bd52cbba1dc58663dfa244b8fe5884561b73f396",
+  "provenance": {
+    "agent_id": "phase105-profile-response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d30c793a896d12f8510beb0a3d656f9135d237dfdd492b74293f1312b01a67fb",
+  "response_id": "COLLABRESP-e73d96d0c2146a08cecda9732d51e4a237d6bb6093434361267d8b65eee7fdd3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

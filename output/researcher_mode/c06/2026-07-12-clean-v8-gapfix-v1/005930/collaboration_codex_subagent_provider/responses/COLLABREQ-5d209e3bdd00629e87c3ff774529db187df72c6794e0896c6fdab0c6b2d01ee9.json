@@ -1,0 +1,606 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-083a0a242c0d5ed4db567fb0",
+        "rationale": "누적 prior19에 더해 별도 재고·충당·보증 6건을 추출했으며 개별 충당부채와 보증·자본 remainder 감사가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-09916b5452a9727d9ec4985e",
+        "rationale": "디스플레이 High Brightness Mode 및 모바일·가전 설명으로 C06 메모리 직접 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-0ef42c4edd3dc855b908e1cf",
+        "rationale": "누적 prior23이 유효하며 잔여 별도 자본·현금흐름 atomic audit가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-1b13101bcc9b1662d45a6e40",
+        "rationale": "모바일·가전 제품 설명으로 메모리/HBM 대상 사업 귀속이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "rationale": "누적 prior19에 더해 연결 이자·배당·투자·재무 현금흐름 5건을 추출했으며 연결 자본·현금 atomic remainder 감사가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-345071554d2634bef8ce21d3",
+        "rationale": "종속회사 명부만으로 현재 목표의 직접 경제 사실을 구성하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-3b6cc7f69973bfe8b33016e8",
+        "rationale": "누적 prior11에 더해 연결 충당부채 합계 1건을 추출했으며 개별 충당·불확실성 remainder 감사가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-3d4d1d527e40e45ee2b60ecd",
+        "rationale": "임직원·임원 경력 명부로 C06 경제 메커니즘 또는 issuer-wide 자본배분 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "별도 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-083a0a242c0d5ed4db567fb0",
+        "economic_mechanism": "삼성전자 별도 기준 2026년 1분기말 재고자산 장부금액은 30,889,508백만원이었다.",
+        "exact_quote": "재고자산\n34,308,148\n(3,418,640)\n30,889,508",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "재고 장부금액은 현금이 재고에 묶인 규모와 재고 리스크를 보여주며 연결 수치와 법적 범위가 다르다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "separate_inventory_carrying_amount",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "REPORTED_SEPARATE_INVENTORY_CARRYING_AMOUNT",
+        "predicate_family": "SEPARATE_INVENTORY_ACTUAL",
+        "primitive_tags": [
+          "inventory",
+          "separate_actual"
+        ],
+        "product_family": "재고자산",
+        "question_family_id": "CORPORATE_INVENTORY_CARRYING_AMOUNT",
+        "question_family_tags": [
+          "capital_allocation",
+          "inventory",
+          "working_capital"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 별도",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 30889508
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-083a0a242c0d5ed4db567fb0",
+        "economic_mechanism": "삼성전자 별도 기준 2026년 1분기말 재고자산 평가충당금은 3,418,640백만원이었다.",
+        "exact_quote": "재고자산\n34,308,148\n(3,418,640)\n30,889,508",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "평가충당금은 재고 가치 훼손의 발행사 직접 counter이며 연결 충당금과 범위가 다르다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "separate_inventory_valuation_allowance",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "REPORTED_SEPARATE_INVENTORY_VALUATION_ALLOWANCE",
+        "predicate_family": "SEPARATE_INVENTORY_ALLOWANCE_ACTUAL",
+        "primitive_tags": [
+          "inventory_allowance",
+          "separate_actual"
+        ],
+        "product_family": "재고자산 평가충당금",
+        "question_family_id": "CORPORATE_INVENTORY_ALLOWANCE",
+        "question_family_tags": [
+          "capital_allocation",
+          "inventory",
+          "valuation_allowance"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 별도",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 3418640
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-083a0a242c0d5ed4db567fb0",
+        "economic_mechanism": "삼성전자 별도 기준 2026년 1분기말 판매보증·기술사용료·장기성과급·기타 충당부채 합계는 10,840,759백만원이었다.",
+        "exact_quote": "기말\n664,415\n3,293,129\n634,261\n6,248,954\n10,840,759",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "충당부채는 향후 비용·현금유출의 추정 부담을 집계한 counter다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "separate_total_provision_balance",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "REPORTED_SEPARATE_TOTAL_PROVISION_BALANCE",
+        "predicate_family": "SEPARATE_PROVISION_BALANCE_ACTUAL",
+        "primitive_tags": [
+          "provision_balance",
+          "separate_actual"
+        ],
+        "product_family": "충당부채",
+        "question_family_id": "CORPORATE_PROVISION_BALANCE",
+        "question_family_tags": [
+          "capital_allocation",
+          "provisions",
+          "future_outflow"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 별도",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 10840759
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-083a0a242c0d5ed4db567fb0",
+        "economic_mechanism": "협상 중인 기술사용계약의 예상 기술사용료를 충당부채로 인식했지만 실제 지급시기와 금액은 협상결과에 따라 달라진다.",
+        "exact_quote": "회사는 협상 진행 중인 기술사용계약과 관련하여 향후 지급이 예상되는 기술사용료를 추정하여 충당부채로 계상하고 있습니다. 지급시기 및 금액은 협상결과에 따라 변동될 수 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "지급시기와 금액의 불확실성은 충당부채를 확정 계약현금흐름으로 읽지 못하게 하는 직접 제한이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "technology_license_provision_payment_uncertainty",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1 report date",
+        "predicate": "TECHNOLOGY_LICENSE_PAYMENT_TIMING_AND_AMOUNT_UNCERTAIN",
+        "predicate_family": "TECHNOLOGY_LICENSE_PROVISION_UNCERTAINTY",
+        "primitive_tags": [
+          "technology_license",
+          "payment_uncertainty"
+        ],
+        "product_family": "기술사용료 충당부채",
+        "question_family_id": "CORPORATE_TECHNOLOGY_LICENSE_PROVISION_UNCERTAINTY",
+        "question_family_tags": [
+          "information_confidence",
+          "provision",
+          "uncertainty"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 별도",
+        "subject_id": "005930",
+        "unit": "issuer_statement",
+        "value": "지급시기 및 금액은 협상결과에 따라 변동 가능"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-083a0a242c0d5ed4db567fb0",
+        "economic_mechanism": "삼성전자가 해외종속기업 자금조달을 위해 제공한 채무보증 한도 합계는 12,255,276백만원이었다.",
+        "exact_quote": "해외종속기업 자금조달 등을 위한 채무보증 합계\n해외종속기업 계약이행을 위한 지급보증\n해외종속기업 계약이행을 위한 지급보증\n피보증처명\nSETK\n기타\nSETK 및 기타\n보증처\nBNP 외\n기타\nBNP 외 기타\n채무보증한도\n1,342,386\n10,912,890\n12,255,276\n623,153",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "종속기업 자금조달 보증은 발행사의 우발 자금부담을 보여준다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "overseas_subsidiary_financing_guarantee_limit",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "REPORTED_SUBSIDIARY_FINANCING_GUARANTEE_LIMIT",
+        "predicate_family": "SUBSIDIARY_FINANCING_GUARANTEE_ACTUAL",
+        "primitive_tags": [
+          "subsidiary_financing",
+          "guarantee_limit"
+        ],
+        "product_family": "채무보증",
+        "question_family_id": "CORPORATE_SUBSIDIARY_FINANCING_GUARANTEE",
+        "question_family_tags": [
+          "capital_allocation",
+          "guarantee",
+          "contingent_liability"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 해외종속기업 자금조달 보증",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 12255276
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-083a0a242c0d5ed4db567fb0",
+        "economic_mechanism": "삼성전자가 해외종속기업 계약이행을 위해 제공한 지급보증 한도는 623,153백만원이었다.",
+        "exact_quote": "당분기말 현재 회사가 해외종속기업의 계약이행을 위하여 제공하고 있는 지급보증 한도액은 623,153백만원입니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "계약이행 보증은 자금조달 보증과 별개의 우발 지급노출이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "overseas_subsidiary_performance_guarantee_limit",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "REPORTED_SUBSIDIARY_PERFORMANCE_GUARANTEE_LIMIT",
+        "predicate_family": "SUBSIDIARY_PERFORMANCE_GUARANTEE_ACTUAL",
+        "primitive_tags": [
+          "performance_guarantee",
+          "subsidiary"
+        ],
+        "product_family": "지급보증",
+        "question_family_id": "CORPORATE_SUBSIDIARY_PERFORMANCE_GUARANTEE",
+        "question_family_tags": [
+          "capital_allocation",
+          "performance_guarantee",
+          "contingent_liability"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 해외종속기업 계약이행 보증",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 623153
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "economic_mechanism": "삼성전자 연결 기준 2026년 1분기 이자 수취 현금은 931,109백만원이었다.",
+        "exact_quote": "이자의 수취\n931,109\n1,579,942",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "이자 수취는 연결 영업현금흐름 구성과 현금수익을 보완한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "consolidated_interest_cash_receipt",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_CONSOLIDATED_INTEREST_CASH_RECEIPT",
+        "predicate_family": "CONSOLIDATED_INTEREST_RECEIPT_ACTUAL",
+        "primitive_tags": [
+          "interest_received",
+          "consolidated_cash_flow"
+        ],
+        "product_family": "이자 수취",
+        "question_family_id": "CORPORATE_INTEREST_RECEIPT_CASH_FLOW",
+        "question_family_tags": [
+          "capital_allocation",
+          "cash_flow",
+          "interest_receipt"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 931109
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "economic_mechanism": "삼성전자 연결 기준 2026년 1분기 배당금 수입 현금은 28,211백만원이었다.",
+        "exact_quote": "배당금 수입\n28,211\n4,523",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "배당금 수입은 연결 투자자산에서 회수된 실제 현금이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "consolidated_dividend_cash_receipt",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_CONSOLIDATED_DIVIDEND_CASH_RECEIPT",
+        "predicate_family": "CONSOLIDATED_DIVIDEND_INCOME_ACTUAL",
+        "primitive_tags": [
+          "dividend_income",
+          "consolidated_cash_flow"
+        ],
+        "product_family": "배당금 수입",
+        "question_family_id": "CORPORATE_DIVIDEND_INCOME_CASH_FLOW",
+        "question_family_tags": [
+          "capital_allocation",
+          "cash_flow",
+          "dividend_income"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 28211
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "economic_mechanism": "삼성전자 연결 기준 2026년 1분기 투자활동 순현금유출은 21,456,000백만원이었다.",
+        "exact_quote": "투자활동현금흐름\n(21,456,000)\n(6,431,187)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "투자활동 순현금유출은 연결 현금창출에서 투자집행으로 전환된 총규모다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "consolidated_net_investing_cash_outflow",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_CONSOLIDATED_INVESTING_NET_CASH_OUTFLOW",
+        "predicate_family": "CONSOLIDATED_INVESTING_CASH_FLOW_ACTUAL",
+        "primitive_tags": [
+          "investing_cash_flow",
+          "net_outflow"
+        ],
+        "product_family": "투자활동현금흐름",
+        "question_family_id": "CORPORATE_INVESTING_CASH_FLOW_ACTUAL",
+        "question_family_tags": [
+          "capital_allocation",
+          "investing_cash_flow"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 21456000
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "economic_mechanism": "삼성전자 연결 기준 2026년 1분기 재무활동 순현금유출은 5,455,268백만원이었다.",
+        "exact_quote": "재무활동현금흐름\n(5,455,268)\n(11,341,720)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "재무활동 순현금유출은 차입·상환·배당·자기주식의 종합 현금효과다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "consolidated_net_financing_cash_outflow",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_CONSOLIDATED_FINANCING_NET_CASH_OUTFLOW",
+        "predicate_family": "CONSOLIDATED_FINANCING_CASH_FLOW_ACTUAL",
+        "primitive_tags": [
+          "financing_cash_flow",
+          "net_outflow"
+        ],
+        "product_family": "재무활동현금흐름",
+        "question_family_id": "CORPORATE_FINANCING_CASH_FLOW_ACTUAL",
+        "question_family_tags": [
+          "capital_allocation",
+          "financing_cash_flow"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 5455268
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "economic_mechanism": "삼성전자 연결 기준 2026년 1분기 현금흐름표상 배당금 지급은 13,824백만원이었다.",
+        "exact_quote": "배당금의지급\n(13,824)\n(78,965)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현금흐름표의 실제 배당금 지급은 자본변동표상 결의액과 구분되는 현금 집행이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "consolidated_dividend_cash_payment",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_CONSOLIDATED_DIVIDEND_CASH_PAYMENT",
+        "predicate_family": "CONSOLIDATED_DIVIDEND_PAYMENT_ACTUAL",
+        "primitive_tags": [
+          "dividend_paid",
+          "consolidated_cash_flow"
+        ],
+        "product_family": "배당금 지급",
+        "question_family_id": "CORPORATE_DIVIDEND_PAYMENT_CASH_FLOW",
+        "question_family_tags": [
+          "capital_allocation",
+          "dividend",
+          "cash_payment"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 13824
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-3b6cc7f69973bfe8b33016e8",
+        "economic_mechanism": "삼성전자 연결 기준 2026년 1분기말 판매보증·기술사용료·장기성과급·기타 충당부채 합계는 13,541,897백만원이었다.",
+        "exact_quote": "기말\n2,614,946\n3,293,129\n832,733\n6,801,089\n13,541,897",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "연결 충당부채 합계는 미래 비용·현금유출의 추정 부담을 집계한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "consolidated_total_provision_balance",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "REPORTED_CONSOLIDATED_TOTAL_PROVISION_BALANCE",
+        "predicate_family": "CONSOLIDATED_PROVISION_BALANCE_ACTUAL",
+        "primitive_tags": [
+          "provision_balance",
+          "consolidated_actual"
+        ],
+        "product_family": "충당부채",
+        "question_family_id": "CORPORATE_PROVISION_BALANCE",
+        "question_family_tags": [
+          "capital_allocation",
+          "provisions",
+          "future_outflow"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 13541897
+      }
+    ],
+    "unresolved_document_ids": [
+      "OFFICIALDOC-083a0a242c0d5ed4db567fb0",
+      "OFFICIALDOC-0ef42c4edd3dc855b908e1cf",
+      "OFFICIALDOC-29c2bfab5c362378d394f6da",
+      "OFFICIALDOC-3b6cc7f69973bfe8b33016e8"
+    ],
+    "unresolved_research_notes": [
+      "page3 이후 개별 충당부채·보증·잔여 자본 및 현금흐름의 distinct atomic remainder를 계속 감사해야 한다."
+    ]
+  },
+  "payload_hash": "d65108be64cc796afeb82a72be33ed6373cb240c0956cc893c16bca67d39d8ac",
+  "production_score_authority": false,
+  "prompt_hash": "6c14b3dfb7f04f65d1b10a0271c73cea513772bcb3f3ea9e68faf02471a303f0",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5d209e3bdd00629e87c3ff774529db187df72c6794e0896c6fdab0c6b2d01ee9",
+  "response_id": "COLLABRESP-3e2066f9559e84af5dbf847aa85910385e6558d581b99109cf42c7c1d677a2d1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

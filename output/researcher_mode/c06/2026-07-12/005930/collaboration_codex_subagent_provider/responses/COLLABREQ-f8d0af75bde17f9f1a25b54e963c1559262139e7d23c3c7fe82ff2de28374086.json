@@ -1,0 +1,102 @@
+{
+  "output_schema_hash": "2aa2068441c0afd368451f442d212ab1426e39e77461819a63f5b6c851c22ca7",
+  "payload": {
+    "challenged_fact_row_indices": [
+      10,
+      13,
+      20,
+      38,
+      63,
+      105,
+      106,
+      113,
+      130,
+      150,
+      203,
+      246,
+      253,
+      260,
+      277,
+      283,
+      292,
+      297,
+      311,
+      320,
+      321,
+      350,
+      370,
+      392,
+      401,
+      405,
+      408,
+      416,
+      420,
+      485,
+      503,
+      508
+    ],
+    "confidence": 0.84,
+    "recommended_research_directions": [
+      "Use issuer or regulatory disclosures available by the cutoff to verify any public HBM customer commitments, contract duration, price-adjustment, cancellation, penalty, or prepayment terms.",
+      "Seek issuer-level product or segment bridges that separately connect HBM revenue, margin, cash conversion, and capacity spending without attributing corporate or DS-wide figures to HBM.",
+      "Reconcile current capacity commitments, working-capital movements, and the detailed memory investment schedule against audited cash-flow disclosures and official amendments available by the cutoff.",
+      "Monitor official customer-platform timing, supplier-allocation decisions, and HBM4 qualification or volume updates while preserving NDA-constrained fields as unresolved."
+    ],
+    "resolved_challenges": [
+      "The challenge that HBM4 commercialization is only aspirational is resolved by current yield, platform mass-production, completed customer-contract, sold-out-capacity, purchase-order, and realized-revenue evidence.",
+      "The challenge that current pricing pressure is forecast-only is resolved by a realized quarterly conventional-DRAM price increase and disclosed sold-out HBM4 production capacity, while duration remains open.",
+      "The challenge that capital return and funding capacity are policy-only is resolved by current operating cash flow and an executed treasury-share cancellation.",
+      "The challenge that no reproducible official baseline exists is resolved by issuer operating disclosures and the external interim-review conclusion."
+    ],
+    "review_complete": true,
+    "reviewed_component_ids": [
+      "eps_fcf_explosion",
+      "earnings_visibility",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation",
+      "information_confidence"
+    ],
+    "source_coverage": [
+      "COMPANYGUIDE",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "ISSUER_GUIDANCE",
+      "ISSUER_NEWSROOM",
+      "KRX_PRICE_MARKET_CAP",
+      "OPENDART",
+      "PUBLIC_BROKER_PDF",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "unresolved_challenges": [
+      "Earnings and cash conversion remain issuer-wide or memory-wide rather than HBM-only, while customer free-cash-flow contraction, price sensitivity, and possible inventory accumulation constrain durability.",
+      "Customer-specific volume, price, prepayment, cancellation, penalty, qualification, and allocation terms remain undisclosed; LTA price lags, customer schedule delays, and supplier review can change timing and margins.",
+      "Time-based utilization and current price increases do not establish HBM-specific capacity or a permanent shortage; price deceleration, large capacity spending, gradual supply response, and end-demand sensitivity remain material.",
+      "Relative valuation gaps are not automatically closable because forward PBR has already expanded, peer methodologies and listing markets differ, leveraged flows raise sensitivity, and the FY2028 profit outlook includes decline.",
+      "HBM4 commercialization does not by itself establish durable rerating because initial profitability, customer-product delay, and periodic allocation review remain open.",
+      "Corporate cash generation does not establish HBM investment returns; unperformed asset commitments, receivables and working-capital outflows, and an unfinalized memory investment plan compete for cash.",
+      "Official financial and memory baselines are reproducible, but HBM customer identity, qualification, contract terms, allocation, and product-level operating profit remain unavailable or estimate-dependent."
+    ]
+  },
+  "payload_hash": "283216d446ef5010aa14e7a14ad66e23440e3b557af1d0831608ae95365eee7d",
+  "production_score_authority": false,
+  "prompt_hash": "d4edb6cf61815fe3719607bc71b0b377d0e69a79e14d458839515945399f1b5d",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f8d0af75bde17f9f1a25b54e963c1559262139e7d23c3c7fe82ff2de28374086",
+  "response_id": "COLLABRESP-2fbb152f120b8b862d9eb137097cae0cb64ebecd3b877239e6fb50b0f45be73e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

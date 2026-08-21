@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "868c7c7cdd3258048a388d9f56dec3dd50f46dc8a5a17396fa2499b7882743e1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7e2229873e2a677c8e8119e9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "SK 그룹 윤리경영 사이트는 SK하이닉스 issuer 실적발표 또는 발표자료 원문이 아니며 valuation earnings bridge와 관련된 메타데이터가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-80ad2294810ff81c1c94ff6f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "LinkedIn 회사 페이지는 검증된 issuer-domain 실적발표·presentation 원문이 아니다. 특정 현재 earnings나 valuation denominator를 제공한다는 메타데이터도 없다."
+      },
+      {
+        "candidate_id": "SGCAND-815d6fa41b1e2c4921d277f9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "검증되지 않은 외부 기관 루트 주소이며 SK하이닉스 issuer 실적발표 또는 발표자료 provenance와 objective 연결이 없다."
+      },
+      {
+        "candidate_id": "SGCAND-820e8ecd193417c6a564a7ef",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "YouTube embed 링크는 URL 소유자가 issuer가 아니며 영상 제목·기간·실적 내용도 공급되지 않았다. 요청된 issuer earnings release 또는 presentation 원문으로 확인할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-95ac703064e49b13d5af6e19",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.58,
+        "rationale": "SK하이닉스가 소유한 검증된 공식 IR 하위 페이지이며 material official IR parent에서 현재 objective scope를 상속했다. 세부 메타데이터는 없지만 issuer presentation 원문·연결 자료를 찾는 bounded full-fetch route로 유효하며 내용과 기준일은 fetch 후 검증해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-b141b573390e886a51d83774",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "회사 소유 welcome 서브도메인의 루트는 채용·방문 안내 성격의 일반 route이며, 공급된 메타데이터에는 실적발표·IR presentation 또는 valuation 자료가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-b4cadaca334c00caf63d2a6e",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.58,
+        "rationale": "SK하이닉스가 소유한 검증된 공식 IR 하위 페이지이며 material official IR parent에서 현재 objective scope를 상속했다. 세부 메타데이터는 없지만 issuer presentation 원문·연결 자료를 찾는 bounded full-fetch route로 유효하며 내용과 기준일은 fetch 후 검증해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-b673df01301c26f68dba1612",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.58,
+        "rationale": "SK하이닉스가 소유한 검증된 공식 IR 하위 페이지이며 material official IR parent에서 현재 objective scope를 상속했다. 세부 메타데이터는 없지만 issuer presentation 원문·연결 자료를 찾는 bounded full-fetch route로 유효하며 내용과 기준일은 fetch 후 검증해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-c2af077248b7468381278f9e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 회사 도메인이지만 /etc/ 공통 페이지이고 제목·snippet·문서 정보가 없어 요청된 실적발표 또는 발표자료 provenance를 확인할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-cfb8b553d37a32b53274f2d9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 회사 도메인이지만 /etc/ 공통 페이지이고 제목·snippet·문서 정보가 없어 요청된 실적발표 또는 발표자료 provenance를 확인할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-d7027dc3ad80783820f2bfd7",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.58,
+        "rationale": "SK하이닉스가 소유한 검증된 공식 IR 하위 페이지이며 material official IR parent에서 현재 objective scope를 상속했다. 세부 메타데이터는 없지만 issuer presentation 원문·연결 자료를 찾는 bounded full-fetch route로 유효하며 내용과 기준일은 fetch 후 검증해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-f70bd36dec41bf25e27369af",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Instagram 계정은 검증된 issuer-domain 실적발표·presentation 원문이 아니며 특정 현재 earnings 또는 valuation 자료도 식별되지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "12개 후보를 각각 정확히 한 번 분류했다. 공식 IR 하위 route 4개만 material이며, 실제 문서 유형·기준일·내용은 full fetch가 필요하다."
+    ]
+  },
+  "payload_hash": "3510ba8e1d8aa80aae7730451b5598966fd47bb2bbf66c4e08a5689d168fe13b",
+  "production_score_authority": false,
+  "prompt_hash": "75f121398be3167214b08ee66e9e0eab4adf68e1366c1bed1eab8a479c6eef08",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d792b11d07075d5fc6a2f91ccb49adff19c06f975feb1460920dc9613cfc6d94",
+  "response_id": "COLLABRESP-ba8231a2245bc8fde4f4fd2c92f83d6f7f4e6e65326c299eb80bb8e37759d6d5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

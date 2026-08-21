@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "3885e06527a44286bfd9318a7e97f4727d7002753186fba579331bc5de08b8ba",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-04cf0fb23d94310f6b1c36ab",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "This 2024 daily market-strategy PDF is generic and does not address the target or HBM valuation mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-d97ee269e10e763c9f35709d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "The generic risk-preference report provides no supplied target-specific HBM earnings or valuation information."
+      },
+      {
+        "candidate_id": "SGCAND-3b0cf1fcec6dfffb3214116f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.05,
+        "rationale": "This broker file gives only a list-style SK hynix target-price row without an attributable HBM earnings or multiple bridge."
+      },
+      {
+        "candidate_id": "SGCAND-22b54fffa90af09a98ec7fa6",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.12,
+        "rationale": "The data-center bottleneck report is broad system context and the supplied metadata does not connect it to SK hynix earnings or valuation."
+      },
+      {
+        "candidate_id": "SGCAND-f2947a3989a486d631b24c1a",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.03,
+        "rationale": "The report focuses on optical interconnect and memory IP rather than the target-specific HBM earnings and valuation mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-6769363d0da0073e39ff0d0f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "This 2024 daily market-strategy PDF is unrelated to the target-specific objective."
+      },
+      {
+        "candidate_id": "SGCAND-2e149ef1683ec35e48ee11df",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "This 2024 daily market-strategy PDF is unrelated to the target-specific objective."
+      },
+      {
+        "candidate_id": "SGCAND-046af68e97d40b3a719e7cd2",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "The 2022 display and electronic-materials report is unrelated to current SK hynix HBM economics."
+      },
+      {
+        "candidate_id": "SGCAND-8c553d1d073046c9d8a3e4ea",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.03,
+        "rationale": "The Asia market-strategy report discusses market-wide PBR and buybacks but not the target-specific HBM earnings bridge."
+      },
+      {
+        "candidate_id": "SGCAND-91c5dc991c98a01f41674f0e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.14,
+        "rationale": "The report gives broad memory-price momentum only, without SK hynix HBM attribution, consensus, or a valuation denominator."
+      },
+      {
+        "candidate_id": "SGCAND-73ebe96890e14bcdef2550c8",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.55,
+        "rationale": "The semiconductor broker report directly revises SK hynix earnings and connects conventional-memory pricing with the 2026 Rubin/HBM demand route; it is material historical and forward bridge context."
+      },
+      {
+        "candidate_id": "SGCAND-185ad2e762cdef58202f8e85",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "This broad global-market risk report does not address target-specific HBM earnings or valuation."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Full-text and publication-date eligibility must still be verified during bounded fetch; snippets were used only for discovery routing."
+    ]
+  },
+  "payload_hash": "d1e239e245dafe4e4309c3b80f5c31744365603ec9d9fe7ee0873fc3a8c56b20",
+  "production_score_authority": false,
+  "prompt_hash": "7edcc5ee40c597cb06c62c6a57a72d49e2bd2b1c9ffb5586a7b09f6db8c8d627",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-788e2335eb87d55da682a669488ce4b2c9ee3706e9a6cf5b46c1317d4b5d0781",
+  "response_id": "COLLABRESP-63ad544de1e434a7c28cce45be3a00ef6b49c95eecd48ed1249adbe3218f0165",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

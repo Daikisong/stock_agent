@@ -1,0 +1,48 @@
+{
+  "output_schema_hash": "6b8c147908a57aacaf44255658318cf4c640c3e39802154d59622712715d30e5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-9dceecf1d03f93be3512f139",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Although this is a fetchable broker or PDF route, its document subject and scope do not directly resolve Samsung memory/HBM capex, capacity, and cash-conversion evidence under a requested source family."
+      },
+      {
+        "candidate_id": "SGCAND-f4cb4d92a304a2ae0f0e1abb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Although this is a fetchable broker or PDF route, its document subject and scope do not directly resolve Samsung memory/HBM capex, capacity, and cash-conversion evidence under a requested source family."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Snippets and metadata remain discovery-only; every selected route still requires full fetch, publication-date verification against 2026-07-12, target/segment attribution, and counter/supersession validation before any evidence use."
+    ]
+  },
+  "payload_hash": "e66f92ba9ac5995b97ddd94fe52d0ec2e18908ace2a909f83244a4712279d6b4",
+  "production_score_authority": false,
+  "prompt_hash": "fb11ecfcd97bff6e7dca8445a5005edf177b5da9a00263a4ea8cb58d631757b0",
+  "provenance": {
+    "agent_id": "root-phase101-c06-rankings",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ae8dbd3b2727c8651fee07d963a270861fb08ecfb477cd803e4643ec469a958a",
+  "response_id": "COLLABRESP-3d1ee25998c5df7938c547f5a6ec700d675a257e1ada0fc41fc3db679dfd1571",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

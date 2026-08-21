@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-aeaaac07a50e8a4d9d65230d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This official Mirae equity report covers Komico, not Samsung Electronics or the requested capacity report."
+      },
+      {
+        "candidate_id": "SGCAND-4ee1cbb82906783c026acde1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The Mirae securities-sector report concerns brokerage companies and is unrelated to Samsung memory economics."
+      },
+      {
+        "candidate_id": "SGCAND-19e14e6747bfedf1039ac181",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The official Mirae PDF is an electronics-parts report centered on Samsung Electro-Mechanics, not Samsung Electronics HBM capacity."
+      },
+      {
+        "candidate_id": "SGCAND-36b63b3ddfdf483cb2400737",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The First Solar report is the wrong issuer and industry for both open objectives."
+      },
+      {
+        "candidate_id": "SGCAND-3e9fe5e14f6cc76aa1586f0a",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This is a corrected offering document, not a Samsung Electronics broker research report."
+      },
+      {
+        "candidate_id": "SGCAND-346855d07fa7e6ed0e80bb53",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The ETF-flow report merely mentions Samsung Electronics and DRAM in market commentary; it is not the exact capacity report or mechanism evidence route."
+      },
+      {
+        "candidate_id": "SGCAND-71bd0a45ac921c357c2949c4",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This 2023 cross-industry strategy PDF is not the specified current Samsung Electronics report and its displayed snippet concerns oil."
+      },
+      {
+        "candidate_id": "SGCAND-ae646752ade6c2d03a541738",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The Mirae-hosted prospectus contents are unrelated to Samsung memory capacity, contracts, or earnings visibility."
+      },
+      {
+        "candidate_id": "SGCAND-ebe38a04310f309dee4e8fe4",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The healthcare report is the wrong sector and subject."
+      },
+      {
+        "candidate_id": "SGCAND-bf01149dd2c264a8475741a4",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The banking report has no target-company memory or HBM mechanism relevance."
+      },
+      {
+        "candidate_id": "SGCAND-4d44076ed4e192de09bd3a27",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This prospectus/table-of-contents PDF is the wrong document class and does not identify the requested report."
+      },
+      {
+        "candidate_id": "SGCAND-cac73f590c49df14af178940",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The general AI Weekly report is not target-scoped Samsung Electronics research and does not repair the exact report route."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "All twelve candidates are Mirae-hosted broker-family documents, but each is the wrong issuer, sector, document class, or report identity; the requested current Samsung Electronics PDF remains unresolved."
+    ]
+  },
+  "payload_hash": "72b8d7d5c270aa8156a32e5af692251a80473c9141fc948cef3db8ec1f1fdcfb",
+  "production_score_authority": false,
+  "prompt_hash": "12067a8f04f7b263b2ecfede5f4c31bd981ce51fbbaaf7f90affcffa76abeacf",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d84cb111b0d15a85225475116626404179e9203dd447b4907852f7a932c345d2",
+  "response_id": "COLLABRESP-147cd2522c5dd611006eedde7d21775854d65689d7edef10b965dad87e00fec8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

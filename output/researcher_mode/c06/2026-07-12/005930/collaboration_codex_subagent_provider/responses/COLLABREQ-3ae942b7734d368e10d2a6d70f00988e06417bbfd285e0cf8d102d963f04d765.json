@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-aecd1d645fcfcccaf1870d5f",
+        "rationale": "159,952자·35개 PDF 페이지 전체를 검토했다. 문서의 EV/EBITDA 표 18개는 HPSP, 피에스케이, 케이엔솔, 원익IPS, 케이씨텍, 에스티아이 등 장비업체에 귀속되며 삼성전자 값이 아니다. 삼성전자 직접 언급은 2024년 당시 DRAM/HBM CAPA·공급 전망과 장비업체 고객사 설명뿐으로, 현재 valuation_rerating의 FORWARD_EV_EBITDA 역할을 충족하는 삼성전자 기간·점값·배수 단위의 직접 표가 없다. 산업·peer 값을 삼성전자 valuation fact로 전용하지 않고, 오래된 CAPA 전망도 현재 valuation objective fact로 재표현하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "fed1394918b5c68ca78a7a795d2155e83e3228fbe6dfa531be966c486c08b744",
+  "production_score_authority": false,
+  "prompt_hash": "bf04dde71fccce57226c5b770e8912b898df42911dea05511a180a0bb52536aa",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3ae942b7734d368e10d2a6d70f00988e06417bbfd285e0cf8d102d963f04d765",
+  "response_id": "COLLABRESP-b7cd8773264e0abd4cebf3161285d6d8c6db8f533dfde4141935f07f8b65ec45",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

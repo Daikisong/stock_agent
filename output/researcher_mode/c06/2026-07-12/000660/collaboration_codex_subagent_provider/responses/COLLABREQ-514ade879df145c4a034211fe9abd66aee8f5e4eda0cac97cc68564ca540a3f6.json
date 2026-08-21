@@ -1,0 +1,67 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "KRX 상장사 가운데 SK하이닉스와 동일하게 글로벌 DRAM·HBM을 직접 제조·판매하고 AI 메모리 수요, ASP, bit growth, 선단공정 CAPA라는 핵심 경제축을 공유하는 가장 직접적인 국내 peer다. 다만 삼성전자의 비메모리 사업이 커서 연결 배수는 보조 비교축으로만 사용해야 한다.",
+        "confidence": 0.93,
+        "material_differences": [
+          "삼성전자는 파운드리·시스템LSI·모바일·디스플레이·가전까지 포함하는 다각화 기업이어서 연결 손익과 배수가 순수 메모리 업황을 희석한다.",
+          "SK하이닉스와 HBM 고객 구성, 인증 진행도, 제품 믹스 및 메모리 내 DRAM·NAND 비중이 다르다.",
+          "두 회사의 연결 배수를 비교할 때 비메모리 사업가치와 순현금·투자구조 차이를 별도로 조정해야 한다."
+        ],
+        "peer_name": "삼성전자",
+        "peer_symbol": "005930",
+        "shared_economic_drivers": [
+          "DRAM과 HBM을 포함한 메모리 반도체의 가격·출하·제품 믹스가 이익을 좌우한다.",
+          "선단 메모리 공정 전환, HBM 적층·패키징, 대규모 생산설비 투자가 공급능력과 현금흐름을 결정한다.",
+          "AI 가속기와 데이터센터의 고대역폭 메모리 수요 및 고객 인증 속도에 노출된다."
+        ]
+      },
+      {
+        "comparability_rationale": "국내 KRX roster에서 반도체 제조 CAPA와 고정비·감가상각 구조를 비교할 수 있는 인접 peer다. 제품과 고객 경제는 직접 comparable하지 않으므로 삼성전자와 같은 직접 메모리 peer의 대체재가 아니라 자본집약적 제조축의 경계 비교로만 선정한다.",
+        "confidence": 0.68,
+        "material_differences": [
+          "DB하이텍은 파운드리 사업자로 DRAM·HBM을 판매하지 않으므로 HBM scarcity, 메모리 ASP, 고객 인증 경제를 직접 공유하지 않는다.",
+          "성숙 공정 위탁생산의 고객·가격·계약 구조는 SK하이닉스의 선단 메모리 제품 믹스와 다르다.",
+          "따라서 직접 메모리 peer가 아니라 CAPA·가동률·고정비 레버리지를 점검하는 인접 제조 proxy다."
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "반도체 웨이퍼 생산설비의 가동률, 공정 전환, CAPA 투자와 감가상각이 수익성과 현금흐름에 영향을 준다.",
+          "고객 주문과 반도체 수급에 따른 가격·물량 변동 및 높은 고정비 레버리지에 노출된다.",
+          "국내 상장 반도체 제조사로서 제조 CAPA의 자본집약도와 사이클 민감도를 비교할 수 있다."
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "직접 제품·수요 경제를 공유하는 삼성전자를 중심 peer로 두고, 최소 peer 수를 충족하면서도 비교 범위를 과장하지 않도록 DB하이텍을 자본집약적 반도체 제조의 인접 proxy로 분리했다. 예를 들어 삼성전자 배수는 HBM·DRAM rerating 비교에 쓸 수 있지만 비메모리 사업 조정이 필요하고, DB하이텍 배수는 HBM premium이 아니라 CAPA·가동률·고정비 경계 확인에만 적합하다.",
+    "unresolved_research_notes": [
+      "2026-07-12 시점 point-in-time structured peer identity roster에는 사용 가능한 배수 identity가 0건이다. 이 응답은 peer 방향과 경제적 경계만 선정하며 P/B·ROE·PER 등 수치를 생성하지 않는다.",
+      "삼성전자는 직접 메모리 peer지만 사업 다각화 조정이 필요하고, DB하이텍은 CAPA·가동률·고정비만 공유하는 인접 proxy다. 두 회사를 같은 강도의 HBM peer로 취급하면 안 된다.",
+      "국내 KRX roster에는 SK하이닉스를 제외하고 동일한 순수 HBM·DRAM 사업구조를 가진 두 번째 직접 peer가 확인되지 않아, 최소 2개 구성의 두 번째 자리는 명시적으로 인접 경계 peer를 사용했다."
+    ]
+  },
+  "payload_hash": "162b4550b14613236e41180a6f61ca514321d7f624cd54fc92239975621089be",
+  "production_score_authority": false,
+  "prompt_hash": "5dade2d02f52def2d37cd5c9991c5150584ce9b31d8979c0e166a2e037156361",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-514ade879df145c4a034211fe9abd66aee8f5e4eda0cac97cc68564ca540a3f6",
+  "response_id": "COLLABRESP-a848f6d96a5a5066d880a90e728ee455eef9c0607b9672fab3b70cde038ba25f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

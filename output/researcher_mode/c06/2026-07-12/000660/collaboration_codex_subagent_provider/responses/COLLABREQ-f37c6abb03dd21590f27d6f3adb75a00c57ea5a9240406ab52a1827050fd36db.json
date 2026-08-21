@@ -1,0 +1,54 @@
+{
+  "output_schema_hash": "3505ca947391eae0977237cea6957f48a1e3be399d39231ba6fee2c6476748d1",
+  "payload": {
+    "allowed_range": [
+      1.8,
+      2.8
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e의 LOW-confidence ordinal positive band와 ORDTRANSFER-0508f71bf609ed09f47c3acc의 LOW-confidence ordinal counter band를 모두 비교했다. 두 anchor는 경제 사실의 exact match가 아니므로 점수 눈금 참고에만 사용하고, 현재 exact support와 counter의 균형으로 범위를 정했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0110c93a9c546290e8d34635"
+    ],
+    "disagreements": [
+      "전사 현금창출 능력은 확인되지만 forward CAPA 계획을 이미 실현된 HBM 투자회수로 간주해서는 안 된다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "proposed_points": 2.3,
+    "rationale": "모든 counterfact와 valuation·불확실성·지속성 제한을 우선 검토했다. actual 영업현금흐름과 순현금 포지션, 100% 가동률 및 수요연계 투자 원칙은 투자 대응 여력을 지지한다. 그러나 매출채권·재고 증가는 현금을 흡수하고 투자 원칙은 plan이며 HBM 단독 realised ROIC·회수율은 확인되지 않았다.",
+    "support_fact_ids": [
+      "EFACT-02d58ad600093d0014e8428a",
+      "EFACT-08f8b87524ceb3f3ee376bc2",
+      "EFACT-2b6d88631c21daa364467682",
+      "EFACT-bb3c20c5fdc5425689b78c4d",
+      "EFACT-c589801b18002cc79aa63e94"
+    ],
+    "why_not_higher": "운전자본 흡수, 대규모 투자 필요와 HBM 단독 realised ROIC·고객 구매의무 부재 때문에 strong 상단을 확정할 수 없다.",
+    "why_not_lower": "actual 영업현금흐름과 순현금 완충력, 높은 가동률이라는 실행 기반이 있어 자본배분 여력을 weak 이하로 볼 근거도 부족하다."
+  },
+  "payload_hash": "3267f0774c2f7c7e9d74388991bb84d1b353255eeb67c1c1cacd1eb92082f892",
+  "production_score_authority": false,
+  "prompt_hash": "f182f8010603b7b4dff9c7e11326958e008cf7d71ef5bbef48f38f1f1d82c8e7",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f37c6abb03dd21590f27d6f3adb75a00c57ea5a9240406ab52a1827050fd36db",
+  "response_id": "COLLABRESP-2c8f9abb4b1d9ef0dfd67f0bbb6d6bc4ebc0778a2627e68c714622f417fc4657",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

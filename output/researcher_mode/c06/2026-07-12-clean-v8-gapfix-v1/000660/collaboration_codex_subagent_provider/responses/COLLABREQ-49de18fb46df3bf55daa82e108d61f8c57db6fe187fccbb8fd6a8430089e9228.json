@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      3.9,
+      5.2
+    ],
+    "anchor_comparisons": [
+      "POSITIVE ordinal anchor ORDTRANSFER-c54e0c02076da1642b64c8df의 4.32~5.52는 actual DRAM 성장, 100% 메모리 가동, HBM 가격·제품·고객 실행에 가까운 중간 rerating 상태다. 다만 exact anchor가 아니고 HBM earnings bridge가 없어 중심 이상을 자동 적용하지 않는다.",
+      "COUNTER ordinal anchor ORDTRANSFER-c2ec77e0538ebb9af9ce204b의 2.83~4.03은 fact signature가 약한 상태다. 고객집중·재고·재공품 위험과 derived valuation 한계는 이 방향을 지지하지만 다수 actual 실행이 있어 그 상단보다 약간 높게 둔다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c07ed486e6d67134d19d6951",
+      "EFACT-c418009dc8a6493dd0a098b4"
+    ],
+    "disagreements": [
+      "Current·forward multiple과 peer band가 존재한다는 사실만으로 저평가 또는 재평가 여력을 확정하지 않는다.",
+      "DRAM actual과 메모리 전체 가동률을 HBM 단독 정상 이익·FCF로 전이하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 4.5,
+    "rationale": "여섯 positive facts의 DRAM actual 성장, 메모리 100% 가동 및 HBM 가격·제품·고객 실행은 이익 질 개선과 rerating 가능성을 지지한다. 동시에 여섯 counter facts의 고객 집중, 재고평가·재공품 손실·잔액과 27.21배 forward EV/EBITDA, 6.91배 forward PB, 1.78% forward FCF yield 같은 derived valuation은 상단을 제한한다. 연결·DRAM actual을 HBM 단독 earnings로 바꾸지 않고 두 ordinal anchor 사이 4.5로 보정한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "HBM 단독 정상 이익·FCF bridge가 없고 forward multiple은 derived estimate이며 고객집중·재고·재공품 위험과 peer 사업 믹스 차이가 있다.",
+    "why_not_lower": "DRAM actual 성장, 100% 메모리 가동과 HBM 가격·제품·고객 실행은 질적 rerating의 source-backed 기반을 제공한다."
+  },
+  "payload_hash": "f901195376b893f771cf457ec24c2efe91813713d9376d5d507901757b2e08ba",
+  "production_score_authority": false,
+  "prompt_hash": "efb6445b42d68f75e2f3fd41942ace529f8f7df2c62390caad2a6f1407f4a6a7",
+  "provenance": {
+    "agent_id": "phase105-profile-response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-49de18fb46df3bf55daa82e108d61f8c57db6fe187fccbb8fd6a8430089e9228",
+  "response_id": "COLLABRESP-826278a4b4f2d55fc8d1742fd69821942922c498025b65ea54ca357decb7c822",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

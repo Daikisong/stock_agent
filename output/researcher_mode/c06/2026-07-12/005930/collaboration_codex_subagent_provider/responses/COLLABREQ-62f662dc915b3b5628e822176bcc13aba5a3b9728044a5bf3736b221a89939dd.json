@@ -1,0 +1,463 @@
+{
+  "output_schema_hash": "ae7dad2545414309536c569bb68fe5cf7c3acb2f6e168186b4a0a24c455dd15e",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ca050b3a35a2b673a9d3490e",
+        "rationale": "문서의 삼성전자 HBM3E 인증 지연·재고 해소 기대는 current durable qualification/resolution facts와 의미상 중복되거나 이후 사실에 의해 해소됐고, 현재 정보 신뢰도 목적에 추가되는 distinct fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "rationale": "삼성전자 메모리·DRAM의 2026년 broker 매출·이익·마진·출하·ASP 전망 10건을 추출했다. 동일 문서의 EV/EBITDA·target·peer facts는 current durable graph와 중복되어 제외했고, 추가 objective-local distinct fact는 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "메모리 부문 매출 전망은 메모리 이익과 가치평가의 매출 분모를 형성한다.",
+        "exact_quote": "Memory 매출액 19.1 21.2 26.7 37.1 74.8 118.1 142.1 148.3 84.5 104.1 483.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 가치평가를 뒷받침하는 target-direct 매출 전망이다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_REVENUE:2026F:HANA",
+        "normalized_object": "2026년 메모리 매출 전망 483.3조원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "하나증권은 삼성전자 메모리 부문의 2026년 매출액을 483.3조원으로 전망했다.",
+        "predicate_family": "MEMORY_FORWARD_REVENUE",
+        "primitive_tags": [
+          "MEMORY",
+          "REVENUE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_FORWARD_REVENUE",
+        "question_family_tags": [
+          "MEMORY",
+          "REVENUE_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 부문 2026년 매출 전망",
+        "subject_id": "005930:MEMORY:REVENUE:2026F:HANA",
+        "unit": "KRW trillion",
+        "value": 483.3
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "메모리 영업이익 전망은 HBM·DRAM 수익의 기업가치 전환을 수치화한다.",
+        "exact_quote": "Memory 매출액 19.1 21.2 26.7 37.1 74.8 118.1 142.1 148.3 84.5 104.1 483.3\n영업이익 3.5 2.6 7.9 18.2 54.6 93.3 116.2 120.7 19.3 32.3 384.8",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 가치평가의 핵심 이익 전망이다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_OP:2026F:HANA",
+        "normalized_object": "2026년 메모리 영업이익 전망 384.8조원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "하나증권은 삼성전자 메모리 부문의 2026년 영업이익을 384.8조원으로 전망했다.",
+        "predicate_family": "MEMORY_FORWARD_OPERATING_PROFIT",
+        "primitive_tags": [
+          "MEMORY",
+          "OPERATING_PROFIT"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_FORWARD_OPERATING_PROFIT",
+        "question_family_tags": [
+          "MEMORY",
+          "OPERATING_PROFIT_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 부문 2026년 영업이익 전망",
+        "subject_id": "005930:MEMORY:OP:2026F:HANA",
+        "unit": "KRW trillion",
+        "value": 384.8
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "메모리 영업이익률은 가격·믹스 개선이 이익으로 전환되는 정도를 나타낸다.",
+        "exact_quote": "Memory 매출액 19.1 21.2 26.7 37.1 74.8 118.1 142.1 148.3 84.5 104.1 483.3\n영업이익 3.5 2.6 7.9 18.2 54.6 93.3 116.2 120.7 19.3 32.3 384.8\n영업이익률 18% 12% 29% 49% 73% 79% 82% 81% 23% 31% 80%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 earnings bridge의 수익성 가정이다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_OPM:2026F:HANA",
+        "normalized_object": "2026년 메모리 영업이익률 전망 80%",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "하나증권은 삼성전자 메모리 부문의 2026년 영업이익률을 80%로 전망했다.",
+        "predicate_family": "MEMORY_FORWARD_OPERATING_MARGIN",
+        "primitive_tags": [
+          "MEMORY",
+          "OPERATING_MARGIN"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_FORWARD_MARGIN",
+        "question_family_tags": [
+          "MEMORY",
+          "MARGIN_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 부문 2026년 영업이익률 전망",
+        "subject_id": "005930:MEMORY:OPM:2026F:HANA",
+        "unit": "%",
+        "value": 80
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "DRAM 매출 전망은 HBM을 포함한 DRAM 가치평가의 매출 기반이다.",
+        "exact_quote": "DRAM 매출액 12.9 13.9 18.4 27.5 54.5 84.3 99.7 102.6 52.4 72.8 341.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM을 포함하는 DRAM 매출 전망이 target valuation bridge를 직접 보강한다.",
+        "mechanism_scope_id": "005930:DRAM:FORWARD_REVENUE:2026F:HANA",
+        "normalized_object": "2026년 DRAM 매출 전망 341.1조원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "하나증권은 삼성전자 DRAM의 2026년 매출액을 341.1조원으로 전망했다.",
+        "predicate_family": "DRAM_FORWARD_REVENUE",
+        "primitive_tags": [
+          "DRAM",
+          "REVENUE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_FORWARD_REVENUE",
+        "question_family_tags": [
+          "DRAM",
+          "REVENUE_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DRAM 2026년 매출 전망",
+        "subject_id": "005930:DRAM:REVENUE:2026F:HANA",
+        "unit": "KRW trillion",
+        "value": 341.1
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "DRAM 영업이익 전망은 HBM·DRAM 업사이클의 이익 전환 규모를 수치화한다.",
+        "exact_quote": "DRAM 매출액 12.9 13.9 18.4 27.5 54.5 84.3 99.7 102.6 52.4 72.8 341.1\n영업이익 4.7 4.2 8.3 16.8 43.3 69.9 84.4 86.3 18.9 34.0 283.8",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 수익의 target-direct valuation 근거다.",
+        "mechanism_scope_id": "005930:DRAM:FORWARD_OP:2026F:HANA",
+        "normalized_object": "2026년 DRAM 영업이익 전망 283.8조원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "하나증권은 삼성전자 DRAM의 2026년 영업이익을 283.8조원으로 전망했다.",
+        "predicate_family": "DRAM_FORWARD_OPERATING_PROFIT",
+        "primitive_tags": [
+          "DRAM",
+          "OPERATING_PROFIT"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_FORWARD_OPERATING_PROFIT",
+        "question_family_tags": [
+          "DRAM",
+          "OPERATING_PROFIT_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DRAM 2026년 영업이익 전망",
+        "subject_id": "005930:DRAM:OP:2026F:HANA",
+        "unit": "KRW trillion",
+        "value": 283.8
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "DRAM 영업이익률 전망은 가격 상승과 제품 믹스가 이익률로 전환되는 정도를 나타낸다.",
+        "exact_quote": "DRAM 매출액 12.9 13.9 18.4 27.5 54.5 84.3 99.7 102.6 52.4 72.8 341.1\n영업이익 4.7 4.2 8.3 16.8 43.3 69.9 84.4 86.3 18.9 34.0 283.8\n영업이익률 37% 30% 45% 61% 79% 83% 85% 84% 36% 47% 83%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM earnings bridge의 수익성 가정이다.",
+        "mechanism_scope_id": "005930:DRAM:FORWARD_OPM:2026F:HANA",
+        "normalized_object": "2026년 DRAM 영업이익률 전망 83%",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "하나증권은 삼성전자 DRAM의 2026년 영업이익률을 83%로 전망했다.",
+        "predicate_family": "DRAM_FORWARD_OPERATING_MARGIN",
+        "primitive_tags": [
+          "DRAM",
+          "OPERATING_MARGIN"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_FORWARD_MARGIN",
+        "question_family_tags": [
+          "DRAM",
+          "MARGIN_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DRAM 2026년 영업이익률 전망",
+        "subject_id": "005930:DRAM:OPM:2026F:HANA",
+        "unit": "%",
+        "value": 83
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "DRAM 출하량은 메모리 매출 전망의 물량 축을 이룬다.",
+        "exact_quote": "반도체\nShipment(1Gb Eq.) 22,927 25,513 29,706 30,759 30,890 32,466 34,903 36,407 98,438 108,905 134,666\nbit growth 1% 11% 16% 4% 0% 5% 8% 4% 15% 11% 24%\nDRAM",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM valuation bridge의 물량 가정이다.",
+        "mechanism_scope_id": "005930:DRAM:FORWARD_SHIPMENT:2026F:HANA",
+        "normalized_object": "2026년 DRAM 출하량 전망 134,666 1Gb Eq.",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "하나증권은 삼성전자 DRAM의 2026년 출하량을 134,666(1Gb Eq.)으로 전망했다.",
+        "predicate_family": "DRAM_FORWARD_SHIPMENT",
+        "primitive_tags": [
+          "DRAM",
+          "SHIPMENT"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_FORWARD_SHIPMENT",
+        "question_family_tags": [
+          "DRAM",
+          "SHIPMENT_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DRAM 2026년 출하 전망",
+        "subject_id": "005930:DRAM:SHIPMENT:2026F:HANA",
+        "unit": "1Gb equivalent",
+        "value": 134666
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "DRAM bit growth는 출하 물량 증가가 매출로 전환되는 속도를 나타낸다.",
+        "exact_quote": "반도체\nShipment(1Gb Eq.) 22,927 25,513 29,706 30,759 30,890 32,466 34,903 36,407 98,438 108,905 134,666\nbit growth 1% 11% 16% 4% 0% 5% 8% 4% 15% 11% 24%\nDRAM",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 매출 전망의 물량 성장 가정이다.",
+        "mechanism_scope_id": "005930:DRAM:FORWARD_BIT_GROWTH:2026F:HANA",
+        "normalized_object": "2026년 DRAM bit growth 전망 24%",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "하나증권은 삼성전자 DRAM의 2026년 bit growth를 24%로 전망했다.",
+        "predicate_family": "DRAM_FORWARD_BIT_GROWTH",
+        "primitive_tags": [
+          "DRAM",
+          "BIT_GROWTH"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_FORWARD_BIT_GROWTH",
+        "question_family_tags": [
+          "DRAM",
+          "BIT_GROWTH_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DRAM 2026년 bit growth 전망",
+        "subject_id": "005930:DRAM:BIT_GROWTH:2026F:HANA",
+        "unit": "%",
+        "value": 24
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "DRAM ASP는 메모리 매출과 이익 전망의 가격 축을 이룬다.",
+        "exact_quote": "DRAM\nASP ($) 0.39 0.39 0.45 0.63 1.20 1.73 1.94 1.94 0.39 0.47 1.72",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 가격 전망이 target valuation의 매출·마진 bridge를 보강한다.",
+        "mechanism_scope_id": "005930:DRAM:FORWARD_ASP:2026F:HANA",
+        "normalized_object": "2026년 DRAM ASP 전망 1.72달러",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "하나증권은 삼성전자 DRAM의 2026년 ASP를 1.72달러로 전망했다.",
+        "predicate_family": "DRAM_FORWARD_ASP",
+        "primitive_tags": [
+          "DRAM",
+          "ASP"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_FORWARD_ASP",
+        "question_family_tags": [
+          "DRAM",
+          "ASP_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DRAM 2026년 ASP 전망",
+        "subject_id": "005930:DRAM:ASP:2026F:HANA",
+        "unit": "USD",
+        "value": 1.72
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cf489a77cd35cbaae4748ebd",
+        "economic_mechanism": "DRAM ASP 증가율은 메모리 가격 상승의 이익 레버리지를 수치화한다.",
+        "exact_quote": "DRAM\nASP ($) 0.39 0.39 0.45 0.63 1.20 1.73 1.94 1.94 0.39 0.47 1.72\nQoQ / YoY -19% 0% 15% 40% 93% 44% 12% 0% 63% 21% 266%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 가격 상승 가정은 메모리 이익 전망의 핵심 민감도다.",
+        "mechanism_scope_id": "005930:DRAM:FORWARD_ASP_GROWTH:2026F:HANA",
+        "normalized_object": "2026년 DRAM ASP 증가율 전망 266%",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F YoY",
+        "predicate": "하나증권은 삼성전자 DRAM의 2026년 ASP 증가율을 266%로 전망했다.",
+        "predicate_family": "DRAM_FORWARD_ASP_GROWTH",
+        "primitive_tags": [
+          "DRAM",
+          "ASP_GROWTH"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_FORWARD_ASP_GROWTH",
+        "question_family_tags": [
+          "DRAM",
+          "ASP_GROWTH_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DRAM 2026년 ASP 증가율 전망",
+        "subject_id": "005930:DRAM:ASP_GROWTH:2026F:HANA",
+        "unit": "%",
+        "value": 266
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "0406753e70a2936da2458e79355e5f8275ec23e5bdf259a7e91d79a5c6fa95ef",
+  "production_score_authority": false,
+  "prompt_hash": "571d108e60963289553db70c4b6c99f38ce2701d28b67df591d534020c9819a1",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-62f662dc915b3b5628e822176bcc13aba5a3b9728044a5bf3736b221a89939dd",
+  "response_id": "COLLABRESP-831c8b09d043970fe08a314a358192d27d55b3b4ee03e786a907d670c14a3117",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

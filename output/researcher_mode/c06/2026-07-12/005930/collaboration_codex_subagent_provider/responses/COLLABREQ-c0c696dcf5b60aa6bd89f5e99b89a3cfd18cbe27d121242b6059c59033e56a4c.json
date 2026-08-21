@@ -1,0 +1,304 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-01f86f5e744fdaaac5e2ffe8",
+        "rationale": "The full IBK report provides direct same-method peer valuation evidence: a qualitative relative discount, a common operating-profit PER frame, comparable Samsung Electronics and SK hynix forward multiple profiles, and applied PBR anchors. All six objective-linked facts are extracted once.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS memory",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-01f86f5e744fdaaac5e2ffe8",
+        "economic_mechanism": "The analyst states that memory companies remain valued below both the market average and Micron because the market still applies a cyclical-industry frame.",
+        "exact_quote": "아직까지는 시장이 여전히 메모리는 사이클\n산업이라는 빌미로 밸류에이션에는 인색한 것 같습니다. 시장 평균 대비로도 낮고, 경쟁사인 마이크론\n보다도 낮습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is a direct same-report peer-relative valuation observation that advances the unresolved PEER_BAND objective.",
+        "mechanism_scope_id": "MEMORY_PEER_RELATIVE_DISCOUNT",
+        "normalized_object": "relative valuation discount versus market average and Micron",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "As of report date 2026-01-30",
+        "predicate": "is valued below the market average and Micron under a memory-cycle frame",
+        "predicate_family": "MEMORY_PEER_RELATIVE_DISCOUNT",
+        "primitive_tags": [
+          "valuation",
+          "peer comparison",
+          "memory cycle"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_PEER_RELATIVE_VALUATION",
+        "question_family_tags": [
+          "peer band",
+          "relative valuation",
+          "Micron"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Samsung Electronics memory valuation relative to market average and Micron",
+        "subject_id": "005930_MEMORY_RELATIVE_VALUATION",
+        "unit": "",
+        "value": "below market average and Micron"
+      },
+      {
+        "business_segment": "memory industry",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-01f86f5e744fdaaac5e2ffe8",
+        "economic_mechanism": "The analyst applies one common 10x operating-profit PER frame to Samsung Electronics and SK hynix, producing comparable implied equity values.",
+        "exact_quote": "제가 생각하는 최소한의 밸류에이션은 영업이익 PER 10배입니다. 이를 적용하면 삼성전자는 1,800조원,\nSK하이닉스도 1,600조원이 가능합니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "A common denominator and multiple across the issuer and a named peer is direct PEER_BAND evidence rather than a stand-alone target price.",
+        "mechanism_scope_id": "PEER_OPERATING_PROFIT_VALUATION_FRAME",
+        "normalized_object": "common peer valuation framework and implied equity values",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "As of report date 2026-01-30",
+        "predicate": "is valued under a common 10x operating-profit PER framework",
+        "predicate_family": "PEER_OPERATING_PROFIT_VALUATION_FRAME",
+        "primitive_tags": [
+          "valuation",
+          "earnings bridge",
+          "peer comparison"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_PEER_VALUATION_FRAME",
+        "question_family_tags": [
+          "peer band",
+          "operating profit PER",
+          "implied equity value"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Samsung Electronics and SK hynix operating-profit valuation frame",
+        "subject_id": "MEMORY_PEER_OPERATING_PROFIT_VALUATION",
+        "unit": "multiple and KRW trillion",
+        "value": "10x operating-profit PER; implied Samsung Electronics KRW 1,800tn and SK hynix KRW 1,600tn"
+      },
+      {
+        "business_segment": "DS memory valuation context",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-01f86f5e744fdaaac5e2ffe8",
+        "economic_mechanism": "The report supplies a multi-year Samsung Electronics PER, PBR and EV/EBITDA profile on the same methodology used for its SK hynix peer table.",
+        "exact_quote": "PER 36.8 10.7 18.9 6.5 4.9\nPBR 1.5 0.9 1.9 1.9 1.4\nEV/EBITDA 10.0 3.6 7.8 3.8 2.4",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "These same-report forward multiples form the issuer half of the direct Samsung Electronics versus SK hynix peer band.",
+        "mechanism_scope_id": "PEER_COMPARABLE_FORWARD_MULTIPLES",
+        "normalized_object": "Samsung Electronics forward comparable valuation multiples",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F-FY2027F",
+        "predicate": "has the stated FY2025F-FY2027F forward valuation profile",
+        "predicate_family": "SAMSUNG_FORWARD_VALUATION_PROFILE",
+        "primitive_tags": [
+          "valuation",
+          "forward multiples",
+          "Samsung Electronics"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_PEER_FORWARD_MULTIPLES",
+        "question_family_tags": [
+          "peer band",
+          "forward PER",
+          "forward PBR",
+          "forward EV EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Samsung Electronics forward valuation profile",
+        "subject_id": "005930_FORWARD_VALUATION_PROFILE",
+        "unit": "multiple",
+        "value": "FY2025F PER 18.9x, PBR 1.9x, EV/EBITDA 7.8x; FY2026F 6.5x, 1.9x, 3.8x; FY2027F 4.9x, 1.4x, 2.4x"
+      },
+      {
+        "business_segment": "memory peer",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-01f86f5e744fdaaac5e2ffe8",
+        "economic_mechanism": "The report supplies a multi-year SK hynix PER, PBR and EV/EBITDA profile on the same methodology used for Samsung Electronics.",
+        "exact_quote": "PER -11.3 6.4 11.0 4.7 3.7\nPBR 1.9 1.7 4.1 2.6 1.5\nEV/EBITDA 21.3 3.8 7.7 3.1 1.9",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "These same-report forward multiples form the named peer half of the direct Samsung Electronics versus SK hynix peer band.",
+        "mechanism_scope_id": "PEER_COMPARABLE_FORWARD_MULTIPLES",
+        "normalized_object": "SK hynix forward comparable valuation multiples",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F-FY2027F",
+        "predicate": "has the stated FY2025F-FY2027F forward valuation profile",
+        "predicate_family": "SK_HYNIX_FORWARD_VALUATION_PROFILE",
+        "primitive_tags": [
+          "valuation",
+          "forward multiples",
+          "SK hynix"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_PEER_FORWARD_MULTIPLES",
+        "question_family_tags": [
+          "peer band",
+          "forward PER",
+          "forward PBR",
+          "forward EV EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix forward valuation profile",
+        "subject_id": "000660_FORWARD_VALUATION_PROFILE",
+        "unit": "multiple",
+        "value": "FY2025F PER 11.0x, PBR 4.1x, EV/EBITDA 7.7x; FY2026F 4.7x, 2.6x, 3.1x; FY2027F 3.7x, 1.5x, 1.9x"
+      },
+      {
+        "business_segment": "DS memory valuation context",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-01f86f5e744fdaaac5e2ffe8",
+        "economic_mechanism": "The report derives a Samsung Electronics fair-value anchor from a 3.0x PBR applied to forecast BPS.",
+        "exact_quote": "적정 PBR 3 PBR=(ROE-g)/(Ke-g)\n예상 BPS 83,848 2025년\n적정 주가 248,302",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The applied issuer PBR is directly comparable with the named peer's applied PBR in the same report and advances PEER_BAND.",
+        "mechanism_scope_id": "PEER_APPLIED_PBR_ANCHOR",
+        "normalized_object": "Samsung Electronics applied fair PBR anchor",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025 BPS valuation basis; report date 2026-01-30",
+        "predicate": "has a 3.0x fair PBR applied to forecast BPS",
+        "predicate_family": "SAMSUNG_APPLIED_FAIR_PBR",
+        "primitive_tags": [
+          "valuation",
+          "PBR",
+          "Samsung Electronics"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_PEER_TARGET_PBR",
+        "question_family_tags": [
+          "peer band",
+          "applied PBR",
+          "fair value"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Samsung Electronics fair PBR valuation basis",
+        "subject_id": "005930_FAIR_PBR_BASIS",
+        "unit": "multiple and KRW per share",
+        "value": "3.0x PBR on BPS KRW 83,848; implied fair value KRW 248,302"
+      },
+      {
+        "business_segment": "memory peer",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-01f86f5e744fdaaac5e2ffe8",
+        "economic_mechanism": "The report derives the SK hynix target valuation from a 3.3x PBR applied to FY2026 expected BPS.",
+        "exact_quote": "2026년 예상 BPS\n335,687원에 PBR 3.3배를 적용한 수준이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The named peer's applied target PBR is directly comparable with Samsung Electronics' applied fair PBR in the same report.",
+        "mechanism_scope_id": "PEER_APPLIED_PBR_ANCHOR",
+        "normalized_object": "SK hynix applied target PBR anchor",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E BPS valuation basis; report date 2026-01-30",
+        "predicate": "has a 3.3x target PBR applied to FY2026 expected BPS",
+        "predicate_family": "SK_HYNIX_APPLIED_TARGET_PBR",
+        "primitive_tags": [
+          "valuation",
+          "PBR",
+          "peer comparison"
+        ],
+        "product_family": "memory",
+        "question_family_id": "MEMORY_PEER_TARGET_PBR",
+        "question_family_tags": [
+          "peer band",
+          "applied PBR",
+          "SK hynix"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix target PBR valuation basis",
+        "subject_id": "000660_TARGET_PBR_BASIS",
+        "unit": "multiple and KRW per share",
+        "value": "3.3x PBR on FY2026 expected BPS KRW 335,687"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "52722dd1f3739df9434ab5cac506165d227888e35d55dcdd1ff4e822cfe86b01",
+  "production_score_authority": false,
+  "prompt_hash": "84f948d8fe83cf66805babf12cbe338344135c04fedecfe4c497504c6995c1af",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c0c696dcf5b60aa6bd89f5e99b89a3cfd18cbe27d121242b6059c59033e56a4c",
+  "response_id": "COLLABRESP-00240d71cac32d57a8bd458ba5cb8c641a5dcf159a1e0fd426d8fe9cb4182e7c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

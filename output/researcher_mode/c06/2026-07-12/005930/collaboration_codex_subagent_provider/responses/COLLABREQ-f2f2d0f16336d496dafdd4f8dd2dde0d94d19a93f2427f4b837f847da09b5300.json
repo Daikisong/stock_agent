@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "67d65d0bd4f52f9a3911a1f53dbd13543bb98a5bda22f1fcd37d28389e117cb2",
+  "payload": {
+    "allowed_range": [
+      9.5,
+      12.57
+    ],
+    "anchor_comparisons": [
+      "긍정 앵커 ORDTRANSFER-5aadf9d29303975e658a6c23의 6.84~8.74점과 현재 실제·전망 근거를 비교했다.",
+      "반대 앵커 ORDTRANSFER-9205e8ab347aff38184b148a의 4.478571~6.378571점과 현재 불확실성·counterfact를 비교했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0b6b02299ea60f931cf17c4e",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-f05a97edeb8f85d49353381e"
+    ],
+    "disagreements": [
+      "현재 actual 매출·가동·주문·상용화 근거가 있어 최하단만 적용하는 견해는 수용하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "proposed_points": 11.38,
+    "rationale": "반대 역할로 모든 counterfact를 우선 검토했다. 범용 메모리 고마진은 일시적일 수 있고 물량보다 가격에 의존한 이익은 CAPEX 확대와 공급 정상화 때 약해질 수 있다. 다만 수요가 공급을 초과하고 재고가 타이트한 가운데 D램 가격이 상승했으며 고속 HBM4 프리미엄과 안정 수율이 병목의 가격 전환을 뒷받침한다.",
+    "support_fact_ids": [
+      "EFACT-13d6da3b116a9a0ad8043f62",
+      "EFACT-1df441a716b0204f7b107e70",
+      "EFACT-3c095c9436a1460d04797e97",
+      "EFACT-477c6cb45b164685a2a345e8",
+      "EFACT-4e0d88dc056c9e8dcd45ea47",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-a2243488e8b8f0197fd8bd56",
+      "EFACT-b676fc3afacb1117c1ba65be",
+      "EFACT-fd86be3f3b91aa151f046cfb"
+    ],
+    "why_not_higher": "계약 조건·제품별 actual 이익·현금 전환 또는 구조적 지속성의 직접 검증이 완전하지 않다.",
+    "why_not_lower": "현재 citable 긍정 사실과 공식·독립 출처가 실제 매출·수요·생산·현금 경로를 뒷받침한다."
+  },
+  "payload_hash": "4d482469a1e9f4fb41b7e20239fdbc015d4223d3b84db78235426503b9abbfee",
+  "production_score_authority": false,
+  "prompt_hash": "4ebe6df57315bda812d433415a96e40d47c0f5c8d65ffe69002475b6ce38922a",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f2f2d0f16336d496dafdd4f8dd2dde0d94d19a93f2427f4b837f847da09b5300",
+  "response_id": "COLLABRESP-69aa85ed510d0ef4c4411b2921d15fbdabcb872e504166cdf9d876ddddbcf2f5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

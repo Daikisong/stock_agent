@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "9e23b16e6c69b0e3fffaa28e5faeefde1ee90da78940f84f527fe47ed7190077",
+  "payload": {
+    "allowed_range": [
+      2.0,
+      3.1
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-09ab96433f8087166845bf25의 positive upper 2.25는 fact signature 없는 정보 점수지만, 현재 AMD 공식 HBM3E·HBM4·MOU·기술협력 corroboration이 더 구체적이어서 소폭 상회한다.",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64의 counter band(1.5~2.0)는 execution과 company cash bridge의 공백을 반영하며 NVIDIA·OpenAI 독립 확인 부재가 range 하단에 남는다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1",
+      "EFACT-6a317a6c41253b0fafc79d56"
+    ],
+    "disagreements": [
+      "AMD CUSTOMER_OFFICIAL corroboration은 정보 독립성을 높이지만 MOU·technical alignment를 purchase economics로 승격하지 않는다.",
+      "NVIDIA·OpenAI 검색 material 0은 source/관계/계약 부재 증명이 아니며 issuer plan과 LOI만으로 customer confirmation을 대체하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 2.5,
+    "rationale": "AMD 공식 뉴스룸이 HBM3E 공급 이력, HBM4 product alignment, 전략 MOU와 플랫폼 기술협력을 독립 확인해 issuer-only 정보보다 신뢰도가 높다. HBM4 양산 actual과 OpenAI LOI도 관계·execution을 보강한다. 그러나 NVIDIA current qualification/supply와 OpenAI memory demand는 customer-official corroboration이 없고, MOU·LOI·계획은 signed procurement가 아니다. 따라서 5점 만점의 중간 범위로 본다.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-303c70f6fb2e11305c82f77b",
+      "EFACT-4d0e0f24a3a1645c5962f1b3",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-6e9f853e4ad5ac9c6849729a",
+      "EFACT-7f9fca669110a7e761e6264d",
+      "EFACT-b6ff1b966b93b843dd6bcd04",
+      "EFACT-f295131e6dc092d197e8eb93",
+      "EFACT-f8487df03aa235fb70883193"
+    ],
+    "why_not_higher": "NVIDIA·OpenAI의 pre-cutoff customer-official qualification·supply·memory scope와 가격·물량·기간이 없고 AMD는 MOU·technical evidence에 머문다.",
+    "why_not_lower": "AMD 공식 source가 실제 HBM3E partner 이력과 HBM4·플랫폼 협력을 확인하고 HBM4 양산 actual 및 OpenAI LOI가 issuer-only 주장보다 넓은 corroboration을 제공한다."
+  },
+  "payload_hash": "0c88768c9b9914186172d61dbe21c5da2f8f3f0793cc5050e4fa10d11acfe226",
+  "production_score_authority": false,
+  "prompt_hash": "2d8f5836b48bfdbc091b34745a654ed42548dc4a900c3978d081afeae7100e75",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-14b47ce9c414264b10da66d404adbcf3dfd34cc8eee530ab5c4acec6ff193517",
+  "response_id": "COLLABRESP-10efa1de4f184ccc2c688d06033268cb0c29c52716d9c0bbd664ab6c1f3be5a2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

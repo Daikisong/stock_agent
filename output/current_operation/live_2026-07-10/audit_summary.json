@@ -1,0 +1,32 @@
+{
+  "accepted_current_claim_count": 1,
+  "actual_live_claim_provenance_count": 1,
+  "actual_live_source_count": 3,
+  "as_of_date": "2026-07-10",
+  "atomic_decision_count": 4,
+  "canonical_claim_chain_counts": {
+    "adjudicated_claims": 13,
+    "evidence_anchors": 3,
+    "evidence_documents": 3,
+    "raw_assertions": 13,
+    "source_task_executions": 11
+  },
+  "claim_provenance_count": 1,
+  "deep_execution_count": 180,
+  "evaluator_critical_count_sum": 0,
+  "fresh_provider_cache_count": 2,
+  "full_universe_count": 2542,
+  "operational_blockers": [],
+  "operational_critical_count_sum": 0,
+  "production_runtime_ready": true,
+  "promotion_manifest_applied": true,
+  "promotion_manifest_hash": "90fe945ac2eca962ad0905fb293a628b49ed4fe90ab317a19a36a7dab7ed469f",
+  "provider_failure_count": 1,
+  "provider_failure_diagnostics": [
+    "IssuerIR:issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+  ],
+  "schema_version": "e2r_live_operational_audit_summary_v1",
+  "score_contribution_count": 1,
+  "status": "LIVE_OPERATIONAL_BRAIN_READY",
+  "watchlist_count": 419
+}

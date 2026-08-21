@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "7ae920b06bd6263417f575b06bfc5f7d39c17a95255d7e1ca84bfd395413d63e",
+  "payload": {
+    "allowed_range": [
+      4.9,
+      6.6
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df의 LOW-confidence MEDIUM positive ordinal band와 ORDTRANSFER-c2ec77e0538ebb9af9ce204b의 LOW-confidence WEAK counter ordinal band를 함께 비교했다. 둘 다 exact HBM 사례가 아니므로 anchor 점수를 복사하지 않고 거시 할인·감익·경쟁 공급을 actual 지지 근거와 대칭적으로 계상했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "disagreements": [
+      "positive case의 peer discount와 HBM SOTP는 추정 기준 차이와 이미 반영된 P/B 프리미엄을 함께 봐야 하며, actual 개선만으로 multiple 확장이 보장되지는 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 5.8,
+    "rationale": "이익 상향 중에도 거시 불확실성으로 Target PBR이 하향된 실제 사례, FY2027~FY2028 감익 추정과 경쟁사 HBM3E 공급 확대는 peak earnings와 scarcity premium의 지속성을 제한한다. P/B 프리미엄이 이미 있고 HBM 단독 이익·현금 및 공개 LTA 조건도 없다. 다만 actual HBM 성장과 전사 actual 이익, SOTP·peer 근거 때문에 재평가 경로 자체를 부정하지 않는다.",
+    "support_fact_ids": [
+      "EFACT-027939805cca9c1f11e1e81e",
+      "EFACT-122bf71db78558e5780ed3c8",
+      "EFACT-3e4c5596b1c40a463ba54d38",
+      "EFACT-7ccc530bd085e12d2428c531",
+      "EFACT-b3d48bea9ae741feec4d4a05",
+      "EFACT-b74e88a671a1247b0ce230d5"
+    ],
+    "why_not_higher": "거시 multiple 할인의 관찰, FY2027 이후 감익 추정, 경쟁 공급 확대와 공개되지 않은 HBM 단독 cash·계약조건이 strong duration을 막는다.",
+    "why_not_lower": "actual HBM 매출 성장과 전사 이익, 차등 SOTP 및 관찰된 EPS·PER 동반 상승이 있어 재평가 근거가 없는 weak 사례는 아니다."
+  },
+  "payload_hash": "3b24067ea7430d6a8354c97705e36f7c2c4e152eba0c025c87a8c0ebefb718e7",
+  "production_score_authority": false,
+  "prompt_hash": "3fa2a0ba17d45749deac12296a970556f5f2384ef07f43f07554ccf598e835a3",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e8e63e94afccaf5687dfb8bcd58d80b4dd28faedd6fda632b08314bfbddc9602",
+  "response_id": "COLLABRESP-479245fe27135a57b39c00b64d4488e3e48aedc59bcdedd013665b16cc42a249",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

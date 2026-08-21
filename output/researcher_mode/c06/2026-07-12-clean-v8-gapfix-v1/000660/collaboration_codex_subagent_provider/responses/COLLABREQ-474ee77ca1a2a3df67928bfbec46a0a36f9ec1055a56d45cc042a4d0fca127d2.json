@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "8d35b29393ba65323371eb9e0bcfb91b5fa5921ca58b51bd47566462be3c999a",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a6749abccc473c8a687aaf03",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.03,
+        "rationale": "Unofficial GitHub dashboard is not an OPENDART original/full filing route."
+      },
+      {
+        "candidate_id": "SGCAND-e464989e3c171ed6d9f9a5ab",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.12,
+        "rationale": "Third-party tax-news article does not match requested OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-0b5c4ed103c33da6ff059316",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.12,
+        "rationale": "Third-party media report about an SEC filing is not the requested OPENDART original route."
+      },
+      {
+        "candidate_id": "SGCAND-2c08fb4dfe08c94601fa3120",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.03,
+        "rationale": "Unofficial web explainer is not OPENDART and provides only snippet metadata."
+      },
+      {
+        "candidate_id": "SGCAND-59389a77d93cb979ab47ee00",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.05,
+        "rationale": "KB educational article is not the requested OPENDART filing source."
+      },
+      {
+        "candidate_id": "SGCAND-dba9f246c8eaadb51fc919bb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "Third-party business-media article does not match OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-3ef0a37a8dfa1358dca84c36",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "Edaily report is a retelling rather than the requested original disclosure route."
+      },
+      {
+        "candidate_id": "SGCAND-196ef95769a1ccf6280dbfa6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Third-party news analysis does not match OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-356990c50a555c582e29b734",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "Khan article is not the original OPENDART/KIND disclosure route."
+      },
+      {
+        "candidate_id": "SGCAND-d61abcc18fe6ac75a9a09592",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial blog is not a dated full PUBLIC_BROKER_PDF."
+      },
+      {
+        "candidate_id": "SGCAND-532dda4b50a99c38d58e4737",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "Third-party media analysis does not match OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-c0c985f3861b0120e102e7bd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "News1 article is not an original OPENDART filing route and snippet text is not evidence."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate in this roster provides a matching original OPENDART or full public-broker-PDF route; third-party snippets cannot establish evidence or absence."
+    ]
+  },
+  "payload_hash": "97189b6658d358b3f899889b86e86dd8e5d7d3c47e708beb70c7df9db937d447",
+  "production_score_authority": false,
+  "prompt_hash": "d46d67266d0366363fc811c79cb6f5f1e0df80d3b1542bf0f4bc4a6bc793d26c",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-474ee77ca1a2a3df67928bfbec46a0a36f9ec1055a56d45cc042a4d0fca127d2",
+  "response_id": "COLLABRESP-287852ad068164cded2602728d7c767832b3862d14b50c246ef3b25ae1572d6d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

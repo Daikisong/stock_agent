@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-083a0a242c0d5ed4db567fb0",
+        "rationale": "누적 accepted 25건이 별도 재고·자산·차입·충당·보증·배당·투자 사실과 불확실성을 포착한다. 남은 제품별 재고 및 개별 충당부채 세목은 이미 채택된 총액의 단순 분해이거나 C06 메모리 귀속이 없는 전사 세부내역이라 별도 material fact로 반복하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-09916b5452a9727d9ec4985e",
+        "rationale": "문서의 HBM은 메모리가 아니라 디스플레이 High Brightness Mode이며 나머지도 모바일·가전 설명이어서 현재 C06 목표에 직접 연결되지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-0ef42c4edd3dc855b908e1cf",
+        "rationale": "누적 accepted 23건이 메모리 매출, 별도 손익·현금흐름, 자기주식 사건과 핵심 자본 항목을 포착한다. 남은 관계자 표와 현금흐름 세목은 기존 경제 사건의 재표시 또는 비핵심 전사 세부내역이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-1b13101bcc9b1662d45a6e40",
+        "rationale": "모바일·가전 제품 설명으로 메모리/HBM 대상 사업 귀속이 없고 adjacent 기술 내용을 확대하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "rationale": "누적 accepted 24건이 연결 손익·현금흐름·EPS·자금조달 및 주요 현금 세목을 포착한다. 남은 재무제표 계정과 자회사 명부는 기존 총액의 구성 또는 현재 목표에 비핵심인 세부내역이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-345071554d2634bef8ce21d3",
+        "rationale": "종속회사 명부만으로 현재 목표의 메모리 수익·수급·고객·가격·현금회수 또는 독립 자본배분 사건을 직접 구성하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-3b6cc7f69973bfe8b33016e8",
+        "rationale": "누적 accepted 12건이 연결 재고·유형/무형자산·차입·계약부채·취득약정·충당부채 총액을 포착한다. 남은 개별 충당부채와 배출권 세목은 채택된 총액의 분해이거나 C06 메모리 귀속이 없는 비핵심 세부내역이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-3d4d1d527e40e45ee2b60ecd",
+        "rationale": "임직원·임원 경력 명부로 현재 C06 경제 메커니즘 또는 issuer-wide 자본배분·정보품질 사건을 직접 제공하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "99dbd2d7a0d7b0f891d60542999d41007235a4a1d429877eb1fd2147f901f71c",
+  "production_score_authority": false,
+  "prompt_hash": "2b3d79b039f7fad4b5330b09365420a7c5b9ad42daa4af0e651e713dffe406ab",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0a3a998f7dcd6bb89312d574925d4ef50628c3188ee76dc0685b5c898b2be7e1",
+  "response_id": "COLLABRESP-47461158d09e86d123c7773575c7f3d8c2c99ba86c8a5d8facba36c48c804acd",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

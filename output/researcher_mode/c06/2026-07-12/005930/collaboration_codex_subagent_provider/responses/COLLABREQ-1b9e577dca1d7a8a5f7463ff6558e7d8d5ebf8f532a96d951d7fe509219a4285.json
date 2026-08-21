@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-078c7f1c12857f15ccbec189",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.98,
+        "rationale": "The verified issuer earnings-release landing route can lead to full original results and outlook material relevant to current earnings visibility."
+      },
+      {
+        "candidate_id": "SGCAND-0906fb1a290446e10c519f18",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.05,
+        "rationale": "The issuer IR contact page matches the requested issuer family but does not resolve the HBM demand, capacity, customer, or earnings-visibility mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-10d4d74184a1bd34885def2f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.72,
+        "rationale": "The verified issuer disclosure landing route may lead to full original disclosures about commitments, investment, or other facts bearing on earnings visibility."
+      },
+      {
+        "candidate_id": "SGCAND-1194c5fbee18c97ba4824090",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 1.0,
+        "rationale": "The verified issuer 2026 first-quarter conference PDF is a full original route likely to contain current memory demand, capacity, customer, and outlook discussion."
+      },
+      {
+        "candidate_id": "SGCAND-14c1ee92cda009b466209ad8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "Listing information is issuer-owned but does not address the current memory earnings-visibility mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-172e002f384a081c44bb1476",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.05,
+        "rationale": "The board-of-directors page matches the issuer family but has the wrong subject for the supplied earnings-visibility objective."
+      },
+      {
+        "candidate_id": "SGCAND-17fa6e97e1ea9aaad427374c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "The code-of-conduct page is a verified issuer page but does not resolve memory capacity, allocation, qualification, or earnings visibility."
+      },
+      {
+        "candidate_id": "SGCAND-1f538c7f5b5378fc79c53b1e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.15,
+        "rationale": "The general notices route matches the issuer family, but its supplied metadata gives no material link to the specific memory visibility questions."
+      },
+      {
+        "candidate_id": "SGCAND-24a3787f5c2f90641cd1105b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "This is a Facebook sharing endpoint, not an eligible issuer, customer, industry-report, or trusted-business-media source."
+      },
+      {
+        "candidate_id": "SGCAND-28c80f7148fd2c644afa390a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.62,
+        "rationale": "The verified issuer shareholder-letter route may contain management discussion of memory demand, investment, and forward operating conditions relevant to visibility."
+      },
+      {
+        "candidate_id": "SGCAND-32d3697d359f7ba53bf01e7b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "The X sharing URL is third-party transport and cannot satisfy an issuer-source request despite text referring to an HBM4 newsroom item."
+      },
+      {
+        "candidate_id": "SGCAND-3a48538ee6b86db76c0ffc19",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "The issuer legal disclaimer has the wrong subject and provides no material information for the earnings-visibility objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Sparse issuer routes still require bounded full fetch, as-of-date validation, and downstream evidence extraction; this ranking treats metadata only as discovery."
+    ]
+  },
+  "payload_hash": "582623767bc4ef005adef71e29154ea38df7c5572be99dadc34f070c0db5f625",
+  "production_score_authority": false,
+  "prompt_hash": "d2751dfedbce354010ccc51e99a142979ac76dec6ce606405d86c98cc38a407d",
+  "provenance": {
+    "agent_id": "samsung-epoch107-rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_epoch107_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1b9e577dca1d7a8a5f7463ff6558e7d8d5ebf8f532a96d951d7fe509219a4285",
+  "response_id": "COLLABRESP-dacd54a59b3860e0eeb0d37acbdc28d3014c05d289dfc7f487cbac29a7b2cee8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

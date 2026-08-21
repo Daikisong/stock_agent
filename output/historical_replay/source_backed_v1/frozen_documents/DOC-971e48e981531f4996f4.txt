@@ -1,0 +1,72 @@
+NVIDIA GTC 2024: SK hynix Presents AI Memory Solutions
+FACT
+PRESS
+TECH&AI
+STORY
+IR
+Select Page
+English
+Chinese(中文)
+Korean(한국어)
+FACT
+PRESS
+TECH&AI
+STORY
+IR
+ENG
+中文
+KOR
+#AI Memory#CXL#DRAM#eSSD#HBM3E#HBM4#NAND
+TECH&AI사용안함
+NVIDIA GTC 2024: SK hynix Presents the Future of AI Memory Solutions
+March 21, 2024
+Share
+SK hynix is displaying its latest AI memory technologies at NVIDIA’s GPU Technology Conference (GTC) 2024 held in San Jose from March 18–21. The annual AI developer conference is proceeding as an in-person event for the first time since the start of the pandemic, welcoming industry officials, tech decision makers, and business leaders. At the event, SK hynix is showcasing new memory solutions for AI and data centers alongside its established products.
+Figure 1. SK hynix’s exhibition booth at the conference
+Showcasing the Industry’s Highest Standard of AI Memory
+The AI revolution has continued to pick up pace as AI technologies spread their reach into various industries. In response, SK hynix is developing AI memory solutions capable of handling the vast amounts of data and processing power required by AI. At GTC 2024, the company is displaying some of these products, including its 12-layer HBM3E and Compute Express Link (CXL)1, under the slogan “Memory, The Power of AI”.
+1Compute Express Link (CXL): A PCIe-based next-generation interconnect protocol on which high-performance computing systems are based.
+Figure 2. HBM3E, the highest-specification DRAM for AI applications
+HBM3E, the fifth generation of HBM2, is the highest-specification DRAM for AI applications on the market. It offers the industry’s highest capacity of 36 gigabytes (GB), a processing speed of 1.18 terabytes (TB) per second, and exceptional heat dissipation, making it particularly suitable for AI systems. On March 19, SK hynix announced it had become the first in the industry to mass-produce HBM3E.
+2High Bandwidth Memory (HBM): A high-value, high-performance product that possesses much higher data processing speeds compared to existing DRAMs by vertically connecting multiple DRAMs with through-silicon via (TSV).
+Figure 3. CXL and GDDR7 are set to become key components of AI systems
+Displayed alongside HBM3E is CXL, a standardized interface that increases the efficiency of utilizing CPUs, GPUs, accelerators, and memory. CXL is renowned for its ability to expand memory and improve the performance of AI applications. It is therefore set to play a key role in the AI era along with HBM3E. Visitors to SK hynix’s booth can also check out some never-before-seen products, including the next-generation GDDR7 DRAM specialized for video and graphics processing. Compared to its predecessor GDDR6, the latest GDDR3 product offers double the maximum bandwidth (128 GB per second), a 40% improvement in power efficiency, and enhanced visuals due to its expanded memory density. Set to be used in graphics cards and GPUs, GDDR7 will be integral for AI and advanced technologies which require rapid and large-capacity data processing.
+3Graphics DDR (GDDR): A standard specification of graphics DRAM defined by the Joint Electron Device Engineering Council (JEDEC) and specialized for processing graphics more quickly. Its generation shifted from GDDR3, GDDR5 and GDDR5X to GDDR6. It’s now one of the most popular memory chips for AI and big data applications.
+Figure 4. A PCB01-based consumer SSD customized for AI
+SK hynix also revealed a new consumer product based on its industry-leading Gen 5 solid-state drive (SSD), PCB01. SK hynix plans to complete development of PCB01 in the first half of 2024 and launch two versions which target large technology companies and general consumers by the end of the year.
+Technological Insights, Leadership & Collaboration in the AI Era
+Figure 5. Technical Leader Seoyeong Jeong talks about the outlook of the HBM market
+During the conference, SK hynix also hosted sessions on key AI memory technologies. These included a presentation by Technical Leader Seoyeong Jeong of HBM Marketing which covered the market outlook for HBM and emphasized the importance of memory solutions in the AI era.
+Through its activities at GTC 2024, SK hynix underlined its leadership in the AI memory sector. Looking ahead, the company will continue to realize technological breakthroughs and advance AI technology.
+Tag
+#AI#CXL#HBM3E#AI Memory#GDDR7#PCB01#NVIDIA GTC 2024#NVIDIA#GTC 2024
+Share
+Related Posts
+FACT
+SK hynix CEO Kwak Noh-Jung’s Commemorative Remarks at the Nasdaq Opening Bell Ceremony in the U.S.
+July 10, 2026
+PRESS
+SK hynix Lists ADRs on NASDAQ, Elevating Global Status at the Heart of Capital Markets
+July 10, 2026
+IR
+Nasdaq ADR Listing Ceremony (Fri, July 10. 09:15 AM)
+July 10, 2026
+TECH&AI
+From HBM to eSSD: How SK hynix is charting the future of full-stack memory
+July 8, 2026
+TECH&AI
+[Expert POV] From AI semiconductors to AI services: How the ecosystem is evolving
+July 6, 2026
+TECH&AI
+Why advanced memory matters in the AI infrastructure era
+July 3, 2026
+Share article
+Search for:
+Search for:
+Get the latest updates from SK hynix
+Subscribe
+Contact Us
+SK hynix.com
+Careers
+Terms of Use
+COPYRIGHT © SK HYNIX INC. ALL RIGHTS RESERVED.

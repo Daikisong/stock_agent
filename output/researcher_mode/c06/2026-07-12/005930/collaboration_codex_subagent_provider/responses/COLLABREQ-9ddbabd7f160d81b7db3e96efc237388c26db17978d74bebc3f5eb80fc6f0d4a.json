@@ -1,0 +1,126 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4a452da7a4fd63b157d4957d",
+        "rationale": "이후 실제 양산으로 대체된 2026년 2월 양산 출하 준비, 현재 graph에 있는 11.7Gbps 제품 규격, HBM4E·custom HBM·HCB 로드맵 및 일반 산업 배경은 제외했다. DS CTO의 HBM4 고객 feedback과 NVIDIA 11Gbps 요구치 대비 11.7Gbps라는 고유 고객 benchmark 보도만 information_confidence objective에 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4a452da7a4fd63b157d4957d",
+        "economic_mechanism": "삼성전자 DS부문 CTO가 HBM4에 대한 고객 feedback을 매우 만족스럽다고 설명해 고객 평가 반응의 방향을 발행사 임원 발언으로 확인한다. 고객명·평가 항목·주문 물량은 공개되지 않았으므로 qualification 통과나 계약으로 확대하지 않는다.",
+        "exact_quote": "Song Jai-hyuk, chief technology officer of Samsung’s device solutions division, said feedback on HBM4 has been “very satisfactory,” adding that the company is preparing for mass production shipments this month.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "발행사 DS부문 CTO가 고객 반응의 방향을 직접 설명해 HBM4 고객 평가에 대한 정보 신뢰도를 보강한다. 다만 고객·평가 기준·정량 결과가 없어 비핵심 보조 증거로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:CUSTOMER_FEEDBACK",
+        "normalized_object": "HBM4 고객의 매우 만족스러운 feedback",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02-11 현재",
+        "predicate": "삼성전자 DS부문 CTO가 HBM4 고객 feedback이 매우 만족스럽다고 말했다",
+        "predicate_family": "HBM4_CUSTOMER_FEEDBACK",
+        "primitive_tags": [
+          "HBM4",
+          "CUSTOMER_FEEDBACK",
+          "DS_CTO_STATEMENT",
+          "QUALITATIVE_ONLY"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_CUSTOMER_FEEDBACK",
+        "question_family_tags": [
+          "HBM4_CUSTOMER_FEEDBACK",
+          "HBM4_CUSTOMER_EVALUATION_SIGNAL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 고객 반응",
+        "subject_id": "005930:MEMORY:HBM4:CUSTOMER_FEEDBACK:2026-02",
+        "unit": "qualitative customer feedback",
+        "value": "very satisfactory customer feedback"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.76,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4a452da7a4fd63b157d4957d",
+        "economic_mechanism": "기사는 삼성전자 HBM4가 11.7Gbps를 달성해 NVIDIA의 11Gbps 요구치를 넘었다고 기술해 명명 고객의 성능 기준 대비 여유를 제시한다. 1월 보도의 10Gbps 요구치와 다른 후속 보도 수치이므로 NVIDIA 공식 규격으로 확정하지 않고 이 기사에 귀속된 qualification 맥락으로 한정한다.",
+        "exact_quote": "The new memory chips achieve data transfer speeds of 11.7 gigabits per second, exceeding Nvidia’s 11 Gbps requirement and marking a new industry benchmark.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명명 고객의 요구치와 삼성전자 HBM4 성능을 같은 문장에서 비교해 qualification 정보의 구체성을 높인다. 다만 이전 보도의 요구치와 차이가 있고 NVIDIA 공식 출처가 아니므로 보도치로만 취급한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:NVIDIA:REPORTED_SPEED_REQUIREMENT",
+        "normalized_object": "NVIDIA 11Gbps 요구치 대비 삼성전자 HBM4 11.7Gbps",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02-11 보도 현재",
+        "predicate": "Korea Herald는 삼성전자 HBM4의 11.7Gbps가 NVIDIA의 11Gbps 요구치를 넘는다고 보도했다",
+        "predicate_family": "HBM4_NVIDIA_REPORTED_SPEED_REQUIREMENT",
+        "primitive_tags": [
+          "HBM4",
+          "NVIDIA",
+          "11.7_GBPS",
+          "11_GBPS_REQUIREMENT"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_NVIDIA_REPORTED_SPEED_REQUIREMENT",
+        "question_family_tags": [
+          "HBM4_NVIDIA_REPORTED_SPEED_REQUIREMENT",
+          "HBM4_NAMED_CUSTOMER_BENCHMARK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4의 NVIDIA 요구속도 대비 성능",
+        "subject_id": "005930:MEMORY:HBM4:NVIDIA:SPEED_REQUIREMENT:2026-02",
+        "unit": "Gbps",
+        "value": 11.7
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "3953391620ce4392ef1a624c94d17c8e082be33402001f1853536842635f3de1",
+  "production_score_authority": false,
+  "prompt_hash": "866802300230c7aea3ddbdeec5e903c5da8ef43f9d9a4c7c0182790e09f7bc75",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9ddbabd7f160d81b7db3e96efc237388c26db17978d74bebc3f5eb80fc6f0d4a",
+  "response_id": "COLLABRESP-47b6257f10d1bd3e0cfa119041365c584418f95961464cde7912e7804a7b12cc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

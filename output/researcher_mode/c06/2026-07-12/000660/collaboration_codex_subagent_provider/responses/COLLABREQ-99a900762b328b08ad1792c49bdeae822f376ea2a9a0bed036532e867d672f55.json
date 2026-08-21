@@ -1,0 +1,174 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 memo는 전사 actual 이익·현금흐름, DRAM 가격·믹스와 HBM 매출 성장의 지지 근거를 HBM 단독 이익·FCF 및 issuer 숫자형 guidance 부재와 분리한다. A/S/C 범위에 공통 교집합이 있고 같은 evidence로 다시 쓸 material disagreement가 없다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 memo는 HBM4 양산·고객 성능요구·생산 진행과 수요 초과 신호를, 월·분기 가격 합의와 일정·경쟁 위험 및 미체결 장기계약 조건과 함께 평가한다. 세 judge의 범위가 겹치며 공개되지 않은 계약 세부는 현재 실행 가능한 신규 경로가 아니라 monitoring 한계다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "웨이퍼·TSV 집약도, 높은 가동률과 실제 가격·믹스 근거를 경쟁 공급 확대와 수요 가격탄력성 counter에 맞춰 제한했다. 현재 memo와 세 독립 judge는 동일 증거의 병목 강도와 지속성 경계를 충분히 계상한다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "실제 이익·revision과 valuation 문맥을 재평가 지지로 사용하면서도 broker 기준 차이, macro 할인과 역사적 peak 관계를 오가격 확정으로 승격하지 않는다. 현재 A/S/C 공통 범위가 존재해 semantic rewrite 필요가 없다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "peer discount·SOTP와 actual 개선을 FY2026 이후 broker 감익 추정, 경쟁 공급 및 duration 불확실성과 분리했다. 실제와 추정의 경계가 memo와 judge 교집합에 반영되어 현재 자료로 충분하다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "actual 영업현금흐름·유동성과 수요연계 투자 원칙을 운전자본·Capex 현금 흡수 및 HBM 단독 ROIC 부재와 함께 평가한다. 계획과 actual의 구분 및 공통 judge 범위가 유지되어 추가 rewrite가 필요하지 않다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "새 memo는 issuer primary evidence인 HBM4 양산·고객 성능요구·actual HBM 매출 성장과, 독립 고객 확인·signed 조건·HBM 단독 손익 부재 및 broker estimate 불일치를 명확히 분리한다. 새 A/S/C의 공통 교집합 [3.2, 3.4]로 이전 material disagreement가 해소됐다."
+      }
+    ],
+    "component_memos_sufficient": true,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-437852e521aa0a1d9c5daaf9",
+        "rationale": "일부 snippet 후보가 full document 기준을 충족하지 못했지만 해당 objective는 source graph에서 해소됐다. 이 실패는 source absence가 아니며 동일 경로 반복을 요구하지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-567b97939607ad079bedace5",
+        "rationale": "단일 검색의 무결과는 포화나 source absence 증거가 아니지만 해당 failure는 objective resolution으로 종결됐다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-5ab70d267e5e2db4da293e32",
+        "rationale": "snippet-only 문서는 full evidence로 사용할 수 없어 제외됐고 해당 objective는 별도 current evidence로 해소됐다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-6ca2c19dd3c7f768feacee47",
+        "rationale": "full fetch 뒤 게시일을 확정할 수 없었던 transport 검증 실패이며 source absence 증거가 아니다. Objective resolution 상태이므로 비차단이다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-828cb4bb9fe49e835dfadd21",
+        "rationale": "LLM이 prior query와 failure 문맥에서 새 유효 query를 만들지 못한 기록이다. 그 자체는 source absence가 아니며 모든 objective는 다른 current lineage로 해소됐다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-92f6e08ce3843f69573b87ec",
+        "rationale": "snippet만 존재해 full-document evidence 승격이 거부된 fetch 계열 실패이며 alternate route가 요구되지 않고 objective가 해소됐다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-ad49da1faf54332b6e716ea6",
+        "rationale": "as-of 이후 문서라 full fetch 단계에서 제외된 것이며 current source의 부재를 뜻하지 않는다. 해당 objective는 현재 근거로 해소됐다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-b4dfecd65926fd38bb604cb3",
+        "rationale": "full fetch 후 미래 문서로 확인되어 재현 가능성 규칙에 따라 배제됐고 source absence 판단에는 사용할 수 없다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-bdcc541ead14c22a8ce9d7f1",
+        "rationale": "full fetch 뒤 게시일 검증이 되지 않은 문서 거절이며 objective는 다른 current evidence로 해소됐다. 미검증 날짜를 absence로 확대하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-c73a4e1725defb07695655a9",
+        "rationale": "과거 query provider 오류 묶음이지만 source graph에서 관련 objectives가 해소돼 현재 readiness를 막지 않는다. Provider 오류는 source absence가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-c918301e2a9b4f3f5c5c9250",
+        "rationale": "후보 locator 날짜가 as-of 이후라 제외된 문서 묶음이며 현재 자료 부재의 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-ee8739d64fb65ed39d7ae62a",
+        "rationale": "과거 search provider 오류 묶음은 transport 실패일 뿐 source absence가 아니다. 모든 objectives가 별도 lineage에서 해소되어 비차단이다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-f83a2b36aeef6bf6ae3cd08a",
+        "rationale": "snippet-only 후보의 full-document 미확보 실패이며 개별 failure의 retry 가능성은 보존한다. 다만 objective는 해소돼 현재 새 route나 blocking gap으로 재개방하지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [],
+    "new_source_family_directions": [],
+    "next_actions": [],
+    "query_direction_briefs": [],
+    "rationale": "Current facts와 7개 complete memo, memo-bound judges 21개, RTMEMO-2664 및 SYNMEMO-514576은 exact current lineage로 결합돼 있다. 모든 component의 A/S/C score range에 공통 교집합이 있고 information_confidence도 [3.2, 3.4]로 겹쳐 material disagreement가 남지 않는다. Structured roles는 모두 충족됐고 counter/supersession proof 및 red-team 검토도 complete이며 source graph의 7 objectives는 STOPPED_ON_RESOLUTION 상태다. 계약 세부, HBM 단독 손익·현금, 경쟁 공급과 증설 회수는 향후 관찰할 중요한 한계지만 현재 prompt에 새로 실행할 구체적 verified route가 없으므로 blocking gap이나 unresolved question으로 되살리지 않는다. 과거 provider·fetch·날짜·무결과 실패도 모두 resolved이고 source absence를 증명하지 않는다. 따라서 추가 query 없이 independent saturation review로 넘기는 것이 현재 evidence 계약과 일치한다.",
+    "ready_for_independent_saturation_review": true,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "20e87b6f5d8d21d6786c9b63603a9a4dec5f7067f117e197a2139ed6ddae06ed",
+  "production_score_authority": false,
+  "prompt_hash": "8db1ca96e1d1d9de17ac142d3c6b8558432311a455ad39522c554cbc7003f594",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-99a900762b328b08ad1792c49bdeae822f376ea2a9a0bed036532e867d672f55",
+  "response_id": "COLLABRESP-9c7d9d25d768f4e878648a8c75210b4b111e11a4192b1bb6e28058294872980d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

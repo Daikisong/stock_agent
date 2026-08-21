@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Semantic retry attempt 1 identifies no additional official document class. Reopen discovery only when the supplied evidence names a specific, previously unsearched issuer- or customer-owned document identity; do not convert the exhausted routes into synonym variants."
+    ],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "DURABLE_VISIBILITY is still unresolved: none of the reviewed customer-owned document classes produced a verified source jointly attributing SK hynix and HBM with a numeric future period, quantity, non-cancellable term, advance payment, or capacity commitment. The retry context supplies no new document identity that could change this result.",
+      "FORWARD_GUIDANCE is still unresolved because no eligible issuer document gives the required machine-numeric forward point or range. SEGMENT_CONTRIBUTION is still unresolved because no eligible issuer document provides an HBM-specific point value. The retry carries the prior no-new-query feedback but adds no new official issuer route.",
+      "The previous LLM_RETURNED_NO_NEW_VALID_QUERY feedback has been applied exactly. A further query based only on alternative words for supply, purchase, commitment, agreement, guidance, or segment would be semantic duplication rather than a new bounded route."
+    ]
+  },
+  "payload_hash": "52081b657663de742e08cda39f075f494797dc62c17cd989746c9a2ee34f3352",
+  "production_score_authority": false,
+  "prompt_hash": "9a6f6a09e8d5a223c62cbf04fc11e0a5c0da06d9316bb9a14320813a43c87bbd",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2abdcf067ed0ff0a33053e50fe1c9bd4a95b46903d061219949e582809e0d5f4",
+  "response_id": "COLLABRESP-a6900ab4cccef6b8e8a72bb8c9741fe0ff40d104ce1f3d150dd057e5e87302d9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

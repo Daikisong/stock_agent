@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "국내 상장사 중 삼성전자 DS 메모리와 가장 직접적으로 같은 DRAM·HBM 제품, 고객, CAPA, 수율 및 가격 사이클을 공유하는 경제적 peer다. 다만 삼성전자의 사업 다각화와 HBM 경쟁 지위 차이는 valuation 비교에서 별도로 보정해야 한다.",
+        "confidence": 0.99,
+        "material_differences": [
+          "SK하이닉스는 메모리 중심도가 높지만 삼성전자는 파운드리·모바일·디스플레이 등 비메모리 사업이 연결 실적과 자본배분에 함께 반영된다.",
+          "HBM 세대별 고객 승인, 공급 점유율과 제품 믹스가 달라 동일한 수요 환경에서도 실현 ASP와 수익성이 다를 수 있다."
+        ],
+        "peer_name": "SK하이닉스",
+        "peer_symbol": "000660",
+        "shared_economic_drivers": [
+          "DRAM과 HBM을 직접 생산·판매하므로 AI 서버 수요, 고객 배정, 메모리 ASP와 출하량이 매출 및 현금창출을 좌우한다.",
+          "선단 공정 전환, 수율, 웨이퍼 CAPA와 대규모 설비투자가 공급량과 고정비 레버리지를 결정하는 자본집약적 메모리 제조 구조를 공유한다.",
+          "메모리 업황의 공급 제약과 고객 재고조정에 따라 이익 변동성이 커지는 동일한 사이클 노출을 가진다."
+        ]
+      },
+      {
+        "comparability_rationale": "국내 상장 roster에서 두 번째 순수 메모리 제조사를 확보하기 어려운 조건에서, 장비·소재 판매사보다 삼성전자와 가까운 웨이퍼 팹 운영, 고정비, 수율, 가동률 및 CAPEX 경제성을 공유하는 보조 peer로 선택했다. HBM·메모리 제품 차이는 핵심 한계로 명시한다.",
+        "confidence": 0.64,
+        "material_differences": [
+          "DB하이텍은 특화 공정 중심의 외부 고객 파운드리이고 삼성전자 비교 대상 메커니즘은 DRAM·HBM 제품 판매이므로 제품, 가격 형성 및 고객 계약 구조가 다르다.",
+          "DB하이텍에는 HBM 고객 승인·배정과 메모리 ASP 메커니즘이 없어 직접 제품 peer가 아니라 팹 자본집약도와 사이클 민감도를 보는 보조 비교군이다."
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "반도체 웨이퍼 팹을 직접 운영해 가동률, 공정 수율, 제품 가격과 고객 주문이 고정비 흡수 및 현금창출을 좌우한다.",
+          "대규모 설비투자와 긴 증설 리드타임을 필요로 하며 반도체 수요 사이클에 따른 영업 레버리지가 큰 자본집약적 제조 구조를 공유한다."
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "삼성전자를 제외한 최신 KRX 상장 identity roster에서 제품·고객·CAPA 메커니즘이 직접 겹치는 SK하이닉스를 핵심 peer로, 국내에 추가 순수 메모리 제조사가 없는 제약 아래 웨이퍼 팹의 자본집약도와 사이클 경제성을 공유하는 DB하이텍을 보조 peer로 선정했다. 장비·소재사는 고객의 CAPEX가 매출원천인 별도 revenue model이라 제외했으며, 어떤 valuation 수치나 배수도 제안하지 않았다.",
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "82654bb6738d9f09253fc24c75a8e92231d13d7aec82e3913f6a7f848c0efa38",
+  "production_score_authority": false,
+  "prompt_hash": "4fe2667b92a5482f9bb7633f0c51272738508da00bd384c7ec5dc1b550514ebb",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0d82954b7d85525871c11056f8fa89b3da520167e5ebf9efd2df0f5341048d69",
+  "response_id": "COLLABRESP-d2b9bcf521f70fe625f0d95d68f08b97a881f543743400c2fb2a6fa7e1ae6ad5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

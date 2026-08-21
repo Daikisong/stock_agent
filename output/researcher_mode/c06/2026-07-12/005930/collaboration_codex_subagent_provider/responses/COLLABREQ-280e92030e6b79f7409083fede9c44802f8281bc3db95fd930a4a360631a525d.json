@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-356ad0d7dc6b74c4d0fad844",
+        "rationale": "Transport chunk 0 was reviewed in full for the document-linked valuation_rerating objective and its unresolved PEER_BAND focus. It contains broad market and semiconductor-cycle discussion, a qualitative possibility of industry P/E expansion with a market-top caution, and an SK hynix forward P/E/P/B chart whose OCR exposes only axis ranges rather than a citable observation or peer multiple. It does not contain an issuer-specific or same-basis memory peer-band fact with a complete period and denominator. No chart axis, general market commentary, repeated layout text, or adjacent sector material was promoted as evidence. This disposition applies only to chunk 0 of 2 and does not make a claim about the canonical parent document or chunk 1.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "4ad1c1a5576ce46d3400880911d695f8ad223da69297fcd001ca495403e14d69",
+  "production_score_authority": false,
+  "prompt_hash": "6623bd3eec44936c45c080162b65f1b1ddb64eb8d450bc8355e5ff5456c1f6f5",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-280e92030e6b79f7409083fede9c44802f8281bc3db95fd930a4a360631a525d",
+  "response_id": "COLLABRESP-caed98a627ac02f9e986e10afa3d2f09f5766b8c038c330ea457f3f41f1c4ce9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

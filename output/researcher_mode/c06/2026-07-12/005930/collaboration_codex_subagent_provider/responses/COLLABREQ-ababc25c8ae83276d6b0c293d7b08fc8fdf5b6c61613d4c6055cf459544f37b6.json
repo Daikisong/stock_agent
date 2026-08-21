@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "6b8c147908a57aacaf44255658318cf4c640c3e39802154d59622712715d30e5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-28e6d8112cf6f14bfa3a1541",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "LS 티라유텍 사업보고서로 삼성전자 issuer credit report가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0f3d9ee4c16defcc05ea97c5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "Naver 모닝리포트 요약이며 삼성전자 HBM4 전망 언급은 신용평가기관 원문이나 capital-allocation evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-35f40689fb7c28d6e6408271",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "신용평가 원문 형식이지만 평가대상은 SK실트론이고 2024년 문서다. 삼성전자에 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-24dc6961da6dc670b8113c21",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2026-07-29 게시 콘텐츠로 2026-07-12 cutoff 이후이며 미래누수다."
+      },
+      {
+        "candidate_id": "SGCAND-6336aadb3cecb5b3339654f3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "다른 발행사의 투자설명서 정정 PDF로 삼성전자 credit surveillance와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-d49e8c7e0a9533b381541ca8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "환경설비 회사 사업보고서로 issuer·scope가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-aadaf35e686d9d3ed7baaa8f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "투자 블로그 글로 독립 신용평가기관의 검증 가능한 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7a8a9c595cd75b99d2b9b51d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "유화증권 공모 정정 문서로 삼성전자 issuer report가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d51323ff8b78a4a23ae22ed0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "NAVER 2023 통합보고서로 target과 document class가 모두 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-d6b6d882ad0cf650ef07856d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "SK하이닉스 신용등급 관련 기사로 삼성전자 신용평가 원문이 아니며 competitor 수치를 target에 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-12ce3b5ce6571ac94d7bc507",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.08,
+        "rationale": "삼성증권 주간 투자전략 PDF는 DRAM capacity 전망 metadata route이지만 독립 issuer credit report·surveillance가 아니고 HBM-specific cash bridge를 검증하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-156efe54732369b454120d9a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "코미코 사업보고서로 삼성전자 issuer 신용평가와 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "모든 후보를 route-only로 검토했으며 competitor 신용평가와 broker summary를 삼성전자 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "402a117291d562db1e30da396fde80ea1e739d3408b5a9c15212232d41803000",
+  "production_score_authority": false,
+  "prompt_hash": "55268480b4d75d119b9f68059f0d3d653c8ddfccf195a06c1d25fc39fa18baa6",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ababc25c8ae83276d6b0c293d7b08fc8fdf5b6c61613d4c6055cf459544f37b6",
+  "response_id": "COLLABRESP-27705722d4a7265f9e26353797c3c33cc9ecb44bb680f2b5ae0d9c922933e5a7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

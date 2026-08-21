@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "9decf3bdfe51b41f0a237cba06d244a331cb650b991febf81ffaf25dc35a5561",
+  "payload": {
+    "allowed_range": [
+      18.0,
+      20.3
+    ],
+    "anchor_comparisons": [
+      "CANCH-2fb324f77e56e0e487863c17는 POSITIVE 역할의 STRONG ordinal anchor이며 허용 대역은 18.96~21.36점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 MEDIUM와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "CANCH-d3ec23639ebd5c1f8d20fd03는 COUNTER 역할의 STRONG ordinal anchor이며 허용 대역은 20.80~23.20점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "긍정 사실의 실현 정도는 강하지만, ordinal anchor의 상단은 미해결 귀속·지속성 자료가 닫힐 때만 정당화된다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-2bf2934ad088b585cc89843a",
+      "EFACT-992faa8a46788f671cefe250",
+      "EFACT-e449f48cdf920d528532a37f",
+      "EFACT-f05a97edeb8f85d49353381e",
+      "EFACT-f6519571c11130bacb0af98d"
+    ],
+    "disagreements": [
+      "현재의 실적·판매·공급 사실을 단순한 기대만으로 낮춰 보는 해석에는 동의하지 않는다.",
+      "반대로 전사·메모리 수치를 HBM 단독 경제성으로 간주하거나 미해결 supervisor gap을 닫힌 것으로 보는 해석에도 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-2fb324f77e56e0e487863c17",
+      "CANCH-d3ec23639ebd5c1f8d20fd03"
+    ],
+    "proposed_points": 19.3,
+    "rationale": "메모리 이익과 현금전환의 모든 긍정 사실을 검토했다. HBM과 고용량 DDR5 판매 확대가 DRAM ASP를 높이고 메모리 매출과 영업이익의 기록으로 이어졌다. 2026년 1분기 메모리 매출 급증과 큰 이익 기여, 양(+)의 연결 FCF가 함께 확인돼 회계이익이 현금으로 이어지는 경로가 열려 있다. 다만 메모리 이익이 큰 물량 증가보다 가격 급등에 의존하면 가격 상승률 둔화 때 추정치가 빠르게 꺾일 수 있다. 재고평가 충당금·성과급·선단공정 램프업 비용도 보고이익을 낮추며, 연결 FCF는 전사 수치여서 HBM 자체 현금전환을 증명하지 않는다. 추가로 HBM별 매출·마진·영업현금흐름·CAPEX를 연결하는 공식 product/segment bridge이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다. 따라서 강한 현재 성과는 인정하되 제품별 귀속과 지속성이 확인된 최상단으로 보지는 않았다.",
+    "support_fact_ids": [
+      "EFACT-71eb35cf12f591c101571b4e",
+      "EFACT-cb2550bcc2cd6b3a1bd34e00",
+      "EFACT-d91f57ec5514398fe1ab72a9",
+      "EFACT-e854b59aa43bb7f73c1e0835",
+      "EFACT-f8f6e5abba8d72973f8cbc55",
+      "EFACT-f979df4935e2c87e7d55a6ed"
+    ],
+    "why_not_higher": "최고점에 가깝게 두기에는 HBM 단독 이익·현금흐름이 없고, 최신 EPS 리비전 하락과 가격 의존성 및 대규모 CAPEX가 남아 있다. 전사·메모리 현금전환을 HBM 단독 경제성으로 오귀속하지 않기 위해 필요하다.",
+    "why_not_lower": "6개의 current positive 사실이 메모리 이익과 현금전환의 실제 전환을 보여 주고 있어 counter만으로 확인된 성과를 무효화할 수 없다."
+  },
+  "payload_hash": "4e17b29387f461acf6d3deba6194fb920cffd83e672e85b93a7637257b018fd0",
+  "production_score_authority": false,
+  "prompt_hash": "36bd08f519d8f8d68de86f5dbe158c3c48ce570b54ab1e9be592757410335187",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-58145f91e266d035b4f434c202c0be9cbad0459516d0a34a8ee5577ac5f3d509",
+  "response_id": "COLLABRESP-6c84c97ff7dbc0613e562c61831112972fc884a9c9b1014e25f88ac1c7986525",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

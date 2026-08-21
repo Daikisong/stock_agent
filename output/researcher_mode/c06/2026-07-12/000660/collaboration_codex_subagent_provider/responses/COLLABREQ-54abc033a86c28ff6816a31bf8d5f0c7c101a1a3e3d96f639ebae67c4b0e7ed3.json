@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "883df230d7dfdbd00194564298beef38e363d21c27eeb0062eec97f53f20b710",
+  "payload": {
+    "allowed_range": [
+      12.2,
+      14.5
+    ],
+    "anchor_comparisons": [
+      "Counter anchor CANCH-1aa76cb8e89d85cd78d325f4의 9.95~12.05점은 고객 lock 부재·지연·margin bridge 약화 사례다. 현재 월·분기 합의와 플랫폼 지연은 유사하지만 HBM4 양산과 FY2026 DRAM 수요 커버가 있어 counter band 상단보다 높아야 한다.",
+      "Positive anchor CANCH-fe4be151b6e34320ddc5f6a7의 14.28~16.38점은 strong ordinal band다. 현재 수요·생산 사실은 하단 진입을 지지하지만, 공개된 취소권·가격·확정 물량이 없고 LTA가 미체결이라 중앙값 15.33을 그대로 적용하기 어렵다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-c890adf15151ce383d70cf81",
+      "EFACT-dde9f3ef4ad310f18beb72e8"
+    ],
+    "disagreements": [
+      "고객 요청수요와 공급 논의 완료를 구매의무로 간주하는 낙관 해석에는 동의하지 않는다.",
+      "FY2026 DRAM 수요 확보는 강한 연간 수요 신호지만 HBM 전용 가격·물량·취소조건까지 잠겼다는 뜻은 아니다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-1aa76cb8e89d85cd78d325f4",
+      "CANCH-fe4be151b6e34320ddc5f6a7"
+    ],
+    "proposed_points": 13.6,
+    "rationale": "모든 counter를 우선 반영했다. EFACT-b649...는 물량·가격이 월·분기 협의여서 장기 매출 고정성이 낮음을, EFACT-c890...는 CXMT의 HBM 증설을, EFACT-dde9...는 고객 플랫폼 지연에 따른 HBM4 출하 감소를 보여 준다. 동시에 support 7건의 HBM4 생산·성능 충족, 3년 요청수요, FY2026 DRAM 수요 확보, LTA·핵심고객 논의는 0점이나 counter anchor 수준으로 낮추는 것을 막는다. 비구속 논의와 실제 생산을 분리해 13.6점으로 판단한다.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-62c3b9f322f3a062b5e74751",
+      "EFACT-a74dac2b9e727f8592e52c41",
+      "EFACT-d7a582ebff38082719fe2983",
+      "EFACT-e0438e911cc6bbc80ba6e3f4",
+      "EFACT-e269e2b69e9152111e463563",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "가격·물량은 월·분기 협의이고 다년 LTA 조건이 확정되지 않았다. 베라 루빈 지연은 제품 믹스 전환을 늦췄고 CXMT의 HBM3·HBM3E 확대는 기간이 길수록 경쟁 반증을 키운다.",
+    "why_not_lower": "실제 HBM4 양산·대규모 생산, 고객 성능요구 충족, 3년 수요의 CAPA 초과, FY2026 DRAM 생산량 수요 확보가 있어 단순 가격 급등·고객 lock 부재만 있는 counter anchor보다 가시성이 높다."
+  },
+  "payload_hash": "c379db2995971dc880066c10d0bc0e19a043743c09b336b0a4b89d5a09b77b5a",
+  "production_score_authority": false,
+  "prompt_hash": "1b455abf06d3245365c84f76ebcac3405618342c45ecdc4e1056edb895f8f7b7",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-54abc033a86c28ff6816a31bf8d5f0c7c101a1a3e3d96f639ebae67c4b0e7ed3",
+  "response_id": "COLLABRESP-5a9b456545aa0d96bc3a64a8a13bf5909a66f3df63873ce81bfdc072fddce8ca",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

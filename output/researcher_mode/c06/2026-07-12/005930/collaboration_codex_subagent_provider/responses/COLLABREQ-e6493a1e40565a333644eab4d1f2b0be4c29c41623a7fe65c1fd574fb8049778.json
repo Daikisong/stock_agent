@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-8593258f22e6654545ff968f",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer financial-report component has earnings-release provenance, but its old reporting period is superseded and immaterial to the current EPS/FCF mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-8cddcdcb3465db53920c08e5",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer financial-report component has earnings-release provenance, but its old reporting period is superseded and immaterial to the current EPS/FCF mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-8e4df95d9157da5441fc2df8",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified issuer financial-report component has earnings-release provenance, but its old reporting period is superseded and immaterial to the current EPS/FCF mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-8e8f375d61f240fe1d0bd407",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified issuer event or presentation route has the requested presentation provenance, but its historical period or subject is immaterial to the current objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Every candidate in this transport roster was classified. No candidate is materially current; titles, snippets, and reference metadata were not promoted to evidence."
+    ]
+  },
+  "payload_hash": "da2eee374cbe74c2c47842a3650b0cc70e8d73e333b225bda7c3dfb35c50610c",
+  "production_score_authority": false,
+  "prompt_hash": "c10d94769f9f7919da94e54a369b0f756c16a4735f4e0364fbd5507e2ce334b2",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e6493a1e40565a333644eab4d1f2b0be4c29c41623a7fe65c1fd574fb8049778",
+  "response_id": "COLLABRESP-909752ff5f41021d7007601d1a561fcbbca5c9dbf33a767030147edf5f4a315d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

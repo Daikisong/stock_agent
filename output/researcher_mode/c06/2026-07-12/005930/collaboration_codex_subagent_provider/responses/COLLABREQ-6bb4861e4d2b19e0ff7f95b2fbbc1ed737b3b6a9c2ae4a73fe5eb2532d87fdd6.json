@@ -1,0 +1,290 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [
+          "HBM4의 물량·ASP·제품 원가·초기 램프 비용을 범용 DRAM과 분리해 메모리 이익 및 현금전환으로 연결하는 source-backed product bridge"
+        ],
+        "rationale": "현재 memo는 메모리 매출·DS 이익·연결 FCF의 강도를 인정하면서 전사 수치를 HBM 단독 경제성으로 귀속하지 않아 현재 근거를 충분히 반영한다. 다만 2026-07-07 한화 보고서 후보 STRUCTCAND-715e353bc4c72c0e4d00cf14는 HBM4 가격·제품 경제성에 관한 새로운 PUBLIC_BROKER_PDF 경로일 수 있으므로 full report 검증 가치가 남는다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [
+          "장기계약의 가격 재설정·최소구매·취소 또는 재협상·납품기간 중 공개 가능한 경제 조건을 확인하는 source-backed 설명"
+        ],
+        "rationale": "구매주문·일부 다년계약·생산여력 완판과 NDA·중요 장기공급계약 수주거래 부재를 함께 제시해 memo 자체는 충분하다. 그러나 STRUCTCAND-e74162d86f8d35ab99a8d0e0의 full PUBLIC_BROKER_PDF는 장기계약과 사업구조를 직접 다룰 가능성이 있어, 검색어 동의어 반복이 아닌 특정 미수집 문서 경로가 남아 있다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [
+          "HBM 전용 웨이퍼 투입·TSV 또는 패키징 처리량·양품 수율을 일반 메모리 시간 가동률과 분리한 source-backed capacity estimate 또는 공시"
+        ],
+        "rationale": "memo는 100% 시간 가동률과 낮은 재고의 공급제약 의미를 인정하면서 이를 HBM 전용 CAPA나 수율로 환산하지 않아 충분하다. 다만 STRUCTCAND-3cacfef7d2e329694e87abff의 full report는 생산능력과 비용 충격을 함께 다루는 새로운 bounded 문서 경로일 수 있다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 structured valuation·가격·revision 자료와 memo가 낮은 선행 배수, 이미 상승한 PBR, 이익 분모와 상장시장 차이를 모두 반영한다. 보고서 제목이나 목표가격만으로 새 material gap을 만들 이유는 없다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "상업화와 누적매출의 긍정 근거, 초기 HBM4 수익성·수율·사업 믹스의 counter가 모두 memo에 반영돼 있다. 현재 후보 metadata만으로 별도의 재평가 근거를 만들 수 없으며 full evidence 전에는 수치를 선반영하지 않는다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [
+          "HBM 관련 투자·램프 비용과 성과보상·운전자본을 연결 전사 CAPEX 및 FCF에서 분리할 수 있는 source-backed reconciliation"
+        ],
+        "rationale": "현재 memo는 연결 OCF·FCF와 자산취득 약정·운전자본 유출·주주환원의 현금 경쟁을 정확히 보여 충분하다. STRUCTCAND-3cacfef7d2e329694e87abff는 CAPA와 성과급 충당금을 함께 다루므로 full report가 HBM 투자와 비용 귀속을 보강하는지 확인할 합리적 경로가 남는다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "NVIDIA CUSTOMER_OFFICIAL 자료의 기술협력 범위를 qualification·allocation·계약과 분리했고, 발행사 NDA 및 답변 거부도 함께 반영했다. 현재 source-family coverage와 failure ledger에서 새로운 고객 공식 문서 class가 식별되지 않았으므로 같은 고객명·인증 동의어 검색을 반복하지 않는다."
+      }
+    ],
+    "component_memos_sufficient": true,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-0b5855f2582cd708850e51f8",
+        "rationale": "full fetch 뒤 발행일을 확정하지 못한 과거 그룹이다. objective resolution으로 닫혔지만 source absence 증거는 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-433c3c6e8fbe85ad567cccbe",
+        "rationale": "snippet만 있고 full document가 없어 evidence로 사용할 수 없었던 과거 그룹이며 현재 objective resolution으로 닫혔다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-4719db379703acca37cc3116",
+        "rationale": "full document의 주체가 목표와 달랐던 문서 그룹으로, 재시도나 source absence 주장 대상이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-47c4b6795be6845d81bf7187",
+        "rationale": "as-of 이후 문서로 확인돼 제외된 그룹이며 현재 판단에 사용할 수 없다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-79103d90fcc4353dfb4dbfe1",
+        "rationale": "full document content가 너무 작아 해석할 수 없었던 query failure이며 objective resolution 뒤 반복할 이유가 없다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-7dbfbf0cf8c6429efaeda10b",
+        "rationale": "검색 결과의 full document가 목표 주체가 아니어서 제외된 그룹이다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-828cb4bb9fe49e835dfadd21",
+        "rationale": "LLM이 새롭고 유효한 query를 만들지 못했던 resolved group이다. 동의어 변경만으로 같은 검색을 반복하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-8312902036dbcdbf6b5f52f9",
+        "rationale": "candidate locator의 날짜가 as-of 이후여서 제외된 그룹이다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-85ebcad89f6a756735258189",
+        "rationale": "full fetch 뒤 미래 문서로 판정된 query failure 그룹으로 현재 자료로 재사용할 수 없다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-ce794acdfca65d7f60260640",
+        "rationale": "full document content가 너무 작았던 문서 거절 그룹이며 source absence를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-ce9ce6a9661dca1d99511b54",
+        "rationale": "snippet-only여서 full-fetch evidence 요건을 충족하지 못한 문서 그룹이며 metadata를 사실로 승격할 수 없다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-d239a53ec95b27357a7c5172",
+        "rationale": "과거 query provider 오류는 본질적으로 재시도 가능한 transport 실패이나 이후 objective resolution으로 현재 blocker는 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-e7e558fc96bd12913f58a215",
+        "rationale": "과거 search provider 오류는 본질적으로 재시도 가능하지만 objective resolution이 있어 같은 query 반복 근거로 쓰지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-ef2eccfb702d6de4b716113e",
+        "rationale": "full fetch 후 발행일을 검증하지 못한 문서 거절 그룹으로 source absence가 아니며 objective resolution으로 닫혔다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "direction": "RESOLUTION",
+        "fact_need": "STRUCTCAND-715e353bc4c72c0e4d00cf14의 full report가 HBM4 물량·가격·원가 또는 램프 비용을 범용 메모리와 분리해 제시하는지 확인한 source-backed product economics",
+        "why_material": "이 bridge가 있어야 메모리·전사 실적을 HBM 단독 이익과 현금전환으로 오귀속하지 않으면서 HBM4의 실제 기여도를 좁힐 수 있다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "direction": "RESOLUTION",
+        "fact_need": "STRUCTCAND-e74162d86f8d35ab99a8d0e0의 full report가 장기계약의 가격·물량·취소·납기 조건 중 공개 가능한 경제 조건을 제시하는지 확인한 source-backed contract detail",
+        "why_material": "계약 존재와 실제 수익·현금 가시성은 다르므로, 최소구매와 재협상 가능성을 확인해야 완판·주문 근거의 지속 범위를 판단할 수 있다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "direction": "RESOLUTION",
+        "fact_need": "STRUCTCAND-3cacfef7d2e329694e87abff의 full report가 HBM 전용 또는 공정단계별 CAPA·수율·패키징 병목 수치를 일반 메모리 capacity와 분리하는지 확인한 source-backed capacity detail",
+        "why_material": "혼합 메모리 100% 시간 가동률을 HBM 양품 출하능력으로 환산하는 오류를 피하면서 실제 병목 지속성을 검증하는 데 필요하다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "direction": "RESOLUTION",
+        "fact_need": "STRUCTCAND-3cacfef7d2e329694e87abff의 full report가 HBM 관련 증설·램프 비용과 성과보상 영향을 연결 CAPEX·FCF에서 분리하는지 확인한 source-backed cash bridge",
+        "why_material": "전사 FCF가 커도 HBM 투자 회수와 잔존현금은 CAPEX·성과보상·운전자본 귀속에 따라 달라지므로 투자효율 판단의 범위를 정하는 데 필요하다."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": true,
+        "direction": "STRUCTCAND-715e353bc4c72c0e4d00cf14의 full report에서 HBM4 가격·물량·초기 제품경제성과 범용 메모리 이익을 분리 검증",
+        "objective_id": "SGOBJ-eb3cecb1e00c95ccf544cac4",
+        "rationale": "후보 metadata는 evidence가 아니지만 2026-07-07의 특정 보고서 identity가 있어 동의어 검색과 다른 full-fetch route가 존재한다.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "STRUCTCAND-e74162d86f8d35ab99a8d0e0의 full report에서 장기계약의 수익·현금 가시성 조건을 검증",
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "rationale": "장기계약과 사업구조를 명시한 특정 미수집 문서가 있어 계약 존재를 반복 확인하는 것보다 조건 공개 여부를 검증할 수 있다.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "STRUCTCAND-3cacfef7d2e329694e87abff의 full report에서 2027 capacity advantage를 HBM 전용 공정단계별 처리량과 분리 검증",
+        "objective_id": "SGOBJ-7ba6c752cb327ae2c989b6dd",
+        "rationale": "생산능력을 직접 다루는 특정 보고서 경로가 있어 혼합 메모리 가동률을 반복 수집하는 것과 다른 확인 가능성이 있다.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "STRUCTCAND-3cacfef7d2e329694e87abff의 full report에서 capacity 투자와 성과급 충당금이 현금전환에 미치는 분리 가능한 영향을 검증",
+        "objective_id": "SGOBJ-44161aa1a529ae8101bf12b1",
+        "rationale": "동일 특정 문서가 CAPA와 비용 충격을 함께 다루므로 전사 FCF를 HBM 회수로 오귀속하는 counter를 보강할 수 있다.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      }
+    ],
+    "next_actions": [
+      "SOURCE_QUERY_GENERATION_LLM이 STRUCTCAND-715e353bc4c72c0e4d00cf14의 identity를 보존한 bounded full-report 획득 경로만 생성하도록 한다.",
+      "SOURCE_QUERY_GENERATION_LLM이 STRUCTCAND-e74162d86f8d35ab99a8d0e0의 identity를 보존한 bounded full-report 획득 경로만 생성하도록 한다.",
+      "SOURCE_QUERY_GENERATION_LLM이 STRUCTCAND-3cacfef7d2e329694e87abff의 identity를 보존한 bounded full-report 획득 경로를 생성하고 bottleneck·capital objective에 각각 검증한다.",
+      "full document가 확보되기 전에는 후보 metadata·summary를 사실 또는 수치 근거로 사용하지 않는다."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "HBM4 공급·최고가·실적 같은 제목 동의어 일반검색",
+          "후보 summary의 숫자나 문구를 full document 근거로 취급"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-eb3cecb1e00c95ccf544cac4",
+        "research_need": "후보 identity STRUCTCAND-715e353bc4c72c0e4d00cf14를 보존해 해당 full PUBLIC_BROKER_PDF를 확보하고 HBM4 가격·제품경제성의 명시적 근거와 추정 범위를 검증한다."
+      },
+      {
+        "avoid_repeating": [
+          "장기계약·완판·구매주문 존재를 다시 확인하는 동의어 검색",
+          "NDA로 닫힌 고객별 조건을 추정으로 채우기"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "research_need": "후보 identity STRUCTCAND-e74162d86f8d35ab99a8d0e0를 보존해 full report의 장기계약 조건·출처·불확실성을 검증한다."
+      },
+      {
+        "avoid_repeating": [
+          "일반 메모리 100% 시간 가동률을 HBM CAPA로 반복 인용",
+          "P4 전체 DRAM 생산능력을 HBM 양품 출하능력으로 환산"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-7ba6c752cb327ae2c989b6dd",
+        "research_need": "후보 identity STRUCTCAND-3cacfef7d2e329694e87abff를 보존해 full report의 capacity 단위·공정 범위·추정 출처를 검증한다."
+      },
+      {
+        "avoid_repeating": [
+          "연결 CAPEX와 FCF를 HBM 전용 수치로 재표현",
+          "주주환원 규모만으로 HBM 투자 회수를 추정"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-44161aa1a529ae8101bf12b1",
+        "research_need": "STRUCTCAND-3cacfef7d2e329694e87abff의 full report에서 CAPA 투자·성과급 충당금과 현금전환 연결을 검증하되 HBM 귀속 여부를 분리한다."
+      }
+    ],
+    "rationale": "최신 7개 memo, 21개 judge 계보, RTMEMO-faa9a416acaed9d917dc2658, SYNMEMO-373eb7cd238a52214ff990f9, current/open facts 547과 14개 failure group을 함께 검토했다. memo와 structured records는 현재 근거를 충분히 표현하고 score disagreement도 없지만, 267개 보고서 후보 중 세 개의 정확한 as-of-date PUBLIC_BROKER_PDF identity가 HBM4 제품경제성, 계약 조건, 공정별 CAPA 및 투자·비용 귀속을 확인할 합리적 full-fetch route를 남긴다. 이는 후보 summary를 evidence로 쓰겠다는 뜻이 아니라 미수집 full document class를 검증하겠다는 뜻이다. 반대로 qualification·allocation과 NDA 계약조건은 새로운 고객 공식 document class가 없으므로 동의어 query로 반복하지 않는다. 따라서 현재는 semantic saturation을 선언하지 않고 bounded candidate-specific route만 남긴다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "특정 full report 후보가 HBM4 물량·가격·제품 원가와 초기 램프 비용을 범용 DRAM과 분리해 메모리 이익 및 현금전환으로 연결하는가?",
+      "장기계약을 다루는 특정 full report 후보가 가격 재설정·최소구매·취소·재협상·납품기간 중 공개 가능한 경제 조건과 출처를 제시하는가?",
+      "생산능력 특정 full report 후보가 HBM 전용 웨이퍼·적층·패키징 처리량과 양품 수율을 일반 메모리 capacity와 분리하는가?",
+      "생산능력·성과급 특정 full report 후보가 HBM 관련 투자·램프 비용과 전사 현금전환 사이의 귀속 가능한 bridge를 제공하는가?"
+    ]
+  },
+  "payload_hash": "c2aa8c5b292a77ca2b7b4645855ad54d4757273fe1c668f6c0b18f169211e123",
+  "production_score_authority": false,
+  "prompt_hash": "ec25c0a85b17205b49da31b636e6dc2d18963e7cd81aaeeb1daf16e2c30481d4",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6bb4861e4d2b19e0ff7f95b2fbbc1ed737b3b6a9c2ae4a73fe5eb2532d87fdd6",
+  "response_id": "COLLABRESP-18c8d5d6afba3218ff2d2b4086391d0017caec250c6fc26955f40b46c2bd3cbd",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

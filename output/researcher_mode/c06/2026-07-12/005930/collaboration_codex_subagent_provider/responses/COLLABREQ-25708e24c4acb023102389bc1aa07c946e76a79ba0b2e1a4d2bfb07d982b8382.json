@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      10.5,
+      14.5
+    ],
+    "anchor_comparisons": [
+      "Current evidence exceeds the counter anchor midpoint of 8.82 because it contains issuer-stated purchase orders, completed customer arrangements and sold-out capacity, not merely unsupported visibility claims.",
+      "Current evidence remains below the positive anchor midpoint of 15.33 because contract economics, customer allocation, shipment timing and cash conversion are not disclosed and current counterfacts show conditional allocation and delay."
+    ],
+    "counter_fact_ids": [
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-80daa96c00cd5d7b5782c27a",
+      "EFACT-a79b8e5bedf94ee44504539e",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "The analyst position gives too much weight to sold-out capacity without disclosed contract protections and realized shipment conversion.",
+      "The skeptic position underweights the fact that orders and some completed mid-to-long-term arrangements are already present."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-fe4be151b6e34320ddc5f6a7",
+      "CANCH-a55bc660ba3191bbb73fafc7"
+    ],
+    "proposed_points": 12.4,
+    "rationale": "On the 21-point scale, the evidence is appropriately calibrated between the two ordinal anchors. The order-and-capacity plane is materially stronger than generic customer interest, but exact contract quality and realized conversion remain incomplete. Centering the decision below the memo midpoint recognizes that the positive plane is mostly issuer-described and that all four counters directly limit duration, pricing or timing.",
+    "support_fact_ids": [
+      "EFACT-16ee255de13b7acf64e98eaa",
+      "EFACT-1ec0fca52ff40b01ed1890f6",
+      "EFACT-6430c66a53268479f230de39",
+      "EFACT-83b9afe8727ec3fd962620a4",
+      "EFACT-8b6707b4ab45897a5a448a93",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-d05fe1b53b1bb5081130ea1c"
+    ],
+    "why_not_higher": "Calibration should not approach the positive anchor midpoint until customer-level contractual obligations, allocation and realized delivery economics are directly observable.",
+    "why_not_lower": "Calibration should remain above the counter band because issuer-stated purchase orders, sold-out capacity and completed arrangements provide a current visibility base despite incomplete terms."
+  },
+  "payload_hash": "4cefb567423c173d3b5bc9d30dcd426e0baabe337597a77d8c1d6747996d05ec",
+  "production_score_authority": false,
+  "prompt_hash": "ae064dbca5cc847f52e880b2dde08c7cc332b99d259fc874e0b22e025aa1fa30",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-25708e24c4acb023102389bc1aa07c946e76a79ba0b2e1a4d2bfb07d982b8382",
+  "response_id": "COLLABRESP-fb05385a2c5be7743c7d2007a04079d68f65c93f8e10fcdee1d12adf3a9ed03a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-c3736da35fe911b38fda6311",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "증권·자문 PDF 경로는 고객사 공식 원문이 아니다. 스니펫이나 보고서 해석으로 고객 qualification, 플랫폼 통합 또는 공급 관계를 입증할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-985a13c50a62dd263f711c18",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "AI 서버 시장 규모 및 점유율, 통계 보고서 2025-2034 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-6f66f54f48bd4b7ae927d3ba",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "언론·뉴스 재전 경로로서 고객사 공식 원문이 아니다. 관련 주제를 언급하더라도 스니펫은 discovery metadata일 뿐이며 CUSTOMER_OFFICIAL provenance가 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c603560df7cd76423b081e3b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "7월 21일  해외 뉴스 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-2d8029510b63a368326e50cc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성과 AMD, 파트너십 강화: MI455X용 HBM4 및 EPYC Venice용 DDR5 공식 발표 &gt; 하드웨어 .... 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-4d79734816caec994a3ff180",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "2031년 한국 데이터센터 프로세서 시장 전망 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-510087ba25d77b5be2597b7d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "언론·뉴스 재전 경로로서 고객사 공식 원문이 아니다. 관련 주제를 언급하더라도 스니펫은 discovery metadata일 뿐이며 CUSTOMER_OFFICIAL provenance가 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-37ca6a6f4d0c2f34ae64c047",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "증권·자문 PDF 경로는 고객사 공식 원문이 아니다. 스니펫이나 보고서 해석으로 고객 qualification, 플랫폼 통합 또는 공급 관계를 입증할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-06cd0f1c037e33ac091df1f2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "LPDDR5 DRAM 시장 규모, 점유율 및 2031년 성장 추세 보고서 경로는 제3자 웹·포털·커뮤니티 자료이며 고객사가 소유한 공식 원문이 아니다. 스니펫만으로 고객 기술 채택·qualification·공급 관계를 확인할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-5a7597bf678a2af28f21fb95",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "언론·뉴스 재전 경로로서 고객사 공식 원문이 아니다. 관련 주제를 언급하더라도 스니펫은 discovery metadata일 뿐이며 CUSTOMER_OFFICIAL provenance가 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-ac91e587fd2aa300394230f9",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 1.0,
+        "rationale": "NVIDIA 공식 블로그의 GTC 2026 한국 파트너십 원문 경로다. 삼성전자와 차세대 메모리·AI 플랫폼의 기술적 연결을 고객사 측에서 독립 확인하거나 반박할 수 있어 full-fetch 가치가 있다. 스니펫은 증거가 아니며 게시일과 전체 문맥은 fetch 후 검증해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-1943aa08be7734015b3c2045",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "증권·자문 PDF 경로는 고객사 공식 원문이 아니다. 스니펫이나 보고서 해석으로 고객 qualification, 플랫폼 통합 또는 공급 관계를 입증할 수 없어 CUSTOMER_OFFICIAL 목적에는 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "모든 후보를 discovery route로만 판정했으며 스니펫을 EvidenceFact나 점수 근거로 사용하지 않았다.",
+      "NVIDIA 공식 고객사 경로 1건은 full-fetch 대상일 뿐 아직 증거가 아니다. cutoff 게시일, 원문 전체 문맥, 삼성전자 HBM 기술 관계의 정확한 범위를 fetch 후 검증해야 한다."
+    ]
+  },
+  "payload_hash": "67807f9dbdd4a63e2663bd4577917d112a2e450521e2c759e5ca03493bd10f9d",
+  "production_score_authority": false,
+  "prompt_hash": "5e0d410a9989c16bdf996245dac93fc49351988791551696509f17e1911f27ae",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f3e83757098420cfd49e8274fe0ad59df4685e85bf4dd1fd781b8bad29640094",
+  "response_id": "COLLABRESP-b14b6856b693d573f1561f40953dc676eadc0b62bee47edaf7d6d1bf6485810b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

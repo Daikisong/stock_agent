@@ -1,0 +1,517 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3a45ff520aa102e18aeabec0",
+        "rationale": "2024년 1분기 공식 자료 전체를 검토해 메모리 매출, QoQ 성장 및 같은 실적 수치의 회계검토 미완료 제한을 추출했다. 이미 current graph에 있는 메모리 흑자전환·HBM3E 램프업 등은 재추출하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-3a6d22bc8477ae3025991e50",
+        "rationale": "기사 전체에서 삼성전자에 귀속된 메모리 영업이익 추정, D램 판매량, HBM4 초기 수익성 counter, 2027 HBM ASP 전망만 추출했다. SK하이닉스 수치·전사 또는 비메모리 수치·prior와 겹치는 성과급 및 공급부족 서술은 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-3ed6a7bca90f68d11863a0e6",
+        "rationale": "공식 2024년 2분기·상반기 연결 손익계산서 전체를 검토했으나 전사 수치만 있고 메모리 단독 귀속이 없어 current eps_fcf_explosion objective의 신규 material fact로 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-42745b9ae3a1ab33b0aee000",
+        "rationale": "2026년 1분기 컨퍼런스콜 전문 전체를 검토해 prior에 없는 서버 D램 비트판매·D램 ASP·연간 HBM 매출 증가 전망·컨벤셔널 D램 대비 HBM 상대수익성 counter만 추출했다. 기존 graph의 sold-out·계약·2027 공급격차·HBM4 매출비중 등은 중복 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3a45ff520aa102e18aeabec0",
+        "economic_mechanism": "공식 분기 자료의 메모리 매출은 제품 판매가 실제 매출로 전환된 규모를 직접 수치화한다.",
+        "exact_quote": "메모리 17.49 15.71 8.92 11%↑ 96%↑",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 단독 실제 매출을 발행사 자료가 직접 제시해 eps_fcf_explosion의 매출 귀속을 보강한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION",
+        "normalized_object": "메모리 매출",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q1",
+        "predicate": "2024년 1분기 메모리 매출은 17.49조원이었다",
+        "predicate_family": "MEMORY_PRODUCT_REVENUE",
+        "primitive_tags": [
+          "memory_revenue",
+          "revenue_conversion"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_product_revenue",
+        "question_family_tags": [
+          "memory_product_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "삼성전자 메모리 매출",
+        "subject_id": "005930:MEMORY:REVENUE",
+        "unit": "KRW trillion",
+        "value": 17.49
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3a45ff520aa102e18aeabec0",
+        "economic_mechanism": "메모리 매출의 전분기 대비 증가는 메모리 사업의 단기 매출 전환 가속도를 직접 보여준다.",
+        "exact_quote": "메모리 17.49 15.71 8.92 11%↑ 96%↑",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 구조화 공백인 QOQ_GROWTH를 발행사 표의 메모리 단독 점 증감률로 직접 채운다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION",
+        "normalized_object": "메모리 매출 전분기 대비 증가율",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q1",
+        "predicate": "2024년 1분기 메모리 매출은 전분기 대비 11% 증가했다",
+        "predicate_family": "MEMORY_REVENUE_QOQ_GROWTH",
+        "primitive_tags": [
+          "memory_revenue",
+          "qoq_growth"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_qoq_growth",
+        "question_family_tags": [
+          "memory_qoq_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "삼성전자 메모리 매출",
+        "subject_id": "005930:MEMORY:REVENUE_QOQ",
+        "unit": "percent QoQ",
+        "value": 11
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3a45ff520aa102e18aeabec0",
+        "economic_mechanism": "외부감사인 회계검토가 끝나지 않아 같은 자료의 분기 실적 수치가 검토 과정에서 변경될 수 있다.",
+        "exact_quote": "본 자료에 포함된 “2024년 1분기 실적”은 본사, 자회사 및 관계사 등에 대한 외부감사인의 회계검토가 완료되지 않은 상태에서\n투자자 여러분의 편의를 위해 작성된 자료이므로, 그 내용 중 일부는 회계검토과정에서 달라질 수 있음을 양지하시기 바랍니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "같은 문서의 메모리 매출 및 증가율 수치에 붙은 명시적 검토 미완료 조건이므로 증거 확실성을 제한한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:RISK_COUNTER",
+        "normalized_object": "2024년 1분기 실적 확정성",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-Q1",
+        "predicate": "2024년 1분기 실적은 외부감사인 회계검토 미완료 상태로 일부 변경될 수 있었다",
+        "predicate_family": "RESULT_REPORTING_UNCERTAINTY",
+        "primitive_tags": [
+          "reporting_uncertainty",
+          "review_incomplete"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "financial_result_uncertainty",
+        "question_family_tags": [
+          "financial_result_uncertainty"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024년 1분기 메모리 실적 자료",
+        "subject_id": "005930:MEMORY:REPORTING_CERTAINTY",
+        "unit": "",
+        "value": "외부감사인 회계검토 미완료 및 일부 변경 가능"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3a6d22bc8477ae3025991e50",
+        "economic_mechanism": "전사 잠정이익 가운데 메모리 영업이익으로 귀속되는 추정 규모가 메모리 이익 전환을 정량화한다.",
+        "exact_quote": "하나증권은 메모리 영업이익을 91조원, 비메모리(시스템반도체)를 2조원 손실로 추정했고, 대신증권도 비메모리 2조3000억원 손실, MX 1조원 손실, 가전(CE/VD) 0.1조원 손실 등으로 봤다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "독립 분석기관의 메모리 단독 영업이익 귀속치가 eps_fcf_explosion의 현재 이익 규모를 직접 보강하지만 확정 실적은 아니다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "메모리 영업이익 추정치",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2E",
+        "predicate": "하나증권은 2026년 2분기 삼성전자 메모리 영업이익을 91조원으로 추정했다",
+        "predicate_family": "MEMORY_OPERATING_PROFIT_ESTIMATE",
+        "primitive_tags": [
+          "memory_operating_profit",
+          "segment_attribution",
+          "estimate"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "memory_operating_profit_estimate",
+        "question_family_tags": [
+          "memory_operating_profit_estimate"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 영업이익 추정",
+        "subject_id": "005930:MEMORY:OPERATING_PROFIT_ESTIMATE",
+        "unit": "KRW trillion",
+        "value": 91
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3a6d22bc8477ae3025991e50",
+        "economic_mechanism": "D램 판매량 증가는 가격 효과와 별도로 메모리 매출의 물량 전환을 뒷받침한다.",
+        "exact_quote": "2분기 D램 판매량이 전 분기 대비 10% 늘며 가이던스를 웃돌았고, 업계 최고 수준의 D램 가격 상승률을 이끌었다는 평가다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 매출·이익 증가가 가격만이 아니라 D램 판매 물량 증가도 동반했음을 정량화한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:REVENUE_CONVERSION",
+        "normalized_object": "D램 판매량 전분기 대비 증가율",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2",
+        "predicate": "2026년 2분기 D램 판매량은 전분기 대비 10% 증가해 가이던스를 웃돌았다",
+        "predicate_family": "DRAM_SALES_VOLUME_QOQ",
+        "primitive_tags": [
+          "dram_volume",
+          "qoq_growth",
+          "revenue_conversion"
+        ],
+        "product_family": "D램",
+        "question_family_id": "dram_shipment_growth",
+        "question_family_tags": [
+          "dram_shipment_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 D램 판매량",
+        "subject_id": "005930:DRAM:SALES_VOLUME_QOQ",
+        "unit": "percent QoQ",
+        "value": 10
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3a6d22bc8477ae3025991e50",
+        "economic_mechanism": "HBM4 초기 수익성이 이전 세대보다 낮을 수 있어 물량 확대가 즉시 같은 비율의 이익 확대로 이어지지 않을 위험이 있다.",
+        "exact_quote": "IBK투자증권은 HBM4 초기 수익성이 HBM3E 대비 낮을 것으로 추정하면서도, 물량 비중이 예상보다 낮아 D램 영업이익률에 미치는 영향은 제한적일 것으로 봤다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4 물량 확대의 이익 전환 강도를 직접 낮추는 독립 counter이며, 동시에 영향 제한이라는 완화 조건도 원문에 보존한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:RISK_COUNTER",
+        "normalized_object": "HBM4 초기 수익성",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-H2E",
+        "predicate": "IBK투자증권은 HBM4 초기 수익성이 HBM3E보다 낮을 것으로 추정했다",
+        "predicate_family": "HBM4_INITIAL_PROFITABILITY_RISK",
+        "primitive_tags": [
+          "hbm4",
+          "profitability",
+          "counter"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "hbm4_profitability_risk",
+        "question_family_tags": [
+          "hbm4_profitability_risk"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 초기 수익성",
+        "subject_id": "005930:HBM4:INITIAL_PROFITABILITY",
+        "unit": "",
+        "value": "HBM3E 대비 낮은 초기 수익성 추정"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3a6d22bc8477ae3025991e50",
+        "economic_mechanism": "HBM 평균판매단가의 큰 폭 상승 전망은 향후 HBM 매출과 이익 전환의 가격 기여도를 높인다.",
+        "exact_quote": "대신증권은 삼성전자의 2027년 HBM 평균판매단가(ASP)가 전년 대비 91% 오를 것으로 전망했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "미래 HBM 이익 변환을 좌우하는 가격 기여도의 독립 수치 전망이지만 제3자 추정이므로 발행사 FORWARD_GUIDANCE로 태그하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:PRICING_POWER",
+        "normalized_object": "HBM 평균판매단가 전년 대비 상승률 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027E",
+        "predicate": "대신증권은 삼성전자 2027년 HBM 평균판매단가가 전년 대비 91% 오를 것으로 전망했다",
+        "predicate_family": "HBM_ASP_YOY_OUTLOOK",
+        "primitive_tags": [
+          "hbm_asp",
+          "pricing_power",
+          "estimate"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_asp_outlook",
+        "question_family_tags": [
+          "hbm_asp_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 평균판매단가 전망",
+        "subject_id": "005930:HBM:ASP_OUTLOOK",
+        "unit": "percent YoY",
+        "value": 91
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-42745b9ae3a1ab33b0aee000",
+        "economic_mechanism": "서버용 D램 비트 판매 증가가 AI 수요를 실제 메모리 판매 물량으로 전환한 정도를 보여준다.",
+        "exact_quote": "그 결과 서버용 D램과 낸드의 비트 판매는 각각 전 분기 대비 10% 초반, 20% 초반 증가했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 이익 확대의 물량 축 가운데 서버용 D램 증가를 회사 발언으로 직접 확인한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:REVENUE_CONVERSION",
+        "normalized_object": "서버용 D램 비트 판매 전분기 대비 증가율",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 서버용 D램 비트 판매는 전분기 대비 10% 초반 증가했다",
+        "predicate_family": "SERVER_DRAM_BIT_SALES_QOQ",
+        "primitive_tags": [
+          "server_dram",
+          "bit_sales",
+          "qoq_growth"
+        ],
+        "product_family": "서버용 D램",
+        "question_family_id": "dram_bit_sales_growth",
+        "question_family_tags": [
+          "dram_bit_sales_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 서버용 D램 비트 판매",
+        "subject_id": "005930:SERVER_DRAM:BIT_SALES_QOQ",
+        "unit": "percent QoQ range",
+        "value": "10% 초반 증가"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-42745b9ae3a1ab33b0aee000",
+        "economic_mechanism": "D램 혼합 ASP의 급등이 같은 판매 물량에서 발생하는 매출 및 이익 전환을 확대한다.",
+        "exact_quote": "D램은 전 분기 대비 90% 초반, 낸드는 80% 후반 상승했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 분기 메모리 이익 증가의 핵심 가격 변수를 회사 발언으로 직접 정량화한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "D램 혼합 ASP 전분기 대비 상승률",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 D램 혼합 ASP는 전분기 대비 90% 초반 상승했다",
+        "predicate_family": "DRAM_ASP_QOQ_GROWTH",
+        "primitive_tags": [
+          "dram_asp",
+          "pricing_power",
+          "qoq_growth"
+        ],
+        "product_family": "D램",
+        "question_family_id": "dram_asp_growth",
+        "question_family_tags": [
+          "dram_asp_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 D램 혼합 ASP",
+        "subject_id": "005930:DRAM:ASP_QOQ",
+        "unit": "percent QoQ range",
+        "value": "90% 초반 상승"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-42745b9ae3a1ab33b0aee000",
+        "economic_mechanism": "HBM 매출의 세 배 이상 증가 전망은 HBM 양산·출하가 연간 매출로 전환되는 크기를 제시한다.",
+        "exact_quote": "올해 삼성전자 HBM 매출은 이전 분기 실적 발표 때 말한 대로 전년 대비 3배 이상 대폭 늘어날 전망이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 HBM 공급·출하가 연간 매출로 전환되는 예상 규모를 회사 답변이 직접 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:REVENUE_CONVERSION",
+        "normalized_object": "HBM 매출 전년 대비 증가 배수 전망",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "삼성전자는 2026년 HBM 매출이 전년 대비 3배 이상 증가할 것으로 전망했다",
+        "predicate_family": "HBM_REVENUE_YOY_OUTLOOK",
+        "primitive_tags": [
+          "hbm_revenue",
+          "revenue_conversion",
+          "outlook"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_revenue_growth_outlook",
+        "question_family_tags": [
+          "hbm_revenue_growth_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 매출 전망",
+        "subject_id": "005930:HBM:REVENUE_GROWTH_OUTLOOK",
+        "unit": "times YoY",
+        "value": ">3"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-42745b9ae3a1ab33b0aee000",
+        "economic_mechanism": "컨벤셔널 D램 수익성이 HBM보다 높아진 현재 역전은 HBM 비중 확대가 단기 이익 극대화와 항상 일치하지 않는다는 counter다.",
+        "exact_quote": "최근 컨벤셔널 메모리 가격 상승이 이어지면서 컨벤셔널 D램이 HBM 대비 높은 수익성을 보이는 것은 사실이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 중심 매출 확대가 단기 이익 전환에 무조건 유리하다는 해석을 제한하는 회사의 명시적 양면 근거다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:RISK_COUNTER",
+        "normalized_object": "컨벤셔널 D램과 HBM의 상대 수익성",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "최근 컨벤셔널 D램 수익성이 HBM보다 높았다",
+        "predicate_family": "DRAM_HBM_RELATIVE_PROFITABILITY",
+        "primitive_tags": [
+          "conventional_dram",
+          "hbm",
+          "relative_profitability",
+          "counter"
+        ],
+        "product_family": "컨벤셔널 D램 및 HBM",
+        "question_family_id": "memory_profitability_mix_risk",
+        "question_family_tags": [
+          "memory_profitability_mix_risk"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 컨벤셔널 D램과 HBM 수익성",
+        "subject_id": "005930:DRAM_HBM:RELATIVE_PROFITABILITY",
+        "unit": "",
+        "value": "컨벤셔널 D램 수익성이 HBM보다 높음"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d6e922e50fd46ca1f592d13ea259c09b633f14abfc67d2675e1a6a3c49b1c5cd",
+  "production_score_authority": false,
+  "prompt_hash": "67e24fb941ee43798dcab1386771c4bca59b85da9241fe301ac325228452848c",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0969631f3d028468458b332f7226ea515469f73e7f9339d0825a07986cd00716",
+  "response_id": "COLLABRESP-268321fe260016918483e5474bbc5d21e2dcc71830c0d04a25e2b090c63c1fb1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

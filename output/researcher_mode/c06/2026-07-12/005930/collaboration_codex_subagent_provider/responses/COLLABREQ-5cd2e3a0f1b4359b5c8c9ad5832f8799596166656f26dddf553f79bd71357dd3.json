@@ -1,0 +1,42 @@
+{
+  "output_schema_hash": "ae7dad2545414309536c569bb68fe5cf7c3acb2f6e168186b4a0a24c455dd15e",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e1ee451a87a80fa971feabd3",
+        "rationale": "125,914자 전체를 검토했으나 문서는 글로벌 반도체 산업·응용처·지역별 Fab 투자 전망 중심이며, 삼성전자 언급은 과거 300mm 양산과 EUV 고객이라는 일반 설명뿐이다. 삼성전자 메모리·DRAM·HBM의 objective-local 수치나 검증 결과가 없어 산업 일반 내용을 target fact로 오귀속하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-e33040d568aff72c3d9a5415",
+        "rationale": "56,480자 전체를 재검토했다. valuation peer profile·SOTP multiple·역사적 밴드·추정 기준·정확성 및 이해상충 한계는 durable fact graph에 이 문서 출처로 이미 11개 존재한다. 남은 내용은 target-price-only, 더 최신 자료로 대체된 2024년 broker 전망, 산업 수급, NAND·파운드리·모바일 또는 기존 HBM 사실과 의미 중복이어서 신규 objective-local fact로 반복하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "8a92452f050d0cff4322278eccdde270d51971282f209d20fb56822c18d9e6bb",
+  "production_score_authority": false,
+  "prompt_hash": "8f3f7f8e09b9f6b6197ae185d9d8b840416fc3ca668129ae3ef9ea672c16d193",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5cd2e3a0f1b4359b5c8c9ad5832f8799596166656f26dddf553f79bd71357dd3",
+  "response_id": "COLLABRESP-eb066c219d9ea77b4f9855e9aed64433a9258d8145ea1701f74255eb5c471c91",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-44f6d1e54bbf45c8a3d4e724",
+      "CRMEMO-fe88306b51fc9a10bf0b58c0",
+      "CRMEMO-6d0cae9806f3b0a2524c6112",
+      "CRMEMO-8c63fe83d12f62f16d045241",
+      "CRMEMO-ff71c66bea89c9c58ce1025a",
+      "CRMEMO-0691edb321b16cad586bd7b3",
+      "CRMEMO-6067edc7878f29fd73883bcb"
+    ],
+    "confidence": 0.82,
+    "cross_component_support": [
+      "eps_fcf_explosion·bottleneck_pricing·capital_allocation은 같은 현재 경로를 지지한다. 높은 메모리 가격과 고부가 믹스가 실제 메모리 매출·DS 이익을 키웠고, 회사 전체에서는 영업현금이 CAPEX를 웃돌아 양의 잔여현금이 확인됐다. 이는 단순 수요 전망이 아니라 매출→이익→전사 현금 전환이 실제로 작동하고 있음을 뜻한다.",
+      "earnings_visibility·bottleneck_pricing은 고객수요·구매주문·일부 중장기 계약·HBM4 생산여력 완판과 낮은 재고를 함께 보여준다. 고객 물량 가시성과 제한된 공급이 결합해 출하 가능성과 가격력을 동시에 지지한다.",
+      "valuation_rerating·information_confidence는 HBM4가 연구 단계에만 머물렀다는 반론을 약화한다. NVIDIA 고객 공식 자료는 NVIDIA AI 인프라용 설계와 기술 협력을 좁게 확인하고, 발행사 자료는 양산 출하·지속 납품·누적 매출을 확인해 제품화→상업화 경로를 연결한다.",
+      "eps_fcf_explosion·earnings_visibility·valuation_rerating은 HBM4 상업화와 서버·고용량 메모리 믹스가 메모리 실적 개선에 기여한다는 방향에서 일치한다. 계약·주문과 실제 매출이 함께 있어 기술 이벤트만 있는 경우보다 매출 지속성 근거가 강하다.",
+      "market_mispricing·valuation_rerating은 실제 이익 상회와 HBM4 상업화에도 선행 배수가 일부 peer보다 낮다는 점에서 할인 잔존 가능성을 함께 제시한다. structured peer 경로는 직접 메모리 peer와 인접 반도체 peer를 구분할 수 있게 해 상대가치 검토의 재현성을 높인다.",
+      "information_confidence는 다른 여섯 component의 바닥을 고정한다. 외부검토 재무, 회사 공시 메모리 매출과 시간 가동률은 전사·DS·메모리 수준의 사실을 재현 가능하게 하므로, HBM 세부 비공개 때문에 이미 실현된 전체 성과까지 부정할 수는 없다."
+    ],
+    "cross_component_tensions": [
+      "company-vs-HBM 귀속 긴장: eps_fcf_explosion과 capital_allocation은 연결 FCF와 DS·메모리 실적이 강하다고 보지만 information_confidence와 red-team은 HBM 매출·마진·CAPEX·운전자본 bridge가 없다고 지적한다. 따라서 회사 현금창출을 HBM 단독 경제성으로 바꿀 수 없다.",
+      "물량 가시성-vs-계약 경제성 긴장: earnings_visibility는 구매주문·다년계약·완판을 지지하지만 NDA와 중요 장기공급계약 수주거래 부재 공시는 최소구매·가격 재설정·취소·선수금·납품기간을 닫지 못한다. 물량 존재와 마진·회수조건의 확실성은 별개다.",
+      "공급 병목-vs-HBM 전용 CAPA 긴장: bottleneck_pricing의 100% 시간 가동률·낮은 재고는 혼합 메모리 공급 제약을 지지하지만 HBM 웨이퍼 투입, TSV·패키징 처리량, 양품 수율과 실제 출하능력은 측정하지 않는다. 일반 메모리 가동률을 HBM 수율 또는 전용 CAPA로 환산할 수 없다.",
+      "상업화-vs-qualification·allocation 긴장: NVIDIA 공식 자료와 누적 HBM4 매출은 실제 제품화·판매를 확인하지만 고객별 qualification 완료, 실제 플랫폼 탑재, 공급자 배정과 반복구매를 확인하지 않는다. 협력사 성과평가와 고객 일정이 향후 물량을 바꿀 수 있다.",
+      "매출 성장-vs-제품 마진 긴장: valuation_rerating은 양산·누적매출 전환을 지지하지만 red-team은 HBM4 초기 수익성이 HBM3E보다 낮을 수 있고 현재 범용 DRAM 수익성이 더 높다고 지적한다. 메모리 이익 급증을 HBM 마진 확정으로 읽을 수 없다.",
+      "할인-vs-선반영 긴장: market_mispricing은 낮은 선행 PER·peer 격차를 제시하지만 PBR은 이미 크게 상승했고 2028년 이익 감소 전망, 사이클 정점 분모 효과, 사업 믹스·상장시장 차이가 남는다. 관찰된 peer gap이 자동적인 할인 해소를 의미하지 않는다.",
+      "현금창출-vs-현금경쟁 긴장: capital_allocation은 양의 전사 FCF와 환원 실행을 지지하지만 자산취득 약정, CAPEX, 매출채권·재고 등 운전자본 유출과 환원이 같은 현금을 경쟁한다. 전사 잔여현금이 HBM 투자수익률이나 제품별 회수기간을 증명하지 않는다.",
+      "공식 baseline-vs-HBM 세부 검증 긴장: information_confidence는 전사·메모리 기준점의 신뢰가 높다고 보지만 HBM 고객·계약·제품별 이익은 NDA·답변 거부로 닫혀 있고 일부 마진·점유율은 제3자 추정이다. 공식 전체 수치와 HBM 특정 주장의 증거수준을 분리해야 한다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "일곱 component와 red-team을 함께 보면, 현재 근거는 삼성전자의 메모리 업황 개선과 HBM4의 실제 상업화를 강하게 지지한다. 메모리 매출·DS 이익·전사 현금전환, 고객 주문·중장기 물량 계약, HBM4 생산여력 완판, 낮은 재고, NVIDIA 고객측 기술 확인과 누적 HBM4 매출이 서로 보강된다. 그러나 이 결론의 범위는 ‘회사와 메모리 사업의 성과 및 HBM4 제품화·판매가 확인됐다’까지다. HBM 전용 이익·FCF, 고객별 qualification·allocation, 계약 경제조건, 전용 CAPA·수율·패키징 처리량과 초기 제품 마진은 닫히지 않았다. 낮은 선행 배수와 peer gap도 이미 상승한 PBR, 사이클 정점 가능성, 사업 믹스와 상장시장 차이 때문에 독립적인 재평가 근거로 확정할 수 없다. 따라서 확인된 상업화·현금창출을 인정하면서도 company/memory/DS/HBM 귀속, 물량/마진/현금, 기술협력/계약을 각각 분리해 후속 공식 자료로 검증해야 한다.",
+    "unresolved_material_questions": [
+      "발행사 공식 자료에서 메모리 매출·DS 이익·연결 현금을 HBM 물량, ASP, 제품 원가, 영업이익, CAPEX와 운전자본으로 연결하는 product/segment bridge가 공개되는가?",
+      "고객 공식 자료 또는 발행사 공시가 HBM4 qualification 완료, 실제 플랫폼 탑재, 공급자 allocation과 반복구매를 각각 구분해 확인하는가? NVIDIA의 기술 협력 문구만으로 이 조건들을 대신할 수 없다.",
+      "HBM 다년계약의 최소구매, 가격 재설정, 취소·재협상, 선수금, 위약 및 납품기간 가운데 공개 가능한 경제 조건이나 명시적 비공개 경계는 무엇인가?",
+      "HBM 전용 웨이퍼 투입, TSV·적층·패키징 처리량, 양품 수율과 실제 고객 출하능력은 얼마이며 일반 메모리 시간 가동률 및 장기 증설 계획과 어떻게 다른가?",
+      "HBM4 초기 제품 마진과 수율·램프 비용은 후속 분기에서 어떻게 실현되며, 범용 DRAM 가격 효과와 성과보상을 제거한 뒤에도 제품 경제성이 개선되는가?",
+      "연결 OCF에서 DS 메모리 투자, HBM 관련 CAPEX, 매출채권·재고·고객선수금을 분리하면 HBM 투자 회수와 실제 잔여현금은 어떻게 달라지는가?",
+      "동일 기준일·예상기간·회계정책으로 직접 메모리 peer의 사업 믹스, 순현금과 상장시장 차이를 조정해도 상대가치 격차가 남는가? 낮은 PER의 사이클 정점 분모 효과와 이미 상승한 PBR을 어떻게 분해할 수 있는가?",
+      "고객 플랫폼 출시 지연, 공급사 성과평가, AI 설비투자 둔화 또는 증설 램프가 HBM 배정·범용 가격·현금전환을 동시에 훼손하는 조건은 무엇인가?",
+      "최신 EPS 리비전 하락과 영업이익 리비전 상승의 혼재가 세금·비영업·주식수 요인인지, 메모리 이익 지속성 약화인지 후속 동일기준 자료로 확인되는가?"
+    ]
+  },
+  "payload_hash": "92c9dec8f393ae2a50c600f5825639cfc3cb7c2804b275b5513763ee6cf95b88",
+  "production_score_authority": false,
+  "prompt_hash": "8ce8aecb5fbbd97cdb5c819829d93045bdc06a3b1496d8cccbc6b03714fcb0b3",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c3416c834d97836a1ac95127eab396861f8877c27e0c946e09f6e5e52e31794e",
+  "response_id": "COLLABRESP-f6ddafeb5cb826c91e06e9856fc615f33908ea85d39261cd64bdaff82ba2d7b9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "output_schema_hash": "1a57ac1fcb9c8a5ee3c9ee36ddf8e13d13e3430e12986c5b9247b97780bf244a",
+  "payload": {
+    "allowed_range": [
+      7.8,
+      9.55
+    ],
+    "anchor_comparisons": [
+      "긍정 앵커 ORDTRANSFER-e743368708b3aee88a83287c의 5.7~7.2점과 현재 실제·전망 근거를 비교했다.",
+      "반대 앵커 ORDTRANSFER-2bfdc4a0e53457e592939b89의 4.25~5.75점과 현재 불확실성·counterfact를 비교했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1ff68ad6eee1221423b38965",
+      "EFACT-caa96a468d8c424252c4431e"
+    ],
+    "disagreements": [
+      "현재 actual 매출·가동·주문·상용화 근거가 있어 최하단만 적용하는 견해는 수용하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "proposed_points": 8.85,
+    "rationale": "반대 역할로 모든 counterfact를 우선 검토했다. 현재 가격이 일부 2.0배 P/B 기준가치를 웃돌고 메모리 사이클 정점과 2028년 이익감소 전망은 단순 peer 수렴을 제한한다. 다만 HBM4 양산·매출 전환에도 선행 PER과 PBR이 비교군보다 낮다는 관측은 실적 개선 대비 시장 반영이 덜 됐을 가능성을 보여 준다.",
+    "support_fact_ids": [
+      "EFACT-ba3851ffc2538f67427b0ec3",
+      "EFACT-c8d894a7d67c2050fd2961da"
+    ],
+    "why_not_higher": "계약 조건·제품별 actual 이익·현금 전환 또는 구조적 지속성의 직접 검증이 완전하지 않다.",
+    "why_not_lower": "현재 citable 긍정 사실과 공식·독립 출처가 실제 매출·수요·생산·현금 경로를 뒷받침한다."
+  },
+  "payload_hash": "c9f7cf47a86911f8b473056f02044632b86a05f5b03c65f92c649c9cb71395c8",
+  "production_score_authority": false,
+  "prompt_hash": "e3151e2a6cd12348e98b39eac5063baf4eb42df3d2c51bfb87566219864364cb",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d35376b4df9a45ff849950d812411996d86d153887627b9a080f3c37daf0c318",
+  "response_id": "COLLABRESP-a687cf6609cfcc01a6a8466ace6acd1cd5ed2a853f8872d4245880c8d9c1cbef",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

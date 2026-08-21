@@ -1,0 +1,2911 @@
+{
+  "output_schema_hash": "98f11c464ef31fe7fdf9e45da4f45482b27d94424b45004bfe846a211fbfca7c",
+  "payload": {
+    "fact_dispositions": [
+      {
+        "fact_row_index": 0,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 1,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 2,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 3,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 4,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 5,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 6,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 7,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 8,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 9,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 10,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 11,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 12,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 13,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 14,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 15,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 16,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 17,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 18,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 19,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 20,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 21,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 22,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 23,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 24,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 25,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 26,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 27,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 28,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 29,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 30,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 31,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 32,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 33,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 34,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 35,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 36,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 37,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 38,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 39,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 40,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 41,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 42,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 43,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 44,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 45,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 46,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 47,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 48,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 49,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 50,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 51,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 52,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 53,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 54,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 55,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 56,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 57,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 58,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 59,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 60,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 61,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 62,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 63,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 64,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 65,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 66,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 67,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 68,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 69,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 70,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 71,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 72,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 73,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 74,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 75,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 76,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 77,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 78,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 79,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 80,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 81,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 82,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 83,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 84,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 85,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 86,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 87,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 88,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 89,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 90,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 91,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 92,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 93,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 94,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 95,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 96,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 97,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 98,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 99,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 100,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 101,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 102,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 103,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 104,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 105,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 106,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 107,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 108,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 109,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 110,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 111,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 112,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 113,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 114,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 115,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 116,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 117,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 118,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 119,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 120,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 121,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 122,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 123,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 124,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 125,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 126,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 127,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 128,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 129,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 130,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 131,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 132,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 133,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 134,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 135,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 136,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 137,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 138,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 139,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 140,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 141,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 142,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 143,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 144,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 145,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 146,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 147,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 148,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 149,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 150,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 151,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 152,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 153,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 154,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 155,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 156,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 157,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 158,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 159,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 160,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 161,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 162,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 163,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 164,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 165,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 166,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 167,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 168,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 169,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 170,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 171,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 172,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 173,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 174,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 175,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 176,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 177,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 178,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 179,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 180,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 181,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 182,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 183,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 184,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 185,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 186,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 187,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 188,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 189,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 190,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 191,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 192,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 193,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 194,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 195,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 196,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 197,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 198,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 199,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 200,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 201,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 202,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 203,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 204,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 205,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 206,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 207,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 208,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 209,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 210,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 211,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 212,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 213,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 214,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 215,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 216,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 217,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 218,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 219,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 220,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 221,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 222,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 223,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 224,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 225,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 226,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 227,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 228,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 229,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 230,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 231,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 232,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 233,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 234,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 235,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 236,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 237,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 238,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 239,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 240,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 241,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 242,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 243,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 244,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 245,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 246,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 247,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 248,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 249,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 250,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 251,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 252,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 253,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 254,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 255,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 256,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 257,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 258,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 259,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 260,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 261,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 262,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 263,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 264,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 265,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 266,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 267,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 268,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 269,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 270,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 271,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 272,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 273,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 274,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 275,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 276,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 277,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 278,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 279,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 280,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 281,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 282,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 283,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 284,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 285,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 286,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 287,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 288,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 289,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 290,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 291,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 292,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 293,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 294,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 295,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 296,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 297,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 298,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 299,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 300,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 301,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 302,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 303,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 304,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 305,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 306,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 307,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 308,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 309,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 310,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 311,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 312,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 313,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 314,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 315,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 316,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 317,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 318,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 319,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 320,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 321,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 322,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 323,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 324,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 325,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 326,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 327,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 328,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 329,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 330,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 331,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 332,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 333,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 334,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 335,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 336,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 337,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 338,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 339,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 340,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 341,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 342,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 343,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 344,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 345,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 346,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 347,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 348,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 349,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 350,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 351,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 352,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 353,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 354,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 355,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 356,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 357,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 358,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 359,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 360,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 361,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 362,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 363,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 364,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 365,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 366,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 367,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 368,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 369,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 370,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 371,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 372,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 373,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 374,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 375,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 376,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 377,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 378,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 379,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 380,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 381,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 382,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 383,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 384,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 385,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 386,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 387,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 388,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 389,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 390,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 391,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 392,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 393,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 394,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 395,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 396,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 397,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 398,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 399,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 400,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 401,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 402,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 403,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 404,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 405,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 406,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 407,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 408,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 409,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 410,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 411,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 412,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 413,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 414,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 415,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 416,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 417,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 418,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 419,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 420,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 421,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 422,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 423,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 424,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 425,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 426,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 427,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 428,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 429,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 430,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 431,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 432,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 433,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 434,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 435,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 436,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 437,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 438,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 439,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 440,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 441,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 442,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 443,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 444,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 445,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 446,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 447,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 448,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 449,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 450,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 451,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 452,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 453,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 454,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 455,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 456,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 457,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 458,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 459,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 460,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 461,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 462,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 463,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 464,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 465,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 466,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 467,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 468,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 469,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 470,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 471,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 472,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 473,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 474,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 475,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 476,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 477,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 478,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 479,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 480,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 481,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 482,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 483,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 484,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 485,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 486,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 487,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 488,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 489,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 490,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 491,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 492,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 493,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 494,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 495,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 496,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 497,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 498,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 499,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 500,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 501,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 502,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 503,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 504,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 505,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 506,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 507,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 508,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 509,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 510,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 511,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 512,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 513,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 514,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 515,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 516,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 517,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 518,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 519,
+        "rationale": "허용 primitive의 직접 경제 의미와 방향에 일치한다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 520,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 521,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 522,
+        "rationale": "허용 primitive에 직접 대응하지 않거나 중복·일반 맥락이어서 매핑하지 않는다.",
+        "status": "NO_MATCH"
+      }
+    ],
+    "mapping_complete": true,
+    "mappings": [
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          143,
+          434
+        ],
+        "primitive_id": "customer_preorder_or_allocation",
+        "semantic_rationale": "customer_preorder_or_allocation의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          75,
+          282,
+          298,
+          303,
+          358
+        ],
+        "primitive_id": "revenue_visibility_contract",
+        "semantic_rationale": "revenue_visibility_contract의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          168,
+          211,
+          373,
+          517
+        ],
+        "primitive_id": "hbm_capacity_constraint",
+        "semantic_rationale": "hbm_capacity_constraint의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          137,
+          311,
+          453
+        ],
+        "primitive_id": "hbm_capacity_pre_sold",
+        "semantic_rationale": "hbm_capacity_pre_sold의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          45,
+          150,
+          256
+        ],
+        "primitive_id": "memory_price_increase_mentioned",
+        "semantic_rationale": "memory_price_increase_mentioned의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          369,
+          442
+        ],
+        "primitive_id": "memory_price_increase_mentioned",
+        "semantic_rationale": "memory_price_increase_mentioned의 COUNTER 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          138,
+          155,
+          395,
+          458
+        ],
+        "primitive_id": "medium_term_revision_visibility",
+        "semantic_rationale": "medium_term_revision_visibility의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          202,
+          244,
+          313,
+          343
+        ],
+        "primitive_id": "medium_term_revision_visibility",
+        "semantic_rationale": "medium_term_revision_visibility의 COUNTER 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          97,
+          115,
+          136,
+          210
+        ],
+        "primitive_id": "qualification_status",
+        "semantic_rationale": "qualification_status의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          118,
+          227,
+          317
+        ],
+        "primitive_id": "qualification_state",
+        "semantic_rationale": "qualification_state의 COUNTER 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          265,
+          266,
+          276
+        ],
+        "primitive_id": "contract_visibility",
+        "semantic_rationale": "contract_visibility의 COUNTER 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          331,
+          469
+        ],
+        "primitive_id": "cash_or_revision_conversion",
+        "semantic_rationale": "cash_or_revision_conversion의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          420,
+          510,
+          513
+        ],
+        "primitive_id": "cash_or_revision_conversion",
+        "semantic_rationale": "cash_or_revision_conversion의 COUNTER 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          92,
+          127,
+          519
+        ],
+        "primitive_id": "hbm_product_profile",
+        "semantic_rationale": "hbm_product_profile의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          134,
+          149,
+          154,
+          218,
+          249
+        ],
+        "primitive_id": "shipment_or_revenue_mix",
+        "semantic_rationale": "shipment_or_revenue_mix의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          28,
+          74,
+          171
+        ],
+        "primitive_id": "shipment_or_revenue_mix",
+        "semantic_rationale": "shipment_or_revenue_mix의 COUNTER 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          21,
+          452
+        ],
+        "primitive_id": "actual_earnings_conversion",
+        "semantic_rationale": "actual_earnings_conversion의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          193,
+          252
+        ],
+        "primitive_id": "actual_earnings_conversion",
+        "semantic_rationale": "actual_earnings_conversion의 COUNTER 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          390,
+          476,
+          484
+        ],
+        "primitive_id": "margin_fcf_conversion",
+        "semantic_rationale": "margin_fcf_conversion의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          338,
+          459
+        ],
+        "primitive_id": "margin_fcf_conversion",
+        "semantic_rationale": "margin_fcf_conversion의 COUNTER 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          153,
+          294
+        ],
+        "primitive_id": "conventional_memory_drag",
+        "semantic_rationale": "conventional_memory_drag의 COUNTER 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          147,
+          286,
+          416,
+          451,
+          481,
+          486
+        ],
+        "primitive_id": "capacity_supply_response",
+        "semantic_rationale": "capacity_supply_response의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          270,
+          279,
+          318,
+          341,
+          474
+        ],
+        "primitive_id": "capacity_supply_response",
+        "semantic_rationale": "capacity_supply_response의 COUNTER 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          425,
+          444
+        ],
+        "primitive_id": "market_expectation_gap",
+        "semantic_rationale": "market_expectation_gap의 COUNTER 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          78,
+          387,
+          421
+        ],
+        "primitive_id": "current_valuation_vs_earnings",
+        "semantic_rationale": "current_valuation_vs_earnings의 SUPPORT 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          77,
+          384
+        ],
+        "primitive_id": "current_valuation_vs_earnings",
+        "semantic_rationale": "current_valuation_vs_earnings의 COUNTER 방향과 직접 일치하는 current source-backed 사실만 묶었다."
+      }
+    ],
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "960910b1dabb9dcadcf07033a508eeb8bb89b01c086257d0fa6d94b80e7639ff",
+  "production_score_authority": false,
+  "prompt_hash": "71ef4a3dbc124de3322f267eec25d4b8be334c85f713f8074a1bc1fa37646145",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6c56baebf1128a9f57ddbbf89ee26908a5a2a121829afc737f233db3b22a8579",
+  "response_id": "COLLABRESP-6322fb4e0327667380ae9d72ace266311014a22d477e7650502bf381352229b7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

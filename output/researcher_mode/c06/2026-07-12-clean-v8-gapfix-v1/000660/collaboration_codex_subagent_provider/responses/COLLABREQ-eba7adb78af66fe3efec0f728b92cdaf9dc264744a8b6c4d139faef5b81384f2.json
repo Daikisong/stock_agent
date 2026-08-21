@@ -1,0 +1,586 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-18f74031c76c26bfd290e162",
+        "rationale": "문서 전체를 검토해 target-direct 공급사 경쟁·고객 협상력, 12단 HBM3E 가격 압력, SK하이닉스 DDR4·LPDDR4X 공급 연장 전망 3건을 추출했다. 산업 일반 계약 구조와 HBM 수익성 수치는 target 계약경제로 승격하지 않았고 이 문서의 objective-local remainder는 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "rationale": "전문을 검토해 target-direct DRAM 생산, 고부가 mix, 4Q24 전사/DRAM/HBM 전망, HBM3E·HBM4 전망, FY2026 전사 OP 등 첫 9개 distinct 사실을 추출했다. 과거 forecast와 current-open 전망, 전사·DRAM·HBM 귀속을 분리했으며 valuation/EPS 표의 추가 atomic remainder가 page cap 뒤에 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.84,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-18f74031c76c26bfd290e162",
+        "economic_mechanism": "IBK투자증권은 SK하이닉스·Micron·삼성의 NVIDIA 공급 경쟁으로 협상 주도권이 고객에게 넘어갔다고 평가했다. 이는 시장구조 관측이며 개별 signed 계약조건은 아니다.",
+        "exact_quote": "2025년 들어 Micron이 HBM3E 제품으로 두 번째 공급자로 진입하였고, 삼성전자도 HBM4 출시\n를 앞두고 공격적인 가격 인하 전략을 취하며 시장 공략에 나섰다. 그 결과, SK하이닉스·Micron·삼\n성 간의 3자 경쟁 구도가 형성되었고, 이들은 모두 시장을 주도하는 핵심 고객, NVIDIA를 놓고 치열\n한 경쟁을 벌이고 있다. 이로 인해 협상 주도권은 명확히 고객에게 넘어갔다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공급사 경쟁과 고객 협상력 강화는 target의 HBM pricing power 지속성에 대한 직접 counter다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:RISK_COUNTER",
+        "normalized_object": "HBM 공급 경쟁에 따른 고객 협상력 강화",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025년",
+        "predicate": "3개 공급사 경쟁으로 HBM 협상 주도권이 고객에게 넘어갔다고 평가했다",
+        "predicate_family": "BROKER_HBM_CUSTOMER_BARGAINING_POWER",
+        "primitive_tags": [
+          "HBM",
+          "NVIDIA",
+          "customer_bargaining_power"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_customer_bargaining_power",
+        "question_family_tags": [
+          "hbm_customer_bargaining_power",
+          "broker_assessment",
+          "competition_counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 경쟁구도",
+        "subject_id": "000660:HYNIX_HBM_COMPETITION",
+        "unit": "",
+        "value": "고객 협상 주도권 강화"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.87,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-18f74031c76c26bfd290e162",
+        "economic_mechanism": "IBK투자증권은 2025년 하반기 SK하이닉스와 Micron의 12단 HBM3E 가격 하락 압력을 전망했다. 이는 broker forecast이며 realized ASP나 signed 가격조건이 아니다.",
+        "exact_quote": "비록 삼성전자가 아직\nNVIDIA의 전면적인 품질 인증을 받지 못했음에도 불구하고, 2025년 하반기를 앞두고 SK하이닉스\n와 Micron이 공급하는 12단 HBM3E 가격은 하락 압력을 받을 것으로 전망된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간·target·제품이 명시된 가격 counter지만 현재 as-of에서는 과거 broker forecast이며 실제 가격이나 계약조건이 아니다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:PRICING_POWER",
+        "normalized_object": "SK하이닉스 12단 HBM3E 가격 하락 압력 전망",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2H2025 forecast",
+        "predicate": "SK하이닉스가 공급하는 12단 HBM3E 가격에 하락 압력이 있을 것으로 전망했다",
+        "predicate_family": "BROKER_HBM_PRICING_PRESSURE_FORECAST",
+        "primitive_tags": [
+          "HBM3E",
+          "pricing_pressure",
+          "2H2025"
+        ],
+        "product_family": "HBM3E 12Hi",
+        "question_family_id": "hbm3e_pricing_pressure",
+        "question_family_tags": [
+          "hbm3e_pricing_pressure",
+          "broker_forecast",
+          "superseded_period"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 12단 HBM3E",
+        "subject_id": "000660:HYNIX_HBM3E_12HI",
+        "unit": "",
+        "value": "가격 하락 압력"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.89,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-18f74031c76c26bfd290e162",
+        "economic_mechanism": "IBK투자증권은 SK하이닉스가 DDR4·LPDDR4X 공급을 1년 이상 연장할 것으로 전망했다. HBM CAPA나 고객 allocation으로 전이하지 않는다.",
+        "exact_quote": "특히\nSK하이닉스는 DDR4 및 LPDDR4X 공급을 1년 이상 연장할 것으로 전망된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "target-specific 메모리 공급계획 전망은 일반 DRAM supply response를 보여 주지만 HBM 수급이나 signed 판매계약을 의미하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:SUPPLY_RESPONSE",
+        "normalized_object": "SK하이닉스 레거시 DRAM 공급 연장 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-08-05부터 1년 이상 전망",
+        "predicate": "DDR4와 LPDDR4X 공급을 1년 이상 연장할 것으로 전망했다",
+        "predicate_family": "BROKER_LEGACY_DRAM_SUPPLY_EXTENSION",
+        "primitive_tags": [
+          "DDR4",
+          "LPDDR4X",
+          "supply_extension"
+        ],
+        "product_family": "DDR4 and LPDDR4X",
+        "question_family_id": "legacy_dram_supply_extension",
+        "question_family_tags": [
+          "legacy_dram_supply_extension",
+          "broker_forecast",
+          "non_hbm_supply"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 레거시 DRAM",
+        "subject_id": "000660:HYNIX_LEGACY_DRAM",
+        "unit": "",
+        "value": "1년 이상 연장 전망"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.88,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권은 2025년 SK하이닉스 DRAM 생산 bit growth를 23%로 전망하고 시장 수요 B/G를 상회한다고 평가했다. 이는 과거 broker estimate이며 HBM-only capacity가 아니다.",
+        "exact_quote": "CXMT의 DDR5 영향력은 제한적 인한 2025 년 생산 B/G 둔화 가능성이 높다. SK 증권은 2025 년 DRAM 생산\n-> 레거시는 경기 회복 필요\nB/G를 삼성전자 +7%, SK하이닉스 +23%, 마이크론 +14%, CXMT +110%를\n예상하며, 시장 수요 B/G 를 상회하는 업체는 SK 하이닉스, CXMT 뿐 일 것으로\n전망한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "target의 DRAM 공급 증가가 시장 수요를 웃돈다는 과거 전망은 supply response counter지만 HBM-only 증설로 볼 수 없다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:SUPPLY_RESPONSE",
+        "normalized_object": "2025년 SK하이닉스 DRAM 생산 bit growth 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025 forecast",
+        "predicate": "2025년 DRAM 생산 B/G를 23%로 전망했다",
+        "predicate_family": "BROKER_DRAM_PRODUCTION_GROWTH_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "bit_growth",
+          "FY2025"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "dram_production_growth_forecast",
+        "question_family_tags": [
+          "dram_production_growth_forecast",
+          "broker_forecast",
+          "superseded_period"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM 생산",
+        "subject_id": "000660:HYNIX_DRAM_PRODUCTION",
+        "unit": "%",
+        "value": 23
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.79,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권은 HBM·DDR5·고용량 SSD 경쟁력을 근거로 SK하이닉스의 mix 개선 가시성이 가장 높다고 평가했다. 복수 제품 근거이며 HBM-only 이익으로 귀속하지 않는다.",
+        "exact_quote": "수요 회복\n부재 속에 높은 경기 방어력을 증명해야 하는 구간이라는 점에서 HBM, DDR5, 고\n용량 SSD 시장에서의 높은 경쟁력을 바탕으로 믹스 제고 가시성이 가장 높다고 판\n단되는SK하이닉스를 반도체 업종 내 Top-pick으로 유지한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "과거 broker의 target mix 평가로서 earnings visibility 맥락을 제공하지만 제품별 이익 bridge나 current actual은 아니다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:REVENUE_CONVERSION",
+        "normalized_object": "고부가 메모리 기반 mix 개선 가시성",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025 outlook",
+        "predicate": "고부가 메모리 경쟁력을 바탕으로 mix 개선 가시성이 가장 높다고 평가했다",
+        "predicate_family": "BROKER_PREMIUM_MEMORY_MIX_VISIBILITY",
+        "primitive_tags": [
+          "HBM",
+          "DDR5",
+          "product_mix"
+        ],
+        "product_family": "HBM, DDR5 and high-capacity SSD",
+        "question_family_id": "premium_memory_mix_visibility",
+        "question_family_tags": [
+          "premium_memory_mix_visibility",
+          "broker_assessment",
+          "mixed_products"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.8,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 고부가 메모리 mix",
+        "subject_id": "000660:HYNIX_PREMIUM_MEMORY_MIX",
+        "unit": "",
+        "value": "mix 개선 가시성이 가장 높음"
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.88,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권의 4Q24 전사 영업이익 전망이며 actual이나 HBM-only 영업이익이 아니다.",
+        "exact_quote": "SK하이닉스의 4Q24 영업이익을 8.2조원 (+17% QoQ)으로 수요 둔화 속에서도\n분기 최대 이익을 경신할 것으로 예상한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "기간과 target가 명시된 과거 전사 실적 기대치지만 current actual이나 HBM 이익 bridge는 아니다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "4Q24 전사 영업이익 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E",
+        "predicate": "4Q24 영업이익을 8.2조원, 전분기 대비 17% 증가로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "operating_profit",
+          "4Q2024E",
+          "QoQ"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "quarterly_operating_profit_forecast",
+        "question_family_tags": [
+          "quarterly_operating_profit_forecast",
+          "broker_forecast",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.8,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 영업이익 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "",
+        "value": "KRW 8.2 trillion; +17% QoQ"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.87,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권의 4Q24 DRAM 출하 증감 전망이며 NAND 수치를 분리했고 actual이나 HBM-only 출하가 아니다.",
+        "exact_quote": "수익성 추구를 위한 고부가 제품 중심\n출하 전략 지속 (DRAM +4%, NAND +12%)으로 수요 환경 대비 양호한 가격\n(DRAM +10%, NAND -1%)이 예상된다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "target DRAM 출하 전망이지만 과거 broker estimate이며 HBM shipment로 전이하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:REVENUE_CONVERSION",
+        "normalized_object": "4Q24 DRAM 출하 증가 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E",
+        "predicate": "4Q24 DRAM 출하가 4% 증가할 것으로 전망했다",
+        "predicate_family": "BROKER_DRAM_SHIPMENT_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "shipment",
+          "4Q2024E"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "dram_shipment_forecast",
+        "question_family_tags": [
+          "dram_shipment_forecast",
+          "broker_forecast",
+          "non_hbm_attribution"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM 출하",
+        "subject_id": "000660:HYNIX_DRAM_SHIPMENT",
+        "unit": "%",
+        "value": 4
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.87,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권의 4Q24 DRAM 가격 변화 전망이며 actual 또는 HBM ASP가 아니다.",
+        "exact_quote": "수익성 추구를 위한 고부가 제품 중심\n출하 전략 지속 (DRAM +4%, NAND +12%)으로 수요 환경 대비 양호한 가격\n(DRAM +10%, NAND -1%)이 예상된다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "target DRAM 가격 전망이지만 과거 broker estimate이며 HBM realized ASP나 signed price를 뜻하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "4Q24 DRAM 가격 상승 전망",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E",
+        "predicate": "4Q24 DRAM 가격이 10% 상승할 것으로 전망했다",
+        "predicate_family": "BROKER_DRAM_PRICING_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "pricing",
+          "4Q2024E"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "dram_pricing_forecast",
+        "question_family_tags": [
+          "dram_pricing_forecast",
+          "broker_forecast",
+          "non_hbm_attribution"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM 가격",
+        "subject_id": "000660:HYNIX_DRAM_PRICING",
+        "unit": "%",
+        "value": 10
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.9,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권의 4Q24 DRAM 내 HBM 매출 비중 전망이며 actual이나 회사 가이던스가 아니다.",
+        "exact_quote": "DRAM 내 HBM 매출 비중은 40%\n(+10%p QoQ)으로 믹스 제고 역시 지속되며, 경기 부진 사이클에서의 높은 이익\n방어력을 증명할 것으로 전망한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 매출 mix가 target와 DRAM denominator에 명시됐지만 과거 forecast이고 HBM 영업이익·FCF로 전이할 수 없다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:REVENUE_CONVERSION",
+        "normalized_object": "4Q24 DRAM 내 HBM 매출 비중 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E",
+        "predicate": "DRAM 내 HBM 매출 비중을 40%, 전분기 대비 10%p 상승으로 전망했다",
+        "predicate_family": "BROKER_HBM_REVENUE_MIX_FORECAST",
+        "primitive_tags": [
+          "HBM",
+          "revenue_mix",
+          "4Q2024E"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_revenue_mix_forecast",
+        "question_family_tags": [
+          "hbm_revenue_mix_forecast",
+          "broker_forecast",
+          "segment_attribution"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM 내 HBM 매출 비중",
+        "subject_id": "000660:HYNIX_HBM_REVENUE_MIX",
+        "unit": "",
+        "value": "40%; +10 percentage points QoQ"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.89,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권은 4Q24 HBM3E 12단 출하 시작을 전망했다. 이는 과거 commercialization forecast이며 고객 승인·계약·actual을 뜻하지 않는다.",
+        "exact_quote": "해당 국면에서 SK하이닉스는 4Q24 HBM3e 12H 출하 시작을 통해 시장 선점자의\n지위를 재확인 시킬 것으로 예상되며, 2026년 개화가 예상되는 HBM4에서도 경쟁\n력을 증명할 것으로 전망한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "target·제품·시점이 명시된 과거 출하 전망이지만 actual shipment나 customer qualification 증거는 아니다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:PRODUCT_COMMERCIALIZATION",
+        "normalized_object": "4Q24 HBM3E 12단 출하 시작 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E",
+        "predicate": "4Q24 HBM3E 12단 출하 시작을 전망했다",
+        "predicate_family": "BROKER_HBM_SHIPMENT_START_FORECAST",
+        "primitive_tags": [
+          "HBM3E",
+          "12Hi",
+          "shipment_start"
+        ],
+        "product_family": "HBM3E 12Hi",
+        "question_family_id": "hbm3e_product_commercialization",
+        "question_family_tags": [
+          "hbm3e_product_commercialization",
+          "broker_forecast",
+          "superseded_period"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM3E 12단",
+        "subject_id": "000660:HYNIX_HBM3E_12HI",
+        "unit": "",
+        "value": "HBM3E 12Hi shipment start"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.83,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권이 2026년 HBM4에서 SK하이닉스의 경쟁력 증명을 전망한 정성적 broker forecast이며 qualification·deployment·contract evidence가 아니다.",
+        "exact_quote": "해당 국면에서 SK하이닉스는 4Q24 HBM3e 12H 출하 시작을 통해 시장 선점자의\n지위를 재확인 시킬 것으로 예상되며, 2026년 개화가 예상되는 HBM4에서도 경쟁\n력을 증명할 것으로 전망한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 기간의 target HBM4 기대를 보여 주지만 정성 전망뿐이며 고객 공식 corroboration이나 계약경제는 없다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:MARKET_EXPECTATION_GAP",
+        "normalized_object": "2026년 HBM4 경쟁력 정성 전망",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 outlook",
+        "predicate": "2026년 HBM4에서도 경쟁력을 증명할 것으로 전망했다",
+        "predicate_family": "BROKER_HBM4_COMPETITIVENESS_FORECAST",
+        "primitive_tags": [
+          "HBM4",
+          "competitiveness",
+          "FY2026"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "hbm4_competitiveness_forecast",
+        "question_family_tags": [
+          "hbm4_competitiveness_forecast",
+          "broker_forecast",
+          "no_contract_terms"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.87,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4",
+        "subject_id": "000660:HYNIX_HBM4",
+        "unit": "",
+        "value": "경쟁력 증명 전망"
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.87,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권의 FY2026 전사 영업이익 전망이며 HBM-only 이익 또는 issuer guidance가 아니다.",
+        "exact_quote": "영업실적 및 투자지표\n구분 단위 2021 2022 2023 2024E 2025E 2026E\n매출액 십억원 42,998 44,622 32,766 67,667 86,872 103,377\n영업이익 십억원 12,410 6,809 -7,730 23,052 34,600 47,140",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 기간 전사 OP 기대를 수치화하지만 source가 2024년 broker report이고 HBM attribution이나 revision comparison은 포함하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 전사 영업이익 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "2026년 영업이익을 47조1400억원으로 전망했다",
+        "predicate_family": "BROKER_ANNUAL_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "operating_profit",
+          "FY2026E",
+          "broker_table"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "annual_operating_profit_forecast",
+        "question_family_tags": [
+          "annual_operating_profit_forecast",
+          "broker_forecast",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 전사 영업이익 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_FORECAST",
+        "unit": "KRW billion",
+        "value": 47140
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-68e4c276617add99c4c6d4fa"
+    ],
+    "unresolved_research_notes": [
+      "SGDOC-68e4c276617add99c4c6d4fa의 FY2025/FY2026 매출·순이익·EPS·PER·PBR·EV/EBITDA 등 아직 미추출한 target-direct valuation/earnings table atoms를 prior 12건과 dedup해 다음 deterministic continuation에서 검토해야 한다."
+    ]
+  },
+  "payload_hash": "a98f024251ab1e45a02e785e25f50718eb3c5f6eb97c0b05dd0543970575ed4c",
+  "production_score_authority": false,
+  "prompt_hash": "6340950fedec2a80eecc8c7a2a641886003d69d4f8253fe464abdb0002bc6671",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-eba7adb78af66fe3efec0f728b92cdaf9dc264744a8b6c4d139faef5b81384f2",
+  "response_id": "COLLABRESP-0e660643cca460498f1035c57a90fb61b71c21e9bd049c0e7646a83344fb99ed",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

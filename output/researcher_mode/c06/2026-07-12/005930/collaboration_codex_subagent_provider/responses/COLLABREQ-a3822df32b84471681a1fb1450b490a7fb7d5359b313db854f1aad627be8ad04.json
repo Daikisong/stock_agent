@@ -1,0 +1,129 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2b9bc4b1a0e4bc7f711c1a8e",
+        "rationale": "current canonical의 HBM4 양산·공급 확대 계획과 1분기 서버향 판매에서 실제로 진전된 2026년 2분기 HBM4 납품량 증가와 서버용 고용량 DDR5 판매 급증 2건만 추출했다. 회사 전체 잠정실적·성과급 충당금, DS 혼합 마진 전망, E-SSD·범용 D램 시장가격, 장기 연간 전망은 메모리/HBM actual로 전용하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2b9bc4b1a0e4bc7f711c1a8e",
+        "economic_mechanism": "빅테크의 AI 서버 투자가 이어지면서 삼성전자가 양산 중인 HBM4의 실제 납품량 증가로 연결됐다.",
+        "exact_quote": "주요 빅테크 기업의 AI 서버 투자가 지속되면서 삼성전자가 양산 중인 6세대 고대역폭메모리(HBM)의 납품량이 대폭 늘었다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "current canonical의 2026년 2월 HBM4 양산 출하와 향후 공급 확대 계획에서 한 단계 진전된 2026년 2분기 실제 납품량 증가를 보여준다. 다만 납품량·매출·고객별 배정 수치가 없어 정성적 conversion 근거로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:DELIVERY_VOLUME_INCREASE:2026-Q2",
+        "normalized_object": "HBM4 납품량의 대폭 증가",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2",
+        "predicate": "2026년 2분기 삼성전자가 양산 중인 HBM4 납품량이 대폭 증가했다",
+        "predicate_family": "HBM4_DELIVERY_VOLUME_INCREASE",
+        "primitive_tags": [
+          "HBM4_DELIVERY",
+          "AI_SERVER_DEMAND",
+          "SHIPMENT_CONVERSION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_DELIVERY_VOLUME_INCREASE",
+        "question_family_tags": [
+          "HBM4_DELIVERY_VOLUME_INCREASE",
+          "HBM_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 2026년 2분기 납품량",
+        "subject_id": "005930:MEMORY:HBM4:DELIVERY_VOLUME_INCREASE:2026-Q2",
+        "unit": "delivery direction",
+        "value": "delivery volume increased substantially"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.8,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2b9bc4b1a0e4bc7f711c1a8e",
+        "economic_mechanism": "고성능 서버용 고용량 DDR5 판매 급증이 메모리 제품의 실제 매출·수익성 전환을 뒷받침했다.",
+        "exact_quote": "고성능 서버용 고용량 DDR5와 고부가가치 기업용 SSD(E-SSD)의 판매 급증도 반도체(DS) 부문의 수익성을 가파르게 끌어올렸다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "current canonical에는 2026년 1분기 서버향 제품 판매 확대와 DDR5 비중 확대 계획은 있으나, 2분기 서버용 고용량 DDR5의 실제 판매 급증은 없다. 원문의 E-SSD는 NAND 인접 제품이므로 이 fact의 mechanism scope에는 포함하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:SERVER_DDR5:SALES_SURGE:2026-Q2",
+        "normalized_object": "고성능 서버용 고용량 DDR5 판매 급증",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2",
+        "predicate": "2026년 2분기 삼성전자의 고성능 서버용 고용량 DDR5 판매가 급증했다",
+        "predicate_family": "SERVER_DDR5_SALES_SURGE",
+        "primitive_tags": [
+          "SERVER_DDR5",
+          "SALES_SURGE",
+          "EARNINGS_CONVERSION"
+        ],
+        "product_family": "서버용 고용량 DDR5",
+        "question_family_id": "SERVER_DDR5_SALES_SURGE",
+        "question_family_tags": [
+          "SERVER_DDR5_SALES_SURGE",
+          "MEMORY_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 고성능 서버용 고용량 DDR5 판매",
+        "subject_id": "005930:MEMORY:SERVER_DDR5:SALES_SURGE:2026-Q2",
+        "unit": "sales direction",
+        "value": "sales increased sharply"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "연결 매출 171조원·영업이익 89조4000억원은 2분기 잠정 전사 수치이며 메모리/HBM 단독 실적 또는 FCF로 귀속하지 않았다.",
+      "성과급 충당금 17조~20조원과 충당금 전 영업이익 106조원은 증권가·업계의 전사 추산이며 메모리 비용 또는 메모리 이익으로 만들지 않았다.",
+      "DS 영업이익률 80% 안팎은 비메모리를 포함한 전망치라 메모리/HBM 영업이익률로 추출하지 않았다.",
+      "범용 D램 공급 부족과 가격 우위의 지속 전망은 target realized ASP 수치가 아니고 current official ASP 상승·가동률 facts보다 덜 직접적이므로 반복하지 않았다."
+    ]
+  },
+  "payload_hash": "e6f7fc33e3736daa16d3d47998172a872b5fc5d7fef9d1c13aa50015c0fe5840",
+  "production_score_authority": false,
+  "prompt_hash": "9f3db24e3db8efc62e8437b13e1462df2dd16ea6e2a1675e312cb64760e6f9fb",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a3822df32b84471681a1fb1450b490a7fb7d5359b313db854f1aad627be8ad04",
+  "response_id": "COLLABRESP-b398e0336c6641fe8b0348b04c6361e24819130301c693596ffc5a5ed153174f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

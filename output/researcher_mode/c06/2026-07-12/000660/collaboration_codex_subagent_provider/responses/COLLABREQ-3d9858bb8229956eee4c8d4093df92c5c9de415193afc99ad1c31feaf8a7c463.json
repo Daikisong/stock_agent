@@ -1,0 +1,536 @@
+{
+  "output_schema_hash": "624210fc6048edd8058cec50035d1aa616b5921624c2a46b59bb783e7ecdd25d",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "rationale": "Extracted twelve distinct target-specific market-expectation and valuation facts from the SK hynix section: quarterly DRAM/NAND ASP estimate revisions, quarterly/half-year/annual profit bridges, product-level profit forecasts, one forward EV/EBITDA point, and the HBM-specific valuation multiple. General industry commentary, recommendations, target price alone, Samsung figures, and equipment/material-company sections were excluded.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "증권사 DRAM 가격 가정의 상향은 기존 시장 기대보다 강한 가격 환경이 추정 실적에 반영됐음을 보여준다.",
+        "exact_quote": "26년 1분기 DRAM, NAND 가격 상승폭을 기존\n22%, 18%에서 32%, 35%로 상향한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 market_mispricing objective에 직접 연결되는 issuer-specific DRAM 가격 추정 상향이며 기존 공식 actual fact와 다른 expectation revision이다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:MARKET_EXPECTATION_GAP:2026-Q1",
+        "normalized_object": "상향된 2026년 1분기 DRAM 가격 상승률 추정치",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 forecast; prior estimate 22 percent",
+        "predicate": "하나증권이 2026년 1분기 SK하이닉스 DRAM 가격 상승률 가정을 22%에서 32%로 상향했다",
+        "predicate_family": "ASP_EXPECTATION_REVISION",
+        "primitive_tags": [
+          "DRAM_ASP_REVISION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_EXPECTATION_REVISION",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "EXPECTATION_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 1분기 DRAM ASP 추정",
+        "subject_id": "000660:DRAM_ASP:2026-Q1",
+        "unit": "percent",
+        "value": 32
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "NAND 가격 가정의 상향은 DRAM 외 메모리 이익 기대도 동시에 개선됐음을 보여준다.",
+        "exact_quote": "26년 1분기 DRAM, NAND 가격 상승폭을 기존\n22%, 18%에서 32%, 35%로 상향한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "NAND 수익성 기대 상향은 DRAM 중심의 기존 fact와 구별되는 시장 기대 변화다.",
+        "mechanism_scope_id": "000660:MEMORY:NAND_ASP:MARKET_EXPECTATION_GAP:2026-Q1",
+        "normalized_object": "상향된 2026년 1분기 NAND 가격 상승률 추정치",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 forecast; prior estimate 18 percent",
+        "predicate": "하나증권이 2026년 1분기 SK하이닉스 NAND 가격 상승률 가정을 18%에서 35%로 상향했다",
+        "predicate_family": "ASP_EXPECTATION_REVISION",
+        "primitive_tags": [
+          "NAND_ASP_REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "NAND_ASP_EXPECTATION_REVISION",
+        "question_family_tags": [
+          "NAND_ASP",
+          "EXPECTATION_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 1분기 NAND ASP 추정",
+        "subject_id": "000660:NAND_ASP:2026-Q1",
+        "unit": "percent",
+        "value": 35
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "2분기 DRAM 가격 가정 상향은 가격 강세가 한 분기에 그치지 않는다는 추정 변화를 나타낸다.",
+        "exact_quote": "26년 2분기 역시 기존 15%, 10%에서 20%, 18%\n로 상향한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "연속 분기 DRAM 가격 추정 상향은 market expectation gap의 지속성을 직접 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:MARKET_EXPECTATION_GAP:2026-Q2",
+        "normalized_object": "상향된 2026년 2분기 DRAM 가격 상승률 추정치",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2 forecast; prior estimate 15 percent",
+        "predicate": "하나증권이 2026년 2분기 SK하이닉스 DRAM 가격 상승률 가정을 15%에서 20%로 상향했다",
+        "predicate_family": "ASP_EXPECTATION_REVISION",
+        "primitive_tags": [
+          "DRAM_ASP_REVISION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_EXPECTATION_REVISION",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "EXPECTATION_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 2분기 DRAM ASP 추정",
+        "subject_id": "000660:DRAM_ASP:2026-Q2",
+        "unit": "percent",
+        "value": 20
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "2분기 NAND 가격 가정 상향은 NAND 이익 회복 기대가 앞선 추정보다 강해졌음을 나타낸다.",
+        "exact_quote": "26년 2분기 역시 기존 15%, 10%에서 20%, 18%\n로 상향한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "NAND의 두 번째 분기 가격 추정 상향은 시장 기대 변경의 제품별 폭을 보여준다.",
+        "mechanism_scope_id": "000660:MEMORY:NAND_ASP:MARKET_EXPECTATION_GAP:2026-Q2",
+        "normalized_object": "상향된 2026년 2분기 NAND 가격 상승률 추정치",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2 forecast; prior estimate 10 percent",
+        "predicate": "하나증권이 2026년 2분기 SK하이닉스 NAND 가격 상승률 가정을 10%에서 18%로 상향했다",
+        "predicate_family": "ASP_EXPECTATION_REVISION",
+        "primitive_tags": [
+          "NAND_ASP_REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "NAND_ASP_EXPECTATION_REVISION",
+        "question_family_tags": [
+          "NAND_ASP",
+          "EXPECTATION_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 2분기 NAND ASP 추정",
+        "subject_id": "000660:NAND_ASP:2026-Q2",
+        "unit": "percent",
+        "value": 18
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "가격 가정 상향이 상반기 영업이익 추정치의 15% 상향으로 연결되어 기대 격차를 수익 숫자로 확인한다.",
+        "exact_quote": "26년 상반기 영업이익 65.3조원으로 기존대비 15% 상향",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격 추정 변화가 이익 추정 상향으로 전환된 직접적인 market_mispricing 근거다.",
+        "mechanism_scope_id": "000660:MEMORY:OPERATING_PROFIT_REVISION:2026-H1",
+        "normalized_object": "상향된 2026년 상반기 영업이익 추정치",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-H1 forecast; 15 percent above prior estimate",
+        "predicate": "하나증권이 SK하이닉스 2026년 상반기 영업이익을 65.3조원으로, 기존 대비 15% 상향했다",
+        "predicate_family": "OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "ESTIMATE_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 상반기 영업이익 추정",
+        "subject_id": "000660:OPERATING_PROFIT:2026-H1",
+        "unit": "KRW trillion",
+        "value": 65.3
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "가격 상승 가정이 제한된 출하량에도 분기 영업이익 증가로 연결된다는 추정은 가격과 이익의 연결고리를 제공한다.",
+        "exact_quote": "가격 가정을 반영하여 26년 1분기 및 2분기 영업이익을 27.2조원, 38.1조원으로 상향한다. 1\n분기는 출하량이 제한되는 가운데 가격 상승을 통해 영업이익이 전분기대비 42% 증가할\n것으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격 상승이 분기 이익 증가로 이어지는 직접적인 valuation-earnings bridge다.",
+        "mechanism_scope_id": "000660:MEMORY:OPERATING_PROFIT:2026-Q1",
+        "normalized_object": "2026년 1분기 영업이익 추정치",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 forecast; 42 percent QoQ increase",
+        "predicate": "하나증권이 SK하이닉스 2026년 1분기 영업이익을 27.2조원으로 추정하고 전분기 대비 42% 증가를 전망했다",
+        "predicate_family": "OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "PRICE_TO_PROFIT_CONVERSION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 1분기 영업이익 추정",
+        "subject_id": "000660:OPERATING_PROFIT:2026-Q1",
+        "unit": "KRW trillion",
+        "value": 27.2
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "2분기에는 가격 상승폭 둔화에도 출하량 증가가 영업이익 성장을 이어간다는 추정으로 이익 지속성을 보완한다.",
+        "exact_quote": "2분기는 가격 상승폭이 축소되지만, 출하량이 증가하며 영업이익이 전분\n기대비 40% 증가할 전망이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격과 출하량을 함께 반영한 다음 분기 이익 추정으로 expectation bridge의 지속성을 보여준다.",
+        "mechanism_scope_id": "000660:MEMORY:OPERATING_PROFIT:2026-Q2",
+        "normalized_object": "2026년 2분기 영업이익 추정치",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2 forecast; 40 percent QoQ increase",
+        "predicate": "하나증권이 SK하이닉스 2026년 2분기 영업이익을 38.1조원으로 추정하고 전분기 대비 40% 증가를 전망했다",
+        "predicate_family": "OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "PRICE_VOLUME_TO_PROFIT_CONVERSION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 2분기 영업이익 추정",
+        "subject_id": "000660:OPERATING_PROFIT:2026-Q2",
+        "unit": "KRW trillion",
+        "value": 38.1
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "연간 영업이익 전망은 분기 가격 상향이 연간 이익 수준으로 연결되는 시장 기대의 기준점을 제공한다.",
+        "exact_quote": "2026년 영업이익은 158조원으로 전망한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 공식 actual과 구분되는 연간 시장 추정치로 market_mispricing 판단의 수익 기준점이다.",
+        "mechanism_scope_id": "000660:MEMORY:OPERATING_PROFIT:2026",
+        "normalized_object": "2026년 영업이익 추정치",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 forecast",
+        "predicate": "하나증권이 SK하이닉스 2026년 영업이익을 158조원으로 전망했다",
+        "predicate_family": "OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "ANNUAL_OPERATING_PROFIT_FORECAST"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "ANNUAL_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "ANNUAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 영업이익 추정",
+        "subject_id": "000660:OPERATING_PROFIT:2026",
+        "unit": "KRW trillion",
+        "value": 158
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "DRAM 영업이익 추정은 가격 상향이 핵심 메모리 제품 이익으로 전환되는 규모를 분리해 보여준다.",
+        "exact_quote": "DRAM과 NAND의 영업이익은 132조원, 26조원으로 전년대비\n각각 191%, 1,326% 증가할 것으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 귀속 이익 규모와 전년 대비 변화율을 직접 제공해 전사 추정의 제품별 근거를 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM_OPERATING_PROFIT:2026",
+        "normalized_object": "2026년 DRAM 영업이익 추정치",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 forecast; 191 percent YoY increase",
+        "predicate": "하나증권이 SK하이닉스 2026년 DRAM 영업이익을 132조원으로, 전년 대비 191% 증가로 추정했다",
+        "predicate_family": "SEGMENT_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "DRAM_PROFIT_BRIDGE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "OPERATING_PROFIT_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 DRAM 영업이익 추정",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT:2026",
+        "unit": "KRW trillion",
+        "value": 132
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "NAND 영업이익의 급증 추정은 DRAM 이외 제품이 연간 이익 상향에 기여하는 규모를 분리한다.",
+        "exact_quote": "DRAM과 NAND의 영업이익은 132조원, 26조원으로 전년대비\n각각 191%, 1,326% 증가할 것으로 추정된다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "NAND 귀속 이익 개선이 연간 추정 상향의 별도 동력임을 보여준다.",
+        "mechanism_scope_id": "000660:MEMORY:NAND_OPERATING_PROFIT:2026",
+        "normalized_object": "2026년 NAND 영업이익 추정치",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 forecast; 1326 percent YoY increase",
+        "predicate": "하나증권이 SK하이닉스 2026년 NAND 영업이익을 26조원으로, 전년 대비 1,326% 증가로 추정했다",
+        "predicate_family": "SEGMENT_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "NAND_PROFIT_BRIDGE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "NAND_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "NAND",
+          "OPERATING_PROFIT_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 NAND 영업이익 추정",
+        "subject_id": "000660:NAND_OPERATING_PROFIT:2026",
+        "unit": "KRW trillion",
+        "value": 26
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "2026년 forward EV/EBITDA는 상향된 이익 추정이 현재 기업가치 배수에 어떻게 반영되는지 보여주는 직접적인 valuation point다.",
+        "exact_quote": "투자지표 2024 2025 2026F 2027F\n매출액 66,193.0 97,146.9 229,380.8 286,726.0\n영업이익 23,467.3 47,206.9 157,820.5 205,639.9\n세전이익 23,885.4 50,465.4 158,306.6 206,126.0\n순이익 19,788.7 42,945.6 129,811.4 162,264.3\nEPS 27,182 58,991 181,717 227,675\n증감률 흑전 117.02 208.04 25.29\nPER 6.40 11.04 5.22 4.17\nPBR 1.66 4.05 2.76 1.67\nEV/EBITDA 3.87 7.79 3.48 2.07",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 배수가 함께 있는 target-specific forward valuation point로 market expectation 수준을 직접 수치화한다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_EV_EBITDA:2026",
+        "normalized_object": "2026년 EV/EBITDA 추정치",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "하나증권 추정 SK하이닉스 2026년 EV/EBITDA는 3.48배다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION_MULTIPLE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스 2026년 EV/EBITDA 추정",
+        "subject_id": "000660:FORWARD_EV_EBITDA:2026",
+        "unit": "x",
+        "value": 3.48
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7cbf510e60eb402486fdbb7c",
+        "economic_mechanism": "HBM EBITDA에 일반 메모리보다 높은 peer multiple을 적용한 별도 가치평가는 HBM 경쟁력이 추정 기업가치에 반영되는 구조를 보여준다.",
+        "exact_quote": "HBM 32,102 8.5 272,869 Peer Group 평균 EV/EBITDA 적용 TSMC, Global Foundry",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 귀속 EBITDA와 적용 multiple, 산정 가치가 같은 표에 있어 HBM earnings-to-valuation bridge를 직접 제공한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_TARGET_EV_EBITDA:2026",
+        "normalized_object": "HBM 사업가치 산정에 적용한 Target EV/EBITDA",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "valuation as of 2026-02-24",
+        "predicate": "하나증권이 SK하이닉스 HBM EBITDA 32,102십억원에 Target EV/EBITDA 8.5배를 적용해 272,869십억원의 영업가치를 산정했다",
+        "predicate_family": "HBM_VALUATION_EARNINGS_BRIDGE",
+        "primitive_tags": [
+          "HBM_TARGET_EV_EBITDA"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_TARGET_EV_EBITDA",
+        "question_family_tags": [
+          "HBM",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 사업가치 적용 배수",
+        "subject_id": "000660:HBM_TARGET_EV_EBITDA:2026",
+        "unit": "x",
+        "value": 8.5
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-7cbf510e60eb402486fdbb7c"
+    ],
+    "unresolved_research_notes": [
+      "This page reaches the 12-fact transport limit. A continuation pass must independently confirm whether any additional distinct objective-linked SK hynix market-mispricing fact remains, without repeating these facts."
+    ]
+  },
+  "payload_hash": "41f6a270ded6241adfc9c53863ef6fa95bed85a86ac0d9e66fd6147216263764",
+  "production_score_authority": false,
+  "prompt_hash": "5444f10be04273bf148e18a3d00fa1ca160fad8367051fd8b4eebcf918ea24b5",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3d9858bb8229956eee4c8d4093df92c5c9de415193afc99ad1c31feaf8a7c463",
+  "response_id": "COLLABRESP-ae63a9c780532633ddae98ee8b2e8ba2299e0cccc9ac025ab43dbbd834de3ade",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "09aab73a38069b2d403176596fb5f250a58d3ed14c7a93378156d522fc42d3c2",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0532b6260f329683cbe9399a",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.94,
+        "rationale": "유안타증권이 직접 제공하는 2026년 SK하이닉스 기업 PDF이며 예상 BPS와 target PBR 1.9배를 명시한다. forward book value와 P/B의 정확한 점값·기간을 확인하기 위한 핵심 원문 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-3b29cb416a77127b27db734d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-b62c94d1fae23f22f0e70b63",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.92,
+        "rationale": "유안타증권 직접 SK하이닉스 기업 PDF로 2027년 예상 BPS와 target PBR 2.66배를 명시한다. 다른 현재 보고서와 forward book value·P/B 기간 및 가정 변화를 대조할 핵심 원문 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-15dee55d37bb1c5be9d3d73d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.03,
+        "rationale": "BNK투자증권 직접 PDF라는 계열은 맞지만 분석 대상이 SK스퀘어다. 지분가치 문맥의 SK하이닉스 언급은 SK하이닉스 자체 forward BPS/PBR·EV/EBITDA 점값 검증을 대신하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2083f406ecf3c6953dce86e5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-d7978db947fa89a1e917f6d8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-39fe97e87827f61a47b1d08f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-ffbb6cb6101cfbf62885a13e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-6446e9a68accc5571d4fdf7f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-ae310361eabc5c53c1334dde",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-caad21d138a2051727cfae1d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-3a55daac9798f61e1c10ecdc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "이 후보의 URL 소유자와 발견 provenance는 요청된 SK하이닉스 issuer presentation 또는 issuer earnings release 원문 계열을 충족하지 않는다. 제3자 기사·블로그·증권사 자료·다른 발행자 문서는 내용이 인접해도 해당 공식 source-family로 승격할 수 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 모든 후보를 정확히 한 번씩 분류했다. material 후보도 아직 원문 fetch·parse 전이며, 발견 snippet은 증거로 사용하지 않았다."
+    ]
+  },
+  "payload_hash": "ae35f1c9803bbb8f6bbf44674dcd0c16d7a0c67687e66271665151f1d64f4d93",
+  "production_score_authority": false,
+  "prompt_hash": "eb38ff1fec1f5d18e4a95e22971f10aee8c0be75c34977c65ea7d770120b2db3",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0ccf2df8c2149b739df3c21b982013ba60c8031093e853865e0f8d7b9b84209e",
+  "response_id": "COLLABRESP-c3769ace3b36736b36f923b7f692708378f1c8b06d34ba4459b3049fec0e32d3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

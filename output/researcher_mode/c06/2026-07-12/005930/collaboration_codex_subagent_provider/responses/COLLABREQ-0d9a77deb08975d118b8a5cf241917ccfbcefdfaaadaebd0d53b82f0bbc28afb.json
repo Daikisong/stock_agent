@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-931fa2e0e2174913b014c199",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The bond-ETF performance report is unrelated to Samsung Electronics memory economics."
+      },
+      {
+        "candidate_id": "SGCAND-bb5a4ba7ba7b516bca2c4b69",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The global solar report is the wrong industry and issuer."
+      },
+      {
+        "candidate_id": "SGCAND-683bd59a971826b5fe8c09eb",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The global ETF market report has no target HBM or capacity relevance."
+      },
+      {
+        "candidate_id": "SGCAND-81cce5e18b15597460484680",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The shipbuilding and defense outlook is unrelated to Samsung Electronics memory."
+      },
+      {
+        "candidate_id": "SGCAND-a8ac88464e30bd68d963c44c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The Next Biomedical pre-listing report is the wrong company and sector."
+      },
+      {
+        "candidate_id": "SGCAND-fb2036ec44ba6864b6d3b8a4",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This AI Weekly issue is generic technology commentary, not target-scoped Samsung Electronics research."
+      },
+      {
+        "candidate_id": "SGCAND-44bcd4fdd88096e96392a8ad",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The broad Mirae Asset Minutes document lists Samsung Electronics as a top pick but does not identify the exact 2026 capacity report or material HBM mechanism in its discovery metadata."
+      },
+      {
+        "candidate_id": "SGCAND-5f23fd27ffdddde5e0075050",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The global hydrogen-economy report is unrelated to the target."
+      },
+      {
+        "candidate_id": "SGCAND-118a29b180a9f1c7cb69015e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The global biotech report is the wrong sector and subject."
+      },
+      {
+        "candidate_id": "SGCAND-913fb8685e6f5b8a9a13b537",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This AI Weekly issue is generic model and earnings-calendar commentary rather than target-company memory research."
+      },
+      {
+        "candidate_id": "SGCAND-2f032a4ffe67c9883a40a8cf",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The Tesla and aerospace report is unrelated to Samsung Electronics HBM."
+      },
+      {
+        "candidate_id": "SGCAND-39481914d2294f80e6e878f1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The electronics and IT-hardware monthly report concerns component-company earnings and is not the specified Samsung Electronics capacity report."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate in this partition matches the requested Samsung Electronics report identity or provides a target-scoped full-PDF route for the open objectives."
+    ]
+  },
+  "payload_hash": "e1e0a729b03cd734222bb35d0ed588067f974792bd5a8bb9350f83b5b9fb8882",
+  "production_score_authority": false,
+  "prompt_hash": "e6a0f0c899dfba60825d3d7cdfcf9df925da5b41d3231ad10558c45575442585",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0d9a77deb08975d118b8a5cf241917ccfbcefdfaaadaebd0d53b82f0bbc28afb",
+  "response_id": "COLLABRESP-8a3e05da70d0da29bbe1c8657af52a07f3265e6421da98e478d9e72a65d024c9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

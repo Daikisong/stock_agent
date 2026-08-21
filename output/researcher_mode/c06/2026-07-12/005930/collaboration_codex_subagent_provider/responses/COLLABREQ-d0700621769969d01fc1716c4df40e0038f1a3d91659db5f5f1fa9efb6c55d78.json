@@ -1,0 +1,58 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      2.0,
+      3.2
+    ],
+    "anchor_comparisons": [
+      "Both cross-sector anchors are low-confidence ordinal references near the ceiling; neither can establish product-level return on invested capital for the current mixed corporate and memory evidence.",
+      "The positive anchor supports simultaneous investment and return capacity, while the counter anchor highlights how commitments and working capital can absorb apparent cash strength."
+    ],
+    "counter_fact_ids": [
+      "EFACT-09bca4086b235701b1d84801",
+      "EFACT-38d8612a550c7b15e83db302",
+      "EFACT-60fb6751333ef31d586334e5",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-c8cce781c38410832d5bd2a8"
+    ],
+    "disagreements": [
+      "The analyst captures execution and funding capacity; the skeptic better captures cash competition and product-attribution limits."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "proposed_points": 2.6,
+    "rationale": "Calibration recognizes current cash generation, liquidity, and executed shareholder return, but discounts forecast dependence and the absence of HBM-specific return metrics. Capital commitments, working-capital absorption, and an unsettled investment plan justify a mid-to-upper rather than ceiling placement.",
+    "support_fact_ids": [
+      "EFACT-4ca12a741765c57da0832791",
+      "EFACT-91896907330221fdcfdd97b2",
+      "EFACT-9c8e2f378d921c9782b5b6ac",
+      "EFACT-f8f6e5abba8d72973f8cbc55"
+    ],
+    "why_not_higher": "The detailed memory spending schedule, HBM return profile, and working-capital normalization are not established.",
+    "why_not_lower": "Large operating cash flow, liquidity, and executed share cancellation support more than a weak allocation record."
+  },
+  "payload_hash": "d8fffbda48b56e784065116904ca35fc86b4f6b5b8af79a0ab332a6bd94ee9d1",
+  "production_score_authority": false,
+  "prompt_hash": "c21db4dbcba4d2728c5f1d66ba3d9ec770985db13cc30cf869d63d54520e2654",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d0700621769969d01fc1716c4df40e0038f1a3d91659db5f5f1fa9efb6c55d78",
+  "response_id": "COLLABRESP-7b73a5b63faf8f28b2d8fa569c834309ac9494f45ea4a55aca65cc657478f513",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

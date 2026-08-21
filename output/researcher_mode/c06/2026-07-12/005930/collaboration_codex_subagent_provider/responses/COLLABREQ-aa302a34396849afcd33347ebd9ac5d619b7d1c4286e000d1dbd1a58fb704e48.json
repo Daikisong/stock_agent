@@ -1,0 +1,170 @@
+{
+  "output_schema_hash": "15c392422eb10175aa878ae0d23349e23b1124c88beebe0367da4a296026f1fc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-c7937b4dabb8a0e535ea8e35",
+        "rationale": "본문 전체와 current 530 facts/532 claims를 대조해 이미 공식 원문으로 반영된 2028년 P5 HBM 핵심 생산거점 계획과 현재 D램 월 65만~70만장은 반복하지 않았다. objective-local로 비중복인 P5 팹2 기초공사 장비 투입, 팹당 월 30만장·두 팹 완공 시 거의 두 배라는 언론 추정, 2028·2029년 순차 가동 및 2030년대 중반 완공 전망만 추출했다. 3D FET·파운드리·타사 수치와 기사 의견은 제외했고, 언론 추정을 회사 확정치로 바꾸지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.78,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c7937b4dabb8a0e535ea8e35",
+        "economic_mechanism": "컴퓨터베이스 보도를 인용한 기사에 따르면 P5 팹2 기초공사용 장비가 현장에 투입돼 장기 D램 공급능력 확충이 계획에서 초기 토목 실행 단계로 진행됐다. 삼성전자 공식 발표나 생산설비 반입 완료로 확대하지 않는다.",
+        "exact_quote": "컴퓨터베이스가\n22\n일\n(\n현지시각\n)\n보도한 내용에 따르면 삼성전자는\nP5\n팹\n1\n에 이어 팹\n2\n의 기초 공사를 위한 장비를 현장에 투입했다\n.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 current fact는 P5의 2028년 HBM 거점 계획을 담지만, 팹2의 실제 기초공사 장비 투입이라는 현재 실행 milestone은 포함하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:P5_FAB2:GROUNDWORK_EQUIPMENT_DEPLOYMENT:2026-06",
+        "normalized_object": "평택 P5 팹2 기초공사 장비 현장 투입",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current as reported 2026-06-23",
+        "predicate": "컴퓨터베이스 보도를 인용한 기사에 따르면 삼성전자가 평택 P5 팹2 기초공사를 위한 장비를 현장에 투입했다",
+        "predicate_family": "P5_FAB2_GROUNDWORK_EXECUTION_MILESTONE",
+        "primitive_tags": [
+          "P5_FAB2",
+          "DRAM_CAPACITY",
+          "GROUNDWORK"
+        ],
+        "product_family": "D램",
+        "question_family_id": "P5_FAB2_GROUNDWORK_EXECUTION_MILESTONE",
+        "question_family_tags": [
+          "P5_CAPACITY_BUILDOUT",
+          "FAB2_GROUNDWORK",
+          "CAPEX_EXECUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 평택 P5 팹2 기초공사 장비 투입",
+        "subject_id": "005930:MEMORY:P5_FAB2:GROUNDWORK_EQUIPMENT_DEPLOYMENT:2026-06",
+        "unit": "construction execution milestone",
+        "value": "P5 Fab 2 groundwork equipment deployed on site"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.72,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c7937b4dabb8a0e535ea8e35",
+        "economic_mechanism": "기사는 P5 공장 한 곳의 완전 가동 능력을 월 30만장으로 보고, 두 공장 완공 시 삼성전자 D램 총 생산능력이 현재 월 65만장 대비 거의 두 배가 될 것으로 추정했다. 이는 발행사 확정 CAPA가 아닌 언론의 장기 가정이다.",
+        "exact_quote": "이 시설이 완전하게 가동하면 공장 한 곳에서만 달마다\n30\n만 장의 웨이퍼를 가공할 수 있다\n.\n삼성전자의 현재\nD\n램 생산능력이 한 달에\n65\n만 장 수준임을 고려하면 두 공장이 완공될 시 전체 생산능력이 거의 두 배로 뛴다\n.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current graph의 삼성전자 전체 D램 월 65만~70만장과 P4 1c D램 월 13만~14만장을 반복하지 않고, P5 신규 팹별 장기 CAPA 및 두 팹 완공 효과라는 증분 공급 규모를 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:P5_TWO_FABS:DRAM_WAFER_CAPACITY:FULL_OPERATION",
+        "normalized_object": "평택 P5 팹당 월 30만장 및 두 공장 완공 시 D램 총 생산능력 거의 두 배 추정",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "full-operation estimate reported 2026-06-23",
+        "predicate": "기사는 삼성전자 평택 P5 공장 한 곳의 완전 가동 능력을 월 30만장으로 보고 두 공장 완공 시 현재 월 65만장인 D램 총 생산능력이 거의 두 배가 될 것으로 추정했다",
+        "predicate_family": "P5_TWO_FAB_DRAM_CAPACITY_ESTIMATE",
+        "primitive_tags": [
+          "P5_TWO_FABS",
+          "DRAM_CAPACITY",
+          "WAFERS_PER_MONTH"
+        ],
+        "product_family": "D램",
+        "question_family_id": "P5_TWO_FAB_DRAM_CAPACITY_ESTIMATE",
+        "question_family_tags": [
+          "P5_CAPACITY_BUILDOUT",
+          "DRAM_WAFER_CAPACITY",
+          "LONG_TERM_SUPPLY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 평택 P5 두 공장 D램 웨이퍼 생산능력 언론 추정",
+        "subject_id": "005930:MEMORY:P5_TWO_FABS:DRAM_WAFER_CAPACITY:FULL_OPERATION",
+        "unit": "wafers per month and relative capacity",
+        "value": "300000 wafers/month per fab; almost 2x total versus current 650000 wafers/month"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.72,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c7937b4dabb8a0e535ea8e35",
+        "economic_mechanism": "P5의 두 생산라인이 2028년과 2029년에 순차 가동하고 전체 공장이 2030년대 중반 완공될 것이라는 기사 전망은 대규모 D램 공급 증가가 한 번에 발생하지 않고 장기간 단계적으로 투입되는 일정을 제시한다.",
+        "exact_quote": "첫 번째 생산 라인은 오는\n2028\n년 가동을 시작하며 두 번째 라인은 오는\n2029\n년 가동할 예정이다\n.\n전체 공장이 최종 완공되는 시점은 오는\n2030\n년대 중반으로 전망된다\n.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "기존 공식 fact의 2028년 P5 HBM 거점 계획과 겹치는 첫 시점을 확장해 두 번째 라인의 2029년 가동 및 전체 완공 horizon까지 공급 증가의 단계성을 구체화한다. 먼 장기 언론 전망이므로 보조 근거로 제한한다.",
+        "mechanism_scope_id": "005930:MEMORY:P5_TWO_LINES:RAMP_SCHEDULE:2028-2030S",
+        "normalized_object": "평택 P5 두 생산라인 2028·2029년 순차 가동 및 2030년대 중반 최종 완공 전망",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2028 to mid-2030s estimate reported 2026-06-23",
+        "predicate": "기사는 삼성전자 평택 P5의 첫 생산라인이 2028년, 두 번째 생산라인이 2029년에 가동을 시작하고 전체 공장은 2030년대 중반 최종 완공될 것으로 전망했다",
+        "predicate_family": "P5_TWO_LINE_STAGGERED_RAMP_SCHEDULE",
+        "primitive_tags": [
+          "P5_LINE1",
+          "P5_LINE2",
+          "CAPACITY_RAMP"
+        ],
+        "product_family": "D램",
+        "question_family_id": "P5_TWO_LINE_STAGGERED_RAMP_SCHEDULE",
+        "question_family_tags": [
+          "P5_CAPACITY_BUILDOUT",
+          "STAGGERED_RAMP",
+          "LONG_TERM_CAPEX_SCHEDULE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 평택 P5 두 생산라인 단계적 가동 일정 언론 전망",
+        "subject_id": "005930:MEMORY:P5_TWO_LINES:RAMP_SCHEDULE:2028-2030S",
+        "unit": "capacity ramp schedule",
+        "value": "line 1 start 2028; line 2 start 2029; final completion mid-2030s"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d3b11944293f6bf2f78660343ae501aa4263c467f799c8e610f1433d984bd0fb",
+  "production_score_authority": false,
+  "prompt_hash": "098eb57acbd95438c0c0364c36bd8775190933939d5f6d8598778c0e13bd882c",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-aa302a34396849afcd33347ebd9ac5d619b7d1c4286e000d1dbd1a58fb704e48",
+  "response_id": "COLLABRESP-1465a70b05bd16834456d184ee010d33a5ec1a8e4aa2cf06e19b2bcc1e8f3d39",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

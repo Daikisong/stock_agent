@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "2aa865235af57d256ec8f12bbd71b92271c5819891398d130a42b355830a4aab",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5ae716b44b0f5dafeb7a3230",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·웹 요약으로 candidate가 요청한 issuer presentation·issuer earnings release·customer official 또는 명시된 원문 계열을 URL 소유자가 충족하지 않는다. 컨퍼런스콜 인용이나 HBM 관련 표현이 있어도 발견 snippet은 근거가 아니므로 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-d7978db947fa89a1e917f6d8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·웹 요약으로 candidate가 요청한 issuer presentation·issuer earnings release·customer official 또는 명시된 원문 계열을 URL 소유자가 충족하지 않는다. 컨퍼런스콜 인용이나 HBM 관련 표현이 있어도 발견 snippet은 근거가 아니므로 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-341435b4e9a7cb0c480bef5c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·웹 요약으로 candidate가 요청한 issuer presentation·issuer earnings release·customer official 또는 명시된 원문 계열을 URL 소유자가 충족하지 않는다. 컨퍼런스콜 인용이나 HBM 관련 표현이 있어도 발견 snippet은 근거가 아니므로 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-39fe97e87827f61a47b1d08f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·웹 요약으로 candidate가 요청한 issuer presentation·issuer earnings release·customer official 또는 명시된 원문 계열을 URL 소유자가 충족하지 않는다. 컨퍼런스콜 인용이나 HBM 관련 표현이 있어도 발견 snippet은 근거가 아니므로 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-de6693a82fd420963bed9fcd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·웹 요약으로 candidate가 요청한 issuer presentation·issuer earnings release·customer official 또는 명시된 원문 계열을 URL 소유자가 충족하지 않는다. 컨퍼런스콜 인용이나 HBM 관련 표현이 있어도 발견 snippet은 근거가 아니므로 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-29eb64d09ddbd71b9fa298c1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·웹 요약으로 candidate가 요청한 issuer presentation·issuer earnings release·customer official 또는 명시된 원문 계열을 URL 소유자가 충족하지 않는다. 컨퍼런스콜 인용이나 HBM 관련 표현이 있어도 발견 snippet은 근거가 아니므로 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-694a54c66a56ed9a2e46c25a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·웹 요약으로 candidate가 요청한 issuer presentation·issuer earnings release·customer official 또는 명시된 원문 계열을 URL 소유자가 충족하지 않는다. 컨퍼런스콜 인용이나 HBM 관련 표현이 있어도 발견 snippet은 근거가 아니므로 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-0fa2182ec938196a1accac04",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·웹 요약으로 candidate가 요청한 issuer presentation·issuer earnings release·customer official 또는 명시된 원문 계열을 URL 소유자가 충족하지 않는다. 컨퍼런스콜 인용이나 HBM 관련 표현이 있어도 발견 snippet은 근거가 아니므로 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-f05197663663d03e6db80de5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·웹 요약으로 candidate가 요청한 issuer presentation·issuer earnings release·customer official 또는 명시된 원문 계열을 URL 소유자가 충족하지 않는다. 컨퍼런스콜 인용이나 HBM 관련 표현이 있어도 발견 snippet은 근거가 아니므로 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-5d8bd7ca184dbfb22676b3a2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·웹 요약으로 candidate가 요청한 issuer presentation·issuer earnings release·customer official 또는 명시된 원문 계열을 URL 소유자가 충족하지 않는다. 컨퍼런스콜 인용이나 HBM 관련 표현이 있어도 발견 snippet은 근거가 아니므로 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-b6cad8cd9a279e67e0265d25",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·웹 요약으로 candidate가 요청한 issuer presentation·issuer earnings release·customer official 또는 명시된 원문 계열을 URL 소유자가 충족하지 않는다. 컨퍼런스콜 인용이나 HBM 관련 표현이 있어도 발견 snippet은 근거가 아니므로 비관련이다."
+      },
+      {
+        "candidate_id": "SGCAND-ed00124665e505a445fc1d60",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·웹 요약으로 candidate가 요청한 issuer presentation·issuer earnings release·customer official 또는 명시된 원문 계열을 URL 소유자가 충족하지 않는다. 컨퍼런스콜 인용이나 HBM 관련 표현이 있어도 발견 snippet은 근거가 아니므로 비관련이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 모든 후보를 정확히 한 번씩 분류했으나 요청된 issuer·customer 원문 계열 후보가 없어 관련 연구 목적은 미해결이다. 제3자 발견 snippet은 근거로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "b219c995e8247bfe899eef7450f73b09d5dc2b32c4cce4a02604e17dd1fe66d3",
+  "production_score_authority": false,
+  "prompt_hash": "1b3e14b13427f4ccc8e4498d06772f9ac78c355f513eca63a08eadbad01689e8",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d9f492a3f7323c16ab595ded35f42a533690e0aa66e74fb76a31bdec09716242",
+  "response_id": "COLLABRESP-316259642937bbe83c81f37596425d1aaee0cccf1b5c7de6ee277f2d2aa3eb8f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

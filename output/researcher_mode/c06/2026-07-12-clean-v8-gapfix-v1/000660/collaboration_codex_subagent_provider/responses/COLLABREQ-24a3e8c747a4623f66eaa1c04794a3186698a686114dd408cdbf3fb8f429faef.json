@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "RESEARCH_SUPERVISOR_B independent audit of the immutable epoch-70 snapshot finds all seven canonical component memos COMPLETE and materially positive routes accounted for across the current 159-fact roster. The current Red Team result reviews all seven components, while the supervisor-bound counter-and-supersession proof is complete; structured coverage is COMPLETE with no missing required role. The latest supervisor review is READY_FOR_INDEPENDENT_SATURATION_REVIEW and carries no current material gap, new-source direction, query brief, unresolved question, or next action. Residual limits such as HBM-only economic attribution, customer contract terms, capacity realization, and forecast-versus-actual conversion remain explicit monitoring counterweights, but the supplied snapshot identifies no distinct verified executable route that could presently resolve them. Approval rests on semantic coverage and current lineage proof, not on fixed rounds, zero/no-result outcomes, provider or transport failures, or a claim of source absence.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "25c76c5794e6b93e5708ae69d43a8c2217414fb58f89e71848a4f9d28e8397cb",
+  "production_score_authority": false,
+  "prompt_hash": "389e68bac4e17c671609631034110320f86f49b52e6fb82dc30488c730f035d0",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-24a3e8c747a4623f66eaa1c04794a3186698a686114dd408cdbf3fb8f429faef",
+  "response_id": "COLLABRESP-480af5153f79450dca5113a508998218b9fa89ffd561c71d428e45f98956d444",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

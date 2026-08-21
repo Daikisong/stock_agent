@@ -1,0 +1,73 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-6181ef662ff1a5a54459d702",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.12,
+        "rationale": "삼성전자 공식 도메인으로 요청 family provenance는 맞지만, 이 후보의 제목·메타는 구형 또는 다른 제품/일반 navigation·사양에 그쳐 현재 HBM 경제 메커니즘의 material gap을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-7dc93f9f60097a7ffb446de0",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.12,
+        "rationale": "삼성전자 공식 도메인으로 요청 family provenance는 맞지만, 이 후보의 제목·메타는 구형 또는 다른 제품/일반 navigation·사양에 그쳐 현재 HBM 경제 메커니즘의 material gap을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-171c527b309ff841d2189b9f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.12,
+        "rationale": "삼성전자 공식 도메인으로 요청 family provenance는 맞지만, 이 후보의 제목·메타는 구형 또는 다른 제품/일반 navigation·사양에 그쳐 현재 HBM 경제 메커니즘의 material gap을 직접 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-6853a0c4e7e0e48177d4ea1e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.12,
+        "rationale": "삼성전자 공식 도메인으로 요청 family provenance는 맞지만, 이 후보의 제목·메타는 구형 또는 다른 제품/일반 navigation·사양에 그쳐 현재 HBM 경제 메커니즘의 material gap을 직접 해소하지 못한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "published_at 메타가 비어 있어 material 후보는 full fetch 단계에서 원문 게시일이 as_of_date=2026-07-12 이전인지 검증해야 한다.",
+      "snippet은 discovery metadata일 뿐이며 material 후보도 원문 fetch·target 귀속·exact quote 검증 전에는 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "86d354ac2dc64063a85accd63383b8a1a1b900b07f93a38f0c8ca699e8f87546",
+  "production_score_authority": false,
+  "prompt_hash": "8ac5ab30ad38be28abdda61c251aecb57ed68217b0368cf52b7ede8c53bb0f13",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-731ee51e898ee1ac0386b56f383f904e67c15fd3efc1eca42444afa1974142a4",
+  "response_id": "COLLABRESP-8c45d7ced5ee8fb579c81dfb687d1619e2f64fd0e9b2ed74c718b00060727ca0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

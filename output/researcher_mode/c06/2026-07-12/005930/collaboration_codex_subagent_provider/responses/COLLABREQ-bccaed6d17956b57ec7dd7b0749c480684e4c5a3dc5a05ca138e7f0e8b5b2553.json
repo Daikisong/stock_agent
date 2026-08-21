@@ -1,0 +1,523 @@
+{
+  "output_schema_hash": "941a6a3304dade20707c7c53093163ba7438345d1c920a1dc5a6520bf0b78e88",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3a5f37d70ee8bcf876271218",
+        "rationale": "2025년 10월 broker report 전체를 canonical 268건과 대조했다. 2025년 3분기 실적·2026년 HBM/메모리 전망·CAPEX·시장점유율은 이후 issuer 실제 실적과 더 최신 current facts로 대체됐으며, 오래된 forecast를 현재 objective fact로 중복 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-3cf56c7114a0fafff829b8b4",
+        "rationale": "2026년 7월 6일 기사 전체를 검토해 canonical에 없던 삼성증권의 D램 ASP 50%→55% 전망 수정과 하반기 가격 둔화 counter·증설 전 타이트 수급의 distinct facts 3건을 추출했다. 주가·목표가·낸드·비메모리는 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-4167e86530753cdaa8d0ef59",
+        "rationale": "2026년 7월 7일 잠정실적 기사 전체의 메모리 영업이익 추정, D램 가격, 2027년 4분기 공급부족 전망을 canonical facts와 대조했으나 모두 같은 수치·의미의 current facts가 이미 존재해 중복 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-420b335d8fc17abb5522e8b6",
+        "rationale": "BIS 위험 서술과 HBM 3개 시나리오를 전수 검토했다. generic 금융시장 배경은 제외하고, bottleneck objective에 직접 연결되는 HBM 재고축적 bear 경로, 확정 공급물량 base 지지, 맞춤 설계·패키징 병목 resolution 3건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-42225381e004187635ed02f3",
+        "rationale": "2026년 7월 7일 잠정실적 기사 전체를 검토했다. 메모리 영업이익·D램 가격 인상·HBM4 우호 ASP·HBM4 매출은 더 정확하거나 동일한 canonical facts가 이미 있고, 전사·DX·주가 정보는 objective-local scope 밖이라 추가하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-45c80c41fe4ed5e1589a9e01",
+        "rationale": "2026년 1월 29일 기사 전체를 검토했으나 2025년 4분기 D램 ASP 40%, 메모리 매출·이익, 2026년 투자계획은 issuer 실적자료와 canonical facts로 이미 더 직접적으로 수용됐다. SK하이닉스·낸드·주주환원은 이 objective에서 제외했다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-4d1a8341b0777325cdcaf813",
+        "rationale": "2026년 7월 7일 기사 전체의 실적·가격·공급부족·AI 투자둔화 서술을 대조했다. 메모리 공급이 최소 2027년 4분기까지 수요를 못 따라간다는 핵심 문장은 canonical에 동일하게 존재하고 나머지는 전사 실적·주가·LTA 확인 필요 서술이라 중복 또는 비사실로 제외했다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "rationale": "2026년 7월 1일 교보증권 분석 재가공 기사 전체를 검토해 D램 연간 ASP 300% 전망, 가격 지속성 이익민감도 counter, 기간·denominator가 명시된 2026·2027 예상 PER 2건을 추출했다. 목표가·PBR·BPS는 trusted media를 verified broker structured route로 승격하지 않고 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-5123f79f1af2c57d898245e9",
+        "rationale": "2026년 3월 기사 전체를 검토했으나 마이크론 HBM 계약·실적은 peer 사실이며 삼성전자 직접 fact가 아니다. 삼성전자 P5 투자도 canonical에 이미 존재하고, 낸드·SK하이닉스 정보는 허용 scope 밖이라 추가하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-5be1161711c033a8ceef2597",
+        "rationale": "2026년 4월 6일 시장 기사 전체에서 삼성전자 관련 내용은 메모리 가격 협상력과 1분기 전사 영업이익 전망뿐이다. 가격 협상력은 이후 더 구체적인 actual/current facts에 포함됐고 전사 이익은 bottleneck objective에 직접 귀속되지 않아 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-5d3a002c301ea447a2df0b3c",
+        "rationale": "2026년 6월 23일 글로벌 메모리 기사 전체를 검토했으나 핵심 장기 counter는 YMTC의 낸드 증설로 허용 product scope에서 명시적으로 제외된다. DRAM top-3 공급조절·DDR5 전환도 target-direct 삼성전자 fact가 아닌 산업 배경이어서 추가하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-5d7d9f693743beb0409d1928",
+        "rationale": "2026년 4월 7일 잠정실적 기사 전체의 1분기 D램 ASP·메모리 수요·HBM4 준비를 대조했다. 이후 확정 issuer 실적과 current pricing·shipment facts가 이를 대체했고 DX·낸드는 objective scope 밖이므로 중복 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3cf56c7114a0fafff829b8b4",
+        "economic_mechanism": "서버 D램 가격 상승을 반영해 삼성증권이 삼성전자 범용 D램의 2분기 ASP 상승률 전망을 50%에서 55%로 높였다는 것은 가격 병목이 이익 추정치에 반영되는 최신 방향을 수치화한다.",
+        "exact_quote": "반도체 부문의 실적 전망도 상향했다. 메모리 사업의 영업이익 추정치는 기존 80조원에서 84조원으로 높였다. 이는 6월 이후 서버 D램 가격 상승세를 반영해 범용 D램 평균판매가격(ASP) 상승률 전망을 기존 전분기 대비 50%에서 55%로 상향한 데 따른 것이다. 낸드플래시의 수익성 개선 전망도 실적 추정치에 반영됐다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 canonical fact에는 이 삼성증권의 50%→55% 전망 수정점이 없고, 기간·대상·수치가 명시돼 현재 병목 가격 강도를 직접 보완한다. 낸드 서술은 fact 범위에 포함하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:ASP_FORECAST_REVISION:2026Q2",
+        "normalized_object": "범용 D램 ASP 전분기 대비 상승률 전망 상향",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2E",
+        "predicate": "삼성증권은 삼성전자의 2026년 2분기 범용 D램 ASP 전분기 대비 상승률 전망을 50%에서 55%로 상향했다.",
+        "predicate_family": "DRAM_ASP_FORECAST_REVISION",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "FORECAST_REVISION"
+        ],
+        "product_family": "범용 D램",
+        "question_family_id": "DRAM_ASP_FORECAST_REVISION",
+        "question_family_tags": [
+          "DRAM_ASP_FORECAST_REVISION",
+          "DRAM_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 2분기 범용 D램 ASP 전망",
+        "subject_id": "005930:DRAM_PRICING",
+        "unit": "percent QoQ forecast",
+        "value": "50% to 55%"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3cf56c7114a0fafff829b8b4",
+        "economic_mechanism": "하반기에도 가격은 오르지만 상승 속도가 둔화될 것이라는 전망은 현재의 급격한 가격 상승률을 그대로 연장할 수 없다는 병목 가격의 속도 counter다.",
+        "exact_quote": "삼성증권은 메모리 반도체 업황의 상승 사이클도 이어질 것으로 내다봤다. 이 연구원은 \"고객사들은 더 높은 성능의 HBM과 더 큰 용량의 서버 D램을 지속적으로 요구하고 있다\"며 \"하반기 D램 가격 상승 속도는 다소 둔화되겠지만, 공급업체들의 본격적인 증설이 아직 시작되지 않아 수급은 타이트한 상태를 유지할 것\"이라고 설명했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 문장의 공급부족 지지와 별개로 가격 상승률 둔화라는 명시적 counter를 독립 보존한다. 가격 하락으로 확대 해석하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:PRICE_DECELERATION:2026H2",
+        "normalized_object": "하반기 D램 가격 상승 속도 둔화 전망",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-H2E",
+        "predicate": "삼성증권은 2026년 하반기 D램 가격 상승 속도가 다소 둔화될 것으로 전망했다.",
+        "predicate_family": "DRAM_PRICE_GROWTH_DECELERATION_OUTLOOK",
+        "primitive_tags": [
+          "DRAM",
+          "PRICE_DECELERATION",
+          "COUNTER"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_PRICE_GROWTH_DECELERATION_OUTLOOK",
+        "question_family_tags": [
+          "DRAM_PRICE_GROWTH_DECELERATION_OUTLOOK",
+          "PRICING_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 하반기 D램 가격 상승 속도",
+        "subject_id": "005930:DRAM_PRICING",
+        "unit": "",
+        "value": "price increases expected to decelerate"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3cf56c7114a0fafff829b8b4",
+        "economic_mechanism": "공급업체의 본격 증설이 아직 시작되지 않은 가운데 수급이 타이트하게 유지된다는 전망은 가격 상승 둔화 counter가 곧바로 공급 과잉을 뜻하지 않음을 보여준다.",
+        "exact_quote": "삼성증권은 메모리 반도체 업황의 상승 사이클도 이어질 것으로 내다봤다. 이 연구원은 \"고객사들은 더 높은 성능의 HBM과 더 큰 용량의 서버 D램을 지속적으로 요구하고 있다\"며 \"하반기 D램 가격 상승 속도는 다소 둔화되겠지만, 공급업체들의 본격적인 증설이 아직 시작되지 않아 수급은 타이트한 상태를 유지할 것\"이라고 설명했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 문장의 가격 둔화 counter와 구별되는 공급 병목 predicate로, 신규 증설이 실제 공급 완화로 연결되기 전의 상태를 보완한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:CAPACITY_SCARCITY:2026H2",
+        "normalized_object": "본격 증설 전 하반기 D램 타이트 수급",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-H2E",
+        "predicate": "삼성증권은 공급업체의 본격 증설이 아직 시작되지 않아 2026년 하반기 D램 수급이 타이트하게 유지될 것으로 전망했다.",
+        "predicate_family": "DRAM_TIGHT_SUPPLY_WITHOUT_CAPACITY_RAMP",
+        "primitive_tags": [
+          "DRAM",
+          "CAPACITY",
+          "TIGHT_SUPPLY"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_TIGHT_SUPPLY_WITHOUT_CAPACITY_RAMP",
+        "question_family_tags": [
+          "DRAM_TIGHT_SUPPLY_WITHOUT_CAPACITY_RAMP",
+          "DRAM_CAPACITY_SCARCITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 하반기 D램 수급",
+        "subject_id": "005930:DRAM_SUPPLY_DEMAND",
+        "unit": "",
+        "value": "tight supply-demand without full-scale capacity expansion"
+      },
+      {
+        "business_segment": "메모리 산업",
+        "confidence": 0.8,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-420b335d8fc17abb5522e8b6",
+        "economic_mechanism": "빅테크 설비투자 지연과 GPU 발주 감소가 하반기 이후 HBM 재고 축적으로 이어질 수 있다는 조건부 경로는 AI 자금조달·투자 둔화가 실제 메모리 가격 병목을 완화하는 중간 메커니즘을 구체화한다.",
+        "exact_quote": "우선 빅테크의 설비투자가 지연되고\nGPU\n발주가 감소하는\n'\n하락\n(\n베어\n)\n시나리오\n'\n가 전개되면 하반기 이후 공급망 내\nHBM\n재고 축적 압력으로 이어질 가능성이 제기된다\n.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 generic AI 투자 둔화 위험보다 한 단계 구체적으로 GPU 발주 감소→HBM 재고 축적이라는 가격병목 훼손 경로와 시점을 제시한다. 발생 확정이 아닌 조건부 시나리오로 유지했다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:INVENTORY_RISK:2026H2",
+        "normalized_object": "AI 설비투자·GPU 발주 감소 시 HBM 재고 축적 압력",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-H2 onward scenario",
+        "predicate": "빅테크 설비투자 지연과 GPU 발주 감소가 전개되면 2026년 하반기 이후 HBM 공급망에 재고 축적 압력이 생길 수 있다는 시나리오가 제기됐다.",
+        "predicate_family": "HBM_CAPEX_SLOWDOWN_INVENTORY_RISK",
+        "primitive_tags": [
+          "HBM",
+          "CAPEX_SLOWDOWN",
+          "INVENTORY_RISK"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_CAPEX_SLOWDOWN_INVENTORY_RISK",
+        "question_family_tags": [
+          "HBM_CAPEX_SLOWDOWN_INVENTORY_RISK",
+          "HBM_DEMAND_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 전방 투자 둔화 노출",
+        "subject_id": "005930:HBM_DEMAND_RISK",
+        "unit": "",
+        "value": "conditional HBM inventory accumulation pressure"
+      },
+      {
+        "business_segment": "메모리 산업",
+        "confidence": 0.78,
+        "current_lifecycle": "OPEN",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-420b335d8fc17abb5522e8b6",
+        "economic_mechanism": "성장률이 둔화해도 이미 확정된 공급계약 물량과 절대적 인프라 수요가 HBM 시장의 완만한 상승을 지지한다는 기본 시나리오는 전방투자 둔화가 즉시 수요 공백으로 전환되는 경로를 제한한다.",
+        "exact_quote": "반면 성장률 자체는 다소 둔화하더라도 이미 확정된 공급 계약 물량과 절대적 인프라 수요에 힘입어 완만한 우상향을 유지하는\n'\n보통\n(\n베이스\n)\n시나리오\n'\n도 존재한다\n.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 문서의 bear 경로에 대한 source-backed resolution이며, 계약의 기간·구속력·삼성전자 귀속을 추가로 발명하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:COMMITTED_SUPPLY_SUPPORT:2026",
+        "normalized_object": "확정 공급계약 물량 기반 HBM 기본 수요 지지",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 scenario",
+        "predicate": "HBM 시장은 성장률이 둔화하더라도 확정된 공급계약 물량과 절대적 인프라 수요로 완만한 우상향을 유지할 수 있다는 기본 시나리오가 제시됐다.",
+        "predicate_family": "HBM_COMMITTED_SUPPLY_BASE_CASE_SUPPORT",
+        "primitive_tags": [
+          "HBM",
+          "COMMITTED_SUPPLY",
+          "BASE_CASE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_COMMITTED_SUPPLY_BASE_CASE_SUPPORT",
+        "question_family_tags": [
+          "HBM_COMMITTED_SUPPLY_BASE_CASE_SUPPORT",
+          "HBM_DEMAND_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 확정 공급물량 기반 수요 가시성",
+        "subject_id": "005930:HBM_DEMAND_VISIBILITY",
+        "unit": "",
+        "value": "moderate upward base case supported by committed supply volumes"
+      },
+      {
+        "business_segment": "메모리 산업",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-420b335d8fc17abb5522e8b6",
+        "economic_mechanism": "HBM은 맞춤형 전공정 설계와 첨단 패키징 병목 때문에 단순 자본지출 둔화가 곧바로 공급과잉으로 바뀌지 않는다는 반론이 있어, 수요 둔화 위험과 공급 탄력성 사이의 시차를 설명한다.",
+        "exact_quote": "다만\nHBM\n은 여전히 고도의 맞춤형 전공정 설계와 첨단 패키징 공정의 병목 현상으로 인해 기술 장벽이 높아\n,\n단순한 자본지출 둔화가 곧바로 대규모 공급 과잉으로 직결되지는 않을 것이라는 반론도 팽팽하다\n.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "수요 둔화가 공급과잉으로 이어지는 속도를 제한하는 물리적 병목을 별도로 식별한다. 삼성전자 고유 공정능력이나 병목 수치를 발명하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:DESIGN_PACKAGING_BOTTLENECK",
+        "normalized_object": "맞춤형 전공정·첨단 패키징 병목에 따른 공급과잉 전환 지연",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-06-30 current analysis",
+        "predicate": "HBM의 맞춤형 전공정 설계와 첨단 패키징 병목 때문에 단순 자본지출 둔화가 즉시 대규모 공급과잉으로 이어지지 않는다는 반론이 제시됐다.",
+        "predicate_family": "HBM_CUSTOM_DESIGN_PACKAGING_BOTTLENECK",
+        "primitive_tags": [
+          "HBM",
+          "CUSTOM_DESIGN",
+          "ADVANCED_PACKAGING"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_CUSTOM_DESIGN_PACKAGING_BOTTLENECK",
+        "question_family_tags": [
+          "HBM_CUSTOM_DESIGN_PACKAGING_BOTTLENECK",
+          "HBM_CAPACITY_SCARCITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 공급망의 맞춤형 설계·첨단 패키징 병목",
+        "subject_id": "005930:HBM_CAPACITY_SCARCITY",
+        "unit": "",
+        "value": "capex slowdown does not immediately create oversupply"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "economic_mechanism": "교보증권의 삼성전자 2026년 D램 ASP 300% 상승 가정은 출하량보다 가격이 실적을 지배하는 병목 가격 경로의 연간 크기를 별도 수치화한다.",
+        "exact_quote": "연간 추정치에서도 가격 효과는 뚜렷하다. 교보증권은 2026년 D램 ASP를 전년 대비 300%, 낸드 ASP를 246% 상승하는 것으로 가정했다. 2026년 영업이익률 50.0% 전망은 이 같은 메모리 가격 상승이 유지된다는 전제에서 가능하다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "canonical facts의 다른 증권사 2026년 D램 ASP 전망과 구별되는 교보증권의 독립 전망치로, 시장 기대 분산과 가격 병목의 크기를 보완한다. 낸드 수치는 추출하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:ASP_OUTLOOK:2026",
+        "normalized_object": "D램 ASP 전년 대비 상승률 전망",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E vs FY2025",
+        "predicate": "교보증권은 삼성전자의 2026년 D램 ASP가 전년 대비 300% 상승할 것으로 가정했다.",
+        "predicate_family": "DRAM_ANNUAL_ASP_OUTLOOK",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "ANNUAL_FORECAST"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_ANNUAL_ASP_OUTLOOK",
+        "question_family_tags": [
+          "DRAM_ANNUAL_ASP_OUTLOOK",
+          "DRAM_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 D램 ASP 전망",
+        "subject_id": "005930:DRAM_PRICING",
+        "unit": "percent YoY",
+        "value": 300
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "economic_mechanism": "삼성전자 이익 추정치가 출하량보다 메모리 가격 지속성에 더 민감하다는 분석은 높은 가격 상승률의 둔화가 영업레버리지를 반대로 되돌릴 수 있다는 counter다.",
+        "exact_quote": "이 대목은 투자자에게 중요한 의미가 있다. 가격 상승 국면에서는 영업레버리지가 크게 나타나지만, 반대로 가격 상승률이 둔화되면 이익 추정치도 빠르게 흔들릴 수 있다. 삼성전자의 단기 실적 변수는 출하량 확대보다 메모리 가격의 지속성에 더 가깝다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가격병목의 양의 효과만이 아니라 같은 구조가 가격 둔화 때 이익 추정치 하방으로 전환되는 삼성전자 직접 counter를 보존한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:PRICE_DURABILITY_RISK",
+        "normalized_object": "메모리 가격 상승 둔화에 대한 이익 추정치 민감도",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026 outlook as of 2026-07-01",
+        "predicate": "메모리 가격 상승률이 둔화되면 삼성전자 이익 추정치가 빠르게 흔들릴 수 있고 단기 실적은 출하량보다 가격 지속성에 더 민감하다고 분석됐다.",
+        "predicate_family": "MEMORY_PRICE_DURABILITY_EARNINGS_SENSITIVITY",
+        "primitive_tags": [
+          "MEMORY",
+          "PRICE_DURABILITY",
+          "EARNINGS_SENSITIVITY"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PRICE_DURABILITY_EARNINGS_SENSITIVITY",
+        "question_family_tags": [
+          "MEMORY_PRICE_DURABILITY_EARNINGS_SENSITIVITY",
+          "PRICING_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 가격 지속성에 대한 이익 민감도",
+        "subject_id": "005930:MEMORY_PRICING_RISK",
+        "unit": "",
+        "value": "earnings estimates are more sensitive to price durability than shipment growth"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "economic_mechanism": "교보증권의 삼성전자 2026년 예상 PER은 메모리 가격 상승을 반영한 이익 전망 대비 시장가격 배수를 기간과 함께 제시해 기대 반영 정도를 점검하게 한다.",
+        "exact_quote": "밸류에이션 자료도 이익 체력의 변화를 반영한다. 교보증권은 삼성전자의 2026년 매출액을 732조7000억원, 영업이익을 366조4000억원으로 전망했다. 2025년 영업이익 43조6000억원과 비교하면 영업이익 규모가 크게 확대되는 구조다. 2026년 예상 PER은 6.0배, 2027년 예상 PER은 4.4배로 제시됐다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행일 현재의 특정 증권사 forward multiple로 기간과 수치가 모두 명시되며, 다른 broker의 기존 multiple과 함께 시장 기대 분산을 보완한다. 공식 structured broker role로 자칭하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:VALUATION:FORWARD_PE:2026",
+        "normalized_object": "삼성전자 2026년 예상 PER",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "교보증권은 삼성전자의 2026년 예상 PER을 6.0배로 제시했다.",
+        "predicate_family": "MEMORY_FORWARD_PE_ESTIMATE",
+        "primitive_tags": [
+          "MEMORY",
+          "FORWARD_PE",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_FORWARD_PE_ESTIMATE",
+        "question_family_tags": [
+          "MEMORY_FORWARD_PE_ESTIMATE",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 이익 전망 기반 2026년 예상 PER",
+        "subject_id": "005930:MEMORY_FORWARD_VALUATION",
+        "unit": "multiple",
+        "value": 6.0
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-50166fc79795674f74d656f5",
+        "economic_mechanism": "교보증권의 삼성전자 2027년 예상 PER은 같은 이익 전망 경로에서 다음 해 이익 증가가 배수에 미치는 효과를 독립 기간 수치로 제시한다.",
+        "exact_quote": "밸류에이션 자료도 이익 체력의 변화를 반영한다. 교보증권은 삼성전자의 2026년 매출액을 732조7000억원, 영업이익을 366조4000억원으로 전망했다. 2025년 영업이익 43조6000억원과 비교하면 영업이익 규모가 크게 확대되는 구조다. 2026년 예상 PER은 6.0배, 2027년 예상 PER은 4.4배로 제시됐다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2026년과 다른 2027년 denominator 기간을 가진 별도 forward multiple이며, 발행일 현재 기대 경로를 비교할 수 있게 한다. 공식 structured broker role로 자칭하지 않았다.",
+        "mechanism_scope_id": "005930:MEMORY:VALUATION:FORWARD_PE:2027",
+        "normalized_object": "삼성전자 2027년 예상 PER",
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E",
+        "predicate": "교보증권은 삼성전자의 2027년 예상 PER을 4.4배로 제시했다.",
+        "predicate_family": "MEMORY_FORWARD_PE_ESTIMATE",
+        "primitive_tags": [
+          "MEMORY",
+          "FORWARD_PE",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_FORWARD_PE_ESTIMATE",
+        "question_family_tags": [
+          "MEMORY_FORWARD_PE_ESTIMATE",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 이익 전망 기반 2027년 예상 PER",
+        "subject_id": "005930:MEMORY_FORWARD_VALUATION",
+        "unit": "multiple",
+        "value": 4.4
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "71e8b5d2b629cd0fe2611cbde996a92085fbd988f72f3f489f95f001981ec719",
+  "production_score_authority": false,
+  "prompt_hash": "cdf446129e77ceae81d8c037ddf05940520c8f5414fdf475c3ec69d5a874dcdc",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bccaed6d17956b57ec7dd7b0749c480684e4c5a3dc5a05ca138e7f0e8b5b2553",
+  "response_id": "COLLABRESP-4a1ce47e6c734b25a6dbf877927f53f920f2df11b5443cb6596a371103ab1101",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

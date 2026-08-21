@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      6.0,
+      9.0
+    ],
+    "anchor_comparisons": [
+      "현재 support plane은 POSITIVE MEDIUM anchor의 빈약한 proxy보다 훨씬 구체적이므로 5.7~7.2점 band의 중단보다 높게 둘 근거가 있다.",
+      "반면 COUNTER WEAK anchor가 보여주는 4.25~5.75점 하방과 현재의 cycle·선반영 반증을 함께 보면 두 자릿수 상단을 고정할 정도의 duration 증거는 부족하다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-265baf3d80f96dfc1767e565",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-cd10742dea3f5402040d6cbc"
+    ],
+    "disagreements": [
+      "analyst식 상단은 HBM 단독 이익 duration을 확인하기 전에는 과도하고, skeptic식 하단은 현재의 다중 상대가치·revision 증거를 충분히 반영하지 못한다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "proposed_points": 7.5,
+    "rationale": "이익 revision, peer P/E 할인, 지수 이익 기여도 격차는 현재 component를 medium 이상으로 놓는다. 그러나 PBR premium과 이미 발생한 multiple 확장, DRAM 가격 둔화의 peak 신호, FY2027 이후 감익, 컨센서스 기준 충돌은 점수 분산을 넓힌다. 두 historical anchors는 LOW confidence ordinal 기준이므로 경제 메커니즘을 대체하지 않고 scale의 하단·중단 참고로만 사용했다.",
+    "support_fact_ids": [
+      "EFACT-132f5e71cb14a5afb42a7881",
+      "EFACT-79481f0d366a0d98300acfb8",
+      "EFACT-8e9996c5203a21209d0002ed",
+      "EFACT-b3d48bea9ae741feec4d4a05",
+      "EFACT-ec9c9f406dd9bb953d673321",
+      "EFACT-efe36a3a0b5d627f829d0dde"
+    ],
+    "why_not_higher": "재평가의 일부가 이미 진행됐고 FY2027 이후 이익 감소 가능성과 측정 불일치가 남아 있어 강한 duration을 전제로 한 상단 band는 정당화되지 않는다.",
+    "why_not_lower": "여섯 개의 현재 positive facts가 revision·relative valuation·index contribution·normalization을 서로 다른 방식으로 확인해 weak band에 머물 이유가 없다."
+  },
+  "payload_hash": "5fc542097207bb1000960d33a274761e4546d9a300f246194a4df20e495dc6fe",
+  "production_score_authority": false,
+  "prompt_hash": "ebc42cf657da73bcadcc3c325d50aece4755cb9326190731e497eb6af180bf81",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-553aac9175e03bf3496d438b8c94386f27e4b30e90c904b6b5c89aab3108f24a",
+  "response_id": "COLLABRESP-52c7d145ee7f4f8310dc84fa3e8e432ca0c096fdaabf7c7253d8d475dc56c775",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

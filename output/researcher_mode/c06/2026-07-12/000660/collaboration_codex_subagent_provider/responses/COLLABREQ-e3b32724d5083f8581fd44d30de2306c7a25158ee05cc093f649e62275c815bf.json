@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "d654d9e4d7087ab2fe7ab51e3fa89ba2ef1fb1741885154a3e3786d64f97fcec",
+  "payload": {
+    "confidence": 0.86,
+    "counter_case": "2026년 HBM 비트 출하는 크게 늘어도 ASP는 하락할 수 있으며 삼성전자·Micron 공급 확대와 HBM4 공급망 경쟁은 scarcity premium을 낮출 수 있다. 높은 메모리 가격은 PC·모바일 수요 조정을 유발해 가격 전이의 한계가 된다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-054f760d026b470c39e27df1"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-054f760d026b470c39e27df1"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200"
+    ],
+    "positive_case": "현재 생산설비 100% 가동과 제한된 공급, 실제 DRAM ASP 급등이 가격 레버리지를 보여준다. HBM의 더 많은 TSV·큰 다이 면적 및 CAPA 잠식은 같은 수요에 더 많은 자원을 요구해 구조적 병목을 강화한다.",
+    "prior_fact_dispositions": [],
+    "proposed_score_lower": 13.5,
+    "proposed_score_mid": 15.0,
+    "proposed_score_upper": 16.5,
+    "research_complete": true,
+    "researcher_summary": "1Q26 100% 평균가동률, 제한된 공급 속 HBM·서버 DRAM 가격 상승, 출하 정체에도 60% 중반 오른 DRAM ASP가 실제 병목과 가격 전이를 확인한다. HBM의 TSV·다이 면적 및 일반 DRAM CAPA 잠식도 구조적 제약이다. 다만 HBM ASP 하락 전망, 경쟁사 공급 확대와 PC 수요 탄력은 병목의 강도와 지속기간을 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "2027년까지의 공급부족·가격인상 전망은 duration을 지지하지만 산업 전망이지 회사 계약가격은 아니다.",
+        "fact_row_index": 28,
+        "source_economic_mechanism": "AI 추론 확대로 메모리 BoM 비중이 늘고 HBM3E·HBM4·HBM4E 대량 도입이 필요해 공급부족과 가격인상 사이클이 2027년까지 지속될 수 있다는 sector view는 SK하이닉스 HBM 이익의 기간을 뒷받침한다. 이는 산업 전망이며 회사 가격계약이나 확정 판가가 아니다.",
+        "source_period_json": "\"through FY2027 outlook reported 2026-05-11\"",
+        "source_predicate": "HBM3E와 HBM4·HBM4E의 대량 도입 필요로 메모리 공급부족과 가격인상 사이클이 2027년까지 지속될 가능성이 높다고 분석됐다",
+        "source_value_json": "\"HBM3E/HBM4/HBM4E mass adoption with shortage and price-increase cycle potentially lasting through 2027\""
+      },
+      {
+        "component_interpretation": "비트·매출 성장과 동반된 HBM ASP 하락 전망은 물량 증가가 그대로 가격 상승으로 이어지지 않는다는 중립 counter다.",
+        "fact_row_index": 35,
+        "source_economic_mechanism": "2026년 HBM 시장 매출과 비트 출하량의 큰 폭 증가 전망은 SK하이닉스의 earnings bridge를 지지하지만, HBM ASP 하락 전망은 성장의 가격 희석 위험을 함께 보여준다. 회사 자체 가이던스로 취급하지 않는다.",
+        "source_period_json": "\"FY2026F\"",
+        "source_predicate": "2026년 HBM 시장은 매출 57%와 비트 출하 68% 증가가 예상되지만 ASP는 10% 하락할 전망이다",
+        "source_value_json": "\"market revenue +57%; bit shipments +68%; ASP -10%\""
+      },
+      {
+        "component_interpretation": "HBM의 blended ASP 상승과 CAPA 잠식은 더 적은 CAPA로 높은 이익을 만드는 구조적 가격·믹스 경로다.",
+        "fact_row_index": 37,
+        "source_economic_mechanism": "HBM은 DRAM Blended ASP를 높이는 동시에 일반 DRAM CAPA를 잠식해, HBM 수혜가 집중된 SK하이닉스가 더 적은 생산능력으로 더 많은 이익을 창출할 수 있게 했다는 분석이다. 이는 기존 DRAM 가격 사이클과 생산능력 규모만으로 역사적 valuation band를 적용하기 어렵게 만드는 구조적 이익 효율 근거다.",
+        "source_period_json": "\"structural cycle assessment current as of 2024-09-24\"",
+        "source_predicate": "HBM의 Blended ASP 상승과 CAPA 잠식 효과로 SK하이닉스가 더 적은 CAPA에도 더 많은 이익을 창출해 과거 DRAM 사이클과 다른 패턴을 보였다고 분석됐다",
+        "source_value_json": "\"HBM-driven blended-ASP uplift and capacity cannibalization enabled higher profit with less capacity\""
+      },
+      {
+        "component_interpretation": "삼성전자의 HBM4 초도 공급망 진입은 고객 배분과 가격 프리미엄의 경쟁 counter다.",
+        "fact_row_index": 66,
+        "source_economic_mechanism": "삼성전자의 초도 공급망 진입이 HBM4 대량양산기의 공급사 경쟁을 높일 수 있다는 보도는 SK하이닉스의 점유율·가격 지속성에 대한 counterfact다. 실제 점유율 하락이나 가격 인하로 단정하지 않는다.",
+        "source_period_json": "\"HBM4 mass-production ramp outlook reported 2026-04-23\"",
+        "source_predicate": "HBM4 대량양산 시 삼성전자의 초도 공급망 진입으로 메모리 공급사 경쟁이 심화할 수 있다",
+        "source_value_json": "\"competition expected to intensify on Samsung initial supply-chain entry\""
+      },
+      {
+        "component_interpretation": "HBM4의 TSV와 다이 면적 증가는 동일 수요에 더 많은 후공정·웨이퍼 자원을 요구하는 물리적 병목이다.",
+        "fact_row_index": 79,
+        "source_economic_mechanism": "HBM4는 HBM3보다 I/O와 TSV가 두 배이고 다이 폭도 커져 동일 HBM 수요를 생산하는 데 더 많은 TSV CAPA와 웨이퍼가 필요하다는 분석이다. 이는 단순 기술 사양을 넘어 HBM4 믹스 확대가 일반 DRAM CAPA를 잠그는 물리적 병목을 설명한다.",
+        "source_period_json": "\"HBM4 generation specification current as of 2025-05-21\"",
+        "source_predicate": "HBM4는 2,048개 TSV와 더 큰 다이 면적으로 동일 수요 기준 TSV 필요 CAPA를 두 배로 늘리고 웨이퍼당 다이 수를 줄여 DRAM CAPA를 제한한다",
+        "source_value_json": "\"2048 TSV; 2x TSV capacity at equal demand; die width +1.8mm versus HBM3; fewer dies per wafer\""
+      },
+      {
+        "component_interpretation": "1Q26 출하 정체 속 DRAM ASP 급등은 실제 가격 레버리지지만 HBM 단독 ASP는 아니다.",
+        "fact_row_index": 100,
+        "source_economic_mechanism": "DRAM 출하량이 전분기와 비슷한 가운데 ASP가 60% 중반 상승했다는 실제 가격 공시는 물량 증가와 구분되는 가격 기반 매출·이익 전환을 보여준다. 일반 DRAM 가격 강세이며 HBM ASP로 좁히지 않는다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q4\"",
+        "source_predicate": "2026년 1분기 DRAM 출하량은 전분기와 유사했고 ASP는 일반 DRAM 가격 강세로 전분기 대비 60% 중반 상승했다",
+        "source_value_json": "\"mid-60% QoQ increase\""
+      },
+      {
+        "component_interpretation": "메모리 가격 상승이 PC 출하량과 수요를 낮출 수 있어 최종 수요의 가격 탄력을 보여준다.",
+        "fact_row_index": 110,
+        "source_economic_mechanism": "메모리 가격 상승에 따른 구매 부담이 2026년 PC 출하 조정과 일부 수요 둔화로 이어질 수 있다는 공시는 DRAM 가격 강세의 수요탄력성 counterfact다. AI PC의 성장동력도 함께 언급돼 전면적 수요붕괴로 확대하지 않는다.",
+        "source_period_json": "\"2026 outlook as of 2026-Q1\"",
+        "source_predicate": "메모리 가격 상승의 구매 부담으로 2026년 PC 출하량 조정과 일부 수요 둔화가 예상된다",
+        "source_value_json": "\"2026 PC shipment adjustment and partial demand slowdown expected\""
+      },
+      {
+        "component_interpretation": "견조한 수요 대비 제한된 공급과 HBM·서버 DRAM 가격 상승은 현재 수급 병목의 issuer 근거다.",
+        "fact_row_index": 121,
+        "source_economic_mechanism": "2026년 1분기에 견조한 수요 대비 제한된 공급이 지속됐고 HBM과 서버 DRAM 등이 가격 상승을 주도했다는 회사 공시는 현재의 수급 병목과 가격 전환을 직접 연결한다. HBM 단독 가격이나 장기 계약 잠금을 의미하지는 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 견조한 수요 대비 제한된 공급이 지속되며 HBM과 서버 DRAM 등이 가격 상승을 주도했다",
+        "source_value_json": "\"robust demand versus constrained supply; HBM and server DRAM among price-increase drivers\""
+      },
+      {
+        "component_interpretation": "1Q26 평균가동률 100%는 현재 설비 여유가 제한적임을 보여주나 HBM 전용 가동률은 아니다.",
+        "fact_row_index": 159,
+        "source_economic_mechanism": "반도체 생산설비 평균가동률 100%는 2026년 1분기 공급 여유가 제한적이었음을 보완한다. 공시는 HBM 전용 라인의 가동률이나 장래 CAPA 잠금을 따로 제시하지 않으므로 전사 반도체 범위로 제한한다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 반도체 생산실적은 11,465,147백만원이고 생산설비 평균가동률은 100%였다",
+        "source_value_json": "100"
+      },
+      {
+        "component_interpretation": "삼성전자·Micron의 HBM3E 출하 확대는 중기 공급 안정과 scarcity premium 약화 가능성을 높인다.",
+        "fact_row_index": 197,
+        "source_economic_mechanism": "보고서는 2H25~2026년에 HBM과 패키징 공급망이 완화되고, HBM3E 공급이 SK하이닉스 중심에서 삼성전자·Micron의 본격 출하까지 넓어질 것으로 전망했다. Nvidia 공급 안정성과 전세대 매출에는 긍정적이지만, SK하이닉스에는 고객 내 독점성·scarcity premium과 배정 우위가 낮아질 수 있는 직접 경쟁 counterfact다. 실제 점유율 하락이나 가격 인하는 확정하지 않는다.",
+        "source_period_json": "\"2H2025-FY2026 outlook published 2025-09-04\"",
+        "source_predicate": "2H25~2026년 HBM3E 공급이 SK하이닉스 중심에서 삼성전자·Micron 출하까지 확대돼 수급 안정성이 강화될 것으로 전망됐다",
+        "source_value_json": "\"HBM3E supply broadening from SK hynix-centered supply to Samsung and Micron shipments; packaging alternatives also expanding\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      28,
+      35,
+      37,
+      66,
+      79,
+      100,
+      110,
+      121,
+      159,
+      197
+    ],
+    "source_coverage": [
+      "ISSUER_NEWSROOM",
+      "OPENDART",
+      "PUBLIC_BROKER_PDF",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "공개된 60% 중반 ASP 상승은 일반 DRAM 강세가 주도한 DRAM blended 수치이며 HBM 단독 판가가 아니다.",
+      "HBM 가격·물량 계약과 고객별 allocation 조건은 공개되지 않았다.",
+      "경쟁사 HBM4 인증·출하 시기와 실제 공급량, PC·모바일 수요 탄력의 크기는 확정되지 않았다."
+    ],
+    "why_not_higher": "HBM 단독 실현 ASP와 계약 가격이 없고, HBM ASP 하락 전망·경쟁 공급 확대·수요 탄력 counter가 존재한다.",
+    "why_not_lower": "100% 가동률, 제한된 공급, 실제 DRAM ASP 급등과 HBM의 물리적 CAPA 소모가 현재 병목을 여러 각도에서 확인한다."
+  },
+  "payload_hash": "ddded57f8b18ccd017d1838bb1547944ce57b141924a5a6af5fcbd1d5404b791",
+  "production_score_authority": false,
+  "prompt_hash": "c2cbad0f34acbaf5dd1b54ff8ef4dc7d682815917ade672cb142b6d8f0f8a02e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e3b32724d5083f8581fd44d30de2306c7a25158ee05cc093f649e62275c815bf",
+  "response_id": "COLLABRESP-54ed657c5b9ef38357cb86854101edc9b30134926eafef3ef21f1f242ce0d6ea",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

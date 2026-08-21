@@ -1,0 +1,16 @@
+{
+  "as_of_date": "2026-07-10",
+  "eligible_count": 2542,
+  "schema_version": "e2r_live_census_operational_v1",
+  "stage_counts": {
+    "0": 2303,
+    "1": 239
+  },
+  "terminal_status_counts": {
+    "BASELINE_ONLY": 2123,
+    "BUDGET_PENDING": 176,
+    "OFFICIAL_LIGHT": 239,
+    "PROVIDER_PENDING": 1,
+    "SOURCE_PENDING": 3
+  }
+}

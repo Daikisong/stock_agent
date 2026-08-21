@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "b84ead111945075ad6654621287531140a0432b172af3363373abd25408f28b5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1c8fa7391e4b187e056df899",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "2022년 반기보고서의 신용등급 snippet으로 현재 2026 주총 경영계획과 시기·주제가 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8d81d57423cfcb23a17fe92a",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2023 KIND 공고에 2022 결산 안건만 나타나며 SK하이닉스 2026 전망 route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5f281ce0eaba399771fc4c23",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.16,
+        "rationale": "SK하이닉스의 2026 경영환경·사업방향을 다룬 기사지만 issuer newsroom·presentation 또는 KIND 원문이 아니므로 requested family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f0945a3264796372558f3929",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "과거 결산·배당 이사회 내역을 담은 2023 KIND 문서로 2026 숫자형 경영 전망과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-c7d81248bd4a6f166b281d6a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "2021년 실적 컨퍼런스콜을 재게시한 제3자 기사로 최신성·source family가 모두 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-481e79da690c1099dfaa6edd",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2022년 충북 소재 다른 회사의 주총 공고로 대상 기업과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-6126f87f3f227440f014e662",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2022년 제35기 다른 회사의 주총 공고로 SK하이닉스 2026 objective와 대상이 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-8087726744bb5a3c17869d9d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "제3자 CEO 프로필 페이지로 공식 주총 경영계획 문서가 아니며 requested source family도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d93eab7440cedcf5591a77e6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "한화비전 자회사 세미텍의 매출 전망 기사로 HBM 단어가 있어도 SK하이닉스 발행사 guidance와는 다른 사업 주체다."
+      },
+      {
+        "candidate_id": "SGCAND-a742c22e795dba21e07faef6",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2024년 기업분할 증권신고서로 SK하이닉스의 2026 주총·매출 전망과 관련되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8f45893cfa2331ff107aa1c5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "SK스퀘어 주총에서 SK하이닉스 ADR 효과를 언급한 제3자 기사로 대상 발행사의 숫자형 매출 guidance도 아니고 requested family도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-672ce3a3d8830585bbbc7432",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2021년 KIND 공고의 2020 이사회 내역으로 현재 objective와 시기·내용이 맞지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "대상 기업의 2026 경영방향을 다룬 기사도 있었지만 요청된 공식 source family가 아니어서 원문 후보로 선택하지 않았다."
+    ]
+  },
+  "payload_hash": "39972d83e253b7fd0005bffeadf75ce2aa14369836fd9051fca5a8fea42ec04a",
+  "production_score_authority": false,
+  "prompt_hash": "ae422f29abacf555e68ccb699ff04392fe4550213b0b4a3bbb71c6a94eeca55e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d87c82aa9f53e238c7601baf27ec965aa602f88c8db9dd6257cfb34062207ff6",
+  "response_id": "COLLABRESP-12b2f53b64849d5c11690bf3751e5a945b036ff11c87bbf98cebe88553070be6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

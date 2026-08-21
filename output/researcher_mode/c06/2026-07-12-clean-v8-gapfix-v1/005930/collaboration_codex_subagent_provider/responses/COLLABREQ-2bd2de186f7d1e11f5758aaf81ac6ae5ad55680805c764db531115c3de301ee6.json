@@ -1,0 +1,55 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      3.7,
+      5.3
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df is a low-confidence ordinal anchor with a 4.32-5.52 band. The revised actual-only support set fits this middle band: execution is verified, but the valuation bridge is conditional and company-wide.",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b is a low-confidence ordinal anchor with a 2.83-4.03 band. The current actual operating evidence supports a score above its midpoint, while denominator and contract limitations justify an uncertainty range that overlaps its upper edge."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [
+      "The revised actual-only support set improves evidence hygiene but still does not create a period-matched HBM earnings or cash denominator.",
+      "Low-confidence ordinal anchors cannot turn the difference between forward PE 5.59x and trailing PE 21.86x into a single precise cheapness conclusion."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 4.5,
+    "rationale": "A calibrated 4.5 on the 12-point scale reflects the revised evidence selection. Four positive facts establish actual memory/HBM execution without relying on the future AMD MOU. Yet the operating facts and valuation records live on different planes: forward PE/PB use forecast consolidated denominators, trailing PE/PB use actual parent data, and EV/EBITDA and FCF yield use separate forward enterprise and cash scenarios. Neither low-confidence anchor resolves that mismatch, so the score stays in the middle band with explicit downside overlap.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "HBM standalone revenue, margin, CAPEX, and FCF are absent; the forward and trailing denominators are not interchangeable, cash-based valuation is less favorable, and named NVIDIA economics remain unconfirmed.",
+    "why_not_lower": "The revised support plane contains four high-confidence actual or realized execution facts, so the thesis has more substance than a forecast-only valuation claim despite its missing HBM denominator."
+  },
+  "payload_hash": "238a6f14629572317bd7732b858a322f8a5beab6ba75db6a49169819234d0336",
+  "production_score_authority": false,
+  "prompt_hash": "21168c1d0c91093ebe8dbaaa0c67cb381528b61d37b25916df4cc8ef6b40cc6f",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2bd2de186f7d1e11f5758aaf81ac6ae5ad55680805c764db531115c3de301ee6",
+  "response_id": "COLLABRESP-ce3eb9a44fd8180743992220822ffb9824dfe1637375edfed61ac94abe8db58d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

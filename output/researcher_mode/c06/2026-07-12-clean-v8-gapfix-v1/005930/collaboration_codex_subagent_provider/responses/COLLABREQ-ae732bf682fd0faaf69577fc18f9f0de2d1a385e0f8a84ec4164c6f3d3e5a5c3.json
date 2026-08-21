@@ -1,0 +1,293 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "2026-05-16 available FY2026Q1 consolidated earnings and cash-flow actuals, DS-memory revenue, realized ASP, full utilization, and the large CAPEX cash outflow are all reflected with explicit consolidated-versus-HBM attribution limits. The July broker metadata is not issuer actual or exact-quote evidence and does not itself supply HBM-only FCF, so it does not reopen this memo; the absent HBM-only bridge remains a scored limitation rather than an executable fact gap for this component."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "As-of-cutoff counterparty-official status for the named NVIDIA and OpenAI relationships, separating technical qualification or planned support from committed allocation and signed price, volume, duration, cancellation, backlog, or RPO terms."
+        ],
+        "rationale": "The memo correctly separates HBM4 shipment actuals and AMD technical corroboration from LOI, MOU, negotiation, and plan language. It is not yet sufficient under the current route rule because AMD is only one named counterparty: NVIDIA and OpenAI are independently named in the supplied facts and Red Team direction, while their distinct counterparty-official catalogs, product/newsroom materials, filings, or event records have not been shown as exhausted. Discovery does not require a pre-known URL, and either confirmation or disconfirmation could materially change customer visibility without being mistaken for signed contract economics."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "Exact-quote full-report evidence behind the 2026-07-08 DB candidate STRUCTCAND-f6fb158d7f15b0bdbb8f52f6 / provider report 1111300, specifically the duration and scope of supply tightness, HBM4 versus generic-memory capacity attribution, and any realized-versus-forecast pricing basis."
+        ],
+        "rationale": "Actual full utilization, constrained availability, and realized memory ASP support the memo, while HBM-dedicated locked capacity, customer allocation, and contract pricing remain absent. Unlike a generic monitoring wish, the prompt supplies a current pre-cutoff, candidate-bound PUBLIC_BROKER_PDF route whose title and metadata directly concern memory tightness through 2027 and HBM4. Metadata is not evidence, but retrieving and exact-quote validating that full report could materially change the duration and attribution assessment, so this route is not exhausted."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "Period- and denominator-aligned full-report evidence for the same broker before and after the 2Q26 preliminary period, including iM reports 1110016 (2026-07-03) and 1111200 (2026-07-08), to establish the actual expectation revision and dispersion rather than infer it from titles or metadata."
+        ],
+        "rationale": "The memo honestly notes mixed valuation signals and a latest structured EPS revision direction of DOWN, but the prompt also contains pre-cutoff full-report candidates that describe upward estimate changes around the 2Q26 preliminary period. This tension cannot be resolved from metadata. The two candidate-bound iM reports offer a reasonable PUBLIC_BROKER_PDF route to compare the same broker, period, and denominator; it could show either under-recognition or prior incorporation of the operating delta and is therefore material to mispricing."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "A pre-cutoff exact-quote broker valuation bridge that binds forecast period, earnings denominator, valuation multiple, target or current price, and HBM-versus-consolidated attribution, using the supplied 2026-07-08 IBK 1111165 or KB 1111123 full-report identity rather than its metadata summary."
+        ],
+        "rationale": "The memo properly keeps forward PE/PB, trailing PE/PB, EV/EBITDA, and FCF yield on different denominators and uses that mismatch to widen the conditional range. Yet the supplied current broker candidates explicitly combine 2Q26 results, changed expectations, and target-price conclusions. Their summaries are not facts, but the exact full PDFs are a bounded and unexhausted route to the period-specific valuation bridge; such evidence could materially narrow or shift the upper and lower conditions."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The memo accounts for actual buybacks, cancellation, dividends, funding access, capital commitments, CAPEX, payout, and receivables working-capital pressure, while refusing to assign company-wide cash uses to HBM. The July broker candidate summaries contain prospective shareholder-return language but no official action and are metadata-only; as of the cutoff they do not identify a distinct source-backed capital-allocation fact likely to change the current balanced range. HBM-specific ROIC remains a monitoring limitation."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "NVIDIA-official product, catalog, newsroom, filing, or event evidence available by 2026-07-12 that independently confirms or contradicts Samsung HBM3E/HBM4 qualification, platform alignment, or supply status without requiring procurement-term disclosure.",
+          "OpenAI-official partnership, infrastructure, filing, or event evidence available by 2026-07-12 that independently confirms or contradicts the issuer-described memory-support and wafer-demand relationship scope, without converting a plan or LOI into a purchase contract."
+        ],
+        "rationale": "AMD CUSTOMER_OFFICIAL evidence independently corroborates the AMD technical relationship and is sufficient for that named counterparty, while remaining distinct from signed procurement economics. It cannot silently exhaust NVIDIA and OpenAI. The prompt names those counterparties and relationship scopes, but only issuer-side NVIDIA and OpenAI descriptions are reflected in the current memo. Their distinct official catalogs, product/newsroom materials, filings, or event records are reasonable discovery routes and could materially change information confidence even if they disclose only technical status rather than contract terms."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-11f05de07efa5852c6e71412",
+        "rationale": "Four query failures were identified only after full fetch as documents published after the cutoff. Their exclusion is correct and non-retryable; it neither establishes source absence nor resolves a pre-cutoff route.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-828cb4bb9fe49e835dfadd21",
+        "rationale": "The prior LLM returned no new valid query after reviewing earlier attempts. Under the current contract this is not route exhaustion because the prompt now exposes distinct named-counterparty and candidate-bound broker directions; a bounded semantic replanning attempt is appropriate and no source absence is claimed.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-8ce8e0d17715285b367c314b",
+        "rationale": "One document was rejected after full fetch because its publication date could not be verified. Date-verification failure is not evidence and not source absence; the same unverifiable document should not be reused.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-93582c8d3e4a290b445687a0",
+        "rationale": "One query lineage reached a full document whose publication date remained unknown. That lineage cannot pass the as-of gate and does not prove absence; the response opens different, date-bounded routes rather than retrying this unverifiable document.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-944cf2283ff44162e1cf00f0",
+        "rationale": "Four fetched documents were rejected as post-cutoff future documents. They remain excluded and non-retryable and are not used as facts, completion proof, or source-absence proof.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-ae9bd8c7e122eaecfd5e3c57",
+        "rationale": "A zero-result valuation search is not saturation. The prompt contains distinct pre-cutoff candidate-bound broker report identities, so one bounded alternative full-report discovery attempt remains reasonable; no source absence is claimed.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-ff4b69c29ce262d40861a274",
+        "rationale": "Twelve query-provider transport errors are technical failures rather than negative evidence. They are retryable only through the bounded objective-specific directions below and cannot support completion or source absence.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "earnings_visibility",
+        "direction": "RESOLUTION",
+        "fact_need": "As-of-cutoff counterparty-official status for NVIDIA and OpenAI, separating qualification and planned technical support from committed allocation and signed price, volume, duration, cancellation, backlog, or RPO terms.",
+        "why_material": "The present range rests partly on issuer-described negotiation, LOI, and demand plans. Independent confirmation, limitation, or contradiction from each named counterparty could materially change the duration and firmness of customer-linked earnings visibility while preserving the distinction between technical corroboration and procurement economics."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "direction": "RESOLUTION",
+        "fact_need": "Exact-quote evidence from DB's 2026-07-08 full report 1111300 on the forecast duration and product scope of tight supply, HBM4-specific versus generic-memory capacity, and the basis for any pricing conclusion.",
+        "why_material": "The memo's main unresolved boundary is whether realized generic-memory utilization and ASP represent a durable HBM-specific bottleneck. A current full report explicitly scoped to tight memory supply and HBM4 could strengthen, narrow, or counter that duration and attribution judgment; its metadata alone cannot."
+      },
+      {
+        "component_id": "market_mispricing",
+        "direction": "RESOLUTION",
+        "fact_need": "Same-broker, same-denominator expectation revision and dispersion around the 2Q26 preliminary period from the full iM reports 1110016 and 1111200, not their metadata summaries.",
+        "why_material": "The current structured direction is DOWN while current report metadata describes estimate increases and an upside surprise. Exact full-report assumptions are needed to determine whether the operating change was already incorporated or remained outside expectations."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "direction": "RESOLUTION",
+        "fact_need": "A current pre-cutoff full-report valuation bridge from IBK 1111165 or KB 1111123 that states the forecast period, earnings denominator, applied multiple, and target/current price basis with explicit consolidated-versus-HBM limits.",
+        "why_material": "The existing valuation range is intentionally wide because forward, trailing, enterprise, and cash metrics answer different questions. An exact period-and-denominator bridge could materially narrow which upper or lower condition is applicable; target-price metadata alone cannot."
+      },
+      {
+        "component_id": "information_confidence",
+        "direction": "RESOLUTION",
+        "fact_need": "Independent NVIDIA-official technical or platform corroboration of the named Samsung HBM3E/HBM4 relationship status as of the cutoff.",
+        "why_material": "Current NVIDIA status is issuer-described and open. A counterparty-official confirmation or contradiction would materially change information independence even if it disclosed no purchase terms."
+      },
+      {
+        "component_id": "information_confidence",
+        "direction": "RESOLUTION",
+        "fact_need": "Independent OpenAI-official corroboration of the named Samsung memory-support and wafer-demand relationship scope as of the cutoff.",
+        "why_material": "The current OpenAI facts are issuer-side plan and demand-forecast language. Counterparty-official confirmation, narrowing, or contradiction could materially change confidence while still remaining distinct from a signed supply contract."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": true,
+        "direction": "Independently inspect NVIDIA- and OpenAI-official product, newsroom, filing, catalog, and event records available by 2026-07-12 for qualification, platform alignment, supply status, or committed allocation terms, keeping technical corroboration separate from signed procurement economics.",
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "rationale": "AMD official corroboration covers AMD only. NVIDIA and OpenAI are separately named in current facts and Red Team directions, and their distinct official routes could materially change customer visibility without a pre-known URL or document id.",
+        "source_family": "CUSTOMER_OFFICIAL"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "Resolve the exact pre-cutoff DB full report identified as STRUCTCAND-f6fb158d7f15b0bdbb8f52f6 / report 1111300 and extract only exact-quote evidence about supply-tightness duration, HBM4-specific versus generic-memory scope, capacity, and realized or forecast pricing basis.",
+        "objective_id": "SGOBJ-7ba6c752cb327ae2c989b6dd",
+        "rationale": "The candidate is a bounded discovery hint rather than evidence, but its date, broker, title, and scope directly address the memo's material bottleneck-duration and attribution gap.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "Resolve the pre-cutoff iM full reports 1110016 dated 2026-07-03 and 1111200 dated 2026-07-08 and compare their same-broker earnings assumptions, denominator, and revision around the 2Q26 preliminary period.",
+        "objective_id": "SGOBJ-e78cfba9e86bfa02e9a943ae",
+        "rationale": "The full reports could reconcile the current DOWN structured revision signal with metadata that describes estimate increases and an upside surprise, materially testing whether the operating delta was already expected.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "Resolve one exact pre-cutoff full report from the supplied IBK 1111165 or KB 1111123 candidate identities and extract its period-specific earnings denominator, applied valuation multiple, target/current price basis, and explicit HBM-versus-consolidated limitations.",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "A full denominator bridge could materially narrow the conditional valuation range; candidate metadata and target price alone have no fact authority.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "Inspect NVIDIA-official product, catalog, newsroom, filing, and event records available by the cutoff for Samsung HBM3E/HBM4 qualification, platform alignment, or supply status; do not require or infer purchase terms from technical corroboration.",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "The current NVIDIA relationship is supported only by issuer-side plan and negotiation language. Independent official confirmation or contradiction is a distinct material information-confidence route not exhausted by AMD evidence.",
+        "source_family": "CUSTOMER_OFFICIAL"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "Inspect OpenAI-official partnership, infrastructure, filing, and event records available by the cutoff for the Samsung memory-support and wafer-demand relationship scope; preserve plan/LOI versus signed contract boundaries.",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "Issuer-side OpenAI support plans and potential demand do not establish independent corroboration. An OpenAI-official route is materially distinct from both AMD and NVIDIA and does not require a pre-known identity.",
+        "source_family": "CUSTOMER_OFFICIAL"
+      }
+    ],
+    "next_actions": [
+      "Send only the bounded objective-specific CUSTOMER_OFFICIAL and PUBLIC_BROKER_PDF directions to the query-generation LLM; it owns identity discovery and must enforce the 2026-07-12 cutoff and prior-route deduplication.",
+      "Require full dated documents and exact-quote extraction before any candidate metadata, preview number, technical statement, or relationship plan can become a source-backed fact.",
+      "After accepted lineage is available, rewrite only the affected earnings_visibility, bottleneck_pricing, market_mispricing, valuation_rerating, and information_confidence memos, then rerun their independent judges, Red Team, synthesis, and Supervisor review."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "Samsung issuer-newsroom statements already represented in the current facts",
+          "The existing AMD CUSTOMER_OFFICIAL MOU and technical-corroboration document",
+          "Post-2026-07-12 publications or snippets without a full dated document"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "research_need": "Find pre-cutoff NVIDIA- and OpenAI-official evidence that states the technical qualification, platform alignment, supply status, or any committed allocation scope for the named Samsung relationships, and classify every result as technical corroboration, plan/LOI, negotiation, or signed procurement economics."
+      },
+      {
+        "avoid_repeating": [
+          "CompanyGuide candidate metadata or provider summary as evidence",
+          "Generic memory shortage headlines without Samsung or HBM attribution",
+          "Any report published after the 2026-07-12 cutoff"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-7ba6c752cb327ae2c989b6dd",
+        "research_need": "Use the DB 2026-07-08 report 1111300 identity to obtain the full dated PDF and determine whether its evidence is HBM4-specific or only generic memory, actual or forecast, and whether it states a bounded supply-tightness period and pricing basis."
+      },
+      {
+        "avoid_repeating": [
+          "Candidate titles, summaries, or preview numbers as facts",
+          "Target-price-only documents without earnings assumptions",
+          "The prior unbound zero-result or provider-error route"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-e78cfba9e86bfa02e9a943ae",
+        "research_need": "Obtain the full iM reports 1110016 and 1111200 and compare the same broker's forecast period, pre/post preliminary assumptions, revision magnitude and direction, consensus reference, and valuation denominator."
+      },
+      {
+        "avoid_repeating": [
+          "Target price or recommendation without a denominator bridge",
+          "Mixing forward PE/PB with trailing or enterprise and cash metrics",
+          "Metadata-only PUBLIC_BROKER_PDF candidates"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "research_need": "Resolve a supplied IBK 1111165 or KB 1111123 full report and extract the exact period, earnings estimate, valuation denominator and multiple that produce its target/current valuation conclusion, preserving consolidated versus HBM attribution."
+      },
+      {
+        "avoid_repeating": [
+          "AMD official materials as a substitute for NVIDIA corroboration",
+          "Samsung-affiliated repetitions of the same issuer statement",
+          "Procurement-term absence inferred from a technical product page"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "research_need": "Find NVIDIA-official pre-cutoff material tied to the named HBM3E/HBM4 products or platforms and determine whether it confirms, narrows, contradicts, or leaves silent the issuer-described qualification and supply status, without treating technical evidence as a contract."
+      },
+      {
+        "avoid_repeating": [
+          "NVIDIA or AMD evidence as a substitute for OpenAI corroboration",
+          "Samsung issuer LOI and plan language already represented in current facts",
+          "Converting a technical or infrastructure plan into signed purchase terms"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "research_need": "Find OpenAI-official pre-cutoff material tied to the named Samsung partnership, memory-support plan, or infrastructure demand scope and determine whether it independently confirms, narrows, contradicts, or leaves silent the issuer description."
+      }
+    ],
+    "rationale": "The seven memos, Red Team, structured projection, source graph, 260 broker-candidate roster, independent-corroboration projection, and all seven failure groups were audited from the immutable production prompt. EPS/FCF and capital-allocation memos already balance their current actuals and attribution limits, so their remaining HBM-only detail is monitoring rather than an actionable gap. Five other memos remain fail-open for bounded, material routes: NVIDIA and OpenAI are distinct named counterparties not exhausted by AMD customer-official evidence; technical corroboration is kept separate from missing contract economics; DB, iM, IBK, and KB pre-cutoff report identities provide bounded full-PDF routes for bottleneck duration, expectation revision, and denominator-aligned valuation. Candidate metadata is not treated as evidence. The prior zero result, provider errors, objective-resolved flags, score_valid status, and fixed history are not completion proof, and no source absence is claimed. Because concrete objective-bound routes and unresolved material questions remain, this review is NEXT_RESEARCH_REQUIRED and has no score or Stage authority.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "Do NVIDIA- and OpenAI-official pre-cutoff sources independently confirm, narrow, or contradict the issuer-described qualification, support, and supply status, and do any provide committed allocation or signed economic terms?",
+      "Does DB report 1111300 provide exact HBM4-specific evidence for a durable supply bottleneck, or only a generic-memory forecast already reflected as a limitation?",
+      "What same-broker, same-period expectation revision is shown by the full iM 1110016 and 1111200 reports, and was the 2Q26 operating delta already incorporated?",
+      "Which period and earnings denominator underlie the current IBK or KB valuation conclusion, and does that bridge narrow the forward-versus-trailing and consolidated-versus-HBM conditional range?"
+    ]
+  },
+  "payload_hash": "d176a76d1bd6d861608e9832a49131d659753d9ac6bd4f145c50c1a7f895419c",
+  "production_score_authority": false,
+  "prompt_hash": "846c3d2d4ba165e1fe62963dbea866c0aa72156e4f2940490cb6afaac9df7bbc",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ae732bf682fd0faaf69577fc18f9f0de2d1a385e0f8a84ec4164c6f3d3e5a5c3",
+  "response_id": "COLLABRESP-8f3ad48fc6f0faa0e5fe48a10378829053744ef8805642b68028a973d790fc64",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

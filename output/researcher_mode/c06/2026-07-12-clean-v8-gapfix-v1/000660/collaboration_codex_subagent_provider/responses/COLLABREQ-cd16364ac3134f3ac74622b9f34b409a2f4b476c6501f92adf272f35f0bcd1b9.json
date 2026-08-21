@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "656e30c5b0d86a58057dcd0ada669bc596a56cfea507f4daebe45c0130166390",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-86e77817b0065abd6ab122dd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "blog·Telegram·premium summary·generic SEC submission page·wrong-target 경로로 requested original KIND/broker source가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1e633c9932e7c845e2074724",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "KIND official document provenance는 맞지만 2017~2018 historical group report이고 current 000660 capital-allocation event의 target-direct route가 아니어서 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-668127fca29862f33d3e423e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "blog·Telegram·premium summary·generic SEC submission page·wrong-target 경로로 requested original KIND/broker source가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8f507d3cdf89e9c1dd267d27",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "KIND official document provenance는 맞지만 2017~2018 historical group report이고 current 000660 capital-allocation event의 target-direct route가 아니어서 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-9152afb4a89158a31b54db39",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "broker PDF provenance는 맞지만 2009/2014 historical daily market 자료로 current target valuation objective를 직접 해소하지 못해 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-828caa7f5c2207bc34bb4154",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "blog·Telegram·premium summary·generic SEC submission page·wrong-target 경로로 requested original KIND/broker source가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cf824383be4bd98041d85be3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "blog·Telegram·premium summary·generic SEC submission page·wrong-target 경로로 requested original KIND/broker source가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-18bb4ddfa8d43284152014c3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "blog·Telegram·premium summary·generic SEC submission page·wrong-target 경로로 requested original KIND/broker source가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-794ce3fcb9a925c3fc47bb30",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "blog·Telegram·premium summary·generic SEC submission page·wrong-target 경로로 requested original KIND/broker source가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a6e3ae965e1d343b7ca9c1b6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "blog·Telegram·premium summary·generic SEC submission page·wrong-target 경로로 requested original KIND/broker source가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6db37615ca62394a2472dd24",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "blog·Telegram·premium summary·generic SEC submission page·wrong-target 경로로 requested original KIND/broker source가 아니다. nonmaterial이며 metadata/snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c7626201cd66f5b2eb21d9d9",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "broker PDF provenance는 맞지만 2009/2014 historical daily market 자료로 current target valuation objective를 직접 해소하지 못해 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P5 roster 12개 exact-once; current target-direct eligible full-source route는 확인되지 않았다.",
+      "material 0은 source absence/completion이 아니며 metadata/snippet은 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "a3ceb49cf16d6542b6bbbe602cbda4966cb9864df313426c67a56d502369ed7a",
+  "production_score_authority": false,
+  "prompt_hash": "44390ac6bd0b115dba953a39f1e4813e68303a46db8c647af3aa2ac8d52d68ec",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cd16364ac3134f3ac74622b9f34b409a2f4b476c6501f92adf272f35f0bcd1b9",
+  "response_id": "COLLABRESP-f81c6af9a37e5a7d4fd801c18b14235a83115a9f6ea4a8738f8d7fe57cdf5ab5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

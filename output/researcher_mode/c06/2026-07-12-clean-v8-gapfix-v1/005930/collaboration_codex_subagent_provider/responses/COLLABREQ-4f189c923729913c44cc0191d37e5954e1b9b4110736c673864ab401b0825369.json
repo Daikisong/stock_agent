@@ -1,0 +1,180 @@
+{
+  "output_schema_hash": "ea6c03fb5e7b6103662bcf718c7fd1257807399539b5ac26c711687f0d6fcd49",
+  "payload": {
+    "confidence": 0.86,
+    "counter_case": "CURRENT_VALUATION의 trailing PE 21.86배·PB 3.84배, forward EV/EBITDA 18.88배와 FCF yield 1.99%는 단일 저평가 서술을 제한한다. 최신 EPS revision 방향 DOWN과 operating-profit UP이 충돌하고, 행 18의 NVIDIA HBM4 협의 중 상태도 firm economics를 주지 않는다. 후보 report metadata/material 0은 same-broker expectation change나 source absence 증명이 아니다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c"
+    ],
+    "positive_case": "행 1·66·67·73은 HBM 판매 확대 맥락의 record memory performance, 서버향 판매, 메모리 매출과 realized ASP를 확인하고 행 36은 HBM4 양산 actual을 보탠다. CURRENT_VALUATION의 forward PE 5.59배와 EARNINGS_REVISION의 장기 EPS 상향 폭·operating-profit UP은 재평가 여지를 지지한다. 그러나 이는 자동으로 mispricing을 증명하지 않는다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 36,
+        "reason": "RETAIN: HBM4 양산 출하 actual을 expectation delta와 구분해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 44,
+        "reason": "RETAIN: 2025년 1분기 메모리 매출을 2026년 actual 비교의 중립 baseline으로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 58,
+        "reason": "RETAIN: DRAM 점유율의 회복과 2024년 미달을 함께 보여주는 balanced context로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 66,
+        "reason": "RETAIN: 서버 메모리 판매 확대 actual을 expectation surprise와 구분해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 67,
+        "reason": "RETAIN: 2026년 1분기 메모리 매출 actual을 operating delta 근거로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 73,
+        "reason": "RETAIN: realized 메모리 ASP 상승을 HBM-only·expectation denominator와 분리해 유지한다."
+      }
+    ],
+    "proposed_score_lower": 6.8,
+    "proposed_score_mid": 7.8,
+    "proposed_score_upper": 8.8,
+    "research_complete": true,
+    "researcher_summary": "HBM4 양산, 서버 메모리 판매 확대, 메모리 매출·ASP actual은 operating delta를 지지한다. 구조화 자료의 forward PE 5.59배는 낮은 평가 가능성을 보이지만 trailing PE 21.86배·PB 3.84배, forward EV/EBITDA 18.88배·FCF yield 1.99%는 싼 가격 신호와 충돌한다. EPS revision 최신 방향은 DOWN인 반면 operating-profit revision은 UP이라 기대 변화도 혼재한다. iM full-report 후보 또는 CUSTOMER_OFFICIAL 검색 material 0은 expectation·source absence 증명이 아니므로, actual 개선과 그 개선이 이미 가격·추정치에 반영됐는지는 분리한 중간 범위를 유지한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "HBM 판매 확대와 record memory revenue·OP는 operating delta actual이지만 market expectation surprise 자체는 아니다.",
+        "fact_row_index": 1,
+        "source_economic_mechanism": "메모리 부문은 HBM 판매 확대와 범용 DRAM 수요 대응으로 사상 최대 분기 매출·영업이익을 기록했지만 HBM별 금액·마진은 공개되지 않았다.",
+        "source_period_json": "\"2025Q4\"",
+        "source_predicate": "MEMORY_REPORTED_RECORD_QUARTERLY_REVENUE_AND_OPERATING_PROFIT_WITH_HBM_SALES_EXPANSION",
+        "source_value_json": "\"record quarterly revenue and operating profit with expanded HBM sales\""
+      },
+      {
+        "component_interpretation": "NVIDIA HBM4 협의 중 counter는 firm customer economics가 아직 확정되지 않은 expectation risk다.",
+        "fact_row_index": 18,
+        "source_economic_mechanism": "삼성전자는 엔비디아에 HBM3E와 HBM4를 공급할 계획이라고 밝혔지만 HBM4 공급은 아직 긴밀히 협의 중이다. 이는 명명 고객과의 공급 논의를 확인하되 서명 계약·확정 배정·물량·가격을 확인하지 못하는 가시성 counter다.",
+        "source_period_json": "\"2025-10-31 현재 및 이후\"",
+        "source_predicate": "엔비디아 대상 HBM3E·HBM4 공급은 issuer plan이며 HBM4 공급은 2025-10-31 현재 협의 중이다.",
+        "source_value_json": "\"HBM3E·HBM4 공급 계획; HBM4 공급 협의 중\""
+      },
+      {
+        "component_interpretation": "HBM4 양산 출하는 execution actual이나 예상 대비 차이 또는 valuation re-rating을 직접 증명하지 않는다.",
+        "fact_row_index": 36,
+        "source_economic_mechanism": "2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS",
+        "source_value_json": "\"HBM4 양산 출하\""
+      },
+      {
+        "component_interpretation": "2025년 1분기 메모리 매출은 2026년 actual 성장의 비교 기준이며 자체 positive 점수 근거는 아니다.",
+        "fact_row_index": 44,
+        "source_economic_mechanism": "메모리 제품 매출의 전년 비교 기준",
+        "source_period_json": "\"2025-Q1\"",
+        "source_predicate": "2025년 1분기 메모리 제품 매출액을 비교표에 보고했다",
+        "source_value_json": "19069038"
+      },
+      {
+        "component_interpretation": "HBM 매출 3배 및 HBM4 capacity 확대는 issuer guidance로, 시장 반영 여부와 실현치를 분리한다.",
+        "fact_row_index": 49,
+        "source_economic_mechanism": "회사는 2026년 HBM 매출을 2025년의 3배 이상으로 전망하고 HBM4 생산능력을 선제 확대하고 있다.",
+        "source_period_json": "\"2026\"",
+        "source_predicate": "GUIDES_HBM_REVENUE_ABOVE_THREE_TIMES_AND_EXPANDS_HBM4_CAPACITY",
+        "source_value_json": "\"2026 HBM revenue more than 3x 2025\""
+      },
+      {
+        "component_interpretation": "DRAM 점유율 회복과 2024년 미달을 함께 담는 balanced context이며 market expectation을 직접 측정하지 않는다.",
+        "fact_row_index": 58,
+        "source_economic_mechanism": "삼성전자의 2026년 1분기 추정 DRAM 금액 기준 점유율 38.4%는 2025년 34.0%보다 높지만 2024년 41.5%에는 미달해 경쟁지위 회복과 잔여 격차를 함께 보여준다.",
+        "source_period_json": "\"2026-Q1 vs 2025 and 2024\"",
+        "source_predicate": "ESTIMATED_DRAM_MARKET_SHARE_RECOVERED_YEAR_ON_YEAR_BUT_BELOW_2024",
+        "source_value_json": "\"38.4% vs 34.0% in 2025 and 41.5% in 2024\""
+      },
+      {
+        "component_interpretation": "서버 메모리 판매 확대 actual은 operating momentum을 지지하나 예상 대비 surprise는 아니다.",
+        "fact_row_index": 66,
+        "source_economic_mechanism": "2026년 1분기 메모리 사업은 AI 수요 강세 아래 서버향 제품 판매 확대에 주력했다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "FOCUSED_ON_EXPANDING_SERVER_MEMORY_PRODUCT_SALES",
+        "source_value_json": "\"서버향 제품 중심 판매 확대에 주력\""
+      },
+      {
+        "component_interpretation": "2026년 1분기 메모리 매출 actual은 2025년 baseline과 함께 operating delta를 확인한다.",
+        "fact_row_index": 67,
+        "source_economic_mechanism": "메모리 제품 매출의 실제 수익 전환",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 메모리 제품 매출액을 보고했다",
+        "source_value_json": "74779980"
+      },
+      {
+        "component_interpretation": "메모리 ASP 146% 상승은 realized operating evidence지만 HBM-only·market-expectation denominator는 아니다.",
+        "fact_row_index": 73,
+        "source_economic_mechanism": "메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.",
+        "source_period_json": "\"2026Q1 vs 2025 annual average\"",
+        "source_predicate": "MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE",
+        "source_value_json": "146"
+      }
+    ],
+    "selected_fact_row_indices": [
+      1,
+      18,
+      36,
+      44,
+      49,
+      58,
+      66,
+      67,
+      73
+    ],
+    "source_coverage": [
+      "COMPANYGUIDE",
+      "KRX_PRICE_MARKET_CAP",
+      "TARGET_OFFICIAL_TRAILING_VALUATION",
+      "ISSUER_NEWSROOM",
+      "OPENDART"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "2Q26 전후 동일 broker·동일 denominator의 full-report estimate 변화가 현재 fact plane에 없다.",
+      "EPS latest DOWN과 operating-profit UP의 기간·분모 정렬이 불완전하다.",
+      "전사·메모리 actual에서 HBM-only earnings bridge가 분리되지 않는다.",
+      "material 0 또는 candidate metadata는 expectation 반영 여부나 source absence 증명이 아니다."
+    ],
+    "why_not_higher": "actual 개선에도 valuation 지표가 서로 충돌하고 EPS 최신 방향은 DOWN이다. 동일 broker의 pre/post estimate·denominator·dispersion exact evidence가 없어 개선이 이미 반영됐는지 판정할 수 없다.",
+    "why_not_lower": "HBM4 양산과 강한 memory revenue·ASP actual, 서버향 판매 확대, 낮은 forward PE 및 일부 positive revision history가 있어 mispricing 가능성을 완전히 배제할 수 없다."
+  },
+  "payload_hash": "fdc30538be33482a74ed9f55b227e106f1968d0971605c2ff0f2b5bca66f060f",
+  "production_score_authority": false,
+  "prompt_hash": "ad624bbcf523d06a0c8982722cc9c093149ee0a9a293f21587ecd5b68f764d27",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4f189c923729913c44cc0191d37e5954e1b9b4110736c673864ab401b0825369",
+  "response_id": "COLLABRESP-d4a345a01e0b29276f43a674c63fabb5ed7fe5d7b03960b11790d019da11c00a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

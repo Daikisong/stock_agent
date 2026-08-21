@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "1eb963bcc335b0bfd23238a5aaf71a28c645bb48582f2a7b86ca030b214b4a53",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0964968626eef4530df63603",
+        "rationale": "전체 문서와 current facts를 재대조했다. DRAM mix, 서버 메모리 수요, 관세 불확실성, 투자 규율과 HBM 수요 전망은 이미 durable facts로 보존되어 있다. 이 broker PDF에는 issuer-owned numeric FORWARD_GUIDANCE나 customer/issuer official DURABLE_VISIBILITY를 새로 성립시키는 distinct 증거가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-1709fe1fcbba59b4bb64c5ff",
+        "rationale": "HBM4E 1c 양산 성숙, 고객별 ramp, 고객 요청 수요 대비 공급능력, 경쟁 counter, 용인·P&T7 일정은 current facts에 이미 반영되어 있다. 제3자 기사 속 고객 요청수요와 공급 논의는 확정 물량·취소권·위약금·선수금을 갖춘 customer/issuer official commitment가 아니므로 DURABLE_VISIBILITY로 승격하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-307fb9014727799335a8db49",
+        "rationale": "섹터 탐방 보고서 전체를 검토했으나 2025년 당시 산업 수요와 장비·타사 내용이 중심이며, current target valuation 또는 공식적인 SK하이닉스 HBM duration을 새로 입증하는 distinct fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "rationale": "PER valuation 방법론 전환, 역사적 PBR band 상단 돌파, Micron peer 비교, 2026~2027 PBR·EV/EBITDA는 이미 current facts로 보존되어 있다. 남은 문구는 중복·타사·목표주가 또는 일반 면책이어서 신규 objective-local fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "rationale": "최신 peer 할인, 목표배수 산식, HBM 이익비중, ADR 경로, forward earnings·FCF와 source-quality limitation은 이미 current facts에 반영되어 있다. LTA의 가격보호·법적 장치·비중 증가는 broker 판단이며 exact 계약조건이 비공개이므로 공식 DURABLE_VISIBILITY로 확대하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-4ad2b2c5d23cebf2ce49609c",
+        "rationale": "HBM4 인증 지연, 초기 샘플 성숙도와 기술 복잡도는 이미 세 counterfacts로 보존되고 후속 issuer 사실이 일부 supersede했다. 확인되지 않은 최종 실패 추측을 새 fact로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-5a3f1affd4616ae845ce6c2d",
+        "rationale": "Nanya 보고서 안의 SK하이닉스 peer 표와 HBM 시장·점유율·CAPA 일정·PER/PBR/BPS/ROE facts는 current ledger에 이미 반영되어 있다. Nanya 자체 실적과 NAND 내용은 target 또는 허용 product scope 밖이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-5abf2b66451a741d72c342fb",
+        "rationale": "문서의 분석 대상과 valuation은 라온로보틱스(232680)다. 고객으로 언급된 SK하이닉스와 산업 일반 수요를 SK하이닉스의 valuation 또는 공식 HBM commitment로 귀속할 수 없다.",
+        "status": "WRONG_TARGET_OR_SEGMENT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "076a254613396125969052222e6a294e4e1b6f84271c28e9d02e1ee9333ae782",
+  "production_score_authority": false,
+  "prompt_hash": "a32551c24dcb5acc146330dcac07e983c71cafb4ca13843302a38bc8cc11d104",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f5626953de28003548fc843570fcec7c2dbbe473f686de313ebd1bcec74dd6d1",
+  "response_id": "COLLABRESP-3d6ab62e4376b42f05c0fcf16042365bdbdf276c50b7885c9bb1d3108d3e36e6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

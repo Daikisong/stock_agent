@@ -1,0 +1,75 @@
+{
+  "output_schema_hash": "50e9b24076957d0d9f2938f114392431d2a42f70ff2d2c73e20f5dd230627aa5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-10f193a9ee7125852bf7e484",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`PIM 관련주 TOP10 | 반도체 주식, 대장주` 후보는 GENERAL_WEB_DISCOVERY 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-b7488fb399bb7f4c8322fee0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`반도체 장비 관련주, '봄꽃만개' 에이팩트·저스템·그린광학·쎄크... '...` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-9f1d0007ef63ede205c36e31",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`[Who Is ?] 최우형 브이엠 대표이사` 후보는 TRUSTED_BUSINESS_MEDIA 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-05d05dbd28c0f1c5562d2a8a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.0,
+        "rationale": "`A Journey Towards a Sustainable Future` 후보는 ISSUER_NEWSROOM 경로로 발견되어 요청된 OPENDART·KIND_KRX 삼성전자 원 공시 provenance가 아닙니다. 제목이나 snippet에 삼성전자, HBM, 투자가 일부 나타나더라도 제3자 요약 또는 다른 문서 family이며, HBM4·메모리 신규시설투자 직접성을 snippet만으로 입증할 수 없습니다. source owner 불일치가 명확하므로 이 요청에서는 full fetch 대상으로 선택하지 않습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "epoch86 partition 8의 후보 4건을 각각 한 번씩 분류했습니다.",
+      "요청된 OPENDART·KIND_KRX 삼성전자 원 공시이면서 HBM4·메모리 신규시설투자를 직접 가리키는 full-fetch 후보는 이 partition에 없습니다.",
+      "ranking_complete=true는 이 partition transport roster의 분류 완료만 뜻하며, 신규시설투자 근거 확보나 전체 research 완료를 뜻하지 않습니다.",
+      "모든 snippet은 discovery metadata로만 취급했고 evidence로 승격하지 않았습니다."
+    ]
+  },
+  "payload_hash": "9f9c5ca9c3cae0f0622e8af4f72ee2996837a3eb9377be193d739f0a4581545a",
+  "production_score_authority": false,
+  "prompt_hash": "186b22db827963b239762efd48d7fd3ee8480084924e7c6ff4017037b7f66b44",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6abfb1d0bbbb4de953e240eee67dd93758c5d57b34d2a3b5132d2bc1f3ab0843",
+  "response_id": "COLLABRESP-0520e6cf39d4d6d880de26f2ec30fc308f6f253821f259c3f80fbc875a5b773b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

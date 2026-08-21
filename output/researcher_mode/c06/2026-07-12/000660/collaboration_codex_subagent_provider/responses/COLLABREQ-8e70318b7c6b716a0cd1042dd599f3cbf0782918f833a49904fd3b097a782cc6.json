@@ -1,0 +1,58 @@
+{
+  "output_schema_hash": "48d3b7a885a34860970d637ef748fc553885214fc85fb0bce8c695bb2e18b232",
+  "payload": {
+    "allowed_range": [
+      7.2,
+      9.6
+    ],
+    "anchor_comparisons": [
+      "현재 근거는 HBM 매출의 실제 2배 이상 성장, HBM 8.5배와 일반메모리 5.2배의 SOTP 차등, peer 대비 높은 ROE와 낮은 P/E·EV/EBITDA가 함께 있어 POSITIVE MEDIUM anchor ORDTRANSFER-c54e0c02076da1642b64c8df보다 경제적 연결이 구체적이다.",
+      "반면 POSITIVE STRONG anchor ORDTRANSFER-505a232bb2f7dc1ce7f89a4a의 상단과 비교하면 HBM 단독 이익·현금흐름과 FY2027 이후 duration이 확인되지 않아 같은 수준의 확정성을 부여할 수 없다.",
+      "COUNTER STRONG anchor ORDTRANSFER-75306723611a10615f950fec와 같은 강한 반대 band를 고려하면 경쟁 공급 확대와 이익 감속이 상단을 제약하지만, 이미 관찰된 매출·배수·PBR 변화 때문에 현재 근거를 약한 band로 낮추기도 어렵다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "disagreements": [
+      "HBM에 더 높은 SOTP 배수가 적용됐다는 사실을 시장 전체가 아직 반영하지 않았다는 뜻으로 확대하지 않는다. PBR band 상단 돌파와 PER 상승은 일부 재평가가 이미 발생했음을 함께 보여준다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a",
+      "ORDTRANSFER-75306723611a10615f950fec"
+    ],
+    "proposed_points": 8.4,
+    "rationale": "FY2025 HBM 매출의 2배 이상 성장으로 제품 경제성이 전사 실적에 실제 전환됐고, 브로커 SOTP가 HBM에 일반메모리보다 높은 EV/EBITDA를 적용해 가치 전환 경로를 명시했다. peer 표의 높은 ROE와 낮은 P/E·EV/EBITDA, EPS 상향과 PER 상승 및 역사적 PBR 상단 돌파도 평가체계 변화와 일치한다. 다만 issuer 실적과 브로커 추정이 섞여 있고 HBM 단독 현금창출과 구속력 있는 고객 commitment는 공개되지 않았다. 거시 할인, FY2027~FY2028 감익 전망, 경쟁 공급 확대를 반영해 강하지만 상단 미만으로 판단한다.",
+    "support_fact_ids": [
+      "EFACT-122bf71db78558e5780ed3c8",
+      "EFACT-3e4c5596b1c40a463ba54d38",
+      "EFACT-b3d48bea9ae741feec4d4a05",
+      "EFACT-b74e88a671a1247b0ce230d5"
+    ],
+    "why_not_higher": "HBM 절대 매출·영업이익·현금흐름과 구속력 있는 고객 계약이 없어 8.5배 SOTP의 실현성과 duration을 독립적으로 검증할 수 없고, FY2027 이후 감익 및 경쟁 공급 확대가 상단을 제한한다.",
+    "why_not_lower": "실제 HBM 매출 성장, HBM과 일반메모리의 명시적 배수 차등, peer 수익성·배수 비교, EPS와 multiple의 동반 상승이 서로 다른 축에서 같은 valuation 전환을 지지한다."
+  },
+  "payload_hash": "f761245ccce76326d5cdfb303dcc509f79b264869247188dcd9fb6b9e354f6a2",
+  "production_score_authority": false,
+  "prompt_hash": "2cae68801190b18f9816f5acfdf07e145020f4e4f5a05bd4d9402774ee01a8a8",
+  "provenance": {
+    "agent_id": "root-phase101-c06-valuation-analyst",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_valuation_analyst",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8e70318b7c6b716a0cd1042dd599f3cbf0782918f833a49904fd3b097a782cc6",
+  "response_id": "COLLABRESP-677c7c129d72e2fe9f920e512ac8782100587f0aa0104ca921e389777bfa126f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

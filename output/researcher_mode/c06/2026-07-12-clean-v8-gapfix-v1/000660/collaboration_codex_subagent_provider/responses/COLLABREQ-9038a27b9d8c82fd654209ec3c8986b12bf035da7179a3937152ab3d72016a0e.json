@@ -1,0 +1,53 @@
+{
+  "output_schema_hash": "0761f5e3ecd4782e02ae6eb9a78357b05abf9a59da01df619fd2e3bf925f105d",
+  "payload": {
+    "allowed_range": [
+      12.0,
+      14.5
+    ],
+    "anchor_comparisons": [
+      "positive anchor CANCH-20eb617beb160e1032292ed3와 비교해 확인된 positive는 유지하되 미확인 항목만 상단에서 제한한다",
+      "counter anchor CANCH-1aa76cb8e89d85cd78d325f4와 비교하면 현재 source-backed evidence가 0점 상태보다 강하다"
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca"
+    ],
+    "disagreements": [
+      "분석가보다 귀속·계약·지속성의 미확인 항목을 더 크게 본다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-20eb617beb160e1032292ed3",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 13.25,
+    "rationale": "고객 집중이 높고 고객별 물량·가격·기간·취소보호·RPO가 독립 확인되지 않았다. 그럼에도 생산가동과 HBM 제품 실행, 고객 공동개발이 수요에서 제품화로 이어지는 경로를 확인한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "고객 집중이 높고 고객별 물량·가격·기간·취소보호·RPO가 독립 확인되지 않았다.",
+    "why_not_lower": "생산가동과 HBM 제품 실행, 고객 공동개발이 수요에서 제품화로 이어지는 경로를 확인한다."
+  },
+  "payload_hash": "940494995a93e610029479bce94d709ecc83e69b38e89d963c63bd66df97e5ca",
+  "production_score_authority": false,
+  "prompt_hash": "e88726820bdbe946270e20b1a4d2927d8c24e48c40582b8cb45c8b5b81f9ccc2",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9038a27b9d8c82fd654209ec3c8986b12bf035da7179a3937152ab3d72016a0e",
+  "response_id": "COLLABRESP-775bda737c97c1bfe4128eeb9e4c292787d2b6e5a8a787eddbf9ebc223074c38",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

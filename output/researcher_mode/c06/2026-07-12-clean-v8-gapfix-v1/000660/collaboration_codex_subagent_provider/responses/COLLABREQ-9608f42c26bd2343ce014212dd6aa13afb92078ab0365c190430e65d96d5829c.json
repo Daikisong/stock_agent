@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "09e6883df75a193dc7ea146a98d62802447bc6cc59de736cd3248b0d2a1f4eb9",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7144bc5fa5999fe766bc6ae4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "지배구조 개요는 공식이지만 요청된 투자 발표자료나 현금흐름 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-eb7cf8c9085f1d24ee3e9829",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "지속가능경영 홈은 구체적 IR·현금흐름 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2b5f0ec3941b65a4cf66796a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "HBM4 제품 사양 페이지는 CAPEX·CAPA·FCF 실적 발표자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b141b573390e886a51d83774",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "방문 포털 로그인으로 연구 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-95b531bbd702938924ffedeb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "SSD 소비자 사이트로 자본배분 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-85ac08ebdfed8f6ae2a225cd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "협력사 등록 절차로 요청 문서군과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-5cd48fce2d6139c83884346d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "글로벌 네트워크 소개로 IR 발표자료나 현금흐름 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-046ccc7cc34384e732a65498",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "채용 절차로 연구 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-dea50ad551c1c1f2ec4aa1de",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "복지제도 설명으로 자본배분 연구 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-04d75ea8b0eef04efa050800",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "브랜드 BI 페이지로 요청 문서군과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-1cfa9bd4f0db6eebda4c39fd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "협력사 기술자료 임치 안내로 발행사 IR·현금흐름 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2b8cfb5a90c73cc077368824",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "기업정보 홈은 경제적 목적을 확인할 구체 발표자료 경로가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 파티션에는 요청된 ISSUER_PRESENTATION 또는 CASH_FLOW 원문으로 직접 이어지는 후보가 없다."
+    ]
+  },
+  "payload_hash": "a2005ecd0ac64157780f03c52409dbae5e86c040f8d328eb65f4f401f698bfcb",
+  "production_score_authority": false,
+  "prompt_hash": "7fc0f8abb0fe6f5a8ebd93a010390c39ce46f902697ce8c7a9440625e957ea41",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9608f42c26bd2343ce014212dd6aa13afb92078ab0365c190430e65d96d5829c",
+  "response_id": "COLLABRESP-5ee1f8f5810682a9851950bcb7ff67b98167bb2f8dad88dd75160e3de8078b82",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

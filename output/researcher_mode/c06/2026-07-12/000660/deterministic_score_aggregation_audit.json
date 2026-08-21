@@ -1,0 +1,55 @@
+{
+  "aggregation_config": {
+    "consensus_method": "MEDIAN_WITH_ALLOWED_RANGE_INTERSECTION",
+    "counter_application": "SKEPTIC_CANNOT_CREATE_SUPPORT",
+    "independent_corroboration_affects_points": false,
+    "invalid_proposal_policy": "REMOVE_AND_RECORD",
+    "material_disagreement_absolute_floor": 2.0,
+    "material_disagreement_fraction": 0.2,
+    "material_disagreement_policy": "RESEARCH_REQUIRED",
+    "minimum_finalization_confidence": 0.4,
+    "required_roles": [
+      "ANALYST",
+      "SKEPTIC",
+      "CALIBRATION_JUDGE"
+    ],
+    "source_confidence_affects_points": false,
+    "stage_authority": false,
+    "tiny_impact_cap_multiplication": false,
+    "version": "e2r_v5_component_consensus_v2"
+  },
+  "aggregation_config_hash": "522ff198cef25ef61f1974c7c2889a5bba6f771d927f3c7505bf4d289856f995",
+  "complete_component_count": 7,
+  "component_count": 7,
+  "component_scoring_memo_run_status": "COMPONENT_SCORING_MEMOS_COMPLETE",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "component_config_hash_mismatch_count": 0,
+    "component_max_violation_count": 0,
+    "component_research_required_count": 0,
+    "component_roster_mismatch_count": 0,
+    "global_pending_reason_count": 0,
+    "material_disagreement_count": 0,
+    "production_stage_authority_count": 0,
+    "required_component_lineage_missing_count": 0,
+    "source_confidence_points_multiplication_enabled_count": 0,
+    "tiny_impact_cap_multiplication_enabled_count": 0,
+    "total_aggregation_pending_count": 0,
+    "total_reconciliation_error_count": 0
+  },
+  "diagnostic_counts": {
+    "counter_effect_applied_component_count": 7,
+    "independently_corroborated_component_count": 7,
+    "invalid_proposal_removed_count": 0,
+    "valid_proposal_count": 21
+  },
+  "independent_corroboration_affects_confidence_only": true,
+  "production_stage_authority": false,
+  "proposal_validation_count": 21,
+  "research_request_count": 0,
+  "schema_version": "e2r_deterministic_score_aggregation_audit_v1",
+  "source_confidence_affects_points": false,
+  "status": "DETERMINISTIC_SCORE_AGGREGATION_AUDIT_PASS",
+  "tiny_impact_cap_multiplication_used": false,
+  "total_score_reconciled": true
+}

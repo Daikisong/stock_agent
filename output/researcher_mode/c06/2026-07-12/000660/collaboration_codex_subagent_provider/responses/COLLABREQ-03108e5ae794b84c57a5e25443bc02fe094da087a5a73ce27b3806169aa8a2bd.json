@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "현재 exact snapshot의 7개 canonical component memo는 모두 COMPLETE이며 FY2025 및 1Q26 actual, HBM4 양산·생산, DRAM ASP·가동률, valuation·cash conversion과 각각의 counter를 같은 evidence 등급으로 제한해 반영한다. 268개 current fact record와 51개 full-fetch evidence document가 7개 objective를 substantive evidence로 해소하고, cutoff 2026-07-12 이전에 합리적으로 이용 가능한 최신 actual·공식 제품 진행과 structured valuation이 포함돼 있다. Red Team은 7개 component 전부에서 계약조건 비공개, HBM 단독 손익·FCF 미분리, FY2027 이후 duration, 경쟁 공급, 높은 trailing 배수와 추정치 차이를 명시했으며, 이는 현재 점수 범위의 상단 제한과 향후 공시 모니터링으로 보존됐다. 그러나 exact prompt는 이 한계를 지금 실행할 수 있는 새 문서 identity나 source-family route로 연결하지 않는다. Structured result는 COMPLETE이고 모든 component의 missing role이 비어 있으며, latest Supervisor에도 missing material fact, source-family gap, query direction, next action 또는 material disagreement가 없다. 따라서 material positive·counter·supersession·structured 경로는 검토 완료됐고 현재 실행 가능한 unresolved material question은 없다. 이 판정은 검색 0건, provider 오류, 고정 횟수, transport budget 또는 source absence 추정에 의존하지 않는다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "e6857105eb33cb22b483e6023016aecf6de2e6cb8e2bc28fafe8a7d49c776fc0",
+  "production_score_authority": false,
+  "prompt_hash": "9314631d4d3c7c0295f9d8cf02b414d5b11fdc7139b6a09eafdc2c08ccb0a63f",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-03108e5ae794b84c57a5e25443bc02fe094da087a5a73ce27b3806169aa8a2bd",
+  "response_id": "COLLABRESP-bfeb2c5488fb00fdaeee86f43661d5deffdfdd91ab94e3a7be5450c381c82222",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

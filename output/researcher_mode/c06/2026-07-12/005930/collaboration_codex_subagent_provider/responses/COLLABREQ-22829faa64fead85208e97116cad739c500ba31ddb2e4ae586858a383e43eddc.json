@@ -1,0 +1,549 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "rationale": "삼성전자 직접 HBM qualification·sample, DRAM capacity counter, 2026 DRAM·메모리 volume/ASP/revenue/profit/margin 12건을 추출했다. Page limit 때문에 forward valuation·Value-up/Capex discipline 잔여가 있다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "HBM3E 고객 인증 완료는 출하·매출 전환의 선행 gate가 통과됐음을 뜻한다.",
+        "exact_quote": " HBM의경우,HBM3e는모든거래선향제품인증을완료.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 고객 qualification 불확실성을 독립 broker full report가 해소한다.",
+        "mechanism_scope_id": "005930:HBM3E:QUALIFICATION_COMPLETE:2025Q4:DAISHIN",
+        "normalized_object": "HBM3E 전 거래선 제품 인증 완료",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q4",
+        "predicate": "대신증권은 삼성전자 HBM3E가 모든 거래선 대상 제품 인증을 완료했다고 밝혔다.",
+        "predicate_family": "HBM3E_CUSTOMER_QUALIFICATION_COMPLETE",
+        "primitive_tags": [
+          "HBM3E",
+          "QUALIFICATION"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "HBM_CUSTOMER_QUALIFICATION",
+        "question_family_tags": [
+          "HBM3E",
+          "CUSTOMER_QUALIFICATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM3E qualification",
+        "subject_id": "005930:HBM3E:QUALIFICATION:2025Q4:DAISHIN",
+        "unit": "qualitative",
+        "value": "all customer qualifications completed"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "주요 고객 sample 제출은 HBM4 qualification과 향후 공급망 진입의 선행 단계다.",
+        "exact_quote": "HBM4도 최대 11.7Gbps 속도까지 대응 가능한 이\n점을기반으로주요고객사들로Sample을제출.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4 상업화·qualification 경로의 target-direct 진척이다.",
+        "mechanism_scope_id": "005930:HBM4:CUSTOMER_SAMPLE:2025Q4:DAISHIN",
+        "normalized_object": "11.7Gbps HBM4 주요 고객 sample 제출",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q4",
+        "predicate": "삼성전자는 최대 11.7Gbps 대응 HBM4 샘플을 주요 고객사에 제출했다.",
+        "predicate_family": "HBM4_CUSTOMER_SAMPLE_SUBMISSION",
+        "primitive_tags": [
+          "HBM4",
+          "CUSTOMER_SAMPLE"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_COMMERCIALIZATION",
+        "question_family_tags": [
+          "HBM4",
+          "SAMPLE_SUBMISSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 customer samples",
+        "subject_id": "005930:HBM4:SAMPLES:2025Q4:DAISHIN",
+        "unit": "Gbps",
+        "value": 11.7
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "메모리 Capex가 DRAM 생산 증가로 이어지는 공급 response를 정량화한다.",
+        "exact_quote": " 삼성전자 메모리반도체: Capex는 2025년 34조원, 2026년 35조원 전망. 당사 예상 Capex 기준\n2026년생산증가율은DRAM+10%후반,NAND+10%초반수준.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "투자 규모와 DRAM 공급 반응을 target-direct하게 연결한다.",
+        "mechanism_scope_id": "005930:DRAM:CAPEX_PRODUCTION:2026:DAISHIN",
+        "normalized_object": "2026 메모리 Capex 35조원과 DRAM 생산 10% 후반 성장",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 메모리 Capex를 2026년 35조원, DRAM 생산 증가율을 10% 후반으로 전망했다.",
+        "predicate_family": "DRAM_CAPEX_PRODUCTION_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "CAPEX",
+          "PRODUCTION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_CAPEX_SUPPLY_RESPONSE",
+        "question_family_tags": [
+          "CAPEX",
+          "DRAM_SUPPLY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 메모리 Capex와 DRAM 생산",
+        "subject_id": "005930:DRAM:CAPEX_PRODUCTION:2026:DAISHIN",
+        "unit": "capex and production growth",
+        "value": "KRW 35 trillion; high-teens percent"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "P4L 추가 DRAM capacity는 단기 기여가 작아도 생산 신호가 고객 주문과 pricing에 영향을 줄 수 있다.",
+        "exact_quote": " 삼성전자:P4L(평택4공장)에서추가Capa투자가가능할것이라생각.시장의BaseCase는2026\n년Phase1과Phase3투자이나,Phase2가변수로작용가능.Phase2의경우,당초로직/파운드리\n라인으로 활용될 것으로 예상되었으나, DRAM 라인으로 전환. 해당 구역의 인프라 투자 완료 시점이\n2Q26으로예상되는만큼2026년생산에유의미한기여를하긴어려우나,생산증가시그널이보이기\n시작하면,고객들의반응도달라질수있음을상기할필요.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공급 부족 thesis를 깨뜨릴 수 있는 target-specific 추가 capacity option이다.",
+        "mechanism_scope_id": "005930:DRAM:P4L_PHASE2_OPTION:2026:DAISHIN",
+        "normalized_object": "P4L Phase2 DRAM 전환의 추가 증산 옵션",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026F",
+        "predicate": "대신증권은 P4L Phase2의 DRAM 전환이 2026년 생산 기여는 제한적이나 추가 증산 가능성과 고객 반응 변화의 변수라고 분석했다.",
+        "predicate_family": "DRAM_ADDITIONAL_CAPACITY_OPTION_COUNTER",
+        "primitive_tags": [
+          "DRAM",
+          "P4L",
+          "CAPACITY_COUNTER"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_CAPACITY_UPSIDE_COUNTER",
+        "question_family_tags": [
+          "P4L",
+          "CAPACITY_OPTION",
+          "COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 P4L Phase2 DRAM capacity option",
+        "subject_id": "005930:DRAM:P4L_PHASE2_OPTION:2026:DAISHIN",
+        "unit": "qualitative",
+        "value": "limited 2026 contribution but expansion option"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "DRAM 출하량은 메모리 매출과 이익 전망의 물량 축이다.",
+        "exact_quote": "DRAM출하량(십억Gb) 24.5 27.3 31.1 32.0 32.1 33.7 35.7 36.4 105.9 114.9 137.8",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM earnings bridge의 volume 가정이다.",
+        "mechanism_scope_id": "005930:DRAM:SHIPMENT:2026:DAISHIN",
+        "normalized_object": "2026 DRAM 출하량 137.8십억Gb",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 DRAM 출하량을 137.8십억Gb로 전망했다.",
+        "predicate_family": "DRAM_SHIPMENT_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "SHIPMENT"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_VOLUME_BRIDGE",
+        "question_family_tags": [
+          "DRAM_VOLUME",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 DRAM shipment",
+        "subject_id": "005930:DRAM:SHIPMENT:2026:DAISHIN",
+        "unit": "billion Gb",
+        "value": 137.8
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "DRAM ASP 상승은 volume과 결합해 메모리 매출·마진을 확대한다.",
+        "exact_quote": "DRAMASP/Gb(USD) 0.37 0.38 0.43 0.58 0.68 0.69 0.70 0.68 0.38 0.45 0.69",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM earnings bridge의 가격 축이다.",
+        "mechanism_scope_id": "005930:DRAM:ASP:2026:DAISHIN",
+        "normalized_object": "2026 DRAM ASP 0.69달러/Gb",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 DRAM ASP를 Gb당 0.69달러로 전망했다.",
+        "predicate_family": "DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "ASP"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_PRICING_BRIDGE",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 DRAM ASP",
+        "subject_id": "005930:DRAM:ASP:2026:DAISHIN",
+        "unit": "USD per Gb",
+        "value": 0.69
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "메모리 공급·가격 개선이 segment revenue로 전환되는 전망이다.",
+        "exact_quote": "메모리반도체 19,069 21,178 26,690 35,359 40,027 42,255 45,779 44,996 84,463 102,297 173,056",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM·DRAM 가격과 물량의 revenue conversion 규모다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE:2026:DAISHIN",
+        "normalized_object": "2026 메모리 매출 173.056조원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 메모리반도체 매출을 173.056조원으로 전망했다.",
+        "predicate_family": "MEMORY_REVENUE_FORECAST",
+        "primitive_tags": [
+          "MEMORY",
+          "REVENUE"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_REVENUE_BRIDGE",
+        "question_family_tags": [
+          "MEMORY_REVENUE",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 메모리 매출",
+        "subject_id": "005930:MEMORY:REVENUE:2026:DAISHIN",
+        "unit": "KRW billion",
+        "value": 173056
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "DRAM 출하와 ASP가 segment revenue로 전환되는 규모다.",
+        "exact_quote": "DRAM 13,018 14,110 18,436 26,541 30,463 31,598 33,822 33,341 53,255 72,104 129,224",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM volume·ASP 가정의 direct revenue bridge다.",
+        "mechanism_scope_id": "005930:DRAM:REVENUE:2026:DAISHIN",
+        "normalized_object": "2026 DRAM 매출 129.224조원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 DRAM 매출을 129.224조원으로 전망했다.",
+        "predicate_family": "DRAM_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "REVENUE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_REVENUE_BRIDGE",
+        "question_family_tags": [
+          "DRAM_REVENUE",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 DRAM 매출",
+        "subject_id": "005930:DRAM:REVENUE:2026:DAISHIN",
+        "unit": "KRW billion",
+        "value": 129224
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "HBM·DRAM revenue 확대가 segment operating profit으로 전환된다.",
+        "exact_quote": "메모리반도체 3,400 2,950 7,700 13,807 17,586 20,122 22,672 16,156 20,467 27,857 76,536",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 revenue의 profit conversion을 직접 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:OP:2026:DAISHIN",
+        "normalized_object": "2026 메모리 영업이익 76.536조원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 메모리반도체 영업이익을 76.536조원으로 전망했다.",
+        "predicate_family": "MEMORY_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "MEMORY",
+          "OPERATING_PROFIT"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_PROFIT_BRIDGE",
+        "question_family_tags": [
+          "MEMORY_PROFIT",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 메모리 영업이익",
+        "subject_id": "005930:MEMORY:OP:2026:DAISHIN",
+        "unit": "KRW billion",
+        "value": 76536
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "DRAM 가격·물량 개선이 operating profit으로 전환되는 규모다.",
+        "exact_quote": "DRAM 3,700 3,250 6,800 12,484 15,960 17,138 18,726 13,825 16,483 26,234 65,648",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM revenue의 profit conversion을 직접 제시한다.",
+        "mechanism_scope_id": "005930:DRAM:OP:2026:DAISHIN",
+        "normalized_object": "2026 DRAM 영업이익 65.648조원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 DRAM 영업이익을 65.648조원으로 전망했다.",
+        "predicate_family": "DRAM_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "OPERATING_PROFIT"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_PROFIT_BRIDGE",
+        "question_family_tags": [
+          "DRAM_PROFIT",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 DRAM 영업이익",
+        "subject_id": "005930:DRAM:OP:2026:DAISHIN",
+        "unit": "KRW billion",
+        "value": 65648
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "메모리 가격·믹스 개선의 margin leverage가 valuation bridge를 강화한다.",
+        "exact_quote": "메모리반도체 18 14 29 39 44 48 50 36 24 27 44",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 earnings quality와 rerating 가능성을 정량화한다.",
+        "mechanism_scope_id": "005930:MEMORY:OPM:2026:DAISHIN",
+        "normalized_object": "2026 메모리 영업이익률 44%",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 메모리반도체 영업이익률을 44%로 전망했다.",
+        "predicate_family": "MEMORY_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "MEMORY",
+          "MARGIN"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_MARGIN_BRIDGE",
+        "question_family_tags": [
+          "MEMORY_MARGIN",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 메모리 영업이익률",
+        "subject_id": "005930:MEMORY:OPM:2026:DAISHIN",
+        "unit": "percent",
+        "value": 44
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "economic_mechanism": "DRAM ASP와 volume 개선이 높은 operating margin으로 전환된다.",
+        "exact_quote": "DRAM 28 23 37 47 52 54 55 41 31 36 51",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 가격 상승이 margin으로 전환되는 정도를 보여준다.",
+        "mechanism_scope_id": "005930:DRAM:OPM:2026:DAISHIN",
+        "normalized_object": "2026 DRAM 영업이익률 51%",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "대신증권은 삼성전자 2026년 DRAM 영업이익률을 51%로 전망했다.",
+        "predicate_family": "DRAM_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "MARGIN"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_MARGIN_BRIDGE",
+        "question_family_tags": [
+          "DRAM_MARGIN",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 DRAM 영업이익률",
+        "subject_id": "005930:DRAM:OPM:2026:DAISHIN",
+        "unit": "percent",
+        "value": 51
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-9a49712a57980bd910075a33"
+    ],
+    "unresolved_research_notes": [
+      "12개 page limit 도달: 동일 문서에 prior page와 distinct한 삼성전자 forward PER/PBR 및 Value-up·Capex discipline counter가 남아 있다."
+    ]
+  },
+  "payload_hash": "20ba13b7b35118db5eed8584552425490a087bd0915a46db1de5ce763987ab45",
+  "production_score_authority": false,
+  "prompt_hash": "0b7ec2d8a6c13ba46d387abbcc0ad5d11248919311538d5db966ce784ac3bcd3",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-22829faa64fead85208e97116cad739c500ba31ddb2e4ae586858a383e43eddc",
+  "response_id": "COLLABRESP-8179ebf491ebb9d3be29fc7c2ef28a837265ea78dbe29977095b5866cd305bbc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

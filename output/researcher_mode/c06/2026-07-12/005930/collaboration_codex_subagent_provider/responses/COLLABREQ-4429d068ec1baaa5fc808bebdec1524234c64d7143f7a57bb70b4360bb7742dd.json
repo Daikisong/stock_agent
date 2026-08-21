@@ -1,0 +1,236 @@
+{
+  "output_schema_hash": "9dc918761338e30f5e2e77f6f9c46b69266bb7d23bbb734ac0b47f7fdbf732b1",
+  "payload": {
+    "confidence": 0.83,
+    "counter_case": "공시 가동률은 시간 기준이므로 HBM 전용 웨이퍼 투입·수율·패키징 처리량을 직접 측정하지 않는다. 가격 상승 속도 둔화, 큰 물량 증가 없는 가격 의존, 수요 둔화와 아직 확정되지 않은 대규모 증설 계획은 현재 프리미엄의 정상화 경로다. 추가로 HBM 전용 웨이퍼 투입·수율·적층·패키징 처리량과 증설 램프 일정 및 가격 둔화에 따른 공급제약 변화이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-054f760d026b470c39e27df1"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-054f760d026b470c39e27df1"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200"
+    ],
+    "positive_case": "가동률 100%, 완판된 HBM4 생산여력, 낮은 재고와 수요 초과가 동시에 나타나 단순 업황 기대가 아니라 실제 공급 제약이 확인된다. 이 제약은 범용 D램 가격 급등과 고속 HBM4 프리미엄으로 전환됐고, HBM 투입이 범용 공급을 줄이는 구조가 병목을 강화한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 15,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 32,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 53,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 124,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 131,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 223,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 255,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 283,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 316,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 358,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 429,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 452,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      }
+    ],
+    "proposed_score_lower": 15.5,
+    "proposed_score_mid": 16.8,
+    "proposed_score_upper": 18.1,
+    "research_complete": true,
+    "researcher_summary": "2026년 1분기 DS 메모리 라인의 공시 시간 기준 가동률 100%, HBM4 생산여력 완판, 역대 최저 수준의 메모리 재고와 고객수요 대비 낮은 공급 충족률은 실제 공급 여유가 제한됐음을 함께 보여준다. 범용 D램 가격은 2026년 2분기에 전분기 대비 58~63% 상승했고 11.7Gbps HBM4는 표준 제품보다 높은 가격대를 형성해 병목이 실현가격으로 전환됐다. HBM 적층용 D램 투입이 범용 D램 공급을 줄이는 상호 병목도 있다. 다만 100%는 시간 기준이지 HBM 전용 웨이퍼·패키징·수율 CAPA가 아니며, 가격 상승 둔화·대규모 CAPEX·수요 약화가 프리미엄을 낮출 수 있다. 이번 semantic rewrite에서는 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다. 필요한 공식 bridge가 현재 fact에 추가되지 않았으므로 supervisor gap을 미해결로 유지한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다.",
+        "fact_row_index": 15,
+        "source_economic_mechanism": "범용 메모리 마진 약 80%가 일시적이라는 전문가 평가는 현재 가격 병목이 높은 이익으로 전환되는 현상을 영구 구조로 외삽할 수 없다는 정상화 counter를 제공한다.",
+        "source_period_json": "\"current as of 2026-05-29\"",
+        "source_predicate": "이형수 HSL파트너스 대표는 현재 약 80%인 범용 메모리 반도체 마진율을 일시적 현상으로 평가했다",
+        "source_value_json": "\"about 80%, assessed as temporary\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다.",
+        "fact_row_index": 32,
+        "source_economic_mechanism": "범용 D램 가격의 큰 폭 상승은 같은 판매량의 메모리 매출과 이익 전환을 확대한다.",
+        "source_period_json": "\"2026-Q2\"",
+        "source_predicate": "트렌드포스에 따르면 2026년 2분기 범용 D램 가격은 전분기 대비 58~63% 상승했다",
+        "source_value_json": "\"58-63\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다.",
+        "fact_row_index": 53,
+        "source_economic_mechanism": "역대 최저 수준의 타이트한 메모리 재고 운영은 재고 부담보다 공급 여유가 제한된 현재 수급 상태를 나타낸다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "삼성전자 메모리 재고가 역대 최저 수준으로 타이트하게 운영되고 있다고 설명됐다",
+        "source_value_json": "\"record-low and tight inventory level\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다.",
+        "fact_row_index": 124,
+        "source_economic_mechanism": "MEMORY_CAPACITY_UTILIZATION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 DS 메모리 생산라인의 가동 가능 시간과 실제 가동 시간이 모두 21,600시간으로 공시 가동률이 100%였다",
+        "source_value_json": "1.0"
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다.",
+        "fact_row_index": 131,
+        "source_economic_mechanism": "삼성전자의 메모리 공급 역량이 고객 수요에 크게 못 미치고 공급 충족률이 역대 최저라는 설명은 현재 생산·재고 여유보다 수요가 큰 직접적인 공급 병목을 나타낸다.",
+        "source_period_json": "\"2026-Q1 as of 2026-04-30\"",
+        "source_predicate": "삼성전자의 메모리 공급 역량이 고객 수요에 크게 못 미치며 수요 대비 공급 충족률이 역대 최저 수준을 기록했다",
+        "source_value_json": "\"record-low supply fulfillment rate\""
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다.",
+        "fact_row_index": 223,
+        "source_economic_mechanism": "2026년 메모리 대규모 CAPEX 증가 전망은 제한된 공급에 대응하는 증설 여력을 높이는 동시에, 이익이 FCF로 전환되는 과정의 현금지출 부담을 키우는 양면 요인이다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자는 2026년 세부 투자계획이 미확정인 상태에서 메모리 대규모 CAPEX 증가를 예상했다",
+        "source_value_json": "\"large memory capex increase expected; detailed plan not finalized\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다.",
+        "fact_row_index": 255,
+        "source_economic_mechanism": "HBM4 생산여력이 완판됐다는 회사 측 설명은 양산·출하를 넘어 현재 계획 생산능력이 고객 수요로 소진된 상태를 나타낸다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 HBM4 생산 여력이 완판된 상태라고 밝혔다",
+        "source_value_json": "\"production capacity sold out\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다.",
+        "fact_row_index": 283,
+        "source_economic_mechanism": "11.7Gbps HBM4의 표준 10.3Gbps 제품 대비 높은 가격대는 고속 제품 믹스가 매출과 수익성에 기여하는 경로다.",
+        "source_period_json": "\"2026 through 2026-07-07\"",
+        "source_predicate": "11.7Gbps HBM4의 가격대는 표준 10.3Gbps HBM4보다 높게 형성됐다",
+        "source_value_json": "\"higher price band than standard 10.3Gbps HBM4\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다.",
+        "fact_row_index": 316,
+        "source_economic_mechanism": "HBM 생산 확대가 적층 D램 투입을 늘려 범용 D램 공급을 줄이고 범용 메모리 가격 상승을 강화하는 생산 믹스의 기회비용을 제시한다.",
+        "source_period_json": "\"2026-Q2 현재\"",
+        "source_predicate": "HBM 생산 확대에 따른 적층 D램 투입 증가가 범용 D램 공급을 줄여 범용 메모리 가격 상승에 기여했다",
+        "source_value_json": "\"HBM expansion increased stacked-DRAM use, reduced conventional DRAM supply, and raised conventional memory prices\""
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다.",
+        "fact_row_index": 358,
+        "source_economic_mechanism": "하반기에도 가격은 오르지만 상승 속도가 둔화될 것이라는 전망은 현재의 급격한 가격 상승률을 그대로 연장할 수 없다는 병목 가격의 속도 counter다.",
+        "source_period_json": "\"2026-H2E\"",
+        "source_predicate": "삼성증권은 2026년 하반기 D램 가격 상승 속도가 다소 둔화될 것으로 전망했다.",
+        "source_value_json": "\"price increases expected to decelerate\""
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다.",
+        "fact_row_index": 429,
+        "source_economic_mechanism": "메모리 물량이 크게 늘지 않은 상태에서 가격 급등에 의존한 이익은 가격 사이클이 둔화될 때 지속성이 약해질 수 있다.",
+        "source_period_json": "\"2026-Q2 current risk\"",
+        "source_predicate": "삼성전자 메모리 실적이 큰 물량 증가 없이 가격 급등에 의존한다는 불안이 제기됐다",
+        "source_value_json": "\"earnings depend on price surge without large volume growth\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 시간 기준 가동률과 HBM 전용 웨이퍼·수율·적층·패키징 병목을 동일시하지 않는다.",
+        "fact_row_index": 452,
+        "source_economic_mechanism": "투자와 증설 계획을 반영한 뒤에도 2026년 고객 메모리 수요가 삼성전자의 공급을 초과할 것으로 예상돼 수요-공급 병목의 지속성을 보여준다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자는 2026년 고객 메모리 수요가 투자·증설 계획을 고려한 공급을 초과할 것으로 예상했다",
+        "source_value_json": "\"customer demand expected to exceed supply after investment and capacity expansion\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      15,
+      32,
+      53,
+      124,
+      131,
+      223,
+      255,
+      283,
+      316,
+      358,
+      429,
+      452
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_GUIDANCE",
+      "ISSUER_NEWSROOM",
+      "KIND_KRX",
+      "PUBLIC_BROKER_PDF",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "시간 기준 가동률을 HBM 전용 CAPA나 수율 100%로 해석할 수 없다.",
+      "HBM 전공정·적층·패키징별 병목 수치와 실제 고객 배정률은 공개되지 않았다.",
+      "CAPEX의 세부 일정과 램프 속도, 하반기 가격 상승 둔화 폭이 불확실하다.",
+      "현재 높은 범용 메모리 마진이 일시적일 가능성을 배제할 수 없다.",
+      "미해결 supervisor gap: HBM 전용 웨이퍼 투입·수율·적층·패키징 처리량과 증설 램프 일정 및 가격 둔화에 따른 공급제약 변화"
+    ],
+    "why_not_higher": "HBM 전용 CAPA·수율·패키징 처리량이 없고, 가격 상승 둔화와 CAPEX 공급 대응 및 가격 의존 위험이 있어 만점 수준의 지속성을 확정할 수 없다. 시간 기준 가동률과 현재 가격 상승만으로 HBM 병목의 위치와 지속기간을 확정할 수 없다.",
+    "why_not_lower": "공시 100% 가동률, 발행사 HBM4 완판, 낮은 재고·공급 충족률과 실제 D램 가격 상승 및 HBM4 프리미엄이 병목과 가격력을 다각도로 확인한다. 기존 current positive facts는 그대로 유효하다."
+  },
+  "payload_hash": "7e4eeb672fc7fa127537aab43ed7a15c8cf95966f1a14425a804e90fe28e30eb",
+  "production_score_authority": false,
+  "prompt_hash": "0c8faec0b89155e034f918f0ff9d26bb0c12cfd10ae15998d668441b525dcfba",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4429d068ec1baaa5fc808bebdec1524234c64d7143f7a57bb70b4360bb7742dd",
+  "response_id": "COLLABRESP-67a5c32a0816d4774ac50ec02b81457976ce74427bd6bb04adb56a59634404a8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

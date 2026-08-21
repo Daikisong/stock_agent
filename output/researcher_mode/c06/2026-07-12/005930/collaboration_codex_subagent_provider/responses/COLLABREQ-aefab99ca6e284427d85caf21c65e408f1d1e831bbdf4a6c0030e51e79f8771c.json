@@ -1,0 +1,224 @@
+{
+  "output_schema_hash": "1e1d4e3100799854dabba517b22b43f3c9fde50cc680b3d0b3b997e9e3d210a7",
+  "payload": {
+    "confidence": 0.78,
+    "counter_case": "대규모 자산취득 약정과 운전자본 유출이 이미 존재하며 향후 메모리 CAPEX 세부계획은 미확정이다. 전사·DS 수치만으로 HBM 투자수익률을 계산할 수 없고, 자기주식 취득·배당도 선단공정 투자와 동일한 현금 재원을 경쟁한다. 추가로 약정·매출채권·운전자본·상세 메모리 투자계획을 함께 반영한 잔여 현금과 HBM 투자수익 경로이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0"
+    ],
+    "positive_case": "실제 OCF가 CAPEX를 웃돌아 양(+) FCF가 발생했고 충분한 현금성자산, DS 투자 실행, 자기주식 소각과 FCF 기반 환원 규칙이 함께 확인된다. 이는 성장 투자와 주주환원이 모두 실행될 수 있는 자금 흐름을 보여준다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 13,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 106,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 145,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 190,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 221,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 253,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 297,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 320,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 400,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 481,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 500,
+        "reason": "현재 citable fact이고 방향·lifecycle·component scope가 유지되어 재작성에서도 사용한다."
+      }
+    ],
+    "proposed_score_lower": 2.0,
+    "proposed_score_mid": 2.6,
+    "proposed_score_upper": 3.2,
+    "research_complete": true,
+    "researcher_summary": "구조화 실제치상 2026년 1분기 연결 영업현금흐름 40.27조원, CAPEX 18.18조원, FCF 22.10조원으로 투자 후에도 양(+)의 현금이 남았다. DS 신·증설 및 보완 투자 10.19조원과 전사 자산취득은 공급 대응을 보여주며, 자기주식 소각과 2024~2026년 FCF 50%를 재원으로 한 정규배당·추가환원 정책은 실제 환원 경로를 제시한다. 다만 이 수치들은 전사 또는 DS 혼합 기준이고 HBM 투자수익률을 분리하지 못한다. 미발생 자산취득 약정 27.50조원, 매출채권 및 운전자본 현금 유출, 미확정 메모리 CAPEX 세부계획은 잔여 현금과 배분 효율을 제한한다. 이번 semantic rewrite에서는 전사 현금창출과 HBM 투자수익을 분리하고 약정·운전자본·미확정 투자계획의 현금 경쟁을 반영한다. source provider가 pending이고 새 accepted fact가 없으므로 supervisor gap을 미해결로 유지한다. 현재 546개 fact의 방향과 lifecycle을 다시 대조해 prior selected rows를 유지했고, 새 source-backed fact가 없는 gap은 uncertainty와 상단 제한으로 남겼다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 전사 현금창출과 HBM 투자수익을 분리하고 약정·운전자본·미확정 투자계획의 현금 경쟁을 반영한다.",
+        "fact_row_index": 13,
+        "source_economic_mechanism": "CORPORATE_CAPITAL_COMMITMENT",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "2026년 3월 말 연결 기준 아직 발생하지 않은 유·무형자산 취득 약정액이 27,503,020백만원이다",
+        "source_value_json": "27503020"
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 전사 현금창출과 HBM 투자수익을 분리하고 약정·운전자본·미확정 투자계획의 현금 경쟁을 반영한다.",
+        "fact_row_index": 106,
+        "source_economic_mechanism": "WORKING_CAPITAL_CASH_CONVERSION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 매출채권 증가가 영업현금흐름을 27,680,587백만원 감소시켰다",
+        "source_value_json": "-27680587"
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 전사 현금창출과 HBM 투자수익을 분리하고 약정·운전자본·미확정 투자계획의 현금 경쟁을 반영한다.",
+        "fact_row_index": 145,
+        "source_economic_mechanism": "CORPORATE_LIQUIDITY",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "2026년 1분기말 연결 현금및현금성자산이 73,306,751백만원이다",
+        "source_value_json": "73306751"
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 전사 현금창출과 HBM 투자수익을 분리하고 약정·운전자본·미확정 투자계획의 현금 경쟁을 반영한다.",
+        "fact_row_index": 190,
+        "source_economic_mechanism": "SHAREHOLDER_RETURN_CASH_USE",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 별도 자기주식 취득 현금유출이 7,614,808백만원이다",
+        "source_value_json": "7614808"
+      },
+      {
+        "component_interpretation": "NEUTRAL 방향을 유지하며 전사 현금창출과 HBM 투자수익을 분리하고 약정·운전자본·미확정 투자계획의 현금 경쟁을 반영한다.",
+        "fact_row_index": 221,
+        "source_economic_mechanism": "CORPORATE_CAPITAL_ALLOCATION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 DS 부문 신·증설 및 보완 시설투자가 101,927억원이었다",
+        "source_value_json": "101927"
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 전사 현금창출과 HBM 투자수익을 분리하고 약정·운전자본·미확정 투자계획의 현금 경쟁을 반영한다.",
+        "fact_row_index": 253,
+        "source_economic_mechanism": "2026년 메모리 대규모 CAPEX 증가 전망은 제한된 공급에 대응하는 증설 여력을 높이는 동시에, 이익이 FCF로 전환되는 과정의 현금지출 부담을 키우는 양면 요인이다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자는 2026년 세부 투자계획이 미확정인 상태에서 메모리 대규모 CAPEX 증가를 예상했다",
+        "source_value_json": "\"large memory capex increase expected; detailed plan not finalized\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 전사 현금창출과 HBM 투자수익을 분리하고 약정·운전자본·미확정 투자계획의 현금 경쟁을 반영한다.",
+        "fact_row_index": 297,
+        "source_economic_mechanism": "TREASURY_SHARE_CANCELLATION",
+        "source_period_json": "\"2026-04-02\"",
+        "source_predicate": "2026년 4월 2일 보통주 자기주식 73,359,314주를 소각했다",
+        "source_value_json": "73359314"
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 전사 현금창출과 HBM 투자수익을 분리하고 약정·운전자본·미확정 투자계획의 현금 경쟁을 반영한다.",
+        "fact_row_index": 320,
+        "source_economic_mechanism": "OPERATING_CASH_GENERATION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 연결 영업활동현금흐름이 40,274,106백만원이다",
+        "source_value_json": "40274106"
+      },
+      {
+        "component_interpretation": "COUNTER 방향을 유지하며 전사 현금창출과 HBM 투자수익을 분리하고 약정·운전자본·미확정 투자계획의 현금 경쟁을 반영한다.",
+        "fact_row_index": 400,
+        "source_economic_mechanism": "WORKING_CAPITAL_CASH_CONVERSION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 영업활동 자산·부채 변동이 현금흐름을 25,543,731백만원 감소시켰다",
+        "source_value_json": "-25543731"
+      },
+      {
+        "component_interpretation": "NEUTRAL 방향을 유지하며 전사 현금창출과 HBM 투자수익을 분리하고 약정·운전자본·미확정 투자계획의 현금 경쟁을 반영한다.",
+        "fact_row_index": 481,
+        "source_economic_mechanism": "CORPORATE_SHAREHOLDER_RETURN",
+        "source_period_json": "\"2024-2026\"",
+        "source_predicate": "삼성전자는 2024~2026년 발생 FCF의 50%를 재원으로 연 9.8조원 정규배당을 유지하고 잔여 재원은 추가 환원할 계획이다",
+        "source_value_json": "\"FCF 50%; annual regular dividend KRW 9.8 trillion\""
+      },
+      {
+        "component_interpretation": "POSITIVE 방향을 유지하며 전사 현금창출과 HBM 투자수익을 분리하고 약정·운전자본·미확정 투자계획의 현금 경쟁을 반영한다.",
+        "fact_row_index": 500,
+        "source_economic_mechanism": "키움증권의 잉여현금흐름 전망은 메모리 이익과 투자 이후 남는 전사 현금 규모를 valuation_rerating 논리와 연결한다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "키움증권은 삼성전자의 2026년 잉여현금흐름을 120조3000억원으로 추정했다",
+        "source_value_json": "120.3"
+      }
+    ],
+    "selected_fact_row_indices": [
+      13,
+      106,
+      145,
+      190,
+      221,
+      253,
+      297,
+      320,
+      400,
+      481,
+      500
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "ISSUER_GUIDANCE",
+      "PUBLIC_BROKER_PDF",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "전사 및 DS 혼합 현금흐름·CAPEX를 HBM 단독 투자수익으로 귀속할 수 없다.",
+      "메모리 세부 CAPEX 일정과 제품별 기대수익률이 공개되지 않았다.",
+      "매출채권·재고 및 기타 운전자본 유출의 정상화 시점이 불확실하다.",
+      "키움증권의 2026년 FCF 전망은 공개 추정치이지 회사 가이던스가 아니다.",
+      "미해결 supervisor gap: 약정·매출채권·운전자본·상세 메모리 투자계획을 함께 반영한 잔여 현금과 HBM 투자수익 경로"
+    ],
+    "why_not_higher": "HBM 단독 투자수익률과 세부 CAPEX 계획이 없고 자산취득 약정·운전자본 유출이 커서 전사 양(+) FCF만으로 최상단 자본배분 효율을 확정할 수 없다. 전사 현금창출이 투자·운전자본 경쟁 뒤 HBM 투자수익과 환원 여력으로 남는지 가른다.",
+    "why_not_lower": "실제 OCF·CAPEX·FCF, 현금성자산, DS 투자와 자기주식 소각 및 FCF 기반 환원정책이 투자와 환원의 실행 가능성을 동시에 확인한다. 기존 current positive facts는 그대로 유효하다."
+  },
+  "payload_hash": "b39017060132cc81d96f0e48d72ee628bcf44d870876d39aec391a1560b0517e",
+  "production_score_authority": false,
+  "prompt_hash": "fcc5d8990cd07c528cc12522a713899232c81ce6829c78454c3e104bd990e9a6",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-aefab99ca6e284427d85caf21c65e408f1d1e831bbdf4a6c0030e51e79f8771c",
+  "response_id": "COLLABRESP-bbe33c2ca6955f903b5282f1bb1c815b2ba6efcd4d5c56ef3b7309ba3d7a1f99",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

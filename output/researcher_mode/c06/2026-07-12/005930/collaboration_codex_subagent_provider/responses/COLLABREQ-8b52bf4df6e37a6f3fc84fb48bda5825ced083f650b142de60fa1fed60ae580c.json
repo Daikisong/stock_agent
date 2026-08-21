@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-c63b3fda667aea18ce6d22b7",
+        "rationale": "원문 14,507자를 처음부터 끝까지 Gold-blind 검토하고 current 524개 fact/526개 claim과 의미 중복을 대조했다. 문서는 모바일 메모리의 customized make-to-order, tapered pricing, shortage 시 선택적 고객관계, 기술 복잡성에 따른 CAPEX, V-NAND·LPDDR3/4·DDR4 전략 등을 설명하지만, 본문 시계열과 제품 계획은 2013~2017년 중심의 과거 프레젠테이션이다. 문서의 forward-looking disclaimer도 해당 과거 전략 전망의 불확실성을 제한할 뿐 2026년 현재 HBM4 고객 일정·capacity·매출 전환을 새로 advance/counter/supersede하지 않는다. current graph의 2025~2026 HBM3E/HBM4 실제 공급·양산 근거보다 오래된 일반 전략·기술 이력이므로 objective-local 신규 물질적 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "8ce04e2f9f338962306635d34a79ae3d9788c614be8dcc23fc8501c63c154731",
+  "production_score_authority": false,
+  "prompt_hash": "3bfbbda612eae28d667770d355cc67ff3d0afa0224610e2fac76d394a5312f39",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8b52bf4df6e37a6f3fc84fb48bda5825ced083f650b142de60fa1fed60ae580c",
+  "response_id": "COLLABRESP-cc366910fb40a1e6447859a2ea4cf9a8632c8e415954e8dcae90ebbb7b490eaa",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

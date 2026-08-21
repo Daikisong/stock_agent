@@ -1,0 +1,242 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "1Q26 전사 actual, DRAM 가격·믹스, 현금흐름·FCF와 FY2027 이후 감익 counter가 함께 반영됐고 현재 점수 판단에 필요한 양방향 증거와 불확실성이 메모에 충분히 보존됐다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "HBM4 양산 진입과 공급 논의의 긍정 경로, 비구속적 수요·LTA와 고객 일정·경쟁 공급 counter가 함께 반영돼 현재 evidence 기준 메모는 충분하다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "100% 가동률과 DRAM blended ASP 상승, HBM4 공정 부담을 증설·수요 탄력·HBM 단독 실현가격 부재와 함께 평가해 현재 병목 판단에 필요한 양방향 근거가 충분하다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 valuation·revision과 동일시점 structured peer P/B가 존재하고, 인접 peer의 사업모델 차이·큰 band 분산·이미 발생한 rerating counter도 보존돼 현재 메모는 충분하다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "issuer 또는 고객 공식 원문에 기간·물량 또는 capacity·가격 체계와 취소권·위약금·선수금 중 구속 조건이 명시된 HBM durable visibility 사실"
+        ],
+        "rationale": "현재 valuation과 peer band는 확보됐지만 structured required role DURABLE_VISIBILITY가 유일하게 비어 있다. 공급 논의·요청수요·브로커 LTA 전망만으로 희소성 프리미엄의 지속성을 검증할 수 없다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "실제 OCF·순현금과 유형자산 취득·구매약정·장기 혼합 투자의 FCF 및 ROIC counter가 함께 반영돼 현재 capital-allocation 판단에 충분하다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "DART·issuer·KIND·복수 브로커와 counter/supersession 계보를 대조했고 잠정자료·브로커 불일치·HBM 단독 분해 부재를 명시해 현재 정보 신뢰도 메모는 충분하다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-8d15e7e4385888bb3f7b009e",
+        "rationale": "FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE 계보는 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-89ba5f6d9f32562c51a7e63d",
+        "rationale": "FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE 계보는 이미 다른 계보로 해소됐으며 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-f2bc145de9775bd3b5483fe4",
+        "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH 계보는 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-58aa8c4c9372e2c39576e762",
+        "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH 계보는 이미 다른 계보로 해소됐으며 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-5ab70d267e5e2db4da293e32",
+        "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED 계보는 이미 다른 계보로 해소됐으며 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-33bd389bcd242693264dd5e6",
+        "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED 계보는 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-b9a707d45ecab434f593a8ca",
+        "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH 계보는 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-45940b3586b74aace3808ae0",
+        "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH 계보는 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-964f9cd2427089ae0236d3b2",
+        "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH 계보는 이미 다른 계보로 해소됐으며 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-92f6e08ce3843f69573b87ec",
+        "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED 계보는 이미 다른 계보로 해소됐으며 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-2d9439d7c171deebfd934d4c",
+        "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED 계보는 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-a66c0e9e74284de2c6c42094",
+        "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH 계보는 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY 계보는 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-79d8a3a358b2360d9a66473f",
+        "rationale": "QUERY_PROVIDER_ERROR 계보는 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-aa53327c4d887284a29a8367",
+        "rationale": "SEARCH_NO_RESULT_NOT_SATURATION 계보는 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-6259195749deafde2b334843",
+        "rationale": "SEARCH_PROVIDER_ERROR 계보는 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-26e413af0f7a3405cecd499e",
+        "rationale": "SEARCH_PROVIDER_ERROR 계보는 이미 다른 계보로 해소됐으며 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-23199c842e54d8427028a4e8",
+        "rationale": "REQUESTED_SOURCE_FAMILY_WITHOUT_ACCEPTED_CLAIM_FACT_LINEAGE 계보는 전송·fetch·시점·검색 범위를 나타낼 뿐 source absence 증명이 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "valuation_rerating",
+        "direction": "POSITIVE",
+        "fact_need": "issuer 또는 고객 공식 원문에서 기간·물량 또는 capacity·가격 체계와 취소권·위약금·선수금 중 구속 조건이 확인되는 HBM 공급 약정",
+        "why_material": "현재 structured valuation gate에서 DURABLE_VISIBILITY만 빠져 있으며, 이 조건이 있어야 현재 병목과 HBM 프리미엄을 일시적 수급이 아닌 지속 가능한 계약 기반으로 구분할 수 있다."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": false,
+        "direction": "고객 공식 IR·공시·실적 원문에서 SK하이닉스 HBM의 기간·물량 또는 capacity·가격 체계와 취소권·위약금·선수금 중 구속 조건이 함께 드러나는 약정만 확인한다.",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "DURABLE_VISIBILITY가 유일한 structured role gap이고 기존 issuer 공급 논의나 브로커 LTA 전망은 구매의무를 증명하지 못했다.",
+        "source_family": "CUSTOMER_OFFICIAL"
+      }
+    ],
+    "next_actions": [
+      "LLM query planner가 SGOBJ-5fccea4d80fc98e697bd7a0e의 CUSTOMER_OFFICIAL 방향을 비중복 semantic query로 생성하고, bounded full-fetch·fact extraction 뒤 DURABLE_VISIBILITY structured role을 재평가한다."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "SK하이닉스의 공급 논의 완료·요청수요·비구속 LTA 설명",
+          "브로커가 추정한 HBM 가격·물량·LTA",
+          "본문 없는 검색 snippet과 게시일 미확인 문서",
+          "이미 실행한 동일 CUSTOMER_OFFICIAL query의 단순 동의어"
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "research_need": "as_of_date 이내 고객 공식 원문에서 SK하이닉스 HBM 공급의 계약 기간과 binding capacity 또는 물량, 가격 체계, 취소·위약·선수금 조건을 검증한다."
+      }
+    ],
+    "rationale": "현재 7개 component memo와 21개 독립 judge는 완성됐고 material score disagreement가 없으며, Red Team과 10개 counter/supersession route proof도 완료됐다. 동일시점 adjacent peer P/B band까지 생성됐지만 structured engine은 valuation_rerating의 DURABLE_VISIBILITY 한 역할만 SOURCE_PENDING으로 남긴다. 따라서 다른 컴포넌트와 미래 monitoring 항목을 재개방하지 않고, 구속력 있는 HBM 고객 약정을 확인할 CUSTOMER_OFFICIAL 경로 하나만 actionable gap으로 유지한다. 실패·zero-result·provider error는 source absence로 해석하지 않는다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": false,
+    "unresolved_material_questions": [
+      "as_of_date 이내 고객 공식 원문에서 SK하이닉스 HBM 공급의 기간·binding capacity 또는 물량·가격·취소 조건이 확인되는가?"
+    ]
+  },
+  "payload_hash": "d7122d402f1cb6ad7b1f470493c5613afb91cc564ff69b6f6269a1c2d8b1ee41",
+  "production_score_authority": false,
+  "prompt_hash": "109fc2a6e22c48bc7ec06cec615288f605cc00ab6ba35aa41bdfc6da9692d7ed",
+  "provenance": {
+    "agent_id": "root-phase101-c06-supervisor-durable-refresh",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_supervisor_durable_refresh",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2381c0fb6a46b1b39356a3748271e7561c9a784e6bc060982276aa18c345f866",
+  "response_id": "COLLABRESP-ba9fad55142bbb42ee7b6375ec5a02906af601812e5566713a94a33616bc01ea",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

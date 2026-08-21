@@ -1,0 +1,47 @@
+{
+  "output_schema_hash": "7dbfe60b384654cd791016e65d09fc824423c5bf4c909208543889fef9766b15",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-85ea729874cf9262f768d66a",
+        "rationale": "page1·page2에서 삼성전자 직접 objective-local facts 16건이 이미 accepted됐다. full remainder 재감사 결과 나머지는 메모리 매출·영업이익·마진, HBM 투자·양산, EPS·PER·BPS·PBR·EV/EBITDA·FCF facts의 semantic duplicate이거나 회사 전체 보조 수치여서 추가 distinct fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-8b02f84953986605b86fd5e1",
+        "rationale": "page1에서 삼성전자 HBM3E 고객 검증 지연과 HBM4 양산 목표 2건이 already accepted됐다. full remainder는 두 사실의 반복, SK하이닉스 단독 또는 일반 HBM 산업 설명이어서 추가 distinct objective-local fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-8ca1b72eb3df7faccadfe53c",
+        "rationale": "page1·page2에서 삼성전자 HBM 인증·PO counter, DRAM 매출·영업이익 및 forward valuation facts 6건이 already accepted됐다. full remainder 재감사 결과 나머지는 기존 valuation bridge의 semantic duplicate 또는 회사 전체·타사·산업 일반 내용이어서 추가 distinct objective-local fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "c606f9fb121477c0f140dc455f4a895fa49c0c56f4fa5c571d53d3b8e868ee10",
+  "production_score_authority": false,
+  "prompt_hash": "3dab6db1196b87cb9d2fff872472a03b033306f93243b042d306f18c849b6b9a",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3bc5d068064cdf3773a1de3515fb584756327b0dd0feec7cb9eeaa909658d7fe",
+  "response_id": "COLLABRESP-83f9799a6aa9840275b338ce25f8750e54ac73be03be6a29fe25082d40b3ef08",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

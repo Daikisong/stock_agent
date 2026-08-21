@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "8a99e028b46d82720a78e0d0944d807c7b374d6815bb9d4b70454ce2da574702",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5abf3b6c75eb6d548ccfe7a7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "후보는 media·market-research·third-party 경로로 NVIDIA 등 customer-owned official domain이 아니다. customer official full-source provenance를 충족하지 않아 family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6b7f094abfe7b334b24331b5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "후보는 기사·portal summary·third-party retelling으로 original PUBLIC_BROKER_PDF owner/landing/attachment가 아니다. 005930 target-specific valuation/revision full-source route를 제공하지 않아 family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7d9c26d3db3226c2534b7dc4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "후보는 기사·portal summary·third-party retelling으로 original PUBLIC_BROKER_PDF owner/landing/attachment가 아니다. 005930 target-specific valuation/revision full-source route를 제공하지 않아 family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b3704fa77cd26112142dcccc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "후보는 기사·portal summary·third-party retelling으로 original PUBLIC_BROKER_PDF owner/landing/attachment가 아니다. 005930 target-specific valuation/revision full-source route를 제공하지 않아 family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1f938f467048a40d1c948756",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "후보는 기사·portal summary·third-party retelling으로 original PUBLIC_BROKER_PDF owner/landing/attachment가 아니다. 005930 target-specific valuation/revision full-source route를 제공하지 않아 family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2ee0a9c1668a6bd24face33b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "후보는 기사·portal summary·third-party retelling으로 original PUBLIC_BROKER_PDF owner/landing/attachment가 아니다. 005930 target-specific valuation/revision full-source route를 제공하지 않아 family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3cd3828df67144b69acfe41e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "후보는 media·market-research·third-party 경로로 NVIDIA 등 customer-owned official domain이 아니다. customer official full-source provenance를 충족하지 않아 family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f96680e3b1100b2ce03a80ca",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "후보는 기사·portal summary·third-party retelling으로 original PUBLIC_BROKER_PDF owner/landing/attachment가 아니다. 005930 target-specific valuation/revision full-source route를 제공하지 않아 family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-bda72df323267766d26b4735",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "후보는 media·market-research·third-party 경로로 NVIDIA 등 customer-owned official domain이 아니다. customer official full-source provenance를 충족하지 않아 family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d6f61acfc4a6c9e85c874da8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "후보는 기사·portal summary·third-party retelling으로 original PUBLIC_BROKER_PDF owner/landing/attachment가 아니다. 005930 target-specific valuation/revision full-source route를 제공하지 않아 family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d7052f0c38bcf360824a522c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "후보는 기사·portal summary·third-party retelling으로 original PUBLIC_BROKER_PDF owner/landing/attachment가 아니다. 005930 target-specific valuation/revision full-source route를 제공하지 않아 family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-417d9b920f1c36c4862fd403",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "후보는 media·market-research·third-party 경로로 NVIDIA 등 customer-owned official domain이 아니다. customer official full-source provenance를 충족하지 않아 family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P0 roster 12개를 exact-once 분류했으나 적격 CUSTOMER_OFFICIAL 또는 PUBLIC_BROKER_PDF full-source route는 확인되지 않았다.",
+      "material 0은 source absence가 아니며 metadata·snippet을 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "0e5b7b27e37b621fe3e37f49bda556c2d32484883b2d452e29584ff8b6a23aba",
+  "production_score_authority": false,
+  "prompt_hash": "fd88a00d90111591b8486c3b597926f511d9430fad45f6e1b27df2bc4fca45f1",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6eba00fc4ee495a4ccd3c654ded3b26bee6517ff3a92226b8e94493ced1b5ef4",
+  "response_id": "COLLABRESP-a8ba4e273a7f499caee856c2b16a72dc37e2ee1cec934071ed8a2e4e3b4f14c7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

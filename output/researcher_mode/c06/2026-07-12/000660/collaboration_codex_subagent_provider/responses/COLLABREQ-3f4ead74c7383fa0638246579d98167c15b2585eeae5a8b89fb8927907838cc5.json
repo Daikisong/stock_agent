@@ -1,0 +1,281 @@
+{
+  "output_schema_hash": "f1112cb266f8971719d0d2d26e85084b83320ea4c8ae3fc2c76ea570f3494102",
+  "payload": {
+    "confidence": 0.86,
+    "counter_case": "현재 trailing P/E 20.6766배·P/B 9.4569배와 forward FCF yield 1.7827%는 기대가 이미 크게 반영됐을 가능성을 보이고, SK하이닉스 P/B는 직접 peer보다 높다. FY2026 이후 이익 감소·정체 전망, 매크로 불확실성에 따른 PBR 하향, CSP CapEx 재원 위험, 경쟁사 HBM 공급 확대와 forward 수치 불일치는 낮은 forward multiple이 peak earnings를 반영할 가능성을 남긴다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-cf3c9742b856a43c5c18a073",
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a",
+      "ORDTRANSFER-a99b35934948524825bcefbe",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b",
+      "ORDTRANSFER-75306723611a10615f950fec"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df"
+    ],
+    "positive_case": "FY2025 HBM 매출 2배 이상과 1Q26 연결 이익·마진 actual은 HBM 성장 서사가 실적으로 전환됐음을 보여준다. forward 이익 추정 상향, 삼성전자·Micron 대비 낮은 P/E·EV/EBITDA와 높은 ROE, HBM에 더 높은 배수를 적용한 SOTP, PBR band 상단 돌파와 EPS·PER 동반 상승은 재평가 근거를 보강한다. LTA 보호장치는 원계약이 확인될 경우 이익 변동성 축소의 추가 경로다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 1,
+        "reason": "LTA 가격 하방·이행 보호장치가 이익 변동성 축소와 valuation duration에 조건부로 연결되므로 직접성 한계를 명시해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 18,
+        "reason": "동일 forward peer P/E·EV/EBITDA·ROE 비교가 상대 valuation 근거를 직접 제공한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 33,
+        "reason": "실적 상향에도 목표 PBR이 하향된 관찰은 배수 확장의 직접 counterweight다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 60,
+        "reason": "일반메모리와 HBM의 차등 EV/EBITDA SOTP가 HBM 프리미엄의 valuation bridge를 명시한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 106,
+        "reason": "연결 actual 이익과 마진 급증이 forward valuation 분모를 검증하되 HBM 단독 귀속은 하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 165,
+        "reason": "PBR band 상단 돌파와 EPS·PER 동반 상승이 관찰된 regime 변화 근거다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 168,
+        "reason": "HBM 매출 2배 이상 증가가 HBM 프리미엄과 실제 실적 사이의 연결을 지지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 182,
+        "reason": "FY2026 이후 이익 감소 전망은 peak-earnings valuation 위험을 직접 계량한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 226,
+        "reason": "경쟁사 HBM3E 공급 확대는 scarcity premium 약화 가능성이라는 직접 valuation counterfact다."
+      }
+    ],
+    "proposed_score_lower": 6.3,
+    "proposed_score_mid": 7.0,
+    "proposed_score_upper": 7.6,
+    "research_complete": true,
+    "researcher_summary": "valuation_rerating은 medium anchor를 웃돌지만 strong anchor에는 못 미친다. actual HBM 매출 성장과 1Q26 연결 이익·마진, forward 이익 상향, 직접 메모리 peer 대비 낮은 P/E·EV/EBITDA와 높은 ROE, HBM 차등 SOTP가 재평가를 지지한다. 반면 trailing P/E·P/B가 높고 forward FCF yield가 낮으며 P/B 프리미엄, peak-earnings 전망, 매크로 할인, 경쟁 공급과 수치 불일치가 추가 배수 확장을 제한한다. PEER_STRUCTURED와 STRUCTURED_PEER_BAND는 직접 메모리 peer의 비교 경계를 확인하는 비권위 문맥이며, 인접 peer의 계약·CAPA·현금 구조나 prompt 밖 valuation 값을 전이하지 않는다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "LTA의 가격 하방·이행 보호장치가 실제로 작동하면 이익 변동성 축소와 valuation 방법론 전환을 지지하지만 이는 브로커 파악이며 원계약은 없다.",
+        "fact_row_index": 1,
+        "source_economic_mechanism": "한화리서치는 SK하이닉스가 LTA를 활발히 체결 중이고 해당 계약에 메모리 가격 하방 방지 및 성실 이행을 위한 법적 장치가 있으며 비중도 빠르게 늘고 있다고 파악했다. 이는 issuer가 조건을 공개한 확정계약 공시가 아니라 독립 브로커의 파악이므로 고객·기간·물량·가격·위약금이 확정됐다고 확대하지 않는다.",
+        "source_period_json": "\"current LTA activity assessed 2026-06-22\"",
+        "source_predicate": "한화리서치는 SK하이닉스가 LTA를 활발히 체결 중이고 체결 중인 LTA에는 메모리 가격 하방 방지와 성실 이행을 위한 법적 장치가 있으며 LTA 비중이 빠르게 늘고 있다고 파악했다",
+        "source_value_json": "\"broker assessment of active LTA execution, price-downside protection, legal performance protection and rapidly rising LTA share; exact terms undisclosed\""
+      },
+      {
+        "component_interpretation": "동일 forward 기준에서 삼성전자·Micron보다 낮은 P/E·EV/EBITDA와 높은 ROE는 상대 할인 가능성을 지지하고, 높은 P/B는 이미 반영된 수익성 프리미엄을 보여준다.",
+        "fact_row_index": 18,
+        "source_economic_mechanism": "유안타 peer 표에서 SK하이닉스는 FY2026~FY2027 P/E와 EV/EBITDA가 삼성전자·Micron보다 낮고 ROE는 높게 추정됐다. P/B는 삼성전자보다 높아 수익성 프리미엄도 함께 내포하며, 이는 2026-01-27 시점의 브로커·Bloomberg 추정 비교다.",
+        "source_period_json": "\"FY2026F-FY2027F peer estimates as of 2026-01-27\"",
+        "source_predicate": "유안타 peer 표는 SK하이닉스의 FY2026F P/E 6.9배·EV/EBITDA 4.7배와 FY2027F 5.9배·4.1배가 삼성전자와 Micron보다 낮고 ROE는 각각 53.7%와 38.3%로 높게 추정됐음을 보여준다",
+        "source_value_json": "\"SK hynix FY2026F PER/PBR/ROE/EV-EBITDA 6.9x/2.9x/53.7%/4.7x and FY2027F 5.9x/1.9x/38.3%/4.1x; Samsung and Micron peer rows quoted\""
+      },
+      {
+        "component_interpretation": "최근 forward 영업이익·순이익 추정 상향은 valuation 분모와 기대 재설정의 직접 근거지만 특정 시점 컨센서스다.",
+        "fact_row_index": 20,
+        "source_economic_mechanism": "Quantiwise 컨센서스 표는 2026년 영업이익 성장률과 12개월 선행 영업이익·순이익 추정치의 최근 상향 폭을 한 기준으로 제시해 forward earnings와 기대 변화의 크기를 직접 계량한다.",
+        "source_period_json": "\"FY2026F and 12-month-forward consensus snapshot as of 2025-11-19\"",
+        "source_predicate": "2026년 영업이익 성장률은 64.6%이고 12개월 선행 영업이익 추정치는 1개월간 37.9%, 3개월간 65.7%, 12개월 선행 순이익 추정치는 1개월간 44.0% 변했다",
+        "source_value_json": "\"2026 OP growth 64.6; 12M forward OP 1M change 37.9; 3M change 65.7; 12M forward NP 1M change 44.0\""
+      },
+      {
+        "component_interpretation": "실적 상향에도 매크로 불확실성으로 목표 PBR이 낮아진 사례는 이익 개선이 배수 확장을 자동 보장하지 않음을 보여준다.",
+        "fact_row_index": 33,
+        "source_economic_mechanism": "실적발표 당일 주가는 1H25 실적이 시장 기대를 웃돌 것이라는 추정에도 1.5% 하락했고, 분석사는 연간 영업이익 추정 상향과 동시에 관세·하반기 매크로 불확실성을 반영해 12개월 선행 Target PBR을 1.8배에서 1.6배로 낮췄다. 이는 이익 상향만으로 배수 재평가가 보장되지 않고 불확실성이 valuation을 상쇄할 수 있음을 보여주는 관찰이다.",
+        "source_period_json": "\"2025-04-24 market and valuation snapshot\"",
+        "source_predicate": "1H25 실적 상향에도 관세와 하반기 매크로 불확실성이 주가 하락과 Target PBR 하향에 반영됐다",
+        "source_value_json": "\"post-call stock -1.5%; 12M forward Target PBR cut to 1.6x from 1.8x\""
+      },
+      {
+        "component_interpretation": "HBM에 일반메모리보다 높은 EV/EBITDA를 부여한 SOTP는 구조적 HBM 프리미엄의 valuation bridge지만 브로커 가정이고 forward 기간이 불명확하다.",
+        "fact_row_index": 60,
+        "source_economic_mechanism": "일반메모리와 HBM을 분리해 각각 다른 EV/EBITDA 배수를 적용한 SOTP는 HBM의 구조적 성장 프리미엄이 전사 가치로 전환되는 valuation bridge를 직접 제시한다. 배수의 forward 기간이 명시되지 않아 구조화된 FORWARD_EV_EBITDA 역할로 태그하지 않는다.",
+        "source_period_json": "\"valuation published 2025-11-19\"",
+        "source_predicate": "일반메모리 가치는 327조원에 EV/EBITDA 5.2배, HBM 가치는 255조원에 EV/EBITDA 8.5배를 적용해 산정됐다",
+        "source_value_json": "\"general memory KRW 327tn at 5.2x EV/EBITDA; HBM KRW 255tn at 8.5x EV/EBITDA\""
+      },
+      {
+        "component_interpretation": "1Q26 연결 매출·영업이익·마진 actual은 valuation 분모의 실현을 지지하지만 HBM 단독 이익으로 귀속하지 않는다.",
+        "fact_row_index": 106,
+        "source_economic_mechanism": "2026년 1분기 연결 매출과 영업이익이 전분기 대비 각각 60%, 96.2% 증가하고 영업이익률이 72%로 개선돼 가격·수요 강세의 전사 손익 전환을 보여준다. 반도체부문이 100%로 공시됐지만 HBM 단독 이익으로 귀속하지 않는다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q4 and 2025-Q1\"",
+        "source_predicate": "2026년 1분기 연결 매출은 52.6조원으로 전분기 대비 60% 증가했고 영업이익은 37.6조원, 영업이익률은 72%였다",
+        "source_value_json": "\"revenue KRW 52.6tn (+60% QoQ, +198% YoY); operating profit KRW 37.6tn; operating margin 72% (+13pp QoQ)\""
+      },
+      {
+        "component_interpretation": "HBM 차별 이익과 함께 PBR band 상단 돌파 및 EPS·PER 동반 상승이 관찰돼 regime rerating의 일부 실현을 보이지만 미래 성과를 보장하지 않는다.",
+        "fact_row_index": 165,
+        "source_economic_mechanism": "SK증권은 HBM 경쟁력에서 나온 SK하이닉스의 차별적 이익이 과거 PBR Band 상단 돌파로 연결되고, 단순 불황 탈출 구간이 아닌데도 EPS 상향과 PER 상승이 동시에 나타난 점을 Value 확장의 신호로 해석했다. 이는 관찰된 valuation regime 변화이지 미래 주가 성과의 보장은 아니다.",
+        "source_period_json": "\"AI cycle from 2023 through assessment published 2025-11-03\"",
+        "source_predicate": "HBM 경쟁력 기반의 차별 이익으로 SK하이닉스 PBR이 과거 Band 상단을 돌파했고 EPS 상향과 PER 상승도 동반됐다",
+        "source_value_json": "\"PBR moved above its historical upper band while EPS upgrades and PER expansion occurred together\""
+      },
+      {
+        "component_interpretation": "FY2025 HBM 매출의 2배 이상 증가는 HBM 프리미엄 논리가 실제 전사 실적에 연결됐음을 지지하나 정확한 HBM 이익은 없다.",
+        "fact_row_index": 168,
+        "source_economic_mechanism": "FY2025 HBM 매출이 전년보다 2배 이상으로 늘어 전사 사상 최대 실적에 크게 기여했다는 회사 설명은 HBM 수요가 실제 매출과 전사 손익으로 전환된 것을 보여준다. 정확한 HBM 매출액·비중·영업이익은 공개되지 않았다.",
+        "source_period_json": "\"FY2025 vs FY2024\"",
+        "source_predicate": "SK하이닉스 FY2025 HBM 매출은 전년 대비 2배 이상으로 늘어 회사 사상 최대 실적에 중요하게 기여했다",
+        "source_value_json": "\"more than 2x year-on-year\""
+      },
+      {
+        "component_interpretation": "FY2026 이후 영업이익·EPS 감소 전망은 낮은 forward multiple이 peak earnings를 반영할 가능성을 제기한다.",
+        "fact_row_index": 182,
+        "source_economic_mechanism": "BNK는 SK하이닉스 영업이익이 FY2026F 240,536십억원에서 FY2027F 230,332십억원, FY2028F 214,828십억원으로 감소하고, EPS 증가율도 FY2027F -6.9%, FY2028F -5.3%가 될 것으로 추정했다. 이는 FY2026의 급증 뒤 이익이 계속 확대된다는 가정에 대한 독립적인 duration counterfact이며 확정 실적이 아니다.",
+        "source_period_json": "\"FY2026F-FY2028F\"",
+        "source_predicate": "BNK는 SK하이닉스 영업이익과 EPS가 FY2026F에 급증한 뒤 FY2027F와 FY2028F에 감소할 것으로 추정했다",
+        "source_value_json": "\"operating profit FY2026F 240536, FY2027F 230332, FY2028F 214828; EPS growth FY2026F 393.8%, FY2027F -6.9%, FY2028F -5.3%\""
+      },
+      {
+        "component_interpretation": "같은 문서의 2026 매출 전망 불일치는 forward valuation 분모의 신뢰도와 범위 상단을 낮춘다.",
+        "fact_row_index": 197,
+        "source_economic_mechanism": "같은 SK하이닉스 Top Pick 구간에서 2026년 매출 요약은 110.1조원이라고 쓰지만 바로 아래 표는 139,064.8십억원이라고 제시한다. 이 내부 불일치는 forward revenue 숫자의 확정적 사용을 제한하는 정보품질 counterfact다.",
+        "source_period_json": "\"FY2026F; published 2025-11-19\"",
+        "source_predicate": "같은 분석 구간의 2026년 매출 전망이 요약 110.1조원과 표 139,064.8십억원으로 서로 다르다",
+        "source_value_json": "\"summary KRW 110.1tn versus table KRW 139.0648tn\""
+      },
+      {
+        "component_interpretation": "1Q26 자료의 잠정·시점 제한은 actual 기반 valuation bridge에도 정보품질 할인을 요구한다.",
+        "fact_row_index": 200,
+        "source_economic_mechanism": "자료 자체는 1Q26 실적을 잠정치라고 하고 2026년 1월 28일 시점에서만 유효하다고 기재해 수치 적용 시점에 명시적 제한이 있다.",
+        "source_period_json": "\"1Q2026 release with stated operative date 2026-01-28\"",
+        "source_predicate": "1Q26 실적자료는 수치를 잠정치이며 2026년 1월 28일 시점에서만 유효하다고 기재했다",
+        "source_value_json": "\"preliminary; speaks only as of 2026-01-28\""
+      },
+      {
+        "component_interpretation": "EPS 상향 주도 랠리와 미완의 valuation 정상화 평가는 추가 rerating 여지를 보이지만 산업 관점이지 종목 성과 확정이 아니다.",
+        "fact_row_index": 213,
+        "source_economic_mechanism": "보고서는 반도체 지수의 신고가가 단순 배수 팽창이 아니라 EPS 상향으로 설명되며, 그럼에도 밸류에이션 정상화는 아직 끝나지 않았다고 판단한다. 이는 현재 이익 추정치 개선과 추가 재평가 가능성을 연결하는 산업 관점이지 SK하이닉스의 목표주가나 미래 수익률 확정이 아니다.",
+        "source_period_json": "\"current assessment reported 2026-05-11\"",
+        "source_predicate": "반도체 지수의 신고가 경신은 EPS 상향이 주도했으며 밸류에이션 정상화는 아직 완료되지 않았다고 분석됐다",
+        "source_value_json": "\"record-high semiconductor index attributed to EPS upgrades; valuation normalization assessed as incomplete\""
+      },
+      {
+        "component_interpretation": "동일 2026 기준에서 삼성전자보다 낮은 P/E와 높은 ROE는 상대 가치 근거지만 더 높은 P/B는 프리미엄이 이미 가격에 포함됐음을 뜻한다.",
+        "fact_row_index": 217,
+        "source_economic_mechanism": "동일한 2026년 선행 기준에서 SK하이닉스는 P/B 3.6배와 ROE 91.9%, P/E 5.9배로 제시됐고 삼성전자는 P/B 2.6배와 ROE 49.0%, P/E 6.5배로 제시됐다. SK하이닉스가 더 높은 P/B를 받더라도 ROE 대비 P/E는 더 낮다는 peer-band 근거이며, 표의 주가 상승률이나 목표가격을 가치 근거로 사용하지 않는다.",
+        "source_period_json": "\"FY2026E peer comparison as of 2026-05-08\"",
+        "source_predicate": "2026년 예상치에서 SK하이닉스의 P/B는 3.6배, ROE는 91.9%, P/E는 5.9배로 삼성전자의 P/B 2.6배, ROE 49.0%, P/E 6.5배와 비교됐다",
+        "source_value_json": "\"SK hynix P/E 5.9x, P/B 3.6x, ROE 91.9%, EPS growth 407.7%; Samsung P/E 6.5x, P/B 2.6x, ROE 49.0%, EPS growth 576.0%\""
+      },
+      {
+        "component_interpretation": "CSP CapEx 실행 미달과 FCF·차입·금리 민감도는 downstream AI 지출 둔화를 통해 HBM 기대와 valuation을 낮출 수 있다.",
+        "fact_row_index": 221,
+        "source_economic_mechanism": "1Q26 미국 CSP 실제 CapEx는 컨센서스의 98%, Meta는 71%에 그쳤다. 이후 연간 증가 전망이 64%에서 69% YoY로 높아졌지만 Meta와 Microsoft의 FCF 악화·하반기 음수 전환 가능성, 차입·금리 민감도와 장단기금리차 하락을 근거로 BNK는 AI CapEx 모멘텀 둔화를 예상했다. 이는 장기 CapEx 성장 전망과 구별되는 최신 실행·재원 counterfact다.",
+        "source_period_json": "\"1Q2026 actual and 2H2026 outlook stated 2026-05-12\"",
+        "source_predicate": "1Q26 미국 CSP CapEx는 컨센서스의 98%, Meta는 71%에 그쳤고 FCF 악화와 차입·금리 민감도로 하반기 AI CapEx 모멘텀 둔화가 예상됐다",
+        "source_value_json": "\"1Q26 CSP CapEx 98% of consensus; Meta 71%; annual growth outlook raised from 64% to 69% YoY despite FCF and debt risk\""
+      },
+      {
+        "component_interpretation": "FY2026 급증 뒤 FY2027 영업이익 증가가 제한된 경로는 이익 duration과 rerating 상단을 제약한다.",
+        "fact_row_index": 224,
+        "source_economic_mechanism": "유안타 추정재무제표는 매출과 영업이익이 FY2026에 크게 늘지만 FY2027 영업이익 증가는 제한되는 경로를 제시한다. 이는 한 브로커의 point-estimate path이며 실제 실적을 확정하지 않는다.",
+        "source_period_json": "\"FY2025P-FY2027F\"",
+        "source_predicate": "유안타는 매출을 FY2025P 97,147십억원, FY2026F 208,455십억원, FY2027F 227,216십억원으로, 영업이익을 47,207십억원, 139,254십억원, 140,874십억원으로 추정했다",
+        "source_value_json": "\"revenue FY2025P 97147/FY2026F 208455/FY2027F 227216; operating profit FY2025P 47207/FY2026F 139254/FY2027F 140874\""
+      },
+      {
+        "component_interpretation": "Customized 메모리 경쟁력에 40% PBR 프리미엄을 적용한 방법은 rerating 논리를 수치화하지만 실제 시장 multiple이 아닌 목표가 가정이다.",
+        "fact_row_index": 225,
+        "source_economic_mechanism": "유안타는 Customized 메모리 공급 경쟁력을 근거로 2017년 PBR 밴드 상단에 40% 프리미엄을 적용한 Target PBR 2.66배를 사용했다. 이는 해당 브로커의 목표가 산정 가정일 뿐 실제 시장 multiple이나 투자성과가 아니다.",
+        "source_period_json": "\"FY2027F valuation basis published 2026-01-29\"",
+        "source_predicate": "유안타는 FY2027F 조정 BPS 438,960원에 Customized 메모리 공급 경쟁력을 근거로 2017년 PBR 밴드 상단 대비 40% 프리미엄을 반영한 Target PBR 2.66배를 사용했다",
+        "source_value_json": "\"FY2027F adjusted BPS KRW 438960; target PBR 2.66x; 40% premium to 2017 PBR-band high\""
+      },
+      {
+        "component_interpretation": "삼성전자·Micron의 HBM3E 공급 확대는 scarcity premium과 고객 내 배정 우위를 완화할 수 있는 직접 경쟁 counterfact다.",
+        "fact_row_index": 226,
+        "source_economic_mechanism": "보고서는 2H25~2026년에 HBM과 패키징 공급망이 완화되고, HBM3E 공급이 SK하이닉스 중심에서 삼성전자·Micron의 본격 출하까지 넓어질 것으로 전망했다. Nvidia 공급 안정성과 전세대 매출에는 긍정적이지만, SK하이닉스에는 고객 내 독점성·scarcity premium과 배정 우위가 낮아질 수 있는 직접 경쟁 counterfact다. 실제 점유율 하락이나 가격 인하는 확정하지 않는다.",
+        "source_period_json": "\"2H2025-FY2026 outlook published 2025-09-04\"",
+        "source_predicate": "2H25~2026년 HBM3E 공급이 SK하이닉스 중심에서 삼성전자·Micron 출하까지 확대돼 수급 안정성이 강화될 것으로 전망됐다",
+        "source_value_json": "\"HBM3E supply broadening from SK hynix-centered supply to Samsung and Micron shipments; packaging alternatives also expanding\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      1,
+      18,
+      20,
+      33,
+      60,
+      106,
+      165,
+      168,
+      182,
+      197,
+      200,
+      213,
+      217,
+      221,
+      224,
+      225,
+      226
+    ],
+    "source_coverage": [
+      "COMPANYGUIDE",
+      "DETERMINISTIC_FORWARD_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "ISSUER_NEWSROOM",
+      "KRX_PRICE_MARKET_CAP",
+      "KRX_PRICE_MARKET_CAP+COMPANYGUIDE",
+      "KRX_PRICE_MARKET_CAP+PUBLIC_BROKER_REPORT",
+      "PEER_STRUCTURED",
+      "PUBLIC_BROKER_PDF",
+      "PUBLIC_BROKER_REPORT",
+      "STRUCTURED_HISTORICAL_BAND",
+      "STRUCTURED_PEER_BAND",
+      "TARGET_OFFICIAL_TRAILING_VALUATION"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "HBM 단독 매출액·영업이익·FCF가 없어 연결·DRAM actual을 HBM valuation 분모로 직접 귀속할 수 없다.",
+      "forward P/E·P/B·EV/EBITDA와 SOTP는 기관·기간·방법론별 추정이며 issuer actual이나 확정 시장 multiple이 아니다.",
+      "trailing P/E·P/B와 낮은 forward P/E·P/B의 큰 차이는 FY2026 이후 이익 정상화 가정에 매우 민감하다.",
+      "PEER_STRUCTURED와 STRUCTURED_PEER_BAND는 비교대상 경계를 제공하지만 사업믹스·cycle·회계 차이 때문에 peer valuation을 그대로 복제할 수 없다.",
+      "LTA의 고객명·체결 여부·최소물량·가격·취소·위약 조건이 없어 변동성 하한과 재평가 효과를 확정할 수 없다.",
+      "HBM 경쟁 공급 확대와 고객 CapEx 재원 위험이 실제 점유율·가격·마진에 미칠 크기는 미확정이다.",
+      "DURABLE_VISIBILITY의 장기 투자계획은 공급전략 guidance이지 확정 이익·배수 또는 HBM 전용 CAPA 증명이 아니다."
+    ],
+    "why_not_higher": "HBM 단독 이익·FCF와 원계약이 없고 trailing valuation·낮은 forward FCF yield·peer 대비 P/B 프리미엄이 이미 반영된 기대를 시사한다. 이익 duration, 매크로, 경쟁 공급과 forecast 품질 위험 때문에 strong anchor 수준은 정당화되지 않는다.",
+    "why_not_lower": "실제 HBM 매출 성장과 1Q26 연결 이익·마진, forward 이익 상향, 직접 peer 대비 낮은 P/E·EV/EBITDA, HBM 차등 SOTP와 관찰된 band 상단 돌파가 단순 서사보다 강한 source-backed 재평가 근거를 제공한다."
+  },
+  "payload_hash": "4debb23af03d5da7e54dd87e8e8baeea0113d988d02eb3c993c136d38a4c0ebe",
+  "production_score_authority": false,
+  "prompt_hash": "bd926d32f73e968b899c79baa98c049fe9ecee83bf9790e142260e24784ec803",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3f4ead74c7383fa0638246579d98167c15b2585eeae5a8b89fb8927907838cc5",
+  "response_id": "COLLABRESP-aa6a317682d01ff4658550eff63ce73150e4dedd9f2bab2563ad6406906a56ab",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

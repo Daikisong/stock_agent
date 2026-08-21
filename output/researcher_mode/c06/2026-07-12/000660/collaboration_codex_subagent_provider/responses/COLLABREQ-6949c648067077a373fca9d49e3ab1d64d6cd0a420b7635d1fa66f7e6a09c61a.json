@@ -1,0 +1,377 @@
+{
+  "output_schema_hash": "b5b5f90834d3aa488eeb61cf89dbab833ca36e1257ca7f76331902c40710d32e",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-d33ba57cbaa79f08bce5a38c",
+        "rationale": "prior12를 보존하고 서버용 LPDDR 및 24Gb GDDR7 제품 계획 2건을 추가했다. 전사 현금 수치는 메모리 단독 귀속이 아니며 다른 문장은 prior 사실과 중복이어서 objective-local remainder가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "rationale": "prior12를 보존하고 Agentic AI 수요, 효율-수요 선순환, 수요연계 증설, 잠정시점, 감사변경, 미래진술 위험 6건을 추가했다. 전사 현금과 NAND 전용 사실을 제외하면 distinct objective-local remainder가 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-d33ba57cbaa79f08bce5a38c",
+        "economic_mechanism": "회사는 서버용 LPDDR 기반 모듈 공급을 2025년 안에 시작할 계획이라고 밝혔다. 고객·물량·가격은 제시하지 않은 제품 출시 계획이다.",
+        "exact_quote": "SK hynix will start provision of an LPDDR-based module for servers within this year, and prepare for GDDR7 products for AI GPUs with an expanded capacity of 24Gb from 16Gb in a bid to enhance its leadership in the AI memory market with product diversification.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "서버 DRAM 제품 다변화의 예정 시점을 보여 주지만 판매 실현이나 고객 커밋은 아니다.",
+        "mechanism_scope_id": "000660:DRAM:FY2025_SERVER_LPDDR_MODULE_PROVISION_PLAN",
+        "normalized_object": "2025년 서버용 LPDDR 모듈 공급 개시 계획",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025",
+        "predicate": "서버용 LPDDR 기반 모듈 공급을 2025년 안에 시작할 계획이다",
+        "predicate_family": "FY2025_SERVER_LPDDR_MODULE_PROVISION_PLAN",
+        "primitive_tags": [
+          "LPDDR",
+          "SERVER_MODULE",
+          "PRODUCT_PLAN"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "FY2025_SERVER_LPDDR_MODULE_PROVISION_PLAN",
+        "question_family_tags": [
+          "FY2025_SERVER_LPDDR_MODULE_PROVISION_PLAN"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 서버용 LPDDR 모듈 공급 개시 계획",
+        "subject_id": "000660:DRAM:SERVER_LPDDR_MODULE_2025_PLAN",
+        "unit": "qualitative product launch plan",
+        "value": "server LPDDR-based module provision planned to start within 2025"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-d33ba57cbaa79f08bce5a38c",
+        "economic_mechanism": "회사는 AI GPU용 GDDR7 용량을 16Gb에서 24Gb로 확대한 제품을 준비한다고 밝혔다. 이는 제품 사양 계획이지 출하·매출 실적은 아니다.",
+        "exact_quote": "SK hynix will start provision of an LPDDR-based module for servers within this year, and prepare for GDDR7 products for AI GPUs with an expanded capacity of 24Gb from 16Gb in a bid to enhance its leadership in the AI memory market with product diversification.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "AI GPU용 DRAM 제품 사양 확대를 보여 주지만 양산·출하 실적은 아니다.",
+        "mechanism_scope_id": "000660:DRAM:GDDR7_24GB_AI_GPU_PRODUCT_PLAN",
+        "normalized_object": "AI GPU용 GDDR7 용량 확대 제품 계획",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward plan stated 2025-07-24",
+        "predicate": "AI GPU용 GDDR7 제품 용량을 16Gb에서 24Gb로 확대해 준비할 계획이다",
+        "predicate_family": "GDDR7_24GB_AI_GPU_PRODUCT_PLAN",
+        "primitive_tags": [
+          "GDDR7",
+          "AI_GPU",
+          "PRODUCT_SPEC"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "GDDR7_24GB_AI_GPU_PRODUCT_PLAN",
+        "question_family_tags": [
+          "GDDR7_24GB_AI_GPU_PRODUCT_PLAN"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 AI GPU용 24Gb GDDR7 제품 계획",
+        "subject_id": "000660:DRAM:GDDR7_24GB_AI_GPU_PLAN",
+        "unit": "Gb per device specification",
+        "value": "24Gb planned versus 16Gb"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "economic_mechanism": "회사는 AI가 대규모 학습에서 실시간 추론을 반복하는 Agentic AI 단계로 발전하면서 DRAM 수요 기반이 넓어진다고 분석했다. 이는 시장 전망이지 고객 주문은 아니다.",
+        "exact_quote": "The company analyzed that as AI evolves from large model training to the stage of agentic AI, which repeatedly performs real-time inference across various service environments, the foundation for memory demand is expanding across both DRAM and NAND flash.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 수요 확대의 기술적 사용 단계 변화를 설명하지만 SK하이닉스 확정 물량은 아니다.",
+        "mechanism_scope_id": "000660:DRAM:AGENTIC_AI_DEMAND_EXPANSION",
+        "normalized_object": "Agentic AI 기반 DRAM 수요 확장",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current-to-forward analysis stated 2026-04-23",
+        "predicate": "AI가 Agentic AI 단계로 발전하면서 DRAM 수요 기반이 확대된다고 분석했다",
+        "predicate_family": "AGENTIC_AI_DRAM_DEMAND_EXPANSION",
+        "primitive_tags": [
+          "AGENTIC_AI",
+          "DRAM_DEMAND",
+          "NONBINDING_OUTLOOK"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "AGENTIC_AI_DRAM_DEMAND_EXPANSION",
+        "question_family_tags": [
+          "AGENTIC_AI_DRAM_DEMAND_EXPANSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "Agentic AI 전환에 따른 DRAM 수요기반 확대",
+        "subject_id": "000660:DRAM:AGENTIC_AI_DEMAND_EXPANSION",
+        "unit": "qualitative issuer demand analysis",
+        "value": "DRAM demand foundation expanding with agentic AI"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "economic_mechanism": "메모리 효율 기술이 AI 서비스 경제성을 높여 서비스 규모와 메모리 수요를 다시 키운다는 issuer 수요 메커니즘이다. page2의 가격 전망과 구분되는 수요량 논리다.",
+        "exact_quote": "SK hynix also predicted that the spread of memory efficiency technologies will enhance the economic viability of AI services, leading to an expansion of the overall service scale and further drive memory demand.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "가격 전망과 별도로 메모리 효율 개선이 수요량 확대에 미치는 메커니즘을 설명한다.",
+        "mechanism_scope_id": "000660:MEMORY:EFFICIENCY_AI_SERVICE_DEMAND_LOOP",
+        "normalized_object": "메모리 효율 기술의 AI 서비스 수요 선순환",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward outlook stated 2026-04-23",
+        "predicate": "메모리 효율 기술 확산이 AI 서비스 경제성과 규모를 높여 메모리 수요를 추가로 확대할 것으로 전망했다",
+        "predicate_family": "MEMORY_EFFICIENCY_AI_SERVICE_DEMAND_LOOP",
+        "primitive_tags": [
+          "MEMORY_EFFICIENCY",
+          "AI_SERVICE_SCALE",
+          "DEMAND_LOOP"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "MEMORY_EFFICIENCY_AI_SERVICE_DEMAND_LOOP",
+        "question_family_tags": [
+          "MEMORY_EFFICIENCY_AI_SERVICE_DEMAND_LOOP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "메모리 효율 기술과 AI 서비스 규모의 수요 선순환",
+        "subject_id": "000660:MEMORY:EFFICIENCY_AI_SERVICE_DEMAND_LOOP",
+        "unit": "qualitative demand mechanism",
+        "value": "memory efficiency improves AI-service economics and scale, further driving memory demand"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "economic_mechanism": "회사는 수요에 맞춘 투자로 안정적 공급과 재무건전성을 함께 확보하고 장기 수요에 선행해 생산거점을 확대할 계획이라고 밝혔다. 실현된 ROIC나 현금회수는 아니다.",
+        "exact_quote": "The company highlighted that it will secure both stable supply and robust financial conditions through investment aligned with demand and will strategically expand production bases to proactively respond to long-term demand growth.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "증설의 재무 규율을 설명하지만 실제 투자수익률이나 현금회수 성과로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:DEMAND_ALIGNED_CAPEX_FINANCIAL_BALANCE",
+        "normalized_object": "수요연계 증설의 공급·재무 균형 계획",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward plan stated 2026-04-23",
+        "predicate": "수요연계 투자로 공급 안정성과 재무건전성을 함께 확보하고 장기 수요에 선행해 생산거점을 확대할 계획이다",
+        "predicate_family": "DEMAND_ALIGNED_CAPEX_FINANCIAL_BALANCE",
+        "primitive_tags": [
+          "DEMAND_ALIGNED_CAPEX",
+          "FINANCIAL_DISCIPLINE",
+          "PRODUCTION_BASE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "DEMAND_ALIGNED_CAPEX_FINANCIAL_BALANCE",
+        "question_family_tags": [
+          "DEMAND_ALIGNED_CAPEX_FINANCIAL_BALANCE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "수요연계 투자와 공급·재무 안정성의 병행 계획",
+        "subject_id": "000660:MEMORY:DEMAND_ALIGNED_CAPEX_FINANCIAL_BALANCE",
+        "unit": "qualitative capital-allocation plan",
+        "value": "demand-aligned investment; stable supply and robust financial conditions; strategic production-base expansion"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "economic_mechanism": "자료 자체는 1Q26 실적을 잠정치라고 하고 2026년 1월 28일 시점에서만 유효하다고 기재해 수치 적용 시점에 명시적 제한이 있다.",
+        "exact_quote": "※ Please note that the financial results discussed herein are preliminary and speak only as of January 28, 2026. Readers should not assume that this information remains operative at a later time.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "실적의 잠정성과 자료가 스스로 명시한 적용 시점을 그대로 보존한다.",
+        "mechanism_scope_id": "000660:MEMORY:1Q26_PRELIMINARY_OPERATIVE_DATE_LIMIT",
+        "normalized_object": "1Q26 잠정실적의 기재 시점 제한",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "1Q2026 release with stated operative date 2026-01-28",
+        "predicate": "1Q26 실적자료는 수치를 잠정치이며 2026년 1월 28일 시점에서만 유효하다고 기재했다",
+        "predicate_family": "1Q26_PRELIMINARY_OPERATIVE_DATE_LIMIT",
+        "primitive_tags": [
+          "PRELIMINARY_RESULTS",
+          "OPERATIVE_DATE",
+          "SOURCE_LIMITATION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "1Q26_PRELIMINARY_OPERATIVE_DATE_LIMIT",
+        "question_family_tags": [
+          "1Q26_PRELIMINARY_OPERATIVE_DATE_LIMIT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "1Q26 실적자료의 잠정·시점 제한",
+        "subject_id": "000660:MEMORY:1Q26_PRELIMINARY_DATE_LIMIT",
+        "unit": "source-quality limitation",
+        "value": "preliminary; speaks only as of 2026-01-28"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "economic_mechanism": "FY2026 1Q 실적 검토가 끝나지 않았고 독립 감사 과정에서 수치가 바뀔 수 있어 잠정 실적의 확정성을 제한한다.",
+        "exact_quote": "Review of the FY2026 Q1 financial results has not been finalized. Figures in this earnings release are subject to changes during the independent auditing process.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "최신 분기 수치가 감사 과정에서 변경될 수 있다는 직접적 정보품질 한계다.",
+        "mechanism_scope_id": "000660:MEMORY:1Q26_AUDIT_REVIEW_NOT_FINALIZED",
+        "normalized_object": "1Q26 실적의 감사 변경 가능성",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "1Q2026",
+        "predicate": "FY2026 1Q 실적 검토가 완료되지 않았고 수치는 독립 감사 과정에서 변경될 수 있다",
+        "predicate_family": "1Q26_AUDIT_REVIEW_NOT_FINALIZED",
+        "primitive_tags": [
+          "AUDIT_REVIEW",
+          "FIGURE_CHANGE_RISK"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "1Q26_AUDIT_REVIEW_NOT_FINALIZED",
+        "question_family_tags": [
+          "1Q26_AUDIT_REVIEW_NOT_FINALIZED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "1Q26 실적 검토 미완료와 수치 변경 가능성",
+        "subject_id": "000660:MEMORY:1Q26_AUDIT_REVIEW_NOT_FINALIZED",
+        "unit": "source-quality limitation",
+        "value": "review not finalized; figures subject to change during independent audit"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f6575d1419961bf2a8a0ec20",
+        "economic_mechanism": "자료의 미래예측 진술은 위험과 불확실성 때문에 실제 결과와 크게 다를 수 있어 가격·수요·증설 계획을 실현치로 취급할 수 없다.",
+        "exact_quote": "This material contains forward-looking statements which can be subject to certain risks and uncertainties that could cause actual results to differ materially.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "모든 미래 수요·가격·증설 계획의 실현 한계를 직접 명시한다.",
+        "mechanism_scope_id": "000660:MEMORY:1Q26_FORWARD_LOOKING_STATEMENT_RISK",
+        "normalized_object": "1Q26 미래예측 진술의 실현 불확실성",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "forward statements in 1Q2026 earnings release",
+        "predicate": "자료의 미래예측 진술은 위험과 불확실성으로 실제 결과와 크게 달라질 수 있다",
+        "predicate_family": "1Q26_FORWARD_LOOKING_STATEMENT_RISK",
+        "primitive_tags": [
+          "FORWARD_LOOKING_STATEMENT",
+          "UNCERTAINTY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "1Q26_FORWARD_LOOKING_STATEMENT_RISK",
+        "question_family_tags": [
+          "1Q26_FORWARD_LOOKING_STATEMENT_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "1Q26 자료의 forward-looking statement 위험",
+        "subject_id": "000660:MEMORY:1Q26_FORWARD_LOOKING_RISK",
+        "unit": "forward-looking risk qualification",
+        "value": "actual results may differ materially due to risks and uncertainties"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "40004f1470e639a4efa3d52b6926d6986beee9c6e779b30e38f28d114fc6a2c2",
+  "production_score_authority": false,
+  "prompt_hash": "495c73e340adbd6dbd09853eca1168a3fa9696cdb5a64fed5209c28251f1e74e",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6949c648067077a373fca9d49e3ab1d64d6cd0a420b7635d1fa66f7e6a09c61a",
+  "response_id": "COLLABRESP-9d5c1e7ab72943e00162130764078c10f6d0d3fd7b6c127af58ad17f75f11b6a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-ec4686acbb5072d12caaa8a0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.tradingkey.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-3c3f2dfbb435b1bd550efe01",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.compal.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-1d658a3428db1ad3bc873b7b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.williamblair.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-9bbe2e7dba4b5b23b6243803",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The iea.blob.core.windows.net candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-e99c21d19bc6ac6f086542f1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The grokipedia.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-2023ffaafa8face25e9d4b65",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.mordorintelligence.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-3241b72308127d5ed93a7f7d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The pdf.businesskorea.co.kr candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-59861b3658747d6067cfb734",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The stocktwits.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-01e320437665fb796f3d7145",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The grokipedia.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-70acade34d1ec588cc688bc3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The jmflresearch.com candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-845528b86fbded65f2e5f4ce",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The pdf.businesskorea.co.kr candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      },
+      {
+        "candidate_id": "SGCAND-ce2f064c3d107cea16669ce4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The www.belfercenter.org candidate is not verified as an NVIDIA-owned CUSTOMER_OFFICIAL fiscal 2027 first-quarter financial-results release or official IR landing page. Its supplied title, URL, and provenance do not provide the requested SK hynix-specific HBM commitment route."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate in this partition provides a verified NVIDIA-owned fiscal 2027 first-quarter financial-results release or official IR landing-page route available by 2026-07-12; CUSTOMER_OFFICIAL remains unresolved.",
+      "Every candidate was classified from discovery metadata for fetch routing only; no snippet was treated as evidence."
+    ]
+  },
+  "payload_hash": "f936f887f759b8c5c70add1ab991257f093b6ec2c830422b13826a4ffb931e23",
+  "production_score_authority": false,
+  "prompt_hash": "7b81cc94a8ab29af003071951e56c81abc2eb270389848537164e1adce9408c1",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-63a8342bfc78da925859893534b149363f11878229907f2beb87f9a616d0a09d",
+  "response_id": "COLLABRESP-5280c7e1f23b2b8995454be588cb1707b056c059909869432fee1a88ada29c5b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

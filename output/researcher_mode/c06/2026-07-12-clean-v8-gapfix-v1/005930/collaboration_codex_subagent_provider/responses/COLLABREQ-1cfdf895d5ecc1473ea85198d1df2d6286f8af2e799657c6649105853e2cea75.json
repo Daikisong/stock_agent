@@ -1,0 +1,65 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-9090dbe7d62ea6f7e55994e5",
+      "CRMEMO-e33d24eb53e54f8b0079b89d",
+      "CRMEMO-c989e641c46cb2589aaef403",
+      "CRMEMO-ef70ee03faa19d8789cfb3f2",
+      "CRMEMO-a8ea1b713155d07973355ec3",
+      "CRMEMO-49d146bc643b60c9fe57efe2",
+      "CRMEMO-6268597ffc9811550a086087"
+    ],
+    "confidence": 0.94,
+    "cross_component_support": [
+      "eps_fcf_explosion: 메모리 매출·ASP·100% 가동과 연결 영업이익·OCF actual이 이익 및 현금전환의 실현 개선을 함께 지지한다.",
+      "earnings_visibility: HBM4 양산 출하와 서버향 판매 확대는 제품 실행이 계획 단계를 넘어섰음을 보여준다.",
+      "bottleneck_pricing: 메모리 100% 가동과 ASP 상승은 현재 공급 제약 및 가격력의 방향을 직접 지지한다.",
+      "market_mispricing: 강한 메모리 operating delta와 HBM 실행은 시장 기대와 비교할 실물 기반을 제공한다.",
+      "valuation_rerating: HBM4 actual 출하와 메모리 수익 개선은 이익 질 개선에 따른 재평가 가능성을 지지한다.",
+      "capital_allocation: 자기주식 매입·소각과 배당 actual, 투자등급 조달 접근성은 주주환원 실행 및 재무 완충력을 확인한다.",
+      "information_confidence: 규제공시·감사 맥락과 HBM4 actual 및 AMD 공급 이력은 형식적 신뢰도와 일부 독립 corroboration을 제공한다."
+    ],
+    "cross_component_tensions": [
+      "eps_fcf_explosion의 연결·DS 메모리 actual은 강하지만 HBM 단독 매출·마진·CAPEX·FCF bridge가 없어 귀속 상단을 제한한다.",
+      "earnings_visibility의 actual 출하와 달리 OpenAI LOI·전망, 엔비디아 협의, AMD MOU·우선공급은 signed 물량·가격·기간·취소조건이 아니다.",
+      "bottleneck_pricing의 메모리 100% 가동·ASP 상승은 HBM 전용 wafer·패키징 CAPA, yield, allocation 또는 장기 sold-out을 직접 증명하지 않는다.",
+      "market_mispricing의 operating improvement는 확인되지만 현재 시장 기대에 미반영됐다는 직접 evidence와 actual-versus-consensus bridge는 제한적이다.",
+      "valuation_rerating의 target·peer structured band는 비교 문맥이나 사업 믹스와 HBM 정상 이익 bridge 차이 때문에 직접적인 저평가 결론이 아니다.",
+      "capital_allocation의 환원 actual과 동시에 대규모 자산취득 약정·CAPEX·운전자본 유출 및 희석 부담이 현금배분 품질을 제약한다.",
+      "information_confidence의 공식 공시 안정성과 AMD corroboration에도 고객별 qualification·품질·마진·계약조건의 독립 검증은 부족하다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "일곱 component 모두 현재 memo-bound A/S/C 허용범위의 3-way 교집합이 비어 있지 않아 material judge disagreement는 없다. 교집합은 EPS/FCF 13.2~13.8, earnings visibility 11.6~12.8, bottleneck pricing 13.8~15.8, market mispricing 5.1~6.5, valuation rerating 4.2~4.7, capital allocation 2.1~2.3, information confidence 2.0~2.25다. 강한 actual 운영 개선과 HBM 실행은 공통 positive지만, 연결·메모리·HBM 귀속, plan/LOI/MOU/negotiation과 signed contract의 경계, 전용 CAPA·계약·현금 bridge, peer 비교 가능성 및 독립 corroboration 공백은 계속 material limitation이다. synthesis_complete는 이 current evidence의 review coverage만 뜻한다.",
+    "unresolved_material_questions": [
+      "연결·DS 메모리 실적 중 HBM 단독 매출·마진·CAPEX·FCF는 얼마인가?",
+      "OpenAI·엔비디아·AMD 관련 signed 물량·가격·기간·취소조건·backlog가 실제로 존재하는가?",
+      "HBM 전용 wafer·advanced packaging CAPA, yield, 고객 allocation과 공급 부족 지속기간은 어떠한가?",
+      "HBM actual이 당시 시장 consensus·가격에 미반영됐음을 입증하는 직접 bridge가 있는가?",
+      "사업 믹스 차이를 조정한 HBM 정상 이익과 target·peer valuation의 비교 결과는 무엇인가?",
+      "HBM 투자별 금액·capacity 증분·회수기간·ROIC와 운전자본 회수 경로는 무엇인가?",
+      "고객별 qualification·품질 결과·계약 경제성·마진을 독립적으로 corroborate할 수 있는가?"
+    ]
+  },
+  "payload_hash": "f2547eda2b34418684cb1662496d823117a0f0d6e11f155efa40b57a7d9fcd6e",
+  "production_score_authority": false,
+  "prompt_hash": "19e602717127a8d746070249b7763d5cfdfeac1aa3ca1dda63916d46fddcaf46",
+  "provenance": {
+    "agent_id": "phase105-profile-response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1cfdf895d5ecc1473ea85198d1df2d6286f8af2e799657c6649105853e2cea75",
+  "response_id": "COLLABRESP-5d0187e80a00549926d57ff91339520ca0534b849660925380c0997cdd4b8d99",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

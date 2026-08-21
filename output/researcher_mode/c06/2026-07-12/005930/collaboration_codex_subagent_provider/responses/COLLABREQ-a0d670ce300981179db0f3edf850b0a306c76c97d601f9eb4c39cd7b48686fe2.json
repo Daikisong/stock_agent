@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "785a6753a523225382796207548b4544adfc9711b2beadc233f9b345e1ed913f",
+  "payload": {
+    "allowed_range": [
+      0.8,
+      2.2
+    ],
+    "anchor_comparisons": [
+      "The counter anchor's 0.6-1.0 band is directionally close because the record lacks HBM-specific return and contains large commitments and working-capital outflows, but actual corporate liquidity supports a value above it.",
+      "The positive anchor's 3.8-4.0 band is not justified because company-level cash and operating cash flow do not establish that HBM investment earns an attractive return after capital intensity and ramp costs."
+    ],
+    "counter_fact_ids": [
+      "EFACT-09bca4086b235701b1d84801",
+      "EFACT-38d8612a550c7b15e83db302",
+      "EFACT-5a65baeee25b1b83354b8cf0",
+      "EFACT-60fb6751333ef31d586334e5",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-9cdcaad56af436ed1ac5bc6f",
+      "EFACT-c8cce781c38410832d5bd2a8"
+    ],
+    "disagreements": [
+      "The memo midpoint overstates allocation quality by treating corporate cash capacity as evidence of HBM project returns.",
+      "Share cancellation is an executed return action but does not resolve the tradeoff between buybacks, capacity investment and HBM ramp economics."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "proposed_points": 1.5,
+    "rationale": "All seven counterfacts expose the cash cost or return risk: large asset-purchase commitments, receivables and other working-capital outflows, rising advanced-process investment, share-repurchase cash use, an unfinalized large memory capital plan and lower initial HBM4 profitability. Positive company liquidity is real, but neither HBM capital employed nor HBM free cash flow and return are separated. Capital capacity should not be mistaken for allocation quality.",
+    "support_fact_ids": [
+      "EFACT-037c307f30be846aa6604c82",
+      "EFACT-4ca12a741765c57da0832791",
+      "EFACT-91896907330221fdcfdd97b2",
+      "EFACT-9c8e2f378d921c9782b5b6ac",
+      "EFACT-f8f6e5abba8d72973f8cbc55"
+    ],
+    "why_not_higher": "HBM-specific capital intensity, working capital, depreciation, free cash flow and return remain unknown while large commitments and cash-conversion drains are already visible.",
+    "why_not_lower": "The record is stronger than the bottom band because large actual cash and operating cash flow provide a real funding buffer and infrastructure investment has an identified supply purpose."
+  },
+  "payload_hash": "30dda9161eca4c06acf1a4cd147453957a2e0e693292ab88a6546f200f7d7262",
+  "production_score_authority": false,
+  "prompt_hash": "887cc2a240f25ce58c50d0d2f8db00c9c8278777c68e834b1ebecf416f99054c",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a0d670ce300981179db0f3edf850b0a306c76c97d601f9eb4c39cd7b48686fe2",
+  "response_id": "COLLABRESP-f51744b3bdae59cc866d253c2e972303323c898075009e8ef4565ba20e30d14d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

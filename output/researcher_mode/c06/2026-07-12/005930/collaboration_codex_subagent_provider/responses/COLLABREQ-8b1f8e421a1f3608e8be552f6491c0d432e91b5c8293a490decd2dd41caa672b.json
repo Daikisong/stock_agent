@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6b8412d13eaf6c84c390f094",
+        "rationale": "Chunk 1 continues the environmental and supply-chain sections. Its quantified HBM4 power-efficiency improvement and 2030 efficiency target are product-environmental attributes rather than a current HBM customer, qualification, booking, revenue, or profit-conversion fact. Generic supplier-order protections and production-material forecasts describe Samsung as a purchaser and are not HBM customer commitments, while the remaining content is unrelated environmental, workforce, or supply-chain governance material; therefore no distinct objective-linked fact remains in this chunk.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "aa7d2f5593dc3787c817c778a0303768da449face1528df53d75a63b0ea386fc",
+  "production_score_authority": false,
+  "prompt_hash": "19272d6d784163d68eba05081abd4b6283ef596a1638dc7e2a2129cff696dd37",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8b1f8e421a1f3608e8be552f6491c0d432e91b5c8293a490decd2dd41caa672b",
+  "response_id": "COLLABRESP-4c859044cf111c0cac477aa471eb239630adfa7cd86b7459768f90c7e4cebba4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

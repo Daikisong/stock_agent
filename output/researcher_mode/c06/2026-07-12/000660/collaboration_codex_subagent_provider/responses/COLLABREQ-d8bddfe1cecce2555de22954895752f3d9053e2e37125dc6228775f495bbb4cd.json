@@ -1,0 +1,71 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Separate issuer-authored DRAM and NAND bit-shipment guidance from earlier HBM-only searches and retain both the stated range and any downside revision for the same forward period.",
+      "Search issuer earnings and newsroom material for a numeric enterprise-SSD share of NAND sales so a specific segment point value can be tested without attributing consolidated revenue to that segment.",
+      "For durable visibility, restrict the new route to issuer documents that state a 2027 memory capacity or bit-growth point or range; do not infer a quantity from sold-out, demand-secured, or investment-plan language."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK hynix 2026 DRAM NAND bit shipment growth outlook percentage official earnings",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "The open FORWARD_GUIDANCE role requires an issuer-authored numeric point or range for a future period. Earlier searches focused on HBM shipment growth, HBM revenue targets, or broad corporate revenue outlook; this query instead isolates the issuer's 2026 DRAM and NAND bit-shipment outlook, including any lowered range or demand downside, so a whole-company estimate or broker forecast is not substituted for product-level guidance.",
+        "source_families": [
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_PRESENTATION",
+          "ISSUER_NEWSROOM"
+        ]
+      },
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "SK hynix 2026 enterprise SSD revenue share NAND sales percentage official",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "The unresolved SEGMENT_CONTRIBUTION role needs an issuer-source numeric point tied to a specific business segment. Prior searches covered HBM mix, DRAM product revenue, and a combined DRAM/NAND annual-report breakdown; this narrower route looks for an enterprise-SSD share of NAND sales or revenue, preserving the segment boundary and rejecting qualitative growth language or consolidated revenue as a substitute.",
+        "source_families": [
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_PRESENTATION",
+          "ISSUER_NEWSROOM"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK hynix 2027 memory production capacity bit growth percentage official investor presentation",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "DURABLE_VISIBILITY remains open because statements that 2026 demand is secured contain no machine-readable quantity or range. This query targets a later-period issuer numeric plan for memory production capacity or bit growth, distinct from the prior 2026 HBM supply-allocation, revenue-target, and capex/cash-flow searches; only an issuer point or range explicitly referring to 2027 can qualify, while equipment capacity headlines and broker estimates remain ineligible.",
+        "source_families": [
+          "ISSUER_PRESENTATION",
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_NEWSROOM"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "If no issuer-authored future numeric point or range is found, FORWARD_GUIDANCE and DURABLE_VISIBILITY must remain pending; broker forecasts and qualitative demand visibility are not substitutes.",
+      "If enterprise-SSD growth is stated without a numeric share of a defined NAND revenue or sales denominator, SEGMENT_CONTRIBUTION remains unresolved.",
+      "PEER_BAND belongs to the structured peer materialization path and is not reopened through these general source queries."
+    ]
+  },
+  "payload_hash": "9f0d7489670e73aa1cae69ba90fc37464155e91f7d3efecee8211fd9ef188b09",
+  "production_score_authority": false,
+  "prompt_hash": "8ec3fc3175ab15349ef432f8f7fec18d829209e59b3d3d500307867007ec0c88",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d8bddfe1cecce2555de22954895752f3d9053e2e37125dc6228775f495bbb4cd",
+  "response_id": "COLLABRESP-a534ce275e109168674e6e22866f1e8e0bf5215de1ef2f22c448a43106a5bb6c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

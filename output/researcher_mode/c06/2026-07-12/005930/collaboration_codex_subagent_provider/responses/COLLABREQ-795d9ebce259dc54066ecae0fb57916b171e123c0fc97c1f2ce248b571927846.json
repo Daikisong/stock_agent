@@ -1,0 +1,63 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      2.4,
+      3.7
+    ],
+    "anchor_comparisons": [
+      "Both low-confidence cross-sector anchors are near the ceiling and are not exact analogues; their numeric bands cannot override the split between audited corporate data and opaque HBM detail.",
+      "The positive anchor resembles reliable official baselines, while the counter anchor captures missing fact signatures and disclosure gaps at the product and customer level."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1b7ea0a31b99641332cac15f",
+      "EFACT-2d9adec8b0d4434e530afdc5",
+      "EFACT-38845077848fa69caeb992ce",
+      "EFACT-4f576cd7cba9f5720973f2a5",
+      "EFACT-61735c2a94db0377111a4e18",
+      "EFACT-66a852e3b8f9484e6dad3710",
+      "EFACT-7a7c894af3d9e5b7ce1bd90d",
+      "EFACT-7ed0bdc27aff6817247539ec",
+      "EFACT-ce89050359be3b6f19cb2cec"
+    ],
+    "disagreements": [
+      "The analyst appropriately values reviewed official records; the skeptic correctly focuses on missing HBM-specific fields."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "proposed_points": 3.0,
+    "rationale": "Calibration separates high-confidence official financial and memory operating baselines from low-confidence HBM-specific allocation, contract, and profitability claims. The low-confidence ordinal anchors do not justify their near-ceiling bands for this mixed disclosure plane.",
+    "support_fact_ids": [
+      "EFACT-09794909b5e3c9f009eb5007",
+      "EFACT-0beff561f9964f06b80cbe4b",
+      "EFACT-477c6cb45b164685a2a345e8",
+      "EFACT-71eb35cf12f591c101571b4e",
+      "EFACT-c56aa2a9eb9eb1bb77d693bc"
+    ],
+    "why_not_higher": "Customer, qualification, contract, and product-profit details remain unavailable, and several estimate sources carry explicit limitations.",
+    "why_not_lower": "Reviewed financial statements and official memory sales and operating-hour disclosures provide a reproducible foundation."
+  },
+  "payload_hash": "21a140a592abc9384906ad6290b4f28c98241a33412228df9cc40b77a8b320e9",
+  "production_score_authority": false,
+  "prompt_hash": "4199f02d6e5a045c4a106f4fc66116f104993996f509fdf0d044b20622ce6aa2",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-795d9ebce259dc54066ecae0fb57916b171e123c0fc97c1f2ce248b571927846",
+  "response_id": "COLLABRESP-08acccb7e82728c328b4508497cd081579d00503f1eab0b9e3311e4c7ce2cc6f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

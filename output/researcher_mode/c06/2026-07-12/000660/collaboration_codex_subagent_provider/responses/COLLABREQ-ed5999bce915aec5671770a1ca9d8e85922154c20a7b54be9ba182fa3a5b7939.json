@@ -1,0 +1,581 @@
+{
+  "output_schema_hash": "5a5b9b0266462c7cd0c0a378900448786d8f59371b2e4159b16dcc38f62d33bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "rationale": "문서 전체와 기존 current fact graph를 대조해 DRAM 가격 상승폭 둔화 반증, HBM의 blended ASP·CAPA 잠식, HBM3E 가격·믹스, AMD·Microsoft 수요 다변화, 추론형 자체칩의 탑재량 반증 등 서로 다른 5개 valuation_rerating 사실을 현재 계보로 재검증했다. 이 문서의 objective-linked 잔여는 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e9dbc7829f4c05543a8fd272",
+        "rationale": "1Q26 actual, 2Q26 전망, 장기계약 가격·LTA 경제성, 현물시장 해석, SRAM/LPU 대체 위험 중 첫 6개 distinct 사실을 exact quote로 재검증했다. 재무·현금흐름·valuation 표의 distinct 사실이 남아 다음 continuation에서 이어간다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-ec7d322937ea71859c174817",
+        "rationale": "Nvidia FY2Q26 데이터센터·Blackwell actual과 HBM 수요 연결 사실 1개를 exact quote로 재검증했다. 수출제재, 인프라 제약, agentic compute, 공급망 완화 등 distinct counter/bridge 사실이 남아 다음 continuation에서 이어간다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "economic_mechanism": "보고서는 과거 DRAM 사이클에서 가격 하락폭의 축소가 주가 저점, 가격 상승폭의 축소가 주가·업황 고점과 연결됐다고 분석했다. 2024년 3분기 업계 DRAM 가격 상승률은 전분기 15~18%에서 약 10%로, SK하이닉스의 2024년 2분기 상승률은 직전 분기 21%에서 14%로 둔화됐다는 관찰은 이익이 늘어도 valuation이 먼저 수축할 수 있다는 반증이다. 이는 반복 가능성을 검토하는 역사적 관계이지 2026년 주가 고점을 확정하는 신호가 아니다.",
+        "exact_quote": "메모리 반도체 업체들의 주가가 하락세로 들어섰다. 이는 DRAM 업황의 피크아웃 시그널이\n포착되었기 때문이다. 과거 DRAM 싸이클 상에서 DRAM 가격의 상승폭이 전분기대비 축소\n된 경우에 주가 및 업황의 피크아웃이었던 적이 많다. 24년 3분기 DRAM 가격 상승폭은\n10% 수준으로 전분기 15~18%대비 축소될 것으로 추정된다. SK하이닉스의 DRAM 가격 상\n승폭은 24년 2분기 14%로 전분기 21%에서 축소되었다. 하나증권은 22년 9월에 작성한 보\n고서를 통해서 22년 4분기 DRAM 가격의 하락폭이 30%로 극대화된 이후에 23년 1분기 가\n격 하락폭이 20%로 축소되면 주가가 바닥일 가능성에 대해 언급한 바 있다. 실제로 23년\n1분기 이후에 삼성전자와 SK하이닉스의 주가는 상승세로 전환되었다. 이와 반대 경우인\nDRAM 가격의 상승폭 축소는 주가의 고점일 가능성이 높은데, 실제로 22년 7월 이후 반도\n체 업체들의 주가도 하향 추세로 접어들었다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 가격 상승이 계속돼도 증가폭 둔화가 먼저 valuation 수축으로 이어질 수 있다는 관계는 SK하이닉스 저배수의 지속 가능성을 검증하는 핵심 counter-risk다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM_ASP_DECELERATION_VALUATION_PEAK_SIGNAL",
+        "normalized_object": "DRAM 가격 상승폭 둔화가 선행하는 메모리 valuation 피크 위험",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "historical DRAM cycles through 3Q2024E; analysis published 2024-09-24",
+        "predicate": "과거 DRAM 사이클에서 가격 상승폭 축소는 주가·업황 고점과 연결됐고 2024년 3분기 업계 상승률과 2024년 2분기 SK하이닉스 상승률에서 둔화가 관찰됐다",
+        "predicate_family": "DRAM_ASP_DECELERATION_VALUATION_PEAK_SIGNAL",
+        "primitive_tags": [
+          "DRAM",
+          "ASP_DECELERATION",
+          "MARKET_EXPECTATION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_DECELERATION_VALUATION_PEAK_SIGNAL",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "PEAK_SIGNAL",
+          "VALUATION_CYCLE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "DRAM 가격 상승폭 둔화와 메모리 주가·업황 피크 신호",
+        "subject_id": "INDUSTRY:DRAM:ASP_QOQ_DECELERATION_PEAK_SIGNAL",
+        "unit": "% QoQ and qualitative historical relationship",
+        "value": "industry 3Q2024E DRAM ASP growth about 10% QoQ versus prior 15-18%; SK hynix 2Q2024 DRAM ASP growth 14% versus prior 21%; historical peak-signal relationship"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.93,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "economic_mechanism": "HBM은 DRAM Blended ASP를 높이는 동시에 일반 DRAM CAPA를 잠식해, HBM 수혜가 집중된 SK하이닉스가 더 적은 생산능력으로 더 많은 이익을 창출할 수 있게 했다는 분석이다. 이는 기존 DRAM 가격 사이클과 생산능력 규모만으로 역사적 valuation band를 적용하기 어렵게 만드는 구조적 이익 효율 근거다.",
+        "exact_quote": "다만, 과거와 다른 점도 상기할 필요는 있다. 금번 업싸이클이 과거와 다른 점은 HBM이다.\nHBM은 기존과 다른 차원의 DRAM이라는 점과 더불어 그로 인한 Blended ASP의 변화와\nCAPA 잠식 효과를 야기했다. 해당 수혜가 집중된 SK하이닉스가 더 적은 CAPA에도 불구하\n고 더 많은 이익을 창출하기도 했다. 과거와는 다른 패턴의 싸이클이 전개되었기 때문에 과\n거와는 다른 주가 흐름을 시현할 가능성 또한 열려 있다는 판단이다. 아울러 DRAM 가격의\n상승폭 축소 외에는 피크아웃을 논할 데이터 포인트가 아직 보이진 않는다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM이 가격과 CAPA 양쪽을 통해 이익 효율을 바꾸는 구조는 SK하이닉스에 기존 시클리컬 P/B band보다 높은 배수를 적용할 수 있는지 직접 설명한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_BLENDED_ASP_CAPACITY_PROFIT_RERATING",
+        "normalized_object": "HBM 가격·생산능력 구조가 만든 SK하이닉스의 이익 효율과 과거 사이클 차별화",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "structural cycle assessment current as of 2024-09-24",
+        "predicate": "HBM의 Blended ASP 상승과 CAPA 잠식 효과로 SK하이닉스가 더 적은 CAPA에도 더 많은 이익을 창출해 과거 DRAM 사이클과 다른 패턴을 보였다고 분석됐다",
+        "predicate_family": "HBM_BLENDED_ASP_CAPACITY_PROFIT_EFFICIENCY",
+        "primitive_tags": [
+          "HBM",
+          "PROFIT_EFFICIENCY",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_BLENDED_ASP_CAPACITY_CANNIBALIZATION_RERATING",
+        "question_family_tags": [
+          "HBM_RERATING",
+          "BLENDED_ASP",
+          "CAPACITY_CANNIBALIZATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "HBM의 Blended ASP·CAPA 잠식과 SK하이닉스 이익 효율",
+        "subject_id": "000660:HBM:BLENDED_ASP_CAPACITY_PROFIT_EFFICIENCY",
+        "unit": "qualitative valuation-earnings bridge",
+        "value": "HBM-driven blended-ASP uplift and capacity cannibalization enabled higher profit with less capacity"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "economic_mechanism": "하나증권은 일반 DRAM 가격이 2024년 3분기 약 10% 오르는 가운데 HBM 믹스가 약 5%포인트를 더해 SK하이닉스 Blended DRAM ASP 상승률을 14%로 유지시키고, HBM3E 가격은 기존 제품보다 10% 이상 높을 것으로 가정했다. 이는 HBM 프리미엄이 범용 DRAM 가격 둔화를 전사 가격과 valuation 분모에서 완충하는 정량 bridge이며 확정 판가나 issuer guidance는 아니다.",
+        "exact_quote": "하나증권은 SK하이닉스의 24년 3분기 DRAM 가격 상승폭은 14%로 전분기대비 유지될 것\n으로 전망중이다. 이는 기존 싸이클과는 다른 양상으로, HBM 매출 비중 확대로 인해\nBlended ASP 상승폭이 여타 업체들과 다르게 전개될 것으로 판단하기 때문이다. 현재 일반\nDRAM의 전분기대비 가격 상승폭은 10% 내외로 추정되며, 하나증권은 HBM으로 인해 추\n가적으로 5% 내외의 가격 상승이 가능할 것으로 가정하고 있다. 24년 2분기부터 HBM 3E\n공급이 시작되었고, 3분기에는 물량이 극대화되기 시작하기 때문이다. HBM 3E 가격이 기존\n제품대비 10% 이상 상승할 것으로 가정했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 프리미엄이 범용 DRAM 가격 둔화를 얼마나 상쇄하는지 정량화한 자료는 HBM 기반 실적 차별화와 re-rating의 earnings bridge를 직접 검증한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM3E_BLENDED_ASP_PREMIUM_3Q2024E",
+        "normalized_object": "HBM3E 프리미엄과 믹스가 만든 SK하이닉스 Blended DRAM ASP 방어",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E forecast published 2024-09-24",
+        "predicate": "HBM 믹스가 일반 DRAM 가격 상승률에 약 5%포인트를 더하고 HBM3E가 기존 제품보다 10% 이상 높은 가격을 받아 SK하이닉스의 2024년 3분기 Blended DRAM ASP 상승률을 14%로 유지할 것으로 추정됐다",
+        "predicate_family": "HBM3E_BLENDED_ASP_PREMIUM_BRIDGE",
+        "primitive_tags": [
+          "HBM",
+          "ASP",
+          "MIX_EFFECT"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM3E_BLENDED_ASP_PREMIUM_BRIDGE",
+        "question_family_tags": [
+          "HBM3E",
+          "BLENDED_ASP",
+          "PRICE_PREMIUM"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "HBM3E의 SK하이닉스 2024년 3분기 Blended DRAM ASP 기여 전망",
+        "subject_id": "000660:HBM3E:BLENDED_ASP_PREMIUM_3Q2024E",
+        "unit": "% QoQ, percentage points and % price premium",
+        "value": "3Q2024E SK hynix blended DRAM ASP +14% QoQ; general DRAM about +10%; HBM contribution about +5pp; HBM3E price premium above 10%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "economic_mechanism": "AMD의 2024년 2분기 데이터센터 매출이 전년동기 대비 115% 늘었고 MI325X가 Microsoft 수주를 받았다는 보고는 Nvidia 중심이던 HBM 최종 수요가 다른 가속기와 고객으로 넓어졌다는 독립 수요 근거다. 이는 SK하이닉스의 공급계약·물량 의무나 Microsoft의 직접 HBM 구매를 입증하지 않는다.",
+        "exact_quote": "2025년에도 HBM 수요는 견조할 전망이다. Nvidia의 Blackwell 출시 지연 우려가 있는 상황\n이지만, 빅테크 업체들의 Capex는 증가할 것으로 전망되고 있어 수요 자체가 없어지는 것\n은 아니다. 일부 설계 변경이 진행된 B100은 연내 출시가 가능할 전망이다. AMD의 MI300X\n및 MI325X도 HBM 수요를 자극하고 있다. AMD의 24년 2분기 Datacenter향 매출액은 전\n년동기대비 115% 증가했다. 1년 늦었지만, 전년동기대비 2배 이상의 매출액 달성은 Nvidia\n의 초기 H100 수요 폭증 때와 유사한 모습이다. 아울러 연내 출시 예정인 MI325X는\nMicrosoft로부터 수주를 받았다는 언급도 있었다. 금번 싸이클의 시작이 Microsoft-Open\nAI의 Chat GPT 공개 이후였던 점을 감안하면 AMD의 이번 수주는 유의미하다는 판단이다.\n아울러 Nvidia가 독과점했던 HBM의 수요가 다변화된다는 측면에서 HBM의 수요 질 자체가\n개선된 점도 긍정적이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 수요가 단일 GPU 공급자에서 다변화되는지는 수요 duration과 고객집중 위험을 동시에 바꿔 valuation premium의 지속성을 직접 좌우한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_AMD_MICROSOFT_DEMAND_DIVERSIFICATION",
+        "normalized_object": "AMD·Microsoft 경로가 확장한 HBM 수요처와 수요 질",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024 actual and 2024 product-order report; outlook published 2024-09-24",
+        "predicate": "AMD 데이터센터 매출의 2024년 2분기 115% 증가와 MI325X의 Microsoft 수주 언급을 근거로 Nvidia 독점형 HBM 수요가 다변화돼 수요 질이 개선됐다고 분석됐다",
+        "predicate_family": "HBM_ACCELERATOR_CUSTOMER_DEMAND_DIVERSIFICATION",
+        "primitive_tags": [
+          "HBM",
+          "AI_ACCELERATOR",
+          "DEMAND_QUALITY"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_DEMAND_DIVERSIFICATION_AMD_MICROSOFT",
+        "question_family_tags": [
+          "HBM_DEMAND",
+          "AMD",
+          "CUSTOMER_DIVERSIFICATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "AMD AI 가속기와 Microsoft 수주에 따른 HBM 수요처 다변화",
+        "subject_id": "INDUSTRY:HBM:AMD_MICROSOFT_DEMAND_DIVERSIFICATION_2024",
+        "unit": "% YoY and qualitative customer diversification",
+        "value": "AMD 2Q2024 datacenter revenue +115% YoY; MI325X Microsoft order reported; HBM demand diversification beyond Nvidia"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.86,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-e9187807afac1336fa2dfdb8",
+        "economic_mechanism": "추론 시장에서 고객별 자체 칩이 늘면 HBM 수요처와 맞춤 대응은 넓어지지만, 각 칩의 HBM 탑재량은 Nvidia 범용 GPU보다 낮아질 수 있다는 분석이다. 따라서 고객 다변화를 곧바로 칩당 HBM 증가나 총수요 확정으로 해석할 수 없으며, 수요 질 개선과 content dilution을 함께 봐야 한다.",
+        "exact_quote": "AI향 수요 관련한 일부 우려가 있지만, 현재 Training 시장 중심으로 성장하는 AI 수요는\n2025년 이후부터 추론 중심의 시장으로 옮겨갈 것이다. Nvidia의 범용 GPU에 의존하는\nTraining 시장과 달리 추론 시장은 AI에 투자하는 다수의 고객사들의 자체 칩이 활용될 가\n능성이 높다. 고객사 별로 자신의 비즈니스에 최적화된 AI 서비스 제공을 위해 자체 칩을\n개발중에 있다. 해당 칩들 개별로는 HBM 탑재량이 낮아질 수 있지만, HBM이 고객사 별로\n다양하게 대응해야 하는 점을 감안하면 공급 측면에서도 플러스 요인은 상존한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "추론 수요 확장이 HBM 총수요와 valuation duration으로 이어지려면 고객 수 증가뿐 아니라 칩당 탑재량 감소 가능성도 함께 반영해야 한다.",
+        "mechanism_scope_id": "000660:MEMORY:INFERENCE_CUSTOM_ASIC_HBM_CONTENT_MIX_RISK",
+        "normalized_object": "추론용 자체 칩의 HBM 수요 다변화와 칩당 content dilution의 혼합 효과",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "post-2025 inference-market outlook published 2024-09-24",
+        "predicate": "추론 시장의 고객별 자체 칩 확산은 HBM 고객 대응을 다변화하지만 개별 칩의 HBM 탑재량은 낮아질 수 있다고 분석됐다",
+        "predicate_family": "INFERENCE_CUSTOM_ASIC_HBM_CONTENT_MIX_RISK",
+        "primitive_tags": [
+          "HBM",
+          "ASIC",
+          "DEMAND_MIX"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "INFERENCE_CUSTOM_ASIC_HBM_CONTENT_MIX_RISK",
+        "question_family_tags": [
+          "INFERENCE_AI",
+          "CUSTOM_ASIC",
+          "HBM_CONTENT_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "추론용 자체 칩 확산의 HBM 고객 다변화와 칩당 탑재량 반증",
+        "subject_id": "INDUSTRY:HBM:INFERENCE_CUSTOM_ASIC_CONTENT_MIX",
+        "unit": "qualitative demand-mix counterfact",
+        "value": "more customer-specific inference chips with potentially lower HBM content per chip and greater supplier customization breadth"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e9dbc7829f4c05543a8fd272",
+        "economic_mechanism": "유안타는 SK하이닉스 1Q26 실제 매출·영업이익과 DRAM 실적을 제시하면서 Conventional DRAM 가격 상승이 성장을 이끌었다고 평가했다. 서버 판매 확대와 달리 HBM 매출 비중은 전분기보다 낮아져, 이 사실은 전사·DRAM 가격 레버리지이지 HBM 믹스 확대를 뜻하지 않는다.",
+        "exact_quote": "동사 1Q26 매출액과 영업이익은 각각 52.6조원(YoY +198.1%, QoQ +60.2%),\n37.6조원(OPM 71.5%, YoY +405.5%, QoQ +96.2%)으로 1M기준 시장 컨센서스\n목표주가 1,900,000원 (U)\n평균값(매출액 53.9조원, 영업이익 38.3조원)을 소폭 하회했다. DRAM 부문 매출액과\n영업이익은 각각 41.0조원(YoY +188.9%, QoQ 64.4%), 32.1조원(OPM 78.2%, YoY 직전 목표주가 1,800,000원\n+342.8%, QoQ +89.9%)으로 Conventional DRAM 중심의 가격 상승세가 성장을 현재주가 (04/23) 1,225,000원\n견인했기 때문이다. 금번 분기 DRAM 가격/출하량은 각각 전분기대비 64.0%, 0.5%\n상승여력 55%\n상승한 것으로 추정한다. Server 중심의 판매가 확대되는 가운데, PC 및 HBM(당사 추정치\n기준 4Q25 37% → 1Q26 23%)의 매출 비중이 전분기대비 감소한 것으로 파악된다.\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "실현된 매출·영업이익과 DRAM 가격·믹스는 valuation denominator 및 이익 질을 직접 갱신한다.",
+        "mechanism_scope_id": "000660:DRAM:YUANTA_1Q26_ACTUAL_PRICE_MIX_LEVERAGE",
+        "normalized_object": "1Q26 전사·DRAM 실제 이익과 Conventional DRAM 가격 레버리지 및 HBM 믹스 하락",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2026 actual reported 2026-04-23",
+        "predicate": "유안타는 1Q26 매출 52.6조원과 영업이익 37.6조원, DRAM 매출 41.0조원과 영업이익 32.1조원을 제시했고 DRAM 가격이 QoQ 64.0% 상승한 반면 HBM 매출 비중은 37%에서 23%로 낮아졌다고 추정했다",
+        "predicate_family": "BROKER_ACTUAL_DRAM_PRICE_MIX_EARNINGS_LEVERAGE",
+        "primitive_tags": [
+          "DRAM",
+          "ACTUAL_EARNINGS",
+          "PRODUCT_MIX"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "BROKER_ACTUAL_DRAM_PRICE_MIX_EARNINGS_LEVERAGE",
+        "question_family_tags": [
+          "ACTUAL_EARNINGS",
+          "DRAM_PRICING",
+          "HBM_MIX_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1Q26 전사·DRAM 실제 실적과 메모리 믹스",
+        "subject_id": "000660:DRAM:YUANTA_1Q26_ACTUAL_PRICE_MIX_LEVERAGE",
+        "unit": "KRW trillion, %, and revenue-mix percentage",
+        "value": "revenue KRW 52.6tn; operating profit KRW 37.6tn; DRAM revenue KRW 41.0tn; DRAM operating profit KRW 32.1tn; DRAM price +64.0% QoQ; HBM revenue mix 37% to 23%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-e9dbc7829f4c05543a8fd272",
+        "economic_mechanism": "같은 보고서의 본문과 요약표가 서로 다른 컨센서스 기준을 사용해 1Q26 실적을 각각 소폭 하회와 상회로 표현한다. 이는 실제치의 충돌이 아니라 surprise 해석에 쓰인 기준값이 다르다는 정보 한계다.",
+        "exact_quote": "동사 1Q26 매출액과 영업이익은 각각 52.6조원(YoY +198.1%, QoQ +60.2%),\n37.6조원(OPM 71.5%, YoY +405.5%, QoQ +96.2%)으로 1M기준 시장 컨센서스\n목표주가 1,900,000원 (U)\n평균값(매출액 53.9조원, 영업이익 38.3조원)을 소폭 하회했다. DRAM 부문 매출액과\n영업이익은 각각 41.0조원(YoY +188.9%, QoQ 64.4%), 32.1조원(OPM 78.2%, YoY 직전 목표주가 1,800,000원\n+342.8%, QoQ +89.9%)으로 Conventional DRAM 중심의 가격 상승세가 성장을 현재주가 (04/23) 1,225,000원\n견인했기 때문이다. 금번 분기 DRAM 가격/출하량은 각각 전분기대비 64.0%, 0.5%\n상승여력 55%\n상승한 것으로 추정한다. Server 중심의 판매가 확대되는 가운데, PC 및 HBM(당사 추정치\n기준 4Q25 37% → 1Q26 23%)의 매출 비중이 전분기대비 감소한 것으로 파악된다.\n시가총액 8,730,604억원\nNAND 부문 매출액과 영업이익은 각각 11.1조원(YoY +256.9%, QoQ +46.9%),\n총발행주식수 712,702,365주\n5.5조원(OPM 50.0%, YoY +8817.5%, QoQ +139.0%)으로, 전분기 기저효과 및 Tech\n60일 평균 거래대금 44,116억원\nmigration 영향에 따라 전분기대비 출하량 감소(-10.0%)는 불가피했지만, 전반적인 제품의\n60일 평균 거래량 4,661,906주\n강한 가격(+65.0%) 상승세가 이어지며 사상 최대 수익성을 기록했기 때문이다. 1,225,000원 /\n52주 고/저\n177,500원\n외인지분율 53.05%\n배당수익률 0.46%\n투자의견 BUY, 목표주가 190만원으로 상향 조정\n주요주주 에스케이스퀘어 외 6 인\n2Q26 예상 매출액과 영업이익은 각각 84.9조원(YoY +281.8%, QoQ +61.4%),\n65.5조원(OPM 77.2%, YoY +610.9%, QoQ +74.1%)으로 상향 조정하고, 이는 1M기준 주가수익률 (%) 1개월 3개월 12개월\n시장 컨센서스 평균값(매출액 74.1조원, 영업이익 55.6조원)을 상회하는 가운데 사상 최대 절대 31.3 59.7 576.8\n실적 갱신을 이어나갈 전망이다. 차기분기 메모리 가격 상승폭은 (DRAM/NAND 각각 상대 9.6 23.1 163.9\n+45.0%, +50.0%로 추정) 전분기대비 둔화되겠지만, 시장 컨센서스를 크게 상회할 것으로 절대 (달러환산) 34.5 58.1 549.2\n예상하기 때문이다. 동사를 포함한 메모리업계 전반적으로 장기 계약 및 중장기 지속가능한\n투자 방향성에 대한 논의가 지속되고 있다. 기존 Cycle과 다르게 주요 고객사 대상 장기\n계약 가격이 당사 기존 예상치를 상회하고 있는 것으로 파악된다는 점은 향후 메모리반도체\n변동성을 축소시키고, 안정적인 현금 흐름 기반의 주주 친화 활동을 강화할 것이다. 동사에\n대한 투자의견 BUY를 유지하고, 목표주가는 190만원(2027년 예상 BPS * Target PBR\n1.9배 적용)으로 상향 조정한다.\nQuarterlY earning Forecasts (십억원, %) Forecasts and valuations (K-IFRS 연결) (십억원, 원, %, 배)\n1Q26P 전년동기대비 전분기대비 컨센서스 컨센서스대비 결산 (12월) 2023A 2024A 2025A 2026F\n매출액 32,766 66,193 97,147 358,695\n매출액 52,576 198.1 60.2 51,935 1.2\n영업이익 -7,730 23,467 47,206 275,507\n영업이익 37,610 405.5 96.2 36,395 3.3\n지배순이익 -9,112 19,789 42,919 213,763\n세전계속사업이익 41,352 344.7 134.2 37,776 9.5\nPER -8.6 6.6 5.2 4.1\n지배순이익 32,270 298.0 112.0 30,807 4.7\nPBR 1.4 1.7 1.8 2.5\n영업이익률 (%) 71.5 +29.3 %pt +13.1 %pt 70.1 +1.4 %pt EV/EBITDA 17.5 4.0 3.6 2.4\n지배순이익률 (%) 61.4 +15.4 %pt +15.0 %pt 59.3 +2.1 %pt ROE -15.6 31.1 44.2 93.9\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "실적 surprise의 부호가 컨센서스 기준에 따라 바뀌므로 valuation revision 해석의 확신도를 직접 제한한다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_1Q26_CONSENSUS_BASELINE_DIVERGENCE",
+        "normalized_object": "1Q26 실적 surprise에 사용된 보고서 내 컨센서스 기준값 차이",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "1Q2026 actual and consensus snapshot published 2026-04-23",
+        "predicate": "같은 유안타 보고서는 1Q26 실제 매출·영업이익을 본문의 컨센서스 53.9조원·38.3조원보다 낮다고 설명하면서 표에서는 컨센서스 51,935십억원·36,395십억원 대비 1.2%·3.3% 높다고 제시했다",
+        "predicate_family": "BROKER_CONSENSUS_BASELINE_DIVERGENCE",
+        "primitive_tags": [
+          "MEMORY",
+          "CONSENSUS",
+          "INFORMATION_RISK"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_CONSENSUS_BASELINE_DIVERGENCE",
+        "question_family_tags": [
+          "CONSENSUS_GAP",
+          "SOURCE_UNCERTAINTY",
+          "VALUATION_COUNTERFACT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "유안타 1Q26 실적 컨센서스 기준 차이",
+        "subject_id": "000660:MEMORY:YUANTA_1Q26_CONSENSUS_BASELINE_DIVERGENCE",
+        "unit": "KRW trillion, KRW billion, and % surprise",
+        "value": "narrative consensus revenue/OP KRW 53.9tn/38.3tn versus table consensus KRW 51935bn/36395bn; same actuals classified below versus +1.2%/+3.3% above"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e9dbc7829f4c05543a8fd272",
+        "economic_mechanism": "유안타는 2Q26 전사 매출·영업이익이 당시 컨센서스를 크게 웃돌고 DRAM 가격 상승이 이어질 것으로 전망했다. 이는 브로커 추정이며 실제 2Q26 결과나 issuer guidance가 아니다.",
+        "exact_quote": "2Q26 예상 매출액과 영업이익은 각각 84.9조원(YoY +281.8%, QoQ +61.4%),\n65.5조원(OPM 77.2%, YoY +610.9%, QoQ +74.1%)으로 상향 조정하고, 이는 1M기준 주가수익률 (%) 1개월 3개월 12개월\n시장 컨센서스 평균값(매출액 74.1조원, 영업이익 55.6조원)을 상회하는 가운데 사상 최대 절대 31.3 59.7 576.8\n실적 갱신을 이어나갈 전망이다. 차기분기 메모리 가격 상승폭은 (DRAM/NAND 각각 상대 9.6 23.1 163.9\n+45.0%, +50.0%로 추정) 전분기대비 둔화되겠지만, 시장 컨센서스를 크게 상회할 것으로 절대 (달러환산) 34.5 58.1 549.2\n예상하기 때문이다. ",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "당시 다음 분기의 이익·가격 추정과 컨센서스 격차는 forward earnings bridge를 직접 갱신한다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_2Q26_EARNINGS_PRICE_FORECAST",
+        "normalized_object": "DRAM 가격 상승에 기반한 2Q26 전사 실적 컨센서스 상회 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2026 forecast published 2026-04-23",
+        "predicate": "유안타는 2Q26 매출 84.9조원과 영업이익 65.5조원을 전망해 당시 컨센서스 74.1조원과 55.6조원을 상회하고 DRAM 가격이 QoQ 45.0% 오를 것으로 추정했다",
+        "predicate_family": "BROKER_QUARTERLY_EARNINGS_PRICE_FORECAST",
+        "primitive_tags": [
+          "MEMORY",
+          "FORWARD_EARNINGS",
+          "DRAM_ASP"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_QUARTERLY_EARNINGS_PRICE_FORECAST",
+        "question_family_tags": [
+          "FORWARD_EARNINGS",
+          "CONSENSUS_GAP",
+          "PRICING_LEVERAGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "유안타의 SK하이닉스 2Q26 실적·가격 전망",
+        "subject_id": "000660:MEMORY:YUANTA_2Q26_EARNINGS_PRICE_FORECAST",
+        "unit": "KRW trillion and % forecast",
+        "value": "revenue KRW 84.9tn versus consensus KRW 74.1tn; operating profit KRW 65.5tn versus consensus KRW 55.6tn; DRAM price +45.0% QoQ estimate"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e9dbc7829f4c05543a8fd272",
+        "economic_mechanism": "유안타는 주요 고객 장기계약 가격이 자체 예상보다 높다고 파악해 메모리 이익 변동성과 현금흐름의 안정성이 개선될 것으로 해석했다. 이는 브로커의 파악과 전망이며 체결 물량·기간·상대방·가격을 입증하지 않는다.",
+        "exact_quote": "동사를 포함한 메모리업계 전반적으로 장기 계약 및 중장기 지속가능한\n투자 방향성에 대한 논의가 지속되고 있다. 기존 Cycle과 다르게 주요 고객사 대상 장기\n계약 가격이 당사 기존 예상치를 상회하고 있는 것으로 파악된다는 점은 향후 메모리반도체\n변동성을 축소시키고, 안정적인 현금 흐름 기반의 주주 친화 활동을 강화할 것이다. ",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "장기계약 가격과 변동성·현금흐름 연결은 높은 이익에 적용할 valuation multiple의 지속성을 직접 바꾼다.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_LTA_PRICE_ABOVE_EXPECTATION",
+        "normalized_object": "주요 고객 장기계약 가격의 유안타 예상 상회와 메모리 변동성 완화 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "long-term contract assessment published 2026-04-23",
+        "predicate": "유안타는 주요 고객 대상 장기계약 가격이 자체 예상을 상회하는 것으로 파악돼 메모리 변동성 축소와 안정적 현금흐름에 기여할 것으로 전망했다",
+        "predicate_family": "BROKER_LTA_PRICE_ABOVE_EXPECTATION",
+        "primitive_tags": [
+          "MEMORY",
+          "LTA",
+          "PRICE_VISIBILITY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_LTA_PRICE_ABOVE_EXPECTATION",
+        "question_family_tags": [
+          "CONTRACT_PRICING",
+          "DURABLE_VISIBILITY",
+          "BROKER_INFERENCE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "유안타가 파악한 SK하이닉스 주요 고객 장기계약 가격",
+        "subject_id": "000660:MEMORY:YUANTA_LTA_PRICE_ABOVE_EXPECTATION",
+        "unit": "qualitative broker contract-price assessment",
+        "value": "long-term contract prices assessed above broker prior expectations; no exact contract terms disclosed"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e9dbc7829f4c05543a8fd272",
+        "economic_mechanism": "1Q26 Q&A 요약은 다년 LTA가 고객 공급 안정성과 SK하이닉스의 수요·수익 안정성을 높이고 투자부담을 완화할 수 있다고 설명한다. 다만 아직 여러 조건을 검토 중이며, 시장 평가 개선은 LTA 정착을 전제로 한 조건부 전망이다.",
+        "exact_quote": "3. LTA 관련 현황 업데이트, 확대되는 시점 언제 일지, 과거의 LTA 와 차이점은?\n- 메모리 공급 부족 장기화로 고객들로부터 중장기 물량 확보 요청이 늘어나고 있음. 당사 역시\n수요 가시성 확보를 통한 투자부담 완화는 중요한 요인. 다년 LTA 는 고객에게는 공급 안정성,\n당사에게는 수요 안정성 및 안정적 수익구조 제공 가능. 과거와 달리 현재는 다양한 부분 검토\n중.\n- 공급 제약으로 인해 모든 고객의 요청을 수용하기에는 제한적. 만약 다년 LTA 가 정착된다면\n수요 가시성과 투자 효율성이 개선될 것으로 예상. 메모리 사업의 변동성 축소함으로써\n메모리산업에 대한 시장의 평가 개선도 예상됨.\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "미체결 LTA의 조건부 수요 안정·투자효율·변동성 완화는 rerating thesis와 그 성립 조건을 동시에 명시한다.",
+        "mechanism_scope_id": "000660:MEMORY:ISSUER_LTA_CONDITIONAL_RERATING_MECHANISM",
+        "normalized_object": "미체결 다년 LTA의 조건부 수요안정·투자효율·시장평가 개선 메커니즘",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "LTA discussions stated in 1Q2026 results Q&A",
+        "predicate": "SK하이닉스는 다년 LTA가 정착될 경우 수요 가시성·투자 효율·수익 안정성이 개선되고 메모리 사업 변동성 축소로 시장 평가도 개선될 수 있지만 현재는 다양한 조건을 검토 중이라고 설명했다",
+        "predicate_family": "ISSUER_LTA_CONDITIONAL_RERATING_MECHANISM",
+        "primitive_tags": [
+          "MEMORY",
+          "LTA",
+          "INVESTMENT_EFFICIENCY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "ISSUER_LTA_CONDITIONAL_RERATING_MECHANISM",
+        "question_family_tags": [
+          "UNSIGNED_LTA",
+          "DURABLE_VISIBILITY",
+          "RERATING_CONDITION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 다년 LTA의 조건부 valuation 효과",
+        "subject_id": "000660:MEMORY:ISSUER_LTA_CONDITIONAL_RERATING_MECHANISM",
+        "unit": "qualitative conditional contract-economics assessment",
+        "value": "if multi-year LTA is established: demand visibility, investment efficiency, stable earnings and market evaluation may improve; terms still under review"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e9dbc7829f4c05543a8fd272",
+        "economic_mechanism": "1Q26 Q&A 요약은 현물 약세가 전체 DRAM을 대표하지 않으며 HBM·서버 메모리 수요 증가와 짧은 기간 내 공급 확대 한계가 이어진다고 설명한다. 고객이 가격보다 물량 확보를 우선한다는 평가는 cycle duration을 지지하지만 향후 가격과 수요를 확정하지 않는다.",
+        "exact_quote": "1. 최근 메모리 현물 약세 보이고 있어 일부는 메모리 가격 부담으로 수요 감소 및 업황\n피크아웃 우려하고 있는데, 회사의 견해는?\n- 시장에서 다양한 해석 있음. 현물시장은 전체 디램에서 차지하는 규모 작음. 현재와 같은 시장\n현상에서, 현물이 전체 시장 상황 다 반영한다고 보기는 어려움. HBM, 서버, eSSD 등 주요\n고객의 메모리 수요는 전방위적으로 증가. 하지만 회사들은 단기간에 공급 늘리는 것이\n제한적인 상황. 이러한 수급 부족 현상 지속에 따라, 메모리 싸이클도 과거보다 장기화될\n것으로 예상.\n2. 현재 진행되고 있는 슈퍼싸이클이 메모리가격 상승세로 이끌고 있는데, 회사가 생각하는\n앞으로의 메모리 가격 전망은?\n- 이번 메모리는 일시적인 수급 변화가 아니라 시장 구조적 변화로 판단. 따라서, 과거와는 다른\n싸이클 보일 것. AI 발전으로 메모리의 중요성 증가되며 IT 업체들은 메모리 확보 위해\n경쟁적으로 구매 늘리고 있음.\n- 반면, 업계의 공급은 지난 다운턴 이후 투자 감소, 가용 스페이스 부족으로 단기간내 유의미한\n생산 확대에 한계가 있음. 공급사들은 증산 여력 확보 위해 신규 팹, 인프라 투자 재개하여\n투자규모 늘리고 있지만, 유의미한 클린룸, 캐파 확보까지는 시간이 필요할 것. 이러한 수급\n불균형 지속되며 고객들이 물량 확보를 가격보다 우선시하고 있음. 때문에, 싸이클 지속될\n것으로 판단.\n5\nSK하이닉스 (000660)\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객의 물량 우선 구매와 클린룸·캐파 시차는 가격·이익 duration 및 scarcity multiple을 직접 지지한다.",
+        "mechanism_scope_id": "000660:MEMORY:CUSTOMER_VOLUME_PRIORITY_STRUCTURAL_CYCLE",
+        "normalized_object": "현물 약세와 분리된 고객 물량 우선 구매·공급 시차 기반 구조적 메모리 cycle",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current conditions and forward cycle assessment stated in 1Q2026 results Q&A",
+        "predicate": "SK하이닉스는 현물시장이 전체 DRAM을 대표하지 않고 HBM·서버 수요 증가와 클린룸·캐파 확보 시차로 고객이 가격보다 물량 확보를 우선해 메모리 cycle이 과거보다 길어질 것으로 판단했다",
+        "predicate_family": "CUSTOMER_VOLUME_PRIORITY_STRUCTURAL_MEMORY_CYCLE",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPACITY_SCARCITY",
+          "CUSTOMER_DEMAND"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CUSTOMER_VOLUME_PRIORITY_STRUCTURAL_MEMORY_CYCLE",
+        "question_family_tags": [
+          "CYCLE_DURATION",
+          "PRICE_PRIORITY",
+          "SUPPLY_LAG"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 고객의 메모리 물량 우선 구매와 공급 시차",
+        "subject_id": "000660:MEMORY:CUSTOMER_VOLUME_PRIORITY_STRUCTURAL_CYCLE",
+        "unit": "qualitative issuer cycle assessment",
+        "value": "spot market small; HBM/server demand rising; cleanroom and capacity expansion delayed; customers prioritize volume over price"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-ec7d322937ea71859c174817",
+        "economic_mechanism": "Nvidia의 FY2Q26 데이터센터 매출은 중국 H20 매출이 40억달러 줄었는데도 전년 동기 대비 56% 증가했고, Blackwell 매출은 전분기 대비 17% 늘면서 GB300 양산 출하가 시작됐다. CSP·neo-cloud·enterprise·sovereign AI 전반의 수요가 동반됐다는 관찰은 AI 가속기용 메모리의 downstream 수요가 단일 고객군에만 의존하지 않는다는 실적 기반 근거다. 이는 SK하이닉스의 공급량·점유율·계약을 직접 입증하지 않는다.",
+        "exact_quote": "FY2Q26 Data Center 부문 매출액은 전년 동기 대비 +56% 성장. 중국향 H20 매출이 40억\n달러 감소했음에도 전분기 대비 성장세를 유지. Blackwell 기반 제품 매출은 전분기 대비 +17%\n증가하며 GB300 양산 출하 개시 또한 실적에 긍정적이었기 때문. 주요 CSP, Neo-cloud 업체,\nEnterprise, Sovereign AI 프로젝트 등 다양한 고객군에서 전방 수요 고르게 발생.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "가장 큰 HBM 수요 플랫폼의 실제 매출 성장과 고객군 확산은 SK하이닉스 HBM earnings duration을 통해 valuation_rerating 지속성을 검증하는 직접 downstream 근거다.",
+        "mechanism_scope_id": "000660:MEMORY:NVIDIA_BLACKWELL_DOWNSTREAM_DEMAND_FY2Q26",
+        "normalized_object": "Nvidia 데이터센터·Blackwell 실적이 확인한 다층 AI 메모리 전방 수요",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "Nvidia FY2Q26 actual",
+        "predicate": "중국 H20 매출 감소에도 Nvidia 데이터센터와 Blackwell 매출이 성장하고 GB300 출하가 시작됐으며 여러 고객군에서 전방 수요가 발생했다",
+        "predicate_family": "AI_ACCELERATOR_DOWNSTREAM_DEMAND_ACTUAL",
+        "primitive_tags": [
+          "AI_MEMORY",
+          "DOWNSTREAM_ACTUAL",
+          "DEMAND_VISIBILITY"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "NVIDIA_DATA_CENTER_BLACKWELL_DOWNSTREAM_DEMAND_ACTUAL",
+        "question_family_tags": [
+          "HBM_DOWNSTREAM_DEMAND",
+          "BLACKWELL",
+          "CUSTOMER_DIVERSIFICATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Nvidia FY2Q26 데이터센터·Blackwell 실적과 고객군별 전방 수요",
+        "subject_id": "INDUSTRY:AI_MEMORY:NVIDIA_BLACKWELL_DEMAND_FY2Q26",
+        "unit": "% YoY, % QoQ and USD",
+        "value": "FY2Q26 data-center revenue +56% YoY despite China H20 revenue -USD 4bn; Blackwell revenue +17% QoQ; GB300 mass shipments began"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-e9dbc7829f4c05543a8fd272",
+      "SGDOC-ec7d322937ea71859c174817"
+    ],
+    "unresolved_research_notes": [
+      "12개 페이지 한도 때문에 SGDOC-e9dbc7829f4c05543a8fd272와 SGDOC-ec7d322937ea71859c174817의 이미 식별된 distinct objective-linked 잔여를 다음 continuation에서 검증한다."
+    ]
+  },
+  "payload_hash": "04db78811e62b6a0d8665f42e59b6bee0d0a5207fe070166b5624bd75afe27e9",
+  "production_score_authority": false,
+  "prompt_hash": "6614aea06b32508f62066fe4783d0ee5c9c1e05c0e7d413797e173aca9597096",
+  "provenance": {
+    "agent_id": "root-phase101-c06-facts",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_facts",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ed5999bce915aec5671770a1ca9d8e85922154c20a7b54be9ba182fa3a5b7939",
+  "response_id": "COLLABRESP-1438b67bc1cd1315c4df1b6e10c3da5944002d89ea2405bce08ed924963e1c6c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

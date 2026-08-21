@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "a700d541c72ff1c48300ae246bc77d06c10c035ffc2c3453ea7b1dd104a01aed",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-d529dca0a398c35d1f4742f3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "컷오프 이후 7월 15일 공시와 7월 29일 발표를 말하는 비공식 블로그로 미래 정보이며 요청된 공식 출처군도 아니다. HBM 수치 자료도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ba4c547321b4615160eff61c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.01,
+        "rationale": "2026년 7월 반도체 산업 일반 보고서로 요청된 SK하이닉스 공식 기업설명회·공시 자료가 아니다. 산업 서술은 회사 HBM 매출 절대값이나 수치형 전망을 대신하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-183e5224cb9e7a6721c0af60",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "유료 시장 요약 콘텐츠로 요청된 공식 출처군이 아니다. 혼합된 D램 가격·HBM4 스니펫을 회사 공식 수치 증거로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-96c9b0840092b3db37e40818",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "연합뉴스 산업 섹션 페이지로 특정 SK하이닉스 공식 발표자료가 아니며 현재 스니펫도 무관한 식품위생 기사다. 요청된 HBM 수치 공백과 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 파티션에도 컷오프 이전 SK하이닉스 공식 기업설명회·공시 첨부자료가 없다. 미래 일정과 일반 산업 페이지는 제외했고 스니펫은 증거로 사용하지 않았다."
+    ]
+  },
+  "payload_hash": "3eee3a96b2e56d43cbcba89d7b4b19919731e03566d4d773534188fa4de8783a",
+  "production_score_authority": false,
+  "prompt_hash": "50c8f2ff02fc2131cf8ac7ee03c3af4cbe99ec3251e136d57a84c8b649435263",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fa3ed831becd27b4a7dfdc55d7e362fdbd6c43ca8350be0ea193cc9a44830e79",
+  "response_id": "COLLABRESP-9193d2d751504212c764e5d6cc979aa88cc2108b347d745ca243ab51a0138a69",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

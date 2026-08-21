@@ -1,0 +1,83 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-eed6ab771e86737e8965eaa3",
+        "rationale": "삼성전자 HBM4용 1c D램 개발 지연과 대량양산 확대 제약을 후속 양산 전 historical counter 1건으로 추출했다. 산업 전체 출하·ASP 전망과 장비 공급망 일반론은 target-direct fact로 승격하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.83,
+        "current_lifecycle": "RESOLVED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-eed6ab771e86737e8965eaa3",
+        "economic_mechanism": "대신증권은 삼성전자가 HBM4에 적용할 1c D램 개발 완료가 당초 예상보다 늦고 대량양산 환경 구축에도 시간이 필요해 HBM4 생산을 빠르게 늘리기 어렵다고 판단했다. 이는 이후 1c HBM4 양산 전의 개발·램프업 counter다.",
+        "exact_quote": "SK하이닉스와MicronTechnology는HBM4양산에기존DRAM1b공정\n을적용예정이나,삼성전자는DRAM1c를적용.DRAM1c의개발완료시점이당초예상대비지연\n(2025년 6월 말 개발 완료 예상)되었고, 대량 양산 환경 구축에 시간이 필요한 만큼 HBM4 생산을\n빠르게늘리는일은그만큼제한될것이라는판단.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 1c HBM4 구성·양산 fact에는 드러나지 않는 이전 개발 지연과 램프업 제약을 source-backed historical counter로 보존하되, 후속 양산으로 해소된 lifecycle을 명시한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:DRAM1C_DEVELOPMENT_DELAY:2025",
+        "normalized_object": "HBM4 1c DRAM development and mass-production ramp delay",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "as of 2025-06-19, development completion expected by 2025-06 end",
+        "predicate": "대신증권은 삼성전자의 HBM4용 1c D램 개발 완료가 지연돼 대량양산 환경 구축과 HBM4 생산 확대가 제한될 것으로 판단했다",
+        "predicate_family": "HBM4_1C_DEVELOPMENT_RAMP_DELAY",
+        "primitive_tags": [
+          "HBM4",
+          "DRAM1C",
+          "DEVELOPMENT_DELAY",
+          "RAMP_CONSTRAINT"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_1C_DEVELOPMENT_DELAY",
+        "question_family_tags": [
+          "HBM4_1C_DEVELOPMENT_DELAY",
+          "QUALIFICATION_EXECUTION",
+          "PRODUCTION_RAMP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4용 1c D램 개발·양산 확대",
+        "subject_id": "005930:MEMORY:HBM4:DRAM1C:DEVELOPMENT_DELAY:2025",
+        "unit": "development and ramp status",
+        "value": "development delayed; rapid HBM4 production ramp constrained"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "a7edf6bb109f4d29bcaf0db7666f416bc56b1464ee4c05139556810a1124f888",
+  "production_score_authority": false,
+  "prompt_hash": "f23027feea77f430fb439df5d994c08d2ba762e57169c53414795f37e47cafa1",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-00ae948d46a98ad395ffded590ec16034de892a7a71c08ef78c8052f5937451c",
+  "response_id": "COLLABRESP-ff70a82e436a4cb212eef4be0fdd8f81bd8596dd94f32ab63c5f09e09aec80e3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

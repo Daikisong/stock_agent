@@ -1,0 +1,130 @@
+{
+  "output_schema_hash": "6b8c147908a57aacaf44255658318cf4c640c3e39802154d59622712715d30e5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-07b9e8cd9039ebb8e667ff5e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The KIND filing metadata identifies another issuer or unrelated filing and does not provide target-direct Samsung memory/HBM capex-to-cash-flow evidence for the objective."
+      },
+      {
+        "candidate_id": "SGCAND-20514870c0e45af684800a9c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The KIND filing metadata identifies another issuer or unrelated filing and does not provide target-direct Samsung memory/HBM capex-to-cash-flow evidence for the objective."
+      },
+      {
+        "candidate_id": "SGCAND-a9ef6f36bad90382c9e820b0",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The supplied route is after, or lacks a reliable publication date before, the 2026-07-12 cutoff; it cannot be admitted for this as-of ranking and the snippet is not evidence."
+      },
+      {
+        "candidate_id": "SGCAND-1f1cc32e1f78f280f3715c95",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The KIND filing metadata identifies another issuer or unrelated filing and does not provide target-direct Samsung memory/HBM capex-to-cash-flow evidence for the objective."
+      },
+      {
+        "candidate_id": "SGCAND-65718451b3a24b7e539aea2e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The KIND filing metadata identifies another issuer or unrelated filing and does not provide target-direct Samsung memory/HBM capex-to-cash-flow evidence for the objective."
+      },
+      {
+        "candidate_id": "SGCAND-cd3a635753343208873e309c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The KIND filing metadata identifies another issuer or unrelated filing and does not provide target-direct Samsung memory/HBM capex-to-cash-flow evidence for the objective."
+      },
+      {
+        "candidate_id": "SGCAND-0bdf96121394c0a1b14f945b",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The candidate is not a distinct target-direct full-document route for Samsung memory/HBM capex, capacity, and cash-flow conversion; its discovery snippet is insufficient and cannot become evidence."
+      },
+      {
+        "candidate_id": "SGCAND-032eff7d05cbc985b6da80b3",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The candidate is not a distinct target-direct full-document route for Samsung memory/HBM capex, capacity, and cash-flow conversion; its discovery snippet is insufficient and cannot become evidence."
+      },
+      {
+        "candidate_id": "SGCAND-5eca03b18ade7c9cbd71f2dd",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The candidate is not a distinct target-direct full-document route for Samsung memory/HBM capex, capacity, and cash-flow conversion; its discovery snippet is insufficient and cannot become evidence."
+      },
+      {
+        "candidate_id": "SGCAND-fccd2873a6a3c0ca14aef153",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Although this is a fetchable broker or PDF route, its document subject and scope do not directly resolve Samsung memory/HBM capex, capacity, and cash-conversion evidence under a requested source family."
+      },
+      {
+        "candidate_id": "SGCAND-804838c14b66bb0d045e6a3f",
+        "matched_requested_source_family": "GENERAL_WEB_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The candidate is not a distinct target-direct full-document route for Samsung memory/HBM capex, capacity, and cash-flow conversion; its discovery snippet is insufficient and cannot become evidence."
+      },
+      {
+        "candidate_id": "SGCAND-ae541b2d193c544143e53cc1",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.84,
+        "rationale": "Original 2026 industry-outlook download route explicitly addresses memory boom, server-led demand, supply constraints, and 2026 estimates, making it a material full-document route for capex and capacity counter/supersession analysis."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Snippets and metadata remain discovery-only; every selected route still requires full fetch, publication-date verification against 2026-07-12, target/segment attribution, and counter/supersession validation before any evidence use."
+    ]
+  },
+  "payload_hash": "b785a53055a7f7d0e5b7bc9f92329de56ab0753b3833a4523c3b80be5f62a9f2",
+  "production_score_authority": false,
+  "prompt_hash": "85ac21a9abd0736ad06efb3cc3d49826fc9a26d7a96c5e137508949070fa7984",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1b40dcf66b34b63a499be1a850c1d2165250ef47ab1f6eea16a06f18e6722859",
+  "response_id": "COLLABRESP-8267eebd2bb0d530b3c02dd84fe941c839081fab47b9d8fd94001c47d71621c2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

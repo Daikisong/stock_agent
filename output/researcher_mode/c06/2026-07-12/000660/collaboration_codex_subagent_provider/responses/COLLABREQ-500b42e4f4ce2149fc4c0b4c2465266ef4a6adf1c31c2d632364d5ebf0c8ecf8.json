@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "semantic retry attempt 6에서 37개 prior literal과 문서 class를 다시 대조했다. issuer earnings·IR·DART·KIND 계약공시·SKHY final registration statement·sustainability report·customer annual/quarterly filing·customer earnings call·broker archive까지 이미 실행됐으므로, URL을 미리 알아야 한다는 조건을 제거해도 의미상 새로운 target-scoped 공식 document class가 남지 않는다.",
+      "FORWARD_GUIDANCE는 issuer의 기간 명시 숫자형 매출·이익·출하·Capex point 또는 range가 없어 미해결이다. existing issuer earnings·IR·ADR registration 검색의 동의어 변형은 새 class가 아니다.",
+      "SEGMENT_CONTRIBUTION은 HBM 또는 최소 memory 제품군의 실제 매출·영업이익·마진·현금흐름 기여가 없어 미해결이다. DART 제품매출·SKHY registration·sustainability class는 이미 검색됐고 전사·DRAM actual을 HBM 단독으로 귀속하지 않는다.",
+      "DURABLE_VISIBILITY는 기간·확정 물량 또는 CAPA와 취소권·위약금·선수금 조건을 함께 제시한 target-attributable 고객 commitment 원문이 없다. KIND 단일판매 공급계약, customer filing, NVIDIA 10-Q·earnings call class는 이미 실행됐다.",
+      "information-confidence의 독립 corroboration 필요는 남지만 CUSTOMER_OFFICIAL의 GTC·annual report·10-Q·earnings call class가 이미 실행됐다. 새 customer 문서 종류 없이 같은 qualification·supply 단어만 바꾸는 것은 semantic duplicate다.",
+      "CompanyGuide structured broker metadata는 discovery hint이고 이미 PUBLIC_BROKER_PDF archive class도 실행됐으므로 공식 issuer/customer/filing class의 새 근거가 아니다.",
+      "새 URL을 사전에 알 필요는 없지만 새로 검증 가능한 문서 종류 자체가 현재 prompt에 없으므로 suggested_queries를 비워 둔다."
+    ]
+  },
+  "payload_hash": "93a041e9f5a59fd6a3c4b16254acb04a148d2c01bb54bd4c2829316e29504ca7",
+  "production_score_authority": false,
+  "prompt_hash": "c912e91c60d3c106172acd18fad04bd2ec2afa9c5b91b97fe53f25de2c33dfd2",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-500b42e4f4ce2149fc4c0b4c2465266ef4a6adf1c31c2d632364d5ebf0c8ecf8",
+  "response_id": "COLLABRESP-ae3fc3b040d43c16a49f474420de93928c3173e621b137935ca3c91168ee6b4b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

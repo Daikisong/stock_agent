@@ -1,0 +1,774 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "confidence": {
+        "maximum": 1,
+        "minimum": 0,
+        "type": "number"
+      },
+      "counter_case": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "historical_anchor_ids": {
+        "items": {
+          "enum": [
+            "ORDTRANSFER-81a57e040e267483ef68f5f2",
+            "ORDTRANSFER-5aadf9d29303975e658a6c23",
+            "ORDTRANSFER-79ec36a5021be9c2294bf200",
+            "ORDTRANSFER-bc978faa90a05601db10cc5f",
+            "ORDTRANSFER-9205e8ab347aff38184b148a",
+            "ORDTRANSFER-054f760d026b470c39e27df1"
+          ],
+          "type": "string"
+        },
+        "maxItems": 6,
+        "minItems": 6,
+        "type": "array"
+      },
+      "nearest_counter_anchor_ids": {
+        "items": {
+          "enum": [
+            "ORDTRANSFER-bc978faa90a05601db10cc5f",
+            "ORDTRANSFER-9205e8ab347aff38184b148a",
+            "ORDTRANSFER-054f760d026b470c39e27df1"
+          ],
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "nearest_positive_anchor_ids": {
+        "items": {
+          "enum": [
+            "ORDTRANSFER-81a57e040e267483ef68f5f2",
+            "ORDTRANSFER-5aadf9d29303975e658a6c23",
+            "ORDTRANSFER-79ec36a5021be9c2294bf200"
+          ],
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "positive_case": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "prior_fact_dispositions": {
+        "items": {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "RETAIN",
+                    "OMIT"
+                  ],
+                  "type": "string"
+                },
+                "fact_row_index": {
+                  "enum": [
+                    25
+                  ],
+                  "type": "integer"
+                },
+                "reason": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fact_row_index",
+                "disposition",
+                "reason"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "RETAIN",
+                    "OMIT"
+                  ],
+                  "type": "string"
+                },
+                "fact_row_index": {
+                  "enum": [
+                    34
+                  ],
+                  "type": "integer"
+                },
+                "reason": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fact_row_index",
+                "disposition",
+                "reason"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "RETAIN",
+                    "OMIT"
+                  ],
+                  "type": "string"
+                },
+                "fact_row_index": {
+                  "enum": [
+                    95
+                  ],
+                  "type": "integer"
+                },
+                "reason": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fact_row_index",
+                "disposition",
+                "reason"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "RETAIN",
+                    "OMIT"
+                  ],
+                  "type": "string"
+                },
+                "fact_row_index": {
+                  "enum": [
+                    154
+                  ],
+                  "type": "integer"
+                },
+                "reason": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fact_row_index",
+                "disposition",
+                "reason"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "RETAIN",
+                    "OMIT"
+                  ],
+                  "type": "string"
+                },
+                "fact_row_index": {
+                  "enum": [
+                    390
+                  ],
+                  "type": "integer"
+                },
+                "reason": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fact_row_index",
+                "disposition",
+                "reason"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "RETAIN",
+                    "OMIT"
+                  ],
+                  "type": "string"
+                },
+                "fact_row_index": {
+                  "enum": [
+                    399
+                  ],
+                  "type": "integer"
+                },
+                "reason": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fact_row_index",
+                "disposition",
+                "reason"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "RETAIN",
+                    "OMIT"
+                  ],
+                  "type": "string"
+                },
+                "fact_row_index": {
+                  "enum": [
+                    531
+                  ],
+                  "type": "integer"
+                },
+                "reason": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fact_row_index",
+                "disposition",
+                "reason"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        "maxItems": 7,
+        "minItems": 7,
+        "prefixItems": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "disposition": {
+                "enum": [
+                  "RETAIN",
+                  "OMIT"
+                ],
+                "type": "string"
+              },
+              "fact_row_index": {
+                "enum": [
+                  25
+                ],
+                "type": "integer"
+              },
+              "reason": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "fact_row_index",
+              "disposition",
+              "reason"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "disposition": {
+                "enum": [
+                  "RETAIN",
+                  "OMIT"
+                ],
+                "type": "string"
+              },
+              "fact_row_index": {
+                "enum": [
+                  34
+                ],
+                "type": "integer"
+              },
+              "reason": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "fact_row_index",
+              "disposition",
+              "reason"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "disposition": {
+                "enum": [
+                  "RETAIN",
+                  "OMIT"
+                ],
+                "type": "string"
+              },
+              "fact_row_index": {
+                "enum": [
+                  95
+                ],
+                "type": "integer"
+              },
+              "reason": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "fact_row_index",
+              "disposition",
+              "reason"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "disposition": {
+                "enum": [
+                  "RETAIN",
+                  "OMIT"
+                ],
+                "type": "string"
+              },
+              "fact_row_index": {
+                "enum": [
+                  154
+                ],
+                "type": "integer"
+              },
+              "reason": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "fact_row_index",
+              "disposition",
+              "reason"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "disposition": {
+                "enum": [
+                  "RETAIN",
+                  "OMIT"
+                ],
+                "type": "string"
+              },
+              "fact_row_index": {
+                "enum": [
+                  390
+                ],
+                "type": "integer"
+              },
+              "reason": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "fact_row_index",
+              "disposition",
+              "reason"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "disposition": {
+                "enum": [
+                  "RETAIN",
+                  "OMIT"
+                ],
+                "type": "string"
+              },
+              "fact_row_index": {
+                "enum": [
+                  399
+                ],
+                "type": "integer"
+              },
+              "reason": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "fact_row_index",
+              "disposition",
+              "reason"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "disposition": {
+                "enum": [
+                  "RETAIN",
+                  "OMIT"
+                ],
+                "type": "string"
+              },
+              "fact_row_index": {
+                "enum": [
+                  531
+                ],
+                "type": "integer"
+              },
+              "reason": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "fact_row_index",
+              "disposition",
+              "reason"
+            ],
+            "type": "object"
+          }
+        ],
+        "type": "array"
+      },
+      "proposed_score_lower": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "proposed_score_mid": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "proposed_score_upper": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "research_complete": {
+        "enum": [
+          true
+        ],
+        "type": "boolean"
+      },
+      "researcher_summary": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "selected_fact_groundings": {
+        "items": {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "component_interpretation": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "fact_row_index": {
+                  "enum": [
+                    95
+                  ],
+                  "type": "integer"
+                },
+                "source_economic_mechanism": {
+                  "enum": [
+                    "2026년 1분기 반도체 생산실적은 11,465,147백만원이며 생산설비 평균가동률은 100%였다. 이는 메모리 전반의 현재 설비 활용도를 보여주지만 HBM 전용 가동률이나 장기 예약 물량을 뜻하지 않는다."
+                  ],
+                  "type": "string"
+                },
+                "source_period_json": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "source_predicate": {
+                  "enum": [
+                    "OPERATED_MEMORY_PRODUCTION_FACILITIES_AT_FULL_UTILIZATION"
+                  ],
+                  "type": "string"
+                },
+                "source_value_json": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fact_row_index",
+                "source_predicate",
+                "source_value_json",
+                "source_period_json",
+                "source_economic_mechanism",
+                "component_interpretation"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "component_interpretation": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "fact_row_index": {
+                  "enum": [
+                    34
+                  ],
+                  "type": "integer"
+                },
+                "source_economic_mechanism": {
+                  "enum": [
+                    "고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다."
+                  ],
+                  "type": "string"
+                },
+                "source_period_json": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "source_predicate": {
+                  "enum": [
+                    "고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다."
+                  ],
+                  "type": "string"
+                },
+                "source_value_json": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fact_row_index",
+                "source_predicate",
+                "source_value_json",
+                "source_period_json",
+                "source_economic_mechanism",
+                "component_interpretation"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "component_interpretation": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "fact_row_index": {
+                  "enum": [
+                    769
+                  ],
+                  "type": "integer"
+                },
+                "source_economic_mechanism": {
+                  "enum": [
+                    "The issuer reports that HBM4 is currently in mass production for quantities requested by customers, directly linking customer demand to production execution while disclosing no named customer, signed purchase contract, numeric volume, price, duration, or allocation protection."
+                  ],
+                  "type": "string"
+                },
+                "source_period_json": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "source_predicate": {
+                  "enum": [
+                    "is mass-producing customer-requested quantities"
+                  ],
+                  "type": "string"
+                },
+                "source_value_json": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fact_row_index",
+                "source_predicate",
+                "source_value_json",
+                "source_period_json",
+                "source_economic_mechanism",
+                "component_interpretation"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "component_interpretation": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "fact_row_index": {
+                  "enum": [
+                    672
+                  ],
+                  "type": "integer"
+                },
+                "source_economic_mechanism": {
+                  "enum": [
+                    "The broker sees additional M15X investment and capacity headroom, a conditional supply-upside counter to a fixed-capacity scarcity thesis rather than an announced issuer plan."
+                  ],
+                  "type": "string"
+                },
+                "source_period_json": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "source_predicate": {
+                  "enum": [
+                    "broker identifies conditional M15X investment and capacity upside"
+                  ],
+                  "type": "string"
+                },
+                "source_value_json": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fact_row_index",
+                "source_predicate",
+                "source_value_json",
+                "source_period_json",
+                "source_economic_mechanism",
+                "component_interpretation"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        "type": "array"
+      },
+      "selected_fact_row_indices": {
+        "items": {
+          "enum": [
+            95,
+            34,
+            769,
+            672
+          ],
+          "type": "integer"
+        },
+        "type": "array"
+      },
+      "source_coverage": {
+        "items": {
+          "enum": [
+            "COMPANYGUIDE",
+            "COMPANYGUIDE+KRX_PRICE_MARKET_CAP",
+            "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+            "DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO",
+            "DART_ACTUALS_DETERMINISTIC_SCENARIO+KRX_PRICE_MARKET_CAP",
+            "DETERMINISTIC_FORWARD_SCENARIO",
+            "DETERMINISTIC_FORWARD_SCENARIO+KRX_PRICE_MARKET_CAP",
+            "ISSUER_GUIDANCE",
+            "ISSUER_NEWSROOM",
+            "KIND_KRX",
+            "KRX_PRICE_MARKET_CAP",
+            "KRX_PRICE_MARKET_CAP+COMPANYGUIDE",
+            "KRX_PRICE_MARKET_CAP+DETERMINISTIC_FORWARD_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO",
+            "KRX_PRICE_MARKET_CAP+PUBLIC_BROKER_REPORT",
+            "OPENDART",
+            "PUBLIC_BROKER_PDF",
+            "PUBLIC_BROKER_REPORT",
+            "STRUCTURED_HISTORICAL_BAND",
+            "TARGET_OFFICIAL_TRAILING_VALUATION"
+          ],
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "structured_metric_row_indices": {
+        "items": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "maxItems": 0,
+        "type": "array"
+      },
+      "uncertainties": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "why_not_higher": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "why_not_lower": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "selected_fact_row_indices",
+      "selected_fact_groundings",
+      "prior_fact_dispositions",
+      "structured_metric_row_indices",
+      "historical_anchor_ids",
+      "nearest_positive_anchor_ids",
+      "nearest_counter_anchor_ids",
+      "researcher_summary",
+      "positive_case",
+      "counter_case",
+      "uncertainties",
+      "source_coverage",
+      "proposed_score_lower",
+      "proposed_score_mid",
+      "proposed_score_upper",
+      "why_not_higher",
+      "why_not_lower",
+      "confidence",
+      "research_complete"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "520ee7bfcd42cd7960b33e317b11d9314675fd3874644601de57bb856c07c8fb",
+  "pass_name": "COMPONENT_RESEARCH",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nWrite one component memo with a bounded point range, nearest positive/counter anchors, both-side reasoning, and explicit uncertainty. The prior_component_memo_context is non-authoritative continuity context. Reassess every current prior fact row and account for it exactly once in prior_fact_dispositions as RETAIN or OMIT with a semantic reason; RETAIN rows must also appear in selected_fact_row_indices and OMIT rows must not. Only current_fact_rows require dispositions. When current_fact_rows is empty or prior_fact_dispositions_required is false, return an empty prior_fact_dispositions array; unavailable prior facts are hash-only audit history and must never be assigned a current row index. This is an LLM reselection decision, never deterministic carry-forward. When prior_supervisor_feedback_context.available is true, address its component-specific semantic findings in a complete rewrite. Treat the feedback as diagnostic continuity, not score or Stage authority. Never reverse a selected fact's predicate or value to fit the thesis; omit it or narrate its actual economic meaning. For every selected fact row, return exactly one selected_fact_groundings row. Copy the decoded predicate and economic_mechanism exactly; encode the decoded value and period as compact JSON strings. The positive_case, counter_case, prior dispositions, and component_interpretation must all remain consistent with those immutable groundings. If the real fact does not support the component thesis, OMIT it instead of changing its comparison basis, subject, period, predicate, value, or mechanism. A positive score range requires at least one selected current POSITIVE EvidenceFact. Neutral context and structured metrics marked score_authority=false cannot support positive points. Return structured_metric_row_indices using only the explicit row numbers from structured_metric_rows. The deterministic engine will restore the immutable requirement ids and values; never copy a nested record metric_id or invent a value.\nReturn exactly one JSON object matching the supplied schema.\n{\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"as_of_date\": \"2026-07-12\", \"component_fact_scope_projection\": {\"citable_fact_count\": 1897, \"citable_source_claim_count\": 1897, \"every_input_fact_accounted\": true, \"every_input_source_claim_accounted\": true, \"filter_basis\": \"PREEXISTING_DETERMINISTIC_ALLOWED_COMPONENT_IDS\", \"fixed_top_n_used\": false, \"input_fact_count\": 2190, \"input_source_claim_count\": 2190, \"non_citable_fact_count\": 293, \"non_citable_fact_roster_hash\": \"3c54d44d4e683e50fe500b3251afb1ce69146221dfb67b725eadd6e5f1d7f39f\", \"non_citable_source_claim_count\": 293, \"non_citable_source_claim_roster_hash\": \"3d3d6d8db3858fff986dedcb87a7c1825d950090d5e7765137a64bb36ad87394\", \"prompt_projection_is_research_cap\": false, \"score_authority\": false}, \"component_id\": \"bottleneck_pricing\", \"component_max_points\": 19.0, \"current_counterfacts\": [{\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 12}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 21}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 24}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 29}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 32}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 34}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 61}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 70}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 80}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 84}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 85}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 86}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 87}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 94}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 96}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 98}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 103}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 105}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 112}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 127}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 130}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 131}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 144}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 146}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 153}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 187}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 191}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 199}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 201}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 208}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 212}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 216}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 218}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 222}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 223}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 225}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 229}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 246}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 248}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 254}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 257}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 269}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 271}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 280}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 288}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 293}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 306}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 314}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 319}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 322}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 328}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 344}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 348}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 374}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 376}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 380}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 390}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 399}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 417}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 419}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 420}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 422}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 434}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 435}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 476}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 485}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 487}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 489}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 507}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 511}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 522}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 524}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 525}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 550}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 553}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 554}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 560}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 562}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 573}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 575}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 576}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 588}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 595}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 596}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 597}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 598}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 601}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 611}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 621}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 623}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 639}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 643}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 652}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 669}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 672}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 683}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 684}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 688}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 690}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 700}, {\"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 714}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 715}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 717}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 719}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 725}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 728}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 747}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 748}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 750}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 752}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 766}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 770}, {\"current_lifecycle\": \"OPEN\", \"fact_row_index\": 772}], \"current_evidence_fact_graph\": [], \"current_evidence_fact_projection\": {\"fact_fields\": [\"fact_row_index\", \"subject_dictionary_index\", \"business_segment_dictionary_index\", \"product_family_dictionary_index\", \"economic_mechanism_dictionary_index\", \"predicate_dictionary_index\", \"value_dictionary_index\", \"unit_dictionary_index\", \"period_dictionary_index\", \"direction_dictionary_index\", \"current_lifecycle_dictionary_index\", \"confidence_dictionary_index\", \"structured_evidence_roles_dictionary_index\"], \"fact_semantics_transported_in_chunk_responses\": true, \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"global_fact_projection_accounting\": {\"closed_fact_count\": 1124, \"closed_fact_history_projection_hash\": \"7bef4d711ce4119dff1ece03e44418902930e4408765cad7153188856c9d9d4f\", \"closed_fact_roster_hash\": \"3def1b17219fa3490a50009802dea59ff87afec319ea2af6e2c2aee80a6c81f1\", \"closed_history_persisted_outside_chunk_prompts\": true, \"current_fact_count\": 773, \"current_fact_roster_hash\": \"65cd521dd5e2d78a54408f1264af7771d2a5dbe32c7ab28411aa3831d307873c\", \"every_global_fact_partitioned_without_sampling\": true, \"fixed_top_n_used\": false, \"global_fact_row_index_roster_hash\": \"6ee2f11a5548bfb696b4adc9eb4567c7c455b21d5704997044e5935723330482\", \"input_fact_count\": 1897, \"input_fact_roster_hash\": \"984f369f0ce03842ff6eb3a2a5dd507c75f70cb88b95081b083a36f618879d91\", \"prompt_projection_is_research_cap\": false, \"schema_version\": \"e2r_v5_global_fact_projection_accounting_v1\", \"score_authority\": false}, \"prompt_projection_is_research_cap\": false, \"schema_version\": \"e2r_v5_fact_chunk_synthesis_projection_v1\", \"score_authority\": false}, \"historical_component_anchors\": [{\"anchor_id\": \"ORDTRANSFER-81a57e040e267483ef68f5f2\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"1q24_ape_new_csm_retention_growth_without_price_confirmation\", \"songdaiki_stock_web\"], \"max_points\": 19.0, \"points_lower\": 0.0, \"points_mid\": 0.38, \"points_upper\": 1.33, \"role\": \"POSITIVE\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-5aadf9d29303975e658a6c23\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"c27_game_movie_kids_ip_liveops_retained_economics_leaf_v3\", \"songdaiki_stock_web\"], \"max_points\": 19.0, \"points_lower\": 6.84, \"points_mid\": 7.79, \"points_upper\": 8.74, \"role\": \"POSITIVE\", \"score_band\": \"MEDIUM\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-79ec36a5021be9c2294bf200\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"reinsurance_rate_cycle_reserve_earnings_visibility\"], \"max_points\": 19.0, \"points_lower\": 18.05, \"points_mid\": 19.0, \"points_upper\": 19.0, \"role\": \"POSITIVE\", \"score_band\": \"STRONG\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-bc978faa90a05601db10cc5f\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 19.0, \"points_lower\": 0.0, \"points_mid\": 0.0, \"points_upper\": 0.95, \"role\": \"COUNTER\", \"score_band\": \"ZERO\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-9205e8ab347aff38184b148a\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 19.0, \"points_lower\": 4.478571, \"points_mid\": 5.428571, \"points_upper\": 6.378571, \"role\": \"COUNTER\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-054f760d026b470c39e27df1\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"price_only_local_peak\", \"margin_or_backlog_slowdown\", \"relative_strength\", \"early_revision_signal\", \"source_name_level_proxy\", \"exact_url_pending\", \"performance_marketing_recovery_narrative_treated_as_insufficient_unless_advertiser_retention_and_channel_economics_are_verified\"], \"max_points\": 19.0, \"points_lower\": 18.05, \"points_mid\": 19.0, \"points_upper\": 19.0, \"role\": \"COUNTER\", \"score_band\": \"STRONG\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}], \"loss_accounted_fact_chunk_synthesis\": {\"chunk_count\": 2, \"chunk_partition_roster_hash\": \"e4634b6f2145b72430d8c26c8cf8285faa77f8288e3a8110fcd3dda21a113c6b\", \"chunk_responses\": [{\"chunk_fact_count\": 605, \"chunk_fact_row_index_roster_hash\": \"1b0495d1eee7ef0ac702701a00a8a087e0d89780727d64ecb062d7af2f9fab71\", \"chunk_index\": 0, \"response\": {\"confidence\": 0.78, \"counter_case\": \"고객 집중과 재협의 관행, HBM 전용 CAPA 미분리가 지속기간 상단을 제한한다.\", \"historical_anchor_ids\": [\"ORDTRANSFER-79ec36a5021be9c2294bf200\", \"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"nearest_counter_anchor_ids\": [\"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"nearest_positive_anchor_ids\": [\"ORDTRANSFER-79ec36a5021be9c2294bf200\"], \"positive_case\": \"100% 메모리 가동률과 HBM 가격 상승 기여는 병목과 가격력을 지지한다.\", \"prior_fact_dispositions\": [{\"disposition\": \"OMIT\", \"fact_row_index\": 25, \"reason\": \"재협의 관행은 pricing duration의 counter로 요약\"}, {\"disposition\": \"RETAIN\", \"fact_row_index\": 34, \"reason\": \"고객 집중 counter 유지\"}, {\"disposition\": \"RETAIN\", \"fact_row_index\": 95, \"reason\": \"공시된 100% 가동률 유지\"}, {\"disposition\": \"OMIT\", \"fact_row_index\": 154, \"reason\": \"평균원가 생산능력은 HBM 전용 CAPA가 아님\"}, {\"disposition\": \"OMIT\", \"fact_row_index\": 390, \"reason\": \"재고 충당은 직접 bottleneck 근거보다 후순위\"}, {\"disposition\": \"OMIT\", \"fact_row_index\": 399, \"reason\": \"재공품 충당은 직접 pricing 근거가 아님\"}, {\"disposition\": \"OMIT\", \"fact_row_index\": 531, \"reason\": \"가격 상승 정성 근거는 다음 chunk와 종합\"}], \"proposed_score_lower\": 11.0, \"proposed_score_mid\": 14.0, \"proposed_score_upper\": 16.0, \"research_complete\": true, \"researcher_summary\": \"가동률과 가격상승 제품군은 공급 긴장을 지지하지만 HBM 전용 sold-out·실현 ASP·고객 allocation은 확인되지 않았다.\", \"selected_fact_groundings\": [{\"component_interpretation\": \"전사 메모리 공급 긴장은 확인되지만 HBM 전용 CAPA lock으로 확대하지 않는다.\", \"fact_row_index\": 95, \"source_economic_mechanism\": \"2026년 1분기 반도체 생산실적은 11,465,147백만원이며 생산설비 평균가동률은 100%였다. 이는 메모리 전반의 현재 설비 활용도를 보여주지만 HBM 전용 가동률이나 장기 예약 물량을 뜻하지 않는다.\", \"source_period_json\": \"\\\"2026-Q1\\\"\", \"source_predicate\": \"OPERATED_MEMORY_PRODUCTION_FACILITIES_AT_FULL_UTILIZATION\", \"source_value_json\": \"\\\"production output KRW 11,465,147 million; average utilization 100%\\\"\"}, {\"component_interpretation\": \"강한 대형 고객 수요와 동시에 고객 협상력·집중 위험을 반영한다.\", \"fact_row_index\": 34, \"source_economic_mechanism\": \"고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.\", \"source_period_json\": \"\\\"2026-Q1 vs 2025-Q1\\\"\", \"source_predicate\": \"고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.\", \"source_value_json\": \"\\\"7,780,590 and 6,536,458 vs 4,786,233\\\"\"}], \"selected_fact_row_indices\": [95, 34], \"source_coverage\": [\"OPENDART\", \"ISSUER_NEWSROOM\", \"PUBLIC_BROKER_PDF\"], \"structured_metric_row_indices\": [], \"uncertainties\": [\"HBM 전용 CAPA와 realized ASP가 없다\", \"구조적 쇼티지를 확정할 signed allocation이 없다\"], \"why_not_higher\": \"메모리-wide 지표를 HBM-only 구조적 쇼티지로 승격할 수 없다.\", \"why_not_lower\": \"실제 100% 가동과 HBM 가격 상승 제품군 근거가 있다.\"}}, {\"chunk_fact_count\": 168, \"chunk_fact_row_index_roster_hash\": \"82f3badc9139512624ef2a8f03b0a0aaa1c060d42a96e38c9e13fb65a3eba978\", \"chunk_index\": 1, \"response\": {\"confidence\": 0.76, \"counter_case\": \"M15X 추가 증산 여력과 고객별 allocation·가격·기간 미공개는 고정된 장기 병목 주장에 반대되는 근거다.\", \"historical_anchor_ids\": [\"ORDTRANSFER-79ec36a5021be9c2294bf200\", \"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"nearest_counter_anchor_ids\": [\"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"nearest_positive_anchor_ids\": [\"ORDTRANSFER-79ec36a5021be9c2294bf200\"], \"positive_case\": \"고객 요청 물량이 실제 HBM4 양산으로 연결돼 수요가 생산 실행으로 전환되고 있다.\", \"prior_fact_dispositions\": [], \"proposed_score_lower\": 11.0, \"proposed_score_mid\": 14.0, \"proposed_score_upper\": 16.0, \"research_complete\": true, \"researcher_summary\": \"고객 요청 HBM4 양산은 병목의 경제성을 지지하지만 HBM 전용 CAPA 잠김과 realized ASP가 분리되지 않아 구조적 scarcity의 최상단은 아니다.\", \"selected_fact_groundings\": [{\"component_interpretation\": \"고객 요청 물량의 HBM4 양산은 수요와 생산 실행의 연결을 지지하지만 sold-out 기간이나 가격 조건을 증명하지 않는다.\", \"fact_row_index\": 769, \"source_economic_mechanism\": \"The issuer reports that HBM4 is currently in mass production for quantities requested by customers, directly linking customer demand to production execution while disclosing no named customer, signed purchase contract, numeric volume, price, duration, or allocation protection.\", \"source_period_json\": \"\\\"current as of 2026-01-28\\\"\", \"source_predicate\": \"is mass-producing customer-requested quantities\", \"source_value_json\": \"\\\"customer-requested quantities currently in mass production\\\"\"}, {\"component_interpretation\": \"추가 증산 여력은 공급 병목이 영구 고정됐다는 주장에 대한 counter다.\", \"fact_row_index\": 672, \"source_economic_mechanism\": \"The broker sees additional M15X investment and capacity headroom, a conditional supply-upside counter to a fixed-capacity scarcity thesis rather than an announced issuer plan.\", \"source_period_json\": \"\\\"FY2026 outlook\\\"\", \"source_predicate\": \"broker identifies conditional M15X investment and capacity upside\", \"source_value_json\": \"\\\"추가 투자 및 증산 여력\\\"\"}], \"selected_fact_row_indices\": [769, 672], \"source_coverage\": [\"OPENDART\", \"ISSUER_NEWSROOM\", \"PUBLIC_BROKER_PDF\"], \"structured_metric_row_indices\": [], \"uncertainties\": [\"HBM 전용 CAPA와 sold-out 기간이 정량 공개되지 않았다\", \"실현 HBM ASP와 계약별 가격 보호가 확인되지 않았다\"], \"why_not_higher\": \"HBM 전용 CAPA 잠김, realized ASP, 고객별 allocation 보호가 확인되지 않았다.\", \"why_not_lower\": \"발행사가 고객 요청 HBM4 물량의 실제 양산을 확인했다.\"}}], \"every_chunk_response_must_be_reviewed\": true, \"fixed_top_n_used\": false, \"global_fact_count\": 773, \"global_fact_row_index_roster_hash\": \"6ee2f11a5548bfb696b4adc9eb4567c7c455b21d5704997044e5935723330482\", \"instruction\": \"Synthesize every chunk response into exactly one normal pass response. No chunk is a global conclusion. Cite only fact row indices already cited or selected by at least one chunk response. For COMPONENT_RESEARCH, copy selected fact groundings exactly from the chunk responses, reconcile every prior fact disposition once, and recalibrate one component range across all chunks. For BUSINESS_MODEL_RESEARCH and RED_TEAM_RESEARCH, integrate all support, counterevidence, dependencies, and uncertainties. Completion means all chunk responses were reviewed; never output total score or Stage.\", \"pass_name\": \"COMPONENT_RESEARCH\", \"prompt_projection_is_research_cap\": false, \"schema_version\": \"e2r_v5_loss_accounted_fact_chunk_synthesis_v1\", \"score_authority\": false}, \"prior_component_memo_context\": {\"available\": true, \"current_fact_row_count\": 7, \"current_fact_rows\": [{\"current_direction\": \"NEUTRAL\", \"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 25, \"prior_role\": \"CONTEXT\"}, {\"current_direction\": \"COUNTER\", \"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 34, \"prior_role\": \"COUNTER\"}, {\"current_direction\": \"POSITIVE\", \"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 95, \"prior_role\": \"POSITIVE\"}, {\"current_direction\": \"NEUTRAL\", \"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 154, \"prior_role\": \"CONTEXT\"}, {\"current_direction\": \"COUNTER\", \"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 390, \"prior_role\": \"COUNTER\"}, {\"current_direction\": \"COUNTER\", \"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 399, \"prior_role\": \"COUNTER\"}, {\"current_direction\": \"POSITIVE\", \"current_lifecycle\": \"CURRENT\", \"fact_row_index\": 531, \"prior_role\": \"POSITIVE\"}], \"deterministic_fact_carry_forward\": false, \"prior_fact_dispositions_required\": true, \"prior_research_complete\": true, \"required_prior_fact_disposition_count\": 7, \"score_authority\": false, \"unavailable_prior_fact_count\": 0, \"unavailable_prior_fact_roster_hash\": \"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\", \"unavailable_prior_facts_are_hash_only_not_dispositions\": true}, \"prior_supervisor_feedback_context\": {\"available\": true, \"feedback\": {\"component_findings\": [{\"component_id\": \"bottleneck_pricing\", \"memo_sufficient\": false, \"missing_fact_needs\": [\"메모리-wide 100% 가동과 구별되는 HBM별 realized ASP·협상 시점·front-end 및 packaging CAPA·sold-out 기간·고객 allocation과 LTA 가격 하방의 기간별 full-report 근거\"], \"rationale\": \"CRMEMO-2249911cddf154b56adcb60c는 메모리 100% 가동을 HBM 전용 잠김 CAPA로 확대하지 않았다. 그러나 STRUCTCAND-dd271cdb3c5c93d51fc8e631, STRUCTCAND-b59017f376f838a51eb08dfe, STRUCTCAND-02cf8524a3032fcfa567e54a는 HBM ASP 협상·장기 공급부족·LTA라는 서로 다른 기간 경로를 가리킨다. 본문을 읽어 HBM 귀속과 기간을 검증하면 현재 병목의 지속성과 pricing judgment가 달라질 수 있다.\"}], \"component_id\": \"bottleneck_pricing\", \"component_status\": \"COMPLETE\", \"missing_material_facts\": [{\"component_id\": \"bottleneck_pricing\", \"direction\": \"RESOLUTION\", \"fact_need\": \"HBM별 realized ASP·협상기간·전용 CAPA·sold-out 기간·고객 allocation을 메모리-wide 100% 가동과 구별한다.\", \"why_material\": \"HBM 귀속 병목과 가격 지속기간은 당기 공급제약을 장기 pricing power로 볼 수 있는지 직접 결정한다.\"}], \"new_source_family_directions\": [{\"counter_or_supersession\": true, \"direction\": \"STRUCTCAND-dd271cdb3c5c93d51fc8e631, STRUCTCAND-b59017f376f838a51eb08dfe 및 LTA 후보의 본문에서 HBM ASP 협상·공급부족 기간·제품 귀속·customer allocation을 검증한다.\", \"objective_id\": \"SGOBJ-96e6fadd695c6b292e28d22e\", \"rationale\": \"메모리-wide 가동률과 HBM-only pricing duration을 가르는 material route다.\", \"source_family\": \"PUBLIC_BROKER_PDF\"}], \"query_direction_briefs\": [{\"avoid_repeating\": [\"메모리 전체 100% 가동을 HBM 전용 CAPA lock으로 전환\", \"전망 판가를 realized ASP로 전환\", \"동일 한글·영문 report 중복\"], \"counter_or_supersession\": true, \"objective_id\": \"SGOBJ-96e6fadd695c6b292e28d22e\", \"research_need\": \"HBM ASP 협상과 공급부족 기간을 언급한 full reports에서 제품별 realized pricing, CAPA, sold-out duration, allocation을 기간별로 검증한다.\"}], \"status\": \"NEXT_RESEARCH_REQUIRED\"}, \"instruction\": \"Treat this as diagnostic feedback for a full semantic rewrite. Correct cited fact direction, predicate, value, and narrative consistency; independently reselect current fact rows.\", \"score_authority\": false, \"stage_authority\": false}, \"research_plan\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"candidate_anchor_ids\": [\"ORDTRANSFER-81a57e040e267483ef68f5f2\", \"ORDTRANSFER-5aadf9d29303975e658a6c23\", \"ORDTRANSFER-79ec36a5021be9c2294bf200\", \"ORDTRANSFER-bc978faa90a05601db10cc5f\", \"ORDTRANSFER-9205e8ab347aff38184b148a\", \"ORDTRANSFER-054f760d026b470c39e27df1\"], \"candidate_fact_roster_projection\": {\"candidate_fact_count\": 2190, \"candidate_fact_ids_exposed_to_provider\": false, \"candidate_fact_roster_hash\": \"232b11711b246bc578053d967b917d80cfb419fc2ed30cd423fd79218feca8f2\", \"every_candidate_fact_accounted_by_count_and_hash\": true, \"fixed_top_n_used\": false, \"full_candidate_fact_roster_persisted_in_dossier\": true, \"prompt_projection_is_research_cap\": false, \"provider_selection_namespace\": \"current_evidence_fact_graph.fact_row_index\", \"score_authority\": false}, \"component_id\": \"bottleneck_pricing\", \"component_max_points\": 19.0, \"counter_route_hints\": [\"pricing_counter\", \"capacity_counter\", \"supersession\", \"memory_recovery_supersession\", \"counter_supersession\", \"customer_counter\"], \"plan_id\": \"CRPLAN-d7aab3e2760258196d2b2719\", \"research_questions\": [\"memory, DRAM, or HBM\", \"ASP or realized pricing\", \"pricing commentary without quantified actual\", \"raw commodity headline\", \"unattributed company revenue\", \"HBM or memory scope\", \"capacity constraint, sold-out, pre-sold, or demand exceeds supply\", \"demand exceeds supply without booked period\", \"capacity specification only\", \"memory or HBM attribution\", \"capex, capacity, investment, supply, or oversupply\", \"mixed-segment capex with memory reference\", \"unrelated Foundry/display capex\", \"conventional memory product\", \"weakness, drag, decline, or inventory risk\", \"mixed memory conditions\", \"generic industry headline\", \"HBM or memory product\", \"customer allocation, booking, commitment, or supply contract\", \"customer schedule or non-binding allocation discussion\", \"generic customer name\", \"Foundry contract\", \"product profile\", \"HBM or memory customer\", \"concentration, dependency, named allocation, or customer share\", \"named HBM customers without concentration share\", \"generic company customer list\", \"Foundry customer\"], \"researcher_role\": \"BottleneckPricingResearcher\", \"schema_version\": \"e2r_component_research_plan_v1\", \"source_route_hints\": [\"official_filing\", \"issuer_earnings\", \"issuer_ir\", \"trusted_independent\", \"customer_official\"], \"structured_metric_requirements\": [], \"target_id\": \"000660\"}, \"researcher_role\": \"BottleneckPricingResearcher\", \"selected_fact_grounding_contract\": {\"component_cases_must_match_groundings\": true, \"deterministic_code_may_repair_interpretation\": false, \"exactly_once\": true, \"required_for_every_selected_fact\": true, \"source_economic_mechanism_copy_exactly\": true, \"source_period_json_encoding\": \"compact JSON of the decoded source period\", \"source_predicate_copy_exactly\": true, \"source_value_json_encoding\": \"compact JSON of the decoded source value\", \"unsupported_fact_action\": \"OMIT_AND_RESELECT\"}, \"source_claims\": {\"available_at_roster\": {\"count\": 17, \"roster_hash\": \"b314e760a9cb5207f9b96dbe332c319e4f97e6ad92ff0fad6f7522a529b0f86d\"}, \"claim_id_roster\": {\"count\": 1897, \"roster_hash\": \"51d1dfdfc8d59be875528b28c131a01ab40d3f2d60dce211fc51dd13a2f09094\"}, \"collection_name\": \"research_source_claim_profile\", \"document_id_roster\": {\"count\": 21, \"roster_hash\": \"30993b609d3bfb209f30eecee45a9cc61906d4e4dbe430a6ebf67cdbac5e0b4d\"}, \"every_exact_quote_accounted_by_count_and_hash\": true, \"every_record_accounted_by_hash_and_group_count\": true, \"exact_quote_character_count\": 586305, \"exact_quote_roster\": {\"count\": 649, \"roster_hash\": \"e731cf2d8cffc9b3da98a705ae11f480eb0c6b52649c649865cfcfc89f5d72b4\"}, \"extraction_lineage_excluded_from_provider\": true, \"fact_semantics_are_in_current_citable_fact_rows\": true, \"fixed_top_n_used\": false, \"full_claim_records_persisted_outside_prompt\": true, \"full_records_persisted_outside_prompt\": true, \"prompt_projection_is_research_cap\": false, \"published_at_roster\": {\"count\": 17, \"roster_hash\": \"b314e760a9cb5207f9b96dbe332c319e4f97e6ad92ff0fad6f7522a529b0f86d\"}, \"record_count\": 1897, \"record_roster_hash\": \"c93b933090ceb84ddabd95fe284e3a10a7dee7d7a218ae987f7fc9a5673b183f\", \"relation_coverage\": {}, \"schema_version\": \"e2r_v5_research_source_claim_profile_v2\", \"score_authority\": false, \"semantic_claim_fields\": [\"claim_id\", \"document_id\", \"source_ids\", \"exact_quote\", \"source_family\", \"source_tier\", \"published_at\", \"available_at\", \"structured_evidence_roles\"], \"semantic_group_count\": 12, \"semantic_groups\": [{\"numeric_distributions\": {}, \"record_count\": 7, \"record_roster_hash\": \"5b575a834c7c1896f654163befd2e13ae1ab5161611e5f3e415eb16d24eb5cd4\", \"state\": {\"source_family\": \"ISSUER_NEWSROOM\", \"source_tier\": \"ISSUER_OFFICIAL\", \"structured_evidence_roles\": [\"DURABLE_VISIBILITY\"]}}, {\"numeric_distributions\": {}, \"record_count\": 1, \"record_roster_hash\": \"599bc0b5368354f660a20886b3f0c070cd10bdcdc16d88cf2f15856a9f829537\", \"state\": {\"source_family\": \"ISSUER_NEWSROOM\", \"source_tier\": \"ISSUER_OFFICIAL\", \"structured_evidence_roles\": [\"SEGMENT_CONTRIBUTION\"]}}, {\"numeric_distributions\": {}, \"record_count\": 10, \"record_roster_hash\": \"8b2182c278bd9ba68834f78c765bf8920f1403276cb5bba958be3660ee847370\", \"state\": {\"source_family\": \"ISSUER_NEWSROOM\", \"source_tier\": \"ISSUER_OFFICIAL\", \"structured_evidence_roles\": []}}, {\"numeric_distributions\": {}, \"record_count\": 1, \"record_roster_hash\": \"d6ecfb0a2fbf2ffc6dec6abc226fbdd03de9c8bb59648c97c8e06fb205cd144e\", \"state\": {\"source_family\": \"OPENDART\", \"source_tier\": \"REGULATORY_OFFICIAL\", \"structured_evidence_roles\": [\"SEGMENT_CONTRIBUTION\"]}}, {\"numeric_distributions\": {}, \"record_count\": 14, \"record_roster_hash\": \"0a683eb1c9766fc03042595489de10d5693d324bf2de045f6f5edabb7492b657\", \"state\": {\"source_family\": \"OPENDART\", \"source_tier\": \"REGULATORY_OFFICIAL\", \"structured_evidence_roles\": []}}, {\"numeric_distributions\": {}, \"record_count\": 16, \"record_roster_hash\": \"e05f1ed77f00427d9b5a69fdb7b7fb7da8bdb690d59f2aa6cc3dedfc0831c906\", \"state\": {\"source_family\": \"PUBLIC_BROKER_PDF\", \"source_tier\": \"TRUSTED_INDEPENDENT\", \"structured_evidence_roles\": [\"FORWARD_BOOK_VALUE\"]}}, {\"numeric_distributions\": {}, \"record_count\": 9, \"record_roster_hash\": \"056f45a90bfde5339af1d010ccac5fafccee2f36a171e39df28e225d6af3a27f\", \"state\": {\"source_family\": \"PUBLIC_BROKER_PDF\", \"source_tier\": \"TRUSTED_INDEPENDENT\", \"structured_evidence_roles\": [\"FORWARD_EV_EBITDA\"]}}, {\"numeric_distributions\": {}, \"record_count\": 20, \"record_roster_hash\": \"4b0674139e26d25ae071d1c1051a19d5f3618a857e4d154fda7dab1e52ada607\", \"state\": {\"source_family\": \"PUBLIC_BROKER_PDF\", \"source_tier\": \"TRUSTED_INDEPENDENT\", \"structured_evidence_roles\": [\"FORWARD_PB\"]}}, {\"numeric_distributions\": {}, \"record_count\": 26, \"record_roster_hash\": \"f7a0f553dc1bbc2f9f8112cd967631f22bdb4b629b19fc161fc3f40c3b455c90\", \"state\": {\"source_family\": \"PUBLIC_BROKER_PDF\", \"source_tier\": \"TRUSTED_INDEPENDENT\", \"structured_evidence_roles\": [\"OPERATING_PROFIT_REVISION\"]}}, {\"numeric_distributions\": {}, \"record_count\": 50, \"record_roster_hash\": \"e52f6a9373807943cdf202d0b420f69628275490ad2bf34e84bb37972f492d30\", \"state\": {\"source_family\": \"PUBLIC_BROKER_PDF\", \"source_tier\": \"TRUSTED_INDEPENDENT\", \"structured_evidence_roles\": [\"QOQ_GROWTH\"]}}, {\"numeric_distributions\": {}, \"record_count\": 30, \"record_roster_hash\": \"2ea726dd55995f8257b0b1da4d1dd1027a94e404dd239f13a038e75d776fdcc9\", \"state\": {\"source_family\": \"PUBLIC_BROKER_PDF\", \"source_tier\": \"TRUSTED_INDEPENDENT\", \"structured_evidence_roles\": [\"SEGMENT_CONTRIBUTION\"]}}, {\"numeric_distributions\": {}, \"record_count\": 1713, \"record_roster_hash\": \"cbcf5462fbae790e543ba772bf73739a22e61d85d00db153fe03f9275c9ba895\", \"state\": {\"source_family\": \"PUBLIC_BROKER_PDF\", \"source_tier\": \"TRUSTED_INDEPENDENT\", \"structured_evidence_roles\": []}}], \"source_id_roster\": {\"count\": 21, \"roster_hash\": \"30993b609d3bfb209f30eecee45a9cc61906d4e4dbe430a6ebf67cdbac5e0b4d\"}}, \"source_coverage\": [\"COMPANYGUIDE\", \"COMPANYGUIDE+KRX_PRICE_MARKET_CAP\", \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"DART_ACTUALS_DETERMINISTIC_SCENARIO+KRX_PRICE_MARKET_CAP\", \"DETERMINISTIC_FORWARD_SCENARIO\", \"DETERMINISTIC_FORWARD_SCENARIO+KRX_PRICE_MARKET_CAP\", \"ISSUER_GUIDANCE\", \"ISSUER_NEWSROOM\", \"KIND_KRX\", \"KRX_PRICE_MARKET_CAP\", \"KRX_PRICE_MARKET_CAP+COMPANYGUIDE\", \"KRX_PRICE_MARKET_CAP+DETERMINISTIC_FORWARD_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"KRX_PRICE_MARKET_CAP+PUBLIC_BROKER_REPORT\", \"OPENDART\", \"PUBLIC_BROKER_PDF\", \"PUBLIC_BROKER_REPORT\", \"STRUCTURED_HISTORICAL_BAND\", \"TARGET_OFFICIAL_TRAILING_VALUATION\"], \"source_documents\": {\"acquisition_lineage_excluded_from_provider\": true, \"available_at_roster\": {\"count\": 21, \"roster_hash\": \"f826828054a0038cb494b8a1da009c6d7dbe2c75e6d9d9bb939238d93bec80aa\"}, \"canonical_url_roster\": {\"count\": 23, \"roster_hash\": \"b461864232eb170eaaa76f868f0dc31193052cf1a1366a26ffad9a4241a04a63\"}, \"collection_name\": \"research_source_document_profile\", \"content_hash_roster\": {\"count\": 35, \"roster_hash\": \"a8beebbff14e18771fda9003a75ebe37a3aefc34d2c0615e5850c4d4ac4c47a3\"}, \"document_bodies_already_consumed_by_fact_extraction\": true, \"document_id_roster\": {\"count\": 35, \"roster_hash\": \"ad99174b88900e2caab7c545e20b754da2a676c1d425cc3dbfd817507c23bfe9\"}, \"every_record_accounted_by_hash_and_group_count\": true, \"excluded_acquisition_lineage_fields\": [\"discovery_urls\", \"query_ids\", \"objective_ids\", \"referenced_urls\", \"referenced_document_ids\"], \"fixed_top_n_used\": false, \"full_document_records_persisted_outside_prompt\": true, \"full_records_persisted_outside_prompt\": true, \"prompt_projection_is_research_cap\": false, \"published_at_roster\": {\"count\": 21, \"roster_hash\": \"f826828054a0038cb494b8a1da009c6d7dbe2c75e6d9d9bb939238d93bec80aa\"}, \"record_count\": 35, \"record_roster_hash\": \"066ac35b439eaa046ae3c12194408af94c27eb7544b8d36099f9b687caa1128b\", \"relation_coverage\": {}, \"schema_version\": \"e2r_v5_research_source_document_profile_v2\", \"score_authority\": false, \"semantic_document_fields\": [\"document_id\", \"full_source_document_id\", \"target_id\", \"as_of_date\", \"canonical_url\", \"title\", \"source_family\", \"source_provider\", \"published_at\", \"available_at\", \"content_type\", \"content_hash\", \"full_source_content_hash\", \"full_source_text_chars\", \"chunk_index\", \"chunk_count\", \"all_chunks_preserved\", \"source_independence_group\", \"full_fetch_performed\", \"full_source_fetch_performed\", \"snippet_only\", \"snippet_used_as_document\", \"evidence_eligible\"], \"semantic_group_count\": 6, \"semantic_groups\": [{\"numeric_distributions\": {}, \"record_count\": 3, \"record_roster_hash\": \"b024a0855cc852708376e8172796d0d209fe66602609a3b59f8d747e950e5042\", \"state\": {\"content_type\": \"text/html; charset=UTF-8\", \"evidence_eligible\": true, \"source_family\": \"ISSUER_NEWSROOM\", \"source_provider\": \"PageFetcher\"}}, {\"numeric_distributions\": {}, \"record_count\": 4, \"record_roster_hash\": \"2dfcedc893fb0dfbe333720e882e9e5f2a6492da1af2a2d4abb8e1bc83f2a3ad\", \"state\": {\"content_type\": \"text/html\", \"evidence_eligible\": true, \"source_family\": \"KIND_KRX\", \"source_provider\": \"PageFetcher\"}}, {\"numeric_distributions\": {}, \"record_count\": 13, \"record_roster_hash\": \"5622845ac1a71cd05b11899f47b9f8c6f07958e81aefdc46ee90fc55f5bf0f62\", \"state\": {\"content_type\": \"text/plain\", \"evidence_eligible\": true, \"source_family\": \"OPENDART\", \"source_provider\": \"OpenDART\"}}, {\"numeric_distributions\": {}, \"record_count\": 13, \"record_roster_hash\": \"38edf7bebb2b1da75fc4cd93bc778e34ed5869d79f6f72ef81ff5d702d34cae5\", \"state\": {\"content_type\": \"application/pdf\", \"evidence_eligible\": true, \"source_family\": \"PUBLIC_BROKER_PDF\", \"source_provider\": \"PageFetcher\"}}, {\"numeric_distributions\": {}, \"record_count\": 1, \"record_roster_hash\": \"fb1eb9d87d0bc6b8713d379cb4887814d4d754591a66bfc3233d5a2822d69f27\", \"state\": {\"content_type\": \"application/pdf;;charset=euc-kr\", \"evidence_eligible\": true, \"source_family\": \"PUBLIC_BROKER_PDF\", \"source_provider\": \"PageFetcher\"}}, {\"numeric_distributions\": {}, \"record_count\": 1, \"record_roster_hash\": \"ee14c39b489babb2b1960408e9e344bb3de927a99f902b6201935538adf4aec8\", \"state\": {\"content_type\": \"application/pdf;charset=UTF-8\", \"evidence_eligible\": true, \"source_family\": \"PUBLIC_BROKER_PDF\", \"source_provider\": \"PageFetcher\"}}], \"title_roster\": {\"count\": 23, \"roster_hash\": \"dc5760b66d7684c55503b4611db9d447c88bbff9b68f88a6410062ab95edf349\"}}, \"structured_metric_rows\": [], \"target_business_model\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"as_of_date\": \"2026-07-12\", \"business_model_summary\": \"SK하이닉스는 DRAM·HBM 중심의 자본집약적 메모리 제조사다. AI 서버용 HBM 수요, 제품 믹스와 ASP가 매출·이익을 키우고, 선단공정·EUV·첨단 패키징 투자와 수율·감가상각·운전자본·세금이 FCF 전환을 좌우한다. HBM4 고객 요청 물량 양산과 ASIC 공동개발은 상용 수요를 지지하지만, 실명 고객별 확정 물량·가격·기간·취소보호·선수금·RPO까지 증명하지는 않는다.\", \"capacity_and_supply_constraints\": [\"메모리 전반 가동률과 HBM 패키징·수율 병목\", \"M15X와 P&T7 증설은 공급 기반을 늘리지만 집행기간과 비용이 크다\", \"브로커 CAPA 전망과 고객 요청 물량은 HBM 전용 sold-out 기간이나 고객별 allocation을 정량 증명하지 않는다\"], \"confidence\": 0.88, \"cost_and_cash_drivers\": [\"HBM의 큰 die와 수율이 원가와 공급량에 미치는 영향\", \"M15X·EUV·용인 인프라·P&T7 첨단 패키징 투자와 감가상각\", \"영업현금흐름에서 CAPEX·세금·재고 등 운전자본을 차감한 FCF 전환\", \"ADR 조달·현금·차입을 함께 사용하는 투자재원 구조\"], \"customer_and_channel_dependencies\": [\"주요 고객과 공급 물량·가격을 월별 또는 분기별 합의한다\", \"상위 익명 고객의 연결 매출 비중이 높아 고객 집중 위험이 있다\", \"고객 요청 HBM4 양산과 ASIC 협업은 직접 수요 경로지만 고객 실명과 계약조건은 공개되지 않았다\"], \"fact_ids\": [\"EFACT-0017d198c525e83abc3cd53e\", \"EFACT-992f55758706446e53a38d38\", \"EFACT-008d86b190177715c94e3977\", \"EFACT-00d92ff690094ac0fc5892a2\", \"EFACT-01bd5bf11e7ea117a9c03d52\", \"EFACT-0295af0d92028218f77266f2\", \"EFACT-032d8176aaa9e163e28dec03\", \"EFACT-03933d87dba15a6ea1834562\", \"EFACT-0548906d522ad9190ac33644\", \"EFACT-090f8f72448959824cda66ea\", \"EFACT-0acf42f2a7b3a54791c685ca\", \"EFACT-0b646e9fc534aca87ab01c17\", \"EFACT-0c3469f2afeb9c7c1e060e5c\", \"EFACT-0c40e76ca25aec1371ba3790\", \"EFACT-9657d8948101c516333a456b\", \"EFACT-967f5b986a5ad74930421875\", \"EFACT-9d3abfee72c1257fc8d9164d\", \"EFACT-9deebb8473a44150b981c991\", \"EFACT-9fdeaa2b756caf1fc9e5d690\", \"EFACT-f86978c738cf0ab0f2cc5fe4\", \"EFACT-f9993e88cad0558124e8a118\", \"EFACT-f9fa114a3daa17bcad2e20e9\", \"EFACT-fb9d043777dd8f6494d571c3\", \"EFACT-fbebe9bd766d3ccabf23232b\", \"EFACT-fd4139addbcd7b73fde272d4\", \"EFACT-fd7995c7d059c87c9d390d9b\", \"EFACT-fe3de19254ddabef098a6b03\", \"EFACT-ff11c94625e0328af0a31c0d\"], \"memo_id\": \"BMMEMO-4c3c238032aed7a0766819e6\", \"research_complete\": true, \"revenue_engines\": [\"DRAM과 HBM의 출하량·제품 믹스·ASP 상승\", \"AI 서버용 HBM 수요 확대와 HBM4 세대 전환\", \"고객 요청 물량 양산 및 ASIC 공동개발을 통한 상용화 경로\"], \"schema_version\": \"e2r_business_model_memo_v1\", \"source_ids\": [\"OFFICIALDOC-15c31fba9ab95bed68a1d7db\", \"OFFICIALDOC-1eabc4cd2a0071d58213c4ea\", \"OFFICIALDOC-517ee88c46b03a911ecddcca\", \"OFFICIALDOC-5d1c1167b9b6798bbb391320\", \"OFFICIALDOC-7ad7370ba36a061011a502fc\", \"OFFICIALDOC-c800a91f87de890b5b8d2e06\", \"SGDOC-3fa5f1bda504b0cb332bde68\", \"SGDOC-4ad58a46779d88509f7896e6\", \"SGDOC-66906bdb3ebcd1c94bb85268\", \"SGDOC-6e405a0dc5bd4f8f2cf7ed5f\", \"SGDOC-74492633cf8cbe35a5220a22\", \"SGDOC-7620fd80beb92f0461d44a2d\", \"SGDOC-82c4d529809691327e652074\", \"SGDOC-a496f2fff2b891528afafbfd\", \"SGDOC-bf1e1d3af59f8c85f9b1fab0\", \"SGDOC-cec48c4b300fe56a6ba42cb7\", \"SGDOC-e387fbf074539d32a618025a\", \"SGDOC-e4e768107cc43f617507017f\"], \"target_id\": \"000660\", \"uncertainties\": [\"HBM별 realized ASP·수율·전용 CAPA·마진·FCF가 전사 또는 DRAM 수치와 완전히 분리되지 않는다\", \"signed HBM 계약의 기간·물량·가격·취소·선수금·backlog/RPO가 공식 자료로 충분히 확인되지 않았다\", \"브로커 전망과 장기 투자계획은 실제 실적·집행과 다를 수 있다\", \"고객 실명과 제품별 매출 귀속이 공개되지 않았다\"]}, \"target_id\": \"000660\"}",
+  "prompt_hash": "cf3b365a66212c4c401198f560bd04173ece8f95d9532335d7bbae7bc654d706",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-93407328d918e50ea8401ab1617b1050f2824340f2f520a78c0e4285d1cbbf8c",
+  "request_identity": {
+    "output_schema_hash": "520ee7bfcd42cd7960b33e317b11d9314675fd3874644601de57bb856c07c8fb",
+    "pass_name": "COMPONENT_RESEARCH",
+    "prompt_hash": "cf3b365a66212c4c401198f560bd04173ece8f95d9532335d7bbae7bc654d706",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_component_research",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

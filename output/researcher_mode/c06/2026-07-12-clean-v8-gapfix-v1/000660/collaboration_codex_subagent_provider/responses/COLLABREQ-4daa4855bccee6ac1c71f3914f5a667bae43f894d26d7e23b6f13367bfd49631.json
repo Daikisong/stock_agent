@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7eea0cd0c73c44584e84c831",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "stockeconomykm.blogspot.com의 blog·portal·navigation 또는 재서술 route로 original PUBLIC_BROKER_PDF provenance가 없고 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f4e07b7bbac2012e94d50f41",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "koreainvestinsights.com의 blog·portal·navigation 또는 재서술 route로 original PUBLIC_BROKER_PDF provenance가 없고 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-aa996047d465dbcd33bae33f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "언론/목록/영상 route로 original broker PDF가 아니며, 노출 metadata만으로 현재 target earnings mechanism을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-2cd8f551f0f664949a362611",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 유료 콘텐츠의 리포트 요약·재서술로 original PUBLIC_BROKER_PDF route가 아니며 snippet을 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-236b23d2b745a946b31c9e4c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "457deep.com의 blog·portal·navigation 또는 재서술 route로 original PUBLIC_BROKER_PDF provenance가 없고 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4fdffacff5d3c41af1dc59b4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 유료 콘텐츠의 리포트 요약·재서술로 original PUBLIC_BROKER_PDF route가 아니며 snippet을 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-3cbcdfdec1da9a2132504c60",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "arca.live의 blog·portal·navigation 또는 재서술 route로 original PUBLIC_BROKER_PDF provenance가 없고 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4bcf02f7f9a73611e27d2543",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 유료 콘텐츠의 리포트 요약·재서술로 original PUBLIC_BROKER_PDF route가 아니며 snippet을 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-348fef5b23f4f767fb80daa9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "SK주식회사 annual report로 broker research가 아니고 대상 법인도 SK하이닉스가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-285866252ff61cfbd0f0b030",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 유료 콘텐츠의 리포트 요약·재서술로 original PUBLIC_BROKER_PDF route가 아니며 snippet을 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-82abca54686a6340f5258375",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 유료 콘텐츠의 리포트 요약·재서술로 original PUBLIC_BROKER_PDF route가 아니며 snippet을 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-2c77c5af5f5b523896836929",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "bullstory.io의 blog·portal·navigation 또는 재서술 route로 original PUBLIC_BROKER_PDF provenance가 없고 snippet은 evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 분류는 discovery provenance와 full-fetch 가능성을 판정한 것이며, 선정 route도 원문 fetch·날짜·target 귀속·quote 검증 전에는 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "4b4f2018329091046b365dfc549211c8ea5c98044fe0f8fd43780e87dedd431e",
+  "production_score_authority": false,
+  "prompt_hash": "b8eb7708f2053ec32855e936e6b314760a38cdae72da1fb2c66f92143c762e07",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4daa4855bccee6ac1c71f3914f5a667bae43f894d26d7e23b6f13367bfd49631",
+  "response_id": "COLLABRESP-4e7899f71d1afe569046478855693268de852f82b18472fbd1eb1b623e6d7497",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

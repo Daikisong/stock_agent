@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "b84ead111945075ad6654621287531140a0432b172af3363373abd25408f28b5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a9ef9fe2c71e90d8d71b2658",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2024 회계기간만 나타나는 KIND 문서로 대상 기업이나 2026 주총 경영계획 연결이 확인되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-3a842145e3ccfefb313540c0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "DART 일반 홈페이지이며 이번 후보에 요청된 family는 issuer newsroom·presentation·KIND뿐이고 대상 문서도 특정되지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-c151e93f0a1f90aa35785093",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.12,
+        "rationale": "SK하이닉스 2026 주총과 HBM 매출 전망을 언급하지만 제3자 전망 기사이므로 발행사 전용 guidance 요건과 요청 family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b705e4f1aa60b52d84d1d95d",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2026년 7월 코스텍시스템 임시주총 KIND 공고로 SK하이닉스 정기주총과 대상이 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-7313ca5803d8e74045667bb8",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2022년 전자투표 안내 중심의 KIND 공고로 현재 대상의 2026 경영계획과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-30f36981037151c598747260",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "2026 KIND 공고이나 참석 준비물만 보이고 대상 기업·숫자형 전망의 연결이 없어 material route로 특정할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-65fe2a786cb21f5843e07c14",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.18,
+        "rationale": "SK하이닉스 2026 주총에서 현금 축적과 주주환원 논쟁을 다룬 기사지만 제3자 문서이며 requested issuer/KIND family가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-82b2c7a4842fe0db850e069e",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2023년 다른 회사의 주총 소집 문구로 SK하이닉스 2026 objective와 관련되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c26e8f10983ad903bd76f6a2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "대학 파일 다운로드 경로에 SK하이닉스 명칭이 포함되지만 발행사·KIND 원문이 아니며 문서 시기와 주총 경로도 확인되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-da527d9523aa0f6ff0506cd5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "토스의 ADR 상장을 다룬 기사에서 SK하이닉스가 비교 사례로만 등장해 대상 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-4da170f884741fa1878ed870",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.22,
+        "rationale": "SK하이닉스 2026 주총의 순현금 목표와 투자 방향을 직접 다루지만 연합인포맥스 기사라 requested issuer/KIND family가 아니다. snippet은 fetch 증거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1b8b94c34997a1f6820da20c",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2026년 6월 다른 회사의 정관 변경 주총 공고로 SK하이닉스 경영계획과 대상이 다르다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "주총의 순현금 100조 목표를 전하는 언론 후보는 관련성이 있어도 발행사/KIND 원문 요건 밖이므로 material로 선택하지 않았다."
+    ]
+  },
+  "payload_hash": "e1464a5cf885414ca5cda4ec7af0ff3335bcca32181826d3250848763ba84cfd",
+  "production_score_authority": false,
+  "prompt_hash": "f7d4ff9c0cf4715834aab37893e8e04c7a372d0d077956d7438f2c26325b28a4",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3a86ef212cc7215f4672e6abff5639bf0462e5c9409d86f13a99c23e041cc4bb",
+  "response_id": "COLLABRESP-cc95ad577d1b065caa9594511e381500e5792eb432adbb4fc119fb8eae0007b3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

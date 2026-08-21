@@ -1,0 +1,422 @@
+본 보고서는 2025 회계연도 연례보고서(Form 20-F) 및 2026년 1분기 실적 공시를 바탕으로 TSMC의 재무 구조, 기술 리더십, 그리고 구조적 리스크 요인을 심층 분석한다. TSMC는 고성능 컴퓨팅(HPC)과 AI 전방 수요의 폭발적 성장에 힘입어 2025년 미국 달러 기준 35.9%의 매출 성장을 기록했으며, 2026년 1분기에는 사상 최고치인 66.2%의 매출총이익률을 달성하며 압도적인 가격 결정력을 증명했다. 기술적으로는 N2(2나노) GAA 공정의 성공적인 양산 진입과 A14·A16 등 옹스트롬급 로드맵의 가시화를 통해 후발주자와의 격차를 공고히 하고 있다. 다만, 단기적으로는 N2 초기 양산 및 미국 애리조나 등 해외 팹 가동(Ramp-up)에 따른 이중 마진 희석(Dilution)..
+[AI 인프라 백서 #10] 엔비디아의 루빈도 내가 생산해야 실체가 있는 법. TSMC FY25 and FY26 Q1
+본 보고서는 2025 회계연도 연례보고서(Form 20-F) 및 2026년 1분기 실적 공시를 바탕으로 TSMC의 재무 구조, 기술 리더십, 그리고 구조적 리스크 요인을 심층 분석한다. TSMC는 고성능 컴퓨팅(HPC)과 AI 전방 수요의 폭발적 성장에 힘입어 2025년 미국 달러 기준 35.9%의 매출 성장을 기록했으며, 2026년 1분기에는 사상 최고치인 66.2%의 매출총이익률을 달성하며 압도적인 가격 결정력을 증명했다. 기술적으로는 N2(2나노) GAA 공정의 성공적인 양산 진입과 A14·A16 등 옹스트롬급 로드맵의 가시화를 통해 후발주자와의 격차를 공고히 하고 있다. 다만, 단기적으로는 N2 초기 양산 및 미국 애리조나 등 해외 팹 가동(Ramp-up)에 따른 이중 마진 희석(Dilution)..
+[AI 인프라 백서 #10] 엔비디아의 루빈도 내가 생산해야 실체가 있는 법. TSMC FY25 and FY26 Q1
+본 보고서는 2025 회계연도 연례보고서(Form 20-F) 및 2026년 1분기 실적 공시를 바탕으로 TSMC의 재무 구조, 기술 리더십, 그리고 구조적 리스크 요인을 심층 분석한다. TSMC는 고성능 컴퓨팅(HPC)과 AI 전방 수요의 폭발적 성장에 힘입어 2025년 미국 달러 기준 35.9%의 매출 성장을 기록했으며, 2026년 1분기에는 사상 최고치인 66.2%의 매출총이익률을 달성하며 압도적인 가격 결정력을 증명했다. 기술적으로는 N2(2나노) GAA 공정의 성공적인 양산 진입과 A14·A16 등 옹스트롬급 로드맵의 가시화를 통해 후발주자와의 격차를 공고히 하고 있다. 다만, 단기적으로는 N2 초기 양산 및 미국 애리조나 등 해외 팹 가동(Ramp-up)에 따른 이중 마진 희석(Dilution)..
+[AI 인프라 백서 #10] 엔비디아의 루빈도 내가 생산해야 실체가 있는 법. TSMC FY25 and FY26 Q1
+[AI 인프라 백서 #10] 엔비디아의 루빈도 내가 생산해야 실체가 있는 법. TSMC FY25 and FY26 Q1
+본문 바로가기
+Pragma's Think-Tank
+블로그 내 검색
+검색
+관리
+글쓰기
+로그인
+로그아웃
+메뉴
+Home
+Profile & Contact
+Privacy Policy
+AI,Tech,Sci/AI Infrastructure Dissection
+[AI 인프라 백서 #10] 엔비디아의 루빈도 내가 생산해야 실체가 있는 법. TSMC FY25 and FY26 Q1
+by pragma
+2026. 5. 21.
+본 보고서는 2025 회계연도 연례보고서(Form 20-F) 및 2026년 1분기 실적 공시를 바탕으로 TSMC의 재무 구조, 기술 리더십, 그리고 구조적 리스크 요인을 심층 분석한다.
+TSMC는 고성능 컴퓨팅(HPC)과 AI 전방 수요의 폭발적 성장에 힘입어 2025년 미국 달러 기준 35.9%의 매출 성장을 기록했으며, 2026년 1분기에는 사상 최고치인 66.2%의 매출총이익률을 달성하며 압도적인 가격 결정력을 증명했다.
+기술적으로는 N2(2나노) GAA 공정의 성공적인 양산 진입과 A14·A16 등 옹스트롬급 로드맵의 가시화를 통해 후발주자와의 격차를 공고히 하고 있다.
+다만, 단기적으로는 N2 초기 양산 및 미국 애리조나 등 해외 팹 가동(Ramp-up)에 따른 이중 마진 희석(Dilution) 압력이 상존하며, 미국 무역확장법 제232조 및 제301조 조사 등 통상 규제 격화, 난징 팹의 VEU 만료에 따른 미·중 법적 긴장감, 그리고 대만 내 지리적 집중도는 핵심 하방 리스크로 작용하고 있다.
+그러나 이러한 지정학적·비용적 부하 속에서도 수율 안정화 단계에 진입한 N3(3나노) 공정이 든든한 버팀목 역할을 수행하는 '세대별 교차 방어 체계'가 건재하므로, 회사가 제시한 장기 매출총이익률 목표(56% 이상) 및 독점적 헤게모니는 시차를 두고 지속될 것으로 전망된다.
+주요 출처: 미국 증권거래위원회 온라인 데이터베이스 (SEC EDGAR, Securities and Exchange Commission Electronix Data Gathering, Analysis, and Retrieval)에서 제공하는 TSMC의 공시자료 (TSM Form 20-F FY2025; 6-K series 2025–2026) · LSEG StreetEvents (Q1 2026 Earnings Call Transcript)
+*TSMC는 주당 가격의 무게감 때문에 포트폴리오에 몇 주 담아두지 못했지만, 매달 찍히는 수익률을 보면 언제나 효자 노릇을 톡톡히 합니다. 첨단 파운드리 시장의 '사실상 유일한 대안'이라는 헤게모니는 당분간 깨지기 어려워 보입니다. 후발주자들과의 물리적·기술적 격차가 이미 단기간에 좁힐 수 있는 수준을 넘어섰기 때문입니다.
+물론 시장의 'TSMC 원톱 체제'에 피로감을 느낀 빅테크들이 공급망 다변화를 시도하는 움직임은 포착됩니다. 실제로 애플이 인텔 파운드리의 문을 두드리고, 일부 빅테크가 삼성전자에 일감을 나누는 선제적 헤징(Hedging)이 대표적입니다. 하지만 '독점 탈피'라는 당위성과 '실제 칩 퍼포먼스'는 전혀 다른 영역의 문제입니다. 미세 공정 노드에서 삼성전자가 TSMC와 대등한 수율과 퍼포먼스를 증명해 내지 못한다면, 이러한 우회 시도는 결국 '일시적인 레버리지용 카드'에 그칠 확률이 높습니다. 성능이 동급인 칩을 받아 들기 전까지는, 저 역시 굳이 포지션을 바꿀 이유를 찾지 못해 굳건히 동행할 생각입니다.
+주기적으로 시장을 흔드는 양안관계 리스크요? 지리적 집중도는 팩트지만, 중국이 대만에 군사적 결단을 내리는 것은 단순히 섬 하나를 차지하는 문제가 아닙니다. 제1도련선을 뚫고 태평양으로 나아가려는 중국과, 이를 기필코 저지하려는 미국 간의 '글로벌 전면전'을 감수해야 하는 고차방정식이죠. 미국이 태평양 헤게모니를 포기하지 않는 한, 지정학적 노이즈는 주가를 누르는 단기 밸류에이션 할인 요인(Discount)일 뿐, 펀더멘털을 파괴할 임박한 미래는 아니라고 봅니다. 그러니 저는 노이즈를 뒤로하고 계속 홀딩하렵니다.
+*PC나 태블릿 열람을 적극 권장합니다.
+*경고: 이 보고서는 기업/산업 분석에만 충실하며, 향후 투자에 도움이 될 만한 시나리오를 제공하지 않습니다.
+KEY METRICS — 회계연도 2025 실적 및 회계연도 2026 1분기 실적 및 가이던스
+FY2025 NET REVENUE
+25 회계연도 순매출
+FY2025 NET INCOME
+25 회계연도 순이익
+FY2025 GROSS MARGIN
+25 회계연도 매출총이익률
+FY2025 OPERATING MARGIN
+25 회계연도 영업이익률
+FY2025 R&D SPEND
+25 회계연도 연구개발비
+FY2025 CAPEX
+25 회계연도 자본지출(설비투자)액
+US$122.42B / NT$3,809.05B
++35.9% Y/Y (USD)
+NT$1,717.88B
+(Taiwan-IFRS) +46.4% Y/Y
+59.9%
++3.8 ppts Y/Y
+50.8%
++5.1 ppts Y/Y
+NT$246.43B / US$7.86B
+6.5% of revenue
+NT$1,272.41B / US$40.90B
++33.1% Y/Y
+Q1 2026 NET REVENUE
+26 회계연도 1분기 순매출
+Q1 2026 GROSS MARGIN
+26 회계연도 1분기 매출총이익률
+Q1 2026 EPS (DILUTED)
+26 회계연도 1분기 희석 주당순이익
+2026 CAPEX GUIDANCE
+26년 자본지출 가이던스
+CASH & SECURITIES (MAR 31)
+26년 1분기 말 기준 현금 및 유가증권
+2026 FULL-YEAR OUTLOOK
+26년 성장 전망
+US$35.90B / NT$1,134.10B
++8.4% QoQ / +40.6% Y/Y
+66.2%
++3.9 ppts QoQ
+Beat guidance high-end
+NT$22.08 / US$3.49 ADR
++58.3% Y/Y
+US$52–56B
+Towards high end
+TWD3.4T / US$106B
+Above 30% in USD terms
+(raised from “close to 30%”)
+Sources: Taiwan Semiconductor Manufacturing Company Limited 2026c (Form 20-F FY2025, Item 5 and Item 6); Taiwan Semiconductor Manufacturing Company Limited 2026e (Q1 2026 Earnings Release, Apr 16, 2026); Taiwan Semiconductor Manufacturing Company Limited 2026b (Q1 2026 Earnings Presentation, Apr 16, 2026). Net income on Taiwan-IFRS consolidated basis. USD revenue translated at weighted-average NT$31.11 per US$1.00 (FY2025).
+Section I
+재무 구조
+TSMC의 2025 회계연도 연결 순매출은 3조 8,090억 5,400만 대만달러를 기록했습니다. 연간 가중평균 환율인 달러당 31.11 대만달러를 적용하면 1,224억 2천만 달러 규모로, 2024년과 비교해 대만달러 기준 31.6%, 미국 달러 기준 35.9% 성장했습니다 (TSMC, 2026c, Item 5; 2026a).
+이로써 TSMC는 3년 연속 두 자릿수 성장세를 이어갔으며, AI 반도체 수요라는 구조적 흐름을 타고 2023년 2조 1,617억 3,600만 대만달러였던 매출 규모가 지금의 수준까지 커졌습니다. 2024년 달러당 32.13 대만달러였던 가중평균 환율이 2025년 31.11 대만달러로 오르면서 환차손에 따른 매출 감소 효과가 있었음에도 불구하고 견고한 성장세를 증명했습니다 (TSMC, 2026c, Item 5).
+생산 측면에서도 성과가 뚜렷합니다. 12인치 웨이퍼 환산 기준 출하량은 2023년 1,200만 장, 2024년 1,300만 장을 거쳐 2025년에는 약 1,500만 장까지 증가했습니다. 생산 시설 확충뿐만 아니라 최첨단 공정 전반에서 높은 가동률이 유지되고 있습니다 (ibid.).
+플랫폼별 매출 구성을 보면 그 이유를 확인할 수 있습니다. 고성능 컴퓨팅(HPC) 부문은 매출의 58%인 2조 1,929억 3,100만 대만달러를 기록하며 전년 대비 48% 성장했는데, AI 가속기에 대한 수요가 폭발적으로 증가한 결과입니다. 스마트폰 부문은 11% 성장해 전체 매출의 29%를 차지했고, 자동차 부문과 사물인터넷(IoT) 부문은 각각 34%와 15% 성장하며 나란히 5%의 매출 비중을 기록했습니다. 디지털 가전 부문은 1%의 비중을 유지하며 변화가 없었습니다 (TSMC, 2026c, Item 4).
+지리적 매출 구성을 보면 북미 지역의 비중이 2024년 70%에서 2025년 75%로 더욱 확대되었습니다. 미국에 본사를 둔 AI 및 기술 기업들의 주문이 42%나 급증한 데 따른 것입니다. 반면 중국 지역 매출 비중은 9%로 줄었는데, 수출 통제 조치로 인해 첨단 공정 반도체 선적이 제한된 영향이 컸습니다 (ibid.).
+기술 노드별 매출 구성을 살펴보면 TSMC의 수익성 향상 전략이 더욱 분명해집니다. 현 시점에서 부가가치가 높은 최첨단 기술인 3나노 공정은 2025 회계연도 전체 웨이퍼 매출의 24%를 차지하며 2024년 18% 대비 큰 폭으로 성장했습니다. 5나노 공정은 36%로 견고한 비중을 유지했고, 7나노 공정은 14%로 다소 하락했습니다. 그 결과 7나노 이하의 첨단 공정이 전체 웨이퍼 매출에서 차지하는 비중은 2024년 69%에서 2025년 74%로 상승했습니다 (TSMC, 2026c, Item 5).
+이러한 공정 구성의 변화(mix shift)는 수익성 개선을 이끄는 핵심적인 물리적 동력입니다. 첨단 노드는 기본적으로 더 높은 가격을 책정할 수 있으며, 초기 양산 시기의 감가상각이 정상화되면서 공정이 성숙할수록 마진이 점진적으로 높아지는 구조를 가지고 있기 때문입니다.
+그 결과 2025 회계연도의 매출총이익률은 59.9%를 기록하며 전년 대비 3.8%p 상승했습니다. 영업이익률 또한 45.7%에서 50.8%로 올랐는데, 막대한 고정비를 기반으로 하는 반도체 제조 산업 특유의 '영업 레버리지(operating leverage)' 효과가 매출 급증과 맞물려 나타난 결과입니다 (ibid.).
+지배기업 주주 귀속 순이익은 대만 IFRS 기준으로 1조 7,178억 8,200만 대만달러였고, 희석 주당순이익은 66.25대만달러였습니다. IASB가 제정한 국제회계기준(IFRS)으로 Form 20-F에 보고된 수치는 순이익 1조 6,976억 400만 대만달러(541억 2천만 달러), 희석 주당순이익 65.47대만달러입니다. 두 수치 사이의 202억 7,800만 대만달러 차이는 대만 내 유보이익에 대한 법인세 인식 시점 차이 때문이며, 기업의 현금 창출 능력과 실제 사업 운영 상황과는 무관합니다(ibid.). 한편, 기업의 이익이 늘어남에 따라 법인세 비용은 전년보다 39.6% 증가한 3,465억 3,000만 대만달러를 기록했습니다 (ibid.). 법인세는 이익에 비례하여 부과되므로, 세금 납부액의 증가는 곧 기업이 벌어들인 순이익(과세표준)이 비약적으로 커졌음을 방증합니다.
+TSMC의 현금 창출 능력은 탁월합니다. 2025 회계연도 영업활동현금흐름은 전년 대비 24.6% 늘어난 2조 2,749억 7,600만 대만달러(725억 2천만 달러)를 기록했습니다. 시설 투자 규모는 33.1% 증가한 1조 2,724억 1,100만 대만달러(409억 달러)였으며, 주로 N2, N3, N5 공정의 생산 능력 확대와 첨단 패키징 인프라 구축에 투입되었습니다(ibid.). 잉여현금흐름은 1조 25억 7,000만 대만달러였고, 연말 기준 현금 및 유가증권 보유액은 26.7% 증가한 3조 685억 9,500만 대만달러(978억 2천만 달러)를 나타냈습니다. 즉, 회사가 재무적 압박 없이 대규모 자본 투자 프로그램을 자체 자금으로 충당하고 있음을 의미합니다. 한편, 장기 부채는 1조 329억 8,800만 대만달러(329억 3천만 달러) 수준이며, 0.41%에서 4.63% 사이의 고정 금리가 적용되고 있습니다(ibid.).
+2025 회계연도 연구개발(R&D) 비용은 전년 대비 20.7% 늘어난 2,464억 2,700만 대만달러(78억 5,500만 달러)로, 전체 순매출의 6.5%에 달합니다. 이 자금은 10옹스트롬(10Å), 14옹스트롬(14Å), 16옹스트롬(16Å) 공정 기술 개발에 집중 투입되었습니다 (TSMC, 2026c, Item 4). 지속가능성 측면에서 TSMC의 행보는 더욱 구체화되었습니다. 2025년 전 세계적으로 5,780GWh의 재생 에너지를 사용했으며, 7.3GW 규모의 청정 에너지 용량에 대한 전력 구매 계약(PPA)을 체결하며 2050년 탄소 중립 목표를 향해 나아가고 있습니다 (ibid.).
+장기적인 경영 목표와 관련하여, 경영진은 2024년부터 2029년까지 달러 기준 연평균 매출 성장률(CAGR) 25% 달성, 56% 이상의 장기 매출총이익률 유지, 그리고 20%대 후반의 자기자본이익률(ROE)을 달성하겠다는 확고한 비전을 제시하고 있습니다 (Taiwan Semiconductor Manufacturing Company Limited 2026a).
+KEY TERMS IN THIS SECTION
+Taiwan-IFRS vs. IASB-IFRS
+TSMC는 두 가지 기준의 재무제표를 작성합니다. 대만 금융감독위원회가 승인한 '대만 IFRS'는 국내 규제 준수 및 분기 실적 발표용으로 사용하며, 미국 증권거래위원회(SEC)의 Form 20-F 보고용으로는 'IASB(국제회계기준위원회) IFRS'를 사용합니다. 2025 회계연도의 유일한 차이는 이익잉여금에 대한 대만 세금 인식 시점 때문인데, 이로 인해 IASB 기준 순이익이 대만 기준보다 약 202억 7,900만 대만달러 낮게 계상되었습니다.
+Advanced Technologies (≤7nm)
+TSMC가 공식적으로 정의하는 '첨단 공정'은 7나노미터 이하의 공정 노드를 모두 포함합니다. 2025 회계연도 기준, 이들 공정은 전체 웨이퍼 매출의 74%를 차지하며 전년의 69%에서 비중이 더 늘어나 매출 성장과 매출총이익률 확대의 핵심 동력으로 작용하고 있습니다.
+Free Cash Flow (FCF)
+영업활동을 통해 창출된 현금에서 시설 투자액(CapEx)을 뺀 금액입니다. 2025 회계연도에 TSMC는 1조 2,724억 1,100만 대만달러라는 막대한 투자를 집행했음에도 불구하고, 1조 25억 7,000만 대만달러의 잉여현금흐름을 기록했습니다. 대규모 투자 주기 속에서도 회사가 가진 사업 모델의 탁월한 현금 창출 효율성을 잘 보여줍니다.
+CapEx Intensity
+순매출 대비 시설 투자액의 비중을 의미합니다. 2025 회계연도 매출 3조 8,090억 5,400만 대만달러 대비 투자액은 1조 2,724억 1,100만 대만달러로, 약 33.4%의 투자 강도를 보였습니다. TSMC의 과거 평균에 비해 높은 수준이지만, 경영진은 향후 몇 년간 매출 성장률이 투자 성장률을 상회할 것으로 전망하고 있어, 현재의 높은 투자 강도는 점차 낮아질 것으로 예상됩니다.
+플랫폼별 매출 비중
+기술 노드별 비중
+HPC 비중, FY2025
+58%
+↑ FY2023 43%에서 상승
+HPC 매출 성장 (2024→2025)
++48%
+NT$1,476.9B → NT$2,192.9B
+스마트폰 비중, FY2025
+29%
+↓ FY2023 38%에서 하락
+보기 방식
+% 비중
+NT$ 십억
+출처: TSMC 2026c, Item 4 (FY2023–2025 연간); TSMC 2026b (Q1 2026 분기). NT$ 십억 보기는 FY2023–2025만 표시. Q1 '26은 단일 분기 수치로 연간과 직접 비교 불가.
+첨단 공정(≤7nm), FY2025
+74%
+↑ FY2023 58%에서 상승
+3nm 웨이퍼 매출, FY2025
+24%
+↑ FY2023 6%에서 상승
+레거시(≥16nm), FY2025
+26%
+↓ FY2023 42%에서 하락
+출처: TSMC 2026c, Item 5 (FY2023–2025 연간); TSMC 2026e (Q1 2026: 3/5/7nm 직접 인용, ≥16nm 잔여값 산출). ≥90nm는 명명 노드 합계 후 잔여값. Q1 '26은 단일 분기.
+Section II
+무엇을 하는 회사인가
+타이완 반도체 제조 주식회사(TSMC)는 1987년 2월 21일 대만 정부와 민간 투자자의 합작으로 설립된 이후, 세계 최대의 전문 반도체 파운드리 기업으로 자리매김해 왔습니다. TSMC가 구축한 '순수 파운드리(pure-play)' 모델의 핵심은 고객의 설계도에 따라 반도체를 위탁 생산하는 데 집중하는 것입니다. 자체적으로 반도체를 설계하거나 완제품을 판매하지 않는다는 원칙을 고수함으로써 고객사와의 이해충돌을 방지합니다 (TSMC, 2026c, Item 4).
+비경쟁 원칙은 제약이 아니라 고객과의 신뢰 관계를 형성하는 근간이 되며, 수직 계열화되지 않은 경쟁 기업들이 모방하기 어려운 TSMC만의 핵심 역량입니다. 이러한 사업 모델을 통해 축적된 생산 규모 역시 상당합니다. 2025년 기준 TSMC는 305개의 차별화된 공정 기술을 바탕으로 전 세계 534개 고객사를 위해 12,682개 제품을 생산했습니다 (TSMC, 2026e).
+2026년 2월 28일 기준, TSMC는 신주·중부·남부 대만과 미국(애리조나·워싱턴주), 중국(상하이·난징), 일본(구마모토) 등에 걸쳐 총 23개의 생산 시설을 운영하고 있습니다. 세부적으로는 150mm 팹 1곳, 200mm 팹 6곳, 300mm 팹 9곳, 그리고 첨단 후공정 팹 7곳으로 구성됩니다 (TSMC, 2026c, Item 4). 생산 능력 측면에서는 2025년 기준 12인치 웨이퍼 환산 연간 생산량이 1,700만 장을 돌파했으며, 3나노 공정 확대에 따른 성장세가 주효했습니다 (TSMC, 2026c, Item 4).
+인적 자원 규모 또한 지속적으로 확대되고 있습니다. 2025년 12월 31일 기준 전체 정규직 직원은 90,557명으로, 전년(83,825명) 대비 증가했습니다. 이 중 약 86%가 대만 내 과학단지에 배치되어 핵심 인력으로서 운영을 뒷받침하고 있습니다 (TSMC, 2026c, Item 6).
+매출 구조를 살펴보면, 2025년 순매출의 약 86%가 웨이퍼 제조 부문에서 발생했습니다. 나머지 매출은 패키징, 테스트, 마스크 제작, 설계 서비스 및 로열티 등 부가적인 사업 영역에서 창출되었습니다 (TSMC, 2026c, Item 5).
+TSMC는 고객 중심의 사업을 5개의 엔드마켓 플랫폼으로 나누어 운영합니다 (TSMC, 2026c, Item 4):
+고성능 컴퓨팅(HPC)
+: 가장 규모가 크고 성장세가 가파른 핵심 사업부입니다. AI 가속기(GPU, ASIC), 중앙처리장치(CPU), 네트워킹 칩 및 서버용 프로세서 등을 생산하며, TSMC의 최첨단 로직 공정과 3DFabric® 첨단 패키징 기술이 집약됩니다.
+스마트폰
+: 고성능 모바일 애플리케이션 프로세서(AP)를 중심으로 사업을 전개합니다.
+사물인터넷(IoT)
+: 엣지 컴퓨팅 및 다양한 연결 기기에 탑재되는 전용 칩을 처리합니다.
+자동차
+: 첨단 운전자 보조 시스템(ADAS)과 전기차 플랫폼을 지원합니다. 2025년 말에는 가장 진보된 등급의 공정 노드를 고객에게 공급하기 시작하며 기술적 경쟁력을 강화했습니다.
+디지털 가전
+: 프리미엄 디스플레이 기기용 칩을 다루며, 5개 플랫폼 중 가장 작은 비중을 차지합니다.
+KEY TERMS IN THIS SECTION
+Pure-Play Foundry / 순수 파운드리
+순수 파운드리(Pure-Play Foundry)란 고객이 설계한 독자적인 회로도를 기반으로 반도체를 위탁 생산만 하는 기업을 의미합니다. 직접 반도체를 설계하거나 판매하지 않겠다는 TSMC의 '비경쟁 원칙'은, 제조 역량을 갖춘 경쟁사를 전략적 위협으로 느낄 수 있는 팹리스 고객사들이 안심하고 협력할 수 있는 강력한 신뢰의 토대가 됩니다.
+Fabless Company / 팹리스 기업
+반도체를 직접 설계만 하고 제조(fab)는 외부 파운드리 업체에 전적으로 맡기는 회사를 의미합니다. 엔비디아(Nvidia), AMD, 애플, 퀄컴, 브로드컴 등이 TSMC의 대표적인 팹리스 고객사이며, 이들과 TSMC 간의 설계 및 제조 파트너십이 현재 AI 반도체 공급망을 움직이는 핵심 동력입니다.
+12-inch Equivalent Wafer / 12인치 웨이퍼 환산
+생산 능력을 측정하는 표준 단위입니다. 크기가 작은 150mm나 200mm 웨이퍼를 면적 비율에 따라 300mm(12인치) 크기로 환산하여, 다양한 팹(fab)의 전체 생산량을 일관성 있게 비교할 수 있게 합니다. TSMC의 2025년 연간 생산량은 이 단위로 환산했을 때 1,700만 장을 넘어섰습니다.
+CoWoS® (Chip on Wafer on Substrate)
+TSMC의 2.5D 첨단 패키징 기술입니다. 여러 개의 칩(die)을 실리콘 인터포저 위에 나란히 올린 뒤 기판에 접합하는 방식입니다. 일반적인 회로 기판(PCB) 배선으로는 구현하기 힘든 고밀도의 고대역폭 연결을 가능하게 해주며, 현재 AI 가속기 패키징 시장을 지배하고 있는 핵심 기술입니다.
+TSMC-SoIC®
+TSMC의 3D 반도체 적층 기술입니다. 두 개의 칩을 거의 하나처럼 연결될 정도로 아주 밀접하게 맞붙이는 기술입니다. CoWoS®와 함께 TSMC의 '3DFabric®' 패키징 제품군에 속하며, 서로 다른 공정에서 생산된 로직 칩과 메모리 칩을 하나의 패키지로 통합할 수 있습니다.
+Section III
+1분기 성적과 단기 전망
+TSMC는 2026년 1분기 1조 1,341억 대만달러(359억 달러)의 매출을 기록하며, 전년 동기 대비 40.6%(달러 기준) 성장하는 성과를 거두었습니다 (TSMC, 2026e). 올해 1월 제시했던 가이던스(346억~358억 달러)를 상회하는 수치로, 최첨단 공정 기술에 대한 시장의 강력한 수요가 실질적인 매출 증대로 이어졌음을 의미합니다 (LSEG StreetEvents 2026, p. 3).
+특히 매출총이익률은 전분기 대비 3.9%p, 전년 동기 대비 7.4%p 상승한 66.2%를 기록하며 사상 최고치를 경신했습니다. 지속적인 원가 절감 노력과 전반적인 생산 설비 가동률 상승, 그리고 유리한 환율 효과가 복합적으로 작용한 결과입니다. 무엇보다 실제 가동률이 내부 예상치를 상회함에 따라, 매출총이익률은 회사 측 가이던스 상단보다도 120bp(1.2%p) 높게 나타났습니다 (LSEG StreetEvents 2026, p. 3).
+영업이익률 또한 전분기 대비 4.1%p 상승한 58.1%를 기록했으며, 순이익률은 50.5%에 달했습니다. 분기 기준으로 매출 1달러당 절반 이상을 순이익으로 남긴 것은 TSMC 역사상 이번이 처음입니다(TSMC, 2026e).
+기술 노드별로 살펴보면, 3나노 공정은 전체 웨이퍼 매출의 25%를 점유하며 2025년(24%) 대비 성장세를 이어갔습니다. 5나노 공정은 36%로 견고한 비중을 유지했고, 7나노 공정은 13%로 소폭 하락했습니다. 이로써 7나노 이하 첨단 공정이 전체 웨이퍼 매출에서 차지하는 비중은 74%를 기록하며, 지난 회계연도의 높은 기술 집약적 수익 구조를 유지했습니다 (ibid.).
+플랫폼별 성과에서는 고성능 컴퓨팅(HPC) 부문의 독주가 두드러집니다. HPC 매출은 AI 학습 및 추론 인프라에 대한 수요를 업고 전 분기 대비 20% 성장하며 전체 매출의 61%를 점유했습니다. 반면 스마트폰 부문 매출은 계절적 요인(연말 성수기 이후 재고 소진 단계)으로 인해 전분기 대비 11% 하락하여 전체의 26%를 기록했습니다. 그 외 사물인터넷(IoT)은 12% 성장해 6%, 자동차 부문은 7% 하락해 4%, 디지털 가전(DCE)은 28% 성장하여 전체 매출의 1%를 기록했습니다(LSEG StreetEvents 2026, p. 3).
+2026년 1분기 희석 주당순이익(EPS)은 전년 동기 대비 58.3% 급증한 22.08대만달러(ADR 기준 3.49달러)를 기록했으며, 연환산 자기자본이익률(ROE)은 40.5%에 달해 장기 목표치인 20%대 후반을 크게 상회했습니다(TSMC, 2026e).
+2026년 3월 31일 기준, 현금 및 유가증권 보유액은 3조 4,000억 대만달러(1,060억 달러)이며, 총자산은 8조 6,609억 4,900만 대만달러에 달합니다(TSMC, 2026d). 1분기 영업활동현금흐름은 6,989억 7,600만 대만달러를 기록했고, 시설 투자(CapEx)에는 3,507억 6,300만 대만달러(111억 미국달러)가 투입되었습니다(TSMC, 2026b).
+지난 2026년 5월 12일 이사회에서는 1분기 배당으로 주당 7.00대만달러를 승인했습니다. 이와 함께 생산 능력 확충과 시설 건설을 위해 약 312억 8,430만 달러 규모의 자본 지출을 의결했으며, TSMC 애리조나 법인의 경쟁력 강화를 위해 최대 200억 달러의 추가 자본 투입을 결정했습니다(TSMC, 2026d).
+TSMC 경영진은 2026년 2분기 매출을 390억~402억 달러로 전망했습니다. 환율을 1달러당 31.7 대만달러로 가정한 수치로, 전분기 대비 중간값 기준 10%, 전년 동기 대비 32% 성장한 규모입니다. 같은 기간 매출총이익률은 65.5%~67.5%, 영업이익률은 56.5%~58.5% 범위가 될 것으로 내다봤습니다(TSMC, 2026e). 이번 2분기 수익성 전망에는 서로 상충하는 두 가지 요소가 반영되어 있습니다. 높은 설비 가동률과 비용 효율화는 이익률을 높이는 순기능을 하지만, 해외 공장 가동에 따른 초기 비용(ramp costs)은 이익률을 낮추는 요인이 됩니다.
+TSMC 경영진은 2026년 연간 매출 성장률 전망치를 기존(1월 발표 당시) '30% 수준'에서 '30% 상회'로 공식 상향 조정했습니다 (LSEG StreetEvents 2026, p. 4). 더불어 3나노(N3) 공정의 매출총이익률이 2026년 하반기에 전사 평균을 넘어설 것으로 보입니다 (ibid., p. 7).
+KEY TERMS IN THIS SECTION
+ADR (American Depositary Receipt)
+미국 주식시장에서 거래되는 비미국 기업의 주식 소유권을 증명하는 증서입니다. TSMC의 ADR 1단위(NYSE: TSM)는 보통주 5주를 나타냅니다. 2026년 1분기 희석 주당순이익(EPS)은 보통주 기준 22.08대만달러였으며, 이를 ADR 단위로 환산하면 당시 환율 기준 3.49달러가 됩니다.
+ROE (Return on Equity)
+ROE. 평균 자기자본 대비 순이익의 비율로, 분기 실적 보고 시에는 이를 연환산하여 산출합니다. TSMC의 2026년 1분기 연환산 ROE는 40.5%를 기록했습니다. 이는 높은 순이익률과 절제된 자본 관리의 결과이며, 회사가 제시한 장기 목표치인 20%대 후반을 크게 상회하는 성과입니다.
+Overseas Fab Margin Dilution
+대만 이외의 지역에서 새로운 제조 시설을 운영함에 따라 발생하는 매출총이익률 감소 현상을 의미합니다. 해외 공장은 건설비, 인건비, 규제 준수 비용이 대만의 기존 사업장보다 구조적으로 높기 때문입니다. 경영진은 해외 확장 프로그램 초기 단계에서 2~3%, 후기 단계에서는 3~4%의 마진 희석 효과가 발생할 것으로 전망하고 있습니다.
+Section IV
+기술 리더십
+TSMC의 기술 로드맵은 파운드리 업계에서 독보적인 위상을 점하고 있으며, 경쟁사들과의 기술적 격차는 새로운 공정 노드가 양산(high-volume manufacturing) 단계에 도달하는 속도에서 가장 명확하게 드러납니다.
+TSMC의 2나노(N2) 공정은 기존의 핀펫(FinFET, 물고기 지느러미 모양의 3D구조를 가진 트랜지스터) 구조를 벗어나 차세대 기술인 '게이트 올 어라운드(GAA) 나노시트 트랜지스터'를 채택한 첫 양산 노드입니다. 이 공정은 2025년 4분기에 우수한 수율을 확보하며 신주와 가오슝 사업장에서 동시에 양산 단계로 진입했습니다(LSEG StreetEvents 2026, p. 5).
+c.f. 트랜지스터 세대변화 도식
+이 그림은 반도체 칩 안에 있는 트랜지스터의 단면을 세대별로 나란히 비교한 것입니다. 단면의 방향은 전류가 흐르는 방향에 수직으로 자른 것, 즉 소스에서 드레인 쪽을 정면으로 바라본 모습입니다.
+트랜지스터는 전류를 켜고 끄는 스위치입니다. 칩 하나에 수백억 개가 들어 있고, 이것들이 0과 1을 처리합니다. 문제는 스위치가 작아질수록 제어하기 어려워진다는 것입니다. 각 세대는 그 문제를 구조적으로 해결하려는 시도입니다.
+세대별 핵심 차이
+Planar MOSFET (≥ 28 nm)
+: 게이트가 채널 윗면 하나만 제어. 공정이 미세해질수록 옆면으로 전류가 새는 단채널 효과(SCE)가 심화되어 한계에 도달.
+FinFET (5 – 22 nm)
+: 채널을 수직 지느러미 형태로 세워 게이트가 세 면(좌·상·우)을 감쌈. 정전 제어력이 향상되어 SCE를 크게 억제. Intel 22 nm(2012)에서 최초 양산.
+GAA Nanosheet (≤ 3 nm)
+: 채널을 얇은 수평 판(NS) 여러 장으로 쌓고 게이트가 각 판을 사방으로 완전히 둘러쌈. 현존 구조 중 가장 이상적인 정전 제어 실현. Samsung 3 nm GAP(2022) 최초 양산, TSMC N2 적용.
+N2 공정에 대한 수요는 스마트폰과 HPC/AI 고객사 모두로부터 강력하게 뒷받침되고 있으며, TSMC는 N2 제품군을 전략적으로 장기 활용할 수 있도록 구성했습니다. 성능을 개선한 파생 노드인 N2P, 그리고 N2급 트랜지스터에 후면 전력 공급 네트워크(backside power delivery network)를 통합한 A16 공정은 N2 노드의 상업적 수명을 초기 양산 단계를 넘어 크게 연장해 줄 것입니다. 한편, N2와 함께 개발된 16옹스트롬(A16) 노드는 2026년 중 위험 생산(risk production, 양산 직전 단계의 최종 실전 테스트)에 돌입할 예정입니다(Taiwan Semiconductor Manufacturing Company Limited 2026c, Item 4).
+TSMC는 2026년 1분기 실적 발표 컨퍼런스를 통해 N2의 차세대 공정인 A14에 대한 상세 내용을 공개했습니다. A14는 2세대 나노시트(Nanosheet) 트랜지스터 구조를 채택하여, N2 공정 대비 확실한 세대 도약(full-node stride)을 구현할 것으로 기대됩니다. 주요 성능 목표는 동일 전력 기준 10~15%의 속도 향상, 혹은 동일 속도 기준 25~30%의 전력 소모 절감이며, 칩 밀도는 약 20%가량 개선될 전망입니다. A14의 본격적인 양산은 2028년으로 예정되어 있습니다(LSEG StreetEvents 2026, p. 6).
+"N2, has already entered high-volume manufacturing in the fourth quarter of 2025 with good yield. N2 is ramping successfully in multiple phases at both Hsinchu and Kaohsiung site, supported by strong demand from both smartphone and HPC/AI applications. With our strategy of continuous enhancement, such as N2P and A16, we expect our N2 family to be another large and long-lasting node for TSMC."
+— C.C. Wei, Chairman & CEO, TSMC · Q1 2026 Earnings Call, April 16, 2026 (LSEG StreetEvents 2026, p. 5)
+2026년 1분기 실적 발표에서 C.C. 웨이 회장이 내놓은 가장 전략적인 변화는 3나노(N3) 공정의 포괄적인 글로벌 확장 계획입니다. 2022년 말 양산을 시작한 3나노 노드는 당초 목표 달성 이후 추가 확장을 고려하지 않았으나, AI 관련 수요 급증으로 기존 전략을 전면 수정했습니다.
+주요 3나노(N3) 공정 확장 및 조정 계획
+(LSEG StreetEvents 2026, p. 5):
+대만 (타이난 과학단지)
+: 기존 GIGAFAB 클러스터에 3나노 전용 신규 팹을 추가하며, 2027년 상반기 양산을 목표로 합니다.
+미국 (애리조나)
+: 건설이 완료된 제2팹에서 3나노 공정을 운용하며, 2027년 하반기에 양산을 시작할 예정입니다.
+일본 (JASM)
+: 제2팹에 3나노 공정을 도입하기로 했으며, 2028년 양산을 앞두고 있습니다.
+공정 전환 및 최적화
+: 타이난 공장의 5나노(N5) 장비를 3나노 지원용으로 전환 중이며, N7, N5, N3 노드 간 생산 효율을 최적화하고 있습니다.
+이와 동시에 TSMC는 생산 효율을 높이기 위해 노후 팹을 정리하고 공간을 확보하는 전략을 추진 중입니다. 6인치 팹인 Fab 2와 질화갈륨(GaN) 전문 8인치 팹인 Fab 5는 운영을 단계적으로 중단합니다 (ibid.).
+애리조나 확장 프로젝트는 TSMC의 해외 제조 프로그램 중 가장 핵심적이고 규모가 큰 사업입니다. 기존에 진행 중이던 650억 달러 투자 계획에 더해, 2025년 3월 1,000억 달러의 추가 투자를 발표함에 따라 총 투자 규모는 1,650억 달러로 확대되었습니다. 3개의 신규 웨이퍼 제조 시설과 2개의 첨단 패키징 시설, 그리고 주요 연구개발(R&D) 센터를 포함하는 것으로 확장되었으며, 이 모든 시설은 미국 애리조나주 노스 피닉스의 1,100에이커 부지에 들어설 예정입니다 (TSMC, 2025a).
+"AI is reshaping our daily lives and semiconductor technology is the foundation for new capabilities and applications. With the success of our first fab in Arizona, along with needed government support and strong customer partnerships, we intend to expand our U.S. semiconductor manufacturing investment by an additional $100 billion, bringing our total planned investment to $165 billion."
+— C.C. Wei, Chairman & CEO, TSMC · Arizona Expansion Announcement, March 4, 2025 (Taiwan Semiconductor Manufacturing Company Limited 2025a)
+애리조나 Fab 21 프로젝트는 단계별로 차질 없이 진행되고 있습니다. 1단계(N4 공정)는 2024년 말 양산을 시작했으며, 건설을 마친 2단계(N3 공정)는 2027년 하반기 양산을 목표로 준비 중입니다. 2025년에 착공한 3단계(N2/A16 공정) 역시 순조롭게 진행되고 있으며, 2026년에는 후속 단계를 위한 부지까지 추가로 확보했습니다. 2024년 11월, TSMC 애리조나는 미국 반도체 지원법(CHIPS Act)에 따라 최대 66억 달러의 직접 보조금과 50억 달러 규모의 대출을 확보했습니다 (TSMC, 2026c, Item 4; LSEG StreetEvents 2026, p. 5).
+일본과 독일은 TSMC가 3개 대륙에 걸친 글로벌 제조 거점을 완성하는 핵심 지역입니다. 일본 구마모토의 JASM(Japan Advanced Semiconductor Manufacturing)은 TSMC가 지분 72.6%를 보유하고, 소니, 덴소, 토요타가 파트너로 참여하고 있습니다. JASM의 팹 23(Fab 23)은 2024년 12월부터 이미지 센서 및 자동차용 반도체 분야의 28나노미터 공정 양산을 시작했습니다. 3나노미터 공정 도입을 결정한 두 번째 팹은 2025년 10월 착공되었으며, 2028년 양산을 목표로 하고 있습니다 (TSMC, 2026c, Item 4).
+독일 드레스덴에는 TSMC가 지분 70%를 보유하고, 보쉬, 인피니온, NXP가 각각 10%씩 투자한 합작 법인 ESMC(European Semiconductor Manufacturing Company)가 설립되었습니다. 현재 이곳에서는 자동차 및 산업용 반도체를 생산할 팹 24(Fab 24)를 건설 중이며, 아직 양산은 시작되지 않은 상태입니다 (ibid.).
+c.c.f. TSMC의 선단 공정 로드맵 (현재 주력인 2세대 3나노인 N3E 공정 기준)
+공정 세대
+트랜지스터 구조
+양산 시점 (HVM)
+핵심 기술 특징
+이전 세대 대비 개선 지표 (PPA)
+N3P (P=performance) / N3A
+FinFET (핀펫)
+2024 ~ 2026
+FinFET 공정의 최종 성숙 단계
+N3A: 2026년 차량용 오토 얼리 진입
+N3E 대비 성능 5% 향상
+전력 5~10% 절감
+밀도 4% 증가
+N2
+GAA Nanosheet (1세대 나노시트)
+2025년 4분기 (양산 진입 완료)
+TSMC 최초의 GAA 구조 채택
+NanoFlex 기술 도입으로 설계 유연성 확보
+신주/가오슝 팹 중심 가동
+N3E 대비 동일 전력에서 성능 10~15%↑
+동일 성능에서 전력 20~30%↓
+칩 밀도 1.15배 이상↑
+N2P / N2U (U=Ultra Value)
+GAA Nanosheet (1세대 개선형)
+2026년 H2 (N2P)
+2028년 (N2U)
+N2 플랫폼의 고성능/저비용 파생 노드
+N2U: 비용 효율적 다이 슈링크 및 IP 재사용
+N2P: 모바일 및 클라이언트향 성능 고도화
+N2U: 동일 전력서 성능 3~4%↑ 또는 전력 8~10%↓
+A16
+GAA Nanosheet (+ Backside Power)
+2027년 (고객사 램프업 조정)
+1.6나노급 공정 진입
+Super Power Rail (SPR) 후면 전력 공급 최초 도입
+신호선과 전력선 분리로 전압 강하 최소화
+N2P 대비 동일 전압에서 속도 8~10%↑
+동일 속도에서 전력 15~20%↓
+칩 밀도 최대 1.10배↑ (HPC 최적화)
+A14
+GAA Nanosheet (2세대 나노시트)
+2028년 예정
+2세대 나노시트 구조 링커 도입
+NanoFlex Pro 기술 기반 프리미엄 모바일 타깃
+N2 플랫폼 대비 확실한 풀 노드 세대 도약
+성능 10~15%↑ 또는 전력 25~30%↓
+밀도 20%↑
+A12 / A13
+GAA Nanosheet (A14 플랫폼 확장)
+2029년 예정
+A12: A14 기반에 후면 전력(SPR) 통합 (HPC용)
+A13: A14의 광학 다이 슈링크 버전 (비용 절감형)
+A12: 데이터센터향 전력 효율 극대화
+A13: 면적 6% 추가 절감, A14와 설계 호환
+KEY TERMS IN THIS SECTION
+N2 / Nanosheet Transistor
+TSMC의 2나노미터(N2) 공정 노드로, TSMC 생산 역사상 최초로 기존의 핀펫(FinFET) 구조 대신 '게이트 올 어라운드(GAA) 나노시트 트랜지스터'를 채택했습니다. GAA 트랜지스터는 게이트 전극이 전류 채널의 4면을 모두 감싸는 구조로, 정전기 제어 능력을 향상시켜 이전 세대 핀펫 노드와 동등하거나 더 우수한 성능을 유지하면서도 더 낮은 동작 전압을 구현할 수 있습니다. N2 공정은 2025년 4분기에 신주와 가오슝 사업장에서 성공적인 수율로 양산 단계에 진입했습니다.
+A14 / A16 (Angstrom-class nodes)
+N2 이후의 공정 세대로, 마케팅 및 명명 규칙에 따라 나노미터(nm) 대신 옹스트롬(Å, 10⁻¹⁰ 미터) 단위를 사용합니다. A16은 N2급 트랜지스터와 후면 전력 공급 네트워크(backside power delivery network)를 통합한 공정으로 2026년에 위험 생산(risk production)이 예정되어 있습니다. 2세대 나노시트 트랜지스터를 특징으로 하는 A14는 N2 대비 완벽한 한 세대 성능 도약을 목표로 설계되었으며, 2028년 양산을 목표로 하고 있습니다.
+U.S. CHIPS Act
+2022년 제정된 반도체 및 과학법(CHIPS and Science Act)으로, 미국 내 반도체 제조 투자를 장려하기 위해 약 390억 달러의 제조 인센티브를 포함하여 총 527억 달러 규모의 연방 자금을 승인했습니다. TSMC 애리조나는 2024년 11월, 최대 66억 달러의 직접 보조금 지원 및 최대 50억 달러의 별도 대출 계약을 체결했습니다.
+JASM / ESMC
+일본 첨단 반도체 제조(JASM)는 일본 구마모토에 위치한 TSMC의 지배적 합작 투자 법인입니다(TSMC 72.6% 지분, 소니·덴소·토요타가 소수 파트너). 현재 팹 23(Fab 23)을 운영 중이며 두 번째 팹을 건설하고 있습니다. 유럽 반도체 제조 회사(ESMC)는 독일 드레스덴에 위치한 TSMC의 지배적 합작 투자 법인(70.0% 지분)으로, 보쉬·인피니온·NXP가 각각 10% 파트너로 참여하여 자동차 및 산업용 반도체를 위한 팹 24(Fab 24)를 건설 중입니다.
+GIGAFAB Cluster
+공통 인프라, 유틸리티, 물류를 공유하는 여러 최첨단 팹의 캠퍼스를 의미하는 TSMC 고유 용어입니다. 이 클러스터는 규모의 경제를 실현하고 인력을 신속하게 재배치할 수 있게 합니다. 대만 남부 과학단지에 위치한 타이난 기가팹 클러스터에는 2027년 상반기 양산을 목표로 3나노미터 신규 팹이 추가될 예정입니다.
+Section V
+리스크 관리
+TSMC의 시장 지배력은 구조적으로 매우 견고합니다. 현재 AI, 스마트폰, 고성능 컴퓨팅(HPC) 등 글로벌 빅테크 기업들이 요구하는 물량을 상업적 규모로 공급할 수 있는 최첨단 공정(N3 및 N2) 파운드리는 TSMC가 유일합니다.
+현재 시장에서 벌어지는 심각한 공급 부족 현상은 역설적으로 TSMC의 강력한 위상을 증명합니다. 3나노 생산 능력 부족이 얼마나 지속될지 묻는 질문에 웨이 회장은 "새로운 팹을 건설하는 데만 2~3년이 걸린다"며 "이러한 타이트한 수급 상황이 상당히 오랜 기간 이어질 것"이라고 답했습니다 (LSEG StreetEvents 2026, p. 9).
+데이터 센터의 학습 및 추론용 GPU, ASIC, HBM 컨트롤러를 아우르는 AI 가속기 매출은 이미 장기적인 고성장 궤도에 진입했습니다. 웨이 회장은 이 분야의 매출이 오는 2029년까지 50%대 후반의 높은 연평균 성장률(CAGR)을 지속해서 기록할 것으로 전망했습니다 (LSEG StreetEvents 2026, p. 17). 그러나 회사가 직면한 몇 가지 구조적 리스크에 대해서는 짚고 넘어가야 합니다.
+a. 관세
+가장 시급한 대외적 리스크는 빠르게 급변하는 미국의 무역 규제 및 수출 통제 환경입니다. 2025년 12월에 마무리된 무역확장법 제232조(Section 232) 국가 안보 조사 결과, 특정 첨단 컴퓨팅 칩 수입품에 25%의 관세가 부과되었습니다. 다만 미국 내 제조 시설에 투자하는 기업에는 관세를 상쇄해 주는 감면 혜택이 함께 도입되었는데, TSMC의 애리조나 프로젝트가 바로 이 혜택을 받을 수 있도록 설계되었습니다 (TSMC, 2026c, Item 3).
+한편, 2025년 4월에 발표되었던 전면적인 상호 관세 제도는 2026년 2월 연방 대법원의 위헌 판결로 무력화되었으며, 이후 별도의 법령을 통해 대체되었습니다. 하지만 곧바로 2026년 3월 미 무역대표부(USTR)가 대만을 직접 겨냥한 두 건의 추가 조사에 착수하면서 긴장감이 고조되고 있습니다. 해당 조사는 제조 공급 과잉과 강제 노동 관행 의혹을 표적 삼고 있습니다 (ibid.).
+비록 2026년 1월 미국과 대만 간의 양자 무역 협정을 통해 대만산 제품에 대한 관세율을 최대 15%로 제한하고, 미국 내 생산 시설에 투자하는 대만 반도체 제조업체에 우대 조치를 부여하기로 합의했으나, 세부 실행 방안은 아직 최종 조율 중인 단계입니다 (ibid.).
+b. 수출 통제
+또 다른 리스크는 수출 통제 규제이며, 특히 TSMC의 중국 난징 팹(Fab 16, 16나노 공정)이 직접적인 영향권에 있습니다. 미국 정부가 2022년부터 시행 중인 규제에 따라, 특정 국가로 첨단 칩과 반도체 장비를 반출할 때는 반드시 라이선스를 취득해야 합니다. 그동안 난징 공장은 별도의 개별 허가 없이 미국 통제 품목을 반입할 수 있는 '검증된 엔드유저(VEU)' 자격을 유지해 왔으나, 이 권한이 2025년 12월부로 만료되었습니다.
+"Although the VEU authorization expired in December 2025, the U.S. Department of Commerce has granted TSMC Nanjing Company Limited an annual export license that allows U.S. export-controlled items to be supplied to TSMC Nanjing, which ensures uninterrupted fab operations and product deliveries. However, there is no assurance that this annual export license will not be terminated, or we can timely get the license renewed in the future."
+— Taiwan Semiconductor Manufacturing Company Limited, Form 20-F FY2025, Item 3 — Risk Factors (TSMC, 2026c)
+여기에 중국 정부의 '수출통제법 및 반외국제재법(Blocking Statute)' 역시 또 다른 긴장감을 더하고 있습니다. 이 법안은 외국 법률을 준수하느라 중국 기업에 피해를 준 회사에 대해 중국 법인들이 사법적 구제 수단이나 손해배상을 청구할 수 있도록 규정하고 있어, TSMC는 미·중 규제 사이에서 진퇴양난의 법적 리스크를 안게 되었습니다 (ibid.)
+c. 지정학적 불안
+투자자들이나 정책 입안자들이 가장 자주 지적하는 핵심 리스크는 바로 대만 내 '지리적 집중도'입니다. TSMC의 연례보고서(20-F) 역시 "당사 주요 경영진과 핵심 생산 시설 대부분이 대만에 위치하고 있으며, 순매출의 상당 부분 역시 대만 내 운영에서 발생한다"고 인정합니다. 보고서는 이어 "과거 양안 관계(대만과 중국)의 특정 전개 상황이 발생할 때마다, 금융 시장은 당사를 포함한 대만 기업들의 주가를 하락시키는 요인으로 이를 받아들여 왔다"며 지정학적 리스크를 명시했습니다 (TSMC, 2026c, Item 3).
+현재 애리조나, 일본, 독일에 걸쳐 진행 중인 글로벌 생산 거점 다변화는 이러한 리스크를 분산하기 위한 전략적인 대응입니다. 다만 보고서는 국가 간 인력 이동 규제 등으로 인해, 그동안 대만을 중심으로 구축해 온 TSMC만의 '운영 시너지(Operational Synergies)'가 일부 저해되거나 약화될 수 있다는 우려 역시 상존함을 인정했습니다 (ibid).
+d. 높은 큰손 비중
+고객 집중도 역시 구조적으로 심화되는 핵심 리스크 중 하나입니다. TSMC의 상위 10대 고객사가 전체 순매출에서 차지하는 비중은 2023년 70%, 2024년 76%에 이어 2025년에는 78%까지 상승했습니다. 특히 1위 고객사(애플)가 19%, 2위 고객사(엔비디아)가 17%를 차지할 만큼 상위 2개사에 대한 의존도가 압도적입니다. 이러한 집중도는 대금 회수 위험과 직결되는 채권 관리 측면에서 더욱 두드러지는데, 2025년 말 기준 상위 10대 고객사의 매출채권 비중은 무려 84%에 달합니다 (TSMC, 2026c, Item 3).
+여기서 주목해야 할 리스크는 이들 고객사의 재무적 부실 가능성이 아니라, AI 학습 및 추론 아키텍처의 변화에 따라 이들의 주문 패턴이 순식간에 뒤바뀔 수 있다는 점입니다. 실제로 C.C. 웨이 회장이 언급한 생성형(Generative) AI에서 에이전트형(Agentic) AI로의 패러다임 전환은 토큰 소모량과 연산 수요의 급격한 변동을 촉발하며, 이러한 전방 수요의 가변성을 고스란히 증명하고 있습니다 (LSEG StreetEvents, 2026, p. 5).
+e. 설비투자로 인한 매출 희석
+수익성 측면에서 가장 명확하게 수치화된 단기 리스크는 해외 팹 초기 가동(Ramp-up) 비용과 N2 공정 초기 양산에 따른 마진 희석(Dilution)이라는 이중고입니다. 웬델 황(Wendell Huang) CFO는 N2 초기 양산으로 인해 2026년 연간 매출총이익률(Gross Margin)이 2%에서 3%가량 낮아질 것으로 예상했으며, 이러한 마진 희석 효과는 물량이 본격적으로 늘어나는 2026년 하반기에 집중될 것이라고 밝혔습니다. 이와는 독립적으로, 대만 외 지역의 높은 비용 구조를 반영한 해외 팹 관련 마진 희석은 초기 단계에 2~3% 수준을 기록한 뒤, 확장 프로젝트 후기 단계에는 3~4%까지 확대될 전망입니다 (LSEG StreetEvents, 2026, p. 4).
+여기에 중동 분쟁이라는 공급망 변수도 더해졌습니다. 헬륨과 수소를 포함한 특수 화학 물질 및 가스 가격의 상승 가능성이 제기되었으나, 경영진은 2026년 1분기 실적 발표 시점을 기준으로 그 영향을 구체적인 수치로 산출하기에는 아직 이르다고 판단했습니다 (ibid.).
+이러한 단기 리스크 속에서도 장기 마진 구조는 여전히 긍정적입니다. 차세대 선단 공정의 초기 비용 부담을 기존 주력 공정이 상쇄하는 TSMC 특유의 세대별 교차 방어 체계가 작동하고 있기 때문입니다. N3(3나노) 공정의 매출총이익률은 2026년 하반기에 전사 평균 수치를 넘어설 것으로 예상되며, 경영진은 전체 반도체 사이클 전반에 걸쳐 56% 이상의 장기 매출총이익률 목표를 달성할 수 있다는 자신감을 재차 확인했습니다 (LSEG StreetEvents, 2026, pp. 4, 15).
+KEY TERMS IN THIS SECTION
+Section 232 (1962년 무역확장법 232조)
+미국의 국가 안보에 위협이 된다고 판단되는 수입품에 대해 대통령 권한으로 관세를 부과하거나 무역을 제한할 수 있도록 규정한 법안입니다. 반도체 수입을 대상으로 진행된 제232조 조사는 2025년 12월에 마무리되었으며, 그 결과 특정 첨단 컴퓨팅 칩 수입품에 25%의 관세가 부과되었습니다. 다만 미국 내 반도체 제조 시설에 투자하는 기업에는 관세를 상쇄(감면)해 주는 프로그램이 함께 도입되었으며, TSMC의 애리조나 프로젝트에 직접 적용됩니다.
+검증된 엔드유저 (VEU)
+준수 조건을 충족하는 특정 해외 생산 시설에 대해, 개별 라이선스 없이도 미국의 수출 통제 품목을 반입할 수 있도록 허가하는 미 산업안보국(BIS)의 인증 제도입니다. TSMC 난징 팹의 VEU 권한은 2025년 12월부로 만료되었으며, 현재는 매년 상무부의 갱신 심사를 받아야 하는 유연하지 못한 '연간 수출 라이선스'로 대체된 상태입니다.
+Export Administration Regulations (수출관리규정) / October Rules (10월 규제)
+이중용도(민군 겸용) 품목 및 기술의 수출을 통제하는 미 상무부의 규제 프레임워크입니다. 2022년과 2023년에 발표된 '10월 규제'는 중국을 포함한 특정 국가로의 첨단 컴퓨팅 칩 수출에 라이선스 취득을 의무화했습니다. 이어 2025년 1월 규제를 통해 특정 목적지에 대한 통제 대상을 16나노미터 이하 공정까지 확대하면서, TSMC의 난징 팹 운영에 직접적인 영향을 미치고 있습니다.
+Section 301 (1974년 무역법 301조)
+미국의 통상에 부담이나 제한을 주는 외국의 불공정하거나 차별적인 무역 관행을 미 무역대표부(USTR)가 조사하고 보복 조치를 취할 수 있도록 권한을 부여한 법안입니다. 2026년 3월, USTR은 제조업 공급 과잉과 강제 노동 관행 의혹을 겨냥해 두 건의 제301조 조사에 착수했으며, 대만을 조사 대상국에 명시적으로 포함시켰습니다.
+SOURCE CREDIBILITY AND TIER CLASSIFICATION
+(출처 신뢰성 및 신뢰 등급)
+SOURCE
+TIER
+GRADE
+EVIDENTIARY NOTE
+LSEG StreetEvents: Edited Transcript, Q1 2026 TSMC Earnings Call (Apr 16, 2026)
+Tier 3 — LSEG StreetEvents
+A−
+Edited transcript of primary TSMC corporate event. LSEG is a globally recognised financial data service with institutional editorial accountability. LSEG's own disclaimer notes possible transcription inaccuracies; pull-quotes are locked to the LSEG text as supplied. User-supplied PDF, session-processed.
+Taiwan Semiconductor Manufacturing Company Limited 2025a: Form 6-K, Arizona Expansion Announcement (Mar 3, 2025)
+Tier 1 — SEC EDGAR
+A+
+Primary corporate disclosure; fetch-verified from EDGAR this session. Source for US$165B investment figure, fab and facility count, economic impact projections, and the verbatim C.C. Wei statement on Arizona.
+Taiwan Semiconductor Manufacturing Company Limited 2026a: Form 6-K EX-99.2, Q4 2025 Earnings Presentation (Jan 15, 2026)
+Tier 1 — SEC EDGAR
+A+
+Fetch-verified from EDGAR this session. Source for the 2024–2029 revenue CAGR target ("approach 25%"), long-term gross margin ("56% and higher"), and long-term ROE ("high-20s%") disclosures.
+Taiwan Semiconductor Manufacturing Company Limited 2026b: Form 6-K EX-99.2, Q1 2026 Earnings Presentation (Apr 16, 2026)
+Tier 1 — SEC EDGAR
+A+
+Fetch-verified from EDGAR this session. Source for Q1 2026 platform revenue breakdown, balance sheet, cash flow statement, and Q2 2026 guidance slides.
+Taiwan Semiconductor Manufacturing Company Limited 2026c: Annual Report on Form 20-F, FY2025 (Apr 16, 2026)
+Tier 1 — SEC EDGAR
+A+
+Definitive annual disclosure; user-supplied PDF, full text extracted via pdftotext across all Items (122 pages). Primary source for all FY2025 annual financial data, business description, technology platform descriptions, subsidiary and joint venture details, risk factors (tariff, export control, geographic, customer concentration), employee data, ESG metrics, and contractual obligations.
+Taiwan Semiconductor Manufacturing Company Limited 2026d: Form 6-K, May 2026 Board Resolutions (May 12, 2026)
+Tier 1 — SEC EDGAR
+A+
+Fetch-verified from EDGAR this session. Source for Q1 2026 board-approved financial statements (exact NT$ thousands), US$31,284.30M capital appropriations, capital injection of not more than US$20B into TSMC Arizona, and Q1 2026 dividend declaration (NT$7.00/share).
+Taiwan Semiconductor Manufacturing Company Limited 2026e: Form 6-K EX-99.1, Q1 2026 Earnings Release (Apr 16, 2026)
+Tier 1 — SEC EDGAR
+A+
+Fetch-verified from EDGAR this session. Source for Q1 2026 P&L table (NT$ millions), technology node wafer revenue mix, Q2 2026 guidance, and the 'About TSMC' operational statistics.
+BIBLIOGRAPHY
+(참고문헌)
+LSEG StreetEvents. 2026. "Edited Transcript: 2330.TW — Q1 2026 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call (Chinese, English)." Event date: April 16, 2026. Transcript ID: 16715184-2026-04-17T05:13:56.193.
+https://investor.tsmc.com/…/TSMC 1Q26 Transcript.pdf
+Taiwan Semiconductor Manufacturing Company Limited. 2025a. "TSMC Intends to Expand Its Investment in the United States to US$165 Billion to Power the Future of AI." Form 6-K. Filed with U.S. Securities and Exchange Commission, March 3, 2025.
+https://www.sec.gov/Archives/edgar/data/0001046179/…/tsmcexpandinvestmentintheu.htm
+Taiwan Semiconductor Manufacturing Company Limited. 2026a. "2025 Fourth Quarter Earnings Conference." Form 6-K, Exhibit 99.2. Filed with U.S. Securities and Exchange Commission, January 15, 2026.
+https://www.sec.gov/Archives/edgar/data/0001046179/…/a4q25presentatione.htm
+Taiwan Semiconductor Manufacturing Company Limited. 2026b. "2026 First Quarter Earnings Conference." Form 6-K, Exhibit 99.2. Filed with U.S. Securities and Exchange Commission, April 16, 2026.
+https://www.sec.gov/Archives/edgar/data/1046179/…/a1q26presentatione.htm
+Taiwan Semiconductor Manufacturing Company Limited. 2026c. Annual Report on Form 20-F for the Fiscal Year Ended December 31, 2025. Filed with U.S. Securities and Exchange Commission, April 16, 2026. Commission File No. 1-14700.
+https://investor.tsmc.com/sites/ir/sec-filings/2025_20F Report.pdf
+Taiwan Semiconductor Manufacturing Company Limited. 2026d. "TSMC Board of Directors Meeting Resolutions." Form 6-K. Filed with U.S. Securities and Exchange Commission, May 12, 2026.
+https://www.sec.gov/Archives/edgar/data/1046179/…/tsm-boardx20260512.htm
+Taiwan Semiconductor Manufacturing Company Limited. 2026e. "TSMC Reports First Quarter EPS of NT$22.08." Form 6-K, Exhibit 99.1. Filed with U.S. Securities and Exchange Commission, April 16, 2026.
+https://www.sec.gov/Archives/edgar/data/1046179/…/a1q26e_withguidancexfinal.htm
+공유하기
+게시글 관리
+Pragma's Think-Tank
+저작자표시
+비영리
+변경금지
+(새창열림)
+'
+AI,Tech,Sci
+>
+AI Infrastructure Dissection
+' 카테고리의 다른 글
+[AI 인프라 백서 외전 05] GPU 한 장의 제국, 엔비디아는 어떻게 AI 인프라의 출발점이 됐는가: FY2026 · Q1 FY2027 통합편
+(0)
+2026.05.21
+[AI 인프라 백서 외전 04] AI 칩 한 장이 세상에 나오기까지: ASML · TSMC · ASE 테크놀로지
+(0)
+2026.05.21
+[AI 인프라 백서 외전 03] 팔란티어(PLTR): FY2025 → Q1 2026 종합 분석 - 임계점을 넘은 기업의 궤적을 공시로 추적하다
+(0)
+2026.05.18
+[AI 인프라 백서 외전 02] 구글이 만드는 생태계, 아니, 개미지옥
+(0)
+2026.05.17
+[AI 인프라 백서 외전 01] 같은 파도, 다른 배: 이튼·콴타·버티브의 AI 인프라 삼각 구도
+(0)
+2026.05.17
+관련글
+[AI 인프라 백서 외전 05] GPU 한 장의 제국, 엔비디아는 어떻게 AI 인프라의 출발점이 됐는가: FY2026 · Q1 FY2027 통합편
+[AI 인프라 백서 외전 04] AI 칩 한 장이 세상에 나오기까지: ASML · TSMC · ASE 테크놀로지
+[AI 인프라 백서 외전 03] 팔란티어(PLTR): FY2025 → Q1 2026 종합 분석 - 임계점을 넘은 기업의 궤적을 공시로 추적하다
+[AI 인프라 백서 외전 02] 구글이 만드는 생태계, 아니, 개미지옥
+Announces
+씽크탱크 운영원칙
+Categories
+(86)
+AI,Tech,Sci
+(14)
+AI Infrastructure Dissectio..
+(20)
+Litt,His
+(8)
+Philosophy
+(14)
+Society
+(5)
+Investment
+(18)
+etc.
+(6)
+Privacy Policy
+TOP
+Designed by 티스토리
+© AXZ Corp.
+티스토리툴바
+Pragma's Think-Tank
+구독하기

@@ -1,0 +1,112 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-275a1c18a6c18875082a9df4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "STEPI 전략기술 연구보고서로 CUSTOMER_OFFICIAL 출처가 아니며 삼성 HBM 고객의 서명된 구매조건을 확인할 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-fa9b8105d3e600c9d20a8294",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "Cerebras-AWS를 다룬 제3자 기사로 대상과 질문이 다르고 삼성 HBM 고객 공식 계약 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ea3038bcb904e1b2b26d2679",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "민간 R&D 전략보고서로 고객 공식 구매 출처가 아니며 삼성 HBM의 가격·물량·배정·기간을 확인하는 직접 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7351ad525b34ffc06307d82e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "증권 리서치 다운로드 자료로 OpenAI 등 시장 맥락을 언급해도 CUSTOMER_OFFICIAL 원문이 아니며 확정 HBM 계약 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0b8072814763186d87babf7a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성·SK HBM4 경쟁을 다룬 제3자 뉴스 기사로 관련성은 있으나 요청된 고객 공식 출처가 아니고 고객 구매조건 원문으로 이어지는 경로도 제시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c4f455623547994b85db71c0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "2026-08-03자 제3자 IT 뉴스로 as_of_date 이후이며 CUSTOMER_OFFICIAL 원문 또는 삼성 HBM 계약 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4a5d87dc457bc83337b3e15b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NIA의 미국 AI 정책 분석으로 고객 공식 구매 문서가 아니며 삼성 HBM 계약 경제성과 직접 관련되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a3c00aecd7ec6f88bc931dc6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "유안타증권 리서치 자료로 CUSTOMER_OFFICIAL 출처가 아니며 삼성 HBM의 서명된 구매·배정 조건을 확인할 직접 원문 경로가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 8개 후보에서는 요청된 CUSTOMER_OFFICIAL full-source 경로나 삼성 HBM의 서명된 가격·물량·배정·기간을 확인할 문서를 식별하지 못했다. 이는 후보 로스터 분류 결과이며 원문 또는 계약 사실의 부재를 증명하지 않는다."
+    ]
+  },
+  "payload_hash": "8d0f6d5f0f2357f8bc439dfbf8c2122534e9e20c017d78996f93b93e0765d864",
+  "production_score_authority": false,
+  "prompt_hash": "abe19c93cf15d39df441c5aa7ce62660f101a3262f2921cf2ef7dcd5c8e56eda",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c20386db61b73f532241ca66a6d48354f407e89278b6febc642eacec3560dce4",
+  "response_id": "COLLABRESP-2d171a5f8a3e77b3d0993203ddf46022b513b48f0633067aca08685a28f5c254",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

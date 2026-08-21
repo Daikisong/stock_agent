@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "a7e037c139a33ac8cc9a150024495ef4dc2d733048ea2f9f6f7bbcd6f629607c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-3dfaab259b4f5007d4fea05d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.08,
+        "rationale": "The opinion column is third-party media outside all requested official source families; its snippet estimates cannot satisfy the objective."
+      },
+      {
+        "candidate_id": "SGCAND-3a01d8a03ea4d4578478dfaa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.1,
+        "rationale": "This third-party disclosure roundup is not KIND, OpenDART, an issuer earnings release, or an issuer newsroom source."
+      },
+      {
+        "candidate_id": "SGCAND-472df3ef81413e0de1c21171",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.08,
+        "rationale": "The media article is outside every requested source family and cannot replace the underlying issuer or official first-quarter record."
+      },
+      {
+        "candidate_id": "SGCAND-328ab319c35b5e212c065db7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.1,
+        "rationale": "This media retelling of preliminary results is not one of the requested official source families; the snippet is discovery metadata only."
+      },
+      {
+        "candidate_id": "SGCAND-8ab273d8245970ae70c03224",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "The housing-market article is both outside the requested source families and nonresolving for the issuer's EPS, cash-conversion, and memory attribution questions."
+      },
+      {
+        "candidate_id": "SGCAND-058456ecf6f85bbf4483b821",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.06,
+        "rationale": "This general-web article is not a requested official source and cannot establish the preliminary result or its memory-specific bridge."
+      },
+      {
+        "candidate_id": "SGCAND-3cb969ca16d5668ef812eaca",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.06,
+        "rationale": "A daily news roundup is outside all requested official source families and cannot substitute for the original result disclosure."
+      },
+      {
+        "candidate_id": "SGCAND-15e4b5aa371ae8d901dd11be",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.05,
+        "rationale": "The third-party article is outside the requested source families and includes an adjusted-profit estimate that requires an eligible original source."
+      },
+      {
+        "candidate_id": "SGCAND-d325629482a4dce1d29d7408",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.05,
+        "rationale": "The weekly industry preview is third-party media outside the requested official families and does not provide a complete issuer-specific earnings bridge."
+      },
+      {
+        "candidate_id": "SGCAND-a8cdabffd3983d6658f7b079",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.06,
+        "rationale": "The market-news article is not a requested official source, so its preliminary result recap cannot resolve the official-source objective."
+      },
+      {
+        "candidate_id": "SGCAND-0016bf0f4983688c2c7d8358",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.07,
+        "rationale": "This media comparison is outside all requested official source families and does not supply an original, memory-attributed earnings record."
+      },
+      {
+        "candidate_id": "SGCAND-35eae59cff40081070cf7bf8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.05,
+        "rationale": "The third-party outlook article is outside the requested source families; neither its surprise claim nor share-price discussion can replace official evidence."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "All twelve candidates are third-party or general-web results outside the requested KIND, OpenDART, issuer earnings release, and issuer newsroom families; the eligible original result remains unresolved."
+    ]
+  },
+  "payload_hash": "377f5b9069dc07faece0527888cb80bcc99f1181fc4648bcee7e82679e680cbd",
+  "production_score_authority": false,
+  "prompt_hash": "3dfa68a2fa4688958baadf535a6701ab424c538c201feef0b77253d1f5f3e4dc",
+  "provenance": {
+    "agent_id": "samsung-epoch107-rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_epoch107_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c628ba5aaa20a1072101ac68a207930f276ffabe2eaca6558b33242837b5f37b",
+  "response_id": "COLLABRESP-0ff1f10171cf445332b008bb9003dc62bc4bc2f3a6c99c5c88d6c1db1bdb08f5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

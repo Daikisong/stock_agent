@@ -1,0 +1,665 @@
+2025.04.26 HBM 업계의 생산 능력은 2023년부터 2026년까지 매년 두 배씩 증가할 것으로 예상되지만, HBM 칩에 대한 수요가 지속적으로 증가할 것으로 보여 공급과 수요는 여전히 타이트한 상태를 유지할 수 있습니다.HBM은 고도로 커스터마이즈 가능한 특성을 지니고 있기 때문에, 공급 과잉은 2033년까지 발생하지 않을 것으로 예상됩니다.----------------------------------중요: 2024년 말, 마벨(Marvell)은 새로운 커스텀 HBM 연산 아키텍처를 발표했다. cHBM 채택이 DRAM 벤더(SK하이닉스, 삼성전자, 마이크론)에 미치는 영향기본 구조 변화기존 HBM은 DRAM 제조사가 베이스 다이(Base Die)와 메모리 다이(Memory Die)를 모두 설계..
+중요-HBM시장 동향-AI 데이터센터 1개당 GPU, 메모리(HBM) 소모량 정리(2025.04.26)
+2025.04.26 HBM 업계의 생산 능력은 2023년부터 2026년까지 매년 두 배씩 증가할 것으로 예상되지만, HBM 칩에 대한 수요가 지속적으로 증가할 것으로 보여 공급과 수요는 여전히 타이트한 상태를 유지할 수 있습니다.HBM은 고도로 커스터마이즈 가능한 특성을 지니고 있기 때문에, 공급 과잉은 2033년까지 발생하지 않을 것으로 예상됩니다.----------------------------------중요: 2024년 말, 마벨(Marvell)은 새로운 커스텀 HBM 연산 아키텍처를 발표했다. cHBM 채택이 DRAM 벤더(SK하이닉스, 삼성전자, 마이크론)에 미치는 영향기본 구조 변화기존 HBM은 DRAM 제조사가 베이스 다이(Base Die)와 메모리 다이(Memory Die)를 모두 설계..
+중요-HBM시장 동향-AI 데이터센터 1개당 GPU, 메모리(HBM) 소모량 정리(2025.04.26)
+2025.04.26 HBM 업계의 생산 능력은 2023년부터 2026년까지 매년 두 배씩 증가할 것으로 예상되지만, HBM 칩에 대한 수요가 지속적으로 증가할 것으로 보여 공급과 수요는 여전히 타이트한 상태를 유지할 수 있습니다.HBM은 고도로 커스터마이즈 가능한 특성을 지니고 있기 때문에, 공급 과잉은 2033년까지 발생하지 않을 것으로 예상됩니다.----------------------------------중요: 2024년 말, 마벨(Marvell)은 새로운 커스텀 HBM 연산 아키텍처를 발표했다. cHBM 채택이 DRAM 벤더(SK하이닉스, 삼성전자, 마이크론)에 미치는 영향기본 구조 변화기존 HBM은 DRAM 제조사가 베이스 다이(Base Die)와 메모리 다이(Memory Die)를 모두 설계..
+중요-HBM시장 동향-AI 데이터센터 1개당 GPU, 메모리(HBM) 소모량 정리(2025.04.26)
+중요-HBM시장 동향-AI 데이터센터 1개당 GPU, 메모리(HBM) 소모량 정리(2025.04.26)
+본문 바로가기
+주식으로 모두 부자되기
+메뉴
+분류 전체보기
+(2431)
+당뇨병 위암
+(15)
+나의 주식 투자 수익률
+(3)
+소설
+(18)
+김동인 소설
+(1)
+특허-컴퓨터 복사
+(1)
+코딩, 유튜브,shorts
+(11)
+삼성전자-하이닉스-마이크론-샌디스크
+(1263)
+엔비디아-마이크로소프트-AMD-인텔
+(227)
+성광벤드-비엠티
+(100)
+조선-항공-화학
+(86)
+메모리 관련 데이터
+(119)
+경제-수출입 동향
+(143)
+역사풀이
+(10)
+역사
+(36)
+파운드리-TSMC-난야-UMC-DB하이텍
+(70)
+증권-미래에셋-키움
+(2)
+양자컴퓨팅
+(4)
+메타버스-로블록스-제페토
+(0)
+미국 주식 시장
+(27)
+주식 시장 상황
+(26)
+애플-구글-아마존
+(13)
+정치
+(0)
+모두의 아이디어
+(0)
+치매-한의학
+(0)
+자동차-전기차-배터리-리튬
+(27)
+POSCO홀딩스-포스코인터내셔널
+(29)
+원익Qnc-삼성전기-해성디에스
+(7)
+화장품-헬스케어-코로나바이러스
+(32)
+건설-대우건설-현대건설
+(4)
+양자컴퓨터
+(1)
+스튜디오드래곤
+(1)
+WDC
+(1)
+노트북 판매량
+(4)
+스마트폰 판매량
+(5)
+해성디에스-심텍
+(4)
+로봇-에스피지
+(1)
+세경하이테크
+(1)
+아파트
+(0)
+지진 정전 사고
+(6)
+costco
+(1)
+치매
+(1)
+POWERED BY TISTORY
+블로그 내 검색
+검색
+삼성전자-하이닉스-마이크론-샌디스크
+중요-HBM시장 동향-AI 데이터센터 1개당 GPU, 메모리(HBM) 소모량 정리(2025.04.26)
+yjsunshine
+2025. 4. 26. 17:00
+2025.04.26
+HBM 업계의 생산 능력은 2023년부터 2026년까지 매년 두 배씩 증가할 것으로 예상되지만, HBM 칩에 대한 수요가 지속적으로 증가할 것으로 보여 공급과 수요는 여전히 타이트한 상태를 유지할 수 있습니다.
+HBM은
+고도로 커스터마이즈 가능한 특성
+을 지니고 있기 때문에,
+공급 과잉은 2033년까지 발생하지 않을 것으로 예상됩니다.
+----------------------------------
+중요:
+2024년 말, 마벨(Marvell)은 새로운 커스텀 HBM 연산 아키텍처를 발표
+했다.
+cHBM 채택이 DRAM 벤더(SK하이닉스, 삼성전자, 마이크론)에 미치는 영향
+기본 구조 변화
+기존 HBM은 DRAM 제조사가 베이스 다이(Base Die)와 메모리 다이(Memory Die)를 모두 설계, 생산, 적층(Stacking)까지 담당했다.
+그러나 cHBM 및 하이브리드 본딩 도입 이후에는 베이스 다이 설계 주체가 GPU/ASIC 설계 기업(예: 엔비디아)이나 파운드리(TSMC)로 바뀌게 된다.
+이로 인해 DRAM 제조사는 메모리 다이만 공급하는 비중이 커지고, 주도권이 약화될 수 있다.
+SK하이닉스에 미치는 영향
+긍정적 요인: 이미 하이브리드 본딩 대응 준비가 잘 되어 있으며, TSMC와 긴밀한 협력 경험을 갖고 있다.
+부정적 요인: 베이스 다이 관련 추가 수익이 감소할 수 있으며, 고객 주도 구조 전환 시 가격 협상력이 약화될 위험이 있다.
+대응 전략: 메모리 다이 품질과 수율을 극대화하여 차별화하고, HBM4E, HBM5 같은 고성능 제품군에 집중할 필요가 있다.
+삼성전자에 미치는 영향
+긍정적 요인: 하이브리드 본딩 기술을 자체 개발 중이며, 1c DRAM 기반 제품으로 차별화 시도 중이다.
+부정적 요인: HBM3E 인증 실패 이후 고객 신뢰를 회복해야 하며, 베이스 다이 축소로 추가 매출 감소가 우려된다.
+대응 전략: 자체 패키징 기술(FCBGA, Hybrid Bonding) 투자 강화와 초격차 제품 개발을 통한 프리미엄 시장 겨냥이 필요하다.
+마이크론에 미치는 영향
+긍정적 요인: 아직 베이스 다이 경험이 많지 않아 구조 변화에 대한 부담이 상대적으로 적다. TSMC, Marvell 등과 협력 확대 가능성도 있다.
+부정적 요인: 빠른 메모리 다이 생산성과 고성능 제품군 확보가 과제이다.
+대응 전략: 싱가포르, 대만 등 글로벌 생산 거점을 활용한 대규모 생산 효율성 확보와 가격 경쟁력을 활용한 중저가 시장 공략이 유효하다.
+종합 결론
+cHBM 시대에는 베이스 다이 주도권이 GPU/ASIC 고객과 파운드리로 넘어가고, DRAM 제조사들은 메모리 다이 품질 경쟁에 집중해야 한다.
+SK하이닉스는 현 시점에서 가장 잘 준비된 업체이며, 삼성전자는 수율 및 신뢰 회복이 급선무, 마이크론은 빠른 생산 확대와 가격 최적화를 통해 기회를 잡을 수 있다.
+요약 표
+구분 SK하이닉스 삼성전자 마이크론
+강점
+수율 및 양산 경험
+1c DRAM 기반 고성능 전략
+가격 경쟁력
+약점
+고객 주도 변화 대응 리스크
+신뢰도 회복 필요
+기술 리더십 한계
+대응 방향
+프리미엄 제품 강화
+패키징/수율 극복
+대량 생산 및 가격 최적화
+--------------------------------------
+AI 데이터센터 1개당 GPU, 메모리(HBM) 소모량 정리
+1. 기본 가정
+AI 데이터센터 1개 = 약 100메가와트(MW) 규모로 가정 (요즘 표준 규모)
+주로 NVIDIA H100, H200, B100, GB200 같은 고성능 AI GPU 사용
+서버당 GPU 8장 기준 (HGX H100 서버 구성)
+2. GPU 수량 계산
+구분 수치
+서버 1대당 GPU 수
+8장
+서버당 소비 전력
+약 10킬로와트 (GPU 8개 + 기타 부품 포함)
+데이터센터 총 전력
+100메가와트 (100,000킬로와트)
+데이터센터 내 서버 수
+약 10,000대
+데이터센터 내 GPU 총 수량
+약 80,000장 (10,000대 × 8장)
+결론: AI 데이터센터 1개당 GPU 약 8만 장 필요
+3. 메모리(HBM) 소모량 계산
+H100 기준: GPU 1장당 HBM3 메모리 80GB 탑재
+GB200 기준: 2개의 B100 GPU + 1 Grace CPU = 약 288GB HBM3E 탑재 예상
+평균 잡아 GPU 1장당 약 100GB~150GB HBM 탑재 가정
+구분 수치
+GPU 1장당 HBM 용량
+100~150GB
+데이터센터 GPU 총 수량
+80,000장
+데이터센터 전체 HBM 소모량
+8,000
+12,000 테라바이트 (TB) = 8
+12 페타바이트 (PB)
+결론: AI 데이터센터 1개당 HBM 소모량 약 8~12PB
+요약
+항목 대략적 수치
+GPU 수량
+약 8만 장
+HBM 메모리 소모량
+약 8~12PB
+추가 참고
+현재 SK하이닉스, 삼성전자, 마이크론이 생산하는 전체 HBM3, HBM3E 물량을 놓고 보면 AI 데이터센터 1개만 추가해도 HBM 수요가 엄청나게 늘어나는 구조다.
+엔비디아 GB200, Rubin 세대가 본격화되면 GPU 1장당 HBM 용량이 150GB 이상으로 늘어 HBM 수요는 더욱 폭발할 전망이다.
+-------------------------
+2025년부터 2027년까지 AI 데이터센터의 급속한 확장은 고대역폭 메모리(HBM) 수요를 폭발적으로 증가시킬 것으로 예상됩니다. 이러한 추세는 메모리 시장에 큰 영향을 미치며, 주요 공급업체들의 생산 능력 확대와 기술 개발을 촉진하고 있습니다.
+📈 1. HBM 수요 전망
+AI 서버 메모리 수요 증가
+: 2023년 35억 달러였던 AI 서버 메모리 수요는 2027년까지 500억 달러로 14배 증가할 것으로 예상됩니다. (
+Buy Micron Stock, Analyst Says. It's All About AI Server Demand.
+)
+HBM 시장 성장
+:
+HBM 시장은 2024년 150억 달러에서 2027년까지 1000억 달러를 넘어설 것으로 전망되며, 이는 AI 산업의 급속한 확장에 기인합니다
+. (
+High-Bandwidth Memory Market Report 2025 – 10 Year Forecast, AI ...
+)
+HBM 출하량 증가
+: 2025년 HBM 출하량은 전년 대비 70% 증가할 것으로 예상되며, 이는 AI 프로세서의 고대역폭 메모리 수요 증가에 따른 것입니다. (
+2025 Memory Outlook Report - TechInsights
+)
+🏭 2. 주요 HBM 공급업체의 대응
+SK하이닉스
+: 2025년 HBM 칩이 거의 매진되었으며, 2026년에는 12단 HBM4를 양산할 계획입니다. (
+[News] Where is the “Spring” of the Memory Market? - TrendForce
+)
+마이크론
+: 2026년 HBM4 양산을 시작할 예정이며, 2027~2028년에는 HBM4e를 출시할 계획입니다. (
+[News] Where is the “Spring” of the Memory Market? - TrendForce
+)
+삼성전자
+: HBM4 개발을 2025년 이전에 완료하고, 대량 생산을 확대할 계획입니다. (
+[News] Where is the “Spring” of the Memory Market? - TrendForce
+)
+⚠️ 3. 공급 제약과 과제
+생산 능력 한계
+: HBM 칩의 복잡한 제조 공정으로 인해 생산 능력 확대에 시간이 소요되며, 이는 공급 부족을 초래할 수 있습니다. (
+HBM chip shortages put data center growth plans at risk
+)
+전력 및 냉각 문제
+: AI 데이터센터의 전력 수요 증가로 인해 전력 인프라에 대한 투자가 필요하며, 냉각 시스템의 효율성도 중요한 과제로 부각되고 있습니다.
+🔍 결론
+2025년부터 2027년까지 AI 데이터센터의 확장은 HBM 수요를 급격히 증가시킬 것으로 예상되며, 이는 메모리 시장의 구조적 변화를 초래할 것입니다. 주요 공급업체들은 생산 능력 확대와 기술 개발을 통해 이러한 수요에 대응하고 있으며, 전력 및 냉각 인프라에 대한 투자도 병행되어야 할 것입니다.
+추가 정보
+: AI 데이터센터의 확장과 관련된 자세한 내용은 다음 기사에서 확인하실 수 있습니다.
+Barron's
+Reuters
+Investor's Business Daily
+--------------------------------------------------------
+2025.04.25
+High-Bandwidth Memory Market Report 2025 – 10 Year Forecast, Growth Drivers, Bottlenecks, HBM Yields, Production Capacities, HBM4, China, Tariffs & More | by Kirill Mikhailov | Apr, 2025 | Medium
+High-Bandwidth Memory Market Report 2025 – 10 Year Forecast, Growth Drivers, Bottlenecks, HBM Yields, Production Capacities, HBM4, China, Tariffs & More
+2025년 고대역폭 메모리(HBM) 시장 보고서 – 10년 전망, 성장 동력, 병목 요인, 수율, 생산 능력, HBM4, 중국, 관세 등 종합 분석
+Executive Summary
+Over the next decade, the High-Bandwidth Memory (HBM) market is expected to eclipse $100B due to the dizzying expansion of the AI industry and escalating High Performance Computing requirements.
+요약
+향후 10년 동안 고대역폭 메모리(HBM) 시장은 인공지능(AI) 산업의 폭발적인 확장과 고성능 컴퓨팅(HPC) 수요 증가에 힘입어 1,000억 달러를 넘어설 것으로 예상된다.
+Growth in the HBM market, which doubled to $15B in 2024, will primarily be driven by data center supply and demand, and therefore susceptible to its tailwinds and headwinds, such as AI industry funding, product market fit successes, infrastructure and power supply chain backlogs, and federal policies and local permitting. Pairing demand with new manufacturing processes for future generation HBM, volatility is expected in the available supply.
+2024년에 두 배로 성장하여 150억 달러에 도달한 HBM 시장은 주로 데이터센터 수급에 의해 성장하게 될 것이며, 이에 따라 AI 산업 자금 조달, 제품 시장 적합성 성공 여부, 인프라 및 전력 공급망 병목 현상, 연방 정책 및 지역 허가 절차 등의 영향을 크게 받을 것이다.
+또한, 차세대 HBM 제조 공정 도입과 맞물려 수요가 증가하면서 공급 변동성도 예상된다.
+Market share is led by SK Hynix, which accounted for 70% of global HBM sales between January and March 2025 by being the exclusive provider of the highly in-demand 12-Hi 3HBME technology.
+시장 점유율은 SK하이닉스가 주도하고 있다.
+SK하이닉스는 2025년 1월부터 3월까지 전 세계 HBM 매출의 70%를 차지했으며, 이는 수요가 폭발적으로 높은 12단 3HBM3E 기술을 독점 공급한 덕분
+이다.
+Samsung, the second largest HBM manufacturer, has incurred extensive delays for approval by Nvidia for its 12 layer technology. In a bid to save it’s lagging HBM sales and production, Samsung is shifting focus towards HBM4 with the hope of carving out a competitive advantage by being the sole company to incorporate next-gen 1c DRAM into the designs.
+HBM 제조 부문 2위인 삼성전자는 자사의 12단 기술에 대해 엔비디아로부터 승인을 받는 과정에서 심각한 지연을 겪고 있다. 삼성전자는 부진한 HBM 매출과 생산 실적을 만회하기 위해, 차세대 1c DRAM을 설계에 적용하는 유일한 업체가 되는 것을 목표로 하여 HBM4 개발에 집중하고 있다.
+Meanwhile, Micron recently passed Nvidia’s qualification tests for 12-Hi 3HBMe, leaving Samsung as the sole company without certification for current generation HBM.
+한편, 마이크론은 최근 12단 3HBM3E 제품에 대해 엔비디아의 인증 테스트를 통과하여, 현재 세대 HBM 제품에서 인증을 받지 못한 업체는 삼성전자만 남게 되었다.
+Yield rates will be incredibly important to monitor. SK Hynix has announced high yield rates — 80% for HBM3E production and 70% for HBM4 test samples — while Samsung has achieved ~40% yields on its 1c DRAM design. Yield rates will largely determine progress, profitability and ultimately market share, and Samsung must nail their HBM4 design in order to stay in contention. The launch of HBM4 is shaping up to be a market defining event.
+수율(yield rate)은 향후 매우 중요한 관전 포인트가 될 것이다.
+SK하이닉스는 HBM3E 생산에서 80%라는 높은 수율을 달성했으며, HBM4 시험 샘플에서도 70%의 수율을 기록했다고 발표
+했다.
+반면, 삼성전자는 1c DRAM 설계에서 약 40% 수준의 수율을 달성한 것으로 알려졌다.
+수율은 향후 제품 개발 진행 속도, 수익성, 그리고 궁극적으로 시장 점유율을 좌우할 핵심 요소가 될 전망이다.
+삼성전자가 시장 경쟁력을 유지하기 위해서는 반드시 HBM4 설계에서 높은 수율을 확보해야 한다.
+HBM4 출시 자체가 메모리 시장의 판도를 가를 중요한 사건으로 자리 잡아가고 있다.
+Chinese HBM has the potential to disrupt the market and dramatically reduce pricing, but tariffs and restrictions may impede the ability for the US to capture price reductions, though tariffs are unlikely to affect the greater HBM market due to strong global demand and emphasis on AI development. In the meantime, despite being behind in HBM manufacturing, China can leverage their propensity for cost-cutting to supply sectors that don’t require leading generations of HBM, such as the automotive industry and many edge applications.
+중국산 HBM은 시장을 교란하고 가격을 극적으로 인하할 잠재력을 가지고 있다.
+그러나 미국에서는 관세와 규제로 인해 이러한 가격 인하 혜택을 온전히 누리기 어려울 수 있다.
+다만,
+글로벌 AI 개발 열기와 강한 수요를 고려할 때, 관세가 전체 HBM 시장에 미치는 영향은 제한적일 것으로 보인다
+.
+한편, 중국은 아직 HBM 제조 기술에서 뒤처져 있지만, 특유의 비용 절감 능력을 활용하여 자동차 산업이나 다양한 엣지(edge) 애플리케이션처럼 최첨단 HBM이 필요하지 않은 분야에 공급을 확대할 수 있다.
+Infrastructure startups should monitor yields and production capacities to forecast oncoming CapEx rises. A ~20% increase in pricing for future generations of HBM, starting with HBM4, can be expected, while pricing for previous generation HBM will likely incur a large drop as new entrants seek to expand HBM into the automotive and other AI edge-deployable industries.
+인프라 스타트업들은 향후 자본 지출(CapEx) 증가를 예측하기 위해 수율과 생산 능력을 면밀히 모니터링해야 한다.
+HBM4를 시작으로 차세대 HBM 제품 가격은 약 20% 상승할 것으로 예상
+되며,
+반면 이전 세대 HBM 가격은 신규 진입자들이 자동차 및 기타 AI 엣지(edge) 적용 산업으로 HBM 사용을 확대하려는 움직임에 따라 크게 하락할 가능성이 있다.
+In addition to capturing value from HBM market growth and potentially influencing decision making with regards to HBM design, AI labs would benefit from investing in a company like SK Hynix in order to help boost production capacity. In a market with lagging HBM supply, Nvidia would be a disproportionately favored client, so increasing capacity could mitigate their monopolistic strength by making sure other chip manufacturers get adequate HBM supply. Micron would also make for a suitable partnership.
+HBM 시장 성장으로 인한 가치 확보뿐만 아니라, HBM 설계와 관련한 의사결정에도 영향을 미칠 수 있다는 점에서, AI 연구소들은 SK하이닉스 같은 회사에 투자함으로써 생산 능력 증대에 기여할 수 있을 것이다.
+HBM 공급이 부족한 시장에서는 엔비디아가 압도적으로 유리한 고객이 될 가능성이 높기 때문에, 생산 능력을 확대하면 다른 칩 제조업체들도 충분한 HBM을 확보할 수 있어 엔비디아의 독점적 지위를 완화할 수 있다.
+또한, 마이크론과의 협력 역시 적절한 파트너십이 될 수 있다.
+----------------------------------
+HBM Report - 2025 - v4.pdf - Google Drive
+Next-Gen HBM Technology The next generation of High Bandwidth Memory, HBM4, is expected to be introduced in 2H25/2026 and contribute to market revenue meaningfully by 2026. It has the capability to process over 2 TB/s, 60% faster than HBM3E, as well as doubles the memory interface to 2048-bit [14]. This generation may require a more complicated manufacturing process that would reduce the number of dies per wafer and increase input costs, with a predicted pricing increase of 20% over the current HBM3E. In addition, it will incorporate foundry-crafted logic dies which enable customization of HBM solutions optimized for specific customer IP and applications [33].
+차세대 고대역폭 메모리(HBM) 기술
+차세대 고대역폭 메모리인 HBM4는 2025년 하반기에서 2026년 사이에 출시될 것으로 예상되며, 2026년부터 시장 매출에 본격적으로 기여할 것으로 전망된다.
+HBM4는 초당 2테라바이트(TB/s)를 넘는 데이터 처리 속도를 지원할 수 있으며, 이는 HBM3E 대비 60% 빠른 수준
+이다. 또한 메모리 인터페이스 폭이 기존 대비 두 배인 2048비트로 확장된다.
+이 세대의 제품은 제조 공정이 훨씬 복잡해질 것으로 예상되며, 웨이퍼당 생산할 수 있는 다이(die) 수가 줄어들고 원가가 상승할 가능성이 있다.
+이에 따라 HBM4 가격은 현재 HBM3E 대비 약 20% 인상될 것으로 전망
+된다.
+추가로, HBM4는 파운드리(위탁 생산업체)가 제작한 로직 다이(logic die)를 통합하여, 고객사의 지적재산(IP) 및 애플리케이션에 최적화된 맞춤형 HBM 솔루션을 가능하게 할 예정이다.
+HBM4 will play a pivotal roll in market share restructuring. Samsung has recently achieved a greater than 40% test production yield on it’s 4nm logic dies, a key component of their 12-layer HBM4, and will integrate a next- gen 1c DRAM with the logic die. If it pulls off this combination, it may secure a competitive advantage over SK Hynix, but Samsung’s use of Thermal Compression Non-Conductive Film (TC-NCF) casts doubt over the likelihood for success. SK Hynix, on the other hand, is opting for superior 3nm logic dies with the help of TSMC, but incorporating it into previous-generation 1b DRAM.
+HBM4는 향후 시장 점유율 재편에 핵심적인 역할을 하게 될 것이다.
+삼성전자는 최근 12단 HBM4의 핵심 부품인 4나노 로직 다이(test production)에서 40% 이상의 수율을 달성했으며, 여기에 차세대 1c DRAM을 결합할 계획이다.
+만약 이 결합에 성공한다면, 삼성전자는 SK하이닉스를 넘어서는 경쟁우위를 확보할 수 있을 것으로 보인다.
+그러나 삼성전자가 사용하는 열압축 비전도성 필름(TC-NCF, Thermal Compression Non-Conductive Film) 공법은 성공 가능성에 대한 의구심을 불러일으키고 있다
+.
+반면, SK하이닉스는 TSMC의 지원을 받아 더 진보된 3나노 로직 다이를 채택하고 있으며, 이를 기존 세대인 1b DRAM과 결합하는 전략을 선택하고 있다
+.
+시장 개요
+시장 요약
+2024년 기준 고대역폭 메모리(HBM) 시장 규모는 약 150억 달러로 추정된다.
+업계 주요 관계자들은 2025년 HBM 시장 규모가 약 300억 달러에 이를 것으로 전망하고 있으며, 이는 전 세계 DRAM 시장의 약 15%에 해당하는 수준
+이다.
+HBM은 빠르게 DRAM 시장의 중심축으로 부상하고 있다.
+2024년 4분기에는 SK하이닉스 DRAM 매출의 거의 절반(정확히는 40%)이 HBM에서 발생했으며, 이를 통해 SK하이닉스는 글로벌 DRAM 시장 점유율을 36%까지 끌어올려 삼성전자를 제치고 1위를 차지했다.
+삼성과 마이크론은 각각 34%, 25%의 시장 점유율로 2위와 3위를 기록했다.
+SK하이닉스는 12단 HBM3E 칩을 독점 공급하는 경쟁력을 유지하면서 2025년 1분기(1~3월) 동안 전 세계 HBM 매출의 70%를 차지하며 시장을 지배
+했다.
+또한 12단 HBM4와 16단 HBM3E 샘플 출하를 완료해, 차세대 HBM4 요구를 가장 잘 충족할 수 있는 위치에 있다.
+삼성전자는 2024년 4분기에 전분기 대비 HBM 매출을 1.9배 늘렸다.
+삼성은 2025년에는 HBM3E 매출을 기반으로 비트(bit) 공급량을 2024년 대비 2배로 늘릴 계획이었으나, 개발 지연과 엔비디아 인증 테스트 통과 실패로 인해 최근 HBM 생산 계획을 10% 하향 조정했다.
+이에 따라 삼성은 선두 시장을 따라잡기 위해 HBM4 기술에 주력하고 있으나, 성공 가능성에 대한 의구심이 여전히 존재한다.
+마이크론 또한 2024년 4분기 HBM 매출을 두 배로 늘렸으며, 자사의 HBM3E 기술을 엔비디아의 블랙웰(Blackwell) GPU 라인에 성공적으로 탑재했다.
+현재 마이크론은 20% 이상의 시장 점유율 확보를 목표로 생산량 증대를 추진 중이다.
+HBM2E에서 HBM3E로 한 번에 점프하는 데 성공한 마이크론은 엔비디아와의 전략적 파트너십을 굳히는 데 성공했으며, 앞으로도 삼성전자의 시장 점유율을 잠식해 나갈 것으로 보인다.
+일부 전문가들은, SK하이닉스가 2025년 1월 멀티칩 패키지(MCP) 수출량이 30% 감소한 것을 언급하며, HBM 시장도 계절적 수요 변화에 민감해지고 있다고 지적하고 있다.
+10년 전망
+HBM 시장은 향후 10년 동안 극적으로 성장할 것으로 예상되며, 최근 보고서에 따르면 시장 규모가 현재 대비 15배에서 30배까지 확대될 것으로 전망
+된다.
+블룸버그 인텔리전스(Bloomberg Intelligence)는 최근 HBM 칩 시장이 2023년 40억 달러 규모에서 2030년 1,300억 달러 규모로 성장할 것이라고 전망했다. 이는 무려 3,150% 증가에 해당한다.
+그들의 분석에 따르면, 연평균 42%의 성장률을 기록할 경우, 2033년에는 HBM이 전체 DRAM 시장의 50% 이상을 차지하고, 산업 전체 비트 출하량의 10%를 구성하게 될 것으로 예상된다.
+유사하게, 욜 그룹(Yole Group)도 최근 HBM 시장 분석을 발표했는데, 이들은 향후 10년 동안 HBM 시장이 연평균 약 33% 성장해, 2030년 시장 규모가 980억 달러에 이를 것으로 전망했다.
+또한, IDTechEx는 향후 10년 동안 HBM 시장이 15배 성장할 것이라는 보고서를 발표했다.
+반도체 시장 조사기관인
+트렌드포스(TrendForce)는 글로벌 HBM 시장이 2024년 380억 달러에서 2026년 580억 달러로 성장할 것으로 내다봤다
+.
+카운터포인트(Counterpoint) 역시, 강력한 AI 수요 덕분에 HBM 시장이 이른바 '관세 충격'으로 인한 영향을 덜 받을 것이라고 전망했다.
+AI 산업 내 HBM 수요의 폭발적 증가로 인해, 공급이 늘어나더라도 가격은 오히려 상승할 가능성이 높다.
+블룸버그 인텔리전스는 2033년 SK하이닉스, 삼성전자, 마이크론의 시장 점유율이 각각 약 40%, 35%, 23%에 이를 것으로 예상했다.
+또한, 삼성전자가 HBM4 양산에 들어가면서 새로운 맞춤형 로직 다이(customizable logic die)를 적용해 HBM과 AI 칩 간 연결 방식을 차별화할 수 있게 되면서, SK하이닉스와의 기술 격차를 어느 정도 좁힐 수 있을 것이라고 전망했다.
+HBM 주요 제조업체들의 높은 수익성은 엄청난 수요를 보여주는 증거다.
+세 곳의 주요 HBM 제조업체들은 모두 2024년에 30%를 초과하는 영업이익률을 기록했다.
+현재로서는 수요가 공급을 초과하고 있어 높은 수익성이 유지되고 있으며, 특히 기술력과 재무 능력 모두 업계 선두인 SK하이닉스가 가장 큰 혜택을 보고 있다.
+하지만 향후 생산 능력이 수요를 따라잡게 되면, 시장 점유율 경쟁이 심화되면서 수익률이 점차 하락할 가능성도 존재한다.
+SK하이닉스에 정통한 소식통은 "3개 기업 간 물량 경쟁이 심화될 경우, NVIDIA, AMD, Broadcom과 같은 주요 고객들이 HBM 납품 가격 인하를 요구할 가능성이 높다"고 전했다.
+또한 "HBM 제품 중에서 높은 매출을 올리는 12단, 16단 제품의 비중이 더욱 늘어날 것"이라고 덧붙였다.
+한편,
+욜 그룹(Yole Group)은 향후 10년 동안 HBM 평균 판매가격이 안정적으로 유지될 것으로 전망
+했다.
+생산 능력
+"HBM 업계의 생산 능력은 2023년부터 2026년까지 매년 두 배로 증가할 것으로 예상
+된다.
+그러나 HBM 칩에 대한 수요가 지속적으로 증가할 것으로 예상되기 때문에, 공급과 수요는 여전히 빡빡한 상태를 유지할 수 있다.
+HBM은 매우 맞춤화(customizable)된 제품 특성을 가지고 있어, 2033년까지는 공급 과잉이 발생하지 않을 것으로 보인다
+."
+욜 그룹(Yole Group)은 향후 10년 동안 HBM 웨이퍼 생산량이 연평균 18% 성장하고, 비트(bit) 출하량은 연평균 31% 성장할 것으로 전망했다.
+SK하이닉스는 2024년에 월 12만 장(WPM, wafer per month) 평균 생산을 기록한 후, 2025년에는 월 17만 장까지 생산 능력을 끌어올릴 것으로 예상
+하고 있다.
+2024년, 삼성전자는 월 10만 장(WPM, wafer per month) 생산능력에 도달한 후, 엔비디아의 HBM3E 인증 테스트 실패로 인해 향후 목표를 월 17만 장으로 하향 조정했다.
+마이크론은 2025년 말까지 월 6만 장 생산을 목표로 하고 있으며, 이는 전년 대비 3배 증가한 수준
+이다.
+(주:하이닉스 17만장의 3분의1 수준)
+성장 동력
+데이터센터
+AI가 데이터센터 투자를 계속 견인함에 따라, 엔비디아와 같은 칩 제조업체들은 예상 수요를 충족시키기 위해 HBM 제조업체들과 협력하여 생산 일정 조정에 나서고 있다.
+일부에서는 HBM 공급 부족이 데이터센터 구축의 병목 현상을 초래할 수 있다는 관측도 제기되고 있다.
+이러한 가설은 HBM 수요 증가 전망을 뒷받침하며, 주요 업체들이 시장 점유율을 유지하거나 확대하기 위해 생산능력을 확충해야 할 필요성을 강조한다.
+다만, 실제로는 인프라 공급망 지연이 데이터센터 공급에 더 큰 장애 요인이 될 가능성이 높다.
+엣지(Edge) 배치
+향후 몇 년 동안 AI를 엣지(스마트폰, PC 등 소비자 전자기기 내부)로 직접 배치하려는 기술기업들의 움직임이 확대될 전망이다.
+이로 인해 스마트폰, PC 등에도 HBM 칩 탑재가 늘어날 가능성
+이 있다.
+자동차
+자동차 산업은 향후 HBM 시장 성장의 핵심 기여자가 될 것으로 예상
+된다.
+제조사들이 고급 운전자 지원 시스템(ADAS)과 자율주행차 플릿을 지속적으로 확대하면서, 메모리 수요 역시 증가할 것이다.
+구글 자율주행 자회사인 웨이모(Waymo)는 현재 SK하이닉스의 HBM2E를 사용
+하고 있다.
+현재는 대부분 자동차 제조사들이 연산처리를 위해 LPDDR 메모리를 선택하고 있으며, SK하이닉스의 강욱성 부사장은 최근 "향후 5년간은 LPDDR5로 충분할 것 같다"고 말했다.
+그러나 그는 "자율주행차가 본격화되면 HBM이 주류 메모리가 될 것"이라고 전망했다.
+병목 요인
+데이터센터
+최근 데이터센터 구축 투자가 폭발적으로 증가했지만, 인프라 공급망 부족과 에너지 수급 문제가 향후 몇 년간 건설을 제약할 위험이 있다.
+또한, 빅테크 기업들이 AI 투자를 통합하려 하고, 제품 시장 적합성(Product Market Fit)을 찾기 위해 움직이면서 AI 시장이 냉각될 가능성도 존재한다.
+이러한 요인들로 인해 데이터센터 건설은 해마다 부침을 겪을 가능성이 있으며, 이에 따라 HBM 수요 역시 연도별로 변동성이 커질 수 있다.
+만약 GPU 공급이 부족해질 경우, 주요 칩 제조업체들이 우선적으로 HBM을 확보하게 되어, 신규 진입자들의 고급 GPU 확보는 제한될 가능성이 있다.
+제조상의 과제
+DDR, GDDR 같은 기존 메모리 기술에 비해 HBM 제조 공정은 훨씬 더 복잡하다.
+주요 과제 중 하나는 열 관리(thermal management) 문제다.
+HBM은 소형화된 폼팩터의 이점을 가지지만, 그만큼 열 밀도(thermal density)가 높아지는 단점이 있다.
+또한, 고성능 프로세서와 매우 가까운 위치에 쌓아 올려지는 구조로 인해, 발열 문제는 더욱 심각해진다.
+이를 해결하기 위해 고성능 열전달 인터페이스 재료(TIM), 히트 스프레더 및 베이퍼 챔버, 직접 액체 냉각(direct liquid cooling) 같은 첨단 냉각 솔루션이 활용되고 있다.
+하지만 스택 높이가 높아지고 대역폭이 증가함에 따라 발열 문제는 더욱 두드러질 것으로 보인다.
+특히, HBM4처럼 설계가 복잡해질수록 생산 수율 저하와 공정 난이도가 커져, 공급량이 제한되면서 전체 시장 성장을 둔화시킬 위험도 존재한다.
+경쟁 구도
+주요 기업 — 포지셔닝 및 생산 상황
+SK하이닉스
+HBM 개발 부문 시장 선두주자인 SK하이닉스는 최근 고객들에게 12단 HBM4 샘플을 출하했으며, 2025년 하반기부터 대량 생산을 시작할 예정
+이다.
+지난해 SK하이닉스의 HBM 매출은 2023년 대비 4.5배 증가했으며, 2025년에도 HBM 매출이 두 배로 증가할 것으로 전망
+하고 있다.
+2025년 1월 실적 발표 컨퍼런스콜에서는 다음과 같이 밝혔다.
+"올해 상반기 중으로 HBM 매출의 절반 이상이 HBM3E가 차지할 것이다.
+또한, 2026년에는 12단 HBM4를 주력 제품으로 삼을 것이며, 올해 안에 12단 HBM4 개발과 양산 준비를 완료해 고객에게 적기에 공급할 계획이다.
+HBM4 공급은 12단 제품부터 시작하여 16단 제품으로 이어질 예정이다. 16단 칩은 고객 수요에 맞춰 2026년 하반기에 공급될 것으로 예상된다."
+SK하이닉스는 이미 2025년 생산 예정인 HBM 물량을 모두 판매 완료했으며, 2026년 생산 물량도 올해 중반까지 계약을 마무리할 것으로 기대하고 있다.
+또한,
+지난해 말에는 구글, 메타, 바이트댄스를 위한 AI 칩을 개발 중인 브로드컴(Broadcom)과 대형 공급 계약을 체결
+했다.
+파이낸셜 타임스(Financial Times)의 2024년5월 보도에 따르면
+, SK하이닉스는 HBM3E 칩 양산 시간을 50% 단축하는 데 성공했으며, 목표 수율인 80%에 근접한 것으로 알려졌다
+.
+생산 능력 확보를 위해 SK하이닉스는 2024년에 미국 인디애나주 웨스트 라피엣(West Lafayette)과 한국 청주에 수십억 달러를 투자해 새로운 생산 공장을 건설할 계획을 발표했다.이 공장은 HBM과 DRAM 칩 생산 능력을 강화하는 데 중점을 둘 예정이다.
+삼성전자
+삼성전자는 36GB 용량과 약 1.2TB/s 대역폭을 가진 12단 HBM3E 샘플을 제공 중이다.
+그러나 현재 삼성전자는 2025년 중반까지 HBM4 승인을 받는 데 집중하고 있으며, 이는 4나노 로직 다이를 통합할 것으로 예상된다.
+이는 엔비디아가 루빈(Rubin) GPU 출시를 앞두고 HBM4 납품 일정을 앞당겨줄 것을 요청한 데 따른 것이다.
+그러나 삼성전자는 HBM3E에 대한 엔비디아 인증 테스트를 통과하는 데 어려움을 겪고 있으며, 이로 인해 HBM4에서도 요구 조건을 충족할 수 있을지에 대한 의구심이 제기되고 있다.
+실제로 삼성은 2025년 HBM 생산 목표를 10% 하향 조정해, 월 17만 장(WPM)으로 수정
+했다.
+이러한 이유로 삼성전자는 전략을 재조정하여 HBM4 개발에 집중하기로 결정했다.
+ZDNet 보도에 따르면,
+삼성전자는 2024년 3분기에 1c DRAM(차세대 DRAM) 생산에서 "양호한 다이(good die)" 확보에 성공해 HBM4 핵심 다이 생산에 중요한 진전을 이룬 것으로 전해졌다
+.
+삼성전자의 주요 생산 거점은 중국 쑤저우(Suzhou)이며, 일본 요코하마(Yokohama)와 한국 충청남도에서도 생산 확대를 진행하고 있다.
+또한, 미국 텍사스주 중부에 새로운 패키징 공장을 건설 중이며, 이 공장은 2027년에 완공될 예정이다.
+마이크론 테크놀로지
+마이크론은 HBM 시장에 가장 최근에 진입한 업체로, SK하이닉스와 삼성전자와 경쟁하기 위해 생산 능력 확대에 주력하고 있다.
+현재 마이크론의 주요 HBM 생산은 대만에서 이루어지고 있으며, 올해 말까지 추가 확장을 계획하고 있다.
+마이크론은 작년에 대만에서 두 개의 신규 생산 공장을 인수했다.
+또한, 마이크론은 AI 수요 증가에 대응하기 위해 싱가포르에 70억 달러를 투자하여 새로운 HBM 조립 시설을 건설한다고 최근 발표했다.
+이 공장은 2026년에 가동을 시작할 예정이며, HBM3E, HBM4, HBM4E 메모리 생산 능력을 강화해 마이크론이 HBM 시장 점유율을 확대하는 데 기여할 전망이다.
+추가로, 일본 히로시마와 미국 아이다호에서도 2026년에 HBM 생산을 시작할 계획이며, 2027년에는 미국 뉴욕에 추가로 신규 공장이 가동될 예정이다.
+주목할 점은 마이크론이 최근 한미반도체와 일본 신카와(Shinkawa)로부터 대규모 TC 본더(Thermal Compression Bonder) 장비를 주문했다는 것이다.
+가장 수요가 높은 제품인 5세대 HBM, 즉 12단 HBM3E 제품은 한미반도체가 공급하는 TC 본더 없이는 생산이 불가능하다.
+따라서 이번 장비 구매를 통해 마이크론은 상위급 HBM 시장에서 SK하이닉스와 본격적으로 경쟁할 수 있게 되었다.
+마이크론은 2025년 말까지 월 6만 장(WPM) 생산 목표를 세우고 있으며, 이는 전년 대비 3배 확대된 수치이자 SK하이닉스 2024년 생산능력의 절반 수준이다.
+또한 마이크론은 미국 내 두 곳의 생산시설을 통해 미국 내 관세 이슈에도 유리한 위치를 선점하고 있다.
+파트너십
+엔비디아(Nvidia)
+엔비디아는 SK하이닉스와 마이크론 양사로부터 공급을 받고 있다.
+블랙웰(Blackwell) 아키텍처는 양사의 8-Hi HBM3E를 사용하며,
+블랙웰 울트라(Blackwell Ultra)는 12-Hi 모듈을 사용하고 있는데, 이 제품은 SK하이닉스가 단독 공급한다.
+엔비디아 GPU 로드맵:
+루빈(Rubin) : 2026년 하반기 출시 예정, HBM4 탑재
+루빈 울트라(Rubin Ultra) : 2027년 하반기 출시 예정, HBM4E 탑재
+파인만(Feynman) 라인 : 2028년 출시 예정, 차세대 HBM(HBM5로 예상) 탑재
+구글(Google)
+구글의 v6 TPU, 트릴리엄(Trillium)은 삼성전자가 공급하는 8-Hi HBM3를 사용
+한다.
+AMD
+AMD의 MI325 및 MI350 시리즈 GPU는 삼성전자가 공급하는 8-Hi HBM3E를 사용
+한다.
+2026년 출시 예정인 MI400 시리즈에 대한 구체적인 사양은 아직 발표되지 않았지만, HBM4를 사용할 가능성이 크다.
+TSMC
+TSMC는 SK하이닉스 및 경쟁사인 삼성전자 모두와 파운드리 협력 계약을 체결했다.
+이는 엔비디아, 구글 등 주요 고객들의 맞춤형 기능 요구를 반영하기 위한 움직임이다.
+특히, HBM4부터는 파운드리 공정이 가능한 제조 구조를 채택하게 되면서, HBM 주요 업체들이 칩 생산 역량 확보를 위해 전략적 제휴를 강화하고 있다.
+SK하이닉스는 TSMC와의 협력 관계를 활용해 3나노 공정을 적용할 예정이며, 이를 통해 삼성전자의 4나노 공정을 사용하는 HBM4 생산 대비 경쟁우위를 확보하려 하고 있다.
+지정학적 요인 및 무역 환경
+중국산 HBM
+미국이 AI 칩에 대한 수출 규제를 강화함에 따라, 중국 기업들은 자국 내 HBM 생산 능력을 키우기 위해 대규모 투자를 진행하고 있다.
+화웨이가 주도하는 컨소시엄(참여 기업: XMC, SJSemi, TFME, JCET)은 HBM 생산 역량 구축을 목표로 하고 있으며, CXMT는 현재 HBM2 샘플링을 진행하고 있고 HBM2E 개발도 활발히 추진 중이다.
+이는 첨단 패키징 부문 투자에 힘입은 것이다.
+비록 중국 업체들은 업계 선두권과 약 6년 정도 기술 격차가 있는 것으로 평가되지만, 강력한 정부 지원, 자국산 AI 가속기 수요, 탄탄한 산업 네트워크를 기반으로 향후 몇 년 내에 HBM 시장에서 입지를 확대할 가능성
+이 있다.
+한편, 중국은 가격 절감 능력을 활용해 자동차 산업이나 일부 엣지(edge) 애플리케이션처럼 최신 세대 HBM이 필요 없는 분야에 공급을 늘릴 수 있다.
+공급망 및 관세
+주요 HBM 제조업체 세 곳(SK하이닉스, 삼성전자, 마이크론)은 모두 2027년까지 미국 내에 HBM 생산시설을 구축할 계획이다.
+이를 통해 관세나 기타 행정부의 정책 변화 리스크로부터 일정 부분 보호받을 수 있을 것으로 보인다.
+중국에서는 웨이퍼 제조지(location of wafer fabrication)를 기준으로 관세 부과 여부가 결정된다.
+따라서, 아시아 지역(한국, 대만 등) 공장에서 생산된 HBM 제품을 공급하는 한, 중국발 관세 영향은 받지 않을 것으로 예상된다.
+(주:아래 도표의 하이닉스 플랜트 '인천'은 '이천'의 오기.)
+정부 지원 정책
+CHIPS법(반도체 지원법) 하에서, SK하이닉스는 최근 최대 4억 5,800만 달러의 보조금을 수령하게 되었으며, 이를 통해 인디애나주 웨스트 라피엣(West Lafayette)에 차세대 HBM 및 첨단 패키징 연구개발(R&D) 센터를 설립할 계획이다.
+CHIPS법은 마이크론과 SK하이닉스 모두 미국 내 프로젝트 자금 조달에 도움을 줬지만, 최근 트럼프 행정부가 이 반도체 투자 법안을 감독하는 부서를 재편성하면서 향후 법안의 운용 방향은 불투명해졌다.
+기술 트렌드
+cHBM (customized HBM)
+2024년 말, 마벨(Marvell)은 새로운 커스텀 HBM 연산 아키텍처를 발표
+했다.
+이는 내부 AI 연산 가속기 실리콘 다이와 HBM 베이스 다이 간의 I/O 인터페이스를 직렬화하고 속도를 높여, 기존 HBM 인터페이스 대비 최대 70% 낮은 인터페이스 전력 소비를 달성한다.
+또한 최적화된 인터페이스 설계를 통해 각 다이에 필요한 실리콘 면적을 줄일 수 있어, HBM 지원 로직을 베이스 다이에 직접 통합할 수 있게 된다.
+이러한 실리콘 면적 절감(최대 25%)은 연산 성능 향상, 신규 기능 추가, HBM 스택 수 33% 증가(메모리 용량 확장) 등에 활용될 수 있다.
+결과적으로 XPU(확장형 처리 장치)의 성능과 전력 효율성이 개선되고, 클라우드 사업자들의 총 소유 비용(TCO)도 낮아진다.
+cHBM의 성공적인 도입은 IP 제공업체, DRAM 벤더, SoC 설계자, ATE(자동화 테스트 장비) 업체 간 긴밀한 협력이 필수적이기 때문에, 올바른 파트너를 선택하는 것이 매우 중요하다.
+cHBM의 장점은 클라우드 사업자들이 엣지 AI 애플리케이션에 적용할 수 있다
+.
+엣지 AI에서는 비용과 전력 소비가 핵심 기준이기 때문이다.
+또한, 처리 용량과 처리량이 극한까지 요구되는 복잡한 AI/머신러닝(ML) 기반 컴퓨팅 팜( compute farms )에서도
+cHBM의 이점을 활용할 수 있다.
+하이브리드 본딩 (Hybrid Bonding)
+현재는 마이크로 범프 스태킹(micro bump stacking)이 칩 패키징의 주요 방법으로 사용되고 있다.
+마이크로 범프는 도전성 물질로 만든 작은 돌출 구조물로, DRAM 다이(die)들을 서로 연결하여 레이어 간 데이터 전송을 가능하게 하는 역할을 한다.
+그러나 많은 제조업체들은 마이크로 범핑을 대체해 하이브리드 본딩 방식을 채택하려 하고 있다.
+하이브리드 본딩은 더 많은 층을 적층할 수 있고, 칩을 더 두껍게 만들 수 있어 패키지 뒤틀림(warpage) 문제를 개선할 수 있다.
+또한, 데이터 전송 속도가 더 빠르고 열 방출(방열) 특성도 향상된다
+.
+제조업체들은 이 새로운 전략(하이브리드 본딩)이 HBM5 기술부터 본격적으로 도입될 것이라고 확인했다.
+HBM5 세대부터는 층 수가 16층 이상으로 표준화되기 시작하기 때문이다.
+하지만 HBM4와 HBM4e의 16단 적층 기술 역시 주의 깊게 지켜봐야 한다.
+하이브리드 본딩을 더 빠르게 도입하는 제조업체는 이후 세대 제품 양산 과정에서 더 부드럽고 안정적인 생산 이점을 누릴 수 있다.
+트렌드포스(TrendForce)는 "하이브리드 본딩의 도입은 HBM 비즈니스 모델에 중대한 변화를 가져올 수 있다"고 지적했다.
+하이브리드 본딩 방식에서는 웨이퍼 투 웨이퍼(Wafer-to-Wafer) 적층을 위해 베이스 다이(Base Die)와 메모리 다이(Memory Die)의 칩 크기가 완전히 일치해야 한다.
+그리고 베이스 다이 설계는 주로 GPU/ASIC 기업들이 담당하는 만큼,
+베이스 다이와 GPU/ASIC 모두 파운드리 서비스를 제공하는 TSMC가 베이스 다이와 메모리 다이의 적층을 직접 담당할 가능성도 제기되고 있다
+.
+만약 이런 구조 변화가 실제로 일어나게 되면,
+HBM 제조업체들의 베이스 다이 설계, 적층(Stacking), 전체 주문 관리(Order Management) 역할이 대폭 축소될 수 있으며, 이는 HBM 시장의 경쟁 구도를 근본적으로 뒤흔들 수 있다
+.
+Processing-in-Memory (PIM)
+삼성전자는 2021년에 세계 최초로 HBM-PIM을 공개했으며, 현재도 PIM 기술 개발을 지속하고 있다.
+삼성전자는 PIM이 기존 HBM을 능가하는 기술로 발전할 가능성을 보고 있다.
+"Processing-in-Memory(PIM) 기술은 DRAM 안에 직접 프로세서를 구현하여, 데이터 이동을 줄이고 일부 데이터 연산 작업을 메모리에서 처리하게 함으로써 AI 가속기 시스템의 에너지 효율성과 데이터 효율성을 크게 향상시킬 수 있다."
+다만, 이 기술은 아직 상용화 가능성을 입증하기까지는 시간이 더 필요한 단계이므로, 향후 의미 있는 진전 여부를 지속적으로 모니터링할 필요가 있다.
+향후 전망
+HBM4를 시작으로 차세대 HBM 제품 가격은 약 20% 인상될 것으로 예상된다.
+반면, 이전 세대 HBM 제품 가격은 신규 진입자들이 자동차 산업 및 기타 AI 엣지(Edge) 애플리케이션 시장으로 HBM 사용을 확대하려는 움직임에 따라 크게 하락할 가능성이 있다.
+HBM4의 성공적인 대량 생산은 주요 업체들에게 결정적인 과제가 될 것이다.
+삼성전자가 1c DRAM 기술을 채택해 경쟁 우위를 확보하려는 시도는, 향후 시장 점유율을 유지할 수 있을지 여부를 가르는 중요한 시험대가 될 전망이다.
+SK하이닉스는 현재 HBM4 양산에 가장 유리한 위치에 있으며,
+마이크론도 신뢰할 수 있는 HBM 제조업체로 자리 잡기 위해 매우 인상적인 행보를 보이고 있다.
+앞으로 몇 년 동안, 하이브리드 본딩(Hybrid Bonding), PIM(Processing-in-Memory), cHBM(customized HBM) 같은 기술의 채택과 확산 속도가 시장 점유율을 결정하게 될 것이다.
+중국산 HBM은 시장을 교란하고 가격을 극적으로 인하시킬 가능성을 가지고 있지만,
+관세와 수출 제한 조치로 인해 미국이 이러한 가격 인하 혜택을 온전히 누리기는 어려울 수 있다.
+다만, 강력한 AI 수요와 시장의 성장성으로 인해, 관세가 HBM 전체 시장에는 큰 영향을 미치지는 않을 것으로 예상된다.
+중국은 최근, 관세 부과 기준을 패키징 위치가 아닌 웨이퍼 제조지(제조국가) 기준으로 명확히 규정했다.
+따라서 HBM 제조업체들이 계속 아시아 지역(한국, 대만 등)에서 웨이퍼를 제조하는 한, 추가 관세는 부과되지 않는다.
+다만, 일반적인 반도체 수출 규제는 중국으로의 HBM 공급 가능성에 일정한 영향을 미칠 것이다.
+HBM 시장은 향후 10년 동안 비선형적인 성장 패턴을 보일 것으로 예상된다.
+이는 데이터센터 병목현상과 제품 시장 적합성(Product-Market Fit) 촉진 요인에 따라 AI 칩 수요 강도가 변동할 수 있기 때문이다.
+하지만 주요 분석 기관들은 HBM 시장이 결국 1,000억 달러 규모로 성장할 것으로 전망하고 있다
+.
+Sources
+[1] Bloomberg Intelligence HBM Market Analysis (
+https://www.bloomberg.com/company/press/high-bandwidth-
+memory-chip-market-could-grow-to-130-billion-by-2033-according-to-bloomberg-intelligence/)
+[2] SK Hynix Ships HB4M Samples (
+https://finance.yahoo.com/news/sk-hynix-ships-worlds-
+first-014600311.html)
+[3] SK Hynix Sold Out of HBM (
+https://www.mobileworldlive.com/old_latest-stories/sk-hynix-to-tie-up-2026-
+hbm-orders-in-june/)
+[4] SK Hynix Signs Broadcom (
+https://www.trendforce.com/news/2024/12/20/news-sk-hynix-rumored-to-
+deliver-major-hbm-order-to-broadcom-in-2025/)
+[5] Trillium Supplied by Samsung (
+https://www.digitimes.com/news/a20241025VL208/google-digitimes-
+asic-2024-tpu.html#:~:text=Since%202016%2C)
+[6] Micron Boosting Capacity (
+https://www.tomshardware.com/pc-components/dram/micron-invests-usd7-
+billion-in-hbm-assembly-facility-amid-ai-boom)
+[7] Micron Competes with SK Hynix (
+https://biz.chosun.com/en/en-it/2025/04/14/
+K642QULNNJBUPLX4BLPMS2P6V4/)
+[8] SK Hynix plants in Indiana and South Korea (
+https://www.datacenterdynamics.com/en/news/sk-hynix-
+confirms-hbm-chips-sold-out-for-2024-limited-supply-left-for-2025/)
+[9] Micro Bumps (
+https://techlevated.com/techterms/microbump/
+#:~:text=Microbumps%20are%20small%2C%20raised%20metal,materials%2C%20typically%20metals%20like
+%20copper)
+[10] Hybrid Bonding (
+https://www.trendforce.com/presscenter/news/20241030-12343.html)
+[11] AMD Chips (
+https://wccftech.com/amd-details-plans-for-instinct-ai-gpu-lineup-mi350-to-now-release-by-
+mid-2025-mi400-lineup-slated-for-2026/)
+[12] Chinese HBM (
+https://www.yolegroup.com/product/report/next-gen-dram-2025---focus-on-hbm-and-3d-
+dram/)
+[13] PIM Technology (
+https://semiconductor.samsung.com/news-events/tech-blog/hbm-pim-cutting-edge-
+memory-technology-to-accelerate-next-generation-ai/)
+[14] HBM4 Specs (
+https://semiengineering.com/are-you-ready-for-hbm4-a-silicon-lifecycle-management-slm-
+perspective/)
+[15] cHBM Insight (
+https://semiengineering.com/speeding-down-memory-lane-with-custom-hbm/)
+[16] Marvell cHBM Announcement (
+https://www.marvell.com/company/newsroom/marvell-announces-
+breakthrough-custom-hbm-compute-architecture.html)
+[17] SK Hynix Hits Targets for HBM3e (
+https://www.ft.com/content/75482e5d-a3d5-408b-9430-0af27fa25eba)
+[18] Samsung HBM3 Woes and HBM4 Target (
+https://www.trendforce.com/news/2025/01/13/news-samsung-
+reportedly-speeds-up-hbm4-by-6-months-as-nvidia-plans-early-rubin-launch-in-q3/)
+[19] Samsung Reduces HBM Wafer Target (
+https://www.digitimes.com/news/a20241021VL201/production-
+hbm-digitimes-asia-samsung-personnel.html)
+[20] IDTechEx HBM Forecast (
+https://www.idtechex.com/en/research-article/demand-for-hbm-to-grow-15-fold-
+by-2035-for-hpc-and-ai-says-idtechex/32837)
+[21] Waymo Uses Sk Hynix HBM2E (
+https://www.businesskorea.co.kr/news/articleView.html?idxno=223066)
+[22] Samsung Brings HBM to Texas (
+https://www.digitimes.com/news/a20240415VL209/samsung-chips-act-
+funding-hbm-advanced-packaging-texas.html)
+[23] 2024 HBM Market Recap (
+https://www.trendforce.com/news/2025/03/05/news-over-6-67-billion-wafer-
+plant-breaks-ground-as-hbm-market-heats-up/)
+[24] HBM Affected by Seasonal Changes (
+https://www.digitimes.com/news/a20250211PD233/sk-hynix-
+samsung-hbm-exports-2025.html)
+[25] HBM Market Growth (
+https://www.kedglobal.com/korean-chipmakers/newsView/ked202504090006)
+[26] TSMC Partnerships (
+https://www.trendforce.com/news/2024/09/06/news-samsung-partners-with-tsmc-its-
+foundry-rival-on-hbm4-development/)
+[27] SK Hynix Uses TSMC 3nm (
+https://www.digitimes.com/news/a20241223VL203/micron-hbm4-production-
+development-2026.html#:~:text=Mehrotra%20emphasized%20HBM4E%20as%20a,potentially%20boosting%2
+0its%20financial%20performance.)
+[28] SK Hynix Profit Margins (
+https://www.trendforce.com/news/2025/02/17/news-sk-hynix-at-full-throttle-for-
+hbm-expansion-with-engineers-reportedly-set-for-m15x-fab-in-march/)
+[29] HBM Explained (
+https://www.wevolver.com/article/high-bandwidth-memory)
+[30] SK Hynix Yield Rates (
+https://www.digitimes.com/news/a20250226PD239/sk-hynix-hbm4-yield-rate-
+testing-production.html)
+[31] Samsung Yield Rates (
+https://www.chosun.com/english/industry-en/2025/04/16/
+MOHBYKAOOJGCNHOMN5U3FV25VU/)
+[32] Micron Passes 12-Hi HBM3E Qualifying Test (
+https://www.digitimes.com/news/a20250415PD221/micron-
+nvidia-hbm3e-certification.html)
+[33] HBM4 Foundry Logic Dies (
+https://www.trendforce.com/news/2025/01/06/news-samsung-reportedly-starts-
+trial-production-of-hbm4-logic-die-with-in-house-4nm-node-challenging-sk-hynix/)
+[34] China HBM Tariffs (
+https://www.reuters.com/technology/us-chipmakers-outsourcing-manufacturing-will-
+escape-chinas-tariffs-2025-04-11/)
+-------------------------------
+2025.04.30
+SK하이닉스, 지금은 싸게 살 수 있는 기회 "실적은 갈수록 더 좋아진다!" / 화웨이 칩? 중국 반도체 성장이 무서운 이유ㅣ현대차증권 리서치센터장 노근창
+29분경-->마이크로소프트가 임대 계약을 취소한다는 등 잡음이 있으나,TSMC는 실적 발표 컨콜에서 올해 매출을 작년 매출의
+2배는 변동이 없다고 하였고, 빅테크 4개 업체의 투자 감소가 있더라도 r국가의 소버린 AI 투자는 증가할 것이기 때문에 엔비디아
+칩 수요에는 감소가 없을 것이다.
+(주: 소버린 AI(Sovereign AI)는
+특정 국가나 지역이 자국의 전략적 자율성과 안보를 확보하기 위해 독립적으로
+개발·운영하는 인공지능 기술 및 생태계
+를 의미)
+32분경-->엔비디아 블랙웰(아마 GB200언급하는 것같음. 블랙웰 2개 붙은 것)이 대만 기준으로 1분기에
+110만개 판매되었고,2분기에는 더 많이 판매될 것이라고 언급.
+고로 하이닉스의 HBM 매출도 문제가 없을 것이다
+.
+공유하기
+게시글 관리
+주식으로 모두 부자되기
+저작자표시
+비영리
+(새창열림)
+'
+삼성전자-하이닉스-마이크론-샌디스크
+' 카테고리의 다른 글
+2026~2027년 데이터센터 투자 방향(2025.04.26)
+(0)
+2025.04.27
+구글-AI 투자가 알파벳(Alphabet)의 1분기 호실적을 견인(2025.04.25)
+(0)
+2025.04.26
+JEDEC, 규정 완화 — 삼성과 SK하이닉스, AI 메모리 전쟁에서 속도전
+(0)
+2025.04.25
+구글, HBM3E 공급업체 변경 고려 중
+(0)
+2025.04.25
+SK하이닉스의 PER/PBR 50%씩 적용한 혼합 적정 주가(2025.04.25)
+(1)
+2025.04.25
+'삼성전자-하이닉스-마이크론-샌디스크'
+Related Articles
+2026~2027년 데이터센터 투자 방향(2025.04.26)
+구글-AI 투자가 알파벳(Alphabet)의 1분기 호실적을 견인(2025.04.25)
+JEDEC, 규정 완화 — 삼성과 SK하이닉스, AI 메모리 전쟁에서 속도전
+구글, HBM3E 공급업체 변경 고려 중
+DESIGN BY
+TISTORY
+관리자
+티스토리툴바

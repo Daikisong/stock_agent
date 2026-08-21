@@ -1,0 +1,572 @@
+{
+  "output_schema_hash": "7dbfe60b384654cd791016e65d09fc824423c5bf4c909208543889fef9766b15",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9b9b6cdacf39f4dc1a2a2d3c",
+        "rationale": "Page1과 동일하게 구형 산업 valuation 표는 current target earnings bridge의 신규 fact가 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-9fa322af98e4a682dc061a8d",
+        "rationale": "Prior11을 반복하지 않고 2026 EPS·ROE·PER·PBR·EV/EBITDA·EBITDA·운전자본·현금 및 HBM4 high-bin 불확실성 9건을 추가 추출했다. Page cap으로 소수 cash/technology remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-a761736a8079574c2c5c3906",
+        "rationale": "Prior 납품 전망을 반복하지 않고 초도 납품 한계, 수율·패키징, 멀티벤더 counter 3건을 추출했다. 생산 인프라·하반기 안정화 잔여가 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-a76ce9e40d6bad42583ac8d3",
+        "rationale": "장비사 중심 문서로 삼성전자 고객 CAPEX 언급을 005930 valuation fact로 오귀속하지 않았다.",
+        "status": "WRONG_TARGET_OR_SEGMENT"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9fa322af98e4a682dc061a8d",
+        "economic_mechanism": "메모리 이익 급증을 반영한 전사 EPS가 forward valuation의 분모가 된다.",
+        "exact_quote": "EPS 2,225 5,433 7,278 27,332 31,165",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 earnings와 forward valuation multiple을 잇는 분모다.",
+        "mechanism_scope_id": "005930:EPS:2026:HANWHA",
+        "normalized_object": "2026 EPS 27,332원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "한화투자증권은 삼성전자 2026년 EPS를 27,332원으로 전망했다.",
+        "predicate_family": "FORWARD_EPS",
+        "primitive_tags": [
+          "EPS",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "FORWARD_EARNINGS_BRIDGE",
+        "question_family_tags": [
+          "FORWARD_EPS",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 EPS",
+        "subject_id": "005930:EPS:2026:HANWHA",
+        "unit": "KRW per share",
+        "value": 27332
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9fa322af98e4a682dc061a8d",
+        "economic_mechanism": "메모리 이익 개선이 equity return으로 전환되는 정도가 P/B rerating을 지지한다.",
+        "exact_quote": "ROE(%) 4.1 9.0 10.9 32.7 28.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "memory-peer P/B 적용의 수익성 근거다.",
+        "mechanism_scope_id": "005930:ROE:2026:HANWHA",
+        "normalized_object": "2026 ROE 32.7%",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "한화투자증권은 삼성전자 2026년 ROE를 32.7%로 전망했다.",
+        "predicate_family": "FORWARD_ROE",
+        "primitive_tags": [
+          "ROE",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "RETURN_ON_EQUITY",
+        "question_family_tags": [
+          "FORWARD_ROE",
+          "VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 ROE",
+        "subject_id": "005930:ROE:2026:HANWHA",
+        "unit": "percent",
+        "value": 32.7
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9fa322af98e4a682dc061a8d",
+        "economic_mechanism": "메모리 이익 급증으로 낮아지는 forward PER은 rerating 여력을 나타낸다.",
+        "exact_quote": "PER 35.3 9.8 16.5 7.0 6.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 earnings 분모가 있는 target-specific multiple이다.",
+        "mechanism_scope_id": "005930:PER:2026:HANWHA",
+        "normalized_object": "2026 PER 7.0배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "한화투자증권은 삼성전자 2026년 PER을 7.0배로 전망했다.",
+        "predicate_family": "FORWARD_PER",
+        "primitive_tags": [
+          "PER",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "FORWARD_VALUATION_MULTIPLE",
+        "question_family_tags": [
+          "FORWARD_PER",
+          "VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 PER",
+        "subject_id": "005930:PER:2026:HANWHA",
+        "unit": "times",
+        "value": 7.0
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9fa322af98e4a682dc061a8d",
+        "economic_mechanism": "메모리 수익성 회복과 book value를 반영한 forward PBR이다.",
+        "exact_quote": "PBR 1.5 0.9 1.9 2.2 1.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "forward BPS와 함께 관측되는 P/B 수준이다.",
+        "mechanism_scope_id": "005930:PBR:2026:HANWHA",
+        "normalized_object": "2026 PBR 2.2배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "한화투자증권은 삼성전자 2026년 PBR을 2.2배로 전망했다.",
+        "predicate_family": "FORWARD_PB",
+        "primitive_tags": [
+          "PBR",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "FORWARD_VALUATION_MULTIPLE",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "삼성전자 2026 PBR",
+        "subject_id": "005930:PBR:2026:HANWHA",
+        "unit": "times",
+        "value": 2.2
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9fa322af98e4a682dc061a8d",
+        "economic_mechanism": "메모리 earnings와 감가상각을 반영한 enterprise-value multiple이다.",
+        "exact_quote": "EV/EBITDA 9.7 3.5 7.5 4.5 3.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "period와 EBITDA denominator가 명시된 forward multiple이다.",
+        "mechanism_scope_id": "005930:EV_EBITDA:2026:HANWHA",
+        "normalized_object": "2026 EV/EBITDA 4.5배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "한화투자증권은 삼성전자 2026년 EV/EBITDA를 4.5배로 전망했다.",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "FORWARD_VALUATION_MULTIPLE",
+        "question_family_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2026 EV/EBITDA",
+        "subject_id": "005930:EV_EBITDA:2026:HANWHA",
+        "unit": "times",
+        "value": 4.5
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9fa322af98e4a682dc061a8d",
+        "economic_mechanism": "메모리 이익과 감가상각을 포함한 EBITDA가 EV/EBITDA의 분모다.",
+        "exact_quote": "EBITDA 45,234 75,357 90,205 236,117 267,086",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "forward EV/EBITDA의 직접 분모다.",
+        "mechanism_scope_id": "005930:EBITDA:2026:HANWHA",
+        "normalized_object": "2026 EBITDA 236.117조원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "한화투자증권은 삼성전자 2026년 EBITDA를 236.117조원으로 전망했다.",
+        "predicate_family": "EBITDA_FORECAST",
+        "primitive_tags": [
+          "EBITDA",
+          "VALUATION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "EBITDA_BRIDGE",
+        "question_family_tags": [
+          "EBITDA",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 EBITDA",
+        "subject_id": "005930:EBITDA:2026:HANWHA",
+        "unit": "KRW billion",
+        "value": 236117
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-9fa322af98e4a682dc061a8d",
+        "economic_mechanism": "매출채권·재고 증가에 따른 운전자본 흡수는 earnings의 cash conversion을 제한한다.",
+        "exact_quote": "운전자본증감 -5,459 -1,568 -7,200 -71,439 -14,399",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "높은 이익과 OCF 사이의 핵심 cash-conversion counter다.",
+        "mechanism_scope_id": "005930:WORKING_CAPITAL:2026:HANWHA",
+        "normalized_object": "2026 운전자본증감 -71.439조원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026F",
+        "predicate": "한화투자증권은 삼성전자 2026년 운전자본증감을 -71.439조원으로 전망했다.",
+        "predicate_family": "WORKING_CAPITAL_CASH_OUTFLOW_FORECAST",
+        "primitive_tags": [
+          "WORKING_CAPITAL",
+          "COUNTER"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "WORKING_CAPITAL_COUNTER",
+        "question_family_tags": [
+          "WORKING_CAPITAL",
+          "CASH_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 운전자본 증가",
+        "subject_id": "005930:WORKING_CAPITAL:2026:HANWHA",
+        "unit": "KRW billion",
+        "value": -71439
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9fa322af98e4a682dc061a8d",
+        "economic_mechanism": "메모리 이익과 FCF 누적이 balance-sheet 현금으로 전환되는 전망이다.",
+        "exact_quote": "현금성자산 91,772 112,615 122,060 181,582 317,462",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "forward earnings와 FCF가 누적되는 재무 완충력을 제시한다.",
+        "mechanism_scope_id": "005930:CASH:2026:HANWHA",
+        "normalized_object": "2026 현금성자산 181.582조원",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "한화투자증권은 삼성전자 2026년 현금성자산을 181.582조원으로 전망했다.",
+        "predicate_family": "CASH_BALANCE_FORECAST",
+        "primitive_tags": [
+          "CASH",
+          "BALANCE_SHEET"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "CASH_BALANCE",
+        "question_family_tags": [
+          "CASH_BALANCE",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026 현금성자산",
+        "subject_id": "005930:CASH:2026:HANWHA",
+        "unit": "KRW billion",
+        "value": 181582
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.78,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-9fa322af98e4a682dc061a8d",
+        "economic_mechanism": "고성능 high-bin 생산 가능성은 기술 rerating을 지지하지만 비중이 확인되지 않은 broker 추정이다.",
+        "exact_quote": "시장에서는 최근 삼성전자의 HBM4가 12Gbps 수준의 하이빈(High bin, 동일 제품 내\n최상위 제품) 구현에 근접했다는 소문도 일부 언급되고 있다. 동사 HBM 공정의 미세\n화 과정을 감안할 때 이러한 초고성능 HBM이 일부 생산되고 있다는 추측에도 충분히\n개연성이 있다고 판단한다. 물론 이러한 하이빈 제품의 비중이 얼마나 되는지 또한 중\n요한 문제겠지만 현존 최고 성능의 HBM4를 생산할 수 있는 역량을 갖추어 나가고 있\n다는 점은 동사의 HBM 기술경쟁력에 대한 재평가의 여지를 제공한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기술 rerating 근거와 rumor·비중 미확인이라는 신뢰 한계를 함께 보존한다.",
+        "mechanism_scope_id": "005930:HBM4:12GBPS_HIGHBIN:2026:HANWHA",
+        "normalized_object": "12Gbps HBM4 high-bin 가능성·비중 미확인",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026F",
+        "predicate": "한화투자증권은 시장 소문과 공정 미세화를 근거로 삼성전자 HBM4가 12Gbps high-bin 구현에 근접했을 개연성이 있다고 판단했다.",
+        "predicate_family": "HBM4_HIGH_BIN_BROKER_INFERENCE",
+        "primitive_tags": [
+          "HBM4",
+          "12GBPS",
+          "INFERENCE"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_TECHNOLOGY_UNCERTAINTY",
+        "question_family_tags": [
+          "HBM4",
+          "HIGH_BIN",
+          "UNCERTAINTY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 12Gbps high-bin 추정",
+        "subject_id": "005930:HBM4:12GBPS_HIGHBIN:2026:HANWHA",
+        "unit": "qualitative",
+        "value": "near 12Gbps high-bin; share unknown"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a761736a8079574c2c5c3906",
+        "economic_mechanism": "초도 출하는 상업화 진척이지만 양산 안정성이 확인되기 전에는 점유율·매출 지속성을 보장하지 않는다.",
+        "exact_quote": "다만 초반 출하가 곧바로 주도권 확정으로 이어지는 것은 아니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "납품 전망을 실제 점유율·매출 지속성과 구분하는 직접 counter다.",
+        "mechanism_scope_id": "005930:HBM4:INITIAL_DELIVERY_COUNTER:2026Q1:NEWDAILY",
+        "normalized_object": "초도 HBM4 납품은 주도권 확정 아님",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1F",
+        "predicate": "뉴데일리는 삼성전자 HBM4 초반 출하가 곧바로 주도권 확정으로 이어지지 않는다고 지적했다.",
+        "predicate_family": "HBM4_INITIAL_DELIVERY_NOT_LEADERSHIP",
+        "primitive_tags": [
+          "HBM4",
+          "COUNTER"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_SUPPLY_STABILITY_COUNTER",
+        "question_family_tags": [
+          "HBM4",
+          "SUPPLY_STABILITY_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 초도 납품 counter",
+        "subject_id": "005930:HBM4:INITIAL_DELIVERY_COUNTER:2026Q1:NEWDAILY",
+        "unit": "qualitative",
+        "value": "initial shipment does not establish leadership"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a761736a8079574c2c5c3906",
+        "economic_mechanism": "적층·패키징 수율 흔들림은 납기 지연과 공급량 제한으로 이어질 수 있다.",
+        "exact_quote": "HBM은 적층·패키징 공정 난도가 높아 양산 구간에서 수율이 흔들리면 납기가 지연되거나 물량이 제한될 수 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "qualification·초도 납품이 실제 공급량으로 전환되는 핵심 break condition이다.",
+        "mechanism_scope_id": "005930:HBM4:YIELD_PACKAGING_COUNTER:2026:NEWDAILY",
+        "normalized_object": "HBM4 수율 불안 시 납기·물량 제한",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026F",
+        "predicate": "뉴데일리는 HBM 양산 수율이 흔들리면 납기가 지연되거나 물량이 제한될 수 있다고 지적했다.",
+        "predicate_family": "HBM4_YIELD_SUPPLY_RISK",
+        "primitive_tags": [
+          "HBM4",
+          "YIELD",
+          "COUNTER"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_YIELD_COUNTER",
+        "question_family_tags": [
+          "HBM4",
+          "YIELD",
+          "SUPPLY_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 수율·패키징 counter",
+        "subject_id": "005930:HBM4:YIELD_PACKAGING_COUNTER:2026:NEWDAILY",
+        "unit": "qualitative",
+        "value": "yield instability can delay delivery or limit volume"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a761736a8079574c2c5c3906",
+        "economic_mechanism": "고객의 복수 공급선 선호는 삼성전자 진입 기회인 동시에 점유율·가격 협상력의 지속성을 제한한다.",
+        "exact_quote": "HBM 시장에서 고객사들의 멀티벤더(복수 공급) 선호는 점유율 재편 가능성을 키우는 요인이다. AI 가속기 업체 입장에서는 특정 공급사 의존도가 높아질수록 공급 차질과 가격 협상 리스크가 커지기 때문이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객 공급 진입의 upside와 점유율·협상력 지속성 counter를 동시에 제공한다.",
+        "mechanism_scope_id": "005930:HBM4:MULTIVENDOR_COUNTER:2026:NEWDAILY",
+        "normalized_object": "HBM4 멀티벤더 공급 구조 변수",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026F",
+        "predicate": "뉴데일리는 AI 가속기 고객의 멀티벤더 선호가 HBM4 공급 구조와 점유율을 바꿀 수 있다고 분석했다.",
+        "predicate_family": "HBM4_MULTI_VENDOR_SUPPLY_COUNTER",
+        "primitive_tags": [
+          "HBM4",
+          "CUSTOMER",
+          "COUNTER"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_MULTI_VENDOR_COUNTER",
+        "question_family_tags": [
+          "HBM4",
+          "MULTI_VENDOR",
+          "COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "HBM4 멀티벤더 경쟁 counter",
+        "subject_id": "005930:HBM4:MULTIVENDOR_COUNTER:2026:NEWDAILY",
+        "unit": "qualitative",
+        "value": "multi-vendor preference may reshape share"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-9fa322af98e4a682dc061a8d",
+      "SGDOC-a761736a8079574c2c5c3906"
+    ],
+    "unresolved_research_notes": [
+      "12개 page cap 도달: 한화 report의 소수 cash·기술 불확실성과 뉴데일리의 2026 하반기 양산 안정화·인프라 counter가 남아 있다."
+    ]
+  },
+  "payload_hash": "69e513fe4fe3dd540b9a494b7dc268bcc9f99af7283a748e8221089c1aee59ba",
+  "production_score_authority": false,
+  "prompt_hash": "5ec215707826147fd7289268c89a007565ee1475342d6ea6f9b3ebc874a5cc0d",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-00ef57efbd594f6f922068aaffad9b959a2d98b8626bd8bcd0941126a8213995",
+  "response_id": "COLLABRESP-d9b2b0cb617f0c4643d97829863de68791dc4b2c2285cbccba8be5dd952c7584",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

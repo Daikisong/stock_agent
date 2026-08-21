@@ -1,0 +1,7 @@
+{
+  "command": "run_e2r_current_operation",
+  "error": "ValueError: another run already owns this mode output root",
+  "production_runtime_ready": false,
+  "schema_version": "e2r_current_operation_cli_v2",
+  "status": "CURRENT_OPERATION_INPUT_REJECTED"
+}

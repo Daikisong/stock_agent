@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-475ea5b419f0fb0db41ee9df",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The unverified 2013 audio route is obsolete and does not establish requested issuer provenance."
+      },
+      {
+        "candidate_id": "SGCAND-48045edc2e192de8548cffdb",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "The verified 2019 first-quarter presentation route is superseded historical context."
+      },
+      {
+        "candidate_id": "SGCAND-49264fb4c90d0e4aa0c7e7c3",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "The verified 2020 first-quarter presentation route is superseded historical context."
+      },
+      {
+        "candidate_id": "SGCAND-4a9dff32de93c4215322f25b",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.07,
+        "rationale": "The verified 2022 fourth-quarter presentation route is superseded by later reporting periods."
+      },
+      {
+        "candidate_id": "SGCAND-4d6112bdd6680ca6a1a5e19a",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The official 2015 third-quarter conference PDF is superseded historical context."
+      },
+      {
+        "candidate_id": "SGCAND-4f6fee99faacfc651f8f22c9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The unverified 2013 audio route is obsolete and does not establish requested issuer provenance."
+      },
+      {
+        "candidate_id": "SGCAND-51171e6566ccbe9cd917ceea",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.03,
+        "rationale": "The verified 2020 third-quarter presentation route is superseded historical context."
+      },
+      {
+        "candidate_id": "SGCAND-530774f8e3ac291deb9c4055",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The unverified 2011 audio route is obsolete and does not establish requested issuer provenance."
+      },
+      {
+        "candidate_id": "SGCAND-54b17f23d2189a1d746c6b6a",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.24,
+        "rationale": "The official 2025 second-quarter equity-change statement belongs to the issuer reporting package but does not directly resolve the cash-conversion objective."
+      },
+      {
+        "candidate_id": "SGCAND-551766716a9efd75785050ee",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "The official 2021 fourth-quarter conference PDF is superseded historical context."
+      },
+      {
+        "candidate_id": "SGCAND-55b53e6486b7e6603435d9cf",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The official 2011 first-quarter conference PDF is superseded historical context."
+      },
+      {
+        "candidate_id": "SGCAND-57778f08ac399cf9214412c3",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.01,
+        "rationale": "The verified 2016 fourth-quarter presentation route is superseded historical context."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate in this partition directly resolves current earnings and cash conversion; the local roster is fully classified."
+    ]
+  },
+  "payload_hash": "3ed4bf71a694ccdeed91fc0964038613a4bc322b997eec81e39afcf30821ae31",
+  "production_score_authority": false,
+  "prompt_hash": "663fde567ba937903d2bb417b544c1e5f906d3d7c2eff3609688b6a433bf69ea",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-41066eb12eeaaec5eb49907523fff445caf190194a1fbb0846e7dd077a2721b6",
+  "response_id": "COLLABRESP-980571c2ffc0f4ceb375d856c3d22d6a97e92c24328618f6d756c781268f4854",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

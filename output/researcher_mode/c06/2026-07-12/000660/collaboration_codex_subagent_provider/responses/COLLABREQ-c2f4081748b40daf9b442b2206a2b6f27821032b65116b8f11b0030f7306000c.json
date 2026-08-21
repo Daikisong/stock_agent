@@ -1,0 +1,79 @@
+{
+  "output_schema_hash": "87d3c66f564a2179cc4a1c335203172b75ba4ad6a971f0dc4b406e1ae6e503bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-5b6d91276c1af970b04377e6",
+        "rationale": "Extracted the target issuer's completed 15.3 million-share treasury-stock cancellation as a distinct capital-allocation fact. Maximum-shareholder financials, group-company descriptions, and executive biographies are wrong-entity or background material and were not emitted.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-5b6d91276c1af970b04377e6",
+        "economic_mechanism": "자기주식 소각은 발행주식 수를 줄이는 주주환원·자본배분 실행으로, 메모리 사업 성과와 구분해 전사 자본배분 판단을 보완한다.",
+        "exact_quote": "※ 2026년 2월 9일 자기주식 15,300,000주를 소각함에 따라, 지분율이 변동 되었습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 20개 fact에 없는 실제 자기주식 소각 실행으로 전사 자본배분을 직접 보완한다. HBM 수요·가격 또는 메모리 실적으로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "소각한 자기주식 수",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02-09",
+        "predicate": "SK하이닉스가 2026년 2월 9일 자기주식 15,300,000주를 소각했다",
+        "predicate_family": "TREASURY_SHARE_CANCELLATION",
+        "primitive_tags": [
+          "TREASURY_SHARE_CANCELLATION",
+          "SHARE_COUNT_REDUCTION"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "TREASURY_SHARE_CANCELLATION",
+        "question_family_tags": [
+          "TREASURY_SHARE_CANCELLATION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 자기주식",
+        "subject_id": "000660:TREASURY_SHARE_CANCELLATION",
+        "unit": "shares",
+        "value": 15300000
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d487526764f2f6ac141fc2d1b94e82905476ddd173ecb4d9f6e24a639ebf2232",
+  "production_score_authority": false,
+  "prompt_hash": "4d607c94cbe1f56767acd4812c650eba6ee3c925a16ac3b1c7e67e7454142edb",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c2f4081748b40daf9b442b2206a2b6f27821032b65116b8f11b0030f7306000c",
+  "response_id": "COLLABRESP-f965ee6a75e0152cb26e1120bcf2829fde1420de2b360eee0f3ee9924f04fa1e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

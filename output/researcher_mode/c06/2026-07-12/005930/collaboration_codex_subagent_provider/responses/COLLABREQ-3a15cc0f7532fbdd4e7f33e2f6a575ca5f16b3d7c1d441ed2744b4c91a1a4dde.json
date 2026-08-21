@@ -1,0 +1,130 @@
+{
+  "output_schema_hash": "6b8c147908a57aacaf44255658318cf4c640c3e39802154d59622712715d30e5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-2776ae1e72dfd6d33b361ae4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "피엠티 사업보고서로 삼성전자 신용평가·HBM 투자·현금흐름과 subject가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-89f6fd292b54b72fdeb5e93f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "금감원 경로의 신용평가서이지만 평가대상은 SK하이닉스다. HBM·FCF snippet을 삼성전자 capital allocation에 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-26da061c8e1143498b597916",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "SK하이닉스 회사채 신용평가 원문으로 target issuer가 삼성전자가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-842439324d5f1dfab96fcf79",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "Naver 투자전략 콘텐츠이며 독립 신용평가기관의 삼성전자 issuer report·surveillance 원문 route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b15e3e0c7ee1225749234dd7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Telegram 채널 통계 페이지로 target·document class·provenance가 모두 요청과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-2da5a9a52a38daec2d866163",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "2024년 하반기 광범위 산업전망 PDF로 삼성전자 issuer credit surveillance나 HBM-CAPEX cash bridge가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a6ebe4504c3f33e575cb7c33",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "2025년 broad industry outlook이며 삼성전자 신용평가 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cb0b7a1955bf143c9ea0552e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "연합뉴스 특파원 목록 페이지로 삼성전자 credit report나 HBM capital allocation을 검증할 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-335cc5b9fa6c389d912d0bfd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "에프에스티 분기보고서로 평가대상과 경제적 scope가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-a663acd1d819df1d4722794f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "SEC ENG 사업보고서로 삼성전자 issuer credit surveillance가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-bebdb0bd484b8a72264dd792",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "하나증권 daily PDF의 metadata와 snippet은 삼성전자 독립 신용평가 원문·HBM cash bridge를 가리키지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-6bba187bd78e5a11c83d87b5",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "priority": 0.96,
+        "rationale": "NICE신용평가의 직접 fileDown route이며 제목이 삼성그룹 반도체 수요·실적·유동성 전망을 명시하고 snippet은 HBM, 잉여현금흐름, 실질 차입부담과 삼성전자 포함 재구성 범위를 보여준다. Full fetch에서 발행일·cutoff와 삼성전자별 memory/HBM CAPEX·현금흐름 귀속을 확인할 수 있는 bounded credit-surveillance 원문 route다. snippet 수치는 evidence로 사용하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "SGCAND-6bba187bd78e5a11c83d87b5는 full document에서 발행일과 삼성전자별 귀속을 확인하기 전까지 discovery route일 뿐 EvidenceFact가 아니다."
+    ]
+  },
+  "payload_hash": "59aba7924077176360e9e1507329f62bdc427e7c055cb0d08ba1f86f703a427c",
+  "production_score_authority": false,
+  "prompt_hash": "7d74994797d12230d418ebae0d841d2e3c814b262e588128a5877ae9b5f57f60",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3a15cc0f7532fbdd4e7f33e2f6a575ca5f16b3d7c1d441ed2744b4c91a1a4dde",
+  "response_id": "COLLABRESP-ef04bc211d0e2085d8d8eebd02d1f8c7b5aad8146985b564e1f8502db88e44b8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

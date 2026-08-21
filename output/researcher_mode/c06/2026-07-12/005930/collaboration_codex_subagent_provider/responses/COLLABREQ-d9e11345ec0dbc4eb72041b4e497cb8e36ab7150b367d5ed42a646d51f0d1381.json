@@ -1,0 +1,52 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bbeb705252840c2ba6f051a7",
+        "rationale": "2025년 3분기 연결손익계산서와 포괄손익계산서를 전수 검토했다. 매출·영업이익·순이익·주당이익은 모두 삼성전자 연결 전체 수치이고 메모리 제품 또는 메모리 사업 이익·현금흐름으로 귀속되지 않는다. current canonical에는 같은 분기의 메모리 제품 매출 26,690,323백만원과 QoQ·YoY 성장 및 가격 상승에 따른 수익성 개선이 이미 별도 공식 메모리 자료로 반영돼 있다. 전사 수치를 메모리 eps_fcf_explosion 사실로 전용하거나 후속 2026년 실제보다 오래된 전사 분기값을 중복 생성하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-be3fcf98722655b9ba65e810",
+        "rationale": "2024년 연결현금흐름표를 전수 검토했다. 영업활동현금흐름 72,982,621백만원과 유형자산 취득 51,406,355백만원 등은 전사 연결 수치일 뿐 메모리 사업 귀속이 없으며, 동일 값은 다음 연도 공식 연결현금흐름표의 비교열에도 반복된다. 현재 objective는 memory-attributed eps_fcf 전환이므로 전사 현금흐름을 메모리 FCF로 추정하지 않았고, 후속 2025년 연간·2026년 1분기 actual보다 오래된 비교값도 새 fact로 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-be60eaab6581ebf374b5b828",
+        "rationale": "2025년 감사된 연결재무제표 전체와 현금흐름·부문별 보고를 전수 검토했다. FY2025 메모리 제품 매출 104,081,179백만원은 동일 발행일의 공식 주석 문서 SGDOC-440641...에서 current canonical로 이미 수용됐다. 연결 영업활동현금흐름·유형자산 취득과 DS 매출·영업이익은 각각 전사 또는 파운드리·System LSI가 섞인 DS 수치여서 메모리 이익·FCF로 귀속할 수 없다. 따라서 기존 메모리 매출을 반복하거나 혼합 부문 수치를 memory eps_fcf 사실로 확대하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-c1653fec00efd4ea2e16ae64",
+        "rationale": "2025년 2분기 공식 영문 컨퍼런스콜 원문을 전수 검토하고 동일 발행자의 한국어 원문 SGDOC-506589...에서 이미 수용된 current facts와 대조했다. D램 bit 성장 low-teens, D램 재고 정상 이하, 컨벤셔널 D램 ASP low-single-digit 상승, HBM bit 30% 증가와 HBM3E 비중 high-80%는 모두 current canonical과 의미가 같다. 메모리 재고 일회성 비용과 3분기 감소는 다른 current facts에 이미 반영됐고, HBM3E 3분기 전망·HBM4 샘플·하반기 수요 및 가격 전망은 후속 실제·양산·판매 전환 사실로 대체됐다. 같은 공식 자료의 영문판을 중복 발행하거나 과거 전망을 current fact로 되살리지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "038b2ad4b4ecf03312bdb30153cb7b9d778e528c6af51f988bca4ae107cc233d",
+  "production_score_authority": false,
+  "prompt_hash": "5c028d26fe6928f63299a90cf04ed3c6762cb0cc25c3c3317321f6f7a9834009",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d9e11345ec0dbc4eb72041b4e497cb8e36ab7150b367d5ed42a646d51f0d1381",
+  "response_id": "COLLABRESP-9c06b5565c50947ccee31baf43842c3df1247ca2f990e8269398ea9465c79798",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

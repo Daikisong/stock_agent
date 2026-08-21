@@ -1,0 +1,562 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Continuation page 12 resumes after the prior 4Q24 controlling-net-income revision identity. It extracts four controlling-net-income-margin revisions with exact new, old, and percentage-point values, then eight distinct target-company broker-model atoms in source order: FY2024E/FY2025E consolidated cash, inventory, property plant and equipment, and short-term financial liabilities. The previously accepted compound OP-BPS scenario is not re-split. All facts are historical SK Securities forecasts marked SUPERSEDED. Issuer-wide model rows are not attributed to HBM, DRAM, or NAND and are not issuer actuals. Later balance-sheet, income-statement, cash-flow, and valuation model atoms remain.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of controlling-shareholder net-income margin",
+        "exact_quote": "지배순이익률 7% 11% 15% 14% 4% 12% 16% 17% 3%p -1%p -1%p -3%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Exact new, old, and percentage-point values advance historical earnings-revision context but remain a superseded broker forecast, not issuer actual evidence.",
+        "mechanism_scope_id": "000660:MEMORY:CONTROLLING_NET_INCOME_MARGIN:ESTIMATE_REVISION",
+        "normalized_object": "SK hynix 1Q2024 controlling-shareholder net-income margin revised to 13 percent from 8 percent, up 5 percentage points",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "revised controlling-shareholder net-income margin from and to",
+        "predicate_family": "BROKER_QUARTERLY_CONTROLLING_NET_INCOME_MARGIN_REVISION",
+        "primitive_tags": [
+          "CONTROLLING_NET_INCOME_MARGIN",
+          "OLD_ESTIMATE",
+          "NEW_ESTIMATE",
+          "PERCENTAGE_POINT_DELTA"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONTROLLING_NET_INCOME_MARGIN_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME_MARGIN_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated controlling-shareholder net-income margin estimate",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_MARGIN_REVISION:1Q2024E:SKSEC_20240314",
+        "unit": "percent; percentage-point change",
+        "value": "13% from 8%; +5 percentage points"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of controlling-shareholder net-income margin",
+        "exact_quote": "지배순이익률 7% 11% 15% 14% 4% 12% 16% 17% 3%p -1%p -1%p -3%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Exact new, old, and percentage-point values counter historical earnings-revision context but remain a superseded broker forecast, not issuer actual evidence.",
+        "mechanism_scope_id": "000660:MEMORY:CONTROLLING_NET_INCOME_MARGIN:ESTIMATE_REVISION",
+        "normalized_object": "SK hynix 2Q2024 controlling-shareholder net-income margin revised to 11 percent from 12 percent, down 1 percentage point",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "revised controlling-shareholder net-income margin from and to",
+        "predicate_family": "BROKER_QUARTERLY_CONTROLLING_NET_INCOME_MARGIN_REVISION",
+        "primitive_tags": [
+          "CONTROLLING_NET_INCOME_MARGIN",
+          "OLD_ESTIMATE",
+          "NEW_ESTIMATE",
+          "PERCENTAGE_POINT_DELTA"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONTROLLING_NET_INCOME_MARGIN_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME_MARGIN_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated controlling-shareholder net-income margin estimate",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_MARGIN_REVISION:2Q2024E:SKSEC_20240314",
+        "unit": "percent; percentage-point change",
+        "value": "11% from 12%; -1 percentage point"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of controlling-shareholder net-income margin",
+        "exact_quote": "지배순이익률 7% 11% 15% 14% 4% 12% 16% 17% 3%p -1%p -1%p -3%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Exact new, old, and percentage-point values counter historical earnings-revision context but remain a superseded broker forecast, not issuer actual evidence.",
+        "mechanism_scope_id": "000660:MEMORY:CONTROLLING_NET_INCOME_MARGIN:ESTIMATE_REVISION",
+        "normalized_object": "SK hynix 3Q2024 controlling-shareholder net-income margin revised to 15 percent from 16 percent, down 1 percentage point",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "revised controlling-shareholder net-income margin from and to",
+        "predicate_family": "BROKER_QUARTERLY_CONTROLLING_NET_INCOME_MARGIN_REVISION",
+        "primitive_tags": [
+          "CONTROLLING_NET_INCOME_MARGIN",
+          "OLD_ESTIMATE",
+          "NEW_ESTIMATE",
+          "PERCENTAGE_POINT_DELTA"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONTROLLING_NET_INCOME_MARGIN_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME_MARGIN_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated controlling-shareholder net-income margin estimate",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_MARGIN_REVISION:3Q2024E:SKSEC_20240314",
+        "unit": "percent; percentage-point change",
+        "value": "15% from 16%; -1 percentage point"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of controlling-shareholder net-income margin",
+        "exact_quote": "지배순이익률 7% 11% 15% 14% 4% 12% 16% 17% 3%p -1%p -1%p -3%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Exact new, old, and percentage-point values counter historical earnings-revision context but remain a superseded broker forecast, not issuer actual evidence.",
+        "mechanism_scope_id": "000660:MEMORY:CONTROLLING_NET_INCOME_MARGIN:ESTIMATE_REVISION",
+        "normalized_object": "SK hynix 4Q2024 controlling-shareholder net-income margin revised to 14 percent from 17 percent, down 3 percentage points",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "revised controlling-shareholder net-income margin from and to",
+        "predicate_family": "BROKER_QUARTERLY_CONTROLLING_NET_INCOME_MARGIN_REVISION",
+        "primitive_tags": [
+          "CONTROLLING_NET_INCOME_MARGIN",
+          "OLD_ESTIMATE",
+          "NEW_ESTIMATE",
+          "PERCENTAGE_POINT_DELTA"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CONTROLLING_NET_INCOME_MARGIN_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME_MARGIN_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated controlling-shareholder net-income margin estimate",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_MARGIN_REVISION:4Q2024E:SKSEC_20240314",
+        "unit": "percent; percentage-point change",
+        "value": "14% from 17%; -3 percentage points"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated liquidity",
+        "exact_quote": "현금및현금성자산 5,058 4,977 7,587 28,753 53,756",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A target-company liquidity model atom advances capital-allocation and information-quality context but is a superseded broker forecast and has no HBM attribution.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CASH_BALANCE:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2024 consolidated cash and cash equivalents KRW 28,753 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "forecasted cash and cash equivalents equal",
+        "predicate_family": "BROKER_CONSOLIDATED_CASH_AND_EQUIVALENTS_FORECAST",
+        "primitive_tags": [
+          "CASH_AND_EQUIVALENTS",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_CASH_BALANCE_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_CASH_BALANCE_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated cash and cash equivalents",
+        "subject_id": "000660:CONSOLIDATED_CASH_AND_EQUIVALENTS:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 28753
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated liquidity",
+        "exact_quote": "현금및현금성자산 5,058 4,977 7,587 28,753 53,756",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A target-company liquidity model atom advances capital-allocation and information-quality context but is a superseded broker forecast and has no HBM attribution.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CASH_BALANCE:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2025 consolidated cash and cash equivalents KRW 53,756 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "forecasted cash and cash equivalents equal",
+        "predicate_family": "BROKER_CONSOLIDATED_CASH_AND_EQUIVALENTS_FORECAST",
+        "primitive_tags": [
+          "CASH_AND_EQUIVALENTS",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_CASH_BALANCE_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_CASH_BALANCE_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated cash and cash equivalents",
+        "subject_id": "000660:CONSOLIDATED_CASH_AND_EQUIVALENTS:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 53756
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated inventory position",
+        "exact_quote": "재고자산 8,950 15,665 13,481 12,984 11,938",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A consolidated inventory model atom informs issuer-wide risk and capital-allocation context but is a superseded broker forecast and cannot be attributed to DRAM, HBM, or NAND.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:INVENTORY:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2024 consolidated inventory KRW 12,984 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "forecasted consolidated inventory equals",
+        "predicate_family": "BROKER_CONSOLIDATED_INVENTORY_FORECAST",
+        "primitive_tags": [
+          "INVENTORY",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_INVENTORY_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_INVENTORY_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated inventory",
+        "subject_id": "000660:CONSOLIDATED_INVENTORY:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 12984
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated inventory position",
+        "exact_quote": "재고자산 8,950 15,665 13,481 12,984 11,938",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A consolidated inventory model atom informs issuer-wide risk and capital-allocation context but is a superseded broker forecast and cannot be attributed to DRAM, HBM, or NAND.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:INVENTORY:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2025 consolidated inventory KRW 11,938 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "forecasted consolidated inventory equals",
+        "predicate_family": "BROKER_CONSOLIDATED_INVENTORY_FORECAST",
+        "primitive_tags": [
+          "INVENTORY",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_INVENTORY_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_INVENTORY_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated inventory",
+        "subject_id": "000660:CONSOLIDATED_INVENTORY:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 11938
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated productive asset base",
+        "exact_quote": "유형자산 53,226 60,229 52,705 53,243 54,638",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A consolidated productive-asset model atom informs issuer-wide capital-allocation context but is a superseded broker forecast and does not identify HBM or DRAM capacity.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:PPE:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2024 consolidated property plant and equipment KRW 53,243 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "forecasted consolidated property plant and equipment equals",
+        "predicate_family": "BROKER_CONSOLIDATED_PPE_FORECAST",
+        "primitive_tags": [
+          "PROPERTY_PLANT_EQUIPMENT",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_PPE_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_PPE_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated property plant and equipment",
+        "subject_id": "000660:CONSOLIDATED_PPE:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 53243
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated productive asset base",
+        "exact_quote": "유형자산 53,226 60,229 52,705 53,243 54,638",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A consolidated productive-asset model atom informs issuer-wide capital-allocation context but is a superseded broker forecast and does not identify HBM or DRAM capacity.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:PPE:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2025 consolidated property plant and equipment KRW 54,638 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "forecasted consolidated property plant and equipment equals",
+        "predicate_family": "BROKER_CONSOLIDATED_PPE_FORECAST",
+        "primitive_tags": [
+          "PROPERTY_PLANT_EQUIPMENT",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_PPE_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_PPE_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated property plant and equipment",
+        "subject_id": "000660:CONSOLIDATED_PPE:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 54638
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated short-term financing burden",
+        "exact_quote": "단기금융부채 3,183 7,705 11,968 18,212 25,275",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A consolidated financing model atom provides issuer-wide counterevidence for capital-allocation flexibility but is a superseded broker forecast and has no product attribution.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:SHORT_TERM_FINANCIAL_LIABILITIES:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2024 consolidated short-term financial liabilities KRW 18,212 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "forecasted short-term financial liabilities equal",
+        "predicate_family": "BROKER_CONSOLIDATED_SHORT_TERM_FINANCIAL_LIABILITIES_FORECAST",
+        "primitive_tags": [
+          "SHORT_TERM_FINANCIAL_LIABILITIES",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_SHORT_TERM_FINANCIAL_LIABILITIES_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_SHORT_TERM_FINANCIAL_LIABILITIES_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated short-term financial liabilities",
+        "subject_id": "000660:CONSOLIDATED_SHORT_TERM_FINANCIAL_LIABILITIES:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 18212
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated short-term financing burden",
+        "exact_quote": "단기금융부채 3,183 7,705 11,968 18,212 25,275",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "A consolidated financing model atom provides issuer-wide counterevidence for capital-allocation flexibility but is a superseded broker forecast and has no product attribution.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:SHORT_TERM_FINANCIAL_LIABILITIES:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2025 consolidated short-term financial liabilities KRW 25,275 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "forecasted short-term financial liabilities equal",
+        "predicate_family": "BROKER_CONSOLIDATED_SHORT_TERM_FINANCIAL_LIABILITIES_FORECAST",
+        "primitive_tags": [
+          "SHORT_TERM_FINANCIAL_LIABILITIES",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_SHORT_TERM_FINANCIAL_LIABILITIES_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_SHORT_TERM_FINANCIAL_LIABILITIES_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated short-term financial liabilities",
+        "subject_id": "000660:CONSOLIDATED_SHORT_TERM_FINANCIAL_LIABILITIES:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 25275
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "Distinct later target-company broker-model balance-sheet, income-statement, cash-flow, and valuation atoms remain in the supplied literal document; continuation is required."
+    ]
+  },
+  "payload_hash": "e71310cec0c0e726d644616daf4b1d2030bc00dc3a637f28840b93dcdf9b532f",
+  "production_score_authority": false,
+  "prompt_hash": "dbf6e192e6143a3e131882895da1b09a9ea238d3c169b5a5c3ed928912ce7978",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d77c3e8098f4fefa5358a974f716194c873cd7632cd67daba865979d1476edfb",
+  "response_id": "COLLABRESP-e560bf9094395d25fd5b11a08084ca4285023f3d6142a13d9a76147df7ea8b2f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

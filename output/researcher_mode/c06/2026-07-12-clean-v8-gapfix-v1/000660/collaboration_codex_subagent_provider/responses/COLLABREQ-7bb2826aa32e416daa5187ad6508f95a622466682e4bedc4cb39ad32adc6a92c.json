@@ -1,0 +1,182 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-18f74031c76c26bfd290e162",
+        "rationale": "이 final continuation에서는 신규 사실이 없지만 prior pages에서 target-direct 사실 3건이 수락되었고 문서 remainder는 소진됐다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "rationale": "Prior 21건과 strict dedup 후 FY2026 EV/EBITDA와 FY2025/FY2026 ROE 등 마지막 3개 전사 broker table atoms를 추출했다. 전사·HBM 귀속과 broker estimate·issuer guidance 경계를 유지했으며 supplied document remainder를 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "Consolidated valuation, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권의 FY2026 전사 EV/EBITDA 전망이며 HBM-only valuation 또는 현재 실현배수가 아니다.",
+        "exact_quote": "영업실적 및 투자지표\n구분 단위 2021 2022 2023 2024E 2025E 2026E\n매출액 십억원 42,998 44,622 32,766 67,667 86,872 103,377\n영업이익 십억원 12,410 6,809 -7,730 23,052 34,600 47,140\n순이익(지배주주) 십억원 9,602 2,230 -9,112 16,181 25,888 35,985\nEPS 원 13,190 3,063 -12,517 22,226 35,560 49,430\nPER 배 9.9 24.5 -11.3 7.9 4.7 3.4\nPBR 배 1.5 0.8 1.8 1.7 1.3 0.9\nEV/EBITDA 배 4.6 3.5 21.5 3.9 2.4 1.4",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 기간의 forward EV/EBITDA를 수치화하지만 HBM earnings bridge가 없는 broker estimate다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 전사 EV/EBITDA 전망",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "2026년 EV/EBITDA를 1.4배로 전망했다",
+        "predicate_family": "BROKER_FORWARD_EV_EBITDA_FORECAST",
+        "primitive_tags": [
+          "EV/EBITDA",
+          "FY2026E",
+          "broker_table"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "forward_ev_ebitda_forecast",
+        "question_family_tags": [
+          "forward_ev_ebitda_forecast",
+          "broker_valuation",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.84,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스 FY2026 EV/EBITDA 전망",
+        "subject_id": "000660:HYNIX_FORWARD_EV_EBITDA_FY2026",
+        "unit": "x",
+        "value": 1.4
+      },
+      {
+        "business_segment": "Consolidated valuation, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권의 FY2025 전사 ROE 전망이며 HBM-only profitability 또는 issuer guidance가 아니다.",
+        "exact_quote": "영업실적 및 투자지표\n구분 단위 2021 2022 2023 2024E 2025E 2026E\n매출액 십억원 42,998 44,622 32,766 67,667 86,872 103,377\n영업이익 십억원 12,410 6,809 -7,730 23,052 34,600 47,140\n순이익(지배주주) 십억원 9,602 2,230 -9,112 16,181 25,888 35,985\nEPS 원 13,190 3,063 -12,517 22,226 35,560 49,430\nPER 배 9.9 24.5 -11.3 7.9 4.7 3.4\nPBR 배 1.5 0.8 1.8 1.7 1.3 0.9\nEV/EBITDA 배 4.6 3.5 21.5 3.9 2.4 1.4\nROE % 16.8 3.6 -15.6 26.3 31.6 32.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "과거 전사 ROE 기대를 수치화하지만 현재 시점에는 경과한 broker estimate이고 HBM 귀속은 없다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2025 전사 ROE 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "2025년 ROE를 31.6%로 전망했다",
+        "predicate_family": "BROKER_FORWARD_ROE_FORECAST",
+        "primitive_tags": [
+          "ROE",
+          "FY2025E",
+          "broker_table"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "forward_roe_forecast",
+        "question_family_tags": [
+          "forward_roe_forecast",
+          "broker_valuation",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.84,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025 ROE 전망",
+        "subject_id": "000660:HYNIX_FORWARD_ROE_FY2025",
+        "unit": "%",
+        "value": 31.6
+      },
+      {
+        "business_segment": "Consolidated valuation, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권의 FY2026 전사 ROE 전망이며 HBM-only profitability 또는 issuer guidance가 아니다.",
+        "exact_quote": "영업실적 및 투자지표\n구분 단위 2021 2022 2023 2024E 2025E 2026E\n매출액 십억원 42,998 44,622 32,766 67,667 86,872 103,377\n영업이익 십억원 12,410 6,809 -7,730 23,052 34,600 47,140\n순이익(지배주주) 십억원 9,602 2,230 -9,112 16,181 25,888 35,985\nEPS 원 13,190 3,063 -12,517 22,226 35,560 49,430\nPER 배 9.9 24.5 -11.3 7.9 4.7 3.4\nPBR 배 1.5 0.8 1.8 1.7 1.3 0.9\nEV/EBITDA 배 4.6 3.5 21.5 3.9 2.4 1.4\nROE % 16.8 3.6 -15.6 26.3 31.6 32.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 기간의 전사 ROE 기대를 수치화하지만 HBM profitability로 귀속할 수 없는 broker estimate다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 전사 ROE 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "2026년 ROE를 32.1%로 전망했다",
+        "predicate_family": "BROKER_FORWARD_ROE_FORECAST",
+        "primitive_tags": [
+          "ROE",
+          "FY2026E",
+          "broker_table"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "forward_roe_forecast",
+        "question_family_tags": [
+          "forward_roe_forecast",
+          "broker_valuation",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.84,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 ROE 전망",
+        "subject_id": "000660:HYNIX_FORWARD_ROE_FY2026",
+        "unit": "%",
+        "value": 32.1
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "3dad17bd7a4eae26f21acb8049fe657623a7e21c2e3d0cf83ac741e41898b481",
+  "production_score_authority": false,
+  "prompt_hash": "ec6a7b3a18a15b4e6c09adaff6f505cf64bb8acb316b2b8725635cbf9931aa6a",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7bb2826aa32e416daa5187ad6508f95a622466682e4bedc4cb39ad32adc6a92c",
+  "response_id": "COLLABRESP-f458ede3bd4a461c191e04242be45f5e58eb2313f721c975cf0886e684a57e16",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-81f7f76effcd55845f30e428",
+      "CRMEMO-8496044fbbc4ca15486333ef",
+      "CRMEMO-3ec47cfffb8cd6e555131c17",
+      "CRMEMO-c88a0fddbea7cc558300a9ca",
+      "CRMEMO-ddd27ca371648c221b25cff6",
+      "CRMEMO-53f38270f16c1a42043bb93c",
+      "CRMEMO-12e8e7084b644c938bbfa848"
+    ],
+    "confidence": 0.91,
+    "cross_component_support": [
+      "1Q26 전사 actual과 DRAM blended ASP 상승은 가격·믹스 개선이 실제 손익·현금창출로 이어진 경로를 지지한다.",
+      "HBM4 양산 진입·대규모 생산과 반도체 평균가동률 100%는 제품 진척과 현재 공급제약을 함께 지지한다.",
+      "실제 영업현금흐름·순현금은 투자 재원을 제공하고, 유형자산 투자·구매약정은 향후 FCF·ROIC counter와 함께 평가된다.",
+      "HBM 실제 매출 성장, HBM 고배수 SOTP와 EPS·PER/PBR 변화, 동일시점 structured adjacent peer P/B는 재현 가능한 valuation bridge를 제공한다."
+    ],
+    "cross_component_tensions": [
+      "issuer 숫자형 forward guidance가 없어 현재 actual을 같은 속도의 FY2026 이후 이익·FCF로 연장할 수 없다.",
+      "HBM 또는 memory 단독 매출·영업이익·마진·현금흐름 분해가 없어 직접 기여도를 확정할 수 없다.",
+      "공급 논의·요청수요·LTA 논의에는 확정 기간·물량·가격·취소권·위약금·선수금이 없어 DURABLE_VISIBILITY를 충족하지 못한다.",
+      "M15X와 경쟁 공급 확대, 대규모 투자·구매약정은 병목과 가격 강세를 완화하고 FCF를 흡수할 수 있다.",
+      "DB하이텍·한미반도체는 직접 HBM memory peer가 아니고 P/B가 2.33배와 33.28배로 크게 분산돼 직접 rerating anchor가 아니다.",
+      "잠정자료·브로커 내부 불일치와 issuer가 확인하지 않은 HBM 이익·LTA 전망은 information confidence를 제한한다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "현재 evidence는 전사 actual, DRAM 가격·믹스, HBM4 양산 진입, 높은 가동률, HBM 실제 매출 성장과 valuation bridge를 함께 지지한다. 동일시점 adjacent peer band도 확보됐다. 그러나 직접 HBM peer 부재, issuer guidance와 HBM 단독 손익·현금흐름 미분해, 특히 기간·binding capacity 또는 물량·가격·취소 조건이 있는 고객 공식 commitment 부재 때문에 valuation_rerating의 DURABLE_VISIBILITY가 유일한 현재 material gap이다. 나머지 위험은 현재 점수의 counter 또는 미래 monitoring으로 보존한다. synthesis_complete는 7개 메모와 Red Team 쟁점의 coverage 완료를 뜻한다.",
+    "unresolved_material_questions": [
+      "as_of_date 이내 고객 공식 원문에서 SK하이닉스 HBM 공급의 기간·binding capacity 또는 물량·가격 체계와 취소권·위약금·선수금 조건이 확인되는가?",
+      "향후 issuer가 HBM 또는 memory 단독 손익·현금흐름과 숫자형 guidance를 공시하는가?",
+      "M15X와 장기 투자 뒤 실제 ramp·FCF·HBM 귀속 ROIC가 회복되는가?",
+      "HBM4 양산 진입이 고객 인증·실제 물량·가격·믹스 개선으로 이어지고 경쟁 공급 뒤에도 유지되는가?"
+    ]
+  },
+  "payload_hash": "10144c2b9f29e0c8cccafbabec87f4cff3978369dd33fccf078c30d368396c12",
+  "production_score_authority": false,
+  "prompt_hash": "df83fa80ff9af2e11697fcddfc471600fd58514ba14e0735bec64fc58144ebb9",
+  "provenance": {
+    "agent_id": "root-phase101-c06-synthesis-durable-refresh",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_synthesis_durable_refresh",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-afb2131870a1751ffd030daf6e0cb0f77d3a3cf04b82e25a4f2e0bc678999ebd",
+  "response_id": "COLLABRESP-0f704b71d67ef4f2eb2c616599244c0b3c07889768b42f425a28f938c2f116be",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

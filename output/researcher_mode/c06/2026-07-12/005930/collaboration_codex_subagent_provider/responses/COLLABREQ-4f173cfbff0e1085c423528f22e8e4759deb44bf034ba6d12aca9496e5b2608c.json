@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-755ae2b0a85a24c4c9b70b98",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A procurement login page is unrelated to the requested issuer financial sources and objective."
+      },
+      {
+        "candidate_id": "SGCAND-75a43be5bf41ffbedcdba65d",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.1,
+        "rationale": "The Naver Line share URL points toward a 2026 first-quarter earnings announcement, but it is a duplicate social-share route and direct official issuer routes are supplied elsewhere."
+      },
+      {
+        "candidate_id": "SGCAND-768a3b692df82aaf166b693e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The Instagram profile is not a requested issuer financial source."
+      },
+      {
+        "candidate_id": "SGCAND-76e38d5754d3d26521227053",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.04,
+        "rationale": "The official 2023 second-quarter presentation route matches provenance but is superseded historical context."
+      },
+      {
+        "candidate_id": "SGCAND-780d1ddbbe1da2c439991b9f",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.9,
+        "rationale": "The official audited-financial-statements landing page is a direct route to original cash-flow statements needed to test profit conversion; the current report must be fetched in full."
+      },
+      {
+        "candidate_id": "SGCAND-7a9167cfbd1bf88e53200aba",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A service consultation login endpoint is unrelated to the financial investigation."
+      },
+      {
+        "candidate_id": "SGCAND-7be936652e237e3c8ba0aadd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A privacy-policy page is unrelated to the requested mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-7c6ee4866d9afb022d334906",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The accessibility overview does not match a requested financial source family or objective."
+      },
+      {
+        "candidate_id": "SGCAND-7ca740be7a7ef6099a42843e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The consumer AI class page is unrelated to semiconductor earnings and cash conversion."
+      },
+      {
+        "candidate_id": "SGCAND-8260c6e70f92ff6c2a2fabfc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A Facebook newsroom profile is a social landing page and does not match a requested financial family."
+      },
+      {
+        "candidate_id": "SGCAND-827b14effb0dc3bf291c9c59",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The dispute-resolution page is unrelated to the research objective."
+      },
+      {
+        "candidate_id": "SGCAND-82eb0397822bcc00ffedf9cd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A smartphone catalogue is unrelated to the semiconductor financial mechanism."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "The audited-statements route requires bounded full-document retrieval; the Naver share route is not needed while direct official routes remain available."
+    ]
+  },
+  "payload_hash": "664544817d3d395e765ccdf4a0783f29f1b68445d3c968eb1c0a09a8a00b42a5",
+  "production_score_authority": false,
+  "prompt_hash": "3744fe98c2c1279b95566083c4714ee6b0818acf06ba79664d8ad5ba8323f92a",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4f173cfbff0e1085c423528f22e8e4759deb44bf034ba6d12aca9496e5b2608c",
+  "response_id": "COLLABRESP-e3beb8ae66e6b261820fd5e24779c706a0f7e003b9d72a3d272ba7bd8259704a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

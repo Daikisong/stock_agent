@@ -1,0 +1,73 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-87a1c6b89b7fa5604ca366c2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "포털·언론·블로그·제3자 저장소 또는 일반 요약 경로로서 URL owner와 discovery provenance가 요청된 PUBLIC_BROKER_PDF를 함께 지지하지 않으므로, 표시된 숫자나 삼성전자 언급만으로 요청 family의 material 후보가 될 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-68714cb591432e3a878f6ae4",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.08,
+        "rationale": "원 증권사 PDF provenance는 요청 family와 맞지만, 현재 메타데이터상 다른 산업·다른 기업 자료이거나 삼성전자 forward valuation 및 peer band와 직접 연결되는 단서가 없어 이 objective의 material fetch 후보가 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-10640e557ac2137a69e82ad6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "포털·언론·블로그·제3자 저장소 또는 일반 요약 경로로서 URL owner와 discovery provenance가 요청된 PUBLIC_BROKER_PDF를 함께 지지하지 않으므로, 표시된 숫자나 삼성전자 언급만으로 요청 family의 material 후보가 될 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-2fecbe3361bba6be043384f5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "포털·언론·블로그·제3자 저장소 또는 일반 요약 경로로서 URL owner와 discovery provenance가 요청된 PUBLIC_BROKER_PDF를 함께 지지하지 않으므로, 표시된 숫자나 삼성전자 언급만으로 요청 family의 material 후보가 될 수 없습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "각 partition의 current 후보를 exact-once로 분류했으며 snippet과 metadata는 EvidenceFact로 사용하지 않았습니다.",
+      "material 후보도 전체 원문과 as-of-date, forward 기간, 배수 단위 및 비교 기준 검증 전에는 점수·Stage 권한이 없습니다."
+    ]
+  },
+  "payload_hash": "88a15b1f9021bceb7a743f7a7beed352bdfafa3e65033abf7a47d80f914455e8",
+  "production_score_authority": false,
+  "prompt_hash": "ca8cf08e9d68e0e3f6b136f074ccd168e39eba1b3f33b892964cc94bf5f59dd4",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-eb4c9de8fd520f4b6d5de3f2f7a18975658f1665ba799ea4045b67eb08b59986",
+  "response_id": "COLLABRESP-ed16db15f7418e3664d0aa2f27d05976fff7dd5ff87c844a2aedc93314e285a9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

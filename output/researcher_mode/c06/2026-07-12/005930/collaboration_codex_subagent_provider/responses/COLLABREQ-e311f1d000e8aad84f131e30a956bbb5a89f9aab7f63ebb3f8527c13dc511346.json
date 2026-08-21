@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7b79d2e3f3fe9059239c09ae",
+        "rationale": "마지막 전송 청크의 반도체 계열사 거래, HBM4·HBM3E·D램·NAND·SOCAMM2 제품개발 표와 투자자보호 항목을 current fact graph 및 앞선 청크와 전수 대조했다. HBM4 양산·성능·공급안정성은 이미 수용된 사실과 의미 및 인용이 중복되고, 나머지는 제품 사양·개발 이력 또는 전사/계열사 거래 배경으로 현재 eps_fcf_explosion의 이익·FCF 전환 또는 누락된 수치형 forward guidance를 직접 입증하지 않는다. 따라서 중복 재발행이나 사업부 이익 귀속 추정을 하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "f884f98438516b0384510491f63605620b0f09696c267a123f00a3232a0cec8e",
+  "production_score_authority": false,
+  "prompt_hash": "700c088772f3425188b416da126674d92835eda26ad53140dcc05827235eee89",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e311f1d000e8aad84f131e30a956bbb5a89f9aab7f63ebb3f8527c13dc511346",
+  "response_id": "COLLABRESP-da5f43e6b663046486d38f5a584c7c31a1340442503e29790f70849cb9e097d6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

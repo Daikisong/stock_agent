@@ -1,0 +1,135 @@
+{
+  "output_schema_hash": "235b5bfba35042b693bd863d39da3a89dbb058aa7bf5c0a641544d6b694857db",
+  "payload": {
+    "confidence": 0.72,
+    "counter_case": "익명 고객 집중, 월·분기 재협의, 직접 계약조건 미확인이 장기 가시성을 제한한다.",
+    "historical_anchor_ids": [
+      "CANCH-20eb617beb160e1032292ed3",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "nearest_counter_anchor_ids": [
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "nearest_positive_anchor_ids": [
+      "CANCH-20eb617beb160e1032292ed3"
+    ],
+    "positive_case": "100% 메모리 가동률과 대형 고객 매출은 근시계 수요를 지지한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 25,
+        "reason": "월·분기 재협의는 장기 visibility positive가 아니라 상단 제한 근거"
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 34,
+        "reason": "대형 고객 집중 counter를 유지"
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 95,
+        "reason": "공시 가동률 positive를 유지"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 211,
+        "reason": "DRAM 매출은 HBM 계약 가시성의 직접 근거가 아님"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 390,
+        "reason": "재고 충당은 visibility 보조 counter"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 399,
+        "reason": "재공품 충당은 visibility 보조 counter"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 486,
+        "reason": "DRAM 매출 성장 중복"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 531,
+        "reason": "가격 상승 정성 근거는 장기 계약을 증명하지 않음"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 573,
+        "reason": "고객 A 집중은 선택한 결합 집중 근거에 포함"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 588,
+        "reason": "재공품은 계약 visibility와 간접적"
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 597,
+        "reason": "고객 B 집중은 선택한 결합 집중 근거에 포함"
+      }
+    ],
+    "proposed_score_lower": 12.0,
+    "proposed_score_mid": 14.5,
+    "proposed_score_upper": 17.0,
+    "research_complete": true,
+    "researcher_summary": "현재 생산과 대형 고객 수요는 강하지만 signed HBM 물량·가격·기간·취소보호가 확인되지 않아 visibility에 corroboration cap을 적용한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "현재 수요와 생산 활용도는 강하지만 장기 계약 visibility와는 구분한다.",
+        "fact_row_index": 95,
+        "source_economic_mechanism": "2026년 1분기 반도체 생산실적은 11,465,147백만원이며 생산설비 평균가동률은 100%였다. 이는 메모리 전반의 현재 설비 활용도를 보여주지만 HBM 전용 가동률이나 장기 예약 물량을 뜻하지 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "OPERATED_MEMORY_PRODUCTION_FACILITIES_AT_FULL_UTILIZATION",
+        "source_value_json": "\"production output KRW 11,465,147 million; average utilization 100%\""
+      },
+      {
+        "component_interpretation": "큰 고객 수요를 확인하는 동시에 익명 고객 집중과 재협상 위험을 높인다.",
+        "fact_row_index": 34,
+        "source_economic_mechanism": "고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.",
+        "source_value_json": "\"7,780,590 and 6,536,458 vs 4,786,233\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      95,
+      34
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "실명 고객별 확정 계약조건이 없다",
+      "CUSTOMER_OFFICIAL·독립 broker corroboration 공백은 부재 증명이 아니다"
+    ],
+    "why_not_higher": "미확인 독립 corroboration과 계약조건 공백에 confidence cap을 적용한다.",
+    "why_not_lower": "현재 가동률과 실제 고객 매출은 강한 단기 수요를 보여준다."
+  },
+  "payload_hash": "f44cac776169f98073840a699252c9c71afa0929b032dd9a1600290aac1f01a9",
+  "production_score_authority": false,
+  "prompt_hash": "89ae4979aa750d7f11c22a2ec8184000eb840b4653f4132e3a86a22b049e798a",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-58e8dbc43b0c1f1eb2e3a84bebd19f004219119b35f79cf7368c9ad9f3dcc616",
+  "response_id": "COLLABRESP-c4ceba3334dc9212ef5cae7f62ffcb98760d62e31d96d46bdc3c1fe21d26b1cd",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

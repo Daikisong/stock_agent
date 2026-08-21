@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "rationale": "An independent start-to-finish coverage audit of the full official KIND filing found no distinct current-objective material atom omitted from the 33 embedded prior facts. The prior roster already atomically covers the proposed ADR decision, maximum and dilution denominator, facility-funding purpose and uncertainty, investor/depositary and regulatory structure, bookbuilding-dependent quantity and pricing formula, provisional timing and delegated authority, facility plans and invested-to-date amounts, EUV purpose/payment/delivery limitations, and Citibank relationship and planned deposit-agreement boundaries. Remaining literal items such as nominal par value, board attendance, empty statutory fields, charter boilerplate, and repeated procedural descriptions do not independently advance or counter the current capital-allocation mechanism. This honest empty coverage result is not evidence of source absence and does not turn any plan, estimate, expected date, or delegated authority into final actual issuance, signed customer terms, or HBM-only economics.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "931c22809a39a157380a9046cc4ba226656d64ea3393f0afea6aa8e03f549d6c",
+  "production_score_authority": false,
+  "prompt_hash": "7bcaf3dac5696899575ff64ed8c117b6a14236d14747209513e063ea11f1406b",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bfbae6e3e2b8b0d03fefdef707b5d8061ecba08d485b75cd1d01900e81934ea1",
+  "response_id": "COLLABRESP-4ad5070271841eea4f13e299e68bf44b3b08f790ff740d2cd3aec5e9796525a9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

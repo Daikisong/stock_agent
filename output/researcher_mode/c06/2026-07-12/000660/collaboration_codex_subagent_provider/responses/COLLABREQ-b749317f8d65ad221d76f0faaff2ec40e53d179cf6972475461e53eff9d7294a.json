@@ -1,0 +1,34 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "FORWARD_GUIDANCE remains unresolved because the role requires a target-issued, machine-readable numeric forward point or range for a forward period. The 37 executed queries already cover the issuer's 1Q26 earnings release and IR archive, business and quarterly filings, shareholder-meeting management plan, fair-disclosure sales outlook, HBM sales target, bit-shipment outlook, ADR/registration materials, and exact broker-report identities; the remaining CompanyGuide broker rows are third-party estimates and cannot substitute for issuer guidance.",
+      "SEGMENT_CONTRIBUTION remains unresolved because the current source graph does not contain an issuer-reported actual HBM or memory revenue/profit contribution with the required target and period attribution. The executed DART product-sales, quarterly-report, ADR filing and HBM-mix routes already cover the available document classes, and no distinct unexecuted target-official filing identity is present in the supplied context.",
+      "DURABLE_VISIBILITY remains unresolved because the role needs target-attributable, time-bounded customer commitment, allocation, contract, backlog or capacity-lock evidence. Prior searches already cover issuer allocation and supply commentary, NVIDIA official annual/quarterly filings and earnings materials, Rubin/HBM4 customer material, customer concentration risk, and the issuer's single-sale supply-contract disclosure route without producing eligible evidence.",
+      "The structured candidate 1096276 / 1F01420260511_000660_c.pdf is the English-language counterpart of the already queried 2026-05-11 Mirae Asset report route 1096186 / 1F01420260511_000660_a.pdf. Re-querying that language variant would be a semantic duplicate, and in any event a broker forecast cannot close the issuer-only FORWARD_GUIDANCE role. No meaningfully new official issuer or customer document class or verified canonical identity is supplied for this attempt."
+    ]
+  },
+  "payload_hash": "0f5229b6e19a678e2136a254aed584ed2bae0843685e11874e9179f7bcdaea3a",
+  "production_score_authority": false,
+  "prompt_hash": "99b0bb8ce56654edca8d44216c17bd62f37bbfd3c4ce9c42c136efaf1a4caf92",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b749317f8d65ad221d76f0faaff2ec40e53d179cf6972475461e53eff9d7294a",
+  "response_id": "COLLABRESP-502dec45aa93d7285c926380853d26e09723310af5f1653c6566f650daffe9f9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "Semantic retry attempt 1 reviewed all 37 executed query literals and the immediately preceding no-query outcome. The newly consumed red-team review restates evidence requirements but supplies no unexecuted, verified official document identity; changing keywords would only repeat already attempted IR, filing, customer-filing, and broker-report routes.",
+      "FORWARD_GUIDANCE remains unresolved because no new target-issued document with a machine-readable numeric forward point or range was identified. The executed set already covers earnings and IR materials, DART fair-disclosure and sales-outlook routes, shareholder-meeting materials, HBM shipment targets, and ADR or registration filings; broker forecasts are not issuer guidance.",
+      "SEGMENT_CONTRIBUTION remains unresolved because the target reports a single operating segment and no new target-official table was identified that attributes actual revenue or operating profit specifically to HBM or memory. Previously surfaced broker report identities contain estimates and cannot substitute for issuer-reported segment actuals.",
+      "DURABLE_VISIBILITY remains unresolved because no new target-attributable customer commitment, allocation term, backlog, prepayment, or capacity-lock document identity was found. The KRW 9.65 billion TC-bonder contract describes the target procuring equipment rather than a customer committing to buy the target's HBM, while the issuer contract and NVIDIA filing routes have already been queried.",
+      "The remaining peer valuation verification gap is a structured-data issue and does not establish a meaningfully new official document class for the three source roles above. No bounded source-repair query can be proposed without duplicating an executed route or weakening target attribution."
+    ]
+  },
+  "payload_hash": "4f873d7697ea42f471d3d479be93ddb4fa7af017eb4520aafdb9794fbcbc6e85",
+  "production_score_authority": false,
+  "prompt_hash": "4462d9abd0ec10df09f9aeeba9ec49de86f7a70bb6a2cb9392da72e677b685f5",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c6840b47c04248495d320ad0305f529c2c79be9d92fc221eacc487e8d84eafee",
+  "response_id": "COLLABRESP-0307cfb23dbac952cc08e0b90998e9611e817c4f91e6c1c1fd2d15d64b36f26d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0e37c8d922c6ada3894d8ea6",
+        "rationale": "2026년 1분기 연결 현금흐름표의 영업활동현금흐름·운전자본 변동·유형자산 취득·현금 증감 및 잔액은 같은 분기 연결 공시에서 current canonical fact로 이미 추출된 동일 경제 사실이다. 이 문서는 해당 수치를 메모리 또는 HBM에 귀속하지 않고, 메모리/HBM의 FCF·이익 전환, 정량 forward guidance 또는 명시적 QoQ 성장률도 제시하지 않으므로 현재 eps_fcf_explosion objective에 직접 연결되는 비중복 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "연결 영업활동현금흐름 40,274,106백만원과 유형자산 취득 17,127,003백만원은 전사 수치이며 메모리/HBM 현금흐름이나 FCF로 귀속하지 않았다.",
+      "이 문서에는 메모리/HBM 정량 forward guidance 또는 원문이 명시한 QoQ 성장률이 없어 해당 structured role을 생성하지 않았다."
+    ]
+  },
+  "payload_hash": "ae2e6a5f1e8e065af6776a0dc2adb963289f992965a075e5bd00f71adb3ebf78",
+  "production_score_authority": false,
+  "prompt_hash": "b67ab42f205764574dfae01df7e37ecbf4c782dc259bc053a4bfdc825ecc8a25",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-897c9cb6b35e15c9b9e71f2a521d30f441b32431f683561cf1274c6240bf494a",
+  "response_id": "COLLABRESP-6769a57d5a9e677ef029dc4aa88651a7c3198d69e08a8b11c03a296ba00da077",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

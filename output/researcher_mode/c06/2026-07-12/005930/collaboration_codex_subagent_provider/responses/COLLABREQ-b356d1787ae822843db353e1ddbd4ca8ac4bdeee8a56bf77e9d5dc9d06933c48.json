@@ -1,0 +1,63 @@
+{
+  "output_schema_hash": "6304cca64ffb455b95d610e7bade177b8edf3b14fd66844ba2a68b6531d92bb7",
+  "payload": {
+    "allowed_range": [
+      6.8,
+      9.2
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a는 POSITIVE 역할의 STRONG ordinal anchor이며 허용 대역은 11.40~12.00점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "ORDTRANSFER-75306723611a10615f950fec는 COUNTER 역할의 STRONG ordinal anchor이며 허용 대역은 11.40~12.00점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "긍정 사실의 실현 정도는 강하지만, ordinal anchor의 상단은 미해결 귀속·지속성 자료가 닫힐 때만 정당화된다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-07ca574cbad488f436ca70d6",
+      "EFACT-9cdcaad56af436ed1ac5bc6f",
+      "EFACT-a79b8e5bedf94ee44504539e",
+      "EFACT-fa30a47dc732ad5cccb5b20d"
+    ],
+    "disagreements": [
+      "현재의 실적·판매·공급 사실을 단순한 기대만으로 낮춰 보는 해석에는 동의하지 않는다.",
+      "반대로 전사·메모리 수치를 HBM 단독 경제성으로 간주하거나 미해결 supervisor gap을 닫힌 것으로 보는 해석에도 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a",
+      "ORDTRANSFER-75306723611a10615f950fec"
+    ],
+    "proposed_points": 8.1,
+    "rationale": "HBM4 상용화에 따른 재평가의 모든 긍정 사실을 검토했다. HBM4가 시험·수율 단계에서 양산, 지속 납품, 누적 매출로 연속 전환됐다. 이는 과거 경쟁력 할인 사유가 실제 상용 성과로 바뀐 경로이며, 아직 남은 peer 대비 선행 배수 할인은 성과가 지속될 경우 재평가 여지를 만든다. 다만 PBR은 이미 2024년 초보다 크게 올라 회복 기대의 일부가 반영됐다. HBM4 초기 마진이 전작보다 낮을 수 있고 고객 제품 일정 지연이나 정기 공급사 평가가 물량과 실적을 바꾸면 양산·매출의 지속성이 약해질 수 있다. 추가로 HBM4 초기 제품 마진, 고객 플랫폼 일정과 공급사 평가에 따른 allocation·납품 변화이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다. 따라서 강한 현재 성과는 인정하되 제품별 귀속과 지속성이 확인된 최상단으로 보지는 않았다.",
+    "support_fact_ids": [
+      "EFACT-3c095c9436a1460d04797e97",
+      "EFACT-3e5de9f21e03d4bc9871d258",
+      "EFACT-43ac847658ecf13550362d92",
+      "EFACT-60c77b3224c68e190899ad88",
+      "EFACT-7d49113d90b5216890ebb0bc",
+      "EFACT-ba3851ffc2538f67427b0ec3",
+      "EFACT-c8d894a7d67c2050fd2961da",
+      "EFACT-cf374d280bd2cbced74132b9"
+    ],
+    "why_not_higher": "고객별 수량·마진·장기 점유율이 없고 PBR 재평가가 이미 진행됐으며 초기 수익성·고객 일정·재평가 배분 위험이 남아 만점 지속성을 확정할 수 없다. 상용화 확인이 지속적 재평가로 이어지는지는 제품 수익성과 고객 배분에 달려 있다.",
+    "why_not_lower": "8개의 current positive 사실이 HBM4 상용화에 따른 재평가의 실제 전환을 보여 주고 있어 counter만으로 확인된 성과를 무효화할 수 없다."
+  },
+  "payload_hash": "668f9428930751c7d147f4e897ab7dc5a071ecd56599bf6f9bc6917bede6f2f3",
+  "production_score_authority": false,
+  "prompt_hash": "b8b4e791663053c11734d41db26163115181c6329860326378d308ea91d8193b",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b356d1787ae822843db353e1ddbd4ca8ac4bdeee8a56bf77e9d5dc9d06933c48",
+  "response_id": "COLLABRESP-c1004f799cb1fbe9632ff410b7a4b3feababdd7b77f6fc3a074e83117e3dae14",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

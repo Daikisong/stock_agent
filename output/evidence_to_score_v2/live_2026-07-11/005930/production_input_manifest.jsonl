@@ -1,0 +1,191 @@
+{"input_id": "PINPUT-0e06eab528b436c07a236d8a", "input_type": "CONFIG", "origin": "CANONICAL_CONFIG", "value": "C06 canonical production question and scoring contracts"}
+{"input_id": "PINPUT-8555d81d31a3009f5494d4b1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기(2026-01-01~2026-03-31) 공식 IR 실적발표 DRAM NAND HBM 제품별 ASP 평균판매가격 전분기 대비"}
+{"input_id": "PINPUT-38912aac15866b6466727664", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기(2026-01-01~2026-03-31) 공식 분기보고서 제품별 판매가격 계약가격 변동"}
+{"input_id": "PINPUT-84ac0ce1fde85a32cacb61e0", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기(2026-04-01~2026-06-30) 2026-07-11 이전 공식 IR ASP 가격 상승 하락 전망 변경 철회"}
+{"input_id": "PINPUT-6be45d4505f7d39d7a2cee2c", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1월 1일부터 2026년 7월 11일까지 공식 IR 실적발표 고객 공급계약 선주문 물량 배정 상업적 확약 site:samsung.com"}
+{"input_id": "PINPUT-2c1d70c67b5bbdb9066c82fd", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1월 1일부터 2026년 7월 11일까지 공식 공시 고객 주문 취소 물량 축소 공급계약 해지 배정 감소 site:dart.fss.or.kr"}
+{"input_id": "PINPUT-547ec4939c7e12997222d7bf", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1월 1일부터 2026년 7월 11일까지 공식 IR 기존 고객 공급계약 갱신 조건 변경 종료 대체 site:samsung.com"}
+{"input_id": "PINPUT-9aac2c84d0dc18c6f028dadb", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 영업부문 주요 고객 매출 10% 이상 단일 고객 의존도"}
+{"input_id": "PINPUT-eea55ac203fd5dde53ea33b9", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2025년 사업보고서 주요 고객 매출 비중 고객 집중도 단일 외부고객"}
+{"input_id": "PINPUT-40c3bc75d6652453ca4ef2f6", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 IR 고객 다변화 특정 고객 의존도 장기계약 수요 가시성"}
+{"input_id": "PINPUT-c561fc7801dc032cb2254da3", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2025년 사업보고서 주요 고객 매출 비중 고객 집중도 고객 의존도"}
+{"input_id": "PINPUT-1e381edd03b678e91b02da0c", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 공식 IR 고객 다변화 고객사 의존도 매출 비중"}
+{"input_id": "PINPUT-e1bdb6bb664c9ba80954a4b7", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 공식 공시 주요 고객 변경 의존관계 해소 계약 종료 2025년 대비"}
+{"input_id": "PINPUT-798f19d642c61965fef6be40", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 고객사 품질 인증 승인 통과 지연 재설계 재개"}
+{"input_id": "PINPUT-9595e2c6f9f761808c99f3a7", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 컨퍼런스콜 고객 인증 qualification 진행 상황 미해결 실행 위험"}
+{"input_id": "PINPUT-ac5ee50cc8f8ec0c86aa7328", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1월 1일~7월 11일 고객사 공식 발표 품질 인증 승인 지연 재설계 공급 검증"}
+{"input_id": "PINPUT-ca1756f67ed8b04221fefc64", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 주요 고객 매출 비중 10% 이상 고객 집중도 DART"}
+{"input_id": "PINPUT-1ad5ff29dc59c2d11c4d0cb4", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2025년 사업보고서 주요 매출처 고객별 매출 비중 특정 고객 의존도 DART"}
+{"input_id": "PINPUT-330c4e3b237c6588f602505d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 공식 IR 고객 다변화 특정 고객 수요 의존도"}
+{"input_id": "PINPUT-1bb44ac0248bff786f80918f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "site:samsung.com/global/ir 삼성전자 2026년 2분기 잠정실적 매출 영업이익 영업이익률 발표일 2026-07-11 이전"}
+{"input_id": "PINPUT-6eefcd8a7adf0b24ba043aca", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "site:dart.fss.or.kr 삼성전자 2026년 1분기 분기보고서 연결 현금흐름표 영업활동현금흐름 유형자산 취득 CAPEX 발표일 2026-07-11 이전"}
+{"input_id": "PINPUT-42ef79c4a4208522573f351e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "site:samsung.com/global/ir 삼성전자 2026년 1분기 공식 IR 재고자산 매출채권 매입채무 운전자본 현금흐름 발표일 2026-07-11 이전"}
+{"input_id": "PINPUT-bbd9bf03acb39b081a30711e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 DART 분기보고서 영업이익률 영업활동현금흐름 설비투자 운전자본"}
+{"input_id": "PINPUT-025c3a27594be78b54a89661", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 IR 영업이익률 잉여현금흐름 CAPEX 현금창출력"}
+{"input_id": "PINPUT-8f3419450b71bb8774a794c0", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 CompanyGuide 잉여현금흐름 감소 운전자본 증가 설비투자 부담"}
+{"input_id": "PINPUT-d642a2825fc3be259bbd749a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 실적자료 생산능력 캐파 선판매 예약 고객 배정 제품 세대 공식 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-97527774c89ab52ba5326e84", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 공급 물량 생산능력 예약 배정 제품 세대 고객사 공식 발표 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-6e1726f96bdfa01f72ea0640", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 생산능력 여유 미판매 주문 감소 고객 배정 취소 공식 문서 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-d9e02359e85fbbd60e67456c", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 DART 주요 제품 판매가격 변동 DRAM NAND 디스플레이 스마트폰"}
+{"input_id": "PINPUT-37095854a939b64e8dfcc172", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 IR 메모리 HBM DRAM NAND ASP 평균판매가격 계약가격"}
+{"input_id": "PINPUT-4ed07436abb5e7c9e520f986", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 공식자료 제품별 ASP 하락 계약가격 인하 가격 재협상"}
+{"input_id": "PINPUT-1197d910c3b63922c50f5bc1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 자료 DRAM NAND 제품별 ASP 가격 변동 공식 2026-07-11 이전"}
+{"input_id": "PINPUT-65b64065433475acaa66bb35", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 CompanyGuide 리서치 DRAM NAND 계약가격 ASP 추정 변경 2026-07-11 이전"}
+{"input_id": "PINPUT-76c2fba9da44d3eb8882f0c4", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 메모리 ASP 하락 보합 가격 전망 정정 실적 리포트 2026-07-11 이전"}
+{"input_id": "PINPUT-7cdb5aadf10498460d26ea05", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 HBM AI 메모리 매출 출하량 제품 비중 공식 IR site:samsung.com/global/ir"}
+{"input_id": "PINPUT-0e1c19d592e2c58e82cb2637", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 HBM AI 메모리 매출 출하 믹스 공식 자료 2026년 7월 11일 이전 site:samsung.com"}
+{"input_id": "PINPUT-a11564ce7397b586dfd98ee4", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 및 2분기 HBM 출하 지연 매출 감소 제품 믹스 변경 전망 정정 공식 IR 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-518675e285b46469fefbfa9f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 실적발표 고객사 품질 인증 통과 지연 재설계 재개 미해결 공식 IR"}
+{"input_id": "PINPUT-e5149c6ebf9763ff2064dfe0", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 고객사 공식 발표 공급업체 qualification 승인 지연 재검증"}
+{"input_id": "PINPUT-b26656893fc777dc99a6930e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 고객 인증 실패 지연 재설계 재개 실행 리스크 리서치 보고서"}
+{"input_id": "PINPUT-10d28fd6841b0290c09a2f4b", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 주요 고객 매출 비중 고객 집중도 단일 고객 10% DART"}
+{"input_id": "PINPUT-bf12fedc71d368e87308be25", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2025년 사업보고서 주요 매출처 고객 의존도 고객별 매출 비중 고객 다변화 DART"}
+{"input_id": "PINPUT-0ecb3185525934352021a3a8", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 컨퍼런스콜 고객 집중도 고객 다변화 수요 가시성 site:samsung.com"}
+{"input_id": "PINPUT-38219af1824321e8339554a8", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 HBM3E HBM4 생산능력 고객 배정 선판매 공급 물량 IR 2026-07-11 이전"}
+{"input_id": "PINPUT-a6c3eff5f60bfe5c858a27af", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기보고서 반도체 생산능력 가동률 생산실적 HBM DART 2026-07-11 이전"}
+{"input_id": "PINPUT-2619b2a7e33eb1b5350711ac", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 HBM 고객 인증 지연 미판매 잉여 생산능력 공급과잉 IR 2026-07-11 이전"}
+{"input_id": "PINPUT-d6fb7936282b5706149804d9", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 매출 영업이익 HBM 메모리 제품 믹스 ASP 공식 IR 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-7ee9e84d2abda49ce3fa3ad1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 매출 영업이익 DS부문 HBM 메모리 제품 믹스 ASP 공식 IR 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-713af1a08f8e44a7d77577a5", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 정정 공시 HBM 매출 기여 제한 메모리 ASP 하락 실적 영향 공식 자료 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-8a134b9cde8f3546dd76df47", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 실적발표 IR HBM 메모리 매출 영업이익 기여 전망 2026-07-11 이전 발표"}
+{"input_id": "PINPUT-930d1026bc92779ff9dab6c3", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 연간 예상실적 리서치 선행 EPS PER 밸류에이션 HBM 메모리 이익 기대 이미 반영 2026-07-11 이전 발간"}
+{"input_id": "PINPUT-0ed14e88c9fdda0d4230cac7", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기·하반기 공식 IR 또는 리서치 HBM 공급 지연 수율 가격 하락 메모리 이익 전망 하향 또는 기존 전망 수정 2026-07-11 이전 발표"}
+{"input_id": "PINPUT-9a68fc06a82d1adab67232f2", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 IR 제품 세대별 생산능력 고객 배정 선판매 수주 공급 제약 공식 자료"}
+{"input_id": "PINPUT-70e5ab0cce323d2bd3ad1dd2", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 제품별 생산능력 가동률 재고 미판매 물량 공급 여유 공식 공시"}
+{"input_id": "PINPUT-508941cafa6aa5acdf173dda", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 이후 2026년 7월 11일까지 공식 IR 공시 생산능력 고객 배정 계획 변경 지연 취소 대체"}
+{"input_id": "PINPUT-ab2d0c00f0011aa7b6dfeff2", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 HBM AI 메모리 매출 비중 출하량 공식 IR"}
+{"input_id": "PINPUT-d299a281abee9b9eb223f702", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기보고서 HBM AI 메모리 매출 출하량 제품 비중 DART"}
+{"input_id": "PINPUT-aa568a6e769ac5c9b14625ab", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 HBM AI 메모리 출하 감소 매출 비중 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-89eae4bbdcef2ac795d4b6ae", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 IR 고객사 품질검증 승인 여부 공급 지연 2026-07-11 이전"}
+{"input_id": "PINPUT-8db66ef5afbc33550393c37e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 고객사 공식자료 공급업체 인증 재심사 설계변경 검증 재개 2026-07-11 이전"}
+{"input_id": "PINPUT-1e0d4e941538d103919070e9", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 증권사 보고서 고객 승인 일정 양산 전환 차질 미해결 실행 위험 2026-07-11 이전"}
+{"input_id": "PINPUT-074113ca1b10bb4519bc73cf", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 005930 2026년 1분기 분기보고서 영업이익률 영업활동현금흐름 CAPEX 재고자산 매출채권 2026-07-11 이전"}
+{"input_id": "PINPUT-0dbd85e6d4c04d80c65f85fb", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 005930 2026년 2분기 잠정실적 영업이익률 CompanyGuide 추정치 변경 2026-07-11 이전"}
+{"input_id": "PINPUT-2b912f2814b62a35b03c5368", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 005930 2026년 1분기 잉여현금흐름 CAPEX 운전자본 부담 현금창출력 약화 리서치 보고서 2026-07-11 이전"}
+{"input_id": "PINPUT-8ffbe906c968787d4e152ed6", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 연결기준 잠정실적 매출 영업이익 공식 IR"}
+{"input_id": "PINPUT-dbadb104293df25f19e97a90", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 HBM 메모리 제품 믹스 ASP 매출 영업이익 공식 IR"}
+{"input_id": "PINPUT-370b251290aa74d2faee2eb3", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 DS부문 메모리 매출 영업이익 HBM DART"}
+{"input_id": "PINPUT-918c4151b6558342f8a5c117", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 연간 실적 전망 컨센서스 PER PBR HBM 메모리 CompanyGuide"}
+{"input_id": "PINPUT-28777b58f695eafbd75ecc03", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 리서치 보고서 HBM 메모리 영업이익 밸류에이션 기대 선반영"}
+{"input_id": "PINPUT-1490f4afd37af75b6891f325", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 연간 이익 추정치 하향 HBM 지연 메모리 가격 밸류에이션 리서치"}
+{"input_id": "PINPUT-55398ea62c0fa0b7a520504d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 공식 IR 설비투자 CAPEX 집행액 재원 생산능력 증설 일정"}
+{"input_id": "PINPUT-44f8bc034450129499d82539", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 공식 실적자료 생산능력 증가 수요 전망 가동률 재고 공급과잉 위험"}
+{"input_id": "PINPUT-5ee1c0d80481365796b2688f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 공식 공시 IR 기존 설비투자 증설 계획 변경 연기 취소 대체 일정"}
+{"input_id": "PINPUT-fb5b98f3a0f3f029cdb3aa12", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 공식 IR HBM AI 메모리 매출 출하량 비중"}
+{"input_id": "PINPUT-22d17278a0b6b1d8a212c732", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 DART HBM AI 메모리 매출액 출하량 제품 비중"}
+{"input_id": "PINPUT-817838995ef0a4ff037959a0", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 2026년 7월 11일 이전 공식 자료 HBM AI 메모리 매출 출하량 비중"}
+{"input_id": "PINPUT-23564c9d0b692a53b4669847", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 고객사 품질 인증 통과 승인 공식 발표"}
+{"input_id": "PINPUT-ceb6743ab74bfa237ff49eb7", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 실적발표 고객사 인증 지연 재설계 재개 미해결"}
+{"input_id": "PINPUT-ac37d2fec2bba45687bef712", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1월 1일~2026년 7월 11일 고객사 공식 문서 qualification 승인 지연 실행 위험"}
+{"input_id": "PINPUT-fa0bc417815062755517dddc", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 공식 IR 제품 세대별 샘플 평가 양산 출하 상용 공급 제품 사양"}
+{"input_id": "PINPUT-8e58d531452472274b878d0d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 DART 분기보고서 제품 세대별 연구개발 제품화 양산 출하 현황"}
+{"input_id": "PINPUT-9145ddaa10be805688fb7559", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1월 1일~7월 11일 공식 발표 제품 세대 샘플 양산 출하 공급 지연 중단 계획"}
+{"input_id": "PINPUT-775763ca7a65265b6430774b", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 IR 고객 주문 장기공급계약 물량 배정 선주문 공식"}
+{"input_id": "PINPUT-6695e25f959e76d39b8146b6", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 고객과의 계약 공급 약정 수주잔고 DART"}
+{"input_id": "PINPUT-cef3569b5b54d8792ff7a9e5", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 고객사 공식 발표 공급계약 구매약정 예약 물량 배정"}
+{"input_id": "PINPUT-f23d2e268b26f27a1fdba4f0", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 고객 구매확약 선주문 물량 배정 공급계약"}
+{"input_id": "PINPUT-1edae790d0eff431cdc13dc6", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 DART 공시 고객 공급계약 구매약정 선수금 계약부채 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-f1b7557b9b18d25815bbcb9a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 고객사 공식 발표 구매확약 선주문 공급 물량 배정 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-3948c5ce16b13aef8c82376a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 매출액 영업이익 공식 IR 2026-07-11 이전"}
+{"input_id": "PINPUT-9159add9fce428ccd8772406", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 HBM 메모리 제품 믹스 ASP 매출 영업이익 공식 자료 2026-07-11 이전"}
+{"input_id": "PINPUT-4ecc4c1bec36fa5ff888ae17", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 DS부문 매출 영업이익 메모리 가격 재고 수요 DART 2026-07-11 이전"}
+{"input_id": "PINPUT-dc8b69419b17af243cc6cc3e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 공식 IR 제품 세대 샘플 양산 출하 상용 공급 제품 프로필 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-33fd0050bf6ba280049759f8", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 DART 공시 제품 세대 개발 샘플 생산 양산 판매 현황 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-d59cf52d27030b1813b4fb87", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 고객사 공식 발표 제품 세대 샘플 인증 양산 출하 공급 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-5f54e5495d3b6a9eed46affe", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 IR 범용 DRAM NAND 재고 제품 믹스 HBM 2026-07-11 이전 site:samsung.com"}
+{"input_id": "PINPUT-ce9b75be1a8655fc9645e987", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 범용 DRAM NAND 수요 약세 재고조정 제품 믹스 HBM 상쇄 리서치 보고서 2026-07-11 이전"}
+{"input_id": "PINPUT-c460393f8d7769f78431b69d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 IR 범용 DRAM NAND 재고 믹스 2026년 1분기 전망 수정 변경 HBM 2026-07-11 이전 site:samsung.com"}
+{"input_id": "PINPUT-c1ba7f0358eb9dd0992665a1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 공식 발표 매출 영업이익 증감 원인 하반기 가이던스 2026-07-11 이전"}
+{"input_id": "PINPUT-68dc18fc7c942c4d9c919726", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 반영 2026년 영업이익 추정치 조정 근거 리서치 보고서 2026-07-11 이전"}
+{"input_id": "PINPUT-fec3635ea8bcd5e36b139a31", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 영업활동현금흐름 설비투자 잉여현금흐름 변동 원인 2026-07-11 이전"}
+{"input_id": "PINPUT-8bc369eb8ffdf6be78c8ddb8", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 연간 컨센서스 예상 EPS PER PBR HBM 메모리 이익 전망 CompanyGuide 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-622ae3ff65577b40f18883ef", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 증권사 리서치 HBM 메모리 영업이익 전망 밸류에이션 시장 기대 선반영 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-edc3b80d348175ff467d62cf", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 연간 증권사 리서치 HBM 지연 메모리 가격 하락 이익 추정치 하향 밸류에이션 부담 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-fac32ce9ee0f2d9d02d6bb5e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 공식 IR 고객 구매약정 선주문 공급물량 배정 계약 조건 2026-07-11 이전"}
+{"input_id": "PINPUT-484c7b9436a70da916a0acbd", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 DART 단일판매 공급계약 고객명 계약금액 공급물량 계약기간 정정 2026-07-11 이전"}
+{"input_id": "PINPUT-fb51d52abb75f5f5b8e7c073", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 고객사 공식 발표 구매계약 선주문 물량배정 축소 취소 종료 2026-07-11 이전"}
+{"input_id": "PINPUT-88482806471abc291ad304ea", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 HBM AI 메모리 매출 출하량 제품 비중 공식 IR"}
+{"input_id": "PINPUT-b976db533ece95e8da26422d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 HBM AI 메모리 매출 비중 출하 공식 공시"}
+{"input_id": "PINPUT-b3d7b63a849a84c6166d34c9", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 컨퍼런스콜 HBM 고객 인증 지연 출하 제한 매출 영향 공식 발언"}
+{"input_id": "PINPUT-02b997a4a59611c54d74b144", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 컨퍼런스콜 공식 IR 2026년 하반기 수익성 영업현금흐름 CAPEX 전망 근거 발간일 2026-04-01~2026-07-11"}
+{"input_id": "PINPUT-ca06ac958178872632c7fa71", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 발표 후 2026년 영업이익 추정치 변경 보고서 메모리 ASP HBM 파운드리 근거 발간일 2026-07-08~2026-07-11"}
+{"input_id": "PINPUT-fabf586528f4dc554611ee50", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 잉여현금흐름 추정 보고서 운전자본 재고 설비투자 현금흐름 전망을 약화시키는 근거 발간일 2026-01-01~2026-07-11"}
+{"input_id": "PINPUT-78a79a3e701f8a7b941e0389", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 DRAM NAND 메모리 제품 믹스 HBM 2026-07-11 이전 공식 자료"}
+{"input_id": "PINPUT-4e2de3efbb9a242a3c60ef7a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 컨퍼런스콜 DRAM NAND 수요 약세 재고 믹스 HBM 공식 PDF"}
+{"input_id": "PINPUT-76876b71e933fd4da7897136", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 재고자산 DRAM NAND HBM DART"}
+{"input_id": "PINPUT-8d43fa215d38c7071e583ffb", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 DART 연결 영업이익률 영업활동현금흐름 유형자산 취득 2026-07-11 이전"}
+{"input_id": "PINPUT-d9fc9a796300c4bc2b95e1f1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 IR 영업이익률 현금흐름 CAPEX 재고자산 매출채권 매입채무 2026-07-11 이전"}
+{"input_id": "PINPUT-d40d24d88c7a48c993f601b1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2025년 연간 및 2026년 1분기 CompanyGuide 잉여현금흐름 운전자본 증감 영업이익률 악화 2026-07-11 이전"}
+{"input_id": "PINPUT-ecdd381a501d50568da415f5", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 컨퍼런스콜 2026년 연간 매출 영업이익 영업현금흐름 전망 투자계획 발표일 2026-07-11 이전"}
+{"input_id": "PINPUT-1f0a1f96ed50c094a85db31e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 반영 2026년 연간 영업이익 잉여현금흐름 컨센서스 추정치 변경 근거 발행일 2026-07-11 이전"}
+{"input_id": "PINPUT-c6ca0c82ed5e35c3842c9976", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 연간 영업이익 현금흐름 추정치 하향 위험 근거 리서치 발행일 2026-01-01~2026-07-11"}
+{"input_id": "PINPUT-3af0753cc2a60896563452e2", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 IR HBM AI 메모리 매출 비중 출하량 site:samsung.com"}
+{"input_id": "PINPUT-7372f4738e98a76603aea860", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 HBM AI 메모리 매출 출하 제품 구성 site:dart.fss.or.kr"}
+{"input_id": "PINPUT-87b41db7911ad70ee6b137d3", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 2026-07-11 이전 HBM 출하량 매출 비중 고객 인증 공급 지연"}
+{"input_id": "PINPUT-9c56490d9175e1911b5f6dcf", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 HBM3E HBM4 생산능력 고객 배정 선판매 공급 제약"}
+{"input_id": "PINPUT-64742eddfac5f85872d27656", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 DART 분기보고서 반도체 생산능력 가동률 수주잔고 공급능력"}
+{"input_id": "PINPUT-288807bdb72c125975ef069b", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 공식 자료 HBM 파운드리 생산능력 여유 주문 감소 고객 인증 지연"}
+{"input_id": "PINPUT-4d27145bd3b131dfad0e3957", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 HBM 메모리 영업이익 컨센서스 2026년 7월 11일 이전 DART"}
+{"input_id": "PINPUT-843f11bb7c584f0bf5d25165", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 연간 전망 EPS PER PBR 컨센서스 HBM 메모리 이익 반영 2026년 7월 11일 이전 CompanyGuide"}
+{"input_id": "PINPUT-31f344ba213b6a5f09ee57f4", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 증권사 리서치 HBM 메모리 호황 시나리오 주가 선반영 여부 반대 근거 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-30016f98b51a38632e9d7210", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 IR 제품 세대 샘플 평가 양산 출하 상용 공급"}
+{"input_id": "PINPUT-0c1c5e269f5ee124380ed9da", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 DART 분기보고서 제품 세대 개발 단계 제품 소개 사양 샘플 양산 판매"}
+{"input_id": "PINPUT-5282caf4157340e8d19b0ce6", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 공식 공시 IR 제품 세대 인증 지연 양산 지연 출하 지연 공급 취소"}
+{"input_id": "PINPUT-f0f5616f8942e2410b68f625", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 IR 시설투자 CAPEX 집행액 투자 재원 메모리 HBM 생산능력 공식 문서 2026-07-11 이전"}
+{"input_id": "PINPUT-edd7f992b90187eb9a4dd539", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 DART 생산능력 증설 건설중인자산 설비투자 완료 예정 일정 2026-07-11 이전"}
+{"input_id": "PINPUT-9ec14c44e1881467604d96b2", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 컨퍼런스콜 공급 증가 가동률 재고 수급 완화 공급과잉 위험 HBM DRAM NAND 공식 자료 2026-07-11 이전"}
+{"input_id": "PINPUT-c1feffd0bdca2abb2f1e0600", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 공식 문서 매출 영업이익"}
+{"input_id": "PINPUT-75a477130c5d61f8325ccd2f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 매출 영업이익 HBM 메모리 제품 믹스 ASP"}
+{"input_id": "PINPUT-9dee1e28d4a2c53f48752dbf", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 영업이익 HBM 출하 지연 메모리 믹스 ASP 부정적 영향"}
+{"input_id": "PINPUT-957ef817351f8f1a131f091f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 IR 설비투자 CAPEX 생산능력 증설 일정 2026-07-11 이전"}
+{"input_id": "PINPUT-3d064542dbdfa1a2a8120a9d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 DART 설비투자 집행 투자약정 건설중인자산 생산능력 2026-07-11 이전"}
+{"input_id": "PINPUT-2885cd6f740ae6754a2743f7", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 컨퍼런스콜 설비투자 지연 축소 가동률 재고 공급과잉 위험 2026-07-11 이전"}
+{"input_id": "PINPUT-b7ea2ffc433f94188e28d85b", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 공식 실적발표 IR 영업이익률 영업현금흐름 CAPEX 잉여현금흐름"}
+{"input_id": "PINPUT-f8b8399f1ef95e629fcf9714", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 현금흐름표 유형자산 취득 재고자산 매출채권 운전자본"}
+{"input_id": "PINPUT-94ad6aa30c80478bafdfe05d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 공식 발표 2026년 1분기 대비 영업이익 수익성 약화 변경"}
+{"input_id": "PINPUT-cb6dbb4ce08af0885ff9fb5f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 제품별 평균판매가격 ASP 가격 상승 하락 DART"}
+{"input_id": "PINPUT-cf85d4a21fcd6faacbead85c", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 컨퍼런스콜 제품별 ASP 가격 인상 인하 동결 IR"}
+{"input_id": "PINPUT-ff317aa9cab7a21f3a8c2145", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 2026-06-30 종료 2026-07-11 이전 공식 발표 제품 ASP 계약가격 가격 조정"}
+{"input_id": "PINPUT-63d43544c18984d6669203f0", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 공식 발표 2026년 하반기 실적 전망 영업이익 근거 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-5e294f656ead6fd33139528e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 반영 2026년 연간 영업이익 추정치 상향 하향 변경 근거 증권사 리서치 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-703dd372b9c6d8b1de25f2bb", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 연간 영업현금흐름 잉여현금흐름 추정 변경 CAPEX 운전자본 하방 위험 근거 리서치 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-73200c4375f6018b089a8ffc", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 DRAM NAND 재고 ASP 제품 믹스 HBM 공식 IR"}
+{"input_id": "PINPUT-ab2817488a92abacf687531a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 DS부문 재고자산 DRAM NAND HBM DART"}
+{"input_id": "PINPUT-3898ae8d80c0e2ee9e9aed9c", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 DRAM NAND 수요 가격 제품 믹스 HBM 2026년 7월 11일 이전 리서치"}
+{"input_id": "PINPUT-6d46df0216701395e295542a", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 사업보고서 연결 현금흐름표 영업활동현금흐름 유형자산 취득 운전자본 DART"}
+{"input_id": "PINPUT-cbd9f4621a5977562268b4d9", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 자료 영업이익률 CAPEX 잉여현금흐름 공식 IR"}
+{"input_id": "PINPUT-5af63b6854d89d9b8c055a6b", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 매출 영업이익 영업이익률 공식 IR 2026-07-11 이전"}
+{"input_id": "PINPUT-1909611f55a5ae6908129d76", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 공식 발표 DRAM NAND 가격 재고 제품 믹스 HBM"}
+{"input_id": "PINPUT-5a0839688ef23aca97e20b44", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 컨퍼런스콜 공식 DRAM NAND 수요 약세 재고 가격 HBM"}
+{"input_id": "PINPUT-a664e0bd34a4c84e0599de19", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 사업보고서 공식 반도체 재고자산 DRAM NAND HBM 매출 믹스"}
+{"input_id": "PINPUT-907940c39572081f7d49aeac", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 실적 전망 2026년 7월 1일~11일 발간 증권사 리포트 PDF 예상 EPS PER 밸류에이션 HBM 메모리 이익 기여 산정 근거"}
+{"input_id": "PINPUT-b5d2a426d10daf1b0ccadc74", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 후 2026-07-11 이전 발간 증권사 리포트 PDF HBM 메모리 이익 기여 컨센서스 상향 하향 근거"}
+{"input_id": "PINPUT-0919d88b884f0306f696100e", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 2026-07-11 이전 발간 리서치 PDF HBM 고객 인증 지연 메모리 가격 하락 이익 추정 하향 밸류에이션 선반영"}
+{"input_id": "PINPUT-ae20d310b3010381204640e9", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 제품별 평균판매가격 ASP 가격 변동 DART"}
+{"input_id": "PINPUT-dca9cf65d007a540b20e65c6", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 컨퍼런스콜 제품별 ASP 상승 하락 삼성전자 IR"}
+{"input_id": "PINPUT-8b8051b2ab4156262ff56a6f", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1월 1일~7월 11일 제품별 계약가격 가격 인상 가격 인하 공식 발표"}
+{"input_id": "PINPUT-9a3fbe05adbfbd8682dd4785", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 컨퍼런스콜 2026년 연간 영업이익 영업현금흐름 설비투자 전망 공식 IR 발간일 2026-07-11 이전"}
+{"input_id": "PINPUT-b4fa148e76718a91aeaac7f3", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 반영 2026년 연간 영업이익 잉여현금흐름 추정치 변경 근거 증권사 리서치 발간일 2026-07-11 이전"}
+{"input_id": "PINPUT-640e363158ad080f4aac4237", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 기업설명회 자료 정정 공시 전망 변경 영업이익 현금흐름 2026-07-11 이전 site:dart.fss.or.kr"}
+{"input_id": "PINPUT-06585cd38285caccd1f1eaf4", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 DRAM NAND 수요 약세 가격 제품 믹스 HBM IR"}
+{"input_id": "PINPUT-beb6c6267d35549a3679e30b", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 메모리 재고자산 DRAM NAND HBM DART"}
+{"input_id": "PINPUT-4d2cc0bafc766288c92d115d", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 DRAM NAND 가격 재고 제품 믹스 HBM 산업 보고서 발행일 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-cd035a74872f428a9f4ece10", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1월 1일~7월 11일 IR 고객사 품질 인증 통과 지연 재설계 미해결"}
+{"input_id": "PINPUT-000332f9343eee1d62604849", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1월 1일~7월 11일 고객사 품질 인증 미통과 실행 위험 반박 공식 문서"}
+{"input_id": "PINPUT-382c306671baae1b8c83d0bc", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1월 1일~7월 11일 고객사 품질 인증 재개 재심사 이전 상태 정정 공식 발표"}
+{"input_id": "PINPUT-08c8085d2e3da502e7cedc25", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 제품 세대별 생산능력 공급 제약 sold out 선판매 고객 할당 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-df54bdeee4ccd8037fd119f6", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 공식 발표 제품 세대별 생산능력 수주 예약 고객 배정 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-f3f200341e82209868a4b914", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 DART IR 제품 세대별 생산능력 증설 공급 여유 주문 취소 고객 할당 해제 2026년 7월 11일 이전"}
+{"input_id": "PINPUT-b032ef00cbff5f2b0732a4aa", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 설비투자 CAPEX 생산능력 증설 일정 공식 IR"}
+{"input_id": "PINPUT-e2d17877dfa43976a4852064", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 시설투자 집행액 생산능력 가동률 DART"}
+{"input_id": "PINPUT-656ea0e5f425dd1618be786b", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 메모리 생산능력 증설 공급 증가 과잉생산 위험 산업 보고서 2026-07-11 이전"}
+{"input_id": "PINPUT-879b4a90d7088a6604f2798b", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 매출 영업이익 공식 발표 2026-07-11 이전"}
+{"input_id": "PINPUT-fc9de4d08fae4f93a44013db", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 실적발표 DS부문 매출 영업이익 HBM 메모리 제품 믹스 ASP 공식 자료"}
+{"input_id": "PINPUT-721c86e58694b19e68a7fd75", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 1분기 분기보고서 HBM 판매 지연 메모리 ASP 하락 영업이익 영향 DART"}
+{"input_id": "PINPUT-ea1eb85cad421b99c20561a2", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 연간 실적 컨센서스 EPS 영업이익 PER PBR CompanyGuide 2026-07-11 이전"}
+{"input_id": "PINPUT-e425d7962d02bbaf4fc2e8d8", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 HBM 메모리 영업이익 추정 밸류에이션 반영 증권사 리서치 보고서 2026-07-11 이전"}
+{"input_id": "PINPUT-2df1013e9829d731429829a4", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 연간 HBM 메모리 이익 전망 하향 위험 시장 기대 선반영 리서치 보고서 2026-07-11 이전"}
+{"input_id": "PINPUT-e580c69c46bcc62b166133f1", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 잠정실적 공식 공시 2026년 연간 실적 가이던스 영업이익 현금흐름 전망 근거"}
+{"input_id": "PINPUT-ec59c09afeadcf8383058742", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 2분기 CompanyGuide 2026년 연간 매출 영업이익 현금흐름 컨센서스 추정치 상향 하향 변경 근거"}
+{"input_id": "PINPUT-8df2e25421bc007545808895", "input_type": "QUERY", "origin": "LLM_PLANNER", "value": "삼성전자 2026년 상반기 리서치 보고서 2026년 연간 이익 현금흐름 전망 하향 위험 기존 전망 철회 또는 수정 근거"}
+{"input_id": "PINPUT-4db474ef3bc28776d1589d39", "input_type": "PROMPT_CONTEXT", "origin": "CANONICAL_PIPELINE", "value": "question contracts, current production evidence, and score-gap context only"}

@@ -1,0 +1,621 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "No additional distinct fact remains after ten prior accepted issuer-wide ADR decision atoms; no HBM, signed-customer, or durable-visibility upgrade is inferred.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "No additional objective-local fact remains after the current broker estimates and historical target-price calibration rows were fully accounted; none is promoted to issuer guidance or HBM-only economics.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "No additional distinct fact remains after twenty-two prior accepted official ADR and issuer-wide capital atoms; none is promoted to HBM-only economics or customer visibility.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Twelve next source-order historical broker atoms were extracted: controlling net-income growth four, DRAM bit shipments five, and quarterly DRAM bit growth three. Total-versus-controlling attribution and broad-DRAM scope were preserved; all facts remain SUPERSEDED.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Consolidated historical broker forecast with controlling-shareholder attribution, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 2Q24F controlling-shareholder net-income quarter-on-quarter growth of 72 percent. It is superseded and preserves controlling attribution rather than total net income or HBM-only earnings.",
+        "exact_quote": "지배주주 순이익 -2,580 -2,991 -2,184 -1,357 1,918 3,300 3,901 4,294 2,230 -9,112 13,414 15,473\nQoQ/YoY RR RR RR RR TTB 72.0 18.2 10.1 -76.8 TTR TTB 15.4",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit period and controlling-shareholder denominator preserve the historical earnings bridge without converting it to total or HBM-only profit.",
+        "mechanism_scope_id": "000660:CONTROLLING_NET_INCOME_QOQ_GROWTH:2Q24F:MIRAE",
+        "normalized_object": "Historical 2Q24F controlling net-income QoQ growth forecast of 72 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker to grow quarter on quarter by",
+        "predicate_family": "HISTORICAL_CONTROLLING_NET_INCOME_GROWTH_FORECAST",
+        "primitive_tags": [
+          "2Q24_FORECAST",
+          "SUPERSEDED",
+          "CONTROLLING_ATTRIBUTION"
+        ],
+        "product_family": "Issuer-wide memory controlling net-income growth forecast",
+        "question_family_id": "HISTORICAL_CONTROLLING_NET_INCOME_GROWTH_FORECAST",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME",
+          "QOQ_GROWTH",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix 2Q24F controlling net-income growth forecast",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_QOQ_GROWTH:2Q24F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 72
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast with controlling-shareholder attribution, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 3Q24F controlling-shareholder net-income quarter-on-quarter growth of 18.2 percent. It is superseded and preserves controlling attribution rather than total net income or HBM-only earnings.",
+        "exact_quote": "지배주주 순이익 -2,580 -2,991 -2,184 -1,357 1,918 3,300 3,901 4,294 2,230 -9,112 13,414 15,473\nQoQ/YoY RR RR RR RR TTB 72.0 18.2 10.1 -76.8 TTR TTB 15.4",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit period and controlling-shareholder denominator preserve the historical earnings bridge without converting it to total or HBM-only profit.",
+        "mechanism_scope_id": "000660:CONTROLLING_NET_INCOME_QOQ_GROWTH:3Q24F:MIRAE",
+        "normalized_object": "Historical 3Q24F controlling net-income QoQ growth forecast of 18.2 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "3Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker to grow quarter on quarter by",
+        "predicate_family": "HISTORICAL_CONTROLLING_NET_INCOME_GROWTH_FORECAST",
+        "primitive_tags": [
+          "3Q24_FORECAST",
+          "SUPERSEDED",
+          "CONTROLLING_ATTRIBUTION"
+        ],
+        "product_family": "Issuer-wide memory controlling net-income growth forecast",
+        "question_family_id": "HISTORICAL_CONTROLLING_NET_INCOME_GROWTH_FORECAST",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME",
+          "QOQ_GROWTH",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix 3Q24F controlling net-income growth forecast",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_QOQ_GROWTH:3Q24F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 18.2
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast with controlling-shareholder attribution, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 4Q24F controlling-shareholder net-income quarter-on-quarter growth of 10.1 percent. It is superseded and preserves controlling attribution rather than total net income or HBM-only earnings.",
+        "exact_quote": "지배주주 순이익 -2,580 -2,991 -2,184 -1,357 1,918 3,300 3,901 4,294 2,230 -9,112 13,414 15,473\nQoQ/YoY RR RR RR RR TTB 72.0 18.2 10.1 -76.8 TTR TTB 15.4",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit period and controlling-shareholder denominator preserve the historical earnings bridge without converting it to total or HBM-only profit.",
+        "mechanism_scope_id": "000660:CONTROLLING_NET_INCOME_QOQ_GROWTH:4Q24F:MIRAE",
+        "normalized_object": "Historical 4Q24F controlling net-income QoQ growth forecast of 10.1 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "4Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker to grow quarter on quarter by",
+        "predicate_family": "HISTORICAL_CONTROLLING_NET_INCOME_GROWTH_FORECAST",
+        "primitive_tags": [
+          "4Q24_FORECAST",
+          "SUPERSEDED",
+          "CONTROLLING_ATTRIBUTION"
+        ],
+        "product_family": "Issuer-wide memory controlling net-income growth forecast",
+        "question_family_id": "HISTORICAL_CONTROLLING_NET_INCOME_GROWTH_FORECAST",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME",
+          "QOQ_GROWTH",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix 4Q24F controlling net-income growth forecast",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_QOQ_GROWTH:4Q24F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 10.1
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast with controlling-shareholder attribution, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2025F controlling-shareholder net-income year-on-year growth of 15.4 percent. It is superseded and preserves controlling attribution rather than total net income or HBM-only earnings.",
+        "exact_quote": "지배주주 순이익 -2,580 -2,991 -2,184 -1,357 1,918 3,300 3,901 4,294 2,230 -9,112 13,414 15,473\nQoQ/YoY RR RR RR RR TTB 72.0 18.2 10.1 -76.8 TTR TTB 15.4",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit period and controlling-shareholder denominator preserve the historical earnings bridge without converting it to total or HBM-only profit.",
+        "mechanism_scope_id": "000660:CONTROLLING_NET_INCOME_YOY_GROWTH:FY2025F:MIRAE",
+        "normalized_object": "Historical FY2025F controlling net-income YoY growth forecast of 15.4 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker to grow year on year by",
+        "predicate_family": "HISTORICAL_CONTROLLING_NET_INCOME_GROWTH_FORECAST",
+        "primitive_tags": [
+          "Y2025F_FORECAST",
+          "SUPERSEDED",
+          "CONTROLLING_ATTRIBUTION"
+        ],
+        "product_family": "Issuer-wide memory controlling net-income growth forecast",
+        "question_family_id": "HISTORICAL_CONTROLLING_NET_INCOME_GROWTH_FORECAST",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME",
+          "YOY_GROWTH",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025F controlling net-income growth forecast",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_YOY_GROWTH:FY2025F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 15.4
+      },
+      {
+        "business_segment": "DRAM historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 2Q24F DRAM bit shipments of 19,629 billion Gb. It is superseded broad DRAM volume, not HBM-only shipment, issuer guidance, or durable visibility.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact broad-DRAM shipment denominator is retained as superseded supply context without conversion to HBM-only capacity.",
+        "mechanism_scope_id": "000660:DRAM:BIT_SHIPMENT:2Q24F:MIRAE",
+        "normalized_object": "Historical 2Q24F DRAM bit-shipment forecast of 19,629 billion Gb",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_FORECAST",
+        "primitive_tags": [
+          "2Q24_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM bit-shipment forecast",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_FORECAST",
+        "question_family_tags": [
+          "DRAM_SHIPMENT",
+          "HISTORICAL_FORECAST",
+          "SUPPLY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 2Q24F DRAM bit-shipment forecast",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT:2Q24F:MIRAE_2024-05-16",
+        "unit": "billion Gb",
+        "value": 19629
+      },
+      {
+        "business_segment": "DRAM historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 3Q24F DRAM bit shipments of 21,704 billion Gb. It is superseded broad DRAM volume, not HBM-only shipment, issuer guidance, or durable visibility.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact broad-DRAM shipment denominator is retained as superseded supply context without conversion to HBM-only capacity.",
+        "mechanism_scope_id": "000660:DRAM:BIT_SHIPMENT:3Q24F:MIRAE",
+        "normalized_object": "Historical 3Q24F DRAM bit-shipment forecast of 21,704 billion Gb",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "3Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_FORECAST",
+        "primitive_tags": [
+          "3Q24_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM bit-shipment forecast",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_FORECAST",
+        "question_family_tags": [
+          "DRAM_SHIPMENT",
+          "HISTORICAL_FORECAST",
+          "SUPPLY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 3Q24F DRAM bit-shipment forecast",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT:3Q24F:MIRAE_2024-05-16",
+        "unit": "billion Gb",
+        "value": 21704
+      },
+      {
+        "business_segment": "DRAM historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 4Q24F DRAM bit shipments of 22,422 billion Gb. It is superseded broad DRAM volume, not HBM-only shipment, issuer guidance, or durable visibility.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact broad-DRAM shipment denominator is retained as superseded supply context without conversion to HBM-only capacity.",
+        "mechanism_scope_id": "000660:DRAM:BIT_SHIPMENT:4Q24F:MIRAE",
+        "normalized_object": "Historical 4Q24F DRAM bit-shipment forecast of 22,422 billion Gb",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "4Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_FORECAST",
+        "primitive_tags": [
+          "4Q24_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM bit-shipment forecast",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_FORECAST",
+        "question_family_tags": [
+          "DRAM_SHIPMENT",
+          "HISTORICAL_FORECAST",
+          "SUPPLY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 4Q24F DRAM bit-shipment forecast",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT:4Q24F:MIRAE_2024-05-16",
+        "unit": "billion Gb",
+        "value": 22422
+      },
+      {
+        "business_segment": "DRAM historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2024F DRAM bit shipments of 80,799 billion Gb. It is superseded broad DRAM volume, not HBM-only shipment, issuer guidance, or durable visibility.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact broad-DRAM shipment denominator is retained as superseded supply context without conversion to HBM-only capacity.",
+        "mechanism_scope_id": "000660:DRAM:BIT_SHIPMENT:FY2024F:MIRAE",
+        "normalized_object": "Historical FY2024F DRAM bit-shipment forecast of 80,799 billion Gb",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_FORECAST",
+        "primitive_tags": [
+          "Y2024F_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM bit-shipment forecast",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_FORECAST",
+        "question_family_tags": [
+          "DRAM_SHIPMENT",
+          "HISTORICAL_FORECAST",
+          "SUPPLY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024F DRAM bit-shipment forecast",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT:FY2024F:MIRAE_2024-05-16",
+        "unit": "billion Gb",
+        "value": 80799
+      },
+      {
+        "business_segment": "DRAM historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2025F DRAM bit shipments of 95,586 billion Gb. It is superseded broad DRAM volume, not HBM-only shipment, issuer guidance, or durable visibility.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact broad-DRAM shipment denominator is retained as superseded supply context without conversion to HBM-only capacity.",
+        "mechanism_scope_id": "000660:DRAM:BIT_SHIPMENT:FY2025F:MIRAE",
+        "normalized_object": "Historical FY2025F DRAM bit-shipment forecast of 95,586 billion Gb",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_FORECAST",
+        "primitive_tags": [
+          "Y2025F_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM bit-shipment forecast",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_FORECAST",
+        "question_family_tags": [
+          "DRAM_SHIPMENT",
+          "HISTORICAL_FORECAST",
+          "SUPPLY_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025F DRAM bit-shipment forecast",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT:FY2025F:MIRAE_2024-05-16",
+        "unit": "billion Gb",
+        "value": 95586
+      },
+      {
+        "business_segment": "DRAM historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 2Q24F DRAM bit-shipment growth of 15.2 percent quarter on quarter. It is superseded broad DRAM volume growth, not HBM-only capacity or issuer guidance.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact quarterly growth rate preserves the broad-DRAM denominator and superseded lifecycle.",
+        "mechanism_scope_id": "000660:DRAM:BIT_SHIPMENT_QOQ_GROWTH:2Q24F:MIRAE",
+        "normalized_object": "Historical 2Q24F DRAM bit-shipment QoQ growth forecast of 15.2 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker to grow quarter on quarter by",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_QOQ_GROWTH",
+        "primitive_tags": [
+          "2Q24_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM bit-shipment growth forecast",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_QOQ_GROWTH",
+        "question_family_tags": [
+          "DRAM_SHIPMENT",
+          "QOQ_GROWTH",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix 2Q24F DRAM bit-shipment growth forecast",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT_QOQ_GROWTH:2Q24F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 15.2
+      },
+      {
+        "business_segment": "DRAM historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 3Q24F DRAM bit-shipment growth of 10.6 percent quarter on quarter. It is superseded broad DRAM volume growth, not HBM-only capacity or issuer guidance.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact quarterly growth rate preserves the broad-DRAM denominator and superseded lifecycle.",
+        "mechanism_scope_id": "000660:DRAM:BIT_SHIPMENT_QOQ_GROWTH:3Q24F:MIRAE",
+        "normalized_object": "Historical 3Q24F DRAM bit-shipment QoQ growth forecast of 10.6 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "3Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker to grow quarter on quarter by",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_QOQ_GROWTH",
+        "primitive_tags": [
+          "3Q24_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM bit-shipment growth forecast",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_QOQ_GROWTH",
+        "question_family_tags": [
+          "DRAM_SHIPMENT",
+          "QOQ_GROWTH",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix 3Q24F DRAM bit-shipment growth forecast",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT_QOQ_GROWTH:3Q24F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 10.6
+      },
+      {
+        "business_segment": "DRAM historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 4Q24F DRAM bit-shipment growth of 3.3 percent quarter on quarter. It is superseded broad DRAM volume growth, not HBM-only capacity or issuer guidance.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact quarterly growth rate preserves the broad-DRAM denominator and superseded lifecycle.",
+        "mechanism_scope_id": "000660:DRAM:BIT_SHIPMENT_QOQ_GROWTH:4Q24F:MIRAE",
+        "normalized_object": "Historical 4Q24F DRAM bit-shipment QoQ growth forecast of 3.3 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "4Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker to grow quarter on quarter by",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_QOQ_GROWTH",
+        "primitive_tags": [
+          "4Q24_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM bit-shipment growth forecast",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_QOQ_GROWTH",
+        "question_family_tags": [
+          "DRAM_SHIPMENT",
+          "QOQ_GROWTH",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix 4Q24F DRAM bit-shipment growth forecast",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT_QOQ_GROWTH:4Q24F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 3.3
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "Distinct historical annual DRAM bit-growth, DRAM ASP, revision-table, and detailed cash-flow model atoms remain in SGDOC-f87582d14c66af24ff78d6d8."
+    ]
+  },
+  "payload_hash": "edf354737bbb90236d30a655bf2912c9bd33b0fa5e0a0b4439695a1ba8649863",
+  "production_score_authority": false,
+  "prompt_hash": "48568f36ba690a7497e2399ec4c3623b8fb38be2e0ce5c21fa3513cab82f9572",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-05501dbffbc3c889c5c9bc76ada427b61f57583d1afdfc67cdb6504f62abbdd1",
+  "response_id": "COLLABRESP-3c6224ca0d0071157e82bab4934f7d8a4bd7040a7b61c5df2930c7f4fe05f778",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

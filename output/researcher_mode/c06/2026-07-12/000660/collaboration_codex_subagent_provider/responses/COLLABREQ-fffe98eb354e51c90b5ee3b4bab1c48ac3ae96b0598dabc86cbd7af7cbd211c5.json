@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "35e6f43fc9c9abcd9bfdadeeff0240487686427229d3027affc0b5fdab5dc1ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7f1ce5b2f94c3237df455aae",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "Stifel의 SK하이닉스 prospectus 사본으로 NVIDIA 고객 Form 10-Q 원문이 아니며 HBM 구매의무·capacity agreement를 확인할 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a6b0e110fa8136310475fc80",
+        "matched_requested_source_family": "FINANCIAL_STATEMENTS",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "SEC의 NVIDIA FY2026 Form 10-K 직접 원문으로 고객 재무제표 family는 확인된다. 그러나 이번 신규 route인 2026 Form 10-Q가 아니며 discovery metadata에 SK하이닉스와 HBM의 inventory purchase obligations 또는 capacity agreements가 함께 귀속되지 않아 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-6eb6ac43001bdbf34db16a7e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "Applied Materials 공식 실적자료로 SK하이닉스와 HBM 개발 문구는 보여도 NVIDIA의 Form 10-Q 구매의무 문서가 아니다. 타사 IR 문구를 고객 구매약정으로 귀속하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f15808dbb198e45523f88a71",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "2026-07-15 기사로 기준일 2026-07-12 이후이며 NVIDIA Form 10-Q 원문도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-000a42ddb570b753678da15e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "2026-07-15 기사로 기준일 이후이고 대상·문서 유형 모두 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-36d96c689b14ad3d380358a4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'Intel Reports First-Quarter 2026 Financial Results :: Intel Corporation (INTC)' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e023f4410adf242527ce5245",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "SEC에 호스팅된 타 발행사 proxy·annual report로 NVIDIA Form 10-Q가 아니며 SK하이닉스 HBM 귀속이 없다."
+      },
+      {
+        "candidate_id": "SGCAND-0322bed74313d783a7236129",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "SEC에 호스팅된 타 발행사 과거 proxy·annual report로 NVIDIA Form 10-Q가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3d2e62b344c2fa7adbdd16ca",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'Intel Reports Fourth-Quarter and Full-Year 2022 Financial Results :: Intel Corporation (INTC)' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-88345f3de684af59c7a58e50",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'The Enshittifinancial Crisis' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-415a51fb3a98683baf629398",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'Applied Materials Q2 revenue hits record $7.91B | AMAT Stock News' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2834ea88bb8c7f2fd53e2d75",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "SEC의 타 발행사 10-K 경로로 NVIDIA 문서가 아니며 SK하이닉스 HBM 구매의무 귀속이 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에는 NVIDIA 2026 Form 10-Q full-filing direct route와 SK하이닉스·HBM의 inventory purchase obligations 또는 capacity agreements 명시적 귀속을 함께 충족하는 후보가 없다. Snippet은 증거로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "c175f9476750d4a9bde93701c4be10a718cadbefc62b33e23bbd7febafc821b7",
+  "production_score_authority": false,
+  "prompt_hash": "b2327d23ee41202bd06c2ed184d09dc752bc83d1cf6a149e1c1a0722a8fefc7f",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fffe98eb354e51c90b5ee3b4bab1c48ac3ae96b0598dabc86cbd7af7cbd211c5",
+  "response_id": "COLLABRESP-d796f543486e72e63b2a818f926423eeeef149f8a42b1c437076eaae92f16850",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

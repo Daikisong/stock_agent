@@ -1,0 +1,52 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      5.1,
+      6.7
+    ],
+    "anchor_comparisons": [
+      "양의 ORDTRANSFER-e743368708b3aee88a83287c(5.7~7.2)의 중단과 유사하다.",
+      "반증 ORDTRANSFER-2bfdc4a0e53457e592939b89(4.25~5.75)보다 실제 운영 개선이 강하지만 valuation 혼재로 큰 격차는 두지 않는다."
+    ],
+    "counter_fact_ids": [],
+    "disagreements": [
+      "운영 개선이 있다는 사실만으로 시장 기대 대비 저평가가 증명됐다는 해석에는 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "proposed_points": 5.9,
+    "rationale": "HBM4 출하, 서버향 판매, 메모리 매출·ASP 개선은 운영 delta지만 시장의 오해를 직접 증명하지 않는다. forward PE는 낮지만 EV/EBITDA·PB·FCF yield 신호가 혼재하고 최근 EPS revision이 하향이라 중간 수준의 mispricing만 허용한다.",
+    "support_fact_ids": [
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-cbd2e7a3a3670eba7a113d19",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "시장 기대 반영도와 일관된 저평가 신호가 없고 EPS revision 하향이 있어 7점 이상을 허용하지 않는다.",
+    "why_not_lower": "실제 HBM4 출하와 메모리 매출·ASP 개선이 있어 운영 변화가 없는 낮은 앵커보다 높다."
+  },
+  "payload_hash": "68e1348129ee1e477ef7a7a887a864275546a3b9bc4e5cd07321efdc1bf4fa07",
+  "production_score_authority": false,
+  "prompt_hash": "f57ba3f917f7868e59701f895650ad6a1e60d8316d76ccdfc6c426d0913bc4a5",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fd8222767cba3b338ad793f535d0659f41e85879582f414451e79384b588e4c1",
+  "response_id": "COLLABRESP-4a9b10053913893d2c9f14f59f74aec624ed45e69bc4810faa01efa4ccff786a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

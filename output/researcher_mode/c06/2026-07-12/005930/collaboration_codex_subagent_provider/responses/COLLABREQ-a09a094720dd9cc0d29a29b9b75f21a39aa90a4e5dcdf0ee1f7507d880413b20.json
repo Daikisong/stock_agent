@@ -1,0 +1,382 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2103a8a634f59ad8a214e603",
+        "rationale": "전송 청크 0/3의 원문을 처음부터 끝까지 검토하고 현재 512개 fact/514개 claim과 의미 중복을 대조했다. 이 청크에서 2025년 1분기 메모리 ASP, 생산량·가동률, 차세대 메모리 투자, 서버 DRAM 및 PC·모바일 메모리 수요 상태, DRAM 점유율, 2분기 관세 유예 뒤 선제 구매 등 신규 objective-local 사실 8건을 추출했다. 2025년 1분기 메모리 매출은 current ledger의 동일 수치와 중복해 제외했고, 서버 SSD는 금지된 NAND 범위이며 전사 고객 목록·계약부채·유의미한 장기계약 부재는 메모리/HBM 귀속이 없어 제외했다. 2025년 중 실현 기간이 지난 서버·PC·모바일 수요 전망과 HBM3E 대응 계획은 이후 실제 실적·출하 fact가 더 구체적으로 포괄하므로 현재 fact로 반복하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2103a8a634f59ad8a214e603",
+        "economic_mechanism": "2025년 1분기 메모리 제품 평균판매가격이 전년 동기 대비 약 1% 상승했다. 메모리 매출의 가격 기여가 소폭 개선됐음을 보여 주지만 HBM 단독 ASP나 전분기 대비 변화는 아니다.",
+        "exact_quote": "In 1Q25, on a year-on-year basis, the average selling price (ASP) decreased by approximately 6% for TVs; increased by\naround 11% for smartphones; increased by approximately 1% for memory products; decreased by approximately 17% for\nsmartphone-use OLED panels; and stayed at a similar level for digital cockpits.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 graph에 없는 2025년 1분기 메모리 실제 ASP 방향과 크기를 발행사 공시가 정량화해 earnings_visibility를 보강한다. 다만 메모리 전체 수치이고 상승 폭이 작아 비핵심으로 분류한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:2025Q1_ASP_YOY_1PCT",
+        "normalized_object": "2025년 1분기 메모리 ASP 전년 동기 대비 약 1% 상승",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q1 vs 2024-Q1",
+        "predicate": "삼성전자 메모리 제품 평균판매가격이 2025년 1분기에 전년 동기 대비 약 1% 상승했다",
+        "predicate_family": "MEMORY_ASP_YOY_ACTUAL",
+        "primitive_tags": [
+          "MEMORY",
+          "ASP",
+          "PRICING_ACTUAL"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_ASP_ACTUAL",
+        "question_family_tags": [
+          "MEMORY_ASP_ACTUAL",
+          "MEMORY_PRICING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 1분기 메모리 평균판매가격",
+        "subject_id": "005930:MEMORY:MEMORY_GENERIC:ASP:2025Q1",
+        "unit": "percent YoY",
+        "value": 1
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-2103a8a634f59ad8a214e603",
+        "economic_mechanism": "2025년 1분기 DS 메모리 생산량은 패키징 후 1Gb 환산 기준 4억6,847만6천 단위였다. 당시 실제 공급 규모의 기준점이지만 제품 믹스·수율·HBM 물량은 분리되지 않는다.",
+        "exact_quote": "The DS Division’s memory output in 1Gb equivalents was 468,476 million (major production\nsites: Korea [Hwaseong, Pyeongtaek, etc.] and China).",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 graph에 없는 메모리 실제 생산량 기준점을 제공해 공급 실행 가시성을 보강한다. HBM 단독 생산량이 아니므로 비핵심 보조 사실이다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:2025Q1_OUTPUT_468476M_1GB_EQ",
+        "normalized_object": "2025년 1분기 DS 메모리 생산량 468,476백만 1Gb 환산 단위",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q1",
+        "predicate": "삼성전자 DS 부문의 2025년 1분기 메모리 생산량이 1Gb 환산 기준 468,476백만 단위였다",
+        "predicate_family": "MEMORY_OUTPUT_ACTUAL",
+        "primitive_tags": [
+          "MEMORY",
+          "PRODUCTION_OUTPUT",
+          "ONE_GB_EQUIVALENT"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_SUPPLY_OUTPUT_ACTUAL",
+        "question_family_tags": [
+          "MEMORY_SUPPLY_OUTPUT_ACTUAL",
+          "MEMORY_CAPACITY_EXECUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DS 메모리 2025년 1분기 생산량",
+        "subject_id": "005930:MEMORY:MEMORY_GENERIC:OUTPUT:2025Q1",
+        "unit": "million 1Gb equivalents",
+        "value": 468476
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2103a8a634f59ad8a214e603",
+        "economic_mechanism": "2025년 1분기 DS 메모리 생산라인의 가동 가능 시간과 실제 가동 시간이 각각 21,600시간으로 같아 공시 가동률이 100%였다. 당시 설비가 시간 기준으로 완전히 가동됐음을 보여 주지만 웨이퍼 투입·수율·HBM 전용 CAPA를 뜻하지는 않는다.",
+        "exact_quote": "(Hours)\n1Q25\nOrganization Item\nPotential production time Actual production time Utilization rate\nDS Division Memory 21,600 21,600 100.00%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "메모리 라인의 실제 가동률을 정량화해 2025년 1분기 공급여력의 빡빡함을 보여 주는 신규 공식 기준점이다. HBM 전용 가동률이 아니므로 비핵심으로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:2025Q1_UTILIZATION_100PCT",
+        "normalized_object": "2025년 1분기 DS 메모리 시간 기준 가동률 100%",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q1",
+        "predicate": "삼성전자 DS 메모리 생산라인의 2025년 1분기 시간 기준 가동률이 100%였다",
+        "predicate_family": "MEMORY_UTILIZATION_ACTUAL",
+        "primitive_tags": [
+          "MEMORY",
+          "UTILIZATION",
+          "CAPACITY_SCARCITY"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_CAPACITY_UTILIZATION",
+        "question_family_tags": [
+          "MEMORY_CAPACITY_UTILIZATION",
+          "MEMORY_CAPACITY_CONSTRAINT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DS 메모리 2025년 1분기 생산라인 가동률",
+        "subject_id": "005930:MEMORY:MEMORY_GENERIC:UTILIZATION:2025Q1",
+        "unit": "percent",
+        "value": 100
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2103a8a634f59ad8a214e603",
+        "economic_mechanism": "삼성전자는 2025년 1분기에 차세대 메모리 기술 경쟁력 강화와 중장기 수요 대비 투자를 계속했다. 전사 약 12조원 CAPEX에는 DS와 SDC가 섞여 있으므로 그 총액을 메모리 투자액으로 귀속하지 않는다.",
+        "exact_quote": "The Company\ncontinued to invest to strengthen competitiveness for next-generation Memory technology and prepare for mid- to long-\nterm demand.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "메모리 차세대 기술 및 중장기 수요 대응 투자의 실제 지속을 공식 문서가 확인해 공급 대응 가시성을 보강한다. 메모리 전용 투자액은 제시되지 않아 비핵심이다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:2025Q1_NEXTGEN_MEMORY_INVESTMENT",
+        "normalized_object": "2025년 1분기 차세대 메모리 기술 및 중장기 수요 대비 투자 지속",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q1",
+        "predicate": "삼성전자가 2025년 1분기에 차세대 메모리 기술 경쟁력 강화와 중장기 수요 대비 투자를 지속했다",
+        "predicate_family": "MEMORY_CAPACITY_INVESTMENT_ACTUAL",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPEX",
+          "NEXT_GENERATION_TECHNOLOGY"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_CAPACITY_INVESTMENT",
+        "question_family_tags": [
+          "MEMORY_CAPACITY_INVESTMENT",
+          "LONG_TERM_DEMAND_RESPONSE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 1분기 차세대 메모리 투자",
+        "subject_id": "005930:MEMORY:MEMORY_GENERIC:CAPEX:2025Q1",
+        "unit": "investment action",
+        "value": "continued investment for next-generation memory technology and mid-to-long-term demand"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2103a8a634f59ad8a214e603",
+        "economic_mechanism": "2025년 1분기 서버 DRAM 수요는 주요 데이터센터와 기술기업의 AI 서버 투자가 계속되며 견조했다. AI 투자에서 서버 DRAM 수요로 이어지는 당시의 실제 수요 경로를 확인한다.",
+        "exact_quote": "In the memory market in 1Q25, demand for server DRAM remained solid with major data centers and tech companies\ncontinuing to invest in AI servers.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "발행사 공식 문서가 2025년 1분기 서버 DRAM 수요와 AI 서버 투자 간 연결을 실제 시장 상태로 확인해 메모리 수요 가시성을 보강한다. 고객 주문이나 물량은 없어 비핵심이다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:2025Q1_SERVER_AI_DEMAND_SOLID",
+        "normalized_object": "2025년 1분기 AI 서버 투자에 따른 서버 DRAM 견조한 수요",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q1",
+        "predicate": "2025년 1분기 서버 DRAM 수요가 주요 데이터센터와 기술기업의 AI 서버 투자 지속으로 견조했다",
+        "predicate_family": "SERVER_DRAM_DEMAND_ACTUAL",
+        "primitive_tags": [
+          "DRAM",
+          "SERVER_DEMAND",
+          "AI_SERVER_INVESTMENT"
+        ],
+        "product_family": "서버 DRAM",
+        "question_family_id": "SERVER_DRAM_AI_DEMAND",
+        "question_family_tags": [
+          "SERVER_DRAM_AI_DEMAND",
+          "MEMORY_DEMAND_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "2025년 1분기 서버 DRAM 수요",
+        "subject_id": "005930:MEMORY:DRAM:SERVER_DEMAND:2025Q1",
+        "unit": "demand condition",
+        "value": "solid demand supported by continued AI server investment"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2103a8a634f59ad8a214e603",
+        "economic_mechanism": "2025년 1분기 PC·모바일용 메모리 수요 회복은 회사가 앞서 예상한 것보다 양호했다. 컨벤셔널 메모리 수요가 예상치를 웃돈 당시의 기대 차이를 보여 주지만 정량 성장률은 없다.",
+        "exact_quote": "while the demand recovery for PC and mobile has been somewhat better than previously projected.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "PC·모바일 메모리 수요 회복이 이전 전망보다 양호했다는 공식 평가가 당시 수요의 상방 기대 차이를 확인한다. 정량 수치와 HBM 귀속은 없어 비핵심이다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:2025Q1_PC_MOBILE_RECOVERY_ABOVE_PRIOR_VIEW",
+        "normalized_object": "2025년 1분기 PC·모바일 메모리 수요 회복이 이전 전망보다 양호",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q1",
+        "predicate": "2025년 1분기 PC·모바일 메모리 수요 회복이 이전 전망보다 다소 양호했다",
+        "predicate_family": "PC_MOBILE_MEMORY_DEMAND_VS_PRIOR_EXPECTATION",
+        "primitive_tags": [
+          "MEMORY",
+          "PC_MOBILE_DEMAND",
+          "EXPECTATION_GAP"
+        ],
+        "product_family": "PC·모바일 메모리",
+        "question_family_id": "CONVENTIONAL_MEMORY_DEMAND",
+        "question_family_tags": [
+          "CONVENTIONAL_MEMORY_DEMAND",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "2025년 1분기 PC·모바일 메모리 수요 회복",
+        "subject_id": "005930:MEMORY:MEMORY_GENERIC:PC_MOBILE_DEMAND:2025Q1",
+        "unit": "expectation comparison",
+        "value": "somewhat better than previously projected"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-2103a8a634f59ad8a214e603",
+        "economic_mechanism": "삼성전자의 DRAM 매출 기준 세계 시장점유율은 2024년 41.5%에서 2025년 1분기 35.8%로 낮아졌다. 회사 추정치라는 한계가 있지만 경쟁 지위 약화는 메모리 이익 가시성의 반대 근거다.",
+        "exact_quote": "DRAM market share\nProduct 1Q25 2024 2023\nDRAM 35.8% 41.5% 42.2%\nGlobal market share in revenue; data from research firm DRAMeXchange; 1Q25 data is based on the company’s estimates",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 graph에 없는 2025년 1분기 DRAM 점유율 하락을 회사 추정치라는 불확실성과 함께 정량화해 earnings_visibility의 경쟁 리스크를 보강한다. 단일 분기 점유율이므로 비핵심이다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:2025Q1_MARKET_SHARE_35_8_VS_2024_41_5",
+        "normalized_object": "DRAM 매출 기준 시장점유율 2024년 41.5%에서 2025년 1분기 35.8%로 하락",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q1 vs FY2024",
+        "predicate": "삼성전자 DRAM 매출 기준 세계 시장점유율이 2024년 41.5%에서 2025년 1분기 35.8%로 하락했다",
+        "predicate_family": "DRAM_MARKET_SHARE_CHANGE",
+        "primitive_tags": [
+          "DRAM",
+          "MARKET_SHARE",
+          "COMPETITIVE_POSITION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_COMPETITIVE_POSITION",
+        "question_family_tags": [
+          "DRAM_COMPETITIVE_POSITION",
+          "MEMORY_EARNINGS_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 1분기 DRAM 세계 시장점유율",
+        "subject_id": "005930:MEMORY:DRAM:MARKET_SHARE:2025Q1",
+        "unit": "percent revenue market share",
+        "value": "35.8 vs 41.5"
+      },
+      {
+        "business_segment": "메모리 시장",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-2103a8a634f59ad8a214e603",
+        "economic_mechanism": "2025년 2분기 메모리 시장에서 상호관세 유예 뒤 선제 구매가 관찰됐다. 당시 수요 일부가 구조적 최종수요가 아니라 관세 일정에 따른 구매 앞당김일 수 있어 지속성 판단의 반대 근거다.",
+        "exact_quote": "We have seen preemptive purchasing activities in the memory market in the second quarter following the pause on reciprocal\ntariffs.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "발행사가 관찰한 2025년 2분기 메모리 선제 구매의 정책 요인을 명시해 당시 수요의 지속성 한계를 드러낸다. 규모와 삼성전자 매출 기여는 제시되지 않아 비핵심이다.",
+        "mechanism_scope_id": "005930:MEMORY:MEMORY_GENERIC:2025Q2_TARIFF_PAUSE_PREEMPTIVE_BUYING",
+        "normalized_object": "2025년 2분기 상호관세 유예 뒤 메모리 선제 구매",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q2 observed by 2025-05-30",
+        "predicate": "2025년 2분기 메모리 시장에서 상호관세 유예 뒤 선제 구매 활동이 나타났다",
+        "predicate_family": "MEMORY_TARIFF_PULL_FORWARD_DEMAND",
+        "primitive_tags": [
+          "MEMORY",
+          "PREEMPTIVE_PURCHASING",
+          "TARIFF_PULL_FORWARD"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_DEMAND_DURABILITY",
+        "question_family_tags": [
+          "MEMORY_DEMAND_DURABILITY",
+          "PULL_FORWARD_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "2025년 2분기 메모리 시장 선제 구매",
+        "subject_id": "005930:MEMORY:MEMORY_GENERIC:PREEMPTIVE_BUYING:2025Q2",
+        "unit": "demand condition",
+        "value": "preemptive purchasing after reciprocal-tariff pause"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "536676ff86d52115594ea152d7193eeaf77e292b541c20b482279457bfec6f3e",
+  "production_score_authority": false,
+  "prompt_hash": "eb46d3205b39ce1897febc72389e58dc7e9328d4bf054e1fc2f0a02a1699129c",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a09a094720dd9cc0d29a29b9b75f21a39aa90a4e5dcdf0ee1f7507d880413b20",
+  "response_id": "COLLABRESP-aa03bd5f77c6b4939da9d7b513e4170ec0f53cacfa0f4caecc0003cd26840f77",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

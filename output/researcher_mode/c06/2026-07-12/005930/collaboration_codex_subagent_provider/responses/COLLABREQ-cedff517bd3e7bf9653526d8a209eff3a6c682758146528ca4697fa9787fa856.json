@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "두 Supervisor 판단에 의존하지 않고 현재 prompt의 7 component, Red Team, source graph, structured result를 독립 감사했다. 향후 공시로만 확인 가능한 마진·계약·ROIC 질문은 monitoring limitation이며 현재 material executable route가 아니므로 unresolved blocking question은 없다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "a614833cec37441bed1e31f89ef30e6ce7002ff2f4a10f5b4e5750dda73909a3",
+  "production_score_authority": false,
+  "prompt_hash": "fe17b394ca6ecc085ec6a83671c53e508597fff65d4b1625552a541f256894c0",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cedff517bd3e7bf9653526d8a209eff3a6c682758146528ca4697fa9787fa856",
+  "response_id": "COLLABRESP-9998c1340262d37949bafb6fa04f7fc1fcc736674f89414938056e6c17dfcf2a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

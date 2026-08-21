@@ -1,0 +1,63 @@
+{
+  "output_schema_hash": "de95da9141bdd21b8908a3fbbbf6e5007ba0f9ebe80322a80a7d3c3b22ec3fbe",
+  "payload": {
+    "allowed_range": [
+      13.8,
+      17.0
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200는 POSITIVE 역할의 STRONG ordinal anchor이며 허용 대역은 18.05~19.00점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "ORDTRANSFER-054f760d026b470c39e27df1는 COUNTER 역할의 STRONG ordinal anchor이며 허용 대역은 18.05~19.00점이다. 현재 사실은 실제 경제 메커니즘을 지지하지만 anchor 신뢰도 LOW와 미해결 제품·계약·현금흐름 bridge를 함께 반영해 그대로 복제하지 않았다.",
+      "counter anchor는 하방 검증용이며, 현재 확인된 실적·공급 성과까지 부정하는 영점 기준으로 사용하지 않았다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0b6b02299ea60f931cf17c4e",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-cc2cfc3b24f0987278efc0b7",
+      "EFACT-f05a97edeb8f85d49353381e"
+    ],
+    "disagreements": [
+      "긍정 사실이 있다는 이유만으로 제품별 수익성·계약 강도·지속기간까지 확인됐다고 보는 해석에 동의하지 않는다.",
+      "다만 실현된 매출·이익·생산·납품 사실까지 전부 추정으로 취급하는 극단적 하방에도 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-79ec36a5021be9c2294bf200",
+      "ORDTRANSFER-054f760d026b470c39e27df1"
+    ],
+    "proposed_points": 15.5,
+    "rationale": "공급 병목과 가격 전환의 모든 counter를 검토했다. 공시 가동률은 시간 기준이므로 HBM 전용 웨이퍼 투입·수율·패키징 처리량을 직접 측정하지 않는다. 가격 상승 속도 둔화, 큰 물량 증가 없는 가격 의존, 수요 둔화와 아직 확정되지 않은 대규모 증설 계획은 현재 프리미엄의 정상화 경로다. 추가로 HBM 전용 웨이퍼 투입·수율·적층·패키징 처리량과 증설 램프·가격 둔화의 결합이 없어 긍정 사례를 해당 경제성·지속성으로 확장할 수 없다. 긍정 사실인 가동률 100%, 완판된 HBM4 생산여력, 낮은 재고와 수요 초과가 동시에 나타나 단순 업황 기대가 아니라 실제 공급 제약이 확인된다. 이 제약은 범용 D램 가격 급등과 고속 HBM4 프리미엄으로 전환됐고, HBM 투입이 범용 공급을 줄이는 구조가 병목을 강화한다.도 확인되지만, 계약조건·제품별 마진·귀속 bridge가 닫히지 않아 하방을 넓게 유지했다.",
+    "support_fact_ids": [
+      "EFACT-13d6da3b116a9a0ad8043f62",
+      "EFACT-1df441a716b0204f7b107e70",
+      "EFACT-477c6cb45b164685a2a345e8",
+      "EFACT-4e0d88dc056c9e8dcd45ea47",
+      "EFACT-8f02d2ea380eb4c09635924f",
+      "EFACT-a2243488e8b8f0197fd8bd56",
+      "EFACT-b676fc3afacb1117c1ba65be",
+      "EFACT-fd86be3f3b91aa151f046cfb"
+    ],
+    "why_not_higher": "4개의 current/open counter와 미해결 공식 자료 gap이 남아 공급 병목과 가격 전환의 상단 확정을 막는다.",
+    "why_not_lower": "공시 100% 가동률, 발행사 HBM4 완판, 낮은 재고·공급 충족률과 실제 D램 가격 상승 및 HBM4 프리미엄이 병목과 가격력을 다각도로 확인한다. 기존 current positive facts는 그대로 유효하다."
+  },
+  "payload_hash": "365f9a314d1924430c507d5f07cd90974be0592e9eaa2fce27ebd411707f057b",
+  "production_score_authority": false,
+  "prompt_hash": "1ce22cc23d663b5cf3a4af8cd1ddbcf4aab9879714dc4137b62ddd0a8dec8e29",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-adb8741c09ec9ef7608b9d3c0a18b943b6cb3f0477eeb51eee30bff84830e3c3",
+  "response_id": "COLLABRESP-863ebdfcdf19b5c8eaf619951b36ff09ad5843b5d71640d5d8e6b7a1886ccf2f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

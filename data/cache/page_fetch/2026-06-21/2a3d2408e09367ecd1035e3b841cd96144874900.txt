@@ -1,0 +1,200 @@
+NAVER 학술정보 > 패션 산업 뉴스가 의류기업의 주가에 미치는 영향
+오늘날 새로운 디지털 매체의 등장과 인터넷 네트워크의 성장은 미래 경쟁력의 핵심 자원인 빅데이터의 발전을 가져왔다. 빅데이터의 비정형 데이터와 구조화된 정형 데이터는 함께 활용되어 분석될 때 효용이 높으며, 기업은 이를 통해 미래 예측에 도움이 되는 유용한 인사이트를 도출할 수 있다.
+대중 매체의 뉴스는 사회경제에 대한 직간접적인 정보를 포함하고 있어 기업의 경영진과 투자자의 정보 지각에 영향을 주어 이슈에 대한 가치 판단을 결정하게 한다. 따라서, 언론에서 보도하는 뉴스의 내용은 대중에게 산업의 주요 의제와 트렌드를 인식하는데 중요한 역할을 하며, 투자자의 현저성에 영향을 주어 주가의 변화를 가져온다고 할 수 있다.
+이러한 맥락에서 본 연구는 패션 산업 뉴스의 주요 의제와 트렌드 변화를 고찰하고, 다변화되는 경제환경에서 의류기업의 주가지수 변화와 상관관계가 있는 패션 산업의 토픽을 실증적으로 모색하고자 하였다.
+연구 1. LDA 토픽 모델링에서는 2016년 1월 1일부터 2020년 12월 31일까지의 패션 산업 뉴스 문서 총 168,786개에 대하여 LDA 토픽 모델링 분석을 진행하고 토픽 구성과 트렌드 변화를 규명하였다. 연구 2. ARIMAX 시계열 모형 분석에서는 동일 기간의 섬유의복 KOSPI와 거시경제지표 데이터를 수집하여 거시적 경제 환경에서 의류기업의 주가지수와 패션 산업 뉴스 토픽의 상관관계를 검증하였다. 데이터의 수집 및 분석은 Python 3.7과 SAS 9.4 프로그램을 활용하였다.
+연구 1. LDA 토픽 모델링의 분석 결과는 다음과 같다.
+첫째, 최근 5년 동안의 패션 산업 뉴스의 주제어를 분석한 결과, 상위 10개 주제어 TF는 ‘브랜드’, ‘서울’, ‘뷰티’, ‘사업’, ‘기업’, ‘행사’, ‘한국’, ‘롯데백화점’, ‘제품’, ‘출시’ 순으로 도출되었으며, TF-IDF 분석에서는 ‘브랜드’, ‘서울’, ‘뷰티’, ‘롯데백화점’, ‘사업’, ‘한국’, ‘행사’, ‘기업’, ‘서울패션위크’, ‘제품’ 순서로 출현하였다.
+둘째, 패션 산업 뉴스에서 거론된 의제들을 분류하기 위하여 LDA 토픽모델링의 구성을 확인한 결과, 총 19개의 토픽-‘[Topic 1] 부동산 투자 개발’, ‘[Topic 2] 브랜드 콜라보레이션’, ‘[Topic 3] 실적평가’, ‘[Topic 4] 팝업 스토어’, ‘[Topic 5] 컬렉션 출시’, ‘[Topic 6] 매출 성장’, ‘[Topic 7] 기업 M&A’, ‘[Topic 8] CEO의 경영정책’, ‘[Topic 9] 화장품 사업 확장’, ‘[Topic 10] 재무구조 개선과 매각’, ‘[Topic 11] 글로벌 투자’, ‘[Topic 12] 온라인 유통 플랫폼 증가’, ‘[Topic 13] 문화 마케팅’, ‘[Topic 14] 해외 패션 사업 활성화’, ‘[Topic 15] 삼성물산 패션부문과 삼성전자’, ‘[Topic 16] 중국 패션시장 진출’, ‘[Topic 17] 패션위크와 수주박람회’, ‘[Topic 18] 디지털 혁신’, ‘[Topic 19] 국내외 매장 운영 강화’-이 도출되었다.
+셋째, 최근 5년 동안 시간의 흐름에 따라 유의하게 증가한 상향 토픽은 ‘[Topic 2] 브랜드 콜라보레이션’, ‘[Topic 5] 컬렉션 출시’, ‘[Topic 7] 기업 M&A’가 나타났고, 감소 추세의 하향 토픽은 ‘[Topic 1] 패션 기업의 부동산 투자 개발’, ‘[Topic 14] 글로벌 사업 확대’, ‘[Topic 16] 중국 패션시장 진출’로 도출되었다.
+연구 2. ARIMAX 시계열 모형 분석의 결과는 다음과 같다.
+첫째, 최근 5년간의 섬유의복 KOSPI의 ARIMA 모형을 통해 추후 4주간의 주가지수를 예측해본 결과, 섬유의복 KOSPI 종가의 주별 평균은 점차 감소하는 추세를 보이는 것으로 확인되었다.
+둘째, 섬유의복 KOSPI 변화와 상관성이 있는 패션 산업 뉴스의 토픽을 시차효과에 따라 검증한 결과, ‘[Topic 9] 화장품 사업 확장’과 ‘[Topic 18] 디지털 혁신’이 1주일 뒤의 KOSPI 주가 변동에 유의미한 영향을 주었고, ‘[Topic 4] 팝업 스토어’, ‘[Topic 16] 중국 패션시장 진출’ 및 ‘[Topic 17] 패션위크와 수주박람회’가 2주일 뒤의 KOSPI 주가 변동과 상관성이 있는 것으로 나타났다.
+셋째, 거시경제 환경에서 패션 산업 뉴스의 토픽과 섬유의복 KOSPI 변화 간의 상관성을 살펴본 결과, ‘[Topic 9] 화장품 사업 확장’과 ‘[Topic 16] 중국 패션시장 진출’이 통계적으로 유의한 주제로 선별되었다.
+본 연구는 미디어의 뉴스가 패션 산업의 주요 의제를 형성하는데 기여하고 있으며, 거시경제환경에서 의류기업의 주가지수 변화에 영향을 주는 것을 파악함으로써 의제설정이론을 기반으로 하는 프레이밍 효과를 증명하였다는 점에서 학술적 의의를 가진다. 또한, 패션 비정형 데이터 분석을 통한 수치화와 가능성에 주목하여 의류기업의 주가지수 변화에 대한 예측 변수로서 활용이 가능하다는 점을 증명함으로써 의류학 연구를 확장하는데 기여한다. 이를 통해 패션 기업의 실무진들이 뉴스 분석을 통하여 주가변동 리스크를 대비할 수 있는 방안을 제시하고자 하며, 정부기관의 지원사업 선정에서 경제 상황에 맞는 패션 산업 정책의 참고자료로 활용할 수 있을 것이다.
+네이버 학술정보
+패션 산업 뉴스가 의류기업의 주가에 미치는 영향
+NAVER
+학술정보
+본문 바로가기
+검색
+전체
+전체
+제목
+저자
+학술지
+발행처
+키워드
+ISSN/EISSN
+DOI
+자동완성 펼치기
+Korean
+English
+학술정보 홈
+분야별 출판·인용 현황
+연구 트렌드 분석
+beta
+내 학술정보
+학술자료통계
+학위논문(박사)
+내 학술정보에 저장
+print this page
+패션 산업 뉴스가 의류기업의 주가에 미치는 영향
+저자
+김효정
+발행정보
+이화여자대학교
+2022년
+피인용횟수
+0
+자료제공처
+한국교육학술정보원
+무료원문
+한국교육학술정보원
+주제분야
+사회과학
+>
+문헌정보학
+초록
+open button
+목차
+open button
+참고문헌
+open button
+초록
+오늘날 새로운 디지털 매체의 등장과 인터넷 네트워크의 성장은 미래 경쟁력의 핵심 자원인 빅데이터의 발전을 가져왔다. 빅데이터의 비정형 데이터와 구조화된 정형 데이터는 함께 활용되어 분석될 때 효용이 높으며, 기업은 이를 통해 미래 예측에 도움이 되는 유용한 인사이트를 도출할 수 있다.
+대중 매체의 뉴스는 사회경제에 대한 직간접적인 정보를 포함하고 있어 기업의 경영진과 투자자의 정보 지각에 영향을 주어 이슈에 대한 가치 판단을 결정하게 한다. 따라서, 언론에서 보도하는 뉴스의 내용은 대중에게 산업의 주요 의제와 트렌드를 인식하는데 중요한 역할을 하며, 투자자의 현저성에 영향을 주어 주가의 변화를 가져온다고 할 수 있다.
+이러한 맥락에서 본 연구는 패션 산업 뉴스의 주요 의제와 트렌드 변화를 고찰하고, 다변화되는 경제환경에서 의류기업의 주가지수 변화와 상관관계가 있는 패션 산업의 토픽을 실증적으로 모색하고자 하였다.
+연구 1. LDA 토픽 모델링에서는 2016년 1월 1일부터 2020년 12월 31일까지의 패션 산업 뉴스 문서 총 168,786개에 대하여 LDA 토픽 모델링 분석을 진행하고 토픽 구성과 트렌드 변화를 규명하였다. 연구 2. ARIMAX 시계열 모형 분석에서는 동일 기간의 섬유의복 KOSPI와 거시경제지표 데이터를 수집하여 거시적 경제 환경에서 의류기업의 주가지수와 패션 산업 뉴스 토픽의 상관관계를 검증하였다. 데이터의 수집 및 분석은 Python 3.7과 SAS 9.4 프로그램을 활용하였다.
+연구 1. LDA 토픽 모델링의 분석 결과는 다음과 같다.
+첫째, 최근 5년 동안의 패션 산업 뉴스의 주제어를 분석한 결과, 상위 10개 주제어 TF는 ‘브랜드’, ‘서울’, ‘뷰티’, ‘사업’, ‘기업’, ‘행사’, ‘한국’, ‘롯데백화점’, ‘제품’, ‘출시’ 순으로 도출되었으며, TF-IDF 분석에서는 ‘브랜드’, ‘서울’, ‘뷰티’, ‘롯데백화점’, ‘사업’, ‘한국’, ‘행사’, ‘기업’, ‘서울패션위크’, ‘제품’ 순서로 출현하였다.
+둘째, 패션 산업 뉴스에서 거론된 의제들을 분류하기 위하여 LDA 토픽모델링의 구성을 확인한 결과, 총 19개의 토픽-‘[Topic 1] 부동산 투자 개발’, ‘[Topic 2] 브랜드 콜라보레이션’, ‘[Topic 3] 실적평가’, ‘[Topic 4] 팝업 스토어’, ‘[Topic 5] 컬렉션 출시’, ‘[Topic 6] 매출 성장’, ‘[Topic 7] 기업 M&A’, ‘[Topic 8] CEO의 경영정책’, ‘[Topic 9] 화장품 사업 확장’, ‘[Topic 10] 재무구조 개선과 매각’, ‘[Topic 11] 글로벌 투자’, ‘[Topic 12] 온라인 유통 플랫폼 증가’, ‘[Topic 13] 문화 마케팅’, ‘[Topic 14] 해외 패션 사업 활성화’, ‘[Topic 15] 삼성물산 패션부문과 삼성전자’, ‘[Topic 16] 중국 패션시장 진출’, ‘[Topic 17] 패션위크와 수주박람회’, ‘[Topic 18] 디지털 혁신’, ‘[Topic 19] 국내외 매장 운영 강화’-이 도출되었다.
+셋째, 최근 5년 동안 시간의 흐름에 따라 유의하게 증가한 상향 토픽은 ‘[Topic 2] 브랜드 콜라보레이션’, ‘[Topic 5] 컬렉션 출시’, ‘[Topic 7] 기업 M&A’가 나타났고, 감소 추세의 하향 토픽은 ‘[Topic 1] 패션 기업의 부동산 투자 개발’, ‘[Topic 14] 글로벌 사업 확대’, ‘[Topic 16] 중국 패션시장 진출’로 도출되었다.
+연구 2. ARIMAX 시계열 모형 분석의 결과는 다음과 같다.
+첫째, 최근 5년간의 섬유의복 KOSPI의 ARIMA 모형을 통해 추후 4주간의 주가지수를 예측해본 결과, 섬유의복 KOSPI 종가의 주별 평균은 점차 감소하는 추세를 보이는 것으로 확인되었다.
+둘째, 섬유의복 KOSPI 변화와 상관성이 있는 패션 산업 뉴스의 토픽을 시차효과에 따라 검증한 결과, ‘[Topic 9] 화장품 사업 확장’과 ‘[Topic 18] 디지털 혁신’이 1주일 뒤의 KOSPI 주가 변동에 유의미한 영향을 주었고, ‘[Topic 4] 팝업 스토어’, ‘[Topic 16] 중국 패션시장 진출’ 및 ‘[Topic 17] 패션위크와 수주박람회’가 2주일 뒤의 KOSPI 주가 변동과 상관성이 있는 것으로 나타났다.
+셋째, 거시경제 환경에서 패션 산업 뉴스의 토픽과 섬유의복 KOSPI 변화 간의 상관성을 살펴본 결과, ‘[Topic 9] 화장품 사업 확장’과 ‘[Topic 16] 중국 패션시장 진출’이 통계적으로 유의한 주제로 선별되었다.
+본 연구는 미디어의 뉴스가 패션 산업의 주요 의제를 형성하는데 기여하고 있으며, 거시경제환경에서 의류기업의 주가지수 변화에 영향을 주는 것을 파악함으로써 의제설정이론을 기반으로 하는 프레이밍 효과를 증명하였다는 점에서 학술적 의의를 가진다. 또한, 패션 비정형 데이터 분석을 통한 수치화와 가능성에 주목하여 의류기업의 주가지수 변화에 대한 예측 변수로서 활용이 가능하다는 점을 증명함으로써 의류학 연구를 확장하는데 기여한다. 이를 통해 패션 기업의 실무진들이 뉴스 분석을 통하여 주가변동 리스크를 대비할 수 있는 방안을 제시하고자 하며, 정부기관의 지원사업 선정에서 경제 상황에 맞는 패션 산업 정책의 참고자료로 활용할 수 있을 것이다.
+The emergence of digital media and growth of the Internet has contributed to the development of big data, a key resource for future competitiveness. The structured and unstructured data within big data can be analyzed together to obtain useful insights to aid with predictions.
+Mass media news contains direct and indirect news on social and economic issues, which influences investor perception regarding corporate management. This news content helps identify the major industry trends and agendas and communicates this information to the public. The information influences and directs investor attention and results in stock price changes.
+This study aims to examine the major agenda and trends by analyzing fashion industry news content that is correlated with changes in the stock index of apparel companies under economic influences.
+In Study 1, LDA topic modeling classified key topics and determined the changes in trends by year using 168,786 pieces of fashion industry news data from January 1, 2016, to December 31, 2020. The analysis results of LDA topic modeling are as follows.
+First, we examined the main keywords in the fashion industry news that appeared most frequently. The top 10 Time-Frequency (TF) analysis keywords were “brand,” “Seoul,” “beauty,” “business,” “company,” “event,” “Korea,” “Lotte Department Store,” “product,” and “release.” Term Frequency — Inverse Document Frequency (TF-IDF) analysis keywords were “brand,” “Seoul,” “beauty,” “Lotte Department Store,” “business,” “Korea,” “event,” “company,” “Seoul Fashion Week,” and “product.”
+Second, 19 topics were drawn from the main agenda identified in three fashion industry news: “[Topic 1] Real estate investment and development,” “[Topic 2] Brand collaboration,” “[Topic 3] Financial performance evaluation,” “[Topic 4] Pop-up store,” “[Topic 5] Collection launch,” “[Topic 6] Sales growth,” “[Topic 7] Corporate M&A”, “[Topic 8] CEO’s business management policy”, “[Topic 9] Cosmetic business expansion,” “[Topic 10] Financial structure improvement and divestiture,” “[Topic 11] Investment in global fashion business,” “[Topic 12] Increase in online retail platforms,” “[Topic 13] Culture marketing,” “[Topic 14] Global business expansion,” “[Topic 15] Samsung C&T Corporation’s fashion division and Samsung Electronics”, “[Topic 16] Chinese fashion market entry,” “[Topic 17] Fashion week and trade show,” “[Topic 18] Digital innovation,” “[Topic 19] Improvement in local and global store operations.”
+Third, we identified the hot topics, which are topics that increased over five years, and the cold topics, which have decreased in the same period, from the 19 topics listed above. The hot topics were “[Topic 2] Brand collaboration”, “[Topic 5] Collection launch”, and “[Topic 7] Corporate M&A” and cold topics were “[Topic 1] Real estate investment and development”, “[Topic 14] Global business expansion”, and “[Topic 16] Market entry in Chinese fashion market”.
+In Study 2, ARIMAX time series model analysis verified the correlation between fashion industry news topics and the Textile & Wearing Apparel KOSPI in the macroeconomic environment. Python 3.7 and SAS 9.4 programs were used for data collection and analysis. The analysis results of ARIMAX time series model are as follows.
+First, the weekly average of stock closing prices in 4 weeks of January 2021 was expected to gradually decrease based on the ARIMA time series model of Textile & Wearing Apparel KOSPI from 2016 to 2020.
+Second, we verified the fashion industry news topics correlated with changes in Textile & Wearing Apparel KOSPI. As a result, “[Topic 9] Cosmetic business expansion” and “[Topic 18] Digital innovation” had a significant effect on Textile & Wearing Apparel KOSPI changes after 1 week, and “[Topic 4] Pop-up store”, “[Topic 16] Chinese fashion market entry”, and “[Topic 17] Fashion week and trade show”, which were correlated with Textile & Wearing Apparel KOSPI changes after 2 weeks.
+Third, as a result of examining the correlation between Textile & Wearing Apparel KOSPI and fashion industry news topics in the macroeconomic environment, “[Topic 9] Cosmetic business expansion” and “[Topic 16] Chinese fashion market entry” were selected as statistically significant topics.
+Based on the agenda-setting theory, this study results have academic significance in that it analyzed that the media news framing effect influences the main agenda of the fashion industry and affects the stock index change of apparel companies in a macroeconomic environment. Furthermore, this study results contribute to expanding the apparel research by proving that unstructured fashion data analysis can be used as a predictor of the stock index changes of the fashion companies. These results will be useful for the fashion companies to prepare the stock price risk through the news analysis and can be used as a reference for the government agencies to support the fashion industry policies.
+목차
+Ⅰ. 서론 1
+A. 연구의 배경 및 필요성 1
+B. 연구의 목적 및 의의 4
+C. 연구의 구성체계 6
+Ⅱ. 이론적 배경 8
+A. 패션 산업 뉴스에 따른 기업 및 소비자의 영향 9
+1. 패션 산업 뉴스의 정의 및 가치 9
+2. 패션 산업 뉴스 보도와 기업 트렌드의 관계 13
+3. 의제설정 이론과 소비자 인식의 변화 16
+B. 미디어의 뉴스 정보와 주가지수의 변동성 21
+1. 프레이밍 효과와 주식시장의 반응 21
+2. 투자자 관심과 주식투자 결정요인 25
+3. 온라인 뉴스 컨텐츠와 주가지수의 영향 29
+C. 데이터 분석 기법 32
+1. LDA 토픽 모델링 32
+2. 시계열 분석과 ARIMAX 모형 36
+3. 패션 산업과 빅데이터의 활용 41
+Ⅲ. 연구 방법 및 절차 46
+A. 연구 1. LDA 토픽 모델링 46
+1. 연구 문제 46
+2. 연구 절차 48
+3. 데이터 선정 및 수집 49
+4. 데이터 전처리 및 정제 51
+B. 연구 2. ARIMAX 시계열 분석 56
+1. 연구 문제 56
+2. 연구 절차 58
+3. 데이터 선정 및 수집 61
+4. 데이터 전처리 및 정제 68
+Ⅳ. 연구 결과 72
+A. 연구 1. LDA 토픽 모델링 72
+1. TF 및 TF-IDF 분석 결과 72
+2. 토픽 클러스터 개수 선정 및 시각화 결과 77
+3. 토픽 대표문서 추출 및 주제 선정 결과 80
+4. 토픽 트렌드 분석 결과 92
+B. 연구 2. ARIMAX 시계열 분석 102
+1. ARIMA 모형의 식별 결과 102
+2. ARIMA 모형의 추정과 진단 결과 107
+3. ARIMA 모형의 예측 결과 111
+4. ARIMA 모형의 분석 결과 113
+Ⅴ. 결론 및 제언 128
+A. 연구의 요약 및 결론 128
+B. 연구의 시사점 137
+1. 학문적 시사점 137
+2. 실무적 시사점 142
+C. 연구의 한계점 및 후속연구를 위한 제언 146
+참고문헌 149
+ABSTRACT 183
+참고문헌
+조회 가능한 데이터가 없습니다.
+해당 참고문헌을
+고객센터
+를 통해 등록해주시면
+빠른 시간안에 노출하겠습니다.
+Selected option
+view options
+EndNote에 저장
+Scholar note에 저장
+내 학술정보에 저장
+print this page
+맨위로
+문헌정보학
+분야
+피인용 상위 학술지
+Choice Reviews Online
+Association of College and Research Libraries
+Scientometrics
+Springer
+International Journal of Information Management
+Elsevier
+Journal of Documentation
+Association of Special Libraries and Information Bureaux
+Journal of Information Science
+SAGE Publications
+Information Systems Journal
+Association for Information Systems
+Books Abroad
+오클라호마대학교
+COLLEGE & RESEARCH LIBRARIES
+Association of College and Reference Libraries
+Online Information Review
+Emerald Group Publishing Limited
+蘭台世界
+Airiti
+DATA BASE FOR ADVANCES IN INFORMATION SYSTEMS
+Association for Computing Machinery
+Journal of Research in Reading
+United Kingdom Literacy Association
+The Journal of Academic Librarianship
+Elsevier
+Information technology & people
+Emerald Group Publishing Limited
+Classical Philology
+University Chicago Press
+現代情報
+Airiti
+Tushuguan Xuebao
+辽宁省图书馆;辽宁省图书馆学会
+Library Trends
+University of Illinois
+LIBRARY QUARTERLY
+University of Chicago
+NOTES AND QUERIES
+Elsevier
+이용약관
+네이버학술정보고객센터
+개인정보처리방침
+책임의 한계와 법적고지
+Copyright ©
+NAVER Corp.
+All Rights Reserved.

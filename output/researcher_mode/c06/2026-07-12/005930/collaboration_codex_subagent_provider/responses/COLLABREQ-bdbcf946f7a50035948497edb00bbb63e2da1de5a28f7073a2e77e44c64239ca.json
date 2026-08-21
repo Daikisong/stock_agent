@@ -1,0 +1,254 @@
+{
+  "output_schema_hash": "9dc918761338e30f5e2e77f6f9c46b69266bb7d23bbb734ac0b47f7fdbf732b1",
+  "payload": {
+    "confidence": 0.76,
+    "counter_case": "발행사는 HBM4 고객 사안에 답변하지 않았고 고객 NDA로 qualification 및 다년계약 상대·물량·가격·해지조건을 공개하지 않았다. 제품별 영업이익도 없어 HBM 마진은 외부 추정에 의존한다. NVIDIA·AMD 관련 현재 주장은 고객사 공식 제품·플랫폼·기술자료로 독립 확인되지 않았으며, 증권사 보고서의 정확성·완전성 고지, 혼합된 peer 추정 기준과 잠정실적 상태도 추정치를 공식 사실로 승격하지 못하게 한다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797"
+    ],
+    "positive_case": "공식 공시의 2026년 1분기 메모리 매출과 시간 기준 가동률, 외부감사인 중간검토가 전사·메모리 baseline을 제공한다. 신뢰 매체는 NVIDIA 요구속도 대비 HBM4 성능, Vera Rubin용 양산, AMD MI455X 우선공급을 구체적으로 보도해 명명 고객 관계 주장 자체는 복수 문서에 존재한다. 다만 후자의 같은 매체 source family 중복은 고객사 공식 corroboration이 아니다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 11,
+        "reason": "2024년 3분기 메모리 매출은 공식 기준점이지만, 같은 메커니즘의 더 최신 2026년 1분기 공식·독립 corroborated 매출 row 225를 선택해 중복을 줄인다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 19,
+        "reason": "2025년 9개월 시간 기준 가동률은 row 140의 더 최신 2026년 1분기 동일 공시 지표와 중복되므로 현재 정보 품질 판단에서는 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 55,
+        "reason": "일반적인 회계추정 불확실성보다 row 392의 실제 중간검토 결론과 row 412의 잠정실적 상태가 현재 정보확실성을 더 직접적으로 설명한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 90,
+        "reason": "2025년 2분기 검토 전 상태보다 row 392와 row 412의 2026년 1분기 assurance·잠정 상태 조합이 더 최신이고 직접적이다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 105,
+        "reason": "HBM4 명명 고객 관계를 발행사가 직접 확인하지 않은 disclosure 한계를 현재 그대로 보여 준다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 140,
+        "reason": "최신 공식 메모리 라인 가동률의 재현 가능한 기준점과 HBM 전용 귀속 한계를 함께 제공한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 150,
+        "reason": "제품별 영업이익 미공개로 HBM 수익성 판단이 외부 추정에 의존하는 핵심 정보 공백이다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 191,
+        "reason": "증권사 추정 자료를 확정 사실로 승격하지 못하게 하는 명시적 품질 한계다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 203,
+        "reason": "HBM qualification의 발행사 공개 제한이 아직 OPEN이어서 고객사 공식 기술 경로 필요성과 직접 연결된다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 225,
+        "reason": "발행사와 공식 공시가 독립적으로 겹치는 최신 메모리 매출 기준점이며 HBM 단독 귀속 한계도 명확하다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 246,
+        "reason": "사적 계약조건의 비공개와 공개 기술 corroboration 공백을 혼동하지 않도록 해 주는 핵심 disclosure 한계다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 254,
+        "reason": "peer valuation 수치가 동일한 추정 기준이 아니라는 방법론 차이를 직접 명시한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 392,
+        "reason": "최신 분기재무제표의 외부감사인 중간검토라는 가장 강한 전사 assurance 기준점이다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 412,
+        "reason": "증권사 earnings bridge의 잠정실적 의존을 현재 정보확실성 한계로 직접 표시한다."
+      }
+    ],
+    "proposed_score_lower": 2.2,
+    "proposed_score_mid": 2.8,
+    "proposed_score_upper": 3.5,
+    "research_complete": true,
+    "researcher_summary": "현재 546개 fact plane을 다시 검토해 최신 공식 baseline, 명명 고객 관계 주장, 공개 한계와 추정자료 품질을 함께 재선택했다. 2026년 1분기 메모리 매출은 발행사와 공식 공시가 겹치고 분기재무제표는 외부감사인 중간검토를 거쳐 전사·메모리 수준의 재현성은 높다. 반면 NVIDIA 속도요건·Vera Rubin 양산과 AMD 우선공급은 신뢰 매체 보도이며, 같은 source family의 반복을 고객사 공식 독립 corroboration으로 볼 수 없다. 발행사는 고객 관련 답변을 거부하거나 NDA로 qualification·계약 세부를 공개하지 않았고 제품별 영업이익도 없다. 따라서 새로 fetch되지 않은 CUSTOMER_OFFICIAL 증거를 선반영하지 않고, 고객사 공식 제품·플랫폼·기술 세션·뉴스룸 경로의 resolution gap을 명시적으로 열어 둔다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "독립 고객사 자료가 아닌 신뢰 매체가 NVIDIA 속도 요구치 대비 성능을 보도한 현재 주장으로만 사용하며, NVIDIA 공식 규격이나 qualification 완료로 승격하지 않는다.",
+        "fact_row_index": 79,
+        "source_economic_mechanism": "기사는 삼성전자 HBM4가 11.7Gbps를 달성해 NVIDIA의 11Gbps 요구치를 넘었다고 기술해 명명 고객의 성능 기준 대비 여유를 제시한다. 1월 보도의 10Gbps 요구치와 다른 후속 보도 수치이므로 NVIDIA 공식 규격으로 확정하지 않고 이 기사에 귀속된 qualification 맥락으로 한정한다.",
+        "source_period_json": "\"2026-02-11 보도 현재\"",
+        "source_predicate": "Korea Herald는 삼성전자 HBM4의 11.7Gbps가 NVIDIA의 11Gbps 요구치를 넘는다고 보도했다",
+        "source_value_json": "11.7"
+      },
+      {
+        "component_interpretation": "발행사가 고객 관련 확인을 거부했다는 직접적인 disclosure 한계로 사용하며, 거부를 고객 관계의 부재나 NDA 사유로 추정하지 않는다.",
+        "fact_row_index": 105,
+        "source_economic_mechanism": "삼성전자가 HBM4 고객 관련 사안에 답변을 거부해, NVIDIA qualification·선정·출하 일정에 관한 기사 보도를 회사의 직접 확인으로 사용할 수 없는 정보 한계를 남긴다. 답변 거부 이유를 NDA로 단정하거나 고객 관계의 부재로 해석하지 않는다.",
+        "source_period_json": "\"2026-02-08 현재\"",
+        "source_predicate": "삼성전자는 HBM4 고객 관련 사안에 대한 답변을 거부했다",
+        "source_value_json": "\"declined to comment on customer-related matters\""
+      },
+      {
+        "component_interpretation": "신뢰 매체의 AMD 우선·단독 공급 보도로 명명 고객 관계 주장의 존재를 확인하되, AMD 공식 corroboration이나 확정 계약조건으로 확대하지 않는다.",
+        "fact_row_index": 124,
+        "source_economic_mechanism": "AMD MI455X용 HBM4의 우선 공급자이자 당분간 단독 공급 지위를 확보했다는 보도는 특정 AI 가속기 고객 수요에 대한 삼성전자 HBM4의 배정 가시성을 높인다.",
+        "source_period_json": "\"2026-03 현재\"",
+        "source_predicate": "삼성전자가 AMD 인스팅트 MI455X용 HBM4의 우선 공급자 지위를 확보해 당분간 단독 공급한다고 보도됐다",
+        "source_value_json": "\"preferred supplier; sole supplier for the time being\""
+      },
+      {
+        "component_interpretation": "두 신뢰 매체가 NVIDIA Vera Rubin용 양산을 보도한 현재 관계 주장으로 사용하되, 같은 source family의 중복을 고객사 공식 독립 확인으로 계산하지 않는다.",
+        "fact_row_index": 130,
+        "source_economic_mechanism": "HBM4 양산이 엔비디아 베라 루빈 플랫폼용 제품으로 연결돼 범용적인 제품 출시보다 구체적인 AI 가속기 수요 노출을 보여준다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "삼성전자가 엔비디아 베라 루빈 플랫폼용 HBM4 양산을 개시했다",
+        "source_value_json": "\"mass production for NVIDIA Vera Rubin platform\""
+      },
+      {
+        "component_interpretation": "공식 공시의 메모리 라인 시간 기준 가동률을 재현 가능한 운영 기준점으로 사용하되 HBM 전용 CAPA·투입·수율로 귀속하지 않는다.",
+        "fact_row_index": 140,
+        "source_economic_mechanism": "MEMORY_CAPACITY_UTILIZATION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 DS 메모리 생산라인의 가동 가능 시간과 실제 가동 시간이 모두 21,600시간으로 공시 가동률이 100%였다",
+        "source_value_json": "1.0"
+      },
+      {
+        "component_interpretation": "제품별 영업이익 미공개 때문에 HBM 마진이 외부 추정에 의존한다는 정보 공백으로 사용한다.",
+        "fact_row_index": 150,
+        "source_economic_mechanism": "발행사가 제품별 세부 실적을 공개하지 않아 메모리 영업이익과 마진이 증권가 추정에 의존한다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 실적 발표는 제품별 세부 실적을 별도로 공개하지 않아 메모리 제품별 영업이익이 증권가 추정치로 남았다",
+        "source_value_json": "\"product-level detail not separately disclosed; memory profit remains a securities-industry estimate\""
+      },
+      {
+        "component_interpretation": "증권사 보고서 자체의 정확성·완전성 한계를 valuation 추정의 신뢰도 제한으로 사용한다.",
+        "fact_row_index": 191,
+        "source_economic_mechanism": "발행사가 보고서 내용의 정확성이나 완전성을 보장하지 않는다고 명시해 삼성전자 valuation 전망과 비교지표를 확정 사실처럼 취급하지 못하게 한다.",
+        "source_period_json": "\"report published 2026-02-27\"",
+        "source_predicate": "삼성증권은 조사분석자료가 신뢰할 만한 자료와 정보에서 얻어졌지만 정확성이나 완전성을 보장할 수 없다고 고지했다.",
+        "source_value_json": "\"조사분석자료의 정확성·완전성을 보장하지 않음\""
+      },
+      {
+        "component_interpretation": "발행사가 고객 NDA로 qualification 상태를 추가 공개하지 못한 현재 open disclosure gap으로 사용하며, customer-official 기술 경로 미시도와 구분해 함께 남긴다.",
+        "fact_row_index": 203,
+        "source_economic_mechanism": "고객 NDA 때문에 HBM qualification 상태를 추가 공개할 수 없어 고객 승인 여부를 외부에서 직접 확인하는 데 제한이 남았다.",
+        "source_period_json": "\"2025-Q3\"",
+        "source_predicate": "삼성전자는 고객 NDA로 인해 HBM qualification 상태를 추가로 설명할 수 없다고 밝혔다",
+        "source_value_json": "\"qualification details not commentable due to client NDA\""
+      },
+      {
+        "component_interpretation": "발행사 자료와 공식 공시가 독립 source family로 겹치는 2026년 1분기 메모리 매출 기준점으로 사용하되 HBM 단독 매출로 귀속하지 않는다.",
+        "fact_row_index": 225,
+        "source_economic_mechanism": "MEMORY_REVENUE_CONVERSION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 메모리 제품 매출액이 74,779,980백만원이다",
+        "source_value_json": "74779980"
+      },
+      {
+        "component_interpretation": "발행사가 메모리 다년계약의 상대·물량·가격·해지조건을 공개하지 못한 계약 검증 한계로 사용하며, 공개 기술자료가 해소할 수 없는 사적 조건과 구분한다.",
+        "fact_row_index": 246,
+        "source_economic_mechanism": "고객 NDA로 계약 세부내용을 공개할 수 없다는 명시적 한계는 계약 상대방·물량·가격·해지조건을 외부에서 검증할 수 없게 한다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 고객사 NDA 때문에 메모리 다년계약의 구체적 내용을 공개할 수 없다고 밝혔다",
+        "source_value_json": "\"specific contract terms undisclosed due to customer NDA\""
+      },
+      {
+        "component_interpretation": "peer 표가 house estimate와 Refinitiv consensus를 혼합한 방법론 차이로 사용해 동일 기준 비교가 아님을 명시한다.",
+        "fact_row_index": 254,
+        "source_economic_mechanism": "peer 도표가 삼성전자·SK하이닉스에는 증권사 자체 추정치를, 나머지에는 Refinitiv 컨센서스를 사용한다는 점은 비교값의 추정 기준이 완전히 동일하지 않다는 정보 한계를 명시한다.",
+        "source_period_json": "\"peer comparison published 2024-11-14\"",
+        "source_predicate": "미래에셋증권은 peer 비교 도표에서 삼성전자와 SK하이닉스는 자체 추정치, 그 외 업체는 Refinitiv 컨센서스를 사용했다고 밝혔다",
+        "source_value_json": "\"Samsung Electronics and SK hynix use house estimates; other peers use Refinitiv consensus\""
+      },
+      {
+        "component_interpretation": "외부감사인 중간검토가 전사 분기재무제표의 공식 assurance 기준점을 제공한다는 긍정 근거로 사용하되 HBM별 사실을 보증한다고 해석하지 않는다.",
+        "fact_row_index": 392,
+        "source_economic_mechanism": "INTERIM_FINANCIAL_REPORTING_ASSURANCE",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "삼정회계법인의 2026년 1분기 검토에서 K-IFRS 1034에 따라 중요하게 공정 표시되지 않은 사항이 발견되지 않았다",
+        "source_value_json": "\"no material departure from fair presentation under K-IFRS 1034 found in the interim review\""
+      },
+      {
+        "component_interpretation": "증권사 earnings bridge가 잠정실적에 기초했다는 현재 정보확실성 제한으로 사용한다.",
+        "fact_row_index": 412,
+        "source_economic_mechanism": "보고서가 핵심 earnings bridge를 잠정실적으로 명시해 최종 확정치 전 정보 확실성에 제한을 둔다.",
+        "source_period_json": "\"2026-Q1 result reported on 2026-04-08\"",
+        "source_predicate": "유안타증권 보고서는 삼성전자 2026년 1분기 실적을 잠정실적으로 표시했다",
+        "source_value_json": "\"preliminary result status\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      79,
+      105,
+      124,
+      130,
+      140,
+      150,
+      191,
+      203,
+      225,
+      246,
+      254,
+      392,
+      412
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "NVIDIA·AMD 관련 HBM4 호환성·qualification·플랫폼 가용 또는 납품 상태가 고객사 공식 제품·플랫폼·기술 세션·뉴스룸 자료에서 corroborate되거나 반박되는지 아직 확인되지 않았다.",
+      "고객사 공식 기술자료가 procurement 조건을 공개하지 않는다는 점과 사적 계약 상대·물량·가격·취소조건이 NDA로 비공개라는 점은 서로 다른 공백이다.",
+      "제품별 영업이익이 없어 전사 또는 메모리 수치를 HBM 단독 이익으로 귀속할 수 없다.",
+      "시간 기준 메모리 라인 가동률은 웨이퍼 투입·수율·HBM 전용 CAPA를 의미하지 않는다.",
+      "신뢰 매체의 복수 문서가 같은 source family이면 독립 고객사 corroboration count를 늘리지 않는다.",
+      "증권사·언론 추정치의 기준과 방법이 달라 같은 고객 관계·valuation 항목에도 편차가 남는다."
+    ],
+    "why_not_higher": "외부검토 재무와 공식 메모리 baseline은 강하지만 명명 HBM4 고객·qualification·플랫폼 공급 주장이 고객사 공식 source family로 corroborate되지 않았다. 같은 매체 family의 반복과 발행사 NDA·답변거부를 고객 확인으로 바꿀 수 없다.",
+    "why_not_lower": "최신 메모리 매출은 발행사와 공식 공시가 겹치고 전사 분기재무제표는 외부감사인 중간검토를 거쳤다. 또한 명명 고객 관계 주장이 복수 current full-document facts로 존재하므로 전면적인 정보 부재는 아니며, 그 주장과 공식 확인 공백을 분리할 수 있다."
+  },
+  "payload_hash": "0797b86a810c83afb438d47b14db25ee3e7f0e4433de6587fe7a9ead3db84c10",
+  "production_score_authority": false,
+  "prompt_hash": "8dd53f52b122fd98638f2e5cdba6fd6e0eeb214474d554d52471a358b3c9c689",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bdbcf946f7a50035948497edb00bbb63e2da1de5a28f7073a2e77e44c64239ca",
+  "response_id": "COLLABRESP-bd08336133aef162dd522e11d0ea3442a535e772dfeeb0f8a1bfbb0a30d80ea7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

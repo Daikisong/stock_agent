@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "rationale": "Independent full audit of literal chunk 2/3 found no omitted target-direct bottleneck-pricing fact. SK hynix appears only in a historical 2023 exchangeable-bond aggregate footnote, as a stake or NAV input for SK and SK Square, and in broker target-price history; these do not establish SK hynix capacity, shortage, allocation, or pricing power. The 2025-10-22 target-price row also postdates the document's 2025-10-21 availability. This chunk disposition does not prove source absence or parent-document exhaustion.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "a74a9115168b754561903468f16ddb7d9dc834127ba60f11ec32915f48b860db",
+  "production_score_authority": false,
+  "prompt_hash": "46985496c59d666e61b47226a780b8365446e220556808440d4fd043514eac2c",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d7d496d0b2e2b09146e0dfb639e628db64663c4aead440b2f4e6e79a55a8a989",
+  "response_id": "COLLABRESP-4808234a9b6ec4c59dd53097a88e4d44dd1093e56ae81f0beb6ec4dc01cf803f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

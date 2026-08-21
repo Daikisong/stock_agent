@@ -1,0 +1,32 @@
+{
+  "command_run_id": "COMMAND-3290b034b2b20b3bcf703fd0",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "category_hash_mismatch": 0,
+    "current_repo_state_mismatch": 0,
+    "dirty_status_hash_mismatch": 0,
+    "duplicate_hash_entry_id": 0,
+    "external_blocker_without_reason": 0,
+    "hash_category_missing": 0,
+    "hash_entry_content_mismatch": 0,
+    "hash_entry_contract_error": 0,
+    "pass_status_exit_code_mismatch": 0,
+    "production_readiness_overclaim": 0,
+    "required_field_missing": 0,
+    "run_id_mismatch": 0,
+    "runtime_critical_count_invalid": 0,
+    "schema_version_mismatch": 0,
+    "unexpected_hash_category": 0
+  },
+  "recomputed_category_hashes": {
+    "config_hash": "f18e6c95c2c053428d9bde32496c505573b8c6825541b6f4cfa29553040f1196",
+    "corpus_hash": "a63828a7877996ffa9dde4dfb1f449b0752c6a35824ba06b77d00dcb3ae27720",
+    "memory_hash": "40b2f3941f75eb1ae05a5e2a0a5a4a315b6c1a9b420dc0291708d21a3cb75a88",
+    "prompt_hash": "25e8c6199781301a2ce92060761cca2206aaf1815bfd6b165f6cfad33d37a330",
+    "recipe_hash": "b76a1cd42a1165834bdbada69ecb8c0509dbe44683996cf482b5e0f97e42dd9f",
+    "source_hash": "030c126740ab3a1f7f7cf3ed140d0375925ba59ed845470acd494609aa709c8e"
+  },
+  "result_hash": "9cb71a7d835b8c371df6aab40d4c7fd90863352234ab158a3721db5aa9103c6a",
+  "schema_version": "e2r_command_reproducibility_audit_v1",
+  "status": "COMMAND_REPRODUCIBILITY_PASS"
+}

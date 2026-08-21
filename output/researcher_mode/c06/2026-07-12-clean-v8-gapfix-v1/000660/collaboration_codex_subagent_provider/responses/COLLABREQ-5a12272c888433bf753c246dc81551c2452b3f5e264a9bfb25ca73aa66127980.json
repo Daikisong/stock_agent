@@ -1,0 +1,186 @@
+{
+  "output_schema_hash": "2d4bcfb217ea837b9498e86ad338bf1086b96a763a7e46d84aa9039c1e524499",
+  "payload": {
+    "confidence": 0.87,
+    "counter_case": "가동률과 CAPA는 HBM 전용이 아니며 물량·가격은 월·분기 단위 합의라 장기 고정가격·장기 sold-out을 확인하지 못한다. 재고평가충당금과 재공품 계약손실, 대형 고객 집중도는 가격·수요 지속성과 협상력에 반대 근거를 제공한다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23"
+    ],
+    "positive_case": "2026년 1분기 메모리 생산설비가 평균 100% 가동됐고 HBM이 가격 상승을 주도한 제품군으로 직접 언급됐다. 이는 당기 공급 여유가 제한되고 HBM이 가격 강도에 기여했다는 중간 수준의 병목·가격 근거다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 0,
+        "reason": "월·분기 합의 구조를 장기 고정가격 부재와 짧은 가시성 주기의 핵심 문맥으로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 1,
+        "reason": "복수 대형 고객 집중의 수요 신호와 협상·갱신 counter를 함께 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 2,
+        "reason": "메모리 전반 100% 가동을 유지하되 HBM 전용 잠김 CAPA로 승격하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 3,
+        "reason": "메모리 생산능력 규모를 문맥으로 유지하되 HBM 전용 CAPA로 귀속하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 6,
+        "reason": "재고평가충당금을 sold-out 해석의 counter로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 7,
+        "reason": "재공품 계약손실 증가를 가격·수급 지속성 counter로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 9,
+        "reason": "HBM이 가격 상승 주도 제품군에 포함됐다는 직접 양의 근거를 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 10,
+        "reason": "고객 A 집중 정보는 두 고객을 함께 비교한 row 1에 포함돼 중복을 피한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 11,
+        "reason": "재공품 잔액의 양면성은 평가충당금과 계약손실 counter보다 병목·가격 판단에 덜 직접적이어서 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 12,
+        "reason": "고객 B 집중 정보는 두 고객을 함께 비교한 row 1에 포함돼 중복을 피한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 13,
+        "reason": "HBM 제품 실행력은 상용화 근거이나 잠김 CAPA·가격·sold-out 기간을 직접 증명하지 않아 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 14,
+        "reason": "고객 ASIC 협업은 개발 관계이며 확정 물량·배정·고정가격 계약이 아니므로 제외한다."
+      }
+    ],
+    "proposed_score_lower": 6.0,
+    "proposed_score_mid": 7.0,
+    "proposed_score_upper": 8.0,
+    "research_complete": true,
+    "researcher_summary": "메모리 전반 평균가동률 100%와 제한된 공급 환경에서 HBM이 가격 상승 주도 제품군에 포함됐다는 사실은 당기 병목·가격 방향을 지지한다. 그러나 생산능력과 가동률은 메모리 전체 범위이고, 고객 물량·가격은 월별 또는 분기별 합의로 정해져 HBM 전용 장기 locked capacity, 장기간 sold-out 또는 고정 계약가격을 증명하지 않는다. 재고평가충당금과 재공품 계약손실 및 고객 집중은 지속성에 counterweight를 준다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "물량·가격 결정 주기가 짧아 장기 고정가격이나 장기간 sold-out 계약으로 해석할 수 없는 중립적 계약 구조다.",
+        "fact_row_index": 0,
+        "source_economic_mechanism": "주요 고객 공급 물량과 가격이 월별 또는 분기별 상호 합의로 정해져 계약 가시성의 확인 주기가 짧다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "SUPPLY_VOLUME_AND_PRICE_SET_BY_MONTHLY_OR_QUARTERLY_MUTUAL_AGREEMENT",
+        "source_value_json": "\"월별/분기별 상호 합의\""
+      },
+      {
+        "component_interpretation": "복수 대형 고객의 집중은 수요 강도의 간접 신호이면서 협상력·갱신 위험의 counter다. 고객별 HBM 매출로 귀속하지 않는다.",
+        "fact_row_index": 1,
+        "source_economic_mechanism": "고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.",
+        "source_value_json": "\"7,780,590 and 6,536,458 vs 4,786,233\""
+      },
+      {
+        "component_interpretation": "메모리 전반 100% 가동은 당기 공급 여유가 제한됐음을 보여주지만 HBM 전용 잠김 CAPA나 장기 예약을 증명하지 않는다.",
+        "fact_row_index": 2,
+        "source_economic_mechanism": "2026년 1분기 반도체 생산실적은 11,465,147백만원이며 생산설비 평균가동률은 100%였다. 이는 메모리 전반의 현재 설비 활용도를 보여주지만 HBM 전용 가동률이나 장기 예약 물량을 뜻하지 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "OPERATED_MEMORY_PRODUCTION_FACILITIES_AT_FULL_UTILIZATION",
+        "source_value_json": "\"production output KRW 11,465,147 million; average utilization 100%\""
+      },
+      {
+        "component_interpretation": "공시된 메모리 공급 기반의 규모를 확인하는 문맥 사실이며 HBM 전용 CAPA나 고객별 배정량으로 전환하지 않는다.",
+        "fact_row_index": 3,
+        "source_economic_mechanism": "2026년 1분기 반도체 생산능력은 평균원가 기준 11,465,147백만원으로 산출되어 메모리 공급 기반의 현재 규모를 보여준다. 이 수치는 HBM 단독 CAPA로 확대하지 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_Q1_MEMORY_PRODUCTION_CAPACITY",
+        "source_value_json": "11465147"
+      },
+      {
+        "component_interpretation": "재고평가충당금은 모든 메모리 물량이 확정 수요로 잠겼다는 해석을 제한하며 HBM 전용 위험으로 귀속하지 않는다.",
+        "fact_row_index": 6,
+        "source_economic_mechanism": "2026년 1분기말 재고 취득원가 16,385,847백만원에 평가충당금 411,714백만원을 반영해 장부잔액을 15,974,133백만원으로 낮췄다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_INVENTORY_VALUATION_ALLOWANCE",
+        "source_value_json": "411714"
+      },
+      {
+        "component_interpretation": "재공품 계약손실 증가는 생산 제약과 가격 강도가 모든 제품에 동일하게 지속된다는 해석의 counter이며 HBM 전용 손실은 아니다.",
+        "fact_row_index": 7,
+        "source_economic_mechanism": "2026년 1분기말 중국 종속기업 생산 재공품의 구매·추가가공·판매에서 예상되는 손실을 반영한 계약손실충당부채가 162,582백만원으로 전기초 153,267백만원보다 늘었다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_CONTRACT_LOSS_PROVISION_FOR_WAFER_WORK_IN_PROCESS",
+        "source_value_json": "162582"
+      },
+      {
+        "component_interpretation": "HBM이 가격 상승 주도 제품군에 직접 포함됐다는 점은 병목·가격의 양의 방향을 지지하지만 ASP 수치나 고정 계약가격·지속기간은 없다.",
+        "fact_row_index": 9,
+        "source_economic_mechanism": "제한된 공급 환경에서 HBM이 가격 상승을 주도한 제품군에 포함돼 2026년 1분기 실적과 수익률 전환을 지지했다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "HBM_INCLUDED_AMONG_PRODUCTS_LEADING_PRICE_INCREASES",
+        "source_value_json": "\"가격 상승 주도 제품군에 포함\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      0,
+      1,
+      2,
+      3,
+      6,
+      7,
+      9
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "HBM 전용 가동률·CAPA·고객별 배정 물량이 공개되지 않았다.",
+      "장기 고정가격, 취소불가 물량, 선수금, RPO 또는 sold-out 기간이 확인되지 않았다.",
+      "HBM의 실제 ASP 상승률과 기간별 계약가격이 공개되지 않았다.",
+      "재고·재공품 위험과 고객 집중도가 HBM에 얼마나 귀속되는지 알 수 없다."
+    ],
+    "why_not_higher": "메모리 전반 100% 가동과 HBM 가격 기여는 확인되지만 HBM 전용 잠김 CAPA, 장기 sold-out, 고정가격·확정 물량 계약이 없다.",
+    "why_not_lower": "당기 메모리 설비의 완전 가동과 HBM의 가격 상승 주도 제품군 포함이 동시에 확인돼 단순 수요 전망만 있는 상태보다 강하다."
+  },
+  "payload_hash": "b70ef7c8fc67a315db758af83ff0eac2023c85e4f9a160f6710f169094933f4d",
+  "production_score_authority": false,
+  "prompt_hash": "e77566974890f77b1df767cf006af35ca92ef42810be01b285c240f956d45316",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5a12272c888433bf753c246dc81551c2452b3f5e264a9bfb25ca73aa66127980",
+  "response_id": "COLLABRESP-3349ea52676ab323ee8f0c737f44a3f51e69c4d968cac38859d146e5c6d07ef1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

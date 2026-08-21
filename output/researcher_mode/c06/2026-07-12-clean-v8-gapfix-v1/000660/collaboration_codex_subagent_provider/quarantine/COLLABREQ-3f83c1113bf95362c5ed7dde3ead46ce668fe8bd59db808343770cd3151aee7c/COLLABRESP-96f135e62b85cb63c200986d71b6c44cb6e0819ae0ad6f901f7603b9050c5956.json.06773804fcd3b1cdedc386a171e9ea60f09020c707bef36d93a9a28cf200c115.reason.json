@@ -1,0 +1,9 @@
+{
+  "production_score_authority": false,
+  "quarantined_response_path": "output/researcher_mode/c06/2026-07-12-clean-v8-gapfix-v1/000660/collaboration_codex_subagent_provider/quarantine/COLLABREQ-3f83c1113bf95362c5ed7dde3ead46ce668fe8bd59db808343770cd3151aee7c/COLLABRESP-96f135e62b85cb63c200986d71b6c44cb6e0819ae0ad6f901f7603b9050c5956.json",
+  "reason": "ValueError:supervisor readiness contradicts deterministic semantic gates",
+  "request_id": "COLLABREQ-3f83c1113bf95362c5ed7dde3ead46ce668fe8bd59db808343770cd3151aee7c",
+  "response_id": "COLLABRESP-96f135e62b85cb63c200986d71b6c44cb6e0819ae0ad6f901f7603b9050c5956",
+  "reusable_provider_response": false,
+  "schema_version": "e2r_v5_collaboration_response_quarantine_v1"
+}

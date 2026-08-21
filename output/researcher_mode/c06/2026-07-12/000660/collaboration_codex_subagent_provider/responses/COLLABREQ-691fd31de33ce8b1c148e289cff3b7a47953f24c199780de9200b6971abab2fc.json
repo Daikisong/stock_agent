@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "883df230d7dfdbd00194564298beef38e363d21c27eeb0062eec97f53f20b710",
+  "payload": {
+    "allowed_range": [
+      10.5,
+      15.0
+    ],
+    "anchor_comparisons": [
+      "The positive ordinal anchor is directionally close because production readiness, capacity-exceeding requested demand, and FY2026 demand coverage coexist.",
+      "The counter ordinal anchor captures missing customer-lock and margin-bridge terms, but current production and demand evidence is stronger than that pattern alone."
+    ],
+    "counter_fact_ids": [
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-c890adf15151ce383d70cf81",
+      "EFACT-dde9f3ef4ad310f18beb72e8"
+    ],
+    "disagreements": [
+      "The positive case gives insufficient discount to the difference between customer requests, completed discussions, and disclosed binding terms."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-fe4be151b6e34320ddc5f6a7",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 12.5,
+    "rationale": "Visibility is limited by monthly or quarterly agreement of volume and price, absent executed multi-year terms, a reported HBM4-to-HBM3E mix shift following platform delay, and prospective CXMT capacity. Requested demand and completed discussions are not enforceable purchase obligations.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-62c3b9f322f3a062b5e74751",
+      "EFACT-d7a582ebff38082719fe2983",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "Undisclosed volume, price, cancellation rights, penalties, allocation, and ramp timing leave material duration and conversion risk.",
+    "why_not_lower": "HBM4 production, capacity-exceeding requested demand, FY2026 coverage, and completed discussions rule out a low-visibility placement."
+  },
+  "payload_hash": "870ea3182015afaf19ff9c14c2b63abb86a52bee3235aa4769dc7e07f4329ce7",
+  "production_score_authority": false,
+  "prompt_hash": "be24eef031459502d4c562a0a557c2038caab7d6e998a2717aebfae506dc39c2",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-691fd31de33ce8b1c148e289cff3b7a47953f24c199780de9200b6971abab2fc",
+  "response_id": "COLLABRESP-6888dd3a1a0479909575279c8ab82dbd3a9c9f7057c91cf8645a31bee965b285",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "e28ed2759ff3793e73c1ced3a10c22a8b9011df2952b059d2676cfc15b4840ef",
+  "payload": {
+    "allowed_range": [
+      1.1,
+      1.9
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e의 1.0~1.4 weak positive 밴드보다 소폭 높게 본다. 금융부채 감소·순상환·현금 우위와 배당·자기주식 소각이 함께 확인되지만 HBM별 투자회수는 아니다.",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc의 0.6~1.0 counter 밴드보다는 강하다. 다만 매출채권·재고 증가, 큰 CAPEX·R&D 지출과 교환사채 교환이 상단을 제한한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-6459972ca51023d1d4491408",
+      "EFACT-68380c1d51423fc5e672e63b",
+      "EFACT-6a46eb88222723dffed4cb6d",
+      "EFACT-b15e02831a18564591fe308c",
+      "EFACT-f9fa114a3daa17bcad2e20e9"
+    ],
+    "disagreements": [
+      "전사 순현금과 주주환원 실행을 HBM CAPEX의 realized ROIC 또는 HBM별 자본효율로 재분류하는 해석에는 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "proposed_points": 1.5,
+    "rationale": "금융부채 감소, 차입보다 큰 상환, 현금성자산의 차입금 초과는 재무 여력을 보여주고 배당 결의와 자기주식 소각은 주주환원 실행을 확인한다. 반면 매출채권·재고 증가가 현금을 묶고, 유형자산 취득과 R&D 지출이 크며 교환사채 교환은 희석 구조를 남긴다. 모두 전사·별도 범위라 HBM 전용 ROIC를 입증하지 못하므로 1.5점으로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-21677a91e8afb32e4876aa8c",
+      "EFACT-84886f3397f7bbc2bee937cd",
+      "EFACT-d9f801f19a001e7214e5af8c",
+      "EFACT-ef16520d0f9ee4210108fc41",
+      "EFACT-f344a6f409575d6f77888831"
+    ],
+    "why_not_higher": "HBM 전용 CAPEX·R&D·운전자본·FCF·realized ROIC가 없고 매출채권·재고 증가와 큰 투자지출, 교환사채 희석 영향이 남기 때문이다.",
+    "why_not_lower": "부채 감소·순상환·현금 우위가 실제로 확인되고 배당 결의와 대규모 자기주식 소각이라는 주주환원 실행도 함께 존재하기 때문이다."
+  },
+  "payload_hash": "56acc9d4d97150d93b27122a23c490c103b82463f3439d343cb9fd29de449caa",
+  "production_score_authority": false,
+  "prompt_hash": "375332fe3b0eee48951d88cc7e0d7ced670a3706f3d09fe38fc3f4caf60d5d00",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2a320a4772b59ce3f800a256bf297bd8cfc37e6580b25639e74df45977508098",
+  "response_id": "COLLABRESP-98cfd354ba33b329fefe12068a5231497d48c587a574bfcbff22dcb4adbdc4c3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

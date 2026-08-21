@@ -1,0 +1,111 @@
+{
+  "output_schema_hash": "2aa2068441c0afd368451f442d212ab1426e39e77461819a63f5b6c851c22ca7",
+  "payload": {
+    "challenged_fact_row_indices": [
+      12,
+      13,
+      29,
+      38,
+      41,
+      44,
+      46,
+      67,
+      76,
+      80,
+      88,
+      101,
+      130,
+      132,
+      139,
+      148,
+      151,
+      160,
+      165,
+      166,
+      173,
+      189,
+      191,
+      195,
+      196,
+      204,
+      206,
+      207,
+      214,
+      216,
+      217,
+      219,
+      220,
+      230,
+      237,
+      238,
+      239,
+      241
+    ],
+    "confidence": 0.91,
+    "recommended_research_directions": [
+      "valuation_rerating의 DURABLE_VISIBILITY만 현재 실행 가능한 material gap으로 유지한다. 고객 공식 IR·공시·실적 원문에서 SK하이닉스 HBM 공급의 기간·binding capacity 또는 물량·가격 체계와 취소권·위약금·선수금 조건이 함께 있는 약정만 확인한다.",
+      "기존 issuer 공급 논의·요청수요·비구속 LTA, 브로커 추정, snippet-only·게시일 미확인 문서와 같은 의미의 query는 반복하지 않는다.",
+      "향후 DART·issuer 실적자료에서 HBM 또는 memory 단독 손익·현금흐름, 실제 투자집행·운전자본·FCF는 monitoring하되 현재 CUSTOMER_OFFICIAL 계약 gap과 섞어 새 검색을 무한히 열지 않는다."
+    ],
+    "resolved_challenges": [
+      "eps_fcf_explosion: 이익 증가가 추정치뿐이라는 도전은 1Q26 DART actual 매출·영업이익·영업현금흐름·FCF로 해소된다. 단, 전사 기준이라 HBM 단독 EPS·FCF 기여는 해소되지 않는다.",
+      "earnings_visibility: HBM4가 샘플 단계에만 있다는 도전은 issuer의 양산 진입·대규모 생산·고객 요구성능 충족 설명으로 해소된다. 공급량·가격·구매의무와 다년 duration은 별도다.",
+      "bottleneck_pricing: 공급 제약이 산업 전망뿐이라는 도전은 1Q26 반도체 평균가동률 100%, 제한된 공급과 실제 DRAM ASP 상승, HBM4의 추가 TSV·웨이퍼 소모로 해소된다.",
+      "market_mispricing: 2026-07-10 동일시점 trailing parent P/B가 DB하이텍 2.32859배, 한미반도체 33.276177배로 구조화 검증돼 기술적인 peer band 부재는 해소됐다. 직접 memory peer가 아닌 점과 큰 분산은 counter로 남는다.",
+      "capital_allocation: 회사가 투자 재원을 전혀 갖지 못했다는 도전은 실제 영업현금흐름과 순현금 포지션으로 해소된다. 장기 계획의 전액 재원·집행시기·HBM 귀속 ROIC는 확인되지 않았다.",
+      "information_confidence: 96.5억원 계약은 HBM 제품 판매계약이 아니라 HBM 제조용 TC BONDER 장비 조달계약으로 판별됐다. 계약금·선급금이 없고 납기는 협의 변경 가능해 고객 구매의무 근거가 아니다."
+    ],
+    "review_complete": true,
+    "reviewed_component_ids": [
+      "eps_fcf_explosion",
+      "earnings_visibility",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation",
+      "information_confidence"
+    ],
+    "source_coverage": [
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "KIND_KRX",
+      "COMPANYGUIDE",
+      "PUBLIC_BROKER_PDF",
+      "TRUSTED_BUSINESS_MEDIA",
+      "KRX_PRICE_MARKET_CAP",
+      "PEER_STRUCTURED",
+      "STRUCTURED_PEER_BAND"
+    ],
+    "unresolved_challenges": [
+      "eps_fcf_explosion: issuer 숫자형 forward guidance와 HBM 또는 memory 단독 segment contribution이 없다. 전사 actual을 같은 속도의 반복 HBM FCF로 연장할 수 없다.",
+      "earnings_visibility: 공급 논의 완료·고객 요청수요·다년 LTA 논의에는 확정 물량·가격·기간·취소권·위약금·선수금이 없고 주요 고객 물량·가격은 월별 또는 분기별 합의다.",
+      "bottleneck_pricing: 실제 가격 강세는 일반 DRAM blended ASP가 중심이며 HBM 단독 실현 ASP나 계약가격은 없다. M15X와 경쟁 공급 확대는 병목 기간을 제한할 수 있다.",
+      "market_mispricing: peer P/B band는 확보됐지만 DB하이텍은 파운드리, 한미반도체는 장비사이고 2.33배와 33.28배의 분산이 커 낮은 이익배수가 미반영 가치인지 cycle peak인지 단정할 수 없다.",
+      "valuation_rerating: HBM 매출 성장과 고배수 SOTP, current valuation은 존재하지만 기간·binding capacity 또는 물량·가격과 취소·위약·선수금 조건이 있는 고객 공식 commitment가 없어 DURABLE_VISIBILITY가 비어 있다.",
+      "capital_allocation: 전사 OCF·순현금·유형자산 취득을 HBM 전용 현금수익률로 귀속할 수 없고 대규모 구매약정과 단계 투자는 FCF를 흡수한다.",
+      "information_confidence: 반도체 단일 사업부문 공시와 잠정 실적자료의 검토 미완료, 브로커 내부 불일치 때문에 HBM 이익 기여와 LTA 가격·duration을 issuer 사실로 승격할 수 없다."
+    ]
+  },
+  "payload_hash": "6dcc7c0caa3a8c698b9e994a64c4077991bde664a57f748b286214a2174e879f",
+  "production_score_authority": false,
+  "prompt_hash": "814f2df96ce69982a8bd420a7b9fcf4f1eb3b14dfdcd581c23a71256aa4dfdce",
+  "provenance": {
+    "agent_id": "root-phase101-c06-red-durable-refresh",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_red_durable_refresh",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-24cacf3044edb1f91fca5689a83cf741bda1295ac4d22e9051dd7c0d7df9a93a",
+  "response_id": "COLLABRESP-3497ad4d321fb8c4b9dedc9c43fbd8dbab0932fdd2d1179ac3d4a605d792807e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

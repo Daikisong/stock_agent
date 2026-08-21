@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-2832c1716d79ea980d418537",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "검증된 발행사 2019년 2분기 컨퍼런스 경로지만 현행 HBM 세대와 2026년 고객·공급 상태보다 오래돼 비물질적이다."
+      },
+      {
+        "candidate_id": "SGCAND-292f701ae4ce8f0a9309ed62",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.7,
+        "rationale": "검증된 발행사 연계 2025년 2분기 컨퍼런스 페이지는 메모리·HBM 수요, 인증, 공급과 전망의 원문 자료로 이어질 수 있어 추세·counter·supersession 확인용 full-fetch 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-29b9d52658efc22df97892ef",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "검증된 발행사 2022년 2분기 컨퍼런스 경로지만 후속 HBM 고객·양산·실적 자료가 현재 상태를 통제한다."
+      },
+      {
+        "candidate_id": "SGCAND-2a69603c31344342aac84f1f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "검증된 발행사 2021년 3분기 컨퍼런스 페이지지만 현재 HBM 가시성에 필요한 최신 고객·capacity·이익 연결을 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2ca88af6f0d3798f00b55ba6",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "검증된 발행사 2017년 반기보고서 경로지만 현행 HBM 제품과 고객 가시성보다 훨씬 이전이라 후속 공시로 대체됐다."
+      },
+      {
+        "candidate_id": "SGCAND-2ce8531109ee902944032f94",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.22,
+        "rationale": "검증된 발행사 2024년 4분기 컨퍼런스 페이지지만 당시 HBM 전망과 인증 상태는 2025~2026 결과로 대체돼 current route의 우선성이 없다."
+      },
+      {
+        "candidate_id": "SGCAND-2fcec6efb19f3d8cada12a1a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "외부 이벤트 호스트이며 supplied provenance가 요청된 issuer·customer·industry·trusted-media family를 입증하지 못하고 2016년 경로라 current objective에도 부적합하다."
+      },
+      {
+        "candidate_id": "SGCAND-30bbef4fdca6d860b6e5e721",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 발행사 2014년 2분기 컨퍼런스 PDF로 현재 HBM 수요·공급·고객·earnings 상태와 직접 관련이 없다."
+      },
+      {
+        "candidate_id": "SGCAND-3180663981b87ce6ebbbce52",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "발행사 공식 2019년 참고자료지만 광범위한 과거 기업 자료로 2026년 HBM 고객·capacity·earnings 가시성을 직접 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-31d59d4239cb1fa9943c3c49",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "외부 오디오 호스트이고 requested source family provenance가 입증되지 않으며 2010년 경로라 현재 목적에 비물질적이다."
+      },
+      {
+        "candidate_id": "SGCAND-320b2398e4eadc8873e7766f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 발행사 2015년 3분기 컨퍼런스 페이지지만 현행 HBM 경제 메커니즘을 해결하지 못하는 역사자료다."
+      },
+      {
+        "candidate_id": "SGCAND-33012bc1bba4601278040910",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "검증된 발행사 2021년 4분기 컨퍼런스 PDF지만 후속 2025~2026 실적과 HBM 진행 자료로 대체됐다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "SGCAND-292f701ae4ce8f0a9309ed62은 full-fetch와 실제 원문 도달 여부 검증이 남아 있으며, landing metadata 자체는 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "3400bf49891089e3bb04a5001f5d32247ccb667ab822cbe2578a57f341dd1f9a",
+  "production_score_authority": false,
+  "prompt_hash": "77f7bebef4bdb886af63dcdcf8eee2d1ac2e1f4bf5ee866e037107ea81c9e6ad",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8b81bc49481d09ad0100f5bd614dce5786f8aad7c360f9e8bd120a0cbb08895a",
+  "response_id": "COLLABRESP-16705c2a9630317001f6df932abbfdba0a4938931c533926b979c91e565ba7f9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

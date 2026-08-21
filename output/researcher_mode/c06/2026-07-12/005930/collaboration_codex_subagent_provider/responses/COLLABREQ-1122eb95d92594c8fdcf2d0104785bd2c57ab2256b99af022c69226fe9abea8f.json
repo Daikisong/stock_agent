@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-cd1d63fd90dd534d09058e07",
+        "rationale": "문서 전체는 2026년 1분기 삼성전자 연결 손익계산서와 포괄손익계산서로, 수익·영업이익·당기순이익·주당이익 등 전사 합계만 제시하고 메모리 또는 HBM 귀속 수치를 제시하지 않는다. 연결 objective는 earnings_visibility이므로 CORPORATE_GENERIC 사실은 허용 범위가 아니며, 기본·희석주당이익은 current fact ledger에도 이미 동일하게 존재한다. 별도의 objective-local 신규 사실이나 직접적인 메모리 반대사실은 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "611b714d98a855ef35e54075817455f795c5be76c48c8cf95301673cd2fa7b4a",
+  "production_score_authority": false,
+  "prompt_hash": "a2ec975a6b6f0b02c6c0fc01320534a7d64839d2ebabb2dd1e6d99f88f9990e3",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1122eb95d92594c8fdcf2d0104785bd2c57ab2256b99af022c69226fe9abea8f",
+  "response_id": "COLLABRESP-33378ce9f6dd3418cf5fe72ad7153a055b778c426b65b71d10092d08f34d1053",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

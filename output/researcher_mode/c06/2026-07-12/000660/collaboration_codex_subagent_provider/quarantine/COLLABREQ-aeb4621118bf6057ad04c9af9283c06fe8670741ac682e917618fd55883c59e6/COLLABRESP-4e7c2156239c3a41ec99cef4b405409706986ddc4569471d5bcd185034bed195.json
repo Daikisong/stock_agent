@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "1eb963bcc335b0bfd23238a5aaf71a28c645bb48582f2a7b86ca030b214b4a53",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0964968626eef4530df63603",
+        "rationale": "원문 958줄과 현재 계보를 전수 대조했다. 이미 수용된 6건이 DRAM mix·서버 메모리 수요·관세 귀속 한계·투자 규율·HBM 수요 전망을 모두 포함하며, 만료된 2025 추정치와 반복 수치는 추가하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-1709fe1fcbba59b4bb64c5ff",
+        "rationale": "원문 전체와 기존 수용 9건을 대조했다. HBM4E 1c 양산 성숙, 고객별 ramp, 공급능력 대비 수요, 경쟁 counter, 용인·P&T7 일정이 이미 반영돼 distinct 잔여가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-307fb9014727799335a8db49",
+        "rationale": "2025년 3월 섹터 탐방 보고서는 현재 후속 actual·전망보다 오래됐고, 요청된 target forward valuation 또는 독립 공식 DURABLE_VISIBILITY를 새로 제공하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "rationale": "원문 1,959줄과 기존 수용 9건을 대조했다. PER 방법론 전환·PBR band 돌파·Micron 비교·2026~2027 PBR 및 EV/EBITDA가 모두 반영됐고 남은 내용은 중복, 타사, 목표주가 또는 면책이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "rationale": "원문 전체와 기존 수용 10건을 대조했다. 최신 peer 할인, 목표배수 산식, LTA 관련 broker 판단, HBM 이익비중, ADR 경로, forward earnings·FCF 및 면책까지 이미 반영돼 distinct 잔여가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-4ad2b2c5d23cebf2ce49609c",
+        "rationale": "원문 전체의 인증 지연·초기 샘플 성숙도·HBM4 기술복잡도는 기존 3건으로 반영됐고 후속 issuer 사실로 일부 supersede됐다. 확인되지 않은 최종 실패 추측은 추가하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-5a3f1affd4616ae845ce6c2d",
+        "rationale": "원문 전체에서 target에 직접 귀속되는 HBM 시장·점유율·CAPA 일정·forward PER/PBR/BPS/ROE 10건이 이미 수용됐다. Nanya 자체 실적과 NAND 내용은 대상·범위 밖이라 추가하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-5abf2b66451a741d72c342fb",
+        "rationale": "문서의 분석 대상은 SK하이닉스가 아니라 라온로보틱스(232680)다. 고객사 일반 언급과 라온로보틱스 밸류에이션을 SK하이닉스 valuation 사실로 귀속하지 않았다.",
+        "status": "WRONG_TARGET_OR_SEGMENT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "ede1b381a89bfaab7895727960ff1379ef56c4b626227a87c1bb24504dba9535",
+  "production_score_authority": false,
+  "prompt_hash": "0b094824539dd199c8d21db05a4c653a7dbab601558f63257f92da83036bcbac",
+  "provenance": {
+    "agent_id": "root-phase101-c06-facts",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_facts",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-aeb4621118bf6057ad04c9af9283c06fe8670741ac682e917618fd55883c59e6",
+  "response_id": "COLLABRESP-4e7c2156239c3a41ec99cef4b405409706986ddc4569471d5bcd185034bed195",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

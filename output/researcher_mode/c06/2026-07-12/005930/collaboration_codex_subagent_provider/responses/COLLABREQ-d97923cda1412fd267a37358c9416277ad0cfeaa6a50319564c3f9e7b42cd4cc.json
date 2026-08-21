@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-c344cc242e91c104c789d784",
+      "CRMEMO-7e32c653cc0d584f309cb939",
+      "CRMEMO-77068f239fe20ee4f7d2f91d",
+      "CRMEMO-97a451c7ff1b8c79732d5538",
+      "CRMEMO-1c9b7fa5b3621339704c9601",
+      "CRMEMO-76da12a89b382d8f98150565",
+      "CRMEMO-e6671755c226a5751345dce2"
+    ],
+    "confidence": 0.93,
+    "cross_component_support": [
+      "HBM4 인증·양산·지속 납품·누적 매출은 기술 경쟁력이 actual 매출로 전환되는 공통 상방 경로다.",
+      "완판 생산여력·구매주문·중장기 계약과 타이트한 재고는 earnings visibility와 bottleneck pricing을 함께 지지한다.",
+      "2026년 1분기 메모리 매출·영업현금흐름과 가격·믹스 개선은 EPS/FCF 및 valuation rerating의 실적 기반을 보강한다.",
+      "공식 제품매출·가동률·분기검토와 고객 공식 기술 자료는 핵심 actual의 정보 신뢰도를 높인다.",
+      "선행 PER·PBR의 peer 격차는 actual 상용화가 지속될 경우 market mispricing과 rerating의 연결 가능성을 보여 준다."
+    ],
+    "cross_component_tensions": [
+      "생산능력 완판과 주문 가시성이 있어도 고객별 물량·가격·취소·위약조건 비공개는 계약 질의 상단을 제한한다.",
+      "100% 시간가동과 공급부족은 병목을 지지하지만 HBM 전용 CAPA·수율·패키징 처리량을 직접 증명하지 않는다.",
+      "메모리 매출과 전사 OCF 급증에도 HBM 단독 마진·FCF 부재와 CAPEX·운전자본 유출은 현금전환 확신을 낮춘다.",
+      "낮은 상대배수는 재평가 여지를 주지만 현재 가격의 기대 반영과 peer 사업구조 차이는 오평가 확정을 막는다.",
+      "가격 급등 의존 이익과 HBM4 초기 수익성·고객 제품 일정은 actual 매출 증가의 지속성을 제한할 수 있다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "7개 component는 HBM4의 actual 상용화, 고객수요와 공급병목, 메모리 매출·현금 확대라는 일관된 상방을 보인다. 동시에 계약조건·HBM 단독 수익성과 FCF·전용 CAPA·고객 일정·현재 가격 기대를 분리 검증할 수 없어 최고 강도 결론은 제한된다. 남은 질문은 다음 공개기간의 monitoring 한계이며 현재 근거의 양면 coverage는 완결됐다.",
+    "unresolved_material_questions": [
+      "HBM4 단독 actual 매출총이익률·영업이익·FCF bridge는 공개되지 않았다.",
+      "고객별 물량·가격조정·최저가격·선수금·취소·위약 조건은 NDA로 확인할 수 없다.",
+      "HBM 전용 웨이퍼 투입·수율·첨단 패키징 처리량과 증설 ramp actual이 분리되지 않았다.",
+      "고객 최종제품 일정 지연이 qualification·allocation·매출 인식에 미칠 영향이 남아 있다.",
+      "가격 상승 의존 이익이 물량 증가와 구조적 반복 수요로 얼마나 전환되는지 다음 실적에서 확인해야 한다.",
+      "대규모 CAPEX와 운전자본 이후 HBM 투자별 실현 ROIC·잔여현금 회수는 아직 검증되지 않았다.",
+      "현재 주가에 반영된 HBM 이익 기대와 peer 사업구조 차이를 완전히 분해할 수 없다."
+    ]
+  },
+  "payload_hash": "32d0d1d9d34eb27e981f6d6241f49b99bc4113999a3b4670e40637f0d274749f",
+  "production_score_authority": false,
+  "prompt_hash": "a8061f66070b9623fc22f50f2492009dbe2d505ec405a9e5b37971d9f20ba153",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d97923cda1412fd267a37358c9416277ad0cfeaa6a50319564c3f9e7b42cd4cc",
+  "response_id": "COLLABRESP-3d51309df30eee76756713a2ecddee68301597e23a9203a367966c819c681685",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

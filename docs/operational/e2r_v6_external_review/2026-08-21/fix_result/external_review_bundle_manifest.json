@@ -1,0 +1,162 @@
+{
+  "schema_version": "e2r_v6_gate1_external_review_bundle_manifest_v1",
+  "audit_date": "2026-08-22",
+  "target_id": "000660",
+  "as_of_date": "2026-07-12",
+  "file_count": 30,
+  "files": [
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/000660_business_model_memo.json",
+      "bytes": 4343,
+      "sha256": "4a8c7133373328af24d8c47afeefd2d45e661888295246d24e5a1c5224b8f09e"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/000660_component_memos_compact.jsonl",
+      "bytes": 70192,
+      "sha256": "33f472000ef31706fefa5906c9bb6821ab927e13cef33937d3fc6cc93eac71a5"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/000660_final_component_decisions.jsonl",
+      "bytes": 30055,
+      "sha256": "c3b2e9f4588dc25a21079043f58511fdfd517aa607a1aad6deb656232ec1d220"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/000660_judge_decisions_compact.jsonl",
+      "bytes": 38799,
+      "sha256": "5c2fc2405e3b3a2fa26b91abb747f9f84b52282e68c10dc73caa480662c2c9b7"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/000660_red_team_receipt.json",
+      "bytes": 2789,
+      "sha256": "5a04496141608e99ee77c769c405081c27113f354b3102ed339d5d9b5838354b"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/000660_saturation_certificate.json",
+      "bytes": 1071,
+      "sha256": "cdbb0bb1e074b99df20100939697b1a9a156def3f1d7629d6437fca9731b5c62"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/000660_saturation_reviews_compact.jsonl",
+      "bytes": 7098,
+      "sha256": "6fbc59924cc64ae10542f95df6cffda1c4a18ba0e3ef3c2f6ebd20e87031c58d"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/000660_score_receipt.json",
+      "bytes": 5432,
+      "sha256": "9038ea7246cd29143c11101fc2bdfe885224ef9afbd9c8470d47b7db54a80997"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/000660_stage_gate_mappings_compact.jsonl",
+      "bytes": 32896,
+      "sha256": "933df5567e12cd677cbe2b2e958506d0a603cf82ee6300545b6d42421215a4ba"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/000660_stagecourt_receipt.json",
+      "bytes": 3683,
+      "sha256": "5d7b6f3e1a4f3215b9ccf35512dfd5081bfbcf887dc1beadf02863611f75e43f"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/000660_supervisor_receipt.json",
+      "bytes": 27385,
+      "sha256": "6784da0f3250f766ada11e31d409cf6828518229c6c5ba621a2d516deb26674e"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/000660_synthesis_receipt.json",
+      "bytes": 2892,
+      "sha256": "73001e63a4f989cdb531e010ca96d75b29f1474a609682752dd01fca75f73109"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/before_state.json",
+      "bytes": 3787,
+      "sha256": "fc9acb246a07556f0b98a4a9491c722727ae60619fbdbee0a5305dd5e5301cc8"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/current_fact_roster_receipt.json",
+      "bytes": 2678,
+      "sha256": "0506348eb72d9da607054dd30559a0e6bb75f6dba72f3cefc0156b668bb06afa"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/current_pending_request_audit.json",
+      "bytes": 2069,
+      "sha256": "fff85aa0c2198084c9acb2216920fb3ac4c854f1b646adba25c6bba824f7ab32"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/current_request_response_audit.json",
+      "bytes": 3650,
+      "sha256": "5f9877c783133a08334e2521314dccf10a42ccc5253e2fab17ae1bd803d0a61e"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/dependency_invalidation_audit.json",
+      "bytes": 1436,
+      "sha256": "a26977dace95be1d311cbaf4834187fac1b5e5953e6c11ddcb23a54daa21475a"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/final_review.md",
+      "bytes": 5513,
+      "sha256": "28c3365bd91f3d1affeb053035cce6b922ebd187067a8c700c876d322f349f91"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/fixpoint_audit.json",
+      "bytes": 1323,
+      "sha256": "b62e67141ec5d323dba7e72409add1b6d1d02d5b614636fb788e1165e2fa7263"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/focused_test_receipt.json",
+      "bytes": 1326,
+      "sha256": "12c4f4572b5a85a8ab209375d2aec103ef30b09df85111cc36c0462a20ffb4d2"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/full_test_receipt.json",
+      "bytes": 1398,
+      "sha256": "2eca896f6890fa89295cacd69ea797b74a1a147a13b29292c4cf8c59df8366e3"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/gap_identity_audit.json",
+      "bytes": 1436,
+      "sha256": "8f88ec52bc6533d1a467e1148aeb7e013174c22b52af06a8fb53ec934476c0e1"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/gap_materiality_audit.json",
+      "bytes": 2599,
+      "sha256": "f136cbe4a3996e1c02046cccbb2c411f9c6f4dab5840932bc1caf179ca06ed91"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/gate1_reviewer_receipt.json",
+      "bytes": 2208,
+      "sha256": "75f9045bb70e0b7b28b9fcde6271411c3254b5f0bf85fe9d4a329ed9bb98d3ee"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/identical_rerun_audit.json",
+      "bytes": 3050,
+      "sha256": "a39f674f36cb3a490fc99e2ad92ea1fa037b2e32e200fe0a768cd6210b607750"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/ignored_artifact_reproduction_manifest.json",
+      "bytes": 4577,
+      "sha256": "f782ccd233e22924f442253b8a0cb5e38af1177ab513a722b4f6e88080f93da3"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/original_goal_status_matrix.json",
+      "bytes": 2992,
+      "sha256": "86d0ac08ebc4d559d5a1d11915d6e4fd789562812549bae4a4f44bfc3ada44e3"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/readonly_call_graph.md",
+      "bytes": 5149,
+      "sha256": "9bd899ead7c51152a0c2c594812b2c85237d233a5d93585d91cd78450817c5b6"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/문제점과수정결과.md",
+      "bytes": 6629,
+      "sha256": "45bd26113b03bea1e4083b5fda66c0db55327b81970b61b576a95d6d24f3c63a"
+    },
+    {
+      "path": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/외부검토번들안내.md",
+      "bytes": 2457,
+      "sha256": "e0c24857ea32f633b759a08b6f32358848048f34b08705935aa0f666a0fda239"
+    }
+  ],
+  "large_artifact_manifest": "docs/operational/e2r_v6_external_review/2026-08-21/fix_result/ignored_artifact_reproduction_manifest.json",
+  "restore_command": "bash scripts/restore_external_review_artifacts.sh",
+  "gate1_verdict": "C06_ANALYST_MODE_RECOVERY_PASS"
+}

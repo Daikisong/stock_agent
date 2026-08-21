@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "현재 7개 component memo는 모두 COMPLETE이며 actual 메모리 매출·ASP·가동률·HBM4 출하와 연결 이익·현금흐름을 HBM 단독 경제성으로 오귀속하지 않고, CAPEX·운전자본·계약조건·고객별 allocation·valuation denominator 차이를 counter와 조건부 범위로 보존한다. Red Team은 7개 component를 모두 검토하고 counter 및 supersession 점검을 완료했으며, structured result도 COMPLETE이고 component별 missing role이 없다. AMD 고객사 공식 자료는 HBM3E 공급 이력과 HBM4 기술 정렬을 독립 보강하지만 구매의무·물량·가격·기간으로 승격하지 않았다. HBM 단독 손익·FCF, signed 계약조건, HBM 전용 CAPA 잠김, 실현 ROIC 공백은 향후 확인할 모니터링 한계로 남지만, 현재 prompt에는 이를 해결할 새롭고 검증된 실행 가능 문서 identity나 source-family direction이 제시되지 않았다. 따라서 material-positive, counter·supersession, structured-data 및 새 source-family 경로를 모두 독립 검토한 결과 합리적인 material research route와 unresolved material question은 남지 않는다. 이 결론은 zero result, provider error, 반복 횟수, transport budget 또는 source absence 주장에 의존하지 않는다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "1ddd020f300aa93b2e01099aecfe079f12a06307f456817869cdc04770896e98",
+  "production_score_authority": false,
+  "prompt_hash": "f5cef23ace6433021c8fafb32b751945ebf6abea98569b8eb4339699441162fd",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-85e487563622249bd5b92e7481387145be4a51ebd219bfc0c0bbd6a025f89b93",
+  "response_id": "COLLABRESP-958616fc4ff32a9a834318cc26dfc2e64694235aa443c5976410094fb9e5d004",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

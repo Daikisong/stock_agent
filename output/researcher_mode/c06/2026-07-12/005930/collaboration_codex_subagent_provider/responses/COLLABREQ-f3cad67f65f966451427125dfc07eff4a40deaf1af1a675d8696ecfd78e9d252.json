@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "6b8c147908a57aacaf44255658318cf4c640c3e39802154d59622712715d30e5",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-82a28216306fb812c511d2e6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2026-07-30 게시 예정 모닝리포트로 cutoff 이후이며 SK하이닉스 중심 요약이다."
+      },
+      {
+        "candidate_id": "SGCAND-a5bf840c7e99a95cb1cbc440",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "다른 반도체·PCB 발행사의 투자설명서로 삼성전자 신용평가 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e203536ce1a6a9f3e4723a9e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "삼성전자 편입 펀드 운용보고서이며 신용위험 일반 설명과 memory 전망을 issuer credit surveillance로 볼 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-2847d07a1898374fa2ce8b15",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "유화증권 공모 정정 문서로 target과 document class가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-9be8b15acd453b21f680e4ea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2026-07-27 premium blog 콘텐츠로 cutoff 이후이고 검증 가능한 신용평가 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-61d0be1b49cad0fcfc8257fa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "유화증권 투자설명서로 삼성전자 issuer credit report가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-42b71b9428096b53ab4ded84",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "NICE CREDIT OPINION 원문이지만 평가대상은 SK하이닉스다. 삼성전자 언급은 competitor 비교이며 target capital allocation에 귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-d6a472820733ef80da8f7261",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "SK증권 기업 comment PDF의 snippet은 macro 자료이며 삼성전자 credit surveillance가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-516fabcf3a9b40b09381c25b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "SK텔레콤 2020 annual report로 issuer·기간·경제적 scope가 모두 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-1a8f7d47441b6e38fbf1e7d2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "EHD 프린팅 회사 사업보고서로 삼성전자 credit report와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-b9b1fe9d70bec909b5696ac5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "다른 회사 분기보고서의 일반 신용등급 정의일 뿐 삼성전자 평가 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0aac182266bca519512d9891",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "클린환경·재생에너지 회사 분기보고서로 target과 document class가 다르다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "SK하이닉스 NICE report는 direct credit document여도 wrong issuer이므로 삼성전자 source route로 선택하지 않았다."
+    ]
+  },
+  "payload_hash": "7733d4e1478dcb0212cd66825241413985e91d457a880c6cdc0132d036d592a6",
+  "production_score_authority": false,
+  "prompt_hash": "60b42350e97f6ff2a76066ef301a03ef0b20773d6f61926a6376fe01edd97b50",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f3cad67f65f966451427125dfc07eff4a40deaf1af1a675d8696ecfd78e9d252",
+  "response_id": "COLLABRESP-18b849120f3a99b7eca6bcb731bc82c3fa259c6dd320d6122c4bfc41f1b22550",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

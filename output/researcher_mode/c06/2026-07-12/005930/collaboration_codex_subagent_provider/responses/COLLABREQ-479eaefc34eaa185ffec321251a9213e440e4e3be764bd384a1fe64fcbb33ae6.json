@@ -1,0 +1,47 @@
+{
+  "output_schema_hash": "b351b7721597b760f51ec123e9c81846e2273bf92a5f90595a9d5548c5b517f4",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-19304237bd707c56cb7cc504",
+        "rationale": "The TSMC CoWoS capacity and sold-out volume are industry-side evidence rather than a Samsung Electronics realized bottleneck outcome. The Samsung SAINT-D passage describes a possible turnkey opportunity and potential customer redirection, while the durable ledger already contains issuer evidence for an integrated logic-memory-foundry-packaging one-stop solution and supply stability; no distinct target-direct actual remains.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-1b9ad26760e77e9121279ce6",
+        "rationale": "The report's May 2026 forward-PER point estimates are superseded by later current June 2026 valuation evidence. Its AI-slowdown, HBM-supply and realization caveats overlap current demand, supply and cash-conversion counters, and the private scope validator rejects the generalized PER-framework commentary as outside the allowed C06 economic mechanism, so no distinct objective-local fact remains.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-1cb48beb9f8c5922734d50bc",
+        "rationale": "The target-direct Nvidia HBM4 qualification timing, initial production volume, and reallocated competitor volume are already represented by the exact durable fact from this document. Its 1c DRAM design, 11.7Gbps product, and realization caveats are also covered by later current official or independent facts, leaving no distinct proposal.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "6d1eaa27eb32e7ac08ba7924b537aa235e749efd8e93e79100d176179dde9be3",
+  "production_score_authority": false,
+  "prompt_hash": "256e5ca5f268e4314d89c21af73c265335a38bb0c09ca6b1e2454631dd977849",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-479eaefc34eaa185ffec321251a9213e440e4e3be764bd384a1fe64fcbb33ae6",
+  "response_id": "COLLABRESP-5cdc082dbede12eae725e22e162f8bdb23df56d5cba64ba4e22bac91714a51e6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

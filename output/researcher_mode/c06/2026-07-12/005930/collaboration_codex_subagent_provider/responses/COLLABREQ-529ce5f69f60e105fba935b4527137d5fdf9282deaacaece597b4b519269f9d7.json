@@ -1,0 +1,169 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-d478265aa98805e70a809b3f",
+        "rationale": "원문 3,562자를 처음부터 끝까지 Gold-blind 검토하고 current 524개 fact/526개 claim과 의미 중복을 대조했다. 삼성전자를 포함한 삼성 관계사와 OpenAI의 협력 형식이 LOI라는 계약 품질 counterfact, 삼성전자의 스타게이트용 고성능·저전력 메모리 수급 지원 계획, OpenAI의 월 90만 웨이퍼 고성능 D램 필요량 전망 등 신규 objective-local 사실 3건을 추출했다. 반도체·클라우드·조선 전반의 일반 협력, 패키징 역량, 생산능력 1위 표현과 일반 R&D·시설투자 계획은 메모리 제품 세대·확정 물량·매출 귀속이 없어 별도 사실로 반복하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-d478265aa98805e70a809b3f",
+        "economic_mechanism": "삼성전자를 포함한 삼성 관계사와 OpenAI의 협력은 글로벌 AI 핵심 인프라 구축을 위한 LOI, 즉 의향서 형식으로 체결됐다. 명시적 관계 진전이지만 확정 구매물량이나 장기공급계약으로 확대하지 않도록 계약 형식의 한계를 함께 남긴다.",
+        "exact_quote": "삼성과 OpenAI는 10.1(수) 삼성전자 서초사옥에서 글로벌 AI 핵심 인프라 구축을 위해 상호 협력하는 LOI(Letter of Intent, 의향서) 체결식을 거행했다.\nOpen AI와 LOI를 체결한 삼성 관계사는 삼성전자, 삼성SDS, 삼성물산, 삼성중공업 등 4개사로, 삼성은 OpenAI의 전략적 파트너사로서 반도체, 데이터센터, 클라우드, 해양 기술 등 각사의 핵심 역량을 결집시켜 전방위적인 협력 체계를 구축할 예정이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "명명된 AI 고객과의 공식 협력 관계를 확인하면서도 그 형식이 의향서임을 직접 보여 줘 고객 가시성의 확실성을 제한한다. 구매의무·공급기간·물량 확정으로 해석하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:OPENAI:LOI_CONTRACT_FORM:2025-10-01",
+        "normalized_object": "OpenAI 협력의 계약 형식은 LOI(의향서)",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-10-01",
+        "predicate": "삼성전자를 포함한 삼성 관계사들이 OpenAI와 글로벌 AI 핵심 인프라 협력을 위한 LOI를 체결했다",
+        "predicate_family": "OPENAI_MEMORY_RELATIONSHIP_LOI_FORM",
+        "primitive_tags": [
+          "OPENAI",
+          "LOI",
+          "AGREEMENT_QUALITY"
+        ],
+        "product_family": "고성능·저전력 메모리",
+        "question_family_id": "OPENAI_MEMORY_RELATIONSHIP_LOI_FORM",
+        "question_family_tags": [
+          "OPENAI_MEMORY_RELATIONSHIP",
+          "LOI_CONTRACT_QUALITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자와 OpenAI의 글로벌 AI 핵심 인프라 협력 형식",
+        "subject_id": "005930:MEMORY:OPENAI:LOI_FORM:2025-10-01",
+        "unit": "agreement form",
+        "value": "LOI (Letter of Intent)"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-d478265aa98805e70a809b3f",
+        "economic_mechanism": "삼성전자가 OpenAI의 스타게이트 프로젝트에 고성능·저전력 메모리를 원활히 공급받도록 지원하겠다는 계획을 밝혔다. 명명된 AI 고객 수요와 삼성 메모리 공급 역할을 연결하지만 실제 출하, 확정 배정이나 구매의무는 아니다.",
+        "exact_quote": "삼성전자는 스타게이트 프로젝트를 진행하고 있는 OpenAI가 고성능·저전력 메모리를 원활하게 공급받을 수 있도록 지원할 계획이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "발행사 원문이 명명된 AI 고객과 메모리 공급 지원 계획을 직접 연결해 earnings visibility를 보강한다. 다만 LOI 기반 계획이며 제품 세대·물량·가격·출하일은 확정하지 않아 비핵심으로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:OPENAI:STARGATE_SUPPLY_SUPPORT_PLAN:2025-10-01",
+        "normalized_object": "OpenAI 스타게이트의 고성능·저전력 메모리 수급 지원 계획",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward plan announced 2025-10-01",
+        "predicate": "삼성전자가 OpenAI의 스타게이트 프로젝트에 고성능·저전력 메모리 공급을 지원할 계획이다",
+        "predicate_family": "OPENAI_MEMORY_SUPPLY_SUPPORT_PLAN",
+        "primitive_tags": [
+          "OPENAI",
+          "STARGATE",
+          "AI_MEMORY",
+          "SUPPLY_PLAN"
+        ],
+        "product_family": "고성능·저전력 메모리",
+        "question_family_id": "OPENAI_MEMORY_SUPPLY_SUPPORT_PLAN",
+        "question_family_tags": [
+          "OPENAI_MEMORY_SUPPLY_SUPPORT",
+          "STARGATE_AI_MEMORY_DEMAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자의 OpenAI 스타게이트용 고성능·저전력 메모리 공급 지원 계획",
+        "subject_id": "005930:MEMORY:OPENAI:SUPPLY_SUPPORT_PLAN:2025-10-01",
+        "unit": "support plan",
+        "value": "high-performance low-power memory supply support planned"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-d478265aa98805e70a809b3f",
+        "economic_mechanism": "OpenAI가 웨이퍼 기준 월 90만 매의 고성능 D램을 필요로 할 것이라는 발행사 전망은 명명된 AI 고객의 정량 수요 규모를 제시한다. 이는 전체 OpenAI 필요량 전망이며 삼성전자에 확정 배정된 물량이나 HBM 단독 수요는 아니다.",
+        "exact_quote": "OpenAI는 웨이퍼 기준 월 90만 매의 대량의 고성능 D램이 필요할 것으로 전망하고 있다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "공식 원문이 명명된 AI 고객의 고성능 D램 예상 필요량을 수치로 제시해 수요 가시성을 보강한다. 삼성전자 공급 점유율·계약물량·매출 환산이 없고 HBM 단독 수치도 아니므로 비핵심이다.",
+        "mechanism_scope_id": "005930:MEMORY:OPENAI:HIGH_PERFORMANCE_DRAM_900K_WAFERS_MONTH",
+        "normalized_object": "OpenAI 고성능 D램 필요량 월 90만 웨이퍼 전망",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward demand forecast published 2025-10-01; horizon unspecified",
+        "predicate": "OpenAI가 월 90만 웨이퍼의 고성능 D램을 필요로 할 것으로 전망됐다",
+        "predicate_family": "OPENAI_HIGH_PERFORMANCE_DRAM_DEMAND_FORECAST",
+        "primitive_tags": [
+          "OPENAI",
+          "DRAM",
+          "WAFER_DEMAND",
+          "FORECAST"
+        ],
+        "product_family": "고성능 D램",
+        "question_family_id": "OPENAI_HIGH_PERFORMANCE_DRAM_DEMAND_FORECAST",
+        "question_family_tags": [
+          "OPENAI_HIGH_PERFORMANCE_DRAM_DEMAND",
+          "AI_DATA_CENTER_MEMORY_DEMAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "OpenAI의 예상 고성능 D램 월간 수요",
+        "subject_id": "005930:MEMORY:OPENAI:HIGH_PERFORMANCE_DRAM_DEMAND:2025-10-01",
+        "unit": "DRAM wafers per month",
+        "value": 900000
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "a93d3e54fb8424e3a95440fae5929c9b926ba22c770d6734b921bd8900cd1906",
+  "production_score_authority": false,
+  "prompt_hash": "80e63e584b29fae72ce46a462cad69a90632df133a8c760ea51a45350c59d9ab",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-529ce5f69f60e105fba935b4527137d5fdf9282deaacaece597b4b519269f9d7",
+  "response_id": "COLLABRESP-6674b7811ad429d63f35fb5b3432784d55f204444ab2ebe109367877ca191397",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

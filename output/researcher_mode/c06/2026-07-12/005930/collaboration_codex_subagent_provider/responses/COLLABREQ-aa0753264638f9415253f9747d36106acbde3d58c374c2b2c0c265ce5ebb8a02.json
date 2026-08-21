@@ -1,0 +1,170 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-45b3b110a660ead20a96b058",
+        "rationale": "시장 전체 전망·경쟁사 수치·공동 투자액과 현재 fact graph에 이미 있는 1c·4nm·P4·hybrid bonding 내용은 제외했다. 삼성전자에 직접 귀속되고 information_confidence objective를 진전시키는 12단 HBM3E의 NVIDIA 공급망 진입, HBM4 초기 매출, Broadcom·AMD 등을 포함한 비구속적 공급 협의만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.74,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-45b3b110a660ead20a96b058",
+        "economic_mechanism": "시장조사 보고서는 삼성전자 12단 HBM3E가 장기 qualification을 거쳐 2025년 9월 NVIDIA 공급망에 진입했다고 기술한다. 이는 발행사의 고객 NDA로 직접 명명되지 않았던 고객 관계를 독립 자료가 구체화하지만, NVIDIA 공식 확인이나 HBM4 계약으로 확대하지 않는다.",
+        "exact_quote": "Samsung’s 12-layer HBM3E required an extended qualification process before it entered NVIDIA’s supply chain in September 2025, leaving the earlier revenue window largely with SK hynix and Micron.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명명 고객 NVIDIA의 공급망 진입 시점과 qualification 경로를 함께 제시해 HBM3E 고객 승인 상태의 정보 신뢰도를 높인다. 다만 시장조사 보고서의 서술이므로 고객 공식 확인보다 낮은 신뢰도로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM3E:NVIDIA:SUPPLY_CHAIN_ENTRY",
+        "normalized_object": "12단 HBM3E의 NVIDIA 공급망 진입",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-09",
+        "predicate": "시장조사 보고서에 따르면 삼성전자 12단 HBM3E가 장기 qualification 후 2025년 9월 NVIDIA 공급망에 진입했다",
+        "predicate_family": "HBM3E_NVIDIA_SUPPLY_CHAIN_ENTRY",
+        "primitive_tags": [
+          "HBM3E_12_LAYER",
+          "NVIDIA",
+          "SUPPLY_CHAIN_ENTRY",
+          "EXTENDED_QUALIFICATION"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "HBM3E_NVIDIA_SUPPLY_CHAIN_ENTRY",
+        "question_family_tags": [
+          "HBM3E_NVIDIA_SUPPLY_CHAIN_ENTRY",
+          "HBM_NAMED_CUSTOMER_QUALIFICATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 12단 HBM3E의 NVIDIA 공급망 진입",
+        "subject_id": "005930:MEMORY:HBM3E:NVIDIA_SUPPLY_CHAIN:2025-09",
+        "unit": "qualification and supply-chain status",
+        "value": "entered NVIDIA supply chain after extended qualification"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.68,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-45b3b110a660ead20a96b058",
+        "economic_mechanism": "시장조사 보고서는 삼성전자 HBM4 매출이 상용화 첫 4개월 안에 10억 달러를 넘었다고 기술해 제품 양산이 매출로 전환된 규모와 속도를 제시한다. 회사 공시나 감사 재무제표의 HBM4 단독 매출이 아니므로 보고서 추정·집계치 이상으로 확정하지 않는다.",
+        "exact_quote": "June 2026: Samsung Electronics’ HBM4 revenue surpassed USD 1 billion within the first 4 months of commercial availability, with ongoing supply discussions for both NVIDIA-adjacent and hyperscaler-custom ASIC programs including Broadcom and AMD.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4 단독 초기 매출 규모와 상용화 후 기간을 함께 제시해 양산의 실제 매출 전환을 직접 뒷받침한다. 다만 시장조사 보고서 수치이고 삼성전자 공시의 별도 HBM4 매출 검증이 없어 신뢰도에 할인한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:INITIAL_COMMERCIAL_REVENUE",
+        "normalized_object": "HBM4 상용화 첫 4개월 매출 10억 달러 초과",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "상용화 첫 4개월; 2026-06 보도",
+        "predicate": "시장조사 보고서에 따르면 삼성전자 HBM4 매출이 상용화 첫 4개월 안에 10억 달러를 초과했다",
+        "predicate_family": "HBM4_INITIAL_COMMERCIAL_REVENUE",
+        "primitive_tags": [
+          "HBM4",
+          "REVENUE_ACTUAL",
+          "FIRST_FOUR_MONTHS",
+          "MARKET_RESEARCH_REPORT"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_INITIAL_COMMERCIAL_REVENUE",
+        "question_family_tags": [
+          "HBM4_INITIAL_COMMERCIAL_REVENUE",
+          "HBM_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 초기 상용 매출",
+        "subject_id": "005930:MEMORY:HBM4:INITIAL_COMMERCIAL_REVENUE:2026-06",
+        "unit": "USD billion",
+        "value": ">1"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.65,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-45b3b110a660ead20a96b058",
+        "economic_mechanism": "시장조사 보고서는 NVIDIA 인접 및 hyperscaler custom ASIC 프로그램을 대상으로 Broadcom과 AMD 등을 포함한 HBM4 공급 협의가 진행 중이라고 기술한다. 이는 명명된 잠재 수요 경로를 보여주지만 협의 단계이므로 계약·구매의무·배정 물량을 뜻하지 않는다.",
+        "exact_quote": "June 2026: Samsung Electronics’ HBM4 revenue surpassed USD 1 billion within the first 4 months of commercial availability, with ongoing supply discussions for both NVIDIA-adjacent and hyperscaler-custom ASIC programs including Broadcom and AMD.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Broadcom·AMD 등 명명 프로그램으로 HBM4 고객 경로를 넓히는 보조 증거다. 그러나 시장조사 보고서의 협의 상태일 뿐 계약, 공급 확정, 물량 또는 매출 귀속은 확인되지 않아 비핵심으로 한정한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:CUSTOM_ASIC:SUPPLY_DISCUSSIONS",
+        "normalized_object": "Broadcom·AMD 포함 HBM4 custom ASIC 공급 협의",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-06",
+        "predicate": "시장조사 보고서에 따르면 삼성전자가 Broadcom·AMD 등을 포함한 NVIDIA 인접·hyperscaler custom ASIC 프로그램의 HBM4 공급을 협의 중이다",
+        "predicate_family": "HBM4_CUSTOM_ASIC_SUPPLY_DISCUSSIONS",
+        "primitive_tags": [
+          "HBM4",
+          "BROADCOM",
+          "AMD",
+          "NON_BINDING_DISCUSSION"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_CUSTOM_ASIC_SUPPLY_DISCUSSIONS",
+        "question_family_tags": [
+          "HBM4_CUSTOM_ASIC_SUPPLY_DISCUSSIONS",
+          "HBM4_NAMED_CUSTOMER_PATH"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4의 NVIDIA 인접·custom ASIC 공급 협의",
+        "subject_id": "005930:MEMORY:HBM4:CUSTOM_ASIC_SUPPLY_DISCUSSIONS:2026-06",
+        "unit": "non-binding supply discussion status",
+        "value": "ongoing non-binding supply discussions for NVIDIA-adjacent and hyperscaler-custom ASIC programs including Broadcom and AMD"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "2dbabdf537729c0f9397439d430f808de9b8de4e173e8e2ff978331fe8c98e03",
+  "production_score_authority": false,
+  "prompt_hash": "6cf3156294011673dc27aff38ae23f4084ade45f9b8f09805404c2803a5ef3e1",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-aa0753264638f9415253f9747d36106acbde3d58c374c2b2c0c265ce5ebb8a02",
+  "response_id": "COLLABRESP-8f01586304ae758ff39a4ddab78f9beddce0265773403d3f6bf8935c1e58bea6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "f9d296f13b15b91a36baf9fd4e67c3be54c96e16c39742a27ab812e61a1f864a",
+  "payload": {
+    "allowed_range": [
+      2.4,
+      3.4
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-09ab96433f8087166845bf25는 POSITIVE MEDIUM ordinal anchor(1.75-2.25/5.0, confidence LOW)다. 현재 근거의 실제성과 귀속 한계를 함께 반영해 exact 복제가 아닌 상대 위치만 사용했다.",
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797는 POSITIVE STRONG ordinal anchor(4.75-5.0/5.0, confidence LOW)다. 현재 근거의 실제성과 귀속 한계를 함께 반영해 exact 복제가 아닌 상대 위치만 사용했다.",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64는 COUNTER WEAK ordinal anchor(1.5-2.0/5.0, confidence LOW)다. 현재 근거의 실제성과 귀속 한계를 함께 반영해 exact 복제가 아닌 상대 위치만 사용했다.",
+      "ORDTRANSFER-994f92d663d0b49c624b1803는 COUNTER STRONG ordinal anchor(4.75-5.0/5.0, confidence LOW)다. 현재 근거의 실제성과 귀속 한계를 함께 반영해 exact 복제가 아닌 상대 위치만 사용했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-6868a3fa0d1462e2b1dfd4f2",
+      "EFACT-6a317a6c41253b0fafc79d56",
+      "EFACT-7f35f23f1f02e6327c9a1268"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "proposed_points": 2.9,
+    "rationale": "재무제표 재작성 없음과 감사 강조사항·핵심감사사항 없음은 규제공시 신뢰도를 지지하고 HBM4 양산도 발행사 자료로 확인된다. 그러나 HBM 고객·계약·qualification 결과와 제품별 마진이 비공개이며 회사 전체 고객 집중도·제한된 계약 공시를 HBM으로 직접 귀속할 수 없어 중간 범위가 적절하다.",
+    "support_fact_ids": [
+      "EFACT-3dd3bb8fbe1496797f1cd00c",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-9eea79412c9f3395a852d248"
+    ],
+    "why_not_higher": "HBM 고객별 계약조건, qualification outcome, 가격·물량·품질 및 HBM 수익성 공시가 없어 강한 정보 투명성에는 못 미친다.",
+    "why_not_lower": "감사·재작성 관련 긍정 공시와 발행사 HBM4 상용화 자료가 있어 보고 신뢰도를 약한 수준 이하로 보기는 어렵다."
+  },
+  "payload_hash": "964b190e13c1ab66fc1403aca073ae93993795f8ee78ce752396bcdbb9e32b6a",
+  "production_score_authority": false,
+  "prompt_hash": "729fa5313b6b827fcbdc4bde4c9c328b98771d12fd4710dc1b777cbfb3ff25b8",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8dc41acc120f54552e3e449371850f5babd05f9a6f6c849ec9534d6154757e19",
+  "response_id": "COLLABRESP-d5a02e3287f66c07ac51389aa1b15e18a1f20484b81deb48a8bc1d3092ceaef3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

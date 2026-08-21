@@ -1,0 +1,428 @@
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준 – Telegram
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+@KISemicon
+13.6K
+subscribers
+680
+photos
+9
+videos
+129
+files
+3.05K
+links
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+13.6K subscribers
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Sep 29 2025)
+● Daily News Clipping
+▶
+WSJ "트럼프 행정부, 반도체 수입에 ‘미국 생산 매칭’ 규제 추진" (Zdnet) <
+https://vo.la/lynHlWC
+>
+▶
+인텔, 투자 자금 확보를 위해 TSMC와 접촉 (Trendforce) <
+https://vo.la/KHZKG00
+>
+▶
+TEL, 중국 판매 둔화와 고객 자본 지출 조정을 이유로 26년 3월 결산의 순이익 전망치 하향 조정 (Digitimes) <
+https://vo.la/bdlQywy
+>
+▶
+중국 빅 펀드 3기, 반도체 장비에 4.5억 위안 투자 (Trendforce) <
+https://vo.la/97AxKOt
+>
+텔레그램 채널:
+https://t.me/KISemicon
+3.24K
+views
+22:15
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Sep 30 2025)
+● Daily News Clipping
+▶
+Trendforce, 2025년 HBM 시장에서 하이닉스가 출하량의 59%를 차지하고 삼성과 마이크론이 각각 20% 가량 차지할 것으로 전망 (Trendforce) <
+https://vo.la/el8jani
+>
+▶
+젠슨 황, “대중 수출통제는 실패⋯미·중 격차 ‘나노초’ 좁혀” (Techworld) <
+https://vo.la/bFzLyqp
+>
+▶
+퀄컴 “스냅드래곤 X2 엘리트, 벤치마크서 애플 M4 우위” (전자신문) <
+https://vo.la/H1LKQmp
+>
+▶
+AI PC 점유율, 내년에 50% 넘는다… PC업계, 성장 정체 돌파구로 ‘올인’ (조선비즈) <
+https://vo.la/QTUO3PE
+>
+텔레그램 채널:
+https://t.me/KISemicon
+3.15K
+views
+22:07
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] 반도체 산업 Note: 미국 마케팅 Key Takeaways
+● 미국 투자자들의 강한 반도체 섹터 선호 확인
+- 9월 22일부터 26일까지 5일간 미국 마케팅을 진행하며 투자자들과 메모리 반도체에 대한 투자 아이디어와 시장 전망을 논의
+- 우리는 제한된 컨벤셔널 디램 Capa로 인한 공급 부족이 26년 말까지 지속될 것이며, HBM4로의 세대 전환으로 이 같은 공급 부족이 장기화될 것으로 추정
+- 25년 3~4분기는 컨벤셔널 디램 ASP 상승 초입으로, 우리는 이 구간에서 디램 3사에 대해 모두 매수로 대응하는 것이 필요하다는 주장
+- 놀라운 점은 이미 디램 3사 모두를 매수한 투자자가 상당수
+- 투자자들 대부분은 우리의 주장과 마찬가지로 삼성전자와 SK하이닉스를 중심으로 한 메모리 공급사들의 중장기적 실적 상승 및 길어진 메모리 업사이클을 강하게 확신
+● HBM 가격 우려는 점차 옅어지는 중
+- 투자자들의 질문은 1) 왜 갑작스럽게 컨벤셔널 디램 수요가 증가했는가, 2) 공급 부족은 언제까지, 어느 정도의 강도로 진행될 것인가, 3) 26년 HBM 경쟁 구도와 가격 전망은 어떻게 될 것인가, 등에 집중
+- 컨벤셔널 디램 수요가 서버 디램 위주로 급증했고, 데이터센터용 eSSD 수요가 함께 급증한 것을 근거로, 우리는 컨벤셔널 디램, 낸드의 수요 증가 역시 AI 수요에 기인한 것으로 파악
+- AI 워크로드에 대한 처리가 고도화되고 제한된 하드웨어 리소스를 효율적으로 운영하기 위한 연구가 발전하면서, GPU 기반의 AI 서버와 CPU 기반 일반 서버 수요가 동시에 증가하는 것으로 추정
+- 컨벤셔널 디램 수요 증가로 ASP가 상승함으로써 HBM과의 이익률 격차는 지속 줄어들고, 공급 부족 환경 하에서 이는 곧 메모리 반도체 공급사들의 협상력 강화로 이어질 것
+● 메모리 공급사 및 전공정 장비에 대한 최선호 의견 유지
+- 삼성전자와 SK하이닉스에 대해 투자의견 매수와 비중확대 유지
+- 밸류체인에서는 Capa 확장 및 공정 전환 수혜를 장기적으로 기대할 수 있는 전공정 장비에 대해 최선호 의견을 유지
+- 우리는 메모리 반도체 역사상 가장 긴 업사이클을 예상
+- 기술 난이도 상승으로 자본 집약도가 높아지면서, 과거와 동일한 수준의 Capex를 집행해도 Capa 확장 규모는 과거 대비 제한되기 때문
+- 구조적인 공급 부족으로 ASP 상승은 장기화될 것. 컨벤셔널 디램의 공정 전환 및 HBM 세대 전환으로 전공정 장비 투자 역시 중장기적 증가 사이클에 진입할 것
+- 아직 사이클 초반임을 고려할 때 지금은 계속해서 메모리 반도체 관련 종목들을 모아갈 때
+본문:
+https://vo.la/UhqvtkK
+텔레그램:
+https://t.me/KISemicon
+8.33K
+views
+22:53
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Oct 1 2025)
+● Daily News Clipping
+▶
+글로벌 DRAM 재고 평균 3.3주에 불과. 2018년 저점과 일치하는 수준으로 구조적 사이클 이어질 가능성 (Trendforce) <
+https://vo.la/5jAKlAr
+>
+▶
+삼성, 엑시노스 2600 양산 시작. SF2 공정을 적용. SF2 공정 수율은 1분기 약 30%에서 약 50%에 도달 (Trendforce) <
+https://vo.la/KX0TbnR
+>
+▶
+TSMC가 2nm 공정 Capa 중 30%를 미국에 배치함에 따라 대만 제조업체들은 미국에 투자를 확대할 수밖에 없어짐 (Digitimes) <
+https://vo.la/yvJu5qW
+>
+▶
+D램 가격, 6개월 연속 상승… 6달러 돌파 (조선비즈) <
+https://vo.la/osJMONy
+>
+텔레그램 채널:
+https://t.me/KISemicon
+3.02K
+views
+22:04
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+Forwarded from
+[한투증권 이동연] 글로벌 기업(IT S/W)
+Lutnick 장관은 대만이 반도체의 50%를 미국에서 생산할 것을 요청할 수 있다는 발언을 지난 주말에 한 바 있음
+단, 미국과의 관세 협상을 이끄는 대만 Cheng Li-chiun은 이번 협상에서 이러한 주제를 논의한 바가 없고, 설사 관련 요청이 있더라도 동의하지 않을 것이라는 입장을 밝힘
+Taiwan Vice Premier Cheng Li-chiun, who is leading the tariff talks with Washington, told reporters upon getting back to the island that she had not discussed the 50-50 idea suggested by the U.S. during the talks.
+"Our negotiating team has never made any commitment to a 50-50 split on chips. Rest assured, we did not discuss this issue during this round of talks, nor would we agree to such conditions," she said, according to Taiwan's official Central News Agency.
+https://finance.yahoo.com/news/taiwan-not-agree-50-50-002030899.html
+2.99K
+views
+01:11
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+https://n.news.naver.com/article/092/0002392868?sid=105
+Naver
+"최대 월 120만장인데"...오픈AI, 삼성·SK에 HBM용 D램 90만장 요청
+글로벌 빅테크 기업 오픈AI가 삼성전자·SK하이닉스와 핵심 AI 인프라 구축을 위한 전방위적 협력 체계를 구축했다. 오픈AI의 핵심 프로젝트인 '스타게이트'에 고성능 메모리를 공급하는 것이 주 골자로, D램 및 HB
+7.42K
+views
+10:00
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Oct 2 2025)
+● Daily News Clipping
+▶
+퀄컴, 애플과 미디어텍의 칩과 경쟁하기 위해 arm 아키텍처를 이용하는 것으로 플래그십 칩을 전환 (Rueters) <
+https://vo.la/NyJlHgj
+>
+▶
+Intel, amd를 파운드리 고객으로 추가하기 위한 초기 협의 진행 중 (Rueters) <
+https://vo.la/EGxZeZb
+>
+▶
+Trendforce, 주간 디램, 낸드 현물 가격은 강세 분위기 지속. 추가 가격 인상을 염두에 둔 셀러들이 매도를 꺼리고 있기 때문 (Trendforce) <
+https://vo.la/2Nz2saJ
+>
+▶
+테슬라와 애플, 칩 성능 향상을 위해 유리기판 사용 검토. 유리기판 채택 시 자율주행 플랫폼이나 AI 서버 프로세서와 같은 대형 die 애플리케이션을 대상으로 할 가능성이 높음 (Trendforce) <
+https://vo.la/qn63du3
+>
+▶
+9월 수출 659.5억 달러…사상 최대 수출액 경신. 반도체 2개월 연속 최대 수출액 경신…자동차·바이오헬스 9월 중 최대치 (Zdnet) <
+https://vo.la/rQrepD6
+>
+▶
+키옥시아 "낸드 스토리지 수요 매년 20% 증가 전망" (디일렉) <
+https://vo.la/XeezB5K
+>
+▶
+세미파이브, 코스닥 상장 예비심사 통과 (전자신문) <
+https://vo.la/Hhzm3OT
+>
+텔레그램 채널:
+https://t.me/KISemicon
+2.79K
+views
+21:57
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] SK하이닉스 3Q25 Preview: 전인미답의 길을 가다
+● 3분기 실적은 컨센서스 상회 전망
+- 3분기 실적은 매출액 25.1조원(13% QoQ, 43% YoY), 영업이익 12조원(31% QoQ, 71% YoY)으로, 영업이익은 컨센서스 10.8조원을 11% 상회할 것
+- 서버 디램 수요 급증으로 3분기 디램 bit growth는 가이던스를 초과할 전망
+- 낸드는 AI 스토리지용 QLC eSSD 수요가 급증하면서 자회사인 솔리다임 매출과 영업이익이 기존 예상을 초과할 것
+- HBM 매출은 3분기에도 계획을 초과 달성해 디램 매출의 43%, 전사 영업이익의 48%를 차지하며 호실적을 견인할 것
+● 26년 ASP 및 이익 추정치 상향
+- 오픈AI를 필두로 AI 워크로드 지원을 위한 컨벤셔널 디램 수요가 급증하면서 서버용 디램을 중심으로 ASP가 상승 중
+- 하이퍼스케일러들이 경쟁적으로 데이터센터를 확장해 동시다발적으로 서버 수요가 발생한 반면, 메모리 공급사들은 지난 2년간 보수적인 투자 기조를 유지했기 때문에 단기간에 공급을 증가시키기 어려움
+- 우리는 컨벤셔널 디램의 26년 ASP 추정치를 기존 15% 상승에서 30% 상승으로, HBM ASP 추정치는 기존 2% 하락에서 8% 상승으로 상향 조정
+- 이를 반영해 26년 연간 영업이익 추정치는 기존 54조원에서 70조원으로 상향
+- HBM은 아직 연간 계약이 진행 중이나, 컨벤셔널 디램 가격 상승으로 HBM과의 이익률 차이가 지속 줄어들고, 공급 부족으로 업체별 할당이 필요한 상황에서 HBM 가격은 기존 예상 대비 상승할 가능성이 높음
+● 목표주가 상향, 섹터 내 탑픽으로 매수 추천
+- 이익 추정치 상향을 근거로 목표주가를 560,000원(12MF BPS 245,997원, 목표PBR 2.5배)으로 기존 대비 36% 상향
+- 우리는 27년까지 역대 최장 기간의 메모리 업사이클을 예상하며, 달라진 메모리 사이클과 높아진 이익 레벨을 고려해 목표 PBR을 2.5배로 제시
+- 단기간 내 해소되지 않을 공급 여건을 고려할 때, ASP와 실적에는 여전히 업사이드 리스크 상존. 섹터 내 탑픽 유지
+본문:
+https://vo.la/AnitWyg
+텔레그램:
+https://t.me/KISemicon
+33.8K
+views
+07:54
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 조수헌] 테크윙 교환사채 발행 결정
+- 10월 2일 장 마감 후 933억원(전체대비 3.54%) 규모 교환사채(EB) 발행을 공시
+- 표면이율 0.0%, 만기이율 0.0%
+- 납일일 2025년 10월 20일, 교환시작 2026년 1월 20일, 교환종료 2030년 9월 20일
+- 체크할 포인트로는:
+- 1) 교환가액 71,060원으로 20% 할증하여 발행
+- 2) 조달 금액은 시설자금 250억원, 운영자금(신제품 생산) 680억원에 사용될 것
+- 이와 관련된 자세한 코멘트는 보고서를 통해 업데이트 예정
+https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20251002000523
+4.3K
+views
+08:04
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+가족과 함께 즐거운 연휴 보내시길 바랍니다. 감사합니다!
+3.31K
+views
+08:47
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] 삼성전자 3Q25 Preview: 비정상의 정상화
+● 3분기 실적은 컨센서스 상회 전망
+- 3분기 매출액은 82.4조원(11% QoQ, 4% YoY), 영업이익은 10.5조원(125% QoQ, 15% YoY)으로 영업이익 컨센서스 9.8조원을 7% 상회할 것
+- 컨벤셔널 디램 수요 증가로 3분기 bit growth는 가이던스를 상회할 전망
+- HBM 매출은 전분기대비 98% 증가해 컨벤셔널 디램과 함께 ASP 상승을 견인할 것
+- 파운드리는 7나노 이상 성숙 공정에서 신규 고객을 추가로 확보하면서 가동률이 점진적으로 상승 중
+- 또한 24년 하반기부터 발생한 일회성 비용의 인식이 마무리되면서 전분기대비 파운드리 부문 적자폭을 크게 줄일 것으로 추정
+● HBM으로 시작되는 반등의 신호
+- HBM3e 12hi는 3분기 내 사실상 엔비디아향 인증을 완료한 것으로 추정
+- HBM4의 11Gbps 이상 샘플 역시 이미 엔비디아로 출하를 완료한 것으로 알려졌음
+- 25년 하반기는 엔비디아 외 고객향 HBM3e 중심 판매를 이어가겠으나, 26년 이후 엔비디아를 포함한 다양한 고객사로 HBM 매출이 확대되면서 HBM bit growth가 시장 평균을 상회할 전망
+- 우리는 최근의 수급 상황을 반영해 26년 컨벤셔널 디램 ASP 상승률을 기존 10%에서 25%로, HBM ASP 추정치는 기존 2% 하락에서 9% 상승으로 전망을 수정
+- 이를 반영해 26년 영업이익 추정치를 기존 54조원 대비 36% 상향한 73조원으로 제시
+● 목표주가 상향, 섹터 내 차선호주 의견 유지
+- 실적 추정치 상향을 반영해 목표주가를 120,000원(12MF BPS 71,381원, 목표PBR 1.7배)으로 기존 대비 26% 상향하고 섹터 내 차선호주 의견 유지
+- 엔비디아향 HBM3e 12hi 인증으로 HBM 리스크가 상당 부분 해소되었다고 판단해 목표PBR을 기존 1.3배에서 1.7배로 상향 조정
+- HBM 매출이 증가함에 따라 경쟁사와의 이익률 격차를 점차 줄여 나갈 것
+- 컨벤셔널 디램 업사이클과 HBM 사업 정상화의 수혜를 모두 기대 가능. 매수 추천
+본문:
+https://vo.la/fxGrnCY
+텔레그램:
+https://t.me/KISemicon
+7.31K
+views
+09:17
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+Forwarded from
+[한투증권 이동연] 글로벌 기업(IT S/W)
+OpenAI, AMD와 수년간의 6GW 규모 GPU 계약 체결. Pre-market AMD 주가 +24% 급등, 엔비디아는 -1.4% 하락 전환
+https://www.bloomberg.com/news/articles/2025-10-06/openai-signs-amd-chips-deal-worth-tens-of-billions-of-dollars
+Bloomberg.com
+AMD Inks Chip Deal With OpenAI That Triggers Explosive Rally
+Advanced Micro Devices Inc. landed a blockbuster deal with OpenAI to build artificial intelligence infrastructure, giving the chipmaker a chance to show it can mount a challenge to Nvidia Corp. in the AI computing industry.
+3.75K
+views
+11:37
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Oct 10 2025)
+● Daily News Clipping
+▶
+엔비디아, 삼성전자 HBM3e 12단 제품을 GB300 시스템에 탑재할 것이란 의견 전달 (Trendforce) <
+https://vo.la/Y5yZ6os
+>
+▶
+TSMC, 3분기 매출이 +30% YoY 증가하며, 시장 예상치를 상회 (Reuters) <
+https://vo.la/vxMZp0D
+>
+▶
+ASML·TEL 등, 중국향 장비 380억달러 판매 (디일렉) <
+https://vo.la/hsPRMTZ
+>
+▶
+중국 상무부, 희토류 중심의 국가 안보 중요 품목 수출 통제 발표. Seagate와 WDC의 HDD 생산에 영향을 미칠 것 (Trendforce) <
+https://vo.la/U7cU0ZE
+>
+▶
+日 2030년까지 반도체 산업 육성에 10조엔 투자…소부장 수출 기회 (Zdnet) <
+https://vo.la/nvhl2Jp
+>
+▶
+인텔의 이유 있는 자신감 "보급형 외장 GPU 필요 없다" (Zdnet) <
+https://vo.la/yjaCNnv
+>
+▶
+퀄컴, 아두이노 인수 계약 체결 (디일렉) <
+https://vo.la/7kZRysI
+>
+텔레그램 채널:
+https://t.me/KISemicon
+3.3K
+views
+22:04
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 조수헌] 테크윙(089030): 교환사채 발행, 내용과 의미 톺아보기
+● 교환사채 발행으로 성장 자금 확보
+- 지난 10월 2일 933억원 규모의 교환사채(EB) 발행을 공시
+- 보유 자기주식 약 131만주를 대상, 표면과 만기이자율 모두 0%로 이자 부담이 없음
+- 이번 발행에서 주목할 점은 자금 사용 목적의 명확성
+- HBM 검사장비 ‘Cube Prober’의 대규모 수주 가능성에 대응하기 위한 원자재 확보 및 Capa 증설이 핵심 목적
+- 933억원 중 683억은 원자재 및 운영자금, 나머지 250억원은 증설 투자에 사용될 예정
+- 교환가액은 기준일 주가의 120% 인 71,060원으로 산정, 주주가치 제고 차원에서 잔여 자기주식 30만주(약 180억원 규모)도 소각하기로 결정
+● 전수검사가 아닌 공정 효율성 개선 중심의 장비
+- 우리는 Cube Prober의 도입 목적이 전수검사가 아닌 공정 효율성 향상에 있다고 판단
+- HBM 테스트 공정은 총 6단계로 구성되며[그림1], 현재 Cube Prober는 마지막 단계인 DC 테스트 공정에 우선 적용되고 있음
+- 향후 공정 효율성 향상을 위해 번인 공정까지 확대될 것
+- 국내 고객사의 경우 번인 및 Hot/Cold 장비 비중이 다른 4개 공정 대비 약 50% 더 많은 것으로 추정
+- 이는 번인 공정에서 시간이 많이 소요된다는 방증이며, 선제적인 다이싱을 통한 불량칩 제거가 필수적임을 뜻함
+- Cube Prober의 TAM을 해당 고객사의 2026년 HBM Capa 증설을 기반해 최소 5,130억원에 달할 것으로 전망
+- 특히 북미 고객사의 증설 계획이 국내와 비슷한 점을 감안하면 TAM은 배로 증가할 것
+● 글로벌 IDM 3사 확보를 앞두며
+- Cube Prober는 1월 첫번째 IDM 고객사 퀄 테스트 통과 이후 9월 두번째 고객사까지 통과하며 기술력을 입증
+- 현재 북미 고객사 퀄 테스트도 진행 중. 빠르면 10월~11월 내 결과 발표가 예상
+- 2026년 매출액은 7,160억원(+291% YoY), 영업이익 1,919억원(+766% YoY, OPM 26.8%)을 기록할 전망
+- 보수적인 수치인 만큼 향후 수요 증가에 따른 추정치 상향 조정도 가능할 것
+본문:
+https://vo.la/Kzgpw2s
+텔레그램 채널:
+https://t.me/KISemicon
+★ 위 내용은 내부검수인의 결재가 완료된 것입니다.
+10.9K
+views
+06:58
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+2.97K
+views
+06:59
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Oct 13 2025)
+● Daily News Clipping
+▶
+대만, 중국 희토류 제재가 대만 반도체 산업에 큰 영향을 주지 않을 것이라 예상 (Reuters) <
+https://vo.la/Udzsu5t
+>
+▶
+트럼프 "시진핑, 中불황 원치않고 나도 그래" 관세戰 불원 시사 (연합뉴스) <
+https://vo.la/YbLjnzS
+>
+▶
+中, 퀄컴 반독점 조사 착수…대미 압박 본격화 (Bloter) <
+https://vo.la/2Scszct
+>
+▶
+가격 오르지만 의미는 없다…저무는 DDR4 시대 (Zdnet) <
+https://vo.la/gCd3KrK
+>
+▶
+삼성전자, GB300용 HBM3E 12단 제품으로 엔비디아 공급망에 합류. 엔비디아 GPU 5만장 구매 의사도 표명 (Digitimes) <
+https://vo.la/dRUMxXv
+>
+▶
+인텔, '18A 공정' 팹 52 본격 가동 (디일렉) <
+https://vo.la/JscIxND
+>
+▶
+인텔 18A 공정 첫 결실 '팬서 레이크' 기술적 특징은 (전자신문) <
+https://vo.la/62ZP6e9
+>
+텔레그램 채널:
+https://t.me/KISemicon
+3.02K
+views
+21:40
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+Forwarded from
+한투증권 중국/신흥국 정정영
+* 브로드컴 프리마켓 급등
+>> 또 오픈AI
+========================
+• 오픈AI & 브로드컴, 2026년 맞춤형 데이터센터 칩을 출시 계획
+• 브로드컴 가속기 및 이더넷 솔루션 포함한 수직/수평 시스템 공동 개발 예정
+• 브로드컴은 AI 가속기와 네트워크 시스템랙 구축 예정. 2026년 하반기 시작 & 2029년 말까지 완료
+博通盘前涨12%，消息面上，OpenAI与博通计划于2026年推出定制数据中心芯片。OpenAI和Broadcom将共同开发系统，其中包括Broadcom的加速器和以太网解决方案，用于纵向扩展和横向扩展。博通将部署人工智能加速器和网络系统机架，计划于2026年下半年开始，并于2029年底完成。
+~ OpenAI and Broadcom said Monday that they’re
+jointly building and deploying 10 gigawatts of custom artificial intelligence accelerators
+as part of a broader effort across the industry to scale AI infrastructure
+https://www.cnbc.com/2025/10/13/openai-partners-with-broadcom-custom-ai-chips-alongside-nvidia-amd.html?__source=iosappshare%7Ccom.apple.UIKit.activity.CopyToPasteboard
+CNBC
+Broadcom stock pops 9% on OpenAI custom chip deal, adding to Nvidia and AMD agreements
+OpenAI is teaming up with Broadcom to jointly develop and deploy 10 gigawatts of custom AI accelerators starting in 2026.
+2.22K
+views
+13:53
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+Forwarded from
+[한투증권 이동연] 글로벌 기업(IT S/W)
+브로드컴 주가 +9.9% 상승. 오픈AI와 브로드컴이 10기가와트(GW)에 달하는 대규모 AI 칩 공급 협약을 체결한 영향
+2H26~2029년까지의 계약이고, 오픈AI가 설계한 AI 칩·시스템을 브로드컴이 맞춤형으로 개발하고 공급하는 구조
+지난 실적 발표에서 브로드컴은 이미 제4의 XPU 고객을 확보했고, FY2H26부터 관련 매출이 발생할 것이라고 밝힌 바 있음. 시장에서 이미 오픈AI라고 추정한 제4의 고객이 누구인지 다시 한번 확인해준 결과
+https://n.news.naver.com/article/001/0015675495?sid=104
+Naver
+브로드컴-오픈AI, 10GW 규모 칩 계약…주가 장중 10%대 급등
+브로드컴이 2029년 말까지 AI 가속기·네트워크 랙 공급 임미나 특파원 = 챗GPT 개발사 오픈AI와 반도체 기업 브로드컴이 10기가와트(GW)에 달하는 대규모 인공지능(AI) 칩 공급 협약을 체결했다고 13일(현
+2.56K
+views
+21:39
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+[한투증권 채민숙/황준태] Tech Daily (Oct 14 2025)
+● Daily News Clipping
+▶
+오픈 AI, ASIC 생산을 위해 브로드컴과 파트너십 체결. 칩은 2026년 하반기부터 출하될 것 (CNBC) <
+https://vo.la/ZbAL1ob
+>
+▶
+Trendforce, 2026년 랙 규모의 솔루션이 성장함에 따라 8개 주요 CSP의 Capex가 +24% YoY 증가하며 5,200억달러를 넘어설 것으로 예상 (Trendforce) <
+https://vo.la/qgYzCOP
+>
+▶
+Adata, 상위 메모리 제조업체들의 DDR4 생산 재개는 비경제적이라 지적, 이는 Nanya와 Winbond와 같은 대만의 DDR4 공급업체에게 유리 (Trendforce) <
+https://vo.la/XmWFlTl
+>
+▶
+Adata, 자사 엔터프라이즈 스토리지 브랜드인 TRUSTA와 기가 컴퓨팅, 파두와 협력하여 하이엔드 eSSD 솔루션을 공동 개발하기 위한 전략적 파트너십을 체결 (Digitimes) <
+https://vo.la/Rc3vTpF
+>
+▶
+테슬라, 경기도 화성서 반도체 인재 채용 (Zdnet) <
+https://vo.la/VbRCOIs
+>
+텔레그램 채널:
+https://t.me/KISemicon
+3.09K
+views
+22:08
+[한투 테크팀] 채민숙/남채민/황준태/김정찬/김연준
+삼성전자 3분기 잠정 실적입니다!
+4.5K
+views
+22:42

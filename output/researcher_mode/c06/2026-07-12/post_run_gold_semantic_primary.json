@@ -1,0 +1,243 @@
+{
+  "schema_version": "e2r_v6_post_run_gold_semantic_primary_v2",
+  "reviewer_identity": {
+    "role_id": "CODEX_POST_RUN_PRIMARY",
+    "provider_route": "CODEX_COLLABORATION",
+    "provider_call_id": "CODEX-COLLAB-PHASE101-C06-20260712-PRIMARY-V2-FINAL",
+    "prompt_hash": "39f6ac48e32b24709372806c65590d3e9c285c7c8204b68109eda519c0cc838d",
+    "response_hash": "3b61f5fd531f7c111095fceb9213571bfba1fd6cd51c5cf8b4e8a7786cfd482e",
+    "identity_hash": "772146449caf00a9ba93432e927336099d4788cc1126ff4104922974572aa776"
+  },
+  "gold_visible_only_post_run": true,
+  "score_or_stage_authority": false,
+  "production_score_authority": false,
+  "gold_fact_roster_hash": "29a0d39a3a5cef8d66383a529449c9ac1809b680dccb1dea9087afdb7195fc92",
+  "production_fact_roster_hash": "350c819fe039d3e764cddb7cbbadcb20e12faf972e95606d5f1967b5f7de4259",
+  "rows": [
+    {
+      "gold_fact_id": "G-005930-EPS-S",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "005930과 2026-07-12 범위는 일치하지만, production에는 2026년 2분기 연결 매출 171조원과 영업이익 89.4조원의 잠정 실적을 같은 분기·연결 귀속으로 확인한 사실이 없다. 171조원 및 89.4 관련 구조화 행은 FY2026E broker estimate로 분류되어 Q2 actual/preliminary와 시간·상태·의미가 다르다."
+    },
+    {
+      "gold_fact_id": "G-005930-EPS-C",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production에는 2026년 영업현금흐름 294.4조원, CAPEX 71.0조원, FCF 223.4조원의 동일 broker cash-conversion bridge가 없다. Q1 현금흐름·유형자산 취득이나 별도 OpFCF 전망은 기간과 수치 및 FCF 구성 메커니즘이 달라 대체하지 않았다."
+    },
+    {
+      "gold_fact_id": "G-005930-VIS-S",
+      "production_fact_ids": [
+        "EFACT-89612bd6d5152108d49b9e86",
+        "EFACT-e8ce2332a248337ef3117718"
+      ],
+      "semantic_match": true,
+      "mechanism_scope_match": true,
+      "rationale": "두 current SUPPORT 원자가 Gold 의미를 분해해 충족한다. REGULATORY_OFFICIAL EFACT-8961은 2026년 2월 HBM4 양산 출하를 확인하고, ISSUER_OFFICIAL EFACT-e8ce는 삼성전자 공식 실적 컨퍼런스콜에서 FY2026 HBM 매출이 전년 대비 3배를 초과할 것이라는 전망을 직접 확인한다. target, HBM 상용화·연간 매출가시성, 기간 및 출처 품질이 Gold의 핵심 경제 사건과 일치한다."
+    },
+    {
+      "gold_fact_id": "G-005930-VIS-C",
+      "production_fact_ids": [
+        "EFACT-77fa464e89b20ea5014f46ce"
+      ],
+      "semantic_match": true,
+      "mechanism_scope_match": true,
+      "rationale": "REGULATORY_OFFICIAL current COUNTER가 2026년 1분기말 재무제표에 중요한 영향을 미치는 장기공급계약 수주거래가 없었다고 직접 밝힌다. target, 분기, 중요계약 부재, 계약 기반 실적가시성 제한의 의미와 메커니즘이 Gold와 같다."
+    },
+    {
+      "gold_fact_id": "G-005930-BOT-S",
+      "production_fact_ids": [
+        "EFACT-77be01eb95008b4f49f80f17",
+        "EFACT-9a0358628521190aafd60299"
+      ],
+      "semantic_match": true,
+      "mechanism_scope_match": true,
+      "rationale": "두 current 원자가 Gold의 핵심 경제 사건을 분해해 충족한다. EFACT-77be는 2026년 1분기 삼성전자 DRAM 혼합 ASP가 전분기 대비 90% 초반 상승한 realized pricing을 확인하고, ISSUER_OFFICIAL EFACT-9a03은 서버 중심 공급 대응 때문에 2026년 메모리 공급부족이 지속된다는 회사 판단을 확인한다. 동일 target·메모리/DRAM segment와 Q1-current shortage-to-ASP 메커니즘이 Gold와 호환된다. 두 원자를 HBM 단독 가격이나 고객 계약조건으로 확대하지 않는다."
+    },
+    {
+      "gold_fact_id": "G-005930-BOT-C",
+      "production_fact_ids": [
+        "EFACT-23ae1986045e7d820e94a355"
+      ],
+      "semantic_match": true,
+      "mechanism_scope_match": true,
+      "rationale": "ISSUER_OFFICIAL current 사실은 급증하는 HBM4 고객 수요에 대응하기 위한 선제 설비투자 계획을 직접 확인한다. Gold와 문장 표현은 다르지만 target, HBM4 생산능력 확대, 공급제약 완화라는 supply-response 메커니즘과 공식 출처 품질이 같다."
+    },
+    {
+      "gold_fact_id": "G-005930-MKT-S",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production에는 2026년 DS 영업이익 추정치가 236.3조원에서 288.9조원으로 22.2% 상향됐다는 동일 revision pair가 없다. 다른 메모리·DRAM 추정치 상향이나 단일 FY2026 estimate는 DS 귀속과 revision baseline이 달라 매칭하지 않았다."
+    },
+    {
+      "gold_fact_id": "G-005930-MKT-C",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production에는 2026-07-10 current price 285,000원 원자는 있으나 최근결산 PER 43.42배 원자가 없다. 가격만으로 높은 trailing expectation reflection을 재구성할 수 없어 전체 Gold counter와 mechanism scope를 충족하지 않는다."
+    },
+    {
+      "gold_fact_id": "G-005930-VAL-S",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production의 약 5.4배 historical forward P/E와 8.2배 회사 2026E P/E는 Gold의 회사 2026F P/E 5.4배 대 시장 P/E 8.2배 비교와 subject가 다르다. 서로 다른 행을 조합하면 회사 배수와 시장 배수 귀속이 뒤바뀌므로 상대가치 사실로 인정하지 않았다."
+    },
+    {
+      "gold_fact_id": "G-005930-VAL-C",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "2026-07-10 최근결산 PBR 4.45배와 동일한 production fact가 없다. forward P/B, peer P/B, EV/EBITDA 및 current price는 trailing PBR multiple-risk를 대신하지 못한다."
+    },
+    {
+      "gold_fact_id": "G-005930-CAP-S",
+      "production_fact_ids": [
+        "EFACT-8fbff587b0def045d7da0ade"
+      ],
+      "semantic_match": true,
+      "mechanism_scope_match": true,
+      "rationale": "REGULATORY_OFFICIAL current 사실은 같은 target의 2026년 1분기 공시에서 지급 배당금 합계 2,453,316백만원을 정확히 확인한다. Gold의 주당 372원이 별도 production atom으로 분리되지 않았지만, CORE_ECONOMIC_EVENT 계약은 literal numeric surface나 atomic row shape 동일성을 요구하지 않는다. 동일 target·분기·규제공시·실제 shareholder-return 배당 사건과 canonical 총액이 확인되므로 핵심 경제 사건과 메커니즘은 일치한다. 이 매칭을 주당 금액의 독립 검증이나 향후 배당 지속성으로 확대하지 않는다."
+    },
+    {
+      "gold_fact_id": "G-005930-CAP-C",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production에는 2026F CAPEX 71.0조원이라는 동일 independent estimate가 없다. Q1 실제 유형자산 취득과 다른 연간 메모리 CAPEX 전망은 기간·범위·금액이 달라 배당과 경쟁하는 동일 자본배분 부담으로 매칭하지 않았다."
+    },
+    {
+      "gold_fact_id": "G-005930-INF-S",
+      "production_fact_ids": [
+        "EFACT-6430c66a53268479f230de39"
+      ],
+      "semantic_match": true,
+      "mechanism_scope_match": true,
+      "rationale": "CUSTOMER_OFFICIAL current 사실은 같은 GTC 2026 기간의 NVIDIA 공식 블로그에서 삼성전자 HBM4가 NVIDIA AI 인프라용으로 설계됐고 양사 기술 협력이 있음을 target-direct로 확인한다. Gold의 named session과 게시물 단위는 다르지만, 고객 공식 플랫폼이 삼성의 AI 메모리 기술 참여를 독립 corroboration한다는 information-confidence 메커니즘은 같다. 계약, qualification, 배정물량 또는 실제 탑재까지 증명한다고 확대하지 않는다."
+    },
+    {
+      "gold_fact_id": "G-005930-INF-C",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "Gold는 HBM 고객별 공급수량·가격·취소조건이 규제 공시에 없다는 HBM-specific filing absence다. 가장 가까운 production EFACT-7a7c는 고객 NDA로 메모리 다년계약의 구체 내용이 비공개라는 TRUSTED_INDEPENDENT 일반론일 뿐 HBM 귀속, 규제 공시, 세 가지 계약항목의 부재를 확인하지 않는다. subject·segment·source·meaning 범위가 달라 매칭하지 않았다."
+    },
+    {
+      "gold_fact_id": "G-000660-EPS-S",
+      "production_fact_ids": [
+        "EFACT-7ccc530bd085e12d2428c531",
+        "EFACT-771ffa9b3ed8b2b567afbf85",
+        "EFACT-6d5857e4a498681767ee24ec"
+      ],
+      "semantic_match": true,
+      "mechanism_scope_match": true,
+      "rationale": "REGULATORY_OFFICIAL current SUPPORT 세트가 2026년 1분기 연결 매출 52.6조원, 영업이익 37.6조원, 영업이익률 72%를 확인하며 별도 issuer rows가 매출 52조5763억원과 영업이익 37조6103억원을 정확히 보강한다. target, 분기, consolidated earnings-conversion 의미가 Gold와 일치한다."
+    },
+    {
+      "gold_fact_id": "G-000660-EPS-C",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production에는 용인 1기 팹 Phase 2~6 클린룸 추가 시설투자 21.6조원의 동일 committed investment fact가 없다. 다른 용인 일정·총투자·EUV·패키징 투자 원자는 금액과 투자대상이 달라 cash-conversion counter를 대체하지 않는다."
+    },
+    {
+      "gold_fact_id": "G-000660-VIS-S",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "현재 frozen production roster에는 Gold의 2030년 이후 demand-over-capacity 기간을 직접 또는 compound로 충족하는 원자가 없다. EFACT-62c3은 향후 3년간 고객 요청 HBM 수요가 공급능력을 크게 웃돈다고 확인하고, EFACT-e507은 용인 투자가 2033년 이후에도 이어진다고 확인하지만 후자는 장기 투자 일정이지 2030년 이후 수요 초과 증거가 아니다. 서로 다른 기간 명제를 결합해 Gold의 장기 수요를 발명하지 않았다. 이전 V1에서 사용한 두 production fact ID도 현재 roster에는 존재하지 않는다."
+    },
+    {
+      "gold_fact_id": "G-000660-VIS-C",
+      "production_fact_ids": [
+        "EFACT-b649fb636cda41346a53c1ad"
+      ],
+      "semantic_match": true,
+      "mechanism_scope_match": true,
+      "rationale": "REGULATORY_OFFICIAL current COUNTER가 주요 고객 공급 물량과 가격을 월별 또는 분기별 상호 합의로 결정한다고 직접 밝힌다. 고객 공급조건의 짧은 결정주기와 장기 고정계약 수준의 가시성 부재라는 의미가 Gold와 동일하다."
+    },
+    {
+      "gold_fact_id": "G-000660-BOT-S",
+      "production_fact_ids": [
+        "EFACT-87302daba02f8d5d65943a4b"
+      ],
+      "semantic_match": true,
+      "mechanism_scope_match": true,
+      "rationale": "REGULATORY_OFFICIAL current SUPPORT가 2026년 1분기 DRAM ASP가 일반 DRAM 가격 강세로 전분기 대비 60% 중반 상승했다고 직접 확인한다. target, DRAM segment, quarter, realized ASP direction과 magnitude가 Gold와 같다."
+    },
+    {
+      "gold_fact_id": "G-000660-BOT-C",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production은 용인 1기 Phase 1 클린룸의 2027년 2월 조기 개장 계획은 담지만, Gold에 결합된 1기 팹 총투자 약 31조원을 담지 않으며 해당 production row의 role도 SUPPORT다. 사건 일부만으로 전체 공급대응 COUNTER를 매칭하지 않았다."
+    },
+    {
+      "gold_fact_id": "G-000660-MKT-S",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production에는 KB증권의 2026E 280.295조원·2027E 454.225조원 영업이익 상향 pair가 없다. 유안타의 275.507조원·448.349조원 전망이나 일반 revision direction은 provider, 수치, revision 의미가 달라 semantic equivalent가 아니다."
+    },
+    {
+      "gold_fact_id": "G-000660-MKT-C",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production에는 국내 주가 3배 이상 상승 뒤 미국 ADR 첫날 12.8% 상승이라는 2026-07-10 market-expectation event가 없다. ADR 상장 목표나 일반 current price는 실제 ADR 데뷔와 가격반응을 대체하지 못한다."
+    },
+    {
+      "gold_fact_id": "G-000660-VAL-S",
+      "production_fact_ids": [
+        "SFACT-0848e55e06b6d46d55423c71",
+        "SFACT-762bb5c59241663efad29c9a",
+        "SFACT-409716e119c15baf16a21e53"
+      ],
+      "semantic_match": true,
+      "mechanism_scope_match": true,
+      "rationale": "세 FINANCIAL_REVISION current 원자가 동일 forward-valuation 사건을 구성한다. 2026-05-22 12개월 선행 P/E는 6.6073배, 2026-05-28 broker target은 380만원이며, as-of 이전 최신 2026-07-10 KRX 현재가는 218만원이다. Gold의 2026-05-28 현재가 228.9만원과 숫자 표면은 이후 시장가격 갱신 때문에 달라졌지만, 같은 target·기간 안에서 현 주가가 380만원 목표가보다 낮고 forward multiple이 약 6.6배라는 핵심 rerating scenario와 방향은 유지된다. 목표가를 실현 가격이나 투자 결론으로 확대하지 않는다."
+    },
+    {
+      "gold_fact_id": "G-000660-VAL-C",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production에는 2026-07-10 최근결산 PER 36.98배 및 PBR 12.49배의 동일 trailing valuation snapshot이 없다. forward multiples와 peer bands는 trailing multiple-risk counter의 subject와 기간을 대신하지 않는다."
+    },
+    {
+      "gold_fact_id": "G-000660-CAP-S",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production에는 1억7,790만 ADR 발행으로 265억달러를 실제 조달했다는 사실이 없다. 연내 ADR 상장 목표는 계획이고, 기존 현금·투자·보증 facts는 외부자본 조달 사건과 다른 메커니즘이다."
+    },
+    {
+      "gold_fact_id": "G-000660-CAP-C",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production에는 신규 ADR 1억7,790만주 발행에 따른 기존 주주 희석 사실이 없다. 기본·희석 EPS 차이와 ADR 상장 목표는 해당 신규 발행의 dilution 사건을 입증하지 않는다."
+    },
+    {
+      "gold_fact_id": "G-000660-INF-S",
+      "production_fact_ids": [],
+      "semantic_match": false,
+      "mechanism_scope_match": false,
+      "rationale": "production에는 NVIDIA 공식 GTC 카탈로그가 SK hynix의 'How HBM4 Unlocks Efficient LLM Serving at Scale' 세션을 등재했다는 고객 공식 fact가 없다. HBM4 공급점유율 전망이나 issuer의 고객협력은 고객 플랫폼의 named-session corroboration과 다른 사건·source다."
+    },
+    {
+      "gold_fact_id": "G-000660-INF-C",
+      "production_fact_ids": [
+        "EFACT-1e28750f24dd2316329d783d",
+        "EFACT-067d9a40947915d970201481"
+      ],
+      "semantic_match": true,
+      "mechanism_scope_match": true,
+      "rationale": "두 ISSUER_OFFICIAL current COUNTER가 Gold 의미를 정확히 분해한다. EFACT-1e28은 FY2026 1Q 실적 검토 미완료와 독립 감사 중 수치 변경 가능성을, EFACT-067d는 미래예측 진술이 위험·불확실성 때문에 실제 결과와 크게 달라질 수 있음을 직접 확인한다. 동일 Q1 disclosure information-limit 메커니즘이다."
+    }
+  ]
+}

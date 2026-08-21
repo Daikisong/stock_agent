@@ -1,0 +1,211 @@
+{
+  "output_schema_hash": "65d81e583b3b77a4ecf2abe934747d40526049140293f6ad5e3486fafc4d4bbe",
+  "payload": {
+    "confidence": 0.73,
+    "counter_case": "계약 존재만으로 최소구매·가격·취소·선수금·납기 보호를 알 수 없고 LTA 가격 지연, 고객 플랫폼 지연 및 공급사 평가가 allocation과 매출 인식 시점을 바꿀 수 있다. NH 원문 direct archive가 미검증이므로 preview나 추정으로 NDA 공백을 채우지 않는다.",
+    "historical_anchor_ids": [
+      "CANCH-0f9dd0807dd915f5d67d49eb",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "nearest_counter_anchor_ids": [
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "nearest_positive_anchor_ids": [
+      "CANCH-0f9dd0807dd915f5d67d49eb"
+    ],
+    "positive_case": "구매주문과 중장기 계약, 다년계약의 구속력, HBM4 생산여력 완판이 함께 있어 2026년 공급 물량은 단순 수요 기대보다 강하게 뒷받침된다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 39,
+        "reason": "계획 HBM 물량에 대한 고객수요의 공식 근거다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 54,
+        "reason": "다년계약의 구속력에 관한 회사 설명이다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 217,
+        "reason": "NDA가 계약 조건 검증을 막는 직접 counter다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 230,
+        "reason": "LTA 가격 반영 지연의 수익성 counter다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 234,
+        "reason": "장기공급계약 비중의 현재 수치다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 247,
+        "reason": "일부 중장기 계약 완료의 공식 근거다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 256,
+        "reason": "HBM4 계획 capacity 완판 근거다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 294,
+        "reason": "고객 평가가 물량배정에 영향을 주는 counter다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 369,
+        "reason": "준비 capacity에 대한 구매주문 근거다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 447,
+        "reason": "고객 일정 지연이 실적 전환을 늦추는 counter다."
+      }
+    ],
+    "proposed_score_lower": 13.9,
+    "proposed_score_mid": 15.4,
+    "proposed_score_upper": 16.8,
+    "research_complete": true,
+    "researcher_summary": "고객수요·구매주문, 일부 중장기 계약 완료, 다년계약의 구속력과 HBM4 생산여력 완판은 단순 전망보다 강한 2026년 물량 가시성을 만든다. 그러나 NDA 때문에 최소구매·가격 재설정·취소·선수금·납기 조건을 검증할 수 없고 LTA 가격 지연, 고객 플랫폼 일정과 공급사 평가가 마진 및 인식 시점을 바꿀 수 있다. Supervisor가 지정한 NH report 1100084 exact 검색은 0건이었고 candidate·full fetch도 없어 계약조건이 확인되거나 부재가 입증되지 않았다. 공식 archive/download direct route가 남아 있어 계약 존재와 강제 가능한 구매·현금 가시성을 분리한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "계획물량에 대한 고객수요는 판매 가시성을 높이지만 구속력 있는 구매의무와 동일하지 않다.",
+        "fact_row_index": 39,
+        "source_economic_mechanism": "2026년 HBM bit 생산 계획물량에 대해 이미 상당한 고객수요를 확보해 공급 확대 계획의 판매 가시성을 뒷받침한다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자가 2026년 HBM 생산 계획물량에 대해 상당한 고객수요를 이미 확보했다고 밝혔다",
+        "source_value_json": "\"significant customer demand secured for planned volumes\""
+      },
+      {
+        "component_interpretation": "회사 설명상 다년계약은 단순 문의보다 강하지만 물량·가격·취소·위약조건이 없어 현금 가시성은 제한적이다.",
+        "fact_row_index": 54,
+        "source_economic_mechanism": "회사가 다년계약을 상당한 구속력이 있는 계약으로 설명한 점은 단순 수요 문의보다 높은 사업 안정성과 가시성을 시사하지만 구체적 구매의무·위약조건은 공개되지 않았다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 다년계약이 상당한 구속력을 갖춰 사업 안정성과 가시성을 높인다고 설명했다",
+        "source_value_json": "\"significant binding force supporting business stability and visibility\""
+      },
+      {
+        "component_interpretation": "NDA는 계약 존재와 강제 가능한 구매·현금회수 조건 사이의 검증 공백을 남긴다.",
+        "fact_row_index": 217,
+        "source_economic_mechanism": "고객 NDA로 계약 세부내용을 공개할 수 없다는 명시적 한계는 계약 상대방·물량·가격·해지조건을 외부에서 검증할 수 없게 한다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 고객사 NDA 때문에 메모리 다년계약의 구체적 내용을 공개할 수 없다고 밝혔다",
+        "source_value_json": "\"specific contract terms undisclosed due to customer NDA\""
+      },
+      {
+        "component_interpretation": "LTA는 물량 안정성을 높여도 가격 재설정 지연으로 단기 마진을 제한할 수 있다.",
+        "fact_row_index": 230,
+        "source_economic_mechanism": "기사의 LTA 구조 설명은 장기 수익 안정성의 반대편에서 상승하는 시장가격을 즉시 반영하지 못해 단기 수익성이 제한될 수 있음을 지적한다.",
+        "source_period_json": "\"2026-04-07 분석\"",
+        "source_predicate": "메모리 LTA가 시장가격 상승을 즉시 반영하지 못해 단기 수익성에 부정적일 수 있다고 분석됐다",
+        "source_value_json": "\"market price increases not immediately reflected; negative for short-term profitability\""
+      },
+      {
+        "component_interpretation": "30% 비중은 장기 물량 결박의 규모를 보조하지만 계약 경제조건은 확인하지 못한다.",
+        "fact_row_index": 234,
+        "source_economic_mechanism": "메모리 공급계약 가운데 장기공급계약이 30%를 차지해 단기 주문보다 긴 고객 물량 결박이 현재 공급 계약의 의미 있는 비중을 차지한다.",
+        "source_period_json": "\"2026-Q2\"",
+        "source_predicate": "삼성전자의 2026년 2분기 메모리 공급계약 중 장기공급계약 비중이 30%로 알려졌다",
+        "source_value_json": "30"
+      },
+      {
+        "component_interpretation": "일부 고객과 계약 완료는 협의보다 진전된 물량 가시성을 제공하지만 고객별 규모와 조건은 없다.",
+        "fact_row_index": 247,
+        "source_economic_mechanism": "AI 미래 수요를 바탕으로 일부 고객과 중장기 물량 계약을 완료했다는 회사 측 설명은 협의 단계보다 진전된 고객 공급 가시성을 제공한다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 중장기 메모리 물량 확보를 요청한 일부 고객사와 계약을 완료했다고 밝혔다",
+        "source_value_json": "\"contracts completed with some customers\""
+      },
+      {
+        "component_interpretation": "완판은 계획 capacity의 수요 소진을 보여주지만 매출 인식과 가격·취소보호를 확정하지 않는다.",
+        "fact_row_index": 256,
+        "source_economic_mechanism": "HBM4 생산여력이 완판됐다는 회사 측 설명은 양산·출하를 넘어 현재 계획 생산능력이 고객 수요로 소진된 상태를 나타낸다.",
+        "source_period_json": "\"2026-04-30 현재\"",
+        "source_predicate": "삼성전자가 HBM4 생산 여력이 완판된 상태라고 밝혔다",
+        "source_value_json": "\"production capacity sold out\""
+      },
+      {
+        "component_interpretation": "공급사 성과평가와 중단 방지 요구는 계약 후에도 물량 배정이 품질·납기에 조건부임을 보여준다.",
+        "fact_row_index": 294,
+        "source_economic_mechanism": "엔비디아가 협력사 성과를 정기 점검해 물량 배분에 반영하고 AMD가 HBM4 우선공급 관계에서 공급 중단 방지 통제를 요구한다는 보도는 공급 신뢰가 고객 배정의 실제 조건으로 작동하는 경로를 제시한다.",
+        "source_period_json": "\"current as of 2026-04-15\"",
+        "source_predicate": "엔비디아는 협력사 성과 평가를 물량 배분에 반영하고 AMD는 삼성전자 HBM4 우선공급 관계에서 공급 중단 방지 관리를 요구하는 것으로 보도됐다",
+        "source_value_json": "\"NVIDIA periodic supplier review affects allocation; AMD requires interruption-prevention controls\""
+      },
+      {
+        "component_interpretation": "구매주문은 단순 수요보다 강한 근거지만 취소·가격·납기·선수금 조건은 공개되지 않았다.",
+        "fact_row_index": 369,
+        "source_economic_mechanism": "준비한 HBM 생산능력에 고객 구매주문이 이미 확보돼 2026년 HBM 매출 전망이 단순 수요 문의보다 강한 주문 기반을 가진다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자가 준비한 2026년 HBM 생산능력에 대해 고객사 구매주문을 이미 확보했다고 설명했다",
+        "source_value_json": "\"customer purchase orders already secured for prepared capacity\""
+      },
+      {
+        "component_interpretation": "고객 제품 일정 지연은 주문·capacity가 같은 해 매출과 이익으로 전환되는 시점을 늦출 수 있다.",
+        "fact_row_index": 447,
+        "source_economic_mechanism": "고객사 제품 출하 지연으로 삼성전자의 2026년 HBM4 실적 기여가 당초 예상보다 축소됐다는 분석은 HBM4 생산·출하가 고객 최종제품 일정에 따라 같은 해 이익으로 전환되지 못할 수 있는 실행 counter다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "고객사 제품 출하 지연으로 삼성전자의 2026년 HBM4 실적 기여도가 당초 예상보다 축소됐다는 분석이 나왔다",
+        "source_value_json": "\"2026 contribution reduced versus prior expectation\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      39,
+      54,
+      217,
+      230,
+      234,
+      247,
+      256,
+      294,
+      369,
+      447
+    ],
+    "source_coverage": [
+      "ISSUER_GUIDANCE",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF",
+      "PUBLIC_BROKER_REPORT",
+      "TRUSTED_BUSINESS_MEDIA",
+      "COMPANYGUIDE"
+    ],
+    "structured_metric_row_indices": [
+      0
+    ],
+    "uncertainties": [
+      "장기계약의 가격·물량·취소·납기 가운데 공개 가능한 source-backed 경제조건이 아직 없다.",
+      "NH report 1100084의 exact 검색 0건은 원문 부재를 뜻하지 않으며 CompanyGuide 또는 발행 증권사 공식 archive/download route가 남아 있다.",
+      "고객별 최소구매, 가격 재설정, 선수금, 취소·위약 및 재협상 조건은 NDA로 비공개다.",
+      "물량 가시성이 실제 마진과 현금회수 가시성으로 같은 강도로 이어지는지 확인되지 않았다.",
+      "고객 플랫폼 일정과 공급사 성과평가가 2026년 allocation과 매출 인식 시점을 바꿀 수 있다.",
+      "이익 리비전 신호는 긍정적 요소와 하락 요소가 혼재한다."
+    ],
+    "why_not_higher": "구매주문과 계약은 확인되지만 가격·물량·취소·납기·선수금의 강제 조건이 비공개이고 지정 보고서 direct archive도 아직 미검증이다.",
+    "why_not_lower": "상당한 고객수요, 일부 중장기 계약 완료, 구매주문과 HBM4 생산여력 완판이 함께 있어 단순 수요 전망보다 강한 물량 가시성이 존재한다."
+  },
+  "payload_hash": "0e87db01a8e8657df9710716e49b6c53fcc4d68a6de01dca2ad7ad8a67b0d301",
+  "production_score_authority": false,
+  "prompt_hash": "7145856dcd5f34c6b96511e851c3a4b234444d72649276183cbaf85598967ecc",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2cf11ab1d5f80670965e6668fe5aaa1b48a4cbfc56d28258855c7ea9ce42dc3d",
+  "response_id": "COLLABRESP-2fc023baafb9a50be86a33cedf8f3637362fa2699d87b2b86e4e3b028daed8b9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

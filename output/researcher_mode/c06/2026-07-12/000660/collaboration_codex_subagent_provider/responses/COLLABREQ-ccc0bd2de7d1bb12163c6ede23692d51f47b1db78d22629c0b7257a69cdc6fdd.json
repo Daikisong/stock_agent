@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "868c7c7cdd3258048a388d9f56dec3dd50f46dc8a5a17396fa2499b7882743e1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f875ec3bd5723a74137570d1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 공식 뉴스룸의 일반 홈이지만 요청된 family는 issuer earnings release와 issuer presentation이다. 특정 실적자료·기간·valuation earnings bridge를 가리키지 않는 공통 navigation route이므로 비적합이다."
+      },
+      {
+        "candidate_id": "SGCAND-0dfcadad1f13fa24d3949b1e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 주가 요약 페이지이며 제목 대상도 호텔신라다. snippet의 시각은 기준일 이후이고 issuer 실적발표·presentation 원문 provenance가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-b87b69a102c9b6420ac491af",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "펨트론을 다룬 제3자 리서치 PDF이며 SK하이닉스 issuer 실적발표·presentation 원문이 아니다. 고객사 변수 설명은 현재 target의 valuation earnings bridge를 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e016fe49a12438444317e6f9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 블로그의 삼성전자 실적 일정 글로 대상 기업과 URL 소유자가 다르다. SK하이닉스 issuer earnings release 또는 presentation provenance를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8faa65547940175ab9cb8583",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "SK텔레콤의 2024 연차보고서로 대상 기업과 요청 문서 family가 다르다. SK하이닉스의 현재 valuation 또는 HBM earnings bridge 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-621066d521eaefd817b7e819",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 벤더 엘티씨를 다룬 제3자 리서치 PDF다. target issuer의 실적발표·presentation 원문이 아니고 현재 valuation multiple의 period와 denominator를 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f1058f31f9652436931b3f3f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 2024 지속가능경영보고서이지만 요청된 family는 issuer earnings release와 issuer presentation이다. 이전 기간 ESG 보고서는 현재 valuation earnings bridge와 multiple denominator를 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2b6ea19968bd801c7323fc3d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 매체가 컨퍼런스콜을 전한 기사이며 issuer-owned earnings release 또는 presentation 원문이 아니다. 요청된 공식 source family를 충족하지 않아 snippet을 evidence route로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-23a28c69114853d755c7295b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 주가전망 블로그이며 issuer 실적발표·presentation 원문 provenance가 없다. 투자전략 요약은 현재 valuation mechanism을 검증할 공식 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-00fea23e227f6b26db549a76",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "커뮤니티 게시물은 issuer-owned 원문이 아니다. snippet이 회사 홈페이지를 참조하라고 안내할 뿐 원문 문서 URL·본문을 제공하지 않으므로 요청 family를 만족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-59ffbe630095d4ab7a541bdc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "한양이엔지를 다룬 오래된 제3자 리서치 PDF로 대상과 요청 source family가 다르다. SK하이닉스의 현재 valuation earnings bridge가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-bd9ed0d278278a53d096a0a6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 투자 블로그이며 공시·IR을 우선 확인하라는 일반 설명만 있다. issuer earnings release 또는 presentation 원문 provenance와 구체적인 현재 valuation 자료가 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "12개 후보를 각각 정확히 한 번 분류했고 material 후보는 없다. 제3자 기사·블로그·타사 문서의 snippet은 discovery metadata로만 취급했다."
+    ]
+  },
+  "payload_hash": "d2dc0eeabf472f23ea9190be2992b25c47cfff2d5aadbd2afa372af199183cfc",
+  "production_score_authority": false,
+  "prompt_hash": "8313f33ee6a81e9163d112daa888be4e5c39d37ac2fe003c448fba3a7a1b785f",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ccc0bd2de7d1bb12163c6ede23692d51f47b1db78d22629c0b7257a69cdc6fdd",
+  "response_id": "COLLABRESP-c146ade36d34921d04c07ae7f5733743a6eb5e64ad69dab0aa8c2a120784387d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

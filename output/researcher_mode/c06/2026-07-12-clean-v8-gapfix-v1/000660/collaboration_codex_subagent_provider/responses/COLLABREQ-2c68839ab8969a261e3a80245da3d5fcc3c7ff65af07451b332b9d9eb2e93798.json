@@ -1,0 +1,222 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "rationale": "Final continuation extracts the four remaining distinct SK하이닉스 completed recommendation-history gap atoms. The 2025-10-22 current 560,000원 target has no completed gap and is already represented in prior facts, so it is not duplicated; recommendation tables for other issuers are outside target scope. Full remainder review found no additional distinct target facts.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "2025-04-25 제시된 260,000원 목표주가 대비 대상기간 평균주가가 7.8% 낮았다는 사후 괴리율은 브로커 목표가의 평균 실현 오차를 보여준다.",
+        "exact_quote": "2025-04-25 Buy 260,000 1년 -7.8 15.4",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "완료된 브로커 목표가의 평균 괴리율은 기대 정확도와 정보 신뢰도를 보정하지만 발행사 실제 실적·가이던스나 HBM 단독 경제성은 아니다.",
+        "mechanism_scope_id": "000660:EUGENE_TARGET_CALIBRATION:20250425:AVERAGE_GAP",
+        "normalized_object": "2025-04-25 유진투자증권 260,000원 목표주가의 평균주가 괴리율",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-04-25 recommendation; one-year target horizon",
+        "predicate": "목표주가 대비 대상기간 평균주가 괴리율",
+        "predicate_family": "BROKER_TARGET_PRICE_AVERAGE_GAP_CALIBRATION",
+        "primitive_tags": [
+          "broker_target_price",
+          "historical_gap",
+          "average_price"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "broker_target_price_history_calibration",
+        "question_family_tags": [
+          "market_mispricing",
+          "valuation_rerating",
+          "information_confidence"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:EUGENE_TARGET_CALIBRATION:20250425",
+        "unit": "% versus target price",
+        "value": -7.8
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "2025-04-25 제시된 260,000원 목표주가 대비 대상기간 최고주가가 15.4% 높았다는 사후 괴리율은 관측기간 중 목표가를 웃돈 정도를 보여준다.",
+        "exact_quote": "2025-04-25 Buy 260,000 1년 -7.8 15.4",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "완료된 브로커 목표가의 최고주가 괴리율은 평균 괴리율과 별개의 과거 경로 보정치이며 현재 목표가나 HBM 전용 실적을 대신하지 않는다.",
+        "mechanism_scope_id": "000660:EUGENE_TARGET_CALIBRATION:20250425:EXTREME_GAP",
+        "normalized_object": "2025-04-25 유진투자증권 260,000원 목표주가의 최고(최저)주가 괴리율",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-04-25 recommendation; one-year target horizon",
+        "predicate": "목표주가 대비 대상기간 최고(최저)주가 괴리율",
+        "predicate_family": "BROKER_TARGET_PRICE_EXTREME_GAP_CALIBRATION",
+        "primitive_tags": [
+          "broker_target_price",
+          "historical_gap",
+          "extreme_price"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "broker_target_price_history_calibration",
+        "question_family_tags": [
+          "market_mispricing",
+          "valuation_rerating",
+          "information_confidence"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:EUGENE_TARGET_CALIBRATION:20250425",
+        "unit": "% versus target price",
+        "value": 15.4
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "2025-07-25 제시된 330,000원 목표주가 대비 대상기간 평균주가가 5.5% 낮았다는 사후 괴리율은 브로커 목표가의 평균 실현 오차를 보여준다.",
+        "exact_quote": "2025-07-25 Buy 330,000 1년 -5.5 47.1",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "완료된 브로커 목표가의 평균 괴리율은 기대 정확도와 정보 신뢰도를 보정하지만 발행사 실제 실적·가이던스나 HBM 단독 경제성은 아니다.",
+        "mechanism_scope_id": "000660:EUGENE_TARGET_CALIBRATION:20250725:AVERAGE_GAP",
+        "normalized_object": "2025-07-25 유진투자증권 330,000원 목표주가의 평균주가 괴리율",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-07-25 recommendation; one-year target horizon",
+        "predicate": "목표주가 대비 대상기간 평균주가 괴리율",
+        "predicate_family": "BROKER_TARGET_PRICE_AVERAGE_GAP_CALIBRATION",
+        "primitive_tags": [
+          "broker_target_price",
+          "historical_gap",
+          "average_price"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "broker_target_price_history_calibration",
+        "question_family_tags": [
+          "market_mispricing",
+          "valuation_rerating",
+          "information_confidence"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:EUGENE_TARGET_CALIBRATION:20250725",
+        "unit": "% versus target price",
+        "value": -5.5
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "2025-07-25 제시된 330,000원 목표주가 대비 대상기간 최고주가가 47.1% 높았다는 사후 괴리율은 관측기간 중 목표가를 크게 웃돈 정도를 보여준다.",
+        "exact_quote": "2025-07-25 Buy 330,000 1년 -5.5 47.1",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "완료된 브로커 목표가의 최고주가 괴리율은 평균 괴리율과 구분되는 경로 보정치이며 현재 560,000원 목표가 또는 HBM 단독 경제성을 직접 검증하지 않는다.",
+        "mechanism_scope_id": "000660:EUGENE_TARGET_CALIBRATION:20250725:EXTREME_GAP",
+        "normalized_object": "2025-07-25 유진투자증권 330,000원 목표주가의 최고(최저)주가 괴리율",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-07-25 recommendation; one-year target horizon",
+        "predicate": "목표주가 대비 대상기간 최고(최저)주가 괴리율",
+        "predicate_family": "BROKER_TARGET_PRICE_EXTREME_GAP_CALIBRATION",
+        "primitive_tags": [
+          "broker_target_price",
+          "historical_gap",
+          "extreme_price"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "broker_target_price_history_calibration",
+        "question_family_tags": [
+          "market_mispricing",
+          "valuation_rerating",
+          "information_confidence"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:EUGENE_TARGET_CALIBRATION:20250725",
+        "unit": "% versus target price",
+        "value": 47.1
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "68a3c4aee23fc767f80f2dca43b3c9ce0888c2cf21f846e2347bdb20acdf3b90",
+  "production_score_authority": false,
+  "prompt_hash": "d37e32e85f4d2e61c078999dae81d40392acaf37b2eccbaefafe69b5754d3b62",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2c68839ab8969a261e3a80245da3d5fcc3c7ff65af07451b332b9d9eb2e93798",
+  "response_id": "COLLABRESP-1e5baac40242b306c7cbcaf1b43f0064f7bbefd26ae39cfb5a11cf2fb14a9962",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

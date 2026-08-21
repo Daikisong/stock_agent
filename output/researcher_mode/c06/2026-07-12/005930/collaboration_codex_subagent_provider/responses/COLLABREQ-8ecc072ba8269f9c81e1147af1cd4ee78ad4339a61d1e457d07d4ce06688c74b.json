@@ -1,0 +1,118 @@
+{
+  "output_schema_hash": "f0f7ea97d154d5dbe05bd4f97e994888e7d9c0c51cd57d8b759bb0aefe49f6d1",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-a2a8ca683447d0f2c86f94e7",
+        "rationale": "임원 성명·직위·학력과 메모리 조직 담당 이력의 연속 명단으로, 현재 메모리/HBM 수익·가격·캐파·계약·고객 인증을 입증하는 새 경제 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-a74dd284269075ccdf7ae43f",
+        "rationale": "재무제표에 중요한 장기공급계약 수주거래의 명시적 부재와 현재 분기 외부검토 결론 2건을 추출했다. 기존 매출채권·재고 잔액과 회계정책은 반복하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-a74dd284269075ccdf7ae43f",
+        "economic_mechanism": "MATERIAL_CONTRACT_DISCLOSURE_LIMITATION",
+        "exact_quote": "라. 수주계약 현황\n2026년 1분기말 현재 당사 재무제표에 중요한 영향을 미치는 장기공급계약 수주거래는 없습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "장기공급계약 수주거래의 공시상 부재를 직접 밝힌 정보 제한·계약 질 counterfact다. 모든 고객 합의나 비공시 계약이 없다는 뜻으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:INFORMATION_CONFIDENCE",
+        "normalized_object": "재무제표 중요 장기공급계약 수주거래 부재",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기말 재무제표에 중요한 영향을 미치는 장기공급계약 수주거래가 없었다",
+        "predicate_family": "MATERIAL_LONG_TERM_SUPPLY_CONTRACT_ABSENCE",
+        "primitive_tags": [],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "MATERIAL_LONG_TERM_SUPPLY_CONTRACT_DISCLOSURE",
+        "question_family_tags": [],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.5,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 재무제표 중요 장기공급계약 수주거래",
+        "subject_id": "005930:MATERIAL_LONG_TERM_SUPPLY_CONTRACT_DISCLOSURE:2026-Q1",
+        "unit": "disclosure status",
+        "value": "no long-term supply-contract order transaction materially affecting the financial statements"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a74dd284269075ccdf7ae43f",
+        "economic_mechanism": "INTERIM_FINANCIAL_REPORTING_ASSURANCE",
+        "exact_quote": "삼정회계법인은 당사의 제56기 및 제57기 감사, 제58기 1분기 검토를 수행하였고, 감사 관련하여 제55기 및 제56기 감사의견은 적정이며, 제58기 1분기 검토 결과 재무제표에 한국채택국제회계기준 제1034호(중간재무보고)에 따라 중요성의 관점에서공정하게 표시하지 않은 사항이 발견되지 않았습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 분기 재무제표의 외부 검토 결과를 직접 보여주는 정보 신뢰도 사실이다. 연간 감사의 적정의견이나 미래 성과 보증으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:INFORMATION_CONFIDENCE",
+        "normalized_object": "2026년 1분기 중간재무보고 외부검토 결과",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "삼정회계법인의 2026년 1분기 검토에서 K-IFRS 1034에 따라 중요하게 공정 표시되지 않은 사항이 발견되지 않았다",
+        "predicate_family": "INTERIM_REVIEW_NO_MATERIAL_DEPARTURE",
+        "primitive_tags": [],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "INTERIM_FINANCIAL_REVIEW_RESULT",
+        "question_family_tags": [],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.5,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 1분기 재무제표 검토",
+        "subject_id": "005930:INTERIM_FINANCIAL_REVIEW:2026-Q1",
+        "unit": "review conclusion",
+        "value": "no material departure from fair presentation under K-IFRS 1034 found in the interim review"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "장기공급계약 문구는 재무제표에 중요한 영향을 미치는 수주거래 범위에 한정하며, 모든 고객 합의·비공시 계약·HBM 물량 협의의 부재로 일반화하지 않았다.",
+      "제58기 1분기 결과는 중간재무보고 검토 결론이며 연간 감사 또는 미래 실적 보증으로 확대하지 않았다."
+    ]
+  },
+  "payload_hash": "20ef96a91e03eca1e40f703135b3cc18e26c459a11eb34f22808e4791210c099",
+  "production_score_authority": false,
+  "prompt_hash": "6f3c76bdb04001dfa967178bfdecc4d76fb03c96014fc7c8e1950b95987c4a29",
+  "provenance": {
+    "agent_id": "codex_primary",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/codex_primary",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8ecc072ba8269f9c81e1147af1cd4ee78ad4339a61d1e457d07d4ce06688c74b",
+  "response_id": "COLLABRESP-a392f1e178697155d7aba600e8bc7b1ed1652e1635d55c5e02171d3fdcbc0c44",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

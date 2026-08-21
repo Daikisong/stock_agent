@@ -1,0 +1,45 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Use provider report id 1096186 and file name 1F01420260511_000660_a.pdf as the bounded alternate retrieval identity. The 1096276 / 1F01420260511_000660_c.pdf row has the same date and English-equivalent title, so treat it as a likely language variant rather than issuing a second semantically duplicate query unless canonical retrieval establishes that it is a distinct document.",
+      "Accept only the original publisher or provider landing page and full PDF for source repair. Search snippets and the structured provider summary identify a route but are not evidence of the report contents."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "SK하이닉스 미래에셋 1096186 1F01420260511_000660_a.pdf",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "The structured provider roster identifies a 2026-05-11 Mirae Asset record with report id 1096186 and file name 1F01420260511_000660_a.pdf, neither of which appears in the 35 executed literal queries. Retrieve its original landing page or direct PDF to verify whether the report provides source-backed third-party context on long-term AI value-chain order commitments relevant to DURABLE_VISIBILITY. Broker estimates or summaries cannot satisfy issuer-only FORWARD_GUIDANCE or SEGMENT_CONTRIBUTION.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "The report identity, target attribution, publication date, and quoted content remain unverified until the full landing page or PDF is fetched; the candidate title and summary cannot be promoted to a fact.",
+      "Any FY2026/FY2027 HBM revenue, operating-profit, or long-term-order figures in this document would be broker-authored analysis. They may contextualize DURABLE_VISIBILITY but cannot close the issuer-only numeric FORWARD_GUIDANCE or SEGMENT_CONTRIBUTION contracts, and they do not establish a binding customer purchase obligation."
+    ]
+  },
+  "payload_hash": "4700054f64478bd40037e17b5ac8da43c5d6dc293c6b0d9ffa155d9035772631",
+  "production_score_authority": false,
+  "prompt_hash": "f3ffeefbd19ed1b581d1da391b00cc0c6c1abe6dd4a6727573c96d1867d6b6a4",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-54c689a0ecb702bdb8ce72d22b9d74426f602cdb814ce31d6db5e81691c70477",
+  "response_id": "COLLABRESP-297ea880ba583e05a6141aca137b1c9903f82570f541c75a337162bed74e0946",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

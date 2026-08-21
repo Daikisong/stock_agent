@@ -1,0 +1,41 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-14e2cb499763afe380e20f09",
+        "rationale": "2026년 1분기 잠정실적 발표 전 기사로, 회사 전체 매출·영업이익 컨센서스는 메모리/HBM에 귀속할 수 없고 DS 영업이익 범위도 메모리와 비메모리가 섞인 증권가 추정치다. D램 가격 상승·HBM 판매 증가 설명은 현재 canonical의 공식 1분기 메모리 ASP 상승 및 서버향 판매 확대 사실보다 약한 선행 전망이어서 새 비중복 경제 사실로 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "기사의 삼성전자 1분기 매출 121조3946억원·영업이익 41조8359억원은 13개 증권사 컨센서스이며 HBM 또는 메모리 실적으로 귀속하지 않았다.",
+      "DS 영업이익 37조~48조원은 증권가 추정 범위이고 DS에 비메모리 사업이 포함되므로 메모리/HBM 이익으로 만들지 않았다.",
+      "스마트폰·가전·TV와 LG전자 내용은 현재 삼성전자 메모리 objective의 타 사업·타종목 정보라 제외했다."
+    ]
+  },
+  "payload_hash": "228d7d22afbcf96b7782c729a84410ddfc11c958a57d0c9a3a288ae0fe4c0215",
+  "production_score_authority": false,
+  "prompt_hash": "41e299746b1c64e4e5720e07eaf625bc9ec08d635fada7aad0cf5ee85b8f2d71",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-011be79288842d92a6f45716d9bece4d86b9bf961988818a823ca7ac87254b2e",
+  "response_id": "COLLABRESP-5b6ca6dd17794b098965fe25662c5c9de1eba31a4170fab682dd7c0f6a8b8685",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "schema_version": "e2r_v6_post_run_gold_semantic_review_v2",
+  "reviewer_identity": {
+    "role_id": "CODEX_POST_RUN_REVIEWER_B",
+    "provider_route": "CODEX_COLLABORATION",
+    "provider_call_id": "CODEX-COLLAB-PHASE101-C06-20260712-REVIEWER-B-389724-V2",
+    "prompt_hash": "9308adead5a72c3aff582af637e6a344995ab34adf7af16c6b61d2f925fc38c8",
+    "response_hash": "6a94e6a704ee6b717c812e2f0421814f559f3c6304876144c3fef493271a5910",
+    "identity_hash": "bcdae22556a7349c9955a5419c511d5eb342214521b87f525da355a704f80992"
+  },
+  "primary_payload_hash": "38972456138e4e3b8df5f3d2a49c533da15e81f9fadf0e521ecb09217643b583",
+  "gold_visible_only_post_run": true,
+  "score_or_stage_authority": false,
+  "production_score_authority": false,
+  "rows": [
+    {
+      "gold_fact_id": "G-005930-EPS-S",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. production에는 2026년 2분기 연결 잠정실적 171조원·89.4조원을 issuer actual로 확인한 원자가 없고 FY2026E broker 89.4조원은 기간과 actual/forecast 상태가 다르다."
+    },
+    {
+      "gold_fact_id": "G-005930-EPS-C",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. 여러 2026F cash-flow 원자는 동일 OCF 294.4조원·CAPEX 71.0조원·FCF 223.4조원 bridge를 구성하지 못하며 다른 broker 수치와 분기 actual은 canonical cash-conversion 사건이 아니다."
+    },
+    {
+      "gold_fact_id": "G-005930-VIS-S",
+      "approve": true,
+      "rationale": "EFACT-89612bd6d5152108d49b9e86의 HBM4 양산·상용출하와 EFACT-e8ce2332a248337ef3117718의 FY2026 HBM 매출 3배 초과 issuer 전망이 target·segment·기간을 보존하며 상용화와 매출가시성 사건을 compound로 충족한다."
+    },
+    {
+      "gold_fact_id": "G-005930-VIS-C",
+      "approve": true,
+      "rationale": "EFACT-77fa464e89b20ea5014f46ce는 2026년 1분기말 중요한 장기공급계약 수주거래가 없다는 규제공시로 동일 target·기간의 계약 가시성 제한 사건이다."
+    },
+    {
+      "gold_fact_id": "G-005930-BOT-S",
+      "approve": true,
+      "rationale": "EFACT-77be01eb95008b4f49f80f17의 1Q26 DRAM ASP 90% 초반 상승과 EFACT-9a0358628521190aafd60299의 2026년 메모리 공급부족 지속 issuer 판단이 같은 target·memory segment의 shortage-to-realized-pricing 메커니즘을 구성한다."
+    },
+    {
+      "gold_fact_id": "G-005930-BOT-C",
+      "approve": true,
+      "rationale": "EFACT-23ae1986045e7d820e94a355는 HBM4 고객수요 대응 선제 설비투자 계획으로 Gold의 HBM4 capacity supply-response와 target·segment·경제방향이 같다. 계획을 realized capacity로 확대하지 않은 범위도 타당하다."
+    },
+    {
+      "gold_fact_id": "G-005930-MKT-S",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. production의 상향 원자는 전사·메모리·DRAM 또는 다른 분기 귀속이며 FY2026 DS 영업이익 236.3조원에서 288.9조원으로의 동일 subject·revision-baseline 사건이 없다."
+    },
+    {
+      "gold_fact_id": "G-005930-MKT-C",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. SFACT-90901e0474fa0daf58f092a6가 2026-07-10 가격 285,000원을 확인하지만 production trailing PER 21.864975는 Gold 43.42와 canonical numeric meaning이 달라 가격 원자만으로 전체 expectation-reflection 사건을 만들 수 없다."
+    },
+    {
+      "gold_fact_id": "G-005930-VAL-S",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. production의 회사 forward PE 약 5.59 또는 historical 5.41과 회사 2026F PE 8.2를 조합하면 Gold의 회사 5.4 대 시장 8.2에서 두 번째 subject가 뒤바뀐다."
+    },
+    {
+      "gold_fact_id": "G-005930-VAL-C",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. SFACT-bff7b5c78f312993628a252f는 같은 날짜 target trailing parent P/B지만 3.844357로 Gold 4.45와 canonical numeric snapshot이 다르고 peer P/B는 target P/B를 대체하지 못한다."
+    },
+    {
+      "gold_fact_id": "G-005930-CAP-S",
+      "approve": true,
+      "rationale": "EFACT-8fbff587b0def045d7da0ade는 동일 target·2026-Q1·REGULATORY_OFFICIAL 배당 actual과 Gold의 총액 2,453,316백만원을 정확히 확인한다. 주당 372원 원자가 별도 분리되지 않은 atomic granularity 차이는 core shareholder-return event를 깨지 않으며 component-local COUNTER 라벨도 Gold SUPPORT 매칭을 막지 않는다."
+    },
+    {
+      "gold_fact_id": "G-005930-CAP-C",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. production의 2026F CAPEX는 63.453조원, 메모리 35조원 또는 분기 actual 등으로 Gold의 전사 71.0조원 broker estimate와 scope·금액·기간을 함께 충족하지 않는다."
+    },
+    {
+      "gold_fact_id": "G-005930-INF-S",
+      "approve": true,
+      "rationale": "EFACT-6430c66a53268479f230de39는 NVIDIA 공식 GTC 기간 자료가 삼성 HBM4의 NVIDIA AI 인프라 설계와 양사 기술협력을 target-direct로 확인한다. named page 차이는 동일 고객공식 technical-participation corroboration 사건을 깨지 않는다."
+    },
+    {
+      "gold_fact_id": "G-005930-INF-C",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. EFACT-7a7c894af3d9e5b7ce1bd90d는 trusted memory NDA 일반론이고 EFACT-66a852e3b8f9484e6dad3710는 HBM qualification NDA라 HBM 고객별 물량·가격·취소조건의 규제공시 부재를 대체하지 못한다."
+    },
+    {
+      "gold_fact_id": "G-000660-EPS-S",
+      "approve": true,
+      "rationale": "EFACT-7ccc530bd085e12d2428c531, EFACT-771ffa9b3ed8b2b567afbf85, EFACT-6d5857e4a498681767ee24ec가 1Q26 연결 매출 52.5763조원·영업이익 37.6103조원·영업이익률 72% actual을 같은 target·분기에서 compound로 확인한다."
+    },
+    {
+      "gold_fact_id": "G-000660-EPS-C",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. 용인 1기 Phase 2~6 추가 시설투자 21.6조원 원자가 없고 P&T7 19조원·장기 1,100조원·분기 CAPEX는 투자대상·기간·commitment가 다르다."
+    },
+    {
+      "gold_fact_id": "G-000660-VIS-S",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. current 수요초과, 향후 3년 수요초과, 2028년까지 성장 원자는 각각 존재하지만 2030년 이후 demand-over-capacity horizon을 확인하지 않으며 장기 투자일정을 수요로 바꿀 수 없다."
+    },
+    {
+      "gold_fact_id": "G-000660-VIS-C",
+      "approve": true,
+      "rationale": "EFACT-b649fb636cda41346a53c1ad는 주요 고객과 공급물량·가격을 월별 또는 분기별 합의한다는 규제공시로 동일 target·memory 계약의 장기 고정 가시성 제한 사건이다."
+    },
+    {
+      "gold_fact_id": "G-000660-BOT-S",
+      "approve": true,
+      "rationale": "EFACT-87302daba02f8d5d65943a4b는 1Q26 일반 DRAM 가격 강세로 ASP가 전분기 대비 60% 중반 상승한 actual을 직접 확인해 target·기간·segment·pricing 메커니즘이 같다."
+    },
+    {
+      "gold_fact_id": "G-000660-BOT-C",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. EFACT-dbcec463bd70a5fc0b1dc569는 2027년 2월 조기 개장만 확인하고 Gold에 결합된 1기 팹 총투자 약 31조원 원자가 없어 전체 accelerated-capacity 사건을 충족하지 않는다."
+    },
+    {
+      "gold_fact_id": "G-000660-MKT-S",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. EFACT-7d4c5a6dff65a9c99445462f의 유안타 275.507·448.349조원은 point-estimate path이고 consensus/best 원자도 Gold의 동일 기준 상향 revision pair가 아니다."
+    },
+    {
+      "gold_fact_id": "G-000660-MKT-C",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. 국내 주가 3배 초과와 미국 ADR 첫날 12.8% 상승 actual이 없고 EFACT-6a666cc1a8ead556932963be의 연내 ADR 상장 목표는 실제 debut·가격반응 사건이 아니다."
+    },
+    {
+      "gold_fact_id": "G-000660-VAL-S",
+      "approve": true,
+      "rationale": "SFACT-0848e55e06b6d46d55423c71의 선행 PE 6.6073, SFACT-762bb5c59241663efad29c9a의 목표가 380만원, SFACT-409716e119c15baf16a21e53의 current price 218만원이 같은 target·current forward-valuation scenario를 구성한다. 가격 갱신 차이는 목표가 대비 할인 방향을 바꾸지 않는다."
+    },
+    {
+      "gold_fact_id": "G-000660-VAL-C",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. production의 target trailing parent P/B 9.456941과 PE 20.676629는 Gold 12.49·36.98과 canonical numeric snapshot이 다르며 peer band로 보정할 수 없다."
+    },
+    {
+      "gold_fact_id": "G-000660-CAP-S",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. ADR 1억7,790만주 발행과 265억달러 실제 조달 원자가 없고 2026년 내 상장 목표는 external-funding actual이 아니다."
+    },
+    {
+      "gold_fact_id": "G-000660-CAP-C",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. ADR 상장 목표나 기본·희석 EPS 차이는 신규 ADR 1억7,790만주 발행 actual과 그에 따른 기존 주주 희석 사건을 입증하지 않는다."
+    },
+    {
+      "gold_fact_id": "G-000660-INF-S",
+      "approve": true,
+      "rationale": "unmatched 판정을 승인한다. NVIDIA·HBM4 production 원자는 trusted 공급전망·qualification 또는 산업수요일 뿐 NVIDIA CUSTOMER_OFFICIAL GTC가 SK hynix named HBM4 LLM-serving 세션을 등재한 target-direct corroboration이 없다."
+    },
+    {
+      "gold_fact_id": "G-000660-INF-C",
+      "approve": true,
+      "rationale": "EFACT-1e28750f24dd2316329d783d의 1Q26 검토 미완료·수치변경 가능성과 EFACT-067d9a40947915d970201481의 미래예측 위험·불확실성이 같은 target·분기 disclosure limitation을 compound로 충족한다."
+    }
+  ]
+}

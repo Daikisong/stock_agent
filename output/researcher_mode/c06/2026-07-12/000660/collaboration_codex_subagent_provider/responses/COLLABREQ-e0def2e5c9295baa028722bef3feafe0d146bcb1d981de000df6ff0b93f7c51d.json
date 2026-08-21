@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      6.0,
+      8.4
+    ],
+    "anchor_comparisons": [
+      "POSITIVE MEDIUM anchor ORDTRANSFER-c54e0c02076da1642b64c8df의 중간 band보다 현재 사례는 HBM 매출·SOTP 차등·peer 비교·관찰된 multiple 변화가 동시에 있어 더 강하다.",
+      "POSITIVE STRONG anchor ORDTRANSFER-505a232bb2f7dc1ce7f89a4a의 11.4~12점 band에는 HBM 단독 cash conversion과 지속 계약, FY2027 이후 이익 duration이 부족해 미달한다.",
+      "COUNTER STRONG anchor ORDTRANSFER-75306723611a10615f950fec의 강한 반대 형태는 감익과 공급 경쟁의 상단 제약을 환기하지만, 현재의 직접 매출·가치 전환 근거까지 상쇄하지는 않아 중상단 band가 균형적이다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-1f6b2504a0b9dfbc74daf456",
+      "EFACT-c73c140216de4b1a236ccbe5",
+      "EFACT-fa0c552bb4992e26e213ad41"
+    ],
+    "disagreements": [
+      "HBM의 8.5배 SOTP를 실현된 시장 배수로 보지 않고 브로커 valuation bridge로 한정한다.",
+      "PBR band 상단 돌파는 재평가의 관찰 증거인 동시에 일부 기대가 이미 반영됐다는 상단 제약으로 함께 처리한다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a",
+      "ORDTRANSFER-75306723611a10615f950fec"
+    ],
+    "proposed_points": 7.2,
+    "rationale": "네 개의 positive fact는 실제 HBM 매출 성장, HBM 별도 고배수 가치 bridge, peer 대비 수익성·배수, EPS와 multiple의 동반 변화라는 서로 다른 valuation 경로를 제공한다. 세 counterfact는 거시 할인이 이익 상향을 상쇄할 수 있고, FY2026 이후 이익이 감속할 수 있으며, 경쟁사 공급 확대가 희소성 프리미엄을 낮출 수 있음을 보여준다. 따라서 medium anchor보다 높지만 strong positive anchor에는 못 미치는 범위가 적절하다.",
+    "support_fact_ids": [
+      "EFACT-122bf71db78558e5780ed3c8",
+      "EFACT-3e4c5596b1c40a463ba54d38",
+      "EFACT-b3d48bea9ae741feec4d4a05",
+      "EFACT-b74e88a671a1247b0ce230d5"
+    ],
+    "why_not_higher": "HBM 단독 이익·FCF와 고객 계약 duration이 없고, 감익·경쟁 공급·거시 할인 근거가 모두 현재 또는 open 상태여서 strong band로 올릴 수 없다.",
+    "why_not_lower": "매출 실현과 가치 차등, peer 비교, multiple 변화가 함께 관찰돼 재평가 논리가 단일 브로커 목표배수나 정성 주장에만 의존하지 않는다."
+  },
+  "payload_hash": "90ce31340310f27a4debdb6bc4c8612ab88d6c19bedf0c0e2833d06230bf3d23",
+  "production_score_authority": false,
+  "prompt_hash": "921eabc2694fe9d1b5fcd6bfbc737719dddef27a2e6b286a2b8b96b3c4416c28",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e0def2e5c9295baa028722bef3feafe0d146bcb1d981de000df6ff0b93f7c51d",
+  "response_id": "COLLABRESP-928405c7871cdea1a5cd8dbca2531652c12b609ae6f862a85a2290a9da97e92b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

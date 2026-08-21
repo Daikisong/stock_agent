@@ -1,0 +1,44 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Prompt 지정 STRUCTCAND-4d5911293ef032283e9486d5의 exact Shinhan PUBLIC_BROKER_PDF full-document route만 복구하여 valuation 기간·분모와 HBM earnings bridge를 검증한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "SK하이닉스 신한 2026-06-30 1108975 1F00320260630_000660.pdf 경쟁사 본진으로 침투하는 주도주",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "Prompt가 검증된 distinct identity로 지정한 Shinhan 2026-06-30 보고서(provider_report_id 1108975, file 1F00320260630_000660.pdf, title 경쟁사 본진으로 침투하는 주도주)의 full PDF 또는 그 공식 landing route를 식별하기 위한 bounded query다. Full document에서만 forward earnings의 기간·분모, HBM 귀속 earnings bridge, durable demand·capacity 근거와 북미 peer valuation gap을 검증한다. Candidate metadata와 snippet은 증거 또는 structured role로 승격하지 않으며, broker 의견은 issuer-official DURABLE_VISIBILITY를 대체하지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "Full PDF가 fetch·parse되어 exact quote와 accepted claim-fact lineage가 생기기 전에는 metadata의 HBM, 이익, valuation 표현을 증거로 사용할 수 없다.",
+      "Broker report가 HBM 귀속 추정과 valuation 논리를 제공하더라도 issuer-official 고객계약·CAPA 잠김·장기 수요 visibility를 대체하지 않는다."
+    ]
+  },
+  "payload_hash": "de83fd5765073f3185c6dddc6970454aea0840e5ce91661da84f92ff221f65ce",
+  "production_score_authority": false,
+  "prompt_hash": "0e035ec8a7a5ed9c2bd85fd766865a658065fd65c1074f04281537031e2bba0c",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b381722189c67ad921449586747d8cea0c4c72c8cc6c11921ed3ffcf09e8bc02",
+  "response_id": "COLLABRESP-ad272e06d75a93cf53b0ef90637dac82b227ec98eacf43c1ea667dcd8694778d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a42ae60bcc27fd0530990580",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.kistep.re.kr의 'KISTEP InI'은 정책·제3자·consulting 자료로 NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-965bdc4edc9bcf4c3dc99b50",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "gameboy.kr의 'IT·AI·컴퓨팅 데일리 — 2026년 8월 14일 (금) | GAMEBOY.KR'은 정책·제3자·consulting 자료로 NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing이 아니다. Cutoff 이후 날짜이므로 temporal gate도 실패한다."
+      },
+      {
+        "candidate_id": "SGCAND-e9d160fe9e93a2f19b25711f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "in.naver.com의 '네이버 인플루언서: 삶은돈의 홈'은 정책·제3자·consulting 자료로 NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e57f6894a2db1b3c64c12c48",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "contents.premium.naver.com의 '[데일리 자료] 26.07.31 아침에 읽는 주식뉴스모음'은 정책·제3자·consulting 자료로 NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing이 아니다. Cutoff 이후 날짜이므로 temporal gate도 실패한다."
+      },
+      {
+        "candidate_id": "SGCAND-38f1336e952104d7caf97a59",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.kistep.re.kr의 'No.299 - 한국과학기술기획평가원'은 정책·제3자·consulting 자료로 NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3118d4be9aaf5f160f04a50d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "dl.kotra.or.kr의 '252026중동진출전략.pdf'은 정책·제3자·consulting 자료로 NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c8448a3358dcc205f1139cf2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.kiep.go.kr의 '중국 반도체 산업의 혁신과 글로벌 경쟁력'은 정책·제3자·consulting 자료로 NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-47db33a2fe2ed8e692127b1a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "contents.premium.naver.com의 '2026.08.12 (목) Morning Buzz ☀️'은 정책·제3자·consulting 자료로 NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing이 아니다. Cutoff 이후 날짜이므로 temporal gate도 실패한다."
+      },
+      {
+        "candidate_id": "SGCAND-5dfc3a13fdb938b2ef6ac1a3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "contents.premium.naver.com의 'AI 주식들만 오르는 이유? 올해 1위 수익률 종목 공개. (주식 투자 자료 8/10)'은 정책·제3자·consulting 자료로 NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1b8d41ac00106a21b7ac962b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "contents.premium.naver.com의 'Morning Report(2025.10.24.금)'은 정책·제3자·consulting 자료로 NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e28cd5c81fe9993b3b111135",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "contents.premium.naver.com의 '[데일리 자료] 26.07.30 아침에 읽는 주식뉴스모음'은 정책·제3자·consulting 자료로 NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing이 아니다. Cutoff 이후 날짜이므로 temporal gate도 실패한다."
+      },
+      {
+        "candidate_id": "SGCAND-82b52307984998dcb2606c83",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.pwcconsulting.co.kr의 '정부의 전략산업 정책으로 보는 2026년 산업 지도'은 정책·제3자·consulting 자료로 NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing이 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "12개 전수 accounting 결과 pre-cutoff named counterparty official route가 없다. 이 local material 0은 source absence나 관계·계약 부재 증명이 아니다."
+    ]
+  },
+  "payload_hash": "e92cb67afefe40ac78fac14d09e7e575515c819c7dd29e93127ba024b25a2904",
+  "production_score_authority": false,
+  "prompt_hash": "c53e6d6177c849ccf07044236d24f6ab3004646a0f175ddc39d1fa52d6dfacc5",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3298da41d686679d18511643caa7b8d2f58bf84c2400bf9ca87e145c3b06849e",
+  "response_id": "COLLABRESP-86a5d9ae01d006edc5e1e0482210764a4379aacec045ba8534265ff8e012bf4d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

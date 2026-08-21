@@ -1,0 +1,32 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "두 차례 semantic retry와 기존 38개 실행 query를 비교했지만, 현재 prompt에는 기존 공식 발행사·고객·브로커 archive 및 NH·미래에셋 locator 계보와 다른 새 verified 문서 class·문서 identity·locator가 없다. 동의어 변형이나 같은 실패 경로는 반복하지 않는다.",
+      "빈 suggested_queries는 해당 계약·CAPA·현금전환 사실이 존재하지 않는다는 뜻도, 의미 포화가 확정됐다는 뜻도 아니다. 현재 검증 가능한 다음 작업은 새 검색보다 earnings_visibility, bottleneck_pricing, capital_allocation 재작성 memo에 대한 새 독립 judge 검토다."
+    ]
+  },
+  "payload_hash": "6ead00f7975d55fa371a979f540b5866bd7e462ac133b43c57143e23766bcc77",
+  "production_score_authority": false,
+  "prompt_hash": "745c6cce3f201c93d3241f4cc491aa9473fa75658cc384b14de7599bdc0763f8",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-70be579b46f80385fd25aade5a5f5338d1188c76d123f60ca3f24ece12b027c6",
+  "response_id": "COLLABRESP-e24ddfc012e440a1a2d3d56ce96ef07a28dbb16f7869f8c1af94a42ef8c4ddc8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

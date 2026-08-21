@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-35918f7c271dc33bd651d5e9",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This report concerns Samsung Electro-Mechanics rather than Samsung Electronics HBM capacity."
+      },
+      {
+        "candidate_id": "SGCAND-f250b259bc5b09b24529dabf",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The global ETF market report is unrelated to the target report and research objectives."
+      },
+      {
+        "candidate_id": "SGCAND-a1a7f50175bc4ab8b3c26ff4",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This AI Weekly issue is generic AI-event commentary, not target-company memory research."
+      },
+      {
+        "candidate_id": "SGCAND-472abe06ef34a9bfe5768408",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The global bond ETF PDF is unrelated to Samsung Electronics or HBM."
+      },
+      {
+        "candidate_id": "SGCAND-fad3bb6a585e95ed9ade54bb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The KIEP South Africa trade report is neither a requested public-broker PDF nor relevant to the target."
+      },
+      {
+        "candidate_id": "SGCAND-eb8cd1f17247fdc309d55610",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This ETF market report is not target-specific memory research."
+      },
+      {
+        "candidate_id": "SGCAND-ecb5f11bbdce9e77f1fcbd36",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The Grok-focused AI Weekly PDF does not address Samsung Electronics capacity or contract visibility."
+      },
+      {
+        "candidate_id": "SGCAND-6c52644ff3af18792baa777a",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Although this is a target-naming Mirae semiconductor PDF, it is a 2024 global-value-chain report rather than the specified 2026-06-25 capacity report, and the snippet does not identify current HBM capacity, contract, or earnings evidence."
+      },
+      {
+        "candidate_id": "SGCAND-f9a2207d96b4a6e6409e6372",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The Huawei-focused AI Weekly report is not target-company research."
+      },
+      {
+        "candidate_id": "SGCAND-95bfc3667a0d507716e83cf3",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The CIS battery-equipment report is unrelated to Samsung Electronics memory economics."
+      },
+      {
+        "candidate_id": "SGCAND-4218faea2ae13c38bdb4550b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The overseas-stock corporate-actions calendar is the wrong document class and subject."
+      },
+      {
+        "candidate_id": "SGCAND-f487c13874df98f494d8d083",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This 2024 outlook excerpt is for advanced medical devices and does not identify the target report."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "One older Mirae semiconductor PDF names Samsung Electronics, but it is not the exact current report and its discovery snippet cannot establish the missing HBM mechanism; no material full-fetch route was identified in this partition."
+    ]
+  },
+  "payload_hash": "1e0b28329d323643f6214f6c6c80f2f96b62bedb26cc918ce80f2f4166073e9f",
+  "production_score_authority": false,
+  "prompt_hash": "e0eba833fddf0fe778ca9287afbd573f53da49176f5a51f1e8f280ca1b374ea9",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-30b72f1420d19f12f389860443fd20ea2f8d46f91d8666f5fc971bdbf5b597e2",
+  "response_id": "COLLABRESP-3d012098e2919a51edc3e8461521c9dba2e11531a5b4838768fe1eded6d20a54",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

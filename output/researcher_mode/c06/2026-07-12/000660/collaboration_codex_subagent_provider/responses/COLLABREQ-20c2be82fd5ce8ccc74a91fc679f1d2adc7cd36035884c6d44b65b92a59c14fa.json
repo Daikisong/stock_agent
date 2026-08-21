@@ -1,0 +1,85 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "회사 IR landing page와 위임된 영문 발표자료에서 숫자가 있는 HBM 출하 가이던스 및 HBM 매출 구성을 각각 분리해 확인한다.",
+      "현재 유효 증권사 PDF의 valuation 표에서 SK하이닉스 자체 BPS·P/B와 EV/EBITDA를 exact quote로 확인한다.",
+      "NVIDIA 공식 GTC·제품 catalog에서 Rubin-HBM4 통합의 현재 상태를 확인해 과거 qualification 지연의 supersession 여부를 판정한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "SK하이닉스 2026 HBM 출하 증가율 가이던스 IR",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "2026-07-12까지 공개된 최신 회사 IR 또는 실적발표에서 HBM·메모리의 향후 출하 증가율이나 범위를 직접 제시한 문장을 찾는다. 회사가 제시한 미래 기간의 수치만 FORWARD_GUIDANCE 후보로 삼고, 증권사 추정치나 전사 실적 전망은 대체 근거로 쓰지 않는다. 기존 검색은 1분기 실적·HBM 매출·현금흐름을 한꺼번에 찾았으므로 이번에는 출하량 가이던스라는 단일 주장으로 어휘와 목적을 바꾼다.",
+        "source_families": [
+          "ISSUER_PRESENTATION",
+          "ISSUER_EARNINGS_RELEASE"
+        ]
+      },
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "SK hynix 1Q26 HBM revenue mix investor relations",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "2026-07-12 이전 최신 회사 영문 IR 경로에서 HBM 매출액 또는 매출 비중의 정확한 수치와 대상 기간을 찾는다. HBM에 귀속된 점값만 SEGMENT_CONTRIBUTION 후보로 삼으며 전체 메모리·지역·연결 매출은 제외한다. 기존 한국어 다중주장 검색과 달리 영문 IR landing page 및 위임된 발표자료에서 하나의 segment-mix 수치만 찾는 경로다.",
+        "source_families": [
+          "ISSUER_PRESENTATION",
+          "ISSUER_EARNINGS_RELEASE"
+        ]
+      },
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "SK하이닉스 2026 BPS PBR 증권사 리포트 PDF",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "2026-07-12까지 발행된 현재 유효 증권사 PDF의 valuation 표에서 향후 기간 BPS의 원화 주당 점값과 P/B 배수를 정확한 인용문으로 함께 확인한다. 기존 검색은 경쟁사 PBR·ROE 비교군을 찾았지만 이번 경로는 SK하이닉스 자체 FORWARD_BOOK_VALUE와 FORWARD_PB만 대상으로 하며 peer band를 대신하지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "SK하이닉스 2026 EV EBITDA 증권사 리포트 PDF",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "2026-07-12까지 발행된 현재 유효 증권사 PDF에서 향후 회계기간과 분모가 명시된 EV/EBITDA 점배수를 정확한 표 또는 문장으로 찾는다. PER·목표주가만 있는 자료는 제외하며, 기존 실행 query에 없었던 FORWARD_EV_EBITDA 역할만 분리해 조사한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "NVIDIA Rubin SK hynix HBM4 GTC 2026",
+        "objective_id": "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+        "rationale": "2026-07-12까지 공개된 NVIDIA 공식 GTC 세션·제품 페이지·뉴스룸에서 Rubin 계열과 SK hynix HBM4의 기술 통합 또는 현재 qualification 상태가 명시됐는지 확인한다. 이는 2025년 샘플 인증 지연과 2026년 Rubin 일정 위험이 이후 공식 자료로 해소·갱신됐는지를 보는 독립적인 supersession 검색이며, 기술 호환 언급을 구매의무나 확정 공급계약으로 확대하지 않는다.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "PEER_BAND는 별도의 current structured peer-selection 경계가 담당하므로 일반 웹 query로 대체하지 않는다.",
+      "회사 출처의 숫자 가이던스가 없으면 증권사 추정치를 FORWARD_GUIDANCE나 SEGMENT_CONTRIBUTION으로 승격하지 않고 미해결로 유지한다.",
+      "NVIDIA 공식 자료가 기술 통합만 설명하면 고객 구매의무·공급 물량·가격 계약은 여전히 미해결로 남긴다."
+    ]
+  },
+  "payload_hash": "6b872d414638b887083d2d710f31f21e06f3607f13de7e557ed9d74faad6715d",
+  "production_score_authority": false,
+  "prompt_hash": "fa3bdb706a9acf7a3dd0324106cbc5034a1f4391389f51573f6623e7ebbdc93e",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-20c2be82fd5ce8ccc74a91fc679f1d2adc7cd36035884c6d44b65b92a59c14fa",
+  "response_id": "COLLABRESP-e611de0b2ae187a3433a195e81d5009125aa9b55d6f524e17917083c18fe7bbc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

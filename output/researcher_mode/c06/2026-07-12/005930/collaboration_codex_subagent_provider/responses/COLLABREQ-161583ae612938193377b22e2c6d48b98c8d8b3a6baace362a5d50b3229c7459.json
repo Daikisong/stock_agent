@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      1.62,
+      2.18
+    ],
+    "anchor_comparisons": [
+      "긍정 앵커 ORDTRANSFER-b21b177481b9b2eea2f1c13e의 1.0~1.4점과 현재 실제·전망 근거를 비교했다.",
+      "반대 앵커 ORDTRANSFER-0508f71bf609ed09f47c3acc의 0.6~1.0점과 현재 불확실성·counterfact를 비교했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-09bca4086b235701b1d84801",
+      "EFACT-38d8612a550c7b15e83db302",
+      "EFACT-5a65baeee25b1b83354b8cf0",
+      "EFACT-60fb6751333ef31d586334e5",
+      "EFACT-7df33da3760e73919a0a0f31",
+      "EFACT-9cdcaad56af436ed1ac5bc6f",
+      "EFACT-c8cce781c38410832d5bd2a8"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "proposed_points": 1.9,
+    "rationale": "교정 역할로 긍정과 반대 사실 및 양쪽 앵커를 대칭 검토했다. HBM4 공급 인프라, 40조원대 분기 OCF, 73조원대 현금과 실제 자사주 소각은 성장투자와 주주환원을 병행할 재원이다. 동시에 미발생 자산취득 약정, DS 투자, 매출채권·운전자본 현금유출과 초기 HBM4 수익성은 실현 ROIC와 잔여현금을 제한할 수 있다.",
+    "support_fact_ids": [
+      "EFACT-037c307f30be846aa6604c82",
+      "EFACT-4ca12a741765c57da0832791",
+      "EFACT-91896907330221fdcfdd97b2",
+      "EFACT-9c8e2f378d921c9782b5b6ac",
+      "EFACT-f8f6e5abba8d72973f8cbc55"
+    ],
+    "why_not_higher": "계약 조건·제품별 actual 이익·현금 전환 또는 구조적 지속성의 직접 검증이 완전하지 않다.",
+    "why_not_lower": "현재 citable 긍정 사실과 공식·독립 출처가 실제 매출·수요·생산·현금 경로를 뒷받침한다."
+  },
+  "payload_hash": "f8b6734a42debdbf7e8cff0d268ee39f8d7c0225734536bd32c0e9bf9464267e",
+  "production_score_authority": false,
+  "prompt_hash": "fe46414807e7ebea9ef56d5ad35db63e3ddb44f913a44acf7e658ff5f7ae5ad8",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-161583ae612938193377b22e2c6d48b98c8d8b3a6baace362a5d50b3229c7459",
+  "response_id": "COLLABRESP-7a30ead086e2bde27fb1de538692afa31c59da2078fe6edd9c2897bf0d765259",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "output_schema_hash": "87d3c66f564a2179cc4a1c335203172b75ba4ad6a971f0dc4b406e1ae6e503bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "rationale": "기존 19개 fact와 겹치지 않는 연결 계약자산 잔액 1건을 추출했다. 반복된 매출채권·재고·차입금·설비투자 수치와 HBM 귀속이 없는 기타 전사 항목은 다시 만들지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "economic_mechanism": "연결 계약자산 잔액은 전사 운전자본에 남은 계약 관련 자산을 보여주며, 메모리 제품 귀속 없이 자본배분의 현금전환 counter를 보완한다.",
+        "exact_quote": "9. 기타유동자산 및 기타비유동자산 (연결)\n기타자산에 대한 공시\n당분기말\n(단위 : 백만원)\n공시금액\n선급금\n71,503\n선급비용\n367,544\n부가세대급금\n947,397\n계약자산\n77,038",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "기존 19개 fact의 매출채권·재고·현금흐름에는 없는 연결 계약자산 잔액으로 전사 운전자본과 현금전환 판단을 보완한다. HBM·DRAM 고객 계약 또는 수주잔고로는 귀속하지 않는다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "연결 계약자산 잔액",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "2026년 1분기말 연결 계약자산이 77,038백만원이다",
+        "predicate_family": "CONSOLIDATED_CONTRACT_ASSET_BALANCE",
+        "primitive_tags": [
+          "CONTRACT_ASSET_BALANCE",
+          "WORKING_CAPITAL"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_CONTRACT_ASSET_BALANCE",
+        "question_family_tags": [
+          "CONSOLIDATED_CONTRACT_ASSET_BALANCE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 계약자산",
+        "subject_id": "000660:CONSOLIDATED_CONTRACT_ASSET_BALANCE",
+        "unit": "KRW million",
+        "value": 77038
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "연결 계약자산은 전사 잔액이며 HBM·DRAM 고객 계약, 수주잔고, RPO 또는 구매의무로 귀속하지 않았다."
+    ]
+  },
+  "payload_hash": "1ea1ce1a42b85668f21a6ae6a9d46f274476b5e0f4af3b79bb8f10000c238155",
+  "production_score_authority": false,
+  "prompt_hash": "a5725a99bb97777bc54eced8c98618ff89506cfd088b33eaa6d5fb194ad4ccb3",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d7467e968fcb0415a233a6567ff2105e1b03c76c07607d050c57a68fd119b4f8",
+  "response_id": "COLLABRESP-4f28513208c570b00ba0ff60ccc494845be3bd3e2377b73ccad5461f28668811",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

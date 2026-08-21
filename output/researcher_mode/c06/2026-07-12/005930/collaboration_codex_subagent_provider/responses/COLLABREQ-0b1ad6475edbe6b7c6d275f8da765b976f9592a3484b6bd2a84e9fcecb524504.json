@@ -1,0 +1,172 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-320c387fb661f417457b0eb1",
+        "rationale": "현재 prompt의 95개 canonical fact와 Newsis 원문을 독립 재대조했다. HBM4 첫 양산 후 130여일 내 매출 10억달러, HBM4의 전작 대비 높은 상대 수익성, 2026년 2분기 잠정실적의 사업부문별 미공개만 비중복 objective fact로 추출했다. 기존 HBM4 양산·납품·플랫폼 연결 및 메모리 가격·판매 facts는 반복하지 않았고 전사·DS 혼합·DX·타사 수치는 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.88,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-320c387fb661f417457b0eb1",
+        "economic_mechanism": "HBM4 첫 양산 출하가 약 130일 만에 10억달러 매출로 이어져 신제품 상업화가 실제 매출로 전환된 속도를 수치화한다.",
+        "exact_quote": "삼성전자는 HBM4를 첫 양산 출하한 이후 130여일 만에 매출 10억 달러를 돌파한 바 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 canonical에는 HBM4 양산 상태와 납품 방향은 있으나 HBM4 단독 매출액과 매출 도달 기간이 없다. 보도된 누적 매출 이외의 마진·FCF·고객별 매출은 추론하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:MASS_PRODUCTION_REVENUE_RAMP:2026-Q2",
+        "normalized_object": "HBM4 첫 양산 후 약 130일 내 매출 10억달러 돌파",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2",
+        "predicate": "삼성전자 HBM4가 첫 양산 출하 뒤 약 130일 만에 매출 10억달러를 넘었다",
+        "predicate_family": "HBM4_MASS_PRODUCTION_REVENUE_RAMP",
+        "primitive_tags": [
+          "HBM4_REVENUE",
+          "MASS_PRODUCTION",
+          "COMMERCIAL_RAMP"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_MASS_PRODUCTION_REVENUE_RAMP",
+        "question_family_tags": [
+          "HBM4_REVENUE_RAMP",
+          "HBM_PRODUCT_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 양산 후 매출 ramp",
+        "subject_id": "005930:MEMORY:HBM4:MASS_PRODUCTION_REVENUE_RAMP:2026-Q2",
+        "unit": "USD",
+        "value": 1000000000
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.67,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-320c387fb661f417457b0eb1",
+        "economic_mechanism": "HBM4가 전작보다 높은 수익성을 가진다는 보도는 HBM4 매출 확대가 메모리 제품 믹스와 이익 전환에 미치는 방향을 보여준다.",
+        "exact_quote": "HBM4는 전작보다 수익성이 월등히 높은 것으로 알려졌다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 canonical에는 HBM4 제품 사양과 메모리 전체 수익성은 있지만 HBM4 대 전작의 상대 수익성 서술은 없다. 수치가 없는 보도이므로 정성적 방향만 기록한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM4:PROFITABILITY_PREDECESSOR_COMPARISON",
+        "normalized_object": "HBM4의 전작 대비 상대 수익성 우위",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q2",
+        "predicate": "삼성전자 HBM4의 수익성이 전작보다 월등히 높은 것으로 알려졌다",
+        "predicate_family": "HBM4_PROFITABILITY_PREDECESSOR_COMPARISON",
+        "primitive_tags": [
+          "HBM4",
+          "PROFITABILITY_COMPARISON",
+          "HIGH_VALUE_MIX"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_PROFITABILITY_PREDECESSOR_COMPARISON",
+        "question_family_tags": [
+          "HBM4_RELATIVE_PROFITABILITY",
+          "HBM_PRODUCT_MIX_EARNINGS"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4와 전작의 상대 수익성",
+        "subject_id": "005930:MEMORY:HBM4:PROFITABILITY_PREDECESSOR_COMPARISON:2026-Q2",
+        "unit": "relative profitability",
+        "value": "materially higher than predecessor"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-320c387fb661f417457b0eb1",
+        "economic_mechanism": "잠정실적에 부문별 표가 없기 때문에 전사 영업이익 중 메모리의 확정 기여액을 분리할 수 없고 DS 기여도도 추정으로 남는다.",
+        "exact_quote": "이날 잠정 실적은 사업부문별로는 공개되지 않았지만, 반도체 사업을 하는 디바이스솔루션(DS)부문에서 전사 이익의 대부분이 나온 것으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 canonical의 2026년 1분기 제품 세부 미공개와 별개의 2분기 잠정실적 귀속 한계다. 뒤 문장의 DS 기여도는 추정이므로 메모리 수치로 전환하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:PRELIMINARY_ATTRIBUTION_LIMITATION:2026-Q2",
+        "normalized_object": "2026년 2분기 잠정실적의 메모리 귀속 제한",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q2",
+        "predicate": "삼성전자의 2026년 2분기 잠정실적은 사업부문별 실적을 공개하지 않았다",
+        "predicate_family": "PRELIMINARY_MEMORY_ATTRIBUTION_LIMITATION",
+        "primitive_tags": [
+          "SEGMENT_BREAKDOWN_ABSENT",
+          "PRELIMINARY_EARNINGS",
+          "ATTRIBUTION_UNCERTAINTY"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "PRELIMINARY_MEMORY_ATTRIBUTION_LIMITATION",
+        "question_family_tags": [
+          "PRELIMINARY_SEGMENT_DISCLOSURE_GAP",
+          "MEMORY_EARNINGS_ATTRIBUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 2분기 잠정실적 메모리 귀속 한계",
+        "subject_id": "005930:MEMORY:PRELIMINARY_ATTRIBUTION_LIMITATION:2026-Q2",
+        "unit": "disclosure limitation",
+        "value": "business-segment breakdown absent"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "전사 2분기 잠정 매출·영업이익·컨센서스 상회 폭은 부문별 미공개 상태라 메모리 actual로 귀속하지 않았다.",
+      "성과급 충당금과 충당금 제외 전사 영업이익은 DS·메모리 단독 금액이 아니므로 제외했다.",
+      "HBM 및 범용 메모리 판매·가격 상승의 일반 서술은 현재의 더 구체적인 HBM4 납품·DDR5 판매·메모리 ASP facts와 중복돼 반복하지 않았다.",
+      "DX 사업과 SK하이닉스의 실적·전망은 target objective 범위 밖이다."
+    ]
+  },
+  "payload_hash": "14a4cf52ca077617a4f26c3ad87b787eb9cfef43469eaf1ceab4aacd2df7a7fa",
+  "production_score_authority": false,
+  "prompt_hash": "4ecdf917f8d4d8ac21ca4b968af89bfd2993d44027963c0fbce88373284119ab",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0b1ad6475edbe6b7c6d275f8da765b976f9592a3484b6bd2a84e9fcecb524504",
+  "response_id": "COLLABRESP-785b335a7b7e2c9c23b1d8b8fb343b1a9764e371fcecf0ad25859d178222fd66",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "as_of_date": "2026-07-10",
+  "classification_basis": "KRX_MARKET_FALLBACK_SECTOR_FIELD_UNAVAILABLE",
+  "rows": [
+    {
+      "market": "KOSDAQ",
+      "sector": "UNCLASSIFIED",
+      "stage_counts": {
+        "0": 1552,
+        "1": 183
+      },
+      "symbol_count": 1735
+    },
+    {
+      "market": "KOSPI",
+      "sector": "UNCLASSIFIED",
+      "stage_counts": {
+        "0": 751,
+        "1": 56
+      },
+      "symbol_count": 807
+    }
+  ],
+  "schema_version": "e2r_live_census_operational_v1"
+}

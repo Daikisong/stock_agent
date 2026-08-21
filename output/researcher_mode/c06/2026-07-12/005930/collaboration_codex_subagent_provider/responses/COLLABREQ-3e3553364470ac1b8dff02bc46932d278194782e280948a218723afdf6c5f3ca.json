@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6e253f2bee9aeb0f98a082ec",
+        "rationale": "전송 청크 2/3의 원문 94,829자를 처음부터 끝까지 검토하고, prompt에 투영된 current 524개 fact/526개 claim, 같은 parent의 chunk0 accepted 4건 및 chunk1 NO_MATERIAL_FACT와 의미 중복을 대조했다. 대부분 DX 제품과 System LSI·Foundry·Display 연구개발 이력이다. DS Memory의 HBM 구간은 2023년 HBM3E 샘플과 2024년 2월 36GB HBM3E 12H 개발·샘플 출하·2024년 상반기 양산 예상이라는 과거 제품 이력이다. current graph에는 더 늦은 2025년 3분기 HBM3E 전 고객 양산·판매 확대와 2026년 HBM4 양산 출하 등 상용화 상태가 이미 있어, 이 과거 샘플·예상 상태는 현재 earnings_visibility objective를 새로 advance/counter/supersede하지 않는다. 따라서 마지막 청크에서도 채택할 신규 objective-local 물질적 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "7f90bf3354b1adb0fd71b82024872cfde691d2a88933372d077ab9447deb5dfd",
+  "production_score_authority": false,
+  "prompt_hash": "07e33d1675c72912a1ba80d592855cde33281963975e84b6ad8666e25f289918",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3e3553364470ac1b8dff02bc46932d278194782e280948a218723afdf6c5f3ca",
+  "response_id": "COLLABRESP-e47c01fcb17be3b0368542a45c83c3ec08eb0f105100004e517a2523d3cc0d26",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "A와 독립적으로 current checkpoint만 검토했다. 모든 component가 complete이고 counter/supersession route와 structured role이 충족됐으며, zero-result나 round cap을 근거로 삼지 않고 실제 source-backed resolution과 Supervisor의 빈 direction roster를 근거로 승인한다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "52e9abe2bb8ea7e8e08d7e6ef2619e52a98f19eff652ba77257f36d305782646",
+  "production_score_authority": false,
+  "prompt_hash": "f87df8e1f013193cadb7fd2f49264f76b2ba35d92cc200c66d1fbafe04e2c0c7",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-88b08e532c89ddb9e6bdd86ac1430aab8f9952cdd3dbae7eae9c346c4bb659ef",
+  "response_id": "COLLABRESP-7589cec32d931d2be2f7019d06ce8a37dc61e7acdbf23635707d04c3e2245d98",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

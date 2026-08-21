@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-3a84047b31906c6b5c358bb0",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.92,
+        "rationale": "The verified issuer 2025 fourth-quarter conference PDF is a full original route for memory outlook, capacity, customer, and earnings discussion."
+      },
+      {
+        "candidate_id": "SGCAND-3b9de724fe7989610ecc9d6e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.05,
+        "rationale": "The corporate-governance report route matches the issuer family but has the wrong subject for memory earnings visibility."
+      },
+      {
+        "candidate_id": "SGCAND-3c84e61e9bd41d160541934c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.28,
+        "rationale": "The financial-valuation snapshot is issuer-owned, but a generic valuation page does not establish the memory-specific demand, capacity, or earnings bridge sought here."
+      },
+      {
+        "candidate_id": "SGCAND-3c8b071ec5d7c28474035cca",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.2,
+        "rationale": "The URL labels a 2026 second-quarter conference document, but no publication date is supplied to show it existed by 2026-07-12, so it cannot be treated as a current route."
+      },
+      {
+        "candidate_id": "SGCAND-3fc42cf060654d2aa9970060",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.75,
+        "rationale": "The verified issuer HBM4E sample-shipment article is a direct original route relevant to qualification progress and future customer adoption, subject to publication-date validation."
+      },
+      {
+        "candidate_id": "SGCAND-4045c6c59ab7c3140d0d8560",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "Instructions for buying the issuer's stock have no material bearing on the supplied operating visibility objective."
+      },
+      {
+        "candidate_id": "SGCAND-408ce108d596a17a7f2d394f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.25,
+        "rationale": "The generic issuer business overview is not a current source for HBM demand, booked allocation, capacity, qualification, or earnings conversion."
+      },
+      {
+        "candidate_id": "SGCAND-4458492a3b35058c14bc4476",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.2,
+        "rationale": "The issuer-hosted 2026 second-quarter conference route lacks a supplied publication date proving availability by the as-of date, so future leakage cannot be excluded."
+      },
+      {
+        "candidate_id": "SGCAND-4af04f785f4435eb8f9cedc2",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.55,
+        "rationale": "The verified issuer events landing route may lead to full current presentations or conference materials containing memory outlook and capacity commentary."
+      },
+      {
+        "candidate_id": "SGCAND-4c9d0fbc04e2ac8c9216ce01",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.05,
+        "rationale": "The ownership-structure page matches the issuer family but has the wrong subject for earnings visibility."
+      },
+      {
+        "candidate_id": "SGCAND-4dcd4a9056d867ef863d1bd9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "This LINE sharing endpoint is not an eligible requested source family and cannot inherit issuer provenance from the shared headline."
+      },
+      {
+        "candidate_id": "SGCAND-5580d35f3204650c64ac1085",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.7,
+        "rationale": "The verified issuer 2025 fourth-quarter statement of income can support original revenue and profit trend context relevant to current visibility."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Unknown publication dates for 2026 second-quarter and HBM4E routes require fail-closed as-of-date checks before any fetched content can be used."
+    ]
+  },
+  "payload_hash": "90bf9cf332522e26d3054abac2e372639bf020359b2ae62315c3d74a54878fac",
+  "production_score_authority": false,
+  "prompt_hash": "c91b8b093c86ece2a18f2b752e95e5a83463de8c025d1bd56dd83c6d9eb078f4",
+  "provenance": {
+    "agent_id": "samsung-epoch107-rankings",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_epoch107_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2463ea493a8de977f3425fbc9c5bb415ab8ab5b4b3606b46538d3c53fbbc10d1",
+  "response_id": "COLLABRESP-41d820fab832adea7de6dc001e73afaf7952825b58e045ed854f5772a2c8c79b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

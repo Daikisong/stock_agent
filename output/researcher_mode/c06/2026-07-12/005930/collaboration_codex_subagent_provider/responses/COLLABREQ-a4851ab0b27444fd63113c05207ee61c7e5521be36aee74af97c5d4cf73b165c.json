@@ -1,0 +1,126 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0bee5837485fd838fb8309b5",
+        "rationale": "파업 예고 진행 상태와, 생산 차질이 공급망·고객 신뢰 및 장기계약형 메모리 고객의 발주·공급선 대응으로 번지는 조건부 위험 2건을 비중복 추출했다. 1분당·일일 손실과 반도체 영업이익 감소 추정은 메모리 귀속이 없어서 제외했고, TSMC 대체·기술 일정·실제 생산 차질은 시나리오를 발생 사실로 바꾸지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.75,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0bee5837485fd838fb8309b5",
+        "economic_mechanism": "노조가 2026년 5월 파업을 예고한 상태는 메모리 생산·납품의 실행 불확실성을 높이며, 학계 분석은 실제 차질이 발생할 경우 공급망과 고객 신뢰 손상으로 손실이 확장될 수 있다고 본다.",
+        "exact_quote": "[이코노뉴스=최아람 기자] 삼성전자 노동조합이 5월 파업을 예고한 가운데, 생산 차질이 단순 매출 감소를 넘어 공급망과 고객 신뢰 훼손으로 이어질 수 있다는 학계 분석이 나왔다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "기존 canonical에는 노사협상 실패 시 생산 차질 가능성만 있었고, 이 원문은 파업 예고라는 진행 상태와 공급망·고객 신뢰로 확장되는 별도 실행 위험을 제시한다. 파업이나 생산 차질이 실제 발생했다고 단정하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:LABOR_STRIKE:SUPPLY_TRUST_RISK",
+        "normalized_object": "파업 예고에 따른 메모리 공급망·고객 신뢰의 조건부 훼손 위험",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "announced as of 2026-04-26 for 2026-05",
+        "predicate": "삼성전자 노동조합이 2026년 5월 파업을 예고했고 실제 생산 차질은 공급망과 고객 신뢰 훼손으로 이어질 수 있다는 분석이 제시됐다",
+        "predicate_family": "MEMORY_LABOR_STRIKE_SUPPLY_TRUST_RISK",
+        "primitive_tags": [
+          "LABOR_STRIKE_ANNOUNCEMENT",
+          "SUPPLY_CHAIN_RISK",
+          "CUSTOMER_TRUST_RISK"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_MEMORY_LABOR_STRIKE_SUPPLY_RELIABILITY_RISK",
+        "question_family_tags": [
+          "MEMORY_PRODUCTION_CONTINUITY_RISK",
+          "SUPPLY_RELIABILITY",
+          "CUSTOMER_TRUST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 노조의 2026년 5월 파업 예고와 메모리 공급 신뢰 위험",
+        "subject_id": "005930:MEMORY:LABOR_STRIKE:SUPPLY_RELIABILITY:2026-05",
+        "unit": "announced event and conditional risk",
+        "value": "May strike announced; supply-chain and customer-trust damage conditional on production disruption"
+      },
+      {
+        "business_segment": "DS 메모리·반도체",
+        "confidence": 0.65,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-0bee5837485fd838fb8309b5",
+        "economic_mechanism": "반도체 공급 차질이 고객의 신규 발주 축소나 공급선 다변화를 유발하면 장기계약 비중이 큰 메모리 시장에서 고객 배정과 실적에 영향이 지속될 수 있다는 조건부 경로다.",
+        "exact_quote": "반도체 고객사는 단순 가격 경쟁력보다 안정적인 공급 능력을 핵심 평가 요소로 본다. 한 차례 공급 차질이 발생할 경우 신규 발주 축소나 공급선 다변화로 이어질 가능성이 크며, 이는 장기 계약 구조가 많은 메모리·파운드리 시장 특성상 기업 실적에 지속적인 영향을 줄 수 있다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 가격·CAPA 긍정 근거의 반대편에서 공급 신뢰가 고객 발주와 장기계약 지속성에 작용하는 경로를 직접 제시한다. 이 분석은 조건부이고 메모리와 파운드리를 함께 언급하므로 삼성전자 메모리 고객이 실제 이탈했거나 발주를 줄였다는 사실로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:SUPPLY_DISRUPTION:CUSTOMER_REALLOCATION_RISK",
+        "normalized_object": "공급 차질 뒤 고객 발주 축소·공급선 다변화의 장기계약 메모리 영향",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "conditional forward risk as of 2026-04-26",
+        "predicate": "삼성전자 반도체 공급 차질은 신규 발주 축소나 공급선 다변화로 이어져 장기계약형 메모리 시장 실적에 지속 영향을 줄 수 있다는 분석이 제시됐다",
+        "predicate_family": "MEMORY_SUPPLY_DISRUPTION_CUSTOMER_REALLOCATION_RISK",
+        "primitive_tags": [
+          "ORDER_REDUCTION_RISK",
+          "SUPPLIER_DIVERSIFICATION_RISK",
+          "CUSTOMER_ALLOCATION"
+        ],
+        "product_family": "메모리·파운드리 장기계약 시장",
+        "question_family_id": "SAMSUNG_MEMORY_SUPPLY_DISRUPTION_CUSTOMER_REALLOCATION_RISK",
+        "question_family_tags": [
+          "MEMORY_CUSTOMER_ALLOCATION_RISK",
+          "SUPPLY_RELIABILITY",
+          "LONG_TERM_CONTRACT_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 공급 차질 시 메모리 고객의 발주·공급선 대응 위험",
+        "subject_id": "005930:MEMORY:SUPPLY_DISRUPTION:CUSTOMER_REALLOCATION",
+        "unit": "conditional customer-response mechanism",
+        "value": "conditional order reduction or supplier diversification with persistent contract-market impact"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "3d81e039af1483f0d3e04d67316b870b869e109b03dd5d57f033ad30db759bfa",
+  "production_score_authority": false,
+  "prompt_hash": "d10fde3461f34c33c4b61096f94062a2a02fdbc178166245aecea361bb846e68",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a4851ab0b27444fd63113c05207ee61c7e5521be36aee74af97c5d4cf73b165c",
+  "response_id": "COLLABRESP-f0ed51bf79a8f741a7ede8dcde18b91de8cb6b4b81a77871424809d8d0524ec9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

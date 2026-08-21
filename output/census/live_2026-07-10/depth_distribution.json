@@ -1,0 +1,12 @@
+{
+  "as_of_date": "2026-07-10",
+  "maximum_depth_counts": {
+    "L1_BASELINE": 2123,
+    "L2_OFFICIAL_LIGHT": 239,
+    "L3_RESEARCH_BRAIN": 176,
+    "L4_ACQUISITION": 4
+  },
+  "not_selected_for_deep_count": 2362,
+  "schema_version": "e2r_live_census_operational_v1",
+  "selected_for_deep_count": 180
+}

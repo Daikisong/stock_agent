@@ -1,0 +1,54 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "CompanyGuide consensus valuation snapshot 경로가 provider error였으므로, 동일 수치를 추정하는 일반 기사 대신 숫자·배수 단위·forward 기간을 원문에서 인용할 수 있는 최신 전체 증권사 PDF를 우선 확인합니다.",
+      "peer 비교는 삼성전자 단독 historical band와 분리하고, 동일 보고서 안에서 동종기업 roster와 동일 valuation 기준이 함께 제시된 비교표를 찾습니다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 2027년 EV EBITDA 배 증권사 리포트",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "valuation_rerating의 FORWARD_EV_EBITDA 공백을 직접 겨냥합니다. 2026-07-12까지 공개된 전체 증권사 PDF에서 forward 기간, EV/EBITDA 점 추정치, 배수 단위와 산식 분모가 함께 인용 가능한 자료만 유효하며, 목표주가나 PER만 있는 자료는 대체 증거가 아닙니다. 기존 실행 검색어와 어휘·주장이 겹치지 않으며 더 최신 수치가 기존 valuation 해석을 반박하거나 대체하는지도 확인해야 합니다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 메모리 동종기업 밸류에이션 비교 2026 증권사 리포트",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "남은 PEER_BAND 공백을 위해 삼성전자와 동종기업을 같은 기준·기간으로 비교한 valuation 표의 원문 경로를 찾습니다. 2026-07-12까지 공개된 전체 PDF에서 비교기업 범위, 배수 종류, 기준 기간, 중앙값·범위 등 비교 정의를 확인해야 하며 단순 목표주가 기사나 출처 없는 시장 요약은 peer band를 확정하지 못합니다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "FORWARD_EV_EBITDA는 PUBLIC_BROKER_PDF의 exact quote, machine-readable point value, 배수 단위와 forward 기간 조건을 모두 만족하기 전에는 해결된 것으로 보지 않습니다.",
+      "PEER_BAND는 현재 LLM fact-extractable role 계약이 비어 있으므로 발견 문서는 source candidate일 뿐이며 downstream 구조화 계약이 수용할 때까지 공백으로 남습니다."
+    ]
+  },
+  "payload_hash": "2c423048daa003f14e8dda10cfd437de0415e8990259a79b2d3ad90f7ca0a6b7",
+  "production_score_authority": false,
+  "prompt_hash": "19e749ff1853fe4fcb54d3098a63e27fed192893f55086f477f7728be96f9ba4",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-340c54e9c484c57dc04fb7b8c80216703ae7dddbb354d7f11d7cdf548a05cc42",
+  "response_id": "COLLABRESP-212cdfe6c595ba4ffd560e697f0c311f09b2f55036b7f875e5980819969ce9f3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

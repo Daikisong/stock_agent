@@ -1,0 +1,22 @@
+{
+  "as_of_date": "2026-07-11",
+  "forbidden_input_classes": [
+    "GOLD_URL",
+    "GOLD_QUERY",
+    "GOLD_FACT",
+    "EXPECTED_COMPONENT",
+    "EXPECTED_SCORE"
+  ],
+  "gold_visibility": false,
+  "lane_role": "PRODUCTION",
+  "planner_input_classes": [
+    "QUESTION_CONTRACT",
+    "CURRENT_PRODUCTION_EVIDENCE",
+    "SCORE_GAP_CONTEXT"
+  ],
+  "post_run_fact_compilation": true,
+  "production_fact_count": 12,
+  "production_input_count": 191,
+  "schema_version": "e2r_production_material_fact_lane_v1",
+  "target_id": "005930"
+}

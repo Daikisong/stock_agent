@@ -1,0 +1,52 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-f7fb6614c53976f47708a952",
+        "rationale": "90,789자 전체를 재검토했다. 동일 문서에서 FY2026F·FY2027F·FY2028F 삼성전자 EV/EBITDA 3개 시점은 이미 durable facts로 완결돼 있다. 남은 삼성전자 문구 중 메모리 실적·HBM 공급 전망은 현재 valuation_rerating 목적의 신규 valuation point가 아니거나 기존 597 facts와 의미 중복이고, 연결 영업이익 전망은 메모리로 직접 귀속할 수 없다. 산업 일반·타사·장비·target-price-only 내용도 제외했다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-f849078db30b02245a69d543",
+        "rationale": "23,774자 전체를 재검토했다. 동일 문서의 FY2027F EV/EBITDA 4.30배는 이미 durable fact이고 FY2026F EV/EBITDA는 동일 발행사 자료의 기존 fact와 의미 중복으로 앞선 exact extraction에서 완결됐다. 남은 내용은 과거 분기 실적·HBM 매출 비중 전망, 파운드리 등 C06 범위 밖, 또는 target-price-only 정보여서 신규 objective-local fact로 제안하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-fb4211b5215d980468233236",
+        "rationale": "57,364자 전체를 재검토했다. 동일 문서의 삼성전자·메모리 peer 12개월 선행 PER, HBM 기대와 밸류에이션 선반영 위험, source-quality 한계는 이미 6개 durable facts로 완결됐다. 잔여 내용은 산업·장비·타사 일반론, 오래된 HBM 인증 전망, CXL·패키징 등 현재 valuation_rerating 목적과 직접 연결되지 않거나 기존 사실과 의미 중복이어서 반복 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-ffd9b4e1a581c802be6d2fc5",
+        "rationale": "43,572자 전체를 재검토했다. 동일 문서의 삼성전자와 5개 메모리 peer에 대한 2026E·2027E PER/PBR 24개 point는 앞선 exact pages에서 모두 durable facts로 추출됐고 최종 continuation도 complete 처리됐다. 남은 문구는 해당 peer-band facts와 의미 중복이거나 연결 실적·비메모리 사업·주가 및 target-price-only 정보여서 신규 C06 objective-local fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "e7abb9c10f265451e016bc90b3f5be1b8819b1319aa5239cbdbb4d0c04109cbc",
+  "production_score_authority": false,
+  "prompt_hash": "cf476c60b8a9e135a3f096f350b6d24b5da46a15dbcf05946102cd34fe5099c0",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d351d61f108a4c0a104861d40ec8e8fae3f9d7d0d144f32b268eae2714cede02",
+  "response_id": "COLLABRESP-6627368ee273b8bf01abe914d16addf8bcc1e968fc306772d9e8681b20a13cb0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

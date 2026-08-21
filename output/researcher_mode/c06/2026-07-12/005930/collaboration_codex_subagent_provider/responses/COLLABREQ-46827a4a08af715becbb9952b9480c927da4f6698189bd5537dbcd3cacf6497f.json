@@ -1,0 +1,211 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7c6825fee29785eaf666d271",
+        "rationale": "파일 제목은 2007년 날짜처럼 보이지만 supplied transport의 삼성전자 섹션은 2025-08-01 실적 리뷰이며 published_at도 2025-08-01이다. 전체 4,348줄을 검토해 005930 DRAM actual 및 메모리 이익 전망 4개만 추출했고, 파운드리·타사·산업 일반·목표주가와 회사 전체 배수는 C06 범위 밖이라 제외했다. 추가 objective-local distinct fact는 없다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7c6825fee29785eaf666d271",
+        "economic_mechanism": "하나증권은 삼성전자 2Q25 DRAM 비트 성장이 회사 가이던스에 부합한 11%였다고 확인해 당시 물량 실행력을 실제치로 보여준다.",
+        "exact_quote": "DRAM bit growth는 가이던스대로 11%를 기록했고, ASP는 소\n폭 상승했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 HBM 재평가를 직접 증명하는 최신 자료는 아니지만, 동일 MEMORY/DRAM 사업의 당시 물량 가이던스 실행을 target-direct actual로 확인하는 역사적 기준점이다.",
+        "mechanism_scope_id": "005930:DRAM:BIT_GROWTH_ACTUAL:2025Q2",
+        "normalized_object": "2025년 2분기 DRAM 비트 성장률 실제치",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q2",
+        "predicate": "삼성전자 2025년 2분기 DRAM 비트 성장률은 가이던스대로 11%를 기록했다.",
+        "predicate_family": "DRAM_BIT_GROWTH_ACTUAL",
+        "primitive_tags": [
+          "DRAM",
+          "BIT_GROWTH",
+          "ACTUAL"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_BIT_GROWTH_ACTUAL",
+        "question_family_tags": [
+          "DRAM_VOLUME",
+          "HISTORICAL_ACTUAL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 2분기 DRAM 비트 성장",
+        "subject_id": "005930:DRAM_BIT_GROWTH:2025Q2",
+        "unit": "percent",
+        "value": 11
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7c6825fee29785eaf666d271",
+        "economic_mechanism": "하나증권은 삼성전자 2Q25 DRAM ASP가 소폭 상승했다고 확인해 당시 가격 방향을 실제치로 제시했지만 상승 폭은 수치화하지 않았다.",
+        "exact_quote": "DRAM bit growth는 가이던스대로 11%를 기록했고, ASP는 소\n폭 상승했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "DRAM 가격 방향의 target-direct actual이지만 상승 폭이 없어 현재 재평가 배수를 직접 확정하는 근거로는 제한적이다.",
+        "mechanism_scope_id": "005930:DRAM:ASP_DIRECTION_ACTUAL:2025Q2",
+        "normalized_object": "2025년 2분기 DRAM ASP 소폭 상승",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q2",
+        "predicate": "삼성전자 2025년 2분기 DRAM ASP는 소폭 상승했다.",
+        "predicate_family": "DRAM_ASP_DIRECTION_ACTUAL",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "ACTUAL"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_DIRECTION_ACTUAL",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "HISTORICAL_ACTUAL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 2분기 DRAM ASP 방향",
+        "subject_id": "005930:DRAM_ASP_DIRECTION:2025Q2",
+        "unit": "qualitative direction",
+        "value": "slight increase"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-7c6825fee29785eaf666d271",
+        "economic_mechanism": "하나증권은 일회성 비용 반영으로 삼성전자 2Q25 DRAM 수익성이 전분기 대비 하락했다고 평가해, 물량·ASP 개선이 곧바로 이익률 개선으로 이어지지 않은 counter를 제시했다.",
+        "exact_quote": "다만, 일회성 비용이 반영되며 DRAM과 NAND 모두 수익성은 전분기대비 하락했\n다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 물량과 ASP가 개선돼도 일회성 비용으로 수익성이 하락한 직접 counter여서 가격·물량에서 이익으로 이어지는 브리지를 제한한다. NAND는 fact 범위에 포함하지 않았다.",
+        "mechanism_scope_id": "005930:DRAM:PROFITABILITY_DECLINE:2025Q2",
+        "normalized_object": "일회성 비용 반영에 따른 DRAM 수익성 전분기 대비 하락",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q2",
+        "predicate": "일회성 비용이 반영되면서 삼성전자 2025년 2분기 DRAM 수익성은 전분기 대비 하락했다.",
+        "predicate_family": "DRAM_PROFITABILITY_DECLINE",
+        "primitive_tags": [
+          "DRAM",
+          "PROFITABILITY",
+          "ONE_OFF_COST",
+          "COUNTER"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_PROFITABILITY_COUNTER",
+        "question_family_tags": [
+          "DRAM_MARGIN",
+          "VALUATION_COUNTER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 2분기 DRAM 수익성",
+        "subject_id": "005930:DRAM_PROFITABILITY:2025Q2",
+        "unit": "qualitative direction",
+        "value": "declined QoQ due to one-off costs"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.91,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7c6825fee29785eaf666d271",
+        "economic_mechanism": "하나증권은 2025년 하반기 삼성전자 메모리 이익이 우상향할 것으로 전망해 2Q25 일회성 비용 이후의 회복 방향을 제시했지만, 수치나 HBM 귀속은 제공하지 않았다.",
+        "exact_quote": "25년 하반기는 메모리 부\n문의 우상향 이익과 파운드리 부문의 적자 축소로 견조한 실적을 달성할 전망이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "메모리 이익 방향을 직접 제시하지만 수치·HBM 귀속이 없고 전사 전망에는 forbidden 파운드리도 함께 포함돼 제한적으로만 사용해야 한다.",
+        "mechanism_scope_id": "005930:MEMORY:PROFIT_OUTLOOK:2025H2",
+        "normalized_object": "2025년 하반기 메모리 이익 우상향 전망",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-H2F",
+        "predicate": "하나증권은 삼성전자 메모리 부문의 이익이 2025년 하반기에 우상향할 것으로 전망했다.",
+        "predicate_family": "MEMORY_PROFIT_OUTLOOK",
+        "primitive_tags": [
+          "MEMORY",
+          "PROFIT",
+          "BROKER_FORECAST"
+        ],
+        "product_family": "메모리 반도체",
+        "question_family_id": "MEMORY_PROFIT_OUTLOOK",
+        "question_family_tags": [
+          "MEMORY_PROFIT",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 하반기 메모리 이익 전망",
+        "subject_id": "005930:MEMORY_PROFIT_OUTLOOK:2025H2",
+        "unit": "qualitative direction",
+        "value": "upward"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "f1a6b2100c09c7acaeb4564b6a9fdd0e6623f1e060f2ef454a6cd15fb9988cfd",
+  "production_score_authority": false,
+  "prompt_hash": "9e2838a5a8b0f6150e864c1a0c27bd71dcfb4b0183a33a20c7a739abdbbf2838",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-46827a4a08af715becbb9952b9480c927da4f6698189bd5537dbcd3cacf6497f",
+  "response_id": "COLLABRESP-8f40e1e94c434364a8be04bacbd65a4b438ac717f49b7fd16424790560cde9c1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

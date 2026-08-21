@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "9bb65398a21aba33ae74fe74a61a9e442f1ab4cb4b80fcc4aa514c4a399150a6",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-00541d6b600b752403f667f2",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "검증된 발행사 경로지만 동일 파일명 2025_con_quarter01_cf.pdf이 current source graph의 다른 canonical URL에서 이미 full-fetch되어 있다. 새 사실을 위한 독립 원문이 아니라 중복 전송 경로이므로 material로 올리지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-02109c790f02b07be6f053e0",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "검증된 발행사 경로지만 동일 파일명 2025_con_quarter01_note.pdf이 current source graph의 다른 canonical URL에서 이미 full-fetch되어 있다. 새 사실을 위한 독립 원문이 아니라 중복 전송 경로이므로 material로 올리지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-03640021cad28f1b1271ca88",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "검증된 발행사 경로지만 동일 파일명 2025_con_quarter04_note.pdf이 current source graph의 다른 canonical URL에서 이미 full-fetch되어 있다. 새 사실을 위한 독립 원문이 아니라 중복 전송 경로이므로 material로 올리지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-0607730148774aa44098ff98",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "검증된 삼성 뉴스룸 도메인이지만 동영상 목록·약관·뉴스룸 선택용 일반 랜딩 페이지여서 특정 메모리/HBM 고객·capacity·실적 원문으로 이어지지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-0708d848ba3daea1387ec527",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.05,
+        "rationale": "검증된 발행사 2024년 재무·실적 원문 경로지만 2025년 3·4분기와 2026년 1분기 메모리/HBM 자료 및 실제 HBM4 양산 상태가 현재성을 대체했다."
+      },
+      {
+        "candidate_id": "SGCAND-098ec3b3078c8c4e1f03291a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.08,
+        "rationale": "검증된 발행사 최신 재무 원문 경로지만 파일 성격이 전사 현금흐름·재무상태·자본변동 등으로 메모리/HBM 귀속이 없거나 current graph의 동분기 전체 보고서·컨퍼런스 원문과 중복된다."
+      },
+      {
+        "candidate_id": "SGCAND-0dedadc9575a8c244fdd6176",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.05,
+        "rationale": "검증된 발행사 2024년 재무·실적 원문 경로지만 2025년 3·4분기와 2026년 1분기 메모리/HBM 자료 및 실제 HBM4 양산 상태가 현재성을 대체했다."
+      },
+      {
+        "candidate_id": "SGCAND-0e46581ca67d01b0880222b5",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "검증된 발행사 경로지만 동일 파일명 2024_con_quarter04_bs.pdf이 current source graph의 다른 canonical URL에서 이미 full-fetch되어 있다. 새 사실을 위한 독립 원문이 아니라 중복 전송 경로이므로 material로 올리지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-101e196d9328a03fedfebca8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "linkedin.com의 소셜 프로필·공유·전송 링크로, 요청된 issuer/customer/industry/trusted-media 원문 provenance와 후보 본문을 제공하지 않아 full-fetch 대상이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-145d5d9685e511d607fcd9c4",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "검증된 발행사 PDF이지만 공시통제 정책 또는 주주총회 참고자료로, 메모리/HBM earnings visibility의 제품·고객·공급 메커니즘과 대상이 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-161410b7de44ef641d2506f6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "facebook.com의 소셜 프로필·공유·전송 링크로, 요청된 issuer/customer/industry/trusted-media 원문 provenance와 후보 본문을 제공하지 않아 full-fetch 대상이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-165ff3dc5928a8d9728225fa",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "검증된 발행사 경로지만 동일 파일명 2024_con_quarter04_note.pdf이 current source graph의 다른 canonical URL에서 이미 full-fetch되어 있다. 새 사실을 위한 독립 원문이 아니라 중복 전송 경로이므로 material로 올리지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "bec0976d988dca7e01425e91a2ba63d237a366413eef502ba3a2d8cf0e3c22a7",
+  "production_score_authority": false,
+  "prompt_hash": "f45f7a9e8937f7f47e11b2697a9f57f755f8aaa032b490603c7a37ab169ce444",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b9428fdc31aa5682fdd7db0755c76e104913f48d729e1cf6a6d3a430c486b7c5",
+  "response_id": "COLLABRESP-05a2fca025078d3a811d8602e21c5adb1f243aef2597aa3da24ebc5a4fd67fab",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

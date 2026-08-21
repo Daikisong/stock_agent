@@ -1,0 +1,174 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 memo는 연결·DS 메모리 actual의 강도와 HBM 단독 이익·CAPEX·FCF bridge 부재를 함께 보존하며, prompt에는 이 component의 material judge disagreement가 없다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "HBM4 양산 출하와 AMD 기술 corroboration을 실현 근거로, NVIDIA 협의·AMD MOU·OpenAI LOI를 signed 계약과 구분해 현재 증거 범위를 충분히 설명한다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "메모리 100% 가동·ASP 상승·공급 제약과 HBM 전용 CAPA·allocation·장기 계약가격 부재를 함께 반영하며 material judge disagreement가 없다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "실현 operating delta와 혼재된 valuation·revision 신호를 구분해 시장 오해를 자동 추론하지 않으며 current prompt의 disagreement roster에 포함되지 않는다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "HBM 정상 이익·FCF denominator와 period-matched valuation bridge를 source-backed로 보강하고, 전사 multiple·AMD MOU·NVIDIA 협의의 한계를 같은 evidence에서 재서술해 A/S/C 불일치를 해소해야 한다."
+        ],
+        "rationale": "Analyst [4.5,5.6], Skeptic [3.2,4.4], Calibration [3.8,5.2]의 3-way intersection이 비어 있고 deterministic roster가 valuation_rerating을 material disagreement로 지정한다. 따라서 semantic rewrite와 새 독립 judges 전에는 memo sufficient가 될 수 없다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "주주환원·조달 여력과 R&D·CAPEX·자본약정·운전자본 부담, HBM별 ROIC 부재를 균형 있게 보존하며 material judge disagreement가 없다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "AMD CUSTOMER_OFFICIAL은 기술·관계 corroboration만 해소하고 signed 구매조건·HBM 단독 economics는 해소하지 않는다는 경계를 정확히 유지한다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-11f05de07efa5852c6e71412",
+        "rationale": "as-of 이후 문서를 full-fetch 단계에서 배제한 정상 시간 경계이며 objective resolution으로 종료됐다. source absence를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-8ce8e0d17715285b367c314b",
+        "rationale": "full fetch 뒤 발행일을 확정하지 못해 문서를 배제했고 objective resolution으로 종료됐다. 내용 부재의 증거가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-93582c8d3e4a290b445687a0",
+        "rationale": "query 결과 문서의 발행일 검증 실패가 full-fetch 단계에서 발생했으며 alternate route가 요구되지 않고 objective resolution으로 종료됐다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-944cf2283ff44162e1cf00f0",
+        "rationale": "네 문서가 as-of 이후로 확인되어 배제된 정상 미래누수 차단이며 objective resolution으로 종료됐다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-9f90997d630afbd124b522cb",
+        "rationale": "11건의 query provider 오류는 transport 실패이며 자료 부재를 증명하지 않는다. 다른 실행 가능한 경로나 provider가 있으면 재시도 대상이다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-b7c982be24bd51146eafb902",
+        "rationale": "단일 zero-result 검색은 saturation이나 source absence가 아니며 valuation objective의 다른 official route를 막지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "LLM이 새 유효 query를 내지 못한 한 번의 결과는 source absence가 아니며, concrete alternate official route를 objective-bound로 다시 계획할 수 있다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-f1fe69f756be08902192c91d",
+        "rationale": "PUBLIC_BROKER_PDF family에서 accepted claim/fact lineage가 없고 full fetch도 실행되지 않아 unresolved transport/source-family gap이다. 동일 family 반복은 금지하고 다른 official family로 전환해야 한다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "valuation_rerating",
+        "direction": "POSITIVE",
+        "fact_need": "삼성 공식 IR·presentation에서 HBM 정상 이익 또는 HBM 귀속 매출·마진·CAPEX·FCF를 period-matched 전사 valuation denominator와 연결하는 source-backed bridge",
+        "why_material": "현재 전사 forward/trailing multiple과 HBM 실행 facts 사이의 denominator 불일치가 valuation A/S/C 범위 불교집합의 핵심이며, 이 bridge가 있어야 rerating의 크기와 지속성을 같은 기준으로 보정할 수 있다."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": false,
+        "direction": "삼성의 as-of-date 공식 IR·presentation에서 HBM 정상 이익 또는 HBM 귀속 매출·마진·CAPEX·FCF와 period-matched 전사 valuation denominator를 연결하는 원문을 확인한다.",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "PUBLIC_BROKER_PDF route는 accepted lineage 없이 alternate route required 상태이므로 반복하지 않는다. Official IssuerIR provider pending은 자료 부재가 아니며, issuer presentation은 denominator bridge를 직접 확인할 수 있는 서로 다른 bounded source family다.",
+        "source_family": "ISSUER_PRESENTATION"
+      }
+    ],
+    "next_actions": [
+      "SGOBJ-b9fa68f5a7769660459ba605에 대해 동일 PUBLIC_BROKER_PDF 반복 없이 bounded ISSUER_PRESENTATION semantic query direction을 query-generation LLM이 생성·검증한다.",
+      "새 source-backed bridge가 수집되거나 official route가 정직하게 terminalized되면 valuation_rerating memo를 actual·MOU/협의·전사 denominator 경계에 맞춰 semantic rewrite한다.",
+      "Rewritten valuation memo에 대해 새 독립 Analyst·Skeptic·Calibration judges를 실행하고, 이후 Red Team과 Synthesis 및 Supervisor를 현재 lineage로 refresh한다."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "accepted lineage가 없었던 동일 PUBLIC_BROKER_PDF source-family route",
+          "provider preview·target price·metadata를 evidence로 사용하는 방식",
+          "AMD MOU 또는 NVIDIA 협의를 signed HBM economics로 승격하는 방식",
+          "발행일 불명 또는 as-of 이후 문서"
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "research_need": "as-of 2026-07-12 이내 삼성 공식 IR·presentation 원문에서 HBM별 정상 이익 또는 매출·마진·CAPEX·FCF와 전사 valuation denominator의 period-matched bridge를 확인한다."
+      }
+    ],
+    "rationale": "현재 7개 component memo, RTMEMO-2a88fb6a673d38850d4e79ff, SYNMEMO-4c5afbfc1a001097a90a0aec, structured roles와 7-objective counter proof는 모두 검토됐다. 그러나 deterministic score-gap roster가 valuation_rerating의 빈 3-way judge intersection을 material disagreement로 지정하므로 component memo gate는 false다. PUBLIC_BROKER_PDF exact family는 accepted lineage 없이 alternate-route-required여서 반복하지 않으며, provider-pending은 source absence가 아니다. 다른 official family인 ISSUER_PRESENTATION으로 HBM 정상 이익·FCF denominator bridge를 bounded하게 확인할 합리적 경로가 남아 있어 readiness는 false다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "Valuation rerating의 Analyst [4.5,5.6], Skeptic [3.2,4.4], Calibration [3.8,5.2] 범위가 3-way로 겹치지 않으며, HBM 정상 이익·FCF denominator와 전사 valuation bridge가 없어 material disagreement가 남아 있다."
+    ]
+  },
+  "payload_hash": "dbe93384a3f26e4f416bc5338e1bfb7fadc6aee86841899e32fb6e38b7226572",
+  "production_score_authority": false,
+  "prompt_hash": "3918e65d3236c97db316f083c664028bd502ecfbc7d6dc5a9269cd6a4a8c1976",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-200b09f863f8abf0b923f5869ceddddc848638655a1a2c9e394d7e73e2e78463",
+  "response_id": "COLLABRESP-34b344dfef51973bc3134328003b6d672c0a324478b19583d63aec676731db22",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

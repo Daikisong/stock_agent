@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "완전한 제품 peer가 아니라 자본집약적 국내 반도체 제조업의 가동률·수율·CAPEX와 밸류에이션 범위를 확인하는 제한적 보조 peer다.",
+        "confidence": 0.58,
+        "material_differences": [
+          "주력 사업이 파운드리와 특화 공정이며 DRAM·HBM 메모리 제조사가 아니다",
+          "HBM 고객계약·첨단 패키징·메모리 ASP 민감도가 SK하이닉스와 다르다"
+        ],
+        "peer_name": "DB하이텍",
+        "peer_symbol": "000990",
+        "shared_economic_drivers": [
+          "국내 반도체 제조업의 설비투자·가동률·수율 경제",
+          "업황과 제품 가격 변화가 이익과 현금흐름에 미치는 영향"
+        ]
+      },
+      {
+        "comparability_rationale": "HBM 및 메모리 후공정 투자 민감도를 보는 보조 peer이며, 절대 멀티플을 직접 등치하지 않고 공급망 위치 차이를 할인해 사용해야 한다.",
+        "confidence": 0.55,
+        "material_differences": [
+          "메모리 생산자가 아니라 반도체 검사·후공정 장비 공급사다",
+          "DRAM ASP·재고·팹 감가상각·고객별 메모리 계약에 직접 노출되지 않는다"
+        ],
+        "peer_name": "테크윙",
+        "peer_symbol": "089030",
+        "shared_economic_drivers": [
+          "AI 메모리와 HBM 투자 사이클",
+          "메모리 고객 CAPEX와 후공정 장비 수요"
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "직전 제안에서 검증이 거절된 삼성전자·한미반도체를 반복하지 않고, authoritative listing roster의 정확한 종목명·코드를 사용해 제조와 후공정 투자 사이클을 각각 비교할 두 종목을 선택했다.",
+    "unresolved_research_notes": [
+      "국내 상장 allowlist 안에서 SK하이닉스와 동일한 DRAM·HBM 제품구조를 가진 순수 peer는 제한적이므로 두 기업은 보조 비교군으로만 사용한다."
+    ]
+  },
+  "payload_hash": "b4b398e6598e5be04dda4f281e836891e99bbefcd6d19da63752f1402a053bb8",
+  "production_score_authority": false,
+  "prompt_hash": "577e88203b7e22fc7eeb7c9841236c059ae94c28129a1501f80a0658474a5b1d",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6de531a6bd1d8a940668f80c557906bee7cb9f187cf867cf2dad38d0451ee98b",
+  "response_id": "COLLABRESP-859081368e0ffa40ae41d080bf1053b2f3b6c6f7779c4ef71c2bb6455decbe67",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

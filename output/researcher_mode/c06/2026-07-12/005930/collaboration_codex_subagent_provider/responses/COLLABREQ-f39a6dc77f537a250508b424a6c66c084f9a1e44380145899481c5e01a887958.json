@@ -1,0 +1,73 @@
+{
+  "output_schema_hash": "afab55a4d025f0c2bd9bc8d530ac6fb58a2e80caf251252fc340d097e1962c2c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4f7d9d1127372a4dbfd298bb",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "요청 provenance에는 해당하지만 오래된 반복자료, 일반 주가 해설 또는 구체적 HBM 검증·고객·공급 메커니즘이 없는 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-d70e00615f4a8ad2631cfa34",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.66,
+        "rationale": "현재 discovery 메타데이터상 삼성전자 HBM 검증·가격·고객 일정·공급병목 또는 그 반대 위험을 확인할 원문 fetch 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-020487788baf4abe0e121ac9",
+        "matched_requested_source_family": "TRUSTED_BUSINESS_MEDIA",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "요청 provenance에는 해당하지만 오래된 반복자료, 일반 주가 해설 또는 구체적 HBM 검증·고객·공급 메커니즘이 없는 후보입니다."
+      },
+      {
+        "candidate_id": "SGCAND-4a2c2f506ac440e2e71d50f5",
+        "matched_requested_source_family": "NAVER_DISCOVERY",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "요청 provenance에는 해당하지만 다른 기업 단독 자료·채용·일반 시장자료여서 삼성전자 information_confidence를 직접 보강하지 않습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "각 partition 후보는 current discovery 메타데이터로 exact-once 분류했으며 snippet은 증거로 사용하지 않았습니다.",
+      "material 후보도 원문 및 as-of-date 검증 전에는 EvidenceFact, 점수 또는 Stage 권한이 아닙니다."
+    ]
+  },
+  "payload_hash": "866253687379b55cb660bbf38f15d747f673bb33b205eccf01c530a142f3be98",
+  "production_score_authority": false,
+  "prompt_hash": "fdde581e87b7dd98f1062e9c757bab96fd86a78fa639a97814004709767dc707",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f39a6dc77f537a250508b424a6c66c084f9a1e44380145899481c5e01a887958",
+  "response_id": "COLLABRESP-5a19d12b683a879e6557fdaae4e657d6239a2a06ef4fae22f640f881ac45ed9c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e858a6a9eeab099a6b029eb4",
+        "rationale": "173,079자 전체를 재검토했다. 동일 문서는 앞선 exact transport pages에서 삼성전자 DS 메모리 이익 회복, 영업이익 컨센서스, 분기 이익 전망, 선행 PER/PBR, peer 비교, 수급 counter, valuation 종합판단과 source-quality 한계까지 12+4개 facts로 추출 완료됐다. 이번 검토에서 남은 내용은 이 16개 durable facts와 의미 중복이거나 시장전략·산업 일반·타사·기술적 주가 분석·target-price-only 정보이므로 신규 objective-local fact로 반복하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d162eb2be57a1aeb73c8ffd770375c7c18d1cc40041b649c08745b157548e753",
+  "production_score_authority": false,
+  "prompt_hash": "6344eea45e9de5949b3e3f084f87a4ee4e954c3139984ca1524beaac203c324a",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8d5f96fc1bc40bdaedcc549eaafc22df2d889d0e4867ad2222d33fbb1501e624",
+  "response_id": "COLLABRESP-01ce409dad7af3102963ca0ee48ca1e7e51e3b35e0814d978332da1806a8c17b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-04ce74182a41489845f7ad28",
+        "rationale": "전체 본문에서 삼성전자와 HBM 공급 대응을 직접 연결한 고유 사실 1건을 추출했다. SK하이닉스 관련 서술, 장비업체 일반 배경, 삼성전자의 향후 장비 선택을 가정한 조건문은 target-direct 현재 사실이 아니므로 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.78,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-04ce74182a41489845f7ad28",
+        "economic_mechanism": "세메스 중심 장비 내재화와 ASMPT 신규 공급사 검토는 늘어나는 HBM 수요에 대응해 시설투자 장비의 조달 경로를 다변화하려는 공급 대응이다. 다만 독립 매체가 '알려졌다'고 보도한 검토 단계이므로 실제 발주나 도입 완료로 확대하지 않는다.",
+        "exact_quote": "삼성전자는 자회사 세메스를 중심으로 반도체 장비 내재화를 이뤄냈다. 다만 HBM 수요가 늘어나는 만큼 시설 투자와 함께 장비 공급망 다변화도 모색하는 것으로 알려졌다. 현재 삼성전자는 세메스와 함께 홍콩 기업인 ASMPT를 신규 공급사로 검토 중인 것으로 알려졌다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 자체의 HBM 수요 대응 장비 조달 방식과 신규 공급사 검토를 직접 연결해, HBM 공급 대응의 실행 경로와 그 근거의 신뢰도를 판단하는 현재 information_confidence objective를 진전시킨다. 다만 회사 공식 확인이 아닌 보도이므로 confidence에 반영한다.",
+        "mechanism_scope_id": "005930_MEMORY_HBM_CAPACITY_INVESTMENT_SUPPLY_RESPONSE",
+        "normalized_object": "HBM 시설투자 장비 공급망 내재화·다변화 검토",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-04-17 현재",
+        "predicate": "삼성전자는 HBM 수요 증가에 대응해 세메스 중심 장비 내재화와 공급망 다변화를 모색하며 ASMPT를 신규 공급사로 검토 중인 것으로 보도됐다",
+        "predicate_family": "HBM_EQUIPMENT_SUPPLY_DIVERSIFICATION",
+        "primitive_tags": [
+          "HBM",
+          "세메스",
+          "ASMPT",
+          "장비 내재화",
+          "공급망 다변화"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "information_confidence_hbm_equipment_supply_response",
+        "question_family_tags": [
+          "information_confidence",
+          "HBM_capacity_supply_response",
+          "equipment_supplier_diversification"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 장비 공급망 내재화 및 다변화",
+        "subject_id": "005930_HBM_EQUIPMENT_SUPPLY_RESPONSE",
+        "unit": "검토 상태",
+        "value": "세메스 중심 장비 내재화 및 ASMPT 신규 공급사 검토"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "fcbb70c7c0a9cd01c477f1105b3a9fc60476cb8994535945ff7b77df43bf4efc",
+  "production_score_authority": false,
+  "prompt_hash": "5bb4891b4e49394b6c9b80be1aa2475fe61eb6eb79c5ea830b87a072d3cb2f74",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0f5b6dc0942f26237adddef82c33ff1d75b4e0a082b4789356d7837c201e3006",
+  "response_id": "COLLABRESP-fc8b12fedca4bb67272b17a48d98aea02fb3d5effa0483d7ac0c856410c753e6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

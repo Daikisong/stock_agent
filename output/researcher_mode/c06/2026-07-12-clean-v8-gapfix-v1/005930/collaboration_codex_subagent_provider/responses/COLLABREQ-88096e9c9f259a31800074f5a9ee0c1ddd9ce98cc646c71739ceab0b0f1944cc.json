@@ -1,0 +1,318 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 메모는 2026Q1 연결 actual, DS 메모리 매출·ASP, OCF·FCF·CAPEX를 모두 반영하고 연결·메모리·HBM-only 귀속을 명시적으로 제한한다. HBM-only 이익·FCF bridge의 부재는 공개 공시 cadence상 현재 판단의 scored limitation이며, 그 자체만으로 메모를 재개방하지 않는다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "2026-07-12 이전 기준으로 HBM 고객 수요가 실제 배정·공급기간·가격/물량 약정 또는 검증 가능한 장기 visibility로 이어졌는지 보여주는 source-backed fact"
+        ],
+        "rationale": "HBM4 양산과 AMD HBM3E 공급 이력은 actual execution을 지지하지만 AMD MOU, NVIDIA 협의, OpenAI LOI·지원계획은 signed visibility와 다르다. 구조화 후보 STRUCTCAND-0bc65bb7f3ecc40885eed0b6의 원문은 2027년 수요와 NVIDIA 공급 주장에 대한 전제·기간·counter를 확인할 수 있는 bounded route이므로 material0 검색으로 닫을 수 없다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "메모리 100% 가동·ASP 상승을 HBM4-specific locked capacity, realized pricing, 고객 배정 및 shortage duration과 구분해 확인하거나 반증하는 독립 source-backed fact"
+        ],
+        "rationale": "실현된 memory-wide tightness는 강하지만 HBM4 전용 지속기간·배정·가격은 아직 분리되지 않았다. 기존 PUBLIC_BROKER_PDF 미수용 lineage를 반복하지 않으면서도 독립 산업자료의 capacity·수급 route가 합리적으로 남는다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "동일 기간·동일 분모에서 2Q26 actual 전후 시장 기대 또는 동일 broker 추정치가 어떻게 바뀌었는지 보여주는 attributable revision fact"
+        ],
+        "rationale": "forward PE의 낮은 신호와 trailing/EV·FCF 지표, EPS DOWN·영업이익 UP이 충돌한다. deterministic disagreement는 없지만 이는 judge disagreement가 아니라 expectation attribution gap이며, period-matched consensus revision route가 판단을 바꿀 수 있다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "forward·trailing valuation을 같은 기간의 메모리/HBM earnings 또는 cash denominator와 연결해 rerating 상·하단을 검증하는 source-backed fact"
+        ],
+        "rationale": "현재 메모는 여러 valuation 지표의 충돌을 정직하게 보존하지만 period·denominator가 정렬되지 않았다. 기존 broker route를 반복하지 않는 valuation-multiple source family에서 denominator 정합성을 확인할 합리적 route가 남는다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "자기주식 프로그램·소각·배당·조달 접근성과 자본약정·운전자본 부담이 모두 source-backed로 반영됐고 이 objective는 source graph에서 resolved 상태다. HBM 귀속 한계는 전사 자본배분 판단의 counterweight이지 새 executable gap이 아니다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "NVIDIA 공식 product, catalog, newsroom, filing 또는 event 기록에서 2026-07-12 이전 삼성 HBM3E/HBM4 qualification·platform alignment·supply status를 확인하거나 반증하는 fact",
+          "OpenAI 공식 newsroom, infrastructure, partnership 또는 event 기록에서 삼성과의 LOI 및 memory-support scope를 확인하거나 반증하는 fact"
+        ],
+        "rationale": "AMD CUSTOMER_OFFICIAL 자료는 AMD 관계만 corroborate한다. NVIDIA와 OpenAI는 별개의 named counterparties이고 issuer-side 관계·계획만 존재하므로 AMD 한 건이나 material0 결과로 두 경로를 소진할 수 없다. 기술 corroboration과 procurement terms는 별도 질문으로 유지한다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-0b24fb05d7b94c040da2062d",
+        "rationale": "Full fetch 뒤에도 publication date를 검증하지 못해 as_of eligibility가 없는 문서다. fetch 자체는 완료됐으므로 parser 또는 source absence로 분류하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-2f5ba2b1fd280981afbd3251",
+        "rationale": "Full fetch 후 as_of_date 이후 문서임이 확인된 4건 그룹으로 현재 판단에서 제외해야 하며 source absence를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-3966f483106272d23cd48594",
+        "rationale": "12개 QUERY_PROVIDER_ERROR의 transport/provider 실패 그룹이다. 자료 부재가 아니며 provider 복구 또는 다른 합법 route에서 재시도 가능하다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-4a09852cabf968a8d4e9c5ce",
+        "rationale": "후발 candidate source locator date가 cutoff를 넘은 1건으로 현재 evidence에서 배제한다. 이는 source absence가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-6cf98e3c0fbad03131e06844",
+        "rationale": "bottleneck, market, valuation의 PUBLIC_BROKER_PDF 요청에서 accepted claim/fact lineage가 없었던 3건 그룹이다. 동일 objective/family 반복은 금지하되 다른 source family route는 남는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-b7c982be24bd51146eafb902",
+        "rationale": "valuation objective의 zero-result 검색 1건은 saturation이 아니며 distinct route identity 또는 다른 family를 검토해야 한다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY는 그 시도의 novel query 생성 실패일 뿐 material route나 source가 없다는 증명이 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-cb641c897d1d1e3bee7e8d4d",
+        "rationale": "Full fetch 후 publication date가 unknown이라 cutoff 적격성을 검증할 수 없는 문서다. 내용 부재나 source absence로 확대하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-e4e36ba1dec3bf95565da816",
+        "rationale": "query lineage에서 full fetch 후 미래 문서로 확인된 4건 그룹이다. 재사용하지 않으며 현재 source absence와 무관하다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-fbae1be843b3f6094a73511a",
+        "rationale": "earnings_visibility CUSTOMER_OFFICIAL route에서 accepted claim/fact lineage가 없었던 1건이다. material0은 부재 증명이 아니지만 같은 objective/family의 단순 반복 대신 alternate family가 필요하다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "earnings_visibility",
+        "direction": "RESOLUTION",
+        "fact_need": "STRUCTCAND-0bc65bb7f3ecc40885eed0b6의 full report 또는 동등한 pre-cutoff 원문에서 2027년 수요 확보·NVIDIA HBM4 공급 주장에 대한 근거, 기간, 확정성 및 counter를 확인한 fact",
+        "why_material": "현재 HBM4 양산 actual을 durable customer visibility로 전환할 수 있는지, 아니면 analyst expectation에 그치는지에 따라 earnings visibility 범위가 달라진다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "direction": "RESOLUTION",
+        "fact_need": "HBM4-specific capacity utilization·locked allocation·realized pricing 또는 shortage duration을 memory-wide 수급과 분리한 독립 산업 fact",
+        "why_material": "100% 메모리 가동과 ASP 상승이 구조적인 HBM-only 병목인지 범용 메모리 cycle인지 구분해야 가격지속성 판단이 달라진다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "direction": "RESOLUTION",
+        "fact_need": "같은 FY2026E/2Q26 denominator에서 actual 전후 동일 broker 또는 attributable consensus의 EPS·영업이익 추정 변화와 당시 기대 수준",
+        "why_material": "operating delta가 이미 시장 기대와 가격에 반영됐는지 판정하려면 서로 다른 metric 방향이 아니라 기간·분모가 정렬된 revision이 필요하다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "direction": "RESOLUTION",
+        "fact_need": "동일 earnings/cash period에 정렬된 forward·trailing multiple과 메모리/HBM contribution bridge",
+        "why_material": "forward PE, trailing PE/PB, EV/EBITDA, FCF yield의 상반된 신호가 denominator 차이인지 진짜 rerating 여지인지 구분한다."
+      },
+      {
+        "component_id": "information_confidence",
+        "direction": "RESOLUTION",
+        "fact_need": "NVIDIA 공식 pre-cutoff 기록의 삼성 HBM3E/HBM4 qualification·platform alignment·supply status",
+        "why_material": "issuer의 25년 관계와 협의 중 진술을 독립 기술 corroboration으로 검증하되 signed 구매조건과 혼동하지 않아야 한다."
+      },
+      {
+        "component_id": "information_confidence",
+        "direction": "RESOLUTION",
+        "fact_need": "OpenAI 공식 pre-cutoff 기록의 삼성 LOI·AI infrastructure partnership 및 memory-support scope",
+        "why_material": "issuer의 지원 계획과 월간 수요 전망이 실제 counterparty-confirmed relationship scope인지 검증하되 삼성 배정 물량으로 승격하지 않아야 한다."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": true,
+        "direction": "Resolve the full original report bound to STRUCTCAND-0bc65bb7f3ecc40885eed0b6 / provider report 1067847 and verify the exact basis, horizon, and counterevidence for claimed 2027 demand coverage and NVIDIA HBM4 supply.",
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "rationale": "The candidate is pre-cutoff and materially addresses durable visibility, while its CompanyGuide summary is metadata only. PUBLIC_BROKER_PDF is an alternate family to the exhausted CUSTOMER_OFFICIAL lane for this objective.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "Seek a pre-cutoff independent industry full source that separates HBM4 capacity, allocation, realized pricing, and shortage duration from memory-wide utilization and ASP.",
+        "objective_id": "SGOBJ-7ba6c752cb327ae2c989b6dd",
+        "rationale": "This is materially distinct from the exhausted PUBLIC_BROKER_PDF objective/family pair and can test whether current memory tightness is HBM-specific and durable.",
+        "source_family": "INDUSTRY_REPORT"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "Resolve period-matched same-broker or attributable consensus estimates immediately before and after the 2Q26 actual, preserving EPS and operating-profit denominators separately.",
+        "objective_id": "SGOBJ-e78cfba9e86bfa02e9a943ae",
+        "rationale": "Current EPS DOWN and operating-profit UP series are not denominator-aligned; this alternate family can resolve expectation incorporation without repeating the exhausted broker-PDF lane.",
+        "source_family": "CONSENSUS_REVISION"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "Resolve same-period forward and trailing valuation denominators with the corresponding memory/HBM earnings or cash contribution bridge.",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "The route tests whether conflicting PE, PB, EV/EBITDA and FCF-yield signals are denominator artifacts without repeating the exhausted PUBLIC_BROKER_PDF route.",
+        "source_family": "VALUATION_MULTIPLES"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "Search NVIDIA's pre-cutoff product catalog, newsroom, filing, and event/session records for Samsung HBM3E/HBM4 qualification, platform alignment, or supply status.",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "AMD official corroboration does not exhaust the separately named NVIDIA relationship, and technical corroboration must remain distinct from purchase terms.",
+        "source_family": "CUSTOMER_OFFICIAL"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "Search OpenAI's pre-cutoff newsroom, infrastructure, partnership, and event records for the Samsung LOI and memory-support relationship scope.",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "OpenAI is a distinct named counterparty; issuer-side plans and a material0 search neither corroborate nor disprove the relationship or contract economics.",
+        "source_family": "CUSTOMER_OFFICIAL"
+      }
+    ],
+    "next_actions": [
+      "Generate one bounded PUBLIC_BROKER_PDF route for STRUCTCAND-0bc65bb7f3ecc40885eed0b6 under earnings_visibility, then fetch and extract the original report before using any claim.",
+      "Generate a distinct INDUSTRY_REPORT route for HBM4-specific bottleneck duration/allocation/pricing; do not repeat the exhausted bottleneck PUBLIC_BROKER_PDF lane.",
+      "Resolve denominator-matched CONSENSUS_REVISION and VALUATION_MULTIPLES facts for market_mispricing and valuation_rerating.",
+      "Run two separate CUSTOMER_OFFICIAL discovery briefs for NVIDIA and OpenAI; do not let AMD evidence exhaust either counterparty.",
+      "After accepted source-backed facts or honest route terminalization, refresh only affected component memos, independent judges, Red Team, synthesis, and Supervisor."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "CUSTOMER_OFFICIAL objective-family route without accepted lineage",
+          "CompanyGuide summary numbers as facts",
+          "post-cutoff reports or 7/30 conference-call outcomes"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "research_need": "Preserve candidate identity STRUCTCAND-0bc65bb7f3ecc40885eed0b6 and provider report 1067847 while locating the original pre-cutoff full report; extract only source-backed statements about demand horizon, NVIDIA HBM4 supply status, assumptions and counterevidence."
+      },
+      {
+        "avoid_repeating": [
+          "exhausted PUBLIC_BROKER_PDF objective-family route",
+          "generic memory shortage headlines",
+          "material0 or no-result as source absence"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-7ba6c752cb327ae2c989b6dd",
+        "research_need": "Find an independent pre-cutoff industry source that quantifies or explicitly scopes HBM4 capacity/allocation/pricing/shortage duration rather than repeating memory-wide 100% utilization or generic ASP headlines."
+      },
+      {
+        "avoid_repeating": [
+          "exhausted PUBLIC_BROKER_PDF objective-family route",
+          "target-price-only summaries",
+          "different fiscal periods or denominators"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-e78cfba9e86bfa02e9a943ae",
+        "research_need": "Obtain a period- and denominator-matched pre/post 2Q26 expectation revision series so EPS and operating-profit changes can be compared without mixing metrics."
+      },
+      {
+        "avoid_repeating": [
+          "exhausted PUBLIC_BROKER_PDF objective-family route",
+          "mixing forward PE with trailing PB or EV/EBITDA",
+          "metadata preview as evidence"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "research_need": "Align forward and trailing valuation measures to the same earnings/cash period and identify whether any memory/HBM contribution bridge is source-backed."
+      },
+      {
+        "avoid_repeating": [
+          "Samsung issuer-only relationship statements",
+          "AMD official evidence as a proxy for NVIDIA",
+          "generic search material0 as relationship absence"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "research_need": "Independently verify or rebut Samsung HBM3E/HBM4 technical qualification, platform alignment, or supply status in NVIDIA-owned pre-cutoff materials, without requiring procurement terms."
+      },
+      {
+        "avoid_repeating": [
+          "Samsung issuer-only plan and demand forecast",
+          "NVIDIA or AMD evidence as a proxy for OpenAI",
+          "silence as contract or relationship absence"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "research_need": "Independently verify or rebut the Samsung LOI and memory-support relationship scope in OpenAI-owned pre-cutoff materials, separately from allocated volume, price, or revenue."
+      }
+    ],
+    "rationale": "All seven memos are complete artifacts, structured roles are complete, counter/supersession proof covers seven objectives, and deterministic score aggregation is complete with score_valid=true and no material judge disagreement. Those facts are preserved. Readiness nevertheless remains false because five component memos still have concrete source-backed resolution gaps and reasonable alternate routes: earnings visibility, HBM-specific bottleneck duration/pricing, expectation incorporation, valuation denominator alignment, and independent NVIDIA/OpenAI corroboration. Provider errors, no-result, material0, and future/unknown-date rejections were classified without claiming source absence. Capital allocation and EPS/FCF remain sufficient because their remaining limitations are already bounded counterweights rather than actionable public-source gaps.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "Does a pre-cutoff full broker report substantiate the claimed 2027 HBM demand/supply visibility with an attributable basis and counterevidence, or is it only analyst expectation?",
+      "Is the observed memory-wide 100% utilization and ASP increase a durable HBM4-specific capacity/allocation/pricing bottleneck, and for what period?",
+      "How did period-matched market expectations change around the 2Q26 actual once EPS and operating-profit denominators are aligned?",
+      "Do same-period valuation denominators support rerating after separating memory/HBM earnings and cash contribution from consolidated metrics?",
+      "What did NVIDIA official pre-cutoff materials independently confirm or rebut about Samsung HBM3E/HBM4 technical qualification, platform alignment, and supply status?",
+      "What did OpenAI official pre-cutoff materials independently confirm or rebut about the Samsung LOI and memory-support relationship scope?"
+    ]
+  },
+  "payload_hash": "5d631980c6c1dec7473c67ff0ae78fba37b36ccc9e9b8c2ef3a045519bf920ff",
+  "production_score_authority": false,
+  "prompt_hash": "6e133918f55363c23c4dea82267d551add6c3bbb6449f970bd2c6706f02be1c1",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-88096e9c9f259a31800074f5a9ee0c1ddd9ce98cc646c71739ceab0b0f1944cc",
+  "response_id": "COLLABRESP-53b9855f1e782e1583d6f492f9bb882a48ff06c7e4282bd7fc58f96cc867f8ba",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

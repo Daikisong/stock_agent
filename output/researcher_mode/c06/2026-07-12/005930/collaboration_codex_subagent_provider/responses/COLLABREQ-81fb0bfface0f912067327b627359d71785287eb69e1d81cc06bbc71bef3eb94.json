@@ -1,0 +1,214 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 및 반대방향 facts가 메모리 실적, 영업현금흐름과 FCF, HBM 귀속 한계를 함께 다룬다. HBM 단독 이익·현금흐름 부재는 전사 수치를 HBM으로 오귀속하지 못하게 하는 명시적 한계이며, 해결 가능한 공개 자료 공백으로 과장하지 않는다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "구매주문·중장기 물량계약·완판 근거와 공개되지 않은 취소·가격조정·allocation 조건을 함께 반영했다. NDA 대상 사적 계약조건의 부재를 공개 검색으로 해소 가능한 필수 사실처럼 취급하지 않는다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "실제 공급제약·가격전환과 증설·수요둔화 반대근거가 함께 있으며, 시간 기준 100% 가동을 HBM 전용 웨이퍼 투입·수율·패키징 처리량으로 확장하지 않았다. 현재 공개근거로 메커니즘과 한계가 충분히 구분된다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "컨센서스 상회, 선행 배수와 peer 비교의 긍정 근거뿐 아니라 서로 다른 추정 기준, PBR 선반영과 cycle-peak 분모 위험을 함께 반영했다. 구조화 report 후보는 증거가 아니며 현재 구체적 추가 사실 공백을 만들지 않는다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "HBM4 양산·지속 납품·누적 매출이라는 실제 상용화와 초기 마진·고객 일정·공급사 평가별 배분의 불확실성을 분리했다. 공개되지 않은 allocation 세부를 확인된 사실로 승격하지 않아 현재 메모가 충분하다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "양의 전사 영업현금흐름·FCF·현금성자산과 자산취득 약정·운전자본·미확정 메모리 투자부담을 함께 다룬다. 전사 현금여력을 HBM 단독 투자수익으로 귀속하지 않아 현재 의사결정 범위에 충분하다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "현재 facts와 메모가 설명하는 HBM4 고객 플랫폼·qualification·납품 또는 allocation 관계에 대해, 고객사 공식 제품·플랫폼·기술 세션·뉴스룸 자료가 공개한 호환성·qualification·가용 상태 또는 공개 한계"
+        ],
+        "rationale": "현재 메모의 14개 facts 중 독립 source-family corroboration이 있는 것은 메모리 매출 1개뿐이고, 고객·qualification 관련 핵심 주장은 발행사·언론·증권사 근거와 NDA 한계에 머문다. 비공개 구매조건을 요구하지 않더라도 고객사 공식 기술·제품 경로는 합리적으로 시도 가능하므로 이 공백은 열어 둔다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-0b5855f2582cd708850e51f8",
+        "rationale": "full fetch 뒤 게시일을 확정하지 못해 as-of 검증을 통과하지 못한 query-side 메타데이터 추출 실패다. 해당 목적은 이후 source graph에서 해결되었으므로 source absence 근거가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-433c3c6e8fbe85ad567cccbe",
+        "rationale": "검색 snippet만 있고 인용 가능한 full document를 확보하지 못한 fetch 실패다. snippet은 증거로 승격하지 않으며 해당 목적은 이후 해결되었다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-4719db379703acca37cc3116",
+        "rationale": "full document가 대상 기업·주제와 맞지 않아 기각된 문서군이며, 검색 결과 부재를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-47c4b6795be6845d81bf7187",
+        "rationale": "full fetch 문서가 as-of 날짜 이후라 미래누수 방지 규칙으로 기각되었다. 현재 시점의 source absence 근거로 사용할 수 없다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-6d2ceb8681e8018803b02c14",
+        "rationale": "query provider 호출 단계의 오류다. 오류 유형은 재시도 가능하지만 모든 관련 목적은 이후 source graph에서 해결되어 이번 readiness를 막지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-79103d90fcc4353dfb4dbfe1",
+        "rationale": "full fetch 결과의 본문이 유효한 문서로 쓰기에는 너무 작아 content extraction이 실패했다. 해당 목적은 이후 해결되었으며 absence 증거가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-7dbfbf0cf8c6429efaeda10b",
+        "rationale": "query 실행 뒤 받은 full document가 대상 주제와 달라 기각되었다. 이는 관련 자료가 존재하지 않는다는 증명이 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-828cb4bb9fe49e835dfadd21",
+        "rationale": "LLM이 실행 가능한 새 유효 query를 만들지 못한 생성 실패다. 새 semantic context로 재생성 가능한 유형이지만 관련 목적은 이후 해결되었다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-8312902036dbcdbf6b5f52f9",
+        "rationale": "후보 source locator 날짜가 as-of 이후라 미래누수 방지 규칙으로 기각되었다. 현재 자료 부재의 증거가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-85ebcad89f6a756735258189",
+        "rationale": "query 결과의 full document가 as-of 이후여서 기각되었다. 미래 문서를 제외한 것이므로 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-ce794acdfca65d7f60260640",
+        "rationale": "기각된 full document 본문이 유효한 사실 추출에 너무 작았다. 해당 목적은 이후 해결되었고 이 실패만으로 검색 부재를 주장할 수 없다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-ce9ce6a9661dca1d99511b54",
+        "rationale": "full document 대신 snippet만 확보되어 인용·사실 추출 자격이 없었다. snippet을 증거로 승격하지 않으며 목적은 이후 해결되었다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-e7e558fc96bd12913f58a215",
+        "rationale": "search provider 전송 단계 오류다. 재시도 가능한 유형이지만 관련 목적들은 이후 source graph에서 해결되어 이번 판정의 미해결 transport blocker가 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-ef2eccfb702d6de4b716113e",
+        "rationale": "full fetch 후에도 게시일을 확정하지 못해 as-of 검증에서 기각된 document-side 메타데이터 추출 실패다. source absence를 증명하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "information_confidence",
+        "direction": "RESOLUTION",
+        "fact_need": "현재 facts와 메모가 설명하는 HBM4 고객 플랫폼·qualification·납품 또는 allocation 관계에 대해, 고객사 공식 제품·플랫폼·기술 세션·뉴스룸 자료가 공개한 호환성·qualification·가용 상태 또는 공개 한계",
+        "why_material": "고객 관계의 기술적 실체를 발행사·언론·증권사 주장과 독립적으로 corroborate하거나 반박할 수 있는 합리적 공식 경로가 아직 시도되지 않았다. 이는 공개되지 않는 가격·물량·취소조건 같은 사적 계약 공백과는 별개다."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": true,
+        "direction": "RESOLUTION",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "현재 HBM4 고객 플랫폼·qualification·납품 관계는 발행사·언론·증권사와 NDA 한계에 의존한다. 고객사 공식 제품 catalog, 플랫폼 문서, 기술 세션 또는 newsroom은 사적 조달조건을 공개하지 않아도 호환성·qualification·가용 상태를 독립 확인하거나 반박할 수 있는 합리적 공식 경로다.",
+        "source_family": "CUSTOMER_OFFICIAL"
+      }
+    ],
+    "next_actions": [
+      "information_confidence 목적에 대해 CUSTOMER_OFFICIAL official-first bounded source 방향과 semantic research need를 query-generation LLM에 전달하고, as-of 검증된 full document만 수집해 현재 fact graph를 갱신한다."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "발행사 newsroom과 earnings 설명의 반복",
+          "일반 언론의 고객 선정·납품 기사 반복",
+          "증권사 추정과 preview 수치 반복",
+          "사적 가격·물량·취소조건을 공개 기술자료에 요구하는 경로"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "research_need": "as-of 날짜 안에서 현재 자료가 설명하는 HBM4 고객 플랫폼 관계의 기술적 호환성, qualification 또는 공개 가용·납품 상태를 고객사 공식 제품·플랫폼·행사·뉴스룸 자료로 독립 확인하거나 반박하고, 공개되지 않는 구매조건과 구분한다."
+      }
+    ],
+    "rationale": "546개 current facts, 7개 complete component memo, 21개 독립 judge 결정, 7개 final component 결정, complete red-team과 current synthesis는 서로 결속되어 있고 structured data 및 기존 counter/supersession route proof도 완전하다. 여섯 component의 남은 제한은 현재 공개근거가 정직하게 범위를 제한하는 counterweight 또는 비공개 조건이며 새 공개 사실을 억지로 요구하지 않는다. 그러나 information_confidence 메모 자체가 HBM 고객·qualification·allocation의 독립 공식 확인 공백을 명시하고, 현재 14개 scope facts 중 독립 source-family corroboration은 메모리 매출 1개뿐이다. 고객사 공식 기술·제품 경로는 사적 계약조건과 달리 합리적으로 시도 가능하므로 그 한 건의 resolution gap을 닫기 전에는 독립 saturation review 준비 완료로 판정할 수 없다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "현재 자료가 설명하는 HBM4 고객 플랫폼·qualification·납품 또는 allocation 관계가 고객사 공식 제품·플랫폼·기술 세션·뉴스룸 자료에서 기술적으로 corroborate되거나 반박되는가, 아니면 공개 범위 밖임이 확인되는가?"
+    ]
+  },
+  "payload_hash": "f921d92ef08f4f25943ecc9140ccf35b3413d81ac4002c2364d0c599ac7bfbac",
+  "production_score_authority": false,
+  "prompt_hash": "961a1a354aeb3d4eb0665454dd352e2103384d9d3d234487a3cf5cacc9569010",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-81fb0bfface0f912067327b627359d71785287eb69e1d81cc06bbc71bef3eb94",
+  "response_id": "COLLABRESP-bdee9d6a343e74c0c38b3124ab9a29c3e69f57d6792137c0bd9cbef520a0f12c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

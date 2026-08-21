@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9a49712a57980bd910075a33",
+        "rationale": "두 번째 supplied transport를 전수검토했다. 삼성전자 직접 내용은 투자의견·목표주가·괴리율 변경 이력뿐이며, earnings 또는 book-value bridge가 없는 target-price-only 자료라 현재 valuation_rerating objective의 material fact로 승격하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "8084f9477186379b578e544000d82c70ac7a30b1efe15cec8e554f1c2fe86acb",
+  "production_score_authority": false,
+  "prompt_hash": "acc3d269d265ce65dd202926083e378ab947dd5af4883748579c8b3654ab6ead",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e40451c29f842aa4ee7d6700da7f1106a61808cb8695d0cdd841f0a5e426f4a9",
+  "response_id": "COLLABRESP-2929695d32bcc35db9cd72e42386b1893fe04629c98fedb7b91d992f2ad0740a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

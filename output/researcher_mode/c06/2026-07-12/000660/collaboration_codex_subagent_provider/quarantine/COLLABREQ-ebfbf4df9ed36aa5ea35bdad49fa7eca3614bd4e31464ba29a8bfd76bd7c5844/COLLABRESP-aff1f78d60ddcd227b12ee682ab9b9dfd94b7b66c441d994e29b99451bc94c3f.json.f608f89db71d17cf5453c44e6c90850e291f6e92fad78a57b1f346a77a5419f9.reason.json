@@ -1,0 +1,9 @@
+{
+  "production_score_authority": false,
+  "quarantined_response_path": "output/researcher_mode/c06/2026-07-12/000660/collaboration_codex_subagent_provider/quarantine/COLLABREQ-ebfbf4df9ed36aa5ea35bdad49fa7eca3614bd4e31464ba29a8bfd76bd7c5844/COLLABRESP-aff1f78d60ddcd227b12ee682ab9b9dfd94b7b66c441d994e29b99451bc94c3f.json",
+  "reason": "ValueError:counter/supersession completion lacks route and red-team proof",
+  "request_id": "COLLABREQ-ebfbf4df9ed36aa5ea35bdad49fa7eca3614bd4e31464ba29a8bfd76bd7c5844",
+  "response_id": "COLLABRESP-aff1f78d60ddcd227b12ee682ab9b9dfd94b7b66c441d994e29b99451bc94c3f",
+  "reusable_provider_response": false,
+  "schema_version": "e2r_v5_collaboration_response_quarantine_v1"
+}

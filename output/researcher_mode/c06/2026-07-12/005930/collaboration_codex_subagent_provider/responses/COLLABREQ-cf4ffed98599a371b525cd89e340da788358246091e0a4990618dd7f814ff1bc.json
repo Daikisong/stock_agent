@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "013df536ad18757146a169f8b1009b94cce8d94c041c9cc04642b2fbf3ad685c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-8353dc0aea57cc02f0c83f85",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The privacy-and-security sustainability page does not match a requested financial source family or objective."
+      },
+      {
+        "candidate_id": "SGCAND-8641d3d5242b12f67a723146",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "A privacy-policy page is unrelated to semiconductor earnings and cash conversion."
+      },
+      {
+        "candidate_id": "SGCAND-86dd98f132d371e6a0f1ee4b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "The Facebook sharing endpoint may point toward an HBM4E item but is not an issuer, customer, trusted-media, or Naver source and cannot satisfy requested provenance."
+      },
+      {
+        "candidate_id": "SGCAND-8808622b3d5e41581eb0684d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.0,
+        "rationale": "The community forum landing page is not a requested issuer financial source and does not resolve the objective."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate in this partition provides a material requested source; the local roster is fully classified."
+    ]
+  },
+  "payload_hash": "68900dc4c67060db8328bd9a65c7d6563ea62548f76ae02b79a906ff0c1d2b0f",
+  "production_score_authority": false,
+  "prompt_hash": "d88df6213e49ea54b64dc853e56cd4cc9283854a333055de6286fc55c9b5ecdb",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cf4ffed98599a371b525cd89e340da788358246091e0a4990618dd7f814ff1bc",
+  "response_id": "COLLABRESP-ef1d2ba19941860e0668b8ba8a15e83d3928d828fab04413125402470cde5870",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

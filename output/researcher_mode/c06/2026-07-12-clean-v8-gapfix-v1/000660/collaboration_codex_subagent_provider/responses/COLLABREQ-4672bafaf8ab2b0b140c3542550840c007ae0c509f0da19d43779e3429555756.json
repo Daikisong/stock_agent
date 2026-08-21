@@ -1,0 +1,420 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "rationale": "Continuation page 2 fully audited the supplied literal transport chunk 1 of 2 and emitted eight facts distinct from the prior twelve. FY2026/FY2027 PBR, ROE, DPS and net-income-growth rows exhaust the remaining target-direct table atoms. The two PBR rows receive FORWARD_PB; all other structured roles remain empty. Target-price-only material, non-target sections and previously accepted chunk-0 pricing/HBM4 outlook were excluded. Broker estimates were not promoted to issuer guidance, actual performance, signed contract economics, HBM-only profitability or DURABLE_VISIBILITY.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.91,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권 표는 SK하이닉스 FY2026 순이익 증가율을 432.0%로 추정했다. 브로커의 전사 추정이며 issuer guidance나 HBM 단독 이익 성장이 아니다.",
+        "exact_quote": "증감률 흑전 116.9 432.0 25.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 forward 순이익 성장 기대를 수치화해 EPS/valuation objective를 진전시키되 HBM-only 귀속을 배제한다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 consolidated net-income growth estimate",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "FY2026 순이익 증가율을 432.0%로 추정했다",
+        "predicate_family": "BROKER_CONSOLIDATED_NET_INCOME_GROWTH_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "net_income_growth",
+          "432.0%",
+          "FY2026"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "fy2026_net_income_growth_forecast",
+        "question_family_tags": [
+          "net_income_growth",
+          "FY2026",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 순이익 성장률 전망",
+        "subject_id": "000660:NET_INCOME_GROWTH_FY2026_HANA_20260522",
+        "unit": "% YoY",
+        "value": 432.0
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.91,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권 표는 SK하이닉스 FY2027 순이익 증가율을 25.3%로 추정했다. 브로커의 전사 추정이며 issuer guidance나 HBM 단독 이익 성장이 아니다.",
+        "exact_quote": "증감률 흑전 116.9 432.0 25.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2027 전사 forward 순이익 성장 기대를 수치화해 EPS/valuation objective를 진전시키되 HBM-only 귀속을 배제한다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2027 consolidated net-income growth estimate",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027 forecast",
+        "predicate": "FY2027 순이익 증가율을 25.3%로 추정했다",
+        "predicate_family": "BROKER_CONSOLIDATED_NET_INCOME_GROWTH_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "net_income_growth",
+          "25.3%",
+          "FY2027"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "fy2027_net_income_growth_forecast",
+        "question_family_tags": [
+          "net_income_growth",
+          "FY2027",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2027 순이익 성장률 전망",
+        "subject_id": "000660:NET_INCOME_GROWTH_FY2027_HANA_20260522",
+        "unit": "% YoY",
+        "value": 25.3
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.93,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권 표는 SK하이닉스 FY2026 PBR을 3.62배로 제시했다. 기간이 명시된 브로커 forward PBR이며 HBM 단독 multiple이나 issuer guidance가 아니다.",
+        "exact_quote": "PBR 1.66 3.88 3.62 2.00",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 forward PBR 값이 직접 제시돼 valuation/market objective와 FORWARD_PB 역할을 충족한다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 forward PBR estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "FY2026 PBR을 3.62배로 제시했다",
+        "predicate_family": "BROKER_FORWARD_PB_ESTIMATE",
+        "primitive_tags": [
+          "SK하이닉스",
+          "PBR",
+          "3.62x",
+          "FY2026"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "fy2026_forward_pb",
+        "question_family_tags": [
+          "PBR",
+          "FY2026",
+          "broker_valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 FY2026 PBR 추정",
+        "subject_id": "000660:FORWARD_PB_FY2026_HANA_20260522",
+        "unit": "x",
+        "value": 3.62
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.93,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권 표는 SK하이닉스 FY2027 PBR을 2.00배로 제시했다. 기간이 명시된 브로커 forward PBR이며 HBM 단독 multiple이나 issuer guidance가 아니다.",
+        "exact_quote": "PBR 1.66 3.88 3.62 2.00",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2027 기간과 forward PBR 값이 직접 제시돼 valuation/market objective와 FORWARD_PB 역할을 충족한다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2027 forward PBR estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027 forecast",
+        "predicate": "FY2027 PBR을 2.00배로 제시했다",
+        "predicate_family": "BROKER_FORWARD_PB_ESTIMATE",
+        "primitive_tags": [
+          "SK하이닉스",
+          "PBR",
+          "2.00x",
+          "FY2027"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "fy2027_forward_pb",
+        "question_family_tags": [
+          "PBR",
+          "FY2027",
+          "broker_valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스 FY2027 PBR 추정",
+        "subject_id": "000660:FORWARD_PB_FY2027_HANA_20260522",
+        "unit": "x",
+        "value": 2.0
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권 표는 SK하이닉스 FY2026 ROE를 96.78%로 추정했다. 브로커 전사 전망이며 HBM 단독 수익성이나 issuer guidance가 아니다.",
+        "exact_quote": "ROE 31.06 44.15 96.78 58.17",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 forward ROE로 earnings-to-valuation 전환을 수치화하지만 HBM-only profitability로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 ROE estimate",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "FY2026 ROE를 96.78%로 추정했다",
+        "predicate_family": "BROKER_ROE_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "ROE",
+          "96.78%",
+          "FY2026"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "fy2026_roe_forecast",
+        "question_family_tags": [
+          "ROE",
+          "FY2026",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 ROE 추정",
+        "subject_id": "000660:ROE_FY2026_HANA_20260522",
+        "unit": "%",
+        "value": 96.78
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권 표는 SK하이닉스 FY2027 ROE를 58.17%로 추정했다. 브로커 전사 전망이며 HBM 단독 수익성이나 issuer guidance가 아니다.",
+        "exact_quote": "ROE 31.06 44.15 96.78 58.17",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2027 전사 forward ROE로 earnings-to-valuation 전환을 수치화하지만 HBM-only profitability로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2027 ROE estimate",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027 forecast",
+        "predicate": "FY2027 ROE를 58.17%로 추정했다",
+        "predicate_family": "BROKER_ROE_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "ROE",
+          "58.17%",
+          "FY2027"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "fy2027_roe_forecast",
+        "question_family_tags": [
+          "ROE",
+          "FY2027",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2027 ROE 추정",
+        "subject_id": "000660:ROE_FY2027_HANA_20260522",
+        "unit": "%",
+        "value": 58.17
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.91,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권 표는 SK하이닉스 FY2026 DPS를 3,000원으로 추정했다. 브로커 예상이며 이사회가 확정한 배당 actual이나 issuer guidance가 아니다.",
+        "exact_quote": "DPS 2,204 3,000 3,000 3,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 주주환원 기대를 수치화해 capital-allocation objective를 진전시키지만 확정 배당으로 보지 않는다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CORPORATE_GENERIC:INFORMATION_ONLY",
+        "normalized_object": "FY2026 DPS estimate",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "FY2026 DPS를 3,000원으로 추정했다",
+        "predicate_family": "BROKER_DPS_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "DPS",
+          "3000_KRW",
+          "FY2026"
+        ],
+        "product_family": "Issuer-wide dividend estimate",
+        "question_family_id": "fy2026_dps_forecast",
+        "question_family_tags": [
+          "DPS",
+          "FY2026",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 주당배당금 추정",
+        "subject_id": "000660:DPS_FY2026_HANA_20260522",
+        "unit": "KRW per share",
+        "value": 3000
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.91,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권 표는 SK하이닉스 FY2027 DPS를 3,000원으로 추정했다. 브로커 예상이며 이사회가 확정한 배당 actual이나 issuer guidance가 아니다.",
+        "exact_quote": "DPS 2,204 3,000 3,000 3,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2027 전사 주주환원 기대를 수치화해 capital-allocation objective를 진전시키지만 확정 배당으로 보지 않는다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CORPORATE_GENERIC:INFORMATION_ONLY",
+        "normalized_object": "FY2027 DPS estimate",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027 forecast",
+        "predicate": "FY2027 DPS를 3,000원으로 추정했다",
+        "predicate_family": "BROKER_DPS_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "DPS",
+          "3000_KRW",
+          "FY2027"
+        ],
+        "product_family": "Issuer-wide dividend estimate",
+        "question_family_id": "fy2027_dps_forecast",
+        "question_family_tags": [
+          "DPS",
+          "FY2027",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2027 주당배당금 추정",
+        "subject_id": "000660:DPS_FY2027_HANA_20260522",
+        "unit": "KRW per share",
+        "value": 3000
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "68ee9e70ee2f029bec7a0524cd4275361bb1a0b5ba3fdf5de54d668642697d78",
+  "production_score_authority": false,
+  "prompt_hash": "9ceed40f6a483330764d7ec6ecf097ddcd070476926518a02b5d8004221643c9",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4672bafaf8ab2b0b140c3542550840c007ae0c509f0da19d43779e3429555756",
+  "response_id": "COLLABRESP-77e418268546053c2ef62cfb0d2526f34501dddb7ad16623d77e8e9cf4f6ca1a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

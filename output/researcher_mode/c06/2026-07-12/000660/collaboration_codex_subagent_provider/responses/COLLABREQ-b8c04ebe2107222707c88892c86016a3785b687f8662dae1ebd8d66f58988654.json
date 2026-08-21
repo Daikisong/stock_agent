@@ -1,0 +1,42 @@
+{
+  "output_schema_hash": "868c7c7cdd3258048a388d9f56dec3dd50f46dc8a5a17396fa2499b7882743e1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-af70c7bf2ccc5e277b891c95",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "KIND 영문 사이트의 일반 초기 화면이며 특정 SK하이닉스 공시·실적발표·presentation 문서를 가리키지 않는다. candidate hint는 KIND_KRX지만 이 후보가 요청한 family는 issuer earnings release와 issuer presentation뿐이므로 source-family 일치가 없고, 현재 valuation earnings bridge를 해소할 원문 route도 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "단일 후보를 정확히 한 번 분류했다. KIND 일반 홈페이지는 요청된 issuer 원문 family를 충족하지 않는다."
+    ]
+  },
+  "payload_hash": "a4a645d17b11d71deb3718f062a195a3b4b4d741149bc63152bbb3ed2c5579a4",
+  "production_score_authority": false,
+  "prompt_hash": "c7467af87eabb3ea18bc87f331dcb0b367fae16e0885c5d72a3a01a93f1e3767",
+  "provenance": {
+    "agent_id": "phase105_gap_audit",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_gap_audit",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b8c04ebe2107222707c88892c86016a3785b687f8662dae1ebd8d66f58988654",
+  "response_id": "COLLABRESP-ce8931aaa329f0548922836d228f7fe9c1831344a1ff17994ff5dc7b8f8d2b3f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

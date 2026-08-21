@@ -1,0 +1,103 @@
+{
+  "output_schema_hash": "78f6ec730c9bba023cc96969dcb1022845b6d59ba8b14867a6639f617a0389ef",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-cddd025ddc24e75575c65889",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "TipRanks의 EHang 종목 페이지는 SK하이닉스가 아닌 다른 발행자의 제3자 시세 페이지이며, 요청된 SK하이닉스 issuer presentation·newsroom·OPENDART 원문 provenance를 충족하지 않는다. 스니펫의 가격·기업가치 수치는 discovery metadata일 뿐 현재 목표의 evidence나 원문 fetch 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-93647b854005d4a3282de5d1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "iShares II의 2021년 연차보고서 PDF는 SK하이닉스 문서가 아니고 요청된 issuer presentation·newsroom·OPENDART 어느 계열에도 해당하지 않는다. PDF 형식과 스니펫만으로 PUBLIC_BROKER_PDF나 공식 issuer 자료로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-7ccd18c838aaa89fb520d0aa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Apple Podcasts의 일반 금융 팟캐스트는 SK하이닉스 issuer 원문이나 OPENDART가 아니며, 제목·스니펫에도 target의 HBM 이익 지속성 또는 valuation bridge가 없다. 전체 원문으로 이어지는 검증된 공식 provenance도 제공되지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-0a15cb878d19f2a9e0e1e828",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "StockTitan의 Centerra Gold 기사 후보는 target과 산업이 모두 다르고, 요청된 SK하이닉스 issuer presentation·newsroom·OPENDART 원문 provenance를 충족하지 않는다. Global Mofy 관련 스니펫도 해당 URL의 target-specific evidence로 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-fe4ceede67fdac365026d657",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.55,
+        "rationale": "유안타증권 직접 PDF 경로이고 이미 full-fetch 문서 SGDOC-5a3f1affd4616ae845ce6c2d에 연결되어 있다. 표제 종목은 경쟁사 Nanya이지만 전체 보고서에는 SK하이닉스 forward P/E·P/B·BPS peer 비교와 HBM 공급·수익성 가정이 포함되어 현재 valuation rerating의 peer band 및 counter context를 검증할 수 있다. 스니펫 자체는 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-69c6e0e87db2e57d265d2894",
+        "matched_requested_source_family": "VALUATION_MULTIPLES",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.04,
+        "rationale": "Investing.com의 Micron 시세 페이지는 URL과 discovery metadata상 valuation·시장데이터 계열에는 맞지만 SK하이닉스가 아닌 peer의 변동형 실시간 페이지다. 기준일에 고정된 forward 기간·분모·원문 보고서가 없고 full-fetch snapshot도 연결되지 않아 현재 SK하이닉스 peer band의 재현 가능한 material source로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-af0219e5b36441e7cbfe657b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "earnings-desk.com의 Micron 한국어 요약은 제3자 일반 웹 요약으로 PUBLIC_BROKER_PDF·VALUATION_MULTIPLES·INDUSTRY_REPORT 어느 요청 provenance에도 해당하지 않는다. target도 SK하이닉스가 아니며 전체 원문 provenance가 없어 스니펫을 peer evidence로 승격하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "7개 후보를 입력 순서대로 정확히 한 번씩 판정했다. MATERIAL 1개는 이미 검증된 full-fetch 문서 SGDOC-5a3f1affd4616ae845ce6c2d에 연결된 유안타증권 PDF 경로이며, 이 순위 응답 자체는 스니펫이나 기존 문서를 새 evidence로 만들지 않는다.",
+      "Micron Investing.com 페이지는 요청된 VALUATION_MULTIPLES 계열과 형식상 일치하지만 날짜 고정 원문·forward 기간·분모·full-fetch snapshot이 없어 NONMATERIAL로 남겼다."
+    ]
+  },
+  "payload_hash": "a5513302c994f8606e6680a88ab448b8b91a1124620fc839146c6b5cdf553171",
+  "production_score_authority": false,
+  "prompt_hash": "5d1ea1da7219b6e49a8b93bd67344c481ee51d96b9d86db480b037179b715a3d",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-19767497bcfaf1bc5cdfa8455e1c84539802d676883c6fe2f8dd59c95f8c7d10",
+  "response_id": "COLLABRESP-ab01388127283e38b0b87ecfcdc27d3e803511e617a34d654ef77da784270d9b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

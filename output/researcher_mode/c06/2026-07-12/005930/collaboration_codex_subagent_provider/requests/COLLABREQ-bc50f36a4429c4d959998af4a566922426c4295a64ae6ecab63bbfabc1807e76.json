@@ -1,0 +1,306 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "document_dispositions": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "document_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "rationale": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "status": {
+              "enum": [
+                "FACTS_EXTRACTED",
+                "NO_MATERIAL_FACT",
+                "WRONG_TARGET_OR_SEGMENT",
+                "UNREADABLE"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "document_id",
+            "status",
+            "rationale"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "extraction_complete": {
+        "type": "boolean"
+      },
+      "facts": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "business_segment": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "confidence": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "current_lifecycle": {
+              "enum": [
+                "OPEN",
+                "CURRENT",
+                "RESOLVED",
+                "SUPERSEDED"
+              ],
+              "type": "string"
+            },
+            "direction": {
+              "enum": [
+                "POSITIVE",
+                "COUNTER",
+                "NEUTRAL",
+                "RESOLUTION"
+              ],
+              "type": "string"
+            },
+            "document_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "economic_mechanism": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "exact_quote": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "material": {
+              "type": "boolean"
+            },
+            "materiality": {
+              "enum": [
+                "CRITICAL",
+                "NONCRITICAL"
+              ],
+              "type": "string"
+            },
+            "materiality_rationale": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "mechanism_scope_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "normalized_object": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "objective_ids": {
+              "items": {
+                "enum": [
+                  "SGOBJ-eb3cecb1e00c95ccf544cac4"
+                ],
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            "objective_relation": {
+              "enum": [
+                "ADVANCE",
+                "COUNTER",
+                "SUPERSEDE"
+              ],
+              "type": "string"
+            },
+            "period": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "predicate": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "predicate_family": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "primitive_tags": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "product_family": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "question_family_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "question_family_tags": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "scope_business_segment": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "scope_confidence": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "scope_economic_mechanism": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "scope_product_family": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "scope_technology_family": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "scope_transaction_type": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "structured_evidence_roles": {
+              "items": {
+                "enum": [
+                  "SEGMENT_CONTRIBUTION",
+                  "QOQ_GROWTH",
+                  "FORWARD_GUIDANCE",
+                  "FORWARD_BOOK_VALUE",
+                  "FORWARD_PB",
+                  "FORWARD_EV_EBITDA"
+                ],
+                "type": "string"
+              },
+              "maxItems": 1,
+              "type": "array"
+            },
+            "subject": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "subject_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ]
+            }
+          },
+          "required": [
+            "document_id",
+            "question_family_id",
+            "subject_id",
+            "subject",
+            "business_segment",
+            "product_family",
+            "scope_business_segment",
+            "scope_product_family",
+            "scope_technology_family",
+            "scope_transaction_type",
+            "scope_economic_mechanism",
+            "scope_confidence",
+            "economic_mechanism",
+            "mechanism_scope_id",
+            "predicate",
+            "predicate_family",
+            "value",
+            "normalized_object",
+            "unit",
+            "period",
+            "direction",
+            "current_lifecycle",
+            "exact_quote",
+            "material",
+            "materiality",
+            "materiality_rationale",
+            "confidence",
+            "question_family_tags",
+            "primitive_tags",
+            "structured_evidence_roles",
+            "objective_ids",
+            "objective_relation"
+          ],
+          "type": "object"
+        },
+        "maxItems": 12,
+        "type": "array"
+      },
+      "unresolved_document_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "unresolved_research_notes": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "facts",
+      "document_dispositions",
+      "unresolved_document_ids",
+      "unresolved_research_notes",
+      "extraction_complete"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "pass_name": "EVIDENCE_FACT_EXTRACTION",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nExtract every material economic fact and counterfact from the supplied full documents. Cite an exact quote that occurs in the cited document, keep issuer, business segment, product, period, direction, and lifecycle explicit, and account for every document with one disposition. Tag SEGMENT_CONTRIBUTION, QOQ_GROWTH, FORWARD_GUIDANCE, FORWARD_BOOK_VALUE, FORWARD_PB, or FORWARD_EV_EBITDA only when the exact quote and value explicitly establish that structured role; keep value as only the reported numeric point/range, unit separately, and the time horizon in period. Otherwise return an empty structured_evidence_roles array. Tags are extraction context only and never assign points. Read prior fact-extraction retry context and correct the cited disposition/schema failure: FACTS_EXTRACTED is valid only when that same document has at least one accepted fact proposal; otherwise use the accurate non-fact disposition. The five scope_* fields are closed-vocabulary mechanism coordinates. For each one, copy exactly one token from its corresponding allowed_* list in deterministic_mechanism_scope_contract. Never put a translated label, business-unit display name, product generation, narrower synonym, or process generation in a scope_* field. Preserve that narrower source detail in subject, product_family, normalized_object, and exact_quote instead. Never infer absence from silence. Copy exact_quote as a literal contiguous substring of content_text without paraphrasing, punctuation edits, or whitespace normalization. An explicit statement inside a bounded disclosure section that no applicable or material contract exists, or that specified contract terms are not disclosed, is not silence. It may be extracted as a scoped information-limitation counterfact only for the issuer, reporting period, section, and contract class actually named by the source; never generalize it into document-wide or market-wide absence. An explicit statement that figures are preliminary, unaudited, subject to review or change, independently unverified, or forward-looking and exposed to risks is not silence. Extract it as a counterfact when it directly limits the certainty of an objective-linked result or forecast. Likewise, an official counterparty catalog or product page that names the target's technical participation can be an independent-corroboration fact, but it must not be relabelled as a contract, allocation, or purchase obligation. Return every distinct material fact exactly once. Repeated page headers, duplicated body copies, overlapping transport text, and the same quote/economic mechanism do not justify duplicate fact rows. This is lossless deduplication, not a top-N limit: all distinct material facts and counterfacts still must be returned. The facts array is one transport page of at most 12 new facts, never a total fact cap. If more distinct facts remain after this page, set extraction_complete=false and list the affected document ids in unresolved_document_ids. When fact_extraction_continuation_context is present, return only the next facts not listed there. A page that reaches the page limit must be followed by another page; an empty final page with the accurate document disposition may certify that no distinct facts remain. When fact_extraction_coverage_audit_context is present, perform the requested independent second reading and return only omitted facts not listed in previously_accepted_facts. Recheck named relationship and attribution spans (including events, sessions, speakers, participants, products, platforms, and counterparties) and source-quality or uncertainty spans (including preliminary or unaudited status, review or change risk, independent-verification limits, and forward-looking risk). These are semantic coverage families, not a deterministic keyword checklist. Do not repeat an accepted quote with the same normalized economic identity and do not infer a fact or absence from silence. The same literal quote may support more than one row only when each row has a materially distinct normalized predicate/object and objective effect; cosmetic relabeling is still a duplicate. When fact_extraction_scope_contract.mode is PRODUCTION_OBJECTIVE_LOCAL, its narrower material_fact_definition and completion_definition override document-wide exhaustive scope. Return only facts that directly affect at least one objective id linked to that document, copy every directly affected id into objective_ids, and classify the effect as ADVANCE, COUNTER, or SUPERSEDE. Do not turn general background or adjacent technical history into production facts merely because it is economically interesting. Never use snippets, future outcomes, score, or Stage.\nReturn exactly one JSON object matching the supplied schema.\n{\"archetype_hypothesis\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"as_of_date\": \"2026-07-12\", \"current_evidence_facts\": {\"advisory_tag_roster_hash\": \"4fcedd75fe7abcbf225d37eacf6d029f2470514fc586796934856d732712c801\", \"allowed_component_coverage\": {\"bottleneck_pricing\": 17, \"capital_allocation\": 74, \"earnings_visibility\": 17, \"eps_fcf_explosion\": 17, \"information_confidence\": 74, \"market_mispricing\": 17, \"valuation_rerating\": 17}, \"as_of_date_coverage\": {\"2026-07-12\": 74}, \"claim_id_roster\": {\"count\": 74, \"roster_hash\": \"02a0a84d8dba5907735d10dab07bf644f4c6d6379ba3830a53b495d4d16a145f\"}, \"corroborating_independence_group_coverage\": {\"ISSUER_NEWSROOM:images.samsung.com\": 3, \"OPENDART:opendart\": 70, \"TRUSTED_BUSINESS_MEDIA:thelec.kr\": 1}, \"cross_document_deduplication_owner\": \"DETERMINISTIC_EVIDENCE_FACT_COMPILER\", \"economic_mechanism_roster\": {\"count\": 56, \"roster_hash\": \"d27dce3e4b9933f782a24e9d1c4e228429d8950a304a203d67110231dbef545f\"}, \"every_fact_accounted_by_hash_and_group_count\": true, \"every_semantic_observation_accounted_by_hash\": true, \"fact_count\": 74, \"fact_id_roster\": {\"count\": 74, \"roster_hash\": \"053876bd3906611badeacc854d6742534a9781bf8097fdffe4c55a7890a31ee9\"}, \"fact_roster_hash\": \"debb0e8b3c03a9df3bb16c2f14298430b1d909246de1a1f5c856d970105a4a1d\", \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"predicate_roster\": {\"count\": 74, \"roster_hash\": \"f4e46e9e48d004eb7cc6cdae02d5435328f042b4c462492975606d2c9cf09b3e\"}, \"prompt_projection_is_research_cap\": false, \"quote_id_roster\": {\"count\": 74, \"roster_hash\": \"5795dfe5a53ac83f6bd0a9d672442a8f1d145189bda84e60c47d820f9af0f2ee\"}, \"schema_version\": \"e2r_v5_fact_extraction_evidence_context_v1\", \"score_authority\": false, \"semantic_observation_count\": 74, \"semantic_observation_roster_hash\": \"18386281e7eae2c545f394aa4e87fc79b96791c5afc80fdc25328491b96a1ee6\", \"semantic_state_fields\": [\"business_segment\", \"product_family\", \"direction\", \"current_lifecycle\", \"fact_count\", \"fact_roster_hash\"], \"semantic_state_group_count\": 11, \"semantic_state_groups\": [[\"CORPORATE_GENERIC\", \"CORPORATE_GENERIC\", \"COUNTER\", \"CURRENT\", 31, \"23adba29c85f438598121cf956a0e114404fb9ccc94b6aeb01fb4e64e3c78a90\"], [\"CORPORATE_GENERIC\", \"CORPORATE_GENERIC\", \"COUNTER\", \"OPEN\", 2, \"4edac5318bc95d8b2b41788712af759311279deb6f0e8e67afb5e4d475f0a6ec\"], [\"CORPORATE_GENERIC\", \"CORPORATE_GENERIC\", \"NEUTRAL\", \"CURRENT\", 16, \"da3029ba558c222d9426694a4d35d86c6b9241e24853e682bb2f7c26811f6ec4\"], [\"CORPORATE_GENERIC\", \"CORPORATE_GENERIC\", \"POSITIVE\", \"CURRENT\", 8, \"e0b92d2a4b760c995b6abfdd53403f877099920c15f48a343497078e03624290\"], [\"DS 메모리\", \"AI 메모리\", \"POSITIVE\", \"OPEN\", 1, \"daeb26341b3a3b69274978c87e4b98b5a58dd5e17675d629d289584b0cc0edc8\"], [\"DS 메모리\", \"HBM4\", \"POSITIVE\", \"CURRENT\", 5, \"1dca1c4a95303cbd1b16db67fc02c7c39d76c014e2b8cc7ed0a7cc951e004880\"], [\"DS 메모리\", \"HBM4\", \"POSITIVE\", \"OPEN\", 1, \"c266a36250ca98c055fa330f296494c87032178009174d8a19f85d9b35c3eeca\"], [\"DS 메모리\", \"메모리\", \"COUNTER\", \"CURRENT\", 1, \"60fde8e0646a4e4b254445501a8d6d74a61331ce861b7fc8f3d5ecc446de06d5\"], [\"DS 메모리\", \"메모리\", \"POSITIVE\", \"CURRENT\", 7, \"8fc7ba6f638f775bf57134219b2f9d2cf006c4c7b3b934dfd8f7bbdb03021eae\"], [\"DS 메모리\", \"메모리 실적\", \"COUNTER\", \"CURRENT\", 1, \"7bef2fc7196083ce3d9d00a8a3ab9357cb56ab81bceb9c614bc35c48585728b2\"], [\"DS 메모리\", \"서버 메모리\", \"POSITIVE\", \"CURRENT\", 1, \"c36581d5fd4bce2b9f91fe95d2c70c11fa26bfc38564096415b21aa1ee539ad6\"]], \"source_id_roster\": {\"count\": 13, \"roster_hash\": \"aeebf1e79990dcf726086c2c53a12c95390fdda85500baf195b3f8ea24b3db2f\"}, \"source_independence_group_coverage\": {\"ISSUER_NEWSROOM:images.samsung.com\": 3, \"OPENDART:opendart\": 70, \"TRUSTED_BUSINESS_MEDIA:thelec.kr\": 1}, \"structured_evidence_role_coverage\": {\"QOQ_GROWTH\": 1, \"SEGMENT_CONTRIBUTION\": 1}, \"target_id_coverage\": {\"005930\": 74}}, \"deterministic_mechanism_scope_contract\": {\"allowed_business_segments\": [\"MEMORY\"], \"allowed_economic_mechanisms\": [\"CUSTOMER_ALLOCATION\", \"CAPACITY_SCARCITY\", \"PRODUCT_COMMERCIALIZATION\", \"REVENUE_CONVERSION\", \"PRICING_POWER\", \"SUPPLY_RESPONSE\", \"QUALIFICATION_EXECUTION\", \"MARKET_EXPECTATION_GAP\", \"VALUATION_EARNINGS_BRIDGE\", \"RISK_COUNTER\", \"INFORMATION_ONLY\"], \"allowed_product_families\": [\"HBM\", \"DRAM\", \"MEMORY_GENERIC\", \"AI_MEMORY\"], \"allowed_technology_families\": [\"HBM\", \"DRAM\", \"MEMORY\", \"AI_MEMORY\"], \"allowed_transaction_types\": [\"CUSTOMER_COMMITMENT\", \"PRODUCT_SHIPMENT\", \"PRODUCT_PROFILE\", \"REVENUE_ACTUAL\", \"PRICING_ACTUAL\", \"CAPACITY_INVESTMENT\", \"QUALIFICATION\", \"VALUATION_ANALYSIS\", \"RISK\", \"GENERIC_INFORMATION\"], \"forbidden_business_segments\": [\"FOUNDRY\", \"DISPLAY\", \"MOBILE\", \"APPLIANCE\"], \"forbidden_product_families\": [\"LOGIC_FOUNDRY\", \"PACKAGE_SUBSTRATE_ADJACENT\", \"NAND\"], \"generic_company_allowed_components\": [\"information_confidence\", \"capital_allocation\"], \"issuer_wide_fact_encoding\": {\"allowed_only_for_components\": [\"information_confidence\", \"capital_allocation\"], \"instruction\": \"Use these exact scope tokens for issuer-wide liquidity, capital allocation, funding, governance, or information-quality facts that are not attributable to the archetype business segment.\", \"scope_business_segment\": \"CORPORATE_GENERIC\", \"scope_economic_mechanism\": \"INFORMATION_ONLY\", \"scope_product_family\": \"CORPORATE_GENERIC\", \"scope_technology_family\": \"CORPORATE_GENERIC\", \"scope_transaction_type\": \"GENERIC_INFORMATION\"}}, \"fact_extraction_scope_contract\": {\"allowed_objective_relations\": [\"ADVANCE\", \"COUNTER\", \"SUPERSEDE\"], \"completion_definition\": \"extraction_complete means no further distinct objective-linked fact remains in the supplied document batch; it never means every generally economic sentence in the document was exhausted.\", \"deterministic_validation_scope\": \"objective roster, document lineage, exact quote, as_of_date, and closed-vocabulary mechanism coordinates plus objective-component compatibility only\", \"document_objective_ids\": [{\"document_id\": \"SGDOC-209d1895a65d38683795e638\", \"objective_ids\": [\"SGOBJ-eb3cecb1e00c95ccf544cac4\"]}], \"llm_owns_economic_relevance\": true, \"material_fact_definition\": \"A source-backed fact is material in this production pass only when it directly advances, counters, or supersedes at least one document-linked current research objective, with the unresolved facts and questions in score_gap_context controlling the present research focus. General background, adjacent technology history, and facts that do not affect that focus must not be emitted.\", \"mode\": \"PRODUCTION_OBJECTIVE_LOCAL\", \"objective_component_rows\": [{\"component_id\": \"eps_fcf_explosion\", \"objective_id\": \"SGOBJ-eb3cecb1e00c95ccf544cac4\"}]}, \"fact_extraction_semantics_version\": \"e2r_v5_structured_valuation_roles_v5\", \"full_documents\": [{\"available_at\": \"2026-04-30\", \"canonical_url\": \"https://www.yna.co.kr/view/AKR20260430046251003\", \"content_text\": \"삼성 반도체, 압도적 캐파로 1위…\\\"메모리 이익률 74% 돌파\\\"(종합) | 연합뉴스\\n삼성 반도체, 압도적 캐파로 1위…\\\"메모리 이익률 74% 돌파\\\"(종합) | 연합뉴스\\n삼성 반도체, 압도적 캐파로 1위…\\\"메모리 이익률 74% 돌파\\\"(종합) | 연합뉴스\\n삼성 반도체, 압도적 캐파로 1위…\\\"메모리 이익률 74% 돌파\\\"(종합) | 연합뉴스\\n(서울=연합뉴스) 조성흠 강태우 기자 = 삼성전자의 올해 1분기 영업이익이 전년 동기 대비 8배 이상 수직 상승한 데는 '슈퍼사이클(초호황기)'...\\n(서울=연합뉴스) 조성흠 강태우 기자 = 삼성전자의 올해 1분기 영업이익이 전년 동기 대비 8배 이상 수직 상승한 데는 '슈퍼사이클(초호황기)'...\\n(서울=연합뉴스) 조성흠 강태우 기자 = 삼성전자의 올해 1분기 영업이익이 전년 동기 대비 8배 이상 수직 상승한 데는 '슈퍼사이클(초호황기)'...\\n연합뉴스\\n본문 바로가기\\n메뉴 바로가기\\n광고\\n새로운 연합뉴스를 만나세요\\n회원이 되시면 뉴스가 특별해 집니다.\\n닫기\\n최신뉴스\\n정치\\n북한\\n경제\\n마켓+\\n산업\\n사회\\n전국\\n세계\\n문화\\n건강\\n연예\\n스포츠\\n오피니언\\n비주얼\\n제보\\n재난포털\\n마이페이지\\n검색창 열기\\n메뉴 열기\\n삼성 반도체, 압도적 캐파로 1위…\\\"메모리 이익률 74% 돌파\\\"(종합)\\n북마크\\n공유\\n댓글\\n글자크기\\n프린트\\n제보\\n마이페이지\\n검색창 열기\\n메뉴 열기\\n광고\\n광고\\n최신뉴스\\n삼성 반도체, 압도적 캐파로 1위…\\\"메모리 이익률 74% 돌파\\\"(종합)\\n송고\\n2026-04-30 11:31\\n송고 2026년04월30일 11시31분\\n세 줄 요약\\n세 줄 요약\\n삼성전자의 올해 1분기 영업이익이 전년 동기 대비 8배 이상 수직 상승한 데는 '슈퍼사이클'에 진입한 메모리 반도체의 폭발적 성장과 고환율이 작용했다.\\n특히 메모리만 놓고 보면 SK하이닉스의 영업이익률을 앞질렀을 가능성도 점쳐지며, 이익 규모에서는 16조원가량 격차를 벌리며 체급 차이를 나타냈다.\\n최근 증권가 컨센서스에 따르면 1분기 삼성전자 메모리 사업부는 매출 73조3천억원, 영업익 54조4천억원을 기록, 영업이익률이 74.3%에 달한 것으로 추정된다.\\n인공지능이 자동으로 줄인 '세 줄 요약' 기술을 사용합니다.\\n전체 내용을 이해하기 위해서는 기사 본문과 함께 읽어야 합니다.\\n닫기\\n구글에서 선호하는 출처로 추가\\n설명 보기\\n구글 검색에서 연합뉴스 기사를\\n우선적으로 보여줍니다.\\n삭제\\n조성흠\\n기자\\n구독\\n구독중\\n강태우\\n기자\\n구독\\n구독중\\n이전\\n다음\\nDS부문, 전사 영업익 94% '싹쓸이'…DS 내 메모리서만 54조원대 추정\\n범용 D램 중심 추론 AI 최대 수혜…비메모리 포함 영업이익률 66%\\n올해 엔비디아를 제치고 연간 전세계 영업이익 1위 가능성도\\n(서울=연합뉴스) 조성흠 강태우 기자 = 삼성전자의 올해 1분기 영업이익이 전년 동기 대비 8배 이상 수직 상승한 데는 '슈퍼사이클(초호황기)'에 진입한 메모리 반도체의 폭발적 성장과 고환율이 작용했다.\\n반도체 사업을 담당하는 디바이스솔루션(DS)부문은 범용 D램 가격 급등과 고대역폭 메모리(HBM) 공급 확대 등에 힘입어 전사 영업이익의 94%를 견인했다.\\n특히 세계 최대 규모의 캐파(생산능력)를 무기로 SK하이닉스와 영업이익 격차를 16조원 가까이 벌렸고, 고질적 적자에 시달리던 비메모리 부문도 적자 폭을 줄였다. 메모리 사업부는 영업이익률이 74%를 넘어서며 72%를 기록한 SK하이닉스를 넘어 세계 최고치를 달성한 것으로 보인다.\\n이미지 확대\\n삼성전자 평택캠퍼스\\n[삼성전자 제공. 재판매 및 DB 금지]\\n삼성전자는 올해 1분기 매출과 영업이익이 각각 133조8천734억원, 57조2천328억원으로 집계됐다고 30일 공시했다.\\n1년 전과 비교하면 매출은 69.2%, 영업이익은 756.1% 증가했다. 역대급 분기 실적을 냈던 지난해 4분기(영업이익 20조원) 이후 불과 한 분기 만에 최대 기록을 갈아치웠다.\\n사업부별로 보면 DS부문은 53조7천억원의 영업이익을 기록하며 전사 이익의 94%를 책임졌다.\\n이번 실적 발표에선 제품별 세부 실적이 따로 공개되지 않지만, 증권가에서는 메모리 사업부에서 D램 약 43조원, 낸드플래시 약 11조원에 달하는 영업이익을 낸 것으로 추정한다.\\n장사를 얼마나 잘했는지를 보여주는 영업이익률 역시 66%(비메모리 포함)를 기록했다. 지난해 상반기 영업이익률이 한 자릿수에 머물렀던 것과 비교하면 괄목할 만한 성장이다.\\n특히 메모리만 놓고 보면 SK하이닉스의 영업이익률(72%)을 앞질렀을 가능성도 점쳐지며, 이익 규모에서는 16조원가량 격차를 벌리며 체급 차이를 나타냈다. SK하이닉스의 1분기 영업이익은 37조6천억원이었다.\\n최근 증권가 컨센서스(시장 평균 전망치)에 따르면 1분기 삼성전자 메모리 사업부는 매출 73조3천억원, 영업익 54조4천억원을 기록, 영업이익률이 74.3%에 달한 것으로 추정된다.\\n이미지 확대\\n삼성전자, GTC서 HBM4E 최초 공개… '토털 솔루션'으로 엔비디아와 AI 동맹 고도화\\n(서울=연합뉴스) 삼성전자는 16일부터 19일까지(현지시간) 미국 새너제이에서 열리는 엔비디아 GTC에 참가해 차세대 HBM4E 기술력과 베라 루빈 플랫폼을 구현하는 메모리 토털 솔루션을 유일하게 공급할 수 있는 역량을 앞세워 글로벌 AI리더십을 한층 강화한다고 밝혔다. 사진은 삼성전자 HBM4E 제품 전시 사진. 2026.3.17 [삼성전자 제공. 재판매 및 DB 금지] photo@yna.co.kr\\n이러한 호실적은 수급 불균형에 따른 제품 가격 상승과 AI 시장의 패러다임 변화, 업계 최대 규모 캐파를 바탕으로 한 압도적 물량 공세가 맞물린 결과다.\\n특히 AI 시장의 무게 중심이 학습에서 '추론'으로 이동함에 따라, 서버용 D램 등 범용 메모리 탑재량이 시스템 성능을 결정짓는 핵심 지표로 부상한 점이 실적 견인의 견인차 역할을 했다.\\n실제로 1분기 범용 D램 계약가가 전 분기보다 90% 이상 폭등하는 등 '공급자 우위' 시장이 뚜렷해지며 수익성도 수직 상승했다는 분석이다.\\n채민숙 한국투자증권 연구원은 \\\"올해 범용 D램 평균판매단가(ASP)는 전년 대비 201% 증가가 예상되며, 지난해와 달리 올해는 범용 D램 캐파가 클수록 매출·수익성 측면에서 모두 유리할 것\\\"이라며 \\\"캐파 규모 1위를 바탕으로 삼성전자의 올해 실적 모멘텀은 메모리 업체 중 가장 강하게 나타날 것\\\"이라고 설명했다.\\nHBM 기술 경쟁력 강화도 주효했다. 삼성전자는 지난 2월 업계 최초로 HBM4(6세대)를 양산 출하한 데 이어, 다음달 차세대 제품인 HBM4E(7세대)의 첫 번째 샘플을 주요 고객사에 전달할 것으로 알려졌다.\\n현재 삼성전자는 현재 엔비디아, AMD를 비롯한 브로드컴 등 주문형 반도체(ASIC) 기업을 고객사로 확보하며 시장 주도권을 한층 강화하고 있다.\\n이 밖에 원·달러 환율 상승에 따른 원화 환 이익 증가도 실적 확대에 일부 기여한 것으로 분석된다.\\n이미지 확대\\n건설 중인 삼성전자 평택캠퍼스 P4\\n(평택=연합뉴스) 서명곤 기자 = 지난달 24일 저녁 경기도 평택시 삼성전자 평택캠퍼스 4공장(P4) 건설 현장에 설치된 조명이 밤하늘을 밝히고 있다. 2026.3.2 seephoto@yna.co.kr\\n비메모리 부문의 적자 축소도 실적 개선에 보탬이 됐다는 평가다.\\n지난해 1분기 2조원대의 영업손실을 냈던 시스템LSI· 파운드리 사업부 등 비메모리 부문은 올해 1분기 적자 폭을 1조원 안팎까지 절반가량 줄인 것으로 예상된다. 이르면 내년 상반기 흑자 전환이 가능할 수 있다는 관측도 나온다.\\n한편 증권가에서는 삼성전자의 연간 실적 눈높이를 상향 조정하고 있다.\\n올해 연간 영업이익 330조원 달성은 물론 내년에는 엔비디아를 제치고 전 세계 영업이익 1위로 도약할 수 있다는 가능성도 제기된다.\\nburning@yna.co.kr\\n제보는 카카오톡 okjebo\\n<저작권자(c) 연합뉴스,\\n무단 전재-재배포, AI 학습 및 활용 금지>\\n2026/04/30 11:31 송고\\n2026년04월30일 11시31분 송고\\n#삼성전자\\n#반도체\\n#D램\\n#HBM\\n댓글\\n좋아요\\n슬퍼요\\n화나요\\n후속요청\\n국내 최대 원스톱\\n콘텐츠 제공 플랫폼\\n함께 보면 좋은 콘텐츠\\nby\\n데이블\\n광고\\n함께 읽기 좋은 콘텐츠\\nTaboola 후원링크\\n광고\\n광고\\n광고\\n연합 마이뉴스\\n다양한 주제별 맞춤\\n추천 뉴스를 제공합니다.\\n북마크\\n공유\\n공유하기\\n카카오톡\\n페이스북\\nX\\n페이스북 메신저\\n네이버 밴드\\nURL 복사\\n닫기\\nURL이 복사되었습니다.\\n댓글\\n글자크기\\n본문 글자 크기 조정\\n폰트 1단계 13px\\n폰트 2단계 16px\\n폰트 3단계 18px\\n폰트 4단계 20px\\n폰트 5단계 22px\\n닫기\\n프린트\\n제보\\n광고\\n광고\\n핫뉴스\\n'축구의 신' 메시 부친 별세…스타 아들 뒤에 선 조용한 조력자\\n바이든 차남 \\\"아버지, 암 전이돼 고통스럽게 투병 중\\\"\\n\\\"트럼프, 혹시 부분가발 썼나?\\\"…'풍성 금발'에 시선 집중\\n영화가 일깨운 고전의 향기…서점가도 '오디세이' 열풍\\n\\\"버려지고 옥상·차량에 방치되고\\\"…폭염 속 신음하는 동물들\\n피지 출신 일본 럭비 선수, 후쿠오카에서 훈련 중 열사병 사망\\n측정치는 음주운전 처벌기준 0.03%…법원 무죄 선고 이유는\\n돌풍에 말벌도 놀랐나…보령 캠핑장서 일가족 등 7명 벌 쏘임\\n이전 콘텐츠\\n다음 콘텐츠\\n광고\\n광고\\n에디터스 픽\\nEditor's Picks\\n영상\\n[영상] 키이우에 퍼부은 러 탄도·극초음속 미사일 28발…\\\"요격률 제로\\\"\\n[영상] 태국 중학생 총기 난사, 최소 7명 사망…집에선 살해된 조부모\\n[영상] 말라버린 물길…유럽 조여오는 최악 가뭄\\n이전 콘텐츠\\n다음 콘텐츠\\n뉴스\\n올해 끝나는 토허제 실거주 유예 연장하나…세법 후속책 속도\\n[서울폭염] 치매실종 생명줄 경보문자…'독이 된 익숙함'이 극복과제\\n경찰가족이 피의자·피혐의자 사건 45건…뒤늦은 상피제 '첩첩산중'\\n이임생 '홍명보 면담' 기록엔…\\\"4-2-3-1 기본에 4-3-3도\\\"\\n이전 콘텐츠\\n다음 콘텐츠\\n광고\\n광고\\n광고\\n함께 보면 좋은 콘텐츠\\nby\\n데이블\\n오래 머문 뉴스\\n광고\\n광고\\n랭킹뉴스\\n많이 본 뉴스\\n공감 많은 뉴스\\n더보기\\n더보기\\n광고\\n함께 읽기 좋은 콘텐츠\\nby\\n데이블\\n광고\\nShorts\\n'요격율 제로' 방공망…러 탄도미사일에 키이우 뚫렸다\\n도로 꽉 채운 13만 마리 거위 떼…대지진 전조? 중국 '발칵'\\n연합뉴스 Games\\n함께 보면 좋은 콘텐츠\\nTaboola 후원링크\\n함께 볼만한 콘텐츠\\nby\\n데이블\\n광고\\n광고\\n화면 상단으로 이동\\n뉴스레터\\n연합뉴스 Games\\nAPP설치\\n뉴스\\n최신뉴스\\n정치\\n메뉴 열기/닫기\\n정치전체\\n청와대/총리실\\n국회/정당\\n외교\\n국방\\n북한\\n메뉴 열기/닫기\\n북한전체\\n학술/연구\\n북한 알아보기\\n인물\\n비주얼\\nNK NOW\\n경제\\n메뉴 열기/닫기\\n경제전체\\n경제/정책\\n금융\\n부동산\\n취업/창업\\n소비자\\n마켓+\\n메뉴 열기/닫기\\n마켓+전체\\n국내주식\\n해외주식\\n채권\\n펀드/ETF\\n글로벌시장\\n증권/운용사\\n리포트\\n공시\\n산업\\n메뉴 열기/닫기\\n산업전체\\n산업/기업\\n전기전자\\n중화학\\n자동차\\n건설\\n에너지/자원\\nIT/과학\\n게임\\n유통/서비스\\n중기/벤처\\n바이오/헬스\\n농림축산\\n해양수산\\n사회\\n메뉴 열기/닫기\\n사회전체\\n사건/사고\\n법원/검찰\\n교육\\n복지/노동\\n환경/기후변화\\n여성/아동\\n재외동포\\n다문화\\n전국\\n메뉴 열기/닫기\\n전국전체\\n경기\\n인천\\n부산\\n울산\\n경남\\n대구/경북\\n전남광주\\n전북\\n대전/충남/세종\\n충북\\n강원\\n제주\\n세계\\n메뉴 열기/닫기\\n세계전체\\n특파원\\n미국/북미\\n중국\\n일본\\n아시아/호주\\n유럽\\n중남미\\n중동/아프리카\\n국제기구\\n문화\\n메뉴 열기/닫기\\n문화전체\\n책/문학\\n만화/웹툰\\n종교\\n공연/전시\\n학술/문화재\\n미디어\\n여행/레저\\n생활\\n건강\\n메뉴 열기/닫기\\n건강전체\\n헬스노트\\n위클리 건강\\n더건강 영상\\n연예\\n메뉴 열기/닫기\\n연예전체\\n방송\\n영화\\n가요\\n해외연예\\n스포츠\\n메뉴 열기/닫기\\n스포츠전체\\n야구\\n축구\\n농구/배구\\n골프\\n오피니언\\n사람들\\n메뉴 열기/닫기\\n사람들전체\\n인사\\n부고\\n동정/게시판\\nCEO\\n인터뷰\\n뉴스+\\n메뉴 열기/닫기\\n탐사 기획\\n팩트체크\\nAI프리즘\\n반려동물\\n브랜드뉴스\\n이슈\\n이 시각 헤드라인\\n비주얼뉴스\\n메뉴 열기/닫기\\n영상\\n포토\\n화보\\n그래픽\\n테마별뉴스\\n메뉴 열기/닫기\\n핫뉴스\\n주요뉴스\\n긴급뉴스\\n많이 본 뉴스\\n오래 머문 뉴스\\n공감 많은 뉴스\\n외국어 뉴스\\nEnglish\\n中文\\n日本語\\nعربي\\nEspañol\\nFrançais\\nTiếng Việt\\n뉴스상품\\n프리미엄뉴스\\n뉴스리더\\n인터넷맞춤형\\n보도자료 해외배포\\n보도자료 국내배포\\n광고안내\\nKTX 고속열차\\nSRT 고속열차\\nAREX 공항철도\\n모바일\\nPC\\n출판물\\nLED전광판\\n사업제휴\\n콘텐츠판매\\n보도사진\\n그래픽\\n동영상\\n인물\\n출판물\\n이매진\\n연합연감\\n영문연감\\n단행본\\n월간 마이더스\\n서비스안내\\n서비스 소개\\n모바일앱 안내\\n재난포털\\n날씨\\n기자\\n뉴스레터\\n제보\\n뉴스상품\\n광고안내\\n콘텐츠판매\\n연합뉴스 Games\\n서비스 문의\\n서비스 문의\\n서비스 문의\\n자주 묻는 질문\\n공지사항\\n1:1 문의\\n계약사/제휴문의\\nEnglish\\n中文\\n日文\\nعربي\\nEspañol\\nFrançais\\nTiếng Việt\\n유튜브 채널\\n연합뉴스\\nK-Culture NOW\\n통통테크\\n더건강\\nKOREA NOW\\nNK NOW\\nK-VIBE\\nSNS\\n다양한 채널에서 연합뉴스를 만나보세요!\\n연합뉴스 페이스북\\n연합뉴스 인스타그램\\n연합뉴스 유튜브\\n연합뉴스 트위터\\n연합뉴스 : 서울시 종로구 율곡로 2길 25\\n대표 02-398-3114, 제보 02-398-3000\\n대표이사 : 황대일\\n편집인 : 김병수\\n등록번호 : 문화, 나00009\\n등록일자 : 1980.12.29\\n발행일자 : 1980.12.29\\n사업자번호 : 102-81-23273\\n통신판매업신고번호 : 2014-서울종로-0124\\n이용약관\\n개인정보처리방침\\n청소년보호정책(책임자 : 조재영)\\n©2026 Yonhapnews Agency\\nFamily site\\n열기\\n헬로아카이브\\n연합뉴스TV\\n인포맥스\\n한민족센터\\nK-VIBE\\n채용\\nIR 클럽\\nFamily site 닫기\\n회사소개\\n채용\\n윤리헌장\\n저작권규약\\nAI 활용 준칙\\n수용자권익위원회\\n고충처리\\n독자게시판\\n제보\\n보도자료\\n서비스 문의\\nRSS\\n사이트맵\\n뉴스 검색어 입력 양식\\n통합 검색\\n삭제\\n검색\\n전체메뉴 닫기\\n전체메뉴 닫기\\n뉴스\\n최신뉴스\\n정치\\n메뉴 열기/닫기\\n정치전체\\n청와대/총리실\\n국회/정당\\n외교\\n국방\\n북한\\n메뉴 열기/닫기\\n북한전체\\n학술/연구\\n북한 알아보기\\n인물\\n비주얼\\nNK NOW\\n경제\\n메뉴 열기/닫기\\n경제전체\\n경제/정책\\n금융\\n부동산\\n취업/창업\\n소비자\\n마켓+\\n메뉴 열기/닫기\\n마켓+전체\\n국내주식\\n해외주식\\n채권\\n펀드/ETF\\n글로벌시장\\n증권/운용사\\n리포트\\n공시\\n산업\\n메뉴 열기/닫기\\n산업전체\\n산업/기업\\n전기전자\\n중화학\\n자동차\\n건설\\n에너지/자원\\nIT/과학\\n게임\\n유통/서비스\\n중기/벤처\\n바이오/헬스\\n농림축산\\n해양수산\\n사회\\n메뉴 열기/닫기\\n사회전체\\n사건/사고\\n법원/검찰\\n교육\\n복지/노동\\n환경/기후변화\\n여성/아동\\n재외동포\\n다문화\\n전국\\n메뉴 열기/닫기\\n전국전체\\n경기\\n인천\\n부산\\n울산\\n경남\\n대구/경북\\n전남광주\\n전북\\n대전/충남/세종\\n충북\\n강원\\n제주\\n세계\\n메뉴 열기/닫기\\n세계전체\\n특파원\\n미국/북미\\n중국\\n일본\\n아시아/호주\\n유럽\\n중남미\\n중동/아프리카\\n국제기구\\n문화\\n메뉴 열기/닫기\\n문화전체\\n책/문학\\n만화/웹툰\\n종교\\n공연/전시\\n학술/문화재\\n미디어\\n여행/레저\\n생활\\n건강\\n메뉴 열기/닫기\\n건강전체\\n헬스노트\\n위클리 건강\\n더건강 영상\\n연예\\n메뉴 열기/닫기\\n연예전체\\n방송\\n영화\\n가요\\n해외연예\\n스포츠\\n메뉴 열기/닫기\\n스포츠전체\\n야구\\n축구\\n농구/배구\\n골프\\n오피니언\\n사람들\\n메뉴 열기/닫기\\n사람들전체\\n인사\\n부고\\n동정/게시판\\nCEO\\n인터뷰\\n뉴스+\\n메뉴 열기/닫기\\n탐사 기획\\n팩트체크\\nAI프리즘\\n반려동물\\n브랜드뉴스\\n이슈\\n이 시각 헤드라인\\n비주얼뉴스\\n메뉴 열기/닫기\\n영상\\n포토\\n화보\\n그래픽\\n테마별뉴스\\n메뉴 열기/닫기\\n핫뉴스\\n주요뉴스\\n긴급뉴스\\n많이 본 뉴스\\n오래 머문 뉴스\\n공감 많은 뉴스\\n외국어 뉴스\\nEnglish\\n中文\\n日本語\\nعربي\\nEspañol\\nFrançais\\nTiếng Việt\\n뉴스상품\\n프리미엄뉴스\\n뉴스리더\\n인터넷맞춤형\\n보도자료 해외배포\\n보도자료 국내배포\\n광고안내\\nKTX 고속열차\\nSRT 고속열차\\nAREX 공항철도\\n모바일\\nPC\\n출판물\\nLED전광판\\n사업제휴\\n콘텐츠판매\\n보도사진\\n그래픽\\n동영상\\n인물\\n출판물\\n이매진\\n연합연감\\n영문연감\\n단행본\\n월간 마이더스\\n서비스안내\\n서비스 소개\\n모바일앱 안내\\n재난포털\\n날씨\\n기자\\n뉴스레터\\n제보\\n뉴스상품\\n광고안내\\n콘텐츠판매\\n연합뉴스 Games\\n서비스 문의\\n서비스 문의\\n서비스 문의\\n자주 묻는 질문\\n공지사항\\n1:1 문의\\n계약사/제휴문의\\nSNS\\n다양한 채널에서 연합뉴스를 만나보세요!\\n연합뉴스 페이스북\\n연합뉴스 인스타그램\\n연합뉴스 유튜브\\n연합뉴스 트위터\\nESC 닫기\\n이미지 확대\\n삼성전자 평택캠퍼스\\n[삼성전자 제공. 재판매 및 DB 금지]\\n2026-04-30 07:32\\n이미지 확대\\n삼성전자, GTC서 HBM4E 최초 공개… '토털 솔루션'으로 엔비디아와 AI 동맹 고도화\\n(서울=연합뉴스) 삼성전자는 16일부터 19일까지(현지시간) 미국 새너제이에서 열리는 엔비디아 GTC에 참가해 차세대 HBM4E 기술력과 베라 루빈 플랫폼을 구현하는 메모리 토털 솔루션을 유일하게 공급할 수 있는 역량을 앞세워 글로벌 AI리더십을 한층 강화한다고 밝혔다. 사진은 삼성전자 HBM4E 제품 전시 사진. 2026.3.17 [삼성전자 제공. 재판매 및 DB 금지] photo@yna.co.kr\\n2026-04-30 07:33\\n이미지 확대\\n건설 중인 삼성전자 평택캠퍼스 P4\\n(평택=연합뉴스) 서명곤 기자 = 지난달 24일 저녁 경기도 평택시 삼성전자 평택캠퍼스 4공장(P4) 건설 현장에 설치된 조명이 밤하늘을 밝히고 있다. 2026.3.2 seephoto@yna.co.kr\\n2026-04-30 07:32\\n이전 콘텐츠\\n다음 콘텐츠\\n메뉴 열기/닫기\\n이전 콘텐츠\\n다음 콘텐츠\\n본문으로 돌아가기\\n광고\\n광고삭제\\n광고\\n광고삭제\\n댓글\\n닫기\", \"document_id\": \"SGDOC-209d1895a65d38683795e638\", \"full_fetch_performed\": true, \"objective_ids\": [\"SGOBJ-eb3cecb1e00c95ccf544cac4\"], \"published_at\": \"2026-04-30\", \"snippet_used_as_document\": false, \"source_family\": \"TRUSTED_BUSINESS_MEDIA\", \"source_independence_group\": \"TRUSTED_BUSINESS_MEDIA:yna.co.kr\", \"title\": \"삼성 반도체, 압도적 캐파로 1위…\\\"메모리 이익률 74% 돌파\\\"(종합)\"}], \"normalization_contract\": {\"mechanism_scope_id\": \"target-direct business mechanism, never industry or wrong-segment proxy\", \"normalized_object\": \"concise normalized economic object or state\", \"predicate_family\": \"stable economic predicate family\", \"question_family_id\": \"stable semantic research-question family, not a query string\", \"subject_id\": \"stable target business/product/mechanism subject\", \"value\": \"Use a JSON number only for one finite quantitative point. Use a JSON string for text, ranges, identifiers, and dates. Do not encode arbitrary objects or arrays.\"}, \"open_research_objectives\": [{\"budget_required_before_execution\": true, \"component_id\": \"eps_fcf_explosion\", \"counter_or_supersession_required\": true, \"literal_query\": null, \"objective_id\": \"SGOBJ-eb3cecb1e00c95ccf544cac4\", \"preferred_source_families\": [\"OPENDART\", \"ISSUER_EARNINGS_RELEASE\", \"TRUSTED_BUSINESS_MEDIA\", \"CONSENSUS_REVISION\", \"ISSUER_PRESENTATION\", \"ISSUER_NEWSROOM\", \"KIND_KRX\", \"CUSTOMER_OFFICIAL\", \"FINANCIAL_STATEMENTS\", \"SEGMENT_DATA\", \"CASH_FLOW\", \"MARKET_CAP_PRICE\", \"VALUATION_MULTIPLES\", \"REUTERS\", \"PUBLIC_BROKER_PDF\", \"INDUSTRY_REPORT\", \"NAVER_DISCOVERY\", \"GENERAL_WEB_DISCOVERY\"], \"query_must_be_generated_by_llm\": true, \"research_objective\": \"Investigate the component's full current economic mechanism, including material positive evidence, counterevidence, and supersession. The following research questions are semantic investigation hints, not independent checklist gates: memory, DRAM, or HBM; ASP or realized pricing; pricing commentary without quantified actual; raw commodity headline; unattributed company revenue; conventional memory product; weakness, drag, decline, or inventory risk; mixed memory conditions; generic industry headline; HBM or AI memory; revenue, sales, shipment, or mix attribution; HBM sales increased without quantified mix; total company revenue; product profile or mass production only; HBM or memory attribution; margin, FCF, cash flow, or profit conversion; operating profit only; total profit without memory attribution; estimate, guidance, revision, consensus, expectation gap, or current/forward earnings multiple; qualitative outlook without estimate; valuation multiple without a complete HBM earnings bridge; target price only; raw price momentum; historical outcome; revenue, sales, operating profit, or margin; revenue conversion without profit attribution; total company revenue without memory attribution; HBM product; shipment or mass production; sample shipment or planned production; HBM specification only; NAND, SOCAMM, or LPDDR shipment\", \"stop_condition\": \"material claim resolved and counter/supersession checked\"}, {\"budget_required_before_execution\": true, \"component_id\": \"earnings_visibility\", \"counter_or_supersession_required\": true, \"literal_query\": null, \"objective_id\": \"SGOBJ-5ae8f64e9b45a519ee68b062\", \"preferred_source_families\": [\"ISSUER_PRESENTATION\", \"TRUSTED_BUSINESS_MEDIA\", \"OPENDART\", \"ISSUER_EARNINGS_RELEASE\", \"CUSTOMER_OFFICIAL\", \"CONSENSUS_REVISION\", \"ISSUER_NEWSROOM\", \"KIND_KRX\", \"FINANCIAL_STATEMENTS\", \"SEGMENT_DATA\", \"CASH_FLOW\", \"MARKET_CAP_PRICE\", \"VALUATION_MULTIPLES\", \"REUTERS\", \"PUBLIC_BROKER_PDF\", \"INDUSTRY_REPORT\", \"NAVER_DISCOVERY\", \"GENERAL_WEB_DISCOVERY\"], \"query_must_be_generated_by_llm\": true, \"research_objective\": \"Investigate the component's full current economic mechanism, including material positive evidence, counterevidence, and supersession. The following research questions are semantic investigation hints, not independent checklist gates: HBM or memory scope; capacity constraint, sold-out, pre-sold, or demand exceeds supply; demand exceeds supply without booked period; capacity specification only; memory or HBM attribution; capex, capacity, investment, supply, or oversupply; mixed-segment capex with memory reference; unrelated Foundry/display capex; conventional memory product; weakness, drag, decline, or inventory risk; mixed memory conditions; generic industry headline; HBM or memory product; customer allocation, booking, commitment, or supply contract; customer schedule or non-binding allocation discussion; generic customer name; Foundry contract; product profile; HBM or memory customer; concentration, dependency, named allocation, or customer share; named HBM customers without concentration share; generic company customer list; Foundry customer; HBM or AI memory; revenue, sales, shipment, or mix attribution; HBM sales increased without quantified mix; total company revenue; product profile or mass production only; HBM or memory attribution; estimate, guidance, revision, consensus, expectation gap, or current/forward earnings multiple; qualitative outlook without estimate; valuation multiple without a complete HBM earnings bridge; target price only; raw price momentum; historical outcome; HBM qualification state; customer test or approval status; qualification in progress; product sample without qualification status; revenue, sales, operating profit, or margin; revenue conversion without profit attribution; total company revenue without memory attribution; HBM product; shipment or mass production; sample shipment or planned production; HBM specification only; NAND, SOCAMM, or LPDDR shipment\", \"stop_condition\": \"material claim resolved and counter/supersession checked\"}, {\"budget_required_before_execution\": true, \"component_id\": \"bottleneck_pricing\", \"counter_or_supersession_required\": true, \"literal_query\": null, \"objective_id\": \"SGOBJ-7ba6c752cb327ae2c989b6dd\", \"preferred_source_families\": [\"OPENDART\", \"ISSUER_EARNINGS_RELEASE\", \"ISSUER_PRESENTATION\", \"TRUSTED_BUSINESS_MEDIA\", \"CUSTOMER_OFFICIAL\", \"KIND_KRX\", \"ISSUER_NEWSROOM\", \"FINANCIAL_STATEMENTS\", \"SEGMENT_DATA\", \"CASH_FLOW\", \"MARKET_CAP_PRICE\", \"CONSENSUS_REVISION\", \"VALUATION_MULTIPLES\", \"REUTERS\", \"PUBLIC_BROKER_PDF\", \"INDUSTRY_REPORT\", \"NAVER_DISCOVERY\", \"GENERAL_WEB_DISCOVERY\"], \"query_must_be_generated_by_llm\": true, \"research_objective\": \"Investigate the component's full current economic mechanism, including material positive evidence, counterevidence, and supersession. The following research questions are semantic investigation hints, not independent checklist gates: memory, DRAM, or HBM; ASP or realized pricing; pricing commentary without quantified actual; raw commodity headline; unattributed company revenue; HBM or memory scope; capacity constraint, sold-out, pre-sold, or demand exceeds supply; demand exceeds supply without booked period; capacity specification only; memory or HBM attribution; capex, capacity, investment, supply, or oversupply; mixed-segment capex with memory reference; unrelated Foundry/display capex; conventional memory product; weakness, drag, decline, or inventory risk; mixed memory conditions; generic industry headline; HBM or memory product; customer allocation, booking, commitment, or supply contract; customer schedule or non-binding allocation discussion; generic customer name; Foundry contract; product profile; HBM or memory customer; concentration, dependency, named allocation, or customer share; named HBM customers without concentration share; generic company customer list; Foundry customer\", \"stop_condition\": \"material claim resolved and counter/supersession checked\"}, {\"budget_required_before_execution\": true, \"component_id\": \"market_mispricing\", \"counter_or_supersession_required\": true, \"literal_query\": null, \"objective_id\": \"SGOBJ-e78cfba9e86bfa02e9a943ae\", \"preferred_source_families\": [\"CONSENSUS_REVISION\", \"ISSUER_PRESENTATION\", \"OPENDART\", \"TRUSTED_BUSINESS_MEDIA\", \"KIND_KRX\", \"ISSUER_EARNINGS_RELEASE\", \"ISSUER_NEWSROOM\", \"CUSTOMER_OFFICIAL\", \"FINANCIAL_STATEMENTS\", \"SEGMENT_DATA\", \"CASH_FLOW\", \"MARKET_CAP_PRICE\", \"VALUATION_MULTIPLES\", \"REUTERS\", \"PUBLIC_BROKER_PDF\", \"INDUSTRY_REPORT\", \"NAVER_DISCOVERY\", \"GENERAL_WEB_DISCOVERY\"], \"query_must_be_generated_by_llm\": true, \"research_objective\": \"Investigate the component's full current economic mechanism, including material positive evidence, counterevidence, and supersession. The following research questions are semantic investigation hints, not independent checklist gates: HBM or memory attribution; estimate, guidance, revision, consensus, expectation gap, or current/forward earnings multiple; qualitative outlook without estimate; valuation multiple without a complete HBM earnings bridge; target price only; raw price momentum; historical outcome; attributable consensus or market expectation; current or forward earnings multiple with period and denominator; estimate direction without complete consensus dispersion; current valuation multiple with incomplete HBM earnings attribution; target price without earnings bridge; multiple without earnings period\", \"stop_condition\": \"material claim resolved and counter/supersession checked\"}, {\"budget_required_before_execution\": true, \"component_id\": \"valuation_rerating\", \"counter_or_supersession_required\": true, \"literal_query\": null, \"objective_id\": \"SGOBJ-b9fa68f5a7769660459ba605\", \"preferred_source_families\": [\"ISSUER_PRESENTATION\", \"TRUSTED_BUSINESS_MEDIA\", \"OPENDART\", \"CUSTOMER_OFFICIAL\", \"CONSENSUS_REVISION\", \"KIND_KRX\", \"ISSUER_EARNINGS_RELEASE\", \"ISSUER_NEWSROOM\", \"FINANCIAL_STATEMENTS\", \"SEGMENT_DATA\", \"CASH_FLOW\", \"MARKET_CAP_PRICE\", \"VALUATION_MULTIPLES\", \"REUTERS\", \"PUBLIC_BROKER_PDF\", \"INDUSTRY_REPORT\", \"NAVER_DISCOVERY\", \"GENERAL_WEB_DISCOVERY\"], \"query_must_be_generated_by_llm\": true, \"research_objective\": \"Investigate the component's full current economic mechanism, including material positive evidence, counterevidence, and supersession. The following research questions are semantic investigation hints, not independent checklist gates: HBM or memory scope; capacity constraint, sold-out, pre-sold, or demand exceeds supply; demand exceeds supply without booked period; capacity specification only; HBM or memory product; customer allocation, booking, commitment, or supply contract; customer schedule or non-binding allocation discussion; generic customer name; Foundry contract; product profile; HBM or memory attribution; estimate, guidance, revision, consensus, expectation gap, or current/forward earnings multiple; qualitative outlook without estimate; valuation multiple without a complete HBM earnings bridge; target price only; raw price momentum; historical outcome; attributable consensus or market expectation; current or forward earnings multiple with period and denominator; estimate direction without complete consensus dispersion; current valuation multiple with incomplete HBM earnings attribution; target price without earnings bridge; multiple without earnings period\", \"stop_condition\": \"material claim resolved and counter/supersession checked\"}, {\"budget_required_before_execution\": true, \"component_id\": \"capital_allocation\", \"counter_or_supersession_required\": true, \"literal_query\": null, \"objective_id\": \"SGOBJ-44161aa1a529ae8101bf12b1\", \"preferred_source_families\": [\"ISSUER_PRESENTATION\", \"TRUSTED_BUSINESS_MEDIA\", \"OPENDART\", \"ISSUER_EARNINGS_RELEASE\", \"KIND_KRX\", \"ISSUER_NEWSROOM\", \"CUSTOMER_OFFICIAL\", \"FINANCIAL_STATEMENTS\", \"SEGMENT_DATA\", \"CASH_FLOW\", \"MARKET_CAP_PRICE\", \"CONSENSUS_REVISION\", \"VALUATION_MULTIPLES\", \"REUTERS\", \"PUBLIC_BROKER_PDF\", \"INDUSTRY_REPORT\", \"NAVER_DISCOVERY\", \"GENERAL_WEB_DISCOVERY\"], \"query_must_be_generated_by_llm\": true, \"research_objective\": \"Investigate the component's full current economic mechanism, including material positive evidence, counterevidence, and supersession. The following research questions are semantic investigation hints, not independent checklist gates: HBM or memory scope; capacity constraint, sold-out, pre-sold, or demand exceeds supply; demand exceeds supply without booked period; capacity specification only; memory or HBM attribution; capex, capacity, investment, supply, or oversupply; mixed-segment capex with memory reference; unrelated Foundry/display capex; HBM or memory attribution; margin, FCF, cash flow, or profit conversion; operating profit only; total profit without memory attribution\", \"stop_condition\": \"material claim resolved and counter/supersession checked\"}, {\"budget_required_before_execution\": true, \"component_id\": \"information_confidence\", \"counter_or_supersession_required\": true, \"literal_query\": null, \"objective_id\": \"SGOBJ-93cf39260befeafbc887e409\", \"preferred_source_families\": [\"OPENDART\", \"ISSUER_EARNINGS_RELEASE\", \"ISSUER_PRESENTATION\", \"TRUSTED_BUSINESS_MEDIA\", \"CUSTOMER_OFFICIAL\", \"CONSENSUS_REVISION\", \"ISSUER_NEWSROOM\", \"KIND_KRX\", \"FINANCIAL_STATEMENTS\", \"SEGMENT_DATA\", \"CASH_FLOW\", \"MARKET_CAP_PRICE\", \"VALUATION_MULTIPLES\", \"REUTERS\", \"PUBLIC_BROKER_PDF\", \"INDUSTRY_REPORT\", \"NAVER_DISCOVERY\", \"GENERAL_WEB_DISCOVERY\"], \"query_must_be_generated_by_llm\": true, \"research_objective\": \"Investigate the component's full current economic mechanism, including material positive evidence, counterevidence, and supersession. The following research questions are semantic investigation hints, not independent checklist gates: memory, DRAM, or HBM; ASP or realized pricing; pricing commentary without quantified actual; raw commodity headline; unattributed company revenue; HBM or memory scope; capacity constraint, sold-out, pre-sold, or demand exceeds supply; demand exceeds supply without booked period; capacity specification only; HBM or memory product; customer allocation, booking, commitment, or supply contract; customer schedule or non-binding allocation discussion; generic customer name; Foundry contract; product profile; HBM or memory customer; concentration, dependency, named allocation, or customer share; named HBM customers without concentration share; generic company customer list; Foundry customer; HBM or AI memory; revenue, sales, shipment, or mix attribution; HBM sales increased without quantified mix; total company revenue; product profile or mass production only; HBM or memory attribution; margin, FCF, cash flow, or profit conversion; operating profit only; total profit without memory attribution; estimate, guidance, revision, consensus, expectation gap, or current/forward earnings multiple; qualitative outlook without estimate; valuation multiple without a complete HBM earnings bridge; target price only; raw price momentum; historical outcome; HBM qualification state; customer test or approval status; qualification in progress; product sample without qualification status; revenue, sales, operating profit, or margin; revenue conversion without profit attribution; total company revenue without memory attribution; HBM product; shipment or mass production; sample shipment or planned production; HBM specification only; NAND, SOCAMM, or LPDDR shipment; attributable consensus or market expectation; current or forward earnings multiple with period and denominator; estimate direction without complete consensus dispersion; current valuation multiple with incomplete HBM earnings attribution; target price without earnings bridge; multiple without earnings period\", \"stop_condition\": \"material claim resolved and counter/supersession checked\"}], \"score_gap_context\": {\"fact_extraction_score_gap_projection_audit\": {\"duplicate_failure_ledgers_projected\": true, \"excluded_source_transport_fields\": [\"source_graph_status\", \"source_graph_pending_reasons\", \"prior_structured_source_gap.issuer_fact_materialization\"], \"fixed_top_n_used\": false, \"full_gap_context_persisted_outside_prompt\": true, \"llm_authored_missing_facts_questions_and_directions_preserved\": true, \"prompt_projection_is_research_cap\": false, \"schema_version\": \"e2r_v5_fact_extraction_score_gap_projection_v3\", \"score_authority\": false, \"semantic_context_roster_hash\": \"725a2598365c5f4d930969eab621f8ea0759e6bbaa26ec51f3ea0f81398f3aa6\", \"shared_gap_projection_schema_version\": \"e2r_v5_query_score_gap_projection_v3\", \"source_transport_state_excluded_from_fact_identity\": true}, \"prior_deterministic_score_gap\": {}, \"prior_fact_extraction_feedback\": {\"collaboration_transport_waits_excluded_from_semantic_prompt\": true, \"fact_transport_progress_excluded_from_semantic_prompt\": true, \"fact_transport_progress_persisted_in_fact_checkpoint\": true, \"feedback_count\": 54, \"feedback_kind_coverage\": {\"UNRESOLVED_RESEARCH_NOTE\": 54}, \"feedback_roster_hash\": \"971804f51aeb5340d209b7d5c8b6305a1568d8d3c2b5a05dd4611d23763014cf\", \"fixed_top_n_used\": false, \"full_feedback_records_persisted_outside_prompt\": true, \"prompt_projection_is_research_cap\": false, \"schema_version\": \"e2r_v5_fact_gap_feedback_projection_v3\", \"score_authority\": false, \"supervisor_missing_facts_and_questions_remain_verbatim\": true}, \"prior_structured_source_gap\": {\"component_disposition_by_component\": {\"bottleneck_pricing\": \"RESEARCH_READY\", \"capital_allocation\": \"RESEARCH_READY\", \"earnings_visibility\": \"RESEARCH_READY\", \"eps_fcf_explosion\": \"PROVIDER_SOURCE_PENDING\", \"information_confidence\": \"RESEARCH_READY\", \"market_mispricing\": \"RESEARCH_READY\", \"valuation_rerating\": \"PROVIDER_SOURCE_PENDING\"}, \"covered_roles_by_component\": {\"bottleneck_pricing\": [], \"capital_allocation\": [\"CAPEX_SUPPLY_RESPONSE\", \"CASH_CONVERSION\"], \"earnings_visibility\": [\"FORWARD_REVISION\"], \"eps_fcf_explosion\": [\"ACTUAL_EARNINGS\", \"CAPEX\", \"CASH_CONVERSION\", \"FORWARD_REVISION\", \"FREE_CASH_FLOW\", \"LATEST_ACTUAL_NET_INCOME\", \"LATEST_ACTUAL_OPERATING_PROFIT\", \"LATEST_ACTUAL_REVENUE\", \"OPERATING_CASH_FLOW\", \"SEGMENT_CONTRIBUTION\", \"YOY_GROWTH\"], \"information_confidence\": [], \"market_mispricing\": [\"CONSENSUS_HISTORY\", \"CURRENT_VALUATION\", \"EARNINGS_REVISION\", \"EARNINGS_SURPRISE\", \"EPS_REVISION\", \"OPERATING_PROFIT_REVISION\", \"PRICE_REACTION\", \"RELATIVE_PERFORMANCE\"], \"valuation_rerating\": [\"CURRENT_PRICE\", \"CURRENT_VALUATION\", \"FORWARD_EPS\", \"FORWARD_FCF\", \"FORWARD_FCF_YIELD\", \"FORWARD_PE\", \"MARKET_CAP\", \"NET_CASH_DEBT\", \"OWN_HISTORICAL_BAND\", \"PEER_BAND\", \"SCENARIO_SENSITIVITY\"]}, \"deterministic_fallback_query_allowed\": false, \"missing_role_resolution_contracts\": {\"eps_fcf_explosion\": {\"FORWARD_GUIDANCE\": {\"accepted_engine_evidence_roles\": [\"FORWARD_GUIDANCE\"], \"deterministic_fallback_query_allowed\": false, \"fact_materialization_contracts\": {\"FORWARD_GUIDANCE\": {\"allowed_source_families\": [\"CUSTOMER_OFFICIAL\", \"ISSUER_EARNINGS_RELEASE\", \"ISSUER_NEWSROOM\", \"ISSUER_PRESENTATION\", \"KIND_KRX\", \"OPENDART\"], \"exact_quote_required\": true, \"issuer_source_required\": true, \"machine_numeric_point_or_range_required\": true, \"period_must_be_forward_from_source_availability_date\": true, \"third_party_estimate_is_not_substitutable\": true}}, \"literal_query_generation_owner\": \"LLM\", \"llm_fact_extractable_roles\": [\"FORWARD_GUIDANCE\"], \"semantically_adjacent_ineligible_evidence_closes_gap\": false}, \"QOQ_GROWTH\": {\"accepted_engine_evidence_roles\": [\"QOQ_GROWTH\"], \"deterministic_fallback_query_allowed\": false, \"fact_materialization_contracts\": {\"QOQ_GROWTH\": {\"allowed_source_families\": [\"CASH_FLOW\", \"CUSTOMER_OFFICIAL\", \"FINANCIAL_STATEMENTS\", \"ISSUER_EARNINGS_RELEASE\", \"ISSUER_NEWSROOM\", \"ISSUER_PRESENTATION\", \"KIND_KRX\", \"OPENDART\", \"PUBLIC_BROKER_PDF\", \"SEGMENT_DATA\"], \"current_lifecycle_required\": true, \"exact_quote_required\": true, \"machine_numeric_value_required\": true, \"point_percent_required\": true}}, \"literal_query_generation_owner\": \"LLM\", \"llm_fact_extractable_roles\": [\"QOQ_GROWTH\"], \"semantically_adjacent_ineligible_evidence_closes_gap\": false}}, \"valuation_rerating\": {\"DURABLE_VISIBILITY\": {\"accepted_engine_evidence_roles\": [\"DURABLE_VISIBILITY\", \"FORWARD_GUIDANCE\"], \"deterministic_fallback_query_allowed\": false, \"fact_materialization_contracts\": {\"FORWARD_GUIDANCE\": {\"allowed_source_families\": [\"CUSTOMER_OFFICIAL\", \"ISSUER_EARNINGS_RELEASE\", \"ISSUER_NEWSROOM\", \"ISSUER_PRESENTATION\", \"KIND_KRX\", \"OPENDART\"], \"exact_quote_required\": true, \"issuer_source_required\": true, \"machine_numeric_point_or_range_required\": true, \"period_must_be_forward_from_source_availability_date\": true, \"third_party_estimate_is_not_substitutable\": true}}, \"literal_query_generation_owner\": \"LLM\", \"llm_fact_extractable_roles\": [\"FORWARD_GUIDANCE\"], \"semantically_adjacent_ineligible_evidence_closes_gap\": false}, \"FORWARD_BOOK_VALUE\": {\"accepted_engine_evidence_roles\": [\"FORWARD_BOOK_VALUE\"], \"deterministic_fallback_query_allowed\": false, \"fact_materialization_contracts\": {\"FORWARD_BOOK_VALUE\": {\"allowed_source_families\": [\"PUBLIC_BROKER_PDF\"], \"current_or_open_lifecycle_required\": true, \"exact_quote_required\": true, \"krw_per_share_unit_required\": true, \"machine_numeric_value_required\": true, \"period_must_be_forward_from_source_availability_date\": true, \"point_value_required\": true}}, \"literal_query_generation_owner\": \"LLM\", \"llm_fact_extractable_roles\": [\"FORWARD_BOOK_VALUE\"], \"semantically_adjacent_ineligible_evidence_closes_gap\": false}, \"FORWARD_EV_EBITDA\": {\"accepted_engine_evidence_roles\": [\"FORWARD_EV_EBITDA\"], \"deterministic_fallback_query_allowed\": false, \"fact_materialization_contracts\": {\"FORWARD_EV_EBITDA\": {\"allowed_source_families\": [\"PUBLIC_BROKER_PDF\"], \"current_or_open_lifecycle_required\": true, \"exact_quote_required\": true, \"machine_numeric_value_required\": true, \"multiple_unit_required\": true, \"period_must_be_forward_from_source_availability_date\": true, \"point_value_required\": true}}, \"literal_query_generation_owner\": \"LLM\", \"llm_fact_extractable_roles\": [\"FORWARD_EV_EBITDA\"], \"semantically_adjacent_ineligible_evidence_closes_gap\": false}, \"FORWARD_PB\": {\"accepted_engine_evidence_roles\": [\"FORWARD_PB\"], \"deterministic_fallback_query_allowed\": false, \"fact_materialization_contracts\": {\"FORWARD_PB\": {\"allowed_source_families\": [\"PUBLIC_BROKER_PDF\"], \"current_or_open_lifecycle_required\": true, \"exact_quote_required\": true, \"machine_numeric_value_required\": true, \"multiple_unit_required\": true, \"period_must_be_forward_from_source_availability_date\": true, \"point_value_required\": true}}, \"literal_query_generation_owner\": \"LLM\", \"llm_fact_extractable_roles\": [\"FORWARD_PB\"], \"semantically_adjacent_ineligible_evidence_closes_gap\": false}}}, \"missing_roles_by_component\": {\"eps_fcf_explosion\": [\"FORWARD_GUIDANCE\", \"QOQ_GROWTH\"], \"valuation_rerating\": [\"DURABLE_VISIBILITY\", \"FORWARD_BOOK_VALUE\", \"FORWARD_EV_EBITDA\", \"FORWARD_PB\"]}, \"pending_reasons\": [\"STRUCTURED_FETCH_PENDING:CompanyGuide:CONSENSUS_VALUATION_SNAPSHOT:PROVIDER_ERROR\", \"STRUCTURED_ROLE_MISSING:eps_fcf_explosion:FORWARD_GUIDANCE\", \"STRUCTURED_ROLE_MISSING:eps_fcf_explosion:QOQ_GROWTH\", \"STRUCTURED_ROLE_MISSING:valuation_rerating:DURABLE_VISIBILITY\", \"STRUCTURED_ROLE_MISSING:valuation_rerating:FORWARD_BOOK_VALUE\", \"STRUCTURED_ROLE_MISSING:valuation_rerating:FORWARD_EV_EBITDA\", \"STRUCTURED_ROLE_MISSING:valuation_rerating:FORWARD_PB\"], \"query_generation_owner\": \"LLM\", \"status\": \"SOURCE_PENDING\"}, \"prior_supervisor_gap\": {\"failure_assessment_projection\": {\"collaboration_transport_waits_excluded_from_semantic_prompt\": true, \"collaboration_transport_waits_persisted_in_source_graph_checkpoint\": true, \"every_semantic_failure_accounted_by_group_count_and_hash\": true, \"failure_count\": 0, \"failure_group_count\": 0, \"failure_group_member_mapping_hash\": \"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\", \"failure_roster_hash\": \"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\", \"failures\": [], \"fixed_top_n_used\": false, \"full_failure_records_persisted_in_source_graph_checkpoint\": true, \"prompt_projection_is_research_cap\": false, \"schema_version\": \"e2r_v5_query_planner_failure_projection_v2\", \"score_authority\": false}, \"parser_or_extractor_failure_roster\": {\"count\": 0, \"roster_hash\": \"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\"}}}, \"target_aliases\": [\"Samsung Electronics\", \"Samsung\"], \"target_id\": \"005930\", \"target_name\": \"삼성전자\"}",
+  "prompt_hash": "858076f7eefea8580ff5565e335cda1dfe4f82b38f19df6f0fb348f103c7bb5a",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bc50f36a4429c4d959998af4a566922426c4295a64ae6ecab63bbfabc1807e76",
+  "request_identity": {
+    "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+    "pass_name": "EVIDENCE_FACT_EXTRACTION",
+    "prompt_hash": "858076f7eefea8580ff5565e335cda1dfe4f82b38f19df6f0fb348f103c7bb5a",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_evidence_fact_extraction",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

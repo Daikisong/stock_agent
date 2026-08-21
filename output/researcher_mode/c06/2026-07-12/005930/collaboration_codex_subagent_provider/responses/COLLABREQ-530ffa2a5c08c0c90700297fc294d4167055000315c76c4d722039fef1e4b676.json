@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "fe2a22012756a4b860460e1f805b17dfb85c9442c24cda07335dea1a2fbd6380",
+  "payload": {
+    "allowed_range": [
+      6.8,
+      9.6
+    ],
+    "anchor_comparisons": [
+      "positive anchor 5.7~7.2점은 약한~중간 미반영의 ordinal 기준이다. 현재 peer 할인과 실적 상회가 있어 그보다 높지만 크게 벗어날 정도의 확정적 mispricing은 아니다.",
+      "counter anchor 14.25~15.0점은 높은 점수 band지만 exact fact signature가 없다. 현재 선반영·cycle peak·시장 차이 counter가 강해 이 band에 근접시키지 않는다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-07ca574cbad488f436ca70d6",
+      "EFACT-1ff68ad6eee1221423b38965",
+      "EFACT-caa96a468d8c424252c4431e",
+      "EFACT-fc2168a8e13ea4aac9ac7e97"
+    ],
+    "disagreements": [
+      "research memo midpoint 10.6은 peer gap을 강조하지만 PBR 선반영, cycle peak 분모 효과와 시장 차이를 더 감액해 8.2를 제안한다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-378ecb883f851d76fb088bf5"
+    ],
+    "proposed_points": 8.2,
+    "rationale": "모든 counter를 반영하면 낮은 PER·peer gap은 상당 부분 설명 가능하다. 선행 PBR은 1.3배에서 2.7배로 이미 상승했고 현재가는 일부 기준 P/B 가치를 넘었다. 2028년 이익 감소 전망은 2026~2027년을 정점으로 보는 기대를 나타내며, 국내외 상장시장 차이는 해외 peer 배수의 단순 적용을 막는다.",
+    "support_fact_ids": [
+      "EFACT-5034028d97af89eb9d3347e4",
+      "EFACT-7d49113d90b5216890ebb0bc",
+      "EFACT-ba3851ffc2538f67427b0ec3",
+      "EFACT-bfc888f1ad3fde5df7857d8f",
+      "EFACT-c8d894a7d67c2050fd2961da",
+      "EFACT-cb2550bcc2cd6b3a1bd34e00",
+      "EFACT-f893638348118288f80693e7"
+    ],
+    "why_not_higher": "이미 상승한 PBR, 현재가의 일부 기준가 초과, 정점 이익 분모 효과와 상장시장 차이가 낮은 PER·peer 할인 해석을 약화한다.",
+    "why_not_lower": "여러 동일 시점 peer 할인과 상대 주가 부진, 실제 컨센서스 상회 및 이익 상향은 미반영 가능성이 완전히 사라지지 않았음을 보여준다."
+  },
+  "payload_hash": "d4ddfd8395ded26bbb5f58ebeb9bc8219431f20981b43a02762257a191f8c3f3",
+  "production_score_authority": false,
+  "prompt_hash": "41223550aa3644828b05c8ff289031fd3617213ad1366841c8ee9f020ba97319",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-530ffa2a5c08c0c90700297fc294d4167055000315c76c4d722039fef1e4b676",
+  "response_id": "COLLABRESP-43e171e2c0e4c44477bb4eb4dc06e33cff528a0e9c35a094c67a0f6d7dc23637",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

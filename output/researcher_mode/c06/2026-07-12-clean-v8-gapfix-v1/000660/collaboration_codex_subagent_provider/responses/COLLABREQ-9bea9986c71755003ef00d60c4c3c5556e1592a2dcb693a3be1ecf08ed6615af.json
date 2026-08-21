@@ -1,0 +1,53 @@
+{
+  "output_schema_hash": "0761f5e3ecd4782e02ae6eb9a78357b05abf9a59da01df619fd2e3bf925f105d",
+  "payload": {
+    "allowed_range": [
+      7.0,
+      9.0
+    ],
+    "anchor_comparisons": [
+      "positive anchor ORDTRANSFER-e743368708b3aee88a83287c와 비교해 확인된 positive는 유지하되 미확인 항목만 상단에서 제한한다",
+      "counter anchor ORDTRANSFER-2bfdc4a0e53457e592939b89와 비교하면 현재 source-backed evidence가 0점 상태보다 강하다"
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca"
+    ],
+    "disagreements": [
+      "분석가보다 귀속·계약·지속성의 미확인 항목을 더 크게 본다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "proposed_points": 8,
+    "rationale": "현재 가격 반영도와 고객 집중, 확정 계약경제 미분리 때문에 큰 시장 오판으로 단정할 수 없다. 그럼에도 가동률과 제품 실행, 고객 협업이 실적 추정의 추가 상향 가능성을 만든다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "현재 가격 반영도와 고객 집중, 확정 계약경제 미분리 때문에 큰 시장 오판으로 단정할 수 없다.",
+    "why_not_lower": "가동률과 제품 실행, 고객 협업이 실적 추정의 추가 상향 가능성을 만든다."
+  },
+  "payload_hash": "deb7d582d292a5539f5e423f1ff7c0681ed2f22360074b123788b40f231eabe0",
+  "production_score_authority": false,
+  "prompt_hash": "0e51716f1c8029104c2a77b5c0056df3eb5781ff53f61af9718ac5756ff38cbe",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9bea9986c71755003ef00d60c4c3c5556e1592a2dcb693a3be1ecf08ed6615af",
+  "response_id": "COLLABRESP-f235f70e95f5a23bdcaf72a560f1a959d1fa24ad89b40881918723df8ad28eb5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

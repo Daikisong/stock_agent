@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "7ea76ef60cfe4543cbf87e797b88e3246b54c8fd80423885962e8c08b05bab40",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-8975b1ff4c89c6739abeefae",
+        "rationale": "문서 전체를 현재 511개 fact와 대조했다. Vera Rubin용 HBM4 양산, HBM4 수율, SOCAMM2 품질검증·양산 출하는 이미 current fact에 있고, 2026년 3월의 HBM4E 실물 공개·개발 가속화는 이후 5월의 HBM4E 12단 고객 샘플 공급과 고객 일정 연동 양산 계획보다 앞선 제품개발 단계여서 별도 current fact로 반복하지 않았다. HBM4E 속도·대역폭·HCB 사양, 행사 전시와 포괄적 AI 협력 표현은 earnings_visibility objective의 고객 배정·qualification·매출 전환을 별도로 확정하지 않으며, SSD 공급 계획은 허용된 HBM·DRAM 범위 밖이다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d68a474793a9a29c74e1e740f29a88c757ceb9d68decd4680a2ae8e58f052299",
+  "production_score_authority": false,
+  "prompt_hash": "17e1c61169f1bb4c330c35f090e626e83f4fd07a532fc8f342d644144b0dd422",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f6fdf4499d24744612e783175b321247887755c73510d91561d8404f25efe3a9",
+  "response_id": "COLLABRESP-65fd91f3f8a1917b5b0ffb5eaecde8d7f21524e09626f829b267eb3680050233",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

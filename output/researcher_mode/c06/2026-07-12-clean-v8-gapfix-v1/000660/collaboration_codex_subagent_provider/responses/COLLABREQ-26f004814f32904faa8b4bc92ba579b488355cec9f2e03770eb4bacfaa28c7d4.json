@@ -1,0 +1,114 @@
+{
+  "output_schema_hash": "7898fd577667183c98b838d240ce0cf709854afb944fd0eb8422e070ea8a6c59",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-00159944171b8edc10daba52",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.02,
+        "rationale": "youtube.com embed URL은 SK하이닉스의 검증된 공식 도메인이 아니고 metadata만으로 issuer earnings release의 원문 소유권·대상·발행일을 확인할 수 없다. 영상 경로를 실적발표 원문이나 HBM 가시성 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-07824df1387aa066f822fdb3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.18,
+        "rationale": "파일명은 2025년 경영실적 보도자료를 가리키지만 S3 host가 verified official domain으로 확인되지 않았고 본문·발행일·content identity도 없다. 이미 fetched된 공식 parent의 부속파일일 가능성은 discovery 단서일 뿐, 현재 metadata만으로 요청된 issuer earnings release provenance나 신규성을 확정할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-55b5d71516f9aaec53c2f15e",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.24,
+        "rationale": "SK하이닉스 공식 뉴스룸의 2025년 2분기 실적 페이지로 요청 family는 일치한다. 그러나 2026-07-12 기준 더 최신인 2025 연간 및 2026년 1분기 경로가 있고, 이 과거 분기 페이지는 현재 HBM 생산·CAPA·고객 배정 상태를 독립적으로 갱신하지 못하므로 이번 objective의 material full-fetch 우선순위에서는 제외한다."
+      },
+      {
+        "candidate_id": "SGCAND-69fad2e1b3224e41d8ec3382",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.99,
+        "rationale": "SK하이닉스 공식 뉴스룸의 2026년 1분기 경영실적 full-article route로 target과 requested family가 직접 일치한다. as_of_date 이전 최신 공식 분기 자료에서 HBM·메모리의 수요, 생산·CAPA, 제품 믹스와 향후 운영 가시성 및 반대 조건을 원문으로 확인할 수 있어 material이다. URL metadata 자체는 증거가 아니며 fetch 후 발행일·본문·인용을 검증해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-a37f2d444e3c88aae77f606f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.08,
+        "rationale": "SK하이닉스 공식 도메인이지만 URL은 제78기 정기주주총회 페이지이며 issuer earnings release라는 요청 문서 family와 다르다. 실적발표 원문이나 기간별 HBM 생산·수요 가시성을 확인할 수 있다는 metadata가 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c0e1d84aafa9f8f7bde1be2e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.05,
+        "rationale": "S3 ZIP은 2025년 연간실적 인포그래픽 이미지 묶음으로 보이나 verified official domain, 본문, 발행일 및 원문 문서 identity가 확인되지 않았다. 압축 이미지 metadata는 최신 earnings visibility의 full-text source도 증거도 아니며, 공식 parent가 이미 fetched된 상태에서 별도 material route로 우선할 근거가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-ef8dc444d83e92c753af9803",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.12,
+        "rationale": "SK하이닉스 공식 뉴스룸의 2024년 연간 실적 페이지라 requested family는 맞는다. 다만 2026-07-12 현재 HBM·메모리 생산, CAPA 또는 고객 배정 상태를 판단하기에는 기간이 오래됐고 최신 2025 연간·2026년 1분기 자료가 이를 supersede하므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-f03e2a59fe256191f769fefa",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.3,
+        "rationale": "SK하이닉스 공식 뉴스룸의 2025년 3분기 실적 페이지로 requested family와 target은 일치한다. 그러나 2025 연간 및 2026년 1분기 공식 결과보다 오래된 자료이고 최신 운영 상태를 직접 갱신하지 못하므로, 이번 current earnings-visibility gap을 해결하는 material route로는 선택하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Material candidate SGCAND-69fad2e1b3224e41d8ec3382는 full fetch 후 실제 발행일, target, 본문과 HBM·메모리 기간별 운영 상태의 exact quote를 검증해야 한다.",
+      "S3 부속파일은 공식 parent에서 발견됐더라도 verified owner와 content identity가 확정되기 전에는 ISSUER_EARNINGS_RELEASE 또는 evidence로 승격하지 않는다.",
+      "비선정이나 검색 실패는 eligible source의 부재를 뜻하지 않으며, metadata와 snippet은 score·fact 권한이 없다."
+    ]
+  },
+  "payload_hash": "8d30844019ee210f7952861aa8b20124ae265182bed7de2ad2848dc3373ff14a",
+  "production_score_authority": false,
+  "prompt_hash": "cefa96b0d191b9061f661312b5c302a15aabddd74178c278dd28f0ebc5930cd9",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-26f004814f32904faa8b4bc92ba579b488355cec9f2e03770eb4bacfaa28c7d4",
+  "response_id": "COLLABRESP-5160b0358e92a94083ec0f907f96e9fa2a86397b290e3f3e4fe622ab98b64568",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

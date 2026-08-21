@@ -1,0 +1,130 @@
+{
+  "output_schema_hash": "09e6883df75a193dc7ea146a98d62802447bc6cc59de736cd3248b0d2a1f4eb9",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1b56dca8a32a8e09416a2f36",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "HBM3E 제품 사양은 투자·현금흐름 원문이 아니며 경제적 actual을 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-dcbd9d5ce329cc55975afb9a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "SSD 소비자 제품 페이지로 연구 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-41849eaaf439a03cf24d9c0d",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.9,
+        "rationale": "공식 감사보고서 자료실은 감사된 재무제표와 현금흐름표 첨부 원문을 full-fetch할 수 있는 발행사 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-6db7ff8da6df4afc9060e0b4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "협력사 반도체 교육 페이지로 자본배분 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-9914816758735b9979a34f4e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "방문 포털 뷰어 경로로 특정 연구 문서가 식별되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-79701dc430cbe43501a95cad",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "협력사 교육지원 안내로 요청 문서군과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-ec196f877cb15e39c60090b9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "윤리경영 설명은 공식이지만 IR 발표자료 또는 현금흐름 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ab64400033c545923ccc3ec1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "HBM2E 제품 사양으로 기간별 투자·현금흐름 actual을 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-cfb8b553d37a32b53274f2d9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "지역 법인 안내로 요청 원문 문서군과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-c0dab0b0e0e2df24733dfa48",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "DBL 성과측정 설명은 이번 요청의 IR 발표자료·현금흐름 문서 클래스가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cf24ce3abcec44dd8f35424a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.15,
+        "rationale": "지속가능경영 보고서 랜딩은 공식 원문 경로지만 요청된 ISSUER_PRESENTATION 또는 CASH_FLOW 문서군과 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-811e44ba5d5dd2966c2fe752",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "2026년 8월 채용 공고는 as-of 이후이며 연구 목적에도 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "감사보고서의 현금흐름 수치는 전사 연결·별도 범위를 유지하고 HBM 단독 FCF로 승격하지 않아야 한다."
+    ]
+  },
+  "payload_hash": "129d7f60b5f2a1ed49843eab0b40fd96195623efa5130f2ad9db35d9f46ae3a3",
+  "production_score_authority": false,
+  "prompt_hash": "bb40c5ec0574cb2837ea853ee2aabea8198eae3242230f9b0403869b3029b09d",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ff018fa3e608c33494f53bfbf808a16f61eaf588a910ea52bed26a25162ce4e2",
+  "response_id": "COLLABRESP-1c000e79b3557a932a8e433c2618989e52e5c3f8874f3a2b8aa4c1ef766a8001",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "output_schema_hash": "afab55a4d025f0c2bd9bc8d530ac6fb58a2e80caf251252fc340d097e1962c2c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0398ada1b60c12a0c08a2224",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 discovery 메타데이터는 다른 후보가 이 일반 기업 홈페이지를 참조했다는 사실만 보여 주며, 삼성전자 HBM의 고객 검증·가격·공급·수익 전환 또는 반대 증거와 직접 연결되는 제목, 날짜, 본문 단서를 제공하지 않습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "지정된 current partition의 후보 1개를 exact-once로 분류했으며 snippet은 증거로 사용하지 않았습니다.",
+      "이 판단은 원문 기반 EvidenceFact나 점수·Stage 권한을 생성하지 않습니다."
+    ]
+  },
+  "payload_hash": "71cddf44f62af2a6c90cc0a17e249184e5cfd863bf2cebf749d1a4aacef73635",
+  "production_score_authority": false,
+  "prompt_hash": "b2e0357f56a3e564cca773b540511ffdf50d7bb8cfd3b11b0491a912843267ca",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fa5a19818c7e4e02238664cfd2be25f85b14265b891873bb5513b8ac7547aff4",
+  "response_id": "COLLABRESP-a9285e6e0b82abbc4697891f2db838ddcfc0a38e82e36d7b98dc8b0333b2490f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

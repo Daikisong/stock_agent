@@ -1,0 +1,570 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Continuation page 15 resumes after the prior FY2025 cash-tax outflow identity. It extracts twelve distinct signed flow atoms in source order: FY2024E/FY2025E consolidated investing cash flow, PPE investment cash flow, financing cash flow, short-term financial-debt change, long-term financial-debt change, and dividend payment. Flow signs are preserved and debt changes are not mislabeled as balance-sheet stocks. All are historical SK Securities forecasts marked SUPERSEDED and issuer-wide, not HBM-only cash generation or capacity. Financial-asset and generic other rows were not promoted. Later cash-change, beginning/ending-cash, FCF, and remaining model rows remain.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated investing cash outflow",
+        "exact_quote": "투자활동현금흐름 -22,290 -17,713 -7,100 -16,486 -16,343",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed consolidated investing-cash-flow forecast is a target-company capital-allocation and cash-conversion counter, but it is superseded broker evidence without HBM attribution.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:INVESTING_CASH_FLOW:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2024 consolidated investing cash outflow KRW 16,486 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "forecasted investing cash flow equals",
+        "predicate_family": "BROKER_CONSOLIDATED_INVESTING_CASH_FLOW_FORECAST",
+        "primitive_tags": [
+          "INVESTING_CASH_FLOW",
+          "CASH_OUTFLOW",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_INVESTING_CASH_FLOW_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_INVESTING_CASH_FLOW_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated investing cash flow",
+        "subject_id": "000660:CONSOLIDATED_INVESTING_CASH_FLOW:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -16486
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated investing cash outflow",
+        "exact_quote": "투자활동현금흐름 -22,290 -17,713 -7,100 -16,486 -16,343",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed consolidated investing-cash-flow forecast is a target-company capital-allocation and cash-conversion counter, but it is superseded broker evidence without HBM attribution.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:INVESTING_CASH_FLOW:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2025 consolidated investing cash outflow KRW 16,343 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "forecasted investing cash flow equals",
+        "predicate_family": "BROKER_CONSOLIDATED_INVESTING_CASH_FLOW_FORECAST",
+        "primitive_tags": [
+          "INVESTING_CASH_FLOW",
+          "CASH_OUTFLOW",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_INVESTING_CASH_FLOW_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_INVESTING_CASH_FLOW_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated investing cash flow",
+        "subject_id": "000660:CONSOLIDATED_INVESTING_CASH_FLOW:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -16343
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated PPE investment cash outflow",
+        "exact_quote": "유형자산의감소(증가) -12,407 -18,687 -6,785 -13,155 -14,100",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The negative decrease-increase line is preserved as a PPE investment cash outflow; it informs consolidated capital allocation but does not identify HBM-only CAPA and is superseded broker evidence.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:PPE_INVESTMENT_CASH_FLOW:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2024 consolidated PPE increase cash outflow KRW 13,155 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "forecasted PPE decrease-increase cash-flow line equals",
+        "predicate_family": "BROKER_CONSOLIDATED_PPE_INVESTMENT_CASH_FLOW_FORECAST",
+        "primitive_tags": [
+          "PPE_INVESTMENT",
+          "CASH_OUTFLOW",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_PPE_INVESTMENT_CASH_FLOW_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_PPE_INVESTMENT_CASH_FLOW_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated property plant and equipment investment cash flow",
+        "subject_id": "000660:CONSOLIDATED_PPE_INVESTMENT_CASH_FLOW:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -13155
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated PPE investment cash outflow",
+        "exact_quote": "유형자산의감소(증가) -12,407 -18,687 -6,785 -13,155 -14,100",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The negative decrease-increase line is preserved as a PPE investment cash outflow; it informs consolidated capital allocation but does not identify HBM-only CAPA and is superseded broker evidence.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:PPE_INVESTMENT_CASH_FLOW:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2025 consolidated PPE increase cash outflow KRW 14,100 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "forecasted PPE decrease-increase cash-flow line equals",
+        "predicate_family": "BROKER_CONSOLIDATED_PPE_INVESTMENT_CASH_FLOW_FORECAST",
+        "primitive_tags": [
+          "PPE_INVESTMENT",
+          "CASH_OUTFLOW",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_PPE_INVESTMENT_CASH_FLOW_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_PPE_INVESTMENT_CASH_FLOW_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated property plant and equipment investment cash flow",
+        "subject_id": "000660:CONSOLIDATED_PPE_INVESTMENT_CASH_FLOW:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -14100
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated financing cash inflow",
+        "exact_quote": "재무활동현금흐름 7,564 9,440 18,109 6,312 6,237",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The positive financing cash-flow forecast indicates external funding inflow and is retained as an issuer-wide capital-allocation counter, not HBM cash generation; it is superseded broker evidence.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:FINANCING_CASH_FLOW:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2024 consolidated financing cash inflow KRW 6,312 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "forecasted financing cash flow equals",
+        "predicate_family": "BROKER_CONSOLIDATED_FINANCING_CASH_FLOW_FORECAST",
+        "primitive_tags": [
+          "FINANCING_CASH_FLOW",
+          "CASH_INFLOW",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_FINANCING_CASH_FLOW_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_FINANCING_CASH_FLOW_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated financing cash flow",
+        "subject_id": "000660:CONSOLIDATED_FINANCING_CASH_FLOW:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 6312
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated financing cash inflow",
+        "exact_quote": "재무활동현금흐름 7,564 9,440 18,109 6,312 6,237",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The positive financing cash-flow forecast indicates external funding inflow and is retained as an issuer-wide capital-allocation counter, not HBM cash generation; it is superseded broker evidence.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:FINANCING_CASH_FLOW:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2025 consolidated financing cash inflow KRW 6,237 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "forecasted financing cash flow equals",
+        "predicate_family": "BROKER_CONSOLIDATED_FINANCING_CASH_FLOW_FORECAST",
+        "primitive_tags": [
+          "FINANCING_CASH_FLOW",
+          "CASH_INFLOW",
+          "BROKER_MODEL",
+          "CONSOLIDATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_FINANCING_CASH_FLOW_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_FINANCING_CASH_FLOW_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated financing cash flow",
+        "subject_id": "000660:CONSOLIDATED_FINANCING_CASH_FLOW:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 6237
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of short-term debt financing inflow",
+        "exact_quote": "단기금융부채의증가(감소) 0 0 0 6,244 7,063",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a signed debt-change flow, not the debt balance; the increase is issuer-wide financing counterevidence and is a superseded broker forecast.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:SHORT_TERM_DEBT_CHANGE:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2024 short-term financial debt increase KRW 6,244 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "forecasted short-term financial debt increase equals",
+        "predicate_family": "BROKER_SHORT_TERM_FINANCIAL_DEBT_CHANGE_FORECAST",
+        "primitive_tags": [
+          "SHORT_TERM_DEBT_CHANGE",
+          "FINANCING_INFLOW",
+          "FLOW_NOT_STOCK",
+          "BROKER_MODEL"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "SHORT_TERM_FINANCIAL_DEBT_CHANGE_FORECAST",
+        "question_family_tags": [
+          "SHORT_TERM_FINANCIAL_DEBT_CHANGE_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated short-term financial debt change",
+        "subject_id": "000660:SHORT_TERM_FINANCIAL_DEBT_CHANGE:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 6244
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of short-term debt financing inflow",
+        "exact_quote": "단기금융부채의증가(감소) 0 0 0 6,244 7,063",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a signed debt-change flow, not the debt balance; the increase is issuer-wide financing counterevidence and is a superseded broker forecast.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:SHORT_TERM_DEBT_CHANGE:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2025 short-term financial debt increase KRW 7,063 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "forecasted short-term financial debt increase equals",
+        "predicate_family": "BROKER_SHORT_TERM_FINANCIAL_DEBT_CHANGE_FORECAST",
+        "primitive_tags": [
+          "SHORT_TERM_DEBT_CHANGE",
+          "FINANCING_INFLOW",
+          "FLOW_NOT_STOCK",
+          "BROKER_MODEL"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "SHORT_TERM_FINANCIAL_DEBT_CHANGE_FORECAST",
+        "question_family_tags": [
+          "SHORT_TERM_FINANCIAL_DEBT_CHANGE_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated short-term financial debt change",
+        "subject_id": "000660:SHORT_TERM_FINANCIAL_DEBT_CHANGE:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 7063
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of long-term debt financing inflow",
+        "exact_quote": "장기금융부채의증가(감소) 8,610 11,616 20,197 894 0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a signed debt-change flow, not the long-term debt balance; the increase is issuer-wide financing counterevidence and is a superseded broker forecast.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:LONG_TERM_DEBT_CHANGE:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2024 long-term financial debt increase KRW 894 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "forecasted long-term financial debt increase equals",
+        "predicate_family": "BROKER_LONG_TERM_FINANCIAL_DEBT_CHANGE_FORECAST",
+        "primitive_tags": [
+          "LONG_TERM_DEBT_CHANGE",
+          "FINANCING_INFLOW",
+          "FLOW_NOT_STOCK",
+          "BROKER_MODEL"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "LONG_TERM_FINANCIAL_DEBT_CHANGE_FORECAST",
+        "question_family_tags": [
+          "LONG_TERM_FINANCIAL_DEBT_CHANGE_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated long-term financial debt change",
+        "subject_id": "000660:LONG_TERM_FINANCIAL_DEBT_CHANGE:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 894
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of no long-term debt financing change",
+        "exact_quote": "장기금융부채의증가(감소) 8,610 11,616 20,197 894 0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a signed debt-change flow, not the long-term debt balance; the zero change is issuer-wide model context and is a superseded broker forecast.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:LONG_TERM_DEBT_CHANGE:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2025 long-term financial debt change KRW 0 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "forecasted long-term financial debt change equals",
+        "predicate_family": "BROKER_LONG_TERM_FINANCIAL_DEBT_CHANGE_FORECAST",
+        "primitive_tags": [
+          "LONG_TERM_DEBT_CHANGE",
+          "NO_CHANGE",
+          "FLOW_NOT_STOCK",
+          "BROKER_MODEL"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "LONG_TERM_FINANCIAL_DEBT_CHANGE_FORECAST",
+        "question_family_tags": [
+          "LONG_TERM_FINANCIAL_DEBT_CHANGE_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated long-term financial debt change",
+        "subject_id": "000660:LONG_TERM_FINANCIAL_DEBT_CHANGE:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 0
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated dividend cash outflow",
+        "exact_quote": "배당금지급 -805 -1,681 -826 -826 -826",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed dividend-payment flow is a target-company capital-allocation cash outflow, not an HBM cash-flow attribution, and is a superseded broker forecast.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:DIVIDEND_PAYMENT:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2024 consolidated dividend payment cash outflow KRW 826 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "forecasted dividend payment cash flow equals",
+        "predicate_family": "BROKER_CONSOLIDATED_DIVIDEND_PAYMENT_FORECAST",
+        "primitive_tags": [
+          "DIVIDEND_PAYMENT",
+          "CASH_OUTFLOW",
+          "FLOW_NOT_STOCK",
+          "BROKER_MODEL"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_DIVIDEND_PAYMENT_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_DIVIDEND_PAYMENT_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated dividend payment cash flow",
+        "subject_id": "000660:CONSOLIDATED_DIVIDEND_PAYMENT:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -826
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated dividend cash outflow",
+        "exact_quote": "배당금지급 -805 -1,681 -826 -826 -826",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed dividend-payment flow is a target-company capital-allocation cash outflow, not an HBM cash-flow attribution, and is a superseded broker forecast.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:DIVIDEND_PAYMENT:BROKER_MODEL",
+        "normalized_object": "SK hynix FY2025 consolidated dividend payment cash outflow KRW 826 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "forecasted dividend payment cash flow equals",
+        "predicate_family": "BROKER_CONSOLIDATED_DIVIDEND_PAYMENT_FORECAST",
+        "primitive_tags": [
+          "DIVIDEND_PAYMENT",
+          "CASH_OUTFLOW",
+          "FLOW_NOT_STOCK",
+          "BROKER_MODEL"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "CONSOLIDATED_DIVIDEND_PAYMENT_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_DIVIDEND_PAYMENT_FORECAST"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated dividend payment cash flow",
+        "subject_id": "000660:CONSOLIDATED_DIVIDEND_PAYMENT:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -826
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "Distinct later cash-change, beginning/ending-cash, FCF, and remaining target-company broker-model atoms remain in the supplied literal document; continuation is required."
+    ]
+  },
+  "payload_hash": "51d2232be305ab55b37c778169ec422a06689eecff23d1970084fff7d69bd6f0",
+  "production_score_authority": false,
+  "prompt_hash": "1d1bdee62f802a805b73abd81987bfecbb17690eed280af9c1635c8ca0d6f43d",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-77afbeabd18a4d4946edb5ff3644ba78fa4615e0ddc4dc610584600172e4e75a",
+  "response_id": "COLLABRESP-7ccc9eb0b9c125c6e89d52fe9ebcc2b6e8909dff30604f07024f9f408b484dd5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-18d8c22a03411a3f40e57cf8",
+        "rationale": "기사의 2026년 2분기 연결 잠정 매출·영업이익은 메모리/HBM 단독 귀속이 없고, D램·낸드 가격 상승률은 MX사업부 원가 부담을 설명하는 시장 가격으로 삼성전자 메모리의 실현 ASP·매출·이익을 입증하지 않는다. MX의 메모리 장기공급계약 추진도 스마트폰 조달 계약이며 삼성전자 메모리 사업의 외부 고객 장기계약으로 전용할 수 없어, 현재 eps_fcf_explosion objective에 직접 연결되는 비중복 사실을 추출하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "연결 잠정 매출 171조원·영업이익 89조4천억원은 회사 전체 수치라 HBM/메모리 수익 또는 FCF로 귀속하지 않았다.",
+      "2분기 D램 가격 58~63% 상승은 MX 원가 분석에 사용된 시장 가격이며 삼성전자 메모리 실현가격이나 HBM 가격으로 해석하지 않았다.",
+      "MX사업부가 추진하는 LTA와 외부 조달망 검토는 모바일 부품 구매 활동이므로 메모리 사업의 고객 구매의무·수주잔고·CAPA 잠김으로 만들지 않았다.",
+      "MX 손익 추정, 스마트폰 판매·가격, BOE 패널, SK하이닉스·마이크론 공급 언급은 타 사업 또는 타사 귀속 정보라 제외했다."
+    ]
+  },
+  "payload_hash": "8b4b1700e945f946f262c9b7c282aa519681f303132ebd395610006af0c70604",
+  "production_score_authority": false,
+  "prompt_hash": "a93afce6cb24cbad4e114a6d8f98ea382f7fdc840885772bce747f27b709093e",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b33947ecc0e49026bdcaf91706d18fa2625ed2f657aa3dd108c591a400dc90fe",
+  "response_id": "COLLABRESP-5b37ac3e5371258253d5c0c524471b0624acb223723221aca14234f0b02b7593",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

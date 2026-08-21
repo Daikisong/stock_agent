@@ -1,0 +1,167 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b6b83f2a9680810eeb594ea0",
+        "rationale": "2025년 연결 매출·영업이익·순이익 actual 3개를 전사 연결 범위로 추출했다. 영업이익률·순이익률은 v9 허용 consolidated metric이 아니어서 별도 fact로 만들지 않았고, 미래 연관기사와 구체 수치 없는 투자·안정성·환원 문구는 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b6b83f2a9680810eeb594ea0",
+        "economic_mechanism": "SK하이닉스는 2025년 연결 매출 97조 1,467억 원의 연간 actual을 공시했다. 이는 전사 연결 수치이며 HBM 단독 매출로 귀속하지 않는다.",
+        "exact_quote": "SK하이닉스가 2025년 매출액 97조 1,467억 원",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공식 issuer가 발표한 연간 연결 매출 actual로 EPS/FCF 경제 규모를 직접 확인하지만 HBM 단독 귀속은 허용하지 않는다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CONSOLIDATED_EARNINGS_ACTUAL",
+        "normalized_object": "FY2025 연결 매출 actual",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025",
+        "predicate": "REPORTS_FY2025_CONSOLIDATED_REVENUE",
+        "predicate_family": "CONSOLIDATED_ACTUAL",
+        "primitive_tags": [
+          "ISSUER_OFFICIAL",
+          "ANNUAL_ACTUAL",
+          "NO_HBM_ATTRIBUTION"
+        ],
+        "product_family": "연결 전체",
+        "question_family_id": "QF-CONSOLIDATED-EARNINGS-ACTUAL",
+        "question_family_tags": [
+          "EPS_FCF",
+          "CONSOLIDATED_EARNINGS"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 매출",
+        "subject_id": "TARGET:000660:CONSOLIDATED-EARNINGS",
+        "unit": "KRW million",
+        "value": 97146700
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b6b83f2a9680810eeb594ea0",
+        "economic_mechanism": "SK하이닉스는 2025년 연결 영업이익 47조 2,063억 원의 연간 actual을 공시했다. 이는 전사 연결 이익이며 HBM 단독 이익으로 귀속하지 않는다.",
+        "exact_quote": "영업이익 47조 2,063억 원(영업이익률 49%)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공식 issuer의 연간 연결 영업이익 actual은 EPS 전환 강도를 직접 확인하지만 HBM 단독 이익·마진은 아니다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CONSOLIDATED_EARNINGS_ACTUAL",
+        "normalized_object": "FY2025 연결 영업이익 actual",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025",
+        "predicate": "REPORTS_FY2025_CONSOLIDATED_OPERATING_PROFIT",
+        "predicate_family": "CONSOLIDATED_ACTUAL",
+        "primitive_tags": [
+          "ISSUER_OFFICIAL",
+          "ANNUAL_ACTUAL",
+          "NO_HBM_ATTRIBUTION"
+        ],
+        "product_family": "연결 전체",
+        "question_family_id": "QF-CONSOLIDATED-EARNINGS-ACTUAL",
+        "question_family_tags": [
+          "EPS_FCF",
+          "CONSOLIDATED_EARNINGS"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 영업이익",
+        "subject_id": "TARGET:000660:CONSOLIDATED-EARNINGS",
+        "unit": "KRW million",
+        "value": 47206300
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b6b83f2a9680810eeb594ea0",
+        "economic_mechanism": "SK하이닉스는 2025년 연결 순이익 42조 9,479억 원의 연간 actual을 공시했다. 이는 전사 연결 수치이며 HBM 단독 순이익으로 귀속하지 않는다.",
+        "exact_quote": "순이익 42조 9,479억 원(순이익률 44%)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공식 issuer의 연간 연결 순이익 actual은 EPS 결과를 직접 확인하지만 HBM 단독 순이익으로 재분류할 수 없다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CONSOLIDATED_EARNINGS_ACTUAL",
+        "normalized_object": "FY2025 연결 순이익 actual",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025",
+        "predicate": "REPORTS_FY2025_CONSOLIDATED_NET_INCOME",
+        "predicate_family": "CONSOLIDATED_ACTUAL",
+        "primitive_tags": [
+          "ISSUER_OFFICIAL",
+          "ANNUAL_ACTUAL",
+          "NO_HBM_ATTRIBUTION"
+        ],
+        "product_family": "연결 전체",
+        "question_family_id": "QF-CONSOLIDATED-EARNINGS-ACTUAL",
+        "question_family_tags": [
+          "EPS_FCF",
+          "CONSOLIDATED_EARNINGS"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_NET_INCOME_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 순이익",
+        "subject_id": "TARGET:000660:CONSOLIDATED-EARNINGS",
+        "unit": "KRW million",
+        "value": 42947900
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "c14886278abe53898bb8a9528869bb0980c17738d78f4cdd5296cec344b3cd52",
+  "production_score_authority": false,
+  "prompt_hash": "937679bf02ad4c95f2717a5f3f5e24b9b3f262b860fcc92b268f950456bd253c",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f25017393a24cb8909bdcb3f35b5c890b2b6261b8bb0aa93120424247d86bf66",
+  "response_id": "COLLABRESP-0d6649164f99b1484b9f329b9f56103195c3984dcc29d7364b95c41e1948b352",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

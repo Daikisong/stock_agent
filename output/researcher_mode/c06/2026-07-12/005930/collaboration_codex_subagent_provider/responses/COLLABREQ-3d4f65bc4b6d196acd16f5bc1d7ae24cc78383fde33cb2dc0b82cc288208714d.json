@@ -1,0 +1,285 @@
+{
+  "output_schema_hash": "f22689e5ebcd4f562143086f6e1305dd482d5f02b619846dd9ef97e10003b34e",
+  "payload": {
+    "confidence": 0.88,
+    "counter_case": "미발생 자산취득 약정, DS 투자, 매출채권·운전자본 현금유출과 초기 HBM4 수익성은 실현 ROIC와 잔여현금을 제한할 수 있다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-a07945c19eb9b2b62790d62e",
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-55039467f24da62ebee5fae7",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e"
+    ],
+    "positive_case": "HBM4 공급 인프라, 40조원대 분기 OCF, 73조원대 현금과 실제 자사주 소각은 성장투자와 주주환원을 병행할 재원이다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 6,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 23,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 134,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 182,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 219,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 233,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 267,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 298,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 352,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 371,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 372,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 473,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 546,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 570,
+        "reason": "현재 citable 사실이며 직전 의미를 뒤집지 않고 이번 양면 재평가에 유지한다."
+      }
+    ],
+    "proposed_score_lower": 1.2,
+    "proposed_score_mid": 1.9,
+    "proposed_score_upper": 2.6,
+    "research_complete": true,
+    "researcher_summary": "현금·영업현금흐름, 공급 인프라 투자와 자사주 소각은 자본배분 여력을 보여 주지만 CAPEX·약정·운전자본 흡수가 크다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "POSITIVE 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 6,
+        "source_economic_mechanism": "HBM4_INTEGRATED_SUPPLY_INFRASTRUCTURE",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "삼성전자가 HBM4에 로직·메모리·파운드리·패키징 원스톱 솔루션과 선제적 인프라 투자를 적용해 공급 안정성을 확보했다",
+        "source_value_json": "\"integrated one-stop solution and proactive infrastructure investment for supply stability\""
+      },
+      {
+        "component_interpretation": "COUNTER 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 23,
+        "source_economic_mechanism": "CORPORATE_CAPITAL_COMMITMENT",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "2026년 3월 말 연결 기준 아직 발생하지 않은 유·무형자산 취득 약정액이 27,503,020백만원이다",
+        "source_value_json": "27503020"
+      },
+      {
+        "component_interpretation": "COUNTER 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 134,
+        "source_economic_mechanism": "WORKING_CAPITAL_CASH_CONVERSION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 매출채권 증가가 영업현금흐름을 27,680,587백만원 감소시켰다",
+        "source_value_json": "-27680587"
+      },
+      {
+        "component_interpretation": "POSITIVE 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 182,
+        "source_economic_mechanism": "CORPORATE_LIQUIDITY",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "2026년 1분기말 연결 현금및현금성자산이 73,306,751백만원이다",
+        "source_value_json": "73306751"
+      },
+      {
+        "component_interpretation": "COUNTER 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 219,
+        "source_economic_mechanism": "HBM 등 고부가 제품 판매 확대를 위한 선단공정 전환 투자가 2025년 4분기와 연간 모두 증가해 공급 대응을 강화했지만, 같은 기간 현금지출 부담도 높였음을 보여준다.",
+        "source_period_json": "\"2025-Q4 and FY2025\"",
+        "source_predicate": "삼성전자 메모리 투자가 HBM 등 고부가 제품 판매 확대 목적의 선단공정 전환 투자로 2025년 4분기와 연간 모두 증가했다",
+        "source_value_json": "\"memory investment increased in Q4 and FY2025\""
+      },
+      {
+        "component_interpretation": "COUNTER 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 233,
+        "source_economic_mechanism": "SHAREHOLDER_RETURN_CASH_USE",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 별도 자기주식 취득 현금유출이 7,614,808백만원이다",
+        "source_value_json": "7614808"
+      },
+      {
+        "component_interpretation": "NEUTRAL 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 267,
+        "source_economic_mechanism": "CORPORATE_CAPITAL_ALLOCATION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 DS 부문 신·증설 및 보완 시설투자가 101,927억원이었다",
+        "source_value_json": "101927"
+      },
+      {
+        "component_interpretation": "COUNTER 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 298,
+        "source_economic_mechanism": "2026년 메모리 대규모 CAPEX 증가 전망은 제한된 공급에 대응하는 증설 여력을 높이는 동시에, 이익이 FCF로 전환되는 과정의 현금지출 부담을 키우는 양면 요인이다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "삼성전자는 2026년 세부 투자계획이 미확정인 상태에서 메모리 대규모 CAPEX 증가를 예상했다",
+        "source_value_json": "\"large memory capex increase expected; detailed plan not finalized\""
+      },
+      {
+        "component_interpretation": "POSITIVE 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 352,
+        "source_economic_mechanism": "TREASURY_SHARE_CANCELLATION",
+        "source_period_json": "\"2026-04-02\"",
+        "source_predicate": "2026년 4월 2일 보통주 자기주식 73,359,314주를 소각했다",
+        "source_value_json": "73359314"
+      },
+      {
+        "component_interpretation": "POSITIVE 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 371,
+        "source_economic_mechanism": "OPERATING_CASH_GENERATION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 연결 영업활동현금흐름이 40,274,106백만원이다",
+        "source_value_json": "40274106"
+      },
+      {
+        "component_interpretation": "COUNTER 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 372,
+        "source_economic_mechanism": "HBM4 초기 수익성이 이전 세대보다 낮을 수 있어 물량 확대가 즉시 같은 비율의 이익 확대로 이어지지 않을 위험이 있다.",
+        "source_period_json": "\"2026-H2E\"",
+        "source_predicate": "IBK투자증권은 HBM4 초기 수익성이 HBM3E보다 낮을 것으로 추정했다",
+        "source_value_json": "\"HBM3E 대비 낮은 초기 수익성 추정\""
+      },
+      {
+        "component_interpretation": "COUNTER 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 473,
+        "source_economic_mechanism": "WORKING_CAPITAL_CASH_CONVERSION",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 영업활동 자산·부채 변동이 현금흐름을 25,543,731백만원 감소시켰다",
+        "source_value_json": "-25543731"
+      },
+      {
+        "component_interpretation": "NEUTRAL 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 546,
+        "source_economic_mechanism": "CORPORATE_SHAREHOLDER_RETURN",
+        "source_period_json": "\"2024-2026\"",
+        "source_predicate": "삼성전자는 2024~2026년 발생 FCF의 50%를 재원으로 연 9.8조원 정규배당을 유지하고 잔여 재원은 추가 환원할 계획이다",
+        "source_value_json": "\"FCF 50%; annual regular dividend KRW 9.8 trillion\""
+      },
+      {
+        "component_interpretation": "POSITIVE 근거의 원문 의미를 capital_allocation 판단에 그대로 반영하고 actual·전망·한계를 구분한다.",
+        "fact_row_index": 570,
+        "source_economic_mechanism": "키움증권의 잉여현금흐름 전망은 메모리 이익과 투자 이후 남는 전사 현금 규모를 valuation_rerating 논리와 연결한다.",
+        "source_period_json": "\"FY2026E\"",
+        "source_predicate": "키움증권은 삼성전자의 2026년 잉여현금흐름을 120조3000억원으로 추정했다",
+        "source_value_json": "120.3"
+      }
+    ],
+    "selected_fact_row_indices": [
+      6,
+      23,
+      134,
+      182,
+      219,
+      233,
+      267,
+      298,
+      352,
+      371,
+      372,
+      473,
+      546,
+      570
+    ],
+    "source_coverage": [
+      "COMPANYGUIDE",
+      "COMPANYGUIDE+KRX_PRICE_MARKET_CAP",
+      "CUSTOMER_OFFICIAL",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "DETERMINISTIC_FORWARD_SCENARIO",
+      "DETERMINISTIC_FORWARD_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "GENERAL_WEB_DISCOVERY",
+      "ISSUER_GUIDANCE",
+      "ISSUER_NEWSROOM",
+      "KIND_KRX",
+      "KRX_PRICE_MARKET_CAP",
+      "KRX_PRICE_MARKET_CAP+COMPANYGUIDE",
+      "KRX_PRICE_MARKET_CAP+PUBLIC_BROKER_REPORT",
+      "OPENDART",
+      "PEER_STRUCTURED",
+      "PUBLIC_BROKER_PDF",
+      "PUBLIC_BROKER_REPORT",
+      "STRUCTURED_HISTORICAL_BAND",
+      "STRUCTURED_PEER_BAND",
+      "TRUSTED_BUSINESS_MEDIA"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "HBM CAPEX의 증분 ROIC와 회수기간이 공개되지 않았다.",
+      "전사 현금·FCF를 HBM 투자회수로 직접 귀속할 수 없다.",
+      "2026년 상세 투자계획과 집행속도가 확정되지 않았다."
+    ],
+    "why_not_higher": "투자별 실현 ROIC·회수기간과 HBM 단독 현금흐름이 없어 상단을 제한한다.",
+    "why_not_lower": "실제 OCF·현금·자사주 소각과 공급투자가 확인돼 근거가 없는 상태보다 높다."
+  },
+  "payload_hash": "d93178d2a46062c6c29c068f44809864bd3b63bc4a812b87b54d2942060f1317",
+  "production_score_authority": false,
+  "prompt_hash": "4c2f0b7cee99fed69d2c38e3b73054ba2750f70ba08baf03d96500b8e3a87e21",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/primary_phase101",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3d4f65bc4b6d196acd16f5bc1d7ae24cc78383fde33cb2dc0b82cc288208714d",
+  "response_id": "COLLABRESP-8ef9160ca14e34e7f2e6b09484393c10decc76b1a21efabd39e9643ff5aee482",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,1897 @@
+{
+  "completion_based_on_round_count": false,
+  "component_findings": [
+    {
+      "component_id": "eps_fcf_explosion",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "실제 메모리 매출·연결 OCF·FCF와 이익 상방을 가격 의존, 재고·램프 비용, CAPEX·운전자본 counter와 함께 반영했다. HBM 단독 손익·현금 bridge 부재는 귀속 상한과 monitoring으로 이미 반영됐고 현재 판단을 바꿀 구체적 미실행 공개경로가 없다."
+    },
+    {
+      "component_id": "earnings_visibility",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "HBM4 인증·양산·누적매출, CAPA 완판·구매주문·일부 다년계약을 NDA, LTA 재가격, 고객 일정과 취소조건 미공개 counter와 함께 반영했다. 공개되지 않은 계약조건은 monitoring 한계이지 현재 확인된 신규 실행 가능 source gap이 아니다."
+    },
+    {
+      "component_id": "bottleneck_pricing",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "메모리 시간 가동률, 재고·공급충족률, 완판과 가격·믹스 근거를 HBM 전용 처리량 부재, 증설·공급정상화 및 가격사이클 counter와 함께 평가해 현재 병목의 강도와 파손조건을 충분히 구분했다."
+    },
+    {
+      "component_id": "market_mispricing",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "현재·forward 배수, consensus revision과 peer band를 실제 HBM 상용화, 현재 가격의 기대반영, 비교기업 차이와 2028년 이후 정상화 위험과 함께 평가했다. 현 score aggregation은 complete·valid이고 세 역할 범위도 교차한다."
+    },
+    {
+      "component_id": "valuation_rerating",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "HBM4 인증·양산·지속납품·누적매출과 상대배수를 초기 수익성, 고객 일정, 제품별 actual 이익·FCF 부재와 peer 비교 한계에 맞춰 구분했다. Structured report 후보 metadata는 증거로 승격하지 않았으며 현재 구체적인 material full-report gap을 만들지 않는다."
+    },
+    {
+      "component_id": "capital_allocation",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "actual OCF·FCF·현금과 자사주 소각을 CAPEX·미발생 자산취득 약정·운전자본 및 HBM 단독 ROIC 부재와 함께 반영했다. 투자별 회수기간은 향후 monitoring 항목이나 현재 memo를 재작성할 새 공개경로는 확인되지 않는다."
+    },
+    {
+      "component_id": "information_confidence",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "공식 제품매출·가동률·K-IFRS 분기검토와 고객 공식 기술자료를 회계추정, 미감사 설명, NDA·답변거부 및 제품별 이익 미공개 한계와 함께 반영했다. 고객 공식 corroboration은 기술협력 범위로만 사용했고 qualification·구매의무로 확대하지 않았다."
+    }
+  ],
+  "component_memos_sufficient": true,
+  "component_status": {
+    "bottleneck_pricing": "COMPLETE",
+    "capital_allocation": "COMPLETE",
+    "earnings_visibility": "COMPLETE",
+    "eps_fcf_explosion": "COMPLETE",
+    "information_confidence": "COMPLETE",
+    "market_mispricing": "COMPLETE",
+    "valuation_rerating": "COMPLETE"
+  },
+  "counter_and_supersession_checked": true,
+  "epoch": 190,
+  "failure_assessments": [
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-0e32d4bc971f0c261032fa7e",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-164f849ec5c72c6f4a403e0e",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-1aa31929e62c6e9219adb1f4",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-24b8016d357ecdcc6be83e2f",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-25b44d175aa584253af34350",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-2ab348056ef6e08d0b219c6a",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-2f69c54f4e184b88f82e41b8",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-32e43d694372a813a2ffb6ca",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-36320334f0d18d20e67f7080",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-37e65bba0d10ebe090c98116",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-3b5f85ad103c330b49d231cd",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-4161f00bea7a6f4c0115b189",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-4e81f58ad53fd614cc4ba83b",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-506ef2e57c4f5f329596513d",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-55bb4f4cb72a6228d13d3259",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-58b0c70776cc68f2cfa841ad",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-59fff2c565a2f5445794bebc",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-5eae00b90bb317bc0a2e155a",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-5fa2671041cf46d4c625a41b",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-61451a62031f74b8a06c9799",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-61a31724a4a99d67bbfff414",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-638077b3cbd53d733daf0d1f",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-6389639e281e2fbaf26a27f9",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-6baac50249bd6a176626708f",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-79fcbc902985c4b8e581d6f3",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-7b1e0763aa320882f8860dd4",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-834c22e4e34f78e1584bcb05",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-96964d1a6fc2982b50da7909",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-9b8c8863627d040478a7c01f",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-aca743442ecf5dbc3d256d93",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-b23c9265e15f2a15fe1d0783",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-ce22edf6d4d0373ba263b001",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-ce892d20d3263de7e49c6be3",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-d6a536ab58f639db67f0de99",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH는 날짜 검증이 끝나지 않은 fetch 경로 실패다. 해당 objective는 다른 source-backed fact와 counter/supersession 경로로 resolved됐으므로 source absence로 해석하거나 같은 경로를 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-0018af6dcdd2c266238a9d9f",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-0589bbe87b44b582e11052b0",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-118b10a216783db18dbf2c75",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-19d099a34afb54c4238bce79",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-2eb9673aab479d4af29dd1a3",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-436a14baf19911bc89478b9e",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-59642834763c5acdb0ee1929",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-5f2d58f4f37d05ca85ab666b",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-6d751c0d915b55708491ca9b",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-712f945dcc91e95801965855",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-8a5fcec188b90f1592166d41",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-8c52031357f37a6fdfa4cff9",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-9eae91fdc9325630e1d12a5c",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-9edbbc3f4da8c9098bff1066",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-d96386abd86e60573e495144",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-da3d91a2efcd6d203e8e69b7",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-ded27ce64f047281ac3ea7d9",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-e2b519d6ba9ca87829030f55",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-f1641852d6b2628f153dc72c",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-fe1c44109d45612fc628198f",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED는 snippet이 evidence가 될 수 없어 발생한 full-fetch 실패다. snippet을 사실로 승격하지 않고, objective가 독립 evidence로 resolved된 현재 상태에서는 재시도나 absence 주장의 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "IRRELEVANT_DOCUMENT",
+      "failure_id": "RSFAIL-a5d57ddcf94e05df86d38d75",
+      "rationale": "WRONG_SUBJECT_FULL_DOCUMENT는 대상이 다른 문서를 제거한 적합성 판정이다. 올바른 대상의 현재 evidence가 별도로 있으므로 source absence나 parser 실패가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "IRRELEVANT_DOCUMENT",
+      "failure_id": "RSFAIL-ba373cfc6e3f117557e4ff22",
+      "rationale": "WRONG_SUBJECT_FULL_DOCUMENT는 대상이 다른 문서를 제거한 적합성 판정이다. 올바른 대상의 현재 evidence가 별도로 있으므로 source absence나 parser 실패가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "IRRELEVANT_DOCUMENT",
+      "failure_id": "RSFAIL-c989ec0642ba926d31a44296",
+      "rationale": "WRONG_SUBJECT_FULL_DOCUMENT는 대상이 다른 문서를 제거한 적합성 판정이다. 올바른 대상의 현재 evidence가 별도로 있으므로 source absence나 parser 실패가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-0069895ae99971028d80a755",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-00e29106a84f7f7cfd289778",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-0265d745ad83256aaaebfe4f",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-1f7b31bfdac63c53c9c2e834",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-271c1516859fcd2653a13334",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-2a141f39223297f709f5e3ee",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-2a2bf24de5056867897681e0",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-385d31e3f5a80313e31d245d",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-3b9a5668cb0712ade935b93d",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-414069dea1732051dc68a615",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-4779dad92e8a0a802932f16d",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-4c0dcad555355e249fa1319b",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-551a11775b1ecfac95ba74e4",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-5873d64953325022db73f679",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-6b56ce5946788d13e99a46b1",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-702b1be57266f8d644fd6cdc",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-7434caea36897a3f6df1a1e5",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-74c7a3a29aeb4eaf8c93e66d",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-7cfa74202dac6f031b276db9",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-888abd4d5374766f4bd1e8c1",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-8e8605902f2ca078754dfe8a",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-92359c7081b1b8f71e05f26f",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-93b54c98ea5526ae8080bbc7",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-a06e44912c690d98bcde1259",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-acedf263175a9a601bc40f99",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-b29634769478e9345a967f2e",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-ba2c6ed4a232cd132b2a1b37",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-bd19452fa4bd74368eca9287",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-c03d1d5f76be9e0e0d8d9df2",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-c50467e65b7645fa0a4f9cee",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-c75a54ac3b318b5cd8c46182",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-cef3d7c6f436023b142af888",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-d0976d0219c09976b6839327",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-d62cd3b298f4449f0968d2b2",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-d9962143a8c26581877d5e44",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-e11f26c4c63ef19bd393875c",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-e6b6905d7d4ff230c9dea3dc",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-f6aa38797dac3463ea856a0d",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-fac9fd3cfc95db3540b06a67",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH는 as_of_date 이후 문서를 차단한 정상적인 미래누수 방지다. 제외된 미래 자료를 완료나 부재의 근거로 사용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "IRRELEVANT_DOCUMENT",
+      "failure_id": "RSFAIL-14c1a3447ebd9f10e26c2b3d",
+      "rationale": "WRONG_SUBJECT_FULL_DOCUMENT query failure는 full document가 target과 다른 경우다. current objective는 다른 정확한 대상 자료로 resolved됐고 같은 문서는 재시도하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "IRRELEVANT_DOCUMENT",
+      "failure_id": "RSFAIL-18c7ecb1ce41e094aba43386",
+      "rationale": "WRONG_SUBJECT_FULL_DOCUMENT query failure는 full document가 target과 다른 경우다. current objective는 다른 정확한 대상 자료로 resolved됐고 같은 문서는 재시도하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "IRRELEVANT_DOCUMENT",
+      "failure_id": "RSFAIL-e4935edd7991bdaf9e2fcf53",
+      "rationale": "WRONG_SUBJECT_FULL_DOCUMENT query failure는 full document가 target과 다른 경우다. current objective는 다른 정확한 대상 자료로 resolved됐고 같은 문서는 재시도하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "INSUFFICIENT_SEARCH",
+      "failure_id": "RSFAIL-04a1b7279d776687bfc8e548",
+      "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY는 그 호출에서 신규 유효 query를 만들지 못했다는 기록일 뿐 saturation 또는 source absence 증명이 아니다. 다만 7개 objective는 별도 source-backed 경로로 resolved됐고 현재 concrete novel route가 없어 동일·동의어 query는 재생성하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-0fbfab0243b53825ac4bef1e",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-12e6c4984a5604e05218d7b7",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-2254cbfbc32e56028fa350f4",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-2323769e867fd570b56140f5",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-2be2ca3762099630f1ef261d",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-315fe2934a5575aac43eceb7",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-3a7948796cb5684829811569",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-3aea2a46969b2b5df9828265",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-3f22525626bbf1bb2eb935da",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-4836a1ca01987cf0f8cc4289",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-5163b838637498c3f50588ba",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-58d85a942200291f917ba9c0",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-5f2ce084184f5fe12ca1c3a9",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-6402cd3bc06dbf4d7c4c9a0d",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-6fb42953b4ed086f3a9e704b",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-78b76d45eeb10d202542fd2a",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-8750ea2f9c831fd808fd7cfe",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-88996501add0489be9d1c115",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-97ec5c1f1a0d06934663a9dd",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-9830a9fabd696eb00331a186",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-a1c73fbd88fef6330c0d3fac",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-a8fc8ff616a78d983d8b202b",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-ac912390e4cecb1b4c5037e6",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-ac9de579f43bbb890c0d13bf",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-acb4722a756d905879a46939",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-b11921469755f72a519d7cb1",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-b99e84d12f3aa53a7dec9701",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-ba566ad6bcf83e60c3c01abc",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-c41281814c320c5d93a6f5ba",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-c91ad80c1e8e9a8781ab967e",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-cd99f5c10d098452e2534333",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-d026f1b9e48a72886c43d482",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-d1fa70c63bd2c6655affddd7",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-d7e6098af53635488ee05e34",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-dafbb86fbdb417e96b3525ef",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-eaa86f1317cdc326e0e30500",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-ec1a7fb3523a4a68eeb191c5",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-ee136d24c30f157f73ba3aef",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-f7cb623e20d48b01b4072a66",
+      "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure는 cutoff 이후 문서를 사용하지 않은 정상 차단이다. 다른 현재 evidence가 objective를 해결했으므로 재시도·부재 주장이 필요하지 않다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "INSUFFICIENT_SEARCH",
+      "failure_id": "RSFAIL-34333cf1be31ecde65ab86de",
+      "rationale": "SEARCH_NO_RESULT_NOT_SATURATION는 zero result가 saturation이 아님을 명시한다. zero result 자체를 readiness 근거로 쓰지 않았고 다른 독립 evidence·counter route와 objective resolution을 기준으로 판정했다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "INSUFFICIENT_SEARCH",
+      "failure_id": "RSFAIL-d4c4735fc2f4822a0378723e",
+      "rationale": "SEARCH_NO_RESULT_NOT_SATURATION는 zero result가 saturation이 아님을 명시한다. zero result 자체를 readiness 근거로 쓰지 않았고 다른 독립 evidence·counter route와 objective resolution을 기준으로 판정했다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "INSUFFICIENT_SEARCH",
+      "failure_id": "RSFAIL-f2379e49f42a43ac28be2d46",
+      "rationale": "SEARCH_NO_RESULT_NOT_SATURATION는 zero result가 saturation이 아님을 명시한다. zero result 자체를 readiness 근거로 쓰지 않았고 다른 독립 evidence·counter route와 objective resolution을 기준으로 판정했다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-451722a51298ba1c03f919aa",
+      "rationale": "FULL_DOCUMENT_CONTENT_TOO_SMALL document rejection은 충분한 본문을 확보하지 못한 fetch 실패다. 짧은 본문을 evidence로 쓰지 않았고, 다른 current 자료가 objective를 해결했으므로 absence를 뜻하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-a4b9c95e9587bc846d750963",
+      "rationale": "FULL_DOCUMENT_CONTENT_TOO_SMALL document rejection은 충분한 본문을 확보하지 못한 fetch 실패다. 짧은 본문을 evidence로 쓰지 않았고, 다른 current 자료가 objective를 해결했으므로 absence를 뜻하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-b3b258614e73b4d406bf2c96",
+      "rationale": "FULL_DOCUMENT_CONTENT_TOO_SMALL document rejection은 충분한 본문을 확보하지 못한 fetch 실패다. 짧은 본문을 evidence로 쓰지 않았고, 다른 current 자료가 objective를 해결했으므로 absence를 뜻하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-d877e3b43f675af1debcb8d4",
+      "rationale": "FULL_DOCUMENT_CONTENT_TOO_SMALL document rejection은 충분한 본문을 확보하지 못한 fetch 실패다. 짧은 본문을 evidence로 쓰지 않았고, 다른 current 자료가 objective를 해결했으므로 absence를 뜻하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-02802fc2a96dfb37250b394f",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-03b7d9f50644bea58e7465e9",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-173f8d88038b2140a423639e",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-1d6d55c532249697153f00f4",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-1dfb17270f1469f6d3b6b61c",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-1f0aa68d10d8f9ce3eb8fb45",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-28a24e5ce96a52e0df9a2ac8",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-3be0b198fdfca6af093416e4",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-53743dcb91249063df08da83",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-58d2ef5e66070e9684b5245f",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-5ac0d956ce2b157390e62720",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-7d7bcf87d74b76f2317639c9",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-8a3e05c308204e3191847f6b",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-9abe3526b56613618f75eebd",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-cb7a37d927f954f280ba8086",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-d2dc24883b06cc742ccc537c",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-e3ad53d7d1234a2bb60947f9",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-ea03036e1f493048cbf315b2",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-ed66dfe9b270689cb0e6f14b",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-f00cd3a6fa5385d02d2ccf56",
+      "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED document rejection은 discovery snippet을 full evidence로 사용하지 않은 결과다. current objective resolution과 별개이며 source absence를 허용하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-171e2aa524a3661f0bd0deac",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-1b1ce2e719fbd45ed5842201",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-2333a406180aec563c0efce2",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-2fdeefa08beedec7659fca76",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-364608993cc0ed61b007565c",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-39af5ed84a42cf4b6a396c4d",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-3aabf4782a1b12146947a221",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-3c73564b1a180d780489b0a0",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-42698706d6d68e030e370b0c",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-461492a1afcc471dfc70f9ee",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-4a5e855d5ca0c423f2e59d4a",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-4df1474b516122eec938b86b",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-50a75d693cfa682eef353e91",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-52d4201523b2da3bb65e9c4c",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-56c429cdaa9453103917c780",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-5d1fe374c6957970fc9b0ca3",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-65d9607f119d366a29fbe37c",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-6e581f1e4a4b4c59a9460abc",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-709610d88cb9721264095993",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-7b6fc968ee2b7df378144622",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-84b705a61e2bf96ccbfb5df6",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-94414b368c70163783c52de0",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-9669bf71b2ca686a76631158",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-a30e4512014581c1156cc831",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-af39ac66e42b80ecddfcfaf8",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-ba830e4d3ab477ed6d9ef61d",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-c1f16bee86baf05aa0293c19",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-d496612160ea2f4bf9b03149",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-d7d125d9f44d6c7e3fb8a4de",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-f985ceaece5a35b470c2c016",
+      "rationale": "SEARCH_PROVIDER_ERROR는 검색 provider transport 실패다. 실패 자체는 부재 증명이 아니며, 이후 다른 source-backed 경로가 objective를 해결해 현재 동일 query lane을 재개방하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-03a34b801a6807bc27bed1ff",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-174f8b44d72b07c86ff57aae",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-1b7c6606ae190f8dbf87ee44",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-1ee88f39f6d142644431e3f3",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-23dee4a40918e9ae509e0c95",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-2df394d93aabf14a41804bfc",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-31afe20ad7a2488918d5df6a",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-375d7ef71bc05d8bdd6b31cc",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-37671076c37d8e443776c2a6",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-3b2b40eb72439234ff1e20a9",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-3e2f15b8c00abc0d7ac7ef75",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-56a45bd70cf232326cdd77d8",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-5b2fb53117480b0fda0dc390",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-5bd51e9e1e7d7d3620f2a64a",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-5eea343a56507388bb4ea586",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-62d5e01036531fba3c5770d0",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-6604f3ccb67986555c97d210",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-70954073c496fb479e79297d",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-7153c1adfddd182793259fa9",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-730b015bad2b468b0ed67af5",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-77508f90f5ebe0b89118b6fa",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-81629b5806102306d2840a88",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-86bf6f63c2e6939a56b02378",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-873c19d7b837642b95473229",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-ac0ac24f4462772aed17afef",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-ae4e42e9f2a58bd703de3508",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-b41e057ac2dc6335fcc25f21",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-ba89e7edea2614bd8bea8fbc",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-c1d2de1b6cd7de439d4c86f9",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-d6b6f08bc6fd2fd8cc9ce769",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-d77b0aafbc0313c8ec55f272",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-e1bcff0763a202f6b0fd9017",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-f1a91e48a39503ea5ce71a5c",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-ff2c619a5cec3b7d83415fd2",
+      "rationale": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH document rejection은 publication-date 검증 불충분으로 evidence eligibility를 거부한 fetch 실패다. source absence나 parser 완결 증명이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-0bf8146050f6d05e3cbf7272",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-18e328d66934339a4685c66c",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-18eaf53732387c113271d0f8",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-1d9e07cf0e59019d53fa4fc0",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-29ab73f30709f1801d0230cd",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-30e303fae46feedc297ba11a",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-3521f9841ead5c08f6d975a7",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-4718403b59a677ba05cf8acf",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-474bbfe6788055f6e54680b2",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-61f0d76e35654804a659fed4",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-6f12358a21daaae41bb92af6",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-8eae48f0d3b156bb0cc29a9c",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-904a8e7221f906cc86733533",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-9b9f5303087f588cc32cafe8",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-b1eef7956b4793e848e5befd",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-b729b6854b9b4726ab40bec5",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-cf2d634071d8050e20614643",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-d24abaa23badb24eb24ee8d2",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-dabb68bd01ac0fce41622d74",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-e616bc3077260910ce14e5fb",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-edcd852b3ad20f85de090c14",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "PROVIDER_FAILURE",
+      "failure_id": "RSFAIL-fd145cedcf728fb8ecd23067",
+      "rationale": "QUERY_PROVIDER_ERROR는 query provider 오류다. 22개 member failure를 이 group에서 exact-once 분류하되 다른 경로의 objective resolution이 있어 현재 blocking·retryable 상태로 보지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-26f33c31db87ba065ccb1450",
+      "rationale": "FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE는 locator의 미래 날짜를 cutoff에서 차단한 정상 판정이다. 미래 후보를 현재 증거나 부재 판단에 쓰지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-42d3c376d5ef5e333f9e9de9",
+      "rationale": "FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE는 locator의 미래 날짜를 cutoff에서 차단한 정상 판정이다. 미래 후보를 현재 증거나 부재 판단에 쓰지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-a543f57c39a9b15de14f74d0",
+      "rationale": "FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE는 locator의 미래 날짜를 cutoff에서 차단한 정상 판정이다. 미래 후보를 현재 증거나 부재 판단에 쓰지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-0f17d12f59587dcae80e2f2d",
+      "rationale": "FULL_DOCUMENT_CONTENT_TOO_SMALL query failure는 full document 내용이 증거 최소조건을 충족하지 못한 fetch 실패다. alternate_route_required=false이고 objective가 다른 사실로 resolved돼 재시도와 absence 주장을 모두 닫는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-933784885298bf6eae7ab044",
+      "rationale": "FULL_DOCUMENT_CONTENT_TOO_SMALL query failure는 full document 내용이 증거 최소조건을 충족하지 못한 fetch 실패다. alternate_route_required=false이고 objective가 다른 사실로 resolved돼 재시도와 absence 주장을 모두 닫는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-a397b10fbe3d02aff87bf526",
+      "rationale": "FULL_DOCUMENT_CONTENT_TOO_SMALL query failure는 full document 내용이 증거 최소조건을 충족하지 못한 fetch 실패다. alternate_route_required=false이고 objective가 다른 사실로 resolved돼 재시도와 absence 주장을 모두 닫는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FETCH_FAILURE",
+      "failure_id": "RSFAIL-f52d28cc1f95889d6745447e",
+      "rationale": "FULL_DOCUMENT_CONTENT_TOO_SMALL query failure는 full document 내용이 증거 최소조건을 충족하지 못한 fetch 실패다. alternate_route_required=false이고 objective가 다른 사실로 resolved돼 재시도와 absence 주장을 모두 닫는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    }
+  ],
+  "llm_direction_generation_used": true,
+  "missing_material_facts": [],
+  "new_source_family_directions": [],
+  "next_actions": [],
+  "parser_or_extractor_failures": [],
+  "prior_review_prompt_projection": null,
+  "prompt_hash": "6d907226e12a14b5108d86a2bd1505344a80031c5b932df2784218cf6a5b7d51",
+  "provider_name": "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE",
+  "query_direction_briefs": [],
+  "rationale": "현재 7개 component memo는 모두 complete이고 최신 21개 memo-bound judge의 세 역할 범위에 material disagreement가 없다. Structured engine은 7개 component를 모두 RESEARCH_READY로 판정하고 missing role이 없으며, current counter/supersession proof는 zero-result가 아닌 직접 source-backed facts로 7개 COUNTER objective와 4개 SUPERSESSION 경로를 검증했다. Source graph의 7개 objective는 모두 resolved됐고, 267개 broker report metadata 후보는 discovery hint일 뿐 현재 concrete material fact gap을 만들지 않아 unfetched preview를 증거로 쓰거나 무리하게 route를 열지 않았다. 계약조건·HBM 단독 마진·전용 CAPA·ROIC·고객일정은 이미 score counterweight와 향후 monitoring으로 보존되지만, 지금 실행할 새로운 verified public identity가 없으므로 blocking gap으로 되살리지 않는다. Readiness는 zero result, provider failure, fixed round 또는 transport budget이 아니라 memos·structured·counter proof·objective resolution과 실행 가능한 material route 부재에 근거한다.",
+  "ready_for_independent_saturation_review": true,
+  "reasonable_positive_routes_remaining": false,
+  "review_id": "RSUP-e616cf3de74dc504b878f0d0",
+  "reviewer_role": "RESEARCH_SUPERVISOR_A",
+  "schema_version": "e2r_research_supervisor_review_v3",
+  "search_zero_result_treated_as_saturation": false,
+  "source_family_gaps": [],
+  "status": "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+  "structured_data_complete": true,
+  "synthesis_memo_hash": "e224e45d895cd3315794d609a79b88df490599eb41371ef1074d12f01cd04ca6",
+  "synthesis_memo_id": "SYNMEMO-bf62817e479cb7871541e6e6",
+  "transport_budget_treated_as_completion": false,
+  "unresolved_material_questions": []
+}

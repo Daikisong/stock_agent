@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-39bc66390589fb5e2c28c66f",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA GeForce 세대 비교 공식 페이지로 소비자 GPU 사양이며 Samsung HBM 관계가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-6a31822c5ed515261d0504b2",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA DLI 교육 landing으로 Samsung HBM qualification·supply 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-26224f1ea3c849ed23b9eaaa",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA A100 공식 datasheet는 HBM2 사양을 제공하지만 Samsung 공급자 관계나 current HBM3E/HBM4 상태를 명시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-fa6ed972e11cff1574b363af",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA BlueField networking platform 원문으로 Samsung HBM 관계 범위와 다른 제품이다."
+      },
+      {
+        "candidate_id": "SGCAND-a2400e5bdacde88260d7e785",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 자율주행 MLOps 교육 세션으로 Samsung 또는 HBM 공급 관계를 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ae1d57f12a70039981e63267",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA cuDSS 기술 세션으로 Samsung HBM relationship scope와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-9f0d904b30b95f52af53604d",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.02,
+        "rationale": "NVIDIA GTC 2026 poster gallery landing이지만 Samsung 또는 HBM 관련 특정 poster·session 원문을 가리키지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2553374fd1c58377308868ce",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA cuOpt 교육 세션으로 공급망 일반 예시일 뿐 Samsung HBM 공급 상태를 뜻하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1702bc1479f1f38d86a76c9e",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Tesla P40 공식 datasheet로 과거 visualization GPU이며 Samsung HBM3E/HBM4 관계가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-a9d27301493bced0d55f5cc0",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Omniverse 공식 제품 페이지로 Samsung HBM qualification·platform supply 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-3bd7b706783a207c7e75ad8d",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA rendering 세션으로 Samsung 또는 HBM 관계를 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-5606877902e28a3dc1546c9b",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Omniverse Kit 세션으로 Samsung HBM 공급·qualification 관계와 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "공식 NVIDIA product/event 후보 12건은 모두 target relationship scope를 포함하지 않았다. 이 local material 0은 source absence나 완료 증명이 아니다."
+    ]
+  },
+  "payload_hash": "ad7797c9ac05a60428133c3c97663fdc75910f0eac837fb268e141b8075f740b",
+  "production_score_authority": false,
+  "prompt_hash": "244c0dab7b173078ef3e7a86a51ed98cb2912e05b0b01398442a4347c02b295b",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-69b863e8da2ef2a7a0f00a147c16ccee723599f5240661cfa94113c905c454d8",
+  "response_id": "COLLABRESP-20821c059cb84539139a8a4eb8c133474faeb01a0b5013566909f11d402e5f93",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

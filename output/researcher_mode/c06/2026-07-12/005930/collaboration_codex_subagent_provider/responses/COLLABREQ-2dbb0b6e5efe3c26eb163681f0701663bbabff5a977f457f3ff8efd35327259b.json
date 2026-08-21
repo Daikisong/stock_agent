@@ -1,0 +1,66 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-44f6d1e54bbf45c8a3d4e724",
+      "CRMEMO-fe88306b51fc9a10bf0b58c0",
+      "CRMEMO-6d0cae9806f3b0a2524c6112",
+      "CRMEMO-8c63fe83d12f62f16d045241",
+      "CRMEMO-ff71c66bea89c9c58ce1025a",
+      "CRMEMO-0691edb321b16cad586bd7b3",
+      "CRMEMO-6067edc7878f29fd73883bcb"
+    ],
+    "confidence": 0.79,
+    "cross_component_support": [
+      "메모리 제품매출·영업이익의 실제 확대와 HBM4 양산·지속 납품·누적 매출은 eps_fcf_explosion, earnings_visibility, valuation_rerating의 공통 실현 경로를 지지한다.",
+      "시간 기준 100% 가동, 낮은 재고, 수요 대비 낮은 공급 충족률, 완판된 HBM4 생산여력과 범용 D램 가격 상승은 bottleneck_pricing과 earnings_visibility의 공급제약 논리를 함께 지지한다.",
+      "고객 구매주문, 완료된 중장기 물량 계약과 구속력 있는 다년계약 설명은 단순 수요 전망보다 강한 판매 가시성을 제공한다.",
+      "양의 연결 영업현금흐름·FCF와 현금성자산은 성장투자와 환원을 병행할 전사 재원을 지지하지만 HBM 단독 현금전환의 증거는 아니다.",
+      "실제 컨센서스 상회와 낮아진 선행 PER, 일부 peer 대비 할인은 market_mispricing과 valuation_rerating의 재평가 가능성을 지지한다.",
+      "외부감사인 검토 재무제표와 회사 공시 메모리 매출·가동시간은 전사 및 메모리 제품군 수준의 핵심 기준점을 재현 가능하게 한다."
+    ],
+    "cross_component_tensions": [
+      "eps_fcf_explosion은 analyst 19.3점·18.0~20.3 대 skeptic 17.3점·15.8~18.8이며 calibration은 18.5점·17.0~19.8이다. 실현된 이익·현금흐름과 HBM 단독 귀속 부재가 동시에 남는다.",
+      "earnings_visibility는 analyst 17.2점·15.8~18.5 대 skeptic 14.6점·12.8~16.2이며 calibration은 16.0점·14.3~17.5이다. 구매주문·다년계약과 비공개 취소·가격조정·allocation 조건이 충돌한다.",
+      "bottleneck_pricing은 analyst 17.7점·16.5~18.6 대 skeptic 15.5점·13.8~17.0이며 calibration은 16.6점·15.0~18.0이다. 실제 공급제약·가격전환은 강하지만 시간 기준 가동률을 HBM 전용 CAPA·수율로 해석할 수 없다.",
+      "market_mispricing은 analyst 10.9점·9.4~12.0 대 skeptic 8.0점·6.5~9.5이며 calibration은 9.5점·8.0~11.0이다. 낮은 PER·peer 할인과 높아진 PBR·cycle-peak 분모 위험이 함께 존재한다.",
+      "valuation_rerating은 analyst 8.1점·6.8~9.2 대 skeptic 5.8점·4.5~7.2이며 calibration은 6.8점·5.5~8.2이다. HBM4 양산·납품·매출은 확인되지만 초기 마진과 고객 일정·평가별 배분은 열려 있다.",
+      "capital_allocation은 analyst 3.1점·2.6~3.6 대 skeptic 1.9점·1.2~2.7이며 calibration은 2.5점·1.8~3.2이다. 전사 현금여력과 약정·운전자본·미확정 메모리 CAPEX 부담을 동시에 반영해야 한다.",
+      "information_confidence는 analyst 3.6점·3.0~4.1 대 skeptic 2.2점·1.5~3.0이며 calibration은 2.9점·2.2~3.6이다. 공식 전사·메모리 기준점은 강하지만 HBM 고객·계약·제품이익은 NDA와 외부 추정 의존으로 약하다.",
+      "메모리 전체의 가격·매출·현금흐름 개선을 HBM만의 경제성으로 확장하면 attribution 오류가 발생하며, 반대로 제품별 공백 때문에 확인된 메모리·HBM4 상용 성과까지 무시하는 것도 과도하다.",
+      "구조적 계약·병목 서사는 구매주문과 완판 근거를 가지지만 계약의 구매의무·취소·위약·가격조정 조건 및 HBM 전용 생산 처리량이 없어 지속기간과 마진 고정성을 확정할 수 없다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "일곱 component를 종합하면 메모리 실적 확대, HBM4 양산·납품·누적 매출, 고객 주문·계약, 공급제약과 전사 현금창출이라는 실현된 긍정 경로가 존재한다. 동시에 모든 component에서 analyst와 skeptic의 허용범위가 의미 있게 갈리며, calibration도 그 차이를 제거하지 않는다. 핵심 이유는 HBM 단독 매출·마진·현금흐름·CAPEX 귀속, 공개 가능한 계약 조건, HBM 전용 생산 처리량, 초기 제품마진·고객 allocation, 동일 기준 peer valuation, 투자·운전자본 이후 잔여현금이 아직 확인되지 않았기 때문이다. 따라서 긍정 메커니즘은 보존하되 회사 전체 또는 메모리 수치를 HBM 단독 성과로 바꾸거나 일곱 미해결 질문을 해소된 것으로 간주하지 않는다.",
+    "unresolved_material_questions": [
+      "HBM별 매출·마진·영업현금흐름·CAPEX 공식 bridge가 없어 전사 및 메모리 성과를 HBM 단독 경제성으로 귀속할 수 없다.",
+      "공개 가능한 HBM 계약기간·물량·가격조정·선수금·취소·위약 조건과 qualification·allocation 기준이 없다.",
+      "시간 기준 가동률은 HBM 전용 웨이퍼 투입·수율·적층·패키징 처리량을 증명하지 않으며 증설 램프와 가격 둔화의 결합도 없다.",
+      "동일 기준일·회계정책·사업구성·이익기간으로 조정한 peer valuation과 PBR 선반영·cycle 분모 효과의 분해가 없다.",
+      "HBM4 초기 제품 마진과 고객 플랫폼 일정·공급사 평가가 allocation 및 납품에 미치는 변화가 확인되지 않았다.",
+      "자산취득 약정·매출채권·운전자본·상세 메모리 투자계획을 함께 반영한 잔여 현금과 HBM 투자수익 경로가 없다.",
+      "HBM 고객·qualification·계약·allocation·제품별 영업이익에 대한 독립 공식 확인 또는 공식 비공개 범위 확인이 없다."
+    ]
+  },
+  "payload_hash": "740a2aac36710b769157268c0bf7f5957748ccd61255edbb378ea31fa1b048ac",
+  "production_score_authority": false,
+  "prompt_hash": "84cabcfee8432066919273989942efd4df89bcb3b191e103834642c423a77a02",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2dbb0b6e5efe3c26eb163681f0701663bbabff5a977f457f3ff8efd35327259b",
+  "response_id": "COLLABRESP-26884f9b92316dbc3b61e3d4ea46cc520ca26ffd1478b6ae95cbbf1006c8bfbf",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

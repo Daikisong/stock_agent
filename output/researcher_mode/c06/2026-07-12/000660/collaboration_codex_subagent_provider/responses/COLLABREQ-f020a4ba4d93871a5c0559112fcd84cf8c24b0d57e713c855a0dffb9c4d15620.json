@@ -1,0 +1,34 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "Prompt-identity migration 뒤의 exact current prompt에서 39개 executed query, 58개 query/source failure, current facts와 objectives를 의미 단위로 다시 검토했다. 발행사 실적·IR·공시, 고객사 공식 자료, broker 원문 복구, KIND 공급계약, AMD 및 Broadcom literal route와 겹치는 검색은 다시 제안하지 않는다.",
+      "Transport-wait filtering으로 prompt hash가 달라졌지만 current research projection에는 새로 검증된 문서 identity, 파일명, 문서일자, 아직 실행하지 않은 official document class가 추가되지 않았다. Prompt identity 변화 자체를 새 research route로 간주하지 않는다.",
+      "Current prompt의 supervisor projection에는 missing material fact, query direction, new source-family direction, source-family gap이 없고 reasonable_positive_routes_remaining=false다. 특정 고객·플랫폼·계약을 추정하거나 기존 query를 바꿔 쓰지 않고 suggested_queries를 비운다.",
+      "과거 provider 오류·무결과·미래 문서·snippet 거절은 source absence 또는 fixed-round completion 증거가 아니다. 이번 응답은 현재 exact prompt에서 신규 검증 query가 없다는 PENDING 결과이며 deterministic fallback, score 또는 Stage 권한을 사용하지 않는다."
+    ]
+  },
+  "payload_hash": "0252d213c884b152c9e08314144b7af1e1a36817bd0a1322e85ef846bb88530b",
+  "production_score_authority": false,
+  "prompt_hash": "3ab93f22114c3a08119cb2c35105ee06e8a235eaf4f519bc406e97c56843b6d1",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f020a4ba4d93871a5c0559112fcd84cf8c24b0d57e713c855a0dffb9c4d15620",
+  "response_id": "COLLABRESP-1dbb25c5391add6de17eb6f15ea2478b17bf8b5919777eb1e3b54648fa9aea1c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

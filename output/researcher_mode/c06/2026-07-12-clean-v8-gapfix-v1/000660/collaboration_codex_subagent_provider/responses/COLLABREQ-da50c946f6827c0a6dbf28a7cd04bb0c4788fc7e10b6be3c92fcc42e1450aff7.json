@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "c8bb15e88e81a680beef610c6441d4af1d7872c4681bfc02a93ec41a416e36e6",
+  "payload": {
+    "allowed_range": [
+      13.8,
+      15.7
+    ],
+    "anchor_comparisons": [
+      "Counter anchor CANCH-17745cd4887afd21639e9dd6 [10.32,12.72]보다 actual 이익·현금은 강하지만 HBM 단독 bridge 부재와 세 counter를 반영해 양의 anchor 하단 쪽으로 제한한다.",
+      "Positive anchor CANCH-0714e46eb37d4c4b066de92c [13.68,16.08]에는 진입하지만 CAPEX·재고·재공품 손실 때문에 중심값 위로 크게 올리지 않는다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-22b3c14ea08f7a3f6c58b170",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332"
+    ],
+    "disagreements": [
+      "연결 및 DRAM actual을 HBM 단독 earnings로 귀속하는 해석에 동의하지 않는다.",
+      "Forward revision을 realised cash conversion으로 취급하지 않는다.",
+      "HBM 가격 기여만으로 CAPEX·재고·재공품 위험이 상쇄됐다고 보지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-0714e46eb37d4c4b066de92c",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 14.7,
+    "rationale": "연결·DRAM actual과 HBM 가격 기여는 부정할 수 없지만 HBM 단독 EPS·마진·FCF bridge가 없다. 증가한 CAPEX 현금유출, 재고평가충당금, 재공품 계약손실은 OCF와 forward revision이 모두 자유현금으로 실현된다는 가정을 약화한다. 따라서 양의 actual을 인정하되 memo 범위의 하중단을 중심으로 본다.",
+    "support_fact_ids": [
+      "EFACT-0295af0d92028218f77266f2",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-d2e799df4d980691c6707a9e"
+    ],
+    "why_not_higher": "HBM 전용 earnings·FCF attribution이 없고 CAPEX·재고·재공품 손실 counter가 현재 현금전환의 지속성을 제한한다.",
+    "why_not_lower": "감사된 순이익·DRAM 매출·영업현금 actual과 HBM 가격 기여가 모두 강해 counter만으로 중하단까지 낮출 수 없다."
+  },
+  "payload_hash": "bdfae64dd0095f78b867d449201f1e50973e45874b9ddf8baeaf4109c457511a",
+  "production_score_authority": false,
+  "prompt_hash": "aef32008e99113552da87fe5047b1c43935f82d921f25f678913ac5e5654af28",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-da50c946f6827c0a6dbf28a7cd04bb0c4788fc7e10b6be3c92fcc42e1450aff7",
+  "response_id": "COLLABRESP-116e4fa524867993ad14fd39cd69b2ca140852438e3a2f92c129dd1724383834",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

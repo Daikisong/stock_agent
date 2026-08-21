@@ -1,0 +1,67 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "PUBLIC_BROKER_PDF candidate identity STRUCTCAND-715e353bc4c72c0e4d00cf14의 exact full-report route만 검증",
+      "PUBLIC_BROKER_PDF candidate identity STRUCTCAND-e74162d86f8d35ab99a8d0e0의 exact full-report route만 검증",
+      "PUBLIC_BROKER_PDF candidate identity STRUCTCAND-3cacfef7d2e329694e87abff의 exact full-report route를 한 번만 검증하고 bottleneck·capital 귀속은 fact 단계에서 분리"
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 한화증권 1110991 \"2Q26 Review: 범용 메모리 서프, 파운드리 흑전, 글로벌 최고가 HBM4 생산\" 1L01120260707_005930_a.pdf",
+        "objective_id": "SGOBJ-eb3cecb1e00c95ccf544cac4",
+        "rationale": "STRUCTCAND-715e353bc4c72c0e4d00cf14의 broker·report id·정확한 제목·파일명을 보존한 bounded full-report 획득 경로다. 기존의 일반 HBM 공급·실적 query와 달리 이 특정 문서만 검증하며, full PDF가 확보되기 전에는 제목과 summary를 제품가격·마진 근거로 사용하지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 NH투자증권 1100084 \"구조적 성장에 초점\" 1F02420260522_005930.pdf",
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "rationale": "STRUCTCAND-e74162d86f8d35ab99a8d0e0의 exact report identity를 이용해 장기계약을 다루는 full PDF만 찾는다. 계약·완판 동의어를 반복하지 않고, 문서가 실제로 가격 재설정·최소구매·취소·납기 조건과 출처를 제시하는지 검증하기 위한 경로다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "삼성전자 미래에셋증권 1108000 \"27년에 더욱 부각될 생산능력\" 1F01420260625_005930_a.pdf",
+        "objective_id": "SGOBJ-7ba6c752cb327ae2c989b6dd",
+        "rationale": "STRUCTCAND-3cacfef7d2e329694e87abff의 exact report identity를 보존해 capacity·성과급 내용을 담은 full PDF를 한 번만 획득한다. 확보된 동일 문서는 bottleneck objective에서 HBM 전용 CAPA·수율을, 후속 fact attribution에서 capital objective의 투자·비용 bridge를 각각 검증할 수 있어 같은 문서의 중복 query를 만들지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "세 candidate row는 metadata-only discovery hint이며 full document가 fetch·parse·fact extraction을 통과하기 전에는 어떤 숫자나 문구도 evidence가 아니다.",
+      "STRUCTCAND-715e353bc4c72c0e4d00cf14의 full report가 HBM4 물량·ASP·제품 원가·초기 램프 비용을 실제로 분리하는지는 미확인이다.",
+      "STRUCTCAND-e74162d86f8d35ab99a8d0e0의 full report가 장기계약의 최소구매·가격조정·취소·납기 조건과 근거 출처를 실제로 제시하는지는 미확인이다.",
+      "STRUCTCAND-3cacfef7d2e329694e87abff의 full report가 HBM 전용 공정별 CAPA·수율과 전사 투자·성과급의 귀속 가능한 bridge를 실제로 제시하는지는 미확인이다.",
+      "세 exact full-report 경로가 실패하거나 새 source-backed fact를 만들지 못하면 일반 HBM·계약·CAPA 동의어 query로 확장하지 말고 failure를 supervisor에 반환해야 한다."
+    ]
+  },
+  "payload_hash": "5c41db094a502486246d89c733c8f6b1f89236f048f177dc0a6b405dc73f10db",
+  "production_score_authority": false,
+  "prompt_hash": "fcc9de9c97ef2141eed5528b66578dfeb383300d887487ab142d0b14ff9e52fa",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9b4c74136dd471e6c21ca4b72cf1b7163c56f54dd5caf6114aa581cede60518e",
+  "response_id": "COLLABRESP-b88805c75c551822accb04bcc208a0bac486a2b787c49cd40c0377277f9fa945",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

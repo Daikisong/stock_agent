@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-6f6836f9c65d6a7fb96239f1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "RNA 치료제·CDMO 보고서로 연구 대상과 무관하다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-de0bf218d6263c7efe7da628",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "AI Weekly의 실적발표 일정에 삼성전자가 나올 뿐 HBM CAPA·계약·가격 원문이 아니다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-35f0de52f80ca00f46ec719d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "글로벌 제약·바이오 보고서로 삼성전자 HBM 목표와 무관하다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-185ddeb1639cd70131d064ee",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "직업생활 미래 연구이며 broker PDF provenance와 삼성전자 HBM 주제가 모두 맞지 않는다. 검색 snippet은 discovery metadata로만 보며 full PDF 사실로 사용하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P8 roster의 모든 후보를 분류했으나 미래에셋 report id 1108000 / 1F01420260625_005930_a.pdf의 정확한 공식 archive 원문은 이 partition에서 회수되지 않았다. snippet·목차·이익수정 메타데이터는 HBM CAPA 또는 가격 사실이 아니다."
+    ]
+  },
+  "payload_hash": "f7399451c8a0c829e2ca985d42b70e16879b10aee4a4bc3da2b705eb70ec9df3",
+  "production_score_authority": false,
+  "prompt_hash": "30b226d40ba1cefa7efe0c2576442a35e5840ae2b30aeb9d9384b3e903010a88",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c9010f500a5b13c91d794c236011522025eb4041829a6aa4b17769ab38833bf0",
+  "response_id": "COLLABRESP-1cd465434c2ee0ab483cd08a3bc5711ad3e90fda585ea20406256a2219975167",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

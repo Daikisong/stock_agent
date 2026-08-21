@@ -1,0 +1,42 @@
+{
+  "output_schema_hash": "67050aa48e3e0902eb18d17220b8ee3713e24cc193055d1195317248f16c5803",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-344a10e00a7671ebc85cc88e",
+        "rationale": "전문을 current 333 facts와 대조했다. 핵심 수치와 장기공급계약 해석은 마이크론의 실적·가이던스·SCA이며 삼성전자 직접 사실이 아니다. 삼성전자 관련 내용도 당일 주가와 마이크론 실적에서 파생된 HBM·D램 기대에 그쳐 target-specific 가격·물량·계약을 입증하지 않고, 동일 문서는 이미 canonical에서 NO_MATERIAL로 종결됐다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-34b40004b02ec9b3d06322d1",
+        "rationale": "실적 발표 전 프리뷰 전체를 검토했다. 2026년 2분기 D램 ASP·메모리 매출·영업이익과 3분기 가격 전망은 증권사 추정치이며 더 최신 current facts와 같거나 후속 실적으로 대체됐다. 장기계약의 가격 고정 효과도 기존 counter와 중복되고, 전사 영업이익·보상비용·목표주가를 HBM 병목 actual로 전용하지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "903e3aec4efd045a73d6bca8744782605d49cdd700c0f417a4f25a2a0dd35ea5",
+  "production_score_authority": false,
+  "prompt_hash": "d796e0f02c9a0a406518a4885cb11dbbffc2dfc673ef25fb664f249776b82f20",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-49f589436cdbc1ac40a719ba002f56cfca13e28a162a71ee45002c6d798ec23e",
+  "response_id": "COLLABRESP-100956c13f3f77b5eb5d665c121c560b6d5f7a33f66123eb94c675d225bb12a5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

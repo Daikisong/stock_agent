@@ -1,0 +1,124 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1857a7eefdc000ad6712da60",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 문서 metadata가 증권사 equity research PDF가 아니라 지속가능보고서·펀드 재무제표·학술·정부·상표·일반 매체 자료를 가리키므로 PUBLIC_BROKER_PDF와 삼성전자 PEER_BAND 목적에 맞지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e70a13fd36877a8cf5d2fe02",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 문서 metadata가 증권사 equity research PDF가 아니라 지속가능보고서·펀드 재무제표·학술·정부·상표·일반 매체 자료를 가리키므로 PUBLIC_BROKER_PDF와 삼성전자 PEER_BAND 목적에 맞지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-745242708d40ac5ddae0c35e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 문서 metadata가 증권사 equity research PDF가 아니라 지속가능보고서·펀드 재무제표·학술·정부·상표·일반 매체 자료를 가리키므로 PUBLIC_BROKER_PDF와 삼성전자 PEER_BAND 목적에 맞지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-74b598438df38a75b22a7e90",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 문서 metadata가 증권사 equity research PDF가 아니라 지속가능보고서·펀드 재무제표·학술·정부·상표·일반 매체 자료를 가리키므로 PUBLIC_BROKER_PDF와 삼성전자 PEER_BAND 목적에 맞지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-1832fd033211a7c5fa908a1e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 문서 metadata가 증권사 equity research PDF가 아니라 지속가능보고서·펀드 재무제표·학술·정부·상표·일반 매체 자료를 가리키므로 PUBLIC_BROKER_PDF와 삼성전자 PEER_BAND 목적에 맞지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-cc90e855ef9e21d333c3e289",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 문서 metadata가 증권사 equity research PDF가 아니라 지속가능보고서·펀드 재무제표·학술·정부·상표·일반 매체 자료를 가리키므로 PUBLIC_BROKER_PDF와 삼성전자 PEER_BAND 목적에 맞지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-3f79bedb2b1990331efe25b1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 문서 metadata가 증권사 equity research PDF가 아니라 지속가능보고서·펀드 재무제표·학술·정부·상표·일반 매체 자료를 가리키므로 PUBLIC_BROKER_PDF와 삼성전자 PEER_BAND 목적에 맞지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-a198f5aac7585ba26e12eb43",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 문서 metadata가 증권사 equity research PDF가 아니라 지속가능보고서·펀드 재무제표·학술·정부·상표·일반 매체 자료를 가리키므로 PUBLIC_BROKER_PDF와 삼성전자 PEER_BAND 목적에 맞지 않습니다."
+      },
+      {
+        "candidate_id": "SGCAND-f842a2d1a929a2581f725199",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.02,
+        "rationale": "URL owner와 문서 metadata가 증권사 equity research PDF가 아니라 지속가능보고서·펀드 재무제표·학술·정부·상표·일반 매체 자료를 가리키므로 PUBLIC_BROKER_PDF와 삼성전자 PEER_BAND 목적에 맞지 않습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "current epoch77 두 partition의 21개 후보를 exact-once로 분류했으며 검색 snippet은 EvidenceFact로 사용하지 않았습니다.",
+      "요청한 Valuation gap set to narrow 정확 제목의 삼성전자 broker 원문과 동일 기간 peer 표는 이 roster에서 확인되지 않았습니다.",
+      "타 회사 peer 평균, 종목 목록, 목표주가와 자체 밴드는 PEER_BAND를 닫지 않으며 이 분류에는 점수·Stage 권한이 없습니다."
+    ]
+  },
+  "payload_hash": "2b412680945d68b01ac6264b72d00f3262609c61bdc5d3d559f0284d82409321",
+  "production_score_authority": false,
+  "prompt_hash": "a5389dbc76f4604d673efaf63e120f010615826e3e0070a4b0513e4908eea4ef",
+  "provenance": {
+    "agent_id": "blind-source-queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f01b7d847e2b82e1f88e0e5393dd2153d0b950c28781f775ebc5c94050e6e273",
+  "response_id": "COLLABRESP-1c3758d79af3b0e220edf484da3267d15989ac8a955004499e7048249b45b048",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

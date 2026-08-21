@@ -1,0 +1,617 @@
+{
+  "output_schema_hash": "1eb963bcc335b0bfd23238a5aaf71a28c645bb48582f2a7b86ca030b214b4a53",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-0964968626eef4530df63603",
+        "rationale": "원문 전수검토 결과 valuation objective에 직접 연결되는 6건 중 첫 2건을 이번 페이지에 정확 인용으로 수록했다. 나머지 4건은 다음 continuation에서 중복 없이 처리한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-1709fe1fcbba59b4bb64c5ff",
+        "rationale": "원문 전수검토 결과 information-confidence objective에 직접 연결되는 9건 중 첫 2건을 수록했다. 고객별 ramp·경쟁·증설 일정 등 잔여 7건은 continuation 대상이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-307fb9014727799335a8db49",
+        "rationale": "2025년 3월 섹터 탐방 보고서는 현재 후속 actual·전망보다 오래됐고, 요청된 target forward valuation 또는 독립 공식 DURABLE_VISIBILITY를 새로 제공하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "rationale": "원문 전수검토 결과 valuation methodology와 forward multiple 관련 9건 중 첫 2건을 수록했다. 나머지 7건은 continuation에서 처리한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "rationale": "원문 전수검토 결과 최신 peer 할인·LTA·HBM 이익·FCF 등 10건 중 첫 2건을 수록했다. 나머지 8건은 continuation에서 처리한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-4ad2b2c5d23cebf2ce49609c",
+        "rationale": "원문에서 당시 인증 지연·초기 샘플 성숙도 2건을 이번 페이지에 수록했다. 기술복잡도 counter 1건은 continuation에서 처리한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-5a3f1affd4616ae845ce6c2d",
+        "rationale": "원문에서 target 직접 HBM·valuation 사실 10건 중 첫 2건을 수록했다. 잔여 8건은 continuation에서 처리하며 Nanya 자체 실적과 NAND는 제외한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-5abf2b66451a741d72c342fb",
+        "rationale": "분석 대상은 SK하이닉스가 아니라 라온로보틱스(232680)다. 고객사 일반 언급과 라온로보틱스 valuation을 target 사실로 귀속하지 않았다.",
+        "status": "WRONG_TARGET_OR_SEGMENT"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0964968626eef4530df63603",
+        "economic_mechanism": "2025년 1분기에는 고수익 DRAM의 이익률이 전분기보다 개선되고 매출 비중이 80%로 확대되면서, 계절적 판매량 감소와 NAND 가격 하락에도 전사 이익을 지지했다. 이는 DRAM 제품 믹스가 전사 수익성과 valuation 분모로 전환되는 실제 메커니즘이며, 2026년 실적이나 HBM 단독 기여로 확대하지 않는다.",
+        "exact_quote": "- 계절적 비수기 영향으로 판매량 감소, 낸드 가격 하락으로 매출 감소. 영업이익 규모도 전분기\n대비 소폭 줄었지만 수익성 높은 디램 이익률 개선되고 매출 비중이 80%로 확대되면서 전사 이\n익 개선 가능해짐.\n- 고부가 제품 비중 확대로 디램 컨벤셔널 가격 하락에도 수익성 전분기대비 개선, 낸드는 가격\n하락과 판매량 감소에도 흑자 기조는 유지.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 믹스와 이익률이 전사 이익으로 연결된 실제 관찰은 SK하이닉스의 메모리 수익성 개선이 valuation 재평가로 이어질 수 있는지 직접 검증한다.",
+        "mechanism_scope_id": "000660:MEMORY:1Q25_DRAM_MIX_PROFIT_CONVERSION",
+        "normalized_object": "DRAM 매출 믹스와 이익률 개선이 만든 전사 이익 방어",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2025 actual",
+        "predicate": "2025년 1분기 DRAM 매출 비중이 80%로 확대되고 고수익 DRAM 이익률이 개선돼 전사 이익을 지지했다",
+        "predicate_family": "DRAM_MIX_PROFIT_CONVERSION_ACTUAL",
+        "primitive_tags": [
+          "DRAM",
+          "REVENUE_MIX",
+          "PROFITABILITY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_MIX_PROFIT_CONVERSION_ACTUAL",
+        "question_family_tags": [
+          "DRAM_MIX",
+          "PROFIT_CONVERSION",
+          "EARNINGS_BRIDGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1Q25 DRAM 매출비중과 전사 이익 전환",
+        "subject_id": "000660:DRAM:1Q25_MIX_PROFIT_CONVERSION",
+        "unit": "% revenue mix and qualitative profitability change",
+        "value": "DRAM revenue mix 80%; DRAM profitability improved QoQ despite conventional DRAM price decline"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.91,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-0964968626eef4530df63603",
+        "economic_mechanism": "SK하이닉스는 2025년 1분기에 DDR5 기반 96GB 수요 증가를 경험했고, Reasoning AI의 훈련·추론이 더 많은 메모리와 고용량 서버 인프라를 요구해 중장기 서버 DRAM 수요를 견인할 것으로 설명했다. 이는 관찰된 고용량 수요와 향후 수요 논리를 연결하지만, 특정 고객 계약이나 확정 매출 가이던스는 아니다.",
+        "exact_quote": "- 딥시크는 AI개발 비용 절감할 수 있음. 이는 AI 시장 진입 장벽 낮춘 효과로 보임. AI 개발 시\n도 증가 중이고, HBM뿐만 아니라 고용량 서버 디램 수요도 같이 확대 중.\n- 1분기 당사도 D5기반 96GB수요 증가 경험. 올해 지속적으로 고용량 수요는 증가할 것.\n- 추가적으로 오픈AI o3, 딥시크 r1 등 Reasoning AI 모델은 더 많은 메모리 필요로 할 것. AI\n모델이 더 정교한 결과 제공하기위해 더 많은 하드웨어 자원을 필요로 함. 훈련에서 추론 영역\n으로 확대 중. 고용량 메모리 창출하는 요인임.\n- 고품질 추론 서비스를 위해서 모델 훈련도 필요하기 때문에 고용량 서버 인프라 확대는 필연\n적. 당사 고용량 서버가 중장기 서버 수요의 핵심이 될 것으로 전망. 향후 AI 개발 응용 점차 확\n대되고 장기 AI 성장과 메모리 수요 견인할 것.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 외 고용량 서버 DRAM의 실제 수요와 장기 수요 동인은 AI 메모리 earnings duration과 사업 믹스의 폭을 통해 valuation_rerating의 지속성을 직접 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:HIGH_CAPACITY_SERVER_DRAM_REASONING_AI_DEMAND",
+        "normalized_object": "Reasoning AI가 확대하는 고용량 서버 DRAM 수요와 SK하이닉스의 실제 수요 관찰",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2025 actual and medium-term outlook stated 2025-04-24",
+        "predicate": "SK하이닉스는 2025년 1분기 96GB DDR5 수요 증가를 경험했고 Reasoning AI 확산이 고용량 서버 메모리 수요를 늘릴 것으로 전망했다",
+        "predicate_family": "HIGH_CAPACITY_SERVER_DRAM_REASONING_AI_DEMAND",
+        "primitive_tags": [
+          "DRAM",
+          "DDR5",
+          "AI_MEMORY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HIGH_CAPACITY_SERVER_DRAM_REASONING_AI_DEMAND",
+        "question_family_tags": [
+          "SERVER_DRAM",
+          "REASONING_AI",
+          "DEMAND_DURATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "96GB 서버 DRAM 실제 수요와 Reasoning AI 메모리 수요",
+        "subject_id": "000660:DRAM:96GB_REASONING_AI_DEMAND_1Q25",
+        "unit": "qualitative actual demand and forward outlook",
+        "value": "1Q25 observed 96GB DDR5 demand increase; continued high-capacity server-memory demand outlook"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.92,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-1709fe1fcbba59b4bb64c5ff",
+        "economic_mechanism": "회사 임원이 향후 3년의 고객 요청 수요가 공급 능력을 크게 웃돈다고 설명해 HBM 병목의 기간과 강도를 직접 보완한다. 요청 수요를 구매의무나 확정계약으로 확대하지 않는다.",
+        "exact_quote": "김기태 부사장은 “향후 3년 동안 고객들이 당사에 요청하는 수요는 우리 공급 캐파(생산능력)를 훨씬 상회하는 수준으로, 현재 제한된 캐파 내에서 최대한의 HBM을 공급하기 위해 매진하고 있다”며, “앞으로도 HBM3E와 HBM4를 포함한 제품 대응력 바탕으로 시장 리더십을 공고히 할 것”이라고 말했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 수요 초과와 공급 제약의 3년 기간을 함께 제시해 information_confidence의 구조적 지속성을 직접 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM_THREE_YEAR_DEMAND_CAPACITY_GAP",
+        "normalized_object": "향후 3년 HBM 고객 요청 수요와 제한된 공급 능력",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-2028 outlook stated 2026-04-23",
+        "predicate": "향후 3년간 고객 요청 HBM 수요가 SK하이닉스 공급 능력을 크게 상회한다",
+        "predicate_family": "HBM_DEMAND_EXCEEDS_CAPACITY",
+        "primitive_tags": [
+          "HBM",
+          "CAPACITY_SCARCITY",
+          "THREE_YEAR_DEMAND"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_CUSTOMER_DEMAND_CAPACITY_GAP",
+        "question_family_tags": [
+          "HBM_DEMAND_CAPACITY_GAP",
+          "CUSTOMER_REQUESTED_DEMAND"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 고객 수요와 공급 능력",
+        "subject_id": "000660:HBM_CUSTOMER_DEMAND_CAPACITY",
+        "unit": "qualitative issuer-executive statement",
+        "value": "customer-requested demand far exceeds available capacity"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-1709fe1fcbba59b4bb64c5ff",
+        "economic_mechanism": "HBM4E의 2026년 하반기 샘플과 2027년 양산 목표는 차세대 제품의 상용화 순서를 보여준다. 샘플 계획을 인증 완료나 매출 확정으로 해석하지 않는다.",
+        "exact_quote": "김기태 부사장은 “HBM4E는 출하 일정과 제품 사양에 대해 고객사와 긴밀한 협의를 통해 준비 중으로, 내부적으론 하반기 샘플 공급 계획하고 있으며 2027년 양산 목표로 순조롭게 개발 중”이라며, “HBM4E에 사용될 베이스다이는 고객사 요구에 부합하는 최적의 테크를 기반으로 개발 중이며, 고객사와 협업을 통해 원활하게 진행 중”이라고 설명했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현재 roster에 없는 HBM4E의 샘플·양산 시간표로 제품 상용화 가시성을 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4E_COMMERCIALIZATION_TIMELINE",
+        "normalized_object": "HBM4E 샘플 및 양산 목표 일정",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2H2026 sample; 2027 mass-production target",
+        "predicate": "HBM4E는 2026년 하반기 샘플 공급과 2027년 양산을 목표로 개발 중이다",
+        "predicate_family": "HBM4E_SAMPLE_AND_MASS_PRODUCTION_TIMELINE",
+        "primitive_tags": [
+          "HBM4E",
+          "SAMPLE",
+          "MASS_PRODUCTION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4E_SAMPLE_MASS_PRODUCTION_TIMELINE",
+        "question_family_tags": [
+          "HBM4E_COMMERCIALIZATION",
+          "SAMPLE_TIMELINE",
+          "MASS_PRODUCTION_TARGET"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4E 상용화 일정",
+        "subject_id": "000660:HBM4E_COMMERCIALIZATION_TIMELINE",
+        "unit": "commercialization timeline",
+        "value": "sample in 2H26; mass-production target in 2027"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "economic_mechanism": "AI 사이클 이전 메모리 산업은 고정비 비중과 가격 변동에 따른 이익 탄력성이 커 실적 신뢰도가 낮았고, 상대적으로 안정적인 장부가치를 분모로 한 PBR이 주가를 더 잘 설명했다. 이는 현재 multiple 전환을 평가할 때 넘어야 할 역사적 기준이며, 현재도 같은 변동성이 지속된다는 뜻으로 확대하지 않는다.",
+        "exact_quote": "역사적으로 메모리 주식의 Valuation tool은 PBR이었다.\n2010 년 초반 스마트폰 사이클, 이후 서버, 코로나 사이클을 거치며 메모리 산업은\n불황과 호황의 차이가 극명했기 때문이다. 메모리 산업의 비용 상당부분이 고정비이\n므로 메모리 가격 변동에 따른 높은 이익 탄력성은 양날의 검이었다. 변동이 심한\nEarnings보다 안정적인 Book value 기반의 Valuation이 효과적이었다.\n또한 거시경제에 연동되는 전형적인 Cyclical 산업이었다.\n2010년 이후 AI 사이클 이전까지 그 어떤 사이클도 거시경제의 방향에서 벗어나지\n못했다. 실적도, 주가도 마찬가지였다. 그 과정에서 PBR은 주가를 잘 설명했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "과거 PBR의 경제적 근거를 명시해야 AI 사이클의 이익 안정성이 실제로 valuation 방법론을 바꿀 정도인지 재평가할 수 있다.",
+        "mechanism_scope_id": "000660:MEMORY:LEGACY_PBR_VOLATILITY_BASELINE",
+        "normalized_object": "메모리 이익 변동성과 안정적 장부가치에 기반한 역사적 PBR 기준",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "pre-AI memory cycles since 2010; assessment published 2025-11-03",
+        "predicate": "AI 사이클 이전 메모리는 높은 실적 변동성 때문에 안정적인 Book value 기반 PBR로 평가하는 것이 효과적이었다",
+        "predicate_family": "LEGACY_MEMORY_PBR_VOLATILITY_BASELINE",
+        "primitive_tags": [
+          "MEMORY",
+          "PBR",
+          "EARNINGS_VOLATILITY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "LEGACY_MEMORY_PBR_VOLATILITY_BASELINE",
+        "question_family_tags": [
+          "VALUATION_METHOD",
+          "BOOK_VALUE",
+          "CYCLICALITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "AI 사이클 이전 메모리 PBR 방법론의 실적 변동성 근거",
+        "subject_id": "000660:MEMORY:LEGACY_PBR_VOLATILITY_BASELINE",
+        "unit": "qualitative valuation-method rationale",
+        "value": "high earnings volatility made stable book value a more effective valuation basis"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3640343bbccf64f8aa443c35",
+        "economic_mechanism": "SK증권은 HBM 경쟁력에서 나온 SK하이닉스의 차별적 이익이 과거 PBR Band 상단 돌파로 연결되고, 단순 불황 탈출 구간이 아닌데도 EPS 상향과 PER 상승이 동시에 나타난 점을 Value 확장의 신호로 해석했다. 이는 관찰된 valuation regime 변화이지 미래 주가 성과의 보장은 아니다.",
+        "exact_quote": "오랫동안 메모리 업종 주가를 설명해 온 PBR은 기능을 잃기 시작하고 있다.\nAI 사이클 시작 이후 HBM 에서의 높은 경쟁력을 기반으로 한 차별적인 이익을 시\n현한 SK 하이닉스의 PBR은 과거 Band 상단을 상향 돌파하기 시작했기 때문이다.\n2010 년 이후 단 한 번도 그 기능을 잃지 않았다는 점을 감안하면, AI 사이클에서\n과거와는 명백히 다른 Value의 확장이 진행되고 있음을 보여준다.\n최근 메모리 업종에 EPS의 상향과 PER의 상승이 동반되고 있다.\n과거 메모리 업종의 EPS 상향과 PER 상승이 동반되는 경우는 불황에서 호황으로\n턴어라운드 되기 시작하는 구간이었다. 이 시기에는 업황의 탄력적 반등의 기대감이\n주가에 반영되므로 EPS의 상향보다 주가의 상승 탄력성이 더 높다. 이 경우를 제외\n하면 보통 호황에서 저PER, 불황에서 고 PER이 일반적이다.\n현재 메모리 업종은 불황에서 호황으로 턴어라운드 하는 구간이 아니다. 2023년 AI\n사이클 시작 업황은 턴어라운드하기 시작했고, 최근까지 호황이 지속되었다. AI 사이\n클에서의 메모리 업종에 대한 평가가 급격히 바뀌기 시작하는 초입이라고 판단한다.\n메모리 업종에 대한 PBR Valuation을 유지하는게 맞는지 고민해야 할 시점이다.\nPBR의 근거가 높은 실적 변동성이었다면, AI 사이클 내 실적 안정성 강화와 구조적\n성장이 장기화 될 경우 PBR은 점점 명분을 잃기 시작할 것이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 차별 이익과 EPS·PER 동반 상승이 역사적 PBR Band 이탈로 연결된 관찰은 multiple 재평가가 실제로 시작됐는지 직접 검증한다.",
+        "mechanism_scope_id": "000660:HBM:PBR_BAND_BREAKOUT_EPS_PER_RERATING",
+        "normalized_object": "HBM 차별 이익에 따른 과거 PBR Band 상단 돌파와 EPS·PER 동반 상승",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "AI cycle from 2023 through assessment published 2025-11-03",
+        "predicate": "HBM 경쟁력 기반의 차별 이익으로 SK하이닉스 PBR이 과거 Band 상단을 돌파했고 EPS 상향과 PER 상승도 동반됐다",
+        "predicate_family": "HBM_PBR_BAND_BREAKOUT_EPS_PER_RERATING",
+        "primitive_tags": [
+          "HBM",
+          "PBR_BAND",
+          "EPS_PER"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_PBR_BAND_BREAKOUT_EPS_PER_RERATING",
+        "question_family_tags": [
+          "VALUATION_RERATING",
+          "HISTORICAL_BAND",
+          "EXPECTATION_CHANGE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 이익과 역사적 PBR Band 상단 돌파",
+        "subject_id": "000660:HBM:PBR_BAND_BREAKOUT_EPS_PER_RERATING",
+        "unit": "qualitative historical-band and earnings-multiple direction",
+        "value": "PBR moved above its historical upper band while EPS upgrades and PER expansion occurred together"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "economic_mechanism": "한화리서치는 글로벌 반도체 종목 가운데 2026년 예상 및 12개월 선행 P/E가 10배 이하인 종목이 없고 같은 메모리 사업의 Micron도 선행 P/E 10배 이상인 반면, SK하이닉스는 12개월 선행 P/E 6.6배라고 비교했다. 이는 같은 시점의 peer 비교에 근거한 valuation 할인이지 향후 주가 결과를 뜻하지 않는다.",
+        "exact_quote": "아래 [그림4, 5]에서 확인할 수 있듯이 글로벌 반도체 종목들 중\n지배주주순이익 19,789 42,919 217,232 318,894\nEPS 27,182 58,955 321,737 472,307 '26F P/E, 12MF P/E 기준 10배 이하의 멀티플을 부여받고 있는 종\n순차입금 13,554 -242 -180,885 -458,510\n목은 단 하나도 없음. 이는 성장주의 대표격이라고 할 수 있는 테\nPER 101.7 46.9 8.6 5.9\nPBR 27.2 16.7 5.8 3.0 크 섹터 내에서는 당연한 현상이라고 할 수 있음. 심지어는 동사와\nEV/EBITDA 55.0 32.2 6.3 3.4\n완벽히 같은 사업을 영위하고 있는 Micron Technology 마저도 이\n배당수익률 0.1 0.1 0.1 0.1\nROE 31.1 44.2 94.3 64.0 제 FW P/E 10배 이상을 부여받고 있음. 그럼에도 불구하고 동사의\n12MF P/E는 6.6배로 여전히 글로벌 테크 종목들의 기본 배수도\n주가 추이\n부여받지 못하고 있는 상황.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 시점의 글로벌 반도체 및 직접 메모리 peer와 비교한 12MF P/E 할인은 현재 미해결 PEER_BAND와 재평가 여지를 직접 검증한다.",
+        "mechanism_scope_id": "000660:MEMORY:12MF_PE_GLOBAL_PEER_DISCOUNT",
+        "normalized_object": "SK하이닉스 12MF P/E 6.6배와 글로벌 반도체 peer 10배 이상 기준의 할인",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "12MF valuation as of 2026-06-19, reported 2026-06-22",
+        "predicate": "한화리서치 기준 SK하이닉스의 12개월 선행 P/E는 6.6배로, 2026년 예상 및 12개월 선행 P/E가 10배 이하인 글로벌 반도체 peer가 없고 Micron도 선행 P/E 10배 이상이라는 비교 기준보다 낮았다",
+        "predicate_family": "CURRENT_12MF_PE_GLOBAL_PEER_DISCOUNT",
+        "primitive_tags": [
+          "VALUATION",
+          "PEER_COMPARISON",
+          "FORWARD_PE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "SKHYNIX_12MF_PE_GLOBAL_PEER_DISCOUNT",
+        "question_family_tags": [
+          "SKHYNIX_12MF_PE_GLOBAL_PEER_DISCOUNT",
+          "PEER_BAND",
+          "FORWARD_PE",
+          "MICRON"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 12개월 선행 P/E의 글로벌 반도체 peer 대비 할인",
+        "subject_id": "000660:MEMORY:12MF_PE_GLOBAL_PEER_DISCOUNT",
+        "unit": "x",
+        "value": "SK hynix 12MF P/E 6.6x; no cited global semiconductor peer below 10x on 2026F or 12MF P/E; Micron forward P/E above 10x"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-446d9d7d3a11922dd4b94b08",
+        "economic_mechanism": "보고서는 12MF EPS 429,777원에 글로벌 반도체 종목의 최소 12MF P/E라고 정의한 10배를 적용해 목표가격 4,300,000원을 산출하고, 6월 19일 종가 2,764,000원 대비 차이를 55.6%로 제시했다. 이는 EPS 분모와 적용 배수가 모두 있는 브로커 valuation 시나리오이며 투자 결과를 보장하지 않는다.",
+        "exact_quote": "[표3] SK하이닉스 P/E 밸류에이션\n12MF 비고\n12MF EPS(원) 429,777\nTarget P/E(배) 10 글로벌 반도체 종목들의 최소 12MF P/E\n목표주가(원) 4,300,000\n현재주가(원) 2,764,000 6월 19일 종가\n상승여력(%) 55.6\n자료: 한화투자증권 리서치센터",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 가격과 12MF EPS 분모, 적용 P/E와 산출가격이 모두 연결된 최신 valuation bridge이므로 목표가격만 있는 비경제적 신호가 아니다.",
+        "mechanism_scope_id": "000660:MEMORY:TARGET_PER_12MF_EPS_BRIDGE",
+        "normalized_object": "12MF EPS 429,777원과 글로벌 peer 최소 P/E 10배의 목표가격 산식",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "12MF target valuation with close price on 2026-06-19",
+        "predicate": "한화리서치는 SK하이닉스 12MF EPS 429,777원에 글로벌 반도체 종목의 최소 12MF P/E 10배를 적용해 목표가격 4,300,000원을 산출했고 6월 19일 종가 2,764,000원 대비 55.6% 차이를 제시했다",
+        "predicate_family": "TARGET_PER_GLOBAL_SEMICONDUCTOR_FLOOR_METHOD",
+        "primitive_tags": [
+          "VALUATION",
+          "FORWARD_EPS",
+          "TARGET_PE"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "TARGET_PER_GLOBAL_SEMICONDUCTOR_FLOOR_METHOD",
+        "question_family_tags": [
+          "TARGET_PER_GLOBAL_SEMICONDUCTOR_FLOOR_METHOD",
+          "FORWARD_EPS",
+          "TARGET_PE",
+          "SCENARIO_SENSITIVITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 12MF EPS 기반 목표 P/E valuation bridge",
+        "subject_id": "000660:MEMORY:TARGET_PER_12MF_EPS_BRIDGE",
+        "unit": "KRW, x and %",
+        "value": "12MF EPS KRW 429777; target P/E 10x; target price KRW 4300000; close KRW 2764000; stated gap 55.6%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.7,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4ad2b2c5d23cebf2ce49609c",
+        "economic_mechanism": "2025년 3월 HBM4 12단 샘플을 고객에게 보낸 뒤 4개월 시점까지 엔비디아 인증을 통과하지 못했다는 보도는 당시 qualification 지연 위험을 보여준다. 이후 2026년 생산 준비 보도가 있어 현재 상태로 확대하지 않는다.",
+        "exact_quote": "SK하이닉스는 지난 3월 6세대 HBM4 12단 제품 샘플을 엔비디아 등 주요 고객사에 제공했다고 밝혔으나 4개월이 지난 지금까지 인증을 통과하지 못한 것으로 알려졌다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "당시 HBM4 고객 인증의 실행 위험을 직접 기록하되 이후 상태를 추론하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_NVIDIA_QUALIFICATION_DELAY_2025",
+        "normalized_object": "HBM4 12단 엔비디아 인증 지연 보도",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-03 to 2025-07",
+        "predicate": "2025년 7월 보도 시점에 HBM4 12단 샘플은 제공 후 4개월간 엔비디아 인증을 통과하지 못한 것으로 알려졌다",
+        "predicate_family": "HBM4_QUALIFICATION_DELAY_REPORTED",
+        "primitive_tags": [
+          "HBM4",
+          "NVIDIA",
+          "QUALIFICATION",
+          "SAMPLE"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_NVIDIA_QUALIFICATION_DELAY",
+        "question_family_tags": [
+          "HBM4_QUALIFICATION",
+          "NVIDIA_TEST",
+          "DELAY_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.7,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4 엔비디아 인증 상태",
+        "subject_id": "000660:HBM4_NVIDIA_QUALIFICATION_STATUS_2025_07",
+        "unit": "months after sample delivery",
+        "value": "not qualified four months after sample delivery"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.64,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4ad2b2c5d23cebf2ce49609c",
+        "economic_mechanism": "초기 버전 샘플이 테스트 통과 전 보완 단계를 필요로 한다는 보도는 샘플 제출과 양산 인증 사이의 간극을 보여준다. 보완 횟수나 최종 실패를 확정하지 않는다.",
+        "exact_quote": "일각에서는 SK하이닉스가 지난 3월 엔비디아에 보낸 HBM4 샘플이 완제품이 아닌 초기 버전으로, 테스트 통과까지 몇 단계의 보완을 거쳐야 하는 것으로 알려졌다. 이는 거의 완성 상태에서 샘플을 보내던 이전 세대인 HBM3E와는 다소 차이가 있다는 분석이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "샘플 제출 자체를 qualification 완료로 오인하지 않게 하는 정보품질 counterfact다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM4_SAMPLE_MATURITY_RISK",
+        "normalized_object": "HBM4 초기 샘플의 보완 필요성",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "reported 2025-07-15",
+        "predicate": "2025년 3월 엔비디아에 보낸 HBM4 샘플은 초기 버전으로 테스트 통과 전 보완 단계가 필요한 것으로 보도됐다",
+        "predicate_family": "HBM4_INITIAL_SAMPLE_REWORK_RISK",
+        "primitive_tags": [
+          "HBM4",
+          "INITIAL_SAMPLE",
+          "REWORK",
+          "QUALIFICATION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM4_SAMPLE_MATURITY_RISK",
+        "question_family_tags": [
+          "HBM4_SAMPLE_MATURITY",
+          "QUALIFICATION_GAP",
+          "REWORK_RISK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.64,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4 초기 샘플 완성도",
+        "subject_id": "000660:HBM4_INITIAL_SAMPLE_MATURITY",
+        "unit": "qualitative qualification risk",
+        "value": "initial-version sample required several improvement steps"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-5a3f1affd4616ae845ce6c2d",
+        "economic_mechanism": "동일 기준 peer 표가 SK하이닉스의 2026년 예상 BPS를 제시해 forward P/B의 분모를 명시한다.",
+        "exact_quote": "SK하이닉스 000660 KS N/R 768000.0 373,565 28.2 42.0 47.4 98463.5 154838. 253407. 7.8 5.0 3.0\n6 2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 missing role인 FORWARD_BOOK_VALUE를 target·기간·단위가 있는 broker peer 표로 직접 채운다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_BOOK_VALUE_2026F",
+        "normalized_object": "SK하이닉스 2026년 예상 BPS",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "유안타 peer 표의 SK하이닉스 2026년 예상 BPS는 154,838.6원이다",
+        "predicate_family": "FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "BPS",
+          "FY2026F",
+          "PEER_VALUATION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SKHYNIX_FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "FORWARD_BOOK_VALUE",
+          "BPS",
+          "PEER_TABLE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK하이닉스 2026년 예상 주당순자산",
+        "subject_id": "000660:FORWARD_BOOK_VALUE:2026F",
+        "unit": "KRW/share",
+        "value": 154838.6
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-5a3f1affd4616ae845ce6c2d",
+        "economic_mechanism": "동일 기준 peer 표가 SK하이닉스의 2027년 예상 BPS를 제시해 forward P/B의 분모를 명시한다.",
+        "exact_quote": "SK하이닉스 000660 KS N/R 768000.0 373,565 28.2 42.0 47.4 98463.5 154838. 253407. 7.8 5.0 3.0\n6 2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 missing role인 FORWARD_BOOK_VALUE를 target·기간·단위가 있는 broker peer 표로 직접 채운다.",
+        "mechanism_scope_id": "000660:MEMORY:FORWARD_BOOK_VALUE_2027F",
+        "normalized_object": "SK하이닉스 2027년 예상 BPS",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "유안타 peer 표의 SK하이닉스 2027년 예상 BPS는 253,407.2원이다",
+        "predicate_family": "FORWARD_BOOK_VALUE",
+        "primitive_tags": [
+          "BPS",
+          "FY2027F",
+          "PEER_VALUATION"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "SKHYNIX_FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "FORWARD_BOOK_VALUE",
+          "BPS",
+          "PEER_TABLE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK하이닉스 2027년 예상 주당순자산",
+        "subject_id": "000660:FORWARD_BOOK_VALUE:2027F",
+        "unit": "KRW/share",
+        "value": 253407.2
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-0964968626eef4530df63603",
+      "SGDOC-1709fe1fcbba59b4bb64c5ff",
+      "SGDOC-3640343bbccf64f8aa443c35",
+      "SGDOC-446d9d7d3a11922dd4b94b08",
+      "SGDOC-4ad2b2c5d23cebf2ce49609c",
+      "SGDOC-5a3f1affd4616ae845ce6c2d"
+    ],
+    "unresolved_research_notes": [
+      "12-fact transport page limit; six target-direct documents retain distinct objective-linked remainder."
+    ]
+  },
+  "payload_hash": "20fcef18b24599d01c7f45240bec74f0f1e867fdfaba4930ec2ad2bdb986ec48",
+  "production_score_authority": false,
+  "prompt_hash": "5f905263501da6871aca54698a9b5df1ba96aa6576e9636a1984ed50af6588cc",
+  "provenance": {
+    "agent_id": "root-phase101-c06-facts",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase101_c06_facts",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d15230488400e87c97e191f0ec0a7e005f65b0145a9d0009944988069b5ddd61",
+  "response_id": "COLLABRESP-07e175c9496170589a0cd718d00a02a6ba1bc2dc85e7c4cf432b2bba81649a2d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,569 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "rationale": "Continuation page 3 adds 12 distinct source-order valuation atoms after the exact prior 24: FY2025-FY2027 controlling-basis EPS, PER, BPS, and PBR. The literal chunk still contains distinct ROE and subsequent quarterly/segment-margin model atoms, so this is not the final page.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory consolidated broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "Daishin's controlling-shareholder-basis EPS forecast is an external earnings input for issuer-wide valuation and is neither issuer guidance nor HBM-only earnings.",
+        "exact_quote": "EPS -12,517 27,182 54,045 86,380 39,121\nPER NA 6.4 9.4 5.9 13.0\nBPS 73,495 101,515 154,267 239,161 276,881\nPBR 1.9 1.7 3.4 2.2 1.9\nROE -15.6 31.1 42.3 43.9 15.2\n주: EPS와BPS, ROE는지배지분수치기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The report's FY2025 EPS estimate is a direct broker earnings-and-valuation input; the adjacent note identifies EPS as controlling-shareholder-basis, but it does not make the number issuer guidance or HBM-only profit.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2025 controlling-shareholder-basis EPS Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "Daishin forecasts SK hynix controlling-shareholder-basis EPS at KRW 54,045 for FY2025.",
+        "predicate_family": "BROKER_CONTROLLING_EPS_FORECAST",
+        "primitive_tags": [
+          "EPS",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "daishin_skh_controlling_eps_fy2025f",
+        "question_family_tags": [
+          "earnings",
+          "valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix controlling-shareholder-basis EPS broker forecast",
+        "subject_id": "000660:CONTROLLING_EPS:FY2025F:DAISHIN_20251128",
+        "unit": "KRW per share",
+        "value": 54045
+      },
+      {
+        "business_segment": "Memory consolidated broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "Daishin's controlling-shareholder-basis EPS forecast is an external earnings input for issuer-wide valuation and is neither issuer guidance nor HBM-only earnings.",
+        "exact_quote": "EPS -12,517 27,182 54,045 86,380 39,121\nPER NA 6.4 9.4 5.9 13.0\nBPS 73,495 101,515 154,267 239,161 276,881\nPBR 1.9 1.7 3.4 2.2 1.9\nROE -15.6 31.1 42.3 43.9 15.2\n주: EPS와BPS, ROE는지배지분수치기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The report's FY2026 EPS estimate directly advances the external earnings bridge; the table note fixes the controlling-shareholder basis without changing the broker-estimate lifecycle.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2026 controlling-shareholder-basis EPS Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "Daishin forecasts SK hynix controlling-shareholder-basis EPS at KRW 86,380 for FY2026.",
+        "predicate_family": "BROKER_CONTROLLING_EPS_FORECAST",
+        "primitive_tags": [
+          "EPS",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "daishin_skh_controlling_eps_fy2026f",
+        "question_family_tags": [
+          "earnings",
+          "valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix controlling-shareholder-basis EPS broker forecast",
+        "subject_id": "000660:CONTROLLING_EPS:FY2026F:DAISHIN_20251128",
+        "unit": "KRW per share",
+        "value": 86380
+      },
+      {
+        "business_segment": "Memory consolidated broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "Daishin's outer-year controlling-shareholder EPS estimate falls sharply from FY2026, providing a broker counter to extrapolating the FY2026 earnings peak.",
+        "exact_quote": "EPS -12,517 27,182 54,045 86,380 39,121\nPER NA 6.4 9.4 5.9 13.0\nBPS 73,495 101,515 154,267 239,161 276,881\nPBR 1.9 1.7 3.4 2.2 1.9\nROE -15.6 31.1 42.3 43.9 15.2\n주: EPS와BPS, ROE는지배지분수치기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2027 broker estimate is a material outer-year counter because it falls well below FY2026; it is issuer-wide and not an HBM-only attribution.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2027 controlling-shareholder-basis EPS Daishin broker forecast and outer-year decline counter",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2027F",
+        "predicate": "Daishin forecasts SK hynix controlling-shareholder-basis EPS at KRW 39,121 for FY2027, below FY2026's KRW 86,380.",
+        "predicate_family": "BROKER_CONTROLLING_EPS_FORECAST",
+        "primitive_tags": [
+          "EPS",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "daishin_skh_controlling_eps_fy2027f",
+        "question_family_tags": [
+          "earnings",
+          "valuation",
+          "outer_year_counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix controlling-shareholder-basis EPS broker forecast",
+        "subject_id": "000660:CONTROLLING_EPS:FY2027F:DAISHIN_20251128",
+        "unit": "KRW per share",
+        "value": 39121
+      },
+      {
+        "business_segment": "Memory consolidated broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker's forward PER links its consolidated controlling-shareholder EPS estimate to issuer-wide valuation without implying issuer guidance or HBM-only economics.",
+        "exact_quote": "EPS -12,517 27,182 54,045 86,380 39,121\nPER NA 6.4 9.4 5.9 13.0\nBPS 73,495 101,515 154,267 239,161 276,881\nPBR 1.9 1.7 3.4 2.2 1.9\nROE -15.6 31.1 42.3 43.9 15.2\n주: EPS와BPS, ROE는지배지분수치기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2025 forward PER is a direct issuer-wide valuation input derived from the broker's estimate table.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2025 forward PER Daishin broker estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "Daishin estimates SK hynix FY2025 forward PER at 9.4 times.",
+        "predicate_family": "BROKER_FORWARD_PER_FORECAST",
+        "primitive_tags": [
+          "PER",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "daishin_skh_forward_per_fy2025f",
+        "question_family_tags": [
+          "valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix forward PER broker estimate",
+        "subject_id": "000660:FORWARD_PER:FY2025F:DAISHIN_20251128",
+        "unit": "times",
+        "value": 9.4
+      },
+      {
+        "business_segment": "Memory consolidated broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker's forward PER links its consolidated controlling-shareholder EPS estimate to issuer-wide valuation without implying issuer guidance or HBM-only economics.",
+        "exact_quote": "EPS -12,517 27,182 54,045 86,380 39,121\nPER NA 6.4 9.4 5.9 13.0\nBPS 73,495 101,515 154,267 239,161 276,881\nPBR 1.9 1.7 3.4 2.2 1.9\nROE -15.6 31.1 42.3 43.9 15.2\n주: EPS와BPS, ROE는지배지분수치기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2026 PER is the report's lowest forward multiple and directly informs issuer-wide rerating potential, while remaining a broker estimate.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2026 forward PER Daishin broker estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "Daishin estimates SK hynix FY2026 forward PER at 5.9 times.",
+        "predicate_family": "BROKER_FORWARD_PER_FORECAST",
+        "primitive_tags": [
+          "PER",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "daishin_skh_forward_per_fy2026f",
+        "question_family_tags": [
+          "valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix forward PER broker estimate",
+        "subject_id": "000660:FORWARD_PER:FY2026F:DAISHIN_20251128",
+        "unit": "times",
+        "value": 5.9
+      },
+      {
+        "business_segment": "Memory consolidated broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The FY2027 broker PER rises as the outer-year EPS estimate falls, countering a simple continuation of FY2026's low-multiple earnings peak.",
+        "exact_quote": "EPS -12,517 27,182 54,045 86,380 39,121\nPER NA 6.4 9.4 5.9 13.0\nBPS 73,495 101,515 154,267 239,161 276,881\nPBR 1.9 1.7 3.4 2.2 1.9\nROE -15.6 31.1 42.3 43.9 15.2\n주: EPS와BPS, ROE는지배지분수치기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2027 multiple is a material counter to extrapolating the FY2026 valuation trough and is explicitly a broker forecast.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2027 forward PER Daishin broker estimate and outer-year multiple counter",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2027F",
+        "predicate": "Daishin estimates SK hynix FY2027 forward PER at 13.0 times, above FY2026's 5.9 times.",
+        "predicate_family": "BROKER_FORWARD_PER_FORECAST",
+        "primitive_tags": [
+          "PER",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "daishin_skh_forward_per_fy2027f",
+        "question_family_tags": [
+          "valuation",
+          "outer_year_counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix forward PER broker estimate",
+        "subject_id": "000660:FORWARD_PER:FY2027F:DAISHIN_20251128",
+        "unit": "times",
+        "value": 13.0
+      },
+      {
+        "business_segment": "Memory consolidated broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "Daishin's forward controlling-shareholder-basis book value is a direct issuer-wide P/B denominator and is not HBM-only book value.",
+        "exact_quote": "EPS -12,517 27,182 54,045 86,380 39,121\nPER NA 6.4 9.4 5.9 13.0\nBPS 73,495 101,515 154,267 239,161 276,881\nPBR 1.9 1.7 3.4 2.2 1.9\nROE -15.6 31.1 42.3 43.9 15.2\n주: EPS와BPS, ROE는지배지분수치기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2025 BPS estimate is a direct forward book-value denominator; the table note confirms controlling-shareholder basis.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2025 controlling-shareholder-basis BPS Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "Daishin forecasts SK hynix controlling-shareholder-basis BPS at KRW 154,267 for FY2025.",
+        "predicate_family": "BROKER_CONTROLLING_BPS_FORECAST",
+        "primitive_tags": [
+          "BPS",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "daishin_skh_controlling_bps_fy2025f",
+        "question_family_tags": [
+          "valuation",
+          "book_value"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK hynix controlling-shareholder-basis BPS broker forecast",
+        "subject_id": "000660:CONTROLLING_BPS:FY2025F:DAISHIN_20251128",
+        "unit": "KRW per share",
+        "value": 154267
+      },
+      {
+        "business_segment": "Memory consolidated broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "Daishin's forward controlling-shareholder-basis book value is a direct issuer-wide P/B denominator and is not HBM-only book value.",
+        "exact_quote": "EPS -12,517 27,182 54,045 86,380 39,121\nPER NA 6.4 9.4 5.9 13.0\nBPS 73,495 101,515 154,267 239,161 276,881\nPBR 1.9 1.7 3.4 2.2 1.9\nROE -15.6 31.1 42.3 43.9 15.2\n주: EPS와BPS, ROE는지배지분수치기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2026 BPS estimate supplies a direct forward book-value denominator for issuer-wide valuation.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2026 controlling-shareholder-basis BPS Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "Daishin forecasts SK hynix controlling-shareholder-basis BPS at KRW 239,161 for FY2026.",
+        "predicate_family": "BROKER_CONTROLLING_BPS_FORECAST",
+        "primitive_tags": [
+          "BPS",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "daishin_skh_controlling_bps_fy2026f",
+        "question_family_tags": [
+          "valuation",
+          "book_value"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK hynix controlling-shareholder-basis BPS broker forecast",
+        "subject_id": "000660:CONTROLLING_BPS:FY2026F:DAISHIN_20251128",
+        "unit": "KRW per share",
+        "value": 239161
+      },
+      {
+        "business_segment": "Memory consolidated broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "Daishin's forward controlling-shareholder-basis book value is a direct issuer-wide P/B denominator and is not HBM-only book value.",
+        "exact_quote": "EPS -12,517 27,182 54,045 86,380 39,121\nPER NA 6.4 9.4 5.9 13.0\nBPS 73,495 101,515 154,267 239,161 276,881\nPBR 1.9 1.7 3.4 2.2 1.9\nROE -15.6 31.1 42.3 43.9 15.2\n주: EPS와BPS, ROE는지배지분수치기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2027 BPS estimate preserves the report's outer-year book-value denominator even though the EPS path weakens.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2027 controlling-shareholder-basis BPS Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "Daishin forecasts SK hynix controlling-shareholder-basis BPS at KRW 276,881 for FY2027.",
+        "predicate_family": "BROKER_CONTROLLING_BPS_FORECAST",
+        "primitive_tags": [
+          "BPS",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "daishin_skh_controlling_bps_fy2027f",
+        "question_family_tags": [
+          "valuation",
+          "book_value"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK hynix controlling-shareholder-basis BPS broker forecast",
+        "subject_id": "000660:CONTROLLING_BPS:FY2027F:DAISHIN_20251128",
+        "unit": "KRW per share",
+        "value": 276881
+      },
+      {
+        "business_segment": "Memory consolidated broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The report's forward PBR connects the market value to controlling-shareholder-basis book value and remains an external broker valuation estimate.",
+        "exact_quote": "EPS -12,517 27,182 54,045 86,380 39,121\nPER NA 6.4 9.4 5.9 13.0\nBPS 73,495 101,515 154,267 239,161 276,881\nPBR 1.9 1.7 3.4 2.2 1.9\nROE -15.6 31.1 42.3 43.9 15.2\n주: EPS와BPS, ROE는지배지분수치기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2025 PBR is a direct forward valuation multiple tied to the report's stated BPS basis.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2025 forward PBR Daishin broker estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "Daishin estimates SK hynix FY2025 forward PBR at 3.4 times.",
+        "predicate_family": "BROKER_FORWARD_PBR_FORECAST",
+        "primitive_tags": [
+          "PBR",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "daishin_skh_forward_pbr_fy2025f",
+        "question_family_tags": [
+          "valuation",
+          "book_value"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK hynix forward PBR broker estimate",
+        "subject_id": "000660:FORWARD_PBR:FY2025F:DAISHIN_20251128",
+        "unit": "times",
+        "value": 3.4
+      },
+      {
+        "business_segment": "Memory consolidated broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The report's forward PBR connects the market value to controlling-shareholder-basis book value and remains an external broker valuation estimate.",
+        "exact_quote": "EPS -12,517 27,182 54,045 86,380 39,121\nPER NA 6.4 9.4 5.9 13.0\nBPS 73,495 101,515 154,267 239,161 276,881\nPBR 1.9 1.7 3.4 2.2 1.9\nROE -15.6 31.1 42.3 43.9 15.2\n주: EPS와BPS, ROE는지배지분수치기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The lower FY2026 PBR directly informs the report's issuer-wide forward rerating case, without implying HBM-only economics.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2026 forward PBR Daishin broker estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "Daishin estimates SK hynix FY2026 forward PBR at 2.2 times.",
+        "predicate_family": "BROKER_FORWARD_PBR_FORECAST",
+        "primitive_tags": [
+          "PBR",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "daishin_skh_forward_pbr_fy2026f",
+        "question_family_tags": [
+          "valuation",
+          "book_value"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK hynix forward PBR broker estimate",
+        "subject_id": "000660:FORWARD_PBR:FY2026F:DAISHIN_20251128",
+        "unit": "times",
+        "value": 2.2
+      },
+      {
+        "business_segment": "Memory consolidated broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The report's forward PBR connects the market value to controlling-shareholder-basis book value and remains an external broker valuation estimate.",
+        "exact_quote": "EPS -12,517 27,182 54,045 86,380 39,121\nPER NA 6.4 9.4 5.9 13.0\nBPS 73,495 101,515 154,267 239,161 276,881\nPBR 1.9 1.7 3.4 2.2 1.9\nROE -15.6 31.1 42.3 43.9 15.2\n주: EPS와BPS, ROE는지배지분수치기준",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2027 PBR is a distinct outer-year valuation multiple and remains a broker estimate based on issuer-wide book value.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2027 forward PBR Daishin broker estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "Daishin estimates SK hynix FY2027 forward PBR at 1.9 times.",
+        "predicate_family": "BROKER_FORWARD_PBR_FORECAST",
+        "primitive_tags": [
+          "PBR",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "daishin_skh_forward_pbr_fy2027f",
+        "question_family_tags": [
+          "valuation",
+          "book_value"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK hynix forward PBR broker estimate",
+        "subject_id": "000660:FORWARD_PBR:FY2027F:DAISHIN_20251128",
+        "unit": "times",
+        "value": 1.9
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-b06350879c518ec49fa8cd5c"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact cap is reached before exhausting literal chunk 0/2. Continue the same document in source order for distinct ROE and later quarterly/segment-margin model atoms, while preserving broker-estimate, controlling-versus-total, consolidated-versus-HBM-only, period, and formula boundaries. Canonical parent chunk 1/2 remains a separate deterministic transport."
+    ]
+  },
+  "payload_hash": "8a2a385eaae1c3e354c37be87d4c90e55c8204732345be2f83d1bd0cbd6db093",
+  "production_score_authority": false,
+  "prompt_hash": "f7647893edaaf8ba30b9930a47e9175f0461267dcd52296a42cd3c984eb8d178",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8865fe48a2eb654f441b7d5206aa73ddd655f7286f06cf4d330a345e1cf0f897",
+  "response_id": "COLLABRESP-b816a19391f34704690228739650e4067182f751e042a71860231dc0adcb828d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

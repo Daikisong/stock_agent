@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "35e6f43fc9c9abcd9bfdadeeff0240487686427229d3027affc0b5fdab5dc1ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-dc562dddfa7d09c41b536168",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'Industrial Policy through the CHIPS and Science Act' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-149aac5b720e4120eb91f60b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "Intel annual report 원문으로 NVIDIA 고객 문서가 아니며 SK하이닉스 HBM 구매의무·capacity agreement 목적을 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a33e9955caf900e7371a0a47",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "2026-07-14 ETF 기사로 기준일 이후이며 NVIDIA 고객 filing과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-ef72eed6d08240ffa1aed8b8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'[2025: Volume 8]' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-69c43bebaa1808e124363fb8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'Telecom Services (OVERWEIGHT)' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-0699e6ac5aa29d9ca1ab2b84",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'2025 REPORT TO CONGRESS - U.S.,CHINA' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-14e174849bb368009e9937f9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'World Shows Growing Interest in Korean Defense Industry, Products' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ae8a74cacc079318d0a8d018",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'ZenaTech Closes 25th Acquisition with Alberta, Canada-based Velocity Geomatics Inc. Expanding Drone as a ....' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-562a6867450b42e4a74f6d05",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "Intel의 2022 10-K 원문으로 대상 고객·기간·HBM 귀속이 모두 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-398a87c4210ac539cff058f7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'Artificial Intelligence Index Report' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-923538f40bd4d4528a9418c8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'Artificial Intelligence Index Report - Webiomed' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2a891f51422593faa27fda32",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0,
+        "rationale": "'Micron Semiconductor Manufacturing Project - FEIS - Appendix A-D' 후보는 NVIDIA 2026 Form 10-Q 고객 공식·재무제표 원문이 아니거나, full-filing direct route와 SK하이닉스·HBM 구매의무의 명시적 귀속을 discovery metadata가 뒷받침하지 않는다. snippet은 evidence로 사용하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에는 NVIDIA 2026 Form 10-Q full-filing direct route와 SK하이닉스·HBM의 inventory purchase obligations 또는 capacity agreements 명시적 귀속을 함께 충족하는 후보가 없다. Snippet은 증거로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "f9a2e2f0643eb50e19c6887fc6d69abfe360e1d52fca049a2f6ed41bb00abb7e",
+  "production_score_authority": false,
+  "prompt_hash": "ef7c87032aa4f7830ea793b2dc6cbfd30d277c41dc01bd8bf5e1cc75381dc38f",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-494f99a656f550cd47a0a416504348bb7fffea77535053eb2a004f9342e10840",
+  "response_id": "COLLABRESP-d7ac9b0cc56f6cca6e41eae547b23cfb256275a15c0747ae2d50543a025e1c63",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

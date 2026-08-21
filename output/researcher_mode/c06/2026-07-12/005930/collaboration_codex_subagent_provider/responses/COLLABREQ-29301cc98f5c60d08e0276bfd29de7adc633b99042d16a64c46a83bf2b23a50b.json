@@ -1,0 +1,82 @@
+{
+  "output_schema_hash": "534e224e2eebdc23293ee52f4a283ccd82ac3a98750a99d64837108fc8a2f425",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-00001237ec54c303cb80b817",
+        "rationale": "Tech Weekly 42,285자 전체와 exact current fact roster를 의미 중복 감사했다. 기존 PER·PBR 및 memory peer valuation facts는 반복하지 않고, 삼성전자의 메모리 가격전망과 실제 주가 반응을 직접 연결한 별도의 valuation counter 1건만 남겼다. 나머지 HBM 산업 일반론과 전자·모바일 내용은 target objective-local 범위 밖이다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리 밸류에이션 맥락",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-00001237ec54c303cb80b817",
+        "economic_mechanism": "삼성전자가 3개월간 18.3% 상승한 뒤 차익실현과 낮아진 하반기 레거시 메모리 가격 전망 속에서 주간 1.8% 하락했다는 설명은 메모리 이익 기대 변화가 단기 valuation 반응으로 이어진 경로를 보여준다.",
+        "exact_quote": "삼성전자도\n단기간(3M +18.3%) 상승 이후에 차익실현, 하반기에 레거시 반도체 가격 전망이 이전 대비 낮아지면\n3Q 이익모멘텀의 기대로\n순환매의 흐름 지속 서 1.8% 하락하였다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "대상 종목의 실제 주가 반응과 레거시 메모리 가격·이익 기대를 직접 연결해 valuation_rerating의 단기 counter를 제공하며, 현재 동일 문서의 PER·PBR 및 peer valuation facts와 경제적 의미가 구별된다.",
+        "mechanism_scope_id": "005930:MEMORY:LEGACY_PRICE_OUTLOOK:PRICE_REACTION:2025-07-21_25",
+        "normalized_object": "삼성전자 메모리 가격전망 관련 3개월 상승 후 주간 하락",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "3-month return through and weekly return for 2025-07-21 to 2025-07-25; report published 2025-07-28",
+        "predicate": "대신증권은 삼성전자가 3개월간 18.3% 상승한 뒤 차익실현과 낮아진 하반기 레거시 반도체 가격 전망 속에서 주간 1.8% 하락했다고 설명했다",
+        "predicate_family": "MEMORY_PRICE_OUTLOOK_SHARE_PRICE_REACTION",
+        "primitive_tags": [
+          "RELATIVE_PERFORMANCE",
+          "LEGACY_MEMORY_PRICE",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_MEMORY_PRICE_REACTION_EXPECTATION_GAP",
+        "question_family_tags": [
+          "SAMSUNG_MEMORY_PRICE_REACTION_EXPECTATION_GAP",
+          "PRICE_REACTION",
+          "MEMORY_PRICE_OUTLOOK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 가격전망과 주가 반응",
+        "subject_id": "005930:MEMORY:PRICE_REACTION:2025-07-21_25",
+        "unit": "percent share-price return",
+        "value": "3M +18.3%; 1W -1.8%"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "51e43baab90c06b4bace6c939c284cc42f83106954fb6a44ab93cf5b1376e51f",
+  "production_score_authority": false,
+  "prompt_hash": "4bc01c4af5a2ef0b347eeee0defbb7e6009ac077dfcc476f2ef5d60ca345f17b",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-29301cc98f5c60d08e0276bfd29de7adc633b99042d16a64c46a83bf2b23a50b",
+  "response_id": "COLLABRESP-820914c8827704760b69567dabf7db5c7a5cf55ab50aa70888da2b566c0b8e52",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,1272 @@
+ 
+ 
+Compliance Note 
+본 조사자료는 당사의 저작물로서 모든 저작권은 당사
+에게 있습니다. 본 조사자료는 당사의 동의 없이 어떠한 
+경우에도 어떠한 형태로든 복제, 배포, 전송, 변경, 대여
+할 수 없습니다. 본 조사자료에 수록된 내용은 당사 
+리서치센터가 신뢰할 만한 자료 및 정보로부터 얻어진 
+것이나, 당사는 그 정확성이나 완전성을 보장할 수 
+없습니다. 따라서 어떠한 경우에도 본 자료는 고객의 
+주식투자의 결과에 대한 법적 책임소재에 대한 증빙
+자료로 사용될 수 없습니다. 본 자료에는 외부의 부당한 
+압력이나 간섭 없이 애널리스트의 의견이 정확하게 반영
+되었습니다. 
+Earnings Tracker 
+(글로벌) IT하드웨어에 에너지 업종 이익 모멘텀 추가 
+ 
+• 한국 증시 이익 모멘텀 주요국 증시 대비 우위 지속. 여전히 반도체 업종이 견인 
+• 글로벌 증시에서 반도체 중심의 IT 하드웨어 강세 지속되고 있고, 관련 소재, 장비, 
+인프라 관련 기업들의 실적 모멘텀도 견조 
+• 에너지 업종의 이익 모멘텀 강세는 유럽과 중국 이익 모멘텀에 기여. 에너지 업종
+의 상향 조정은 다른 업종의 하향조정 요인이 될 수 있는 만큼 향후 추이 주목 
+WHAT’S THE STORY? 
+(한국 연간) 향후 12개월 예상 영업이익 추정치 증가는 반도체 업종이 견인: 지난 한 
+달간, KOSPI 200 기업의 12개월 예상 영업이익 추정치(FnGuide)는 12% 상향 조정. 
+1) 반도체, 2) 기타 자본재, 3) 조선 업종이 각각 10%p, 1.5%p, 0.2%p 기여 
+(한국 분기) 1Q26 영업이익 추정치 상향 조정폭도 작지 않은 수준: 지난 한 달간 
+KOSPI 200 기업의 1분기 영업이익 추정치(FnGuide)는 6.0% 상향 조정. 다만, 반도
+체 업종이 6.2%p 기여하며 나머지 업종의 기여도는 낮은 편 
+(글로벌) 전반적으로 양호. IT 하드웨어에 에너지 이익 모멘텀 추가: 글로벌 이익 모
+멘텀 전반적인 강세 지속. IT 하드웨어 강세 지속되는 가운데, 금융 업종도 미국을 제
+외한 대부분의 조사 지역에서 강세 지속. 중동 분쟁으로 유가가 상승하며 에너지 업
+종 이익 모멘텀이 개선되며 에너지 비중이 높은 유럽, 중국의 이익 모멘텀 개선. 그러
+나, 유가 상승은 다른 업종의 이익 전망에 시차를 두고 부정적으로 작용할 수 있기 때
+문에 고유가 장기화 여부가 향후 이익 모멘텀에 영향을 줄 수도 있을 것 
+AI 관련 반도체 업종이 글로벌 이익을 견인하는 가운데, 관련 소재, 장비, 인프라 관련 
+기업들의 실적 모멘텀이 강했고 (미국 Comfort Sys.USA, Qnity Electronics, 일본 
+Furukawa Electric, Nikon, 대만 Delta Electronics, WPG Holdings, Unimicron 
+T echnology, 중국 Foxconn Industrial Internet, Zhongji Innolight 등), 일본과 유럽에서
+는 제약 기업들의 이익 모멘텀도 강세를 보였으며, 중국에서는 배터리 관련 기업들의 
+이익 모멘텀 개선도 나타남 
+주요국 증시 전월 대비 12개월 예상 EPS (1, 2, 3월) 
+ 
+참고: 한국 KOSPI , 미국 S&P 500, 유럽 Eurostoxx, 일본 Topix, 대만 가권 지수, 중국 CSI 300 지수 대상 
+본문에서 한국 증시는 FnGuide 컨센서스를 사용했으나, 글로벌 비교를 위해 본 차트에서는 LSEG 컨센서스 사용 
+출처: LSEG, 삼성증권 
+23.0
+3.9 2.1
+0.3 1.7 1.0
+9.7 
+2.7 2.4 2.3 1.4 1.0 
+0
+5
+10
+15
+20
+25
+한국 대만 미국 중국 일본 유럽
+(전월 대비, %)
+글로벌투자전략팀 
+양일우 팀장 
+iw.yang@samsung.com  
+ 
+ 
+ 
+▶ Earnings Tracker 
+본 보고서는 1) 한국 증시의 이익을 견인하는 업
+종과 기업을 발굴하고, 2) 한국 증시의 이익 모멘
+텀을 글로벌 증시의 이익 모멘텀과 비교함으로써 
+투자자들의 펀더멘털에 기반한 투자 및 자산 배
+분을 돕기 위해 작성하였습니다. 분석 대상은 한
+국, 미국, 유럽, 일본, 대만, 중국 증시이며, 매월 
+20일경 발간될 예정입니다. 
+ 
+KOREA 
+EQUITY 
+STRATEGY 
+2026. 3. 23. 
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 2  
+향후 12개월 예상 실적 컨센서스 트렌드 
+KOSPI 200 흑자 기업 대상 12개월 예상 기준 컨센서스(FnGuide)는 한 달 전 대비 영업이익과 순이익 
+각각 12.0%, 13.6% 상향 조정. 영업이익 추정치 상향 조정 기여도가 높은 업종은 1) 반도체, 2) 기타 자
+본재(지주), 3) 조선. 
+ 
+향후 12개월 예상 이익 컨센서스 트렌드 (한 달 전 대비) 
+(십억원) 시가총액  12개월 예상 영업이익  12개월 예상 당기순이익  차이 (%)  기여도 (%p) 
+업종   3월 20일 2월 20일  3월 20일 2월 20일  영업이익 순이익  영업이익 순이익 
+IT 2,140,224   385,874  328,212   315,012  266,846   17.6  18.1   10.1  11.1  
+반도체와 반도체장비 1,927,566   373,907  316,702   307,861  260,044   18.1  18.4   10.0  11.1  
+전자와 전기제품 116,001   5,809  5,549   2,623  2,467   4.7  6.3   0.0  0.0  
+소프트웨어와서비스 39,632   2,117  2,097   1,702  1,683   0.9  1.1   0.0  0.0  
+기술하드웨어와장비 51,009   2,694  2,550   2,060  1,937   5.7  6.4   0.0  0.0  
+디스플레이 6,015   1,347  1,314   765  715   2.5  7.1   0.0  0.0  
+금융 405,284   58,874  58,477   43,729  43,490   0.7  0.5   0.1  0.1  
+은행 206,364   34,327  34,031   24,958  24,807   0.9  0.6   0.1  0.0  
+보험 88,427   10,025  9,920   7,646  7,678   1.1  (0.4)  0.0  (0.0) 
+증권 103,576   13,626  13,631   10,456  10,339   (0.0) 1.1   (0.0) 0.0  
+다각화된금융 6,917   896  895   669  666   0.1  0.4   0.0  0.0  
+산업재 817,866   86,831  76,832   56,354  47,482   13.0  18.7   1.7  2.1  
+자본재 762,009   80,777  70,855   51,547  42,731   14.0  20.6   1.7  2.0  
+조선 190,552   22,386  21,305   11,697  11,402   5.1  2.6   0.2  0.1  
+우주항공과국방 146,056   7,344  7,184   4,721  4,595   2.2  2.7   0.0  0.0  
+건설 38,453   3,314  3,263   2,234  2,175   1.6  2.7   0.0  0.0  
+기타 자본재 386,948   47,732  39,102   32,895  24,558   22.1  33.9   1.5  1.9  
+운송 52,479   5,797  5,722   4,606  4,551   1.3  1.2   0.0  0.0  
+상업서비스와공급품 3,378   257  255   202  201   0.6  0.6   0.0  0.0  
+경기관련소비재 299,795   41,297  40,765   33,618  33,099   1.3  1.6   0.1  0.1  
+자동차와부품 231,478   32,722  32,352   28,144  27,766   1.1  1.4   0.1  0.1  
+내구소비재와의류 44,992   4,997  4,867   3,450  3,300   2.7  4.5   0.0  0.0  
+소매(유통) 16,988   3,054  3,019   1,560  1,526   1.2  2.2   0.0  0.0  
+호텔,레스토랑,레저등 6,337   524  527   465  506   (0.6) (8.2)  (0.0) (0.0) 
+커뮤니케이션서비스 134,610   12,172  11,953   9,150  8,991   1.8  1.8   0.0  0.0  
+미디어와엔터테인먼트 95,587   6,906  6,763   5,627  5,517   2.1  2.0   0.0  0.0  
+전기통신서비스 39,023   5,266  5,190   3,523  3,474   1.5  1.4   0.0  0.0  
+건강관리 165,150   5,968  5,845   4,794  4,701   2.1  2.0   0.0  0.0  
+소재 128,782   11,083  10,662   5,915  5,535   4.0  6.9   0.1  0.1  
+철강 35,172   4,241  4,164   2,400  2,359   1.8  1.7   0.0  0.0  
+화학 57,716   4,576  4,382   1,960  1,723   4.4  13.7   0.0  0.1  
+기타 소재 35,894   2,267  2,115   1,556  1,452   7.1  7.1   0.0  0.0  
+에너지 76,028   13,201  13,093   6,065  5,812   0.8  4.4   0.0  0.1  
+필수소비재 45,030   5,999  5,963   3,788  3,757   0.6  0.8   0.0  0.0  
+유틸리티 45,856   20,625  21,097   12,331  12,463   (2.2) (1.1)  (0.1) (0.0) 
+합계 4,258,624   641,924  572,899   490,755  432,177   12.0  13.6   12.0  13.6  
+참고: 2026년 3월 20일, KOSPI 200 흑자 기업 대상, WICS 업종 분류 기준 
+자료: FnGuide, 삼성증권 
+  
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 3  
+지난 한 달간, 향후 12개월 예상 영업이익 추정치는 1) 기타 자본재(지주), 2) 반도체, 3) 기타 소재가 상
+향 조정된 반면, 1) 유틸리티, 2) 레저는 하향 조정. 
+ 
+향후 12개월 예상 영업이익 컨센서스 (한 달 전 대비) 
+ 
+참고: 2026년 3월 20일, KOSPI 200 흑자 기업 대상, WICS 업종 분류 기준 
+자료: WiseFn, 삼성증권 
+ 
+전체 향후 12개월 예상 연간 영업이익 상향 조정에 기여도가 높은 종목은 1) 삼성전자, 2) SK하이닉스, 3) 
+SK스퀘어이고, 하향 조정 기여도가 높은 종목은 1) 한국전력, 2) SK, 3) 한국가스공사. 
+ 
+향후 12개월 예상 영업이익 컨센서스 조정의 기업별 기여도 - 이익의 규모 고려 
+구분 순위 기업명 업종 12개월 예상 영업이익 (십억원) 
+    3월 20일 2월 20일 차이 (%) 기여도 (%p) 
+양 (+) 1 삼성전자 반도체와반도체장비 204,589  170,376  20.1  6.0  
+ 2 SK하이닉스 반도체와반도체장비 168,899  145,912  15.8  4.0  
+ 3 SK스퀘어 복합기업 21,542  13,157  63.7  1.5  
+ 4 HD현대 조선 8,460  7,643  10.7  0.1  
+ 5 LG에너지솔루션 전기제품 1,973  1,795  9.9  0.0  
+ 6 S-Oil 석유와가스 1,737  1,585  9.6  0.0  
+ 7 고려아연 비철금속 1,905  1,756  8.5  0.0  
+ 8 기아 자동차 10,497  10,369  1.2  0.0  
+ 9 HD한국조선해양 조선 5,704  5,586  2.1  0.0  
+ 10 현대차 자동차 13,173  13,056  0.9  0.0  
+음 (-) 10 LIG넥스원 우주항공과국방 472  487  (3.0) (0.0) 
+ 9 대상 식품 178  195  (8.3) (0.0) 
+ 8 두산에너빌리티 기계 1,220  1,238  (1.5) (0.0) 
+ 7 메리츠금융지주 증권 3,309  3,341  (0.9) (0.0) 
+ 6 한화생명 생명보험 767  802  (4.4) (0.0) 
+ 5 SK케미칼 화학 86  136  (36.9) (0.0) 
+ 4 두산 복합기업 1,762  1,816  (2.9) (0.0) 
+ 3 한국가스공사 가스유틸리티 2,123  2,274  (6.7) (0.0) 
+ 2 SK 석유와가스 5,322  5,566  (4.4) (0.0) 
+ 1 한국전력 전기유틸리티 17,916  18,244  (1.8) (0.1) 
+참고: 2026년 3월 20일, KOSPI 200 흑자 기업 대상 WICS 업종 분류 기준 
+자료: FnGuide, 삼성증권 
+  
+-2.2 
+-0.6 
+0.0 
+0.1 
+0.6 
+5.1 
+5.7 
+7.1 
+18.1 
+22.1 
+-5 0 5 10 15 20 25
+유틸리티
+호텔,레스토랑,레저등
+증권
+다각화된금융
+상업서비스와공급품
+조선
+기술하드웨어와장비
+기타 소재
+반도체와반도체장비
+기타 자본재
+(%)
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 4  
+이익 규모를 고려하지 않을 경우, 2025년 연간 영업이익 추정치 상향 조정 폭이 큰 기업은 1) SK스퀘어, 2) 
+에코프로머티, 3) 삼성전자이고, 하향 조정 폭이 큰 기업은 1) 한올바이오파마, 2) SK케미칼, 3) 대상. 
+ 
+영업이익 컨센서스 추정치 변화율 상하위 기업 (향후 12개월 예상) - 이익 규모 고려하지 않음 
+구분 순위 기업명 업종 12개월 예상 영업이익 (십억원) 
+   (소분류) 3월 20일 2월 20일 차이 (%) 
+양 (+) 1 SK스퀘어 복합기업 21,542  13,157  63.7  
+ 2 에코프로머티 전기제품 129  98  31.6  
+ 3 삼성전자 반도체와반도체장비 204,589  170,376  20.1  
+ 4 DL 화학 540  458  18.0  
+ 5 SK하이닉스 반도체와반도체장비 168,899  145,912  15.8  
+ 6 한화시스템 우주항공과국방 378  328  15.4  
+ 7 롯데정밀화학 화학 132  117  12.9  
+ 8 한국카본 조선 166  148  12.2  
+ 9 한전기술 전기유틸리티 72  65  11.1  
+ 10 엘앤에프 전기제품 142  128  11.0  
+음 (-) 10 LIG넥스원 우주항공과국방 472  487  (3.0) 
+ 9 종근당 제약 84  87  (3.2) 
+ 8 농심 식품 213  222  (4.2) 
+ 7 한화생명 생명보험 767  802  (4.4) 
+ 6 SK 석유와가스 5,322  5,566  (4.4) 
+ 5 GKL 호텔,레스토랑,레저 66  70  (6.6) 
+ 4 한국가스공사 가스유틸리티 2,123  2,274  (6.7) 
+ 3 대상 식품 178  195  (8.3) 
+ 2 SK케미칼 화학 86  136  (36.9) 
+ 1 한올바이오파마 제약 4  7  (45.1) 
+참고: 2026년 3월 20일, KOSPI 흑자 200 기업 대상, WICS 업종 분류 기준 
+자료: FnGuide, 삼성증권 
+ 
+  
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 5  
+1Q26 실적 컨센서스 트렌드 
+KOSPI 200 대상, 1Q26 기준 컨센서스(FnGuide)는 한 달 전 대비 영업이익과 순이익은 각각 6.0%, 
+6.1% 상향 조정. 영업이익 추정치 상향 조정의 기여도가 높은 업종은 1) 반도체인 반면, 하향 조정 기여
+도가 높은 업종은 1) 에너지. 
+ 
+1Q26 이익 컨센서스 트렌드 (한 달 전 대비)  
+(십억원) 시가총액  1Q26 영업이익  1Q26 당기순이익  차이 (%)  기여도 (%p) 
+업종   3월 20일 2월 20일  3월 20일 2월 20일  영업이익 순이익  영업이익 순이익 
+IT 2,018,447   69,900  62,672   59,787  54,378   11.5  9.9   6.2  5.9  
+반도체와 반도체장비 1,898,067   67,401  60,179   58,392  52,988   12.0  10.2   6.2  5.9  
+전자와 전기제품 23,724   1,416  1,411   624  615   0.3  1.6   0.0  0.0  
+소프트웨어와서비스 39,632   408  409   330  332   (0.4) (0.4)  (0.0) (0.0) 
+기술하드웨어와장비 51,009   528  524   393  409   0.9  (3.7)  0.0  (0.0) 
+디스플레이 6,015   148  148   47  36   (0.2) 31.7   (0.0) 0.0  
+금융 398,367   16,066  15,904   11,926  11,826   1.0  0.8   0.1  0.1  
+은행 206,364   9,177  9,145   6,701  6,685   0.3  0.2   0.0  0.0  
+보험 88,427   2,896  2,856   2,178  2,144   1.4  1.6   0.0  0.0  
+증권 103,576   3,994  3,903   3,047  2,998   2.3  1.6   0.1  0.1  
+다각화된 금융 6,917   230  226   176  176   1.8  0.0   0.0  0.0  
+산업재 735,267   13,696  13,664   7,751  7,684   0.2  0.9   0.0  0.1  
+자본재 679,409   12,228  12,251   6,645  6,601   (0.2) 0.7   (0.0) 0.0  
+조선 190,552   4,746  4,743   2,435  2,394   0.1  1.7   0.0  0.0  
+우주항공과 국방 146,056   1,323  1,341   819  827   (1.3) (1.0)  (0.0) (0.0) 
+건설 38,453   696  695   491  490   0.0  0.4   0.0  0.0  
+기타 자본재 304,348   5,464  5,472   2,900  2,891   (0.1) 0.3   (0.0) 0.0  
+운송 52,479   1,409  1,355   1,060  1,037   4.0  2.2   0.0  0.0  
+상업서비스와 공급품 3,378   59  59   46  46   0.0  0.0   0.0  0.0  
+경기관련소비재 297,430   9,192  9,187   7,666  7,607   0.1  0.8   0.0  0.1  
+자동차와 부품 231,478   7,388  7,394   6,548  6,503   (0.1) 0.7   (0.0) 0.0  
+내구소비재와 의류 42,627   975  968   683  669   0.7  2.1   0.0  0.0  
+소매(유통) 16,988   692  687   323  322   0.8  0.5   0.0  0.0  
+호텔, 레저 등 6,337   137  139   112  113   (1.4) (1.5)  (0.0) (0.0) 
+커뮤니케이션서비스 134,610   2,814  2,784   2,180  2,155   1.1  1.2   0.0  0.0  
+미디어와엔터테인먼트 95,587   1,466  1,442   1,269  1,251   1.6  1.4   0.0  0.0  
+전기통신서비스 39,023   1,349  1,342   911  904   0.5  0.8   0.0  0.0  
+건강관리 88,087   693  694   576  577   (0.1) (0.3)  (0.0) (0.0) 
+소재 106,898   1,838  1,863   1,211  1,220   (1.3) (0.7)  (0.0) (0.0) 
+철강 35,172   757  771   441  464   (1.8) (5.0)  (0.0) (0.0) 
+화학 35,832   468  469   348  334   (0.3) 4.2   (0.0) 0.0  
+기타 소재 35,894   614  623   422  422   (1.4) 0.1   (0.0) 0.0  
+에너지 67,142   2,743  3,093   1,591  1,538   (11.3) 3.4   (0.3) 0.1  
+필수소비재 42,838   1,236  1,233   830  822   0.3  1.0   0.0  0.0  
+유틸리티 44,778   5,223  5,364   3,094  3,212   (2.6) (3.7)  (0.1) (0.1) 
+합계 3,933,863   123,403  116,458   96,611  91,020   6.0  6.1   6.0  6.1  
+참고: 2026년 3월 20일, KOSPI 200 흑자 기업 대상, WICS 업종 분류 기준  
+자료: FnGuide, 삼성증권 
+  
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 6  
+업종별로 지난 한 달간, 1Q26년 영업이익 추정치는 1) 반도체, 2) 운송, 3) 증권이 상향 조정된 반면, 1) 
+에너지, 2) 유틸리티, 3) 철강 등은 하향 조정. 
+ 
+1Q26 영업이익 컨센서스 (한 달 전 대비) 조정비율 상하위 5개 업종 
+ 
+참고: 2026년 3월 20일, 삼성유니버스 대상 WICS 업종 분류 기준 
+자료: WiseFn, 삼성증권 
+ 
+기업별로 전체 1Q26 영업이익 상향 조정에 기여도가 높은 종목은 1) 삼성전자, 2) SK하이닉스, 3) S-Oil
+이고, 하향 조정 기여도가 높은 종목은 1) SK, 2) 한국전력, 3) 한국가스공사. 
+ 
+1Q26 영업이익 컨센서스 조정의 기업별 기여도 - 이익의 규모 고려 
+구분 순위 기업명 업종 1Q26년 영업이익 (십억원) 
+   (소분류) 3월 20일 2월 20일 차이 (%) 기여도 (%p) 
+양 (+) 1 삼성전자 반도체와반도체장비 36,449  32,367  12.6  3.5  
+ 2 SK하이닉스 반도체와반도체장비 30,952  27,813  11.3  2.7  
+ 3 S-Oil 석유와가스 562  387  45.3  0.2  
+ 4 삼성생명 생명보험 878  759  15.7  0.1  
+ 5 미래에셋증권 증권 992  909  9.0  0.1  
+ 6 대한항공 항공사 380  343  10.9  0.0  
+ 7 SK이노베이션 석유와가스 449  414  8.5  0.0  
+ 8 KB금융 은행 2,443  2,424  0.8  0.0  
+ 9 삼성물산 복합기업 895  876  2.1  0.0  
+ 10 신한지주 은행 2,107  2,088  0.9  0.0  
+음 (-) 10 두산 복합기업 340  350  (2.9) (0.0) 
+ 9 현대차 자동차 2,962  2,978  (0.5) (0.0) 
+ 8 SK케미칼 화학 4  23  (81.8) (0.0) 
+ 7 한화에어로스페이스 우주항공과국방 828  855  (3.1) (0.0) 
+ 6 CJ 복합기업 594  622  (4.4) (0.0) 
+ 5 삼성화재 손해보험 823  868  (5.2) (0.0) 
+ 4 DB손해보험 손해보험 631  685  (7.9) (0.0) 
+ 3 한국가스공사 가스유틸리티 793  860  (7.8) (0.1) 
+ 2 한국전력 전기유틸리티 4,376  4,449  (1.6) (0.1) 
+ 1 SK 석유와가스 917  1,467  (37.4) (0.5) 
+참고: 2026년 3월 20일, KOSPI 200 흑자 기업 대상 WICS 업종 분류 기준 
+자료: FnGuide, 삼성증권 
+  
+-11.3 
+-2.6 
+-1.8 
+-1.4 
+-1.4 
+1.4 
+1.6 
+2.3 
+4.0 
+12.0 
+-15 -10 -5 0 5 10 15
+에너지
+유틸리티
+철강
+기타 소재
+호텔,레스토랑,레저등
+보험
+미디어와엔터테인먼트
+증권
+운송
+반도체와반도체장비
+(%)
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 7  
+이익 규모를 고려하지 않을 경우, 1Q26 영업이익 추정치 상향 조정 폭이 큰 기업은 1) S-Oil, 2) 코오롱
+인더, 3) 삼성생명이고, 하향 조정 폭이 큰 기업은 1) SK케미칼, 2) SK, 3) 종근당. 
+ 
+영업이익 컨센서스 추정치 변화율 상하위 기업 (1Q26) – 이익 규모 고려하지 않음 
+구분 순위 기업명 업종 1Q26 영업이익 (십억원) 
+    3월 20일 2월 20일 차이 (%) 
+양 (+) 1 S-Oil 석유와가스 562  387  45.3  
+ 2 코오롱인더 화학 42  33  26.5  
+ 3 삼성생명 생명보험 878  759  15.7  
+ 4 한국카본 조선 38  33  15.3  
+ 5 엔씨소프트 게임엔터테인먼트 90  78  14.8  
+ 6 삼성전자 반도체와반도체장비 36,449  32,367  12.6  
+ 7 엘앤에프 전기제품 40  36  12.5  
+ 8 SK하이닉스 반도체와반도체장비 30,952  27,813  11.3  
+ 9 대한항공 항공사 380  343  10.9  
+ 10 DL 화학 122  111  10.2  
+음 (-) 10 삼성화재 손해보험 823  868  (5.2) 
+ 9 코스맥스 화장품 57  60  (5.3) 
+ 8 씨에스윈드 에너지장비및서비스 76  83  (7.6) 
+ 7 한국가스공사 가스유틸리티 793  860  (7.8) 
+ 6 DB손해보험 손해보험 631  685  (7.9) 
+ 5 포스코퓨처엠 화학 6  7  (8.4) 
+ 4 HS효성첨단소재 화학 39  43  (9.0) 
+ 3 종근당 제약 16  19  (14.0) 
+ 2 SK 석유와가스 917  1,467  (37.4) 
+ 1 SK케미칼 화학 4  23  (81.8) 
+참고: 2026년 3월 20일, KOSPI 200 흑자 기업 대상, WICS 업종 분류 기준 
+자료: FnGuide, 삼성증권 
+ 
+  
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 8  
+미국 증시, 12개월 예상 실적 컨센서스 트렌드 
+S&P 500 기업 대상 12개월 예상 기준 당기순이익 컨센서스(LSEG)는 한 달 전 대비 3.7% 상향 조정. 
+순이익 추정치 상향 조정의 기여도가 높은 업종은 1) T echnology Hardware and Equipment, 2) Software 
+and Computer Services였음. 
+ 
+12개월 예상 당기순이익 컨센서스 트렌드 (한 달 전 대비) 
+(십억달러) 
+대분류 중분류 시가총액 
+12개월 예상 당기순이익  차이 기여도 
+3월 20일 2월 20일  (%) (%p) 
+T echnology 21,003  1,102  1,021   7.9  2.9  
+Software and Computer Services 8,448  481  475   1.3  0.2  
+T echnology Hardware and Equipment 12,555  620  546   13.7  2.7  
+Financials 4,884  382  380   0.6  0.1  
+Banks 1,925  169  168   0.8  0.0  
+Investment Banking and Brokerage Services 1,758  118  118   0.5  0.0  
+Non-life Insurance 807  67  67   0.2  0.0  
+Finance and Credit Services 252  11  11   0.9  0.0  
+Life Insurance 143  16  16   0.1  0.0  
+Industrials 6,564  307  302   1.4  0.2  
+Aerospace and Defense 1,354  43  43   1.3  0.0  
+Construction and Materials 482  20  20   2.2  0.0  
+Electronic and Electrical Equipment 499  22  22   1.6  0.0  
+General Industrials 983  41  41   1.1  0.0  
+Industrial Engineering 660  26  26   2.8  0.0  
+Industrial Support Services 1,916  117  116   1.1  0.0  
+Industrial T ransportation 671  36  36   1.1  0.0  
+Basic Materials 766  43  41   4.0  0.1  
+Chemicals 447  19  19   4.5  0.0  
+Ener gy 2,244  111  105   5.9  0.2  
+Consumer Discretionary 8,546  334  331   0.8  0.1  
+Retailers 4,648  173  171   1.4  0.1  
+Travel and Leisure 1,108  62  62   (0.7) (0.0) 
+Automobiles and Parts 1,520  28  28   1.4  0.0  
+Media 643  35  35   0.1  0.0  
+Consumer Services 249  13  12   1.0  0.0  
+Personal Goods 129  8  8   0.9  0.0  
+Household Goods and Home Construction  98  8  8   (0.9) (0.0) 
+Leisure Goods 152  7  7   1.7  0.0  
+Consumer Staples 2,215  132  131   0.7  0.0  
+Health Care 5,137  301  298   1.0  0.1  
+Health Care Providers 587  45  45   0.5  0.0  
+Medical Equipment and Services 1,498  76  76   0.9  0.0  
+Pharmaceuticals and Biotechnology 3,052  179  177   1.2  0.1  
+T elecommunications 1,374  93  92   1.2  0.0  
+T elecommunications Equipment 601  26  25   2.4  0.0  
+T elecommunications Service Providers 773  67  67   0.7  0.0  
+Utilities 1,560  83  82   1.0  0.0  
+Real Estate 1,097  31  32   (2.6) (0.0) 
+T otal 55,391  2,918  2,815   3.7  3.7  
+참고: 2026년 3월 20일, S&P 500 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권  
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 9  
+12개월 예상 당기순이익 컨센서스 조정의 기업별 기여도 - 이익의 규모 고려 
+구분 순위 기업명 업종 12개월 예상 당기순이익 (백만달러) 
+    3월 20일 2월 20일 차이 (%) 기여도 (%p) 
+양 (+) 1 MICRON TECHNOLOGY T echnology Hardware and Equipment 84,705  45,183  87.5  1.4  
+ 2 NVIDIA T echnology Hardware and Equipment 213,357  195,051  9.4  0.7  
+ 3 BROADCOM T echnology Hardware and Equipment 68,631  57,048  20.3  0.4  
+ 4 ALPHABET 'A' Software and Computer Services 144,586  142,528  1.4  0.1  
+ 5 MICROSOFT Software and Computer Services 138,052  136,364  1.2  0.1  
+ 6 CHEVRON Oil, Gas and Coal 15,244  13,605  12.0  0.1  
+ 7 AMAZON.COM Retailers 89,270  87,719  1.8  0.1  
+ 8 MET A PLA TFORMS A Software and Computer Services 79,801  78,410  1.8  0.0  
+ 9 MERCK & COMPANY Pharmaceuticals and Biotechnology 15,599  14,629  6.6  0.0  
+ 10 EXXON MOBIL Oil, Gas and Coal 30,297  29,390  3.1  0.0  
+음 (-) 10 LENNAR A A Household Goods and Home Construction 1,592  1,731  (8.0) (0.0) 
+ 9 NORWEGIAN CRUISE LINE Travel and Leisure 1,105  1,248  (11.4) (0.0) 
+ 8 LIVE NA TION ENTM. Travel and Leisure 416  597  (30.3) (0.0) 
+ 7 AMERICAN TOWER Real Estate Investment Trusts 3,078  3,265  (5.7) (0.0) 
+ 6 PARAMOUNT SKYDANCE B Media 870  1,081  (19.5) (0.0) 
+ 5 DEL T A AIR LINES Travel and Leisure 4,589  4,809  (4.6) (0.0) 
+ 4 UNITED AIRLINES HOLDINGS Travel and Leisure 4,189  4,413  (5.1) (0.0) 
+ 3 COINBASE GLOBAL A Investment Banking and Brokerage Services 1,297  1,624  (20.1) (0.0) 
+ 2 FIRST SOLAR Alternative Energy 2,079  2,533  (17.9) (0.0) 
+ 1 REAL TY INCOME Real Estate Investment Trusts 891  1,569  (43.2) (0.0) 
+참고: 2026년 3월 20일, S&P 500 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+ 
+12개월 예상 당기순이익 컨센서스 추정치 변화율 상하위 기업 - 이익 규모 고려하지 않음 
+구분 순위 기업명 업종 12개월 예상 당기순이익 (백만달러) 
+    3월 20일 2월 20일 차이 (%) 
+양 (+) 1 MICRON TECHNOLOGY T echnology Hardware and Equipment 84,705  45,183  87.5  
+ 2 L YONDELLBASELL INDS.CL.A Chemicals 1,391  863  61.2  
+ 3 OCCIDENT AL PTL. Oil, Gas and Coal 2,092  1,454  43.8  
+ 4 CF INDUSTRIES HDG. Chemicals 1,404  1,126  24.7  
+ 5 DEVON ENERGY Oil, Gas and Coal 2,986  2,403  24.3  
+ 6 APA Oil, Gas and Coal 1,016  833  22.0  
+ 7 QNITY ELECTRONICS T echnology Hardware and Equipment 816  672  21.3  
+ 8 COMFORT SYS.USA Construction and Materials 1,353  1,116  21.2  
+ 9 BOEING Aerospace and Defense 852  708  20.3  
+ 10 BROADCOM T echnology Hardware and Equipment 68,631  57,048  20.3  
+음 (-) 10 CROWN CASTLE Real Estate Investment Trusts 991  1,093  (9.4) 
+ 9 THE CAMPBELL S COMPANY Food Producers 683  755  (9.6) 
+ 8 NORWEGIAN CRUISE LINE HDG. Travel and Leisure 1,105  1,248  (11.4) 
+ 7 MOSAIC Chemicals 596  722  (17.4) 
+ 6 FIRST SOLAR Alternative Energy 2,079  2,533  (17.9) 
+ 5 PARAMOUNT SKYDANCE B Media 870  1,081  (19.5) 
+ 4 COINBASE GLOBAL A Investment Banking and Brokerage Services 1,297  1,624  (20.1) 
+ 3 MOLINA HEAL THCARE Health Care Providers 300  420  (28.6) 
+ 2 LIVE NA TION ENTM. Travel and Leisure 416  597  (30.3) 
+ 1 REAL TY INCOME Real Estate Investment Trusts 891  1,569  (43.2) 
+참고: 2026년 3월 20일, S&P 500 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 10  
+가능성 높은 이익 전망치 변경 사유 
+기업 사유 
+MICRON TECHNOLOGY 2Q26 컨센서스 대폭 상회하며, AI 수요 급증 및 HBM 공급 부족 지속으로 이익 전망치가 대폭 상향 조정 
+ 3.18일 FY2Q26 실적발표: 매출 $238억(+196% y-y), EPS $12.20으로 컨센서스(매출 $196억, EPS $8.79) 대폭 상회 
+매출총이익률 75%로 역대 최고치 경신 
+ FY3Q26 매출 가이던스 $335억, EPS $19.15로 컨센서스를 38% 상회. HBM4 고수율 양산 본격화 확인 
+2026년 HBM 전체 공급 계약(가격·물량) 완료. 아이다호 팹 초도 웨이퍼 생산을 2027년 중반으로 앞당겨 
+NVIDIA 1) GTC 2026에서 블랙웰·베라루빈 플랫폼 합산 수주 $1조 달성 예고. 2) AI 인프라 수요 급증에 따른 이익 전망치가 지속 상향 조정 
+ 2.25일 FY4Q26 실적발표: 매출 $681억(+73% y-y), EPS $1.62(+82% y-y)로 시장 컨센서스 상회 
+AI 데이터센터 매출 $623억 (+75% y-y)으로 사상 최고치 경신. FY1Q27 매출 가이던스 $780억 제시(컨센서스 약 $50억 이상 상회) 
+ 하이퍼 스케일러 2026년 Capex 전망치 연초 대비 약 $1,200억 상향, $7,000억에 근접 
+ 3.16일 GTC 2026에서 Vera Rubin NVL72 플랫폼 공개. Blackwell·Vera Rubin 합산 누적 수주 $1조 달성 전망 발표 
+BROADCOM 1) 1Q26 실적발표에서 전망치 상회, 2) OpenAI를 6번째 XPU 고객으로 확인, 3) 27년 AI칩 매출 $1,000억 돌파 가시성 부각 
+ 3.4일 FY1Q26 실적발표: AI 반도체 매출 $84억(+106% y-y). 커스텀 AI 액셀러레이터(XPU) 및 AI 네트워킹 강한 수요 재확인 
+ FY2Q26 AI 반도체 매출 가이던스 $107억(+140% y-y) 제시. FY2Q26 전체 매출 가이던스 $220억으로 컨센서스 상회 
+CEO Hock T an, FY27 AI 칩(반도체만) 매출 $1,000억+ 가시성 언급. 
+ OpenAI를 6번째 커스텀 실리콘 고객으로 공식 확인, 공동 AI 추론 엔진 개발 중. Google TPU v7(Ironwood) 로드맵 지원 지속 
+CHEVRON 1) 중동 분쟁으로 유가 상승하며 에너지 업종 이익 전망치 상향 조정, 2) 페름 분지 생산 최고치 경신, 3) 비용절감 효과 기대 
+ 2.23일 이라크 West Qurna 2 유전(45만 bpd) 독점 협상권 확보 발표. T engiz 증산 프로젝트(+26만 bpd) 본격화 
+베네수엘라 생산 향후 18~24개월 내 50% 증산 가시화 
+ 2026년 FCF +$125억 전망($70/b 가정). 구조적 비용절감 $15억(연간 $20억 run rate). 2026년 말까지 $30~40억 추가 절감 목표 
+배당 4% 인상 및 $150억 자사주 매입 프로그램 지속 
+MERCK & COMP ANY 1) 2028년 키트루다 특허 만료 리스크, 2) 바이오시밀러 경쟁 심화 
+ 2028년 Keytruda(연매출 ~$300억) 특허 만료 임박 
+바이오시밀러 경쟁사(셀트리온, 삼성바이오에피스, 암젠 등) 개발 가속화로 이익 전망 불확실성 확대. 메디케어 가격 협상 리스크 동시 반영 
+ 2026년 가이던스에 소아 백신 접종 일정 축소(미국 보건 정책 변화) 및 Gardasil 중국 수요 부진 영향 반영 
+신성장 동력인 Winrevair 성장은 기대 하회. 피하주사형 Keytruda(QLEX) 전환 전략 진행 중 
+L YONDELLBASELL INDS.CL.A 1) 폴리올레핀 마진 10년래 최저 수준에서 반등 기대, 2) $5억 추가 현금개선 계획 및 유럽 자산 매각 
+ 2026년 Q1 미국 폴리에틸렌·폴리프로필렌 가격 반등 기대(동계 폭풍 Fern 이후 공급 감소)  
+Channelview 부지 에틸렌→프로필렌 전환 설비(연 4억 파운드) 가동 시작 
+ 유럽 4개 자산 매각 2Q26 완료 예정으로 포트폴리오 최적화 진행 중  
+2026년 Capex $12억 계획. 2028년 연간 EBITDA $15억 목표로 구조조정 가속화 
+QNITY ELECTRONICS DuPont 분사 후 AI 반도체 소재·공정 솔루션 수요 호조 
+ 2.26일 Q4·FY2025 실적발표: 4Q 매출 $12.0억(+10% y-y), 7분기 연속 organic 성장 달성. 조정 EBITDA 마진 29.5%로 양호 
+ 2026년 가이던스 EPS $3.55~3.95 제시(midpoint $3.75), 컨센서스 $3.12를 20% 초과 
+매출 $49.7~51.7억 가이던스. AI·HBM·첨단 패키징 수요로 반도체 소재 부문 성장 견인. AI 관련 소재 수요가 메모리 비중 리스크를 상쇄 
+ 3.18일 NVIDIA와 반도체 혁신 협력 발표. Semiconductor T echnologies 7%, Interconnect Solutions 9% 각각 성장  
+COMFORT S YS.USA AI 데이터센터 냉각·전기 인프라 수요 급증으로 수주잔고도 급증 
+ 2.20일 Q4·FY2025 실적발표: EPS $9.37(+100% y-y), 매출 $26억(+42% y-y)으로 컨센서스 대폭 상회  
+수주잔고 전년 대비 99% 급증한 $119.4억 기록(단일 분기 $24억 순증) 
+ 기술 고객(AI 데이터센터) 비중이 매출의 45%로 확대(2024년 33%). AI 데이터센터용 직접칩냉각(DLC) 및 전기 인프라 수요 급증 
+ 모듈러 제조 능력 연내 300만→400만 ft² 확장 계획. 2026년 동일점 매출 성장 15~20% 가이던스 제시 
+BOEING 1) 777X 현금 소모 지속, 2) Spirit 통합 비용 부담으로 이익 회복 시기 지연 
+ 1.27일 4Q25 실적발표: FY26 FCF 가이던스 $1~30억으로 컨센서스 하회  
+777X 첫 인도 2027년 확정, 누적 손실 추정 $150억 이상. 777X 관련 현금 소모 이전 예상치($20억) 초과 전망 
+ Spirit AeroSystems 인수 통합 비용 약 $40억 Capex 부담. 방산 KC-46 고정가 계약 손실 $5.65억 추가 반영 
+ 미국 관세 정책에 따른 항공기 부품·소재 비용 상승 리스크. Airbus와의 글로벌 수주 경쟁 심화 속 구조적 정상화까지 다년 소요 전망 
+FIRST SOLAR 1) 미국 관세 정책으로 해외 생산 시설 비용이 급증, 2) 2025~2026년 EPS 가이던스 컨센서스 하회 
+ 미국 관세 정책으로 비용 급증 반영. 상원 예산안에서 IRA(인플레이션감축법) Section 45X 세액공제 축소 우려 지속 
+미국 내 태양광 수요 견조하나 중국 제조업체의 라오스·인도네시아 우회 수출 증가로 경쟁 심화 
+ 사우스캐롤라이나 신규 공장 2026년 하반기 가동 목표로 미국 내 생산 능력 확충 추진 
+수주잔고 66.3GW(2030년까지)로 중장기 수요 견조. 캄보디아産 패널에 3,500%+ 관세 부과 
+자료: 언론보도종합 
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 11  
+유럽 증시, 12개월 예상 실적 컨센서스 트렌드 
+Eurostoxx 기업 대상 12개월 예상 기준 당기순이익 컨센서스(LSEG)는 한 달 전 대비 1.3% 상향 조정. 
+순이익 추정치 상향 조정의 기여도가 높은 업종은 1) Energy, 2) Banks. 
+ 
+12개월 예상 당기순이익 컨센서스 트렌드 (한 달 전 대비) 
+(십억유로) 
+중분류 시가총액  
+12개월 예상 당기순이익  차이 기여도 
+대분류 3월 20일 2월 20일  (%) (%p) 
+T echnology 977  45  44   2.1  0.1  
+Software and Computer Services 456  30  29   1.5  0.0  
+T echnology Hardware and Equipment 521  15  15   3.3  0.1  
+Financials 2,731  286  282   1.4  0.4  
+Banks 1,725  195  192   1.6  0.3  
+Investment Banking and Brokerage Services 306  29  29   (0.0) (0.0) 
+Life Insurance 140  14  13   1.9  0.0  
+Non-life Insurance 509  45  44   1.1  0.1  
+Industrials 2,378  123  122   0.7  0.1  
+Aerospace and Defense 680  27  26   0.7  0.0  
+Construction and Materials 419  25  25   0.7  0.0  
+Electronic and Electrical Equipment 392  17  17   1.0  0.0  
+Industrial Engineering 218  13  13   0.4  0.0  
+Industrial Support Services 151  9  9   0.2  0.0  
+Industrial T ransportation 295  20  20   0.8  0.0  
+Basic Materials 616  45  44   2.0  0.1  
+Chemicals 240  14  14   0.4  0.0  
+Industrial Materials 34  2  2   (3.0) (0.0) 
+Industrial Metals and Mining 306  26  25   2.8  0.1  
+Ener gy 950  64  59   8.2  0.5  
+Consumer Discretionary 1,394  94  95   (0.6) (0.1) 
+Automobiles and Parts 177  29  30   (1.5) (0.0) 
+Media 169  9  9   (0.1) (0.0) 
+Personal Goods 666  29  29   (0.5) (0.0) 
+Retailers 219  11  11   0.4  0.0  
+Travel and Leisure 104  12  12   (0.6) (0.0) 
+Consumer Staples 1,118  77  77   0.3  0.0  
+Beverages 301  21  21   1.6  0.0  
+Food Producers 379  23  23   (0.7) (0.0) 
+Personal Care, Drug and Grocery Stores 302  21  21   (0.3) (0.0) 
+Health Care 1,714  134  134   0.1  0.0  
+Medical Equipment and Services 245  13  13   0.4  0.0  
+Pharmaceuticals and Biotechnology 1,433  118  117   0.1  0.0  
+T elecommunications 486  31  31   0.7  0.0  
+T elecommunications Equipment 70  4  4   0.4  0.0  
+T elecommunications Service Providers 415  28  27   0.8  0.0  
+Utilities 741  48  47   1.4  0.1  
+Electricity 423  26  26   1.3  0.0  
+Gas, Water and Multi-utilities 318  21  21   1.5  0.0  
+Real Estate 94  9  9   2.0  0.0  
+T otal 13,199  956  943   1.3  1.3  
+참고: 2026년 3월 20일, Eurostoxx 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권  
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 12  
+12개월 예상 당기순이익 컨센서스 조정의 기업별 기여도 - 이익의 규모 고려 
+구분 순위 기업명 업종 12개월 예상 당기순이익 (백만유로) 
+    3월 20일 2월 20일 차이 (%) 기여도 (%p) 
+양 (+) 1 HSBC HOLDINGS Banks 23,859  22,341  6.8  0.2  
+ 2 TOT ALENERGIES Oil, Gas and Coal 13,814  12,634  9.3  0.1  
+ 3 SHELL Oil, Gas and Coal 16,188  15,317  5.7  0.1  
+ 4 BP Oil, Gas and Coal 6,671  5,906  13.0  0.1  
+ 5 EQUINOR Oil, Gas and Coal 6,161  5,654  9.0  0.1  
+ 6 ENI Oil, Gas and Coal 5,151  4,701  9.6  0.0  
+ 7 DEUTSCHE TELEKOM T elecommunications Service Providers 11,059  10,621  4.1  0.0  
+ 8 ASTRAZENECA Pharmaceuticals and Biotechnology 13,964  13,608  2.6  0.0  
+ 9 ZURICH INSURANCE GROUP Non-life Insurance 6,276  5,944  5.6  0.0  
+ 10 NOV ARTIS 'R' Pharmaceuticals and Biotechnology 14,690  14,385  2.1  0.0  
+음 (-) 10 BMW Automobiles and Parts 6,830  6,992  (2.3) (0.0) 
+ 9 MERCK KGAA Pharmaceuticals and Biotechnology 3,378  3,558  (5.1) (0.0) 
+ 8 ORANGE T elecommunications Service Providers 2,925  3,129  (6.5) (0.0) 
+ 7 ROCHE PS PAR Pharmaceuticals and Biotechnology 17,788  18,003  (1.2) (0.0) 
+ 6 AIRBUS Aerospace and Defense 6,163  6,389  (3.5) (0.0) 
+ 5 BA YER Pharmaceuticals and Biotechnology 4,169  4,422  (5.7) (0.0) 
+ 4 DANSKE BANK Banks 3,133  3,392  (7.6) (0.0) 
+ 3 INDUSTRIV ARDEN C Investment Banking and Brokerage Services 2,716  2,988  (9.1) (0.0) 
+ 2 NOVO NORDISK 'B' Pharmaceuticals and Biotechnology 12,405  12,747  (2.7) (0.0) 
+ 1 STELLANTIS Automobiles and Parts 2,990  3,507  (14.7) (0.1) 
+참고: 2026년 3월 20일, Eurostoxx 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+ 
+12개월 예상 당기순이익 컨센서스 추정치 변화율 상하위 기업 - 이익 규모 고려하지 않음 
+구분 순위 기업명 업종 12개월 예상 당기순이익 (백만유로) 
+    3월 20일 2월 20일 차이 (%) 
+양 (+) 1 NESTE Oil, Gas and Coal 1,063  903  17.8  
+ 2 AKER BP Oil, Gas and Coal 1,119  964  16.1  
+ 3 BP Oil, Gas and Coal 6,671  5,906  13.0  
+ 4 REPSOL YPF Oil, Gas and Coal 2,863  2,589  10.6  
+ 5 ENI Oil, Gas and Coal 5,151  4,701  9.6  
+ 6 GALP ENERGIA SGPS B Oil, Gas and Coal 1,067  974  9.6  
+ 7 TOT ALENERGIES Oil, Gas and Coal 13,814  12,634  9.3  
+ 8 ASM INTERNA TIONAL T echnology Hardware and Equipment 963  882  9.3  
+ 9 EQUINOR Oil, Gas and Coal 6,161  5,654  9.0  
+ 10 INDRA SISTEMAS Software and Computer Services 454  418  8.6  
+음 (-) 10 CENTRICA Gas, Water and Multi-utilities 718  773  (7.1) 
+ 9 DANSKE BANK Banks 3,133  3,392  (7.6) 
+ 8 ADIDAS Personal Goods 1,787  1,944  (8.0) 
+ 7 CVC CAPIT AL PARTNERS Investment Banking and Brokerage Services 944  1,028  (8.2) 
+ 6 GENMAB Pharmaceuticals and Biotechnology 746  818  (8.8) 
+ 5 INDUSTRIV ARDEN C Investment Banking and Brokerage Services 2,716  2,988  (9.1) 
+ 4 BOLLORE Media 311  343  (9.3) 
+ 3 TELECOM IT ALIA S P A T elecommunications Service Providers 486  541  (10.1) 
+ 2 STELLANTIS Automobiles and Parts 2,990  3,507  (14.7) 
+ 1 SYENSQO Industrial Materials 425  522  (18.6) 
+참고: 2026년 3월 20일, Eurostoxx 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 13  
+가능성 높은 이익 전망치 변경 사유 
+기업 사유 
+HSBC HOLDINGS 1) 2025년 세전 이익 컨센서스 상회, 2) 2026~2028년 RoTE(유형자기자본 이익률) 목표를 '17% 이상'으로 상향 
+ 2.25일 FY2025 실적발표: 세전 이익 $299억(일회성 요인 제외 $366억)으로 컨센서스(~$289억) 상회. RoTE 17.2% 달성  
+Hang Seng Bank 완전 자회사화($137억)하고, 총 11개 비핵심 사업 철수 
+ 2026~2028년 RoTE 목표를 기존 'mid-teens'에서 '17% 이상'으로 상향. 2028년 연간 매출 성장률 5% 목표 
+ 아시아 Wealth 부문 순유입 $800억(연간)으로 사상 최대. 2026년 비용 성장률 ~1% 목표 제시  
+TOT ALENERGIES 중동 생산 일부(~15%) 차질에도 불구하고 유가 상승분이 이를 상쇄 
+ 중동 분쟁으로 카타르·이라크·UAE 해상 자산 생산 중단·감축(전체 생산의 ~15%, 현금흐름의 ~10%) 
+ T otalEnergies, 유가 상승이 이라크·카타르·UAE 해상 자산의 2026년 현금흐름 손실분을 상쇄한다고 발표  
+중동 외 지역 (아프리카·브라질·통합가스) 성장 계획 영향 없음 
+ 고배당수익률 및 자사주 매입 지속 
+BP 1) 유가 급등으로 업스트림 마진 개선, 2) Gelsenkir chen 정유소 매각 및 3) 비용절감 목표 상향 
+ 3.19일 독일 Gelsenkirchen 정유소를 Klesch Group에 매각 합의 발표 
+구조적 비용절감 목표를 $15~20억에서 $65~75억(2027년까지)으로 대폭 상향. 비핵심 자산 매각으로 재무 건전성 강화 
+ 중동 분쟁으로 업스트림 이익 마진 대폭 개선으로 2026년 말 순부채 축소 전망 
+ 분기 배당금 $0.0492/주 유지. 호주 반독점 조사, Whiting 정유소 노사 분쟁 등 일부 리스크 잔존 
+DEUTSCHE TELEKOM 1) T-Mobile US의 5G 가입자 확대, 2) 독일 내 기업용 솔루션 수요 증가 
+ 2.26일 FY2025 실적발표: 매출 및 EBITDA 컨센서스 상회. T-Mobile US 후불 가입자 견조한 순증 지속 
+2026년 T-Mobile 매출 성장률 전망 상향으로 그룹 전체 이익 견인 
+ Deutsche T elekom 독일 내 5G 커버리지 확대 및 기가비트 네트워크 투자 지속 
+기업용 디지털 솔루션 수요 증가로 B2B 부문 성장 가속화. 2026년 DT 그룹 EBITDA 가이던스 상향 제시 
+ASTRAZENECA 1) 항암제 파이프라인의 글로벌 매출 확대, 2) 다수 임상 성공 
+ T agrisso, Calquence, Farxiga, Imfinzi 등 핵심 제품군의 전 지역 고성장 지속. 2026년 매출 성장률 두 자릿수 가이던스 
+ 핵심 항암제 글로벌 성장세 지속. ADC(Antibody-Drug Conjugate) 플랫폼(Enhertu 등) 글로벌 확대로 중장기 이익 성장 기반 강화 
+ GLP-1 계열 신약(AZD9550 등) 임상 성공으로 비만·당뇨 시장 진입 기대감 고조 
+ZURICH INSURANCE GROUP 금리 안정화 환경에서 1) 보험 언더라이팅 이익 개선, 2) 투자수익 확대 
+ 금리 안정화 환경에서 보험 언더라이팅 이익 개선 지속. 투자수익 확대(채권 재투자 수익률 개선) 
+중동 분쟁 관련 일부 보험금 지급 리스크 있으나 재보험으로 위험 분산 
+ Farmers Insurance 부문 수익성 개선 지속. 2025~2027년 EPS 성장률 연평균 10%+ 목표 재확인  
+안정적인 이익 성장세 유지로 프리미엄 밸류에이션 지속 
+ASM INTERNA TIONAL AI 및 HBM 수요 가속화에 따른 반도체 장비(ALD) 투자 확대와 수주잔고 증가 
+ 2.19일 Q4·FY2025 실적발표: 수주잔고 전분기 대비 증가. 2026년 매출 가이던스 EUR 37~39억으로 컨센서스 상단 상회 
+AI·HBM 투자 가속화에 따른 ALD(원자층증착) 장비 수요 급증 
+ 삼성전자·SK하이닉스·TSMC의 HBM4 및 선단 로직 투자 확대로 ASM의 주력 장비(Epitaxy, ALD, Vertical Furnaces) 수주 증가 
+ GAA(Gate-All-Around) 구조 전환에 따른 ALD 장비 장기 수요 구조적 증가 전망. 미국·일본 신규 팹 투자 수혜 기대 
+INDRA SISTEMAS 1) 방산·국방 예산 확대 기조, 2) 스페인 정부 디지털 전환 수주 증가 
+ 2.26일 FY2025 실적발표: 매출 €45억(+10% y-y), EBIT €5.0억(+15% y-y)으로 컨센서스 상회 
+방산·항공교통관제(A TC) 부문 고성장. 스페인·NA TO 방산 예산 확대로 수주잔고 증가 
+ Minsait(디지털 솔루션) 부문의 정부·공공 디지털 전환 수주 가속화 
+ NA TO 회원국들의 GDP 2% 이상 방산 지출 약속 이행으로 유럽 방산 예산 확대 가속. 레이더·전자전 시스템 수요 급증. 배당금 증액 발표 
+SYENSQO 1) 특수화학 수요 부진, 2) 배터리 소재 가격 하락으로 사업부별 마진 압박 지속 
+ 2.25일 FY2025 실적발표: 매출·EBITDA 컨센서스 하회. 배터리 소재(NMC, PVDF) 가격 하락 지속 및 전기차 배터리 수요 성장 둔화  
+ 전기차 배터리 소재 부문의 공급과잉 및 가격 경쟁 심화. 화학 특수소재 수요 약세 지속. 2026년 가이던스 하향 제시 
+에너지 비용 상승으로 유럽 화학 업체 전반 마진 압박. Solvay 분사 후 독립 법인으로서의 신용도 우려 
+ 배터리 소재 시장 회복 시기 지연 전망. 중국 LFP(리튬인산철) 배터리 확산으로 NMC 계열 소재 수요 구조적 약화 우려 
+STELLANTIS 1) 미국 관세 부과 이후 북미 볼륨 급감 및 2) 신형 모델 출시 지연으로 수익성 회복 지연 
+ 2.26일 FY2025 실적발표: EBIT 마진 0.5%(역대 최저)로 컨센서스 대폭 하회 
+북미 시장 볼륨 급감(미국 관세 15% 부과 영향) 및 딜러 재고 조정 장기화. CEO Carlos T avares 사임 후 리더십 공백 
+ 신형 모델(Ram 1500, Jeep Compass 등) 출시 지연 및 북미 공장 일부 폐쇄 결정. 중국 합작사 Dongfeng 지분 매각 검토 
+ Jeep·Ram·Alfa Romeo 등 핵심 브랜드 경쟁력 약화 우려 
+2025~2026년 배당 삭감 및 자사주 매입 중단. 유럽 전기차 전환 비용 증가 
+자료: 언론보도종합 
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 14  
+일본 증시, 12개월 예상 실적 컨센서스 트렌드 
+Nikkei 225 기업 대상 12개월 예상 기준 당기순이익 컨센서스(LSEG)는 한 달 전 대비 1.4% 상향 조정. 
+순이익 추정치 상향 조정의 기여도가 높은 업종은 1) General Industrials, 2) Industrial Metal and Mining, 
+3) Pharmaceuticals and Biotechnology, 4) Banks, 5) T echnology Hardware and Equipment였던 반면, 하
+향 조정에 기여한 업종은 1) T elecommunications였음. 
+ 
+12개월 예상 당기순이익 컨센서스 트렌드 (한 달 전 대비) 
+(십억 엔) 
+중분류 시가총액 
+12개월 예상 당기순이익  차이 기여도 
+대분류 3월 20일 2월 20일  (%) (%p) 
+T echnology 102.7  4.3  4.2   2.1  0.2  
+Software and Computer Services 14.4  0.7  0.7   (1.2) (0.0) 
+T echnology Hardware and Equipment 88.4  3.6  3.5   2.8  0.2  
+Financials 130.0  10.6  10.5   1.4  0.3  
+Banks 80.7  6.5  6.4   1.6  0.2  
+Non-life Insurance 23.1  2.1  2.1   0.5  0.0  
+Investment Banking and Brokerage Services 13.3  1.0  1.0   1.3  0.0  
+Life Insurance 12.4  1.0  1.0   1.8  0.0  
+Industrials 255.3  13.0  12.7   2.2  0.5  
+Construction and Materials 18.9  1.0  1.0   2.2  0.0  
+Electronic and Electrical Equipment 33.2  1.3  1.2   3.0  0.1  
+General Industrials 88.3  4.1  4.0   2.8  0.2  
+Industrial Engineering 42.2  1.7  1.7   2.4  0.1  
+Industrial Support Services 51.3  3.1  3.0   2.4  0.1  
+Industrial T ransportation 21.4  1.8  1.8   (0.3) (0.0) 
+Basic Materials 38.1  2.5  2.4   4.9  0.2  
+Chemicals 27.0  1.5  1.5   1.2  0.0  
+Industrial Metals and Mining 10.2  0.9  0.8   12.4  0.2  
+Ener gy 11.5  0.9  0.8   9.8  0.1  
+Consumer Discretionary 182.8  11.9  11.8   0.8  0.2  
+Automobiles and Parts 86.2  7.0  6.9   1.0  0.1  
+Leisure Goods 50.0  2.7  2.7   0.8  0.0  
+Retailers 28.1  0.9  0.9   2.1  0.0  
+Travel and Leisure 8.5  0.5  0.5   (2.5) (0.0) 
+Household Goods and Home Construction 6.6  0.6  0.6   (0.6) (0.0) 
+Consumer Staples 39.3  2.1  2.1   (3.3) (0.1) 
+Beverages 5.0  0.6  0.6   (7.3) (0.1) 
+Food Producers 9.0  0.4  0.4   1.0  0.0  
+Personal Care, Drug and Grocery Stores 13.5  0.5  0.5   (5.3) (0.1) 
+T obacco 11.7  0.6  0.6   (0.4) (0.0) 
+Health Care 60.9  2.8  2.7   3.9  0.2  
+Pharmaceuticals and Biotechnology 45.7  2.2  2.1   5.3  0.2  
+Medical Equipment and Services 14.1  0.5  0.5   (1.2) (0.0) 
+T elecommunications 56.2  3.0  3.2   (5.4) (0.3) 
+Utilities 11.1  1.0  0.9   7.2  0.1  
+Real Estate 16.9  0.9  0.9   (1.1) (0.0) 
+T otal 904.8  53.0  52.2   1.4  1.4  
+참고: 2026년 3월 20일, Nikkei 225 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+  
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 15  
+12개월 예상 당기순이익 컨센서스 조정의 기업별 기여도 - 이익의 규모 고려 
+구분 순위 기업명 업종 12개월 예상 당기순이익 (백만 엔) 
+    3월 20일 2월 20일 차이 (%) 기여도 (%p) 
+양 (+) 1 TOYOT A MOTOR Automobiles and Parts 4,075  3,975  2.5  0.2  
+ 2 TOKYO ELECTRIC POWER CO. HDG. Electricity 252  185  36.2  0.1  
+ 3 MITSUBISHI General Industrials 853  799  6.7  0.1  
+ 4 ASTELLAS PHARMA Pharmaceuticals and Biotechnology 325  280  15.9  0.1  
+ 5 MITSUBISHI UFJ FINL.GP. Banks 2,390  2,348  1.8  0.1  
+ 6 SUMITOMO MET AL MINING Industrial Metals and Mining 188  146  28.4  0.1  
+ 7 ADV ANTEST T echnology Hardware and Equipment 429  391  9.7  0.1  
+ 8 SUMITOMO MITSUI FINL.GP. Banks 1,735  1,701  2.0  0.1  
+ 9 CHUGAI PHARM. Pharmaceuticals and Biotechnology 531  498  6.7  0.1  
+ 10 NIPPON STEEL Industrial Metals and Mining 390  358  9.0  0.1  
+음 (-) 10 Y AMA TO HDG. Industrial T ransportation 32  40  (22.1) (0.0) 
+ 9 OL YMPUS Medical Equipment and Services 96  106  (9.3) (0.0) 
+ 8 FUJITSU Software and Computer Services 298  308  (3.3) (0.0) 
+ 7 BRIDGESTONE Automobiles and Parts 370  381  (2.7) (0.0) 
+ 6 JAPAN AIRLINES Travel and Leisure 112  124  (9.7) (0.0) 
+ 5 NINTENDO Leisure Goods 464  482  (3.7) (0.0) 
+ 4 AEON Personal Care, Drug and Grocery Stores 90  122  (26.1) (0.1) 
+ 3 SAPPORO HOLDINGS Beverages 204  242  (15.8) (0.1) 
+ 2 HONDA MOTOR Automobiles and Parts 629  694  (9.5) (0.1) 
+ 1 SOFTBANK GROUP T elecommunications Service Providers 552  732  (24.6) (0.3) 
+참고: 2026년 3월 20일, Nikkei 225 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+ 
+12개월 예상 당기순이익 컨센서스 추정치 변화율 상하위 기업 - 이익 규모 고려하지 않음  
+구분 순위 기업명 업종 12개월 예상 당기순이익 (백만 엔) 
+    3월 20일 2월 20일 차이 (%) 
+양 (+) 1 DOWA HDG. Industrial Metals and Mining 51  37  37.3  
+ 2 TOKYO ELECTRIC POWER CO. HDG. Electricity 252  185  36.2  
+ 3 MITSUBISHI MA TERIALS General Industrials 57  43  33.5  
+ 4 SUMITOMO MET AL MINING Industrial Metals and Mining 188  146  28.4  
+ 5 FURUKAWA ELECTRIC Electronic and Electrical Equipment 59  49  20.4  
+ 6 NIKON Leisure Goods 22  19  18.9  
+ 7 ASTELLAS PHARMA Pharmaceuticals and Biotechnology 325  280  15.9  
+ 8 KYOWA KIRIN Pharmaceuticals and Biotechnology 81  71  15.4  
+ 9 IDEMITSU KOSAN Oil, Gas and Coal 169  148  14.4  
+ 10 MITSUI KINZOKU LIMITED Industrial Metals and Mining 70  62  14.0  
+음 (-) 10 HINO MOTORS Industrial T ransportation 67  73  (8.1) 
+ 9 OL YMPUS Medical Equipment and Services 96  106  (9.3) 
+ 8 HONDA MOTOR Automobiles and Parts 629  694  (9.5) 
+ 7 JAPAN AIRLINES Travel and Leisure 112  124  (9.7) 
+ 6 TOKAI CARBON Chemicals 16  18  (11.1) 
+ 5 NICHIREI Food Producers 29  32  (11.2) 
+ 4 SAPPORO HOLDINGS Beverages 204  242  (15.8) 
+ 3 Y AMA TO HDG. Industrial T ransportation 32  40  (22.1) 
+ 2 SOFTBANK GROUP T elecommunications Service Providers 552  732  (24.6) 
+ 1 AEON Personal Care, Drug and Grocery Stores 90  122  (26.1) 
+참고: 2026년 3월 20일, Nikkei 225 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 16  
+가능성 높은 이익 전망치 변경 사유 
+기업 사유 
+TOYOT A MOTOR 계열사 T oyota Industries(TICO) 공개매수 가격을 인상하며 Elliott와 합의 완료 
+ 3.2일 TICO 공개매수 가격 20,600엔 확정: 기존 18,800엔 대비 약 10% 상향. Elliott Investment가 동의하며 4.7조엔(약 $300억) 규모 
+거래 사실상 확정. 2023년 6월 첫 제시가(16,300엔) 대비 약 26% 인상된 가격으로 소수주주 가치 제고 
+ TICO 지분 인수 완료 시 단기 수익 목표 부담 해소 및 모빌리티·소프트웨어 전환 가속화 가능. 그룹 시너지 내 기대 
+ FY26 3Q 실적(2.6일 발표)에서 확인된 3.8조엔 영업이익 가이던스 유지 
+TOKYO ELECTRIC POWER CO 1) 원전 재가동 진전 및 2) 전력수요 증가로 발전 마진이 개선 
+ 2.9일 가시와자키-카리와 6호기 재가동 성공(약 15년 만). NRA(원자력규제위원회) 승인 하에 제어봉 인출 및 임계 달성 
+ 3.18일 상업운전 재개 목표. 2.20일 이후 출력을 50%까지 단계적으로 상향하며 터빈 설비 점검 후 3월 초 재가동 
+가시와자키-카리와 6호기(135만kW) 연간 발전량 약 95억kWh 예상. 상업운전 개시 시 LNG 연료비 연간 약 1,300억엔 절감 효과 기대 
+ 미국 EIA 추산 연간 약 950만톤 LNG 수입 대체 효과 
+ASTELLAS PHARMA 1) 비뇨기과·항암제 신약 출시, 2) 엔화 약세 수혜로 해외 매출 전망 상향 조정 
+ 3.9일 PADCEV+Keytruda 병용요법 EV-304 Phase 3 임상 결과 발표: 시스플라틴 적격 근육침습 방광암 환자에서 질병 재발·진행·사망 
+위험 약 50% 감소 달성. 전체 생존율(OS)도 통계적 유의 개선 
+ EV-304 성공으로 PADCEV의 방광암 치료 적응증 확대 가시화. 근육침습 방광암 시장 추가 공략 시 연간 매출 수천억엔 규모 추가 성장 
+여력. 2.26일 지속가능성 미팅에서 주주환원 정책 강화 발표. 3월 하순 R&D Day 개최 예정으로 중장기 파이프라인 전략 공개 기대 
+ADVANTEST AI 반도체 테스트 장비 수요 급증 및 HBM 테스트 솔루션 수요 확대로 이익 전망치가 상향 조정됨 
+ 3.16일 NVIDIA GTC 2026에서 차세대 GPU 플랫폼(Vera Rubin) 공개 및 Blackwell·Vera Rubin 합산 누적 수주 $1조 달성 전망 발표 
+차세대 AI 반도체 수요 급증으로 HBM4 테스트 장비 수요 추가 급등 전망 
+ Vera Rubin NVL72 플랫폼 공개로 HBM4 기반 차세대 메모리 테스트 수요 가시화 
+ Advantest의 HBM 테스터 80%+ 독점적 점유율 기반 수주 증가 기대 
+CHUGAI PHARM. 1) 항암제 포트폴리오 확대, 2) 글로벌 임상 성공 
+ 3.9일 Astellas·Pfizer의 PADCEV+Keytruda EV-304 임상 성공 발표. Chugai는 로슈 그룹 내 공동개발 파이프라인(특히 항암제)의 유사 
+성과 기대감 강화. Vabysmo(황반변성·당뇨황반부종) 글로벌 매출 고성장 지속 전망 
+ Vabysmo(파리시맙) 피하주사 제형 개발 진전 및 2월 하순 이후 미국·유럽 처방 데이터 견조 확인.  
+Hemlibra 혈우병 치료제 글로벌 시장 점유율 확대 지속. 3월 하순 Astellas R&D Day에서 유사 항암제 파이프라인 긍정 데이터 공개 기대 
+NIPPON STEEL 1) 철강 가격 회복, 2) 미국 US스틸 인수 관련 시너지 기대 
+ 3.9일 US스틸과의 전략적 파트너십 지속 추진 발표(6.14일 합의 기반). 미국 내 $110억 규모 신규 투자 계획 구체화  
+신규 전기로(Electric Arc Furnace) 공장 건설 부지를 2026년 말까지 최종 선정 예정 
+ US스틸 인수 완료(2025.6월) 이후 북미 프리미엄 강재 시장 공략 본격화. 전기강판(EV·데이터센터용) 수요 확대로 고부가 제품 비중 확대 
+일본 정부 승인 하의 $110억 미국 투자 계획 이행으로 이익 성장 기반 강화 
+DOWA HDG. 1) 귀금속·비철금속 가격 급등과 2) 환경 리사이클링 사업 수혜 
+ 3월 중 금 가격 상승으로 DOWA의 스멜팅(제련) 부문 이익 마진 급격히 개선 
+구리·아연 가격도 동반 강세로 복합 제련 포트폴리오 전체에서 이익 레버리지 효과 극대화 
+ 도시광산(환경 리사이클링) 부문도 금속 회수 가치 상승으로 이익 개선. 반도체 특수 가스 사업도 AI 수요 확대로 수익성 지속 향상 
+FURUKAWA ELECTRIC AI 데이터센터용 전력케이블·광섬유 수요 급증 
+ 2.20일 이후 북미·유럽 하이퍼스케일러의 광섬유·전력케이블 추가 발주 확인 
+AI 데이터센터 증설 사이클 지속으로 수주잔고 역대 최고치 추가 경신 전망. 구리 가격 강세로 전선 사업 매출 단가 상승 효과 
+ 3.16일 NVIDIA GTC 2026에서 발표된 대규모 AI 인프라 투자 계획이 Furukawa의 광섬유·전력케이블 중장기 수요 추가 확인  
+ 배당금 인상 및 자사주 매입 등 주주환원 강화 검토 
+NIKON 1) 반도체 노광장비 수요 회복, 2) 의료·산업용 정밀기기 사업 개선 
+ 2.20일 이후 반도체 노광장비 추가 발주 확인. HBM·DDR5 생산 확대에 따른 DRAM 공정용 ArF 노광장비 수요 증가세 지속 
+ SK하이닉스·Micron 등 HBM4 생산 확대 계획 구체화로 Nikon ArF 노광장비 수요 전망 상향  
+의료 내시경 및 산업용 정밀기기 사업도 2월 하순 이후 수주 회복세 유지. 구조조정 비용절감 효과 가시화 
+ 2026년 하반기 신형 ArF 노광장비 출시 예정으로 수주 확대 기대 
+AEON 1) 식품 가격 상승에 따른 소비자 구매력 약화, 2) 약국체인 수익성 압박 
+ 2월 하순~3월 중 일본 전국 식품·일용품 가격 인상 파동 재발(엔화 약세·수입 물가 상승) 
+AEON의 GMS(종합소매점) 부문 마진 추가 압박. 인건비 상승(최저임금 연속 인상)으로 영업비용 구조적 증가 
+ 전자상거래·할인 경쟁 심화로 집객력 저하. 약국체인(쓰루하 편입 효과 제한적) 수익성 회복 지연 우려 
+ PB(자체 브랜드) 상품 비중 확대 전략에도 불구 이익 개선 시기 후퇴 우려 
+자료: 언론보도종합 
+  
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 17  
+대만 증시, 12개월 예상 실적 컨센서스 트렌드 
+가권 100 기업 대상 12개월 예상 기준 당기순이익 컨센서스(LSEG)는 한 달 전 대비 2.9% 상향 조정. 
+순이익 추정치 상향 조정의 기여도가 높은 업종은 1) T echnology Hardware and Equipment, 2) Banks, 3) 
+Life Insurance, 4) Electronic and Electrical Equipment 였음. 
+ 
+12개월 예상 당기순이익 컨센서스 트렌드 (한 달 전 대비) 
+대분류  
+중분류 시가총액 
+12개월 예상 당기순이익  차이 기여도 
+(십억 대만달러) 3월 20일 2월 20일  (%) (%p) 
+T echnology T echnology Hardware and Equipment 58,971  3,203  3,115   2.8  2.1  
+Financials  6,356  544  527   3.2  0.4  
+ Banks 2,946  214  206   3.7  0.2  
+ Finance and Credit Services 182  21  21   1.8  0.0  
+ Investment Banking and Br okerage Services 589  39  39   0.7  0.0  
+ Life Insurance 2,638  269  261   3.2  0.2  
+Industrials  5,540  217  205   6.3  0.3  
+ Construction and Materials 301  22  22   (1.6) (0.0) 
+ Electronic and Electrical Equipment 4,148  123  114   7.8  0.2  
+ General Industrials 303  6  6   (11.3) (0.0) 
+ Industrial Engineering 79  2  2   9.0  0.0  
+ Industrial T ransportation 709  65  60   8.3  0.1  
+Basic Materials  1,289  46  42   9.1  0.1  
+ Chemicals 891  36  32   11.4  0.1  
+ Industrial Metals and Mining 398  10  10   1.8  0.0  
+Consumer Discr etionary  845  80  83   (3.8) (0.1) 
+ Automobiles and Parts 230  17  17   (1.3) (0.0) 
+ Leisure Goods 28  2  2   (16.3) (0.0) 
+ Personal Goods 265  25  25   (1.5) (0.0) 
+ Travel and Leisure 303  34  37   (5.9) (0.1) 
+Consumer Staples  624  37  37   (0.2) (0.0) 
+ Food Producers 399  24  25   (0.3) (0.0) 
+ Personal Care, Drug and Grocery Stores 226  13  13   (0.1) (0.0) 
+T elecommunications  1,480  56  56   0.6  0.0  
+T otal  75,227  4,195  4,077   2.9  2.9  
+참고: 2026년 3월 20일, 가권 100 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+ 
+  
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 18  
+12개월 예상 당기순이익 컨센서스 조정의 기업별 기여도 - 이익의 규모 고려 
+구분 순위 기업명 업종 12개월 예상 당기순이익 (백만 대만달러) 
+    3월 20일 2월 20일 차이 (%) 기여도 (%p) 
+양 (+) 1 T AIWAN SEMICON.MNFG. T echnology Hardware and Equipment 2,482,096  2,415,336  2.8  1.6  
+ 2 DEL T A ELECTRONICS Electronic and Electrical Equipment 105,239  96,849  8.7  0.2  
+ 3 FUBON FINL.HLDG. Life Insurance 124,726  118,432  5.3  0.2  
+ 4 MEDIA TEK T echnology Hardware and Equipment 118,617  113,428  4.6  0.1  
+ 5 CTBC FINL.HLDG. Banks 85,102  80,195  6.1  0.1  
+ 6 WPG HOLDINGS T echnology Hardware and Equipment 14,816  10,618  39.5  0.1  
+ 7 EVERGREEN MARINE Industrial T ransportation 48,447  44,259  9.5  0.1  
+ 8 UNIMICRON TECHNOLOGY T echnology Hardware and Equipment 20,977  17,061  23.0  0.1  
+ 9 QUANT A COMPUTER T echnology Hardware and Equipment 89,498  85,813  4.3  0.1  
+ 10 NAN Y A PLASTICS Chemicals 29,333  26,550  10.5  0.1  
+음 (-) 10 ASIA CEMENT Construction and Materials 10,998  11,229  (2.1) (0.0) 
+ 9 COMPAL ELECTRONICS T echnology Hardware and Equipment 9,508  9,749  (2.5) (0.0) 
+ 8 GIANT MNFG. Leisure Goods 2,081  2,486  (16.3) (0.0) 
+ 7 POU CHEN Personal Goods 12,023  12,470  (3.6) (0.0) 
+ 6 ASUSTEK COMPUTER T echnology Hardware and Equipment 37,071  37,520  (1.2) (0.0) 
+ 5 HON HAI PRECN.IND. T echnology Hardware and Equipment 251,205  251,879  (0.3) (0.0) 
+ 4 CA TCHER TECHNOLOGY T echnology Hardware and Equipment 8,113  8,790  (7.7) (0.0) 
+ 3 FORMOSA PLASTICS General Industrials 5,649  6,369  (11.3) (0.0) 
+ 2 CHINA AIRLINES Travel and Leisure 12,273  13,114  (6.4) (0.0) 
+ 1 EV A AIRWA YS Travel and Leisure 22,112  23,429  (5.6) (0.0) 
+참고: 2026년 3월 20일, 가권100 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+ 
+12개월 예상 당기순이익 컨센서스 추정치 변화율 상하위 기업 - 이익 규모 고려하지 않음 
+구분 순위 기업명 업종 12개월 예상 당기순이익 (백만 대만달러) 
+    3월 20일 2월 20일 차이 (%) 
+양 (+) 1 WPG HOLDINGS T echnology Hardware and Equipment 14,816  10,618  39.5  
+ 2 UNIMICRON TECHNOLOGY T echnology Hardware and Equipment 20,977  17,061  23.0  
+ 3 FORMOSA CHEMS.& FIBRE Chemicals 6,360  5,484  16.0  
+ 4 NAN Y A PRINTED CUB. T echnology Hardware and Equipment 7,441  6,607  12.6  
+ 5 SYNNEX TECH.INTL. T echnology Hardware and Equipment 10,274  9,150  12.3  
+ 6 HTC T elecommunications Equipment 818  733  11.6  
+ 7 NAN Y A PLASTICS Chemicals 29,333  26,550  10.5  
+ 8 EVERGREEN MARINE Industrial T ransportation 48,447  44,259  9.5  
+ 9 HIWIN TECHNOLOGIES Industrial Engineering 2,498  2,291  9.0  
+ 10 DEL T A ELECTRONICS Electronic and Electrical Equipment 105,239  96,849  8.7  
+음 (-) 10 YULON MOTOR Automobiles and Parts 2,257  2,304  (2.1) 
+ 9 COMPAL ELECTRONICS T echnology Hardware and Equipment 9,508  9,749  (2.5) 
+ 8 CHINA STEEL Industrial Metals and Mining 3,557  3,660  (2.8) 
+ 7 TONG Y ANG IND. Automobiles and Parts 4,366  4,516  (3.3) 
+ 6 POU CHEN Personal Goods 12,023  12,470  (3.6) 
+ 5 EV A AIRWA YS Travel and Leisure 22,112  23,429  (5.6) 
+ 4 CHINA AIRLINES Travel and Leisure 12,273  13,114  (6.4) 
+ 3 CA TCHER TECHNOLOGY T echnology Hardware and Equipment 8,113  8,790  (7.7) 
+ 2 FORMOSA PLASTICS General Industrials 5,649  6,369  (11.3) 
+ 1 GIANT MNFG. Leisure Goods 2,081  2,486  (16.3) 
+참고: 2026년 3월 20일, 가권100 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 19  
+가능성 높은 이익 전망치 변경 사유 
+기업 사유 
+T AIWAN SEMICON.MNFG. 1) AI 가속기용 선단공정 수요 급증과 2) CoWoS 첨단 패키징 능력 확대 
+ 2.19일 Q4·FY2025 실적발표: 4Q25 매출 NTD 8,683억(+39% y-y), 매출총이익률이 59.0%로 역대 최고치  
+AI 서버용 3nm·5nm 선단공정 수요 급증. 2026년 매출 성장률 20% 중반대 가이던스 제시 
+ CoWoS(첨단 패키징) 생산 능력 2026년 2배 이상 확장 계획. HBM4·AI 가속기 패키징 수요 급증으로 공급 부족 지속 
+NVIDIA·AMD·Broadcom·Apple의 3nm 이상 물량 확대. 2nm(N2) 공정 양산 준비 완료 
+ 2026년 Capex $380~420억 제시(전년 대비 약 30% 증가). 미국 Arizona 팹 3개, 일본 2기 팹 건설 진행 중 
+DEL T A ELECTRONICS 1) AI 데이터센터용 전력공급장치(PSU) 및 2) 열관리 솔루션 수요 급증 
+ 2.18일 Q4·FY2025 실적발표: AI 데이터센터용 전력공급장치(PSU) 매출 급증으로 4Q25 이익 컨센서스 상회 
+ 하이퍼스케일러(Meta, Google, Microsoft, Amazon)의 AI 데이터센터 Capex 급증이 Delta의 48V 전력 시스템·액침냉각 수요 증가로 연결  
+전통 산업자동화·EV 충전 사업도 견조. 직접칩냉각(DLC)·액침냉각 등 차세대 열관리 솔루션 시장 선점 
+FUBON FINL.HLDG. 1) 대만 증시 강세에 따른 보험 자산 평가이익 확대와 2) 금리 환경 안정화 
+ 3.3일 FY2025 실적발표: 보험 부문 투자이익 증가 및 대만 증시 강세로 자산 평가이익 확대. 은행 부문(T aipei Fubon Bank) NIM 안정 
+ 대만 증시 강세(AI·반도체 테마주 주도)로 Fubon Life 투자 포트폴리오 가치 증가. 금리 환경 안정화로 채권 평가손실 감소  
+2026년 배당 성향 유지 및 순이익 증가 가이던스 제시. 대만 경제 성장 가속화(AI 수출 주도)로 금융 부문 전반 이익 개선 
+MEDIA TEK 1) AI 스마트폰 AP 수요 증가와 2) Wi-Fi·IoT 반도체 판매 호조 
+ 2026년 AI 스마트폰(On-device AI) 확산으로 고성능 AP 수요 증가 예상.  
+Dimensity 9400 탑재 Xiaomi·OPPO 등 중국 플래그십 스마트폰 수요 강세. AI PC 시장 진입 준비 중 
+ Wi-Fi 7 전환 가속화로 칩셋 교체 수요 증가. IoT·스마트홈·AI 엣지 컴퓨팅 시장 확대로 중장기 성장 기반 강화 
+WPG HOLDINGS 1) AI 서버·메모리 부품 수요 급증에 따른 유통 물량 확대 
+ 2.18일 FY2025 실적발표: AI 서버·메모리 부품 유통 물량 급증으로 4Q25 이익 컨센서스 상회.  
+HBM·DDR5·SSD 등 고부가 메모리 부품 유통 비중 확대로 마진 개선. AI 반도체 유통 시장 선점 효과 지속 
+ 하이퍼스케일러·ODM 업체들의 AI 서버 부품 조달 수요 급증. 반도체 부품 공급 부족 환경에서 유통 마진 개선 
+UNIMICRON TECHNOLOGY AI 서버용 고부가 ABF 기판 수요 급증으로 공급이 수요를 크게 하회 
+ 2.11일 Q4·FY2025 실적발표: AI 서버용 고부가 ABF(Ajinomoto Build-up Film) 기판 수요 급증으로 이익 컨센서스 상회 
+ AI 가속기(NVIDIA GB200, AMD MI400 등) 및 고성능 컴퓨팅 칩에 필요한 ABF 기판 공급 부족 지속.  
+생산 능력 증설 투자 지속(3년간 NTD 1,500억 이상). TSMC CoWoS 패키징 기판 수주 확대 
+ 2026~2027년 ABF 기판 수요 전망이 생산 능력 확장 속도를 초과하는 공급 부족 지속 
+FORMOSA CHEMS.& FIBRE 1) 중국 공급과잉 구조조정 수혜, 2) AI 관련 화학소재 수요 확대 
+ 2.21일 FY2025 실적발표: 중국 공급과잉 구조조정 정책 시행으로 대만 화학 기업의 수출 경쟁력 개선 기대 
+AI 관련 특수소재(반도체급 화학물질) 수요 점진적 확대. 대만달러 강세로 수입 원자재 비용 감소 효과 
+ 중국 석화·화학 업체의 설비 축소(구조조정) 정책으로 글로벌 공급 균형 회복 기대. 에틸렌·프로필렌 마진 반등 전망  
+Nanya Plastic(자회사)의 AI PC용 특수 소재 수요 증가. 중국 구조조정 효과 발현 시기 예상보다 앞당겨질 가능성 
+CA TCHER TECHNOLOGY 1) 메탈 케이스 수요 감소 및 2) 고객 다변화 지연 
+ 2.19일 Q4·FY2025 실적발표: 스마트폰·노트북용 메탈 케이스 수요 부진 지속 
+Apple iPhone 비중 높으나 Apple 자체 생산 내재화 및 카메라 모듈 경쟁사 확대로 성장 동력 약화 
+ AI PC·폴더블폰 시장 성장에도 Catcher의 금속 가공 사업 특성상 수혜 제한적. 중국 경쟁업체의 저가 공세로 마진 압박 지속 
+ EV 배터리 케이스, 의료기기 부품 사업 다각화 추진 중이나 가시적 성과까지 시간 소요 
+FORMOSA PLASTICS 중국의 지속적인 공급과잉 및 에틸렌 마진 압박 지속 
+ 중국의 에틸렌·PVC 생산 능력 지속 확장으로 구조적 공급과잉 해소까지 2~3년 소요 전망. 대만 내 에너지 비용 상승  
+미국 텍사스 석화 사업(FPC USA) 관세 영향으로 비용 증가. 2026년 이익 회복 시기 기존 전망보다 지연 
+GIANT MNFG. 1) 글로벌 자전거 수요 약세 지속 및 2) 재고 조정 장기화 
+ 2.18일 Q4·FY2025 실적발표: 글로벌 자전거 수요 약세 지속으로 판매량·마진 부진.  
+유럽·북미 시장 재고 조정 지속으로 주문 감소. 2026년 1H 가이던스 컨센서스 하회 
+ 코로나 이후 자전거 수요 급등 반작용으로 유럽·미국 소비자 수요 구조적 약화. 전기자전거(e-bike) 부문도 유럽 경기 둔화로 성장 둔화 
+중국 내수 경기 침체로 아시아 수요도 부진 
+EVA AIRWA YS 1) 미중 무역갈등 심화에 따른 화물 수요 불확실성 증대, 2) 항공유 비용 상승 
+ 2.25일 Q4·FY2025 실적발표: 여객 수요 견조하나 화물 수익 하락 및 항공유 비용 상승으로 이익 컨센서스 하회 
+2026년 화물 운임 약세 지속 전망으로 가이던스 하향 
+ 미중 무역갈등 심화로 대만-중국 간 화물 수요 불확실성 증대. AI 반도체 수출 규제 영향으로 첨단 전자제품 화물 볼륨 감소 우려 
+ 여객 수요는 한국·일본·동남아 노선 견조하나 화물 사업 이익 기여도 하락 
+자료: 언론보도종합 
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 20  
+중국 증시, 12개월 예상 실적 컨센서스 트렌드 
+중국 CSI 300 지수 구성 기업 대상 12개월 예상 기준 당기순이익 컨센서스(LSEG)는 한 달 전 대비 
+1.6% 상향 조정. 순이익 추정치 상향 조정의 기여도가 높은 업종은 1) Oil, Gas and Coal , 2) 
+T elecommunications Equipment, 3) Banks였음. 
+ 
+12개월 예상 당기순이익 컨센서스 트렌드 (한 달 전 대비) 
+(십억위안) 
+대분류 중분류 시가총액 
+12개월 예상 당기순이익  차이 기여도 
+3월 20일 2월 20일  (%) (%p) 
+T echnology 5,476  156  151   3.3  0.1  
+Software and Computer Services 837  19  19   4.1  0.0  
+T echnology Hardware and Equipment 4,639  136  132   3.2  0.1  
+Financials 14,960  2,790  2,772   0.7  0.3  
+Banks 10,395  2,164  2,155   0.4  0.2  
+Investment Banking and Brokerage Services 1,974  203  200   1.5  0.1  
+Life Insurance 1,917  357  351   1.5  0.1  
+Industrials 8,008  574  567   1.3  0.1  
+Electronic and Electrical Equipment 3,465  171  166   3.1  0.1  
+Industrial T ransportation 2,031  154  153   0.4  0.0  
+Construction and Materials 1,030  172  171   0.4  0.0  
+Industrial Engineering 825  54  53   1.9  0.0  
+Aerospace and Defense 401  9  8   1.6  0.0  
+Basic Materials 4,491  318  305   4.4  0.3  
+Industrial Metals and Mining 1,889  130  124   5.0  0.1  
+Chemicals 1,681  98  92   6.0  0.1  
+Precious Metals and Mining 922  90  89   2.0  0.0  
+Ener gy 5,103  505  475   6.3  0.6  
+Alternative Energy 872  35  33   4.0  0.0  
+Oil, Gas and Coal 4,230  470  441   6.4  0.5  
+Consumer Discretionary 3,718  298  297   0.2  0.0  
+Automobiles and Parts 1,589  121  121   0.4  0.0  
+Household Goods and Home Construction 922  106  106   (0.2) (0.0) 
+Leisure Goods 476  26  26   2.0  0.0  
+Travel and Leisure 284  20  20   (1.5) (0.0) 
+Consumer Staples 4,125  253  251   0.6  0.0  
+Beverages 2,868  172  171   0.5  0.0  
+Food Producers 1,256  81  80   0.6  0.0  
+Health Care 1,769  90  89   1.2  0.0  
+Pharmaceuticals and Biotechnology 1,261  67  66   1.3  0.0  
+Medical Equipment and Services 378  18  18   0.7  0.0  
+T elecommunications 3,560  339  330   2.8  0.2  
+T elecommunications Equipment 2,726  142  134   6.4  0.2  
+T elecommunications Service Providers 834  197  197   0.4  0.0  
+Utilities 1,885  127  127   0.6  0.0  
+Real Estate 197  7  8   (7.1) (0.0) 
+T otal 53,292  5,458  5,371   1.6  1.6  
+참고: 2026년 3월 20일, CSI300 지수 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+  
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 21  
+12개월 예상 당기순이익 컨센서스 조정의 기업별 기여도 - 이익의 규모 고려 
+구분 순위 기업명 업종 
+ 
+12개월 예상 당기순이익 (백만위안) 
+    3월 20일 2월 20일 차이 (%) 기여도 (%p) 
+양 (+) 1 PETROCHINA 'A' Oil, Gas and Coal 170,074  158,662  7.2  0.2  
+ 2 CNOOC 'A' Oil, Gas and Coal 134,997  127,360  6.0  0.1  
+ 3 CONTEMPORARY AMPEREX TECHNOLOGY Electronic and Electrical Equipment 93,358  89,172  4.7  0.1  
+ 4 FOXCONN INDUSTRIAL INTERNET 'A' T elecommunications Equipment 66,124  62,577  5.7  0.1  
+ 5 ZHONGJI INNOLIGHT 'A' T elecommunications Equipment 29,057  25,992  11.8  0.1  
+ 6 CHINA SHENHUA EN.'A' Oil, Gas and Coal 54,945  52,129  5.4  0.1  
+ 7 PING AN INSURANCE (GP.) CO. OF CHINA 'A' Life Insurance 154,483  151,830  1.7  0.0  
+ 8 CHINA PTL.& CHM.'A' Oil, Gas and Coal 51,103  48,843  4.6  0.0  
+ 9 Y ANKUANG ENERGY GROUP 'A' Oil, Gas and Coal 13,467  11,317  19.0  0.0  
+ 10 GUANGZHOU TINCI MA TS. TECH.'A' Chemicals 6,722  4,809  39.8  0.0  
+음 (-) 10 CHONGQING CHANGAN AUTMB. 'A' Automobiles and Parts 6,832  7,030  (2.8) (0.0) 
+ 9 MIDEA GROUP 'A' Household Goods and Home Construction 48,290  48,513  (0.5) (0.0) 
+ 8 AIR CHINA LIMITED 'A' Travel and Leisure 6,285  6,546  (4.0) (0.0) 
+ 7 CHINA EASTERN AIRL. 'A' Travel and Leisure 4,051  4,342  (6.7) (0.0) 
+ 6 FUY AO GLSS.IND.GROUP 'A' General Industrials 11,250  11,542  (2.5) (0.0) 
+ 5 INDUSTRIAL SECS.'A' Investment Banking and Brokerage Services 3,682  3,991  (7.7) (0.0) 
+ 4 ZTE 'A' T elecommunications Equipment 8,542  8,886  (3.9) (0.0) 
+ 3 CHINA MRCH.SHEKOU INDL. ZONE 'A' Real Estate Investment and Services 3,324  3,919  (15.2) (0.0) 
+ 2 MUYUAN FOODS 'A' Food Producers 24,312  24,921  (2.4) (0.0) 
+ 1 COSCO SHIPPING HDG.'A' Industrial T ransportation 18,653  19,939  (6.4) (0.0) 
+참고: 2026년 3월 20일, CSI300 지수 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+ 
+ 
+12개월 예상 당기순이익 컨센서스 추정치 변화율 상하위 기업 - 이익 규모 고려하지 않음 
+구분 순위 기업명 업종 12개월 예상 당기순이익 (백만위안) 
+    3월 20일 2월 20일 차이 (%) 
+양 (+) 1 CHONGQING ZHIFEI BILG. PRDS.'A' Pharmaceuticals and Biotechnology 114  16  597.7  
+ 2 KUNLUN TECH 'A' Leisure Goods 39  11  248.7  
+ 3 JIANGSU EASTERN SHENGHONG 'A' Chemicals 2,031  1,325  53.3  
+ 4 GUANGZHOU TINCI MA TS. TECH.'A' Chemicals 6,722  4,809  39.8  
+ 5 SHANJIN INTERNA TIONAL GOLD 'A' Industrial Metals and Mining 6,151  4,736  29.9  
+ 6 JA SOLAR TECHNOLOGY 'A' Alternative Energy 967  765  26.5  
+ 7 GANFENG LITHIUM GROUP 'A' Industrial Metals and Mining 3,624  2,907  24.6  
+ 8 NA TIONAL SILICON INDUSTRY GROUP 'A' T echnology Hardware and Equipment 223  181  23.7  
+ 9 Y ANKUANG ENERGY GROUP 'A' Oil, Gas and Coal 13,467  11,317  19.0  
+ 10 JINKO SOLAR 'A' Alternative Energy 1,414  1,196  18.2  
+음 (-) 10 ZTE 'A' T elecommunications Equipment 8,542  8,886  (3.9) 
+ 9 EMPYREAN TECHNOLOGY 'A' Software and Computer Services 291  303  (3.9) 
+ 8 AIR CHINA LIMITED 'A' Travel and Leisure 6,285  6,546  (4.0) 
+ 7 MAXSCEND MICROELECTRONICS 'A' T echnology Hardware and Equipment 578  605  (4.4) 
+ 6 ACM RESEARCH (SHANGHAI) 'A' T echnology Hardware and Equipment 2,026  2,134  (5.0) 
+ 5 COSCO SHIPPING HDG.'A' Industrial T ransportation 18,653  19,939  (6.4) 
+ 4 CHINA EASTERN AIRL. 'A' Travel and Leisure 4,051  4,342  (6.7) 
+ 3 INDUSTRIAL SECS.'A' Investment Banking and Brokerage Services 3,682  3,991  (7.7) 
+ 2 CHINA MRCH.SHEKOU INDL. ZONE 'A' Real Estate Investment and Services 3,324  3,919  (15.2) 
+ 1 XINJIANG DAQO NEW ENERGY 'A' Chemicals 574  716  (19.8) 
+참고: 2026년 3월 20일, CSI300 지수 기업 대상, ICB 업종 분류 기준 
+자료: LSEG, 삼성증권 
+KOREA EQUITY STRATEGY 
+2026. 3. 23. 
+ 
+Earnings Tracker 
+ 
+Samsung Securities (Korea) ∷ www.samsungpop.com 22  
+가능성 높은 이익 전망치 변경 사유 
+기업 사유 
+PETROCHINA 'A' 유가 급등으로 업스트림 이익 마진 개선 
+ 중동 분쟁으로 PetroChina 업스트림 부문 이익 마진 개선 가능성 
+ PetroChina의 주요 생산 자산(중국 내 육상 유전, 중앙아시아 파이프라인)은 중동 분쟁 직접 영향 없음 
+유가 $100/b 지속 시 연간 순이익 추가 수천억 위안 증가 예상. CNOOC와 함께 중국 내 가장 직접적인 고유가 수혜주 
+ 중국 에너지 자립도 강화 정책으로 국내 생산 확대. 배당 성향 유지 및 자사주 매입 지속 예상 
+CONTEMPORARY AMPEREX 
+TECHNOLOGY 1) 정부의 배터리·태양광 공급과잉 구조조정 추진, 2) 글로벌 ESS 수요 확대 
+ 3.5일 FY2025 실적발표: 글로벌 EV 배터리 시장점유율 37%(2위 BYD 15%). 순이익 컨센서스 상회. ESS 매출 급증이 성장 견인 
+ 중국 정부의 태양광·배터리 공급과잉 구조조정 정책으로 경쟁사(중소업체) 퇴출 가속화 
+CA TL의 가격 경쟁력 강화. ESS 매출 비중 30% 이상으로 확대. 전고체배터리 2026년 소량 생산 개시 발표 
+ 2026년 ESS 글로벌 수주 급증(유럽·북미 재생에너지 시장). 배터리 원자재(리튬·코발트) 가격 안정화로 마진 개선 지속 
+FOXCONN INDUSTRIAL 
+INTERNET 1) AI 서버·클라우드 인프라 조립 수주 급증과 2) 데이터센터 솔루션 수요 확대 
+ 2.26일 FY2025 실적발표: AI 서버 조립 및 데이터센터 솔루션 매출 급증. NVIDIA GB200 및 Dell·HPE AI 서버 수주 급증 
+ 주요 고객(Meta, Microsoft, Google, Amazon)의 AI 데이터센터 Capex 급증으로 Foxconn Industrial의 수혜 극대화 
+AI 서버 마진이 기존 IT 제조 사업 대비 2~3배 높아 이익 구조 개선 
+ 3.18일 NVIDIA와 AI 서버 플랫폼 확장 협력 MOU 체결. 2026년 AI 서버 매출 비중 50%+ 목표 
+ZHONGJI INNOLIGHT  AI 데이터센터용 고속 광트랜시버 수요 급증으로 주요 하이퍼스케일러와 대규모 공급 계약이 체결 
+ 3.7일 FY2025 실적발표: AI 데이터센터용 400G·800G 고속 광트랜시버 수요 급증으로 매출 165억 위안(+80% y-y), 순이익 39억 
+위안(+120% y-y)으로 컨센서스 대폭 상회 
+ 주요 하이퍼스케일러(Meta, Google, Microsoft, Amazon, ByteDance)의 AI 데이터센터 광네트워크 투자 급증으로 Zhongji의 광트랜시버 
+수주 급증. 1.6T(테라비트) 광트랜시버 개발 완료 및 양산 준비. AI 데이터센터의 광트랜시버 교체 주기 단축으로 수요 구조적 강세 
+JA SOLAR TECHNOLOGY  정부의 태양광 공급과잉 구조조정 정책으로 업황 회복 기대감 반영 
+ 2.25일 FY2025 실적발표: 중국 태양광 패널 가격 하락 압박 속에서도 해외 수출 비중 확대(미국·유럽·중동)로 이익 방어 
+ 중국 NDRC의 태양광 업종 구조조정(설비 감산·합병 유도) 정책이 2026년 효과 발현 시작 
+TOPCon·HJT 고효율 제품 비중 확대로 ASP 방어. 브라질·사우디아라비아 등 신흥국 대형 프로젝트 수주 
+ 미국 Section 232 관세 부과 일부 국가에서 JA 제품 반사이익 
+GANFENG LITHIUM GROUP 1) 리튬 가격 바닥 인식 확산, 2) 전고체 배터리 상용화 기대 
+ 3.3일 FY2025 실적발표: 리튬 가격(탄산리튬 기준 10만 위안/톤 내외)이 2022~2023년 고점 대비 80% 급락 후 바닥 인식 확산 
+주요 EV 업체들의 장기 공급 계약 재개 및 재고 확보 움직임 
+ 아르헨티나·멕시코 리튬 광산 생산량 증가로 원가 절감. 고체전지 배터리 전해질 소재 신사업 기대감  
+BMW·Volkswagen 등 유럽 완성차 업체와의 중장기 공급 계약 체결. 2026년 EV 글로벌 판매량 회복으로 리튬 수요 증가 기대 
+Y ANKUANG ENERGY GROUP 유가 급등에 따른 석탄 수요 증가와 생산량 확대 가능성 
+ 2.26일 FY2025 실적발표: 중동 분쟁으로 유가 급등, 에너지 가격 전반 상승으로 석탄 수요 및 가격 동반 상승.  
+Y anKuang의 호주·중국 내 석탄 광산 수혜 
+ 중동 분쟁 및 이란 LNG 공급 중단 우려로 석탄 발전 수요 증가. Y anKuang의 호주 에너지 자산(Y anCoal Australia) 이익 대폭 개선 
+ 배당 성향 50%+ 유지로 주주환원 강화 
+COSCO SHIPPING HDG 중동 분쟁으로 항로 변경 및 운임 일부 상승에도 불구하고 글로벌 무역량 감소 우려 
+ 2.25일 FY2025 실적발표: 중동 분쟁(홍해 우회)으로 컨테이너 운임 일부 회복에도 불구, 글로벌 무역량 감소 우려 및 미중 무역갈등 
+심화로 장기 성장 전망 불확실 
+ 미국의 중국産 수입품 관세 강화로 중국발 컨테이너 물동량 감소 우려. 중동 분쟁으로 수에즈 운하 항로 일부 재개 시 홍해 우회 수요 감소 
+가능성. 신조 선박 공급 과잉으로 운임 상승 제한. 글로벌 무역 분절화 트렌드로 중국 해운사 성장 모멘텀 약화 
+XINJIANG DAQO NEW ENERGY 정부의 태양광 공급과잉 구조조정에도 단기 가격 압박이 지속 
+ 2.26일 FY2025 실적발표: 폴리실리콘 가격 급락(kg당 40위안 이하)으로 대규모 적자 지속 
+중국 정부의 태양광 구조조정 정책 발표에도 폴리실리콘 가격 회복 지연으로 2026년 적자 지속 가능성 
+ 중국 정부 주도 태양광 업종 구조조정(생산량 감산·합병)이 Daqo의 단기 실적에 직접 영향 
+구조조정 완료 후 이익 회복 가능하나 2026년 내 가시화는 불확실. 미국 UFLPA(위구르 강제노동 방지법) 제재로 수출 제한 지속 
+자료: 언론보도종합 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+삼성증권주식회사 
+서울특별시 서초구 서초대로74길 11(삼성전자빌딩)  
+T el: 02 2020 8000 / www.samsungpop.com 
+삼성증권 Family Center: 1588 2323 
+고객 불편사항 접수: 080 911 0900 
+  

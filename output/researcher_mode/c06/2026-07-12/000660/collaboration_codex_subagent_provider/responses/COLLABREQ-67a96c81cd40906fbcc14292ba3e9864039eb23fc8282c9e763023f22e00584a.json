@@ -1,0 +1,148 @@
+{
+  "output_schema_hash": "d59cfc6f5361fcccc448ff1f2d8846617e2b365c87141abb20b16f6ed64dfc45",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-2585d63d70d2e243b822c981",
+        "rationale": "Full KIND filing reviewed: three distinct objective-linked facts capture the target-attributed HBM equipment contract and two disclosed contract limitations without treating it as SK hynix customer revenue or a customer purchase commitment.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2585d63d70d2e243b822c981",
+        "economic_mechanism": "HBM 제조 설비의 실제 발주를 통한 생산능력 실행",
+        "exact_quote": "- 세부내용\nHBM 제조용\n'TC BONDER' 장비 수주\n2. 계약내역\n계약금액(원)\n9,650,000,000\n최근매출액(원)\n558,917,191,547\n매출액대비(%)\n1.73\n대규모법인여부\n미해당\n3. 계약상대\nSK하이닉스(SK Hynix Inc.)\n- 회사와의 관계\n-\n4. 판매ㆍ공급지역\n한국\n5. 계약기간\n시작일\n2026-01-14\n종료일\n2026-04-01",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "공식 KIND 공시가 SK하이닉스를 HBM 제조용 본더 장비 계약상대로 직접 명시해 HBM 생산설비 조달 실행을 입증하지만, 단일 소규모 장비 계약이므로 장기 매출 가시성 자체를 확정하지는 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:CAPACITY_INVESTMENT:SUPPLY_RESPONSE",
+        "normalized_object": "SK하이닉스 대상 HBM 제조용 TC BONDER 장비 공급계약",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-01-14 to 2026-04-01",
+        "predicate": "SK하이닉스가 계약상대로 명시된 HBM 제조용 TC BONDER 장비 공급계약 금액은 9,650,000,000원이다",
+        "predicate_family": "hbm_equipment_purchase_contract",
+        "primitive_tags": [],
+        "product_family": "HBM",
+        "question_family_id": "hbm_capacity_equipment_procurement",
+        "question_family_tags": [],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 제조용 TC BONDER 설비 조달",
+        "subject_id": "000660:HBM:TC_BONDER_PROCUREMENT",
+        "unit": "KRW",
+        "value": 9650000000
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-2585d63d70d2e243b822c981",
+        "economic_mechanism": "HBM 장비 계약의 선급금 부재로 인한 선지급 구속력 한계",
+        "exact_quote": "6. 주요 계약조건\n계약금ㆍ선급금 유무\n무\n대금지급 조건 등\n-",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "실제 발주가 존재하더라도 선급금은 없으므로, 이 계약을 선수금으로 잠긴 장기 고객 커밋이나 강한 금융적 구속력으로 확대 해석할 수 없게 한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:RISK:RISK_COUNTER",
+        "normalized_object": "HBM 제조용 TC BONDER 계약의 계약금·선급금 부재",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "contract dated 2026-01-14",
+        "predicate": "HBM 제조용 TC BONDER 계약에는 계약금이나 선급금이 없다",
+        "predicate_family": "hbm_equipment_contract_no_prepayment",
+        "primitive_tags": [],
+        "product_family": "HBM",
+        "question_family_id": "hbm_capacity_equipment_contract_terms",
+        "question_family_tags": [],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 제조용 TC BONDER 계약의 선급 조건",
+        "subject_id": "000660:HBM:TC_BONDER_PREPAYMENT_TERM",
+        "unit": "contract term",
+        "value": "none"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-2585d63d70d2e243b822c981",
+        "economic_mechanism": "협의로 변경 가능한 장비 납기에 따른 HBM 설비 실행 일정 불확실성",
+        "exact_quote": "5) 위, 5. 계약기간 종료일(납기)은 고객사와의 협의에 따라 변경될 수 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "공시된 종료일이 고정 가동일을 보장하지 않으므로 장비 도입 일정을 확정적 HBM 생산능력 가동으로 해석하는 것을 제한한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:RISK:RISK_COUNTER",
+        "normalized_object": "고객사 협의에 따라 변경 가능한 TC BONDER 납기",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "delivery end date stated as 2026-04-01",
+        "predicate": "TC BONDER 계약기간 종료일인 납기는 고객사와 협의해 변경될 수 있다",
+        "predicate_family": "hbm_equipment_delivery_schedule_changeable",
+        "primitive_tags": [],
+        "product_family": "HBM",
+        "question_family_id": "hbm_capacity_equipment_delivery_risk",
+        "question_family_tags": [],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 제조용 TC BONDER 납기",
+        "subject_id": "000660:HBM:TC_BONDER_DELIVERY_SCHEDULE",
+        "unit": "contract term",
+        "value": "delivery end date changeable by customer agreement"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "This supplier filing evidences SK hynix equipment procurement only; it does not disclose SK hynix customer sales, customer purchase obligations, HBM revenue guidance, or a durable revenue period."
+    ]
+  },
+  "payload_hash": "98565cfd52b0da7b0907d26ee5d3c428d44d0ecddb28b7a8c614e78cea48ce88",
+  "production_score_authority": false,
+  "prompt_hash": "1c9b68bee15593814917f4e5ba65229aaa50abc962cbe60726ad4e1ee8c32035",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-67a96c81cd40906fbcc14292ba3e9864039eb23fc8282c9e763023f22e00584a",
+  "response_id": "COLLABRESP-72d15151082d351928f316139d27c29127747a08ec8b899ea9038869b1f28553",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

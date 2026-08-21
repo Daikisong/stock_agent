@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "3885e06527a44286bfd9318a7e97f4727d7002753186fba579331bc5de08b8ba",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a1328c4a3d942c8f54e539de",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "This third-party-hosted 2022 automotive-parts report is unrelated to SK hynix HBM economics and does not establish a requested original source route."
+      },
+      {
+        "candidate_id": "SGCAND-54554dca9fc718b135e796bb",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "The current global-market outlook is macro strategy and provides no target-specific HBM earnings or valuation bridge."
+      },
+      {
+        "candidate_id": "SGCAND-565af8592cccd29b89547af6",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.08,
+        "rationale": "The strategy report mentions Micron AI-memory performance only as a market example and does not resolve SK hynix-specific economics."
+      },
+      {
+        "candidate_id": "SGCAND-2a83738819ffdfff8af5c546",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party news roundup is not a public broker report or industry report and provides no original target-specific source."
+      },
+      {
+        "candidate_id": "SGCAND-bffdfc3a3585f0030cf10350",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.58,
+        "rationale": "The original broker industry report has a dedicated SK hynix section and analyzes AI-driven memory and HBM demand, offering material historical mechanism context."
+      },
+      {
+        "candidate_id": "SGCAND-727310ed766197891df16be7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "The Telegram page is unrelated in the supplied snippet and is not a requested original source family."
+      },
+      {
+        "candidate_id": "SGCAND-51815f6e96109f2f47a30f3c",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "The 2024 daily market-strategy PDF does not address the target-specific HBM valuation mechanism."
+      },
+      {
+        "candidate_id": "SGCAND-ec75273f4236f36afecaec0e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.01,
+        "rationale": "The aggregator result is an automotive industry report unrelated to SK hynix and does not establish relevant original-source provenance."
+      },
+      {
+        "candidate_id": "SGCAND-ab9b17f4630ff197d8b560b6",
+        "matched_requested_source_family": "INDUSTRY_REPORT",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.79,
+        "rationale": "The May 2026 semiconductor industry analysis directly revises memory pricing and SK hynix earnings on stronger LPDDR demand, making it material current expectation context."
+      },
+      {
+        "candidate_id": "SGCAND-6878c00e874e0af58688cf38",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "The global equity strategy report does not provide target-specific HBM earnings or valuation evidence."
+      },
+      {
+        "candidate_id": "SGCAND-0fb2f70ef689563ec649d3dc",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "The global equity strategy report does not provide target-specific HBM earnings or valuation evidence."
+      },
+      {
+        "candidate_id": "SGCAND-9e3c8da9c54f6ceb38a243d7",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.02,
+        "rationale": "The broad global strategy report contains no supplied target-specific HBM earnings or multiple bridge."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Full-text and publication-date eligibility must still be verified during bounded fetch; snippets were used only for discovery routing."
+    ]
+  },
+  "payload_hash": "b9f40d576a795fefa5e0f159388913fc0fa0f996c9b203dbd401464f158dc825",
+  "production_score_authority": false,
+  "prompt_hash": "450d62f3a43251d723e73a64e9ea9358a05f159555d44db94a04d03c65629b39",
+  "provenance": {
+    "agent_id": "hynix_epoch9_rankings",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch9_rankings",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3892dde4174155efcb3ea2106c325f860d9b023ceff9b4a636b949199be8fe6b",
+  "response_id": "COLLABRESP-5395d67e1738cf17f5bc9e3f9a736ca3c8ac87e73b8e43d3fcbc6efc60cc7733",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

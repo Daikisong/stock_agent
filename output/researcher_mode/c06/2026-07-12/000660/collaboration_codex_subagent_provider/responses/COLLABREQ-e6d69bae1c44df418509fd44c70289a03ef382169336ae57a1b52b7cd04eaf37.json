@@ -1,0 +1,615 @@
+{
+  "output_schema_hash": "2d31ad9067a303f4e40525c923492de165ee1da261aeb7792c72cc46ff2b226e",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+        "rationale": "v8 full-document reassessment에서 current page에 distinct objective-local fact 1건을 재추출했다. structured role은 exact issuer/customer statement가 직접 뒷받침하는 범위만 부여했고 계약조건을 추론하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "rationale": "v8 full-document reassessment에서 current page에 distinct objective-local fact 1건을 재추출했다. structured role은 exact issuer/customer statement가 직접 뒷받침하는 범위만 부여했고 계약조건을 추론하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "rationale": "v8 full-document reassessment에서 current page에 distinct objective-local fact 2건을 재추출했다. structured role은 exact issuer/customer statement가 직접 뒷받침하는 범위만 부여했고 계약조건을 추론하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-05b7a9d03e5a17bb237f32fa",
+        "rationale": "v8 full-document reassessment에서 current page에 distinct objective-local fact 1건을 재추출했다. structured role은 exact issuer/customer statement가 직접 뒷받침하는 범위만 부여했고 계약조건을 추론하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-2585d63d70d2e243b822c981",
+        "rationale": "v8 full-document reassessment에서 current page에 distinct objective-local fact 1건을 재추출했다. structured role은 exact issuer/customer statement가 직접 뒷받침하는 범위만 부여했고 계약조건을 추론하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "rationale": "v8 full-document reassessment에서 current page에 distinct objective-local fact 3건을 재추출했다. structured role은 exact issuer/customer statement가 직접 뒷받침하는 범위만 부여했고 계약조건을 추론하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "rationale": "v8 full-document reassessment에서 current page에 distinct objective-local fact 1건을 재추출했다. structured role은 exact issuer/customer statement가 직접 뒷받침하는 범위만 부여했고 계약조건을 추론하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "rationale": "v8 full-document reassessment에서 current page에 distinct objective-local fact 2건을 재추출했다. structured role은 exact issuer/customer statement가 직접 뒷받침하는 범위만 부여했고 계약조건을 추론하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+        "economic_mechanism": "CAPACITY_INVESTMENT_PLAN",
+        "exact_quote": "2026년 4월 착공을 시작으로 청주 테크노폴리스 산업단지 내 어드밴스드 패키징 전용 팹인 P&T7을 건설할 계획입니다. 향후 공장 건설 및 생산 설비 구축에 약 19조원 규모를 투자할 계획입니다",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사 공시의 숫자형 미래 패키징 CAPEX 계획으로 향후 공급 대응과 자본 부담을 함께 보여준다. 다만 HBM 전용 투자나 고객 구매의무로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "P&T7 어드밴스드 패키징 팹 투자계획",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 onward",
+        "predicate": "SK하이닉스가 2026년 4월부터 P&T7 어드밴스드 패키징 팹에 약 19조원을 투자할 계획이다",
+        "predicate_family": "ADVANCED_PACKAGING_CAPEX_PLAN",
+        "primitive_tags": [],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ADVANCED_PACKAGING_FAB_INVESTMENT",
+        "question_family_tags": [
+          "ADVANCED_PACKAGING_FAB_INVESTMENT"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.5,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "SK하이닉스 P&T7 어드밴스드 패키징 팹 투자",
+        "subject_id": "000660:ADVANCED_PACKAGING_FAB_INVESTMENT",
+        "unit": "KRW",
+        "value": 19000000000000
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "economic_mechanism": "INVENTORY_CASH_CONVERSION",
+        "exact_quote": "재고자산회전율{회수}[연환산 매출원가÷{(기초재고+기말재고)÷2}]\n2.9회\n2.8회\n2.6회",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "재고 잔액과 중복되지 않는 전사 재고 현금전환 속도를 보여준다.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "연결 재고자산회전율",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 연결 재고자산회전율이 2.9회로 전기 2.8회 및 전전기 2.6회보다 높다",
+        "predicate_family": "INVENTORY_TURNOVER",
+        "primitive_tags": [],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "INVENTORY_TURNOVER",
+        "question_family_tags": [
+          "INVENTORY_TURNOVER"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.5,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 재고자산 회전율",
+        "subject_id": "000660:INVENTORY_TURNOVER",
+        "unit": "times",
+        "value": 2.9
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "economic_mechanism": "2026년 1분기 연결 매출과 영업이익이 전분기 대비 각각 60%, 96.2% 증가하고 영업이익률이 72%로 개선돼 가격·수요 강세의 전사 손익 전환을 보여준다. 반도체부문이 100%로 공시됐지만 HBM 단독 이익으로 귀속하지 않는다.",
+        "exact_quote": "당사의 1분기 매출은 52.6조원을 기록하며 사상 최초 분기 매출 50조원을 돌파하였습니다. 이는 전분기 대비 60% 증가한 수치이며, 전년 동기 대비는 198% 증가한 것입니다. 1분기 영업이익은 37.6조원으로 4개 분기 연속 사상 최대 분기 영업이익을 재경신, 영업이익률은 전분기 대비 13%p 개선된 72%를 기록하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster의 DRAM 매출·현금흐름과 구별되는 연결 매출·영업이익·마진 전환으로 eps_fcf_explosion과 earnings_visibility를 직접 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:QUARTERLY_PERFORMANCE_CONVERSION",
+        "normalized_object": "연결 매출·영업이익·영업이익률",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 vs 2025-Q4 and 2025-Q1",
+        "predicate": "2026년 1분기 연결 매출은 52.6조원으로 전분기 대비 60% 증가했고 영업이익은 37.6조원, 영업이익률은 72%였다",
+        "predicate_family": "QUARTERLY_REVENUE_OPERATING_PROFIT_GROWTH",
+        "primitive_tags": [
+          "REVENUE_GROWTH",
+          "OPERATING_PROFIT_GROWTH",
+          "OPERATING_MARGIN"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "QUARTERLY_REVENUE_OPERATING_PROFIT_GROWTH",
+        "question_family_tags": [
+          "QUARTERLY_EARNINGS",
+          "PROFIT_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 2026년 1분기 연결 실적",
+        "subject_id": "000660:CONSOLIDATED_QUARTERLY_PERFORMANCE",
+        "unit": "KRW trillion, percent, percentage points",
+        "value": "revenue KRW 52.6tn (+60% QoQ, +198% YoY); operating profit KRW 37.6tn; operating margin 72% (+13pp QoQ)"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "economic_mechanism": "기존 CIS 사업부문을 AI 메모리 분야로 전환하기로 한 결정은 전사 자원·생산기반을 AI 메모리로 재배치하는 공급 대응이다. 구체적 CAPA, HBM 세대, 완료시점은 공시하지 않는다.",
+        "exact_quote": "2025년 3월 CIS 사업부문은 AI 메모리 분야로 전환하기로 결정하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 AI 메모리 공급기반 전환 결정으로 earnings_visibility와 capacity scarcity의 공급 대응을 직접 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:CIS_TO_AI_MEMORY_CONVERSION",
+        "normalized_object": "CIS 사업부문의 AI 메모리 전환 결정",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "decision in 2025-03; current as of 2026-Q1",
+        "predicate": "SK하이닉스는 2025년 3월 CIS 사업부문을 AI 메모리 분야로 전환하기로 결정했다",
+        "predicate_family": "CIS_TO_AI_MEMORY_CAPACITY_REALLOCATION",
+        "primitive_tags": [
+          "CIS_CONVERSION",
+          "AI_MEMORY",
+          "CAPACITY_RESPONSE"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "CIS_TO_AI_MEMORY_CAPACITY_REALLOCATION",
+        "question_family_tags": [
+          "AI_MEMORY_CAPACITY",
+          "SUPPLY_REALLOCATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 CIS 사업부문 AI 메모리 전환",
+        "subject_id": "000660:CIS_TO_AI_MEMORY_CONVERSION",
+        "unit": "strategic capacity decision",
+        "value": "decision to convert CIS business to AI memory"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-05b7a9d03e5a17bb237f32fa",
+        "economic_mechanism": "SK하이닉스는 AI 메모리 수요 대응을 위해 용인·청주·서남권 생산벨트에 총 1,100조원의 장기 투자 로드맵을 제시했다. 용인은 네 번째 팹 건설 목표를 2045년에서 2033년으로 12년 앞당기고 이후 설비를 포함해 600조원을 투입할 계획이며, 청주의 약 100조원은 NAND 신규 팹·장비와 HBM 후공정 역량 강화가 섞인 투자라 HBM 전용 금액으로 해석할 수 없다. 서남권 약 400조원은 향후 투자가 본격 추진될 경우의 조건부·단계적 계획이다. 이 로드맵은 AI 메모리 공급능력 확대 경로인 동시에 장기간의 대규모 현금지출로 FCF 전환을 제약할 수 있다.",
+        "exact_quote": "SK하이닉스는 이러한 시장 변화에 대응하기 위해 기술 혁신과 생산능력 확대를 지속하는 한편, 생산기반을 한층 확대한다는 계획이다. 이에 따라 SK하이닉스는 총 1,100조 원 규모의 중장기 투자 전략을 마련하고, 용인-청주-서남권을 잇는 AI 메모리 생산벨트 구축을 추진한다. 기존 생산거점을 고도화하는 동시에 차세대 생산거점을 단계적으로 확보해 급증하는 글로벌 AI 메모리 수요에 대응하고 안정적인 공급망을 구축한다는 계획이다.\nSK하이닉스는 빠르게 늘어나는 메모리 수요에 대응하기 위해 용인 반도체 클러스터의 조기 완공을 추진 중이다. 당초 2045년 완공 예정이었던 용인 클러스터는 일정을 12년 앞당겨 2033년까지 4번째 팹의 건설을 완료하는 것을 목표로 하고 있다. 이후 생산을 위한 설비와 장비 등이 단계적으로 투자되면 용인클러스터에는 총 600조 원이 투입될 예정이다.\n기존 생산거점인 청주 역시 낸드 증산을 위한 투자를 앞당겨 역량을 한층 끌어올린다. SK하이닉스는 청주에 약 100조 원을 투자해 낸드 신규 팹 건설과 생산장비 도입 등 시설 투자를 진행하고, HBM 후공정을 담당하는 첨단 패키징 역량 등도 강화할 예정이다.\n한편 SK하이닉스는 글로벌 AI 확산으로 급증하는 메모리 수요에 대응하기 위해 또 하나의 대형 거점이 필요하다는 입장이다. 대규모 반도체 생산기지를 구축하기 위해서는 넓은 부지와 전력·용수 등 기반 인프라를 신속하고 안정적으로 확보하는 것이 필수적이다.\nSK하이닉스는 대규모 부지 확보가 가능하고, 정부와 지자체가 전력·용수 등 인프라 구축을 추진하고 있어 관련 조건을 충족할 것으로 기대되는 서남권을 차세대 생산거점으로 준비해 나간다는 계획이다. 향후 투자가 본격 추진될 경우 부지 확보와 팹 건설, 생산설비 도입 등을 포함해 총 약 400조 원이 단계적으로 투입될 예정이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "총 1,100조원의 장기 생산투자와 거점별 집행 조건은 AI 메모리 공급 확대의 규모를 보여주는 동시에 향후 FCF에 대한 대규모 자본지출 부담을 직접 제시한다.",
+        "mechanism_scope_id": "000660:MEMORY:AI_MEMORY_PRODUCTION_BELT_LONG_TERM_CAPEX_ROADMAP",
+        "normalized_object": "AI 메모리 생산벨트 총 1,100조원 장기 투자와 거점별 배분·조건",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "long-term plan announced 2026-06-29; forward phased investment",
+        "predicate": "SK하이닉스는 용인·청주·서남권 AI 메모리 생산벨트에 총 1,100조원의 장기 투자 로드맵을 마련했으며, 거점별 계획은 용인 600조원·청주 약 100조원·조건부 서남권 약 400조원이다",
+        "predicate_family": "AI_MEMORY_PRODUCTION_BELT_CAPEX_ALLOCATION_TIMELINE",
+        "primitive_tags": [
+          "AI_MEMORY",
+          "CAPEX",
+          "CAPACITY",
+          "HBM_PACKAGING"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "AI_MEMORY_PRODUCTION_BELT_LONG_TERM_CAPEX_ROADMAP",
+        "question_family_tags": [
+          "AI_MEMORY_CAPEX",
+          "PRODUCTION_BELT",
+          "FCF_CAPEX_COUNTER",
+          "YONGIN_CHEONGJU_SOUTHWEST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "SK하이닉스 AI 메모리 생산벨트 장기 투자 로드맵",
+        "subject_id": "000660:MEMORY:AI_MEMORY_PRODUCTION_BELT_CAPEX_ROADMAP",
+        "unit": "KRW trillion",
+        "value": 1100
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-2585d63d70d2e243b822c981",
+        "economic_mechanism": "HBM 제조 설비의 실제 발주를 통한 생산능력 실행",
+        "exact_quote": "- 세부내용\nHBM 제조용\n'TC BONDER' 장비 수주\n2. 계약내역\n계약금액(원)\n9,650,000,000\n최근매출액(원)\n558,917,191,547\n매출액대비(%)\n1.73\n대규모법인여부\n미해당\n3. 계약상대\nSK하이닉스(SK Hynix Inc.)\n- 회사와의 관계\n-\n4. 판매ㆍ공급지역\n한국\n5. 계약기간\n시작일\n2026-01-14\n종료일\n2026-04-01",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "공식 KIND 공시가 SK하이닉스를 HBM 제조용 본더 장비 계약상대로 직접 명시해 HBM 생산설비 조달 실행을 입증하지만, 단일 소규모 장비 계약이므로 장기 매출 가시성 자체를 확정하지는 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:CAPACITY_INVESTMENT:SUPPLY_RESPONSE",
+        "normalized_object": "SK하이닉스 대상 HBM 제조용 TC BONDER 장비 공급계약",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-01-14 to 2026-04-01",
+        "predicate": "SK하이닉스가 계약상대로 명시된 HBM 제조용 TC BONDER 장비 공급계약 금액은 9,650,000,000원이다",
+        "predicate_family": "hbm_equipment_purchase_contract",
+        "primitive_tags": [],
+        "product_family": "HBM",
+        "question_family_id": "hbm_capacity_equipment_procurement",
+        "question_family_tags": [],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 제조용 TC BONDER 설비 조달",
+        "subject_id": "000660:HBM:TC_BONDER_PROCUREMENT",
+        "unit": "KRW",
+        "value": 9650000000
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "용인 클러스터의 2033년 이정표는 네 번째 팹 전체 투자 완료가 아니라 첫 번째 클린룸 완공을 뜻한다. 나머지 클린룸과 생산 설비·장비 투자는 수요에 맞춰 2033년 이후에도 단계적으로 이어지므로, 용인 600조원은 2033년까지 일괄 집행되는 금액이 아니라 장기간의 공급능력 확대와 현금지출 계획이다.",
+        "exact_quote": "2033년은 용인 클러스터의 4번째 팹의 건설이 완료되는 시점으로 4번째 팹의 첫번째 클린룸이 완공되는 시기를 의미합니다. 이후 나머지 클린룸 등 생산 설비와 장비 투자는 수요에 맞춰 단계적으로 진행되는 만큼 총 600조 원에 해당되는 투자는 2033년 이후에도 이어지게 됩니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "600조원 투자액의 실제 집행 기간과 2033년 이정표의 범위는 장기 공급능력 확대 속도와 FCF 현금지출 기간을 직접 제한한다.",
+        "mechanism_scope_id": "000660:MEMORY:YONGIN_600TN_CAPEX_EXECUTION_HORIZON",
+        "normalized_object": "용인 600조원 투자의 2033년 이후 단계 집행 기간",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "investment continuing after 2033",
+        "predicate": "용인 클러스터의 2033년 이정표는 네 번째 팹의 첫 번째 클린룸 완공이며 나머지 클린룸·생산 설비·장비를 포함한 총 600조원 투자는 2033년 이후에도 이어진다",
+        "predicate_family": "MEMORY_CAPEX_EXECUTION_HORIZON",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPEX",
+          "CAPACITY",
+          "YONGIN"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "YONGIN_600TN_CAPEX_EXECUTION_HORIZON",
+        "question_family_tags": [
+          "YONGIN_600TN_CAPEX_EXECUTION_HORIZON",
+          "CAPEX_TIMING",
+          "FCF_CAPEX_COUNTER",
+          "FIRST_CLEANROOM_MILESTONE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "SK하이닉스 용인 클러스터 600조원 투자 집행 기간",
+        "subject_id": "000660:MEMORY:YONGIN_600TN_CAPEX_EXECUTION_HORIZON",
+        "unit": "KRW trillion",
+        "value": 600
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "서남권 400조원 메모리 전공정 클러스터는 확정된 일괄 집행안이 아니라 준비와 집행이 단계적인 계획이다. 구체적인 규모와 일정은 수요에 따라 달라질 수 있고 향후 이사회 승인을 거쳐 확정되므로, 이를 고정된 생산능력 또는 확정 현금지출 일정으로 해석할 수 없다.",
+        "exact_quote": "서남권 클러스터는 이천, 청주, 용인에 이은 새로운 생산 거점으로, 메모리 생산(전공정)을 중심으로 조성할 계획입니다. 부지 확보와 팹 건설, 생산 설비 도입 등을 포함해 총 400조 원이 단계적으로 투입될 예정입니다. 다만 부지 선정과 인프라 구축에는 오랜 시간이 걸리는 만큼, 준비는 지금부터 착수하지만 집행은 단계적으로 이뤄질 계획입니다. 용인에 이어 생산 능력의 공백이 생기지 않도록 일정을 준비하고 있으며, 구체적인 규모와 일정은 수요 상황에 따라 달라질 수 있고 향후 이사회 승인 등을 거쳐 단계적으로 확정해 나갈 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "400조원 공급투자의 규모·시점이 수요와 이사회 승인에 조건부라는 사실은 생산능력 및 FCF 전망에서 확정 계획과 조건부 계획을 구분하게 한다.",
+        "mechanism_scope_id": "000660:MEMORY:SOUTHWEST_CLUSTER_CAPEX_CONDITIONALITY",
+        "normalized_object": "서남권 400조원 메모리 클러스터의 수요·이사회 승인 조건",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "long-term phased plan announced 2026-06-29; exact schedule not fixed",
+        "predicate": "서남권 메모리 전공정 클러스터의 400조원 투자는 단계적 계획이며 구체 규모·일정은 수요 상황에 따라 변동할 수 있고 향후 이사회 승인을 거쳐 확정된다",
+        "predicate_family": "MEMORY_CAPEX_DEMAND_AND_APPROVAL_CONDITIONALITY",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPEX",
+          "CAPACITY",
+          "SOUTHWEST_CLUSTER"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "SOUTHWEST_MEMORY_CLUSTER_CAPEX_CONDITIONALITY",
+        "question_family_tags": [
+          "SOUTHWEST_MEMORY_CLUSTER_CAPEX_CONDITIONALITY",
+          "CAPEX_CONDITIONALITY",
+          "BOARD_APPROVAL",
+          "DEMAND_LINKED_EXECUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "SK하이닉스 서남권 메모리 클러스터 400조원 계획의 조건",
+        "subject_id": "000660:MEMORY:SOUTHWEST_CLUSTER_CAPEX_CONDITIONALITY",
+        "unit": "KRW trillion",
+        "value": 400
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "economic_mechanism": "SK하이닉스는 1,100조원 장기 메모리 투자를 수요 가시성에 맞춰 단계 집행하고 재원도 집행 시점에 맞춰 조달할 계획이다. 기본 재원은 영업이익에서 창출되는 현금흐름이지만, 시장 상황에 따라 조달 규모·시점을 조절하고 글로벌 파트너 협력 등 다양한 방식도 검토한다. 따라서 투자 재원이 이미 전액 확보됐거나 외부 파트너 조달이 확정됐다고 볼 수 없으며, 향후 영업현금흐름과 FCF 전환은 투자 집행에 직접 노출된다.",
+        "exact_quote": "이번 투자는 한 번에 집행되는 것이 아니라 수요 가시성에 맞춰 장기간에 걸쳐 단계적으로 이뤄집니다. 따라서 재원 역시 한꺼번에 마련하는 것이 아니라, 집행 시점에 맞춰 단계적으로 조달해 나가게 됩니다. 기본적으로는 회사의 영업이익에서 창출되는 현금흐름을 바탕으로 하되, 투자 원칙(CapEx Discipline)에 입각해 시장 상황을 살펴가며 조달의 규모와 시점을 유연하게 조절해 나가겠습니다. 이 과정에서 글로벌 파트너들과의 협력을 비롯해 다양한 조달 방안을 함께 검토하고 있으며, 구체적인 방식과 조건은 투자 집행 단계에 맞춰 확정해 나갈 계획입니다. 이러한 원칙 위에서 안정적이고 지속 가능한 투자를 이어가겠습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "대규모 메모리 투자 재원을 영업이익 창출 현금흐름에 두고 추가 조달 조건을 미확정으로 남긴 정책은 향후 FCF 전환과 자금조달 위험을 직접 규정한다.",
+        "mechanism_scope_id": "000660:MEMORY:LONG_TERM_CAPEX_FUNDING_AND_PACING",
+        "normalized_object": "1,100조원 메모리 투자의 현금흐름 기반 단계 조달과 미확정 추가 재원",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "long-term investment plan announced 2026-06-29; financing terms to be set at execution stages",
+        "predicate": "SK하이닉스는 1,100조원 장기 투자를 수요 가시성에 맞춰 단계적으로 집행·조달하고 영업이익 창출 현금흐름을 기본 재원으로 삼되 글로벌 파트너 협력 등 추가 조달 방안을 검토한다",
+        "predicate_family": "MEMORY_CAPEX_FUNDING_AND_PACING",
+        "primitive_tags": [
+          "MEMORY",
+          "CAPEX",
+          "CASH_FLOW",
+          "FUNDING"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "LONG_TERM_MEMORY_CAPEX_FUNDING_AND_PACING",
+        "question_family_tags": [
+          "LONG_TERM_MEMORY_CAPEX_FUNDING_AND_PACING",
+          "OPERATING_CASH_FLOW",
+          "CAPEX_DISCIPLINE",
+          "FUNDING_CONDITIONALITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1,100조원 장기 메모리 투자 재원과 조달 시점",
+        "subject_id": "000660:MEMORY:LONG_TERM_CAPEX_FUNDING_AND_PACING",
+        "unit": "qualitative funding policy",
+        "value": "phased demand-visibility-linked funding; operating-profit-generated cash flow as base; financing size and timing flexible; partner and other methods under review with terms unresolved"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "economic_mechanism": "카운터포인트리서치의 2025년 출하·매출 기준 점유율은 SK하이닉스가 HBM 시장 성장에서 실제로 차지한 수익화 위치를 정량화한다. 두 수치는 각각 다른 분기와 기준이므로 하나의 동일 지표로 합치지 않는다.",
+        "exact_quote": "카운터포인트리서치에 따르면 SK하이닉스는 2025년 2분기 기준 HBM 출하량 점유율 62%로 1위, 3분기 매출 기준으로도 57%로 과점적 지위를 유지하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "목표 기업의 실제 HBM 출하·매출 점유율은 산업 성장의 회사 매출 전환 정도를 직접 제약한다.",
+        "mechanism_scope_id": "000660:HBM:2025_SHARE_POSITION",
+        "normalized_object": "SK하이닉스 2025년 HBM 출하량·매출 기준 점유율",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q2 shipment share and 2025-Q3 revenue share",
+        "predicate": "SK하이닉스의 HBM 점유율은 2025년 2분기 출하량 기준 62%, 3분기 매출 기준 57%로 제시됐다",
+        "predicate_family": "SKHYNIX_HBM_SHARE_ACTUAL_2025",
+        "primitive_tags": [
+          "HBM",
+          "MARKET_SHARE",
+          "REVENUE_CONVERSION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SKHYNIX_HBM_SHARE_ACTUAL_2025",
+        "question_family_tags": [
+          "HBM_MARKET_SHARE",
+          "SHIPMENT_SHARE",
+          "REVENUE_SHARE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2025년 HBM 출하·매출 점유율",
+        "subject_id": "000660:HBM:2025_SHARE_POSITION",
+        "unit": "% market share by shipments and revenue",
+        "value": "2025-Q2 shipment share 62%; 2025-Q3 revenue share 57%"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "SK하이닉스가 2026년 HBM 공급에 대한 핵심고객과의 논의를 완료했다는 발표는 다음 해 물량 계획과 고객 일정이 조율된 공급 가시성을 보여준다. 원문은 체결 계약·확정 물량·가격·취소 조항을 공개하지 않았으므로 구매의무로 확대하지 않는다.",
+        "exact_quote": "Meanwhile, the company has completed discussions with key customers regarding HBM supply for next year.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "핵심고객과의 차년도 HBM 공급 논의 완료는 수요·물량 가시성을 회사 원문으로 보완하지만 계약 체결로 해석하지 않는다.",
+        "mechanism_scope_id": "000660:HBM:FY2026_KEY_CUSTOMER_SUPPLY_DISCUSSIONS",
+        "normalized_object": "2026년 HBM 핵심고객 공급 논의 상태",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 supply discussed as of 2025-10-29",
+        "predicate": "SK하이닉스는 핵심고객과 2026년 HBM 공급에 대한 논의를 완료했다",
+        "predicate_family": "HBM_KEY_CUSTOMER_SUPPLY_DISCUSSIONS_COMPLETED",
+        "primitive_tags": [
+          "HBM",
+          "CUSTOMER_DISCUSSION",
+          "SUPPLY_VISIBILITY"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_2026_KEY_CUSTOMER_SUPPLY_DISCUSSIONS",
+        "question_family_tags": [
+          "HBM_SUPPLY_VISIBILITY",
+          "KEY_CUSTOMER_DISCUSSION",
+          "NON_BINDING_ALLOCATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "SK하이닉스 2026년 HBM 핵심고객 공급 논의 완료",
+        "subject_id": "000660:HBM:FY2026_KEY_CUSTOMER_SUPPLY_DISCUSSIONS",
+        "unit": "qualitative non-binding supply-discussion status",
+        "value": "FY2026 HBM supply discussions with key customers completed; no executed contract terms stated"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "AI 메모리 수요 급증 속에서 회사가 FY2026 전체 DRAM 생산량에 대한 고객 수요를 이미 확보했다고 밝힌 점은 예정 캐파의 수요 커버리지와 공급 타이트함을 보여준다. 원문은 DRAM과 NAND를 함께 언급했으며, 이 fact는 C06 범위의 DRAM 부분만 인코딩하고 계약·가격·구매의무를 추론하지 않는다.",
+        "exact_quote": "Furthermore, amid surging demand for AI memory, the company has already secured full customer demand for its entire DRAM and NAND production for next year.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "FY2026 DRAM 예정 생산량의 수요 커버리지를 회사가 직접 밝혀 매출 가시성과 공급 제약 메커니즘을 보완한다.",
+        "mechanism_scope_id": "000660:DRAM:FY2026_FULL_PRODUCTION_DEMAND_COVERAGE",
+        "normalized_object": "FY2026 DRAM 전체 생산량의 고객 수요 커버리지",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 outlook stated 2025-10-29",
+        "predicate": "SK하이닉스는 FY2026 전체 DRAM 생산량에 대한 고객 수요를 이미 확보했다고 밝혔다",
+        "predicate_family": "DRAM_FULL_PRODUCTION_DEMAND_COVERAGE",
+        "primitive_tags": [
+          "DRAM",
+          "DEMAND_COVERAGE",
+          "CAPACITY_SCARCITY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_FULL_PRODUCTION_DEMAND_COVERAGE_FY2026",
+        "question_family_tags": [
+          "DRAM_DEMAND_COVERAGE",
+          "FULL_PRODUCTION_DEMAND",
+          "FY2026_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "SK하이닉스 FY2026 DRAM 전체 생산량 고객 수요 확보",
+        "subject_id": "000660:DRAM:FY2026_FULL_PRODUCTION_DEMAND_COVERAGE",
+        "unit": "qualitative annual production-demand coverage",
+        "value": "full customer demand secured for entire FY2026 DRAM production; no contract terms stated"
+      }
+    ],
+    "unresolved_document_ids": [
+      "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+      "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+      "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+      "SGDOC-05b7a9d03e5a17bb237f32fa",
+      "SGDOC-2585d63d70d2e243b822c981",
+      "SGDOC-3051d060ade5ba704c18da64",
+      "SGDOC-3bc4d865270a1520d336d731",
+      "SGDOC-c6b7e864fbcb27a49bbae8d8"
+    ],
+    "unresolved_research_notes": [
+      "v8 scenario-role atomic reassessment 대상 8개 문서에서 12-fact page limit에 도달했다. 이 page와 중복되지 않는 invalidated current-lineage material facts가 남아 있어 continuation이 필요하다."
+    ]
+  },
+  "payload_hash": "361c93877ec78c82aee8e18b2f9bb8825da31024b8450da0420d20d4c7289250",
+  "production_score_authority": false,
+  "prompt_hash": "0d7d08acdbb3f9701fd6c8b52732e4aace0999a9c6eb17b5d70c68566508ff56",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e6d69bae1c44df418509fd44c70289a03ef382169336ae57a1b52b7cd04eaf37",
+  "response_id": "COLLABRESP-0e09a49b719589df76dda0c9dfc1fcb08e95dbab3a78fad0a4fddedcb5eab077",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

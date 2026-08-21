@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "af6a09607a327476ccec9812ec08734f108bccfa93c2358405b7e196421354fb",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5087480df255fd8fd2540e62",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.96,
+        "rationale": "삼성전자 공식 HBM4 양산 출하 원문으로 직접 fetch 가능하며, HBM4 상용화와 2026년 HBM 매출 방향을 원문에서 검증할 수 있는 route다."
+      },
+      {
+        "candidate_id": "SGCAND-a2df8d6c22c768be092424b5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "삼성전자 issuer 원문이 아닌 제3자·타사 또는 일반 검색 경로이며, 요청된 source-family provenance와 target-direct full-document route를 충족하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-9da08a3011b9cc890396ea78",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "삼성전자 issuer 원문이 아닌 제3자·타사 또는 일반 검색 경로이며, 요청된 source-family provenance와 target-direct full-document route를 충족하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-e0871ed79c8c1c0087d626fc",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.96,
+        "rationale": "삼성 반도체 뉴스룸의 HBM4 양산 출하 원문 route로, 현재 HBM 상용화와 수요·매출 설명을 full fetch로 검증할 수 있다."
+      },
+      {
+        "candidate_id": "SGCAND-0ae8c9311687f29949d838b6",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.88,
+        "rationale": "삼성전자 공식 HBM4E 샘플 출하 원문으로, HBM4 공급 확대와 고객 평가의 현재 상태를 full fetch로 확인할 수 있는 route다."
+      },
+      {
+        "candidate_id": "SGCAND-572932e3c10ba9754a21333d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "삼성전자 issuer 원문이 아닌 제3자·타사 또는 일반 검색 경로이며, 요청된 source-family provenance와 target-direct full-document route를 충족하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-2073ed771d551baf9a8bea6a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "삼성전자 issuer 원문이 아닌 제3자·타사 또는 일반 검색 경로이며, 요청된 source-family provenance와 target-direct full-document route를 충족하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-c97db5206376f210cf2703c9",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.96,
+        "rationale": "삼성전자 반도체 공식 HBM4 양산 출하 페이지로, 현재 HBM 상용화와 수요·매출 설명을 검증할 수 있는 직접 route다."
+      },
+      {
+        "candidate_id": "SGCAND-2bf80ace1b28307abc31d663",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.96,
+        "rationale": "삼성전자 공식 비즈니스 페이지이며 검색 메타상 2026년 HBM 매출 증가 설명이 있어, 원문에서 발행일과 정량 안내를 검증할 가치가 있다."
+      },
+      {
+        "candidate_id": "SGCAND-9f76e2f92b4c0dc2ab5eb263",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "삼성전자 issuer 원문이 아닌 제3자·타사 또는 일반 검색 경로이며, 요청된 source-family provenance와 target-direct full-document route를 충족하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-76bf963e8e99c2eb383b5c61",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "삼성전자 issuer 원문이 아닌 제3자·타사 또는 일반 검색 경로이며, 요청된 source-family provenance와 target-direct full-document route를 충족하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-d754888cb94b39fc2883d551",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.88,
+        "rationale": "삼성전자 글로벌 뉴스룸의 HBM4 양산 출하 원문으로, 현재 HBM 상용화·판매 방향을 검증할 수 있는 직접 route다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "published_at 메타가 비어 있어 material 후보는 full fetch 단계에서 원문 게시일이 as_of_date=2026-07-12 이전인지 검증해야 한다.",
+      "snippet은 discovery metadata일 뿐이며 material 후보도 원문 fetch·target 귀속·exact quote 검증 전에는 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "090c558329ff7ddbf879a2a9b867385eb76b2221538509920a3ead47d76221b4",
+  "production_score_authority": false,
+  "prompt_hash": "ccc7a4282094b95d3efa460ddb30452d229ffb1568227b3397f05d533135535e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3c8ae36a00186028a34eb865fd5ac89a3596c0d106ada4bf854d976d2ebae591",
+  "response_id": "COLLABRESP-0d89cad429c5002717defe6ca20c3bb6df9e4f18d266e4db1b3bbf0ce9877d11",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

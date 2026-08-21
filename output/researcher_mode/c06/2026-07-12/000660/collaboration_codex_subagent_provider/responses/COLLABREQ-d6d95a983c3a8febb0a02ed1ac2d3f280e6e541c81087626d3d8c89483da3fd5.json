@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "ba8068018073e89d464685247f5b32e1314f5919c0de54ffb7d2f0603497f0ec",
+  "payload": {
+    "allowed_range": [
+      3.3,
+      4.2
+    ],
+    "anchor_comparisons": [
+      "현재는 HBM4 양산·고객 성능요구·HBM 매출 성장·공급 논의가 명시돼 1.75~2.25점 POSITIVE MEDIUM anchor보다 정보량이 많다.",
+      "4.75~5.0점 POSITIVE STRONG anchor와 비교하면 긍정 사실이 동일 issuer independence group에 집중되고 계약·HBM 단독 재무가 빠져 완전한 상단에는 못 미친다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-9e6b13a8d7ba3ffb86d2467e",
+      "EFACT-a943dca289563cc8583d4b78",
+      "EFACT-b649fb636cda41346a53c1ad",
+      "EFACT-cd10742dea3f5402040d6cbc",
+      "EFACT-dcd0816b6ba04c76c69e7a4b",
+      "EFACT-e2b5d15b4400874c34e4f2a2",
+      "EFACT-fc43dd3418fa06939957246d"
+    ],
+    "disagreements": [
+      "issuer 공식 발표 여러 건을 서로 완전히 독립된 확인으로 보지 않는다. 동일 independence group 내 반복 확인으로 보고 공시·독립 자료의 한계를 별도 반영한다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-09ab96433f8087166845bf25"
+    ],
+    "proposed_points": 3.8,
+    "rationale": "issuer 자료에서 HBM4 대규모 생산, 고객 성능요구 충족과 양산 진입, FY2025 HBM 매출 2배 이상 성장, FY2026 핵심고객 공급 논의 완료가 실행·품질·매출·고객 축으로 일치한다. 다만 네 positive facts가 같은 issuer 계열에 집중되고, 실적자료는 잠정·비검증이며 HBM 단독 계약조건과 재무 분해가 없다. 따라서 정보 기반은 강하지만 완전 독립 검증 수준은 아니다.",
+    "support_fact_ids": [
+      "EFACT-13ebae852f21b9bb49127d55",
+      "EFACT-a74dac2b9e727f8592e52c41",
+      "EFACT-b74e88a671a1247b0ce230d5",
+      "EFACT-f44ff4e221eeb141ad3a0cbf"
+    ],
+    "why_not_higher": "고객·계약 원문, HBM 단독 재무, 독립 인증 세부가 없고 잠정·비검증 자료와 브로커 내부 불일치가 있어 5점에 근접할 수 없다.",
+    "why_not_lower": "제품 양산, 고객 요구 충족, 실제 HBM 매출 성장, 다음 해 공급 논의가 구체적인 현재 facts로 모두 존재해 단순 전망 위주의 medium 사례보다 강하다."
+  },
+  "payload_hash": "cdf15e7d63e02c44e5499d3074c405cd5ab3b4568cc274956fe668c67cb85cef",
+  "production_score_authority": false,
+  "prompt_hash": "f304c51cb5fd027d4507318c8b057f0ad3c169e8be5b12663835767d911703ad",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d6d95a983c3a8febb0a02ed1ac2d3f280e6e541c81087626d3d8c89483da3fd5",
+  "response_id": "COLLABRESP-31b6b111e2f7b026a174373b8338d0e75dc5e303f966da183adb7db7a1b0b007",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

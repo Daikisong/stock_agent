@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "3fd60831c285c3834ee1a3ac4a7f97db2c48dd815af8c6808eafbee29e0c6eaa",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e1ee451a87a80fa971feabd3",
+        "rationale": "PwC 보고서는 글로벌 반도체 수요·공급망·기술 일반론이며 삼성 언급도 혁신 기업의 예시에 그쳐 삼성전자 HBM의 계약·출하·가격·수율·현금전환 상태를 직접 갱신하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "80781007ce58600ca0d37e94f298d2789e18acc3a8f1fce297d12309059cafbb",
+  "production_score_authority": false,
+  "prompt_hash": "e18a9e4f31fce5a81174cbe4492004303f19a335052af35123285901e6d98475",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6b030d5cbac8d94ee32294b0c368194ee6f1a5bd4b30f76e867c5e3b41b0f875",
+  "response_id": "COLLABRESP-16bdd5abe99c725dd65377906d4e020b68a213e626a89951b92ffdfebca9209a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

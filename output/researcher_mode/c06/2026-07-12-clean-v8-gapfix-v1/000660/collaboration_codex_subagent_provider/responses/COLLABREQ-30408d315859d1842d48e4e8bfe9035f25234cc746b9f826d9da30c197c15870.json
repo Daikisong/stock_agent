@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "rationale": "Independent start-to-finish coverage review of the supplied transport chunk found no distinct target-wide current-objective fact omitted from the 11 accepted facts embedded in the coverage-audit context. The remaining target mentions are ETF composition or marketing, general semiconductor/memory industry background, adjacent-company material, chart labels without a distinct reliable target economic assertion, or the same valuation, pricing, HBM4, earnings-estimate and cycle meanings already accepted. Compound accepted statements were not split into cosmetic duplicates. No broker or third-party statement was promoted into an issuer actual, issuer guidance, signed HBM contract, or HBM-only economic attribution.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "ef47c0272675b327b36a4f5b2dcb2f26dda6dd9266fa682edc7066e4a2670d59",
+  "production_score_authority": false,
+  "prompt_hash": "d3850d01c5afd3b8b16936e9563005fcfa956b640a67e3230f36fe8c19812f46",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-30408d315859d1842d48e4e8bfe9035f25234cc746b9f826d9da30c197c15870",
+  "response_id": "COLLABRESP-d4d0f676ee152a929f957276e95a7d279140e052f627bc679c55e8b456e6b91d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

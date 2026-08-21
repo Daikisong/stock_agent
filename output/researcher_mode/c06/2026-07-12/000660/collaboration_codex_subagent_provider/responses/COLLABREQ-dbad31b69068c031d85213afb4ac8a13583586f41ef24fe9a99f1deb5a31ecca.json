@@ -1,0 +1,52 @@
+{
+  "output_schema_hash": "2d9854ad3e4dc0a54f039c283be4adf9036f2cb73b0b111afaa1ac77b2f36903",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-72a870db4cffe02bfe1453ea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "This third-party broker download is not an issuer earnings release, issuer presentation, or cash-flow source in the requested families."
+      },
+      {
+        "candidate_id": "SGCAND-95d484dd26aaf34c9ce14628",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "A third-party 2025 second-quarter result article is stale and not an issuer-owned requested-family source."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Neither candidate is an eligible current SK hynix issuer earnings release, presentation, or cash-flow source."
+    ]
+  },
+  "payload_hash": "a9ea6c1c60282d1398271b6e997e5905988ccc1e0b1b8f4d0a70a205da72edfb",
+  "production_score_authority": false,
+  "prompt_hash": "ece960632ded86b71e9f31e6f297e6153c26ffcbc1a0f101994617208ea0fdec",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-dbad31b69068c031d85213afb4ac8a13583586f41ef24fe9a99f1deb5a31ecca",
+  "response_id": "COLLABRESP-ac9a8e939ef2845191953106365ac9eacedb923b8fa69819d7fd64166487e60f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

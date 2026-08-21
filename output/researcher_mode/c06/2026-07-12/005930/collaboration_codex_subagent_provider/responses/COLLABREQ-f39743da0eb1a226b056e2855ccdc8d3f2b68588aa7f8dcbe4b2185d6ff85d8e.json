@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-2b8132676540d4f3029a74af",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This broad bi-weekly market minutes document only mentions Samsung Electronics market performance and is not the requested equity report."
+      },
+      {
+        "candidate_id": "SGCAND-d58f87f1ac347337c39a8008",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The prospectus/table-of-contents PDF is unrelated to target HBM economics."
+      },
+      {
+        "candidate_id": "SGCAND-9bea7e24dd0c6dfe43bdbbf1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The Samsung Electronics and SK hynix leveraged-ETF report addresses trading-flow effects, not HBM capacity, contracts, or the exact requested report."
+      },
+      {
+        "candidate_id": "SGCAND-c2cc23f7c33e0d4c0c116b7b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The battery-equipment report is unrelated to Samsung Electronics memory."
+      },
+      {
+        "candidate_id": "SGCAND-bd05960ebc59e701c5a5af4e",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The transportation monthly research PDF is the wrong sector and issuer scope."
+      },
+      {
+        "candidate_id": "SGCAND-ff4dd13669fc76021a04c507",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The 2022 multi-sector forum book is not the specified current Samsung Electronics report."
+      },
+      {
+        "candidate_id": "SGCAND-59a9bdba7062925ca2fbd9f2",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This corrected offering document is not equity research and has no target mechanism relevance."
+      },
+      {
+        "candidate_id": "SGCAND-ef6073aa0dc9b9f128ee1d92",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This Mirae-hosted offering document does not address the target company or requested report."
+      },
+      {
+        "candidate_id": "SGCAND-0ad6c1c1e03c0a1953d47d7d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The prospectus contents are the wrong document class and subject."
+      },
+      {
+        "candidate_id": "SGCAND-c01ae025109e71069eb92fd8",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The US defense-industry report is unrelated to Samsung memory."
+      },
+      {
+        "candidate_id": "SGCAND-654851fd34235ff1b0ec7f16",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "The generic bi-weekly findings document concerns other companies and workforce themes, not the requested target report."
+      },
+      {
+        "candidate_id": "SGCAND-8a28fa774f6a4034888e6671",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This prospectus/table-of-contents document is unrelated to Samsung Electronics HBM research."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Official Mirae archive provenance was present, but every candidate in this partition was a wrong report, sector, or document class; the exact report remains unfound."
+    ]
+  },
+  "payload_hash": "a0ff321a1692415a37177e21af6382e20fe722eda3da23a7644561345b9a1691",
+  "production_score_authority": false,
+  "prompt_hash": "b52c34a206628d44f908c87aa0451749a4022d842eab5a78b548753436272c48",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f39743da0eb1a226b056e2855ccdc8d3f2b68588aa7f8dcbe4b2185d6ff85d8e",
+  "response_id": "COLLABRESP-fb6613c9091ed1d8ddad7d9a2d317b65c58f1d73a509916a91eb7f3b7f9bf0d0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

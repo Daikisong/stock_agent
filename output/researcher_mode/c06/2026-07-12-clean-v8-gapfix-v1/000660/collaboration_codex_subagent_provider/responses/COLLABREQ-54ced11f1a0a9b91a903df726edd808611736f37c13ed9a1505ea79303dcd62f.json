@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "d10e59b1c3d217fd2175a9c0d5a9e1214edfcfdac711552321ad54eb4793b073",
+  "payload": {
+    "allowed_range": [
+      3.9,
+      5.2
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df의 4.32~5.52점 구간과 비교하면 100% 메모리 가동, DRAM actual 성장과 HBM 가격·제품 실행은 재평가 여지에 부합하지만 HBM 단독 earnings bridge가 없어 중간에 둔다.",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b의 2.828571~4.028571점보다 actual 운영 개선과 current valuation 관찰값은 강하지만, 고객·재고·재공품 위험 때문에 격차는 제한된다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c07ed486e6d67134d19d6951",
+      "EFACT-c418009dc8a6493dd0a098b4"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 4.6,
+    "rationale": "100% 메모리 가동, DRAM actual 성장, HBM 가격·제품·고객 실행은 이익 질 개선을 통한 재평가 여지를 지지한다. 다만 current valuation과 peer band는 관찰·문맥 자료일 뿐 HBM 단독 earnings bridge가 아니며, 고객 집중과 재고평가·재공품 손실 위험이 multiple 지속성을 낮출 수 있어 중간 범위로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "연결·DRAM actual을 HBM 단독 earnings로 변환할 수 없고, peer band는 adjacent 문맥이며 고객 집중·재고평가·재공품 손실 위험이 multiple 지속성을 제한한다.",
+    "why_not_lower": "100% 가동, DRAM actual 성장, HBM 가격·제품·고객 실행과 current valuation 관찰 plane이 운영 개선과 재평가 가능성을 동시에 지지한다."
+  },
+  "payload_hash": "3bc4291497bf1b7e4423629c102c83923b484ae8f29f2082371d4f9e4258304a",
+  "production_score_authority": false,
+  "prompt_hash": "6c1d9c2755f2c0e44721695cb69698245c1ba38398baad3715c8955b7d8c4941",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-54ced11f1a0a9b91a903df726edd808611736f37c13ed9a1505ea79303dcd62f",
+  "response_id": "COLLABRESP-329c8a886358e6b2f44d7327441c50b8e174d758f11befbd6529bf2e59bcac7d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

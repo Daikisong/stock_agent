@@ -1,0 +1,121 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+        "rationale": "v9 final continuation에서 prior 3건을 보존하고 distinct remainder 0건을 추가했다. c6b7 잠정실적 시점 한계 외에는 prior36과 중복되지 않는 target-wide current-objective fact가 남지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "rationale": "v9 final continuation에서 prior 6건을 보존하고 distinct remainder 0건을 추가했다. c6b7 잠정실적 시점 한계 외에는 prior36과 중복되지 않는 target-wide current-objective fact가 남지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "rationale": "v9 final continuation에서 prior 6건을 보존하고 distinct remainder 0건을 추가했다. c6b7 잠정실적 시점 한계 외에는 prior36과 중복되지 않는 target-wide current-objective fact가 남지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-05b7a9d03e5a17bb237f32fa",
+        "rationale": "v9 final continuation에서 prior 1건을 보존하고 distinct remainder 0건을 추가했다. c6b7 잠정실적 시점 한계 외에는 prior36과 중복되지 않는 target-wide current-objective fact가 남지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-2585d63d70d2e243b822c981",
+        "rationale": "v9 final continuation에서 prior 3건을 보존하고 distinct remainder 0건을 추가했다. c6b7 잠정실적 시점 한계 외에는 prior36과 중복되지 않는 target-wide current-objective fact가 남지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-3051d060ade5ba704c18da64",
+        "rationale": "v9 final continuation에서 prior 5건을 보존하고 distinct remainder 0건을 추가했다. c6b7 잠정실적 시점 한계 외에는 prior36과 중복되지 않는 target-wide current-objective fact가 남지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-3bc4d865270a1520d336d731",
+        "rationale": "v9 final continuation에서 prior 6건을 보존하고 distinct remainder 0건을 추가했다. c6b7 잠정실적 시점 한계 외에는 prior36과 중복되지 않는 target-wide current-objective fact가 남지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "rationale": "v9 final continuation에서 prior 6건을 보존하고 distinct remainder 1건을 추가했다. c6b7 잠정실적 시점 한계 외에는 prior36과 중복되지 않는 target-wide current-objective fact가 남지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-c6b7e864fbcb27a49bbae8d8",
+        "economic_mechanism": "회사는 이 자료의 3Q25 실적이 2025년 10월 29일 기준 잠정치이며 나중에도 유효하다고 가정하지 말라고 명시했다. 이는 같은 문서의 HBM·AI 서버 기여 실적을 최종 확정 공시로 대체할 수 없게 하는 증거 확실성 한계다.",
+        "exact_quote": "※ Please note that the financial results discussed herein are preliminary and speak only as of October 29, 2025. Readers should not assume that this information remains operative at a later time.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "잠정 실적과 시점 제약은 같은 문서의 HBM·서버 메모리 기여·이익 숫자의 확정성을 직접 제한한다.",
+        "mechanism_scope_id": "000660:MEMORY:Q3_2025_PRELIMINARY_RESULT_LIMIT",
+        "normalized_object": "3Q25 실적의 잠정성·시점 한계",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "3Q2025 results released 2025-10-29",
+        "predicate": "SK하이닉스는 3Q25 실적이 2025년 10월 29일 기준 잠정 정보이며 후일에도 유효하다고 가정하지 말라고 명시했다",
+        "predicate_family": "PRELIMINARY_RESULTS_POINT_IN_TIME_LIMIT",
+        "primitive_tags": [
+          "EARNINGS",
+          "PRELIMINARY",
+          "INFORMATION_QUALITY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "Q3_2025_PRELIMINARY_RESULT_LIMIT",
+        "question_family_tags": [
+          "PRELIMINARY_RESULTS",
+          "POINT_IN_TIME_LIMIT",
+          "SOURCE_QUALITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q25 실적의 잠정성 한계",
+        "subject_id": "000660:MEMORY:Q3_2025_PRELIMINARY_RESULT_LIMIT",
+        "unit": "source-quality limitation",
+        "value": "preliminary and operative only as of 2025-10-29; later operability must not be assumed"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "bdff858e8dce095a8f77439b4122d871547d871c6b4cf82bf86c84f7a94f2d88",
+  "production_score_authority": false,
+  "prompt_hash": "9c0a10b09dd155d74d43ed2c54da323332ad9a6414bfb3f8ecb33e5077d4fbe6",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-00c2ab2b0548e7cbf9a56969203924f4332390fba2666e468fcaa40ed0b2b71c",
+  "response_id": "COLLABRESP-d52cf219e6f9aaae2747fc60ac35947df20012c36f863b7ac0603dbd6fc432ba",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

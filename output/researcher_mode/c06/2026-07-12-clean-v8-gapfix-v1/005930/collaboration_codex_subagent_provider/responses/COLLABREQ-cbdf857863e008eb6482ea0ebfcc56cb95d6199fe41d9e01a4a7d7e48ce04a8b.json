@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f6f16d869b0b4a58596f6442",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Grace CPU HPC demonstration 세션으로 Samsung HBM 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-223c369330beab596ec226b3",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA RTX 5070 소비자 GPU 공식 페이지로 Samsung HBM relationship scope가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-bed5998bd458f0ccce936728",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Merlin 추천모델 교육 세션으로 Samsung HBM qualification·supply와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-44701536e59cc80c0fe62b15",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA cookie policy로 target relationship과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-a63ed36b537ef9df27294fd2",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA C++ parallelism 세션으로 Samsung HBM 관계를 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-85a8e0094de2c06e9232a556",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.08,
+        "rationale": "NVIDIA GB300 NVL72 공식 제품 페이지는 current AI platform 원문이지만 supplied metadata에 Samsung HBM supplier·qualification·supply status가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-e279df0bb2b7ba6e3abf4735",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Tegra 4 architecture 원문으로 과거 mobile GPU이며 Samsung HBM3E/HBM4 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-923bbc28c23d061eacd2a042",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Quadro RTX 6000 공식 자료로 visualization GPU이며 Samsung HBM 관계가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-21de180276d901c5c10ee9bc",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA-hosted eBay inference 세션으로 Samsung HBM relationship scope와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-dfd186cb25a37677ac8888a0",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA DGX A100 공식 datasheet로 과거 시스템 자료이며 Samsung memory supplier 또는 current HBM 관계를 명시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-d65c0ee8fb3a2ef2b6c45c54",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Tesla P100 공식 자료는 HBM2 기술을 설명하지만 Samsung 공급 관계 또는 current HBM3E/HBM4 상태와 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-4a052265e0dd07c0aa2292cc",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.05,
+        "rationale": "NVIDIA Grace CPU 공식 페이지는 AI infrastructure 맥락이지만 Samsung HBM relationship을 명시하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "NVIDIA-owned AI platform pages도 Samsung supplier 명시가 없으면 target relationship 경로가 아니다. material 0은 이 roster의 분류이며 source absence가 아니다."
+    ]
+  },
+  "payload_hash": "4c0bddae66c45c96a3b274fac1015b43c75d2da3d5b0b6bf52d957fce6236b91",
+  "production_score_authority": false,
+  "prompt_hash": "4a6b37de5263a6a6f017f2bd66ccb00779c653b8d7d2cd3523d8ce7b9cc1b6df",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cbdf857863e008eb6482ea0ebfcc56cb95d6199fe41d9e01a4a7d7e48ce04a8b",
+  "response_id": "COLLABRESP-e1d80eb208024ba3a9863c0fb538b127c9566b90f85d5a1de60f9e1e157f101e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

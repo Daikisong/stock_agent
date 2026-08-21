@@ -1,0 +1,53 @@
+{
+  "cache_value_hash": "a06e5784ece6494d51f902f20fccf94663d51fad2a79f8ea7581993199792bba",
+  "canonical_url": "https://opendart.fss.or.kr/api/list.json",
+  "content_hash": "bbb25c4d13eee5b6bcec530bc41ee63aa602ddd7905104f29a83cb4632796ff9",
+  "payload": {
+    "list": [
+      {
+        "corp_cls": "Y",
+        "corp_code": "00161383",
+        "corp_name": "한미반도체",
+        "flr_nm": "한미반도체",
+        "rcept_dt": "20260515",
+        "rcept_no": "20260515001572",
+        "report_nm": "분기보고서 (2026.03)",
+        "rm": "",
+        "stock_code": "042700"
+      },
+      {
+        "corp_cls": "Y",
+        "corp_code": "00161383",
+        "corp_name": "한미반도체",
+        "flr_nm": "한미반도체",
+        "rcept_dt": "20260515",
+        "rcept_no": "20260515801795",
+        "report_nm": "기업설명회(IR)개최(안내공시)              ",
+        "rm": "유",
+        "stock_code": "042700"
+      },
+      {
+        "corp_cls": "Y",
+        "corp_code": "00161383",
+        "corp_name": "한미반도체",
+        "flr_nm": "한미반도체",
+        "rcept_dt": "20260515",
+        "rcept_no": "20260515801516",
+        "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+        "rm": "유",
+        "stock_code": "042700"
+      }
+    ],
+    "message": "정상",
+    "page_count": 100,
+    "page_no": 1,
+    "status": "000",
+    "total_count": 3,
+    "total_page": 1
+  },
+  "provider_request_id": "HTTP-bbb25c4d13eee5b6bcec",
+  "request_fingerprint": "262cf38a50ea7d9933c4ec8817e49df083589ee132c31863ea09a10ffb7362ae",
+  "schema_version": "e2r_v5_current_structured_cache_v2",
+  "status_code": 200,
+  "text": null
+}

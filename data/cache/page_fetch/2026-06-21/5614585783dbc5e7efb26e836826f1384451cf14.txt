@@ -1,0 +1,856 @@
+한화 Tech – Telegram
+한화 Tech
+한화 Tech
+한화 Tech
+@hanwhatech
+1.97K
+subscribers
+62
+photos
+7
+files
+1.15K
+links
+Download Telegram
+About
+Blog
+Apps
+Platform
+Join
+한화 Tech
+1.97K subscribers
+한화 Tech
+[한화 김광진/이용욱]
+2025.07.09(수)
+★ 데일리 뉴스 플로우
+▶️
+반도체
+중국, 사막의 데이터 센터에 전력을 공급하기 위한 115,000개의 Nvidia 칩 확보 계획... 구체적 확보 방안은 미공개
+-link:
+https://buly.kr/2fdvyko
+IBM, 새로운 칩과 서버 출시... Power11 시스템, 추론을 위한 AI 배포 단순화 초점
+-link:
+https://buly.kr/1REd70e
+화웨이 Mate 80, Kirin 9030 탑재…20% 성능 향상… 이전 모델과 동일한 7nm 공정 사용 예상
+-link:
+https://buly.kr/APvH8P2
+카운터포인트리서치, 삼성전자·SK하이닉스, 2분기 D램 매출 1위 놓고 '접전 예상'
+-link:
+https://buly.kr/3u3Eih3
+삼성전자, '8세대 D램' 개발 재개...이번엔 '9나노'
+-link:
+https://buly.kr/CLzbnV5
+인텔, 월요일부터 미국과 이스라엘에서 인력 감축 시작…Kiryat Gat 갓 공장 폐쇄 가능성 검토
+-link:
+https://buly.kr/6Bx5ank
+GlobalFoundries, RISC-V CPU 양산 계획... MIPS 인수 후 포트폴리오 통합
+-link:
+https://buly.kr/ESyhhOg
+차세대 Intel 및 AMD CPU에 AIDA64 지원 ... Zen 6은 2026년에 출시 예상
+-link:
+https://buly.kr/74WsUzF
+PSK, 메탈 에처 내년 출시... "단가 100억~180억 예상"
+-link:
+https://buly.kr/9MQj7tc
+▶️
+2차전지
+EU, 'LG엔솔 포함' 6대 전기차 배터리 프로젝트에 1조원↑ 투자
+-link:
+https://buly.kr/AwfXx22
+글로벌 전기차 시장 34% 성장…日은 나홀로 부진
+-link:
+https://buly.kr/5UI3Rdr
+닛산, 중국 공장 생산 전기차 수출 검토... 2026년 말까지 100억 위안 중국에 투자 계획 유지
+-link:
+https://buly.kr/3NIxm6J
+테슬라, 美 첫 LFP 공장 가동 초읽기…K-배터리 전면 재편 압박
+-link:
+https://buly.kr/Chp7l2j
+포스코퓨처엠, 양극재 '무수리튬' 활용 공정 시험생산…"생산성 10% 향상"
+-link:
+https://buly.kr/6tc7OOj
+1~5월 전기車 배터리 양극재 적재량, 전년比 44%↑
+-link:
+https://buly.kr/5UI3XkR
+1~5월 전기車 배터리 음극재 적재량, 전년比 42%↑
+-link:
+https://buly.kr/6tc7OHg
+채널:
+https://t.me/hanwhatech
+Bloomberg.com
+China Wants to Use 115,000 Banned Nvidia Chips to Fulfil Its AI Ambitions
+A Bloomberg analysis of documents and company filings show how China is building giant data centers in the desert to fuel its AI ambitions — and looking to buy 115,000 banned Nvidia chips to power them. Read The Big Take
+371
+views
+edited
+22:11
+한화 Tech
+[한화투자증권 반도체 김광진]
+★ 삼성전자(005930) - 2Q25 잠정실적 리뷰 : 낮았던 기대. 악재 해소에 무게
+Buy(유지) / TP 79,000원(유지)
+-link:
+https://buly.kr/EI3wj46
+▶
+2Q25 잠정실적: 악재를 해소하고 가는 분기
+2Q25 잠정실적은 매출액 74조원(-6% QoQ), 영업이익 4.6조원(-31% QoQ)으로 시장 기대치(영업이익 6.2조원)를 하회하는 실적 기록. 다만, 이미 충분히 낮게 형성되어 있는 주가 수준에서 유추할 수 있듯 분기 실적에 대한 시장의 기대가 그다지 높지 않았으며, 하반기를 앞두고 일회성 비용 등의 악재를 해소하고 간다는 점을 고려하면 실적으로 인한 주가 충격은 제한적일 것으로 판단. 오히려 2Q25 실적을 바닥으로 인식할 가능성
+부문별 영업이익은 DS 0.4조원(메모리 2.9조원, LSI/파운드리 -2.5조원), SDC 0.5조원, MX/NW 2.9조원, VD/가전 0.4조원, 하만 0.3조원으로 추정. MX는 비수기임에도 불구 스마트폰 판매량이 방어되며 당초 예상대비 실적 감익이 크지 않았고, 기타 사업부들도 기대치에 부합했으나 DS 이익이 기대치를 크게 하회
+DS 이익 쇼크의 직접적인 원인은 일회성 비용. 상반기 HBM 출하량(누적 12억 Gb 내외 추정) 저조로 인한 재고 평가 충당금과 중국향 AI 칩 판매 제약에 따른 파운드리 재고 평가 충당금이 발생. 약 1조원 이상의 일회성 비용이 반영된 것으로 추정. 다만 일회성 비용의 효과를 제거하더라도 다소 아쉬운 실적. 디램은 Blended ASP 개선이 +2% 수준으로 전분기 낮은 기저에도 불구 기대 대비 더딘 회복세를 보인 것으로 추정되며, 파운드리 가동률도 저조한 수준이 지속된 것으로 추정되기 때문
+▶
+하반기 좋아질 부분들에 무게를 둘 필요
+지금부터는 지나간 악재보다 하반기 좋아질 수 있는 부분들에 무게를 두는 것이 타당할 때라 판단. 3Q25 컨벤셔널 디램 가격 상승으로 인한 이익 개선이 극대화될 것으로 예상하며, HBM에서도 12단 전환 및 출하량 증가의 효과가 반영되는 첫 분기임을 염두에 둘 필요. 비록 엔비디아향 인증 여부가 여전히 과제이나, 비 엔비디아 진영(AMD, 브로드컴 등)에서의 인증 성과가 확인되기 시작한 점을 고려하면 긍정적 관점에서 바라볼 필요. 파운드리에서도 가동률 상승에 따라 점진적 적자 축소가 진행될 것으로 판단
+▶
+목표주가 7.9만원 유지. 경쟁사와의 밸류 갭 축소 움직임 기대
+투자의견과 목표주가 유지. 여전히 동사에 대해 비관론이 우세하나, 하반기 개선될 실적 모멘텀과 올해 BPS 기준 0.9X 수준에 불과한 낮은 주가 레벨을 고려하면 경쟁사 대비 단기 매력은 더 높을 수 있다고 판단. 경쟁사와의 밸류 갭 축소 움직임 기대
+- 채널 :
+https://t.me/hanwhatech
+상기 내용은 컴플라이언스 승인을 필함
+400
+views
+22:43
+한화 Tech
+[한화투자증권 2차전지/에너지/화학 이용욱]
+★LG화학(051910) - LGES 서프라이즈 제외하면 기대치 하회
+Buy(유지) / TP 300,000원(유지)
+-link:
+https://buly.kr/DaOunxG
+▶
+2분기 실적: 양극재/석유화학 기대치 하회
+동사의 2분기 실적은 매출액 10.9조 원, 영업이익 4,771억 원으로 컨센서스 영업이익 3,300억 원을 상회할 것으로 전망한다. 2분기 서프라이즈를 기록한 LGES의 실적(2Q25 영업이익 4,922억)을 제외하면 기대치를 하회하는 실적이다. 1) 양극재 사업부는 출하량과 판가가 각각 QoQ -31%, -5% 하락한 것으로 추정되며, 이에 따라 453억 원의 적자가 예상된다. 테슬라/GM/유럽 등 모든 고객사향 출하가 부진한 영향이다. 2) 석유화학 부문도 환율 하락과 단기 유가 급등, PVC/NCC/PO 스프레드 부진으로 적자 개선은 제한적인 것으로 추정된다.
+▶
+하반기 2차전지 업황 불확실성 확대
+미국 OBBBA 최종안이 통과됐으며, 2025년 10월부터 EV용 7,500달러 보조금 지급이 중단된다. 2Q25 실적발표 당시 연간 가이던스를 철회했던 미국 완성차 업체들은 하향 조정된 가이던스를 제시할 것으로 예상된다. LGES는 1H25 18.1GWh의 AMPC를 인식하며 기대치를 상회했으나, 막상 얼티엄셀즈 배터리를 탑재한 GM/Honda의 판매량은 10.4만 대(약 10GWh)에 그쳤다. EV 보조금 폐지가 확정됐으니, 3Q25부터 OEM들은 보수적인 배터리 재고 전략을 취할 것으로 예상된다.
+▶
+투자의견 BUY, 목표주가 30만 원 유지
+동사에 대한 투자의견 및 목표주가를 그대로 유지한다. 2분기 양극재, 석유화학 부문 실적은 모두 기대치를 하회할 것으로 예상되며, 하반기에도 양극재 사업부 실적 전망치도 하향 조정이 불가피할 것으로 보인다. LGES의 지분가치를 고려한 밸류에이션 매력도는 여전히 높지만, 2차전지/석유화학 산업의 부진한 업황을 감안하면 주가 반등에 대한 모멘텀은 부족한 상황이다.
+- 채널 :
+https://t.me/hanwhatech
+상기 내용은 컴플라이언스 승인을 필함
+3.51K
+views
+22:51
+한화 Tech
+[한화 김광진/이용욱]
+2025.07.10(목)
+★ 데일리 뉴스 플로우
+▶️
+반도체
+엔비디아, 이르면 9월 中 수출용 새 AI 반도체 출시…젠슨 황 CEO 방중 계획
+-link:
+https://buly.kr/BpFLKwR
+Arm, 2021년 이후 데이터 센터 고객 칩 14배 증가한 7만 개로 성장 추정
+-link:
+https://buly.kr/HSXajRz
+화웨이, 브라질에 데이터센터 투자 검토 중...
+-link:
+https://buly.kr/AlknSPg
+Rapidus, IBM 지원으로 2nm공정 개발 박차... 2027년 양산 목표
+-link:
+https://buly.kr/4xXn5SN
+SK하이닉스, HBM4·400단 낸드 웨이퍼 절단 바꾼다
+-link:
+https://buly.kr/EdtT2HI
+삼성, 국산 EUV 블랭크마스크 연내 인증 목표로 속도 낸다
+-link:
+https://buly.kr/15P7VSp
+갤럭시Z 이렇게 바뀌었다... 대폭 줄어든 무게와 두께, 삼성 엑시노스 2500 전량 탑재
+-link:
+https://buly.kr/AlknSYO
+3분기 낸드 가격 10% 상승…기업용 SSD 수요 커
+-link:
+https://buly.kr/8pgSY4f
+▶️
+2차전지
+폭스바겐, 상반기 전기차 판매량 47% 증가... 미국과 유럽 수요 증가했으나 중국에서는 급격한 감소세
+-link:
+https://buly.kr/1REdTKg
+日 닛산, SK온 배터리 공급받기로 한 美공장 전기차 생산 연기
+-link:
+https://buly.kr/FLYUxiS
+LG엔솔, 폴란드에 46시리즈 원통형 배터리 투자 추진
+-link:
+https://buly.kr/H6i4ls0
+1∼5월 글로벌 전기차용 배터리 분리막 적재량 49.5% 성장
+-link:
+https://buly.kr/15P7VjR
+트럼프 ‘구리 50% 관세’ 발표에 구리가격 13% 급등…56년만의 최대폭
+-link:
+https://buly.kr/YeqRe3
+중국 후난성 지자오산서 리튬광석 4억 9000만t 확인...글로벌 매장량 2위로 도약
+-link:
+https://buly.kr/GE8Hrnj
+채널:
+https://t.me/hanwhatech
+Naver
+“엔비디아, 이르면 9월 中 수출용 새 AI 반도체 출시” FT…젠슨 황 CEO 방중 계획
+엔비디아가 9일(현지시간) 상장사 가운데 최초로 시가총액 4조달러를 뚫은 가운데 중국 시장을 겨냥한 새 인공지능(AI) 반도체를 이르면 9월에 출시하기로 했다. 젠슨 황 최고경영자(CEO)가 새 반도체 출시 일정에
+😁
+1
+497
+views
+edited
+22:02
+한화 Tech
+[한화 김광진/이용욱]
+2025.07.11(금)
+★ 데일리 뉴스 플로우
+▶️
+반도체
+xAI, 차세대 모델 ‘그록 4’ 공개...벤치마크 성능 1위 기록
+-link:
+https://buly.kr/612LL0I
+화웨이, 중동과 동남아시아에서 AI 칩 수출 기회 모색
+-link:
+https://buly.kr/4FslWZ6
+TSMC, 2분기 매출 44조원…역대 분기 매출 또 경신
+-link:
+https://buly.kr/FAdkGvH
+TSMC, SoIC 시작으로 2028년에 미국 첨단 패키징 공장 착공 예정
+-link:
+https://buly.kr/9tB0ufY
+차세대 D램 표준 'LPDDR6' 공개
+-link:
+https://buly.kr/881R6oW
+-link:
+https://buly.kr/6ihNGF9
+퀄컴, 갤럭시Z폴드7에 스냅드래곤8 엘리트 탑재
+-link:
+https://buly.kr/DaOvW4U
+케이던스, 삼성 파운드리와 협력 확대... 인터페이스 IP 솔루션 구축 확대 다년 IP 계약 체결
+-link:
+https://buly.kr/DEZPYHJ
+▶️
+2차전지
+엘앤에프, 2000억 투입해 LFP 양극재 자회사 설립
+-link:
+https://buly.kr/AwfYgyr
+올해 1∼5월 전기차 배터리 전해액 적재량 46% 성장
+-link:
+https://buly.kr/CsjtU7u
+650마력 '악동' 전기차....현대차 '아이오닉 6N' 베일 벗었다
+-link:
+https://buly.kr/BTPpdhL
+현대차-SES AI, 4년 공들인 차세대 배터리 라인 연기
+-link:
+https://buly.kr/FhO1B1h
+포드 “중국 업체와 기술제휴한 배터리 공장 세액공제 자격 획득”
+-link:
+https://buly.kr/9MQjydQ
+채널:
+https://t.me/hanwhatech
+AI타임스
+xAI, 차세대 모델 ‘그록 4’ 공개...벤치마크 성능 1위 기록
+일론 머스크 CEO의 인공지능(AI) 스타트업 xAI가 차세대 AI 모델 ‘그록 4(Grok 4)’를 전격 공개했다. 이번에도 오픈AI와 구글, 앤트로픽 등 주요
+❤
+2
+👏
+1
+470
+views
+22:07
+한화 Tech
+[한화 김광진/이용욱]
+2025.07.14(월)
+★ 데일리 뉴스 플로우
+▶️
+반도체
+미국 상원의원들, 엔비디아 CEO에 중국 방문 경고
+-link:
+https://buly.kr/3u3GX8s
+엔비디아의 행로는…젠슨황, 16일 베이징서 기자회견
+-link:
+https://buly.kr/GksaGNe
+메타, AI 광폭 행보…음성기술 스타트업 인수·오픈AI 인재 채용
+-link:
+https://buly.kr/9MQl46O
+SpaceX, Elon Musk의 xAI에 20억 달러 투자
+-link:
+https://buly.kr/GvnL7Tl
+중국 문샷 AI, 오픈소스 모델 출시로 시장 지위 회복 시도
+-link:
+https://buly.kr/7QMQ9Y0
+SK하이닉스, 3분기 수요 강세 지속에 DDR4/LPDDR4X 계약가격 20% 인상
+-link:
+https://buly.kr/8elj1D9
+LG전자, 하이브리드 본더 개발 착수... 2028년 양산 목표... 삼성·한화·한미와 기술경쟁 돌입
+-link:
+https://buly.kr/Nk6uxo
+日, 반도체 패키징 경쟁력 확보 시동…30여개 기업 손 잡았다... J-OSAT 설립
+-link:
+https://buly.kr/BIV5jKm
+SEMI "AI 수요 폭증에 2028년 월 웨이퍼 캐파 1110만장 돌파"
+-link:
+https://buly.kr/uUNrDt
+올해 스마트폰 생산량 1% 감소 전망…인도·베트남만 성장세
+-link:
+https://buly.kr/CpLvvb
+▶️
+2차전지
+포스코퓨처엠, 日 배터리사와 음극재 공급계약 체결
+-link:
+https://buly.kr/2qYie60
+“소듐 배터리, 5년 뒤 전기차·ESS 대세 될 것"
+-link:
+https://buly.kr/9iGGtvb
+SK온, 엘앤에프와 맞손…북미 ESS용 LFP 배터리 사업 본격화
+-link:
+https://buly.kr/Chp9Zoh
+“2035년 나트륨 배터리 점유율 50%"…국내 기술 개발 현주소
+-link:
+https://buly.kr/AF0XqPZ
+K-배터리, 전고체 개발 담금질…글로벌 시장 ‘무한경쟁’ 돌입
+-link:
+https://buly.kr/D3efXUD
+국내 ESS 다시 시작된다..."삼성SDI, SK온 수혜 예상"
+-link:
+https://buly.kr/FWTHGvx
+채널:
+https://t.me/hanwhatech
+333
+views
+22:10
+한화 Tech
+[한화투자증권 2차전지/에너지/화학 이용욱]
+★ 롯데케미칼(011170) - 회복 시기 지연
+Buy(유지) / TP 84,000원(하향)
+-link:
+https://buly.kr/GE8JKd2
+▶
+2분기 실적: 영업적자 2,122억 원으로 컨센서스 하회 전망
+동사의 2분기 실적은 매출액 4.6조 원, 영업적자 2,122억 원으로 영업이익 기준 컨센서스(-1,436억 원)을 하회할 것으로 전망한다. 1) LC USA는 에탄 가격 약세에도 MEG 정기보수가 진행됨에 따라 적자 폭이 확대된 것으로 추정한다. 2) 기초소재 부문은 대산공장 정기보수와 주요 제품 스프레드 축소로 적자가 확대됐으며, 3) 환율 하락과 해상 운임 상승에 따른 수익성 부담도 가중됐다.
+▶
+하반기 회복 기대되나, 업황 불확실성 여전
+화학 산업은 여전히 중국발 공급 과잉에서 벗어나지 못하고 있다. 3분기에는 주요 공장 정기보수가 끝나며 LC USA와 기초소재 부문 실적 회복이 예상되며, 유가 하락과 운임 안정화에 따른 원가 부담도 일부 완화될 것으로 기대된다. 그러나, 수요 회복에 따른 스프레드 개선 여부는 불확실하다. 미국의 관세 정책은 번번히 변경/유예되고 있으나, 기존 대비 고관세 기조로 수요 위축에 대한 우려가 상존하기 때문이다.
+▶
+목표주가 84,000원으로 하향, 투자의견 BUY 유지
+동사에 대한 목표주가를 84,000원으로 하향한다. 연초 저유가와 수요 회복에 대한 기대감이 있었으나, 오히려 주요 제품 스프레드는 축소됐다. 이를 반영하여 역사적 저점 PBR(0.38배)에 30% 할인한 0.27배를 적용했다. 단기 회복 시점은 지연됐으나, 신정부가 들어선 이후 국내 화학 산업 구조조정에 대한 기대감이 커지고 있으며, 중국도 대외 변수에 따른 내수부양 및 산업 구조조정 기대감도 상존한다. 동사도 자산 유동화를 통해 체력을 확보하고 있는 점을 감안하여 투자의견 BUY를 유지한다.
+- 채널 :
+https://t.me/hanwhatech
+상기 내용은 컴플라이언스 승인을 필함
+436
+views
+22:54
+한화 Tech
+[한화투자증권 2차전지/에너지/화학 이용욱]
+★ S-Oil(010950) - 정제마진 반등으로 하반기 회복 기대
+Buy(유지) / TP 79,000원(상향)
+-link:
+https://buly.kr/AlkovQ7
+▶
+2분기 실적: 영업적자 2,230억 원으로 컨센서스 하회 전망
+동사의 2분기 실적은 매출액 8.1조 원, 영업적자 2,230억 원으로 영업이익 기준 컨센서스(-1,445억 원)를 하회할 것으로 전망한다. 환율 및 유가 하락(1Q25 $77/b → 2Q25 $67/b)에 따른 재고평가손실 2,320억 원을 추정했다. 정제마진은 개선되었으나, OSP도 QoQ +$1.6/b 상승하며 실질 정제마진은 $1.1/b 개선되는데 그쳤다. 한편, 석유화학 및 윤활기유 부문은 각각 PX 및 윤활기유 스프레드가 확대되며 수익성이 개선된 것으로 추정한다
+▶
+3분기 회복 구간 진입
+동사의 3분기 영업이익은 2,530억 원으로 큰 폭의 턴어라운드를 전망한다. 환율과 유가 약세에 따른 408억 원의 재고평가손실을 추정했으나, 1) 5월부터 연내 최대 수준을 유지하고 있는 Spot 복합 정제마진($10~11/b)과 2) 평균 OSP 하락(QoQ -$1.1/b), 3) 여름철 폭염 및 휘발유 성수기 효과 등의 긍정적 효과가 기대되기 때문이다. 화학 부문도 PX/벤젠 등도 점진적인 스프레드 개선세가 예상되어 적자 폭이 감소할 것으로 보이며, 윤활기유 부문은 2분기 수준의 실적이 예상된다.
+▶
+목표주가 79,000원으로 상향, 투자의견 BUY 유지
+동사에 대한 목표주가를 79,000원으로 상향한다. 12M Fwd BPS에 PBR 1.0배를 적용했다. 석유 수요의 Peak-out은 극복해야 할 과제이며, 유가의 하향 안정화 우려도 상존하고 있으나, 최근 견조한 석유 제품 수요와 정제마진이 반등한 점을 감안하면 과거 하단 수준의 밸류에이션 회복은 가능하다고 판단한다.
+- 채널 :
+https://t.me/hanwhatech
+상기 내용은 컴플라이언스 승인을 필함
+486
+views
+23:00
+한화 Tech
+[한화 김광진/이용욱]
+2025.07.15(화)
+★ 데일리 뉴스 플로우
+▶️
+반도체
+트럼프, AI와 에너지에 700억 달러 투자 발표
+-link:
+https://buly.kr/7x6hZXE
+메타, 초지능 위해 AI 데이터 센터에 수천억 달러 투자 계획... 멀티 기가와트 데이터 센터 Prometheus 2026년 가동 시작, Hyperion 몇 년 내 최대 5기가와트까지 확장... 타이탄 클러스터 여러 개 건설 중
+-link:
+https://buly.kr/jZdM6m
+알리바바 지원 스타트업 Moonshot, ChatGPT를 능가하는 Kimi K2 AI 모델 출시... 두 가지 벤치마크에서 Claude Opus 4 능가
+-link:
+https://buly.kr/3j8Vujp
+엔비디아 차기 '중국 전용' 블랙웰 B30 AI 칩 '흥행 폭발' 시그널... 中 주요 IT기업, 엔비디아 'B30' 대규모 선주문
+-link:
+https://buly.kr/EI3ylbK
+브로드컴, 스페인 마이크로칩 공장 투자 계획 철회…
+-link:
+https://buly.kr/8IwDPzc
+인텔 Nova Lake-S가 TSMC의 2nm 팹에서 tape-out, 18A 수율 향상 중... 연말까지 70% 전망
+-link:
+https://buly.kr/2qYj0mF
+인텔, 수천 명 대거 해고 - 미국에서 4,000명, 오리건에서 2,392명 감원
+-link:
+https://buly.kr/YesG19
+중국 마지막 12인치 팹 AMS, 구조조정 실패 공식 선언
+-link:
+https://buly.kr/9MQl5uD
+일본 경제산업성(METI), Rapidus에 추가 투자 검토... 1000억엔 투자 계획
+-link:
+https://buly.kr/H6i6Soc
+▶️
+2차전지
+LG엔솔·GM 美합작사, 보급형 LFP 배터리 생산…가격경쟁력 겨냥
+-link:
+https://buly.kr/612Mn52
+SK온, 美 배터리공장 첫 풀가동
+-link:
+https://buly.kr/6ihOiM2
+동아줄 맞나…양극재사, ‘LFP’ 양산 갈림길
+-link:
+https://buly.kr/HHcrRSw
+K-배터리 미래 '나트륨 배터리'에 달렸다...전세계 탈중국 러시
+-link:
+https://buly.kr/GksaV40
+"전기차 캐즘 뚫자" … K배터리 삼총사 '3色 전략'
+-link:
+https://buly.kr/jZdErG
+'100점 중 24점' 중국은 포기…K배터리 '1조 프로젝트' 정체
+-link:
+https://buly.kr/uUODhO
+“글로벌 실리콘 음극시장, 중국 독주 속 한국 핵심 특허 부각”
+-link:
+https://buly.kr/C0A817A
+채널:
+https://t.me/hanwhatech
+Reuters
+Trump to unveil $70 billion in AI and energy investments
+U.S. President Donald Trump will announce $70 billion in artificial-intelligence and energy investments on Tuesday, according to a White House official and a person familiar with the initiatives.
+470
+views
+edited
+22:09
+한화 Tech
+[한화 김광진/이용욱]
+2025.07.16(수)
+★ 데일리 뉴스 플로우
+▶️
+반도체
+CoreWeave, 펜실베니아 데이터 센터에 60억 달러 투자... 트럼프 AI 정책 일환
+-link:
+https://buly.kr/7QMR085
+엔비디아 AI 칩 재개 앞두고 중국 기업들 구매 서두르고 있어...
+-link:
+https://buly.kr/BIV6a4E
+엔비디아, H20 GPU 대중 수출 재개... 삼성 HBM3 수혜 기대
+-link:
+https://buly.kr/9BW0oDS
+엔비디아, 차세대 저전력 메모리 모듈 '소캠' 올해 80만장 도입
+-link:
+https://buly.kr/7x6hg6R
+Broadcom, 새로운 Tomahawk Ultra 네트워킹 칩 출시... 구글 지원 네트워킹 프로세서 공개
+-link:
+https://buly.kr/jZdb6L
+마벨, 차세대 ASIC 위해 TSMC의 3nm 이하 포토닉스 기술 활용
+-link:
+https://buly.kr/1GJufQM
+AMD, MI308 AI 칩 중국 수출 재개
+-link:
+https://buly.kr/D3egNuf
+애플, 희토류 생산업체 MP머티리얼즈에 5억 달러 투자
+-link:
+https://buly.kr/BpFNWBB
+중국 스마트폰 시장, 6분기 연속 성장세에서 2분기 하락세로 전환
+-link:
+https://buly.kr/BpFNWVZ
+▶️
+2차전지
+LG엔솔, 美서 전기차용 LFP 배터리 만든다
+-link:
+https://buly.kr/DaOx8H8
+LG엔솔, 내년 CTP 기술 적용한 파우치형 배터리 양산차 투입
+-link:
+https://buly.kr/9BW0bub
+中 LFP에 도전장 내미는 'K-배터리'…美 전기차 시장도 공략
+-link:
+https://buly.kr/DPUC9W9
+이석희 SK온 사장 "나트륨 배터리, 고객사 요구 고려해 단계적 도입 검토“
+-link:
+https://buly.kr/2UjDKyS
+인도 전기차 시장 뜨거워진다… 테슬라 진출 선언에 기아 및 빈패스트도 전기차 출시
+-link:
+https://buly.kr/FWTHvMw
+정부, 반도체·이차전지 생산세액공제 도입 검토…이르면 이달 말 발표
+-link:
+https://buly.kr/5UI61GD
+채널:
+https://t.me/hanwhatech
+Reuters
+CoreWeave commits $6 billion to Pennsylvania data center amid Trump AI push
+CoreWeave plans to spend up to $6 billion on building a new artificial intelligence data center in Pennsylvania, as part of a push by U.S. President Donald Trump to maintain the country’s edge in the booming technology sector, the company said on Tuesday.
+370
+views
+edited
+22:13
+한화 Tech
+[한화 김광진/이용욱]
+2025.07.17(목)
+★ 데일리 뉴스 플로우
+▶️
+반도체
+엔비디아, 중국 H20 판매 재개... 기존 H20 재고 정리 목적, 새로운 H20 공급 계획은 없어
+-link:
+https://buly.kr/Yet68C
+엔비디아, GB10 기반 PC CPU 2026년까지 출시 지연
+-link:
+https://buly.kr/6ihPQQn
+엔비디아 CEO 젠슨 황, 3,700만 달러 상당의 주식 추가 매각
+-link:
+https://buly.kr/1n4Bxdr
+xAI, 사우디아라비아에서 데이터 센터 임대 논의 중
+-link:
+https://buly.kr/BpFNsB1
+'이제는 넘사벽'…AMD CPU 판매량, 인텔 압도... 아마존 점유율 8대 2
+-link:
+https://buly.kr/7mBxJGz
+ASML, 2분기 실적 예상치 상회했으나 지정학적 위험으로 성장 위축 우려…2026년 성장 둔화 경고
+-link:
+https://buly.kr/8elkDDw
+ASML, 2분기 실적 호조세…"High-NA EUV 장비 첫 출하"
+-link:
+https://buly.kr/2qYjqNP
+메모리 현물 가격 업데이트: 최근 급등 이후 소폭 하락세, DDR4가 하락 주도
+-link:
+https://buly.kr/GksbKmL
+▶️
+2차전지
+SK온, 포드 전동화 난항에 현금유출 9조원대...현대차 협력 중요성↑
+-link:
+https://buly.kr/9XLWwG9
+K-배터리 "LFP로 맞불, LMR로 추월"… 中에 반격 노린다
+-link:
+https://buly.kr/15P9r7F
+연기되는 파나소닉발 韓 양극재 수주…3Q 마무리 가능성 거론
+-link:
+https://buly.kr/G3DZEEJ
+가격 경쟁력 앞세운 中기업 고가 배터리 시장 공략 속도
+-link:
+https://buly.kr/1REfoYb
+SK온, 각형 배터리 사업 본격 시동…톱텍이 핵심장비 공급
+-link:
+https://buly.kr/6Bx8Irr
+기아 '간판 전기차'마저 中 배터리…가성비·공급망 두 토끼 노려
+-link:
+https://buly.kr/B7aLlkp
+채널:
+https://t.me/hanwhatech
+[News] NVIDIA H20 Sales Restart Sparks Buzz: Likely Inventory Sell-Off; New Blackwell GPU for China Expected | TrendForce News
+With the U.S. approving NVIDIA’s return to H20 sales in China, chatter among Chinese distributors is picking up. According to Cailian Press, the move ...
+397
+views
+21:58
+한화 Tech
+[한화투자증권 2차전지/에너지/화학 이용욱]
+★ 양극재 6월 수출액 코멘트
+-link:
+https://buly.kr/44y2jjn
+▶
+OBBBA 최종안: 2H25 미국 EV 수요 불확실성 확대 vs ESS 기대감 상승
+2025년 6월 국내 양극재 수출액은 4.7억 달러(MoM +4.9%), 수출량은 1.9만 톤(MoM +4.8%)을 기록했다. 이에 따른 양극재 수출 가격은 24.2 달러/kg 로 MoM 유사한 수준을 보였으며, 7월 잠정치(1~10일)는 23.7달러/kg로 MoM -2% 하락세다. 2Q25 전체 양극재 수출량은 5.6만 톤(QoQ +10%)을 기록했으며, NCM 양극재 수출량이 4.2만 톤(QoQ +18%)으로 회복한 반면, NCA 양극재는 1.3만 톤(QoQ -8%)으로 감소했다. NCM 양극재 수출 회복은 대구, 청주, 천안 지역이 주도했으며, 이는 Tesla x LGES 및 현대기아차 x SKon향 판매 확대 영향으로 추정한다. NCA 양극재의 부진은 삼성SDI의 전방 수요 둔화에서 기인했다.
+미국의 배터리 판매는 2Q25에는 견고하겠지만, 3Q25부터는 감소할 전망이다. LGES은 2분기 잠정실적에서 시장 기대치를 크게 상회하는 실적과 AMPC를 발표했고, SKon의 북미 공장 가동률에 대한 기대치도 높아졌다. 상반기 OEM들의 선제적 배터리 재고 확보가 영향을 미친 것으로 보인다. 특히, 상반기 미국에서 GM/Honda의 BEV 판매량(약 10.4만 대) 대비 LGES의 출하량(약 18.1GWh)이 더 많았다. 상대적으로 SKon의 출하량(6GWh)은 당사의 배터리를 탑재한 현기차/포드/VW 등의 BEV 판매량(약 6.5만 대)과 비교하면 적정 수준으로 보인다. OBBBA 최종안에 따라 10월부터 전기차 보조금(7,500달러)이 폐지되면서 전기차 수요 감소는 4분기부터, 배터리 재고 소진은 3분기부터 본격화될 전망이다.
+최근 ESS에 대한 관심이 높아지고 있다. OBBBA 최종안에서 EV용 혜택이 줄어든 반면, ESS 정책은 우호적이다. 기존 전통 ITC/PTC가 Technology-Neutral Credit 방식으로 수정되며, 태양광/풍력 지원은 줄었지만 ESS에 대한 세액공제(ITC/AMPC)는 각각 2035년, 2032년까지 유지된다. 트럼프 행정부가 탈탄소보다 에너지 시스템 안전성에 우선순위를 두기 때문이다. 세액공제 적용 시점도 완공이 아닌 착공 기준으로 변경되면서 ESS 프로젝트 가속화도 기대된다. 한편, 그동안 미국 ESS는 대부분 중국산이 공급됐다. EV용 배터리 대비 ESS는 非PFE 사용에 대한 혜택이 적었고, 중국산 LFP 배터리가 저렴하기 때문이다. 그러나 OBBBA 최종안에서 ITC/AMPC 혜택을 위한 PFE 사용 규제가 강화되며 미국 ESS 산업의 탈중국화가 본격화될 가능성이 커졌다. 미국의 ESS 설치량은 2023년 19GWh, 2024년 30GWh에서 2025년에는 60~70GW가 설치될 예정이다. 반면, 미국에 대응할 수 있는 국내 배터리 업체의 ESS 캐파는 2025년 말 기준 LGES 16.5GWh(LFP), 삼성SDI 10GWh(NCM)가 전부다. EV 수요 부진으로 배터리 공장 가동률이 저조한 국내 배터리 업체와 아직 LFP 양극재를 생산하지 못하는 양극재 업체에게는 큰 도전이자 기회다.
+🤔
+1
+1.92K
+views
+22:58
+한화 Tech
+[한화투자증권 반도체 김광진]
+★ SK하이닉스 주가 급락. 지난해 7월의 데자뷔
+-link:
+https://buly.kr/90bGHZm
+▶
+지난해 7월의 데자뷔. P/B 1.5X 수준까지 조정 가능성 열어놓을 필요
+금일 SK하이닉스 주가는 -8%대 급락 중. 연초 이후 강력한 AI 수요와 D4 종산 등으로 인한 컨벤셔널 디램 가격 강세가 실적 기대감으로 작용되며 약 73% 주가 상승, 올해 실적 기준 P/B 2.1X 수준까지 밸류에이션 레벨 확장. 그러나 내년 HBM 시장 구도의 변화 가능성이 금일 주가 하락 요소로 작용하고 있으며, 금일 급락으로 밸류에이션 레벨은 P/B 1.8X 수준까지 하락.
+당사는 내년까지 AI 관련 업사이클이 지속된다는 관점에서 반도체 업종에 대한 긍정적 시각은 유지하지만, 단기적으로 1) HBM 시장 구도 변화 가능성과 2) D5 공급 증가에 따른 컨벤셔널 디램 가격 하락 가능성 등을 고려할 때 주가 추가 조정 가능성이 높다 판단. 지난해 7~9월 반도체 업종 주가 하락 구간과 유사한 상황이라고 판단되며, SK하이닉스 주가는 올해 실적 기준 P/B 1.5X 수준(지난해 9월 저점 밸류)까지 조정될 가능성을 열어둘 필요
+▶
+내년 HBM 시장 1위 유지 되겠으나, 경쟁 심화는 불가피
+내년 HBM 시장에서의 큰 변화는 경쟁 심화. 여전히 SK하이닉스의 HBM 시장 1위 구도는 유지 되겠으나, 점유율 측면에서의 변화 예상. 당사는 내년 SK하이닉스의 HBM 출하량이 약 160억 Gb으로 올해 대비 +30% 성장하는 수준일 것으로 예상. 이는 올해 성장세(+90% YoY, 약 58억 Gb)대비 둔화되는 것.
+HBM 세대 전환 속도 감소(엔비디아의 GPU 로드맵 지연이 직접 원인)와 후발주자들의 기술 격차 축소가 직접적인 원인. HBM3E 8단과, 12단 모두 시장 개화 첫 해 사실상 SK하이닉스의 독점 구도가 유지되었던 것과 달리 내년 개화가 예상되는 HBM4는 독점 구도가 아닐 가능성. 이는 SK하이닉스의 판매가와 이익률에도 영향을 미칠 것
+▶
+DDR5 공급 증가 가능성도 부담 요소
+D5 공급 증가 가능성도 현 시점 또 다른 부담 요소. 메모리 3사와 CXMT의 D4 EOL 선언이 컨벤셔널 디램 가격 상승의 긍정 요소로 작용되었으나, 이는 D5로의 전환을 의미하는 만큼 이제는 D5 공급 증가 가능성과 이로 인한 가격 하락 가능성을 염두에 둘 필요. 특히 CXMT의 D5로의 대대적 전환을 주목할 필요. 4Q25를 기점으로 D5 비중이 전체 웨이퍼 투입량의 50%를 넘어가기 시작할 것으로 예상. 이미 중화권 서버 업체들의 CXMT D5 채용이 진행되고 있는 것으로 파악되는 만큼 분명한 부담 요소. 지난해 CXMT의 D4 공급 확대 노이즈가 강하게 발생 했었음을 기억할 필요
+- 채널 :
+https://t.me/hanwhatech
+상기 내용은 컴플라이언스 승인을 필함
+🔥
+3
+👎
+2
+👍
+1
+🤔
+1
+🤣
+1
+702
+views
+edited
+04:16
+한화 Tech
+👎
+2
+👍
+1
+🔥
+1
+🤔
+1
+622
+views
+04:21
+한화 Tech
+[한화 김광진/이용욱]
+2025.07.18(금)
+★ 데일리 뉴스 플로우
+▶️
+반도체
+트럼프 주도한 UAE 엔비디아 칩 수출 합의, 내부서 '中 유출 우려' 제동
+-link:
+https://buly.kr/FWTIqGx
+Amazon AWS 클라우드 컴퓨팅 부문, 최소 수백 명 일자리 감축... AI 에이전트 도입 영향
+-link:
+https://buly.kr/8pgVZFi
+TSMC, 연매출 성장률 전망 25→30%로 상향…3나노 비중 연 20%대 전망
+-link:
+https://buly.kr/9tB3S2V
+TSMC, 애리조나 2호 팹 건설 완료, 양산 일정 가속화, 3호 팹 건설 시작... 일본·독일 팹 일정은 미공개
+-link:
+https://buly.kr/3j8X7Ov
+ASML, High-NA EUV EXE:5200 첫 출하 확정…2027년 인텔 14A 노드에 적용 계획
+-link:
+https://buly.kr/GvnMgc4
+낸드플래시 3분기 가격 5~10% 상승 전망, 512Gb 미만 제품 중심… 공급 부족 2026년까지 이어질 듯
+-link:
+https://buly.kr/5UI6vcL
+공급 축소에 구형 ‘LPDDR4X’ 가격 오른다… 내년 초까지 지속
+-link:
+https://buly.kr/612Nryf
+▶️
+2차전지
+"美, 배터리 핵심 소재 中흑연에 반덤핑관세 93.5% 부과 결정"
+-link:
+https://buly.kr/Gksbhlp
+전기차 수출 16개월 만에 반등…유럽서 질주
+-link:
+https://buly.kr/CWuPybz
+SK온, 국내산 수산화리튬 공급망 확대…美 시장 선제 대응
+-link:
+https://buly.kr/7bHCVkW
+"중국 배터리 벽 뚫어라"··· LG엔솔·SK온, 북미 ESS 시장서 LFP 정면승부
+-link:
+https://buly.kr/uUPEhT
+트럼프發 관세 전쟁, 북미 넘어 한국까지 '공급망 재편' 압박
+-link:
+https://buly.kr/5fCribe
+채널:
+https://t.me/hanwhatech
+서울경제
+트럼프 주도한 UAE 엔비디아 칩 수출 합의, 내부서 '中 유출 우려' 제동
+국제 > 국제일반 뉴스: 도널드 트럼프 대통령이 지난 5월 중동 순방 중 직접 성사시킨 수십억 달러 규모의 ‘인공지능(AI) 칩 수출 합의’가 미국 내 국...
+❤
+1
+508
+views
+21:54
+한화 Tech
+[한화 김광진/이용욱]
+2025.7.21(월)
+★ 데일리 뉴스 플로우
+▶️
+반도체
+엔비디아 CUDA 플랫폼, CPU 측 RISC-V 아키텍처와 호환 발표
+-link:
+https://buly.kr/5q7dzIW
+엔비디아 중국 수출 재개 추가 생산에 어려움... TSMC H20 생산 라인 다른 칩 생산으로 전환
+-link:
+https://buly.kr/7FRhgW4
+미국 공화당원, Nvidia H20 칩 출하 재개 반대
+-link:
+https://buly.kr/3YDn5NC
+Rapidus, 2nm GAA 프로토타입 시작... 2027년 양산 목표
+-link:
+https://buly.kr/DlJjyjC
+삼성, 텍사스에 칩 제조분야 팀 파견…미국 고객사 계약설 불거져
+-link:
+https://buly.kr/8Tr0h1A
+▶️
+2차전지
+트럼프, 관세로 중국 음극재 '융단폭격'…K-음극재 기회창 열렸다
+-link:
+https://buly.kr/GvnNfzA
+K배터리 소재, 2분기 부진에도 ‘포스트 캐즘’ 향한 투자 ‘속도’
+-link:
+https://buly.kr/APvKzVA
+李 대통령 생산세액공제 공약에 '전기차'도 검토..."보조금 만으론 中 공세 못 막아
+-link:
+https://buly.kr/5fCs1GB
+中 전기차 잘 나간다더니…결국, 칼 빼들었다
+-link:
+https://buly.kr/9tB4P83
+테슬라, '모델3 RWD' 배터리 CATL에서 LG엔솔로 갈아탔다
+-link:
+https://buly.kr/BeKeFZ5
+채널:
+https://t.me/hanwhatech
+Tom's Hardware
+Nvidia's CUDA platform now supports RISC-V — support brings open source instruction set to AI platforms, joining x86 and Arm
+Yet another alternative.
+492
+views
+22:24
+한화 Tech
+[한화투자증권 반도체 김광진]
+★ 한화비전(489790) - 현 주가는 세미텍 가치가 사라진 수준
+Buy(유지) / TP 88,000원(유지)
+-link:
+https://buly.kr/GZxrpbd
+▶
+2Q25 Preview : 당사 기존 추정치 상회 예상
+2Q25 실적은 매출액 4,563억원(+1% QoQ), 영업이익 568억원(+28% QoQ)으로 당사 기존 추정치(영업이익 544억원)를 상회할 것으로 예상. 1) AI CCTV 비중 증가에 따른 시큐리티 부문 Mix 개선 효과와 2) TC본더 매출 반영 시작에 따른 한화세미텍 실적 개선이 핵심 요인
+시큐리티 부문은 2Q25에도 전분기와 유사한 10% 후반 수준의 높은 영업이익률 달성 예상. AI CCTV 판매 비중 증가에 따른 Mix 효과가 핵심으로 2Q25 AI CCTV 비중은 20% 중반 수준까지 상승한 것으로 추정(2Q24 AI CCTV 비중은 약 14% 수준에 불과). 이에 따라 환율 하락에 따른 매출 감소에도 불구 575억원 수준의 영업이익 달성 예상
+세미텍은 2Q25 BEP 근접 예상. SK하이닉스 향 TC본더 매출 반영 효과로, 상반기 누적 수주액 805억원 중 일부(당사 추정 210억원 예상)만 매출로 인식됨에도 불구 실적 개선 두드러질 것으로 판단. 3Q25 부터 강력한 턴어라운드 기대
+한편, 영업 외 비용으로 한화에어로스페이스 주가 상승에 따른 RSU 평가손실이 전분기에 이어 추가 반영될 가능성 존재. 다만 전환 가능 시기를 고려할 때 향후 환입 가능성도 높은 만큼 과도한 우려는 경계
+▶
+TC본더 중요하지만, 게임체인저는 하이브리드 본더
+투자자들은 SK하이닉스향 TC본더 5월 수주 규모에 실망했으나, 분명한 성과는 후발주자임에도 상반기 발주 분의 약 67%를 점유, 1벤더 지위로 올라섰다는 점. 향후에도 이 구도에 큰 변동이 없을 것으로 판단
+TC본더 성과도 중요하지만 더 중요한 것은 하이브리드 본더이며, 이는 향후 본더 시장의 게임체인저. 동사는 21년부터 SK하이닉스와 협력해 이미 1세대 하이브리드 본더 제작에 성공했으며, 올해 말 2세대 장비 개발 완료를 앞두고 있어 국내에서 가장 앞서 있음을 주목할 필요
+▶
+목표주가 8.8만원 유지. 세미텍 가치가 사라진 현 주가
+투자의견과 목표주가 유지. 현 주가는 세미텍 가치가 남아있지 않은 수준으로 판단. 적극 매수 필요한 시점
+- 채널 :
+https://t.me/hanwhatech
+상기 내용은 컴플라이언스 승인을 필함
+4.65K
+views
+22:56
+한화 Tech
+[한화투자증권 2차전지/에너지/화학 이용욱]
+★ 포스코퓨처엠(003670) - 음극재 기대감 상승에도 업황 턴어라운드는 아직
+Hold(하향) / TP 170,000원(상향)
+-link:
+https://buly.kr/FWTJwi7
+▶
+2분기 실적: 양극재 출하량 급감하며 컨센서스 하회
+동사의 2분기 실적은 매출액 6,609억 원, 영업이익 8억 원으로 컨센서스(영업이익 72억 원)를 하회했다. 양극재 부문에서 적자 163억 원을 기록했기 때문이다. 출하량과 판가가 각각 QoQ 36%/5% 하락했다. GM향 N86과 STLA향 NCA 출하가 급감했고, 전구체 공장 가동되며 100억 원의 재고평가손실이 발생한 것으로 추정된다. 음극재 부문도 천연흑연 판매량이 증가(QoQ +10%)했으나, 인조흑연 고정비 부담과 환율 하락에 따른 재고평가손실로 수익성이 악화됐다. 다만, 기초소재 부문에서 유가 상승 및 플랜트 매출이 확대되며 전사 흑자가 유지됐다.
+▶
+3분기: 영업이익 162억 원 전망
+동사의 3분기 실적은 매출액 9,013억 원, 영업이익 162억 원으로 전망한다. 양극재 출하량과 판가가 각각 98% 상승, 2% 하락할 것으로 추정했다. 2Q25 N86 판매량 급감은 적격 전구체가 적용된 양극재 판매 물량이 이연됐기 때문이며, 3Q25에는 재차 회복될 전망이다. 다만, 전구체 공장이 본격 가동되며, 초기 생산 비용이 지속 반영됨에 따라 양극재 부문 수익성은 BEP 수준이 예상된다.
+▶
+음극재: 미국 반덤핑 관세로 OP 2,000억 원 이상 개선 기대
+지난 18일 미국은 중국산 흑연 음극재에 대해 93.5%의 반덤핑 관세를 부과했다. 기타 관세까지 포함하면 총 160%의 관세(vs. 국내 25%)가 부과될 것으로 보도됐다. 천연흑연 음극재 가격은 중국 $3~4/kg, 동사는 $5/kg로 추정되며, 현재 미국 내 중국산 음극재 비중은 90%에 이르는 것으로 알려져 있다. 동사는 7.4만 톤의 천연흑연 캐파를 보유하고 있으며, 이번 관세로 풀캐파 가동(7만 톤 판매)과 $2/kg 판가 상승을 가정하면 판가 상승만으로 2,000억 원의 이익 개선이 가능하다.
+▶
+투자의견 HOLD로 하향하나, 목표주가 17만 원으로 상향
+음극재 부문의 실적 개선 기대감을 반영하여 목표주가를 17만 원으로 상향하지만, 투자의견은 HOLD로 하향한다. 동사의 주가는 지난 5월 저점을 기준으로 68% 반등했다. OBBBA 법안이 통과되며 2차전지 업황에 대한 불확실성은 오히려 높아졌으나, 국내 주식 시장 강세와 음극재 부문 기대감이 반영된 결과다. 현 시점 상승여력은 제한적이라 판단하며, 추세적인 상승을 위해서는 국내 2차전지 업황 턴어라운드가 확인되어야 한다.
+- 채널 :
+https://t.me/hanwhatech
+상기 내용은 컴플라이언스 승인을 필함
+464
+views
+23:00
+한화 Tech
+[한화 김광진/이용욱]
+2025.07.22(화)
+★ 데일리 뉴스 플로우
+▶️
+반도체
+영국과 ChatGPT OpenAI, 새로운 전략적 파트너십 체결... AI 컴퓨팅 인프라에 10억 파운드 투자 계획
+-link:
+https://buly.kr/5UI6w8S
+엔비디아 H20 공급 부족...TSMC N4 예약 꽉 차, 업스트림 재주문 징후 아직 관찰되지 않아
+-link:
+https://buly.kr/1REhpK1
+ASIC HBM 수요, 2026년에 80% 급증 전망
+-link:
+https://buly.kr/G3DbEQM
+삼성전자 GDDR7 탑재 엔비디아 중국용 'B30' 수요 급증 전망, 올해만 120만 개 주문
+https://buly.kr/DaOzUtE
+대만 AI 서버 제조업체, 관세 우려로 북미 투자 9배로 증가
+-link:
+https://buly.kr/9tB4tv7
+“연말까지 GPU 100만개 돌린다는데”…올트먼 또 만난 최태원 회장, HBM 단골 만드나
+-link:
+https://buly.kr/31TWeRi
+▶️
+2차전지
+2035년 리튬이차전지 실리콘 음극재 시장은 29.5만톤으로 70억불(9.7조원), CAGR(‘20~’35)은 30%로 성장 전망
+-link:
+https://buly.kr/DEZTLb3
+5분 충전으로 3000㎞ 주행 꿈의 배터리… 2027년 현실 된다
+-link:
+https://buly.kr/GE8M1NH
+ESS 정부입찰 금주 결론…LFP 도입 '신호탄' 되나
+-link:
+https://buly.kr/GP370B7
+율촌화학, LG엔솔에 신형 배터리 파우치필름 공급
+-link:
+https://buly.kr/A45pgmz
+배터리3사 美서 LFP 대전환 가속...中 의존 벗고 현지화 박차
+-link:
+https://buly.kr/6ihR3GO
+채널:
+https://t.me/hanwhatech
+❤
+1
+459
+views
+edited
+22:18
+한화 Tech
+[한화 김광진/이용욱]
+2025.07.23(수)
+★ 데일리 뉴스 플로우
+▶️
+반도체
+오라클, 4.5GW 데이터센터 확장 합의, 오픈AI에 AI 칩 200만 개 공급 예상... Stargate 일환
+-link:
+https://buly.kr/BpFPwim
+백악관, 미국 AI 해외 수출 계획 및 AI 확장에 제한적이라고 여겨지는 주법 단속 계획
+-link:
+https://buly.kr/DlJkjuN
+xAI, AI 확장 위해 최대 120억 달러 자금 조달 계획
+-link:
+https://buly.kr/5q7ehmR
+텍사스 인스트루먼트, 2분기 매출 컨센세스 상회했으나 3분기 이익 기대치 하회
+-link:
+https://buly.kr/A45qFLo
+삼성전자, 'HBM4E 16단'서 하이브리드 본딩 도입 검토…샘플 평가 中
+-link:
+https://buly.kr/EI41gGw
+삼성전자 GDDR7 탑재 엔비디아 중국용 'B30' 수요 급증 전망, 올해만 120만 개 주문
+-link:
+https://buly.kr/DaOzUtE
+갤럭시 Z 폴드7·플립7, 폴더블 최다 사전판매 104만대 신기록.. 폴드 비중 60%
+-link:
+https://buly.kr/GvnOA4F
+애플, 2026년 폴더블폰 출시…국내 부품업체들 확장 본격화
+-link:
+https://buly.kr/FsIqVep
+2Q25부터 GB200 서버 출하 순항... ASIC 호조 지속, CSP 수요 견조
+-link:
+https://buly.kr/31TWlPQ
+▶️
+2차전지
+배터리 소재 '부진의 늪' 딛고 하반기 ‘반등’…키워드는 ‘탈중국’
+-link:
+https://buly.kr/3YDnkUA
+내연車 맞먹는 가치…2032년 배터리 재활용시장 25조 시대 연다
+-link:
+https://buly.kr/Alkrxz3
+전기차 주도권 쥔 'BYD'… "테슬라보다 8만대 더 팔았다"
+-link:
+https://buly.kr/28tju2H
+중국 파라시스 올해 전고체 배터리 생산라인 완공 계획, 고객사에 샘플 공급
+-link:
+https://buly.kr/8pgXB4a
+죽은 전기차, 전력망으로 부활…폐배터리 재사용 사업 속도 내는 車 업계
+-link:
+https://buly.kr/2JoUswZ
+포스코퓨처엠, '천연 흑연' 정부 보조금 신청…中 공세 반격 시동
+-link:
+https://buly.kr/GP37MFe
+채널:
+https://t.me/hanwhatech
+Openai
+Stargate advances with 4.5 GW partnership with Oracle
+New data center capacity will power jobs, growth, and AI that benefits more people.
+❤
+5
+391
+views
+22:22

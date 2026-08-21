@@ -1,0 +1,64 @@
+{
+  "output_schema_hash": "2aa865235af57d256ec8f12bbd71b92271c5819891398d130a42b355830a4aab",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-e7fcc02332a6e9b5461d4956",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This is a third-party premium call-note retelling, not a verified issuer presentation, issuer earnings release, or customer-official document. Similar wording in the discovery snippet cannot establish requested provenance and is not evidence."
+      },
+      {
+        "candidate_id": "SGCAND-f579b5ded7e060d3475255b5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This is a third-party business-media article and none of the requested source families is business media. It cannot substitute for the issuer or customer official source even if it discusses earnings visibility."
+      },
+      {
+        "candidate_id": "SGCAND-2461b0aafaef6420775d9f26",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This third-party article concerns Samsung Electronics rather than the SK hynix target and also matches none of the requested issuer/customer official families."
+      },
+      {
+        "candidate_id": "SGCAND-7d8594814e601d340a0a4d2e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "This is a third-party premium call-note page, not a verified issuer presentation, issuer earnings release, or customer-official source. Its snippet remains discovery-only metadata."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "The requested issuer-presentation, issuer-earnings-release, or customer-official route remains unresolved; none of the four supplied candidates has eligible official provenance, and snippets were not treated as evidence."
+    ]
+  },
+  "payload_hash": "0c1cdd31d2d69f3507496a65619aba317610d6966ba82d70fd73c283c1d61d54",
+  "production_score_authority": false,
+  "prompt_hash": "b7a0f534f1b07b88142e45a3614a5a66640b901afb85a46704b98dff0c9ddfbc",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-41ed24ed75c95729ecf85b07327f9abf03be9104fe8a7a5d99a114bfa22995db",
+  "response_id": "COLLABRESP-0e06c51bdd1e94614e8cf9ed3c8fbce10488d5b0f60320fe4499797f492f4107",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

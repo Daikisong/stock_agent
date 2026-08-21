@@ -1,0 +1,217 @@
+{
+  "output_schema_hash": "87d3c66f564a2179cc4a1c335203172b75ba4ad6a971f0dc4b406e1ae6e503bc",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-7ad7370ba36a061011a502fc",
+        "rationale": "Extracted four distinct objective-direct mechanisms: constrained supply with HBM/server-DRAM pricing, quantified DRAM ASP growth, 100% semiconductor-fab utilization, and the monthly/quarterly customer supply-term horizon. Treasury-share cancellation, exchange-bond exercise, capex cash outflow, general corporate background, NAND-only detail, and generic customer descriptions were already represented or outside the current objective-local scope.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-7ad7370ba36a061011a502fc",
+        "economic_mechanism": "2026년 1분기에 견조한 수요 대비 제한된 공급이 지속됐고 HBM과 서버 DRAM 등이 가격 상승을 주도했다는 회사 공시는 현재의 수급 병목과 가격 전환을 직접 연결한다. HBM 단독 가격이나 장기 계약 잠금을 의미하지는 않는다.",
+        "exact_quote": "계절적 비수기에도 불구하고 견조한 수요 대비 제한된 공급 환경이 지속되며 HBM 및 서버 DARM, 고성능/고용량 eSSD 등 다양한 제품이 가격 상승을 주도하면서 사상 최대 실적과 최고 수익률을 기록하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 회사의 현행 HBM·서버 DRAM 수급-가격 연결로 bottleneck_pricing과 earnings_visibility를 직접 보완한다. 원문의 DARM 표기를 그대로 인용하며 HBM 단독 수치로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:AI_MEMORY_CONSTRAINED_SUPPLY_PRICING",
+        "normalized_object": "HBM 및 서버 DRAM의 제한 공급과 가격 상승 기여",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 견조한 수요 대비 제한된 공급이 지속되며 HBM과 서버 DRAM 등이 가격 상승을 주도했다",
+        "predicate_family": "HBM_SERVER_DRAM_CONSTRAINED_SUPPLY_PRICING",
+        "primitive_tags": [
+          "HBM",
+          "SERVER_DRAM",
+          "CONSTRAINED_SUPPLY",
+          "PRICE_INCREASE"
+        ],
+        "product_family": "AI_MEMORY",
+        "question_family_id": "HBM_SERVER_DRAM_CONSTRAINED_SUPPLY_PRICING",
+        "question_family_tags": [
+          "AI_MEMORY_SUPPLY_DEMAND",
+          "MEMORY_PRICING_POWER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 및 서버 DRAM 수급과 가격",
+        "subject_id": "000660:HBM_SERVER_DRAM_SUPPLY_PRICING",
+        "unit": "qualitative company disclosure",
+        "value": "robust demand versus constrained supply; HBM and server DRAM among price-increase drivers"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-7ad7370ba36a061011a502fc",
+        "economic_mechanism": "DRAM 출하량이 전분기와 비슷한 가운데 ASP가 60% 중반 상승했다는 실제 가격 공시는 물량 증가와 구분되는 가격 기반 매출·이익 전환을 보여준다. 일반 DRAM 가격 강세이며 HBM ASP로 좁히지 않는다.",
+        "exact_quote": "DRAM 출하량은 전분기와 유사한 수준을 유지하였으며, ASP는 일반 DRAM 가격 강세 가속화로 60% 중반 상승하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 공식 DRAM 실제 ASP 전분기 비교로 bottleneck_pricing과 eps_fcf_explosion의 가격 전환을 직접 보완한다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM_ASP_QOQ",
+        "normalized_object": "DRAM 평균판매가격 전분기 대비 변화",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 vs 2025-Q4",
+        "predicate": "2026년 1분기 DRAM 출하량은 전분기와 유사했고 ASP는 일반 DRAM 가격 강세로 전분기 대비 60% 중반 상승했다",
+        "predicate_family": "DRAM_ASP_QOQ_ACTUAL",
+        "primitive_tags": [
+          "DRAM",
+          "ASP_QOQ",
+          "SHIPMENT_FLAT"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_QOQ_ACTUAL",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "REALIZED_PRICING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 DRAM ASP",
+        "subject_id": "000660:DRAM_ASP",
+        "unit": "percent QoQ",
+        "value": "mid-60% QoQ increase"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-7ad7370ba36a061011a502fc",
+        "economic_mechanism": "반도체 생산설비 평균가동률 100%는 2026년 1분기 공급 여유가 제한적이었음을 보완한다. 공시는 HBM 전용 라인의 가동률이나 장래 CAPA 잠금을 따로 제시하지 않으므로 전사 반도체 범위로 제한한다.",
+        "exact_quote": "당사의 2026년 1분기 생산실적은 11,465,147백만원으로 집계되었으며,동 기간의 생산설비의 평균가동률은 100%를 유지하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 실제 가동률로 capacity scarcity를 직접 보완한다. HBM 전용 수율·CAPA 또는 장래 sold-out으로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:SEMICONDUCTOR_FAB_UTILIZATION",
+        "normalized_object": "반도체 생산설비 평균가동률",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 반도체 생산실적은 11,465,147백만원이고 생산설비 평균가동률은 100%였다",
+        "predicate_family": "SEMICONDUCTOR_CAPACITY_UTILIZATION",
+        "primitive_tags": [
+          "PRODUCTION_UTILIZATION",
+          "SEMICONDUCTOR_CAPACITY"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "SEMICONDUCTOR_CAPACITY_UTILIZATION",
+        "question_family_tags": [
+          "FAB_UTILIZATION",
+          "CAPACITY_SCARCITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 반도체 생산설비 가동률",
+        "subject_id": "000660:SEMICONDUCTOR_FAB_UTILIZATION",
+        "unit": "percent",
+        "value": 100
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-7ad7370ba36a061011a502fc",
+        "economic_mechanism": "주요 고객과 공급 물량·가격을 월별 또는 분기별 상호 합의로 정한다는 공시는 현재 매출 가시성이 장기 고정계약만으로 잠긴 것은 아니라는 계약기간 counterfact다. 취소권·위약금 또는 HBM 전용 조건은 공시하지 않는다.",
+        "exact_quote": "당사는 주요 고객사들과 월별/분기별 상호 합의에 따른 공급 물량 및 가격을 결정하고 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 fact roster에 없는 공급조건 결정 주기로 bottleneck_pricing과 earnings_visibility의 장기 잠금 해석을 직접 제한한다. 계약 취소·위약 조건은 발명하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:CUSTOMER_SUPPLY_TERMS_HORIZON",
+        "normalized_object": "고객 공급 물량·가격 결정 주기",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "current as of 2026-Q1",
+        "predicate": "주요 고객사 공급 물량과 가격은 월별 또는 분기별 상호 합의로 결정된다",
+        "predicate_family": "CUSTOMER_SUPPLY_QUANTITY_PRICE_SETTING_HORIZON",
+        "primitive_tags": [
+          "MONTHLY_AGREEMENT",
+          "QUARTERLY_AGREEMENT",
+          "SUPPLY_QUANTITY",
+          "PRICE_SETTING"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "CUSTOMER_SUPPLY_QUANTITY_PRICE_SETTING_HORIZON",
+        "question_family_tags": [
+          "CUSTOMER_SUPPLY_TERMS",
+          "CONTRACT_HORIZON"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 주요 고객 공급 물량과 가격 결정",
+        "subject_id": "000660:MEMORY_CUSTOMER_SUPPLY_TERMS",
+        "unit": "contracting horizon",
+        "value": "monthly or quarterly mutual agreement"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "747e503617d7566e87798ffe0fef32272c43de03d39897d56958dc510bd26f69",
+  "production_score_authority": false,
+  "prompt_hash": "ca164f4aa48ad2a9fade4bfc99b84342fa0dbaf0961663274f3909cb06b4f0e4",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d4512baf53969f18ee1886f77b3766320b1bf491a7738e82ecd6160777fd9dbc",
+  "response_id": "COLLABRESP-852f996b2fa1ae087d2893812b6061c23b575c98cd75ea7e4fa8b3bc74c1fbd6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

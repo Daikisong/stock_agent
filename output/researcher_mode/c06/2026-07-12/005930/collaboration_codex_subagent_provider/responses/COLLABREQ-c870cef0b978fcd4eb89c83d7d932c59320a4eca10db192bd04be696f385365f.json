@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "0c922126d3f73ad789efc31d9576bc16bc122edbe6906bd249b935b60d0ea8ad",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-e1ea3bca12b6f79e78a53f84",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e23a70b66b6c05270d16d269",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e2ee0c107034863ddd481345",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e3ea07463e442e36b5827829",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.7,
+        "rationale": "공식 비교적 최신 분기 재무 주석 경로로, 이익과 현금 전환 메커니즘을 보강할 가능성이 있습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e402f69103f9840736a5d3d1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e42e5987c5a6a51726d759a8",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 EPS/FCF 메커니즘을 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-e45dc0561c4fc076095e67bc",
+        "matched_requested_source_family": "CASH_FLOW",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.12,
+        "rationale": "요청 source family에는 해당하지만 오래되었거나 범위가 좁아 2026-07-12 현재 EPS/FCF 메커니즘을 해결할 우선 후보는 아닙니다."
+      },
+      {
+        "candidate_id": "SGCAND-e4641e513c30cb93079f015f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e47db73bad639bfd71fe6345",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e4d0f41cc8cc9969c602e689",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e4ea9d8ccd616bd1465c9543",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      },
+      {
+        "candidate_id": "SGCAND-e5467ab021fb23cdfee79a33",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "priority": 0.02,
+        "rationale": "현재 URL 소유자와 discovery 메타데이터로는 요청된 source family 및 연구목표와의 직접 연결을 확인할 수 없습니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "모든 후보는 discovery 메타데이터만으로 분류했으며 snippet은 증거로 사용하지 않았습니다.",
+      "material 후보도 원문 fetch와 as-of-date 검증 전에는 EvidenceFact 또는 점수 재료가 아닙니다."
+    ]
+  },
+  "payload_hash": "79ea7b0c182c28449e5c14445e886f18b0b8e479e6857265880349099b98faee",
+  "production_score_authority": false,
+  "prompt_hash": "3542ae1aa77d4e4ff5354f17fdbe6862d45e78bfbdc83413b689f3ac28d5764d",
+  "provenance": {
+    "agent_id": "blind_source_queries",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/blind_source_queries",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c870cef0b978fcd4eb89c83d7d932c59320a4eca10db192bd04be696f385365f",
+  "response_id": "COLLABRESP-0b8b9cbb9601bb78de10b18b5ec186f6dcf373a0f8e7ab647194e30170535dc6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-2be6039411cf3fc137615554",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "네이버 프리미엄콘텐츠 뉴스모음이며 원 broker PDF가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-10661c0b7f8145d2810f6fff",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "네이버 종목 토론글로 full-source 연구자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b081fe4694ccb24386967cbd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "비속어 단문 네이버 토론글로 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-92974aab05d6445a078eb477",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.04,
+        "rationale": "네이버 프리미엄콘텐츠 시장 요약으로 HBM CAPA 단서는 있으나 원 PUBLIC_BROKER_PDF가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2fbb5b5f023c94f3c65673c1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.94,
+        "rationale": "유안타증권 myasset 도메인의 원문 PDF 다운로드 경로이며 2026 상반기 메모리 공급업체 가격협상, SK하이닉스 공정·수요 흐름을 직접 다룬다. 병목과 ASP를 확인할 bounded full source다."
+      },
+      {
+        "candidate_id": "SGCAND-89bb24dff8103a84dd01ed5f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "정치적 비속어 네이버 토론글로 연구 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-2f8738f6ef338257693cefa8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "개인 매수 질문인 네이버 토론글로 source family와 목적을 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-eee360df2b2ef43f7bedbd07",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "인물 관련 단문 네이버 토론글로 HBM 병목 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-aabbc7e981e87248446cb699",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "매도 단문 네이버 토론글로 연구자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-006455bb02559a2d24728262",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "관세 관련 추측 단문 네이버 토론글로 broker full source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-54fcccd82c977ad20ed0a12f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.88,
+        "rationale": "한화투자증권 도메인의 2026 산업전망 원문 file-view 경로이며 메모리 호황, 서버 수요, DRAM 공급을 직접 분석한다. 회사별 HBM 병목 귀속은 원문에서 확인해야 하지만 requested family의 full-source route다."
+      },
+      {
+        "candidate_id": "SGCAND-f5f3903af44fe3ef2e10d008",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "네이버 종목 토론글로 의미 있는 source content가 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "유안타·한화투자증권 full-source 후보는 fetch·parse와 content hash 검증 후에만 evidence로 사용할 수 있다.",
+      "material0 및 검색 snippet은 원문/계약/병목 증거의 부재를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "689b63a5772c9a82d8268e52afd72124431ee21a199e1fd3e356bd662ef54eb9",
+  "production_score_authority": false,
+  "prompt_hash": "bada61391e64164f5c783941409ded9aa9bde071f90fcc93d54ec6a9c94f73c5",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a9057b02ab9205b909461d8752907150c2094880e0b7cb87b409df436f612110",
+  "response_id": "COLLABRESP-e783e293668f9c64d5bdf4d83d3deebf626ae636fba4f2aa1f5230444b8bfbc1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

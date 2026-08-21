@@ -1,0 +1,143 @@
+{
+  "output_schema_hash": "af6a09607a327476ccec9812ec08734f108bccfa93c2358405b7e196421354fb",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-7467d08bdd42ceeca5811bef",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 SK하이닉스 뉴스룸의 SOCAMM2 양산 원문 경로지만 HBM 매출·이익·FCF 귀속을 찾는 현재 objective에는 인접 DRAM 제품 shipment다. SOCAMM2 양산을 HBM 실적이나 세그먼트 기여로 확대하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8e0ec1da18e72425d75746d6",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 issuer 뉴스룸의 321단 QLC NAND 양산 경로이나 현재 HBM 중심 eps_fcf_explosion objective의 제품 범위 밖이다. NAND 제품 출시를 HBM 매출·마진 또는 FCF 전환 근거로 대체하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-9226e7769c5fdf6c0a7e1d75",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "공식 HBM4 양산 소개 경로는 provenance가 맞지만 HBM4 개발 완료·고객 요구 충족·양산 진입과 이후 출하 상태가 current fact graph에 더 구체적으로 반영돼 있다. 제품 양산 profile을 다시 fetch해도 미해결 숫자형 HBM 수익·세그먼트 기여 gap을 직접 닫지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-9a1e256a6d2c22e6aa421dbc",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 issuer 도메인의 4Q25 컨퍼런스콜 초대장 경로이나 초대 일시·접속 정보 자체는 실적 evidence가 아니다. FY25 실적 원문은 이미 full fetch·fact extraction이 완료돼 invitation landing page를 다시 가져올 실익이 없다."
+      },
+      {
+        "candidate_id": "SGCAND-9ffb55da89fd0ad077edf0b8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 issuer 도메인의 1Q26 컨퍼런스콜 초대장으로 source-family provenance는 맞지만 실적 수치나 HBM 매출·FCF를 담은 자료가 아니다. 1Q26 business results 원문이 이미 current fact graph에 반영돼 있다."
+      },
+      {
+        "candidate_id": "SGCAND-ade2cfc75a860e2ac80a52b6",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "공식 뉴스룸 경로이지만 부모 원문의 연관기사에서 2026-07-22로 표시된 NAND 연구기술 자료여서 as_of_date 이후이며 제품 범위도 NAND다. 미래 기술기사를 현재 HBM 수익 evidence로 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-c993b05c3cb8c0870285e397",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "YouTube embed URL이며 요청된 issuer 뉴스룸·실적발표·발표자료의 검증된 원문 family가 아니다. 동영상 embed를 FY25 실적 문서나 HBM 매출·현금흐름 근거로 대체할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-ce0a821b827a9abc18d6f2e0",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 issuer fact 페이지지만 공급된 부모 문맥에서는 미국 AI Company·시스템 최적화 연구 기반에 대한 정성적 참조다. HBM 매출 점값·범위, 이익·FCF 귀속 또는 구매의무를 확인할 직접 신호가 없어 현재 objective에는 immaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-d4c5263613f9c12b31ca3114",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "공식 뉴스룸의 인재·교육 콘텐츠이고 부모 원문의 연관기사 날짜도 2026-07-15로 as_of_date 이후다. PIM 교육 설명은 target의 현재 HBM 수익·현금흐름 근거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ec4ea77deb0a84415b6f7491",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "검증된 issuer 뉴스룸의 SanDisk HBF 표준화 경로이나 HBF는 NAND 기반의 인접 메모리 계층이며 표준화 참여가 HBM 매출·이익·FCF 수치나 회사 forward guidance를 확립하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ed12e11968e9feba8612200b",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.0,
+        "rationale": "공식 뉴스룸 도메인이지만 게시물 이미지 일괄 다운로드 endpoint일 뿐 본문 원문이나 실적·발표자료가 아니다. 이미지 ZIP route를 HBM 수익 evidence로 취급하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "partition 1의 11개 후보를 요청 순서대로 정확히 한 번씩 판정했으며 material 후보는 0개다.",
+      "공식 도메인 후보라도 미래 게시물, invitation·image endpoint, 이미 더 구체적으로 닫힌 HBM4 product profile, NAND·SOCAMM·HBF 인접 제품은 현재 eps_fcf_explosion source gap의 full-fetch 대상으로 올리지 않았다."
+    ]
+  },
+  "payload_hash": "0b76ee45d12da657a4147bdea677469ff078411310680bbe4fc0092e3a45424d",
+  "production_score_authority": false,
+  "prompt_hash": "e4b61a3374c49e4abe45fd6952d54ca5c48d197f64353314b1d845b5ca2853a6",
+  "provenance": {
+    "agent_id": "hynix_current_leaves",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_current_leaves",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6553778f5b8e8b12f1ad0f4ec098ed493c22afc992375775a5eb045541e5acaa",
+  "response_id": "COLLABRESP-08ec7e502f51b77925f713da958af7f49ff95748c7e6c53deb37c772b899d6bb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-06ee3729871fff03414fd30c",
+        "rationale": "발행사 표의 2025년 2분기 메모리 매출 QoQ 11%, 해당 실적의 외부감사인 검토 미완료·변경 가능성, 재고평가충당금 등 일회성 비용의 실적 하락 영향 등 비중복 objective-direct 사실 3건을 추출했다. HBM3E·DDR5 판매 확대는 현재 canonical의 더 최신 서버 메모리 판매 확대와 중복되어 반복하지 않았고, NAND·비메모리·타 사업 정보도 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-06ee3729871fff03414fd30c",
+        "economic_mechanism": "메모리 매출이 2025년 1분기 19.1조원에서 2분기 21.2조원으로 늘어 전분기 대비 11% 성장했다.",
+        "exact_quote": "사업부문별 매출 및 영업이익\n매출 영업이익\n2Q '24 1Q '25 2Q '25 QoQ YoY\n2Q '24 1Q '25 2Q '25 QoQ YoY\n(단위: 조원) (단위: 조원)\n총 액 74.1 79.1 74.6 6%↓ 1%↑\n총 액 10.4 6.7 4.7 2.0↓ 5.8↓\nDX부문 42.1 51.7 43.6 16%↓ 4%↑\nDX부문 2.7 4.7 3.3 1.4↓ 0.6↑\nMX / 네트워크 27.4 37.0 29.2 21%↓ 7%↑\nMX / 네트워크 2.2 4.3 3.1 1.2↓ 0.9↑\nMX 26.6 36.2 28.5 21%↓ 7%↑\nVD / DA 등 0.5 0.3 0.2 0.1↓ 0.3↓\nVD / DA 등 14.4 14.5 14.1 3%↓ 2%↓\nVD 7.5 7.8 7.0 10%↓ 7%↓ DS부문 6.5 1.1 0.4 0.8↓ 6.1↓\nDS부문 28.6 25.1 27.9 11%↑ 2%↓\nSDC 1.0 0.5 0.5 0.01↑ 0.5↓\n메모리 21.7 19.1 21.2 11%↑ 3%↓",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사 경영설명회 표가 메모리 매출의 2025년 1분기·2분기 수치와 QoQ 11%를 직접 제시한다. 전사 또는 DS 혼합 수치에서 역산하지 않은 비중복 메모리 성장 사실이다.",
+        "mechanism_scope_id": "005930:MEMORY:REVENUE:QOQ:2025-Q2",
+        "normalized_object": "2025년 2분기 메모리 매출 전분기 대비 성장률",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q2 vs 2025-Q1",
+        "predicate": "삼성전자 메모리 매출이 2025년 2분기에 전분기 대비 11% 증가했다",
+        "predicate_family": "MEMORY_REVENUE_QOQ_GROWTH",
+        "primitive_tags": [
+          "MEMORY_REVENUE",
+          "REVENUE_GROWTH"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_REVENUE_QOQ_GROWTH",
+        "question_family_tags": [
+          "MEMORY_REVENUE",
+          "QOQ_GROWTH"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "삼성전자 메모리 2025년 2분기 매출 QoQ 성장",
+        "subject_id": "005930:MEMORY:REVENUE_QOQ_GROWTH:2025-Q2",
+        "unit": "percent",
+        "value": 11
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-06ee3729871fff03414fd30c",
+        "economic_mechanism": "외부감사인의 회계검토가 완료되지 않아 같은 자료의 2025년 2분기 메모리 성장 수치가 검토 과정에서 달라질 수 있다.",
+        "exact_quote": "본 자료에 포함된 “2025년 2분기 실적”은 본사, 자회사 및 관계사 등에 대한 외부감사인의 회계검토가 완료되지 않은 상태에서\n투자자 여러분의 편의를 위해 작성된 자료이므로, 그 내용 중 일부는 회계검토과정에서 달라질 수 있음을 양지하시기 바랍니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 자료의 objective-linked 메모리 매출 QoQ 수치에 직접 적용되는 발행사 명시 불확실성이다. 검토 완료나 수치 확정을 다른 자료 없이 추론하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:INTERIM_RESULT_REVIEW_UNCERTAINTY:2025-Q2",
+        "normalized_object": "2025년 2분기 실적의 외부감사인 검토 미완료",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q2",
+        "predicate": "2025년 2분기 경영설명회 실적은 외부감사인 검토 전이며 일부 내용이 검토 과정에서 달라질 수 있다",
+        "predicate_family": "INTERIM_RESULT_EXTERNAL_REVIEW_INCOMPLETE",
+        "primitive_tags": [
+          "INFORMATION_UNCERTAINTY",
+          "REVIEW_STATUS"
+        ],
+        "product_family": "메모리 실적",
+        "question_family_id": "INTERIM_RESULT_EXTERNAL_REVIEW_INCOMPLETE",
+        "question_family_tags": [
+          "PRELIMINARY_RESULTS",
+          "EXTERNAL_REVIEW_INCOMPLETE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 2분기 메모리 실적 검토 상태",
+        "subject_id": "005930:MEMORY:INTERIM_RESULT_REVIEW_STATUS:2025-Q2",
+        "unit": "review status",
+        "value": "external auditor review incomplete; some figures may change during review"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-06ee3729871fff03414fd30c",
+        "economic_mechanism": "재고자산 평가 충당금 등 일회성 비용이 2025년 2분기 메모리 실적을 낮췄다.",
+        "exact_quote": "• 재고자산 평가 충당금 등 일회성 비용 등으로 실적 하락",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 매출 성장과 별개로 이익 전환을 낮춘 비용 요인을 발행사가 직접 제시한 비중복 counterfact다. 비용 금액이나 HBM 단독 이익 영향은 추론하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:ONE_TIME_COST_EARNINGS_DRAG:2025-Q2",
+        "normalized_object": "2025년 2분기 메모리 일회성 비용 실적 하락",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q2",
+        "predicate": "2025년 2분기 메모리 실적이 재고자산 평가 충당금 등 일회성 비용으로 하락했다",
+        "predicate_family": "MEMORY_ONE_TIME_COST_EARNINGS_DRAG",
+        "primitive_tags": [
+          "INVENTORY_PROVISION",
+          "ONE_TIME_COST",
+          "EARNINGS_DRAG"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_ONE_TIME_COST_EARNINGS_DRAG",
+        "question_family_tags": [
+          "INVENTORY_VALUATION_ALLOWANCE",
+          "ONE_TIME_COST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 일회성 비용 실적 영향",
+        "subject_id": "005930:MEMORY:ONE_TIME_COST:EARNINGS_DRAG:2025-Q2",
+        "unit": "earnings impact",
+        "value": "inventory valuation provisions and other one-time costs reduced performance"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "2025년 2분기 메모리 매출 21.2조원 자체는 QoQ 11% 성장 fact의 원문 맥락으로 사용했으며 같은 표를 별도 중복 fact로 만들지 않았다.",
+      "HBM3E 판매와 고용량 DDR5 비중 확대는 현재 2026년 공식 서버향 판매 확대·HBM4 양산 facts보다 오래되고 의미가 겹쳐 반복하지 않았다.",
+      "일회성 비용의 금액, 메모리 또는 HBM 단독 영업이익, FCF 영향은 원문에 없어 추론하지 않았다.",
+      "하반기 HBM·LPDDR5x·DDR5·GDDR7 판매 계획은 정량 guidance가 아니므로 FORWARD_GUIDANCE 역할을 부여하지 않았다."
+    ]
+  },
+  "payload_hash": "e420b68527e227c72e2b3145039889e360bb0690d7ddc253ce6d99781855f173",
+  "production_score_authority": false,
+  "prompt_hash": "3a254d975563ca4e273457d40b06011298523368551d4853f47232509ccf1383",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0fe76e781e3b27b11e65c8ffcd00ff1edd0c91f3dc7a721bb2e99e98a21d65ba",
+  "response_id": "COLLABRESP-f5f05118da8ae9658c7fbb11a8d9ec5c26e19560b8d60d414d52f2fe328be8ae",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

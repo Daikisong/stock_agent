@@ -1,0 +1,45 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "SK하이닉스 공식 실적발표·IR 자료에서 2026년 HBM 생산, CAPA, 수요 또는 고객 배정의 기간별 운영 상태를 확인하고 계약성 주장과 분리한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "SK하이닉스 2026 HBM 생산 계획 고객 배정 실적발표 자료",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "2026-07-12 이전 SK하이닉스 공식 실적발표 또는 IR 자료에서 기간이 특정된 HBM 생산·CAPA·수요 또는 고객 배정의 운영 상태를 확인하는 경로다. 앞선 issuer query가 CAPEX·FCF를 넓게 찾은 것과 달리 valuation_rerating의 DURABLE_VISIBILITY를 직접 겨냥하며, 계획·배정·협업을 서명된 구매계약이나 확정 물량으로 해석하지 않는다.",
+        "source_families": [
+          "ISSUER_PRESENTATION",
+          "ISSUER_EARNINGS_RELEASE"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "검색 결과가 없거나 문서가 부적합하더라도 공식 자료의 부재를 뜻하지 않는다.",
+      "full document의 발행일·대상회사·제품 범위·원문 인용을 검증하기 전에는 DURABLE_VISIBILITY 사실이나 valuation 근거로 사용할 수 없다."
+    ]
+  },
+  "payload_hash": "12d8c41278ed56d2a57ad21d64e24a7c0019754d4d17898708695bed90ae29e9",
+  "production_score_authority": false,
+  "prompt_hash": "f349ec9f57bb66b3a746d1e77c00160907de9d878c05729e492b728d53bcfbab",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-78feca51aa98881d392b70e4acbc020a7a379d409b1af5da22403534e8751210",
+  "response_id": "COLLABRESP-301aec5d313bb7f88156dc04ecd6f2dd5aa3ef9195cce8d7761d190351b060c1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,608 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "The prior ten accepted facts exhaust this document's distinct current-objective material; no new fact was forced on page 7.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "Cumulative review retains prior 22 facts and adds seven source-order DRAM margin, controlling-net-income, and annual DRAM-revenue estimate atoms; further genuine rows remain.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "Cumulative review retains prior 20 facts and adds the two remaining distinct project-level invested-to-date amounts; other text is semantic repetition or immaterial procedure.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Cumulative review retains prior 20 facts and adds three source-order annual revenue forecast atoms, all explicitly SUPERSEDED; further historical target model rows remain.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "DRAM 분기 영업이익률 전망 하향이 earnings bridge를 제약",
+        "exact_quote": "영업이익률 79% 80% 79% 78% 78% 78% 1%p 2%p 1%p\nDRAM 82% 83% 83% 83% 84% 83% -1%p -1%p 0%p",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Dated broker table gives an adverse DRAM margin revision with exact period and denominator; it is neither issuer guidance nor HBM-only profitability.",
+        "mechanism_scope_id": "000660|MEMORY|DRAM|QUARTERLY_MARGIN_REVISION",
+        "normalized_object": "3Q26E DRAM 영업이익률 83%, 종전 84% 대비 1%p 하향",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "3Q26E; report published 2026-05-07",
+        "predicate": "broker_dram_operating_margin_estimate_revised",
+        "predicate_family": "BROKER_DRAM_MARGIN_REVISION",
+        "primitive_tags": [
+          "broker_estimate",
+          "dram_segment",
+          "counter",
+          "not_hbm_only"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "BROKER_DRAM_MARGIN_REVISION",
+        "question_family_tags": [
+          "earnings_visibility",
+          "eps_fcf_explosion",
+          "dram_margin_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN_REVISION:3Q26E:SKS_2026-05-07",
+        "unit": "%",
+        "value": 83
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "DRAM 분기 수익성 전망이 전사 earnings bridge를 지지",
+        "exact_quote": "영업이익률 79% 80% 79% 78% 78% 78% 1%p 2%p 1%p\nDRAM 82% 83% 83% 83% 84% 83% -1%p -1%p 0%p",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The period-mapped DRAM margin level is material to forward earnings visibility even though the revision delta is zero; it remains a broker estimate and not HBM-only evidence.",
+        "mechanism_scope_id": "000660|MEMORY|DRAM|QUARTERLY_MARGIN_ESTIMATE",
+        "normalized_object": "4Q26E DRAM 영업이익률 전망 83%, 종전 전망과 동일",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q26E; report published 2026-05-07",
+        "predicate": "broker_dram_operating_margin_estimate",
+        "predicate_family": "BROKER_DRAM_MARGIN_ESTIMATE",
+        "primitive_tags": [
+          "broker_estimate",
+          "dram_segment",
+          "not_hbm_only"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "BROKER_DRAM_MARGIN_ESTIMATE",
+        "question_family_tags": [
+          "earnings_visibility",
+          "eps_fcf_explosion",
+          "dram_margin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN:4Q26E:SKS_2026-05-07",
+        "unit": "%",
+        "value": 83
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "지배주주 순이익 전망 상향으로 per-share earnings 기반 강화",
+        "exact_quote": "지배순이익 48,895 59,029 65,703 46,931 55,995 62,302 4% 5% 5%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Broker table separately maps controlling-shareholder net income and revision rate; it is consolidated, estimate-only, and not HBM-attributed.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|CONTROLLING_NI_REVISION",
+        "normalized_object": "2Q26E 지배순이익 48,895십억원, 종전 46,931십억원 대비 4% 상향",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E; report published 2026-05-07",
+        "predicate": "broker_controlling_net_income_estimate_revised",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "primitive_tags": [
+          "broker_estimate",
+          "controlling_net_income",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "net_income_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_REVISION:2Q26E:SKS_2026-05-07",
+        "unit": "KRW bn",
+        "value": 48895
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "지배주주 순이익 전망 상향으로 per-share earnings 기반 강화",
+        "exact_quote": "지배순이익 48,895 59,029 65,703 46,931 55,995 62,302 4% 5% 5%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is a distinct period-mapped controlling-net-income revision and remains a broker forecast rather than issuer or HBM-only evidence.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|CONTROLLING_NI_REVISION",
+        "normalized_object": "3Q26E 지배순이익 59,029십억원, 종전 55,995십억원 대비 5% 상향",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E; report published 2026-05-07",
+        "predicate": "broker_controlling_net_income_estimate_revised",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "primitive_tags": [
+          "broker_estimate",
+          "controlling_net_income",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "net_income_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_REVISION:3Q26E:SKS_2026-05-07",
+        "unit": "KRW bn",
+        "value": 59029
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "지배주주 순이익 전망 상향으로 per-share earnings 기반 강화",
+        "exact_quote": "지배순이익 48,895 59,029 65,703 46,931 55,995 62,302 4% 5% 5%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The fourth-quarter controlling-net-income revision is independent by period and remains consolidated and non-HBM-attributed.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|CONTROLLING_NI_REVISION",
+        "normalized_object": "4Q26E 지배순이익 65,703십억원, 종전 62,302십억원 대비 5% 상향",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q26E; report published 2026-05-07",
+        "predicate": "broker_controlling_net_income_estimate_revised",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "primitive_tags": [
+          "broker_estimate",
+          "controlling_net_income",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "net_income_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_REVISION:4Q26E:SKS_2026-05-07",
+        "unit": "KRW bn",
+        "value": 65703
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "연간 DRAM 매출 전망 상향이 전사 earnings bridge를 강화",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2026E 2027E 2026E 2027E 2026E 2027E\n매출액 336,588 470,245 326,782 420,416 3% 12%\nDRAM 258,904 366,229 248,298 326,254 4% 12%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The annual DRAM revenue revision is explicit but cannot be promoted to HBM-only sales or issuer guidance.",
+        "mechanism_scope_id": "000660|MEMORY|DRAM|ANNUAL_REVENUE_REVISION",
+        "normalized_object": "FY2026E DRAM 매출 258,904십억원, 종전 248,298십억원 대비 4% 상향",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E; report published 2026-05-07",
+        "predicate": "broker_dram_revenue_estimate_revised",
+        "predicate_family": "BROKER_ANNUAL_DRAM_REVENUE_REVISION",
+        "primitive_tags": [
+          "broker_estimate",
+          "dram_segment",
+          "not_hbm_only"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "BROKER_ANNUAL_DRAM_REVENUE_REVISION",
+        "question_family_tags": [
+          "earnings_visibility",
+          "eps_fcf_explosion",
+          "dram_revenue_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:DRAM_REVENUE_REVISION:FY2026E:SKS_2026-05-07",
+        "unit": "KRW bn",
+        "value": 258904
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "연간 DRAM 매출 전망 상향이 전사 earnings bridge를 강화",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2026E 2027E 2026E 2027E 2026E 2027E\n매출액 336,588 470,245 326,782 420,416 3% 12%\nDRAM 258,904 366,229 248,298 326,254 4% 12%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Outer-year DRAM revenue is independently period-mapped and remains a broker forecast with no HBM-only attribution.",
+        "mechanism_scope_id": "000660|MEMORY|DRAM|ANNUAL_REVENUE_REVISION",
+        "normalized_object": "FY2027E DRAM 매출 366,229십억원, 종전 326,254십억원 대비 12% 상향",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E; report published 2026-05-07",
+        "predicate": "broker_dram_revenue_estimate_revised",
+        "predicate_family": "BROKER_ANNUAL_DRAM_REVENUE_REVISION",
+        "primitive_tags": [
+          "broker_estimate",
+          "outer_year",
+          "dram_segment",
+          "not_hbm_only"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "BROKER_ANNUAL_DRAM_REVENUE_REVISION",
+        "question_family_tags": [
+          "earnings_visibility",
+          "eps_fcf_explosion",
+          "dram_revenue_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:DRAM_REVENUE_REVISION:FY2027E:SKS_2026-05-07",
+        "unit": "KRW bn",
+        "value": 366229
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "용인 팹 장기 투자계획의 기집행 금액",
+        "exact_quote": "(주1) 상기 금액은 추정치이며, 향후 시장 환경 및 공정 사양 변경 등에 따라 변동될 수 있습니다. 상기 금액 중 용인 반도체클러스터 1기 팹의 기 투자금액은 4,383,200백만원, 청주 P&T7 어드밴스드 패키징 팹의 기 투자금액은 53,473백만원 입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Issuer filing quantifies capital already invested in the Yongin fab, but the amount is issuer-wide semiconductor capacity and not HBM-only allocation.",
+        "mechanism_scope_id": "000660|CORPORATE_GENERIC|YONGIN_INVESTED_TO_DATE",
+        "normalized_object": "용인 반도체클러스터 1기 팹 기투자금액 4,383,200백만원",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "invested to date disclosed 2026-07-10",
+        "predicate": "facility_investment_spent_to_date",
+        "predicate_family": "ISSUER_CAPITAL_INVESTED_TO_DATE",
+        "primitive_tags": [
+          "issuer_official",
+          "actual_spend",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "ISSUER_CAPITAL_INVESTED_TO_DATE",
+        "question_family_tags": [
+          "capital_allocation",
+          "capacity_investment",
+          "invested_to_date"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:YONGIN_FAB_INVESTED_TO_DATE:2026-07-10",
+        "unit": "KRW mn",
+        "value": 4383200
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "첨단 패키징 팹 투자계획의 기집행 금액",
+        "exact_quote": "(주1) 상기 금액은 추정치이며, 향후 시장 환경 및 공정 사양 변경 등에 따라 변동될 수 있습니다. 상기 금액 중 용인 반도체클러스터 1기 팹의 기 투자금액은 4,383,200백만원, 청주 P&T7 어드밴스드 패키징 팹의 기 투자금액은 53,473백만원 입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Issuer filing quantifies P&T7 investment already incurred, without assigning it to HBM-only supply, a customer, or a signed sales contract.",
+        "mechanism_scope_id": "000660|CORPORATE_GENERIC|P_AND_T7_INVESTED_TO_DATE",
+        "normalized_object": "청주 P&T7 어드밴스드 패키징 팹 기투자금액 53,473백만원",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "invested to date disclosed 2026-07-10",
+        "predicate": "facility_investment_spent_to_date",
+        "predicate_family": "ISSUER_CAPITAL_INVESTED_TO_DATE",
+        "primitive_tags": [
+          "issuer_official",
+          "actual_spend",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "ISSUER_CAPITAL_INVESTED_TO_DATE",
+        "question_family_tags": [
+          "capital_allocation",
+          "advanced_packaging",
+          "invested_to_date"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:P_AND_T7_INVESTED_TO_DATE:2026-07-10",
+        "unit": "KRW mn",
+        "value": 53473
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "과거 연결 매출 전망의 valuation earnings denominator",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Historical broker forecast is preserved only as superseded issuer-wide calibration and is not issuer guidance, actual revenue, or HBM-only economics.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|HISTORICAL_REVENUE_FORECAST",
+        "normalized_object": "FY2024F 연결 매출 전망 64,651십억원",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "broker_consolidated_revenue_forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "broker_estimate",
+          "historical",
+          "superseded",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_REVENUE_FORECAST",
+        "question_family_tags": [
+          "market_mispricing",
+          "eps_fcf_explosion",
+          "historical_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW bn",
+        "value": 64651
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "과거 연결 매출 전망의 valuation earnings denominator",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The outer-year broker forecast is distinct by period but remains superseded, consolidated, and non-HBM-attributed.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|HISTORICAL_REVENUE_FORECAST",
+        "normalized_object": "FY2025F 연결 매출 전망 81,029십억원",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "broker_consolidated_revenue_forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "broker_estimate",
+          "historical",
+          "superseded",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_REVENUE_FORECAST",
+        "question_family_tags": [
+          "market_mispricing",
+          "eps_fcf_explosion",
+          "historical_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW bn",
+        "value": 81029
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "과거 연결 매출 전망의 valuation earnings denominator",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical FY2026F revenue model is retained only as superseded broker calibration, not current or HBM-only evidence.",
+        "mechanism_scope_id": "000660|MEMORY|MEMORY_GENERIC|HISTORICAL_REVENUE_FORECAST",
+        "normalized_object": "FY2026F 연결 매출 전망 94,364십억원",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "broker_consolidated_revenue_forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "broker_estimate",
+          "historical",
+          "superseded",
+          "not_hbm_only"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_REVENUE_FORECAST",
+        "question_family_tags": [
+          "market_mispricing",
+          "eps_fcf_explosion",
+          "historical_revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW bn",
+        "value": 94364
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-cec48c4b300fe56a6ba42cb7",
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "Page 7 reached the 12-fact upper bound after exhausting SGDOC-ce7946 and SGDOC-e387; distinct current broker model rows and historical superseded broker rows remain in SGDOC-cec48 and SGDOC-f875."
+    ]
+  },
+  "payload_hash": "894e8146d3e028b79debb0f1116d7e968222bb439c23d53dd15496501383bb34",
+  "production_score_authority": false,
+  "prompt_hash": "49b020a82367e4624e074d01c3aa2264b0db7bc14ce1a93a8a5faf748cb9ac06",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c8a558f46102c27eb64733784ecfe3eb874064818436de9abbe61cbb91ee23bc",
+  "response_id": "COLLABRESP-93a0054977681b45b1ae90d2f0bd5a783d01d4bbcfb8abfa7cb60678e33f0624",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

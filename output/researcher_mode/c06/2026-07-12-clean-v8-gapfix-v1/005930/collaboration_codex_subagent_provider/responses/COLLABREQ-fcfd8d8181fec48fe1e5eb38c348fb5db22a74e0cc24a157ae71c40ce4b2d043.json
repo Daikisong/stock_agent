@@ -1,0 +1,160 @@
+{
+  "output_schema_hash": "ea6c03fb5e7b6103662bcf718c7fd1257807399539b5ac26c711687f0d6fcd49",
+  "payload": {
+    "confidence": 0.78,
+    "counter_case": "하단 조건은 current operating 개선이 이미 가격에 반영됐거나 forward 추정 분모가 약화되고, HBM 단독 earnings·cash bridge와 계약경제가 계속 비공개인 경우다. Trailing PE 21.86배·PB 3.84배, forward EV/EBITDA 18.88배와 FCF yield 1.99%는 forward PE·PB보다 덜 우호적이며 서로 다른 기간·enterprise·cash 기준이다. 엔비디아 공급도 협의·계획이므로 강한 rerating을 확정하지 못한다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df"
+    ],
+    "positive_case": "상단 조건은 actual HBM4 출하와 메모리 매출·ASP 개선이 향후 전사 earnings에 지속 반영되고, forward 추정 분모가 실제로 실현되는 경우다. 이때 forward PE 5.59배와 PB 2.99배는 제품 계획만 있는 경우보다 높은 rerating 여지를 준다. 다만 AMD HBM3E 이력은 실행 확인이지 HBM 단독 earnings 수치가 아니므로 상단도 중간 구간에 제한한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 3,
+        "reason": "독립 고객이 확인한 실제 HBM3E 공급과 비공개 계약경제를 한 행에서 함께 보여 주므로 actual과 attribution 양쪽에 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 18,
+        "reason": "엔비디아 공급이 협의·계획 단계라는 직접 counter가 forward 지속성 상단을 제한하므로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 36,
+        "reason": "HBM4 실제 양산 출하는 positive actual execution의 핵심이므로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 44,
+        "reason": "2025년 동기 메모리 매출은 current actual operating delta의 동일 범주 비교 기준이므로 context로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 67,
+        "reason": "2026년 1분기 메모리 매출은 실현 수익 전환이므로 유지하되 HBM 단독으로 귀속하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 73,
+        "reason": "메모리 ASP 상승은 실현 earnings 방향을 보여 주므로 유지하되 HBM 가격·마진으로 바꾸지 않는다."
+      }
+    ],
+    "proposed_score_lower": 3.4,
+    "proposed_score_mid": 4.15,
+    "proposed_score_upper": 4.9,
+    "research_complete": true,
+    "researcher_summary": "하나의 숫자로 혼합 valuation 지표를 합치지 않고 세 층으로 비교한다. 첫째, actual operating layer는 HBM4 양산 출하, AMD의 HBM3E 공급 확인, 메모리 매출과 ASP 상승이다. 둘째, valuation layer에서 forward PE 5.59배·PB 2.99배는 전사 추정 equity 분모의 조건부 긍정 신호인 반면 trailing PE 21.86배·PB 3.84배, forward EV/EBITDA 18.88배·FCF yield 1.99%는 actual·enterprise·cash 기준의 제약 신호다. 셋째, attribution layer에는 HBM standalone 매출·마진·CAPEX·FCF bridge가 없다. 지표가 서로 다른 질문에 답하므로 허용 범위를 넓게 두되, 하단과 상단의 성립 조건을 명시한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "Actual layer: 독립 고객이 확인한 HBM3E 공급 이력은 실행 위험을 낮춘다. Attribution layer: 가격·물량·기간·HBM 단독 매출이 없어 valuation denominator에는 직접 배분하지 않는다.",
+        "fact_row_index": 3,
+        "source_economic_mechanism": "AMD 공식 뉴스룸은 삼성전자가 AMD의 primary HBM3E partner로서 Instinct MI350X와 MI355X 가속기를 지원해 왔다고 독립적으로 확인한다. 이는 실현된 고객·제품 공급 이력의 corroboration이지만 가격, 물량, 기간, HBM-only 매출은 공개하지 않는다.",
+        "source_period_json": "\"nearly two decades of collaboration through 2026-03-18; HBM3E partner history current at publication\"",
+        "source_predicate": "AMD_OFFICIAL_CONFIRMED_SAMSUNG_AS_PRIMARY_HBM3E_PARTNER_FOR_MI350X_MI355X",
+        "source_value_json": "\"primary HBM3E partner to AMD powering Instinct MI350X and MI355X\""
+      },
+      {
+        "component_interpretation": "Counter layer: 협의·계획은 고객 접점이지만 서명 계약·배정·물량·가격이 아니다. 따라서 forward earnings 지속성과 rerating 상단을 확정하지 못한다.",
+        "fact_row_index": 18,
+        "source_economic_mechanism": "삼성전자는 엔비디아에 HBM3E와 HBM4를 공급할 계획이라고 밝혔지만 HBM4 공급은 아직 긴밀히 협의 중이다. 이는 명명 고객과의 공급 논의를 확인하되 서명 계약·확정 배정·물량·가격을 확인하지 못하는 가시성 counter다.",
+        "source_period_json": "\"2025-10-31 현재 및 이후\"",
+        "source_predicate": "엔비디아 대상 HBM3E·HBM4 공급은 issuer plan이며 HBM4 공급은 2025-10-31 현재 협의 중이다.",
+        "source_value_json": "\"HBM3E·HBM4 공급 계획; HBM4 공급 협의 중\""
+      },
+      {
+        "component_interpretation": "Actual layer: HBM4가 개발에서 상용 출하로 전환된 직접 실행이다. Attribution layer: 출하 사실은 HBM 매출·마진·FCF 크기나 전사 multiple의 정상 분모를 제공하지 않는다.",
+        "fact_row_index": 36,
+        "source_economic_mechanism": "2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS",
+        "source_value_json": "\"HBM4 양산 출하\""
+      },
+      {
+        "component_interpretation": "Comparison layer: 2026년 1분기 메모리 매출 actual의 동일 범주 기준점이다. Scope layer: DS 메모리 전체이므로 HBM 단독 또는 연결 이익으로 재분류하지 않는다.",
+        "fact_row_index": 44,
+        "source_economic_mechanism": "메모리 제품 매출의 전년 비교 기준",
+        "source_period_json": "\"2025-Q1\"",
+        "source_predicate": "2025년 1분기 메모리 제품 매출액을 비교표에 보고했다",
+        "source_value_json": "19069038"
+      },
+      {
+        "component_interpretation": "Actual layer: 전년 비교 기준 대비 강한 DS 메모리 수익 전환이다. Scope layer: HBM 단독 매출·마진·현금분모를 생성하지 않으므로 전사 forecast valuation에 조건부로만 연결한다.",
+        "fact_row_index": 67,
+        "source_economic_mechanism": "메모리 제품 매출의 실제 수익 전환",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 메모리 제품 매출액을 보고했다",
+        "source_value_json": "74779980"
+      },
+      {
+        "component_interpretation": "Actual layer: 실현 ASP 상승은 earnings 개선 방향을 뒷받침한다. Scope layer: 전체 메모리 ASP여서 HBM 계약가격·믹스·마진으로 직접 전이하지 않는다.",
+        "fact_row_index": 73,
+        "source_economic_mechanism": "메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.",
+        "source_period_json": "\"2026Q1 vs 2025 annual average\"",
+        "source_predicate": "MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE",
+        "source_value_json": "146"
+      }
+    ],
+    "selected_fact_row_indices": [
+      3,
+      18,
+      36,
+      44,
+      67,
+      73
+    ],
+    "source_coverage": [
+      "CUSTOMER_OFFICIAL",
+      "ISSUER_NEWSROOM",
+      "OPENDART",
+      "KRX_PRICE_MARKET_CAP",
+      "KRX_PRICE_MARKET_CAP+COMPANYGUIDE",
+      "KRX_PRICE_MARKET_CAP+DETERMINISTIC_FORWARD_SCENARIO",
+      "KRX_PRICE_MARKET_CAP+DETERMINISTIC_FORWARD_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO+DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DETERMINISTIC_FORWARD_SCENARIO+KRX_PRICE_MARKET_CAP",
+      "TARGET_OFFICIAL_TRAILING_VALUATION",
+      "ISSUER_GUIDANCE"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "상단은 forward 전사 earnings 추정이 실제로 실현되고 actual 메모리 개선이 지속된다는 조건에 민감하다.",
+      "하단은 trailing·enterprise·cash 지표가 forward equity multiples보다 현재 경제성을 더 잘 나타내거나 operating 개선이 이미 반영된 경우다.",
+      "HBM standalone 매출·마진·CAPEX·FCF가 없어 operating facts와 valuation denominator 사이의 정량 bridge가 없다.",
+      "Forward PE·PB, trailing PE·PB, forward EV/EBITDA와 FCF yield는 기간·추정·equity/enterprise·cash 기준이 달라 허용 범위를 넓힌다.",
+      "엔비디아 공급 논의에는 확정 배정·물량·가격·기간·취소조건이 없다.",
+      "DURABLE_VISIBILITY의 전사 AI factory GPU 계획은 HBM 고객 계약이나 HBM earnings visibility가 아니다."
+    ],
+    "why_not_higher": "상단 조건에서도 HBM standalone earnings·FCF와 signed 고객경제가 없고 forward 추정 실현 여부가 불확실하다. Trailing·enterprise·cash 지표도 더 강한 rerating 해석을 제한한다.",
+    "why_not_lower": "하단 조건에서도 HBM4 실제 양산 출하, AMD 공식 HBM3E 공급 이력, 실현 메모리 매출·ASP 개선이 존재해 forecast-only 또는 target-price-only thesis보다 강하다."
+  },
+  "payload_hash": "4660c4f3564895ee35ccdbdcf1e84e26b9edc3183fe250e1f687f2ad1b941d31",
+  "production_score_authority": false,
+  "prompt_hash": "77c7352bd48d3f9069891b7309a55d8f74813200ad55dcc11edf00e9249b2f87",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fcfd8d8181fec48fe1e5eb38c348fb5db22a74e0cc24a157ae71c40ce4b2d043",
+  "response_id": "COLLABRESP-6936e600e73efa9ba208457bfa93535e3bc16b41d95d5a2805a700e73d4dcd2b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

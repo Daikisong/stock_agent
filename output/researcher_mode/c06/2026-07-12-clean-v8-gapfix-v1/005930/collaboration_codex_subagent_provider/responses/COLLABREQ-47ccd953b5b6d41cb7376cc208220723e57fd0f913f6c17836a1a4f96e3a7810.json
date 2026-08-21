@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      1.5,
+      2.6
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-09ab96433f8087166845bf25의 positive midpoint 2.0은 AMD 공식 corroboration을 반영하는 ordinal 중심으로 현재 case와 가장 가깝다.",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64의 counter midpoint 1.75는 NVIDIA·OpenAI 독립 outcome과 contract-to-cash bridge 부재의 하단을 제공한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1",
+      "EFACT-6a317a6c41253b0fafc79d56"
+    ],
+    "disagreements": [
+      "AMD corroboration의 높은 source quality와 MOU·technical evidence의 낮은 contract completeness를 같은 층으로 합치지 않는다.",
+      "NVIDIA·OpenAI material 0과 제한 공시는 source/계약 absence proof가 아니므로 monitoring gap으로만 남긴다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 2.0,
+    "rationale": "AMD official의 HBM3E 공급 이력과 HBM4·MOU·플랫폼 협력은 독립 corroboration을 제공한다. 반면 NVIDIA는 issuer 협의 중, OpenAI는 LOI·지원 계획·잠재 수요뿐이고 customer-official outcome이 없다. HBM4 양산 actual은 execution으로 별도 반영하되 procurement economics를 대신하지 않는다. 두 ordinal anchor 중심에 맞춰 2.0점과 1.5~2.6 범위를 둔다.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-303c70f6fb2e11305c82f77b",
+      "EFACT-4d0e0f24a3a1645c5962f1b3",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-6e9f853e4ad5ac9c6849729a",
+      "EFACT-7f9fca669110a7e761e6264d",
+      "EFACT-b6ff1b966b93b843dd6bcd04",
+      "EFACT-f295131e6dc092d197e8eb93",
+      "EFACT-f8487df03aa235fb70883193"
+    ],
+    "why_not_higher": "NVIDIA·OpenAI customer-official current outcome과 AMD purchase price·volume·duration이 없어 information completeness 상단을 충족하지 못한다.",
+    "why_not_lower": "AMD 공식 뉴스룸이 실제 HBM3E 공급 이력과 HBM4·플랫폼 협력을 독립 확인해 issuer-only information plane보다 명확히 낫다."
+  },
+  "payload_hash": "c3114633397b8e9313a085d2ff25d2bc03dcf8a5b790d9ad57eb6b10ca8e250d",
+  "production_score_authority": false,
+  "prompt_hash": "03b1270c2d5aa04f6d6288c5a7605a62ad67f37206b03b860fc58010a9319d0e",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-47ccd953b5b6d41cb7376cc208220723e57fd0f913f6c17836a1a4f96e3a7810",
+  "response_id": "COLLABRESP-2571d3151b96ebd1d348dc6a8e57e1db1632a43b8ea8230dc2e488e376dcb626",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "output_schema_hash": "c868b7984783713b2e3740f6cd04e782db23cbf2a2dc528af1d966a1aa3d96b4",
+  "payload": {
+    "confidence": 0.68,
+    "counter_case": "COUNTER 행 1,6,7,10,11,12를 모두 반영한다. 고객 집중, 재고평가, 재공품 손실 및 큰 재공품은 operating improvement가 이미 가격에 반영됐거나 실현되지 않을 위험을 남긴다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c"
+    ],
+    "positive_case": "POSITIVE 행 2,4,8,9,13,14를 모두 반영한다. 실제 DRAM 성장과 HBM 실행은 기대 재평가 가능성을 높이지만 DRAM을 HBM으로 귀속하지 않는다. CURRENT_VALUATION과 EARNINGS_REVISION은 비교 plane이며 그 자체가 저평가 증명은 아니다.",
+    "prior_fact_dispositions": [],
+    "proposed_score_lower": 5.8,
+    "proposed_score_mid": 6.8,
+    "proposed_score_upper": 7.8,
+    "research_complete": true,
+    "researcher_summary": "DRAM actual 성장, 메모리 100% 가동, HBM 가격·제품·고객 실행은 시장 기대와 대조할 positive operating delta다. 그러나 현재 가격·multiple과 revision의 구조화 자료가 있어도 HBM earnings bridge 및 기대치 대비 실제 surprise를 직접 증명하지 않으므로 mispricing은 중간 수준으로 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "market_mispricing counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 1,
+        "source_economic_mechanism": "고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.",
+        "source_value_json": "\"7,780,590 and 6,536,458 vs 4,786,233\""
+      },
+      {
+        "component_interpretation": "market_mispricing positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 2,
+        "source_economic_mechanism": "2026년 1분기 반도체 생산실적은 11,465,147백만원이며 생산설비 평균가동률은 100%였다. 이는 메모리 전반의 현재 설비 활용도를 보여주지만 HBM 전용 가동률이나 장기 예약 물량을 뜻하지 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "OPERATED_MEMORY_PRODUCTION_FACILITIES_AT_FULL_UTILIZATION",
+        "source_value_json": "\"production output KRW 11,465,147 million; average utilization 100%\""
+      },
+      {
+        "component_interpretation": "market_mispricing positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 4,
+        "source_economic_mechanism": "SK하이닉스 별도 기준 2026년 1분기 DRAM 매출 실제치는 39,758,279백만원이었다. HBM 단독 매출로 재분류하지 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_Q1_2026_DRAM_REVENUE",
+        "source_value_json": "39758279"
+      },
+      {
+        "component_interpretation": "market_mispricing counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 6,
+        "source_economic_mechanism": "2026년 1분기말 재고 취득원가 16,385,847백만원에 평가충당금 411,714백만원을 반영해 장부잔액을 15,974,133백만원으로 낮췄다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_INVENTORY_VALUATION_ALLOWANCE",
+        "source_value_json": "411714"
+      },
+      {
+        "component_interpretation": "market_mispricing counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 7,
+        "source_economic_mechanism": "2026년 1분기말 중국 종속기업 생산 재공품의 구매·추가가공·판매에서 예상되는 손실을 반영한 계약손실충당부채가 162,582백만원으로 전기초 153,267백만원보다 늘었다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_CONTRACT_LOSS_PROVISION_FOR_WAFER_WORK_IN_PROCESS",
+        "source_value_json": "162582"
+      },
+      {
+        "component_interpretation": "market_mispricing positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 8,
+        "source_economic_mechanism": "별도 DRAM 매출의 전년 동기 대비 확대가 메모리 수익전환을 보여주지만 HBM 단독 매출은 아니다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "별도 DRAM 매출은 2026년 1분기 39,758,279백만원으로 전년 동기 13,607,092백만원보다 컸다.",
+        "source_value_json": "\"39,758,279 vs 13,607,092\""
+      },
+      {
+        "component_interpretation": "market_mispricing positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 9,
+        "source_economic_mechanism": "제한된 공급 환경에서 HBM이 가격 상승을 주도한 제품군에 포함돼 2026년 1분기 실적과 수익률 전환을 지지했다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "HBM_INCLUDED_AMONG_PRODUCTS_LEADING_PRICE_INCREASES",
+        "source_value_json": "\"가격 상승 주도 제품군에 포함\""
+      },
+      {
+        "component_interpretation": "market_mispricing counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 10,
+        "source_economic_mechanism": "2026년 1분기 단일 외부고객 (가)의 매출이 연결 매출의 10%를 넘고 7,780,590백만원에 달해 고객 집중 위험을 확인한다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_REVENUE_FROM_CUSTOMER_A_ABOVE_TEN_PERCENT",
+        "source_value_json": "7780590"
+      },
+      {
+        "component_interpretation": "market_mispricing counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 11,
+        "source_economic_mechanism": "2026년 1분기말 반도체 재공품은 9,627,923백만원으로 전체 재고 15,974,133백만원의 큰 비중을 차지해 향후 출하 전환 잠재력과 재고 위험을 함께 만든다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_WORK_IN_PROCESS_INVENTORY",
+        "source_value_json": "9627923"
+      },
+      {
+        "component_interpretation": "market_mispricing counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 12,
+        "source_economic_mechanism": "2026년 1분기 단일 외부고객 (나)의 매출도 연결 매출의 10%를 넘고 6,536,458백만원으로 공시돼 복수 대형 고객 집중을 확인한다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_REVENUE_FROM_CUSTOMER_B_ABOVE_TEN_PERCENT",
+        "source_value_json": "6536458"
+      },
+      {
+        "component_interpretation": "market_mispricing positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 13,
+        "source_economic_mechanism": "회사는 HBM의 Time to Market 실현과 대역폭·밀도·Core Die 적층 단수 향상, 성능·품질을 제품 실행 기반으로 설명했다. 같은 문장의 기존 고객 ASIC 협업 사실과 구별되는 제품 상용화 실행력이다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "REPORTS_HBM_TIME_TO_MARKET_AND_PERFORMANCE_EXECUTION",
+        "source_value_json": "\"HBM Time to Market realized with higher bandwidth, density and Core Die stacking\""
+      },
+      {
+        "component_interpretation": "market_mispricing positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 14,
+        "source_economic_mechanism": "HBM 성능·품질을 기반으로 고객과 ASIC 개발 협업을 진행해 고객 요구가 제품 개발에 연결되는 상용화 경로를 형성한다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "COLLABORATING_WITH_CUSTOMERS_ON_ASIC_DEVELOPMENT_FOR_HBM",
+        "source_value_json": "\"고객들과 ASIC 개발 협력\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      1,
+      2,
+      4,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_GUIDANCE",
+      "COMPANYGUIDE",
+      "KRX_PRICE_MARKET_CAP",
+      "TARGET_OFFICIAL_TRAILING_VALUATION"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "시장 컨센서스 대비 HBM 단독 actual surprise bridge가 없다.",
+      "현재/forward multiple은 구조화 비교 자료지만 HBM earnings 귀속이 완결되지 않았다.",
+      "고객 집중과 재고·재공품 위험의 시장 반영 정도를 직접 확인할 수 없다."
+    ],
+    "why_not_higher": "HBM actual-versus-expectation bridge와 독립적 mispricing 증명이 없고 구조화 multiple·revision은 score authority가 아니다.",
+    "why_not_lower": "actual DRAM 성장, 100% 가동, HBM 가격·제품 실행과 current valuation/revision plane이 있어 기대 재평가 가능성을 0으로 둘 수 없다."
+  },
+  "payload_hash": "88ab4ad0bae517cd9c0a5b8d75ee184ded34cacfa6ca462f6a2f52dd0431b8bb",
+  "production_score_authority": false,
+  "prompt_hash": "df146872800c95a6e8b93cff442ed0fb09356baeea3ed3edc74732d55a3da268",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2dd913adb7dc84344d9a2d120b4fe5c8e8129c95e5dc7b2cd7965c862d9fc707",
+  "response_id": "COLLABRESP-09592d809bc5f2287a66642eb461c9a560a4dff48dc97e381f194fd49de7b840",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

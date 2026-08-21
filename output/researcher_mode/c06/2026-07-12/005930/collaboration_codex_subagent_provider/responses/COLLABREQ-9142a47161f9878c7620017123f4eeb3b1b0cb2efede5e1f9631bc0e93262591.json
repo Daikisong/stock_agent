@@ -1,0 +1,214 @@
+{
+  "output_schema_hash": "e487b359c651bbea87773122793eea3da2ec824f45fc4d70982c15ff37eaecff",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-d878b0b5e7b0cea4b5fd4647",
+        "rationale": "163,219자 공개 증권사 PDF 전체를 current 320 facts와 대조했다. 산업·NAND·장비주·SK하이닉스 등 타사 표와 기존 가격·실적 전망은 제외하고, 삼성전자 직접 2026F/2027F EV/EBITDA 2건 및 삼성전자 메모리/HBM SOTP에 직접 적용된 peer·target EV/EBITDA 2건만 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-d878b0b5e7b0cea4b5fd4647",
+        "economic_mechanism": "공개 증권사 보고서의 예상 EV/EBITDA는 삼성전자 메모리 이익 전망을 포함한 기업가치가 예상 EBITDA 대비 몇 배인지 수치화한다.",
+        "exact_quote": "Financial Data (십억원, %, 배, 원)\n투자지표 2024 2025 2026F 2027F\n매출액 300,870.9 333,605.9 552,528.0 637,754.3\n영업이익 32,726.0 43,601.1 199,499.4 267,238.9\n세전이익 37,529.7 49,481.5 204,248.4 271,987.8\n순이익 33,621.4 44,261.0 160,489.6 213,716.4\nEPS 4,950 6,564 23,827 31,729\n증감율 132.29 32.61 263.00 33.16\nPER 10.75 18.27 7.98 5.99\nPBR 0.92 1.87 2.21 1.64\nEV/EBITDA 3.60 7.67 4.17 2.50",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "삼성전자 직접 재무표가 현재 구조화 gate에 필요한 2026F EV/EBITDA 기간·점값·배수 단위를 명시한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EV_EBITDA:FY2026F",
+        "normalized_object": "삼성전자 2026년 예상 EV/EBITDA 4.17배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "하나증권은 삼성전자의 2026년 예상 EV/EBITDA를 4.17배로 제시했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "FORWARD_EV_EBITDA",
+          "FY2026F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2026년 예상 EV/EBITDA",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 4.17
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-d878b0b5e7b0cea4b5fd4647",
+        "economic_mechanism": "공개 증권사 보고서의 예상 EV/EBITDA는 삼성전자 메모리 이익 전망을 포함한 기업가치가 예상 EBITDA 대비 몇 배인지 수치화한다.",
+        "exact_quote": "Financial Data (십억원, %, 배, 원)\n투자지표 2024 2025 2026F 2027F\n매출액 300,870.9 333,605.9 552,528.0 637,754.3\n영업이익 32,726.0 43,601.1 199,499.4 267,238.9\n세전이익 37,529.7 49,481.5 204,248.4 271,987.8\n순이익 33,621.4 44,261.0 160,489.6 213,716.4\nEPS 4,950 6,564 23,827 31,729\n증감율 132.29 32.61 263.00 33.16\nPER 10.75 18.27 7.98 5.99\nPBR 0.92 1.87 2.21 1.64\nEV/EBITDA 3.60 7.67 4.17 2.50",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 삼성전자 직접 재무표가 2027F 점값을 별도로 제시해 예상 EBITDA 증가에 따른 forward 배수 기간 구조를 확인하게 한다.",
+        "mechanism_scope_id": "005930:MEMORY:FORWARD_EV_EBITDA:FY2027F",
+        "normalized_object": "삼성전자 2027년 예상 EV/EBITDA 2.50배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027F",
+        "predicate": "하나증권은 삼성전자의 2027년 예상 EV/EBITDA를 2.50배로 제시했다",
+        "predicate_family": "FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "FORWARD_EV_EBITDA",
+          "FY2027F"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_FORWARD_EV_EBITDA",
+        "question_family_tags": [
+          "FORWARD_VALUATION_MULTIPLE",
+          "SAMSUNG_FORWARD_EV_EBITDA"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "삼성전자 2027년 예상 EV/EBITDA",
+        "subject_id": "005930",
+        "unit": "배",
+        "value": 2.5
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-d878b0b5e7b0cea4b5fd4647",
+        "economic_mechanism": "삼성전자 메모리 사업부 EBITDA에 직접 비교 가능한 메모리 업체들의 평균 EV/EBITDA를 적용한 SOTP 영업가치는 메모리 이익이 기업가치로 전환되는 가정을 수치화한다.",
+        "exact_quote": "도표 7. 밸류에이션\nTarget\n영업가치(십억원) 사업부 EBITDA Value 비고1 비고2\nEV/EBITDA\n메모리 200,380 5.2 1,041,978 Peer Group 평균 EV/EBITDA 적용 SK하이닉스, Micron, Nanya\nHBM 18,582 8.5 157,944\nFoundry/LSI 9,041 8.5 76,853 Peer Group 평균 EV/EBITDA 적용 TSMC, Global Foundry\nSDC 4,134 4.9 20,255 Peer Group 평균 EV/EBITDA 적용 LG디스플레이, BOE, AUO 등\nDX 5,674 4.0 22,695 Peer Group 평균 EV/EBITDA 적용 Apple, Xiaomi, LG전자, Whirlpool 등\nHarman 1,748 6.0 10,486 Peer Group 평균 EV/EBITDA 적용\nSub-Total (A) 239,559 6.1 1,330,210",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "삼성전자 메모리 사업부에 직접 적용된 peer roster와 5.2배 배수가 명시돼 전체 forward 배수의 비교가정을 보완한다.",
+        "mechanism_scope_id": "005930:MEMORY:PEER_EV_EBITDA:SOTP:2026-02-24",
+        "normalized_object": "삼성전자 메모리 사업부 peer EV/EBITDA 5.2배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02-24 target valuation",
+        "predicate": "하나증권은 삼성전자 메모리 사업부 가치 산정에 SK하이닉스·Micron·Nanya peer 평균 EV/EBITDA 5.2배를 적용했다",
+        "predicate_family": "PEER_EV_EBITDA_VALUATION",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "MEMORY_PEER_GROUP",
+          "SOTP"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "SAMSUNG_MEMORY_PEER_EV_EBITDA",
+        "question_family_tags": [
+          "PEER_VALUATION",
+          "SAMSUNG_MEMORY_SOTP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 사업부 peer valuation",
+        "subject_id": "005930:MEMORY",
+        "unit": "배",
+        "value": 5.2
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-d878b0b5e7b0cea4b5fd4647",
+        "economic_mechanism": "삼성전자 HBM EBITDA에 적용된 target EV/EBITDA는 HBM 이익 기여에 부여한 별도 SOTP 가치평가 가정을 수치화한다.",
+        "exact_quote": "도표 7. 밸류에이션\nTarget\n영업가치(십억원) 사업부 EBITDA Value 비고1 비고2\nEV/EBITDA\n메모리 200,380 5.2 1,041,978 Peer Group 평균 EV/EBITDA 적용 SK하이닉스, Micron, Nanya\nHBM 18,582 8.5 157,944\nFoundry/LSI 9,041 8.5 76,853 Peer Group 평균 EV/EBITDA 적용 TSMC, Global Foundry\nSDC 4,134 4.9 20,255 Peer Group 평균 EV/EBITDA 적용 LG디스플레이, BOE, AUO 등\nDX 5,674 4.0 22,695 Peer Group 평균 EV/EBITDA 적용 Apple, Xiaomi, LG전자, Whirlpool 등\nHarman 1,748 6.0 10,486 Peer Group 평균 EV/EBITDA 적용\nSub-Total (A) 239,559 6.1 1,330,210",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "삼성전자 HBM 사업부의 별도 EBITDA·target multiple·가치가 같은 표에 직접 제시돼 HBM 프리미엄 가정을 보완한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:TARGET_EV_EBITDA:SOTP:2026-02-24",
+        "normalized_object": "삼성전자 HBM 사업부 target EV/EBITDA 8.5배",
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02-24 target valuation",
+        "predicate": "하나증권은 삼성전자 HBM 사업부 가치 산정에 target EV/EBITDA 8.5배를 적용했다",
+        "predicate_family": "TARGET_EV_EBITDA_VALUATION",
+        "primitive_tags": [
+          "EV_EBITDA",
+          "HBM",
+          "SOTP"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "SAMSUNG_HBM_TARGET_EV_EBITDA",
+        "question_family_tags": [
+          "HBM_VALUATION",
+          "SAMSUNG_HBM_SOTP"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 사업부 valuation",
+        "subject_id": "005930:HBM",
+        "unit": "배",
+        "value": 8.5
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "a789fe023d138f65b96a2e736cc468f35669e882ee5d9f24f4a69378e6cba4a1",
+  "production_score_authority": false,
+  "prompt_hash": "156a659e012be0179eca1d2afcab04717a202076cb215af4b27893b0f0a83c11",
+  "provenance": {
+    "agent_id": "samsung_components_b",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9142a47161f9878c7620017123f4eeb3b1b0cb2efede5e1f9631bc0e93262591",
+  "response_id": "COLLABRESP-0826d13a6624b8337eff46ef25b7c47619e8865ca6b86ffad240ee3e08b9b59a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

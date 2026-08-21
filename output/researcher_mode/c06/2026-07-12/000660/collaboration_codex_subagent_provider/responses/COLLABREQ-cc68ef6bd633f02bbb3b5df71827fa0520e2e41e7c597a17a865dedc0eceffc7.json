@@ -1,0 +1,158 @@
+{
+  "output_schema_hash": "c7ca72ff99ddf46467b35019d847737b617a8ba9faf30058ae5717203b8d91b2",
+  "payload": {
+    "confidence": 0.84,
+    "counter_case": "장기 생산벨트 투자는 영업현금흐름을 다시 흡수하며 조달 조건도 확정되지 않았다. Big 5 고객 FCF 감소와 일부 외부차입 전환은 AI CapEx 재원을 제약하고, BNK의 FY2027~FY2028 영업이익·EPS 감소 전망은 FY2026 급증이 계속 가속된다는 가정에 반대된다.",
+    "historical_anchor_ids": [
+      "CANCH-3d3e727f09221d0fc00e86a6",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "nearest_counter_anchor_ids": [
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "nearest_positive_anchor_ids": [
+      "CANCH-3d3e727f09221d0fc00e86a6"
+    ],
+    "positive_case": "1Q26 연결 매출·영업이익·마진, DRAM ASP와 매출 증가, FY2025 HBM 매출의 2배 이상 성장에 더해 구조화 actual earnings·FCF와 컨센서스 상향이 동시 확인된다. 이는 가격·믹스가 전사 이익과 현금으로 전환된 강한 현재 근거지만 HBM 단독 이익이나 FCF 수치는 아니다.",
+    "prior_fact_dispositions": [],
+    "proposed_score_lower": 16.5,
+    "proposed_score_mid": 18.0,
+    "proposed_score_upper": 19.5,
+    "research_complete": true,
+    "researcher_summary": "FY2025와 1Q26의 전사 실적, 실제 DRAM 매출·ASP, FY2025 HBM 매출 성장, 현재 현금전환 및 추정치 상향은 이익 확대가 실적과 현금으로 이어진 경로를 함께 보여준다. 다만 전사·DRAM 수치를 HBM 단독 손익으로 귀속할 수 없고, 장기 투자와 고객 AI CapEx 재원 및 FY2027 이후 감익 전망이 지속성을 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "선행 이익 추정치의 큰 폭 상향은 폭발적 이익 기대의 현재성을 지지하지만 회사 가이던스는 아니다.",
+        "fact_row_index": 15,
+        "source_economic_mechanism": "Quantiwise 컨센서스 표는 2026년 영업이익 성장률과 12개월 선행 영업이익·순이익 추정치의 최근 상향 폭을 한 기준으로 제시해 forward earnings와 기대 변화의 크기를 직접 계량한다.",
+        "source_period_json": "\"FY2026F and 12-month-forward consensus snapshot as of 2025-11-19\"",
+        "source_predicate": "2026년 영업이익 성장률은 64.6%이고 12개월 선행 영업이익 추정치는 1개월간 37.9%, 3개월간 65.7%, 12개월 선행 순이익 추정치는 1개월간 44.0% 변했다",
+        "source_value_json": "\"2026 OP growth 64.6; 12M forward OP 1M change 37.9; 3M change 65.7; 12M forward NP 1M change 44.0\""
+      },
+      {
+        "component_interpretation": "장기 투자의 단계 집행과 유동적 조달은 성장 CAPA 경로인 동시에 FCF 지속성의 제약이다.",
+        "fact_row_index": 40,
+        "source_economic_mechanism": "SK하이닉스는 1,100조원 장기 메모리 투자를 수요 가시성에 맞춰 단계 집행하고 재원도 집행 시점에 맞춰 조달할 계획이다. 기본 재원은 영업이익에서 창출되는 현금흐름이지만, 시장 상황에 따라 조달 규모·시점을 조절하고 글로벌 파트너 협력 등 다양한 방식도 검토한다. 따라서 투자 재원이 이미 전액 확보됐거나 외부 파트너 조달이 확정됐다고 볼 수 없으며, 향후 영업현금흐름과 FCF 전환은 투자 집행에 직접 노출된다.",
+        "source_period_json": "\"long-term investment plan announced 2026-06-29; financing terms to be set at execution stages\"",
+        "source_predicate": "SK하이닉스는 1,100조원 장기 투자를 수요 가시성에 맞춰 단계적으로 집행·조달하고 영업이익 창출 현금흐름을 기본 재원으로 삼되 글로벌 파트너 협력 등 추가 조달 방안을 검토한다",
+        "source_value_json": "\"phased demand-visibility-linked funding; operating-profit-generated cash flow as base; financing size and timing flexible; partner and other methods under review with terms unresolved\""
+      },
+      {
+        "component_interpretation": "AI 메모리와 HBM이 FY2025 전사 최대 실적을 견인했지만 제시된 손익은 전사 수치다.",
+        "fact_row_index": 53,
+        "source_economic_mechanism": "SK하이닉스는 AI 메모리 경쟁력과 HBM을 포함한 고부가 제품이 FY2025 사상 최대 실적을 견인했다고 귀속했고, 전사 매출 97.1467조원·영업이익 47.2063조원·순이익 42.9479조원을 보고했다. 전사 숫자이므로 HBM 단독 이익으로 확대하지 않는다.",
+        "source_period_json": "\"FY2025\"",
+        "source_predicate": "SK하이닉스는 AI 메모리와 HBM 포함 고부가 제품이 견인한 FY2025 사상 최대 실적으로 매출 97.1467조원과 영업이익 47.2063조원, 순이익 42.9479조원을 기록했다",
+        "source_value_json": "\"revenue KRW 97.1467tn; operating profit KRW 47.2063tn; net profit KRW 42.9479tn\""
+      },
+      {
+        "component_interpretation": "1Q26 전사 매출·영업이익·마진은 현재 이익 확대의 실제 기준점이며 HBM 단독 실적은 아니다.",
+        "fact_row_index": 89,
+        "source_economic_mechanism": "2026년 1분기 연결 매출과 영업이익이 전분기 대비 각각 60%, 96.2% 증가하고 영업이익률이 72%로 개선돼 가격·수요 강세의 전사 손익 전환을 보여준다. 반도체부문이 100%로 공시됐지만 HBM 단독 이익으로 귀속하지 않는다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q4 and 2025-Q1\"",
+        "source_predicate": "2026년 1분기 연결 매출은 52.6조원으로 전분기 대비 60% 증가했고 영업이익은 37.6조원, 영업이익률은 72%였다",
+        "source_value_json": "\"revenue KRW 52.6tn (+60% QoQ, +198% YoY); operating profit KRW 37.6tn; operating margin 72% (+13pp QoQ)\""
+      },
+      {
+        "component_interpretation": "브로커의 FY2026~FY2027 OCF·FCF 전망은 forward cash bridge지만 실제 현금흐름이 아니다.",
+        "fact_row_index": 99,
+        "source_economic_mechanism": "한화리서치는 FY2026E와 FY2027E 영업현금흐름을 각각 226,337십억원과 331,425십억원, 설비투자를 42,080십억원과 50,683십억원, FCF를 180,763십억원과 279,910십억원으로 전망했다. 이는 이익 전망이 실제 현금 전환으로 이어진다는 valuation 입력의 최신 브로커 추정이며 회사 공식 guidance가 아니다.",
+        "source_period_json": "\"FY2026E-FY2027E forecast published 2026-06-22\"",
+        "source_predicate": "한화리서치는 SK하이닉스 FY2026E와 FY2027E 영업현금흐름을 226,337십억원과 331,425십억원, 설비투자를 42,080십억원과 50,683십억원, Free Cash Flow를 180,763십억원과 279,910십억원으로 전망했다",
+        "source_value_json": "\"operating cash flow FY2026E 226337/FY2027E 331425; capex 42080/50683; FCF 180763/279910\""
+      },
+      {
+        "component_interpretation": "출하량 정체에도 DRAM ASP 급등이 발생해 가격 레버리지가 실제 전사 실적 경로에 존재한다.",
+        "fact_row_index": 100,
+        "source_economic_mechanism": "DRAM 출하량이 전분기와 비슷한 가운데 ASP가 60% 중반 상승했다는 실제 가격 공시는 물량 증가와 구분되는 가격 기반 매출·이익 전환을 보여준다. 일반 DRAM 가격 강세이며 HBM ASP로 좁히지 않는다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q4\"",
+        "source_predicate": "2026년 1분기 DRAM 출하량은 전분기와 유사했고 ASP는 일반 DRAM 가격 강세로 전분기 대비 60% 중반 상승했다",
+        "source_value_json": "\"mid-60% QoQ increase\""
+      },
+      {
+        "component_interpretation": "공시된 DRAM 매출 증가는 제품군 매출 전환을 수치화하지만 HBM 매출로 확대하지 않는다.",
+        "fact_row_index": 145,
+        "source_economic_mechanism": "DRAM 품목 매출이 전년 동기보다 크게 증가해 메모리 매출 전환을 직접 확인한다. 다만 이 공시는 DRAM 전체이며 HBM만의 매출이나 이익으로 귀속하지 않는다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "2026년 1분기 DRAM 매출은 39,758,279백만원으로 2025년 1분기 13,607,092백만원보다 증가했다",
+        "source_value_json": "\"2026-Q1 39758279; 2025-Q1 13607092\""
+      },
+      {
+        "component_interpretation": "FY2025 HBM 매출 2배 이상 성장은 HBM이 실제 매출로 전환됐음을 보여주나 절대액과 이익률은 없다.",
+        "fact_row_index": 150,
+        "source_economic_mechanism": "FY2025 HBM 매출이 전년보다 2배 이상으로 늘어 전사 사상 최대 실적에 크게 기여했다는 회사 설명은 HBM 수요가 실제 매출과 전사 손익으로 전환된 것을 보여준다. 정확한 HBM 매출액·비중·영업이익은 공개되지 않았다.",
+        "source_period_json": "\"FY2025 vs FY2024\"",
+        "source_predicate": "SK하이닉스 FY2025 HBM 매출은 전년 대비 2배 이상으로 늘어 회사 사상 최대 실적에 중요하게 기여했다",
+        "source_value_json": "\"more than 2x year-on-year\""
+      },
+      {
+        "component_interpretation": "FY2027~FY2028 감익 전망은 FY2026 이익 급증의 지속기간을 제한하는 독립 counter다.",
+        "fact_row_index": 162,
+        "source_economic_mechanism": "BNK는 SK하이닉스 영업이익이 FY2026F 240,536십억원에서 FY2027F 230,332십억원, FY2028F 214,828십억원으로 감소하고, EPS 증가율도 FY2027F -6.9%, FY2028F -5.3%가 될 것으로 추정했다. 이는 FY2026의 급증 뒤 이익이 계속 확대된다는 가정에 대한 독립적인 duration counterfact이며 확정 실적이 아니다.",
+        "source_period_json": "\"FY2026F-FY2028F\"",
+        "source_predicate": "BNK는 SK하이닉스 영업이익과 EPS가 FY2026F에 급증한 뒤 FY2027F와 FY2028F에 감소할 것으로 추정했다",
+        "source_value_json": "\"operating profit FY2026F 240536, FY2027F 230332, FY2028F 214828; EPS growth FY2026F 393.8%, FY2027F -6.9%, FY2028F -5.3%\""
+      },
+      {
+        "component_interpretation": "고객 CapEx의 분기 미달과 FCF·차입 위험은 HBM 전방수요가 같은 속도로 현금화된다는 가정의 counter다.",
+        "fact_row_index": 192,
+        "source_economic_mechanism": "1Q26 미국 CSP 실제 CapEx는 컨센서스의 98%, Meta는 71%에 그쳤다. 이후 연간 증가 전망이 64%에서 69% YoY로 높아졌지만 Meta와 Microsoft의 FCF 악화·하반기 음수 전환 가능성, 차입·금리 민감도와 장단기금리차 하락을 근거로 BNK는 AI CapEx 모멘텀 둔화를 예상했다. 이는 장기 CapEx 성장 전망과 구별되는 최신 실행·재원 counterfact다.",
+        "source_period_json": "\"1Q2026 actual and 2H2026 outlook stated 2026-05-12\"",
+        "source_predicate": "1Q26 미국 CSP CapEx는 컨센서스의 98%, Meta는 71%에 그쳤고 FCF 악화와 차입·금리 민감도로 하반기 AI CapEx 모멘텀 둔화가 예상됐다",
+        "source_value_json": "\"1Q26 CSP CapEx 98% of consensus; Meta 71%; annual growth outlook raised from 64% to 69% YoY despite FCF and debt risk\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      15,
+      40,
+      53,
+      89,
+      99,
+      100,
+      145,
+      150,
+      162,
+      192
+    ],
+    "source_coverage": [
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "COMPANYGUIDE",
+      "PUBLIC_BROKER_PDF"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1,
+      2
+    ],
+    "uncertainties": [
+      "공시는 반도체 단일부문 중심이므로 전사 매출·영업이익·FCF를 HBM 단독으로 분리할 수 없다.",
+      "FY2026 이후 FCF와 이익 경로 및 revision은 제3자 추정치이며 issuer의 숫자 가이던스가 아니다.",
+      "1,100조원 장기 로드맵의 실제 시기·재원·HBM 귀속액과 운전자본 부담은 확정되지 않았다."
+    ],
+    "why_not_higher": "issuer의 HBM 매출액·영업이익·FCF 기여와 숫자형 forward guidance가 없고, 대규모 Capex와 고객 재원 및 FY2027 이후 감익 위험이 남아 있다.",
+    "why_not_lower": "1Q26 actual earnings와 cash conversion, FY2025 HBM 매출 성장, 실제 DRAM ASP·매출 증가, 큰 폭의 forward revision이 서로 다른 경로에서 동시에 확인된다."
+  },
+  "payload_hash": "096172f26da27d386cc7c19d8768ce148c13dfbab94b1ccce60232c3d17b7192",
+  "production_score_authority": false,
+  "prompt_hash": "4ee44ba2381cdf7f6af8964ff1a4e34e8f323a42fbf4ae67312973869b39d1d2",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cc68ef6bd633f02bbb3b5df71827fa0520e2e41e7c597a17a865dedc0eceffc7",
+  "response_id": "COLLABRESP-3ff50632d24061a94819f8a17bf0eb6b75b32c708ec9cdffb04d31f28e4125e4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

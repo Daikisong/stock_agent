@@ -1,0 +1,311 @@
+{
+  "output_schema_hash": "1b82348d4e3307165516ddc64bde4ae275708cfe60f909a2661dd2bfd6464c02",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b665107e37d5a8db87dc54c7",
+        "rationale": "직전 검증에서 HBM4 최종 SiP 인증 평가 fact가 수락됐으므로 재출력하지 않고 그 수락 상태를 보존한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-b88d600beab5243b6790e009",
+        "rationale": "원문 줄바꿈을 포함한 literal substring으로 D램 물량·ASP와 HBM/DDR5 판매, 전망 차이, HBM3E 고객 확대 fact를 다시 근거화했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-b9c379dfdf8942ab3b473693",
+        "rationale": "연결·별도 현금흐름표의 전사 합계는 제시되지만 메모리·HBM 귀속이나 현재 objective에 필요한 직접 수익 전환 연결은 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-bad1b05b2602306ee7b57042",
+        "rationale": "직전 검증에서 메모리사업부 TAI 100% 지급 counterfact가 수락됐으므로 재출력하지 않고 그 수락 상태를 보존한다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b88d600beab5243b6790e009",
+        "economic_mechanism": "D램 비트 출하 감소는 가격 상승과 별개로 물량 기반 매출 전환을 약화시키는 반대 근거다.",
+        "exact_quote": "conditions in Q4, DRAM bit growth was down by a low teens percentage Q-on-\nQ, NAND bit growth down by a low single percentage.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사 경영진이 D램 물량 변화를 전분기 대비 범위로 직접 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:RISK_COUNTER:BIT_GROWTH_2024Q4",
+        "normalized_object": "D램 비트 출하량 증감",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-Q4 vs 2024-Q3",
+        "predicate": "삼성전자 D램 비트 출하량은 2024년 4분기에 전분기 대비 10%대 초반 감소했다",
+        "predicate_family": "DRAM_BIT_GROWTH_ACTUAL",
+        "primitive_tags": [
+          "dram_bit_growth",
+          "shipment_volume",
+          "qoq_decline"
+        ],
+        "product_family": "D램",
+        "question_family_id": "dram_bit_growth_actual",
+        "question_family_tags": [
+          "dram_bit_growth_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024년 4분기 D램 비트 출하 감소",
+        "subject_id": "005930:DRAM:BIT_GROWTH:2024-Q4",
+        "unit": "percent QoQ range",
+        "value": "low-teens decrease"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b88d600beab5243b6790e009",
+        "economic_mechanism": "D램 ASP의 전분기 대비 상승은 비트 출하 감소를 일부 상쇄해 메모리 매출을 지지하지만, 노후 재고 판매가 상승폭을 제한했다.",
+        "exact_quote": "DRAM ASP rose by around 20% Q-on-Q, although following on the third\nquarter, we continued to drive sales of aging stock to normalize inventory back\nto more sound levels, which limited the rise in ASP.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사가 D램 ASP 상승률과 노후 재고 판매의 제한 효과를 함께 밝혔다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:PRICING_POWER:ASP_2024Q4",
+        "normalized_object": "D램 평균판매가격 증감",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q4 vs 2024-Q3",
+        "predicate": "삼성전자 D램 ASP는 2024년 4분기에 전분기 대비 약 20% 상승했다",
+        "predicate_family": "DRAM_ASP_QOQ_ACTUAL",
+        "primitive_tags": [
+          "dram_asp",
+          "pricing_actual",
+          "qoq_growth",
+          "aging_inventory"
+        ],
+        "product_family": "D램",
+        "question_family_id": "dram_asp_actual",
+        "question_family_tags": [
+          "dram_asp_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024년 4분기 D램 ASP 상승률",
+        "subject_id": "005930:DRAM:ASP:2024-Q4",
+        "unit": "percent QoQ",
+        "value": 20
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b88d600beab5243b6790e009",
+        "economic_mechanism": "HBM 판매 배수 증가는 고부가 AI 메모리 수요가 실제 판매로 전환된 정도를 정량화한다.",
+        "exact_quote": "Overall, high value-added products increased as a share of total sales, with\nHBM sales increasing by 1.9x, sales of 128 gigabyte or higher DDR5, modules\nincreasing by 2.5x.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사 경영진이 HBM 판매 증가를 정확한 배수로 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:REVENUE_CONVERSION:SALES_2024Q4",
+        "normalized_object": "HBM 판매 증감 배수",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q4 vs 2024-Q3",
+        "predicate": "삼성전자 HBM 판매는 2024년 4분기에 전분기 대비 1.9배 증가했다",
+        "predicate_family": "HBM_SALES_GROWTH_ACTUAL",
+        "primitive_tags": [
+          "hbm_sales",
+          "revenue_conversion",
+          "qoq_growth"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_sales_growth_actual",
+        "question_family_tags": [
+          "hbm_sales_growth_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024년 4분기 HBM 판매 배수",
+        "subject_id": "005930:HBM:SALES_GROWTH:2024-Q4",
+        "unit": "times QoQ",
+        "value": 1.9
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b88d600beab5243b6790e009",
+        "economic_mechanism": "128GB 이상 고용량 DDR5 판매 증가는 서버용 고부가 D램 믹스가 실제 판매 물량으로 전환된 정도를 보여준다.",
+        "exact_quote": "HBM sales increasing by 1.9x, sales of 128 gigabyte or higher DDR5, modules\nincreasing by 2.5x.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "128GB 이상 DDR5의 정확한 판매 배수를 발행사가 직접 제시한다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:REVENUE_CONVERSION:DDR5_128GB_2024Q4",
+        "normalized_object": "128GB 이상 DDR5 모듈 판매 증감 배수",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q4 vs 2024-Q3",
+        "predicate": "삼성전자 128GB 이상 DDR5 모듈 판매는 2024년 4분기에 전분기 대비 2.5배 증가했다",
+        "predicate_family": "HIGH_DENSITY_DDR5_SALES_GROWTH_ACTUAL",
+        "primitive_tags": [
+          "ddr5",
+          "high_density_memory",
+          "server_memory",
+          "sales_growth"
+        ],
+        "product_family": "고용량 DDR5",
+        "question_family_id": "high_density_ddr5_sales_growth_actual",
+        "question_family_tags": [
+          "high_density_ddr5_sales_growth_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 128GB 이상 DDR5 모듈 판매 배수",
+        "subject_id": "005930:DRAM:DDR5_128GB_SALES_GROWTH:2024-Q4",
+        "unit": "times QoQ",
+        "value": 2.5
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b88d600beab5243b6790e009",
+        "economic_mechanism": "HBM 판매가 성장해도 지정학적 이슈와 제품 개선 일정으로 초기 전망을 밑돌 수 있어 매출 전환 실행 위험이 남는다.",
+        "exact_quote": "As a result, our HBM sales in the fourth\nquarter grew by 1.9x Q-on-Q, which was slightly below our initial forecast.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "판매 증가와 별개로 발행사가 초기 전망 미달을 직접 인정한 기대치 차이 근거다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:MARKET_EXPECTATION_GAP:SALES_2024Q4",
+        "normalized_object": "HBM 판매 증가의 초기 전망 대비 차이",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-Q4",
+        "predicate": "삼성전자 2024년 4분기 HBM 판매는 1.9배 증가했지만 초기 전망을 소폭 밑돌았다",
+        "predicate_family": "HBM_SALES_FORECAST_SHORTFALL",
+        "primitive_tags": [
+          "hbm_sales",
+          "forecast_gap",
+          "geopolitical_risk",
+          "product_enhancement"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_sales_forecast_shortfall",
+        "question_family_tags": [
+          "hbm_sales_forecast_shortfall"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2024년 4분기 HBM 판매의 초기 전망 미달",
+        "subject_id": "005930:HBM:SALES_FORECAST_GAP:2024-Q4",
+        "unit": "actual versus forecast status",
+        "value": "1.9x growth, slightly below initial forecast"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b88d600beab5243b6790e009",
+        "economic_mechanism": "HBM3E 공급 고객이 복수 GPU·데이터센터 고객으로 확대되고 HBM3 판매를 넘어선 것은 차세대 제품의 고객 확장과 판매 믹스 전환을 함께 입증한다.",
+        "exact_quote": "Since the third quarter, our HBM3E 8-stack and 12-stack products have been in\nmass production and sales. In the fourth quarter, we expanded our HBM3E\nsupply to multiple GPU providers and data center clients, with HBM3E sales\nexceeding HBM3 sales.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객 이름이나 집중도를 발명하지 않고 발행사가 밝힌 복수 고객 공급과 제품 세대 판매 역전을 보존한다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:REVENUE_CONVERSION:HBM3E_CLIENT_MIX_2024Q4",
+        "normalized_object": "HBM3E 고객 범위와 판매 믹스 전환",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-Q4",
+        "predicate": "삼성전자는 2024년 4분기 HBM3E 공급을 복수 GPU·데이터센터 고객으로 확대했고 HBM3E 판매가 HBM3를 넘어섰다",
+        "predicate_family": "HBM3E_CUSTOMER_BREADTH_SALES_MIX",
+        "primitive_tags": [
+          "hbm3e",
+          "gpu_clients",
+          "data_center_clients",
+          "sales_mix"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "hbm3e_customer_breadth_sales_mix",
+        "question_family_tags": [
+          "hbm3e_customer_breadth_sales_mix"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM3E 고객 확대와 HBM3 대비 판매 역전",
+        "subject_id": "005930:HBM3E:CUSTOMER_BREADTH_SALES_MIX:2024-Q4",
+        "unit": "customer breadth and relative sales mix",
+        "value": "multiple GPU and data-center clients; HBM3E sales exceeded HBM3"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "2024년 4분기 actual은 확인되지만 현재 2026년 이익·현금흐름으로 이어지는 동일 범위의 최신 발행사 정량 guidance는 이 문서 묶음에서 확인되지 않는다."
+    ]
+  },
+  "payload_hash": "9f8eb6c4291f958e4eca2329a43372ae00cbb0f336ddbfcc1d3a7e7e6afcff2e",
+  "production_score_authority": false,
+  "prompt_hash": "c53735f147d3fd6f66977f646ed0de397f6a039e99105c5ab22f62b1114424ec",
+  "provenance": {
+    "agent_id": "samsung_components_a",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_a",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-982145f5575ae426d921a18d5ef9274684cfcf9d947356a71542db99b2d7b337",
+  "response_id": "COLLABRESP-ffec1f02e7e8a85d5f068b893622aebd26f197f6d794677576a6f48e298fc94d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

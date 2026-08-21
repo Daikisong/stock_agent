@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "현재 prompt의 7개 component memo는 모두 complete이고 21개 judge 범위는 component별 공통 교집합을 가지며, information_confidence의 새 범위도 [3.2, 3.4]에서 겹친다. RTMEMO-2664는 7개 component를 모두 counter 검토했고 SYNMEMO-514576과 RSUP current review는 actual·forecast, issuer·독립 출처, 계약 논의·binding commitment, 전사·HBM 단독 귀속의 경계를 보존한다. Structured roles는 모두 충족됐고 Source Graph는 7개 objective를 STOPPED_ON_RESOLUTION으로 닫았으며 current supervisor에는 missing fact, source direction, query brief, next action이 없다. 고객별 계약조건, HBM 단독 손익·현금, 경쟁 공급과 CAPA 회수는 중요한 향후 monitoring 한계이나, 현재 prompt에는 이를 지금 해결할 검증된 신규 full-fetch route가 없다. 무결과·provider 오류·fixed round를 source absence 또는 포화 증거로 사용하지 않았고, 이미 수집된 evidence와 의미상 해결 상태 및 실행 가능한 신규 경로 부재를 근거로 독립 승인한다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "5daa5ff255a033e42517b66582b10b0abed6ea84d044d204861c7f48d740bc7d",
+  "production_score_authority": false,
+  "prompt_hash": "a9eb6a1b9d21f5cbb4c79c243bcd8fa9268619ed8839d5f1263d5a8ea95186e2",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-835b196647488450f4a1f6908dc54948b43ba8e837c0001939f1c82a413c61ac",
+  "response_id": "COLLABRESP-fbad032c45f22f56ca45669479a3bc3f17e16946ef39fca21a39366d8bd5c798",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,430 @@
+{
+  "output_schema_hash": "dd0e9e6c0e0e622202133e086194b4c11a90fcae855a5c23c173618153be2140",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-31436c94cb495001c93e69b0",
+        "rationale": "발행사 2025년 3분기 earnings call을 current 95개 canonical fact와 대조해 메모리 사상 최대 분기 매출, 전분기 일회성 재고조정 축소, DRAM ASP 상승, HBM 자격 NDA 제한, HBM3E 전 고객 판매·bit 출하 증가·믹스 전환, 2026년 메모리 수요 초과 및 계획물량 고객수요 확보를 추출했다. 현재 HBM4 양산·속도·고객 확대와 중복되는 과거 HBM4 샘플·개발 상태, DS 혼합 CAPEX·Foundry·비메모리 수치는 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-31436c94cb495001c93e69b0",
+        "economic_mechanism": "HBM3E와 서버 SSD 성장에 힘입어 2025년 3분기 메모리 사업이 역대 최고 분기 매출을 기록했다.",
+        "exact_quote": "with the Memory business\nsetting a new, all-time high for quarterly sales, driven by strong growth of\nHBM3E and server SSDs.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical에는 2025년 2분기·2026년 1분기 메모리 매출 point가 있으나 2025년 3분기의 발행사 확인 사상 최대 매출 기록은 없다. 매출액 또는 HBM 단독 기여액은 원문에 없어 만들지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:QUARTERLY_SALES_RECORD:2025-Q3",
+        "normalized_object": "2025년 3분기 메모리 역대 최고 분기 매출",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q3",
+        "predicate": "삼성전자 메모리 사업이 2025년 3분기에 역대 최고 분기 매출을 기록했다",
+        "predicate_family": "MEMORY_QUARTERLY_SALES_RECORD",
+        "primitive_tags": [
+          "MEMORY_SALES",
+          "ALL_TIME_HIGH",
+          "HBM3E_GROWTH"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_QUARTERLY_SALES_RECORD",
+        "question_family_tags": [
+          "MEMORY_QUARTERLY_SALES_RECORD",
+          "MEMORY_EARNINGS_EXPANSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 2025년 3분기 분기 매출 기록",
+        "subject_id": "005930:MEMORY:QUARTERLY_SALES_RECORD:2025-Q3",
+        "unit": "sales record status",
+        "value": "all-time high quarterly sales"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-31436c94cb495001c93e69b0",
+        "economic_mechanism": "2025년 2분기에 발생한 재고 관련 일회성 charge가 3분기에 줄어 메모리 실적 개선의 일부로 작용했다.",
+        "exact_quote": "Also, our performance improved significantly quarter-on-quarter, and the\nreduction in the inventory-related one-time charge that occurred in the\nprevious quarter also somewhat contributed to the performance improvement.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 2025년 2분기 재고평가 충당금 등 일회성 비용 drag를 다음 분기에 부분 해소한 발행사 resolution이다. 완전 소멸이나 환입 금액은 주장하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:INVENTORY_CHARGE_REDUCTION:2025-Q3",
+        "normalized_object": "전분기 재고 관련 일회성 charge 축소",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q3",
+        "predicate": "2025년 3분기에 전분기의 메모리 재고 관련 일회성 charge가 줄어 실적 개선에 일부 기여했다",
+        "predicate_family": "MEMORY_ONE_TIME_INVENTORY_CHARGE_REDUCTION",
+        "primitive_tags": [
+          "INVENTORY_ADJUSTMENT",
+          "ONE_TIME_CHARGE_REDUCTION",
+          "EARNINGS_RESOLUTION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_ONE_TIME_INVENTORY_CHARGE_REDUCTION",
+        "question_family_tags": [
+          "INVENTORY_ONE_TIME_CHARGE_RESOLUTION",
+          "MEMORY_EARNINGS_QUALITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 일회성 재고조정 축소",
+        "subject_id": "005930:MEMORY:INVENTORY_CHARGE_REDUCTION:2025-Q3",
+        "unit": "earnings impact",
+        "value": "prior-quarter one-time inventory charge reduced"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-31436c94cb495001c93e69b0",
+        "economic_mechanism": "2025년 3분기 DRAM ASP의 mid-teens QoQ 상승이 메모리 이익 회복의 실현가격 기반을 강화했다.",
+        "exact_quote": "DRAM ASP rose by mid 10% QonQ and NAND\nby a mid-single-digit percentage.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 2024년 1분기 DRAM ASP actual 및 2026년 전망과 다른 2025년 3분기 발행사 actual이다. mid-10% 표현을 단일 숫자로 바꾸지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:DRAM:ASP_CHANGE:2025-Q3",
+        "normalized_object": "2025년 3분기 DRAM ASP QoQ mid-teens 상승",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q3 vs 2025-Q2",
+        "predicate": "삼성전자 DRAM ASP가 2025년 3분기에 전분기 대비 mid-teens 상승했다",
+        "predicate_family": "DRAM_ASP_QOQ_CHANGE_ACTUAL",
+        "primitive_tags": [
+          "DRAM_ASP",
+          "QOQ_CHANGE",
+          "PRICING_POWER"
+        ],
+        "product_family": "D램",
+        "question_family_id": "DRAM_ASP_QOQ_CHANGE_ACTUAL",
+        "question_family_tags": [
+          "DRAM_ASP_QOQ_CHANGE_ACTUAL",
+          "MEMORY_REALIZED_PRICING"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 3분기 DRAM ASP 변화",
+        "subject_id": "005930:MEMORY:DRAM:ASP_CHANGE:2025-Q3",
+        "unit": "percent range",
+        "value": "mid-teens increase"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-31436c94cb495001c93e69b0",
+        "economic_mechanism": "고객 NDA 때문에 HBM qualification 상태를 추가 공개할 수 없어 고객 승인 여부를 외부에서 직접 확인하는 데 제한이 남았다.",
+        "exact_quote": "First of all, I must say that regarding our HBM qualifications, we are quite aware\nthat the market is very interested, but due to our NDA commitments with our\nclients, I'm afraid we are not able to comment further.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "qualification 통과 또는 실패가 아니라 발행사가 확인 가능한 정보의 경계를 직접 제시한 counter다. 이후 판매 확대를 특정 고객 최종 승인으로 전용하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:QUALIFICATION_NDA_LIMITATION",
+        "normalized_object": "고객 NDA에 따른 HBM qualification 공개 제한",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-Q3",
+        "predicate": "삼성전자는 고객 NDA로 인해 HBM qualification 상태를 추가로 설명할 수 없다고 밝혔다",
+        "predicate_family": "HBM_QUALIFICATION_NDA_LIMITATION",
+        "primitive_tags": [
+          "HBM_QUALIFICATION",
+          "CLIENT_NDA",
+          "INFORMATION_GAP"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_QUALIFICATION_NDA_LIMITATION",
+        "question_family_tags": [
+          "HBM_QUALIFICATION_DISCLOSURE_LIMITATION",
+          "CUSTOMER_APPROVAL_UNCERTAINTY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM qualification 공개 제한",
+        "subject_id": "005930:MEMORY:HBM:QUALIFICATION_NDA_LIMITATION:2025-Q3",
+        "unit": "disclosure limitation",
+        "value": "qualification details not commentable due to client NDA"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-31436c94cb495001c93e69b0",
+        "economic_mechanism": "HBM3E 양산과 판매를 모든 고객으로 확대했다는 발행사 설명은 고객 기반의 폭과 제품 매출 전환을 보여준다.",
+        "exact_quote": "What I can share with\nyou at this point is that we are seeing HBM demand grow at a faster pace than\nsupply, and that we have been expanding HBM3E mass production and sales to\nall of our customers.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 HBM4 다수 고객 공급 계획과 세대·기간·actual 상태가 다른 HBM3E 전 고객 판매 확대다. 개별 고객명·비중·구매의무를 추론하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM3E:ALL_CUSTOMER_SALES:2025-Q3",
+        "normalized_object": "HBM3E 전 고객 양산·판매 확대",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q3",
+        "predicate": "삼성전자가 2025년 3분기까지 HBM3E 양산과 판매를 모든 고객으로 확대하고 있다고 밝혔다",
+        "predicate_family": "HBM3E_ALL_CUSTOMER_SALES_EXPANSION",
+        "primitive_tags": [
+          "HBM3E_SALES",
+          "ALL_CUSTOMERS",
+          "CUSTOMER_BREADTH"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "HBM3E_ALL_CUSTOMER_SALES_EXPANSION",
+        "question_family_tags": [
+          "HBM3E_CUSTOMER_BREADTH",
+          "HBM_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM3E 전 고객 판매 확대",
+        "subject_id": "005930:MEMORY:HBM3E:ALL_CUSTOMER_SALES:2025-Q3",
+        "unit": "customer breadth",
+        "value": "mass production and sales expanding to all customers"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-31436c94cb495001c93e69b0",
+        "economic_mechanism": "HBM bit 출하가 2025년 3분기에 전분기 대비 mid-80% 증가해 HBM 수요가 실제 공급·매출 기반으로 전환된 규모를 보여준다.",
+        "exact_quote": "As a result, in the third quarter, our HBM bit shipments increased by mid 80%\nQoQ, and excluding some small tail-end sales of legacy HBMs, our overall sales\nmix is now fully transitioned to HBM3E.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical에 HBM4 납품 증가 방향은 있지만 2025년 3분기 HBM 전체 bit 출하 증가 범위는 없다. mid-80%를 단일 숫자로 바꾸지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:BIT_SHIPMENT_GROWTH:2025-Q3",
+        "normalized_object": "2025년 3분기 HBM bit 출하 QoQ mid-80% 증가",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q3 vs 2025-Q2",
+        "predicate": "삼성전자 HBM bit 출하량이 2025년 3분기에 전분기 대비 mid-80% 증가했다",
+        "predicate_family": "HBM_BIT_SHIPMENT_QOQ_GROWTH",
+        "primitive_tags": [
+          "HBM_BIT_SHIPMENT",
+          "QOQ_GROWTH",
+          "SHIPMENT_CONVERSION"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_BIT_SHIPMENT_QOQ_GROWTH",
+        "question_family_tags": [
+          "HBM_BIT_SHIPMENT_GROWTH",
+          "HBM_REVENUE_CONVERSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 3분기 HBM bit 출하 증가",
+        "subject_id": "005930:MEMORY:HBM:BIT_SHIPMENT_GROWTH:2025-Q3",
+        "unit": "percent range",
+        "value": "mid-80 increase"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-31436c94cb495001c93e69b0",
+        "economic_mechanism": "일부 legacy tail sales를 제외한 HBM 판매 믹스가 HBM3E로 완전히 전환돼 고부가 제품 믹스 변화가 실제 판매 단계에 도달했다.",
+        "exact_quote": "As a result, in the third quarter, our HBM bit shipments increased by mid 80%\nQoQ, and excluding some small tail-end sales of legacy HBMs, our overall sales\nmix is now fully transitioned to HBM3E.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 출하 성장과 구별되는 제품 믹스 actual이다. 매출 비중 수치나 HBM3E 마진은 원문에 없으므로 만들지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:SALES_MIX_HBM3E:2025-Q3",
+        "normalized_object": "legacy tail 제외 HBM 판매 믹스 HBM3E 완전 전환",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-Q3",
+        "predicate": "일부 소규모 legacy HBM 판매를 제외한 삼성전자 HBM 판매 믹스가 2025년 3분기에 HBM3E로 완전히 전환됐다",
+        "predicate_family": "HBM_SALES_MIX_HBM3E_TRANSITION",
+        "primitive_tags": [
+          "HBM3E_MIX",
+          "LEGACY_TAIL",
+          "PRODUCT_TRANSITION"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "HBM_SALES_MIX_HBM3E_TRANSITION",
+        "question_family_tags": [
+          "HBM3E_SALES_MIX_TRANSITION",
+          "HIGH_VALUE_PRODUCT_MIX"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM 판매 믹스의 HBM3E 전환",
+        "subject_id": "005930:MEMORY:HBM:SALES_MIX_HBM3E:2025-Q3",
+        "unit": "sales mix status",
+        "value": "fully transitioned to HBM3E excluding small legacy tail sales"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-31436c94cb495001c93e69b0",
+        "economic_mechanism": "투자와 증설 계획을 반영한 뒤에도 2026년 고객 메모리 수요가 삼성전자의 공급을 초과할 것으로 예상돼 수요-공급 병목의 지속성을 보여준다.",
+        "exact_quote": "It is expected that customers' demand for the next year will exceed our supply,\neven considering our investment and capacity expansion plans.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "current canonical의 제한 공급 가용량보다 범위와 기간이 명시된 발행사 FY2026 수급 전망이다. 물량·기간별 고객 주문·가격을 추론하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:CUSTOMER_DEMAND_EXCEEDS_SUPPLY:2026",
+        "normalized_object": "2026년 투자·증설 후에도 메모리 고객수요가 공급 초과",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "삼성전자는 2026년 고객 메모리 수요가 투자·증설 계획을 고려한 공급을 초과할 것으로 예상했다",
+        "predicate_family": "MEMORY_2026_CUSTOMER_DEMAND_EXCEEDS_SUPPLY",
+        "primitive_tags": [
+          "CUSTOMER_DEMAND",
+          "SUPPLY_SHORTFALL",
+          "CAPACITY_EXPANSION"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "MEMORY_2026_CUSTOMER_DEMAND_EXCEEDS_SUPPLY",
+        "question_family_tags": [
+          "MEMORY_DEMAND_EXCEEDS_SUPPLY",
+          "CAPACITY_SCARCITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 메모리 고객수요와 공급능력",
+        "subject_id": "005930:MEMORY:CUSTOMER_DEMAND_EXCEEDS_SUPPLY:2026",
+        "unit": "supply-demand state",
+        "value": "customer demand expected to exceed supply after investment and capacity expansion"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-31436c94cb495001c93e69b0",
+        "economic_mechanism": "2026년 HBM bit 생산 계획물량에 대해 이미 상당한 고객수요를 확보해 공급 확대 계획의 판매 가시성을 뒷받침한다.",
+        "exact_quote": "While our 2026\nHBM bit production plan was set reflecting a significant YoY increase, we have\nalready secured significant customer demand for the planned volumes.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "발행사가 계획물량의 고객수요 확보를 직접 설명했다. 확정 구매의무·취소제한·고객명·가격·계약기간은 제시되지 않아 계약으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:PLANNED_VOLUME_DEMAND:2026",
+        "normalized_object": "2026년 HBM 계획물량의 상당한 고객수요 확보",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "삼성전자가 2026년 HBM 생산 계획물량에 대해 상당한 고객수요를 이미 확보했다고 밝혔다",
+        "predicate_family": "HBM_2026_PLANNED_VOLUME_CUSTOMER_DEMAND",
+        "primitive_tags": [
+          "HBM_2026_PLAN",
+          "SECURED_CUSTOMER_DEMAND",
+          "PLANNED_VOLUME"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_2026_PLANNED_VOLUME_CUSTOMER_DEMAND",
+        "question_family_tags": [
+          "HBM_PLANNED_VOLUME_DEMAND_COVERAGE",
+          "HBM_CUSTOMER_ALLOCATION_VISIBILITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2026년 HBM 계획물량 고객수요 확보",
+        "subject_id": "005930:MEMORY:HBM:PLANNED_VOLUME_DEMAND:2026",
+        "unit": "demand coverage status",
+        "value": "significant customer demand secured for planned volumes"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": [
+      "HBM qualification은 NDA 때문에 확인할 수 없으므로 NVIDIA 승인·실패 어느 쪽도 추론하지 않았다.",
+      "2025년 3분기 HBM4 개발 완료·전 고객 샘플·양산 준비는 current canonical의 2026년 HBM4 실제 양산·납품·고객 공급 facts보다 이전 상태라 반복하지 않았다.",
+      "2025년 DS CAPEX와 2026년 투자계획은 Foundry·System LSI 혼합 또는 숫자 없는 메모리 계획이어서 메모리 CAPEX actual로 귀속하지 않았다.",
+      "NAND·server SSD 단독 전망과 Foundry·System LSI·Display·DX 수치는 objective mechanism scope 밖이라 제외했다."
+    ]
+  },
+  "payload_hash": "790486a23cce353fa56f8c3b49fc1b2f6fbe3eb64177dd2474611a84fd8de7d7",
+  "production_score_authority": false,
+  "prompt_hash": "63eced47dbc9f178e3b8ff58cec2b81881cd4ff68d315f276a7ce2b743526a39",
+  "provenance": {
+    "agent_id": "/root/samsung_components_b",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/samsung_components_b",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c4958b115c8933b7acfbaa452f5ef52859188f17b0ccb1669296787283ab63a4",
+  "response_id": "COLLABRESP-fc95c3ee29429bc7ca8af89833e4c4639c13009dd7bbf5f8fbdd5e7bd436a715",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}
