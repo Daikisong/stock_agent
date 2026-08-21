@@ -57,6 +57,12 @@ from .evidence_fact_extractor import (
     write_researcher_fact_extraction_result,
 )
 from .evidence_fact_compiler import EvidenceFactCompiler
+from .evidence_gap import (
+    EvidenceGapClass,
+    EvidenceGapDisposition,
+    accepted_lineage_profile,
+    latest_evidence_gap_dispositions,
+)
 from .fact_lineage_materials import (
     AuthoritativeResearchEpochFactLedger,
     load_authoritative_research_epoch_fact_ledger,
@@ -67,7 +73,10 @@ from .official_source_materializer import (
     OfficialSourceMaterializationResult,
     write_official_source_materialization,
 )
-from .prompt_projection import project_fact_extraction_evidence_context
+from .prompt_projection import (
+    project_current_decision_citable_facts,
+    project_fact_extraction_evidence_context,
+)
 from .current_structured_materializer import (
     FACT_STRUCTURED_ROLE_RESOLUTION_CONTRACTS,
     CurrentStructuredMaterializationResult,
@@ -409,6 +418,18 @@ class CurrentResearcherModeTargetRunner:
             archetype_id=config.archetype_id,
             authoritative_fact_context=authoritative_fact_context,
         )
+        evidence_gap_state = _deterministic_evidence_gap_state(
+            root=root,
+            facts=prior_context["facts"],
+            archetype_id=config.archetype_id,
+        )
+        stable_gap_disposition_available = bool(
+            prior_source_checkpoint is not None
+            and _source_checkpoint_has_current_nonblocking_gap_disposition(
+                prior_source_checkpoint,
+                evidence_gap_state=evidence_gap_state,
+            )
+        )
         authoritative_fact_lineage_recovery_required = bool(
             prior_context[
                 "authoritative_fact_lineage_recovery_required"
@@ -425,6 +446,7 @@ class CurrentResearcherModeTargetRunner:
         )
         source_context_requires_acquisition = bool(
             not authoritative_fact_lineage_recovery_required
+            and not stable_gap_disposition_available
             and (
                 prior_context["source_transport_pending_objective_ids"]
                 or prior_context[
@@ -642,6 +664,7 @@ class CurrentResearcherModeTargetRunner:
                 checkpoint_source_repair_only=(
                     source_checkpoint_legacy_text_cap_repair_only
                 ),
+                evidence_gap_state=evidence_gap_state,
             )
             write_source_graph_acquisition_run(source_graph, output_root=root)
         prior_fact = _load_fact_checkpoint(
@@ -2007,6 +2030,38 @@ def _production_semantic_saturation_certified(
         and len(set(prompt_hashes)) == len(SATURATION_REVIEW_ROLES)
         and set(prompt_hashes)
         == set(certificate.get("provider_prompt_hashes") or ())
+    )
+
+
+def _source_checkpoint_has_current_nonblocking_gap_disposition(
+    checkpoint: Mapping[str, Any],
+    *,
+    evidence_gap_state: Mapping[str, Any],
+) -> bool:
+    """Honor a fixpoint only for the exact current fact/lineage snapshot."""
+
+    dispositions = tuple(
+        EvidenceGapDisposition.from_dict(row)
+        for row in checkpoint.get("evidence_gap_dispositions") or ()
+        if isinstance(row, Mapping)
+    )
+    if not dispositions:
+        return False
+    current = latest_evidence_gap_dispositions(dispositions)
+    return any(
+        row.query_lane_exhausted
+        and row.assessment.gap_class
+        in {
+            EvidenceGapClass.CORROBORATION_CAP,
+            EvidenceGapClass.MONITORING_GAP,
+        }
+        and row.key.fact_snapshot_hash
+        == str(evidence_gap_state.get("fact_snapshot_hash") or "")
+        and row.key.accepted_lineage_roster_hash
+        == str(
+            evidence_gap_state.get("accepted_lineage_roster_hash") or ""
+        )
+        for row in current.values()
     )
 
 
@@ -6284,6 +6339,64 @@ def _validated_multi_epoch_source_fact_binding(
         and current_parent_id
         != str(current_source_checkpoint.get("checkpoint_id") or "")
     )
+
+
+def _deterministic_evidence_gap_state(
+    *,
+    root: Path,
+    facts: Sequence[Mapping[str, Any]],
+    archetype_id: str,
+) -> Mapping[str, Any]:
+    """Build factual gap identity state outside every LLM prompt.
+
+    The complete current/open fact projection supplies the snapshot hash.  The
+    accepted claim/fact/source links supply a separate lineage hash.  Neither
+    value contains Supervisor prose, prompt hashes, or request filenames.
+    """
+
+    projection = project_current_decision_citable_facts(facts)
+    active_fact_ids = tuple(
+        str(value)
+        for value in projection.get("fact_id_by_row_index") or ()
+        if str(value)
+    )
+    claim_fact_links = _read_jsonl(root / "claim_fact_links.jsonl")
+    lineage = accepted_lineage_profile(
+        claim_fact_links,
+        active_fact_ids=active_fact_ids,
+    )
+    component_fact_counts = {component_id: 0 for component_id in CANONICAL_COMPONENT_ORDER}
+    for row in facts:
+        if str(row.get("current_lifecycle") or "") in {
+            "RESOLVED",
+            "SUPERSEDED",
+        }:
+            continue
+        for component_id in row.get("allowed_component_ids") or ():
+            normalized = str(component_id or "")
+            if normalized in component_fact_counts:
+                component_fact_counts[normalized] += 1
+    return {
+        "schema_version": "e2r_deterministic_evidence_gap_state_v1",
+        "archetype_id": archetype_id,
+        "input_fact_count": int(projection["input_fact_count"]),
+        "current_fact_count": int(projection["fact_count"]),
+        "closed_fact_count": int(projection["closed_fact_count"]),
+        "fact_snapshot_hash": str(projection["current_fact_roster_hash"]),
+        "accepted_lineage_count": int(
+            lineage["accepted_lineage_count"]
+        ),
+        "accepted_lineage_roster_hash": str(
+            lineage["accepted_lineage_roster_hash"]
+        ),
+        "source_backed_fact_count_by_component": component_fact_counts,
+        "every_current_fact_individually_citable": bool(
+            projection["every_current_fact_individually_citable"]
+        ),
+        "prompt_or_supervisor_prose_in_identity": False,
+        "production_score_authority": False,
+        "production_stage_authority": False,
+    }
 
 
 def _load_prior_research_context(

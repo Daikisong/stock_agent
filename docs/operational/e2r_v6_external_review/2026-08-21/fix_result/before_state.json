@@ -1,0 +1,88 @@
+{
+  "schema_version": "e2r_v6_gate1_before_state_v1",
+  "audit_date": "2026-08-22",
+  "gate": "GATE_1_ONLY",
+  "target_id": "000660",
+  "as_of_date": "2026-07-12",
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "git": {
+    "worktree": "/home/eorb915/projects/stock_agent/.worktrees/e2r-stable-gap-fixpoint-20260821",
+    "branch": "fix/e2r-stable-gap-fixpoint-20260821",
+    "base_commit": "7e3f71793465c0e4d03cce57f9a75c2bb40943c2",
+    "base_matches_origin_main": true
+  },
+  "snapshot": {
+    "authoritative_input_root": "output/researcher_mode/c06/2026-07-12-clean-v8",
+    "copy_on_write_output_root": "output/researcher_mode/c06/2026-07-12-clean-v8-gapfix-v1",
+    "original_snapshot_is_read_only_input": true,
+    "copy_on_write_output_exists_at_r0": false
+  },
+  "source_graph": {
+    "status": "QUERY_GENERATION_PENDING",
+    "epoch": 80,
+    "checkpoint_id": "SGCHECK-d626a43f97b0b6cad65da8c4",
+    "checkpoint_hash": "28ed09cf5a98d10b5eb97687ce740e7c63b09337eb515be2a712cd4c42434bab",
+    "file_sha256": "60a275fc3291b21a91948d2b6a8c6fea35a2eff779614abb615b6c468cf2355b",
+    "generated_query_count": 27,
+    "executed_query_count": 27,
+    "search_candidate_count": 864,
+    "fetch_record_count": 34,
+    "evidence_document_count": 36,
+    "query_failure_count": 50,
+    "query_generation_history_count": 39,
+    "query_generation_supervisor_handoff_count": 3,
+    "resolved_objective_count": 0,
+    "semantic_saturation_certified": false,
+    "pending_reasons": [
+      "SOURCE_FAMILY_ACCEPTED_LINEAGE_PENDING:SGOBJ-7f61ec3a6e8e8409f1c536a0:CUSTOMER_OFFICIAL",
+      "SOURCE_FAMILY_ACCEPTED_LINEAGE_PENDING:SGOBJ-7f61ec3a6e8e8409f1c536a0:PUBLIC_BROKER_PDF",
+      "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:COLLABREQ-88bd97c0d762008c9c9d48fa29aa85f70c57b87629a3d0ee7994e9ca22a2866b"
+    ]
+  },
+  "fact_extraction": {
+    "status": "FACT_EXTRACTION_COMPLETE",
+    "pending_reasons": [],
+    "audit_status": "FACT_EXTRACTION_AUDIT_PASS",
+    "compiled_fact_count": 2190,
+    "future_source_count": 0,
+    "accepted_claim_without_fact_count": 0,
+    "file_sha256": "856b23e7b6e90940e8b0ea64c956bf585d3876d50d8e86699d0a0f5f9b04eedd"
+  },
+  "frozen_semantic_state": {
+    "current_fact_roster_hash": "885ce834edd2f6818446f1b869dfd380f8a7fd1db71e95cc57f1caad530ee56a",
+    "accepted_lineage_count": 996,
+    "accepted_lineage_roster_hash": "fa68aa5d68a35de41a455bb1be032942590f3fb25dc640c768c6109772de8a2a",
+    "source_document_count": 36,
+    "source_corpus_hash": "6974d0f21b76100cf3d9e0a1d580011ed4bc70db88e248117128e46384b927e3"
+  },
+  "collaboration_journal": {
+    "request_count": 471,
+    "response_count": 469,
+    "unanswered_request_count": 2,
+    "canonical_current_pending_request_id": "COLLABREQ-88bd97c0d762008c9c9d48fa29aa85f70c57b87629a3d0ee7994e9ca22a2866b",
+    "historical_residue_request_id": "COLLABREQ-5e6c2b2ca9dd21fb10677567846f67de456dd231924e4112f3952b600a3df087"
+  },
+  "downstream": {
+    "business_model_status": "PENDING",
+    "component_research_memo_count": 0,
+    "component_judge_decision_count": 0,
+    "red_team_status": "PENDING",
+    "supervisor_status": "NEXT_RESEARCH_REQUIRED",
+    "semantic_saturation_status": "PENDING",
+    "semantic_saturation_review_count": 0,
+    "deterministic_score_status": "DETERMINISTIC_SCORE_RESEARCH_REQUIRED",
+    "score_valid": false,
+    "stagecourt_status": "RESEARCH_IN_PROGRESS",
+    "canonical_stage": null,
+    "legacy_final_component_decision_row_count": 7,
+    "legacy_rows_are_not_current_component_memo_or_judge_completion_proof": true
+  },
+  "r0_transport_delta": {
+    "new_generated_queries": 0,
+    "new_executed_queries": 0,
+    "new_search_candidates": 0,
+    "new_fetch_records": 0,
+    "new_evidence_documents": 0
+  },
+  "r0_verdict": "READ_ONLY_BASELINE_CAPTURED"
+}

@@ -1,0 +1,546 @@
+{
+  "completion_based_on_round_count": false,
+  "component_findings": [
+    {
+      "component_id": "eps_fcf_explosion",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "공시 actual 순이익·영업현금흐름과 CAPEX counter가 함께 반영됐고, HBM-only 귀속 한계는 점수 범위의 상단 제한으로 이미 처리됐다."
+    },
+    {
+      "component_id": "earnings_visibility",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "제품 실행·고객 공동개발과 고객 집중·계약조건 미확인이 같은 memo에 반영됐다. 미확인 계약조건은 EGAPDISP-5f2f9b9418ecc7f2b9eed09e의 CORROBORATION_CAP이며 현재 snapshot에서 재검색 blocker가 아니다."
+    },
+    {
+      "component_id": "bottleneck_pricing",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "100% 가동과 HBM 실행을 증설·HBM-only CAPA 및 realized ASP 미분리 counter와 함께 평가해 bounded 판단이 완결됐다."
+    },
+    {
+      "component_id": "market_mispricing",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "actual·revision·현재 valuation 자료와 상반된 시장 기대가 함께 검토됐고 Judge 간 material disagreement가 없다."
+    },
+    {
+      "component_id": "valuation_rerating",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "현재 및 forward valuation 시나리오와 earnings bridge 한계가 동일 memo에 반영돼 추가 자료 없이도 제한된 점수 범위를 판정할 수 있다."
+    },
+    {
+      "component_id": "capital_allocation",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "부채·현금창출·소각의 positive와 CAPEX·희석 counter가 공식·구조화 자료로 함께 검토됐다."
+    },
+    {
+      "component_id": "information_confidence",
+      "memo_sufficient": true,
+      "missing_fact_needs": [],
+      "rationale": "공식 공시와 issuer 자료의 계보는 확인됐고 독립 고객 corroboration 제한은 CORROBORATION_CAP으로 confidence 상단에 반영됐다. 같은 route를 다시 열 조건은 현재 snapshot에 없다."
+    }
+  ],
+  "component_memos_sufficient": true,
+  "component_status": {
+    "bottleneck_pricing": "COMPLETE",
+    "capital_allocation": "COMPLETE",
+    "earnings_visibility": "COMPLETE",
+    "eps_fcf_explosion": "COMPLETE",
+    "information_confidence": "COMPLETE",
+    "market_mispricing": "COMPLETE",
+    "valuation_rerating": "COMPLETE"
+  },
+  "counter_and_supersession_checked": true,
+  "epoch": 86,
+  "failure_assessments": [
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-4a54425ce0546f746aa7286e",
+      "rationale": "as_of_date 이후 locator 4건은 미래누수 차단이 정상 동작한 결과이며 current evidence gap이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-7c36280c117dc0d642170cf9",
+      "rationale": "as_of_date 이후 locator 4건은 미래누수 차단이 정상 동작한 결과이며 current evidence gap이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-a00f9a346e62131490d58449",
+      "rationale": "as_of_date 이후 locator 4건은 미래누수 차단이 정상 동작한 결과이며 current evidence gap이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-b6545bdb658e42688aead914",
+      "rationale": "as_of_date 이후 locator 4건은 미래누수 차단이 정상 동작한 결과이며 current evidence gap이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-3d0223c43e47271baddc87db",
+      "rationale": "full fetch 뒤 미래 문서로 확인된 7건은 적법하게 제외됐으며 재시도 대상이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-586e3f8b43795d9001534a02",
+      "rationale": "full fetch 뒤 미래 문서로 확인된 7건은 적법하게 제외됐으며 재시도 대상이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-5e19067779c0d9ca99974d0a",
+      "rationale": "full fetch 뒤 미래 문서로 확인된 7건은 적법하게 제외됐으며 재시도 대상이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-65fe5fa7d5541b6fbf7611bb",
+      "rationale": "full fetch 뒤 미래 문서로 확인된 7건은 적법하게 제외됐으며 재시도 대상이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-83fa8fdcd7eb1784bd03c06f",
+      "rationale": "full fetch 뒤 미래 문서로 확인된 7건은 적법하게 제외됐으며 재시도 대상이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-d04ec09e60b5d086171d4fd7",
+      "rationale": "full fetch 뒤 미래 문서로 확인된 7건은 적법하게 제외됐으며 재시도 대상이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-e713012c08fb0b58afc0e760",
+      "rationale": "full fetch 뒤 미래 문서로 확인된 7건은 적법하게 제외됐으며 재시도 대상이 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "IRRELEVANT_DOCUMENT",
+      "failure_id": "RSFAIL-04a43cc29b3a00b6abcd7889",
+      "rationale": "snippet-only 1건은 full-document evidence가 아니므로 제외됐고 다른 accepted lineage로 해당 memo 판단이 완결됐다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-c95af694c90f9e7840e2e7b8",
+      "rationale": "snippet-only 후보를 다시 여는 것은 현재 완료된 bottleneck memo와 accepted lineage를 바꾸지 않는 반복 route다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "IRRELEVANT_DOCUMENT",
+      "failure_id": "RSFAIL-1d2956ddaf76fced8c9d7f80",
+      "rationale": "발행일을 검증할 수 없는 2건은 as-of evidence로 채택할 수 없으며 current score의 필수 source가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "IRRELEVANT_DOCUMENT",
+      "failure_id": "RSFAIL-91987875fdf2024406fd5aaa",
+      "rationale": "발행일을 검증할 수 없는 2건은 as-of evidence로 채택할 수 없으며 current score의 필수 source가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-182c2c4fdc146d353825a5c2",
+      "rationale": "미래 문서 7건을 배제한 query 결과이며 같은 결과를 다시 fetch하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-2f9f4932d0a2fd93fbb76894",
+      "rationale": "미래 문서 7건을 배제한 query 결과이며 같은 결과를 다시 fetch하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-444d2d2a81f57aac0a3fbd53",
+      "rationale": "미래 문서 7건을 배제한 query 결과이며 같은 결과를 다시 fetch하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-4effd3ead40858d0846dead8",
+      "rationale": "미래 문서 7건을 배제한 query 결과이며 같은 결과를 다시 fetch하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-521eb11c16c96ad66a863924",
+      "rationale": "미래 문서 7건을 배제한 query 결과이며 같은 결과를 다시 fetch하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-54db283b6e66fc1f7bd3aa3e",
+      "rationale": "미래 문서 7건을 배제한 query 결과이며 같은 결과를 다시 fetch하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-a75a5c8b1f9cd845d04975a1",
+      "rationale": "미래 문서 7건을 배제한 query 결과이며 같은 결과를 다시 fetch하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "IRRELEVANT_DOCUMENT",
+      "failure_id": "RSFAIL-7d2ad2e700b9b26165d4e70b",
+      "rationale": "full document가 아닌 snippet 1건은 evidence가 아니고 해당 objective는 다른 source-backed facts로 판정됐다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-ad82e49d5836b237024cdce8",
+      "rationale": "실패한 snippet route를 반복해도 새 accepted lineage가 생긴다는 근거가 없고 component memo는 이미 counter까지 완결됐다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "IRRELEVANT_DOCUMENT",
+      "failure_id": "RSFAIL-3165339e28219f32d3695074",
+      "rationale": "발행일 미상 문서 2건은 as-of 검증 불가로 제외됐으며 이를 자료 부재로 해석하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "IRRELEVANT_DOCUMENT",
+      "failure_id": "RSFAIL-e43531c99ba096b88a9f53ac",
+      "rationale": "발행일 미상 문서 2건은 as-of 검증 불가로 제외됐으며 이를 자료 부재로 해석하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-54ea97a77b392fcf2aa72877",
+      "rationale": "미래 날짜 query 2건은 검증기가 정상 차단했으며 재실행하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "FUTURE_LEAKAGE",
+      "failure_id": "RSFAIL-c0b9725ec0ef095b30d496e5",
+      "rationale": "미래 날짜 query 2건은 검증기가 정상 차단했으며 재실행하지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-04a1b7279d776687bfc8e548",
+      "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY는 현재 snapshot에서 새 합법 query가 없다는 기록이며 동일 semantic query를 다시 열지 않는다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-0971185c42ce63c4aa5a8a6e",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-293e6d61685a67b099d74792",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-30363ac544678962d30bd0ad",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-30c0d933eec41ff81d748977",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-3356b94908baf6d6cce001ff",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-488672178e32d497fe741536",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-589455e5c8070d21a7e60d41",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-5d0351e00682aa1736ecd689",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-69ab38516f825938d8fed0cd",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-6ccac0e9ae56f2c58f3a34a5",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-6ea473d82ced6fe25a93517c",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-74b33141ce0ff86fae5345dc",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-76d72872226f65f22af12b72",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-798bb83a5d1fb8d768ad9ac4",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-81263ec544c8e654d1f9c719",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-87db200282c1bc1278aa9340",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-8a92520a30691e7b63ea3595",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-9e4ada99621ef2401ed50472",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-9fccadafbf103ae9235b0e41",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-b1b365731857852c794c03bc",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-ed90e1582ab25296e0be5962",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-f00e3aefea2ba9bd21557958",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-f00ef4233a8140a72922bcf4",
+      "rationale": "과거 provider-error 23건은 accepted current fact roster를 훼손하지 않았고 현재 완료된 objective를 다시 여는 근거가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-067f7702ec470be5a5e26a9e",
+      "rationale": "zero-result 6건은 source absence나 saturation 증명이 아니다. 다만 component 판단은 다른 accepted facts로 완결됐고 같은 empty route 반복은 새 material fact를 만들 합리적 경로가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-28d2edc4604f7423b4e2435e",
+      "rationale": "zero-result 6건은 source absence나 saturation 증명이 아니다. 다만 component 판단은 다른 accepted facts로 완결됐고 같은 empty route 반복은 새 material fact를 만들 합리적 경로가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-2f3b0a33b95b3d4c6f0c4482",
+      "rationale": "zero-result 6건은 source absence나 saturation 증명이 아니다. 다만 component 판단은 다른 accepted facts로 완결됐고 같은 empty route 반복은 새 material fact를 만들 합리적 경로가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-47dfca7f66d36804ef765e97",
+      "rationale": "zero-result 6건은 source absence나 saturation 증명이 아니다. 다만 component 판단은 다른 accepted facts로 완결됐고 같은 empty route 반복은 새 material fact를 만들 합리적 경로가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-4a98f295213b5ef914aedaea",
+      "rationale": "zero-result 6건은 source absence나 saturation 증명이 아니다. 다만 component 판단은 다른 accepted facts로 완결됐고 같은 empty route 반복은 새 material fact를 만들 합리적 경로가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-73d4fd8f0889504e34930c0c",
+      "rationale": "zero-result 6건은 source absence나 saturation 증명이 아니다. 다만 component 판단은 다른 accepted facts로 완결됐고 같은 empty route 반복은 새 material fact를 만들 합리적 경로가 아니다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-e56e5b626d34525eb63e5bd7",
+      "rationale": "CUSTOMER_OFFICIAL 미확인은 EGAPDISP-5f2f9b9418ecc7f2b9eed09e에서 CORROBORATION_CAP으로 disposition 됐고 동일 route 재개방 조건이 충족되지 않았다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-37eb610bb654255695c49149",
+      "rationale": "KIND_KRX route는 full-fetch 시도 후 accepted claim lineage가 없었지만 capital memo는 다른 공식 facts로 완결됐으므로 같은 family 반복은 불필요하다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-1263ed357d49b7cf367296f8",
+      "rationale": "PUBLIC_BROKER_PDF route는 이미 full-fetch됐고 accepted lineage가 없는 시도를 같은 objective들에 반복해도 현재 완결된 memo를 바꿀 합리적 근거가 없다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-20a43731b7f388357e8db9b1",
+      "rationale": "PUBLIC_BROKER_PDF route는 이미 full-fetch됐고 accepted lineage가 없는 시도를 같은 objective들에 반복해도 현재 완결된 memo를 바꿀 합리적 근거가 없다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-34288467a64802e846d6a200",
+      "rationale": "PUBLIC_BROKER_PDF route는 이미 full-fetch됐고 accepted lineage가 없는 시도를 같은 objective들에 반복해도 현재 완결된 memo를 바꿀 합리적 근거가 없다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-531ab38ffb76204813b7bfc1",
+      "rationale": "PUBLIC_BROKER_PDF route는 이미 full-fetch됐고 accepted lineage가 없는 시도를 같은 objective들에 반복해도 현재 완결된 memo를 바꿀 합리적 근거가 없다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-5d9606d496be3f5de1dc4ed4",
+      "rationale": "PUBLIC_BROKER_PDF route는 이미 full-fetch됐고 accepted lineage가 없는 시도를 같은 objective들에 반복해도 현재 완결된 memo를 바꿀 합리적 근거가 없다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    },
+    {
+      "classification": "DUPLICATE_QUERY",
+      "failure_id": "RSFAIL-ff0bf45ce3d3dec5737378b6",
+      "rationale": "PUBLIC_BROKER_PDF route는 이미 full-fetch됐고 accepted lineage가 없는 시도를 같은 objective들에 반복해도 현재 완결된 memo를 바꿀 합리적 근거가 없다.",
+      "retryable": false,
+      "source_absence_claim_allowed": false
+    }
+  ],
+  "llm_direction_generation_used": true,
+  "missing_material_facts": [],
+  "new_source_family_directions": [],
+  "next_actions": [],
+  "parser_or_extractor_failures": [],
+  "prior_review_prompt_projection": null,
+  "prompt_hash": "2a959db9b907bd0d10d2f6818c722df44669d3659afeede6f28a2a204a87f557",
+  "provider_name": "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE",
+  "query_direction_briefs": [],
+  "rationale": "7개 component memo, 21개 Judge, Red Team, synthesis, structured records와 counter/supersession route가 모두 완결됐다. 남은 HBM-only 귀속·signed 계약조건·HBM-only CAPA/ASP 한계는 점수 상단과 confidence를 제한하지만 current score를 무효화할 material gap은 아니다. EGAPDISP-5f2f9b9418ecc7f2b9eed09e는 같은 corroboration query lane을 닫고 새 evidence가 생길 때만 재개방하도록 규정하므로 신규 source/query direction 없이 independent saturation review로 진행한다. deterministic zero-result 분류 교정 뒤 동일 frozen snapshot에서 다시 검증했다.",
+  "ready_for_independent_saturation_review": true,
+  "reasonable_positive_routes_remaining": false,
+  "review_id": "RSUP-e5aff2fc97e196ad79138b9a",
+  "reviewer_role": "RESEARCH_SUPERVISOR_A",
+  "schema_version": "e2r_research_supervisor_review_v3",
+  "search_zero_result_treated_as_saturation": false,
+  "source_family_gaps": [],
+  "status": "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+  "structured_data_complete": true,
+  "synthesis_memo_hash": "b3e1200800c61f12dad35bc0258a0e016edf7784fcff8a37abcc3b6e53c5f65a",
+  "synthesis_memo_id": "SYNMEMO-d42560312a817001ea9bf0ab",
+  "transport_budget_treated_as_completion": false,
+  "unresolved_material_questions": []
+}

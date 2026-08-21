@@ -462,6 +462,52 @@ def project_supervisor_source_graph_checkpoint(
         )
         if key in checkpoint
     }
+    if checkpoint.get("evidence_gap_dispositions"):
+        output["evidence_gap_dispositions"] = [
+            {
+                key: row.get(key)
+                for key in (
+                    "disposition_id",
+                    "gap_key",
+                    "semantic_gap_id",
+                    "status",
+                    "gap_class",
+                    "source_absence_proven",
+                    "query_lane_exhausted",
+                    "fact_snapshot_hash",
+                    "accepted_lineage_roster_hash",
+                    "affected_component_ids",
+                    "downstream_action",
+                    "reopen_conditions",
+                    "supersedes_disposition_id",
+                    "reopen_reason",
+                    "production_score_authority",
+                    "production_stage_authority",
+                )
+            }
+            for row in checkpoint.get("evidence_gap_dispositions") or ()
+            if isinstance(row, Mapping)
+        ]
+    if checkpoint.get("evidence_gap_fixpoints"):
+        output["evidence_gap_fixpoints"] = [
+            {
+                key: row.get(key)
+                for key in (
+                    "fixpoint_id",
+                    "gap_key",
+                    "semantic_gap_id",
+                    "status",
+                    "fact_snapshot_hash",
+                    "accepted_lineage_roster_hash",
+                    "valid_no_new_route_confirmation_count",
+                    "source_absence_proven",
+                    "production_score_authority",
+                    "production_stage_authority",
+                )
+            }
+            for row in checkpoint.get("evidence_gap_fixpoints") or ()
+            if isinstance(row, Mapping)
+        ]
     quarantined_documents = tuple(
         dict(row) for row in checkpoint.get("quarantined_documents") or ()
     )

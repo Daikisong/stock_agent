@@ -1,0 +1,68 @@
+{
+  "memo": {
+    "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+    "challenged_fact_ids": [
+      "EFACT-01d45a3ef7e6067534620d5b",
+      "EFACT-06d30fd1e9b97e31e12027e3",
+      "EFACT-1569aa0ff6b114356819c6fa",
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-4cdd1289336f255314565637",
+      "EFACT-57c8f3f6da2340f60145444a",
+      "EFACT-61c3bdd13373f0008854e0be",
+      "EFACT-629ed457589421a9b8531091",
+      "EFACT-a2171397d33bf73edfcbf6b9",
+      "EFACT-a4011676a60c9350cc2d1a92",
+      "EFACT-a88fbe9f73705566b2cb8cdc",
+      "EFACT-a936a40c3c8c7fdbf79d581e",
+      "EFACT-ad949aa4d2d0640e9c2bfbd1",
+      "EFACT-c12173ff1cb3069e79ce62f4",
+      "EFACT-c2b4ac5d23fc58c28900106f",
+      "EFACT-c407d4307309ff3543d51587",
+      "EFACT-d513435c037cad65a12feeb0",
+      "EFACT-daa259c4e94356b03855c185"
+    ],
+    "confidence": 0.84,
+    "counter_fact_ids": [
+      "EFACT-61c3bdd13373f0008854e0be",
+      "EFACT-a936a40c3c8c7fdbf79d581e",
+      "EFACT-c407d4307309ff3543d51587",
+      "EFACT-d513435c037cad65a12feeb0",
+      "EFACT-daa259c4e94356b03855c185"
+    ],
+    "memo_id": "RTMEMO-31470e2b68ef91a49e68eb13",
+    "recommended_research_directions": [],
+    "resolved_challenges": [
+      "연결 actual 이익·영업현금흐름과 HBM 제품·매출 실행은 source-backed fact로 분리됐고 forward 추정과 섞이지 않았다.",
+      "고객 집중, CAPEX, 운전자본, 교환사채 희석, 추가 증산 여력이 각 positive thesis의 counter로 명시됐다.",
+      "HBM4 고객 요청 양산과 ASIC 공동개발은 상용화 경로로만 사용됐으며 signed 계약의 존재나 조건으로 확대되지 않았다.",
+      "적정 감사의견은 재무 actual 신뢰도를 지지하지만 분기 공시 범위 제한을 상쇄하지 않는 것으로 처리됐다."
+    ],
+    "review_complete": true,
+    "reviewed_component_ids": [
+      "eps_fcf_explosion",
+      "earnings_visibility",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation",
+      "information_confidence"
+    ],
+    "schema_version": "e2r_red_team_memo_v1",
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM",
+      "PUBLIC_BROKER_PDF",
+      "KIND_KRX",
+      "KRX_PRICE_MARKET_CAP"
+    ],
+    "target_id": "000660",
+    "unresolved_challenges": [
+      "HBM-only 매출·마진·FCF bridge는 전사 actual과 완전히 분리되지 않는다.",
+      "고객별 signed 물량·가격·기간·취소보호·선수금·backlog/RPO는 독립 확인되지 않았다.",
+      "HBM 전용 CAPA 잠김·sold-out 기간·realized ASP는 정량 확인되지 않았다."
+    ]
+  },
+  "pending_reasons": [],
+  "provider_name": "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE",
+  "status": "COMPLETE"
+}
