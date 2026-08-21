@@ -9,18 +9,23 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
+from enum import Enum
 import hashlib
 import json
 import re
 from typing import Any, Mapping, Sequence
 
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
+from e2r.research_brain.researcher_mode.schemas import (
+    CANONICAL_COMPONENT_ORDER,
+)
 
 
 EVIDENCE_GAP_KEY_SCHEMA_VERSION = "e2r_evidence_gap_key_v1"
 EVIDENCE_GAP_AUDIT_LINEAGE_SCHEMA_VERSION = (
     "e2r_evidence_gap_audit_lineage_v1"
 )
+EVIDENCE_GAP_ASSESSMENT_SCHEMA_VERSION = "e2r_evidence_gap_assessment_v1"
 
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 _STABLE_TOKEN = re.compile(r"[A-Za-z0-9_.:/,+\-\[\]]+")
@@ -46,6 +51,39 @@ _PROSE_OR_CALL_LINEAGE_FIELDS = frozenset(
         "retry_count",
         "request_id",
     }
+)
+_ACCEPTED_LINEAGE_FIELDS = (
+    "link_id",
+    "claim_id",
+    "fact_id",
+    "economic_fact_key",
+    "link_role",
+    "material_claim",
+    "claim_confidence",
+    "current_lifecycle",
+    "source_ids",
+    "source_independence_group",
+    "resolves_fact_ids",
+    "supersedes_fact_ids",
+    "production_score_authority",
+)
+_SOURCE_CORPUS_FIELDS = (
+    "document_id",
+    "full_source_document_id",
+    "target_id",
+    "as_of_date",
+    "canonical_url",
+    "content_hash",
+    "full_source_content_hash",
+    "published_at",
+    "available_at",
+    "source_family",
+    "source_independence_group",
+    "evidence_eligible",
+    "evidence_os_ingest_eligible",
+    "full_fetch_performed",
+    "full_source_fetch_performed",
+    "snippet_only",
 )
 
 
@@ -80,6 +118,89 @@ def _sha256(value: Any, label: str) -> str:
     if _SHA256.fullmatch(text) is None:
         raise ValueError(f"{label} must be a sha256 digest")
     return text
+
+
+def _mapping(row: Mapping[str, Any] | Any) -> Mapping[str, Any]:
+    if isinstance(row, Mapping):
+        return row
+    to_dict = getattr(row, "to_dict", None)
+    if callable(to_dict):
+        value = to_dict()
+        if isinstance(value, Mapping):
+            return value
+    raise TypeError("evidence gap state rows must be mappings or expose to_dict")
+
+
+def accepted_lineage_profile(
+    claim_fact_links: Sequence[Mapping[str, Any] | Any],
+    *,
+    active_fact_ids: Sequence[str] | None = None,
+) -> Mapping[str, Any]:
+    """Hash accepted claim/fact/source lineage without prompt or row order."""
+
+    active = (
+        {str(value) for value in active_fact_ids}
+        if active_fact_ids is not None
+        else None
+    )
+    rows = []
+    for raw in claim_fact_links:
+        row = _mapping(raw)
+        fact_id = str(row.get("fact_id") or "")
+        if active is not None and fact_id not in active:
+            continue
+        if str(row.get("current_lifecycle") or "") in {
+            "RESOLVED",
+            "SUPERSEDED",
+        }:
+            continue
+        projected = {field: row.get(field) for field in _ACCEPTED_LINEAGE_FIELDS}
+        for field in ("source_ids", "resolves_fact_ids", "supersedes_fact_ids"):
+            projected[field] = sorted(
+                {str(value) for value in projected.get(field) or () if str(value)}
+            )
+        rows.append(projected)
+    ordered = sorted(
+        rows,
+        key=lambda row: (
+            str(row.get("fact_id") or ""),
+            str(row.get("claim_id") or ""),
+            str(row.get("link_id") or ""),
+        ),
+    )
+    return {
+        "schema_version": "e2r_accepted_lineage_profile_v1",
+        "accepted_lineage_count": len(ordered),
+        "accepted_lineage_roster_hash": _canonical_hash(ordered),
+        "row_order_affects_hash": False,
+        "prompt_or_supervisor_prose_in_hash": False,
+    }
+
+
+def source_corpus_profile(
+    documents: Sequence[Mapping[str, Any] | Any],
+) -> Mapping[str, Any]:
+    """Hash source identity/content state, excluding discovery prompt prose."""
+
+    rows = [
+        {field: _mapping(raw).get(field) for field in _SOURCE_CORPUS_FIELDS}
+        for raw in documents
+    ]
+    ordered = sorted(
+        rows,
+        key=lambda row: (
+            str(row.get("document_id") or ""),
+            str(row.get("full_source_content_hash") or ""),
+            str(row.get("content_hash") or ""),
+        ),
+    )
+    return {
+        "schema_version": "e2r_source_corpus_profile_v1",
+        "source_document_count": len(ordered),
+        "source_corpus_hash": _canonical_hash(ordered),
+        "row_order_affects_hash": False,
+        "query_or_prompt_prose_in_hash": False,
+    }
 
 
 def canonical_source_family_requirement(
@@ -306,3 +427,234 @@ class EvidenceGapAuditLineage:
             "production_stage_authority": False,
         }
 
+
+class EvidenceGapClass(str, Enum):
+    CORE_SCORE_BLOCKER = "CORE_SCORE_BLOCKER"
+    CORROBORATION_CAP = "CORROBORATION_CAP"
+    MONITORING_GAP = "MONITORING_GAP"
+
+
+class MissingSourceRole(str, Enum):
+    CORE_SCORE_SOURCE = "CORE_SCORE_SOURCE"
+    INDEPENDENT_CORROBORATION = "INDEPENDENT_CORROBORATION"
+    MONITORING_ONLY = "MONITORING_ONLY"
+
+
+@dataclass(frozen=True)
+class EvidenceGapAssessment:
+    """Deterministic materiality decision for a structured evidence gap.
+
+    The LLM may propose a class and economic rationale.  The class that owns
+    downstream behavior is derived from source-backed component sufficiency,
+    range boundedness, and hard-break/Red-Team relevance.
+    """
+
+    key: EvidenceGapKey
+    gap_class: EvidenceGapClass
+    missing_source_role: MissingSourceRole
+    source_backed_component_ids: tuple[str, ...]
+    component_range_bounded: bool
+    provider_or_parser_failure: bool
+    direct_contradiction_or_hard_break_unresolved: bool
+    required_red_team_evidence_missing: bool
+    could_change_score: bool
+    could_change_stage: bool
+    could_change_hard_break: bool
+    economic_reason: str
+    llm_proposed_gap_class: str | None = None
+    schema_version: str = EVIDENCE_GAP_ASSESSMENT_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        if self.schema_version != EVIDENCE_GAP_ASSESSMENT_SCHEMA_VERSION:
+            raise ValueError("evidence gap assessment schema mismatch")
+        known = frozenset(CANONICAL_COMPONENT_ORDER)
+        source_backed = tuple(sorted(set(self.source_backed_component_ids)))
+        if not set(self.key.affected_component_ids).issubset(known):
+            raise ValueError("evidence gap affects an unknown component")
+        if not set(source_backed).issubset(known):
+            raise ValueError("source-backed roster contains an unknown component")
+        object.__setattr__(self, "source_backed_component_ids", source_backed)
+        if not str(self.economic_reason or "").strip():
+            raise ValueError("evidence gap assessment requires an economic reason")
+        expected = self._deterministic_class(
+            missing_source_role=self.missing_source_role,
+            affected_component_ids=self.key.affected_component_ids,
+            source_backed_component_ids=source_backed,
+            component_range_bounded=self.component_range_bounded,
+            provider_or_parser_failure=self.provider_or_parser_failure,
+            direct_contradiction_or_hard_break_unresolved=(
+                self.direct_contradiction_or_hard_break_unresolved
+            ),
+            required_red_team_evidence_missing=(
+                self.required_red_team_evidence_missing
+            ),
+        )
+        if self.gap_class != expected:
+            raise ValueError(
+                "gap class disagrees with deterministic component sufficiency"
+            )
+
+    @classmethod
+    def classify(
+        cls,
+        *,
+        key: EvidenceGapKey,
+        missing_source_role: MissingSourceRole,
+        source_backed_component_ids: Sequence[str],
+        component_range_bounded: bool,
+        provider_or_parser_failure: bool = False,
+        direct_contradiction_or_hard_break_unresolved: bool = False,
+        required_red_team_evidence_missing: bool = False,
+        could_change_score: bool,
+        could_change_stage: bool,
+        could_change_hard_break: bool,
+        economic_reason: str,
+        llm_proposed_gap_class: str | None = None,
+    ) -> "EvidenceGapAssessment":
+        source_backed = tuple(sorted(set(source_backed_component_ids)))
+        deterministic_class = cls._deterministic_class(
+            missing_source_role=missing_source_role,
+            affected_component_ids=key.affected_component_ids,
+            source_backed_component_ids=source_backed,
+            component_range_bounded=component_range_bounded,
+            provider_or_parser_failure=provider_or_parser_failure,
+            direct_contradiction_or_hard_break_unresolved=(
+                direct_contradiction_or_hard_break_unresolved
+            ),
+            required_red_team_evidence_missing=(
+                required_red_team_evidence_missing
+            ),
+        )
+        return cls(
+            key=key,
+            gap_class=deterministic_class,
+            missing_source_role=missing_source_role,
+            source_backed_component_ids=source_backed,
+            component_range_bounded=component_range_bounded,
+            provider_or_parser_failure=provider_or_parser_failure,
+            direct_contradiction_or_hard_break_unresolved=(
+                direct_contradiction_or_hard_break_unresolved
+            ),
+            required_red_team_evidence_missing=(
+                required_red_team_evidence_missing
+            ),
+            could_change_score=could_change_score,
+            could_change_stage=could_change_stage,
+            could_change_hard_break=could_change_hard_break,
+            economic_reason=economic_reason,
+            llm_proposed_gap_class=llm_proposed_gap_class,
+        )
+
+    @staticmethod
+    def _deterministic_class(
+        *,
+        missing_source_role: MissingSourceRole,
+        affected_component_ids: Sequence[str],
+        source_backed_component_ids: Sequence[str],
+        component_range_bounded: bool,
+        provider_or_parser_failure: bool,
+        direct_contradiction_or_hard_break_unresolved: bool,
+        required_red_team_evidence_missing: bool,
+    ) -> EvidenceGapClass:
+        affected = set(affected_component_ids)
+        source_backed = set(source_backed_component_ids)
+        core_blocking = bool(
+            direct_contradiction_or_hard_break_unresolved
+            or required_red_team_evidence_missing
+            or not component_range_bounded
+            or not affected.issubset(source_backed)
+            or (
+                provider_or_parser_failure
+                and missing_source_role == MissingSourceRole.CORE_SCORE_SOURCE
+            )
+            or missing_source_role == MissingSourceRole.CORE_SCORE_SOURCE
+        )
+        if core_blocking:
+            return EvidenceGapClass.CORE_SCORE_BLOCKER
+        if missing_source_role == MissingSourceRole.INDEPENDENT_CORROBORATION:
+            return EvidenceGapClass.CORROBORATION_CAP
+        return EvidenceGapClass.MONITORING_GAP
+
+    @property
+    def affected_component_ids(self) -> tuple[str, ...]:
+        return self.key.affected_component_ids
+
+    @property
+    def blocked_component_ids(self) -> tuple[str, ...]:
+        if self.gap_class == EvidenceGapClass.CORE_SCORE_BLOCKER:
+            return self.affected_component_ids
+        return ()
+
+    @property
+    def capped_component_ids(self) -> tuple[str, ...]:
+        if self.gap_class == EvidenceGapClass.CORROBORATION_CAP:
+            return self.affected_component_ids
+        return ()
+
+    @property
+    def score_valid_if_only_gap(self) -> bool:
+        return self.gap_class != EvidenceGapClass.CORE_SCORE_BLOCKER
+
+    @property
+    def global_score_block(self) -> bool:
+        return self.gap_class == EvidenceGapClass.CORE_SCORE_BLOCKER
+
+    def component_effect(self, component_id: str) -> str:
+        component = _stable_token(component_id, "component id")
+        if component not in set(CANONICAL_COMPONENT_ORDER):
+            raise ValueError("unknown component id")
+        if component not in set(self.affected_component_ids):
+            return "UNAFFECTED"
+        if self.gap_class == EvidenceGapClass.CORE_SCORE_BLOCKER:
+            return "BLOCKED"
+        if self.gap_class == EvidenceGapClass.CORROBORATION_CAP:
+            return "CAPPED"
+        return "MONITORING"
+
+    def component_completion_allowed(self, component_id: str) -> bool:
+        return self.component_effect(component_id) != "BLOCKED"
+
+    def to_dict(self) -> Mapping[str, Any]:
+        proposed = (
+            str(self.llm_proposed_gap_class)
+            if self.llm_proposed_gap_class is not None
+            else None
+        )
+        return {
+            "schema_version": self.schema_version,
+            "gap_key": self.key.gap_key,
+            "semantic_gap_id": self.key.semantic_gap_id,
+            "gap_class": self.gap_class.value,
+            "affected_component_ids": list(self.affected_component_ids),
+            "blocked_component_ids": list(self.blocked_component_ids),
+            "capped_component_ids": list(self.capped_component_ids),
+            "unaffected_component_ids": [
+                component_id
+                for component_id in CANONICAL_COMPONENT_ORDER
+                if component_id not in set(self.affected_component_ids)
+            ],
+            "missing_source_role": self.missing_source_role.value,
+            "source_backed_component_ids": list(
+                self.source_backed_component_ids
+            ),
+            "component_range_bounded": self.component_range_bounded,
+            "provider_or_parser_failure": self.provider_or_parser_failure,
+            "direct_contradiction_or_hard_break_unresolved": (
+                self.direct_contradiction_or_hard_break_unresolved
+            ),
+            "required_red_team_evidence_missing": (
+                self.required_red_team_evidence_missing
+            ),
+            "could_change_score": self.could_change_score,
+            "could_change_stage": self.could_change_stage,
+            "could_change_hard_break": self.could_change_hard_break,
+            "economic_reason": self.economic_reason,
+            "llm_proposed_gap_class": proposed,
+            "llm_proposal_matches_deterministic_class": (
+                proposed is None or proposed == self.gap_class.value
+            ),
+            "score_valid_if_only_gap": self.score_valid_if_only_gap,
+            "global_score_block": self.global_score_block,
+            "production_score_authority": False,
+            "production_stage_authority": False,
+        }

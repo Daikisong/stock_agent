@@ -1,0 +1,67 @@
+{
+  "schema_version": "e2r_v6_gate1_gap_materiality_audit_v1",
+  "audit_date": "2026-08-22",
+  "target_id": "000660",
+  "as_of_date": "2026-07-12",
+  "implementation": "src/e2r/research_brain/researcher_mode/evidence_gap.py",
+  "gap_key": "EGAP-ab1e809361504122a3d9b0af",
+  "semantic_gap_id": "EGAPSEM-c7842e9b38715573390bc291",
+  "objective_identity": "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+  "required_source_family": "SOURCE_FAMILY_SET[CUSTOMER_OFFICIAL,PUBLIC_BROKER_PDF]",
+  "economic_mechanism_id": "CUSTOMER_COMMITMENT_VISIBILITY",
+  "predicate_or_fact_need_id": "DIRECT_CONTRACT_TERMS",
+  "fact_snapshot_hash": "885ce834edd2f6818446f1b869dfd380f8a7fd1db71e95cc57f1caad530ee56a",
+  "accepted_lineage_roster_hash": "fa68aa5d68a35de41a455bb1be032942590f3fb25dc640c768c6109772de8a2a",
+  "current_source_backed_fact_counts_by_component": {
+    "eps_fcf_explosion": 794,
+    "bottleneck_pricing": 773,
+    "earnings_visibility": 773,
+    "market_mispricing": 773,
+    "valuation_rerating": 773,
+    "capital_allocation": 975,
+    "information_confidence": 975
+  },
+  "assessment": {
+    "gap_class": "CORROBORATION_CAP",
+    "missing_source_role": "INDEPENDENT_CORROBORATION",
+    "affected_component_ids": [
+      "earnings_visibility",
+      "information_confidence"
+    ],
+    "blocked_component_ids": [],
+    "capped_component_ids": [
+      "earnings_visibility",
+      "information_confidence"
+    ],
+    "unaffected_component_ids": [
+      "eps_fcf_explosion",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation"
+    ],
+    "component_range_bounded": true,
+    "direct_contradiction_or_hard_break_unresolved": false,
+    "required_red_team_evidence_missing": false,
+    "score_valid_if_only_gap": true,
+    "global_score_block": false,
+    "production_score_authority": false,
+    "production_stage_authority": false
+  },
+  "deterministic_validation": {
+    "all_affected_components_have_current_source_backed_inputs": true,
+    "missing_role_is_independent_corroboration": true,
+    "unrelated_components_remain_completable": true,
+    "llm_classification_can_override_deterministic_result": false
+  },
+  "unrelated_component_blocked_count": 0,
+  "corroboration_gap_global_score_block_count": 0,
+  "core_blocker_misclassified_as_cap_count": 0,
+  "tests": [
+    "test_corroboration_gap_only_caps_affected_components",
+    "test_corroboration_gap_does_not_zero_fcf_revision_valuation",
+    "test_core_score_blocker_keeps_score_invalid",
+    "test_monitoring_gap_does_not_block_component_completion"
+  ],
+  "verdict": "PASS"
+}

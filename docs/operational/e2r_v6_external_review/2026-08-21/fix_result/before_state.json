@@ -48,6 +48,13 @@
     "accepted_claim_without_fact_count": 0,
     "file_sha256": "856b23e7b6e90940e8b0ea64c956bf585d3876d50d8e86699d0a0f5f9b04eedd"
   },
+  "frozen_semantic_state": {
+    "current_fact_roster_hash": "885ce834edd2f6818446f1b869dfd380f8a7fd1db71e95cc57f1caad530ee56a",
+    "accepted_lineage_count": 996,
+    "accepted_lineage_roster_hash": "fa68aa5d68a35de41a455bb1be032942590f3fb25dc640c768c6109772de8a2a",
+    "source_document_count": 36,
+    "source_corpus_hash": "6974d0f21b76100cf3d9e0a1d580011ed4bc70db88e248117128e46384b927e3"
+  },
   "collaboration_journal": {
     "request_count": 471,
     "response_count": 469,
