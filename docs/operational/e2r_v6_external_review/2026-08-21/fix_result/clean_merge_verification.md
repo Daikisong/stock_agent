@@ -82,7 +82,7 @@ Gate 1 compact review 문서 29개와 clean packaging 문서 3개:
 - gzip/zip/tar/zst 및 repository 내부 archive 복원 script
 - `.pytest_cache`, `__pycache__`, `*.pyc`, 임시 로그
 
-raw 원문과 cache/output은 clean PR에 없다. archive를 만들거나 GitHub Release/LFS에 게시하지 않았다. 테스트에 필요한 기존 snapshot은 legacy worktree에서 clean worktree의 ignored 경로로만 임시 복사했고, Git 검증 전에 제거했다.
+raw 원문과 cache/output은 clean PR에 없다. archive를 만들거나 GitHub Release/LFS에 게시하지 않았다. 초기 branch 내부 영수증을 만들 때만 일부 기존 snapshot을 legacy worktree에서 clean worktree의 ignored 경로로 임시 복사했고 Git 검증 전에 제거했다. 독립 검수 후 clean-checkout 검증은 raw snapshot을 복사하지 않은 새 detached worktree에서 수행했다.
 
 ## Canonical Gate 1 보존
 
@@ -115,6 +115,24 @@ raw 원문과 cache/output은 clean PR에 없다. archive를 만들거나 GitHub
 - network search/query/fetch/provider/LLM/subagent: 실행하지 않음
 
 위 221/7,204/15 PASS는 초기 branch 내부 실행 영수증이다. GitHub Actions 독립 실행이 green이 되기 전에는 `CLEAN_PR_READY` 근거로 사용하지 않는다. 독립 검수 수정 후 현재 head의 실제 결과는 PR checks와 후속 검증 기록을 우선한다.
+
+### 독립 검수 수정 후 clean-checkout 로컬 검증
+
+raw/cache를 복사하지 않은 detached worktree에서 GitHub `offline-contract`와 같은 순서로 다시 확인했다.
+
+- PR delta 금지 경로: `.e2r_cache/**`, `data/cache/**`, `output/**` 추가 0개
+- Gate 1 tracked-receipt consistency: 4/4 PASS
+- production static audit: `E2R_V6_PRODUCTION_STATIC_AUDIT_PASS`, critical 0
+- full discovery: `PYTHONPATH=src python -m unittest discover -s tests -v` → 7,210 tests, failure 0, error 0, `OK (skipped=10)`, 563.000초
+- Phase100: 15/15 PASS, failure/error/skip 0
+- `python -m compileall -q src tests`: exit 0
+- 테스트 뒤 `git status --porcelain --untracked-files=all`: 빈 결과
+
+skip 10개 중 3개는 기존 ignored live artifact 의존 테스트이고, 7개는 clean PR에 게시하지 않은 과거 live reviewer raw leaf가 있어야 실행할 수 있는 변조 테스트다. 이 7개는 raw leaf가 없을 때 성공으로 위장하지 않고 skip 사유를 명시한다. 대신 같은 class의 tracked reviewer receipt 검사는 역사적 영수증의 status/critical/roster 일관성을 확인한다.
+
+쉬운 예: 원본 계약서가 없는 환경에서 계약서 문구 변조 테스트를 억지로 PASS시키지 않는다. 해당 변조 테스트는 `raw leaf 미게시`로 skip하고, 배포된 결재 영수증은 “과거 영수증 일관성” 범위에서만 검사한다.
+
+workflow의 초기 `Verify tracked receipts offline` 단계는 아직 저장소에 없는 Phase101 미래 경로를 요구했다. 현재 PR 검증 단계는 실제 게시된 `Frozen000660Gate1AcceptanceTest`를 실행한다. main 전환용 Phase101 검증 경로는 `main-authority` job에 그대로 남아 있으며 이번 Gate 1 PR의 완료 증명으로 사용하지 않는다.
 
 ## Git payload hard gate
 

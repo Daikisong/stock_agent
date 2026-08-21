@@ -117,7 +117,11 @@ legacy copy-on-write 실행 영수증에는 신규 request/query/fetch/document/
 - 초기 branch 내부 영수증: focused 221개 PASS
 - 초기 branch 내부 영수증: full discovery 7,204개 PASS, 실패 0, 오류 0, skip 0
 - 초기 branch 내부 영수증: Phase100 15개 PASS
+- 독립 검수 수정 후 raw 없는 clean checkout: full discovery 7,210개, 실패 0, 오류 0, `OK (skipped=10)`
+- 같은 clean checkout: Gate 1 receipt 4/4 PASS, production static audit critical 0, Phase100 15/15 PASS, compileall PASS, 테스트 후 Git status clean
 - 독립 GitHub Actions: 현재 head가 green이 되기 전에는 clean PR readiness를 선언하지 않음
+
+skip 10개는 ignored/raw live leaf 의존성이 명시된 테스트다. 그중 7개 과거 live reviewer 변조 검사는 raw leaf 미게시 상태에서 skip하며, tracked 결과를 fresh recomputation으로 부르지 않는다.
 
 ## 20. Gate 1 Reviewer
 
@@ -129,7 +133,7 @@ Gate 1 항목은 증명 완료다. Phase101~109와 다른 archetype/KRX Census/m
 
 ## 22. 남은 일
 
-Gate 1 외부 검토 후 original goal의 Phase101부터 순서대로 진행하는 일만 남는다. 같은 000660 검색을 다시 여는 일은 남은 작업이 아니다.
+현재 PR 범위에서는 GitHub Actions green 확인과 외부 재검토만 남는다. 그 뒤 original goal을 계속한다면 Phase101부터 별도 범위로 진행한다. 같은 000660 검색을 다시 여는 일은 남은 작업이 아니다.
 
 이 clean PR에는 `output/**`, `data/cache/**`, raw claim provenance, collaboration 원문, gzip/archive가 없다. 제외 파일의 경로·크기·SHA-256은 `external_artifact_receipt.json`에 기록했으며 publication status는 `NOT_PUBLISHED`다. PR #5는 legacy/raw review reference이고 병합 후보는 새 clean PR이다.
 
