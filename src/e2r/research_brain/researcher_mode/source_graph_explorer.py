@@ -48,6 +48,16 @@ from .document_ranker import (
     normalize_candidate_url,
     project_candidate_ranking_discovery_candidates,
 )
+from .evidence_gap import (
+    EvidenceGapAssessment,
+    EvidenceGapClass,
+    EvidenceGapDisposition,
+    EvidenceGapKey,
+    MissingSourceRole,
+    NoNewRouteConfirmation,
+    SemanticNoNewRouteFixpoint,
+    latest_evidence_gap_dispositions,
+)
 from .schemas import ComponentResearchPlan, EvidenceFact
 from .source_query_planner import (
     CANONICAL_SOURCE_FAMILIES,
@@ -607,6 +617,7 @@ class ResearcherSourceGraphAcquirer:
         official_domain_allowlist: Sequence[str] = (),
         checkpoint_migration_only: bool = False,
         checkpoint_source_repair_only: bool = False,
+        evidence_gap_state: Mapping[str, Any] | None = None,
     ) -> SourceGraphAcquisitionRun:
         if (
             checkpoint_migration_only or checkpoint_source_repair_only
@@ -651,6 +662,10 @@ class ResearcherSourceGraphAcquirer:
             raise ValueError("source graph received cross-target EvidenceFacts")
         if any(str(row.get("as_of_date")) != as_of_date for row in facts):
             raise ValueError("source graph EvidenceFact as_of_date mismatch")
+        validated_evidence_gap_state = _validated_evidence_gap_state(
+            evidence_gap_state,
+            facts=facts,
+        )
         state = _new_acquisition_state(
             target_id=target_id,
             target_name=target_name,
@@ -1264,7 +1279,48 @@ class ResearcherSourceGraphAcquirer:
             )
             in prior_lineage_failure_keys
         )
-        if repeated_source_family_lineage_failures:
+        current_evidence_gap = _current_query_generation_evidence_gap(
+            target_id=target_id,
+            as_of_date=as_of_date,
+            objectives=objectives,
+            lineage_failures=repeated_source_family_lineage_failures,
+            evidence_gap_state=validated_evidence_gap_state,
+        )
+        parser_or_fetch_repair_pending = bool(
+            (
+                effective_score_gap_context.get("prior_supervisor_gap")
+                or {}
+            ).get("parser_or_extractor_failures")
+        )
+        stable_gap_disposition_suppresses_query_generation = False
+        if current_evidence_gap is not None:
+            gap_key, gap_assessment = current_evidence_gap
+            current_dispositions = _current_evidence_gap_dispositions(state)
+            prior_disposition = current_dispositions.get(
+                gap_key.semantic_gap_id
+            )
+            if prior_disposition is not None:
+                reopen_reason = prior_disposition.reopen_reason_for(
+                    candidate_key=gap_key
+                )
+                if reopen_reason is None and prior_disposition.query_lane_exhausted:
+                    # The would-be third request is suppressed before the
+                    # provider sees it.  ``guard_source_query_generation`` is
+                    # the hard-failure boundary if any caller bypasses this
+                    # routing guard.
+                    stable_gap_disposition_suppresses_query_generation = True
+                    query_generation_supervisor_handoff = True
+                elif reopen_reason is not None:
+                    reopened = prior_disposition.superseding_reopen(
+                        assessment=gap_assessment
+                    )
+                    state.setdefault("evidence_gap_dispositions", []).append(
+                        reopened.to_dict()
+                    )
+        if (
+            repeated_source_family_lineage_failures
+            and not stable_gap_disposition_suppresses_query_generation
+        ):
             pending_reasons.extend(
                 "SOURCE_FAMILY_ACCEPTED_LINEAGE_PENDING:"
                 + str(row.get("objective_id") or "")
@@ -1450,6 +1506,55 @@ class ResearcherSourceGraphAcquirer:
                     )
                 )
             )
+            if current_evidence_gap is not None:
+                gap_key, gap_assessment = current_evidence_gap
+                gap_fixpoint = SemanticNoNewRouteFixpoint(
+                    key=gap_key,
+                    confirmations=_query_generation_confirmations_for_gap(
+                        history=state["query_generation_history"],
+                        key=gap_key,
+                        parser_or_fetch_repair_pending=(
+                            parser_or_fetch_repair_pending
+                        ),
+                    ),
+                )
+                if gap_fixpoint.reached:
+                    current_dispositions = (
+                        _current_evidence_gap_dispositions(state)
+                    )
+                    disposition = current_dispositions.get(
+                        gap_key.semantic_gap_id
+                    )
+                    if disposition is None:
+                        disposition = gap_fixpoint.create_disposition(
+                            assessment=gap_assessment,
+                            attempted_route_signatures=(
+                                _attempted_query_route_signatures(
+                                    generated_rows,
+                                    objective_identity=(
+                                        gap_key.objective_identity
+                                    ),
+                                    required_source_family=(
+                                        gap_key.required_source_family
+                                    ),
+                                )
+                            ),
+                        )
+                        state.setdefault(
+                            "evidence_gap_dispositions", []
+                        ).append(disposition.to_dict())
+                    persisted_fixpoint_ids = {
+                        str(row.get("fixpoint_id") or "")
+                        for row in state.setdefault(
+                            "evidence_gap_fixpoints", []
+                        )
+                        if isinstance(row, Mapping)
+                    }
+                    if gap_fixpoint.fixpoint_id not in persisted_fixpoint_ids:
+                        state["evidence_gap_fixpoints"].append(
+                            gap_fixpoint.to_dict()
+                        )
+                    query_generation_supervisor_handoff = True
             collaboration_transport_wait = (
                 _query_generation_has_collaboration_transport_wait(
                     query_generation.to_dict()
@@ -2899,6 +3004,26 @@ def validate_source_graph_checkpoint(
     ]
     if any(not value for value in query_ids) or len(query_ids) != len(set(query_ids)):
         raise ValueError("source graph query ids must be unique and non-empty")
+    _current_evidence_gap_dispositions(payload)
+    fixpoint_ids = [
+        str(row.get("fixpoint_id") or "")
+        for row in payload.get("evidence_gap_fixpoints") or ()
+        if isinstance(row, Mapping)
+    ]
+    if any(not value for value in fixpoint_ids) or len(fixpoint_ids) != len(
+        set(fixpoint_ids)
+    ):
+        raise ValueError("source graph evidence gap fixpoint ids are invalid")
+    if any(
+        row.get("status") != "SEMANTIC_NO_NEW_ROUTE_FIXPOINT"
+        or row.get("source_absence_proven") is not False
+        or int(row.get("valid_no_new_route_confirmation_count") or 0) < 2
+        or row.get("production_score_authority") is not False
+        or row.get("production_stage_authority") is not False
+        for row in payload.get("evidence_gap_fixpoints") or ()
+        if isinstance(row, Mapping)
+    ):
+        raise ValueError("source graph evidence gap fixpoint contract is invalid")
     validated_official_first_resolution_query_ids(payload)
     for row in documents:
         if row.get("target_id") not in {None, "", payload["target_id"]}:
@@ -3093,6 +3218,252 @@ def _objective_dict(
 
 def _fact_dict(row: EvidenceFact | Mapping[str, Any]) -> Mapping[str, Any]:
     return row.to_dict() if isinstance(row, EvidenceFact) else dict(row)
+
+
+def _validated_evidence_gap_state(
+    value: Mapping[str, Any] | None,
+    *,
+    facts: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any] | None:
+    if value is None:
+        return None
+    if not isinstance(value, Mapping):
+        raise ValueError("deterministic evidence gap state must be an object")
+    if value.get("schema_version") != "e2r_deterministic_evidence_gap_state_v1":
+        raise ValueError("deterministic evidence gap state schema mismatch")
+    if (
+        value.get("prompt_or_supervisor_prose_in_identity") is not False
+        or value.get("production_score_authority") is not False
+        or value.get("production_stage_authority") is not False
+    ):
+        raise ValueError("deterministic evidence gap state authority mismatch")
+    for key in ("fact_snapshot_hash", "accepted_lineage_roster_hash"):
+        if re.fullmatch(r"[0-9a-f]{64}", str(value.get(key) or "")) is None:
+            raise ValueError(f"deterministic evidence gap state {key} is invalid")
+    current_fact_count = sum(
+        str(row.get("current_lifecycle") or "")
+        not in {"RESOLVED", "SUPERSEDED"}
+        for row in facts
+    )
+    if int(value.get("current_fact_count") or 0) != current_fact_count:
+        raise ValueError("deterministic evidence gap fact count mismatch")
+    component_counts = value.get("source_backed_fact_count_by_component")
+    if not isinstance(component_counts, Mapping):
+        raise ValueError("deterministic component fact counts are missing")
+    if any(
+        isinstance(count, bool) or int(count) < 0
+        for count in component_counts.values()
+    ):
+        raise ValueError("deterministic component fact counts are invalid")
+    return json.loads(json.dumps(value, ensure_ascii=False, default=str))
+
+
+def _current_query_generation_evidence_gap(
+    *,
+    target_id: str,
+    as_of_date: str,
+    objectives: Sequence[Mapping[str, Any]],
+    lineage_failures: Sequence[Mapping[str, Any]],
+    evidence_gap_state: Mapping[str, Any] | None,
+) -> tuple[EvidenceGapKey, EvidenceGapAssessment] | None:
+    """Build the stable structured gap behind repeated accepted-lineage waits."""
+
+    if evidence_gap_state is None or not lineage_failures:
+        return None
+    objective_by_id = {
+        str(row.get("objective_id") or ""): row for row in objectives
+    }
+    objective_ids = tuple(
+        sorted(
+            {
+                str(row.get("objective_id") or "")
+                for row in lineage_failures
+                if str(row.get("objective_id") or "") in objective_by_id
+            }
+        )
+    )
+    source_families = tuple(
+        sorted(
+            {
+                str(row.get("source_family") or "")
+                for row in lineage_failures
+                if str(row.get("source_family") or "")
+            }
+        )
+    )
+    if not objective_ids or not source_families:
+        return None
+    affected_components = {
+        str(objective_by_id[objective_id].get("component_id") or "")
+        for objective_id in objective_ids
+    }
+    # This is a canonical component dependency, not a symbol/archetype/query
+    # template.  Missing customer-direct corroboration of an information
+    # claim also bounds the durability/visibility component when that
+    # component already has source-backed inputs.  It never opens a query.
+    component_counts = evidence_gap_state[
+        "source_backed_fact_count_by_component"
+    ]
+    if (
+        "information_confidence" in affected_components
+        and "CUSTOMER_OFFICIAL" in source_families
+        and int(component_counts.get("earnings_visibility") or 0) > 0
+    ):
+        affected_components.add("earnings_visibility")
+    affected_components.discard("")
+    if not affected_components:
+        return None
+    objective_identity = (
+        objective_ids[0]
+        if len(objective_ids) == 1
+        else stable_intelligence_id(
+            "EGAPOBJSET", {"objective_ids": list(objective_ids)}
+        )
+    )
+    key = EvidenceGapKey(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        archetype_id=str(evidence_gap_state.get("archetype_id") or ""),
+        objective_identity=objective_identity,
+        affected_component_ids=tuple(affected_components),
+        required_source_family=source_families,  # type: ignore[arg-type]
+        economic_mechanism_id="CUSTOMER_OR_INDEPENDENT_CORROBORATION",
+        predicate_or_fact_need_id="ACCEPTED_CLAIM_FACT_LINEAGE",
+        fact_snapshot_hash=str(evidence_gap_state["fact_snapshot_hash"]),
+        accepted_lineage_roster_hash=str(
+            evidence_gap_state["accepted_lineage_roster_hash"]
+        ),
+    )
+    source_backed_components = tuple(
+        sorted(
+            component_id
+            for component_id, count in component_counts.items()
+            if int(count or 0) > 0
+        )
+    )
+    component_range_bounded = set(key.affected_component_ids).issubset(
+        source_backed_components
+    )
+    assessment = EvidenceGapAssessment.classify(
+        key=key,
+        missing_source_role=(
+            MissingSourceRole.INDEPENDENT_CORROBORATION
+            if component_range_bounded
+            else MissingSourceRole.CORE_SCORE_SOURCE
+        ),
+        source_backed_component_ids=source_backed_components,
+        component_range_bounded=component_range_bounded,
+        could_change_score=True,
+        could_change_stage=True,
+        could_change_hard_break=False,
+        economic_reason=(
+            "Current source-backed component inputs exist, while requested "
+            "independent source-family claim/fact lineage remains unconfirmed."
+        ),
+    )
+    return key, assessment
+
+
+def _query_generation_confirmations_for_gap(
+    *,
+    history: Sequence[Mapping[str, Any]],
+    key: EvidenceGapKey,
+    parser_or_fetch_repair_pending: bool,
+) -> tuple[NoNewRouteConfirmation, ...]:
+    request_id_by_prompt: dict[str, str] = {}
+    for row in history:
+        prompt_hash = str(row.get("prompt_hash") or "")
+        for reason in row.get("feedback_for_next_llm_call") or ():
+            match = re.search(r"COLLABREQ-[0-9a-f]{64}", str(reason or ""))
+            if prompt_hash and match is not None:
+                request_id_by_prompt[prompt_hash] = match.group(0)
+    confirmations = []
+    for row in history:
+        prompt_hash = str(row.get("prompt_hash") or "")
+        response_hash = str(row.get("response_hash") or "")
+        if (
+            not prompt_hash.startswith("QUERYPROMPT-")
+            or not response_hash.startswith("QUERYRESP-")
+        ):
+            continue
+        feedback = tuple(
+            str(value) for value in row.get("feedback_for_next_llm_call") or ()
+        )
+        confirmations.append(
+            NoNewRouteConfirmation(
+                key=key,
+                prompt_hash=prompt_hash,
+                response_hash=response_hash,
+                request_id=request_id_by_prompt.get(prompt_hash),
+                suggested_queries=tuple(
+                    dict(value)
+                    for value in row.get("queries") or ()
+                    if isinstance(value, Mapping)
+                ),
+                new_source_directions=tuple(
+                    str(value)
+                    for value in row.get("new_source_directions") or ()
+                    if str(value).strip()
+                ),
+                unresolved_research_notes=tuple(
+                    str(value)
+                    for value in row.get("unresolved_research_notes") or ()
+                    if str(value).strip()
+                ),
+                provider_error=any(
+                    value.startswith("QUERY_PROVIDER_ERROR:")
+                    for value in feedback
+                ),
+                parser_or_fetch_repair_pending=(
+                    parser_or_fetch_repair_pending
+                ),
+                deterministic_fallback_query_used=(
+                    row.get("deterministic_fallback_query_used") is not False
+                ),
+            )
+        )
+    return tuple(confirmations)
+
+
+def _attempted_query_route_signatures(
+    generated_queries: Sequence[Mapping[str, Any]],
+    *,
+    objective_identity: str,
+    required_source_family: str,
+) -> tuple[str, ...]:
+    return tuple(
+        sorted(
+            {
+                stable_intelligence_id(
+                    "SGROUTE",
+                    {
+                        "objective_identity": str(
+                            row.get("objective_id") or ""
+                        ),
+                        "source_families": sorted(
+                            str(value)
+                            for value in row.get("source_families") or ()
+                        ),
+                        "query_id": str(row.get("query_id") or ""),
+                    },
+                )
+                for row in generated_queries
+                if str(row.get("objective_id") or "")
+                and str(row.get("query_id") or "")
+            }
+        )
+    )
+
+
+def _current_evidence_gap_dispositions(
+    state: Mapping[str, Any],
+) -> Mapping[str, EvidenceGapDisposition]:
+    rows = tuple(
+        EvidenceGapDisposition.from_dict(row)
+        for row in state.get("evidence_gap_dispositions") or ()
+        if isinstance(row, Mapping)
+    )
+    return latest_evidence_gap_dispositions(rows)
 
 
 def _validated_pending_query_generation_replay_context(
@@ -3735,6 +4106,8 @@ def _new_acquisition_state(
         "resumed_from_checkpoint_id": None,
         "query_generation_history": [],
         "query_generation_supervisor_handoffs": [],
+        "evidence_gap_dispositions": [],
+        "evidence_gap_fixpoints": [],
         "generated_queries": [],
         "executed_queries": [],
         "query_failures": [],

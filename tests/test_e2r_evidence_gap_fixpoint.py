@@ -9,9 +9,13 @@ from e2r.research_brain.researcher_mode.evidence_gap import (
     EvidenceGapDisposition,
     EvidenceGapKey,
     MissingSourceRole,
+    NoNewRouteConfirmation,
+    RepeatedExhaustedGapReopenedError,
+    SemanticNoNewRouteFixpoint,
     accepted_lineage_profile,
     canonical_current_pending_request_ids,
     derive_objective_identity,
+    guard_source_query_generation,
     latest_evidence_gap_dispositions,
     source_corpus_profile,
 )
@@ -303,6 +307,8 @@ class EvidenceGapDispositionTest(unittest.TestCase):
             "COMPONENT_MEMO_WITH_CONFIDENCE_PENALTY",
             row["downstream_action"],
         )
+        restored = EvidenceGapDisposition.from_dict(row)
+        self.assertEqual(disposition.disposition_id, restored.disposition_id)
 
     def test_disposition_reopens_only_on_real_state_change(self) -> None:
         disposition = self._disposition()
@@ -354,6 +360,142 @@ class EvidenceGapDispositionTest(unittest.TestCase):
             quarantined_request_ids=(residue,),
         )
         self.assertEqual((current,), result)
+
+
+class SemanticNoNewRouteFixpointTest(unittest.TestCase):
+    def _assessment(self) -> EvidenceGapAssessment:
+        key = EvidenceGapKey(
+            target_id="TEST_TARGET",
+            as_of_date="2026-07-12",
+            archetype_id="TEST_ARCHETYPE",
+            objective_identity="SGOBJ-stable123",
+            affected_component_ids=(
+                "information_confidence",
+                "earnings_visibility",
+            ),
+            required_source_family=(
+                "SOURCE_FAMILY_SET[CUSTOMER_OFFICIAL,PUBLIC_BROKER_PDF]"
+            ),
+            economic_mechanism_id="CUSTOMER_COMMITMENT_VISIBILITY",
+            predicate_or_fact_need_id="DIRECT_CONTRACT_TERMS",
+            fact_snapshot_hash="a" * 64,
+            accepted_lineage_roster_hash="b" * 64,
+        )
+        return EvidenceGapAssessment.classify(
+            key=key,
+            missing_source_role=MissingSourceRole.INDEPENDENT_CORROBORATION,
+            source_backed_component_ids=(
+                "information_confidence",
+                "earnings_visibility",
+            ),
+            component_range_bounded=True,
+            could_change_score=True,
+            could_change_stage=True,
+            could_change_hard_break=False,
+            economic_reason="독립 corroboration 미확인",
+        )
+
+    def _confirmation(
+        self,
+        ordinal: int,
+        **overrides: object,
+    ) -> NoNewRouteConfirmation:
+        values: dict[str, object] = {
+            "key": self._assessment().key,
+            "prompt_hash": f"QUERYPROMPT-{ordinal}",
+            "response_hash": f"QUERYRESP-{ordinal}",
+            "request_id": "COLLABREQ-" + str(ordinal) * 64,
+            "suggested_queries": (),
+            "new_source_directions": (),
+            "unresolved_research_notes": ("미확인 공백은 유지된다.",),
+        }
+        values.update(overrides)
+        return NoNewRouteConfirmation(**values)  # type: ignore[arg-type]
+
+    def test_two_independent_empty_confirmations_close_same_gap(self) -> None:
+        assessment = self._assessment()
+        fixpoint = SemanticNoNewRouteFixpoint(
+            key=assessment.key,
+            confirmations=(self._confirmation(1), self._confirmation(2)),
+        )
+        self.assertTrue(fixpoint.reached)
+        self.assertEqual(2, fixpoint.valid_confirmation_count)
+        disposition = fixpoint.create_disposition(
+            assessment=assessment,
+            attempted_route_signatures=("ROUTE-A", "ROUTE-B"),
+        )
+        self.assertTrue(disposition.query_lane_exhausted)
+        self.assertEqual(2, len(disposition.no_new_route_confirmation_ids))
+
+    def test_new_source_direction_prevents_fixpoint(self) -> None:
+        fixpoint = SemanticNoNewRouteFixpoint(
+            key=self._assessment().key,
+            confirmations=(
+                self._confirmation(1),
+                self._confirmation(
+                    2,
+                    new_source_directions=("새 partner official filing 경로",),
+                    concrete_untried_source_route_signatures=("ROUTE-C",),
+                ),
+            ),
+        )
+        self.assertFalse(fixpoint.reached)
+        self.assertEqual(0, fixpoint.valid_confirmation_count)
+
+    def test_provider_error_does_not_count_as_no_route(self) -> None:
+        fixpoint = SemanticNoNewRouteFixpoint(
+            key=self._assessment().key,
+            confirmations=(
+                self._confirmation(1),
+                self._confirmation(2, provider_error=True),
+            ),
+        )
+        self.assertFalse(fixpoint.reached)
+        self.assertEqual(1, fixpoint.valid_confirmation_count)
+
+    def test_parser_failure_does_not_count_as_no_route(self) -> None:
+        fixpoint = SemanticNoNewRouteFixpoint(
+            key=self._assessment().key,
+            confirmations=(
+                self._confirmation(1),
+                self._confirmation(2, parser_or_fetch_repair_pending=True),
+            ),
+        )
+        self.assertFalse(fixpoint.reached)
+        self.assertEqual(1, fixpoint.valid_confirmation_count)
+
+    def test_fixpoint_does_not_create_source_absence_fact(self) -> None:
+        assessment = self._assessment()
+        fixpoint = SemanticNoNewRouteFixpoint(
+            key=assessment.key,
+            confirmations=(self._confirmation(1), self._confirmation(2)),
+        )
+        disposition = fixpoint.create_disposition(
+            assessment=assessment,
+            attempted_route_signatures=("ROUTE-A",),
+        )
+        self.assertFalse(fixpoint.to_dict()["source_absence_proven"])
+        self.assertFalse(disposition.to_dict()["source_absence_proven"])
+        self.assertNotIn("facts", disposition.to_dict())
+
+    def test_third_same_gap_query_is_hard_failure(self) -> None:
+        assessment = self._assessment()
+        fixpoint = SemanticNoNewRouteFixpoint(
+            key=assessment.key,
+            confirmations=(self._confirmation(1), self._confirmation(2)),
+        )
+        disposition = fixpoint.create_disposition(
+            assessment=assessment,
+            attempted_route_signatures=("ROUTE-A", "ROUTE-B"),
+        )
+        with self.assertRaisesRegex(
+            RepeatedExhaustedGapReopenedError,
+            "REPEATED_EXHAUSTED_GAP_REOPENED",
+        ):
+            guard_source_query_generation(
+                disposition=disposition,
+                candidate_key=assessment.key,
+            )
 
 
 if __name__ == "__main__":

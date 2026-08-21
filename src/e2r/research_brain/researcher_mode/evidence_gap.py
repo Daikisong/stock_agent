@@ -27,6 +27,12 @@ EVIDENCE_GAP_AUDIT_LINEAGE_SCHEMA_VERSION = (
 )
 EVIDENCE_GAP_ASSESSMENT_SCHEMA_VERSION = "e2r_evidence_gap_assessment_v1"
 EVIDENCE_GAP_DISPOSITION_SCHEMA_VERSION = "e2r_evidence_gap_disposition_v1"
+NO_NEW_ROUTE_CONFIRMATION_SCHEMA_VERSION = (
+    "e2r_no_new_route_confirmation_v1"
+)
+SEMANTIC_NO_NEW_ROUTE_FIXPOINT_SCHEMA_VERSION = (
+    "e2r_semantic_no_new_route_fixpoint_v1"
+)
 
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 _STABLE_TOKEN = re.compile(r"[A-Za-z0-9_.:/,+\-\[\]]+")
@@ -351,6 +357,34 @@ class EvidenceGapKey:
         return _IDENTITY_FIELDS
 
     @classmethod
+    def from_dict(cls, row: Mapping[str, Any]) -> "EvidenceGapKey":
+        return cls(
+            target_id=str(row.get("target_id") or ""),
+            as_of_date=str(row.get("as_of_date") or ""),
+            archetype_id=str(row.get("archetype_id") or ""),
+            objective_identity=str(row.get("objective_identity") or ""),
+            affected_component_ids=tuple(
+                str(value) for value in row.get("affected_component_ids") or ()
+            ),
+            required_source_family=str(
+                row.get("required_source_family") or ""
+            ),
+            economic_mechanism_id=str(
+                row.get("economic_mechanism_id") or ""
+            ),
+            predicate_or_fact_need_id=str(
+                row.get("predicate_or_fact_need_id") or ""
+            ),
+            fact_snapshot_hash=str(row.get("fact_snapshot_hash") or ""),
+            accepted_lineage_roster_hash=str(
+                row.get("accepted_lineage_roster_hash") or ""
+            ),
+            schema_version=str(
+                row.get("schema_version") or EVIDENCE_GAP_KEY_SCHEMA_VERSION
+            ),
+        )
+
+    @classmethod
     def prohibited_prose_or_call_lineage_fields(cls) -> frozenset[str]:
         return _PROSE_OR_CALL_LINEAGE_FIELDS
 
@@ -546,6 +580,59 @@ class EvidenceGapAssessment:
             llm_proposed_gap_class=llm_proposed_gap_class,
         )
 
+    @classmethod
+    def from_dict(
+        cls,
+        row: Mapping[str, Any],
+        *,
+        key: EvidenceGapKey | None = None,
+    ) -> "EvidenceGapAssessment":
+        raw_key = key
+        if raw_key is None:
+            key_payload = row.get("key")
+            if not isinstance(key_payload, Mapping):
+                raise ValueError("persisted assessment lacks its gap key")
+            raw_key = EvidenceGapKey.from_dict(key_payload)
+        return cls(
+            key=raw_key,
+            gap_class=EvidenceGapClass(str(row.get("gap_class") or "")),
+            missing_source_role=MissingSourceRole(
+                str(row.get("missing_source_role") or "")
+            ),
+            source_backed_component_ids=tuple(
+                str(value)
+                for value in row.get("source_backed_component_ids") or ()
+            ),
+            component_range_bounded=(
+                row.get("component_range_bounded") is True
+            ),
+            provider_or_parser_failure=(
+                row.get("provider_or_parser_failure") is True
+            ),
+            direct_contradiction_or_hard_break_unresolved=(
+                row.get("direct_contradiction_or_hard_break_unresolved")
+                is True
+            ),
+            required_red_team_evidence_missing=(
+                row.get("required_red_team_evidence_missing") is True
+            ),
+            could_change_score=row.get("could_change_score") is True,
+            could_change_stage=row.get("could_change_stage") is True,
+            could_change_hard_break=(
+                row.get("could_change_hard_break") is True
+            ),
+            economic_reason=str(row.get("economic_reason") or ""),
+            llm_proposed_gap_class=(
+                str(row["llm_proposed_gap_class"])
+                if row.get("llm_proposed_gap_class") is not None
+                else None
+            ),
+            schema_version=str(
+                row.get("schema_version")
+                or EVIDENCE_GAP_ASSESSMENT_SCHEMA_VERSION
+            ),
+        )
+
     @staticmethod
     def _deterministic_class(
         *,
@@ -623,6 +710,7 @@ class EvidenceGapAssessment:
         )
         return {
             "schema_version": self.schema_version,
+            "key": self.key.to_dict(),
             "gap_key": self.key.gap_key,
             "semantic_gap_id": self.key.semantic_gap_id,
             "gap_class": self.gap_class.value,
@@ -768,6 +856,51 @@ class EvidenceGapDisposition:
             downstream_action=action,
         )
 
+    @classmethod
+    def from_dict(cls, row: Mapping[str, Any]) -> "EvidenceGapDisposition":
+        assessment_payload = row.get("assessment")
+        if not isinstance(assessment_payload, Mapping):
+            raise ValueError("persisted disposition lacks assessment")
+        assessment = EvidenceGapAssessment.from_dict(assessment_payload)
+        disposition = cls(
+            assessment=assessment,
+            attempted_route_signatures=tuple(
+                str(value)
+                for value in row.get("attempted_route_signatures") or ()
+            ),
+            no_new_route_confirmation_ids=tuple(
+                str(value)
+                for value in row.get("no_new_route_confirmation_ids") or ()
+            ),
+            query_lane_exhausted=row.get("query_lane_exhausted") is True,
+            downstream_action=str(row.get("downstream_action") or ""),
+            supersedes_disposition_id=(
+                str(row["supersedes_disposition_id"])
+                if row.get("supersedes_disposition_id") is not None
+                else None
+            ),
+            reopen_reason=(
+                str(row["reopen_reason"])
+                if row.get("reopen_reason") is not None
+                else None
+            ),
+            status=EvidenceGapDispositionStatus(
+                str(row.get("status") or "")
+            ),
+            schema_version=str(
+                row.get("schema_version")
+                or EVIDENCE_GAP_DISPOSITION_SCHEMA_VERSION
+            ),
+        )
+        if row.get("disposition_id") not in {
+            None,
+            disposition.disposition_id,
+        }:
+            raise ValueError("persisted disposition id mismatch")
+        if row.get("source_absence_proven") not in {None, False}:
+            raise ValueError("disposition cannot prove source absence")
+        return disposition
+
     @property
     def key(self) -> EvidenceGapKey:
         return self.assessment.key
@@ -858,6 +991,7 @@ class EvidenceGapDisposition:
         return {
             "schema_version": self.schema_version,
             "disposition_id": self.disposition_id,
+            "assessment": self.assessment.to_dict(),
             "gap_key": self.key.gap_key,
             "semantic_gap_id": self.key.semantic_gap_id,
             "status": self.status.value,
@@ -933,3 +1067,274 @@ def canonical_current_pending_request_ids(
     return tuple(
         sorted((referenced & requested) - answered - quarantined)
     )
+
+
+@dataclass(frozen=True)
+class NoNewRouteConfirmation:
+    """One consumed LLM call assessed for no-new-route convergence."""
+
+    key: EvidenceGapKey
+    prompt_hash: str
+    response_hash: str
+    request_id: str | None
+    suggested_queries: tuple[Mapping[str, Any], ...]
+    new_source_directions: tuple[str, ...]
+    unresolved_research_notes: tuple[str, ...]
+    provider_error: bool = False
+    parser_or_fetch_repair_pending: bool = False
+    deterministic_fallback_query_used: bool = False
+    concrete_untried_source_route_signatures: tuple[str, ...] = ()
+    accepted_fact_delta: int = 0
+    accepted_lineage_delta: int = 0
+    schema_version: str = NO_NEW_ROUTE_CONFIRMATION_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        if self.schema_version != NO_NEW_ROUTE_CONFIRMATION_SCHEMA_VERSION:
+            raise ValueError("no-new-route confirmation schema mismatch")
+        if not str(self.prompt_hash or "").startswith("QUERYPROMPT-"):
+            raise ValueError("confirmation requires query prompt lineage")
+        if not str(self.response_hash or "").startswith("QUERYRESP-"):
+            raise ValueError("confirmation requires consumed query response lineage")
+        if self.request_id is not None and not str(self.request_id).startswith(
+            "COLLABREQ-"
+        ):
+            raise ValueError("confirmation request id is invalid")
+        if self.accepted_fact_delta < 0 or self.accepted_lineage_delta < 0:
+            raise ValueError("accepted state deltas cannot be negative")
+        directions = tuple(
+            _required_text(value, "new source direction")
+            for value in self.new_source_directions
+        )
+        notes = tuple(
+            _required_text(value, "unresolved research note")
+            for value in self.unresolved_research_notes
+        )
+        routes = tuple(
+            sorted(
+                {
+                    _stable_token(value, "untried source route signature")
+                    for value in self.concrete_untried_source_route_signatures
+                }
+            )
+        )
+        object.__setattr__(self, "new_source_directions", directions)
+        object.__setattr__(self, "unresolved_research_notes", notes)
+        object.__setattr__(
+            self, "concrete_untried_source_route_signatures", routes
+        )
+
+    @property
+    def confirmation_id(self) -> str:
+        return stable_intelligence_id(
+            "EGAPCONF",
+            {
+                "gap_key": self.key.gap_key,
+                "prompt_hash": self.prompt_hash,
+                "response_hash": self.response_hash,
+                "request_id": self.request_id,
+            },
+        )
+
+    @property
+    def valid_no_new_route_confirmation(self) -> bool:
+        return bool(
+            not self.suggested_queries
+            and not self.new_source_directions
+            and not self.provider_error
+            and not self.parser_or_fetch_repair_pending
+            and not self.deterministic_fallback_query_used
+            and not self.concrete_untried_source_route_signatures
+            and self.accepted_fact_delta == 0
+            and self.accepted_lineage_delta == 0
+        )
+
+    @property
+    def resets_confirmation_chain(self) -> bool:
+        return bool(
+            self.suggested_queries
+            or self.new_source_directions
+            or self.concrete_untried_source_route_signatures
+            or self.accepted_fact_delta
+            or self.accepted_lineage_delta
+        )
+
+    def to_dict(self) -> Mapping[str, Any]:
+        return {
+            "schema_version": self.schema_version,
+            "confirmation_id": self.confirmation_id,
+            "gap_key": self.key.gap_key,
+            "prompt_hash": self.prompt_hash,
+            "response_hash": self.response_hash,
+            "request_id": self.request_id,
+            "suggested_query_count": len(self.suggested_queries),
+            "new_source_direction_count": len(self.new_source_directions),
+            "unresolved_research_notes": list(
+                self.unresolved_research_notes
+            ),
+            "provider_error": self.provider_error,
+            "parser_or_fetch_repair_pending": (
+                self.parser_or_fetch_repair_pending
+            ),
+            "deterministic_fallback_query_used": (
+                self.deterministic_fallback_query_used
+            ),
+            "concrete_untried_source_route_signatures": list(
+                self.concrete_untried_source_route_signatures
+            ),
+            "accepted_fact_delta": self.accepted_fact_delta,
+            "accepted_lineage_delta": self.accepted_lineage_delta,
+            "valid_no_new_route_confirmation": (
+                self.valid_no_new_route_confirmation
+            ),
+            "source_absence_proven": False,
+            "production_score_authority": False,
+            "production_stage_authority": False,
+        }
+
+
+@dataclass(frozen=True)
+class SemanticNoNewRouteFixpoint:
+    """State convergence for one stable gap; never a source-absence proof."""
+
+    key: EvidenceGapKey
+    confirmations: tuple[NoNewRouteConfirmation, ...]
+    schema_version: str = SEMANTIC_NO_NEW_ROUTE_FIXPOINT_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        if self.schema_version != SEMANTIC_NO_NEW_ROUTE_FIXPOINT_SCHEMA_VERSION:
+            raise ValueError("semantic no-new-route fixpoint schema mismatch")
+        if any(row.key.gap_key != self.key.gap_key for row in self.confirmations):
+            raise ValueError("fixpoint confirmation belongs to another gap state")
+
+    @property
+    def confirmation_chain(self) -> tuple[NoNewRouteConfirmation, ...]:
+        chain: list[NoNewRouteConfirmation] = []
+        for row in self.confirmations:
+            if row.resets_confirmation_chain:
+                chain.clear()
+                continue
+            if row.valid_no_new_route_confirmation:
+                chain.append(row)
+        return tuple(chain)
+
+    @property
+    def valid_confirmation_count(self) -> int:
+        return len(self.confirmation_chain)
+
+    @property
+    def reached(self) -> bool:
+        chain = self.confirmation_chain
+        if len(chain) < 2:
+            return False
+        latest = chain[-2:]
+        if len({row.prompt_hash for row in latest}) != 2:
+            return False
+        request_ids = [row.request_id for row in latest if row.request_id]
+        if request_ids and len(set(request_ids)) != len(request_ids):
+            return False
+        return True
+
+    @property
+    def fixpoint_id(self) -> str | None:
+        if not self.reached:
+            return None
+        return stable_intelligence_id(
+            "EGAPFIX",
+            {
+                "gap_key": self.key.gap_key,
+                "confirmation_ids": [
+                    row.confirmation_id for row in self.confirmation_chain[-2:]
+                ],
+            },
+        )
+
+    def create_disposition(
+        self,
+        *,
+        assessment: EvidenceGapAssessment,
+        attempted_route_signatures: Sequence[str],
+    ) -> EvidenceGapDisposition:
+        if assessment.key.gap_key != self.key.gap_key:
+            raise ValueError("fixpoint assessment belongs to another gap")
+        if not self.reached:
+            raise ValueError("semantic no-new-route fixpoint is not reached")
+        return EvidenceGapDisposition.unresolved(
+            assessment=assessment,
+            attempted_route_signatures=attempted_route_signatures,
+            no_new_route_confirmation_ids=tuple(
+                row.confirmation_id for row in self.confirmation_chain[-2:]
+            ),
+        )
+
+    def to_dict(self) -> Mapping[str, Any]:
+        return {
+            "schema_version": self.schema_version,
+            "fixpoint_id": self.fixpoint_id,
+            "gap_key": self.key.gap_key,
+            "semantic_gap_id": self.key.semantic_gap_id,
+            "status": (
+                "SEMANTIC_NO_NEW_ROUTE_FIXPOINT"
+                if self.reached
+                else "NO_NEW_ROUTE_FIXPOINT_PENDING"
+            ),
+            "fact_snapshot_hash": self.key.fact_snapshot_hash,
+            "accepted_lineage_roster_hash": (
+                self.key.accepted_lineage_roster_hash
+            ),
+            "confirmation_count": len(self.confirmations),
+            "valid_no_new_route_confirmation_count": (
+                self.valid_confirmation_count
+            ),
+            "independent_prompt_count": len(
+                {row.prompt_hash for row in self.confirmation_chain[-2:]}
+            ),
+            "confirmation_ids": [
+                row.confirmation_id for row in self.confirmation_chain
+            ],
+            "accepted_fact_delta": sum(
+                row.accepted_fact_delta for row in self.confirmation_chain[-2:]
+            ),
+            "accepted_lineage_delta": sum(
+                row.accepted_lineage_delta
+                for row in self.confirmation_chain[-2:]
+            ),
+            "source_absence_proven": False,
+            "deterministic_fallback_query_used": False,
+            "production_score_authority": False,
+            "production_stage_authority": False,
+        }
+
+
+class RepeatedExhaustedGapReopenedError(RuntimeError):
+    failure_code = "REPEATED_EXHAUSTED_GAP_REOPENED"
+
+
+def guard_source_query_generation(
+    *,
+    disposition: EvidenceGapDisposition,
+    candidate_key: EvidenceGapKey,
+    candidate_route_signatures: Sequence[str] = (),
+    provider_or_parser_recovered: bool = False,
+    new_current_event: bool = False,
+) -> str | None:
+    """Hard-fail a third query for an unchanged exhausted gap.
+
+    A real state change returns its explicit reopen reason.  The caller must
+    append a superseding disposition before opening the query lane.
+    """
+
+    reason = disposition.reopen_reason_for(
+        candidate_key=candidate_key,
+        candidate_route_signatures=candidate_route_signatures,
+        provider_or_parser_recovered=provider_or_parser_recovered,
+        new_current_event=new_current_event,
+    )
+    if reason is not None:
+        return reason
+    if disposition.query_lane_exhausted:
+        raise RepeatedExhaustedGapReopenedError(
+            RepeatedExhaustedGapReopenedError.failure_code
+            + ":"
+            + candidate_key.gap_key
+        )
+    return None
