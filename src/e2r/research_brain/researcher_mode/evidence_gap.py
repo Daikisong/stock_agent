@@ -26,6 +26,7 @@ EVIDENCE_GAP_AUDIT_LINEAGE_SCHEMA_VERSION = (
     "e2r_evidence_gap_audit_lineage_v1"
 )
 EVIDENCE_GAP_ASSESSMENT_SCHEMA_VERSION = "e2r_evidence_gap_assessment_v1"
+EVIDENCE_GAP_DISPOSITION_SCHEMA_VERSION = "e2r_evidence_gap_disposition_v1"
 
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 _STABLE_TOKEN = re.compile(r"[A-Za-z0-9_.:/,+\-\[\]]+")
@@ -658,3 +659,277 @@ class EvidenceGapAssessment:
             "production_score_authority": False,
             "production_stage_authority": False,
         }
+
+
+class EvidenceGapDispositionStatus(str, Enum):
+    UNRESOLVED_EVIDENCE_GAP = "UNRESOLVED_EVIDENCE_GAP"
+
+
+_REOPEN_CONDITIONS = (
+    "FACT_SNAPSHOT_CHANGED",
+    "ACCEPTED_LINEAGE_ROSTER_CHANGED",
+    "GENUINELY_NEW_SOURCE_ROUTE",
+    "PROVIDER_OR_PARSER_RECOVERED",
+    "NEW_CURRENT_EVENT",
+)
+
+
+@dataclass(frozen=True)
+class EvidenceGapDisposition:
+    """Append-only handoff from an exhausted query lane to analysis."""
+
+    assessment: EvidenceGapAssessment
+    attempted_route_signatures: tuple[str, ...]
+    no_new_route_confirmation_ids: tuple[str, ...]
+    query_lane_exhausted: bool
+    downstream_action: str
+    supersedes_disposition_id: str | None = None
+    reopen_reason: str | None = None
+    status: EvidenceGapDispositionStatus = (
+        EvidenceGapDispositionStatus.UNRESOLVED_EVIDENCE_GAP
+    )
+    schema_version: str = EVIDENCE_GAP_DISPOSITION_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        if self.schema_version != EVIDENCE_GAP_DISPOSITION_SCHEMA_VERSION:
+            raise ValueError("evidence gap disposition schema mismatch")
+        routes = tuple(
+            sorted(
+                {
+                    _required_text(value, "attempted route signature")
+                    for value in self.attempted_route_signatures
+                }
+            )
+        )
+        confirmations = tuple(
+            dict.fromkeys(
+                _required_text(value, "no-new-route confirmation id")
+                for value in self.no_new_route_confirmation_ids
+            )
+        )
+        object.__setattr__(self, "attempted_route_signatures", routes)
+        object.__setattr__(
+            self, "no_new_route_confirmation_ids", confirmations
+        )
+        action = _stable_token(self.downstream_action, "downstream action")
+        object.__setattr__(self, "downstream_action", action)
+        expected_actions = {
+            EvidenceGapClass.CORE_SCORE_BLOCKER: {
+                "RESEARCH_PENDING_CORE_SOURCE",
+                "REOPEN_SOURCE_QUERY_LANE",
+            },
+            EvidenceGapClass.CORROBORATION_CAP: {
+                "COMPONENT_MEMO_WITH_CONFIDENCE_PENALTY",
+                "REOPEN_SOURCE_QUERY_LANE",
+            },
+            EvidenceGapClass.MONITORING_GAP: {
+                "MONITORING_LEDGER",
+                "REOPEN_SOURCE_QUERY_LANE",
+            },
+        }
+        if action not in expected_actions[self.assessment.gap_class]:
+            raise ValueError("downstream action disagrees with gap class")
+        if self.query_lane_exhausted and action == "REOPEN_SOURCE_QUERY_LANE":
+            raise ValueError("an exhausted query lane cannot be marked reopened")
+        if not self.query_lane_exhausted and action != "REOPEN_SOURCE_QUERY_LANE":
+            raise ValueError("a reopened query lane requires the reopen action")
+        if self.supersedes_disposition_id is not None:
+            _stable_token(
+                self.supersedes_disposition_id,
+                "superseded disposition id",
+            )
+            if self.reopen_reason not in _REOPEN_CONDITIONS:
+                raise ValueError("superseding disposition requires a real state change")
+        elif self.reopen_reason is not None:
+            raise ValueError("initial disposition cannot have a reopen reason")
+
+    @classmethod
+    def unresolved(
+        cls,
+        *,
+        assessment: EvidenceGapAssessment,
+        attempted_route_signatures: Sequence[str],
+        no_new_route_confirmation_ids: Sequence[str],
+    ) -> "EvidenceGapDisposition":
+        action = {
+            EvidenceGapClass.CORE_SCORE_BLOCKER: "RESEARCH_PENDING_CORE_SOURCE",
+            EvidenceGapClass.CORROBORATION_CAP: (
+                "COMPONENT_MEMO_WITH_CONFIDENCE_PENALTY"
+            ),
+            EvidenceGapClass.MONITORING_GAP: "MONITORING_LEDGER",
+        }[assessment.gap_class]
+        return cls(
+            assessment=assessment,
+            attempted_route_signatures=tuple(attempted_route_signatures),
+            no_new_route_confirmation_ids=tuple(
+                no_new_route_confirmation_ids
+            ),
+            query_lane_exhausted=True,
+            downstream_action=action,
+        )
+
+    @property
+    def key(self) -> EvidenceGapKey:
+        return self.assessment.key
+
+    @property
+    def disposition_id(self) -> str:
+        return stable_intelligence_id(
+            "EGAPDISP",
+            {
+                "gap_key": self.key.gap_key,
+                "gap_class": self.assessment.gap_class.value,
+                "status": self.status.value,
+                "query_lane_exhausted": self.query_lane_exhausted,
+                "attempted_route_signatures": self.attempted_route_signatures,
+                "no_new_route_confirmation_ids": (
+                    self.no_new_route_confirmation_ids
+                ),
+                "downstream_action": self.downstream_action,
+                "supersedes_disposition_id": self.supersedes_disposition_id,
+                "reopen_reason": self.reopen_reason,
+            },
+        )
+
+    def reopen_reason_for(
+        self,
+        *,
+        candidate_key: EvidenceGapKey,
+        candidate_route_signatures: Sequence[str] = (),
+        provider_or_parser_recovered: bool = False,
+        new_current_event: bool = False,
+    ) -> str | None:
+        if candidate_key.semantic_gap_id != self.key.semantic_gap_id:
+            raise ValueError("cannot reopen a disposition for a different gap")
+        if candidate_key.fact_snapshot_hash != self.key.fact_snapshot_hash:
+            return "FACT_SNAPSHOT_CHANGED"
+        if (
+            candidate_key.accepted_lineage_roster_hash
+            != self.key.accepted_lineage_roster_hash
+        ):
+            return "ACCEPTED_LINEAGE_ROSTER_CHANGED"
+        attempted = set(self.attempted_route_signatures)
+        if any(
+            _required_text(value, "candidate route signature") not in attempted
+            for value in candidate_route_signatures
+        ):
+            return "GENUINELY_NEW_SOURCE_ROUTE"
+        if provider_or_parser_recovered:
+            return "PROVIDER_OR_PARSER_RECOVERED"
+        if new_current_event:
+            return "NEW_CURRENT_EVENT"
+        return None
+
+    def superseding_reopen(
+        self,
+        *,
+        assessment: EvidenceGapAssessment,
+        candidate_route_signatures: Sequence[str] = (),
+        provider_or_parser_recovered: bool = False,
+        new_current_event: bool = False,
+    ) -> "EvidenceGapDisposition":
+        reason = self.reopen_reason_for(
+            candidate_key=assessment.key,
+            candidate_route_signatures=candidate_route_signatures,
+            provider_or_parser_recovered=provider_or_parser_recovered,
+            new_current_event=new_current_event,
+        )
+        if reason is None:
+            raise ValueError("disposition cannot reopen without a real state change")
+        return EvidenceGapDisposition(
+            assessment=assessment,
+            attempted_route_signatures=tuple(
+                sorted(
+                    set(self.attempted_route_signatures)
+                    | {
+                        _required_text(value, "candidate route signature")
+                        for value in candidate_route_signatures
+                    }
+                )
+            ),
+            no_new_route_confirmation_ids=(),
+            query_lane_exhausted=False,
+            downstream_action="REOPEN_SOURCE_QUERY_LANE",
+            supersedes_disposition_id=self.disposition_id,
+            reopen_reason=reason,
+        )
+
+    def to_dict(self) -> Mapping[str, Any]:
+        return {
+            "schema_version": self.schema_version,
+            "disposition_id": self.disposition_id,
+            "gap_key": self.key.gap_key,
+            "semantic_gap_id": self.key.semantic_gap_id,
+            "status": self.status.value,
+            "gap_class": self.assessment.gap_class.value,
+            "source_absence_proven": False,
+            "query_lane_exhausted": self.query_lane_exhausted,
+            "fact_snapshot_hash": self.key.fact_snapshot_hash,
+            "accepted_lineage_roster_hash": (
+                self.key.accepted_lineage_roster_hash
+            ),
+            "attempted_route_signatures": list(
+                self.attempted_route_signatures
+            ),
+            "no_new_route_confirmation_ids": list(
+                self.no_new_route_confirmation_ids
+            ),
+            "affected_component_ids": list(self.key.affected_component_ids),
+            "downstream_action": self.downstream_action,
+            "reopen_conditions": list(_REOPEN_CONDITIONS),
+            "supersedes_disposition_id": self.supersedes_disposition_id,
+            "reopen_reason": self.reopen_reason,
+            "production_score_authority": False,
+            "production_stage_authority": False,
+        }
+
+
+def latest_evidence_gap_dispositions(
+    rows: Sequence[EvidenceGapDisposition],
+) -> Mapping[str, EvidenceGapDisposition]:
+    """Index append-only rows without mutating superseded history."""
+
+    by_id: dict[str, EvidenceGapDisposition] = {}
+    superseded_ids: set[str] = set()
+    for row in rows:
+        if row.disposition_id in by_id:
+            raise ValueError("duplicate evidence gap disposition id")
+        if (
+            row.supersedes_disposition_id is not None
+            and row.supersedes_disposition_id not in by_id
+        ):
+            raise ValueError("evidence gap disposition supersedes an unknown row")
+        by_id[row.disposition_id] = row
+        if row.supersedes_disposition_id is not None:
+            superseded_ids.add(row.supersedes_disposition_id)
+    current: dict[str, EvidenceGapDisposition] = {}
+    for disposition_id, row in by_id.items():
+        if disposition_id in superseded_ids:
+            continue
+        semantic_id = row.key.semantic_gap_id
+        if semantic_id in current:
+            raise ValueError("multiple current dispositions exist for one gap")
+        current[semantic_id] = row
+    return current
+
+
+def canonical_current_pending_request_ids(
+    *,
+    pending_reasons: Sequence[str],
+    request_ids: Sequence[str],
+    response_ids: Sequence[str],
+    quarantined_request_ids: Sequence[str] = (),
+) -> tuple[str, ...]:
+    """Return only unanswered requests referenced by canonical state."""
+
+    requested = set(request_ids)
+    answered = set(response_ids)
+    quarantined = set(quarantined_request_ids)
+    referenced: set[str] = set()
+    for reason in pending_reasons:
+        referenced.update(
+            re.findall(r"COLLABREQ-[0-9a-f]{64}", str(reason or ""))
+        )
+    return tuple(
+        sorted((referenced & requested) - answered - quarantined)
+    )

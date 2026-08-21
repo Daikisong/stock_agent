@@ -6,10 +6,13 @@ from e2r.research_brain.researcher_mode.evidence_gap import (
     EvidenceGapAuditLineage,
     EvidenceGapAssessment,
     EvidenceGapClass,
+    EvidenceGapDisposition,
     EvidenceGapKey,
     MissingSourceRole,
     accepted_lineage_profile,
+    canonical_current_pending_request_ids,
     derive_objective_identity,
+    latest_evidence_gap_dispositions,
     source_corpus_profile,
 )
 
@@ -240,6 +243,117 @@ class EvidenceGapMaterialityTest(unittest.TestCase):
             assessment.component_completion_allowed("information_confidence")
         )
         self.assertTrue(assessment.score_valid_if_only_gap)
+
+
+class EvidenceGapDispositionTest(unittest.TestCase):
+    def _assessment(
+        self,
+        *,
+        fact_hash: str = "a" * 64,
+        lineage_hash: str = "b" * 64,
+        supervisor_prose: str = "ignored",
+    ) -> EvidenceGapAssessment:
+        del supervisor_prose
+        key = EvidenceGapKey(
+            target_id="TEST_TARGET",
+            as_of_date="2026-07-12",
+            archetype_id="TEST_ARCHETYPE",
+            objective_identity="SGOBJ-stable123",
+            affected_component_ids=(
+                "information_confidence",
+                "earnings_visibility",
+            ),
+            required_source_family=(
+                "SOURCE_FAMILY_SET[CUSTOMER_OFFICIAL,PUBLIC_BROKER_PDF]"
+            ),
+            economic_mechanism_id="CUSTOMER_COMMITMENT_VISIBILITY",
+            predicate_or_fact_need_id="DIRECT_CONTRACT_TERMS",
+            fact_snapshot_hash=fact_hash,
+            accepted_lineage_roster_hash=lineage_hash,
+        )
+        return EvidenceGapAssessment.classify(
+            key=key,
+            missing_source_role=MissingSourceRole.INDEPENDENT_CORROBORATION,
+            source_backed_component_ids=(
+                "information_confidence",
+                "earnings_visibility",
+            ),
+            component_range_bounded=True,
+            could_change_score=True,
+            could_change_stage=True,
+            could_change_hard_break=False,
+            economic_reason="독립 corroboration 미확인",
+        )
+
+    def _disposition(self) -> EvidenceGapDisposition:
+        return EvidenceGapDisposition.unresolved(
+            assessment=self._assessment(),
+            attempted_route_signatures=("ROUTE-A", "ROUTE-B"),
+            no_new_route_confirmation_ids=("CONFIRM-1", "CONFIRM-2"),
+        )
+
+    def test_fixpoint_creates_unresolved_gap_disposition(self) -> None:
+        disposition = self._disposition()
+        row = disposition.to_dict()
+        self.assertEqual("UNRESOLVED_EVIDENCE_GAP", row["status"])
+        self.assertEqual("CORROBORATION_CAP", row["gap_class"])
+        self.assertTrue(row["query_lane_exhausted"])
+        self.assertFalse(row["source_absence_proven"])
+        self.assertEqual(
+            "COMPONENT_MEMO_WITH_CONFIDENCE_PENALTY",
+            row["downstream_action"],
+        )
+
+    def test_disposition_reopens_only_on_real_state_change(self) -> None:
+        disposition = self._disposition()
+        same = self._assessment()
+        self.assertIsNone(
+            disposition.reopen_reason_for(candidate_key=same.key)
+        )
+        with self.assertRaisesRegex(ValueError, "real state change"):
+            disposition.superseding_reopen(assessment=same)
+
+        changed = self._assessment(lineage_hash="c" * 64)
+        reopened = disposition.superseding_reopen(assessment=changed)
+        self.assertEqual(
+            "ACCEPTED_LINEAGE_ROSTER_CHANGED", reopened.reopen_reason
+        )
+        self.assertFalse(reopened.query_lane_exhausted)
+        self.assertEqual(
+            disposition.disposition_id,
+            reopened.supersedes_disposition_id,
+        )
+        current = latest_evidence_gap_dispositions((disposition, reopened))
+        self.assertEqual(
+            reopened.disposition_id,
+            current[reopened.key.semantic_gap_id].disposition_id,
+        )
+
+    def test_supervisor_paraphrase_does_not_reopen_disposition(self) -> None:
+        disposition = self._disposition()
+        first = self._assessment(
+            supervisor_prose="고객 공식 계약 corroboration이 부족함"
+        )
+        second = self._assessment(
+            supervisor_prose="named customer direct confirmation이 확인되지 않음"
+        )
+        self.assertEqual(first.key.gap_key, second.key.gap_key)
+        self.assertIsNone(
+            disposition.reopen_reason_for(candidate_key=second.key)
+        )
+
+    def test_quarantined_request_not_counted_as_current_pending(self) -> None:
+        current = "COLLABREQ-" + "a" * 64
+        residue = "COLLABREQ-" + "b" * 64
+        result = canonical_current_pending_request_ids(
+            pending_reasons=(
+                "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:" + current,
+            ),
+            request_ids=(current, residue),
+            response_ids=(),
+            quarantined_request_ids=(residue,),
+        )
+        self.assertEqual((current,), result)
 
 
 if __name__ == "__main__":
