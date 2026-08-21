@@ -1,0 +1,47 @@
+{
+  "schema_version": "e2r_v6_gate1_gap_identity_audit_v1",
+  "audit_date": "2026-08-22",
+  "implementation": "src/e2r/research_brain/researcher_mode/evidence_gap.py",
+  "identity_schema_version": "e2r_evidence_gap_key_v1",
+  "identity_fields": [
+    "target_id",
+    "as_of_date",
+    "archetype_id",
+    "objective_identity",
+    "affected_component_ids",
+    "required_source_family",
+    "economic_mechanism_id",
+    "predicate_or_fact_need_id",
+    "fact_snapshot_hash",
+    "accepted_lineage_roster_hash"
+  ],
+  "excluded_audit_lineage_fields": [
+    "supervisor_text",
+    "rationale",
+    "query_text",
+    "prompt_hash",
+    "response_hash",
+    "retry_count",
+    "request_id"
+  ],
+  "paraphrase_fixture": {
+    "same_gap_paraphrase_count": 3,
+    "unique_gap_key_count": 1,
+    "gap_key": "EGAP-802576f0397582ffea42084f",
+    "semantic_gap_id": "EGAPSEM-b670eb4aa3c34987ce9b1bd8"
+  },
+  "same_gap_paraphrase_count": 3,
+  "paraphrase_split_error_count": 0,
+  "different_gap_collision_count": 0,
+  "prose_field_in_identity_count": 0,
+  "prompt_hash_in_identity_count": 0,
+  "request_hash_in_identity_count": 0,
+  "symbol_or_archetype_specific_branch_count": 0,
+  "tests": [
+    "test_evidence_gap_key_is_paraphrase_invariant",
+    "test_different_core_fact_need_does_not_collide",
+    "test_prompt_hash_does_not_define_gap_identity",
+    "test_fallback_objective_identity_uses_only_stable_structure"
+  ],
+  "verdict": "PASS"
+}
