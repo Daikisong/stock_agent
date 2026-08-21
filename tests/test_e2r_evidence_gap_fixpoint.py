@@ -8,6 +8,7 @@ from e2r.research_brain.researcher_mode.evidence_gap import (
     EvidenceGapClass,
     EvidenceGapDisposition,
     EvidenceGapKey,
+    GapScoreMaterialityAssessment,
     MissingSourceRole,
     NoNewRouteConfirmation,
     RepeatedExhaustedGapReopenedError,
@@ -247,6 +248,94 @@ class EvidenceGapMaterialityTest(unittest.TestCase):
             assessment.component_completion_allowed("information_confidence")
         )
         self.assertTrue(assessment.score_valid_if_only_gap)
+
+    def test_score_valid_can_be_true_with_corroboration_cap(self) -> None:
+        materiality = GapScoreMaterialityAssessment.assess(
+            assessment=self._corroboration_cap(),
+            component_lower_delta={
+                "earnings_visibility": 0.0,
+                "information_confidence": 0.0,
+            },
+            component_upper_delta={
+                "earnings_visibility": 1.0,
+                "information_confidence": 1.0,
+            },
+            deterministic_lower_stage="3-Yellow",
+            deterministic_upper_stage="3-Yellow",
+            executable_new_source_route_exists=False,
+            rationale="현재 원천으로 범위 계산이 가능하고 새 route가 없다.",
+        )
+
+        self.assertTrue(materiality.score_valid_if_only_gap)
+        self.assertFalse(materiality.search_required)
+        self.assertIsNone(materiality.stage_cap_if_unconfirmed)
+
+    def test_unconfirmed_corroboration_can_cap_upper_stage(self) -> None:
+        materiality = GapScoreMaterialityAssessment.assess(
+            assessment=self._corroboration_cap(),
+            component_lower_delta={
+                "earnings_visibility": 0.0,
+                "information_confidence": 0.0,
+            },
+            component_upper_delta={
+                "earnings_visibility": 2.0,
+                "information_confidence": 1.0,
+            },
+            deterministic_lower_stage="3-Yellow",
+            deterministic_upper_stage="3-Green",
+            executable_new_source_route_exists=False,
+            rationale="경계를 가르지만 시도하지 않은 route가 없다.",
+            stage_cap_reason=(
+                "미확인 독립 corroboration이므로 deterministic lower Stage를 적용"
+            ),
+        )
+
+        self.assertTrue(materiality.score_valid_if_only_gap)
+        self.assertFalse(materiality.search_required)
+        self.assertEqual("3-Yellow", materiality.stage_cap_if_unconfirmed)
+
+    def test_crossing_stage_reopens_only_when_new_route_exists(self) -> None:
+        materiality = GapScoreMaterialityAssessment.assess(
+            assessment=self._corroboration_cap(),
+            component_lower_delta={
+                "earnings_visibility": 0.0,
+                "information_confidence": 0.0,
+            },
+            component_upper_delta={
+                "earnings_visibility": 2.0,
+                "information_confidence": 1.0,
+            },
+            deterministic_lower_stage="3-Yellow",
+            deterministic_upper_stage="3-Green",
+            executable_new_source_route_exists=True,
+            rationale="Stage 경계를 바꿀 수 있고 실제 새 route가 있다.",
+        )
+
+        self.assertTrue(materiality.search_required)
+        self.assertIsNone(materiality.stage_cap_if_unconfirmed)
+
+    def test_llm_has_no_total_score_or_stage_authority(self) -> None:
+        materiality = GapScoreMaterialityAssessment.assess(
+            assessment=self._corroboration_cap(),
+            component_lower_delta={
+                "earnings_visibility": 0.0,
+                "information_confidence": 0.0,
+            },
+            component_upper_delta={
+                "earnings_visibility": 1.0,
+                "information_confidence": 1.0,
+            },
+            deterministic_lower_stage="2",
+            deterministic_upper_stage="2",
+            executable_new_source_route_exists=False,
+            rationale="LLM은 근거 해석만 하고 점수와 Stage는 계산하지 않는다.",
+        )
+        row = materiality.to_dict()
+
+        self.assertFalse(row["production_score_authority"])
+        self.assertFalse(row["production_stage_authority"])
+        self.assertFalse(row["new_score_weight_created"])
+        self.assertFalse(row["new_stage_threshold_created"])
 
 
 class EvidenceGapDispositionTest(unittest.TestCase):

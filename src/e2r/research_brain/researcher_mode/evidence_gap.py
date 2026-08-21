@@ -12,6 +12,7 @@ from datetime import date
 from enum import Enum
 import hashlib
 import json
+import math
 import re
 from typing import Any, Mapping, Sequence
 
@@ -26,6 +27,9 @@ EVIDENCE_GAP_AUDIT_LINEAGE_SCHEMA_VERSION = (
     "e2r_evidence_gap_audit_lineage_v1"
 )
 EVIDENCE_GAP_ASSESSMENT_SCHEMA_VERSION = "e2r_evidence_gap_assessment_v1"
+GAP_SCORE_MATERIALITY_ASSESSMENT_SCHEMA_VERSION = (
+    "e2r_gap_score_materiality_assessment_v1"
+)
 EVIDENCE_GAP_DISPOSITION_SCHEMA_VERSION = "e2r_evidence_gap_disposition_v1"
 NO_NEW_ROUTE_CONFIRMATION_SCHEMA_VERSION = (
     "e2r_no_new_route_confirmation_v1"
@@ -744,6 +748,287 @@ class EvidenceGapAssessment:
             ),
             "score_valid_if_only_gap": self.score_valid_if_only_gap,
             "global_score_block": self.global_score_block,
+            "production_score_authority": False,
+            "production_stage_authority": False,
+        }
+
+
+@dataclass(frozen=True)
+class GapScoreMaterialityAssessment:
+    """Bound one unresolved gap without inventing score weights or Stage rules.
+
+    ``deterministic_lower_stage`` and ``deterministic_upper_stage`` are outputs
+    of the existing deterministic scorer/Stage classifier for the two bounded
+    component vectors.  This record may decide whether another source-query
+    lane is warranted, but it cannot calculate or overwrite a production
+    score or Stage itself.
+    """
+
+    assessment: EvidenceGapAssessment
+    component_lower_delta: Mapping[str, float]
+    component_upper_delta: Mapping[str, float]
+    total_score_lower_delta: float
+    total_score_upper_delta: float
+    could_change_score_valid: bool
+    could_cross_stage_boundary: bool
+    could_change_hard_break: bool
+    search_required: bool
+    stage_cap_if_unconfirmed: str | None
+    rationale: str
+    deterministic_lower_stage: str | None
+    deterministic_upper_stage: str | None
+    executable_new_source_route_exists: bool
+    stage_cap_reason: str | None = None
+    schema_version: str = GAP_SCORE_MATERIALITY_ASSESSMENT_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        if self.schema_version != GAP_SCORE_MATERIALITY_ASSESSMENT_SCHEMA_VERSION:
+            raise ValueError("gap score materiality assessment schema mismatch")
+        affected = tuple(self.assessment.affected_component_ids)
+        lower = self._validated_delta_mapping(
+            self.component_lower_delta,
+            affected_component_ids=affected,
+            label="component lower delta",
+        )
+        upper = self._validated_delta_mapping(
+            self.component_upper_delta,
+            affected_component_ids=affected,
+            label="component upper delta",
+        )
+        for component_id in affected:
+            if lower[component_id] > upper[component_id]:
+                raise ValueError("component lower delta cannot exceed upper delta")
+        object.__setattr__(self, "component_lower_delta", lower)
+        object.__setattr__(self, "component_upper_delta", upper)
+        lower_total = self._finite_number(
+            self.total_score_lower_delta,
+            "total score lower delta",
+        )
+        upper_total = self._finite_number(
+            self.total_score_upper_delta,
+            "total score upper delta",
+        )
+        if lower_total > upper_total:
+            raise ValueError("total score lower delta cannot exceed upper delta")
+        if not math.isclose(lower_total, sum(lower.values()), abs_tol=1e-9):
+            raise ValueError("total score lower delta must equal component sum")
+        if not math.isclose(upper_total, sum(upper.values()), abs_tol=1e-9):
+            raise ValueError("total score upper delta must equal component sum")
+        object.__setattr__(self, "total_score_lower_delta", lower_total)
+        object.__setattr__(self, "total_score_upper_delta", upper_total)
+        if not str(self.rationale or "").strip():
+            raise ValueError("gap score materiality rationale is required")
+
+        for stage, label in (
+            (self.deterministic_lower_stage, "deterministic lower stage"),
+            (self.deterministic_upper_stage, "deterministic upper stage"),
+            (self.stage_cap_if_unconfirmed, "stage cap"),
+        ):
+            if stage is not None:
+                self._canonical_stage(stage, label)
+        crosses = bool(
+            self.deterministic_lower_stage is not None
+            and self.deterministic_upper_stage is not None
+            and self.deterministic_lower_stage
+            != self.deterministic_upper_stage
+        )
+        if self.could_cross_stage_boundary != crosses:
+            raise ValueError(
+                "stage-boundary flag must come from deterministic lower/upper stages"
+            )
+        expected_score_valid_change = bool(
+            self.assessment.global_score_block
+            or not self.assessment.component_range_bounded
+        )
+        if self.could_change_score_valid != expected_score_valid_change:
+            raise ValueError(
+                "score-validity materiality disagrees with core source sufficiency"
+            )
+        if self.could_change_hard_break != self.assessment.could_change_hard_break:
+            raise ValueError(
+                "hard-break materiality disagrees with evidence-gap assessment"
+            )
+        expected_search = bool(
+            self.assessment.gap_class == EvidenceGapClass.CORE_SCORE_BLOCKER
+            or not self.assessment.component_range_bounded
+            or self.could_change_hard_break
+            or (crosses and self.executable_new_source_route_exists)
+        )
+        if self.search_required != expected_search:
+            raise ValueError("search policy disagrees with deterministic materiality")
+
+        expected_cap = None
+        if (
+            crosses
+            and not expected_search
+            and self.assessment.gap_class
+            in {
+                EvidenceGapClass.CORROBORATION_CAP,
+                EvidenceGapClass.MONITORING_GAP,
+            }
+        ):
+            expected_cap = self.deterministic_lower_stage
+        if self.stage_cap_if_unconfirmed != expected_cap:
+            raise ValueError(
+                "unconfirmed gap must use the deterministic lower Stage as its cap"
+            )
+        if expected_cap is not None and not str(self.stage_cap_reason or "").strip():
+            raise ValueError("a conservative Stage cap requires stage_cap_reason")
+        if expected_cap is None and self.stage_cap_reason is not None:
+            raise ValueError("stage_cap_reason is only allowed when a cap exists")
+
+    @staticmethod
+    def _finite_number(value: Any, label: str) -> float:
+        if isinstance(value, bool):
+            raise ValueError(f"{label} must be finite")
+        try:
+            number = float(value)
+        except (TypeError, ValueError) as error:
+            raise ValueError(f"{label} must be finite") from error
+        if not math.isfinite(number):
+            raise ValueError(f"{label} must be finite")
+        return number
+
+    @classmethod
+    def _validated_delta_mapping(
+        cls,
+        values: Mapping[str, float],
+        *,
+        affected_component_ids: Sequence[str],
+        label: str,
+    ) -> Mapping[str, float]:
+        if not isinstance(values, Mapping):
+            raise ValueError(f"{label} must be a mapping")
+        expected = set(affected_component_ids)
+        if set(values) != expected:
+            raise ValueError(f"{label} must cover exactly the affected components")
+        return {
+            component_id: cls._finite_number(values[component_id], label)
+            for component_id in affected_component_ids
+        }
+
+    @staticmethod
+    def _canonical_stage(value: str, label: str) -> str:
+        canonical = {
+            "0",
+            "1",
+            "2",
+            "3-Green",
+            "3-Yellow",
+            "3-Red",
+            "4A",
+            "4B",
+            "4C",
+            "5",
+        }
+        stage = str(value)
+        if stage not in canonical:
+            raise ValueError(f"{label} must use the canonical Stage enum")
+        return stage
+
+    @classmethod
+    def assess(
+        cls,
+        *,
+        assessment: EvidenceGapAssessment,
+        component_lower_delta: Mapping[str, float],
+        component_upper_delta: Mapping[str, float],
+        deterministic_lower_stage: str | None,
+        deterministic_upper_stage: str | None,
+        executable_new_source_route_exists: bool,
+        rationale: str,
+        stage_cap_reason: str | None = None,
+    ) -> "GapScoreMaterialityAssessment":
+        lower = {
+            component_id: float(component_lower_delta[component_id])
+            for component_id in assessment.affected_component_ids
+        }
+        upper = {
+            component_id: float(component_upper_delta[component_id])
+            for component_id in assessment.affected_component_ids
+        }
+        crosses = bool(
+            deterministic_lower_stage is not None
+            and deterministic_upper_stage is not None
+            and deterministic_lower_stage != deterministic_upper_stage
+        )
+        score_valid_change = bool(
+            assessment.global_score_block
+            or not assessment.component_range_bounded
+        )
+        search_required = bool(
+            assessment.gap_class == EvidenceGapClass.CORE_SCORE_BLOCKER
+            or not assessment.component_range_bounded
+            or assessment.could_change_hard_break
+            or (crosses and executable_new_source_route_exists)
+        )
+        stage_cap = (
+            deterministic_lower_stage
+            if crosses
+            and not search_required
+            and assessment.gap_class
+            in {
+                EvidenceGapClass.CORROBORATION_CAP,
+                EvidenceGapClass.MONITORING_GAP,
+            }
+            else None
+        )
+        return cls(
+            assessment=assessment,
+            component_lower_delta=lower,
+            component_upper_delta=upper,
+            total_score_lower_delta=sum(lower.values()),
+            total_score_upper_delta=sum(upper.values()),
+            could_change_score_valid=score_valid_change,
+            could_cross_stage_boundary=crosses,
+            could_change_hard_break=assessment.could_change_hard_break,
+            search_required=search_required,
+            stage_cap_if_unconfirmed=stage_cap,
+            rationale=rationale,
+            deterministic_lower_stage=deterministic_lower_stage,
+            deterministic_upper_stage=deterministic_upper_stage,
+            executable_new_source_route_exists=(
+                executable_new_source_route_exists
+            ),
+            stage_cap_reason=stage_cap_reason,
+        )
+
+    @property
+    def gap_key(self) -> str:
+        return self.assessment.key.gap_key
+
+    @property
+    def affected_component_ids(self) -> tuple[str, ...]:
+        return self.assessment.affected_component_ids
+
+    @property
+    def score_valid_if_only_gap(self) -> bool:
+        return not self.could_change_score_valid
+
+    def to_dict(self) -> Mapping[str, Any]:
+        return {
+            "schema_version": self.schema_version,
+            "gap_key": self.gap_key,
+            "affected_component_ids": list(self.affected_component_ids),
+            "component_lower_delta": dict(self.component_lower_delta),
+            "component_upper_delta": dict(self.component_upper_delta),
+            "total_score_lower_delta": self.total_score_lower_delta,
+            "total_score_upper_delta": self.total_score_upper_delta,
+            "could_change_score_valid": self.could_change_score_valid,
+            "could_cross_stage_boundary": self.could_cross_stage_boundary,
+            "could_change_hard_break": self.could_change_hard_break,
+            "search_required": self.search_required,
+            "stage_cap_if_unconfirmed": self.stage_cap_if_unconfirmed,
+            "stage_cap_reason": self.stage_cap_reason,
+            "rationale": self.rationale,
+            "deterministic_lower_stage": self.deterministic_lower_stage,
+            "deterministic_upper_stage": self.deterministic_upper_stage,
+            "executable_new_source_route_exists": (
+                self.executable_new_source_route_exists
+            ),
+            "score_valid_if_only_gap": self.score_valid_if_only_gap,
+            "new_score_weight_created": False,
+            "new_stage_threshold_created": False,
             "production_score_authority": False,
             "production_stage_authority": False,
         }
